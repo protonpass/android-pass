@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
+import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -51,8 +52,11 @@ import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
 fun AliasAddressRow(
     modifier: Modifier = Modifier,
     alias: String,
+    isAliasDisabled: Boolean,
+    isAliasSyncEnabled: Boolean,
     onCopyAlias: (String) -> Unit,
-    onCreateLoginFromAlias: (String) -> Unit
+    onCreateLoginFromAlias: (String) -> Unit,
+    onToggleAliasState: (Boolean) -> Unit
 ) {
     Row(
         modifier = modifier
@@ -67,7 +71,7 @@ fun AliasAddressRow(
             contentDescription = null,
             tint = PassTheme.colors.aliasInteractionNorm
         )
-        Column {
+        Column(Modifier.weight(1f)) {
             SectionTitle(
                 modifier = Modifier.padding(start = 8.dp),
                 text = stringResource(R.string.field_alias_title)
@@ -89,6 +93,9 @@ fun AliasAddressRow(
                 textDecoration = TextDecoration.Underline
             )
         }
+        if (isAliasSyncEnabled) {
+            Switch(checked = isAliasDisabled, onCheckedChange = onToggleAliasState)
+        }
     }
 }
 
@@ -99,8 +106,11 @@ fun AliasAddressRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark
         Surface {
             AliasAddressRow(
                 alias = "some@alias.test",
+                isAliasDisabled = false,
+                isAliasSyncEnabled = true,
                 onCopyAlias = {},
-                onCreateLoginFromAlias = {}
+                onCreateLoginFromAlias = {},
+                onToggleAliasState = {}
             )
         }
     }

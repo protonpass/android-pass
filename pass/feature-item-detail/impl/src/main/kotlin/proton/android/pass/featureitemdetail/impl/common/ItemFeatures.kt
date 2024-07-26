@@ -21,5 +21,6 @@ package proton.android.pass.featureitemdetail.impl.common
 internal data class ItemFeatures(
     internal val isHistoryEnabled: Boolean,
     internal val isSecurityCenterEnabled: Boolean,
+    internal val slAliasSyncEnabled: Boolean,
     internal val isUsernameSplitEnabled: Boolean
 )

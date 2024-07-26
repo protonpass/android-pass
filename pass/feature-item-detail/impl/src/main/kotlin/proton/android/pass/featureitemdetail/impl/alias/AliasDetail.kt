@@ -181,6 +181,8 @@ fun AliasDetail(
                         vault = state.vault,
                         mailboxes = state.mailboxes,
                         isLoading = state.isLoadingMailboxes,
+                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
+                        isAliasSyncEnabled = state.isSLAliasSyncEnabled,
                         onCopyAlias = { viewModel.onCopyAlias(it) },
                         onCreateLoginFromAlias = { alias ->
                             val event = ItemDetailNavigation.OnCreateLoginFromAlias(
@@ -202,7 +204,7 @@ fun AliasDetail(
                                 )
                             )
                         },
-                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled
+                        onToggleAliasState = viewModel::toggleAliasState
                     )
                 }
 

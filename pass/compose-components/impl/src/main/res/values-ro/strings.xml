@@ -114,11 +114,21 @@
     -->
   <string name="date_full_date_format">zz LLLL HH:mm</string>
   <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to 12 Feb 12:34
+    -->
+  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_compact_month">zz LLL HH:mm</string>
+  <!--
     Pattern used when displaying a date including the year.
     It would translate to
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <!--
+   Pattern used when displaying a date including the year.
+   It would translate to 12 Feb 2023 12:34
+   -->
+  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_with_year_compact_month">zz LLL aaaa HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Adresă alias</string>
   <string name="item_details_alias_section_mailboxes_title">Transferare către</string>
@@ -194,7 +204,7 @@
   <!-- Time units -->
   <plurals name="time_unit_days">
     <item quantity="one">%d zi</item>
-    <item quantity="few">%d days</item>
+    <item quantity="few">%d de zile</item>
     <item quantity="other">%d de zile</item>
   </plurals>
   <plurals name="time_unit_hours">
@@ -229,4 +239,9 @@
   <string name="snack_bar_message_item_restore_error">A apărut o eroare la restaurarea acestui articol.</string>
   <string name="snack_bar_message_item_delete_success">Articolul a fost șters.</string>
   <string name="snack_bar_message_item_delete_error">A apărut o eroare la ștergerea acestui articol.</string>
+  <!-- Simple Login -->
+  <string name="simple_login_widget_title">Activare sincronizare SimpleLogin</string>
+  <string name="simple_login_widget_message">Am detectat că aveți 16 aliasuri care sunt prezente în SimpleLogin, dar lipsesc în Proton Pass. Doriți să le importați?</string>
+  <string name="simple_login_widget_action">Sincronizare aliasuri</string>
+  <string name="simple_login_widget_close_content_description">Buton de închidere modul de sincronizare aliasuri SimpleLogin</string>
 </resources>

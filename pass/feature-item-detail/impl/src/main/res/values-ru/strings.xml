@@ -95,6 +95,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Невозможно поделиться</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">У вас недостаточно прав для совместного использования этого хранилища.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Вы достигли предела общего доступа к хранилищу. Для того, чтобы поделиться большим количеством хранилищ, улучшите ваш текущий тариф.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
   <string name="password_score_vulnerable">Уязвимый</string>
   <string name="password_score_weak">Слабый</string>
   <string name="password_score_strong">Надежный</string>

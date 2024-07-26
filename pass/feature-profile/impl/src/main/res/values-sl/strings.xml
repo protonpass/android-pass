@@ -12,6 +12,7 @@
   <string name="profile_option_autofill">Samodejno izpolnjevanje</string>
   <string name="profile_option_autofill_subtitle">Samodejno izpolnite svoja uporabniška imena in gesla.</string>
   <string name="profile_option_secure_links">Secure links</string>
+  <string name="profile_option_aliases">Aliases</string>
   <string name="profile_error_biometry_failed_to_start">Biometrične avtentikacije ni bilo mogoče začeti</string>
   <string name="profile_error_biometry_failed_to_authenticate">Preverjanje pristnosti ni uspelo</string>
   <string name="profile_fingerprint_lock_enabled">Omogočeno zaklepanje s prstnim odtisom</string>
@@ -74,9 +75,9 @@
   </plurals>
   <string name="profile_less_than_a_minute">Manj kot minuto</string>
   <string name="account_switcher_manage_account">Manage account</string>
-  <string name="account_switcher_sign_in">Sign in</string>
+  <string name="account_switcher_sign_in">Prijava</string>
   <string name="account_switcher_sign_out">Sign out</string>
-  <string name="account_switcher_switch_to">Switch to</string>
+  <string name="account_switcher_switch_to">Preklopite na</string>
   <string name="account_switcher_add_account">Add account</string>
   <string name="account_switcher_remove">Remove</string>
 </resources>

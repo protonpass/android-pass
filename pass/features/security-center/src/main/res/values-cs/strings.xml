@@ -105,7 +105,7 @@
   <string name="security_center_custom_email_email_address_placeholder">E-mailová adresa</string>
   <string name="security_center_custom_email_invalid_address">Neplatná e-mailová adresa</string>
   <string name="security_center_custom_email_continue">Pokračovat</string>
-  <string name="security_center_custom_email_already_verified">Email je již ověřen</string>
+  <string name="security_center_custom_email_already_verified">E-mail je již ověřen</string>
   <string name="security_center_custom_email_error_adding">Chyba při přidávání e-mailové adresy</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_code_placeholder">Kód</string>

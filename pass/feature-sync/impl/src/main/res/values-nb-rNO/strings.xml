@@ -17,16 +17,16 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="sync_item_empty">Empty vault</string>
+  <string name="sync_item_empty">Tomt hvelv</string>
   <plurals name="sync_item_count">
-    <item quantity="one">Downloaded %d item</item>
-    <item quantity="other">Downloaded %d items</item>
+    <item quantity="one">Lasted ned %d element</item>
+    <item quantity="other">Lasted ned %d elementer</item>
   </plurals>
   <plurals name="sync_finished_item_count">
-    <item quantity="one">%d item synchronized</item>
-    <item quantity="other">%d items synchronized</item>
+    <item quantity="one">%d element synkronisert</item>
+    <item quantity="other">%d elementer synkronisert</item>
   </plurals>
-  <string name="sync_progress_item_count">Downloading %1$d of %2$d items</string>
+  <string name="sync_progress_item_count">Laster ned %1$d av %2$d elementer</string>
   <string name="sync_dialog_title">Synkroniserer elementer…</string>
   <string name="sync_dialog_title_error">Synkroniseringen mislyktes</string>
   <string name="sync_dialog_title_success">Synkronisering fullført</string>
@@ -35,6 +35,6 @@
   <string name="sync_dialog_subtitle_success">Elementene dine ble lastet ned og dekryptert.</string>
   <string name="sync_item_not_started">Ikke påbegynt</string>
   <string name="sync_item_failed">Synkroniseringen mislyktes</string>
-  <string name="sync_dialog_title_inserting">Inserting items…</string>
-  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
+  <string name="sync_dialog_title_inserting">Setter inn elementer…</string>
+  <string name="sync_dialog_subtitle_inserting">Fullfører siste trinn, nesten der.</string>
 </resources>

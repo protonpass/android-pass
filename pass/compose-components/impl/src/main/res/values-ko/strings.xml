@@ -110,11 +110,21 @@
     -->
   <string name="date_full_date_format">LLLL dd HH:mm</string>
   <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to 12 Feb 12:34
+    -->
+  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_compact_month">LLL dd HH:mm</string>
+  <!--
     Pattern used when displaying a date including the year.
     It would translate to
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">yyyy LLLL dd HH:mm</string>
+  <!--
+   Pattern used when displaying a date including the year.
+   It would translate to 12 Feb 2023 12:34
+   -->
+  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_with_year_compact_month">yyyy LLLL dd HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">별칭 주소</string>
   <string name="item_details_alias_section_mailboxes_title">전달받는 주소</string>
@@ -217,4 +227,9 @@
   <string name="snack_bar_message_item_restore_error">항목 복구 중 오류가 발생했습니다.</string>
   <string name="snack_bar_message_item_delete_success">항목을 성공적으로 생성했습니다.</string>
   <string name="snack_bar_message_item_delete_error">항목 삭제 중 오류가 발생했습니다.</string>
+  <!-- Simple Login -->
+  <string name="simple_login_widget_title">SimpleLogin 동기화 활성화</string>
+  <string name="simple_login_widget_message">SimpleLogin에 16개의 별칭이 존재하지만 Proton Pass에는 누락된 별칭이 있음이 발견되었어요. 해당 별명을 불러오시겠어요?</string>
+  <string name="simple_login_widget_action">별칭 동기화</string>
+  <string name="simple_login_widget_close_content_description">Simple Login 별칭 동기화 위젯을 닫는 버튼</string>
 </resources>

@@ -28,10 +28,10 @@
   <string name="security_center_home_row_data_breaches_subtitle">Выяўлены парушэнні</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
   <string name="security_center_home_row_sentinel_subtitle">Дадатковая праграма абароны ўліковага запісу</string>
-  <string name="security_center_home_row_insecure_passwords_title">Ненадзейны пароль</string>
+  <string name="security_center_home_row_insecure_passwords_title">Ненадзейныя паролі</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Змяніць свой пароль</string>
   <string name="security_center_home_row_reused_passwords_title">Паўторна выкарыстаныя паролі</string>
-  <string name="security_center_home_row_reused_passwords_subtitle">Генерыраваць унікальныя паролі</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">Генерацыя ўнікальных пароляў</string>
   <string name="security_center_home_row_missing_tfa_title">Неактыўныя 2ФА</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Наладзьце 2ФА для большай бяспекі</string>
   <string name="security_center_home_row_excludes_items_title">Выключана з назірання</string>
@@ -48,7 +48,7 @@
   <string name="security_center_sentinel_snackbar_message_disable_canceled">Дэактывацыя абароны Proton Sentinel была скасавана</string>
   <string name="security_center_sentinel_snackbar_message_disable_error">Адбылася памылка падчас адключэння абароны Proton Sentinel. Паспрабуйце яшчэ раз.</string>
   <!-- Weak passwords screen -->
-  <string name="security_center_weak_pass_top_bar_title">Ненадзейны пароль</string>
+  <string name="security_center_weak_pass_top_bar_title">Ненадзейныя паролі</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Ненадзейныя паролі лёгка падабраць. Згенерыруйце надзейны пароль, каб абараніць свой уліковы запіс.</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Паўторна выкарыстаныя паролі</string>

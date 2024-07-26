@@ -18,48 +18,48 @@
   -->
 <resources>
   <!--Create screen-->
-  <string name="secure_links_create_title">Jaa turvallinen linkki</string>
+  <string name="secure_links_create_title">Jaa suojatulla linkillä</string>
   <string name="secure_links_create_row_expiration_title">Linkki erääntyy</string>
-  <string name="secure_links_create_row_expiration_options_one_hour">Yksi tunti</string>
-  <string name="secure_links_create_row_expiration_options_one_day">Yksi päivä</string>
-  <string name="secure_links_create_row_expiration_options_seven_days">7 päivää</string>
-  <string name="secure_links_create_row_expiration_options_fourteen_days">14 päivää</string>
-  <string name="secure_links_create_row_expiration_options_thirty_days">30 päivää</string>
-  <string name="secure_links_create_row_max_views_title">Rajoita katselujen määrää</string>
-  <string name="secure_links_create_row_max_views_subtitle">Katselujen enimmäismäärä: %d</string>
-  <string name="secure_links_create_button_generate">Luo turvallinen linkki</string>
-  <string name="secure_links_create_snackbar_message_error">Virhe turvallista linkkiä luotaessa</string>
+  <string name="secure_links_create_row_expiration_options_one_hour">Tunnin kuluttua</string>
+  <string name="secure_links_create_row_expiration_options_one_day">Vuorokauden kuluttua</string>
+  <string name="secure_links_create_row_expiration_options_seven_days">Viikon kuluttua</string>
+  <string name="secure_links_create_row_expiration_options_fourteen_days">Kahden viikon kuluttua</string>
+  <string name="secure_links_create_row_expiration_options_thirty_days">30 päivän kuluttua</string>
+  <string name="secure_links_create_row_max_views_title">Rajoita avausmäärää</string>
+  <string name="secure_links_create_row_max_views_subtitle">Avausten enimmäismäärä: %d</string>
+  <string name="secure_links_create_button_generate">Luo suojattu linkki</string>
+  <string name="secure_links_create_snackbar_message_error">Virhe luotaessa suojattua linkkiä</string>
   <!--Overview screen-->
-  <string name="secure_links_overview_widget_expiration_title">Erääntyy:</string>
-  <string name="secure_links_overview_widget_max_views_title">Voi katsella:</string>
-  <string name="secure_links_overview_widget_open_times_title">Avattu:</string>
+  <string name="secure_links_overview_widget_expiration_title">Erääntymiseen:</string>
+  <string name="secure_links_overview_widget_max_views_title">Avattavissa:</string>
+  <string name="secure_links_overview_widget_open_times_title">Avaukset:</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="one">%d kerran</item>
     <item quantity="other">%d kertaa</item>
   </plurals>
-  <string name="secure_links_overview_widget_max_views_unlimited">Rajattomasti</string>
-  <string name="secure_links_overview_button_view_all_links">Näytä kaikki turvalliset linkkisi</string>
+  <string name="secure_links_overview_widget_max_views_unlimited">ei rajoitusta</string>
+  <string name="secure_links_overview_button_view_all_links">Näytä kaikki suojatut linkkisi</string>
   <!--List screen-->
-  <string name="secure_links_list_title">Turvalliset linkit</string>
-  <string name="secure_links_list_empty_title">Ei turvallisia linkkejä</string>
-  <string name="secure_links_list_empty_subtitle">Voit aloittaa turvallisten linkkien luomisen kohteen jakamisvaihtoehdoista</string>
-  <string name="secure_links_list_expiration_description">Vanhenee: %s</string>
-  <string name="secure_links_list_expired_description">Vanhentunut</string>
+  <string name="secure_links_list_title">Suojatut linkit</string>
+  <string name="secure_links_list_empty_title">Suojattuja linkkejä ei ole</string>
+  <string name="secure_links_list_empty_subtitle">Voit luoda suojattuja linkkejä kohteiden jakovalinnoista.</string>
+  <string name="secure_links_list_expiration_description">Erääntymiseen: %s</string>
+  <string name="secure_links_list_expired_description">Erääntyneet</string>
   <plurals name="secure_links_list_viewed_times_description">
-    <item quantity="one">%d tarkastelukerta</item>
-    <item quantity="other">%d tarkastelukertaa</item>
+    <item quantity="one">%d näyttö</item>
+    <item quantity="other">%d näyttöä</item>
   </plurals>
-  <string name="secure_links_list_snackbar_message_links_fetch_error">Virhe turvallisia linkkejä noutaessa</string>
-  <string name="secure_links_list_header_title_inactive">Käytöstä poistetut linkit</string>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">Virhe noudettaessa suojattuja linkkejä</string>
+  <string name="secure_links_list_header_title_inactive">Käytöstä poistuneet linkit</string>
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">Kopioi linkki</string>
   <string name="secure_links_shared_action_share_link">Jaa linkki</string>
   <string name="secure_links_shared_action_delete_link">Poista linkki</string>
-  <string name="secure_links_shared_action_delete_link_inactive">Poista käytöstä poistettu linkki</string>
-  <string name="secure_links_shared_action_delete_links_inactive">Poista kaikki käytöstä poistetut linkit</string>
-  <string name="secure_links_shared_snackbar_message_link_copied">Turvallinen linkki kopioitiin</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Turvallisen linkin poisto peruttiin</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_error">Virhe turvallista linkkiä poistettaessa</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Käytöstä poistettujen turvallisten linkkien poisto peruttiin</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Virhe käytöstä poistettuja turvallisia linkkejä poistettaessa</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Poista käytöstä poistunut linkki</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Poista kaikki käytöstä poistuneet linkit</string>
+  <string name="secure_links_shared_snackbar_message_link_copied">Suojattu linkki kopioitiin</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Suojatun linkin poisto peruttiin</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">Virhe poistettaessa suojattua linkkiä</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Käytöstä poistuneiden suojattujen linkkien poisto peruttiin</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Virhe poistettaessa käytöstä poistuneita suojattuja linkkejä</string>
 </resources>

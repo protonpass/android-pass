@@ -92,6 +92,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">共有できません</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">この保管庫を共有するための十分な権限がありません。</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">保管庫の共有制限に達しました。さらに多くのボールトを共有するには、現在のプランをアップグレードしてください。</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
   <string name="password_score_vulnerable">脆弱</string>
   <string name="password_score_weak">弱い</string>
   <string name="password_score_strong">強い</string>

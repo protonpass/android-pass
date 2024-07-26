@@ -27,7 +27,7 @@
   <string name="auth_unlock_app_subtitle">Syötä tunnuksen %s pääsalasana</string>
   <string name="auth_unlock_app_extra_password_subtitle">Syötä tunnuksen %s lisäsalasana</string>
   <string name="auth_unlock_app_subtitle_account_switch">Syötä pääsalasana tilille:</string>
-  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Syötä lisäsalasana tilille:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Syötä lisäsalasana tunnukselle:</string>
   <string name="auth_master_password_label">Pääsalasana</string>
   <string name="auth_action_reveal_password">Näytä pääsalasana</string>
   <string name="auth_action_conceal_password">Piilota pääsalasana</string>
@@ -38,7 +38,7 @@
   <string name="auth_error_empty_password">Salasana ei voi olla tyhjä</string>
   <string name="auth_error_pin_cannot_be_empty">PIN-koodi ei voi olla tyhjä</string>
   <string name="auth_extra_password_label">Syötä lisäsalasanasi</string>
-  <string name="auth_extra_password_error">Virhe lisäsalasanalla tunnistautumisessa</string>
+  <string name="auth_extra_password_error">Virhe tunnistauduttaessa lisäsalasanalla</string>
   <string name="auth_extra_password_too_many_attempts">Liian monta epäonnistunutta kirjautumisyritystä. Sinut on kirjattu ulos.</string>
   <string name="auth_error_wrong_password_no_attempts">Virheellinen salasana</string>
   <plurals name="auth_error_wrong_password">

@@ -30,9 +30,9 @@
   <string name="bottomsheet_monitor_exclude">Izključi iz spremljanja</string>
   <string name="bottomsheet_monitor_include">Vključi v spremljanje</string>
   <string name="bottomsheet_migrate_item">Premakni se v drug trezor</string>
-  <string name="bottomsheet_copy_item_note">Copy note</string>
+  <string name="bottomsheet_copy_item_note">Kopiraj opombo</string>
   <string name="bottomsheet_delete_permanently">Trajno izbriši</string>
-  <string name="bottomsheet_restore">Restore</string>
+  <string name="bottomsheet_restore">Obnovi</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Odpri meni z dejanji predmeta</string>
   <string name="action_upgrade_now">Nadgradi zdaj</string>
@@ -116,11 +116,21 @@
     -->
   <string name="date_full_date_format">dd LLLL HH:mm</string>
   <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to 12 Feb 12:34
+    -->
+  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_compact_month">dd LLL HH:mm</string>
+  <!--
     Pattern used when displaying a date including the year.
     It would translate to
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <!--
+   Pattern used when displaying a date including the year.
+   It would translate to 12 Feb 2023 12:34
+   -->
+  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_with_year_compact_month">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Naslov vzdevka</string>
   <string name="item_details_alias_section_mailboxes_title">Posredovanje na</string>
@@ -136,49 +146,49 @@
   <string name="item_details_login_section_primary_totp_title">Žeton 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Spletne strani</string>
   <string name="item_details_identity_section_personal_title">Osebni podatki</string>
-  <string name="item_details_identity_section_personal_first_name_title">First name</string>
-  <string name="item_details_identity_section_personal_middle_name_title">Middle name</string>
-  <string name="item_details_identity_section_personal_last_name_title">Last name</string>
-  <string name="item_details_identity_section_personal_full_name_title">Full name</string>
-  <string name="item_details_identity_section_personal_email_title">Email address</string>
-  <string name="item_details_identity_section_personal_gender_title">Gender</string>
-  <string name="item_details_identity_section_personal_phone_title">Phone number</string>
-  <string name="item_details_identity_section_personal_birthday_title">Birthday</string>
+  <string name="item_details_identity_section_personal_first_name_title">Ime</string>
+  <string name="item_details_identity_section_personal_middle_name_title">Srednje ime</string>
+  <string name="item_details_identity_section_personal_last_name_title">Priimek</string>
+  <string name="item_details_identity_section_personal_full_name_title">Polno ime</string>
+  <string name="item_details_identity_section_personal_email_title">E-poštni naslov</string>
+  <string name="item_details_identity_section_personal_gender_title">Spol</string>
+  <string name="item_details_identity_section_personal_phone_title">Telefonska številka</string>
+  <string name="item_details_identity_section_personal_birthday_title">Rojstni dan</string>
   <string name="item_details_identity_section_address_title">Podrobnosti naslova</string>
-  <string name="item_details_identity_section_address_organization_title">Organization</string>
+  <string name="item_details_identity_section_address_organization_title">Organizacija</string>
   <string name="item_details_identity_section_address_street_address_title">Naslov, poštni predal</string>
-  <string name="item_details_identity_section_address_floor_title">Floor</string>
-  <string name="item_details_identity_section_address_city_title">City</string>
-  <string name="item_details_identity_section_address_zip_or_postal_code_title">ZIP or postal code</string>
+  <string name="item_details_identity_section_address_floor_title">Nadstropje</string>
+  <string name="item_details_identity_section_address_city_title">Mesto</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">Poštna številka</string>
   <string name="item_details_identity_section_address_state_or_province_title">Država ali pokrajina</string>
-  <string name="item_details_identity_section_address_county_title">County</string>
-  <string name="item_details_identity_section_address_country_or_region_title">Country or region</string>
+  <string name="item_details_identity_section_address_county_title">Okrožje</string>
+  <string name="item_details_identity_section_address_country_or_region_title">Država ali regija</string>
   <string name="item_details_identity_section_contact_title">Podrobnosti stika</string>
   <string name="item_details_identity_section_contact_social_security_number_title">Številka socialnega zavarovanja</string>
   <string name="item_details_identity_section_contact_passport_number_title">Številka potnega lista</string>
-  <string name="item_details_identity_section_contact_license_number_title">License number</string>
-  <string name="item_details_identity_section_contact_website_title">Website</string>
+  <string name="item_details_identity_section_contact_license_number_title">Registrska številka</string>
+  <string name="item_details_identity_section_contact_website_title">Spletna stran</string>
   <string name="item_details_identity_section_contact_x_handle_title">X-Handle</string>
-  <string name="item_details_identity_section_contact_secondary_phone_number_title">Secondary phone number</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">Dodatna telefonska številka</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
   <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
   <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
   <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
   <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
-  <string name="item_details_identity_section_work_title">Work details</string>
-  <string name="item_details_identity_section_work_company_title">Company</string>
-  <string name="item_details_identity_section_work_occupation_title">Occupation</string>
+  <string name="item_details_identity_section_work_title">Podatki o delovnem mestu</string>
+  <string name="item_details_identity_section_work_company_title">Podjetje</string>
+  <string name="item_details_identity_section_work_occupation_title">Poklic</string>
   <string name="item_details_identity_section_work_email_title">Službeni e-poštni naslov</string>
   <string name="item_details_identity_section_work_phone_number_title">Službena telefonska številka</string>
   <string name="item_details_identity_section_work_personal_website_title">Osebno spletno mesto</string>
   <string name="item_details_shared_section_note_title">Opomba</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">Last autofill</string>
-  <string name="item_details_shared_section_item_history_created_title">Created</string>
+  <string name="item_details_shared_section_item_history_created_title">Ustvarjeno</string>
   <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Prikaži zgodovino predmeta</string>
-  <string name="item_details_shared_section_more_info_header_title">More info</string>
+  <string name="item_details_shared_section_more_info_header_title">Več informacij</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
-  <string name="item_details_shared_section_more_info_item_id">Item ID</string>
+  <string name="item_details_shared_section_more_info_item_id">ID predmeta</string>
   <string name="item_details_shared_section_more_info_share_id">Vault ID</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Ta različica ni več podprta, zato priporočamo posodobitev aplikacije.</string>
   <!-- Passkeys -->
@@ -235,4 +245,9 @@
   <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
   <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
   <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
+  <!-- Simple Login -->
+  <string name="simple_login_widget_title">Enable SimpleLogin sync</string>
+  <string name="simple_login_widget_message">We detected that you have 16 aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
+  <string name="simple_login_widget_action">Sync aliases</string>
+  <string name="simple_login_widget_close_content_description">Button to close simple login aliases sync widget</string>
 </resources>

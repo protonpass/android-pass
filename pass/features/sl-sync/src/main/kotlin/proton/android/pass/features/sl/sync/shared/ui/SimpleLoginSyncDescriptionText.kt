@@ -27,10 +27,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Norm
 
 @Composable
-internal fun SimpleLoginSyncDescriptionText(
-    modifier: Modifier = Modifier,
-    text: String
-) {
+internal fun SimpleLoginSyncDescriptionText(modifier: Modifier = Modifier, text: String) {
     Text(
         modifier = modifier.padding(horizontal = Spacing.small),
         text = text,

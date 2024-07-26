@@ -80,14 +80,14 @@ internal fun SimpleLoginSyncSettingsVaultSection(
 
             Column(
                 modifier = Modifier.weight(weight = 1f),
-                verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall),
+                verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
             ) {
                 SectionTitle(
-                    text = stringResource(id = R.string.simple_login_sync_settings_default_vault_title),
+                    text = stringResource(id = R.string.simple_login_sync_settings_default_vault_title)
                 )
 
                 SectionSubtitle(
-                    text = vaultName.asAnnotatedString(),
+                    text = vaultName.asAnnotatedString()
                 )
             }
 
@@ -99,15 +99,13 @@ internal fun SimpleLoginSyncSettingsVaultSection(
         }
 
         SimpleLoginSyncDescriptionText(
-            text = stringResource(id = R.string.simple_login_sync_settings_default_vault_description),
+            text = stringResource(id = R.string.simple_login_sync_settings_default_vault_description)
         )
     }
 }
 
 @[Preview Composable]
-internal fun SimpleLoginSyncSettingsVaultPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+internal fun SimpleLoginSyncSettingsVaultPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SimpleLoginSyncSettingsVaultSection(

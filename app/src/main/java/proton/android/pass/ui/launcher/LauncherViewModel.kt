@@ -182,10 +182,8 @@ class LauncherViewModel @Inject constructor(
         PassLogger.i(TAG, "Disabling all accounts")
         snackbarDispatcher.reset()
 
-        val accounts = accountManager.getAccounts(Ready).firstOrNull() ?: emptyList()
-        accounts.forEach {
-            accountManager.disableAccount(it.userId)
-        }
+        accountManager.getAccounts(Ready).firstOrNull()
+            ?.forEach { accountManager.disableAccount(it.userId) }
     }
 
     internal fun remove(userId: UserId) = viewModelScope.launch {

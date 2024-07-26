@@ -40,5 +40,5 @@
   <string name="sync_item_not_started">Не запушчана</string>
   <string name="sync_item_failed">Збой сінхранізацыі</string>
   <string name="sync_dialog_title_inserting">Устаўка элементаў…</string>
-  <string name="sync_dialog_subtitle_inserting">Завяршэнне апошняга крока. Амаль гатова.</string>
+  <string name="sync_dialog_subtitle_inserting">Завяршэнне апошняга кроку. Амаль гатова.</string>
 </resources>

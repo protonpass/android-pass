@@ -19,4 +19,13 @@
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">Button for displaying menu options</string>
   <string name="item_details_toolbar_content_description_share_button">Button for sharing an item</string>
+  <!-- Item details forbidden actions -->
+  <string name="item_details_forbidden_actions_edit_title">Cannot edit</string>
+  <string name="item_details_forbidden_actions_edit_permission">Bạn không thể chỉnh sửa nội dung này vì bạn không có đủ quyền làm điều đó.</string>
+  <string name="item_details_forbidden_actions_edit_trash">Bạn không thể chỉnh sửa nội dung này vì nó nằm trong thùng rác. Hãy chuyển nó ra trước khi chỉnh sửa.</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">Bạn chỉ có thể chỉnh sửa nội dung trong các kho lưu trữ cũ nhất của mình. Để chỉnh sửa nội dung này, vui lòng nâng cấp gói của bạn.</string>
+  <string name="item_details_forbidden_actions_share_title">Cannot share</string>
+  <string name="item_details_forbidden_actions_share_limit">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="item_details_forbidden_actions_share_permission">Bạn không có đủ quyền để chia sẻ kho lưu trữ này.</string>
+  <string name="item_details_forbidden_actions_share_trash">You cannot share this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
 </resources>

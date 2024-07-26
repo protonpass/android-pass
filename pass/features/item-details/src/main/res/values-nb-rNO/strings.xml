@@ -19,4 +19,13 @@
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">Knapp for visning av menyalternativer</string>
   <string name="item_details_toolbar_content_description_share_button">Knapp for å dele et element</string>
+  <!-- Item details forbidden actions -->
+  <string name="item_details_forbidden_actions_edit_title">Kan ikke redigere</string>
+  <string name="item_details_forbidden_actions_edit_permission">Du kan ikke redigere dette elementet fordi du ikke har nok tillatelser til å gjøre det.</string>
+  <string name="item_details_forbidden_actions_edit_trash">Du kan ikke redigere dette elementet fordi det er i papirkurven. Vennligst flytt det ut av papirkurven før du redigerer det.</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">Du har bare lov til å redigere elementer i de eldste hvelvene dine. For å redigere dette elementet, vennligst oppgrader din nåværende plan.</string>
+  <string name="item_details_forbidden_actions_share_title">Kan ikke dele</string>
+  <string name="item_details_forbidden_actions_share_limit">Du har nådd delingsgrensen for hvelv. For å dele flere hvelv, vennligst oppgrader din nåværende plan.</string>
+  <string name="item_details_forbidden_actions_share_permission">Du har ikke nok tillatelser til å dele dette hvelvet.</string>
+  <string name="item_details_forbidden_actions_share_trash">Du kan ikke dele dette elementet fordi det er i papirkurven. Vennligst flytt det ut av papirkurven før du deler det.</string>
 </resources>

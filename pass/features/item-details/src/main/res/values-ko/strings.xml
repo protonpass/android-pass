@@ -19,4 +19,13 @@
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">메뉴 옵션을 표시하는 버튼</string>
   <string name="item_details_toolbar_content_description_share_button">항목 공유를 위한 버튼</string>
+  <!-- Item details forbidden actions -->
+  <string name="item_details_forbidden_actions_edit_title">편집 불가</string>
+  <string name="item_details_forbidden_actions_edit_permission">편집할 권한이 없어 이 항목 수정이 불가합니다.</string>
+  <string name="item_details_forbidden_actions_edit_trash">휴지통에 있어 항목 수정이 불가합니다. 수정 전 휴지통에서 일반 함으로 다시 복구하십시오.</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">사용자의 이전 금고의 항목 편집만 허용됩니다. 이 항목을 수정하려면 플랜을 업그레이드 하세요.</string>
+  <string name="item_details_forbidden_actions_share_title">공유할 수 없음</string>
+  <string name="item_details_forbidden_actions_share_limit">금고 공유 수 제한에 도달했습니다. 금고를 더 공유하려면 현재 플랜에서 업그레이드 하세요.</string>
+  <string name="item_details_forbidden_actions_share_permission">이 금고를 공유할 권한이 없습니다.</string>
+  <string name="item_details_forbidden_actions_share_trash">휴지통에 있어 항목 공유가 불가합니다. 수정 전 휴지통에서 일반 함으로 다시 복구하십시오.</string>
 </resources>

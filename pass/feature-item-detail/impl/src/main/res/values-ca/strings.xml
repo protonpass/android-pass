@@ -93,6 +93,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">No es pot compartir.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">No teniu prou permisos per compartir aquesta caixa forta.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Heu assolit el límit de compartició de la caixa forta. Per compartir més caixes fortes, milloreu el vostre pla actual.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
   <string name="password_score_vulnerable">Vulnerable</string>
   <string name="password_score_weak">Feble</string>
   <string name="password_score_strong">Segura</string>

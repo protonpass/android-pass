@@ -33,7 +33,7 @@
   <string name="share_with_title">Chia sẻ với</string>
   <string name="share_with_email_hint">Địa chỉ email</string>
   <string name="share_with_email_error">Địa chỉ email không hợp lệ</string>
-  <string name="share_with_email_cannot_invite_outside_org">You can\'t invite people outside of your organization, contact admin for more info</string>
+  <string name="share_with_email_cannot_invite_outside_org">Không thể mời người dùng bên ngoài tổ chức, liên hệ quản lí để tìm hiểu thêm</string>
   <string name="share_with_email_email_already_added">You have already added this email address</string>
   <string name="share_permissions_title">Thiết lập cấp độ truy cập</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s mời bạn truy cập nội dung trong</string>
@@ -117,7 +117,7 @@
     <item quantity="other">The item\'s vault is currently shared with %d users.</item>
   </plurals>
   <string name="share_with_view_shared_vault_members_title">View vault members</string>
-  <string name="sharing_edit_permissions_set_access_level_all_members">Set access level for all members</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Thiết lập quyền truy cập cho tất cả mọi thành viên</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
   <string name="sharing_edit_permissions_remove_user">Remove user</string>
   <string name="sharing_error_dialog_title">Unknown error</string>

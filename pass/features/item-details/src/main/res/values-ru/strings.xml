@@ -19,4 +19,13 @@
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">Кнопка для отображения параметров меню</string>
   <string name="item_details_toolbar_content_description_share_button">Кнопка для совместного использования элемента</string>
+  <!-- Item details forbidden actions -->
+  <string name="item_details_forbidden_actions_edit_title">Cannot edit</string>
+  <string name="item_details_forbidden_actions_edit_permission">Вы не можете редактировать этот элемент, потому что у вас для этого недостаточно прав.</string>
+  <string name="item_details_forbidden_actions_edit_trash">Вы не можете отредактировать этот элемент, потому что он находится в корзине. Пожалуйста, переместите его из корзины, прежде чем редактировать.</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">Вы можете редактировать элементы только в самых старых хранилищах. Чтобы отредактировать этот элемент, пожалуйста, обновите текущий тариф.</string>
+  <string name="item_details_forbidden_actions_share_title">Cannot share</string>
+  <string name="item_details_forbidden_actions_share_limit">Вы достигли предела общего доступа к хранилищу. Для того, чтобы поделиться большим количеством хранилищ, улучшите ваш текущий тариф.</string>
+  <string name="item_details_forbidden_actions_share_permission">У вас недостаточно прав для совместного использования этого хранилища.</string>
+  <string name="item_details_forbidden_actions_share_trash">You cannot share this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
 </resources>

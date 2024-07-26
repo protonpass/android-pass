@@ -60,6 +60,6 @@
   <string name="secure_links_shared_snackbar_message_link_copied">Sicherer Link kopiert</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Löschen des sicheren Links abgebrochen</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_error">Fehler beim Löschen des sicheren Links.</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Inactive secure links deletion was canceled</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Löschen der inaktiven sicheren Links abgebrochen.</string>
   <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Fehler beim Löschen inaktiver sicherer Links.</string>
 </resources>

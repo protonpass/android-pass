@@ -12,6 +12,7 @@
   <string name="profile_option_autofill">Automatické vypĺňanie</string>
   <string name="profile_option_autofill_subtitle">Automatické vypĺňanie používateľských mien a hesiel.</string>
   <string name="profile_option_secure_links">Bezpečné odkazy</string>
+  <string name="profile_option_aliases">Aliases</string>
   <string name="profile_error_biometry_failed_to_start">Nepodarilo sa spustiť biometrickú autentifikáciu</string>
   <string name="profile_error_biometry_failed_to_authenticate">Autentifikácia zlyhala</string>
   <string name="profile_fingerprint_lock_enabled">Uzamknutie odtlačkom povolené</string>

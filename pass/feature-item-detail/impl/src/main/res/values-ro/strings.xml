@@ -94,6 +94,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nu se poate partaja</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nu aveți permisiuni suficiente pentru a participa acest seif.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Ați atins limita de partajare a seifului. Pentru a partaja mai multe seifuri, alegeți alt plan cu plată.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Nu puteți partaja acest articol deoarece este în coșul de gunoi. Scoateți-l din coșul de gunoi înainte de a-l partaja.</string>
   <string name="password_score_vulnerable">Vulnerabilă</string>
   <string name="password_score_weak">Slabă</string>
   <string name="password_score_strong">Puternică</string>

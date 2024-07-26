@@ -46,7 +46,7 @@
   <string name="secure_links_list_empty_title">Няма бяспечных спасылак</string>
   <string name="secure_links_list_empty_subtitle">Вы можаце пачаць ствараць бяспечныя спасылкі з параметраў абагульвання падрабязнасцяў элемента</string>
   <string name="secure_links_list_expiration_description">Дзейнічаюць да %s</string>
-  <string name="secure_links_list_expired_description">Пратэрмінавана</string>
+  <string name="secure_links_list_expired_description">Пратэрмінаваныя</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="one">%d прагляд</item>
     <item quantity="few">%d прагляды</item>

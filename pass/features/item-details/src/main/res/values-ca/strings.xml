@@ -19,4 +19,13 @@
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">Botó per a mostrar les opcions del menú</string>
   <string name="item_details_toolbar_content_description_share_button">Botó per a compartir un element</string>
+  <!-- Item details forbidden actions -->
+  <string name="item_details_forbidden_actions_edit_title">Cannot edit</string>
+  <string name="item_details_forbidden_actions_edit_permission">No podeu editar aquest element perquè no teniu prou permisos per fer-ho.</string>
+  <string name="item_details_forbidden_actions_edit_trash">No podeu editar aquest element perquè és a la paperera. Si us plau, traieu-lo de la paperera abans d\'editar-lo.</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">Només podeu editar elements a les vostres caixes fortes més antigues. Per editar aquest element, milloreu el vostre pla actual.</string>
+  <string name="item_details_forbidden_actions_share_title">Cannot share</string>
+  <string name="item_details_forbidden_actions_share_limit">Heu assolit el límit de compartició de la caixa forta. Per compartir més caixes fortes, milloreu el vostre pla actual.</string>
+  <string name="item_details_forbidden_actions_share_permission">No teniu prou permisos per compartir aquesta caixa forta.</string>
+  <string name="item_details_forbidden_actions_share_trash">You cannot share this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
 </resources>

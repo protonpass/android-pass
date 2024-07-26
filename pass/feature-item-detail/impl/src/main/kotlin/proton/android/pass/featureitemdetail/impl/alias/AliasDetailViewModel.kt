@@ -145,16 +145,12 @@ class AliasDetailViewModel @Inject constructor(
         .asLoadingResult()
 
     private val itemFeaturesFlow = combine(
-        featureFlagsRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT),
-        getUserPlan()
-    ) { isSecurityCenterEnabled, isUsernameSplitEnabled, userPlan ->
-        ItemFeatures(
-            isSecurityCenterEnabled = isSecurityCenterEnabled,
-            isUsernameSplitEnabled = isUsernameSplitEnabled,
-            isHistoryEnabled = userPlan.isPaidPlan
-        )
-    }
+        featureFlagsRepository[FeatureFlag.SECURITY_CENTER_V1],
+        featureFlagsRepository[FeatureFlag.USERNAME_SPLIT],
+        featureFlagsRepository[FeatureFlag.SL_ALIASES_SYNC],
+        getUserPlan().map { it.isPaidPlan },
+        ::ItemFeatures
+    )
 
     val uiState: StateFlow<AliasDetailUiState> = combineN(
         aliasItemDetailsResultFlow,
@@ -211,7 +207,8 @@ class AliasDetailViewModel @Inject constructor(
                     shareClickAction = shareAction,
                     itemActions = actions,
                     event = event,
-                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled
+                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
+                    isSLAliasSyncEnabled = itemFeatures.slAliasSyncEnabled
                 )
             }
         }
@@ -307,6 +304,10 @@ class AliasDetailViewModel @Inject constructor(
             }
 
         isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    internal fun toggleAliasState(state: Boolean) {
+        // WIP
     }
 
     companion object {

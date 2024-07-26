@@ -36,18 +36,24 @@ import proton.android.pass.domain.AliasMailbox
 fun AliasSection(
     modifier: Modifier = Modifier,
     alias: String,
+    isAliasDisabled: Boolean,
+    isAliasSyncEnabled: Boolean,
     mailboxes: PersistentList<AliasMailbox>,
     isLoading: Boolean,
     onCopyAlias: (String) -> Unit,
-    onCreateLoginFromAlias: (String) -> Unit
+    onCreateLoginFromAlias: (String) -> Unit,
+    onToggleAliasState: (Boolean) -> Unit
 ) {
     RoundedCornersColumn(
         modifier = modifier.fillMaxWidth()
     ) {
         AliasAddressRow(
             alias = alias,
+            isAliasDisabled = isAliasDisabled,
+            isAliasSyncEnabled = isAliasSyncEnabled,
             onCopyAlias = { onCopyAlias(it) },
-            onCreateLoginFromAlias = onCreateLoginFromAlias
+            onCreateLoginFromAlias = onCreateLoginFromAlias,
+            onToggleAliasState = onToggleAliasState
         )
         if (!mailboxes.isEmpty() || isLoading) {
             Divider(color = PassTheme.colors.inputBorderNorm)
@@ -71,10 +77,13 @@ fun AliasSectionPreview(
         Surface {
             AliasSection(
                 alias = "myalias@myalias.com",
+                isAliasDisabled = false,
+                isAliasSyncEnabled = false,
                 mailboxes = input.second.toPersistentList(),
                 isLoading = false,
                 onCopyAlias = {},
-                onCreateLoginFromAlias = {}
+                onCreateLoginFromAlias = {},
+                onToggleAliasState = {}
             )
         }
     }

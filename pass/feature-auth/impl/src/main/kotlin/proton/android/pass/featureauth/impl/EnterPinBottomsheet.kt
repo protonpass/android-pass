@@ -30,6 +30,8 @@ sealed interface EnterPinNavigation {
 
     data object Close : EnterPinNavigation
 
+    data object ForceSignOutAllUsers : EnterPinNavigation
+
     @JvmInline
     value class Success(val origin: AuthOrigin) : EnterPinNavigation
 }
@@ -43,7 +45,17 @@ fun EnterPinBottomsheet(
     val keyboardController = LocalSoftwareKeyboardController.current
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    EventLaunchedEffect(state as? EnterPinUiState.Data, onNavigate)
+    val event = (state as? EnterPinUiState.Data)?.event
+    LaunchedEffect(event) {
+        when (event) {
+            is EnterPinEvent.ForceSignOutAllUsers -> onNavigate(EnterPinNavigation.ForceSignOutAllUsers)
+            is EnterPinEvent.ForcePassword -> onNavigate(EnterPinNavigation.Close)
+            is EnterPinEvent.Success -> onNavigate(EnterPinNavigation.Success(event.origin))
+            EnterPinEvent.Unknown,
+            null -> {
+            }
+        }
+    }
 
     EnterPinContent(
         modifier = modifier,
@@ -54,19 +66,4 @@ fun EnterPinBottomsheet(
             viewModel.onPinSubmit()
         }
     )
-}
-
-@Composable
-private fun EventLaunchedEffect(data: EnterPinUiState.Data?, onNavigate: (EnterPinNavigation) -> Unit) {
-    if (data == null) {
-        return
-    }
-
-    LaunchedEffect(data.event) {
-        when (val event = data.event) {
-            is EnterPinEvent.ForcePassword -> onNavigate(EnterPinNavigation.Close)
-            is EnterPinEvent.Success -> onNavigate(EnterPinNavigation.Success(event.origin))
-            EnterPinEvent.Unknown -> {}
-        }
-    }
 }

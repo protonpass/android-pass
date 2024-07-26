@@ -1434,6 +1434,8 @@ fun NavGraphBuilder.appGraph(
                     destination = EnterPin,
                     route = EnterPin.buildRoute(it.origin)
                 )
+
+                AuthNavigation.ForceSignOutAllUsers -> onNavigate(AppNavigation.ForceSignOutAllUsers)
             }
         }
     )

@@ -69,6 +69,7 @@ class MainActivity : FragmentActivity() {
             }
         }
 
+    @Suppress("LongMethod")
     override fun onCreate(savedInstanceState: Bundle?) {
         setSecureMode()
         val splashScreen = installSplashScreen()
@@ -130,6 +131,7 @@ class MainActivity : FragmentActivity() {
                             is AppNavigation.RemoveAccount -> launcherViewModel.remove(it.userId)
                             is AppNavigation.SwitchAccount -> launcherViewModel.switch(it.userId)
                             is AppNavigation.SecurityKeys -> SecurityKeysActivity.start(this@MainActivity)
+                            is AppNavigation.ForceSignOutAllUsers -> launcherViewModel.disableAll()
                         }
                     }
                 )

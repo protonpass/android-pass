@@ -44,10 +44,12 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.usecases.CheckPin
+import proton.android.pass.featureauth.impl.EnterPinSnackbarMessage.PinTooManyAttemptsError
 import proton.android.pass.featureauth.impl.EnterPinUiState.NotInitialised
 import proton.android.pass.featureauth.impl.PinConstants.MAX_PIN_ATTEMPTS
 import proton.android.pass.featureauth.impl.PinConstants.MAX_PIN_LENGTH
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
@@ -58,6 +60,7 @@ class EnterPinViewModel @Inject constructor(
     private val checkPin: CheckPin,
     private val storeAuthSuccessful: StoreAuthSuccessful,
     private val internalSettingsRepository: InternalSettingsRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -114,7 +117,18 @@ class EnterPinViewModel @Inject constructor(
                     PassLogger.w(TAG, "Too many wrong attempts, logging user out")
                     val userId = accountManager.getPrimaryUserId().firstOrNull()
                         ?: throw UserIdNotAvailableError()
-                    eventState.update { EnterPinEvent.ForcePassword(userId) }
+                    when (origin) {
+                        AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY -> {
+                            snackbarDispatcher(PinTooManyAttemptsError)
+                            delay(1.seconds)
+                            eventState.update { EnterPinEvent.ForceSignOutAllUsers }
+                        }
+                        AuthOrigin.AUTO_LOCK,
+                        AuthOrigin.EXTRA_PASSWORD_CONFIGURE,
+                        AuthOrigin.EXTRA_PASSWORD_LOGIN,
+                        AuthOrigin.EXTRA_PASSWORD_REMOVE ->
+                            eventState.update { EnterPinEvent.ForcePassword(userId) }
+                    }
                 } else {
                     pinErrorState.update { PinError.PinIncorrect(remainingAttempts).some() }
                 }
@@ -129,6 +143,8 @@ class EnterPinViewModel @Inject constructor(
 }
 
 sealed interface EnterPinEvent {
+
+    data object ForceSignOutAllUsers : EnterPinEvent
 
     @JvmInline
     value class ForcePassword(val userId: UserId) : EnterPinEvent

@@ -219,7 +219,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Body request: UpdateAliasMailboxesRequest
     ): AliasDetailsResponse
 
-    @PUT("$PREFIX/share/{enc_shareID}/alias/{enc_itemID}/status")
+    @PUT("$PREFIX/share/{shareId}/alias/{itemId}/status")
     suspend fun changeAliasStatus(
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String,

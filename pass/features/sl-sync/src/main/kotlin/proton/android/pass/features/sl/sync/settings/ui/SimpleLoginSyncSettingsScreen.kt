@@ -19,9 +19,14 @@
 package proton.android.pass.features.sl.sync.settings.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.domain.ShareId
 import proton.android.pass.features.sl.sync.settings.presentation.SimpleLoginSyncSettingsViewModel
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 
@@ -29,8 +34,16 @@ import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNav
 fun SimpleLoginSyncSettingsScreen(
     onNavigated: (SimpleLoginSyncNavDestination) -> Unit,
     viewModel: SimpleLoginSyncSettingsViewModel = hiltViewModel(),
+    selectedShareIdOption: Option<ShareId>
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(selectedShareIdOption) {
+        when (selectedShareIdOption) {
+            None -> return@LaunchedEffect
+            is Some -> onSelectShareId(shareId = selectedShareIdOption.value)
+        }
+    }
 
     SimpleLoginSyncSettingsContent(
         state = state,

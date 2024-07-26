@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.features.sl.sync.settings.presentation.SimpleLoginSyncSettingsState
 
@@ -52,12 +53,12 @@ internal fun SimpleLoginSyncSettingsContent(
                 .padding(all = Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
-            if (hasVaults) {
+            if (selectedVaultOption is Some) {
                 SimpleLoginSyncSettingsVaultSection(
-                    selectedVault = selectedVault,
+                    selectedVault = selectedVaultOption.value,
                     onClick = {
                         SimpleLoginSyncUiEvent.OnSelectVaultClicked(
-                            shareId = selectedVault.shareId
+                            shareId = selectedVaultOption.value.shareId
                         ).also(onUiEvent)
                     }
                 )

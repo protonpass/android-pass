@@ -18,15 +18,28 @@
 
 package proton.android.pass.features.sl.sync.shared.navigation
 
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.common.api.toOption
+import proton.android.pass.domain.ShareId
 import proton.android.pass.features.sl.sync.settings.navigation.SimpleLoginSyncSettingsNavItem
 import proton.android.pass.features.sl.sync.settings.ui.SimpleLoginSyncSettingsScreen
 import proton.android.pass.navigation.api.composable
 
+private const val SELECTED_SHARE_ID_KEY = "vaultSelected"
+
 fun NavGraphBuilder.simpleLoginSyncNavGraph(onNavigated: (SimpleLoginSyncNavDestination) -> Unit) {
 
-    composable(navItem = SimpleLoginSyncSettingsNavItem) {
-        SimpleLoginSyncSettingsScreen(onNavigated = onNavigated)
+    composable(navItem = SimpleLoginSyncSettingsNavItem) { navBackStack ->
+        val selectedShareIdArg by navBackStack.savedStateHandle
+            .getStateFlow<String?>(key = SELECTED_SHARE_ID_KEY, initialValue = null)
+            .collectAsStateWithLifecycle()
+
+        SimpleLoginSyncSettingsScreen(
+            onNavigated = onNavigated,
+            selectedShareIdOption = selectedShareIdArg?.let(::ShareId).toOption()
+        )
     }
 
 }

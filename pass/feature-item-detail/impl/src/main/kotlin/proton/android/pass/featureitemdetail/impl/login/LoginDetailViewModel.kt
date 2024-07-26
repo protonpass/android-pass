@@ -110,7 +110,7 @@ import proton.android.pass.featureitemdetail.impl.PassMonitorItemDetailFromMissi
 import proton.android.pass.featureitemdetail.impl.PassMonitorItemDetailFromReusedPassword
 import proton.android.pass.featureitemdetail.impl.PassMonitorItemDetailFromWeakPassword
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
-import proton.android.pass.featureitemdetail.impl.common.ItemFeatures
+import proton.android.pass.featureitemdetail.impl.common.LoginItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -216,17 +216,12 @@ class LoginDetailViewModel @Inject constructor(
         .onEach { hasItemBeenFetchedAtLeastOnce = true }
         .asLoadingResult()
 
-    private val itemFeaturesFlow = combine(
-        featureFlagsRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT),
-        getUserPlan()
-    ) { isSecurityCenterEnabled, isUsernameSplitEnabled, userPlan ->
-        ItemFeatures(
-            isSecurityCenterEnabled = isSecurityCenterEnabled,
-            isUsernameSplitEnabled = isUsernameSplitEnabled,
-            isHistoryEnabled = userPlan.isPaidPlan
-        )
-    }
+    private val itemFeaturesFlow: Flow<LoginItemFeatures> = combine(
+        featureFlagsRepository[FeatureFlag.SECURITY_CENTER_V1],
+        featureFlagsRepository[FeatureFlag.USERNAME_SPLIT],
+        getUserPlan().map { it.isPaidPlan },
+        ::LoginItemFeatures
+    )
 
     private val loginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> = combine(
         loginItemDetailsResultFlow,

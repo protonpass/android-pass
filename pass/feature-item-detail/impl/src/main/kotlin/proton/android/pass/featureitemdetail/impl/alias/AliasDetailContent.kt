@@ -44,8 +44,10 @@ fun AliasDetailContent(
     vault: Vault?,
     mailboxes: PersistentList<AliasMailbox>,
     isLoading: Boolean,
+    isAliasSyncEnabled: Boolean,
     onCopyAlias: (String) -> Unit,
     onCreateLoginFromAlias: (String) -> Unit,
+    onToggleAliasState: (Boolean) -> Unit,
     onVaultClick: () -> Unit,
     onViewItemHistoryClicked: () -> Unit,
     isHistoryFeatureEnabled: Boolean
@@ -66,10 +68,13 @@ fun AliasDetailContent(
 
         AliasSection(
             alias = contents.aliasEmail,
+            isAliasDisabled = contents.isDisabled,
+            isAliasSyncEnabled = isAliasSyncEnabled,
             mailboxes = mailboxes,
             isLoading = isLoading,
             onCopyAlias = onCopyAlias,
-            onCreateLoginFromAlias = onCreateLoginFromAlias
+            onCreateLoginFromAlias = onCreateLoginFromAlias,
+            onToggleAliasState = onToggleAliasState
         )
 
         NoteSection(

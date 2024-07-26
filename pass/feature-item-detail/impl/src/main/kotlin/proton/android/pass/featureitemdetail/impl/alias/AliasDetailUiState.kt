@@ -52,6 +52,7 @@ sealed interface AliasDetailUiState {
         val shareClickAction: ShareClickAction,
         val itemActions: ItemActions,
         val event: ItemDetailEvent,
-        val isHistoryFeatureEnabled: Boolean
+        val isHistoryFeatureEnabled: Boolean,
+        val isSLAliasSyncEnabled: Boolean
     ) : AliasDetailUiState
 }

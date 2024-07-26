@@ -87,6 +87,8 @@ sealed interface AuthNavigation {
     @JvmInline
     value class ForceSignOut(val userId: UserId) : AuthNavigation
 
+    data object ForceSignOutAllUsers : AuthNavigation
+
     @JvmInline
     value class EnterPin(val origin: AuthOrigin) : AuthNavigation
 
@@ -114,6 +116,8 @@ fun NavGraphBuilder.authGraph(canLogout: Boolean, navigation: (AuthNavigation) -
                         is EnterPinNavigation.Success ->
                             navigation(AuthNavigation.Success(destination.origin))
                         is EnterPinNavigation.Close -> navigation(AuthNavigation.Dismissed)
+                        EnterPinNavigation.ForceSignOutAllUsers ->
+                            navigation(AuthNavigation.ForceSignOutAllUsers)
                     }
                 }
             )

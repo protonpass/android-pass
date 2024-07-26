@@ -53,11 +53,13 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.isDisabled
 import me.proton.core.account.domain.entity.isReady
 import me.proton.core.account.domain.entity.isStepNeeded
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
@@ -174,6 +176,16 @@ class LauncherViewModel @Inject constructor(
         PassLogger.i(TAG, "Disabling account: $userId")
         snackbarDispatcher.reset()
         accountManager.disableAccount(userId)
+    }
+
+    internal fun disableAll() = viewModelScope.launch {
+        PassLogger.i(TAG, "Disabling all accounts")
+        snackbarDispatcher.reset()
+
+        val accounts = accountManager.getAccounts(Ready).firstOrNull() ?: emptyList()
+        accounts.forEach {
+            accountManager.disableAccount(it.userId)
+        }
     }
 
     internal fun remove(userId: UserId) = viewModelScope.launch {

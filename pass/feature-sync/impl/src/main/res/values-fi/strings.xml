@@ -17,24 +17,24 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="sync_item_empty">Empty vault</string>
+  <string name="sync_item_empty">Tyhjä holvi</string>
   <plurals name="sync_item_count">
-    <item quantity="one">Downloaded %d item</item>
-    <item quantity="other">Downloaded %d items</item>
+    <item quantity="one">%d kohde ladattiin</item>
+    <item quantity="other">%d kohdetta ladattiin</item>
   </plurals>
   <plurals name="sync_finished_item_count">
-    <item quantity="one">%d item synchronized</item>
-    <item quantity="other">%d items synchronized</item>
+    <item quantity="one">%d kohde synkronoitiin</item>
+    <item quantity="other">%d kohdetta synkronoitiin</item>
   </plurals>
-  <string name="sync_progress_item_count">Downloading %1$d of %2$d items</string>
+  <string name="sync_progress_item_count">%1$d/%2$d kohdetta on ladattu</string>
   <string name="sync_dialog_title">Synkronoidaan kohteita…</string>
   <string name="sync_dialog_title_error">Synkronointi epäonnistui</string>
-  <string name="sync_dialog_title_success">Synkronointi valmis</string>
-  <string name="sync_dialog_subtitle">Kohteitasi ladataan ja niiden salausta puretaan. Tämä saattaa kestää muutaman minuutin.</string>
-  <string name="sync_dialog_subtitle_error">Virhe kohteidesi lataamisessa ja salauksen purkamisessa. Yritä uudelleen.</string>
-  <string name="sync_dialog_subtitle_success">Kohde ladattiin ja sen salaus purettiin.</string>
+  <string name="sync_dialog_title_success">Synkronointi on valmis</string>
+  <string name="sync_dialog_subtitle">Kohteitasi ladataan ja niiden salausta puretaan. Tämä voi kestää muutamia minuutteja.</string>
+  <string name="sync_dialog_subtitle_error">Virhe ladattaessa kohteitasi ja purettaessa niiden salausta. Yritä uudelleen.</string>
+  <string name="sync_dialog_subtitle_success">Kohteesi ladattiin ja niiden salaukset purettiin.</string>
   <string name="sync_item_not_started">Ei aloitettu</string>
   <string name="sync_item_failed">Synkronointi epäonnistui</string>
-  <string name="sync_dialog_title_inserting">Inserting items…</string>
-  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
+  <string name="sync_dialog_title_inserting">Kohteita lisätään…</string>
+  <string name="sync_dialog_subtitle_inserting">Suoritetaan viimeistä vaihetta, lähes valmis.</string>
 </resources>

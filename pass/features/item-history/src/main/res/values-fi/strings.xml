@@ -19,13 +19,13 @@
 <resources>
   <string name="item_history_restore_action">Palauta</string>
   <string name="item_history_restore_confirmation_dialog_title">Palautetaanko tämä versio?</string>
-  <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">Nykyinen kohteesi palautetaan versioon %1$s</string>
-  <string name="item_history_restore_snackbar_message_error">Virhe kohteen versioita palautettaessa</string>
-  <string name="item_history_restore_snackbar_message_success">Kohteen versiot palautettiin</string>
+  <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">Nykyinen kohde palautetaan ajan %1$s versioon.</string>
+  <string name="item_history_restore_snackbar_message_error">Virhe palautettaessa kohteen versiota</string>
+  <string name="item_history_restore_snackbar_message_success">Kohteen versio palautettiin</string>
   <string name="item_history_restore_tab_title_current">Nykyinen</string>
   <string name="item_history_timeline_title">Historia</string>
   <string name="item_history_timeline_node_child_title">Muokattu</string>
   <string name="item_history_timeline_node_leaf_title">Luotu</string>
   <string name="item_history_timeline_node_root_title">Nykyinen versio</string>
-  <string name="item_history_timeline_snackbar_message_error">Virhe kohteen versioita noudattessa</string>
+  <string name="item_history_timeline_snackbar_message_error">Virhe noudattessa kohteen versioita</string>
 </resources>

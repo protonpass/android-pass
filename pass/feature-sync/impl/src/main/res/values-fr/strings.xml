@@ -17,16 +17,16 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="sync_item_empty">Empty vault</string>
+  <string name="sync_item_empty">Coffre-fort vide</string>
   <plurals name="sync_item_count">
-    <item quantity="one">Downloaded %d item</item>
-    <item quantity="other">Downloaded %d items</item>
+    <item quantity="one">%d élément téléchargé</item>
+    <item quantity="other">%d éléments téléchargés</item>
   </plurals>
   <plurals name="sync_finished_item_count">
-    <item quantity="one">%d item synchronized</item>
-    <item quantity="other">%d items synchronized</item>
+    <item quantity="one">%d élément synchronisé</item>
+    <item quantity="other">%d éléments synchronisés</item>
   </plurals>
-  <string name="sync_progress_item_count">Downloading %1$d of %2$d items</string>
+  <string name="sync_progress_item_count">Téléchargement des éléments : %1$d sur %2$d</string>
   <string name="sync_dialog_title">Synchronisation des éléments en cours</string>
   <string name="sync_dialog_title_error">La synchronisation n\'a pas abouti.</string>
   <string name="sync_dialog_title_success">La synchronisation est terminée.</string>
@@ -35,6 +35,6 @@
   <string name="sync_dialog_subtitle_success">Vos éléments ont été téléchargés et déchiffrés.</string>
   <string name="sync_item_not_started">Non commencée</string>
   <string name="sync_item_failed">La synchronisation n\'a pas abouti.</string>
-  <string name="sync_dialog_title_inserting">Inserting items…</string>
-  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
+  <string name="sync_dialog_title_inserting">Insertion des éléments…</string>
+  <string name="sync_dialog_subtitle_inserting">La dernière étape est en cours. C\'est bientôt terminé !</string>
 </resources>

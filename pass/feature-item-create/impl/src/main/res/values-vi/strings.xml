@@ -108,10 +108,10 @@
   <string name="identity_field_street_address_title">Tên đường, hộp thư thuê bao</string>
   <string name="identity_field_zip_or_postal_code_title">Mã bưu chính</string>
   <string name="identity_field_city_title">Thành phố</string>
-  <string name="identity_field_state_or_province_title">State or province</string>
-  <string name="identity_field_country_or_region_title">Country or Region</string>
-  <string name="identity_field_social_security_number_title">Social security number</string>
-  <string name="identity_field_passport_number_title">Passport number</string>
+  <string name="identity_field_state_or_province_title">Tỉnh thành</string>
+  <string name="identity_field_country_or_region_title">Quốc gia hoặc khu vực</string>
+  <string name="identity_field_social_security_number_title">Số bảo hiểm xã hội</string>
+  <string name="identity_field_passport_number_title">Số hộ chiếu</string>
   <string name="identity_field_license_number_title">License number</string>
   <string name="identity_field_website_title">Website</string>
   <string name="identity_field_xhandle_title">X handle</string>
@@ -130,7 +130,7 @@
   <string name="identity_field_yahoo_title">Yahoo username</string>
   <string name="identity_field_instagram_title">Instagram handle</string>
   <string name="identity_field_personal_website_title">Personal website URL</string>
-  <string name="identity_field_work_phone_number_title">Work phone number</string>
+  <string name="identity_field_work_phone_number_title">Số điện thoại công việc</string>
   <string name="identity_field_work_email_title">Work email address</string>
   <string name="identity_add_field_first_name">First name</string>
   <string name="identity_add_field_middle_name">Middle name</string>
@@ -145,18 +145,18 @@
   <string name="identity_add_field_yahoo">Yahoo username</string>
   <string name="identity_add_field_instagram">Instagram handle</string>
   <string name="identity_add_field_personal_website">Personal website URL</string>
-  <string name="identity_add_field_work_phone_number">Work phone number</string>
+  <string name="identity_add_field_work_phone_number">Số điện thoại công việc</string>
   <string name="identity_add_field_work_email_address">Work email address</string>
   <string name="identity_add_field_custom_field">Custom field</string>
-  <string name="identity_section_personal_details">Personal details</string>
-  <string name="identity_section_address_details">Address details</string>
-  <string name="identity_section_contact_details">Contact details</string>
+  <string name="identity_section_personal_details">Thông tin cá nhân</string>
+  <string name="identity_section_address_details">Thông tin địa chỉ</string>
+  <string name="identity_section_contact_details">Thông tin liên lạc</string>
   <string name="identity_section_work_details">Work details</string>
   <string name="identity_add_more_fields">Thêm trường khác</string>
   <string name="identity_bottomsheet_add_field">Add field</string>
   <string name="create_identity_init_error">Problem retrieving identity details</string>
   <string name="create_identity_item_creation_error">Could not create identity</string>
-  <string name="create_identity_item_creation_success">Identity created</string>
+  <string name="create_identity_item_creation_success">Đã tạo danh tính</string>
   <string name="update_identity_item_creation_success">Đã cập nhật danh tính</string>
   <string name="update_identity_item_creation_error">Could not update identity</string>
   <!--  Common create items  -->

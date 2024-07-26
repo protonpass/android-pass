@@ -93,6 +93,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">გაზიარება შეუძლებელია</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">ამ საცავის გაზიარებისთვის საკმარისი წვდომები არ გაგაჩნიათ.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">მიაღწიეთ საცავის გაზიარების ზღვარს. იმისთვის, რომ მეტი საცავი გააზიაროთ, ასწიეთ თქვენი სატარიფო გეგმა.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
   <string name="password_score_vulnerable">მოწყვლადი</string>
   <string name="password_score_weak">სუსტი</string>
   <string name="password_score_strong">ძლიერი</string>

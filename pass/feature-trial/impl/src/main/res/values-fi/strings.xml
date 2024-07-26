@@ -7,7 +7,7 @@
   <string name="trial_feature_4">Mukautetut kentät</string>
   <string name="trial_button_text">Päivitä tilaus nyt</string>
   <plurals name="trial_days_left">
-    <item quantity="one">%d päivä testata premium-ominaisuuksia</item>
+    <item quantity="one">%d päivä aikaa testata premium-ominaisuuksia</item>
     <item quantity="other">%d päivää aikaa testata premium-ominaisuuksia</item>
   </plurals>
   <string name="trial_learn_more">Lue lisää</string>

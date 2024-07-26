@@ -19,4 +19,13 @@
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">Buton pentru afișarea meniului de opțiuni</string>
   <string name="item_details_toolbar_content_description_share_button">Buton pentru partajarea unui articol</string>
+  <!-- Item details forbidden actions -->
+  <string name="item_details_forbidden_actions_edit_title">Nu se poate edita</string>
+  <string name="item_details_forbidden_actions_edit_permission">Nu puteți edita acest articol deoarece nu aveți suficiente permisiuni pentru a face acest lucru.</string>
+  <string name="item_details_forbidden_actions_edit_trash">Nu puteți edita acest articol deoarece este în coșul de gunoi. Scoateți-l din coșul de gunoi înainte de a-l edita.</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">Aveți voie să editați doar articole doar din seifurile vechi. Pentru a edita acest articol, modificați-vă planul actual.</string>
+  <string name="item_details_forbidden_actions_share_title">Nu se poate partaja</string>
+  <string name="item_details_forbidden_actions_share_limit">Ați atins limita de partajare a seifului. Pentru a partaja mai multe seifuri, alegeți alt plan cu plată.</string>
+  <string name="item_details_forbidden_actions_share_permission">Nu aveți permisiuni suficiente pentru a participa acest seif.</string>
+  <string name="item_details_forbidden_actions_share_trash">Nu puteți partaja acest articol deoarece este în coșul de gunoi. Scoateți-l din coșul de gunoi înainte de a-l partaja.</string>
 </resources>

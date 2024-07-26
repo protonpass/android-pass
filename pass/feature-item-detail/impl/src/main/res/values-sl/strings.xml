@@ -95,6 +95,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Ni mogoče deliti</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nimate dovolj dovoljenj za skupno rabo tega trezorja.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Dosegli ste omejitev skupne rabe trezorja. Če želite deliti več trezorjev, nadgradite svoj trenutni paket.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
   <string name="password_score_vulnerable">Slab</string>
   <string name="password_score_weak">Šibko</string>
   <string name="password_score_strong">Močno</string>

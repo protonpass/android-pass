@@ -32,10 +32,10 @@
     <item quantity="one">%d jäsen</item>
     <item quantity="other">%d jäsentä</item>
   </plurals>
-  <string name="share_with_title">Jaa käyttäjälle</string>
+  <string name="share_with_title">Jaa henkilöille</string>
   <string name="share_with_email_hint">Sähköpostiosoite</string>
   <string name="share_with_email_error">Virheellinen sähköpostiosoite</string>
-  <string name="share_with_email_cannot_invite_outside_org">Et voi kutsua organisaatiosi ulkopuolisia henkilöitä, ota yhteyttä ylläpitäjään saadaksesi lisätietoja</string>
+  <string name="share_with_email_cannot_invite_outside_org">Et voi kutsua organisaatiosi ulkopuolisia henkilöitä. Lisätietoja saat organisaatiosi ylläpidolta.</string>
   <string name="share_with_email_email_already_added">Olet jo lisännyt tämän sähköpostiosoitteen</string>
   <string name="share_permissions_title">Aseta käyttöoikeustaso</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s kutsui sinut käyttämään sisältöä holvista</string>
@@ -99,7 +99,7 @@
   <string name="sharing_snackbar_transfer_ownership_error">Virhe siirrettäessä omistajuutta</string>
   <string name="sharing_invites_info_dialog_title">Jäsenrajoitus</string>
   <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
-    <item quantity="one">Tässä holvissa voi olla enintään %1$d jäsen. Käytettävissäsi on vielä %2$d kutsu.</item>
+    <item quantity="one">Tässä holvissa voi olla vain %1$d jäsen. Käytettävissäsi on vielä %2$d kutsu.</item>
     <item quantity="other">Tässä holvissa voi olla enintään %1$d jäsentä. Käytettävissäsi on vielä %2$d kutsua.</item>
   </plurals>
   <string name="sharing_limit_reached">Holvin jäsenien ja kutsujen enimmäismäärä on saavutettu.</string>
@@ -115,8 +115,8 @@
   <string name="share_with_suggestions_title">Ehdotukset</string>
   <string name="share_with_recents_title">Viimeisimmät</string>
   <string name="share_with_remove_email_content_description">Poista sähköpostiosoite</string>
-  <string name="share_with_secure_link_title">Turvallisen linkin kautta</string>
-  <string name="share_with_secure_link_description">Luo turvallinen linkki tähän kohteeseen.</string>
+  <string name="share_with_secure_link_title">Suojatun linkin välityksellä</string>
+  <string name="share_with_secure_link_description">Luo suojattu linkki tähän kohteeseen.</string>
   <string name="share_with_manage_shared_vault_title">Hallitse holvin käyttöoikeuksia</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Kohteen holvi on tällä hetkellä jaettu %d käyttäjän kanssa.</item>
@@ -129,5 +129,5 @@
   <string name="sharing_error_dialog_title">Tuntematon virhe</string>
   <string name="sharing_error_dialog_message">Virhe tämän holvin kutsun lähettämisessä. Jos ongelma jatkuu, ota yhteyttä asiakaspalveluun.</string>
   <string name="sharing_with_no_addresses_can_be_invited">Osoitteita ei voida kutsua</string>
-  <string name="sharing_with_some_addresses_cannot_be_invited">Joitain osoitteita ei voida kutsua</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Joitakin osoitteita ei voida kutsua</string>
 </resources>

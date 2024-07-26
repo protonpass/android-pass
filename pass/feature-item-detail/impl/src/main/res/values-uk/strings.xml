@@ -95,6 +95,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Не може поширювати</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">У вас недостатньо прав для надання спільного доступу до цього сховища.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Ви досягли ліміту спільного доступу до сховища. Щоб отримати доступ до більшої кількості сховищ, будь ласка, оновіть свій поточний тарифний план.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
   <string name="password_score_vulnerable">Вразливий</string>
   <string name="password_score_weak">Простий</string>
   <string name="password_score_strong">Надійний</string>

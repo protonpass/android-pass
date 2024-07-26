@@ -39,7 +39,7 @@
   <string name="auth_error_pin_cannot_be_empty">Le code PIN ne peut pas être vide.</string>
   <string name="auth_extra_password_label">Saisissez votre mot de passe supplémentaire.</string>
   <string name="auth_extra_password_error">Une erreur s\'est produite lors de l\'authentification avec le mot de passe supplémentaire.</string>
-  <string name="auth_extra_password_too_many_attempts">Trop de tentatives de connexion n\'ont pas abouti. Vous avez été déconnecté.</string>
+  <string name="auth_extra_password_too_many_attempts">Un nombre trop important de tentatives de connexion n\'a pas abouti. Vous avez été déconnecté.</string>
   <string name="auth_error_wrong_password_no_attempts">Le mot de passe n\'est pas correct.</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Le mot de passe n\'est pas correct. Il reste %d tentative.</item>

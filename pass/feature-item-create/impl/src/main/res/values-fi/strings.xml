@@ -44,7 +44,7 @@
   <string name="bottomsheet_custom_field_type_text">Teksti</string>
   <string name="bottomsheet_custom_field_type_text_content_description">Mukautettu tekstikenttä</string>
   <string name="bottomsheet_custom_field_type_hidden">Piilotettu</string>
-  <string name="bottomsheet_custom_field_type_totp">Salainen 2FA-avain (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_totp">2FA-salaisuus (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Muokkaa nimeä</string>
   <string name="bottomsheet_custom_field_option_remove">Poista kenttä</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Poista mukautettu kenttä</string>
@@ -56,8 +56,8 @@
   <string name="custom_field_dialog_title">Mukautetun kentän nimi</string>
   <string name="custom_field_dialog_body">Nimeä mukautettu kenttä</string>
   <string name="custom_field_dialog_placeholder">Esim. käyttäjätunnus, PIN</string>
-  <string name="custom_section_dialog_title">Syötä osion nimike</string>
-  <string name="custom_section_dialog_placeholder">Nimike</string>
+  <string name="custom_section_dialog_title">Syötä osion nimi</string>
+  <string name="custom_section_dialog_placeholder">Nimi</string>
   <string name="custom_field_options_content_description">Mukautetun kentän valinnat</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Muistiinpanoa ei voitu luoda</string>
@@ -102,7 +102,7 @@
   <string name="credit_card_item_update_error">Maksukorttia ei voitu päivittää</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Koko nimi</string>
-  <string name="identity_field_email_title">Sähköposti</string>
+  <string name="identity_field_email_title">Sähköpostiosoite</string>
   <string name="identity_field_phone_number_title">Puhelinnumero</string>
   <string name="identity_field_organization_title">Organisaatio</string>
   <string name="identity_field_street_address_title">Katuosoite, postilokero</string>
@@ -114,7 +114,7 @@
   <string name="identity_field_passport_number_title">Passin numero</string>
   <string name="identity_field_license_number_title">Ajokortin numero</string>
   <string name="identity_field_website_title">Verkkosivusto</string>
-  <string name="identity_field_xhandle_title">X-käyttäjätunnus</string>
+  <string name="identity_field_xhandle_title">X-tunnus</string>
   <string name="identity_field_company_title">Yritys</string>
   <string name="identity_field_job_title_title">Tehtävänimike</string>
   <string name="identity_field_first_name_title">Etunimi</string>
@@ -123,12 +123,12 @@
   <string name="identity_field_birthdate_title">Syntymäpäivä</string>
   <string name="identity_field_gender_title">Sukupuoli</string>
   <string name="identity_field_floor_title">Kerros</string>
-  <string name="identity_field_county_title">Maa</string>
+  <string name="identity_field_county_title">Piirikunta</string>
   <string name="identity_field_linkedin_title">Linkedin</string>
-  <string name="identity_field_reddit_title">Reddit-käyttäjätunnus</string>
-  <string name="identity_field_facebook_title">Facebook-URL</string>
-  <string name="identity_field_yahoo_title">Yahoo-käyttäjätunnus</string>
-  <string name="identity_field_instagram_title">Instagram-käyttäjätunnus</string>
+  <string name="identity_field_reddit_title">Reddit-tunnus</string>
+  <string name="identity_field_facebook_title">Facebook-osoite</string>
+  <string name="identity_field_yahoo_title">Yahoo-tunnus</string>
+  <string name="identity_field_instagram_title">Instagram-tunnus</string>
   <string name="identity_field_personal_website_title">Henkilökohtainen verkkosivusto</string>
   <string name="identity_field_work_phone_number_title">Työpuhelin</string>
   <string name="identity_field_work_email_title">Työsähköposti</string>
@@ -138,23 +138,23 @@
   <string name="identity_add_field_birthdate">Syntymäpäivä</string>
   <string name="identity_add_field_gender">Sukupuoli</string>
   <string name="identity_add_field_floor">Kerros</string>
-  <string name="identity_add_field_county">Maa</string>
+  <string name="identity_add_field_county">Piirikunta</string>
   <string name="identity_add_field_linkedin">Linkedin</string>
-  <string name="identity_add_field_reddit">Reddit-käyttäjätunnus</string>
-  <string name="identity_add_field_facebook">Facebook-URL</string>
-  <string name="identity_add_field_yahoo">Yahoo-käyttäjätunnus</string>
-  <string name="identity_add_field_instagram">Instagram-käyttäjätunnus</string>
+  <string name="identity_add_field_reddit">Reddit-tunnus</string>
+  <string name="identity_add_field_facebook">Facebook-osoite</string>
+  <string name="identity_add_field_yahoo">Yahoo-tunnus</string>
+  <string name="identity_add_field_instagram">Instagram-tunnus</string>
   <string name="identity_add_field_personal_website">Henkilökohtainen verkkosivusto</string>
   <string name="identity_add_field_work_phone_number">Työpuhelin</string>
   <string name="identity_add_field_work_email_address">Työsähköposti</string>
   <string name="identity_add_field_custom_field">Mukautettu kenttä</string>
   <string name="identity_section_personal_details">Henkilötiedot</string>
   <string name="identity_section_address_details">Osoitetiedot</string>
-  <string name="identity_section_contact_details">Yhteystiedon tiedot</string>
+  <string name="identity_section_contact_details">Yhteystiedot</string>
   <string name="identity_section_work_details">Työtiedot</string>
   <string name="identity_add_more_fields">Lisää kenttä</string>
   <string name="identity_bottomsheet_add_field">Lisää kenttä</string>
-  <string name="create_identity_init_error">Ongelma identiteetin tietojen noudossa</string>
+  <string name="create_identity_init_error">Ongelma noudettaessa identiteetin tietoja</string>
   <string name="create_identity_item_creation_error">Identiteettiä ei voitu luoda</string>
   <string name="create_identity_item_creation_success">Identiteetti luotiin</string>
   <string name="update_identity_item_creation_success">Identiteettiä muokattiin</string>
@@ -163,9 +163,9 @@
   <string name="title_create">Luo</string>
   <string name="changes_saved">Muutokset tallennettiin</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">Salainen 2FA-avain (TOTP)</string>
-  <string name="totp_create_login_field_invalid">Virheellinen salainen 2FA-avain (TOTP)</string>
-  <string name="totp_create_login_field_placeholder">Lisää salainen 2FA-avain (TOTP)</string>
+  <string name="totp_create_login_field_title">2FA-salaisuus (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Virheellinen 2FA-salaisuus (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">Lisää 2FA-salaisuus (TOTP)</string>
   <string name="close_scree_icon_content_description">Sulje ruutu -painike</string>
   <string name="totp_paste_code_action">Liitä koodi</string>
   <string name="totp_scan_code_action">Skannaa koodi</string>
@@ -173,9 +173,9 @@
   <string name="camera_permission_explanation">Ominaisuus tarvitsee kameran käyttöoikeuden.</string>
   <string name="camera_permission_open_settings">Avaa asetukset</string>
   <!--  TOTP limit  -->
-  <string name="mfa_limit_reached">2FA-rajoitus on saavutettu</string>
+  <string name="mfa_limit_reached">Kaksivaiheisen tunnistautumisen rajoitus on saavutettu</string>
   <string name="upgrade">Päivitä</string>
-  <string name="mfa_icon_content_description">2FA-kuvake</string>
+  <string name="mfa_icon_content_description">Kasivaiheisen tunnistautumisen kuvake</string>
   <string name="select_suffix_upgrade_for_custom_domains">Käytä omia verkkotunnuksiasi päivittämällä tilauksesi</string>
   <string name="create_alias_content_limit_banner">Luotujen aliasten enimmäismäärä on saavutettu. Luo aliaksia rajattomasti päivittämällä tilauksesi.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Sovellus on päivitettävä tämän kohteen muokkaamiseksi</string>

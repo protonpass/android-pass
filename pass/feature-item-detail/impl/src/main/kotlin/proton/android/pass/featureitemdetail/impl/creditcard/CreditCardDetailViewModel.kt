@@ -74,13 +74,12 @@ import proton.android.pass.domain.canUpdate
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.ItemDelete
+import proton.android.pass.featureitemdetail.impl.common.CreditCardItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
-import proton.android.pass.featureitemdetail.impl.common.ItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -193,16 +192,8 @@ class CreditCardDetailViewModel @Inject constructor(
 
     }.distinctUntilChanged()
 
-    private val itemFeaturesFlow = combine(
-        featureFlagsRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT),
-        getUserPlan()
-    ) { isSecurityCenterEnabled, isUsernameSplitEnabled, userPlan ->
-        ItemFeatures(
-            isSecurityCenterEnabled = isSecurityCenterEnabled,
-            isUsernameSplitEnabled = isUsernameSplitEnabled,
-            isHistoryEnabled = userPlan.isPaidPlan
-        )
+    private val itemFeaturesFlow: Flow<CreditCardItemFeatures> = getUserPlan().map {
+        CreditCardItemFeatures(isHistoryEnabled = it.isPaidPlan)
     }
 
     val uiState: StateFlow<CreditCardDetailUiState> = combineN(

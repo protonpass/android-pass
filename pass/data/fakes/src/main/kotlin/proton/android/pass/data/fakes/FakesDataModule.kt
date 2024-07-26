@@ -36,6 +36,7 @@ import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CancelInvite
+import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.CheckCanAddressesBeInvited
 import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.CheckPin
@@ -176,6 +177,7 @@ import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.repositories.TestInviteRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
+import proton.android.pass.data.fakes.usecases.FakeChangeAliasStatus
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeGetSuggestedIdentityItems
 import proton.android.pass.data.fakes.usecases.FakeObserveAddressesByUserId
@@ -777,5 +779,8 @@ abstract class FakesDataModule {
     abstract fun bindObserveHasAssociatedSecureLinks(
         impl: FakeObserveHasAssociatedSecureLinks
     ): ObserveHasAssociatedSecureLinks
+
+    @Binds
+    abstract fun bindChangeAliasStatus(impl: FakeChangeAliasStatus): ChangeAliasStatus
 
 }

@@ -22,6 +22,7 @@ import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.BreachAddEmailRequest
 import proton.android.pass.data.impl.requests.BreachVerifyEmailRequest
+import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.CheckAddressesCanBeInvitedRequest
 import proton.android.pass.data.impl.requests.ConfirmInviteRequest
 import proton.android.pass.data.impl.requests.CreateAliasRequest
@@ -217,6 +218,13 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("itemId") itemId: String,
         @Body request: UpdateAliasMailboxesRequest
     ): AliasDetailsResponse
+
+    @PUT("$PREFIX/share/{enc_shareID}/alias/{enc_itemID}/status")
+    suspend fun changeAliasStatus(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Body request: ChangeAliasStatusRequest
+    ): CodeOnlyResponse
 
     // Events
     @GET("$PREFIX/share/{shareId}/event")

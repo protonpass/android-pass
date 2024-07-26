@@ -20,12 +20,13 @@ package proton.android.pass.data.impl.remote
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
-import proton.android.pass.data.impl.responses.AliasDetails
-import proton.android.pass.data.impl.responses.AliasOptionsResponse
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
+import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
+import proton.android.pass.data.impl.responses.AliasDetails
+import proton.android.pass.data.impl.responses.AliasOptionsResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
@@ -64,5 +65,16 @@ class RemoteAliasDataSourceImpl @Inject constructor(
             .valueOrThrow
             .alias
         emit(res)
+    }
+
+    override suspend fun changeAliasStatus(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        request: ChangeAliasStatusRequest
+    ) {
+        api.get<PasswordManagerApi>(userId)
+            .invoke { changeAliasStatus(shareId.id, itemId.id, request) }
+            .valueOrThrow
     }
 }

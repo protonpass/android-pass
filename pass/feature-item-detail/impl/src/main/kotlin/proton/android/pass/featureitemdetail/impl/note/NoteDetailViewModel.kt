@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -76,12 +75,11 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemRes
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.NoteCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.ItemDelete
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
-import proton.android.pass.featureitemdetail.impl.common.ItemFeatures
+import proton.android.pass.featureitemdetail.impl.common.NoteItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -142,16 +140,8 @@ class NoteDetailViewModel @Inject constructor(
         .onEach { hasItemBeenFetchedAtLeastOnce = true }
         .asLoadingResult()
 
-    private val itemFeaturesFlow = combine(
-        featureFlagsRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT),
-        getUserPlan()
-    ) { isSecurityCenterEnabled, isUsernameSplitEnabled, userPlan ->
-        ItemFeatures(
-            isSecurityCenterEnabled = isSecurityCenterEnabled,
-            isUsernameSplitEnabled = isUsernameSplitEnabled,
-            isHistoryEnabled = userPlan.isPaidPlan
-        )
+    private val itemFeaturesFlow: Flow<NoteItemFeatures> = getUserPlan().map {
+        NoteItemFeatures(isHistoryEnabled = it.isPaidPlan)
     }
 
     val state: StateFlow<NoteDetailUiState> = combineN(

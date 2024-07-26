@@ -18,9 +18,25 @@
 
 package proton.android.pass.featureitemdetail.impl.common
 
-internal data class ItemFeatures(
-    internal val isHistoryEnabled: Boolean,
+internal interface ItemFeatures {
+    val isHistoryEnabled: Boolean
+}
+
+internal data class AliasItemFeatures(
+    override val isHistoryEnabled: Boolean,
+    internal val slAliasSyncEnabled: Boolean
+) : ItemFeatures
+
+internal data class CreditCardItemFeatures(
+    override val isHistoryEnabled: Boolean
+) : ItemFeatures
+
+internal data class NoteItemFeatures(
+    override val isHistoryEnabled: Boolean
+) : ItemFeatures
+
+internal data class LoginItemFeatures(
+    override val isHistoryEnabled: Boolean,
     internal val isSecurityCenterEnabled: Boolean,
-    internal val slAliasSyncEnabled: Boolean,
     internal val isUsernameSplitEnabled: Boolean
-)
+) : ItemFeatures

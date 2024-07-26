@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,34 +16,29 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.AliasDetails
-import proton.android.pass.domain.AliasMailbox
-import proton.android.pass.domain.AliasOptions
+import kotlinx.coroutines.flow.firstOrNull
+import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
+import proton.android.pass.data.api.repositories.AliasRepository
+import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import javax.inject.Inject
 
-interface AliasRepository {
-    fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptions>
-    fun getAliasDetails(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId
-    ): Flow<AliasDetails>
-    fun updateAliasMailboxes(
-        userId: UserId,
+class ChangeAliasStatusImpl @Inject constructor(
+    private val accountManager: AccountManager,
+    private val aliasRepository: AliasRepository
+) : ChangeAliasStatus {
+
+    override suspend fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-        mailboxes: List<AliasMailbox>
-    ): Flow<Unit>
-
-    suspend fun changeAliasStatus(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        enable: Boolean
-    )
+        enabled: Boolean
+    ) {
+        val userId = accountManager.getPrimaryUserId().firstOrNull()
+            ?: throw UserIdNotAvailableError()
+        aliasRepository.changeAliasStatus(userId, shareId, itemId, enabled)
+    }
 }

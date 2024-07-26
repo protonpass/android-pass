@@ -76,8 +76,8 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNot
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotRestored
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemRestored
 import proton.android.pass.featureitemdetail.impl.ItemDelete
+import proton.android.pass.featureitemdetail.impl.common.AliasItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
-import proton.android.pass.featureitemdetail.impl.common.ItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -144,12 +144,10 @@ class AliasDetailViewModel @Inject constructor(
         .onEach { hasItemBeenFetchedAtLeastOnce = true }
         .asLoadingResult()
 
-    private val itemFeaturesFlow = combine(
-        featureFlagsRepository[FeatureFlag.SECURITY_CENTER_V1],
-        featureFlagsRepository[FeatureFlag.USERNAME_SPLIT],
+    private val itemFeaturesFlow: Flow<AliasItemFeatures> = combine(
         featureFlagsRepository[FeatureFlag.SL_ALIASES_SYNC],
         getUserPlan().map { it.isPaidPlan },
-        ::ItemFeatures
+        ::AliasItemFeatures
     )
 
     val uiState: StateFlow<AliasDetailUiState> = combineN(

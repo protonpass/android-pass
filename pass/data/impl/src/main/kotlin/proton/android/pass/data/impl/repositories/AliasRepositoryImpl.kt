@@ -22,12 +22,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.remote.RemoteAliasDataSource
+import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
 import proton.android.pass.data.impl.responses.AliasMailboxResponse
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasOptions
@@ -50,7 +51,7 @@ class AliasRepositoryImpl @Inject constructor(
         itemId: ItemId
     ): Flow<AliasDetails> = remoteDataSource.getAliasDetails(userId, shareId, itemId)
         .map { details ->
-            proton.android.pass.domain.AliasDetails(
+            AliasDetails(
                 email = details.email,
                 mailboxes = mapMailboxes(details.mailboxes),
                 availableMailboxes = mapMailboxes(details.availableMailboxes)
@@ -72,6 +73,16 @@ class AliasRepositoryImpl @Inject constructor(
             .flowOn(Dispatchers.IO)
     }
 
+    override suspend fun changeAliasStatus(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        enable: Boolean
+    ) {
+        val request = ChangeAliasStatusRequest(enable)
+        remoteDataSource.changeAliasStatus(userId, shareId, itemId, request)
+    }
+
     private fun mapMailboxes(input: List<AliasMailboxResponse>): List<AliasMailbox> =
-        input.map { proton.android.pass.domain.AliasMailbox(id = it.id, email = it.email) }
+        input.map { AliasMailbox(id = it.id, email = it.email) }
 }

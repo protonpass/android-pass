@@ -19,4 +19,13 @@
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">Schaltfläche zum Anzeigen der Menüoptionen</string>
   <string name="item_details_toolbar_content_description_share_button">Schaltfläche zum Teilen eines Eintrags</string>
+  <!-- Item details forbidden actions -->
+  <string name="item_details_forbidden_actions_edit_title">Cannot edit</string>
+  <string name="item_details_forbidden_actions_edit_permission">Du kannst dieses Element nicht bearbeiten, da du nicht über die erforderlichen Berechtigungen verfügst.</string>
+  <string name="item_details_forbidden_actions_edit_trash">Du kannst diesen Eintrag nicht bearbeiten, da er sich im Papierkorb befindet. Bitte entferne ihn aus dem Papierkorb, um ihn zu bearbeiten.</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">Du kannst nur Einträge in deinem ältesten Tresor bearbeiten. Um diesen Artikel zu bearbeiten, aktualisiere bitte auf dein aktuelles Abonnement.</string>
+  <string name="item_details_forbidden_actions_share_title">Cannot share</string>
+  <string name="item_details_forbidden_actions_share_limit">Du hast das Limit für das Teilen von Tresoren erreicht. Um mehr Tresore gemeinsam nutzen zu können, upgrade bitte dein aktueles Abonnement.</string>
+  <string name="item_details_forbidden_actions_share_permission">Deine Berechtigungen reichen nicht aus, um diesen Tresor freizugeben.</string>
+  <string name="item_details_forbidden_actions_share_trash">You cannot share this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
 </resources>

@@ -30,8 +30,8 @@
   <string name="item_monitor_exclude_message">Kohde poissuljettiin valvonnasta</string>
   <string name="item_monitor_exclude_message_error">Virhe poissuljettaessa kohdetta valvonnasta</string>
   <string name="item_monitor_include_message">Kohde sisällytettiin valvontaan</string>
-  <string name="item_monitor_include_message_error">Virhe kohteen valvontaan lisäämisessä</string>
-  <string name="login_item_generate_totp_error">Virhe luotaessa 2FA-koodia</string>
+  <string name="item_monitor_include_message_error">Virhe lisättäessä kohdetta valvontaan</string>
+  <string name="login_item_generate_totp_error">Virhe luotaessa kaksivaiheisen tunnistautumisen todennuskoodia</string>
   <string name="login_item_view_alias_button">Näytä alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Heikko salasana</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Tämä tili on vaarassa. Käy vaihtamassa salasanasi palvelun tiliasetuksista.</string>
@@ -39,7 +39,7 @@
     <item quantity="one">%d muu kirjautumistieto käyttää samaa salasanaa</item>
     <item quantity="other">%d muuta kirjautumistietoa käyttää samaa salasanaa</item>
   </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Tehosta suojausta määrittämällä 2FA</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Tehosta suojausta määrittämällä kaksivaiheinen tunnistautuminen</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Palvelu mahdollistaa kaksivaiheisen tunnistautumisen. Paranna tilin suojausta ottamalla se käyttöön.</string>
   <string name="login_item_reused_passwords_subtitle">Holviesi tätä salasanaa käyttävät kohteet.</string>
   <string name="field_email">Sähköpostiosoite</string>
@@ -47,18 +47,18 @@
   <string name="field_username_or_email">Käyttäjätunnus tai sähköpostiosoite</string>
   <string name="field_password">Salasana</string>
   <string name="websites_section_title">Verkkosivustot</string>
-  <string name="totp_section_title">2FA-tunniste (TOTP)</string>
+  <string name="totp_section_title">Todennuskoodi (TOTP)</string>
   <string name="action_reveal_password">Näytä salasana</string>
   <string name="action_conceal_password">Piilota salasana</string>
   <string name="action_reveal_number">Näytä numero</string>
   <string name="action_conceal_number">Piilota numero</string>
-  <string name="share_button_content_description">Jaon avauspainike</string>
+  <string name="share_button_content_description">Avaa jakaminen -painike</string>
   <string name="open_menu_icon_content_description">Avaa valikko -painike</string>
-  <string name="mfa_limit_reached">2FA-rajoitus on saavutettu</string>
-  <string name="mfa_icon_content_description">2FA-kuvake</string>
+  <string name="mfa_limit_reached">Kaksivaiheisen tunnistautumisen rajoitus on saavutettu</string>
+  <string name="mfa_icon_content_description">Kasivaiheisen tunnistautumisen kuvake</string>
   <string name="custom_field_text_icon_description">Mukautettu tekstikenttä</string>
   <string name="custom_field_hidden_icon_description">Mukautettu piilotettu kenttä</string>
-  <string name="custom_field_totp_icon_description">Mukautettu 2FA-kenttä</string>
+  <string name="custom_field_totp_icon_description">Mukautettu 2FA-todennuksen kenttä</string>
   <!-- Credit card details -->
   <string name="credit_card_cardholder_field_name">Kortinhaltijan nimi</string>
   <string name="credit_card_number_field_name">Kortin numero</string>
@@ -93,6 +93,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Jakaminen ei ole mahdollista</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Oikeutesi eivät riitä tämän holvin jakamiseen.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Olet saavuttanut holvien jakamisrajan. Jos haluat jakaa lisää holveja, päivitä nykyinen tilauksesi.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Et voi jakaa kohdetta, koska se on roskakorissa. Siirrä se ensin pois roskakorista.</string>
   <string name="password_score_vulnerable">Haavoittuvainen</string>
   <string name="password_score_weak">Heikko</string>
   <string name="password_score_strong">Vahva</string>

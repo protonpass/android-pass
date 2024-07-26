@@ -25,10 +25,10 @@
     <item quantity="other">Pobrano %d elementów</item>
   </plurals>
   <plurals name="sync_finished_item_count">
-    <item quantity="one">%d item synchronized</item>
-    <item quantity="few">%d items synchronized</item>
-    <item quantity="many">%d items synchronized</item>
-    <item quantity="other">%d items synchronized</item>
+    <item quantity="one">Zsynchronizowano %d element</item>
+    <item quantity="few">Zsynchronizowano %d elementy</item>
+    <item quantity="many">Zsynchronizowano %d elementów</item>
+    <item quantity="other">Zsynchronizowano %d elementów</item>
   </plurals>
   <string name="sync_progress_item_count">Pobieranie %1$d z %2$d elementów</string>
   <string name="sync_dialog_title">Synchronizacja elementów…</string>
@@ -39,6 +39,6 @@
   <string name="sync_dialog_subtitle_success">Elementy zostały pobrane i odszyfrowane.</string>
   <string name="sync_item_not_started">Nie rozpoczęto</string>
   <string name="sync_item_failed">Synchronizacja nie powiodła się</string>
-  <string name="sync_dialog_title_inserting">Inserting items…</string>
-  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
+  <string name="sync_dialog_title_inserting">Ładowanie elementów…</string>
+  <string name="sync_dialog_subtitle_inserting">Trwa kończenie ostatniego kroku.</string>
 </resources>

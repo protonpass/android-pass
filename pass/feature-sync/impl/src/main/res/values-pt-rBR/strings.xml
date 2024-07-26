@@ -36,5 +36,5 @@
   <string name="sync_item_not_started">Não iniciado</string>
   <string name="sync_item_failed">Falha na sincronização</string>
   <string name="sync_dialog_title_inserting">Inserindo itens…</string>
-  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
+  <string name="sync_dialog_subtitle_inserting">Completado a última etapa falta pouco.</string>
 </resources>

@@ -20,9 +20,9 @@
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
   <string name="security_center_home_dark_web_monitoring_title">Dark Web Monitoring</string>
-  <string name="security_center_home_widget_breaches_title">Breach detected</string>
-  <string name="security_center_home_widget_breaches_subtitle">Your email address was leaked in at least 1 data breach.</string>
-  <string name="security_center_home_widget_no_breaches_subtitle">Get notified if your email, password or other personal data was leaked.</string>
+  <string name="security_center_home_widget_breaches_title">違反が検出されました</string>
+  <string name="security_center_home_widget_breaches_subtitle">あなたの電子メール アドレスは、少なくとも 1 件のデータ侵害で漏洩しました。</string>
+  <string name="security_center_home_widget_no_breaches_subtitle">メールアドレス、パスワード、その他の個人データが漏洩した場合に通知を受け取ります。</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">侵害は検出されませんでした</string>
   <string name="security_center_home_row_data_breaches_title">Dark Web Alert</string>
   <string name="security_center_home_row_data_breaches_subtitle">侵害が検出されました</string>
@@ -34,13 +34,13 @@
   <string name="security_center_home_row_reused_passwords_subtitle">一意のパスワードを生成してください</string>
   <string name="security_center_home_row_missing_tfa_title">2要素認証が無効</string>
   <string name="security_center_home_row_missing_tfa_subtitle">2要素認証を設定するとより安全になります</string>
-  <string name="security_center_home_row_excludes_items_title">Excluded from monitoring</string>
-  <string name="security_center_home_row_excludes_items_subtitle">These items remain at risk</string>
+  <string name="security_center_home_row_excludes_items_title">監視対象外</string>
+  <string name="security_center_home_row_excludes_items_subtitle">これらのアイテムは危険なままです</string>
   <string name="security_center_get_breaches_error">Could not load breaches</string>
   <string name="security_center_home_section_password_health">パスワードの健全性</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_sentinel_subtitle">Proton Sentinel is an advanced account protection program powered by sophisticated AI systems and specialists working around the clock to protect you from bad actors and security threats.</string>
+  <string name="security_center_sentinel_subtitle">Proton Sentinel は、洗練された AI システムとスペシャリストを活用した高度なアカウント保護プログラムで、悪者やセキュリティの脅威からユーザーを保護するために 24 時間体制で働いています。</string>
   <string name="security_center_sentinel_button_enable">Proton Sentinelを有効にする</string>
   <string name="security_center_sentinel_button_disable">Proton Sentinelを無効にする</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel protection activation has been canceled</string>
@@ -52,11 +52,11 @@
   <string name="security_center_weak_pass_top_bar_subtitle">弱いパスワードは推測されやすく、安全ではありません。アカウントを安全に保つために強力なパスワードを生成してください。</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">再利用パスワード</string>
-  <string name="security_center_reused_pass_top_bar_subtitle">Generate unique passwords for each account to increase your security.</string>
-  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Reused %1$d times</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">セキュリティを強化するために、アカウントごとに一意のパスワードを生成します。</string>
+  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">%1$d 回再利用しました</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">2要素認証が無効</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">For added security, set up two-factor authentication on the following accounts.</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">セキュリティを強化するには、次のアカウントに 2 要素認証を設定します。</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Excluded items</string>
   <!-- Dark web monitor -->
@@ -67,7 +67,7 @@
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Add new custom email address</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">追加</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
-    <item quantity="other">Used in %d logins</item>
+    <item quantity="other">%d ログインで使用されます</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
     <item quantity="other">%d breaches detected</item>
@@ -92,7 +92,7 @@
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">There was an error removing the email. Please try again later.</string>
   <!-- Add custom email monitoring -->
-  <string name="security_center_custom_email_top_bar_title">Custom email monitoring</string>
+  <string name="security_center_custom_email_top_bar_title">カスタムメール監視</string>
   <string name="security_center_custom_email_email_address_placeholder">メールアドレス</string>
   <string name="security_center_custom_email_invalid_address">無効なメールアドレスです</string>
   <string name="security_center_custom_email_continue">Continue</string>
@@ -101,7 +101,7 @@
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_code_placeholder">コード</string>
   <string name="security_center_verify_email_code_error">無効なコード</string>
-  <string name="security_center_verify_email_title">Confirm your email</string>
+  <string name="security_center_verify_email_title">メールを確認してください</string>
   <string name="security_center_verify_email_subtitle">We\'ve sent a verification code to %s. Please enter it below:</string>
   <string name="security_center_verify_email_code_resend_header">Haven’t received the code?</string>
   <string name="security_center_verify_email_code_resend_body">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
@@ -111,41 +111,41 @@
   <string name="security_center_verify_email_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Too many invalid verifications. Removing custom email.</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_report_title_detected">Breaches detected for</string>
+  <string name="security_center_verify_report_title_detected">検出された侵害</string>
   <string name="security_center_verify_report_title_none">No breaches detected for</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Used in</string>
   <string name="security_center_email_report_breaches_header">Breaches</string>
-  <string name="security_center_email_report_resolved_breaches_header">Resolved breaches</string>
-  <string name="security_center_email_report_mark_as_resolved">Mark as resolved</string>
+  <string name="security_center_email_report_resolved_breaches_header">解決された違反</string>
+  <string name="security_center_email_report_mark_as_resolved">解決済みにする</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_success">Breach has been marked as resolved</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_error">Could not mark as resolved</string>
   <string name="security_center_email_report_snackbar_get_breaches_error">Could not load breaches</string>
   <string name="security_center_email_report_options_menu">Breach report options menu</string>
   <!-- Breach report detail-->
-  <string name="security_center_report_detail_your_exposed_information">Your exposed information</string>
-  <string name="security_center_report_detail_subtitle">Your info was in a data breach and found on __DATE__</string>
+  <string name="security_center_report_detail_your_exposed_information">あなたの暴露された情報</string>
+  <string name="security_center_report_detail_subtitle">あなたの情報はデータ侵害に遭い、__DATE__ で発見されました。</string>
   <string name="security_center_report_detail_details">Details</string>
   <string name="security_center_report_detail_email_address">メールアドレス</string>
   <string name="security_center_report_detail_password">パスワード</string>
-  <string name="security_center_report_detail_recommended_actions">Recommended actions</string>
+  <string name="security_center_report_detail_recommended_actions">推奨されるアクション</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">The exposed information was leaked from %s. Your Proton Account information remains secure and encrypted.</string>
   <string name="security_center_report_detail_learn_more">Learn more</string>
   <string name="security_center_report_detail_snackbar_error">Could not load breach details</string>
-  <string name="security_center_report_detail_excluded_from_monitoring">Excluded from monitoring</string>
+  <string name="security_center_report_detail_excluded_from_monitoring">監視対象外</string>
   <string name="security_center_report_resolve_confirmation_dialog_title">Resolve all breaches?</string>
   <string name="security_center_report_resolve_confirmation_dialog_message">All current breaches will be marked as resolved. In case of future data breaches, you will be notified.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Proton アドレス</string>
   <string name="security_center_proton_list_no_breaches_detected">侵害は検出されませんでした</string>
-  <string name="security_center_proton_list_excluded_from_monitoring">Excluded from monitoring</string>
+  <string name="security_center_proton_list_excluded_from_monitoring">監視対象外</string>
   <string name="security_center_proton_list_error">Could not load addresses</string>
-  <string name="security_center_proton_list_included_in_monitoring">Enable monitoring to get notified if your Proton addresses were leaked.</string>
+  <string name="security_center_proton_list_included_in_monitoring">Proton アドレスが漏洩した場合に通知を受け取るには、監視を有効にします。</string>
   <string name="security_center_proton_list_options_menu">Proton screen options menu</string>
   <string name="security_center_proton_list_not_monitored">Not monitored</string>
   <!-- Address Bottomsheet options -->
-  <string name="security_center_address_bottomsheet_disable_monitoring">Pause monitoring</string>
-  <string name="security_center_address_bottomsheet_enable_monitoring">Resume monitoring</string>
+  <string name="security_center_address_bottomsheet_disable_monitoring">監視を一時停止する</string>
+  <string name="security_center_address_bottomsheet_enable_monitoring">監視を再開する</string>
   <string name="security_center_address_bottomsheet_remove_custom_email">Remove custom email</string>
   <string name="security_center_address_bottomsheet_snackbar_message_enable_error">There was an error pausing monitoring</string>
   <string name="security_center_address_bottomsheet_snackbar_message_disable_error">There was an error resuming monitoring</string>
@@ -155,11 +155,11 @@
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Custom email removed</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Hide-my-email エイリアス</string>
-  <string name="security_center_alias_list_excluded_from_monitoring">Excluded from monitoring</string>
+  <string name="security_center_alias_list_excluded_from_monitoring">監視対象外</string>
   <string name="security_center_alias_list_error">Could not load addresses</string>
   <string name="security_center_alias_list_included_in_monitoring">Enable monitoring to get notified if your Hide-my-email aliases were leaked.</string>
   <string name="security_center_alias_list_monitored">Monitored</string>
-  <string name="security_center_alias_list_custom_email_message">Aliases with custom domains are not monitored, please add them as a custom email for monitoring.</string>
+  <string name="security_center_alias_list_custom_email_message">カスタム ドメインを持つエイリアスは監視されません。監視用のカスタム電子メールとして追加してください。</string>
   <string name="security_center_alias_list_options_menu">Alias screen options menu</string>
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">データセキュリティ</string>

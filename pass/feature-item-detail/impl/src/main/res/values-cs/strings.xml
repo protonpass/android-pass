@@ -95,6 +95,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nelze sdílet</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nemáte dostatečná oprávnění pro sdílení tohoto trezoru.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Dosáhli jste limitu pro sdílení trezoru. Chcete-li sdílet více trezorů, navyšte svůj stávající tarif.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Tuto položku nemůžete sdílet, protože je v koši. Před sdílením ji prosím přesuňte z koše.</string>
   <string name="password_score_vulnerable">Zranitelný</string>
   <string name="password_score_weak">Slabý</string>
   <string name="password_score_strong">Silný</string>

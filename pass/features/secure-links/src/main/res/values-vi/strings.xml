@@ -37,15 +37,15 @@
     <item quantity="other">%d lần</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">Unlimited</string>
-  <string name="secure_links_overview_button_view_all_links">View all your secure links</string>
+  <string name="secure_links_overview_button_view_all_links">Xem tất cả các liên kết bảo mật</string>
   <!--List screen-->
   <string name="secure_links_list_title">Secure links</string>
   <string name="secure_links_list_empty_title">No secure links</string>
   <string name="secure_links_list_empty_subtitle">You can start creating secure links from an item details sharing options</string>
-  <string name="secure_links_list_expiration_description">Expires in %s</string>
+  <string name="secure_links_list_expiration_description">Hết hạn trong %s</string>
   <string name="secure_links_list_expired_description">Expired</string>
   <plurals name="secure_links_list_viewed_times_description">
-    <item quantity="other">%d views</item>
+    <item quantity="other">%d lượt xem</item>
   </plurals>
   <string name="secure_links_list_snackbar_message_links_fetch_error">There was an error fetching secure links</string>
   <string name="secure_links_list_header_title_inactive">Inactive links</string>

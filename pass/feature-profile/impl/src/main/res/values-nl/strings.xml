@@ -12,6 +12,7 @@
   <string name="profile_option_autofill">Autom. aanvullen</string>
   <string name="profile_option_autofill_subtitle">Vul automatisch uw gebruikersnamen en wachtwoorden in.</string>
   <string name="profile_option_secure_links">Secure links</string>
+  <string name="profile_option_aliases">Aliases</string>
   <string name="profile_error_biometry_failed_to_start">Kan de biometrische authenticatie niet starten</string>
   <string name="profile_error_biometry_failed_to_authenticate">Authenticatie mislukt</string>
   <string name="profile_fingerprint_lock_enabled">Vingerafdrukontgrendeling ingeschakeld</string>

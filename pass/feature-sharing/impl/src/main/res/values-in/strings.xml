@@ -121,7 +121,7 @@
   <string name="sharing_edit_permissions_set_access_level_single_member">Tetapkan tingkat akses untuk %s</string>
   <string name="sharing_edit_permissions_remove_user">Hapus pengguna</string>
   <string name="sharing_error_dialog_title">Kesalahan yang tidak diketahui</string>
-  <string name="sharing_error_dialog_message">Terdapat kesalahan pada saat mengirim undangan untuk brankas ini. Apabila masalah terus berlanjut, silakan hubungi layanan dukungan kami.</string>
+  <string name="sharing_error_dialog_message">Terdapat kesalahan pada saat mengirim undangan untuk brankas ini. Apabila masalah ini terus berlanjut, silakan hubungi layanan dukungan kami.</string>
   <string name="sharing_with_no_addresses_can_be_invited">Tidak ada alamat yang bisa diundang</string>
   <string name="sharing_with_some_addresses_cannot_be_invited">Beberapa alamat tidak bisa diundang</string>
 </resources>

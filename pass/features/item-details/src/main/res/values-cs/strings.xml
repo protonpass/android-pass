@@ -19,4 +19,13 @@
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">Tlačítko pro zobrazení možností nabídky</string>
   <string name="item_details_toolbar_content_description_share_button">Tlačítko pro sdílení položky</string>
+  <!-- Item details forbidden actions -->
+  <string name="item_details_forbidden_actions_edit_title">Nelze upravit</string>
+  <string name="item_details_forbidden_actions_edit_permission">Tuto položku nemůžete upravit, protože k tomu nemáte dostatečná oprávnění.</string>
+  <string name="item_details_forbidden_actions_edit_trash">Tuto položku nemůžete upravit, protože je v koši. Před úpravou ji prosím přesuňte z koše.</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">Upravovat můžete pouze položky v nejstarších trezorech. Chcete-li tuto položku upravit, navyšte svůj aktuální tarif.</string>
+  <string name="item_details_forbidden_actions_share_title">Nelze sdílet</string>
+  <string name="item_details_forbidden_actions_share_limit">Dosáhli jste limitu pro sdílení trezoru. Chcete-li sdílet více trezorů, navyšte svůj stávající tarif.</string>
+  <string name="item_details_forbidden_actions_share_permission">Nemáte dostatečná oprávnění pro sdílení tohoto trezoru.</string>
+  <string name="item_details_forbidden_actions_share_trash">You cannot share this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
 </resources>

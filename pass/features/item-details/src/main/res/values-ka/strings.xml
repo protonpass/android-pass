@@ -19,4 +19,13 @@
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">ღილაკი მენიუს პარამეტრების საჩვენებლად</string>
   <string name="item_details_toolbar_content_description_share_button">ღილაკი ელემენტის გასაზიარებლად</string>
+  <!-- Item details forbidden actions -->
+  <string name="item_details_forbidden_actions_edit_title">ჩასწორება შეუძლებელია</string>
+  <string name="item_details_forbidden_actions_edit_permission">ამ ელემენტის ჩასწორება არ შეგიძლიათ საკმარისი წვდომების არქონის გამო.</string>
+  <string name="item_details_forbidden_actions_edit_trash">ამ ელემენტის ჩასწორება არ შეგიძლიათ, რადგან ის ნაგვის ყუთშია. გამოიტანეთ ის ნაგვის ყუთიდან, სანამ ჩაასწორებთ.</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">თქვენს უძველეს საცავებში ელემენტებს ვერ ჩაასწორებთ. ამ ელემენტების ჩასასწორებლად ასწიეთ მიმდინარე სატარიფო გეგმა.</string>
+  <string name="item_details_forbidden_actions_share_title">გაზიარება შეუძლებელია</string>
+  <string name="item_details_forbidden_actions_share_limit">მიაღწიეთ საცავის გაზიარების ზღვარს. იმისთვის, რომ მეტი საცავი გააზიაროთ, ასწიეთ თქვენი სატარიფო გეგმა.</string>
+  <string name="item_details_forbidden_actions_share_permission">ამ საცავის გაზიარებისთვის საკმარისი წვდომები არ გაგაჩნიათ.</string>
+  <string name="item_details_forbidden_actions_share_trash">You cannot share this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
 </resources>

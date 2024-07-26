@@ -140,13 +140,13 @@
   <string name="identity_add_field_floor">Floor</string>
   <string name="identity_add_field_county">County</string>
   <string name="identity_add_field_linkedin">Linkedin</string>
-  <string name="identity_add_field_reddit">Reddit username</string>
+  <string name="identity_add_field_reddit">Reddit使用者名稱</string>
   <string name="identity_add_field_facebook">Facebook URL</string>
   <string name="identity_add_field_yahoo">Yahoo username</string>
   <string name="identity_add_field_instagram">Instagram handle</string>
-  <string name="identity_add_field_personal_website">Personal website URL</string>
-  <string name="identity_add_field_work_phone_number">Work phone number</string>
-  <string name="identity_add_field_work_email_address">Work email address</string>
+  <string name="identity_add_field_personal_website">個人網站網址</string>
+  <string name="identity_add_field_work_phone_number">工作電話號碼</string>
+  <string name="identity_add_field_work_email_address">工作電子郵件</string>
   <string name="identity_add_field_custom_field">Custom field</string>
   <string name="identity_section_personal_details">個人資訊</string>
   <string name="identity_section_address_details">Address details</string>

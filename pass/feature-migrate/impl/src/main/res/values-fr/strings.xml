@@ -10,7 +10,7 @@
   <string name="migrate_item_error_snackbar">Une erreur s\'est produite pendant le déplacement des éléments.</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Une erreur s\'est produite lors du déplacement de certains éléments.</string>
   <string name="migrate_item_warning_history">Quand les éléments sont déplacés d\'un coffre-fort à l\'autre, nous conservons au maximum les 50 dernières modifications apportées à chaque élément.</string>
-  <string name="migrate_item_warning_secure_link">Les liens sécurisés de l\'élément seront supprimés lorsqu\'il sera déplacé vers un autre coffre-fort.</string>
+  <string name="migrate_item_warning_secure_link">Les liens sécurisés de l\'élément seront retirés lorsqu\'il sera déplacé vers un autre coffre-fort.</string>
   <string name="migrate_all_items_success_snackbar">Tous les éléments ont été déplacés.</string>
   <string name="migrate_all_items_error_snackbar">Une erreur s\'est produite pendant le déplacement des éléments du coffre-fort.</string>
   <string name="migrate_init_error_snackbar">Impossible de préparer l\'écran de transfert</string>

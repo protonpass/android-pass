@@ -23,7 +23,7 @@
   <string name="account_settings_list_item_extra_password_header">Senha adicional para o Proton Pass</string>
   <string name="account_settings_list_item_extra_password_header_set">Configurar senha adicional para o Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Ativo</string>
-  <string name="account_settings_list_item_extra_password_description">A senha extra será necessária para utilizar o Pass. Ela serve como uma senha adicional sobre sua senha do Proton.</string>
+  <string name="account_settings_list_item_extra_password_description">A senha adicional será necessária para utilizar o Pass. Serve como uma senha adicional sobre sua senha do Proton.</string>
   <string name="account_settings_list_item_security_keys_hint_not_set">Não definido</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">

@@ -93,6 +93,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">No se puede compartir.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">No tienes los permisos suficientes para compartir esta caja fuerte.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Has alcanzado el límite de cajas fuertes compartidas. Mejora tu plan actual para compartir más cajas fuertes.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
   <string name="password_score_vulnerable">Vulnerable</string>
   <string name="password_score_weak">Poco segura</string>
   <string name="password_score_strong">Segura</string>

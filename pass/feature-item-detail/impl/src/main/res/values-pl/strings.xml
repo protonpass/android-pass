@@ -95,6 +95,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nie można udostępnić</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nie masz wystarczających uprawnień do udostępnienia sejfu.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Osiągnięto maksymalną liczbę udostępnionych sejfów. Ulepsz plan, aby udostępnić więcej sejfów.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
   <string name="password_score_vulnerable">Bardzo słabe</string>
   <string name="password_score_weak">Słabe</string>
   <string name="password_score_strong">Silne</string>

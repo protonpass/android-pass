@@ -112,11 +112,21 @@
     -->
   <string name="date_full_date_format">dd LLLL HH:mm</string>
   <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to 12 Feb 12:34
+    -->
+  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_compact_month">dd LLL HH:mm</string>
+  <!--
     Pattern used when displaying a date including the year.
     It would translate to
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <!--
+   Pattern used when displaying a date including the year.
+   It would translate to 12 Feb 2023 12:34
+   -->
+  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_with_year_compact_month">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Alias-adress</string>
   <string name="item_details_alias_section_mailboxes_title">Vidarebefordrad till</string>
@@ -223,4 +233,9 @@
   <string name="snack_bar_message_item_restore_error">Det gick inte återställa detta objekt</string>
   <string name="snack_bar_message_item_delete_success">Objekt borttaget</string>
   <string name="snack_bar_message_item_delete_error">Det gick inte ta bort detta objekt</string>
+  <!-- Simple Login -->
+  <string name="simple_login_widget_title">Aktivera SimpleLogin-synkronisering</string>
+  <string name="simple_login_widget_message">Vi upptäckte att du har 16 alias som finns i SimpleLogin men saknas i Proton Pass. Vill du importera dem?</string>
+  <string name="simple_login_widget_action">Synkronisera alias</string>
+  <string name="simple_login_widget_close_content_description">Button to close simple login aliases sync widget</string>
 </resources>

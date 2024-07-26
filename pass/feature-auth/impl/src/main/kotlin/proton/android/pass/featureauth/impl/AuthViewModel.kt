@@ -142,15 +142,8 @@ class AuthViewModel @Inject constructor(
             accountManager.getAccounts(AccountState.Ready),
             accountManager.getPrimaryAccount()
         ) { accounts: List<Account>, primaryAccount: Account? ->
-            val orderedAccounts = primaryAccount?.let { primary ->
-                listOf(primary) + accounts.filter { it.userId != primary.userId }
-            } ?: accounts
-            orderedAccounts.associate { account ->
-                account.userId to AccountItem(
-                    email = userManager.getUser(account.userId).email.orEmpty(),
-                    isPrimary = primaryAccount?.userId == account.userId
-                )
-            }.toPersistentMap()
+            val orderedAccounts = orderAccountsByPrimary(accounts, primaryAccount)
+            orderedAccounts.toPersistentMap()
         },
         ::AccountSwitcherState
     )
@@ -162,14 +155,6 @@ class AuthViewModel @Inject constructor(
         userId ?: primaryAccountUserId
     }.filterNotNull()
 
-    private val remainingPasswordAttemptCountFlow = currentUserId
-        .flatMapLatest { internalSettingsRepository.getMasterPasswordAttemptsCount(it) }
-        .map {
-            (MAX_WRONG_PASSWORD_ATTEMPTS - it).takeIf { attempts ->
-                attempts > 0 && attempts != MAX_WRONG_PASSWORD_ATTEMPTS
-            }.toOption()
-        }
-
     val state: StateFlow<AuthState> = combineN(
         eventFlow,
         formContentFlow,
@@ -179,7 +164,7 @@ class AuthViewModel @Inject constructor(
         accountSwitcherFlow,
         currentUserId,
         internalSettingsRepository.getPinAttemptsCount(),
-        remainingPasswordAttemptCountFlow
+        currentUserId.flatMapLatest(::getRemainingPasswordAttempts)
     ) { event, formContent, userEmail, authMethod, hasExtraPassword,
         accountSwitcherState, currentUserId, pinAttemptsCount, remainingPasswordAttemptCount ->
         val address = when (userEmail) {
@@ -219,6 +204,34 @@ class AuthViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000L),
             initialValue = AuthState.Initial
         )
+
+    private fun getRemainingPasswordAttempts(userId: UserId): Flow<Option<Int>> =
+        internalSettingsRepository.getMasterPasswordAttemptsCount(userId)
+            .map(::calculateRemainingAttempts)
+
+    private fun calculateRemainingAttempts(attempts: Int): Option<Int> {
+        val remainingAttempts = MAX_WRONG_PASSWORD_ATTEMPTS - attempts
+        return if (remainingAttempts > 0 && remainingAttempts != MAX_WRONG_PASSWORD_ATTEMPTS) {
+            remainingAttempts.toOption()
+        } else {
+            None
+        }
+    }
+
+    private suspend fun orderAccountsByPrimary(accounts: List<Account>, primaryAccount: Account?) =
+        primaryAccount?.let { primary ->
+            listOf(primary) + accounts.filter { it.userId != primary.userId }
+        }?.associate { account ->
+            account.userId to createAccountItem(account, primaryAccount)
+        } ?: accounts.associate { account ->
+            account.userId to createAccountItem(account, primaryAccount)
+        }
+
+    private suspend fun createAccountItem(account: Account, primaryAccount: Account?): AccountItem {
+        val email = userManager.getUser(account.userId).email.orEmpty()
+        val isPrimary = primaryAccount?.userId == account.userId
+        return AccountItem(email = email, isPrimary = isPrimary)
+    }
 
     fun onAccountSwitch(userId: UserId) = viewModelScope.launch {
         accountManager.setAsPrimary(userId)

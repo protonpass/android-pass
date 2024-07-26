@@ -74,7 +74,7 @@ internal fun AliasRow(
                             backgroundColor = PassTheme.colors.aliasInteractionNormMajor1
                         )
                     },
-                    content = { AliasIcon() }
+                    content = { AliasIcon(activeAlias = !content.isDisabled) }
                 )
 
                 is ItemSelectionModeState.InSelectionMode -> {
@@ -91,7 +91,12 @@ internal fun AliasRow(
                                     backgroundColor = PassTheme.colors.aliasInteractionNormMajor1
                                 )
                             },
-                            content = { AliasIcon(enabled = isEnabled) }
+                            content = {
+                                AliasIcon(
+                                    enabled = isEnabled,
+                                    activeAlias = !content.isDisabled
+                                )
+                            }
                         )
                     }
                 }

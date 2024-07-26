@@ -159,7 +159,8 @@ sealed class ItemContents {
     data class Alias(
         override val title: String,
         override val note: String,
-        val aliasEmail: String
+        val aliasEmail: String,
+        val isDisabled: Boolean
     ) : ItemContents()
 
     @Stable

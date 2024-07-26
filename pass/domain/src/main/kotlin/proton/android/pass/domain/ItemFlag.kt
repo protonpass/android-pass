@@ -20,5 +20,6 @@ package proton.android.pass.domain
 
 enum class ItemFlag(val value: Int) {
     SkipHealthCheck(value = 1 shl 0),
-    EmailBreached(value = 1 shl 1)
+    EmailBreached(value = 1 shl 1),
+    AliasDisabled(value = 1 shl 2)
 }

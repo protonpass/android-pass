@@ -145,7 +145,8 @@ class TestObservePinnedItems @Inject constructor() : ObservePinnedItems {
             itemContents = ItemContents.Alias(
                 title = title,
                 note = note,
-                aliasEmail = alias
+                aliasEmail = alias,
+                isDisabled = false
             )
         )
 

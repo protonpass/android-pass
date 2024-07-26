@@ -53,6 +53,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
+import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetAliasDetails
 import proton.android.pass.data.api.usecases.GetItemActions
@@ -69,6 +70,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.canUpdate
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.AliasChangeStatusError
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.AliasCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMovedToTrash
@@ -101,6 +103,7 @@ class AliasDetailViewModel @Inject constructor(
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
+    private val changeAliasStatus: ChangeAliasStatus,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     getAliasDetails: GetAliasDetails,
@@ -304,8 +307,20 @@ class AliasDetailViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
-    internal fun toggleAliasState(state: Boolean) {
-        // WIP
+    internal fun toggleAliasState(
+        shareId: ShareId,
+        itemId: ItemId,
+        state: Boolean
+    ) {
+        viewModelScope.launch {
+            runCatching { changeAliasStatus(shareId, itemId, state) }
+                .onSuccess { PassLogger.i(TAG, "Alias status changed successfully") }
+                .onFailure {
+                    snackbarDispatcher(AliasChangeStatusError)
+                    PassLogger.w(TAG, "Error changing alias status")
+                    PassLogger.w(TAG, it)
+                }
+        }
     }
 
     companion object {

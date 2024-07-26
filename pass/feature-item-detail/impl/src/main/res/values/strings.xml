@@ -35,6 +35,7 @@
     <string name="item_monitor_exclude_message_error">There was an error excluding item from monitoring</string>
     <string name="item_monitor_include_message">Item successfully included in monitoring</string>
     <string name="item_monitor_include_message_error">There was an error including item in monitoring</string>
+    <string name="alias_change_status_error">There was an error changing the alias status</string>
     <string name="login_item_generate_totp_error">Error generating 2FA code</string>
     <string name="login_item_view_alias_button">View alias</string>
     <string name="login_item_monitor_widget_weak_pass_title">Weak Password</string>

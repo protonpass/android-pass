@@ -55,13 +55,14 @@ internal fun SimpleLoginSyncSettingsVaultSection(
     selectedVault: Vault,
 ) {
     Column(
-        modifier = modifier.clickable { onClick() },
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
         Row(
             modifier = Modifier
                 .roundedContainerNorm()
                 .fillMaxWidth()
+                .clickable { onClick() }
                 .padding(all = Spacing.medium),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium)

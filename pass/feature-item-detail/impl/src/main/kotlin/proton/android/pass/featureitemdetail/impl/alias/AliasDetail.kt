@@ -42,6 +42,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemState
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
@@ -90,6 +91,7 @@ fun AliasDetail(
                 skipHalfExpanded = true
             )
 
+            val contents = state.itemUiModel.contents as ItemContents.Alias
             PassModalBottomSheetLayout(
                 sheetState = bottomSheetState,
                 sheetContent = {
@@ -138,7 +140,11 @@ fun AliasDetail(
                                     shouldShowDeleteItemDialog = true
                                 }
                             },
-                            icon = { AliasIcon() }
+                            icon = {
+                                AliasIcon(
+                                    activeAlias = !contents.isDisabled
+                                )
+                            }
                         )
                     }
                 }

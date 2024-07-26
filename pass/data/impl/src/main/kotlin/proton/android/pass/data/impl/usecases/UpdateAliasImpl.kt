@@ -28,10 +28,10 @@ import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateAliasItemContent
-import proton.android.pass.log.api.PassLogger
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class UpdateAliasImpl @Inject constructor(
@@ -84,7 +84,8 @@ class UpdateAliasImpl @Inject constructor(
         val itemContents = ItemContents.Alias(
             title = content.title,
             note = content.note,
-            aliasEmail = "" // Not used when creating the payload
+            aliasEmail = "", // Not used when creating the payload
+            isDisabled = false
         )
         return itemRepository.updateItem(userId, share, item, itemContents)
     }

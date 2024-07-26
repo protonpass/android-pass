@@ -86,7 +86,8 @@ fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents = wh
 private fun Item.createAlias(encryptionContext: EncryptionContext, type: ItemType.Alias) = ItemContents.Alias(
     title = encryptionContext.decrypt(title),
     note = encryptionContext.decrypt(note),
-    aliasEmail = type.aliasEmail
+    aliasEmail = type.aliasEmail,
+    isDisabled = isAliasDisabled
 )
 
 private fun Item.createLogin(encryptionContext: EncryptionContext, type: ItemType.Login) = ItemContents.Login(

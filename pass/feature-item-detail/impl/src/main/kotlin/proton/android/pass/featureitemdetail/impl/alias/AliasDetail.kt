@@ -204,7 +204,13 @@ fun AliasDetail(
                                 )
                             )
                         },
-                        onToggleAliasState = viewModel::toggleAliasState
+                        onToggleAliasState = {
+                            viewModel.toggleAliasState(
+                                shareId = state.itemUiModel.shareId,
+                                itemId = state.itemUiModel.id,
+                                state = it
+                            )
+                        }
                     )
                 }
 

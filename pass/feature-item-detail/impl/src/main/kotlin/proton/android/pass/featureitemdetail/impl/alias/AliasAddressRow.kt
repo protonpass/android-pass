@@ -30,6 +30,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Switch
+import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -94,7 +95,14 @@ fun AliasAddressRow(
             )
         }
         if (isAliasSyncEnabled) {
-            Switch(checked = isAliasDisabled, onCheckedChange = onToggleAliasState)
+            Switch(
+                checked = !isAliasDisabled,
+                onCheckedChange = onToggleAliasState,
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = PassTheme.colors.aliasInteractionNorm,
+                    checkedTrackColor = PassTheme.colors.aliasInteractionNormMajor1
+                )
+            )
         }
     }
 }

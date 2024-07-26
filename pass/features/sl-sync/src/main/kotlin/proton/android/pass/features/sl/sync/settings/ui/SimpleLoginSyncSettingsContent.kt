@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.features.sl.sync.settings.presentation.SimpleLoginSyncSettingsState
 
 @Composable
@@ -55,14 +56,19 @@ internal fun SimpleLoginSyncSettingsContent(
             verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
             if (selectedVaultOption is Some) {
-                SimpleLoginSyncSettingsVaultSection(
-                    selectedVault = selectedVaultOption.value,
-                    onClick = {
-                        SimpleLoginSyncUiEvent.OnSelectVaultClicked(
-                            shareId = selectedVaultOption.value.shareId
-                        ).also(onUiEvent)
-                    }
-                )
+                with(selectedVaultOption.value) {
+                    SimpleLoginSyncSettingsVaultSection(
+                        vaultName = name,
+                        vaultBackgroundColor = color.toColor(isBackground = true),
+                        vaultIcon = icon,
+                        vaultIconColor = color.toColor(),
+                        onClick = {
+                            SimpleLoginSyncUiEvent.OnSelectVaultClicked(
+                                shareId = selectedVaultOption.value.shareId
+                            ).also(onUiEvent)
+                        }
+                    )
+                }
             }
         }
     }

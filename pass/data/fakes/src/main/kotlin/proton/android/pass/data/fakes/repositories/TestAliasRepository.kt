@@ -19,8 +19,8 @@
 package proton.android.pass.data.fakes.repositories
 
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.data.api.repositories.AliasRepository
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasOptions
@@ -48,6 +48,15 @@ class TestAliasRepository @Inject constructor() : AliasRepository {
         itemId: ItemId,
         mailboxes: List<AliasMailbox>
     ): Flow<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun changeAliasStatus(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        enable: Boolean
+    ) {
         TODO("Not yet implemented")
     }
 }

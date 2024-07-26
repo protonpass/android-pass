@@ -39,4 +39,11 @@ interface AliasRepository {
         itemId: ItemId,
         mailboxes: List<AliasMailbox>
     ): Flow<Unit>
+
+    suspend fun changeAliasStatus(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        enable: Boolean
+    )
 }

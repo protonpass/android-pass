@@ -28,6 +28,7 @@ import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CancelInvite
+import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.CheckCanAddressesBeInvited
 import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.CheckPin
@@ -185,6 +186,7 @@ import proton.android.pass.data.impl.usecases.ApplyPendingEventsImpl
 import proton.android.pass.data.impl.usecases.CanDisplayTotpImpl
 import proton.android.pass.data.impl.usecases.CanPerformPaidActionImpl
 import proton.android.pass.data.impl.usecases.CancelInviteImpl
+import proton.android.pass.data.impl.usecases.ChangeAliasStatusImpl
 import proton.android.pass.data.impl.usecases.CheckCanAddressesBeInvitedImpl
 import proton.android.pass.data.impl.usecases.CheckMasterPasswordImpl
 import proton.android.pass.data.impl.usecases.CheckPinImpl
@@ -829,4 +831,6 @@ abstract class DataUseCaseModule {
         impl: ObserveHasAssociatedSecureLinksImpl
     ): ObserveHasAssociatedSecureLinks
 
+    @[Binds Singleton]
+    abstract fun bindChangeAliasStatus(impl: ChangeAliasStatusImpl): ChangeAliasStatus
 }

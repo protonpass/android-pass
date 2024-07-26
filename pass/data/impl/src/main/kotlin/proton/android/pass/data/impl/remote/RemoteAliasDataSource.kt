@@ -19,10 +19,11 @@
 package proton.android.pass.data.impl.remote
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
 import proton.android.pass.data.impl.responses.AliasDetails
 import proton.android.pass.data.impl.responses.AliasOptionsResponse
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
@@ -39,4 +40,11 @@ interface RemoteAliasDataSource {
         itemId: ItemId,
         mailboxes: UpdateAliasMailboxesRequest
     ): Flow<AliasDetails>
+
+    suspend fun changeAliasStatus(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        request: ChangeAliasStatusRequest
+    )
 }

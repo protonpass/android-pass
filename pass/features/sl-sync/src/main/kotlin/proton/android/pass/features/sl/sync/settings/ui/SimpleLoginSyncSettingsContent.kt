@@ -53,20 +53,15 @@ internal fun SimpleLoginSyncSettingsContent(
             verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
             if (hasVaults) {
-                SimpleLoginSyncSettingsVault(
-                    selectedVault = selectedVault
+                SimpleLoginSyncSettingsVaultSection(
+                    selectedVault = selectedVault,
+                    onClick = {
+                        SimpleLoginSyncUiEvent.OnSelectVaultClicked(
+                            shareId = selectedVault.shareId
+                        ).also(onUiEvent)
+                    }
                 )
             }
-
-            SimpleLoginSyncSettingsNotes(
-                isChecked = isNotesStoringEnabled,
-                onCheckedChange = { isChecked ->
-                    SimpleLoginSyncUiEvent.OnNoteStoringFlagChanged(
-                        isEnabled = isChecked
-                    ).also(onUiEvent)
-                },
-                onLinkClick = { onUiEvent(SimpleLoginSyncUiEvent.OnLinkClicked) }
-            )
         }
     }
 }

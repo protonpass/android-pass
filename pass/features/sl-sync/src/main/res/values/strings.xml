@@ -21,6 +21,4 @@
     <string name="simple_login_sync_settings_title">Sync aliases</string>
     <string name="simple_login_sync_settings_default_vault_title">Default SL vault</string>
     <string name="simple_login_sync_settings_default_vault_description">SimpleLogin aliases will be imported into this vault.</string>
-    <string name="simple_login_sync_settings_notes_title">Store alias notes from SimpleLogin in Proton Pass</string>
-    <string name="simple_login_sync_settings_notes_description">All notes from SimpleLogin will be reset. Please only store aliases notes in Proton Pass exclusively from now on. Learn more.</string>
 </resources>

@@ -18,8 +18,13 @@
 
 package proton.android.pass.features.sl.sync.shared.navigation
 
+import proton.android.pass.domain.ShareId
+
 sealed interface SimpleLoginSyncNavDestination {
 
     data object Back : SimpleLoginSyncNavDestination
+
+    @JvmInline
+    value class SelectVault(val shareId: ShareId) : SimpleLoginSyncNavDestination
 
 }

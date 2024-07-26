@@ -75,7 +75,11 @@ fun AliasOptionsBottomSheetContents(
             } else {
                 { BottomSheetItemSubtitle(text = contents.aliasEmail) }
             },
-            leftIcon = { AliasIcon() }
+            leftIcon = {
+                AliasIcon(
+                    activeAlias = !contents.isDisabled
+                )
+            }
         )
 
         val bottomSheetItems = mutableListOf(copyAlias(contents.aliasEmail, onCopyAlias)).apply {
@@ -132,7 +136,8 @@ fun AliasOptionsBottomSheetContentsPreview(
                     contents = ItemContents.Alias(
                         "My Alias",
                         "Note content",
-                        "alias.email@proton.me"
+                        "alias.email@proton.me",
+                        false
                     ),
                     state = 0,
                     createTime = Clock.System.now(),

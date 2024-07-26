@@ -50,20 +50,22 @@ fun AliasDetailContent(
     onViewItemHistoryClicked: () -> Unit,
     isHistoryFeatureEnabled: Boolean
 ) {
+    val contents = itemUiModel.contents as ItemContents.Alias
     Column(
         modifier = modifier.padding(horizontal = Spacing.medium),
         verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         AliasTitle(
             modifier = Modifier.padding(Spacing.none, Spacing.mediumSmall),
-            title = itemUiModel.contents.title,
+            title = contents.title,
+            isActive = !contents.isDisabled,
             vault = vault,
             onVaultClick = onVaultClick,
             isPinned = itemUiModel.isPinned
         )
 
         AliasSection(
-            alias = (itemUiModel.contents as ItemContents.Alias).aliasEmail,
+            alias = contents.aliasEmail,
             mailboxes = mailboxes,
             isLoading = isLoading,
             onCopyAlias = onCopyAlias,
@@ -71,7 +73,7 @@ fun AliasDetailContent(
         )
 
         NoteSection(
-            text = itemUiModel.contents.note,
+            text = contents.note,
             accentColor = PassTheme.colors.aliasInteractionNorm
         )
 

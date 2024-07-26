@@ -254,14 +254,16 @@ internal class ItemUiFilterTest {
             itemContents = ItemContents.Alias(
                 title = "Title",
                 note = "Note",
-                aliasEmail = "alias@example.com"
+                aliasEmail = "alias@example.com",
+                isDisabled = false
             )
         ),
         TestItemUiModel.create(
             itemContents = ItemContents.Alias(
                 title = "Another Title",
                 note = "Another Note",
-                aliasEmail = "test@example.com"
+                aliasEmail = "test@example.com",
+                isDisabled = false
             )
         )
     )

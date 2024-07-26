@@ -18,15 +18,15 @@
 
 package proton.android.pass.features.sl.sync.settings.ui
 
+import proton.android.pass.domain.ShareId
+
 internal sealed interface SimpleLoginSyncUiEvent {
 
     data object OnCloseClicked : SimpleLoginSyncUiEvent
 
     data object OnConfirmClicked : SimpleLoginSyncUiEvent
 
-    data object OnLinkClicked : SimpleLoginSyncUiEvent
-
     @JvmInline
-    value class OnNoteStoringFlagChanged(internal val isEnabled: Boolean) : SimpleLoginSyncUiEvent
+    value class OnSelectVaultClicked(internal val shareId: ShareId) : SimpleLoginSyncUiEvent
 
 }

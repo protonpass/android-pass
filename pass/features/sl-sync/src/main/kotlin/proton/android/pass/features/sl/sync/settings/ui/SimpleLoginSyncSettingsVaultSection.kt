@@ -29,6 +29,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,7 +44,8 @@ import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
-import proton.android.pass.domain.Vault
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
 import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.shared.ui.SimpleLoginSyncDescriptionText
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -52,7 +54,10 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun SimpleLoginSyncSettingsVaultSection(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
-    selectedVault: Vault,
+    vaultName: String,
+    vaultBackgroundColor: Color,
+    vaultIcon: ShareIcon,
+    vaultIconColor: Color
 ) {
     Column(
         modifier = modifier,
@@ -68,9 +73,9 @@ internal fun SimpleLoginSyncSettingsVaultSection(
             horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
             VaultIcon(
-                backgroundColor = selectedVault.color.toColor(true),
-                icon = selectedVault.icon.toResource(),
-                iconColor = selectedVault.color.toColor()
+                backgroundColor = vaultBackgroundColor,
+                icon = vaultIcon.toResource(),
+                iconColor = vaultIconColor
             )
 
             Column(
@@ -82,7 +87,7 @@ internal fun SimpleLoginSyncSettingsVaultSection(
                 )
 
                 SectionSubtitle(
-                    text = selectedVault.name.asAnnotatedString(),
+                    text = vaultName.asAnnotatedString(),
                 )
             }
 
@@ -105,7 +110,13 @@ internal fun SimpleLoginSyncSettingsVaultPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-//            SimpleLoginSyncSettingsVault()
+            SimpleLoginSyncSettingsVaultSection(
+                vaultName = "Vault name",
+                vaultBackgroundColor = ShareColor.Color1.toColor(isBackground = true),
+                vaultIcon = ShareIcon.Icon1,
+                vaultIconColor = ShareColor.Color1.toColor(),
+                onClick = {}
+            )
         }
     }
 }

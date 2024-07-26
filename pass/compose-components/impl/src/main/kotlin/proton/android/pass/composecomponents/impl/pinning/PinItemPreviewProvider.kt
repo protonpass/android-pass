@@ -76,7 +76,8 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             contents = ItemContents.Alias(
                 title = "Alias title",
                 note = "",
-                aliasEmail = ""
+                aliasEmail = "",
+                isDisabled = false
             ),
             state = 0,
             createTime = Clock.System.now(),

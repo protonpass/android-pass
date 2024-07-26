@@ -19,23 +19,19 @@
 package proton.android.pass.features.sl.sync.settings.presentation
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.domain.Vault
 
 @Stable
 internal data class SimpleLoginSyncSettingsState(
-    internal val isNotesStoringEnabled: Boolean,
-    private val vaults: List<Vault>
+    internal val selectedVaultOption: Option<Vault>
 ) {
-
-    internal val hasVaults: Boolean = vaults.isNotEmpty()
-
-    internal val selectedVault: Vault by lazy { vaults.first() }
 
     internal companion object {
 
         internal val Initial: SimpleLoginSyncSettingsState = SimpleLoginSyncSettingsState(
-            isNotesStoringEnabled = false,
-            vaults = emptyList()
+            selectedVaultOption = None
         )
 
     }

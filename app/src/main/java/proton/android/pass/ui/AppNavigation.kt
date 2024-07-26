@@ -30,7 +30,7 @@ sealed interface AppNavigation {
     data object RecoveryEmail : AppNavigation
     data object SecurityKeys : AppNavigation
     data object AddAccount : AppNavigation
-
+    data object ForceSignOutAllUsers : AppNavigation
 
     @JvmInline
     value class ForceSignOut(val userId: UserId) : AppNavigation

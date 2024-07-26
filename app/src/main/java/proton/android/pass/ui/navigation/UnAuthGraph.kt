@@ -64,6 +64,7 @@ fun NavGraphBuilder.unAuthGraph(
                     when (it) {
                         is EnterPinNavigation.Success -> dismissBottomSheet { appNavigator.navigateBack() }
                         is EnterPinNavigation.Close -> dismissBottomSheet { appNavigator.navigateBack() }
+                        EnterPinNavigation.ForceSignOutAllUsers -> onNavigate(AppNavigation.ForceSignOutAllUsers)
                     }
                 }
             )
@@ -91,6 +92,8 @@ private fun SharedAuthScreen(onNavigate: (AppNavigation) -> Unit, appNavigator: 
                     EnterPin,
                     EnterPin.buildRoute(AuthOrigin.AUTO_LOCK)
                 )
+
+                AuthNavigation.ForceSignOutAllUsers -> onNavigate(AppNavigation.ForceSignOutAllUsers)
             }
         }
     )

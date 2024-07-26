@@ -157,7 +157,8 @@ class ItemRepositoryImpl @Inject constructor(
         val itemContents = ItemContents.Alias(
             title = newAlias.title,
             note = newAlias.note,
-            aliasEmail = "" // Not used when creating the payload
+            aliasEmail = "", // Not used when creating the payload,
+            isDisabled = false
         )
         val body = createItem.create(shareKey, itemContents)
 
@@ -195,7 +196,8 @@ class ItemRepositoryImpl @Inject constructor(
             val aliasContents = ItemContents.Alias(
                 title = newAlias.title,
                 note = newAlias.note,
-                aliasEmail = "" // Not used when creating the payload
+                aliasEmail = "", // Not used when creating the payload
+                isDisabled = false
             )
             val aliasBody = createItem.create(shareKey, aliasContents)
 
@@ -280,7 +282,8 @@ class ItemRepositoryImpl @Inject constructor(
         isFlagEnabled: Boolean
     ): Item = when (flag) {
         ItemFlag.SkipHealthCheck -> UpdateItemFlagsRequest().copy(skipHealthCheck = isFlagEnabled)
-        ItemFlag.EmailBreached -> UpdateItemFlagsRequest()
+        ItemFlag.EmailBreached,
+        ItemFlag.AliasDisabled -> UpdateItemFlagsRequest()
     }.let { updateItemFlagsRequest ->
         remoteItemDataSource.updateItemFlags(
             userId = userId,

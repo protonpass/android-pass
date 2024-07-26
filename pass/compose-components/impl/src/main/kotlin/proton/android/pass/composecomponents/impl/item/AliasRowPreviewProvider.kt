@@ -29,6 +29,7 @@ class AliasRowPreviewProvider : PreviewParameterProvider<AliasRowParameter> {
     override val values: Sequence<AliasRowParameter>
         get() = sequenceOf(
             with(title = "Empty alias", alias = ""),
+            with(title = "Disabled alias", alias = "", disabled = true),
             with(title = "With content", alias = "somealias@random.local"),
             with(
                 title = "With very long content",
@@ -56,12 +57,13 @@ class AliasRowPreviewProvider : PreviewParameterProvider<AliasRowParameter> {
             title: String,
             alias: String,
             note: String = "",
-            highlight: String = ""
+            highlight: String = "",
+            disabled: Boolean = false
         ) = AliasRowParameter(
             model = ItemUiModel(
                 id = ItemId("123"),
                 shareId = ShareId("456"),
-                contents = ItemContents.Alias(title, note, alias),
+                contents = ItemContents.Alias(title, note, alias, disabled),
                 state = 0,
                 createTime = Clock.System.now(),
                 modificationTime = Clock.System.now(),

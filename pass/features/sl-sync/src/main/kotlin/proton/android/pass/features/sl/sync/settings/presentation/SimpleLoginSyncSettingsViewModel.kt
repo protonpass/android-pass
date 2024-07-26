@@ -72,4 +72,8 @@ class SimpleLoginSyncSettingsViewModel @Inject constructor(
         selectedShareIdOptionFlow.update { shareId.some() }
     }
 
+    internal fun onConfirmSyncSetting() {
+        // Will be implemented in IDTEAM-3642
+    }
+
 }

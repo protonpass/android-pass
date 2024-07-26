@@ -24,31 +24,52 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
+import proton.android.pass.data.api.usecases.ObserveVaultById
+import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
 class SimpleLoginSyncSettingsViewModel @Inject constructor(
-    observeVaults: ObserveVaults
+    observeDefaultVault: ObserveDefaultVault,
+    observeVaultById: ObserveVaultById
 ) : ViewModel() {
 
-    private val isNotesStoringEnabledFlow = MutableStateFlow(false)
+    private val selectedShareIdOptionFlow = MutableStateFlow<Option<ShareId>>(None)
 
-    internal val state: StateFlow<SimpleLoginSyncSettingsState> = combine(
-        isNotesStoringEnabledFlow,
-        observeVaults(),
-        ::SimpleLoginSyncSettingsState
-    ).stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
-        initialValue = SimpleLoginSyncSettingsState.Initial
-    )
+    private val selectedVaultOptionFlow = selectedShareIdOptionFlow
+        .flatMapLatest { shareIdOption ->
+            when (shareIdOption) {
+                None -> observeDefaultVault().map { vaultWithItemCountOption ->
+                    when (vaultWithItemCountOption) {
+                        None -> None
+                        is Some -> vaultWithItemCountOption.value.vault.toOption()
+                    }
+                }
 
-    internal fun onChangeNotesStoringFlag(isEnabled: Boolean) {
-        isNotesStoringEnabledFlow.update { isEnabled }
+                is Some -> observeVaultById(shareId = shareIdOption.value)
+            }
+        }
+
+    internal val state: StateFlow<SimpleLoginSyncSettingsState> = selectedVaultOptionFlow
+        .map(::SimpleLoginSyncSettingsState)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
+            initialValue = SimpleLoginSyncSettingsState.Initial
+        )
+
+    internal fun onSelectShareId(shareId: ShareId) {
+        selectedShareIdOptionFlow.update { shareId.some() }
     }
 
 }

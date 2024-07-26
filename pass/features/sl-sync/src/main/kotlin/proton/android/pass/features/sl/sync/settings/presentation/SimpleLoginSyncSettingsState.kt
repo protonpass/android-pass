@@ -21,12 +21,18 @@ package proton.android.pass.features.sl.sync.settings.presentation
 import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.domain.Vault
 
 @Stable
 internal data class SimpleLoginSyncSettingsState(
     internal val selectedVaultOption: Option<Vault>
 ) {
+
+    internal val canConfirmSettings: Boolean = when (selectedVaultOption) {
+        None -> false
+        is Some -> true
+    }
 
     internal companion object {
 

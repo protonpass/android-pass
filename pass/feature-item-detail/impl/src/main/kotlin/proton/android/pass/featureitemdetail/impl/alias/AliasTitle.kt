@@ -45,7 +45,8 @@ fun AliasTitle(
     title: String,
     vault: Vault?,
     onVaultClick: () -> Unit,
-    isPinned: Boolean
+    isPinned: Boolean,
+    isActive: Boolean
 ) {
     Row(
         modifier = modifier,
@@ -60,7 +61,11 @@ fun AliasTitle(
                 )
             },
             content = {
-                AliasIcon(size = 60, shape = PassTheme.shapes.squircleMediumLargeShape)
+                AliasIcon(
+                    size = 60,
+                    shape = PassTheme.shapes.squircleMediumLargeShape,
+                    activeAlias = isActive
+                )
             }
         )
 
@@ -85,7 +90,8 @@ fun AliasTitlePreview(@PreviewParameter(ThemeItemTitleProvider::class) input: Pa
                 title = params.itemUiModel.contents.title,
                 vault = params.vault,
                 onVaultClick = {},
-                isPinned = params.itemUiModel.isPinned
+                isPinned = params.itemUiModel.isPinned,
+                isActive = true
             )
         }
     }

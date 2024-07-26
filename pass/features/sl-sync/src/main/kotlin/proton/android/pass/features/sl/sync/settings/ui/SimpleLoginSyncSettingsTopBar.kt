@@ -20,6 +20,7 @@ package proton.android.pass.features.sl.sync.settings.ui
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -37,8 +38,19 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun SimpleLoginSyncSettingsTopBar(
     modifier: Modifier = Modifier,
     onUpClick: () -> Unit,
-    onConfirmClick: () -> Unit
+    onConfirmClick: () -> Unit,
+    isConfirmEnabled: Boolean
 ) {
+    val buttonColorDefault = PassTheme.colors.interactionNormMajor1
+
+    val buttonColor = remember(isConfirmEnabled) {
+        if (isConfirmEnabled) {
+            buttonColorDefault
+        } else {
+            buttonColorDefault.copy(alpha = 0.1f)
+        }
+    }
+
     PassExtendedTopBar(
         modifier = modifier,
         backButton = PassTopBarBackButtonType.Cross,
@@ -47,7 +59,7 @@ internal fun SimpleLoginSyncSettingsTopBar(
         actions = {
             LoadingCircleButton(
                 isLoading = false,
-                color = PassTheme.colors.interactionNormMajor1,
+                color = buttonColor,
                 text = {
                     Text(
                         text = stringResource(id = CompR.string.action_confirm),
@@ -58,7 +70,9 @@ internal fun SimpleLoginSyncSettingsTopBar(
                         maxLines = 1
                     )
                 },
-                onClick = onConfirmClick
+                onClick = onConfirmClick,
+                buttonEnabled = isConfirmEnabled,
+                showClickEffect = isConfirmEnabled
             )
         }
     )

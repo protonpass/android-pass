@@ -21,5 +21,5 @@ package proton.android.pass.features.sl.sync.settings.navigation
 import proton.android.pass.navigation.api.NavItem
 
 object SimpleLoginSyncSettingsNavItem : NavItem(
-    baseRoute = "sl/sync/settings",
+    baseRoute = "sl/sync/settings"
 )

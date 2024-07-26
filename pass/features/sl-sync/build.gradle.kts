@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.core.presentation.compose)
     implementation(libs.dagger.hilt.android)
     implementation(libs.kotlinx.collections)
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
     kapt(libs.dagger.hilt.android.compiler)

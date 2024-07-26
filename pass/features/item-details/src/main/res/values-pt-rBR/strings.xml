@@ -19,4 +19,13 @@
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">Botão para exibição do menu de opções</string>
   <string name="item_details_toolbar_content_description_share_button">Botão para compartilhar um item</string>
+  <!-- Item details forbidden actions -->
+  <string name="item_details_forbidden_actions_edit_title">Não pode editar</string>
+  <string name="item_details_forbidden_actions_edit_permission">Você não pode editar porque você não tem permissão suficiente.</string>
+  <string name="item_details_forbidden_actions_edit_trash">Você não pode editar este item porque ele está na lixeira. Retire-o da lixeira antes de editá-lo.</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">Você só tem permissão para editar itens nos cofres mais antigos. Para editar este item, atualize seu plano atual.</string>
+  <string name="item_details_forbidden_actions_share_title">Não pode compartilhar</string>
+  <string name="item_details_forbidden_actions_share_limit">Você atingiu o limite de compartilhamento do cofre. Para compartilhar mais cofres, atualize seu plano atual.</string>
+  <string name="item_details_forbidden_actions_share_permission">Você não tem permissões suficientes para compartilhar este cofre.</string>
+  <string name="item_details_forbidden_actions_share_trash">Você não pode compartilhar este item porque ele está na lixeira. Retire-o da lixeira antes de editá-lo.</string>
 </resources>

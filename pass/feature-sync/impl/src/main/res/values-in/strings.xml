@@ -17,14 +17,14 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="sync_item_empty">Empty vault</string>
+  <string name="sync_item_empty">Brankas kosong</string>
   <plurals name="sync_item_count">
-    <item quantity="other">Downloaded %d items</item>
+    <item quantity="other">%d item diunduh</item>
   </plurals>
   <plurals name="sync_finished_item_count">
-    <item quantity="other">%d items synchronized</item>
+    <item quantity="other">%d item disinkronkan</item>
   </plurals>
-  <string name="sync_progress_item_count">Downloading %1$d of %2$d items</string>
+  <string name="sync_progress_item_count">Mengunduh %1$d dari %2$d item</string>
   <string name="sync_dialog_title">Menyinkronkan item…</string>
   <string name="sync_dialog_title_error">Sinkronisasi gagal</string>
   <string name="sync_dialog_title_success">Sinkronisasi selesai</string>
@@ -33,6 +33,6 @@
   <string name="sync_dialog_subtitle_success">Item Anda berhasil diunduh dan didekripsi.</string>
   <string name="sync_item_not_started">Belum dimulai</string>
   <string name="sync_item_failed">Sinkronisasi gagal</string>
-  <string name="sync_dialog_title_inserting">Inserting items…</string>
-  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
+  <string name="sync_dialog_title_inserting">Menyisipkan item…</string>
+  <string name="sync_dialog_subtitle_inserting">Menyelesaikan langkah terakhir, hampir sampai.</string>
 </resources>

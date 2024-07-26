@@ -19,5 +19,5 @@
 <resources>
   <!-- Delete dialog -->
   <string name="item_trash_delete_dialog_title">Poistetaanko pysyvästi?</string>
-  <string name="item_trash_delete_dialog_message">Tätä ei ole mahdollista kumota.</string>
+  <string name="item_trash_delete_dialog_message">Toimintoa ei ole mahdollista kumota.</string>
 </resources>

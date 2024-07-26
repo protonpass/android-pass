@@ -11,7 +11,8 @@
   <string name="profile_option_rating">Arvioi sovellus</string>
   <string name="profile_option_autofill">Automaattitäyttö</string>
   <string name="profile_option_autofill_subtitle">Täytä käyttäjätunnukset ja salasanat automaattisesti.</string>
-  <string name="profile_option_secure_links">Turvalliset linkit</string>
+  <string name="profile_option_secure_links">Suojatut linkit</string>
+  <string name="profile_option_aliases">Aliakset</string>
   <string name="profile_error_biometry_failed_to_start">Biometristä todennusta ei voitu käynnistää</string>
   <string name="profile_error_biometry_failed_to_authenticate">Todennus epäonnistui</string>
   <string name="profile_fingerprint_lock_enabled">Sormenjälkilukitus otettiin käyttöön</string>
@@ -23,8 +24,8 @@
   <string name="feedback_option_vote_new_features">Äänestä uusia ominaisuuksia</string>
   <string name="app_lock_immediately">Välittömästi</string>
   <string name="app_lock_one_minute">Minuutin kuluttua</string>
-  <string name="app_lock_two_minutes">2 minuutin kuluttua</string>
-  <string name="app_lock_five_minutes">5 minuutin kuluttua</string>
+  <string name="app_lock_two_minutes">Kahden minuutin kuluttua</string>
+  <string name="app_lock_five_minutes">Viiden minuutin kuluttua</string>
   <string name="app_lock_ten_minutes">10 minuutin kuluttua</string>
   <string name="app_lock_one_hour">Tunnin kuluttua</string>
   <string name="app_lock_four_hours">4 tunnin kuluttua</string>

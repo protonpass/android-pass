@@ -38,9 +38,9 @@
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="other">%d lần đăng nhập khác sử dụng cùng mật khẩu</item>
   </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Set up 2FA for more security</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
-  <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Thiết lập 2FA để an toàn hơn</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Dịch vụ này hỗ trợ mã bí mật 2FA. Hãy khởi tạo nó để tăng cường bảo mật cho tài khoản của bạn.</string>
+  <string name="login_item_reused_passwords_subtitle">Các nội dung khác sử dụng cùng mật khẩu này.</string>
   <string name="field_email">Địa chỉ email</string>
   <string name="field_username">Tên người dùng</string>
   <string name="field_username_or_email">Tên đăng nhập hoặc Email</string>
@@ -92,6 +92,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Không thể chia sẽ</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Bạn không có đủ quyền để chia sẻ kho lưu trữ này.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
   <string name="password_score_vulnerable">Dễ bị bẻ khóa</string>
   <string name="password_score_weak">Yếu</string>
   <string name="password_score_strong">Mạnh</string>

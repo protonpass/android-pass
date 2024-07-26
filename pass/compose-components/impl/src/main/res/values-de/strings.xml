@@ -112,11 +112,21 @@
     -->
   <string name="date_full_date_format">dd. LLLL HH:mm</string>
   <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to 12 Feb 12:34
+    -->
+  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_compact_month">dd LLL HH:mm</string>
+  <!--
     Pattern used when displaying a date including the year.
     It would translate to
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">dd. LLLL yyyy HH:mm</string>
+  <!--
+   Pattern used when displaying a date including the year.
+   It would translate to 12 Feb 2023 12:34
+   -->
+  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_with_year_compact_month">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Alias-Adresse</string>
   <string name="item_details_alias_section_mailboxes_title">Wird weitergeleitet an</string>
@@ -162,10 +172,10 @@
   <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
   <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
   <string name="item_details_identity_section_work_title">Angaben zur Arbeit</string>
-  <string name="item_details_identity_section_work_company_title">Firma</string>
+  <string name="item_details_identity_section_work_company_title">Unternehmen</string>
   <string name="item_details_identity_section_work_occupation_title">Beruf</string>
   <string name="item_details_identity_section_work_email_title">Geschäftliche E-Mail-Adresse</string>
-  <string name="item_details_identity_section_work_phone_number_title">Geschäftliche Rufnummer</string>
+  <string name="item_details_identity_section_work_phone_number_title">Geschäftliche Telefonnummer</string>
   <string name="item_details_identity_section_work_personal_website_title">Persönliche Website</string>
   <string name="item_details_shared_section_note_title">Notiz</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">Letztes Auto-Ausfüllen</string>
@@ -223,4 +233,9 @@
   <string name="snack_bar_message_item_restore_error">Fehler beim Wiederherstellen des Eintrags.</string>
   <string name="snack_bar_message_item_delete_success">Eintrag erfolgreich gelöscht.</string>
   <string name="snack_bar_message_item_delete_error">Fehler beim Löschen des Eintrags.</string>
+  <!-- Simple Login -->
+  <string name="simple_login_widget_title">SimpleLogin-Synchronisierung aktivieren</string>
+  <string name="simple_login_widget_message">Wir haben festgestellt, dass du 16 Aliasse hast, die in SimpleLogin vorhanden sind, aber in Proton Pass fehlen. Möchtest du diese importieren?</string>
+  <string name="simple_login_widget_action">Aliasse synchronisieren</string>
+  <string name="simple_login_widget_close_content_description">Schaltfläche zum Schließen des Widgets für die Synchronisierung von SimpleLogin-Aliassen</string>
 </resources>

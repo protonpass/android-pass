@@ -45,7 +45,7 @@
   <string name="security_center_sentinel_button_disable">Désactiver Proton Sentinel</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">L\'activation de Proton Sentinel a été annulée.</string>
   <string name="security_center_sentinel_snackbar_message_enable_error">Une erreur s\'est produite lors de l\'activation de la protection Proton Sentinel. Veuillez réessayer plus tard.</string>
-  <string name="security_center_sentinel_snackbar_message_disable_canceled">La désactivation de Proton Sentinel a été annulée</string>
+  <string name="security_center_sentinel_snackbar_message_disable_canceled">La désactivation de Proton Sentinel a été annulée.</string>
   <string name="security_center_sentinel_snackbar_message_disable_error">Une erreur s\'est produite lors de la désactivation de la protection Proton Sentinel. Veuillez réessayer plus tard.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Mots de passe faibles</string>
@@ -56,7 +56,7 @@
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Réutilisé %1$d fois</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">L\'authentification A2F n\'est pas active.</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">Pour une sécurité améliorée, activez l\'authentification à deux facteurs sur les comptes suivants.</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">Pour plus de sécurité, activez l\'authentification à deux facteurs sur les comptes suivants.</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Éléments exclus</string>
   <!-- Dark web monitor -->

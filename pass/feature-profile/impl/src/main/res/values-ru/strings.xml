@@ -12,6 +12,7 @@
   <string name="profile_option_autofill">Автозаполнение</string>
   <string name="profile_option_autofill_subtitle">Автоматическое заполнение имен пользователей и паролей.</string>
   <string name="profile_option_secure_links">Защищенные ссылки</string>
+  <string name="profile_option_aliases">Aliases</string>
   <string name="profile_error_biometry_failed_to_start">Не удалось запустить биометрическую аутентификацию</string>
   <string name="profile_error_biometry_failed_to_authenticate">Сбой аутентификации</string>
   <string name="profile_fingerprint_lock_enabled">Отпечаток ключа включен</string>

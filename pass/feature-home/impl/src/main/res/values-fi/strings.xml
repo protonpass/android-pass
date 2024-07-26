@@ -130,6 +130,6 @@
   <string name="home_snackbar_items_pinned_partial_success">Virhe joidenkin kohteiden kiinnityksessä</string>
   <string name="home_snackbar_items_pinned_error">Virhe kohteiden kiinnityksessä</string>
   <string name="home_snackbar_items_unpinned_success">Kohteet irrotettiin</string>
-  <string name="home_snackbar_items_unpinned_partial_success">Virhe joidenkin kohteiden irrotuksessa</string>
-  <string name="home_snackbar_items_unpinned_error">Virhe kohteiden irrotuksessa</string>
+  <string name="home_snackbar_items_unpinned_partial_success">Virhe irrotettaessa osaa kohteista</string>
+  <string name="home_snackbar_items_unpinned_error">Virhe irrotettaessa kohteita</string>
 </resources>

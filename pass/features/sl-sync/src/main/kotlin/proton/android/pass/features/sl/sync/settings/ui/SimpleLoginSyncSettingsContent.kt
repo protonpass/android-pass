@@ -43,7 +43,8 @@ internal fun SimpleLoginSyncSettingsContent(
                 },
                 onConfirmClick = {
                     onUiEvent(SimpleLoginSyncUiEvent.OnConfirmClicked)
-                }
+                },
+                isConfirmEnabled = canConfirmSettings
             )
         }
     ) { innerPaddingValue ->

@@ -55,7 +55,7 @@ fun SimpleLoginSyncSettingsScreen(
                 }
 
                 SimpleLoginSyncUiEvent.OnConfirmClicked -> {
-
+                    onConfirmSyncSetting()
                 }
 
                 is SimpleLoginSyncUiEvent.OnSelectVaultClicked -> {

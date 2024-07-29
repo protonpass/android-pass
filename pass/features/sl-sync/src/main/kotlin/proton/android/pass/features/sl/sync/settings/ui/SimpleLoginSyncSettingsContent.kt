@@ -32,7 +32,7 @@ import proton.android.pass.features.sl.sync.settings.presentation.SimpleLoginSyn
 @Composable
 internal fun SimpleLoginSyncSettingsContent(
     modifier: Modifier = Modifier,
-    onUiEvent: (SimpleLoginSyncUiEvent) -> Unit,
+    onUiEvent: (SimpleLoginSettingsSyncUiEvent) -> Unit,
     state: SimpleLoginSyncSettingsState
 ) = with(state) {
     Scaffold(
@@ -40,10 +40,10 @@ internal fun SimpleLoginSyncSettingsContent(
         topBar = {
             SimpleLoginSyncSettingsTopBar(
                 onUpClick = {
-                    onUiEvent(SimpleLoginSyncUiEvent.OnCloseClicked)
+                    onUiEvent(SimpleLoginSettingsSyncUiEvent.OnCloseClicked)
                 },
                 onConfirmClick = {
-                    onUiEvent(SimpleLoginSyncUiEvent.OnConfirmClicked)
+                    onUiEvent(SimpleLoginSettingsSyncUiEvent.OnConfirmClicked)
                 },
                 isConfirmEnabled = canConfirmSettings
             )
@@ -63,7 +63,7 @@ internal fun SimpleLoginSyncSettingsContent(
                         vaultIcon = icon,
                         vaultIconColor = color.toColor(),
                         onClick = {
-                            SimpleLoginSyncUiEvent.OnSelectVaultClicked(
+                            SimpleLoginSettingsSyncUiEvent.OnSelectVaultClicked(
                                 shareId = selectedVaultOption.value.shareId
                             ).also(onUiEvent)
                         }

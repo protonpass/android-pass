@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.settings.ui
+package proton.android.pass.features.sl.sync.shared.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,44 +25,38 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
-import proton.android.pass.composecomponents.impl.extension.toColor
-import proton.android.pass.composecomponents.impl.extension.toResource
-import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
-import proton.android.pass.domain.ShareColor
-import proton.android.pass.domain.ShareIcon
-import proton.android.pass.features.sl.sync.R
-import proton.android.pass.features.sl.sync.shared.ui.SimpleLoginSyncDescriptionText
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-internal fun SimpleLoginSyncSettingsVaultSection(
+internal fun SimpleLoginSyncSectionRow(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
-    vaultName: String,
-    vaultBackgroundColor: Color,
-    vaultIcon: ShareIcon,
-    vaultIconColor: Color
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    label: String? = null,
+    description: String? = null
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
+        label?.let { labelText ->
+            SimpleLoginSyncLabelText(
+                text = labelText,
+            )
+        }
+
         Row(
             modifier = Modifier
                 .roundedContainerNorm()
@@ -72,22 +66,18 @@ internal fun SimpleLoginSyncSettingsVaultSection(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
-            VaultIcon(
-                backgroundColor = vaultBackgroundColor,
-                icon = vaultIcon.toResource(),
-                iconColor = vaultIconColor
-            )
+            leadingIcon?.invoke()
 
             Column(
                 modifier = Modifier.weight(weight = 1f),
                 verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
             ) {
                 SectionTitle(
-                    text = stringResource(id = R.string.simple_login_sync_shared_default_vault_title)
+                    text = title
                 )
 
                 SectionSubtitle(
-                    text = vaultName.asAnnotatedString()
+                    text = subtitle.asAnnotatedString()
                 )
             }
 
@@ -98,22 +88,9 @@ internal fun SimpleLoginSyncSettingsVaultSection(
             )
         }
 
-        SimpleLoginSyncDescriptionText(
-            text = stringResource(id = R.string.simple_login_sync_shared_default_vault_description)
-        )
-    }
-}
-
-@[Preview Composable]
-internal fun SimpleLoginSyncSettingsVaultPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
-        Surface {
-            SimpleLoginSyncSettingsVaultSection(
-                vaultName = "Vault name",
-                vaultBackgroundColor = ShareColor.Color1.toColor(isBackground = true),
-                vaultIcon = ShareIcon.Icon1,
-                vaultIconColor = ShareColor.Color1.toColor(),
-                onClick = {}
+        description?.let { descriptionText ->
+            SimpleLoginSyncDescriptionText(
+                text = descriptionText
             )
         }
     }

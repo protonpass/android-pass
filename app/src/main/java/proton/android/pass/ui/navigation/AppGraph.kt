@@ -1926,6 +1926,10 @@ fun NavGraphBuilder.appGraph(
                         selectedVault = destination.shareId
                     )
                 )
+
+                SimpleLoginSyncNavDestination.Settings -> appNavigator.navigate(
+                    destination = SimpleLoginSyncSettingsNavItem
+                )
             }
         }
     )

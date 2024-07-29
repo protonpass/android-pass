@@ -50,7 +50,7 @@ internal fun SimpleLoginSyncDetailsContent(
             PassFullScreenLoading()
         } else {
             SimpleLoginSyncDetailsSections(
-                modifier = modifier.padding(paddingValues = innerPaddingValue),
+                modifier = Modifier.padding(paddingValues = innerPaddingValue),
                 defaultDomain = defaultDomain,
                 defaultMailbox = defaultMailbox,
                 defaultVaultOption = defaultVaultOption,

@@ -62,7 +62,7 @@ internal fun SimpleLoginSyncSectionRow(
     ) {
         label?.let { labelText ->
             SimpleLoginSyncLabelText(
-                text = labelText,
+                text = labelText
             )
         }
 
@@ -106,9 +106,7 @@ internal fun SimpleLoginSyncSectionRow(
 }
 
 @[Preview Composable]
-internal fun SimpleLoginSyncSectionRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+internal fun SimpleLoginSyncSectionRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SimpleLoginSyncSectionRow(
@@ -122,9 +120,7 @@ internal fun SimpleLoginSyncSectionRowPreview(
 }
 
 @[Preview Composable]
-internal fun SimpleLoginSyncSectionRowVaultPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+internal fun SimpleLoginSyncSectionRowVaultPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SimpleLoginSyncSectionRow(

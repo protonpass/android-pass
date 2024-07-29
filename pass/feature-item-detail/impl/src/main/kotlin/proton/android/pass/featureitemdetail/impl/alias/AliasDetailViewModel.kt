@@ -148,8 +148,8 @@ class AliasDetailViewModel @Inject constructor(
         .asLoadingResult()
 
     private val itemFeaturesFlow: Flow<AliasItemFeatures> = combine(
-        featureFlagsRepository[FeatureFlag.SL_ALIASES_SYNC],
         getUserPlan().map { it.isPaidPlan },
+        featureFlagsRepository[FeatureFlag.SL_ALIASES_SYNC],
         ::AliasItemFeatures
     )
 

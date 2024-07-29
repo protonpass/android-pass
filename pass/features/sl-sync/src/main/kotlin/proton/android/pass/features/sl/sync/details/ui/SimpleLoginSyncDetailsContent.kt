@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTopBarBackButtonType
+import proton.android.pass.composecomponents.impl.loading.PassFullScreenLoading
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.details.presentation.SimpleLoginSyncDetailsState
@@ -45,12 +46,16 @@ internal fun SimpleLoginSyncDetailsContent(
             )
         }
     ) { innerPaddingValue ->
-        SimpleLoginSyncDetailsSections(
-            modifier = modifier.padding(paddingValues = innerPaddingValue),
-            defaultDomain = defaultDomain,
-            defaultMailbox = defaultMailbox,
-            defaultVaultOption = defaultVaultOption,
-            onUiEvent = onUiEvent
-        )
+        if (isLoading) {
+            PassFullScreenLoading()
+        } else {
+            SimpleLoginSyncDetailsSections(
+                modifier = modifier.padding(paddingValues = innerPaddingValue),
+                defaultDomain = defaultDomain,
+                defaultMailbox = defaultMailbox,
+                defaultVaultOption = defaultVaultOption,
+                onUiEvent = onUiEvent
+            )
+        }
     }
 }

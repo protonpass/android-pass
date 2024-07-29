@@ -38,6 +38,7 @@ fun AliasSection(
     alias: String,
     isAliasDisabled: Boolean,
     isAliasSyncEnabled: Boolean,
+    isAliasToggleTooltipEnabled: Boolean,
     mailboxes: PersistentList<AliasMailbox>,
     isLoading: Boolean,
     onCopyAlias: (String) -> Unit,
@@ -51,6 +52,7 @@ fun AliasSection(
             alias = alias,
             isAliasDisabled = isAliasDisabled,
             isAliasSyncEnabled = isAliasSyncEnabled,
+            isAliasToggleTooltipEnabled = isAliasToggleTooltipEnabled,
             onCopyAlias = { onCopyAlias(it) },
             onCreateLoginFromAlias = onCreateLoginFromAlias,
             onToggleAliasState = onToggleAliasState
@@ -79,6 +81,7 @@ fun AliasSectionPreview(
                 alias = "myalias@myalias.com",
                 isAliasDisabled = false,
                 isAliasSyncEnabled = false,
+                isAliasToggleTooltipEnabled = false,
                 mailboxes = input.second.toPersistentList(),
                 isLoading = false,
                 onCopyAlias = {},

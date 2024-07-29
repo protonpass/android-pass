@@ -50,7 +50,8 @@ fun AliasDetailContent(
     onToggleAliasState: (Boolean) -> Unit,
     onVaultClick: () -> Unit,
     onViewItemHistoryClicked: () -> Unit,
-    isHistoryFeatureEnabled: Boolean
+    isHistoryFeatureEnabled: Boolean,
+    isAliasToggleTooltipEnabled: Boolean
 ) {
     val contents = itemUiModel.contents as ItemContents.Alias
     Column(
@@ -70,6 +71,7 @@ fun AliasDetailContent(
             alias = contents.aliasEmail,
             isAliasDisabled = contents.isDisabled,
             isAliasSyncEnabled = isAliasSyncEnabled,
+            isAliasToggleTooltipEnabled = isAliasToggleTooltipEnabled,
             mailboxes = mailboxes,
             isLoading = isLoading,
             onCopyAlias = onCopyAlias,

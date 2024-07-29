@@ -19,5 +19,6 @@
 package proton.android.pass.domain.tooltips
 
 enum class Tooltip {
-    UsernameSplit
+    UsernameSplit,
+    AliasToggle
 }

@@ -173,6 +173,14 @@ class TestLocalItemDataSource : LocalItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
+    override suspend fun updateItemFlags(
+        shareId: ShareId,
+        itemId: ItemId,
+        flags: Int
+    ) {
+        throw IllegalStateException("Not yet implemented")
+    }
+
     override suspend fun getItemsPendingForPasskeyMigration(): List<ItemEntity> {
         throw IllegalStateException("Not yet implemented")
     }

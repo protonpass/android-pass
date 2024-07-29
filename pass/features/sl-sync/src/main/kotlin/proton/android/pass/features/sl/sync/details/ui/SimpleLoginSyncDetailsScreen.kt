@@ -42,11 +42,11 @@ fun SimpleLoginSyncDetailsScreen(
                 }
 
                 SimpleLoginSyncDetailsUiEvent.OnDomainClicked -> {
-
+                    // Will be implemented in IDTEAM-3659
                 }
 
                 SimpleLoginSyncDetailsUiEvent.OnMailboxClicked -> {
-
+                    // Will be implemented in IDTEAM-3659
                 }
 
                 SimpleLoginSyncDetailsUiEvent.OnSyncSettingsClicked -> {

@@ -49,16 +49,16 @@ fun SimpleLoginSyncSettingsScreen(
         state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
-                SimpleLoginSyncUiEvent.OnCloseClicked -> {
+                SimpleLoginSettingsSyncUiEvent.OnCloseClicked -> {
                     SimpleLoginSyncNavDestination.Back
                         .also(onNavigated)
                 }
 
-                SimpleLoginSyncUiEvent.OnConfirmClicked -> {
+                SimpleLoginSettingsSyncUiEvent.OnConfirmClicked -> {
                     onConfirmSyncSetting()
                 }
 
-                is SimpleLoginSyncUiEvent.OnSelectVaultClicked -> {
+                is SimpleLoginSettingsSyncUiEvent.OnSelectVaultClicked -> {
                     SimpleLoginSyncNavDestination.SelectVault(
                         shareId = uiEvent.shareId
                     ).also(onNavigated)

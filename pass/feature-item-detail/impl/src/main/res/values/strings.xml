@@ -118,4 +118,7 @@
     <string name="passkey_detail_bottomsheet_domain">Domain</string>
     <string name="passkey_detail_bottomsheet_key">Key</string>
     <string name="passkey_detail_bottomsheet_created">Created</string>
+
+    <string name="alias_toggle_tooltip_title">title</string>
+    <string name="alias_toggle_tooltip_description">descr</string>
 </resources>

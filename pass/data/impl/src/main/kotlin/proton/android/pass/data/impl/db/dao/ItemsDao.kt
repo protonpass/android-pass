@@ -345,4 +345,18 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract fun observeItemsWithTotpForShare(userId: String, shareId: String): Flow<List<ItemEntity>>
+
+    @Query(
+        """
+        UPDATE ${ItemEntity.TABLE}
+        SET ${ItemEntity.Columns.FLAGS} = :flags
+        WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
+            AND ${ItemEntity.Columns.ID} = :itemId
+        """
+    )
+    abstract suspend fun updateItemFlags(
+        shareId: String,
+        itemId: String,
+        flags: Int
+    )
 }

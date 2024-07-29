@@ -83,7 +83,7 @@ internal fun SimpleLoginSyncSettingsVaultSection(
                 verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
             ) {
                 SectionTitle(
-                    text = stringResource(id = R.string.simple_login_sync_settings_default_vault_title)
+                    text = stringResource(id = R.string.simple_login_sync_shared_default_vault_title)
                 )
 
                 SectionSubtitle(
@@ -99,7 +99,7 @@ internal fun SimpleLoginSyncSettingsVaultSection(
         }
 
         SimpleLoginSyncDescriptionText(
-            text = stringResource(id = R.string.simple_login_sync_settings_default_vault_description)
+            text = stringResource(id = R.string.simple_login_sync_shared_default_vault_description)
         )
     }
 }

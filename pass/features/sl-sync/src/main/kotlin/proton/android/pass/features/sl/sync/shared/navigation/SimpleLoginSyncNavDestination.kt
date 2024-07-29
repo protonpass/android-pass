@@ -27,4 +27,6 @@ sealed interface SimpleLoginSyncNavDestination {
     @JvmInline
     value class SelectVault(val shareId: ShareId) : SimpleLoginSyncNavDestination
 
+    data object Settings : SimpleLoginSyncNavDestination
+
 }

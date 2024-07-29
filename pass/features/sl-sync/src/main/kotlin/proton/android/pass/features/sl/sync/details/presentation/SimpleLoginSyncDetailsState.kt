@@ -18,9 +18,16 @@
 
 package proton.android.pass.features.sl.sync.details.presentation
 
+import androidx.compose.runtime.Stable
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.domain.Vault
+
+@Stable
 internal data class SimpleLoginSyncDetailsState(
     internal val defaultDomain: String,
     internal val defaultMailbox: String,
+    internal val defaultVaultOption: Option<Vault>,
     internal val isLoading: Boolean
 ) {
 
@@ -29,6 +36,7 @@ internal data class SimpleLoginSyncDetailsState(
         internal val Initial: SimpleLoginSyncDetailsState = SimpleLoginSyncDetailsState(
             defaultDomain = "",
             defaultMailbox = "",
+            defaultVaultOption = None,
             isLoading = true
         )
 

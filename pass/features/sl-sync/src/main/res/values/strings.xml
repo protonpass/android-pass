@@ -17,6 +17,9 @@
   -->
 
 <resources>
+    <!-- Details screen -->
+    <string name="simple_login_sync_details_title">Aliases</string>
+
     <!-- Settings screen -->
     <string name="simple_login_sync_settings_title">Sync aliases</string>
     <string name="simple_login_sync_settings_default_vault_title">Default SL vault</string>

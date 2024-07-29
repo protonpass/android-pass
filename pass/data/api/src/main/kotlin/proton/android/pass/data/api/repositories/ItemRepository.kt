@@ -57,6 +57,7 @@ interface ItemRepository {
         share: Share,
         newAlias: NewAlias
     ): Item
+
     suspend fun createItemAndAlias(
         userId: UserId,
         shareId: ShareId,
@@ -78,6 +79,13 @@ interface ItemRepository {
         flag: ItemFlag,
         isFlagEnabled: Boolean
     ): Item
+
+    suspend fun updateLocalItemFlags(
+        shareId: ShareId,
+        itemId: ItemId,
+        flag: ItemFlag,
+        isFlagEnabled: Boolean
+    )
 
     fun observeItems(
         userId: UserId,

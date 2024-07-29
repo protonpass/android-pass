@@ -314,7 +314,9 @@ class AliasDetailViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             runCatching { changeAliasStatus(shareId, itemId, state) }
-                .onSuccess { PassLogger.i(TAG, "Alias status changed successfully") }
+                .onSuccess {
+                    PassLogger.i(TAG, "Alias status changed successfully")
+                }
                 .onFailure {
                     snackbarDispatcher(AliasChangeStatusError)
                     PassLogger.w(TAG, "Error changing alias status")

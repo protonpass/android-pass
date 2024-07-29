@@ -217,9 +217,9 @@ class LoginDetailViewModel @Inject constructor(
         .asLoadingResult()
 
     private val itemFeaturesFlow: Flow<LoginItemFeatures> = combine(
+        getUserPlan().map { it.isPaidPlan },
         featureFlagsRepository[FeatureFlag.SECURITY_CENTER_V1],
         featureFlagsRepository[FeatureFlag.USERNAME_SPLIT],
-        getUserPlan().map { it.isPaidPlan },
         ::LoginItemFeatures
     )
 

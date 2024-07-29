@@ -18,27 +18,15 @@
 
 package proton.android.pass.features.sl.sync.details.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTopBarBackButtonType
-import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.extension.toColor
-import proton.android.pass.composecomponents.impl.extension.toResource
-import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
-import proton.android.pass.composecomponents.impl.widgets.PassSingleActionWidget
 import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.details.presentation.SimpleLoginSyncDetailsState
-import proton.android.pass.features.sl.sync.shared.ui.SimpleLoginSyncLabelText
-import proton.android.pass.features.sl.sync.shared.ui.SimpleLoginSyncSectionRow
-import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun SimpleLoginSyncDetailsContent(
@@ -57,65 +45,12 @@ internal fun SimpleLoginSyncDetailsContent(
             )
         }
     ) { innerPaddingValue ->
-        Column(
-            modifier = Modifier
-                .padding(paddingValues = innerPaddingValue)
-                .padding(all = Spacing.medium),
-            verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
-        ) {
-            SimpleLoginSyncSectionRow(
-                label = stringResource(id = R.string.simple_login_sync_details_domain_label),
-                title = stringResource(id = R.string.simple_login_sync_details_domain_title),
-                subtitle = defaultDomain,
-                onClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnDomainClicked) }
-            )
-
-            SimpleLoginSyncSectionRow(
-                label = stringResource(id = R.string.simple_login_sync_details_mailboxes_label),
-                title = stringResource(id = R.string.simple_login_sync_details_mailboxes_title),
-                subtitle = defaultDomain,
-                onClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnDomainClicked) }
-            )
-
-            when (defaultVaultOption) {
-                None -> {
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
-                    ) {
-                        SimpleLoginSyncLabelText(
-                            text = stringResource(id = R.string.simple_login_sync_details_vault_title),
-                        )
-
-                        PassSingleActionWidget(
-                            title = stringResource(id = CompR.string.simple_login_widget_title),
-                            message = stringResource(id = CompR.string.simple_login_widget_message),
-                            actionText = stringResource(id = CompR.string.simple_login_widget_action),
-                            onActionClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnSyncSettingsClicked) }
-                        )
-                    }
-                }
-
-                is Some -> {
-                    with(defaultVaultOption.value) {
-                        SimpleLoginSyncSectionRow(
-                            leadingIcon = {
-                                VaultIcon(
-                                    backgroundColor = color.toColor(isBackground = true),
-                                    icon = icon.toResource(),
-                                    iconColor = color.toColor()
-                                )
-                            },
-                            label = stringResource(id = R.string.simple_login_sync_details_vault_title),
-                            title = stringResource(id = R.string.simple_login_sync_shared_default_vault_title),
-                            subtitle = name,
-                            description = stringResource(
-                                id = R.string.simple_login_sync_shared_default_vault_description
-                            ),
-                            onClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnDomainClicked) }
-                        )
-                    }
-                }
-            }
-        }
+        SimpleLoginSyncDetailsSections(
+            modifier = modifier.padding(paddingValues = innerPaddingValue),
+            defaultDomain = defaultDomain,
+            defaultMailbox = defaultMailbox,
+            defaultVaultOption = defaultVaultOption,
+            onUiEvent = onUiEvent
+        )
     }
 }

@@ -28,7 +28,7 @@ import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNav
 @Composable
 fun SimpleLoginSyncDetailsScreen(
     onNavigated: (SimpleLoginSyncNavDestination) -> Unit,
-    viewModel: SimpleLoginSyncDetailsViewModel = hiltViewModel(),
+    viewModel: SimpleLoginSyncDetailsViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
 

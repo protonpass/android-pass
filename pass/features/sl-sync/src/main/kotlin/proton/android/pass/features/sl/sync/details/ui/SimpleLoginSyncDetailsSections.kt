@@ -44,7 +44,7 @@ internal fun SimpleLoginSyncDetailsSections(
     defaultDomain: String,
     defaultMailbox: String,
     defaultVaultOption: Option<Vault>,
-    onUiEvent: (SimpleLoginSyncDetailsUiEvent) -> Unit,
+    onUiEvent: (SimpleLoginSyncDetailsUiEvent) -> Unit
 ) {
     Column(
         modifier = modifier.padding(all = Spacing.medium),
@@ -70,7 +70,7 @@ internal fun SimpleLoginSyncDetailsSections(
                     verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
                 ) {
                     SimpleLoginSyncLabelText(
-                        text = stringResource(id = R.string.simple_login_sync_details_vault_title),
+                        text = stringResource(id = R.string.simple_login_sync_details_vault_title)
                     )
 
                     PassSingleActionWidget(

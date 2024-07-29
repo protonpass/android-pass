@@ -223,6 +223,12 @@ class LocalItemDataSourceImpl @Inject constructor(
             shareIds = shareIds.map(ShareId::id)
         )
 
+    override suspend fun updateItemFlags(
+        shareId: ShareId,
+        itemId: ItemId,
+        flags: Int
+    ) = database.itemsDao().updateItemFlags(shareId.id, itemId.id, flags)
+
     private fun ItemEntity.toItemWithTotp(): ItemWithTotp = ItemWithTotp(
         shareId = ShareId(shareId),
         itemId = ItemId(id),

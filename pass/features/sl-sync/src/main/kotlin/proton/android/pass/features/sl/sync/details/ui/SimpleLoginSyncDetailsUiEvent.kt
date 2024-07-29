@@ -22,4 +22,10 @@ internal sealed interface SimpleLoginSyncDetailsUiEvent {
 
     data object OnBackClicked : SimpleLoginSyncDetailsUiEvent
 
+    data object OnDomainClicked : SimpleLoginSyncDetailsUiEvent
+
+    data object OnMailboxClicked : SimpleLoginSyncDetailsUiEvent
+
+    data object OnSyncSettingsClicked : SimpleLoginSyncDetailsUiEvent
+
 }

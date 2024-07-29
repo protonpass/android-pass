@@ -19,7 +19,9 @@
 package proton.android.pass.features.sl.sync.details.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.sl.sync.details.presentation.SimpleLoginSyncDetailsViewModel
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 
@@ -27,12 +29,28 @@ import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNav
 fun SimpleLoginSyncDetailsScreen(
     onNavigated: (SimpleLoginSyncNavDestination) -> Unit,
     viewModel: SimpleLoginSyncDetailsViewModel = hiltViewModel(),
-) {
+) = with(viewModel) {
+    val state by state.collectAsStateWithLifecycle()
+
     SimpleLoginSyncDetailsContent(
+        state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SimpleLoginSyncDetailsUiEvent.OnBackClicked -> {
                     SimpleLoginSyncNavDestination.Back
+                        .also(onNavigated)
+                }
+
+                SimpleLoginSyncDetailsUiEvent.OnDomainClicked -> {
+
+                }
+
+                SimpleLoginSyncDetailsUiEvent.OnMailboxClicked -> {
+
+                }
+
+                SimpleLoginSyncDetailsUiEvent.OnSyncSettingsClicked -> {
+                    SimpleLoginSyncNavDestination.Settings
                         .also(onNavigated)
                 }
             }

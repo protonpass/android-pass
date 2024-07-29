@@ -19,9 +19,16 @@
 <resources>
     <!-- Details screen -->
     <string name="simple_login_sync_details_title">Aliases</string>
+    <string name="simple_login_sync_details_domain_label">Domain</string>
+    <string name="simple_login_sync_details_domain_title">Default domain for aliases</string>
+    <string name="simple_login_sync_details_mailboxes_label">Mailboxes</string>
+    <string name="simple_login_sync_details_mailboxes_title">Default mailbox for aliases</string>
+    <string name="simple_login_sync_details_vault_title">SimpleLogin sync</string>
 
     <!-- Settings screen -->
     <string name="simple_login_sync_settings_title">Sync aliases</string>
-    <string name="simple_login_sync_settings_default_vault_title">Default SL vault</string>
-    <string name="simple_login_sync_settings_default_vault_description">SimpleLogin aliases will be imported into this vault.</string>
+
+    <!-- Shared -->
+    <string name="simple_login_sync_shared_default_vault_title">Default SL vault</string>
+    <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliases will be imported into this vault.</string>
 </resources>

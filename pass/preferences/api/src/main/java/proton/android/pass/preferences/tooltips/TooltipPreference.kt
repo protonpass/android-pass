@@ -19,5 +19,6 @@
 package proton.android.pass.preferences.tooltips
 
 enum class TooltipPreference {
-    UsernameSplit
+    UsernameSplit,
+    AliasToggle
 }

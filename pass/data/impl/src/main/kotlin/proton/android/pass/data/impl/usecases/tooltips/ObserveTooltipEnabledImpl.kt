@@ -31,6 +31,7 @@ class ObserveTooltipEnabledImpl @Inject constructor(
 
     override fun invoke(tooltip: Tooltip): Flow<Boolean> = when (tooltip) {
         Tooltip.UsernameSplit -> TooltipPreference.UsernameSplit
+        Tooltip.AliasToggle -> TooltipPreference.AliasToggle
     }.let(tooltipPreferencesRepository::observeEnabled)
 
 }

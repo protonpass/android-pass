@@ -53,6 +53,7 @@ sealed interface AliasDetailUiState {
         val itemActions: ItemActions,
         val event: ItemDetailEvent,
         val isHistoryFeatureEnabled: Boolean,
-        val isSLAliasSyncEnabled: Boolean
+        val isSLAliasSyncEnabled: Boolean,
+        val isAliasToggleTooltipEnabled: Boolean
     ) : AliasDetailUiState
 }

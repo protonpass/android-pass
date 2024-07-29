@@ -24,7 +24,8 @@ internal interface ItemFeatures {
 
 internal data class AliasItemFeatures(
     override val isHistoryEnabled: Boolean,
-    internal val slAliasSyncEnabled: Boolean
+    internal val slAliasSyncEnabled: Boolean,
+    internal val isAliasToggleTooltipEnabled: Boolean
 ) : ItemFeatures
 
 internal data class CreditCardItemFeatures(

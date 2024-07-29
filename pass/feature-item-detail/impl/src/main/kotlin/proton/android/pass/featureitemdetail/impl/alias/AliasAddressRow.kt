@@ -36,6 +36,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
@@ -46,6 +47,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.composecomponents.impl.tooltips.PassTooltipPopup
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
 
@@ -55,6 +57,7 @@ fun AliasAddressRow(
     alias: String,
     isAliasDisabled: Boolean,
     isAliasSyncEnabled: Boolean,
+    isAliasToggleTooltipEnabled: Boolean,
     onCopyAlias: (String) -> Unit,
     onCreateLoginFromAlias: (String) -> Unit,
     onToggleAliasState: (Boolean) -> Unit
@@ -95,13 +98,23 @@ fun AliasAddressRow(
             )
         }
         if (isAliasSyncEnabled) {
-            Switch(
-                checked = !isAliasDisabled,
-                onCheckedChange = onToggleAliasState,
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = PassTheme.colors.aliasInteractionNorm,
-                    checkedTrackColor = PassTheme.colors.aliasInteractionNormMajor1
-                )
+            PassTooltipPopup(
+                titleResId = R.string.alias_toggle_tooltip_title,
+                descriptionResId = R.string.alias_toggle_tooltip_description,
+                onDismiss = { },
+                shouldDisplayTooltip = isAliasToggleTooltipEnabled,
+                arrowHeight = 8.dp,
+                backgroundColor = Color.Red,
+                requesterView = {
+                    Switch(
+                        checked = !isAliasDisabled,
+                        onCheckedChange = onToggleAliasState,
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = PassTheme.colors.aliasInteractionNorm,
+                            checkedTrackColor = PassTheme.colors.aliasInteractionNormMajor1
+                        )
+                    )
+                }
             )
         }
     }
@@ -116,6 +129,7 @@ fun AliasAddressRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark
                 alias = "some@alias.test",
                 isAliasDisabled = false,
                 isAliasSyncEnabled = true,
+                isAliasToggleTooltipEnabled = false,
                 onCopyAlias = {},
                 onCreateLoginFromAlias = {},
                 onToggleAliasState = {}

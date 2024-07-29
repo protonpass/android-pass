@@ -24,10 +24,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.extension.toColor
+import proton.android.pass.composecomponents.impl.extension.toResource
+import proton.android.pass.composecomponents.impl.icon.VaultIcon
+import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.settings.presentation.SimpleLoginSyncSettingsState
+import proton.android.pass.features.sl.sync.shared.ui.SimpleLoginSyncSectionRow
 
 @Composable
 internal fun SimpleLoginSyncSettingsContent(
@@ -57,11 +62,17 @@ internal fun SimpleLoginSyncSettingsContent(
         ) {
             if (selectedVaultOption is Some) {
                 with(selectedVaultOption.value) {
-                    SimpleLoginSyncSettingsVaultSection(
-                        vaultName = name,
-                        vaultBackgroundColor = color.toColor(isBackground = true),
-                        vaultIcon = icon,
-                        vaultIconColor = color.toColor(),
+                    SimpleLoginSyncSectionRow(
+                        leadingIcon = {
+                            VaultIcon(
+                                backgroundColor = color.toColor(isBackground = true),
+                                icon = icon.toResource(),
+                                iconColor = color.toColor()
+                            )
+                        },
+                        title = stringResource(id = R.string.simple_login_sync_shared_default_vault_title),
+                        subtitle = name,
+                        description = stringResource(id = R.string.simple_login_sync_shared_default_vault_description),
                         onClick = {
                             SimpleLoginSettingsSyncUiEvent.OnSelectVaultClicked(
                                 shareId = selectedVaultOption.value.shareId

@@ -25,16 +25,25 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.extension.toColor
+import proton.android.pass.composecomponents.impl.extension.toResource
+import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
@@ -91,6 +100,45 @@ internal fun SimpleLoginSyncSectionRow(
         description?.let { descriptionText ->
             SimpleLoginSyncDescriptionText(
                 text = descriptionText
+            )
+        }
+    }
+}
+
+@[Preview Composable]
+internal fun SimpleLoginSyncSectionRowPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            SimpleLoginSyncSectionRow(
+                title = "SL sync title",
+                subtitle = "SL sync subtitle",
+                label = "SL sync label",
+                onClick = {}
+            )
+        }
+    }
+}
+
+@[Preview Composable]
+internal fun SimpleLoginSyncSectionRowVaultPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            SimpleLoginSyncSectionRow(
+                title = "SL sync title",
+                subtitle = "SL sync subtitle",
+                description = "SL sync description",
+                leadingIcon = {
+                    VaultIcon(
+                        backgroundColor = ShareColor.Color1.toColor(isBackground = true),
+                        icon = ShareIcon.Icon1.toResource(),
+                        iconColor = ShareColor.Color1.toColor()
+                    )
+                },
+                onClick = {}
             )
         }
     }

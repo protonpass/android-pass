@@ -20,13 +20,13 @@ package proton.android.pass.features.sl.sync.settings.ui
 
 import proton.android.pass.domain.ShareId
 
-internal sealed interface SimpleLoginSyncUiEvent {
+internal sealed interface SimpleLoginSettingsSyncUiEvent {
 
-    data object OnCloseClicked : SimpleLoginSyncUiEvent
+    data object OnCloseClicked : SimpleLoginSettingsSyncUiEvent
 
-    data object OnConfirmClicked : SimpleLoginSyncUiEvent
+    data object OnConfirmClicked : SimpleLoginSettingsSyncUiEvent
 
     @JvmInline
-    value class OnSelectVaultClicked(internal val shareId: ShareId) : SimpleLoginSyncUiEvent
+    value class OnSelectVaultClicked(internal val shareId: ShareId) : SimpleLoginSettingsSyncUiEvent
 
 }

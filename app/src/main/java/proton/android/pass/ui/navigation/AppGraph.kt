@@ -174,6 +174,7 @@ import proton.android.pass.features.security.center.shared.navigation.SecurityCe
 import proton.android.pass.features.security.center.shared.navigation.securityCenterNavGraph
 import proton.android.pass.features.security.center.verifyemail.navigation.SecurityCenterVerifyEmailNavItem
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassNavItem
+import proton.android.pass.features.sl.sync.details.navigation.SimpleLoginSyncDetailsNavItem
 import proton.android.pass.features.sl.sync.settings.navigation.SimpleLoginSyncSettingsNavItem
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 import proton.android.pass.features.sl.sync.shared.navigation.simpleLoginSyncNavGraph
@@ -650,9 +651,9 @@ fun NavGraphBuilder.appGraph(
                 is ProfileNavigation.OnSwitchAccount -> onNavigate(AppNavigation.SwitchAccount(it.userId))
                 ProfileNavigation.SyncDialog -> appNavigator.navigate(SyncNavItem)
 
-                ProfileNavigation.AliasesSyncDetails -> {
-                    // Will be implemented in IDTEAM-3635
-                }
+                ProfileNavigation.AliasesSyncDetails -> appNavigator.navigate(
+                    destination = SimpleLoginSyncDetailsNavItem
+                )
 
                 ProfileNavigation.AliasesSyncSettings -> appNavigator.navigate(
                     destination = SimpleLoginSyncSettingsNavItem

@@ -308,6 +308,22 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun updateLocalItemFlags(
+        shareId: ShareId,
+        itemId: ItemId,
+        flag: ItemFlag,
+        isFlagEnabled: Boolean
+    ) {
+        val item: ItemEntity = localItemDataSource.getById(shareId, itemId)
+            ?: throw ItemNotFoundError(itemId, shareId)
+        val updatedFlags = if (!isFlagEnabled) {
+            item.flags or flag.value
+        } else {
+            item.flags and flag.value.inv()
+        }
+        localItemDataSource.updateItemFlags(shareId, itemId, updatedFlags)
+    }
+
     override fun observeItems(
         userId: UserId,
         shareSelection: ShareSelection,

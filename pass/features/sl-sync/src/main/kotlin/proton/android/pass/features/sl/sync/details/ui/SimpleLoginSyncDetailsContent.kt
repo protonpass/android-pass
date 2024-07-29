@@ -106,8 +106,11 @@ internal fun SimpleLoginSyncDetailsContent(
                                 )
                             },
                             label = stringResource(id = R.string.simple_login_sync_details_vault_title),
-                            title = name,
-                            subtitle = defaultDomain,
+                            title = stringResource(id = R.string.simple_login_sync_shared_default_vault_title),
+                            subtitle = name,
+                            description = stringResource(
+                                id = R.string.simple_login_sync_shared_default_vault_description
+                            ),
                             onClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnDomainClicked) }
                         )
                     }

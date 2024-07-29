@@ -16,17 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.shared.navigation
+package proton.android.pass.features.sl.sync.shared.ui
 
-import proton.android.pass.domain.ShareId
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import me.proton.core.compose.theme.ProtonTheme
 
-sealed interface SimpleLoginSyncNavDestination {
-
-    data object Back : SimpleLoginSyncNavDestination
-
-    @JvmInline
-    value class SelectVault(val shareId: ShareId) : SimpleLoginSyncNavDestination
-
-    data object Settings : SimpleLoginSyncNavDestination
-
+@Composable
+internal fun SimpleLoginSyncLabelText(
+    modifier: Modifier = Modifier,
+    text: String
+) {
+    Text(
+        modifier = modifier,
+        text = text,
+        style = ProtonTheme.typography.body2Regular,
+        fontWeight = FontWeight.Bold,
+    )
 }

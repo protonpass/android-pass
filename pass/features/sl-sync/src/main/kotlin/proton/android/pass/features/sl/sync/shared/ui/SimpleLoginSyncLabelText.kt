@@ -25,14 +25,11 @@ import androidx.compose.ui.text.font.FontWeight
 import me.proton.core.compose.theme.ProtonTheme
 
 @Composable
-internal fun SimpleLoginSyncLabelText(
-    modifier: Modifier = Modifier,
-    text: String
-) {
+internal fun SimpleLoginSyncLabelText(modifier: Modifier = Modifier, text: String) {
     Text(
         modifier = modifier,
         text = text,
         style = ProtonTheme.typography.body2Regular,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.Bold
     )
 }

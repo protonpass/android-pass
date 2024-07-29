@@ -42,7 +42,7 @@ internal fun SimpleLoginSyncDetailsContent(
                 modifier = modifier,
                 backButton = PassTopBarBackButtonType.BackArrow,
                 title = stringResource(id = R.string.simple_login_sync_details_title),
-                onUpClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnBackClicked) },
+                onUpClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnBackClicked) }
             )
         }
     ) { innerPaddingValue ->

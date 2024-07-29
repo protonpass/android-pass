@@ -115,6 +115,15 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
+    override suspend fun updateLocalItemFlags(
+        shareId: ShareId,
+        itemId: ItemId,
+        flag: ItemFlag,
+        isFlagEnabled: Boolean
+    ) {
+        TODO("Not yet implemented")
+    }
+
     override fun observeItems(
         userId: UserId,
         shareSelection: ShareSelection,

@@ -106,9 +106,7 @@ fun ProfileScreen(
                         ProfileNavigation.SecureLinks
                     }.also(onNavigateEvent)
                 }
-                ProfileUiEvent.OnCloseAliasesWidgetClicked -> {
-                    // Will be implemented in IDTEAM-3637
-                }
+                ProfileUiEvent.OnCloseAliasesWidgetClicked -> viewModel.onDisableSimpleLoginWidget()
                 ProfileUiEvent.OnSyncAliasesClicked -> onNavigateEvent(ProfileNavigation.AliasesSyncSettings)
                 ProfileUiEvent.OnAliasesClicked -> onNavigateEvent(ProfileNavigation.AliasesSyncDetails)
 

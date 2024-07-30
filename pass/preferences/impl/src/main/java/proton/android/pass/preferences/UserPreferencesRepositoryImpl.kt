@@ -35,6 +35,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
+import proton.android.pass.preferences.simplelogin.SimpleLoginSyncStatusPreference
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -228,6 +229,21 @@ class UserPreferencesRepositoryImpl @Inject constructor(
     override fun observeMonitorStatusPreference(): Flow<MonitorStatusPreference> = getPreference { userPreferences ->
         userPreferences.monitorStatus.toValue()
     }
+
+    override fun setSimpleLoginSyncStatusPreference(preference: SimpleLoginSyncStatusPreference): Result<Unit> =
+        setPreference { userPreferencesBuilder ->
+            preference.value
+                .toBooleanPrefProto()
+                .let(userPreferencesBuilder::setSimpleLoginSyncStatus)
+        }
+
+    override fun observeSimpleLoginSyncStatusPreference(): Flow<SimpleLoginSyncStatusPreference> =
+        getPreference { userPreferences ->
+            fromBooleanPrefProto(
+                pref = userPreferences.simpleLoginSyncStatus,
+                default = true
+            ).let(SimpleLoginSyncStatusPreference::from)
+        }
 
     private fun setPreference(mapper: suspend (UserPreferences.Builder) -> UserPreferences.Builder): Result<Unit> =
         runBlocking {

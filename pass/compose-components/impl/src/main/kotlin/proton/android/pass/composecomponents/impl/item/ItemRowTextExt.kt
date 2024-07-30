@@ -135,6 +135,8 @@ private fun firstSection(input: String, span: MatchSpan) = buildAnnotatedString 
         append(Typography.ellipsis)
         val startIdx = (span.start - CHARACTER_OFFSET).coerceAtLeast(0)
         val endIdx = span.start.coerceAtMost(input.length)
-        append(input.substring(startIdx, endIdx))
+        if (startIdx <= endIdx) {
+            append(input.substring(startIdx, endIdx))
+        }
     }
 }

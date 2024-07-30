@@ -16,17 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain.simplelogin
+package proton.android.pass.preferences.simplelogin
 
-import proton.android.pass.domain.Vault
+enum class SimpleLoginSyncStatusPreference(val value: Boolean) {
+    Disabled(value = false),
+    Enabled(value = true);
 
-data class SimpleLoginSyncStatus(
-    val isSyncEnabled: Boolean,
-    val isPreferenceEnabled: Boolean,
-    val pendingAliasCount: Int,
-    val defaultVault: Vault
-) {
+    companion object {
 
-    val hasPendingAliases: Boolean = pendingAliasCount > 0
+        fun from(value: Boolean): SimpleLoginSyncStatusPreference = if (value) Enabled else Disabled
+
+    }
 
 }

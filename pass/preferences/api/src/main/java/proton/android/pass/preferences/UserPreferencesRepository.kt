@@ -24,6 +24,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ShareId
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
+import proton.android.pass.preferences.simplelogin.SimpleLoginSyncStatusPreference
 
 @Suppress("TooManyFunctions", "ComplexInterface")
 interface UserPreferencesRepository {
@@ -85,4 +86,8 @@ interface UserPreferencesRepository {
     fun setMonitorStatusPreference(preference: MonitorStatusPreference): Result<Unit>
 
     fun observeMonitorStatusPreference(): Flow<MonitorStatusPreference>
+
+    fun setSimpleLoginSyncStatusPreference(preference: SimpleLoginSyncStatusPreference): Result<Unit>
+
+    fun observeSimpleLoginSyncStatusPreference(): Flow<SimpleLoginSyncStatusPreference>
 }

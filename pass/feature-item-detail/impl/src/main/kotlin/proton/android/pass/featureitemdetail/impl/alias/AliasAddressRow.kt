@@ -20,6 +20,7 @@ package proton.android.pass.featureitemdetail.impl.alias
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -68,69 +69,70 @@ fun AliasAddressRow(
     onToggleAliasState: (Boolean) -> Unit,
     onDismissTooltip: () -> Unit
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable { onCopyAlias(alias) }
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Icon(
-            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
-            contentDescription = null,
-            tint = PassTheme.colors.aliasInteractionNorm
-        )
-        Column(Modifier.weight(1f)) {
-            SectionTitle(
-                modifier = Modifier.padding(start = 8.dp),
-                text = stringResource(R.string.field_alias_title)
+    Box(modifier = modifier) {
+        val position = remember { mutableStateOf(IntOffset.Zero) }
+        val size = remember { mutableStateOf(IntSize.Zero) }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onCopyAlias(alias) }
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Icon(
+                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
+                contentDescription = null,
+                tint = PassTheme.colors.aliasInteractionNorm
             )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            SectionSubtitle(
-                modifier = Modifier.padding(start = 8.dp),
-                text = alias.asAnnotatedString()
-            )
-            Text(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .clickable { onCreateLoginFromAlias(alias) }
-                    .padding(8.dp),
-                text = stringResource(R.string.alias_create_login_from_alias),
-                color = PassTheme.colors.aliasInteractionNorm,
-                textDecoration = TextDecoration.Underline
-            )
-        }
-        if (isAliasSyncEnabled) {
-
-            val position = remember { mutableStateOf(IntOffset.Zero) }
-            val size = remember { mutableStateOf(IntSize.Zero) }
-
-            Switch(
-                modifier = Modifier.onGloballyPositioned { coordinates ->
-                    position.value =
-                        coordinates.positionInRoot().let { IntOffset(it.x.toInt(), it.y.toInt()) }
-                    size.value = coordinates.size
-                },
-                checked = !isAliasDisabled,
-                onCheckedChange = onToggleAliasState,
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = PassTheme.colors.aliasInteractionNorm,
-                    checkedTrackColor = PassTheme.colors.aliasInteractionNormMajor1
+            Column(Modifier.weight(1f)) {
+                SectionTitle(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = stringResource(R.string.field_alias_title)
                 )
-            )
 
-            if (isAliasToggleTooltipEnabled) {
-                PassTooltipPopup(
-                    title = "title",
-                    description = "description",
-                    position = position,
-                    size = size,
-                    onDismissRequest = onDismissTooltip
+                Spacer(modifier = Modifier.height(8.dp))
+
+                SectionSubtitle(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = alias.asAnnotatedString()
+                )
+                Text(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable { onCreateLoginFromAlias(alias) }
+                        .padding(8.dp),
+                    text = stringResource(R.string.alias_create_login_from_alias),
+                    color = PassTheme.colors.aliasInteractionNorm,
+                    textDecoration = TextDecoration.Underline
                 )
             }
+            if (isAliasSyncEnabled) {
+                Switch(
+                    modifier = Modifier.onGloballyPositioned { coordinates ->
+                        position.value =
+                            coordinates.positionInRoot()
+                                .let { IntOffset(it.x.toInt(), it.y.toInt()) }
+                        size.value = coordinates.size
+                    },
+                    checked = !isAliasDisabled,
+                    onCheckedChange = onToggleAliasState,
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = PassTheme.colors.aliasInteractionNorm,
+                        checkedTrackColor = PassTheme.colors.aliasInteractionNormMajor1
+                    )
+                )
+            }
+        }
+
+        if (isAliasSyncEnabled && isAliasToggleTooltipEnabled) {
+            PassTooltipPopup(
+                title = stringResource(id = R.string.alias_toggle_tooltip_title),
+                description = stringResource(id = R.string.alias_toggle_tooltip_description),
+                position = position,
+                size = size,
+                onDismissRequest = onDismissTooltip
+            )
         }
     }
 }

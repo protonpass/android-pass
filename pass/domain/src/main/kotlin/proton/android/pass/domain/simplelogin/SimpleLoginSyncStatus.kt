@@ -18,11 +18,14 @@
 
 package proton.android.pass.domain.simplelogin
 
-import proton.android.pass.common.api.Option
 import proton.android.pass.domain.Vault
 
 data class SimpleLoginSyncStatus(
-    val isEnabled: Boolean,
+    val isSyncEnabled: Boolean,
     val pendingAliasCount: Int,
-    val defaultVault: Option<Vault>
-)
+    val defaultVault: Vault
+) {
+
+    val hasPendingAliases: Boolean = pendingAliasCount > 0
+
+}

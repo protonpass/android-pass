@@ -78,6 +78,7 @@ import proton.android.pass.data.impl.responses.LastEventIdResponse
 import proton.android.pass.data.impl.responses.MigrateItemsResponse
 import proton.android.pass.data.impl.responses.OrganizationGetResponse
 import proton.android.pass.data.impl.responses.PendingInvitesResponse
+import proton.android.pass.data.impl.responses.SimpleLoginSyncStatusResponse
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.responses.UpdateGlobalMonitorStateRequest
 import proton.android.pass.data.impl.responses.UpdateGlobalMonitorStateResponse
@@ -431,6 +432,10 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     @POST("$PREFIX/user/srp/auth")
     suspend fun sendSrpInfo(@Body extraPasswordSendSrpDataRequest: ExtraPasswordSendSrpDataRequest): CodeOnlyResponse
+
+    // SimpleLogin sync
+    @GET("$PREFIX/alias_sync/status")
+    suspend fun getSimpleLoginSyncStatus(): SimpleLoginSyncStatusResponse
 
 
     // Core

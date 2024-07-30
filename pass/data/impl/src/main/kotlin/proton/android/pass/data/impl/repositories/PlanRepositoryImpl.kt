@@ -35,8 +35,8 @@ import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.log.api.PassLogger
-import java.lang.Math.ceil
 import javax.inject.Inject
+import kotlin.math.ceil
 
 class PlanRepositoryImpl @Inject constructor(
     private val remotePlanDataSource: RemotePlanDataSource,
@@ -85,7 +85,10 @@ class PlanRepositoryImpl @Inject constructor(
                     waitingNewUserInvites = response.accessResponse.waitingNewUserInvites,
                     minVersionUpgrade = response.accessResponse.minVersionUpgrade,
                     protonMonitorEnabled = response.accessResponse.monitorResponse.protonMonitorEnabled,
-                    aliasMonitorEnabled = response.accessResponse.monitorResponse.aliasMonitorEnabled
+                    aliasMonitorEnabled = response.accessResponse.monitorResponse.aliasMonitorEnabled,
+                    isSimpleLoginSyncEnabled = response.accessResponse.userData.isAliasSyncEnabled,
+                    simpleLoginSyncDefaultShareId = response.accessResponse.userData.defaultShareID,
+                    simpleLoginSyncPendingAliasCount = response.accessResponse.userData.pendingAliasToSync
                 )
             )
         }.onSuccess {

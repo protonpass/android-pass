@@ -18,107 +18,69 @@
 
 package proton.android.pass.composecomponents.impl.tooltips
 
-import androidx.activity.compose.BackHandler
-import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntRect
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupPositionProvider
 import androidx.compose.ui.window.PopupProperties
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import kotlin.math.roundToInt
 
 @Composable
 fun PassTooltipPopup(
     modifier: Modifier = Modifier,
-    @StringRes titleResId: Int,
-    @StringRes descriptionResId: Int,
-    requesterView: @Composable () -> Unit,
-    onDismiss: () -> Unit,
-    shouldDisplayTooltip: Boolean,
-    arrowHeight: Dp,
-    backgroundColor: Color,
-    horizontalPadding: Dp = Spacing.large,
-    verticalPadding: Dp = Spacing.large - Spacing.small
+    title: String,
+    description: String,
+    position: MutableState<IntOffset>,
+    size: MutableState<IntSize>,
+    elevation: Dp = 8.dp,
+    onDismissRequest: () -> Unit
 ) {
-    BackHandler(enabled = shouldDisplayTooltip) {
-        onDismiss()
-    }
-
-    requesterView()
-
-    if (shouldDisplayTooltip) {
-        var arrowPositionX by remember { mutableFloatStateOf(0f) }
-
-        val initialOffset = with(LocalDensity.current) {
-            IntOffset(
-                x = 0,
-                y = arrowHeight.toPx().roundToInt() * 3
-            )
-        }
-
-        val popupPositionProvider = remember {
-            PassTooltipPopupPositionProvider(initialOffset) { newArrowPositionX ->
-                arrowPositionX = newArrowPositionX
-            }
-        }
-
-        Popup(
-            popupPositionProvider = popupPositionProvider,
-            properties = PopupProperties(),
-            onDismissRequest = onDismiss
-        ) {
-            val arrowHeightPx = with(LocalDensity.current) { arrowHeight.toPx() }
-
-            Box(
-                modifier = modifier
-                    .padding(
-                        horizontal = horizontalPadding,
-                        vertical = verticalPadding
-                    )
-                    .drawBehind {
-                        val position = Offset(
-                            x = arrowPositionX.plus(arrowHeightPx),
-                            y = 0f
-                        )
-
-                        Path()
-                            .apply {
-                                moveTo(x = position.x, y = position.y)
-                                lineTo(x = position.x - arrowHeightPx, y = position.y)
-                                lineTo(x = position.x, y = position.y - arrowHeightPx)
-                                lineTo(x = position.x + arrowHeightPx, y = position.y)
-                                lineTo(x = position.x, y = position.y)
-                                close()
-                            }
-                            .also { trianglePath ->
-                                drawPath(
-                                    path = trianglePath,
-                                    color = backgroundColor
-                                )
-                            }
-                    }
-            ) {
-                PassTooltip(
-                    title = stringResource(id = titleResId),
-                    description = stringResource(id = descriptionResId),
-                    backgroundColor = backgroundColor,
-                    onClose = onDismiss
+    Popup(
+        popupPositionProvider = remember(position.value, size.value) {
+            object : PopupPositionProvider {
+                override fun calculatePosition(
+                    anchorBounds: IntRect,
+                    windowSize: IntSize,
+                    layoutDirection: LayoutDirection,
+                    popupContentSize: IntSize
+                ): IntOffset = IntOffset(
+                    x = 0,
+                    y = position.value.y + size.value.height / 2
                 )
             }
+        },
+        properties = PopupProperties(),
+        onDismissRequest = onDismissRequest
+    ) {
+        val density = LocalDensity.current
+        val switchCenterX = with(density) { (position.value.x + size.value.width / 2).toDp() }
+        Surface(
+            modifier = modifier,
+            elevation = elevation,
+            color = PassTheme.colors.backdrop,
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            PassTooltip(
+                modifier = Modifier.padding(Spacing.small),
+                title = title,
+                description = description,
+                backgroundColor = PassTheme.colors.backgroundNorm,
+                arrowOffset = switchCenterX - Spacing.small,
+                onClose = onDismissRequest
+            )
         }
     }
 }

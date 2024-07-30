@@ -21,9 +21,11 @@ package proton.android.pass.composecomponents.impl.tooltips
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -38,6 +40,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
@@ -52,49 +56,63 @@ internal fun PassTooltip(
     modifier: Modifier = Modifier,
     title: String,
     description: String,
-    onClose: () -> Unit,
-    backgroundColor: Color
+    arrowOffset: Dp,
+    radius: Dp = Radius.small,
+    backgroundColor: Color,
+    onClose: () -> Unit
 ) {
-    Column(
-        modifier = modifier
-            .clip(
-                shape = RoundedCornerShape(
-                    topEnd = Radius.small,
-                    bottomEnd = Radius.small,
-                    bottomStart = Radius.small
+    Column(modifier = modifier) {
+        Box(
+            modifier = Modifier
+                .offset(x = arrowOffset)
+                .background(color = backgroundColor, shape = TriangleShape())
+                .padding(
+                    horizontal = Spacing.small,
+                    vertical = Spacing.extraSmall
                 )
-            )
-            .background(color = backgroundColor)
-            .padding(
-                horizontal = Spacing.medium,
-                vertical = Spacing.small
-            ),
-        verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+        )
+        Column(
+            modifier = Modifier
+                .clip(
+                    shape = RoundedCornerShape(
+                        topStart = radius.takeIf { arrowOffset >= Spacing.small } ?: 0.dp,
+                        topEnd = radius,
+                        bottomEnd = radius,
+                        bottomStart = radius
+                    )
+                )
+                .background(color = backgroundColor)
+                .padding(
+                    horizontal = Spacing.medium,
+                    vertical = Spacing.small
+                ),
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
         ) {
-            Text(
-                text = title,
-                style = ProtonTheme.typography.body1Bold,
-                color = PassTheme.colors.textNorm
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = title,
+                    style = ProtonTheme.typography.body1Bold,
+                    color = PassTheme.colors.textNorm
+                )
 
-            Icon(
-                modifier = Modifier.clickable { onClose() },
-                painter = painterResource(id = CoreR.drawable.ic_proton_cross_small),
-                contentDescription = stringResource(id = R.string.tooltip_dismiss_button_content_description),
-                tint = PassTheme.colors.textWeak
+                Icon(
+                    modifier = Modifier.clickable { onClose() },
+                    painter = painterResource(id = CoreR.drawable.ic_proton_cross_small),
+                    contentDescription = stringResource(id = R.string.tooltip_dismiss_button_content_description),
+                    tint = PassTheme.colors.textWeak
+                )
+            }
+
+            Text(
+                text = description,
+                style = PassTheme.typography.body3Weak(),
+                color = PassTheme.colors.textWeak
             )
         }
-
-        Text(
-            text = description,
-            style = PassTheme.typography.body3Weak(),
-            color = PassTheme.colors.textWeak
-        )
     }
 }
 
@@ -105,8 +123,9 @@ internal fun PassTooltipPreview(@PreviewParameter(ThemePreviewProvider::class) i
             PassTooltip(
                 title = "Tooltip title",
                 description = "This is the tooltip description",
-                onClose = {},
-                backgroundColor = PassTheme.colors.searchBarBackground
+                backgroundColor = PassTheme.colors.searchBarBackground,
+                arrowOffset = 0.dp,
+                onClose = {}
             )
         }
     }

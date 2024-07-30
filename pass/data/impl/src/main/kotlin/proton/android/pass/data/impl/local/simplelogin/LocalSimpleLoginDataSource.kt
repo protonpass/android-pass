@@ -16,17 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain.simplelogin
+package proton.android.pass.data.impl.local.simplelogin
 
-import proton.android.pass.domain.Vault
+import kotlinx.coroutines.flow.Flow
 
-data class SimpleLoginSyncStatus(
-    val isSyncEnabled: Boolean,
-    val isPreferenceEnabled: Boolean,
-    val pendingAliasCount: Int,
-    val defaultVault: Vault
-) {
+interface LocalSimpleLoginDataSource {
 
-    val hasPendingAliases: Boolean = pendingAliasCount > 0
+    fun disableSyncPreference()
+
+    fun observeSyncPreference(): Flow<Boolean>
 
 }

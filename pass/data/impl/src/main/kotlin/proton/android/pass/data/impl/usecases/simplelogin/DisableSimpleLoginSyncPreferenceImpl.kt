@@ -16,17 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain.simplelogin
+package proton.android.pass.data.impl.usecases.simplelogin
 
-import proton.android.pass.domain.Vault
+import proton.android.pass.data.api.repositories.SimpleLoginRepository
+import proton.android.pass.data.api.usecases.simplelogin.DisableSimpleLoginSyncPreference
+import javax.inject.Inject
 
-data class SimpleLoginSyncStatus(
-    val isSyncEnabled: Boolean,
-    val isPreferenceEnabled: Boolean,
-    val pendingAliasCount: Int,
-    val defaultVault: Vault
-) {
+class DisableSimpleLoginSyncPreferenceImpl @Inject constructor(
+    private val repository: SimpleLoginRepository
+) : DisableSimpleLoginSyncPreference {
 
-    val hasPendingAliases: Boolean = pendingAliasCount > 0
+    override fun invoke() {
+        repository.disableSyncPreference()
+    }
 
 }

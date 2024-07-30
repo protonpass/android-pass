@@ -31,4 +31,5 @@ message UserPreferences {
   BooleanPrefProto sentinel_status = 17;
   MonitorStatusPrefProto monitor_status = 18;
   map<string, string> default_vault_per_user = 19;
+  BooleanPrefProto simple_login_sync_status = 20;
 }

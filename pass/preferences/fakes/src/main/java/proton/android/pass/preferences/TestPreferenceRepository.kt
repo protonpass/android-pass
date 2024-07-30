@@ -27,6 +27,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.ShareId
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
+import proton.android.pass.preferences.simplelogin.SimpleLoginSyncStatusPreference
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -77,6 +78,8 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
     private val sentinelStatusPreference = MutableStateFlow(SentinelStatusPreference.Disabled)
 
     private val monitorStatusPreference = MutableStateFlow(MonitorStatusPreference.NoIssues)
+
+    private val simpleLoginSyncStatusPreference = MutableStateFlow(SimpleLoginSyncStatusPreference.Disabled)
 
     override fun setAppLockState(state: AppLockState): Result<Unit> {
         appLockState.tryEmit(state)
@@ -207,5 +210,13 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
     }
 
     override fun observeMonitorStatusPreference(): Flow<MonitorStatusPreference> = monitorStatusPreference
+
+    override fun setSimpleLoginSyncStatusPreference(preference: SimpleLoginSyncStatusPreference): Result<Unit> {
+        simpleLoginSyncStatusPreference.tryEmit(preference)
+        return Result.success(Unit)
+    }
+
+    override fun observeSimpleLoginSyncStatusPreference(): Flow<SimpleLoginSyncStatusPreference> =
+        simpleLoginSyncStatusPreference
 
 }

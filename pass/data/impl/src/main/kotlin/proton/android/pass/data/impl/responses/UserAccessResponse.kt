@@ -40,7 +40,9 @@ data class AccessResponse(
     @SerialName("WaitingNewUserInvites")
     val waitingNewUserInvites: Int,
     @SerialName("MinVersionUpgrade")
-    val minVersionUpgrade: String?
+    val minVersionUpgrade: String?,
+    @SerialName("UserData")
+    val userData: UserDataResponse
 )
 
 @Serializable
@@ -69,4 +71,14 @@ data class PlanResponse(
     val hideUpgrade: Boolean,
     @SerialName("TrialEnd")
     val trialEnd: Long?
+)
+
+@Serializable
+data class UserDataResponse(
+    @SerialName("DefaultShareID")
+    val defaultShareID: String,
+    @SerialName("AliasSyncEnabled")
+    val isAliasSyncEnabled: Boolean,
+    @SerialName("PendingAliasToSync")
+    val pendingAliasToSync: Int
 )

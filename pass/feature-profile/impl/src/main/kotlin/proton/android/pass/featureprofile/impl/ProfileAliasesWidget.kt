@@ -85,7 +85,7 @@ internal fun ProfileAliasesWidgetPreview(@PreviewParameter(ThemePreviewProvider:
     PassTheme(isDark = isDark) {
         Surface {
             ProfileAliasesWidget(
-                pendingAliasesCount = 3,
+                pendingAliasesCount = 16,
                 onActionClick = {},
                 onCloseClick = {}
             )

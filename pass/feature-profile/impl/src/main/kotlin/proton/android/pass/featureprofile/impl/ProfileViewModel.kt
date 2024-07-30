@@ -279,8 +279,6 @@ class ProfileViewModel @Inject constructor(
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event, browser,
         passkey, flags, secureLinksCount, accounts, simpleLoginSyncStatusOption ->
 
-        println("JIBIRI: simpleLoginSyncStatusOptionFlow = $simpleLoginSyncStatusOption")
-
         val (accountType, showUpgradeButton) = processUpgradeInfo(upgradeInfo)
         val defaultBrowser = browser.getOrNull() ?: DefaultBrowser.Other
         ProfileUiState(

@@ -33,15 +33,20 @@ import androidx.compose.material.Switch
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -98,24 +103,35 @@ fun AliasAddressRow(
             )
         }
         if (isAliasSyncEnabled) {
-            PassTooltipPopup(
-                titleResId = R.string.alias_toggle_tooltip_title,
-                descriptionResId = R.string.alias_toggle_tooltip_description,
-                onDismiss = { },
-                shouldDisplayTooltip = isAliasToggleTooltipEnabled,
-                arrowHeight = 8.dp,
-                backgroundColor = Color.Red,
-                requesterView = {
-                    Switch(
-                        checked = !isAliasDisabled,
-                        onCheckedChange = onToggleAliasState,
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = PassTheme.colors.aliasInteractionNorm,
-                            checkedTrackColor = PassTheme.colors.aliasInteractionNormMajor1
-                        )
-                    )
-                }
+
+            val position = remember { mutableStateOf(IntOffset.Zero) }
+            val size = remember { mutableStateOf(IntSize.Zero) }
+
+            Switch(
+                modifier = Modifier.onGloballyPositioned { coordinates ->
+                    position.value =
+                        coordinates.positionInRoot().let { IntOffset(it.x.toInt(), it.y.toInt()) }
+                    size.value = coordinates.size
+                },
+                checked = !isAliasDisabled,
+                onCheckedChange = onToggleAliasState,
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = PassTheme.colors.aliasInteractionNorm,
+                    checkedTrackColor = PassTheme.colors.aliasInteractionNormMajor1
+                )
             )
+
+            if (isAliasToggleTooltipEnabled) {
+                PassTooltipPopup(
+                    title = "title",
+                    description = "description",
+                    position = position,
+                    size = size,
+                    onDismissRequest = {
+
+                    }
+                )
+            }
         }
     }
 }
@@ -129,7 +145,7 @@ fun AliasAddressRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark
                 alias = "some@alias.test",
                 isAliasDisabled = false,
                 isAliasSyncEnabled = true,
-                isAliasToggleTooltipEnabled = false,
+                isAliasToggleTooltipEnabled = true,
                 onCopyAlias = {},
                 onCreateLoginFromAlias = {},
                 onToggleAliasState = {}

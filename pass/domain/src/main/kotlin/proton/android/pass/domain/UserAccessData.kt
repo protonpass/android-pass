@@ -23,5 +23,9 @@ data class UserAccessData(
     val waitingNewUserInvites: Int,
     val needsUpdate: Boolean,
     val protonMonitorEnabled: Boolean,
-    val aliasMonitorEnabled: Boolean
+    val aliasMonitorEnabled: Boolean,
+    val isSimpleLoginSyncEnabled: Boolean,
+    val minVersionUpgrade: String?,
+    val simpleLoginSyncDefaultShareId: String,
+    val simpleLoginSyncPendingAliasCount: Int
 )

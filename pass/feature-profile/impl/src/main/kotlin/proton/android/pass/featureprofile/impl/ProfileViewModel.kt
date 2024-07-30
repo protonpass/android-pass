@@ -68,6 +68,7 @@ import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
+import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.domain.PlanType
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.AppVersionCopied
 import proton.android.pass.featureprofile.impl.accountswitcher.AccountItem
@@ -93,6 +94,7 @@ class ProfileViewModel @Inject constructor(
     private val checkPasskeySupport: CheckPasskeySupport,
     private val userManager: UserManager,
     private val refreshContent: RefreshContent,
+    private val observeSimpleLoginSyncStatus: ObserveSimpleLoginSyncStatus,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
@@ -260,9 +262,12 @@ class ProfileViewModel @Inject constructor(
         passkeySupportFlow,
         ffFlow,
         secureLinksCountFlow,
-        accountsFlow
+        accountsFlow,
+        observeSimpleLoginSyncStatus().distinctUntilChanged()
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event, browser,
-        passkey, flags, secureLinksCount, accounts ->
+        passkey, flags, secureLinksCount, accounts, simpleLoginSyncStatus ->
+
+        println("JIBIRI: $simpleLoginSyncStatus")
         val (accountType, showUpgradeButton) = processUpgradeInfo(upgradeInfo)
         val defaultBrowser = browser.getOrNull() ?: DefaultBrowser.Other
         ProfileUiState(

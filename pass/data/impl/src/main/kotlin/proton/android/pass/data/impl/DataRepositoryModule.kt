@@ -35,6 +35,7 @@ import proton.android.pass.data.api.repositories.LiveTelemetryRepository
 import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
 import proton.android.pass.data.api.repositories.SearchEntryRepository
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.repositories.TelemetryRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.impl.core.repositories.SentinelRepositoryImpl
@@ -64,6 +65,7 @@ import proton.android.pass.data.impl.repositories.SecureLinkRepositoryImpl
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.repositories.ShareKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
+import proton.android.pass.data.impl.repositories.SimpleLoginRepositoryImpl
 import proton.android.pass.data.impl.repositories.TelemetryRepositoryImpl
 import proton.android.pass.data.impl.repositories.UserAccessDataRepositoryImpl
 import javax.inject.Singleton
@@ -141,4 +143,7 @@ abstract class DataRepositoryModule {
 
     @Binds
     abstract fun bindLiveTelemetryRepository(impl: LiveTelemetryRepositoryImpl): LiveTelemetryRepository
+
+    @[Binds Singleton]
+    abstract fun bindSimpleLoginRepository(impl: SimpleLoginRepositoryImpl): SimpleLoginRepository
 }

@@ -23,5 +23,9 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.UserAccessData
 
 interface UserAccessDataRepository {
+
     fun observe(userId: UserId): Flow<UserAccessData?>
+
+    suspend fun update(userId: UserId, userAccessData: UserAccessData)
+
 }

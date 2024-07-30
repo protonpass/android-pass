@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -19,13 +19,10 @@
 package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.UserAccessData
+import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 
-interface UserAccessDataRepository {
+interface SimpleLoginRepository {
 
-    fun observe(userId: UserId): Flow<UserAccessData?>
-
-    suspend fun update(userId: UserId, userAccessData: UserAccessData)
+    fun observeSyncStatus(): Flow<SimpleLoginSyncStatus>
 
 }

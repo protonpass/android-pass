@@ -47,7 +47,13 @@ data class UserAccessDataEntity(
     @ColumnInfo(name = Columns.MONITOR_PROTON_ADDRESSES, defaultValue = "1")
     val protonMonitorEnabled: Boolean,
     @ColumnInfo(name = Columns.MONITOR_ALIAS_ADDRESSES, defaultValue = "1")
-    val aliasMonitorEnabled: Boolean
+    val aliasMonitorEnabled: Boolean,
+    @ColumnInfo(name = Columns.SIMPLE_LOGIN_SYNC_ENABLED, defaultValue = "0")
+    val isSimpleLoginSyncEnabled: Boolean,
+    @ColumnInfo(name = Columns.SIMPLE_LOGIN_SYNC_DEFAULT_SHARE_ID, defaultValue = "")
+    val simpleLoginSyncDefaultShareId: String,
+    @ColumnInfo(name = Columns.SIMPLE_LOGIN_SYNC_PENDING_ALIAS_COUNT, defaultValue = "0")
+    val simpleLoginSyncPendingAliasCount: Int
 ) {
     object Columns {
         const val USER_ID = "user_id"
@@ -56,6 +62,9 @@ data class UserAccessDataEntity(
         const val MIN_VERSION_UPGRADE = "min_version_upgrade"
         const val MONITOR_PROTON_ADDRESSES = "monitor_proton_addresses"
         const val MONITOR_ALIAS_ADDRESSES = "monitor_alias_addresses"
+        const val SIMPLE_LOGIN_SYNC_ENABLED = "simple_login_sync_enabled"
+        const val SIMPLE_LOGIN_SYNC_DEFAULT_SHARE_ID = "simple_login_sync_default_share_id"
+        const val SIMPLE_LOGIN_SYNC_PENDING_ALIAS_COUNT = "simple_login_sync_pending_alias_count"
     }
 
     companion object {

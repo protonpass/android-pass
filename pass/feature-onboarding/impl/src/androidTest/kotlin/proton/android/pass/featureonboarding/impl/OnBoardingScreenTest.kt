@@ -72,7 +72,18 @@ class OnBoardingScreenTest {
     @Before
     fun setup() {
         hiltRule.inject()
-        observeUserAccessData.sendValue(UserAccessData(0, 0, false, false, false))
+
+        UserAccessData(
+            pendingInvites = 0,
+            waitingNewUserInvites = 0,
+            needsUpdate = false,
+            protonMonitorEnabled = false,
+            aliasMonitorEnabled = false,
+            minVersionUpgrade = null,
+            isSimpleLoginSyncEnabled = false,
+            simpleLoginSyncPendingAliasCount = 0,
+            simpleLoginSyncDefaultShareId = ""
+        ).also(observeUserAccessData::sendValue)
     }
 
     @Test

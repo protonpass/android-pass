@@ -43,7 +43,8 @@ fun AliasSection(
     isLoading: Boolean,
     onCopyAlias: (String) -> Unit,
     onCreateLoginFromAlias: (String) -> Unit,
-    onToggleAliasState: (Boolean) -> Unit
+    onToggleAliasState: (Boolean) -> Unit,
+    onDismissTooltip: () -> Unit
 ) {
     RoundedCornersColumn(
         modifier = modifier.fillMaxWidth()
@@ -55,7 +56,8 @@ fun AliasSection(
             isAliasToggleTooltipEnabled = isAliasToggleTooltipEnabled,
             onCopyAlias = { onCopyAlias(it) },
             onCreateLoginFromAlias = onCreateLoginFromAlias,
-            onToggleAliasState = onToggleAliasState
+            onToggleAliasState = onToggleAliasState,
+            onDismissTooltip = onDismissTooltip
         )
         if (!mailboxes.isEmpty() || isLoading) {
             Divider(color = PassTheme.colors.inputBorderNorm)
@@ -86,7 +88,8 @@ fun AliasSectionPreview(
                 isLoading = false,
                 onCopyAlias = {},
                 onCreateLoginFromAlias = {},
-                onToggleAliasState = {}
+                onToggleAliasState = {},
+                onDismissTooltip = {}
             )
         }
     }

@@ -65,6 +65,7 @@ import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -106,6 +107,7 @@ class AliasDetailViewModel @Inject constructor(
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
     private val changeAliasStatus: ChangeAliasStatus,
+    private val disableTooltip: DisableTooltip,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     getAliasDetails: GetAliasDetails,
@@ -327,6 +329,12 @@ class AliasDetailViewModel @Inject constructor(
                     PassLogger.w(TAG, "Error changing alias status")
                     PassLogger.w(TAG, it)
                 }
+        }
+    }
+
+    fun dismissAliasToggleTooltip() {
+        viewModelScope.launch {
+            disableTooltip(Tooltip.AliasToggle)
         }
     }
 

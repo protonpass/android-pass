@@ -65,7 +65,8 @@ fun AliasAddressRow(
     isAliasToggleTooltipEnabled: Boolean,
     onCopyAlias: (String) -> Unit,
     onCreateLoginFromAlias: (String) -> Unit,
-    onToggleAliasState: (Boolean) -> Unit
+    onToggleAliasState: (Boolean) -> Unit,
+    onDismissTooltip: () -> Unit
 ) {
     Row(
         modifier = modifier
@@ -127,9 +128,7 @@ fun AliasAddressRow(
                     description = "description",
                     position = position,
                     size = size,
-                    onDismissRequest = {
-
-                    }
+                    onDismissRequest = onDismissTooltip
                 )
             }
         }
@@ -148,7 +147,8 @@ fun AliasAddressRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark
                 isAliasToggleTooltipEnabled = true,
                 onCopyAlias = {},
                 onCreateLoginFromAlias = {},
-                onToggleAliasState = {}
+                onToggleAliasState = {},
+                onDismissTooltip = {}
             )
         }
     }

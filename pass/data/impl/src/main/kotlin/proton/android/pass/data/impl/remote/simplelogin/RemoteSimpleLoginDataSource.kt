@@ -16,17 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain.simplelogin
+package proton.android.pass.data.impl.remote.simplelogin
 
-import proton.android.pass.domain.Vault
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.impl.responses.SimpleLoginSyncStatusResponse
 
-data class SimpleLoginSyncStatus(
-    val isSyncEnabled: Boolean,
-    val isPreferenceEnabled: Boolean,
-    val pendingAliasCount: Int,
-    val defaultVault: Vault
-) {
+interface RemoteSimpleLoginDataSource {
 
-    val hasPendingAliases: Boolean = pendingAliasCount > 0
+    suspend fun getSimpleLoginSyncStatus(userId: UserId): SimpleLoginSyncStatusResponse
 
 }

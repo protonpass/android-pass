@@ -52,8 +52,8 @@ import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.remote.RemoteShareDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteShareKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteShareKeyDataSourceImpl
-import proton.android.pass.data.impl.remote.RemoteSimpleLoginDataSource
-import proton.android.pass.data.impl.remote.RemoteSimpleLoginDataSourceImpl
+import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
+import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteTelemetryDataSource
 import proton.android.pass.data.impl.remote.RemoteTelemetryDataSourceImpl
 import javax.inject.Singleton

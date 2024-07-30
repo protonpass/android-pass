@@ -16,19 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.remote
+package proton.android.pass.data.impl.remote.simplelogin
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.responses.SimpleLoginSyncStatusResponse
 import javax.inject.Inject
-
-interface RemoteSimpleLoginDataSource {
-
-    suspend fun getSimpleLoginSyncStatus(userId: UserId): SimpleLoginSyncStatusResponse
-
-}
 
 class RemoteSimpleLoginDataSourceImpl @Inject constructor(
     private val apiProvider: ApiProvider
@@ -38,6 +32,5 @@ class RemoteSimpleLoginDataSourceImpl @Inject constructor(
         .get<PasswordManagerApi>(userId)
         .invoke { getSimpleLoginSyncStatus() }
         .valueOrThrow
+
 }
-
-

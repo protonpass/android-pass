@@ -19,10 +19,11 @@
 package proton.android.pass.data.api.usecases.simplelogin
 
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.common.api.Option
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 
 interface ObserveSimpleLoginSyncStatus {
 
-    operator fun invoke(): Flow<SimpleLoginSyncStatus>
+    operator fun invoke(): Flow<Option<SimpleLoginSyncStatus>>
 
 }

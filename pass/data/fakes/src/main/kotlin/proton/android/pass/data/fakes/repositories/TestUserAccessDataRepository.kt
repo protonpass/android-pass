@@ -37,4 +37,9 @@ class TestUserAccessDataRepository @Inject constructor() : UserAccessDataReposit
     }
 
     override fun observe(userId: UserId): Flow<UserAccessData?> = flow
+
+    override suspend fun update(userId: UserId, userAccessData: UserAccessData) {
+        sendValue(userAccessData)
+    }
+
 }

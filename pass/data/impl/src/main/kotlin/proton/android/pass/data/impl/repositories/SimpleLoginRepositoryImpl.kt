@@ -28,7 +28,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
@@ -78,12 +77,12 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     }
 
     private suspend fun UserAccessData.toSimpleLoginSyncStatus(userId: UserId) = SimpleLoginSyncStatus(
-        isEnabled = isSimpleLoginSyncEnabled,
+        isSyncEnabled = isSimpleLoginSyncEnabled,
         pendingAliasCount = simpleLoginSyncPendingAliasCount,
         defaultVault = observeVaultById(
             userId = userId,
             shareId = simpleLoginSyncDefaultShareId.let(::ShareId)
-        ).firstOrNull().toOption()
+        ).first()
     )
 
 }

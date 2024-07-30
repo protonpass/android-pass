@@ -18,15 +18,16 @@
 
 package proton.android.pass.composecomponents.impl.tooltips
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.IntSize
@@ -45,9 +46,10 @@ fun PassTooltipPopup(
     description: String,
     position: MutableState<IntOffset>,
     size: MutableState<IntSize>,
-    elevation: Dp = 8.dp,
+    backgroundColor: Color = PassTheme.colors.searchBarBackground,
     onDismissRequest: () -> Unit
 ) {
+    BackHandler { onDismissRequest() }
     Popup(
         popupPositionProvider = remember(position.value, size.value) {
             object : PopupPositionProvider {
@@ -67,20 +69,16 @@ fun PassTooltipPopup(
     ) {
         val density = LocalDensity.current
         val switchCenterX = with(density) { (position.value.x + size.value.width / 2).toDp() }
-        Surface(
-            modifier = modifier,
-            elevation = elevation,
-            color = PassTheme.colors.backdrop,
-            shape = RoundedCornerShape(8.dp)
-        ) {
-            PassTooltip(
-                modifier = Modifier.padding(Spacing.small),
-                title = title,
-                description = description,
-                backgroundColor = PassTheme.colors.backgroundNorm,
-                arrowOffset = switchCenterX - Spacing.small,
-                onClose = onDismissRequest
-            )
-        }
+
+        PassTooltip(
+            modifier = Modifier
+                .padding(Spacing.small)
+                .shadow(Spacing.medium, shape = RoundedCornerShape(8.dp)),
+            title = title,
+            description = description,
+            backgroundColor = backgroundColor,
+            arrowOffset = switchCenterX - Spacing.small,
+            onClose = onDismissRequest
+        )
     }
 }

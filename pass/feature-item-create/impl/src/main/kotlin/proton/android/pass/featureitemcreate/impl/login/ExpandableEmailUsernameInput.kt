@@ -32,13 +32,19 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
@@ -91,38 +97,46 @@ internal fun ExpandableEmailUsernameInput(
                         tint = emailIconTint
                     )
                 } else {
-                    PassTooltipPopup(
-                        titleResId = R.string.field_email_tooltip_title,
-                        descriptionResId = R.string.field_email_tooltip_description,
-                        onDismiss = { onEvent(LoginContentEvent.OnTooltipDismissed(Tooltip.UsernameSplit)) },
-                        shouldDisplayTooltip = isUsernameSplitTooltipEnabled,
-                        arrowHeight = 8.dp,
-                        backgroundColor = PassTheme.colors.searchBarBackground,
-                        requesterView = {
-                            Box(
-                                modifier = Modifier.clickable { isExpanded.value = true }
-                            ) {
-                                Icon(
-                                    modifier = Modifier.padding(horizontal = 2.dp),
-                                    painter = painterResource(id = CoreR.drawable.ic_proton_envelope),
-                                    contentDescription = null,
-                                    tint = emailIconTint
-                                )
-
-                                Icon(
-                                    modifier = Modifier
-                                        .align(alignment = Alignment.TopEnd)
-                                        .size(size = 14.dp)
-                                        .clip(shape = CircleShape)
-                                        .background(color = PassTheme.colors.loginInteractionNormMinor1)
-                                        .padding(all = 3.dp),
-                                    painter = painterResource(id = CoreR.drawable.ic_proton_plus),
-                                    contentDescription = null,
-                                    tint = PassTheme.colors.loginInteractionNormMajor1
-                                )
+                    val position = remember { mutableStateOf(IntOffset.Zero) }
+                    val size = remember { mutableStateOf(IntSize.Zero) }
+                    Box(
+                        modifier = Modifier.clickable { isExpanded.value = true }
+                            .onGloballyPositioned { coordinates ->
+                                position.value =
+                                    coordinates.positionInRoot().let { IntOffset(it.x.toInt(), it.y.toInt()) }
+                                size.value = coordinates.size
                             }
-                        }
-                    )
+                    ) {
+                        Icon(
+                            modifier = Modifier.padding(horizontal = 2.dp),
+                            painter = painterResource(id = CoreR.drawable.ic_proton_envelope),
+                            contentDescription = null,
+                            tint = emailIconTint
+                        )
+
+                        Icon(
+                            modifier = Modifier
+                                .align(alignment = Alignment.TopEnd)
+                                .size(size = 14.dp)
+                                .clip(shape = CircleShape)
+                                .background(color = PassTheme.colors.loginInteractionNormMinor1)
+                                .padding(all = 3.dp),
+                            painter = painterResource(id = CoreR.drawable.ic_proton_plus),
+                            contentDescription = null,
+                            tint = PassTheme.colors.loginInteractionNormMajor1
+                        )
+                    }
+                    if (isUsernameSplitTooltipEnabled) {
+                        PassTooltipPopup(
+                            title = stringResource(id = R.string.field_email_tooltip_title),
+                            description = stringResource(id = R.string.field_email_tooltip_description),
+                            position = position,
+                            size = size,
+                            onDismissRequest = {
+                                onEvent(LoginContentEvent.OnTooltipDismissed(Tooltip.UsernameSplit))
+                            }
+                        )
+                    }
                 }
             },
             trailingIcon = {

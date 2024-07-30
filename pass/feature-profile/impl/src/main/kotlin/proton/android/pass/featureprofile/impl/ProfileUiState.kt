@@ -77,12 +77,11 @@ internal data class ProfileUiState(
 
         when (simpleLoginSyncStatusOption) {
             None -> false
-            is Some ->
-                simpleLoginSyncStatusOption.value
-                    .let { simpleLoginSyncStatus ->
-                        !simpleLoginSyncStatus.isSyncEnabled
-                            .and(simpleLoginSyncStatus.hasPendingAliases)
-                    }
+            is Some -> simpleLoginSyncStatusOption.value.let { simpleLoginSyncStatus ->
+                simpleLoginSyncStatus.isPreferenceEnabled &&
+                    simpleLoginSyncStatus.hasPendingAliases &&
+                    !simpleLoginSyncStatus.isSyncEnabled
+            }
         }
     }
 

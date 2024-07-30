@@ -50,6 +50,7 @@ fun AliasDetailContent(
     onToggleAliasState: (Boolean) -> Unit,
     onVaultClick: () -> Unit,
     onViewItemHistoryClicked: () -> Unit,
+    onDismissTooltip: () -> Unit,
     isHistoryFeatureEnabled: Boolean,
     isAliasToggleTooltipEnabled: Boolean
 ) {
@@ -76,7 +77,8 @@ fun AliasDetailContent(
             isLoading = isLoading,
             onCopyAlias = onCopyAlias,
             onCreateLoginFromAlias = onCreateLoginFromAlias,
-            onToggleAliasState = onToggleAliasState
+            onToggleAliasState = onToggleAliasState,
+            onDismissTooltip = onDismissTooltip
         )
 
         NoteSection(

@@ -210,7 +210,8 @@ fun AliasDetail(
                                 itemId = state.itemUiModel.id,
                                 state = it
                             )
-                        }
+                        },
+                        onDismissTooltip = viewModel::dismissAliasToggleTooltip
                     )
                 }
 

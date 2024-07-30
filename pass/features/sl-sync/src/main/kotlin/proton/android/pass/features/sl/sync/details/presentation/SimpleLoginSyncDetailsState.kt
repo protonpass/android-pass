@@ -28,6 +28,7 @@ internal data class SimpleLoginSyncDetailsState(
     internal val defaultDomain: String,
     internal val defaultMailbox: String,
     internal val defaultVaultOption: Option<Vault>,
+    internal val pendingAliasesCount: Int,
     internal val isLoading: Boolean
 ) {
 
@@ -37,6 +38,7 @@ internal data class SimpleLoginSyncDetailsState(
             defaultDomain = "",
             defaultMailbox = "",
             defaultVaultOption = None,
+            pendingAliasesCount = 0,
             isLoading = true
         )
 

@@ -19,20 +19,24 @@
 package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.flowOf
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.usecases.GetVaultById
-import proton.android.pass.data.impl.remote.RemoteSimpleLoginDataSource
+import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSource
+import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserAccessData
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
@@ -42,22 +46,32 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val userAccessDataRepository: UserAccessDataRepository,
     private val observeVaultById: GetVaultById,
+    private val localSimpleLoginDataSource: LocalSimpleLoginDataSource,
     private val remoteDataSource: RemoteSimpleLoginDataSource
-
 ) : SimpleLoginRepository {
 
     private val simpleLoginSyncStatus = accountManager.getPrimaryUserId()
-        .filterNotNull()
         .flatMapLatest { userId ->
-            userAccessDataRepository.observe(userId)
-                .map { userAccessData -> userAccessData?.toSimpleLoginSyncStatus(userId) }
+            if (userId == null) {
+                flowOf(None)
+            } else {
+                combine(
+                    userAccessDataRepository.observe(userId),
+                    localSimpleLoginDataSource.observeSyncPreference()
+                ) { userAccessData, isSimpleLoginSyncPreferenceEnabled ->
+                    userAccessData?.toSimpleLoginSyncStatus(
+                        userId = userId,
+                        isSimpleLoginSyncPreferenceEnabled = isSimpleLoginSyncPreferenceEnabled
+                    ).toOption()
+                }
+            }
         }
-        .filterNotNull()
 
-    override fun observeSyncStatus(): Flow<SimpleLoginSyncStatus> = flow {
+    override fun observeSyncStatus(): Flow<Option<SimpleLoginSyncStatus>> = flow {
         emit(simpleLoginSyncStatus.first())
 
-        val userId = accountManager.getPrimaryUserId().firstOrNull() ?: throw UserIdNotAvailableError()
+        val userId =
+            accountManager.getPrimaryUserId().firstOrNull() ?: throw UserIdNotAvailableError()
 
         userAccessDataRepository.observe(userId)
             .firstOrNull()
@@ -76,8 +90,18 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         emitAll(simpleLoginSyncStatus)
     }
 
-    private suspend fun UserAccessData.toSimpleLoginSyncStatus(userId: UserId) = SimpleLoginSyncStatus(
+    override fun disableSyncPreference() {
+        localSimpleLoginDataSource.disableSyncPreference()
+    }
+
+    override fun observeSyncPreference(): Flow<Boolean> = localSimpleLoginDataSource.observeSyncPreference()
+
+    private suspend fun UserAccessData.toSimpleLoginSyncStatus(
+        userId: UserId,
+        isSimpleLoginSyncPreferenceEnabled: Boolean
+    ) = SimpleLoginSyncStatus(
         isSyncEnabled = isSimpleLoginSyncEnabled,
+        isPreferenceEnabled = isSimpleLoginSyncPreferenceEnabled,
         pendingAliasCount = simpleLoginSyncPendingAliasCount,
         defaultVault = observeVaultById(
             userId = userId,

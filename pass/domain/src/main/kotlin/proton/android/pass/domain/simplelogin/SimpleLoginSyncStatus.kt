@@ -22,6 +22,7 @@ import proton.android.pass.domain.Vault
 
 data class SimpleLoginSyncStatus(
     val isSyncEnabled: Boolean,
+    val isPreferenceEnabled: Boolean,
     val pendingAliasCount: Int,
     val defaultVault: Vault
 ) {

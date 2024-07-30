@@ -172,6 +172,7 @@ import proton.android.pass.data.api.usecases.securelink.ObserveInactiveSecureLin
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
+import proton.android.pass.data.api.usecases.simplelogin.DisableSimpleLoginSyncPreference
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
@@ -333,6 +334,7 @@ import proton.android.pass.data.impl.usecases.securelink.ObserveInactiveSecureLi
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinkImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksCountImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksImpl
+import proton.android.pass.data.impl.usecases.simplelogin.DisableSimpleLoginSyncPreferenceImpl
 import proton.android.pass.data.impl.usecases.simplelogin.ObserveSimpleLoginSyncStatusImpl
 import proton.android.pass.data.impl.usecases.sync.ForceSyncItemsImpl
 import proton.android.pass.data.impl.usecases.tooltips.DisableTooltipImpl
@@ -838,5 +840,10 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindObserveSimpleLoginSyncStatus(impl: ObserveSimpleLoginSyncStatusImpl): ObserveSimpleLoginSyncStatus
+
+    @[Binds Singleton]
+    abstract fun bindDisableSimpleLoginSyncPreference(
+        impl: DisableSimpleLoginSyncPreferenceImpl
+    ): DisableSimpleLoginSyncPreference
 
 }

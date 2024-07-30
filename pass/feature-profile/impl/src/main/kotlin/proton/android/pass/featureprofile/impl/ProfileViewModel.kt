@@ -59,7 +59,6 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
-import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.data.api.usecases.DefaultBrowser
 import proton.android.pass.data.api.usecases.GetDefaultBrowser
@@ -70,6 +69,7 @@ import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
+import proton.android.pass.data.api.usecases.simplelogin.DisableSimpleLoginSyncPreference
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.domain.PlanType
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.AppVersionCopied
@@ -96,6 +96,7 @@ class ProfileViewModel @Inject constructor(
     private val checkPasskeySupport: CheckPasskeySupport,
     private val userManager: UserManager,
     private val refreshContent: RefreshContent,
+    private val disableSimpleLoginSyncPreference: DisableSimpleLoginSyncPreference,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
@@ -255,11 +256,6 @@ class ProfileViewModel @Inject constructor(
         .distinctUntilChanged()
 
     private val simpleLoginSyncStatusOptionFlow = observeSimpleLoginSyncStatus()
-        .mapLatest { simpleLoginSyncStatus ->
-            simpleLoginSyncStatus
-                .copy(pendingAliasCount = 5)
-                .toOption()
-        }
         .catch { error ->
             PassLogger.w(TAG, "There was an error observing SL sync status")
             PassLogger.w(TAG, error)
@@ -282,6 +278,8 @@ class ProfileViewModel @Inject constructor(
         simpleLoginSyncStatusOptionFlow
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event, browser,
         passkey, flags, secureLinksCount, accounts, simpleLoginSyncStatusOption ->
+
+        println("JIBIRI: simpleLoginSyncStatusOptionFlow = $simpleLoginSyncStatusOption")
 
         val (accountType, showUpgradeButton) = processUpgradeInfo(upgradeInfo)
         val defaultBrowser = browser.getOrNull() ?: DefaultBrowser.Other
@@ -369,14 +367,17 @@ class ProfileViewModel @Inject constructor(
         eventFlow.update { ProfileEvent.ConfigurePin }
     }
 
-    private fun Account.getAccountItem(user: User?, planInfo: PlanInfo): AccountItem = AccountItem(
-        userId = userId,
-        initials = user?.getInitials(count = 1) ?: "?",
-        name = user?.getDisplayName() ?: this.username?.takeIfNotBlank() ?: "Unknown",
-        email = user?.getEmail(),
-        planInfo = planInfo,
-        state = state
-    )
+    internal fun onNewAccountReady(newAccountReady: Set<UserId>) {
+        viewModelScope.launch {
+            newAccountReady.forEach {
+                refreshAccount(it)
+            }
+        }
+    }
+
+    internal fun onDisableSimpleLoginWidget() {
+        disableSimpleLoginSyncPreference()
+    }
 
     private suspend fun ProfileViewModel.refreshAccount(userId: UserId) {
         runCatching { refreshContent(userId) }
@@ -389,13 +390,14 @@ class ProfileViewModel @Inject constructor(
             }
     }
 
-    fun onNewAccountReady(newAccountReady: Set<UserId>) {
-        viewModelScope.launch {
-            newAccountReady.forEach {
-                refreshAccount(it)
-            }
-        }
-    }
+    private fun Account.getAccountItem(user: User?, planInfo: PlanInfo): AccountItem = AccountItem(
+        userId = userId,
+        initials = user?.getInitials(count = 1) ?: "?",
+        name = user?.getDisplayName() ?: this.username?.takeIfNotBlank() ?: "Unknown",
+        email = user?.getEmail(),
+        planInfo = planInfo,
+        state = state
+    )
 
     private companion object {
 

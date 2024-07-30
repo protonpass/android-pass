@@ -30,15 +30,38 @@ import javax.inject.Inject
 class UserAccessDataRepositoryImpl @Inject constructor(
     private val localUserAccessDataDataSource: LocalUserAccessDataDataSource
 ) : UserAccessDataRepository {
+
     override fun observe(userId: UserId): Flow<UserAccessData?> = localUserAccessDataDataSource.observe(userId)
         .map { it?.toDomain() }
 
+    override suspend fun update(userId: UserId, userAccessData: UserAccessData) {
+        userAccessData.toEntity(userId)
+            .also { userAccessDataEntity ->
+                localUserAccessDataDataSource.store(userAccessDataEntity)
+            }
+    }
 
     private fun UserAccessDataEntity.toDomain() = UserAccessData(
         pendingInvites = pendingInvites,
         waitingNewUserInvites = waitingNewUserInvites,
         needsUpdate = minVersionUpgrade != null,
         protonMonitorEnabled = protonMonitorEnabled,
-        aliasMonitorEnabled = aliasMonitorEnabled
+        aliasMonitorEnabled = aliasMonitorEnabled,
+        minVersionUpgrade = minVersionUpgrade,
+        isSimpleLoginSyncEnabled = isSimpleLoginSyncEnabled,
+        simpleLoginSyncDefaultShareId = simpleLoginSyncDefaultShareId,
+        simpleLoginSyncPendingAliasCount = simpleLoginSyncPendingAliasCount
+    )
+
+    private fun UserAccessData.toEntity(userId: UserId) = UserAccessDataEntity(
+        userId = userId.id,
+        pendingInvites = pendingInvites,
+        waitingNewUserInvites = waitingNewUserInvites,
+        minVersionUpgrade = minVersionUpgrade,
+        protonMonitorEnabled = protonMonitorEnabled,
+        aliasMonitorEnabled = aliasMonitorEnabled,
+        isSimpleLoginSyncEnabled = isSimpleLoginSyncEnabled,
+        simpleLoginSyncDefaultShareId = simpleLoginSyncDefaultShareId,
+        simpleLoginSyncPendingAliasCount = simpleLoginSyncPendingAliasCount
     )
 }

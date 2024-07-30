@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -44,6 +45,7 @@ internal fun SimpleLoginSyncDetailsSections(
     defaultDomain: String,
     defaultMailbox: String,
     defaultVaultOption: Option<Vault>,
+    pendingAliasesCount: Int,
     onUiEvent: (SimpleLoginSyncDetailsUiEvent) -> Unit
 ) {
     Column(
@@ -75,7 +77,14 @@ internal fun SimpleLoginSyncDetailsSections(
 
                     PassSingleActionWidget(
                         title = stringResource(id = CompR.string.simple_login_widget_title),
-                        message = stringResource(id = CompR.string.simple_login_widget_message),
+                        message = stringResource(
+                            id = CompR.string.simple_login_widget_message,
+                            pluralStringResource(
+                                id = CompR.plurals.simple_login_widget_pending_aliases,
+                                count = pendingAliasesCount,
+                                pendingAliasesCount
+                            )
+                        ),
                         actionText = stringResource(id = CompR.string.simple_login_widget_action),
                         onActionClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnSyncSettingsClicked) }
                     )

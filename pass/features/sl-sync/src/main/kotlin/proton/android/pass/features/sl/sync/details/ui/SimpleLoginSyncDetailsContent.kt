@@ -54,6 +54,7 @@ internal fun SimpleLoginSyncDetailsContent(
                 defaultDomain = defaultDomain,
                 defaultMailbox = defaultMailbox,
                 defaultVaultOption = defaultVaultOption,
+                pendingAliasesCount = pendingAliasesCount,
                 onUiEvent = onUiEvent
             )
         }

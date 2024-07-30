@@ -166,6 +166,8 @@ import proton.android.pass.data.api.usecases.securelink.ObserveInactiveSecureLin
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
+import proton.android.pass.data.api.usecases.simplelogin.DisableSimpleLoginSyncPreference
+import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
@@ -313,6 +315,8 @@ import proton.android.pass.data.fakes.usecases.securelink.FakeObserveInactiveSec
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinksCount
+import proton.android.pass.data.fakes.usecases.simplelogin.FakeDisableSimpleLoginSyncPreference
+import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLoginSyncStatus
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
@@ -782,5 +786,13 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindChangeAliasStatus(impl: FakeChangeAliasStatus): ChangeAliasStatus
+
+    @Binds
+    abstract fun bindObserveSimpleLoginSyncStatus(impl: FakeObserveSimpleLoginSyncStatus): ObserveSimpleLoginSyncStatus
+
+    @Binds
+    abstract fun bindDisableSimpleLoginSyncPreference(
+        impl: FakeDisableSimpleLoginSyncPreference
+    ): DisableSimpleLoginSyncPreference
 
 }

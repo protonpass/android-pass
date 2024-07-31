@@ -62,7 +62,7 @@ internal fun PassTooltip(
     radius: Dp = Radius.small,
     backgroundColor: Color,
     shape: RoundedCornerShape = RoundedCornerShape(
-        topStart = radius.takeIf { arrowOffset >= Spacing.small } ?: 0.dp,
+        topStart = radius.takeIf { arrowOffset >= Spacing.small } ?: Spacing.none,
         topEnd = radius,
         bottomEnd = radius,
         bottomStart = radius

@@ -39,8 +39,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
@@ -50,12 +48,15 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.tooltips.PassTooltipPopup
+import proton.android.pass.composecomponents.impl.tooltips.findPositionAndSizeForTooltip
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun AliasAddressRow(
@@ -76,32 +77,32 @@ fun AliasAddressRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { onCopyAlias(alias) }
-                .padding(16.dp),
+                .padding(Spacing.medium),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
             Icon(
-                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
+                painter = painterResource(CoreR.drawable.ic_proton_alias),
                 contentDescription = null,
                 tint = PassTheme.colors.aliasInteractionNorm
             )
             Column(Modifier.weight(1f)) {
                 SectionTitle(
-                    modifier = Modifier.padding(start = 8.dp),
+                    modifier = Modifier.padding(start = Spacing.small),
                     text = stringResource(R.string.field_alias_title)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 SectionSubtitle(
-                    modifier = Modifier.padding(start = 8.dp),
+                    modifier = Modifier.padding(start = Spacing.small),
                     text = alias.asAnnotatedString()
                 )
                 Text(
                     modifier = Modifier
                         .clip(RoundedCornerShape(8.dp))
                         .clickable { onCreateLoginFromAlias(alias) }
-                        .padding(8.dp),
+                        .padding(Spacing.small),
                     text = stringResource(R.string.alias_create_login_from_alias),
                     color = PassTheme.colors.aliasInteractionNorm,
                     textDecoration = TextDecoration.Underline
@@ -109,12 +110,7 @@ fun AliasAddressRow(
             }
             if (isAliasSyncEnabled) {
                 Switch(
-                    modifier = Modifier.onGloballyPositioned { coordinates ->
-                        position.value =
-                            coordinates.positionInRoot()
-                                .let { IntOffset(it.x.toInt(), it.y.toInt()) }
-                        size.value = coordinates.size
-                    },
+                    modifier = Modifier.findPositionAndSizeForTooltip(position, size),
                     checked = !isAliasDisabled,
                     onCheckedChange = onToggleAliasState,
                     colors = SwitchDefaults.colors(
@@ -125,7 +121,7 @@ fun AliasAddressRow(
             }
         }
 
-        if (isAliasSyncEnabled && isAliasToggleTooltipEnabled) {
+        if (isAliasSyncEnabled && !isAliasDisabled && isAliasToggleTooltipEnabled) {
             PassTooltipPopup(
                 title = stringResource(id = R.string.alias_toggle_tooltip_title),
                 description = stringResource(id = R.string.alias_toggle_tooltip_description),

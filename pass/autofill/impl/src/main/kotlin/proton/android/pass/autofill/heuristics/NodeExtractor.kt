@@ -638,7 +638,10 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         for (kw in normalizedKeywords) {
             when (val type = detectFieldTypeUsingAutofillHint(kw)) {
                 FieldType.Unknown -> {}
-                else -> return type
+                else -> {
+                    PassLogger.v(TAG, "Found field type $type using hint keyword $kw")
+                    return type
+                }
             }
         }
 

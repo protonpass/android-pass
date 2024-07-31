@@ -20,4 +20,6 @@
     <string name="sync_channel">Sync</string>
     <string name="sync_channel_description">Notifications channel for item syncing</string>
     <string name="syncing_vaults">Syncing vaults and items</string>
+
+    <string name="logging_out_free_users">Logging out extra free users</string>
 </resources>

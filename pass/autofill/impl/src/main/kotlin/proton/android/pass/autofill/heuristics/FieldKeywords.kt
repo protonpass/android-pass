@@ -92,13 +92,13 @@ private val ALLOWED_ORGANIZATION_KEYWORDS = mapOf(
     English to setOf("organi")
 )
 private val ALLOWED_FIRST_NAME_KEYWORDS = mapOf(
-    English to setOf("firstname")
+    English to setOf("firstname", "givenname")
 )
 private val ALLOWED_MIDDLE_NAME_KEYWORDS = mapOf(
-    English to setOf("middlename")
+    English to setOf("middlename", "additionalname")
 )
 private val ALLOWED_LAST_NAME_KEYWORDS = mapOf(
-    English to setOf("lastname")
+    English to setOf("lastname", "familyname")
 )
 private val DEFAULT_DENIED_KEYWORDS = setOf("composer", "message", MOZILLA_BROWSER_PREFIX)
 

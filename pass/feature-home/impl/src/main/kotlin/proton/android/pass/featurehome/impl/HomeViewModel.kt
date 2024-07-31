@@ -535,14 +535,16 @@ class HomeViewModel @Inject constructor(
         navEventState,
         pinningUiStateFlow,
         bottomSheetItemActionFlow,
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT)
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT),
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC)
     ) { homeListUiState,
         searchUiState,
         userPlan,
         navEvent,
         pinningUiState,
         bottomSheetItemAction,
-        isUsernameSplitEnabled ->
+        isUsernameSplitEnabled,
+        isSLAliasSyncEnabled ->
         HomeUiState(
             homeListUiState = homeListUiState,
             searchUiState = searchUiState,
@@ -551,7 +553,8 @@ class HomeViewModel @Inject constructor(
             navEvent = navEvent,
             action = bottomSheetItemAction,
             isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() ?: true,
-            isUsernameSplitEnabled = isUsernameSplitEnabled
+            isUsernameSplitEnabled = isUsernameSplitEnabled,
+            isSLAliasSyncEnabled = isSLAliasSyncEnabled
         )
     }
         .stateIn(

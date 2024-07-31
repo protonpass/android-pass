@@ -51,6 +51,7 @@ import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomShee
 import proton.android.pass.featureitemdetail.impl.common.onEditClick
 import proton.android.pass.featureitemdetail.impl.common.onShareClick
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
+import proton.android.pass.featuretrash.impl.ConfirmTrashAliasDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 
 @OptIn(
@@ -80,6 +81,7 @@ fun AliasDetail(
             }
 
             var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
+            var shouldShowMoveToTrashItemDialog by rememberSaveable { mutableStateOf(false) }
             if (state.isItemSentToTrash || state.isPermanentlyDeleted || state.isRestoredFromTrash) {
                 LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
             }
@@ -106,10 +108,14 @@ fun AliasDetail(
                             },
                             onMoveToTrash = {
                                 scope.launch { bottomSheetState.hide() }
-                                viewModel.onMoveToTrash(
-                                    state.itemUiModel.shareId,
-                                    state.itemUiModel.id
-                                )
+                                if (state.isSLAliasSyncEnabled) {
+                                    viewModel.onMoveToTrash(
+                                        state.itemUiModel.shareId,
+                                        state.itemUiModel.id
+                                    )
+                                } else {
+                                    shouldShowMoveToTrashItemDialog = true
+                                }
                             },
                             onPinned = {
                                 scope.launch { bottomSheetState.hide() }
@@ -214,6 +220,18 @@ fun AliasDetail(
                         onDismissTooltip = viewModel::dismissAliasToggleTooltip
                     )
                 }
+
+                ConfirmTrashAliasDialog(
+                    show = shouldShowMoveToTrashItemDialog,
+                    onConfirm = {
+                        shouldShowMoveToTrashItemDialog = false
+                        viewModel.onMoveToTrash(
+                            state.itemUiModel.shareId,
+                            state.itemUiModel.id
+                        )
+                    },
+                    onDismiss = { shouldShowMoveToTrashItemDialog = false }
+                )
 
                 ConfirmDeleteItemDialog(
                     isLoading = state.isLoading,

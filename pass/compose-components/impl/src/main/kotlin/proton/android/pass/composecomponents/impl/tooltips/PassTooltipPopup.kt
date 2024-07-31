@@ -20,19 +20,19 @@ package proton.android.pass.composecomponents.impl.tooltips
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.times
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupPositionProvider
 import androidx.compose.ui.window.PopupProperties
@@ -60,7 +60,7 @@ fun PassTooltipPopup(
                     popupContentSize: IntSize
                 ): IntOffset = IntOffset(
                     x = 0,
-                    y = position.value.y + size.value.height / 2
+                    y = position.value.y + size.value.height
                 )
             }
         },
@@ -68,16 +68,14 @@ fun PassTooltipPopup(
         onDismissRequest = onDismissRequest
     ) {
         val density = LocalDensity.current
-        val switchCenterX = with(density) { (position.value.x + size.value.width / 2).toDp() }
+        val itemCenter = with(density) { (position.value.x + size.value.width).toDp() }
 
         PassTooltip(
-            modifier = Modifier
-                .padding(Spacing.small)
-                .shadow(Spacing.medium, shape = RoundedCornerShape(8.dp)),
+            modifier = Modifier.padding(horizontal = Spacing.large),
             title = title,
             description = description,
             backgroundColor = backgroundColor,
-            arrowOffset = switchCenterX - Spacing.small,
+            arrowOffset = (itemCenter - 2 * Spacing.large).coerceAtLeast(0.dp),
             onClose = onDismissRequest
         )
     }

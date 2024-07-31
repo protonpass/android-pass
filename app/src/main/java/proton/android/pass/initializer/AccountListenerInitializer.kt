@@ -44,6 +44,7 @@ import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.toSyncMode
 import proton.android.pass.data.api.usecases.ClearUserData
+import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.log.api.PassLogger
@@ -60,19 +61,21 @@ class AccountListenerInitializer : Initializer<Unit> {
         val accountManager = entryPoint.accountManager()
         val itemSyncStatusRepository = entryPoint.itemSyncStatusRepository()
         val refreshOrganizationSettings = entryPoint.refreshOrganizationSettings()
+        val refreshPlan = entryPoint.refreshPlan()
 
         accountManager.observe(
             lifecycle = lifecycleProvider.lifecycle,
             minActiveState = Lifecycle.State.CREATED
         ).onAccountDisabled {
-            PassLogger.i(TAG, "Account disabled")
+            PassLogger.i(TAG, "Account disabled : ${it.userId}")
             performCleanup(it, entryPoint)
         }.onAccountRemoved {
-            PassLogger.i(TAG, "Account removed")
+            PassLogger.i(TAG, "Account removed : ${it.userId}")
             performCleanup(it, entryPoint)
         }.onAccountReady(false) { // this flag is set to false to listen for new accounts only
-            PassLogger.i(TAG, "New Account ready")
-            refreshOrganizationSettings()
+            PassLogger.i(TAG, "New Account ready : ${it.userId}")
+        }.onAccountReady { account ->
+            onAccountReady(account, refreshOrganizationSettings, refreshPlan)
         }
 
         // onAccountReady doesn't notify sometimes when using extra password during login
@@ -87,6 +90,16 @@ class AccountListenerInitializer : Initializer<Unit> {
             }
             .flowWithLifecycle(lifecycleProvider.lifecycle)
             .launchIn(lifecycleProvider.lifecycle.coroutineScope)
+    }
+
+    private suspend fun onAccountReady(
+        account: Account,
+        refreshOrganizationSettings: RefreshOrganizationSettings,
+        refreshPlan: RefreshPlan
+    ) {
+        PassLogger.i(TAG, "Account ready : ${account.userId}")
+        refreshOrganizationSettings(account.userId)
+        refreshPlan(account.userId)
     }
 
     override fun dependencies(): List<Class<out Initializer<*>?>> = emptyList()
@@ -114,6 +127,7 @@ class AccountListenerInitializer : Initializer<Unit> {
     interface AccountListenerInitializerEntryPoint {
         fun itemSyncStatusRepository(): ItemSyncStatusRepository
         fun refreshOrganizationSettings(): RefreshOrganizationSettings
+        fun refreshPlan(): RefreshPlan
         fun passAppLifecycleProvider(): PassAppLifecycleProvider
         fun accountManager(): AccountManager
         fun resetAppToDefaults(): ResetAppToDefaults

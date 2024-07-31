@@ -18,24 +18,19 @@
 
 package proton.android.pass.data.impl.usecases.organization
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class RefreshOrganizationSettingsImpl @Inject constructor(
-    private val accountManager: AccountManager,
     private val organizationSettingsRepository: OrganizationSettingsRepository
 ) : RefreshOrganizationSettings {
 
-    override suspend fun invoke() {
+    override suspend fun invoke(userId: UserId) {
         runCatching {
-            val userId = accountManager.getPrimaryUserId().firstOrNull()
-            if (userId != null) {
-                organizationSettingsRepository.refresh(userId)
-            }
+            organizationSettingsRepository.refresh(userId)
         }.onSuccess {
             PassLogger.i(TAG, "Organization settings refreshed")
         }.onFailure {

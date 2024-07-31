@@ -18,11 +18,12 @@
 
 package proton.android.pass.data.fakes.usecases
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.RefreshPlan
 import javax.inject.Inject
 
 class TestRefreshPlan @Inject constructor() : RefreshPlan {
 
-    override suspend fun invoke() {
+    override suspend fun invoke(userId: UserId) {
     }
 }

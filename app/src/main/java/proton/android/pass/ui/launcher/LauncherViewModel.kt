@@ -78,7 +78,6 @@ import proton.android.pass.biometry.ResetAuthPreferences
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
-import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -97,7 +96,6 @@ class LauncherViewModel @Inject constructor(
     private val userPlanWorkerLauncher: UserPlanWorkerLauncher,
     private val refreshPlan: RefreshPlan,
     private val inAppUpdatesManager: InAppUpdatesManager,
-    private val refreshOrganizationSettings: RefreshOrganizationSettings,
     private val resetUserPreferences: ResetAuthPreferences,
     private val snackbarDispatcher: SnackbarDispatcher,
     commonLibraryVersionChecker: CommonLibraryVersionChecker
@@ -111,9 +109,6 @@ class LauncherViewModel @Inject constructor(
                 PassLogger.i(TAG, "Common library version: $version")
             }
         }
-
-        viewModelScope.launch { refreshPlan() }
-        viewModelScope.launch { refreshOrganizationSettings() }
     }
 
     internal val accountState: StateFlow<AccountState> = accountManager.getAccounts()
@@ -211,20 +206,20 @@ class LauncherViewModel @Inject constructor(
     }
 
     internal fun upgrade() = viewModelScope.launch {
-        getPrimaryUserIdOrNull()?.let {
+        getPrimaryUserIdOrNull()?.let { userId ->
             plansOrchestrator
                 .onUpgradeResult { result ->
                     if (result != null) {
                         viewModelScope.launch {
-                            runCatching { refreshPlan() }
+                            runCatching { refreshPlan(userId) }
                                 .onFailure { e ->
-                                    PassLogger.w(TAG, "Failed refreshing plan")
+                                    PassLogger.w(TAG, "Failed refreshing plan for $userId")
                                     PassLogger.w(TAG, e)
                                 }
                         }
                     }
                 }
-                .startUpgradeWorkflow(it)
+                .startUpgradeWorkflow(userId)
         }
     }
 

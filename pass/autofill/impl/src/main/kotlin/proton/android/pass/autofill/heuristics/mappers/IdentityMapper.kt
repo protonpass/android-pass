@@ -18,6 +18,7 @@
 
 package proton.android.pass.autofill.heuristics.mappers
 
+import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
@@ -32,7 +33,10 @@ object IdentityMapper {
     fun mapIdentityFields(autofillItem: AutofillItem.Identity, cluster: NodeCluster.Identity): AutofillMappings {
         val mappings = mutableListOf<DatasetMapping>()
         mappings.addMapping(cluster.fullName, autofillItem.fullName)
-        mappings.addMapping(cluster.firstName, autofillItem.firstName)
+        mappings.addMapping(
+            cluster.firstName,
+            autofillItem.firstName?.takeIfNotBlank() ?: autofillItem.fullName
+        )
         mappings.addMapping(cluster.middleName, autofillItem.middleName)
         mappings.addMapping(cluster.lastName, autofillItem.lastName)
         mappings.addMapping(cluster.address, autofillItem.address)

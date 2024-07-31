@@ -25,6 +25,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import com.google.common.truth.Truth.assertThat
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -67,6 +68,8 @@ import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
 import javax.inject.Inject
+import proton.android.pass.composecomponents.impl.R as CompR
+import proton.android.pass.featuretrash.R as TrashR
 
 @HiltAndroidTest
 class HomeScreenTest {
@@ -218,6 +221,48 @@ class HomeScreenTest {
     @Test
     fun canNavigateToCreateNote() {
         testEmptyScreenCreateItem(R.string.home_empty_vault_create_note, ItemTypeUiState.Note)
+    }
+
+    @Test
+    fun showsConfirmationDialogBeforeTrashingAlias() {
+        val title = "Some alias"
+        val aliasItem = TestObserveItems.createAlias(title = title)
+        setupWithItems(listOf(aliasItem))
+
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    HomeScreen(
+                        onNavigateEvent = {}
+                    )
+                }
+            }
+
+            waitUntilExists(hasText(title))
+
+            val menuContentDescription =
+                activity.getString(CompR.string.action_content_description_menu)
+            onNodeWithContentDescription(menuContentDescription).performClick()
+
+            val trashItemText = activity.getString(CompR.string.bottomsheet_move_to_trash)
+            waitUntilExists(hasText(trashItemText))
+            onNodeWithText(trashItemText).performClick()
+
+            val confirmDialogText =
+                activity.getString(TrashR.string.alias_dialog_move_to_trash_confirm)
+            waitUntilExists(hasText(confirmDialogText))
+            onNodeWithText(confirmDialogText).performClick()
+
+            waitUntil { trashItem.getMemory().isNotEmpty() }
+
+            onNodeWithText(confirmDialogText).assertDoesNotExist()
+        }
+
+        val memory = trashItem.getMemory()
+        assertThat(memory.size).isEqualTo(1)
+
+        val memoryItem = memory.first()
+        assertThat(memoryItem.items[aliasItem.shareId]!!.first()).isEqualTo(aliasItem.id)
     }
 
     private fun testEmptyScreenCreateItem(

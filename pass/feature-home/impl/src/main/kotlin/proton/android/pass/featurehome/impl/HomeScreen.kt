@@ -90,6 +90,7 @@ import proton.android.pass.featurehome.impl.vault.VaultDrawerContent
 import proton.android.pass.featurehome.impl.vault.VaultDrawerViewModel
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
+import proton.android.pass.featuretrash.impl.ConfirmTrashAliasDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 
 @OptIn(
@@ -147,6 +148,7 @@ fun HomeScreen(
     var shouldShowRestoreItemsDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowMoveToTrashItemsDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowDeleteItemsDialog by rememberSaveable { mutableStateOf(false) }
+    var aliasToBeTrashed by rememberSaveable(stateSaver = ItemUiModelSaver) { mutableStateOf(null) }
     val scrollableState = rememberLazyListState()
 
     LaunchedEffect(enableBulkActions) {
@@ -356,7 +358,11 @@ fun HomeScreen(
                         onMoveToTrash = remember {
                             {
                                 scope.launch { bottomSheetState.hide() }
-                                homeViewModel.sendItemsToTrash(listOf(item))
+                                if (homeUiState.isSLAliasSyncEnabled) {
+                                    homeViewModel.sendItemsToTrash(listOf(it))
+                                } else {
+                                    aliasToBeTrashed = it
+                                }
                             }
                         },
                         onRemoveFromRecentSearch = remember {
@@ -851,6 +857,16 @@ fun HomeScreen(
                     }
                 },
                 onDismiss = { shouldShowDeleteItemDialog = false }
+            )
+
+            ConfirmTrashAliasDialog(
+                show = aliasToBeTrashed != null,
+                onConfirm = {
+                    val item = aliasToBeTrashed ?: return@ConfirmTrashAliasDialog
+                    homeViewModel.sendItemsToTrash(listOf(item))
+                    aliasToBeTrashed = null
+                },
+                onDismiss = { aliasToBeTrashed = null }
             )
 
             ConfirmRestoreItemsDialog(

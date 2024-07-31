@@ -45,11 +45,8 @@ import proton.android.pass.autofill.ui.autofill.AutofillUiState.NotValidAutofill
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.UninitialisedAutofillUiState
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.flatMap
 import proton.android.pass.commonui.api.require
-import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
-import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -58,11 +55,10 @@ import javax.inject.Inject
 @HiltViewModel
 class AutofillActivityViewModel @Inject constructor(
     private val accountOrchestrators: AccountOrchestrators,
-    private val preferenceRepository: UserPreferencesRepository,
-    private val internalSettingsRepository: InternalSettingsRepository,
     private val accountManager: AccountManager,
     private val toastManager: ToastManager,
     private val savedStateHandle: SavedStateHandle,
+    preferenceRepository: UserPreferencesRepository,
     needsBiometricAuth: NeedsBiometricAuth
 ) : ViewModel() {
 
@@ -117,13 +113,6 @@ class AutofillActivityViewModel @Inject constructor(
             accountManager.disableAccount(primaryUserId)
             toastManager.showToast(R.string.autofill_user_logged_out)
         }
-        preferenceRepository.clearPreferences()
-            .flatMap { internalSettingsRepository.clearSettings() }
-            .onSuccess { PassLogger.d(TAG, "Clearing preferences success") }
-            .onFailure {
-                PassLogger.w(TAG, "Error clearing preferences")
-                PassLogger.w(TAG, it)
-            }
 
         closeScreenFlow.update { true }
     }

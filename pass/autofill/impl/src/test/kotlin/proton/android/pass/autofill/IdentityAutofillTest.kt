@@ -83,6 +83,11 @@ class IdentityAutofillTest : BaseAutofillTest() {
         runIdentityAutofillTest("identity/chrome_address_fr.json")
     }
 
+    @Test
+    fun `can autofill chrome proton contact`() {
+        runIdentityAutofillTest("identity/chrome_proton_contact.json")
+    }
+
     private fun runIdentityAutofillTest(file: String) {
         runAutofillTest(
             file = file,

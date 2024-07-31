@@ -89,7 +89,7 @@ private val ALLOWED_PHONE_KEYWORDS = mapOf(
 )
 private val ALLOWED_EMAIL_KEYWORDS = setOf("email")
 private val ALLOWED_ORGANIZATION_KEYWORDS = mapOf(
-    English to setOf("organi")
+    English to setOf("organi", "company", "business")
 )
 private val ALLOWED_FIRST_NAME_KEYWORDS = mapOf(
     English to setOf("firstname", "givenname")

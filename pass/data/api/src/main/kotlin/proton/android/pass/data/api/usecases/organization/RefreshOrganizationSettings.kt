@@ -18,6 +18,8 @@
 
 package proton.android.pass.data.api.usecases.organization
 
+import me.proton.core.domain.entity.UserId
+
 interface RefreshOrganizationSettings {
-    suspend operator fun invoke()
+    suspend operator fun invoke(userId: UserId)
 }

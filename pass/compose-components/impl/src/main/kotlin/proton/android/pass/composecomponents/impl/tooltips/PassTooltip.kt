@@ -35,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -42,6 +43,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
@@ -59,6 +61,12 @@ internal fun PassTooltip(
     arrowOffset: Dp,
     radius: Dp = Radius.small,
     backgroundColor: Color,
+    shape: RoundedCornerShape = RoundedCornerShape(
+        topStart = radius.takeIf { arrowOffset >= Spacing.small } ?: 0.dp,
+        topEnd = radius,
+        bottomEnd = radius,
+        bottomStart = radius
+    ),
     onClose: () -> Unit
 ) {
     Column(modifier = modifier) {
@@ -70,17 +78,13 @@ internal fun PassTooltip(
                     horizontal = Spacing.small,
                     vertical = Spacing.extraSmall
                 )
+                .zIndex(1f)
         )
         Column(
             modifier = Modifier
-                .clip(
-                    shape = RoundedCornerShape(
-                        topStart = radius.takeIf { arrowOffset >= Spacing.small } ?: 0.dp,
-                        topEnd = radius,
-                        bottomEnd = radius,
-                        bottomStart = radius
-                    )
-                )
+                .shadow(4.dp, shape = shape)
+                .zIndex(0f)
+                .clip(shape = shape)
                 .background(color = backgroundColor)
                 .padding(
                     horizontal = Spacing.medium,

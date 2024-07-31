@@ -37,8 +37,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,6 +49,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.composecomponents.impl.tooltips.PassTooltipPopup
+import proton.android.pass.composecomponents.impl.tooltips.findPositionAndSizeForTooltip
 import proton.android.pass.domain.tooltips.Tooltip
 import proton.android.pass.featureitemcreate.impl.R
 import me.proton.core.presentation.R as CoreR
@@ -101,11 +100,7 @@ internal fun ExpandableEmailUsernameInput(
                     val size = remember { mutableStateOf(IntSize.Zero) }
                     Box(
                         modifier = Modifier.clickable { isExpanded.value = true }
-                            .onGloballyPositioned { coordinates ->
-                                position.value =
-                                    coordinates.positionInRoot().let { IntOffset(it.x.toInt(), it.y.toInt()) }
-                                size.value = coordinates.size
-                            }
+                            .findPositionAndSizeForTooltip(position, size)
                     ) {
                         Icon(
                             modifier = Modifier.padding(horizontal = 2.dp),

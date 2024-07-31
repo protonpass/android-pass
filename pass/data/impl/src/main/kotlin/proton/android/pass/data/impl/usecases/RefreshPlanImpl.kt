@@ -18,29 +18,70 @@
 
 package proton.android.pass.data.impl.usecases
 
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.RefreshPlan
+import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.repositories.PlanRepository
+import proton.android.pass.domain.Plan
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.ToastManager
 import javax.inject.Inject
 
 class RefreshPlanImpl @Inject constructor(
-    private val planRepository: PlanRepository
+    private val planRepository: PlanRepository,
+    private val accountManager: AccountManager,
+    private val toastManager: ToastManager
 ) : RefreshPlan {
+
     override suspend fun invoke(userId: UserId) {
         runCatching {
-            planRepository
-                .sendUserAccessAndObservePlan(
-                    userId = userId,
-                    forceRefresh = true
-                )
+            val oldPlan: Plan? = planRepository.observePlan(userId).firstOrNull()
+            val newPlan: Plan = planRepository.sendUserAccessAndObservePlan(userId, true)
                 .first()
+            val isOldPlanPaid = oldPlan?.isPaidPlan ?: false
+            if (isOldPlanPaid && newPlan.isFreePlan) {
+                val list = getAllActivePlans()
+                disableAllFreeAccountsButOne(list)
+            }
         }.onSuccess {
             PassLogger.i(TAG, "Plan refreshed")
         }.onFailure {
             PassLogger.w(TAG, "Error refreshing plan")
             PassLogger.w(TAG, it)
+        }
+    }
+
+    private suspend fun getAllActivePlans(): List<Pair<UserId, Plan>> = accountManager.getAccounts(AccountState.Ready)
+        .flatMapLatest { list ->
+            val planFlows = list.map { account ->
+                planRepository.observePlan(account.userId)
+                    .map { plan -> account.userId to plan }
+            }
+            combine<Pair<UserId, Plan>, List<Pair<UserId, Plan>>>(
+                planFlows,
+                Array<Pair<UserId, Plan>>::toList
+            )
+        }
+        .firstOrNull()
+        ?: emptyList()
+
+
+    private suspend fun disableAllFreeAccountsButOne(list: List<Pair<UserId, Plan>>) {
+        val freePlansToDisable = list.filter { (_, plan) -> plan.isFreePlan }.drop(1)
+        if (freePlansToDisable.isNotEmpty()) {
+            toastManager.showToast(R.string.logging_out_free_users)
+            freePlansToDisable.map { (userId, _) ->
+                PassLogger.i(TAG, "Disabling free account: $userId")
+                accountManager.disableAccount(userId)
+            }
         }
     }
 

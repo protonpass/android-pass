@@ -142,7 +142,7 @@ fun AliasAddressRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark
                 alias = "some@alias.test",
                 isAliasDisabled = false,
                 isAliasSyncEnabled = true,
-                isAliasToggleTooltipEnabled = true,
+                isAliasToggleTooltipEnabled = false,
                 onCopyAlias = {},
                 onCreateLoginFromAlias = {},
                 onToggleAliasState = {},

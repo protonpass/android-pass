@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,18 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.data.impl.remote.accessdata
 
-import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.UserAccessData
+import me.proton.core.network.data.ApiProvider
+import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.responses.UserAccessResponse
+import javax.inject.Inject
 
-interface UserAccessDataRepository {
+class RemoteUserAccessDataDataSourceImpl @Inject constructor(
+    private val apiProvider: ApiProvider
+) : RemoteUserAccessDataDataSource {
 
-    fun observe(userId: UserId): Flow<UserAccessData?>
-
-    suspend fun update(userId: UserId, userAccessData: UserAccessData)
-
-    suspend fun refresh(userId: UserId)
+    override suspend fun getUserAccessData(userId: UserId): UserAccessResponse = apiProvider
+        .get<PasswordManagerApi>(userId)
+        .invoke { userAccess() }
+        .valueOrThrow
 
 }

@@ -28,4 +28,6 @@ interface UserAccessDataRepository {
 
     suspend fun update(userId: UserId, userAccessData: UserAccessData)
 
+    suspend fun refresh(userId: UserId)
+
 }

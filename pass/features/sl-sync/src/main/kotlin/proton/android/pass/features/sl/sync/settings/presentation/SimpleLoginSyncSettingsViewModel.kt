@@ -44,13 +44,15 @@ import proton.android.pass.data.api.usecases.simplelogin.EnableSimpleLoginSync
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
 class SimpleLoginSyncSettingsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     getVaultById: GetVaultById,
-    private val enableSimpleLoginSync: EnableSimpleLoginSync
+    private val enableSimpleLoginSync: EnableSimpleLoginSync,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val defaultShareIdOptionFlow = savedStateHandleProvider.get()
@@ -81,15 +83,22 @@ class SimpleLoginSyncSettingsViewModel @Inject constructor(
 
     private val isEnablingSyncFlow = MutableStateFlow(false)
 
+    private val eventsFlow = MutableStateFlow<SimpleLoginSyncSettingsEvent>(SimpleLoginSyncSettingsEvent.Idle)
+
     internal val state: StateFlow<SimpleLoginSyncSettingsState> = combine(
         defaultVaultOptionFlow,
         isEnablingSyncFlow,
+        eventsFlow,
         ::SimpleLoginSyncSettingsState
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
         initialValue = SimpleLoginSyncSettingsState.Initial
     )
+
+    internal fun onConsumeEvent(event: SimpleLoginSyncSettingsEvent) {
+        eventsFlow.compareAndSet(event, SimpleLoginSyncSettingsEvent.Idle)
+    }
 
     internal fun onSelectShareId(shareId: ShareId) {
         selectedShareIdOptionFlow.update { shareId.some() }
@@ -109,9 +118,12 @@ class SimpleLoginSyncSettingsViewModel @Inject constructor(
                     runCatching {
                         enableSimpleLoginSync(defaultShareId = selectedVaultOption.value.shareId)
                     }.onError { error ->
-                        println("JIBIRI: onError: $error")
+                        PassLogger.w(TAG, "Error enabling SL aliases sync")
+                        PassLogger.w(TAG, error)
+                        snackbarDispatcher(SimpleLoginSyncSnackBarMessage.EnableSyncError)
                     }.onSuccess {
-                        println("JIBIRI: onSuccess")
+                        eventsFlow.update { SimpleLoginSyncSettingsEvent.OnSyncEnabled }
+                        snackbarDispatcher(SimpleLoginSyncSnackBarMessage.EnableSyncSuccess)
                     }
 
                     isEnablingSyncFlow.update { false }

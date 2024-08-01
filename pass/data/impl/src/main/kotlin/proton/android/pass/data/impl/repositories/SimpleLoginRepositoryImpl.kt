@@ -48,7 +48,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     private val userAccessDataRepository: UserAccessDataRepository,
     private val observeVaultById: GetVaultById,
     private val localSimpleLoginDataSource: LocalSimpleLoginDataSource,
-    private val remoteDataSource: RemoteSimpleLoginDataSource
+    private val remoteSimpleLoginDataSource: RemoteSimpleLoginDataSource
 ) : SimpleLoginRepository {
 
     private val simpleLoginSyncStatus = accountManager.getPrimaryUserId()
@@ -71,22 +71,11 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     override fun observeSyncStatus(): Flow<Option<SimpleLoginSyncStatus>> = flow {
         emit(simpleLoginSyncStatus.first())
 
-        val userId =
-            accountManager.getPrimaryUserId().firstOrNull() ?: throw UserIdNotAvailableError()
-
-        userAccessDataRepository.observe(userId)
+        val userId = accountManager.getPrimaryUserId()
             .firstOrNull()
-            ?.also { userAccessData ->
-                val syncStatus = remoteDataSource.getSimpleLoginSyncStatus(userId).syncStatus
+            ?: throw UserIdNotAvailableError()
 
-                userAccessDataRepository.update(
-                    userId = userId,
-                    userAccessData = userAccessData.copy(
-                        isSimpleLoginSyncEnabled = syncStatus.enabled,
-                        simpleLoginSyncPendingAliasCount = syncStatus.pendingAliasCount + 1
-                    )
-                )
-            }
+        userAccessDataRepository.refresh(userId)
 
         emitAll(simpleLoginSyncStatus)
     }
@@ -95,7 +84,8 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         localSimpleLoginDataSource.disableSyncPreference()
     }
 
-    override fun observeSyncPreference(): Flow<Boolean> = localSimpleLoginDataSource.observeSyncPreference()
+    override fun observeSyncPreference(): Flow<Boolean> =
+        localSimpleLoginDataSource.observeSyncPreference()
 
     override suspend fun enableSync(defaultShareId: ShareId) {
         val userId = accountManager.getPrimaryUserId()
@@ -105,8 +95,10 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         SimpleLoginEnableSyncRequest(
             defaultShareId = defaultShareId.id
         ).also { request ->
-            remoteDataSource.enableSimpleLoginSync(userId, request)
+            remoteSimpleLoginDataSource.enableSimpleLoginSync(userId, request)
         }
+
+        userAccessDataRepository.refresh(userId)
     }
 
     private suspend fun UserAccessData.toSimpleLoginSyncStatus(

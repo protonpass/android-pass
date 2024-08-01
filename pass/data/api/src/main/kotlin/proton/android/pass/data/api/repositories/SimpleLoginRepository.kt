@@ -20,6 +20,7 @@ package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.Option
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 
 interface SimpleLoginRepository {
@@ -29,5 +30,7 @@ interface SimpleLoginRepository {
     fun disableSyncPreference()
 
     fun observeSyncPreference(): Flow<Boolean>
+
+    suspend fun enableSync(defaultShareId: ShareId)
 
 }

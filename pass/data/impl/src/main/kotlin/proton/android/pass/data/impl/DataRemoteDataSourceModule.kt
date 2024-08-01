@@ -56,6 +56,8 @@ import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSou
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteTelemetryDataSource
 import proton.android.pass.data.impl.remote.RemoteTelemetryDataSourceImpl
+import proton.android.pass.data.impl.remote.accessdata.RemoteUserAccessDataDataSource
+import proton.android.pass.data.impl.remote.accessdata.RemoteUserAccessDataDataSourceImpl
 import javax.inject.Singleton
 
 @Module
@@ -116,5 +118,11 @@ abstract class DataRemoteDataSourceModule {
 
     @[Binds Singleton]
     abstract fun bindRemoteSimpleLoginDataSource(impl: RemoteSimpleLoginDataSourceImpl): RemoteSimpleLoginDataSource
+
+    @[Binds Singleton]
+    abstract fun bindRemoteUserAccessDataDataSource(
+        impl: RemoteUserAccessDataDataSourceImpl
+    ): RemoteUserAccessDataDataSource
+
 }
 

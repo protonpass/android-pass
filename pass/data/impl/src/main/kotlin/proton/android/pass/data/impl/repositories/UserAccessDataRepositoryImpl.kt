@@ -24,15 +24,19 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
 import proton.android.pass.data.impl.local.LocalUserAccessDataDataSource
+import proton.android.pass.data.impl.remote.accessdata.RemoteUserAccessDataDataSource
+import proton.android.pass.data.impl.responses.UserAccessResponse
 import proton.android.pass.domain.UserAccessData
 import javax.inject.Inject
 
 class UserAccessDataRepositoryImpl @Inject constructor(
+    private val remoteUserAccessDataDataSource: RemoteUserAccessDataDataSource,
     private val localUserAccessDataDataSource: LocalUserAccessDataDataSource
 ) : UserAccessDataRepository {
 
-    override fun observe(userId: UserId): Flow<UserAccessData?> = localUserAccessDataDataSource.observe(userId)
-        .map { it?.toDomain() }
+    override fun observe(userId: UserId): Flow<UserAccessData?> =
+        localUserAccessDataDataSource.observe(userId)
+            .map { it?.toDomain() }
 
     override suspend fun update(userId: UserId, userAccessData: UserAccessData) {
         userAccessData.toEntity(userId)
@@ -40,6 +44,25 @@ class UserAccessDataRepositoryImpl @Inject constructor(
                 localUserAccessDataDataSource.store(userAccessDataEntity)
             }
     }
+
+    override suspend fun refresh(userId: UserId) {
+        remoteUserAccessDataDataSource.getUserAccessData(userId)
+            .also { response ->
+                localUserAccessDataDataSource.store(response.toEntity(userId))
+            }
+    }
+
+    private fun UserAccessResponse.toEntity(userId: UserId) = UserAccessDataEntity(
+        userId = userId.id,
+        pendingInvites = accessResponse.pendingInvites,
+        waitingNewUserInvites = accessResponse.waitingNewUserInvites,
+        minVersionUpgrade = accessResponse.minVersionUpgrade,
+        protonMonitorEnabled = accessResponse.monitorResponse.protonMonitorEnabled,
+        aliasMonitorEnabled = accessResponse.monitorResponse.aliasMonitorEnabled,
+        isSimpleLoginSyncEnabled = accessResponse.userData.isAliasSyncEnabled,
+        simpleLoginSyncDefaultShareId = accessResponse.userData.defaultShareID,
+        simpleLoginSyncPendingAliasCount = accessResponse.userData.pendingAliasToSync
+    )
 
     private fun UserAccessDataEntity.toDomain() = UserAccessData(
         pendingInvites = pendingInvites,

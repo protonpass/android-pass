@@ -85,7 +85,7 @@ leakCanary = "2.12"
 retrofit = "2.9.0"
 # Test
 junit = "4.13.2"
-testParameterInjector = "1.10"
+testParameterInjector = "1.16"
 truth = "1.1.5"
 fusion = "0.9.52"
 # Zxing

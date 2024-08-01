@@ -86,7 +86,7 @@ retrofit = "2.9.0"
 # Test
 junit = "4.13.2"
 testParameterInjector = "1.16"
-truth = "1.1.5"
+truth = "1.4.4"
 fusion = "0.9.52"
 # Zxing
 zxing = "3.5.1"

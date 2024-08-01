@@ -27,7 +27,8 @@ import proton.android.pass.domain.Vault
 @Stable
 internal data class SimpleLoginSyncSettingsState(
     internal val selectedVaultOption: Option<Vault>,
-    internal val isEnablingSync: Boolean
+    internal val isEnablingSync: Boolean,
+    internal val event: SimpleLoginSyncSettingsEvent
 ) {
 
     internal val canConfirmSettings: Boolean = when (selectedVaultOption) {
@@ -39,7 +40,8 @@ internal data class SimpleLoginSyncSettingsState(
 
         internal val Initial: SimpleLoginSyncSettingsState = SimpleLoginSyncSettingsState(
             selectedVaultOption = None,
-            isEnablingSync = false
+            isEnablingSync = false,
+            event = SimpleLoginSyncSettingsEvent.Idle
         )
 
     }

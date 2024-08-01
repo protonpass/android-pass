@@ -50,7 +50,8 @@ internal fun SimpleLoginSyncSettingsContent(
                 onConfirmClick = {
                     onUiEvent(SimpleLoginSettingsSyncUiEvent.OnConfirmClicked)
                 },
-                isConfirmEnabled = canConfirmSettings
+                isConfirmEnabled = canConfirmSettings,
+                isLoading = isEnablingSync
             )
         }
     ) { innerPaddingValue ->
@@ -73,6 +74,7 @@ internal fun SimpleLoginSyncSettingsContent(
                         title = stringResource(id = R.string.simple_login_sync_shared_default_vault_title),
                         subtitle = name,
                         description = stringResource(id = R.string.simple_login_sync_shared_default_vault_description),
+                        isClickable = !isEnablingSync,
                         onClick = {
                             SimpleLoginSettingsSyncUiEvent.OnSelectVaultClicked(
                                 shareId = selectedVaultOption.value.shareId

@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.sl.sync.shared.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.extension.toColor
@@ -54,7 +56,8 @@ internal fun SimpleLoginSyncSectionRow(
     onClick: () -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null,
     label: String? = null,
-    description: String? = null
+    description: String? = null,
+    isClickable: Boolean = true
 ) {
     Column(
         modifier = modifier,
@@ -70,7 +73,12 @@ internal fun SimpleLoginSyncSectionRow(
             modifier = Modifier
                 .roundedContainerNorm()
                 .fillMaxWidth()
-                .clickable { onClick() }
+                .applyIf(
+                    condition = isClickable,
+                    ifTrue = {
+                        clickable { onClick() }
+                    }
+                )
                 .padding(all = Spacing.medium),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium)
@@ -90,11 +98,13 @@ internal fun SimpleLoginSyncSectionRow(
                 )
             }
 
-            Icon(
-                painter = painterResource(id = CompR.drawable.ic_chevron_tiny_right),
-                contentDescription = null,
-                tint = PassTheme.colors.textWeak
-            )
+            AnimatedVisibility(visible = isClickable) {
+                Icon(
+                    painter = painterResource(id = CompR.drawable.ic_chevron_tiny_right),
+                    contentDescription = null,
+                    tint = PassTheme.colors.textWeak
+                )
+            }
         }
 
         description?.let { descriptionText ->

@@ -21,6 +21,8 @@ package proton.android.pass.data.impl.remote.simplelogin
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
+import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.SimpleLoginSyncStatusResponse
 import javax.inject.Inject
 
@@ -31,6 +33,14 @@ class RemoteSimpleLoginDataSourceImpl @Inject constructor(
     override suspend fun getSimpleLoginSyncStatus(userId: UserId): SimpleLoginSyncStatusResponse = apiProvider
         .get<PasswordManagerApi>(userId)
         .invoke { getSimpleLoginSyncStatus() }
+        .valueOrThrow
+
+    override suspend fun enableSimpleLoginSync(
+        userId: UserId,
+        request: SimpleLoginEnableSyncRequest
+    ): CodeOnlyResponse = apiProvider
+        .get<PasswordManagerApi>(userId)
+        .invoke { enableSimpleLoginSync(request) }
         .valueOrThrow
 
 }

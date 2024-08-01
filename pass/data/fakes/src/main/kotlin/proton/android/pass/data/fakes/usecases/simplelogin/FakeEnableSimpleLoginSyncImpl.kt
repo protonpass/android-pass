@@ -16,21 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.data.fakes.usecases.simplelogin
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
+import proton.android.pass.data.api.usecases.simplelogin.EnableSimpleLoginSync
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface SimpleLoginRepository {
+@Singleton
+class FakeEnableSimpleLoginSyncImpl @Inject constructor() : EnableSimpleLoginSync {
 
-    fun observeSyncStatus(): Flow<Option<SimpleLoginSyncStatus>>
-
-    fun disableSyncPreference()
-
-    fun observeSyncPreference(): Flow<Boolean>
-
-    suspend fun enableSync(defaultShareId: ShareId)
+    override suspend fun invoke(defaultShareId: ShareId) = Unit
 
 }

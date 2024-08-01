@@ -31,7 +31,7 @@ androidx-room = "2.6.1"
 androidx-startup = "1.1.1"
 androidx-test = "1.5.0"
 androidx-test-junit = "1.2.1"
-androidx-test-orchestrator = "1.4.2"
+androidx-test-orchestrator = "1.5.0"
 androidx-test-uiautomator = "2.3.0-alpha02"
 androidx-work = "2.8.1"
 

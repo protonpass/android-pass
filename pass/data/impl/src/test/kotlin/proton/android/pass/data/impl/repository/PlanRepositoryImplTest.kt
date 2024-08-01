@@ -35,6 +35,7 @@ import proton.android.pass.data.impl.responses.AccessResponse
 import proton.android.pass.data.impl.responses.MonitorResponse
 import proton.android.pass.data.impl.responses.PlanResponse
 import proton.android.pass.data.impl.responses.UserAccessResponse
+import proton.android.pass.data.impl.responses.UserDataResponse
 import proton.android.pass.domain.PlanType
 import proton.android.pass.test.FixedClock
 import kotlin.time.Duration.Companion.days
@@ -195,6 +196,11 @@ internal class PlanRepositoryImplTest {
                 minVersionUpgrade = null,
                 monitorResponse = MonitorResponse(
                     protonMonitorEnabled = false, aliasMonitorEnabled = false
+                ),
+                userData = UserDataResponse(
+                    defaultShareID = "",
+                    isAliasSyncEnabled = false,
+                    pendingAliasToSync = 0
                 )
             )
         )

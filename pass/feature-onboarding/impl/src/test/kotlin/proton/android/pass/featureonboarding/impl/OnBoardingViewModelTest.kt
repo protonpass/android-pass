@@ -47,7 +47,7 @@ import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 
-class OnBoardingViewModelTest {
+internal class OnBoardingViewModelTest {
 
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
@@ -72,15 +72,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given no supported features should show last page`() = runTest {
-        observeUserAccessData.sendValue(
-            UserAccessData(
-                pendingInvites = 0,
-                waitingNewUserInvites = 0,
-                needsUpdate = false,
-                protonMonitorEnabled = false,
-                aliasMonitorEnabled = false
-            )
-        )
+        observeUserAccessData.sendValue(createUserAccessData())
         biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
         autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
         viewModel = createViewModel()
@@ -96,15 +88,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given unsupported autofill should show 1 screen`() = runTest {
-        observeUserAccessData.sendValue(
-            UserAccessData(
-                pendingInvites = 0,
-                waitingNewUserInvites = 0,
-                needsUpdate = false,
-                protonMonitorEnabled = false,
-                aliasMonitorEnabled = false
-            )
-        )
+        observeUserAccessData.sendValue(createUserAccessData())
         autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
@@ -116,15 +100,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given already enabled autofill should show 1 screen`() = runTest {
-        observeUserAccessData.sendValue(
-            UserAccessData(
-                pendingInvites = 0,
-                waitingNewUserInvites = 0,
-                needsUpdate = false,
-                protonMonitorEnabled = false,
-                aliasMonitorEnabled = false
-            )
-        )
+        observeUserAccessData.sendValue(createUserAccessData())
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
@@ -136,15 +112,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given a click on enable autofill when fingerprint is available should select next page`() = runTest {
-        observeUserAccessData.sendValue(
-            UserAccessData(
-                pendingInvites = 0,
-                waitingNewUserInvites = 0,
-                needsUpdate = false,
-                protonMonitorEnabled = false,
-                aliasMonitorEnabled = false
-            )
-        )
+        observeUserAccessData.sendValue(createUserAccessData())
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         viewModel = createViewModel()
@@ -162,15 +130,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given a click on enable autofill when fingerprint is not available should select next page`() = runTest {
-        observeUserAccessData.sendValue(
-            UserAccessData(
-                pendingInvites = 0,
-                waitingNewUserInvites = 0,
-                needsUpdate = false,
-                protonMonitorEnabled = false,
-                aliasMonitorEnabled = false
-            )
-        )
+        observeUserAccessData.sendValue(createUserAccessData())
         biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         viewModel = createViewModel()
@@ -188,15 +148,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given a click on skip autofill when fingerprint is available should select next page`() = runTest {
-        observeUserAccessData.sendValue(
-            UserAccessData(
-                pendingInvites = 0,
-                waitingNewUserInvites = 0,
-                needsUpdate = false,
-                protonMonitorEnabled = false,
-                aliasMonitorEnabled = false
-            )
-        )
+        observeUserAccessData.sendValue(createUserAccessData())
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         viewModel = createViewModel()
@@ -214,15 +166,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given a click on skip autofill when fingerprint is not available should select next page`() = runTest {
-        observeUserAccessData.sendValue(
-            UserAccessData(
-                pendingInvites = 0,
-                waitingNewUserInvites = 0,
-                needsUpdate = false,
-                protonMonitorEnabled = false,
-                aliasMonitorEnabled = false
-            )
-        )
+        observeUserAccessData.sendValue(createUserAccessData())
         biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         viewModel = createViewModel()
@@ -240,15 +184,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given unsupported biometric should show 1 screen`() = runTest {
-        observeUserAccessData.sendValue(
-            UserAccessData(
-                pendingInvites = 0,
-                waitingNewUserInvites = 0,
-                needsUpdate = false,
-                protonMonitorEnabled = false,
-                aliasMonitorEnabled = false
-            )
-        )
+        observeUserAccessData.sendValue(createUserAccessData())
         biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         viewModel = createViewModel()
@@ -261,15 +197,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given a click on enable fingerprint should select last page`() = runTest {
-        observeUserAccessData.sendValue(
-            UserAccessData(
-                pendingInvites = 0,
-                waitingNewUserInvites = 0,
-                needsUpdate = false,
-                protonMonitorEnabled = false,
-                aliasMonitorEnabled = false
-            )
-        )
+        observeUserAccessData.sendValue(createUserAccessData())
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
@@ -289,13 +217,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given a click on skip fingerprint should select last page`() = runTest {
-        observeUserAccessData.sendValue(
-            UserAccessData(
-                0, 0, false,
-                protonMonitorEnabled = false,
-                aliasMonitorEnabled = false
-            )
-        )
+        observeUserAccessData.sendValue(createUserAccessData())
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         viewModel = createViewModel()
@@ -313,15 +235,7 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given a click on get started in last page should complete on boarding`() = runTest {
-        observeUserAccessData.sendValue(
-            UserAccessData(
-                pendingInvites = 0,
-                waitingNewUserInvites = 0,
-                needsUpdate = false,
-                protonMonitorEnabled = false,
-                aliasMonitorEnabled = false
-            )
-        )
+        observeUserAccessData.sendValue(createUserAccessData())
         biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         viewModel = createViewModel()
@@ -340,22 +254,12 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `show InvitePending screen when needed`() = runTest {
-        testInvitePending(waitingNewUserInvites = 1, expectedToContainPage = true)
-    }
-
-    private suspend fun testInvitePending(waitingNewUserInvites: Int, expectedToContainPage: Boolean) {
-        val userAccessData = UserAccessData(
-            pendingInvites = 0,
-            waitingNewUserInvites = waitingNewUserInvites,
-            needsUpdate = false,
-            protonMonitorEnabled = false,
-            aliasMonitorEnabled = false
-        )
+        val userAccessData = createUserAccessData(waitingNewUserInvites = 1)
         observeUserAccessData.sendValue(userAccessData)
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
             val item = awaitItem()
-            assertThat(item.enabledPages.contains(InvitePending)).isEqualTo(expectedToContainPage)
+            assertThat(item.enabledPages.contains(InvitePending)).isTrue()
         }
     }
 
@@ -367,4 +271,27 @@ class OnBoardingViewModelTest {
         observeUserAccessData = observeUserAccessData,
         storeAuthSuccessful = storeAuthSuccessful
     )
+
+    private fun createUserAccessData(
+        pendingInvites: Int = 0,
+        waitingNewUserInvites: Int = 0,
+        needsUpdate: Boolean = false,
+        protonMonitorEnabled: Boolean = false,
+        aliasMonitorEnabled: Boolean = false,
+        minVersionUpgrade: String? = null,
+        isSimpleLoginSyncEnabled: Boolean = false,
+        simpleLoginSyncPendingAliasCount: Int = 0,
+        simpleLoginSyncDefaultShareId: String = ""
+    ) = UserAccessData(
+        pendingInvites = pendingInvites,
+        waitingNewUserInvites = waitingNewUserInvites,
+        needsUpdate = needsUpdate,
+        protonMonitorEnabled = protonMonitorEnabled,
+        aliasMonitorEnabled = aliasMonitorEnabled,
+        minVersionUpgrade = minVersionUpgrade,
+        isSimpleLoginSyncEnabled = isSimpleLoginSyncEnabled,
+        simpleLoginSyncPendingAliasCount = simpleLoginSyncPendingAliasCount,
+        simpleLoginSyncDefaultShareId = simpleLoginSyncDefaultShareId
+    )
+
 }

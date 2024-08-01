@@ -27,6 +27,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.sl.sync.settings.presentation.SimpleLoginSyncSettingsEvent
 import proton.android.pass.features.sl.sync.settings.presentation.SimpleLoginSyncSettingsViewModel
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 
@@ -43,6 +44,18 @@ fun SimpleLoginSyncSettingsScreen(
             None -> return@LaunchedEffect
             is Some -> onSelectShareId(shareId = selectedShareIdOption.value)
         }
+    }
+
+    LaunchedEffect(state.event) {
+        when (state.event) {
+            SimpleLoginSyncSettingsEvent.Idle -> {}
+
+            SimpleLoginSyncSettingsEvent.OnSyncEnabled ->
+                SimpleLoginSyncNavDestination.Back
+                    .also(onNavigated)
+        }
+
+        onConsumeEvent(state.event)
     }
 
     SimpleLoginSyncSettingsContent(

@@ -25,6 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.featureprofile.impl.applocktime.AppLockTimeBottomsheet
 import proton.android.pass.featureprofile.impl.applocktype.AppLockTypeBottomsheet
@@ -113,7 +114,8 @@ sealed interface ProfileNavigation {
 
     data object AliasesSyncDetails : ProfileNavigation
 
-    data object AliasesSyncSettings : ProfileNavigation
+    @JvmInline
+    value class AliasesSyncSettings(val shareId: ShareId?) : ProfileNavigation
 
 }
 

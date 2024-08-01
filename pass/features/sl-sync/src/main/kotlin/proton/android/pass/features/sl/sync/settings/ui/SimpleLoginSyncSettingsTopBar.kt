@@ -39,7 +39,8 @@ internal fun SimpleLoginSyncSettingsTopBar(
     modifier: Modifier = Modifier,
     onUpClick: () -> Unit,
     onConfirmClick: () -> Unit,
-    isConfirmEnabled: Boolean
+    isConfirmEnabled: Boolean,
+    isLoading: Boolean
 ) {
     val buttonColorDefault = PassTheme.colors.interactionNormMajor1
 
@@ -58,7 +59,7 @@ internal fun SimpleLoginSyncSettingsTopBar(
         onUpClick = onUpClick,
         actions = {
             LoadingCircleButton(
-                isLoading = false,
+                isLoading = isLoading,
                 color = buttonColor,
                 text = {
                     Text(

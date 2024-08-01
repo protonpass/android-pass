@@ -36,7 +36,7 @@ androidx-test-uiautomator = "2.3.0-alpha02"
 androidx-work = "2.8.1"
 
 # CashApp
-turbine = "1.0.0"
+turbine = "1.1.0"
 # Coil
 coil = "2.2.2"
 # Commons codec

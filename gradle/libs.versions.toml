@@ -9,7 +9,7 @@ material = "1.7.0"
 desugar = "2.0.3"
 # AndroidX
 androidx-activity = "1.6.1"
-androidx-annotation = "1.7.1"
+androidx-annotation = "1.8.1"
 androidx-autofill = "1.1.0"
 androidx-benchmark = "1.2.3"
 androidx-biometric = "1.2.0-alpha05"

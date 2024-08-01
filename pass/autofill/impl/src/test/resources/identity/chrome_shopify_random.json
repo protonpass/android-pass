@@ -1014,6 +1014,7 @@
                                                                                                                                     "className": "android.widget.EditText",
                                                                                                                                     "isImportantForAutofill": true,
                                                                                                                                     "text": "",
+                                                                                                                                    "expectedAutofill": "identity_organization",
                                                                                                                                     "hintKeywordList": [
                                                                                                                                       "",
                                                                                                                                       "Company (optional)"

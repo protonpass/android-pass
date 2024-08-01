@@ -550,6 +550,10 @@ dependencyGuard {
 
         allowedFilter = {
             !it.contains("junit")
+            !it.contains("com.android.billingclient")
+            !it.contains("com.google.android.gms")
+            !it.contains("com.google.android.play")
+            !it.contains("io.sentry")
         }
     }
 }

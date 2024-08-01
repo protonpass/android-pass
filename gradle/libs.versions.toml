@@ -89,7 +89,7 @@ testParameterInjector = "1.10"
 truth = "1.1.5"
 fusion = "0.9.52"
 # Zxing
-zxing = "3.5.1"
+zxing = "3.5.2"
 
 [plugins]
 gradlePlugin-android-benchmark = { id = "androidx.benchmark", version.ref = "androidx-benchmark" }

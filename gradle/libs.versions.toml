@@ -81,7 +81,7 @@ passCommon = "0.8.2"
 # Showkase
 showkase = "1.0.2"
 # Squareup
-leakCanary = "2.12"
+leakCanary = "2.14"
 retrofit = "2.9.0"
 # Test
 junit = "4.13.2"

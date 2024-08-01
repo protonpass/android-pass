@@ -544,4 +544,12 @@ dependencyGuard {
             !it.contains("junit")
         }
     }
+    configuration("fdroidProdReleaseRuntimeClasspath") {
+        artifacts = true
+        modules = false
+
+        allowedFilter = {
+            !it.contains("junit")
+        }
+    }
 }

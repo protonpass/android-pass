@@ -82,7 +82,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
                     userId = userId,
                     userAccessData = userAccessData.copy(
                         isSimpleLoginSyncEnabled = syncStatus.enabled,
-                        simpleLoginSyncPendingAliasCount = syncStatus.pendingAliasCount
+                        simpleLoginSyncPendingAliasCount = syncStatus.pendingAliasCount + 1
                     )
                 )
             }

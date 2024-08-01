@@ -28,6 +28,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.data.api.usecases.DefaultBrowser
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import proton.android.pass.featureprofile.impl.accountswitcher.AccountListItem
 import proton.android.pass.passkeys.api.PasskeySupport
@@ -88,6 +89,11 @@ internal data class ProfileUiState(
     internal val simpleLoginPendingAliasesCount: Int = when (simpleLoginSyncStatusOption) {
         None -> 0
         is Some -> simpleLoginSyncStatusOption.value.pendingAliasCount
+    }
+
+    internal val simpleLoginSyncDefaultShareId: ShareId? = when (simpleLoginSyncStatusOption) {
+        None -> null
+        is Some -> simpleLoginSyncStatusOption.value.defaultVault.shareId
     }
 
     internal companion object {

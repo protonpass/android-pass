@@ -92,7 +92,11 @@ class ObserveAppNeedsUpdateImplTest {
                 waitingNewUserInvites = 0,
                 needsUpdate = it,
                 protonMonitorEnabled = false,
-                aliasMonitorEnabled = false
+                aliasMonitorEnabled = false,
+                minVersionUpgrade = null,
+                isSimpleLoginSyncEnabled = false,
+                simpleLoginSyncPendingAliasCount = 0,
+                simpleLoginSyncDefaultShareId = ""
             )
         }
         userAccessDataRepository.sendValue(value)

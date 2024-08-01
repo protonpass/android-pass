@@ -655,8 +655,9 @@ fun NavGraphBuilder.appGraph(
                     destination = SimpleLoginSyncDetailsNavItem
                 )
 
-                ProfileNavigation.AliasesSyncSettings -> appNavigator.navigate(
-                    destination = SimpleLoginSyncSettingsNavItem
+                is ProfileNavigation.AliasesSyncSettings -> appNavigator.navigate(
+                    destination = SimpleLoginSyncSettingsNavItem,
+                    route = SimpleLoginSyncSettingsNavItem.createNavRoute(it.shareId)
                 )
             }
         }

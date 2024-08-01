@@ -18,8 +18,23 @@
 
 package proton.android.pass.features.sl.sync.settings.navigation
 
+import proton.android.pass.domain.ShareId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.toPath
 
 object SimpleLoginSyncSettingsNavItem : NavItem(
-    baseRoute = "sl/sync/settings"
-)
+    baseRoute = "sl/sync/settings",
+    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId)
+) {
+
+    fun createNavRoute(shareId: ShareId?) = buildString {
+        append(baseRoute)
+
+        shareId?.let { id ->
+            mapOf(CommonOptionalNavArgId.ShareId.key to id.id)
+                .also { pathMap -> append(pathMap.toPath()) }
+        }
+    }
+
+}

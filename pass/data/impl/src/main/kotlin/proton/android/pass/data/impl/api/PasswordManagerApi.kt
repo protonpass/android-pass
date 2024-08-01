@@ -39,6 +39,7 @@ import proton.android.pass.data.impl.requests.ItemReadRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.SetupExtraPasswordRequest
+import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
 import proton.android.pass.data.impl.requests.TelemetryRequest
 import proton.android.pass.data.impl.requests.TransferVaultOwnershipRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
@@ -437,6 +438,8 @@ interface PasswordManagerApi : BaseRetrofitApi {
     @GET("$PREFIX/alias_sync/status")
     suspend fun getSimpleLoginSyncStatus(): SimpleLoginSyncStatusResponse
 
+    @POST("$PREFIX/alias_sync/sync")
+    suspend fun enableSimpleLoginSync(@Body request: SimpleLoginEnableSyncRequest): CodeOnlyResponse
 
     // Core
     @GET("core/v4/keys/all")

@@ -19,10 +19,14 @@
 package proton.android.pass.data.impl.remote.simplelogin
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
+import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.SimpleLoginSyncStatusResponse
 
 interface RemoteSimpleLoginDataSource {
 
     suspend fun getSimpleLoginSyncStatus(userId: UserId): SimpleLoginSyncStatusResponse
+
+    suspend fun enableSimpleLoginSync(userId: UserId, request: SimpleLoginEnableSyncRequest): CodeOnlyResponse
 
 }

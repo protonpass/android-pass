@@ -29,21 +29,28 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.onSuccess
+import proton.android.pass.common.api.runCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.simplelogin.EnableSimpleLoginSync
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
 class SimpleLoginSyncSettingsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
-    getVaultById: GetVaultById
+    getVaultById: GetVaultById,
+    private val enableSimpleLoginSync: EnableSimpleLoginSync
 ) : ViewModel() {
 
     private val defaultShareIdOptionFlow = savedStateHandleProvider.get()
@@ -72,20 +79,51 @@ class SimpleLoginSyncSettingsViewModel @Inject constructor(
         }
     }
 
-    internal val state: StateFlow<SimpleLoginSyncSettingsState> = defaultVaultOptionFlow
-        .map(::SimpleLoginSyncSettingsState)
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
-            initialValue = SimpleLoginSyncSettingsState.Initial
-        )
+    private val isEnablingSyncFlow = MutableStateFlow(false)
+
+    internal val state: StateFlow<SimpleLoginSyncSettingsState> = combine(
+        defaultVaultOptionFlow,
+        isEnablingSyncFlow,
+        ::SimpleLoginSyncSettingsState
+    ).stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
+        initialValue = SimpleLoginSyncSettingsState.Initial
+    )
 
     internal fun onSelectShareId(shareId: ShareId) {
         selectedShareIdOptionFlow.update { shareId.some() }
     }
 
     internal fun onConfirmSyncSetting() {
-        // Will be implemented in IDTEAM-3642
+        when (val selectedVaultOption = state.value.selectedVaultOption) {
+            None -> {
+                // This should never happen but just in case added a LOG so we can have some visibility
+                PassLogger.w(TAG, "Cannot confirm SL sync settings without a selected vault")
+            }
+
+            is Some -> {
+                viewModelScope.launch {
+                    isEnablingSyncFlow.update { true }
+
+                    runCatching {
+                        enableSimpleLoginSync(defaultShareId = selectedVaultOption.value.shareId)
+                    }.onError { error ->
+                        println("JIBIRI: onError: $error")
+                    }.onSuccess {
+                        println("JIBIRI: onSuccess")
+                    }
+
+                    isEnablingSyncFlow.update { false }
+                }
+            }
+        }
+    }
+
+    private companion object {
+
+        private const val TAG = "SimpleLoginSyncSettingsViewModel"
+
     }
 
 }

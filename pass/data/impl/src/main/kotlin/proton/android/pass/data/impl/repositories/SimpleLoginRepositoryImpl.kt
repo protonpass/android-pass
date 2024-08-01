@@ -37,6 +37,7 @@ import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSource
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
+import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserAccessData
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
@@ -95,6 +96,18 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     }
 
     override fun observeSyncPreference(): Flow<Boolean> = localSimpleLoginDataSource.observeSyncPreference()
+
+    override suspend fun enableSync(defaultShareId: ShareId) {
+        val userId = accountManager.getPrimaryUserId()
+            .firstOrNull()
+            ?: throw UserIdNotAvailableError()
+
+        SimpleLoginEnableSyncRequest(
+            defaultShareId = defaultShareId.id
+        ).also { request ->
+            remoteDataSource.enableSimpleLoginSync(userId, request)
+        }
+    }
 
     private suspend fun UserAccessData.toSimpleLoginSyncStatus(
         userId: UserId,

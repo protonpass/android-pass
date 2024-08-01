@@ -16,21 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.data.impl.requests
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-interface SimpleLoginRepository {
-
-    fun observeSyncStatus(): Flow<Option<SimpleLoginSyncStatus>>
-
-    fun disableSyncPreference()
-
-    fun observeSyncPreference(): Flow<Boolean>
-
-    suspend fun enableSync(defaultShareId: ShareId)
-
-}
+@Serializable
+data class SimpleLoginEnableSyncRequest(
+    @SerialName("DefaultShareID")
+    val defaultShareId: String
+)

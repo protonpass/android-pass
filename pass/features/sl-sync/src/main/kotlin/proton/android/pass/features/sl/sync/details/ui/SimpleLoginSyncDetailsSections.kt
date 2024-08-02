@@ -107,7 +107,11 @@ internal fun SimpleLoginSyncDetailsSections(
                         description = stringResource(
                             id = R.string.simple_login_sync_shared_default_vault_description
                         ),
-                        onClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnSyncSettingsClicked) }
+                        onClick = {
+                            SimpleLoginSyncDetailsUiEvent.OnDefaultVaultClicked(
+                                shareId = shareId
+                            ).also(onUiEvent)
+                        }
                     )
                 }
             }

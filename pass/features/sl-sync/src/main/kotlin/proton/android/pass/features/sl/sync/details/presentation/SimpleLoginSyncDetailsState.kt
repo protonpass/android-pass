@@ -21,24 +21,34 @@ package proton.android.pass.features.sl.sync.details.presentation
 import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.domain.Vault
 
 @Stable
 internal data class SimpleLoginSyncDetailsState(
     internal val defaultDomain: String,
     internal val defaultMailbox: String,
+    internal val availableDomains: List<String>,
+    internal val availableMailboxes: List<String>,
     internal val defaultVaultOption: Option<Vault>,
-    internal val pendingAliasesCount: Int,
+    internal val pendingAliasesCountOption: Option<Int>,
     internal val isLoading: Boolean
 ) {
+
+    internal val pendingAliasesCount: Int = when (pendingAliasesCountOption) {
+        None -> 0
+        is Some -> pendingAliasesCountOption.value
+    }
 
     internal companion object {
 
         internal val Initial: SimpleLoginSyncDetailsState = SimpleLoginSyncDetailsState(
             defaultDomain = "",
             defaultMailbox = "",
+            availableDomains = emptyList(),
+            availableMailboxes = emptyList(),
             defaultVaultOption = None,
-            pendingAliasesCount = 0,
+            pendingAliasesCountOption = None,
             isLoading = true
         )
 

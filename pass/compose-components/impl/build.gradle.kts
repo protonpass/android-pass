@@ -51,7 +51,6 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
-    implementation(libs.haze)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
 

@@ -39,7 +39,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
-import proton.android.pass.composecomponents.impl.item.placeholder
+import proton.android.pass.composecomponents.impl.modifiers.placeholder
 import proton.android.pass.featureitemcreate.impl.R
 
 @Composable

@@ -16,22 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.item
+package proton.android.pass.composecomponents.impl.modifiers
 
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
+import androidx.compose.ui.graphics.Color
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.placeholder
 import com.google.accompanist.placeholder.shimmer
 import proton.android.pass.commonui.api.PassTheme
 
-fun Modifier.placeholder(): Modifier = this.composed {
-    placeholder(
-        visible = true,
-        color = PassTheme.colors.backgroundWeak,
-        shape = PassTheme.shapes.squircleMediumShape,
-        highlight = PlaceholderHighlight.shimmer(
-            highlightColor = PassTheme.colors.backgroundNorm
-        )
+@Composable
+fun Modifier.placeholder(color: Color = PassTheme.colors.backgroundWeak): Modifier = this.placeholder(
+    visible = true,
+    color = color,
+    shape = PassTheme.shapes.squircleMediumShape,
+    highlight = PlaceholderHighlight.shimmer(
+        highlightColor = PassTheme.colors.backgroundNorm
     )
-}
+)

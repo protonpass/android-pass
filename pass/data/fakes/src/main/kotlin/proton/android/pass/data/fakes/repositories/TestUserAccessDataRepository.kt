@@ -42,4 +42,6 @@ class TestUserAccessDataRepository @Inject constructor() : UserAccessDataReposit
         sendValue(userAccessData)
     }
 
+    override suspend fun refresh(userId: UserId) = Unit
+
 }

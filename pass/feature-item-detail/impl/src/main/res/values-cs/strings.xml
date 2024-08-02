@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">Při vyloučení položky ze sledování došlo k chybě</string>
   <string name="item_monitor_include_message">Položka úspěšně zahrnuta do sledování</string>
   <string name="item_monitor_include_message_error">Při zahrnutí položky do sledování došlo k chybě</string>
+  <string name="alias_change_status_error">Při změně stavu aliasu došlo k chybě</string>
   <string name="login_item_generate_totp_error">Chyba při generování kódu 2FA</string>
   <string name="login_item_view_alias_button">Zobrazit alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Slabé heslo</string>
@@ -104,4 +105,6 @@
   <string name="passkey_detail_bottomsheet_domain">Doména</string>
   <string name="passkey_detail_bottomsheet_key">Klíč</string>
   <string name="passkey_detail_bottomsheet_created">Vytvořeno</string>
+  <string name="alias_toggle_tooltip_title">Deaktivovat alias</string>
+  <string name="alias_toggle_tooltip_description">Klepnutím sem tento alias deaktivujete a přestanete dostávat e-maily.</string>
 </resources>

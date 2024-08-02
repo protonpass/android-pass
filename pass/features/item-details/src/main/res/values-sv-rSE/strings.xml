@@ -27,5 +27,5 @@
   <string name="item_details_forbidden_actions_share_title">Kan inte dela</string>
   <string name="item_details_forbidden_actions_share_limit">Du har nått gränsen för valvdelning. För att dela fler valv, uppgradera ditt nuvarande paket.</string>
   <string name="item_details_forbidden_actions_share_permission">Du har inte tillräckligt med behörigheter för att dela detta valv.</string>
-  <string name="item_details_forbidden_actions_share_trash">You cannot share this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
+  <string name="item_details_forbidden_actions_share_trash">Du kan inte dela detta objekt eftersom det är i papperskorgen. Flytta det ur papperskorgen innan du redigerar det.</string>
 </resources>

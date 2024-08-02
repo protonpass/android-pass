@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">Det oppstod en feil under ekskludering av element fra overvåking</string>
   <string name="item_monitor_include_message">Element inkludert i overvåking</string>
   <string name="item_monitor_include_message_error">Det oppstod en feil under inkludering av element i overvåking</string>
+  <string name="alias_change_status_error">Det oppstod en feil under endring av aliasstatusen</string>
   <string name="login_item_generate_totp_error">Feil ved generering av 2FA-kode</string>
   <string name="login_item_view_alias_button">Vis alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Svakt passord</string>
@@ -102,4 +103,6 @@
   <string name="passkey_detail_bottomsheet_domain">Domene</string>
   <string name="passkey_detail_bottomsheet_key">Nøkkel</string>
   <string name="passkey_detail_bottomsheet_created">Opprettet</string>
+  <string name="alias_toggle_tooltip_title">Deaktiver alias</string>
+  <string name="alias_toggle_tooltip_description">Trykk her for å deaktivere dette aliaset og slutte å motta e-post.</string>
 </resources>

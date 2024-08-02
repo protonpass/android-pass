@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">Hubo un error al excluir el elemento del monitoreo</string>
   <string name="item_monitor_include_message">Elemento incluido en el monitoreo con éxito</string>
   <string name="item_monitor_include_message_error">Hubo un error al incluir el elemento en el monitoreo</string>
+  <string name="alias_change_status_error">Hubo un error al cambiar el estado del alias</string>
   <string name="login_item_generate_totp_error">Error al generar el código 2FA</string>
   <string name="login_item_view_alias_button">Ver alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Contraseña débil</string>
@@ -102,4 +103,6 @@
   <string name="passkey_detail_bottomsheet_domain">Dominio</string>
   <string name="passkey_detail_bottomsheet_key">Clave</string>
   <string name="passkey_detail_bottomsheet_created">Creada</string>
+  <string name="alias_toggle_tooltip_title">Desactivar alias</string>
+  <string name="alias_toggle_tooltip_description">Pulse aquí para desactivar este alias y dejar de recibir correos.</string>
 </resources>

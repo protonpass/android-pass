@@ -27,9 +27,9 @@
   <string name="bottomsheet_monitor_exclude">監視から除外</string>
   <string name="bottomsheet_monitor_include">監視に含める</string>
   <string name="bottomsheet_migrate_item">別の保管庫に移動</string>
-  <string name="bottomsheet_copy_item_note">Copy note</string>
+  <string name="bottomsheet_copy_item_note">メモをコピー</string>
   <string name="bottomsheet_delete_permanently">完全に削除する</string>
-  <string name="bottomsheet_restore">Restore</string>
+  <string name="bottomsheet_restore">復元</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">アイテムアクションメニューを開く</string>
   <string name="action_upgrade_now">今すぐアップグレード</string>
@@ -39,7 +39,7 @@
   <string name="action_view_details">詳細の表示</string>
   <string name="action_see_all">すべてを見る</string>
   <string name="action_confirm">確認</string>
-  <string name="action_cancel">Cancel</string>
+  <string name="action_cancel">キャンセル</string>
   <string name="action_continue">続行</string>
   <string name="action_retry">再試行</string>
   <string name="action_edit">編集</string>
@@ -140,19 +140,19 @@
   <string name="item_details_login_section_primary_totp_title">2 要素認証トークン (TOTP)</string>
   <string name="item_details_login_section_websites_title">ウェブサイト</string>
   <string name="item_details_identity_section_personal_title">Personal details</string>
-  <string name="item_details_identity_section_personal_first_name_title">First name</string>
+  <string name="item_details_identity_section_personal_first_name_title">名</string>
   <string name="item_details_identity_section_personal_middle_name_title">Middle name</string>
-  <string name="item_details_identity_section_personal_last_name_title">Last name</string>
-  <string name="item_details_identity_section_personal_full_name_title">Full name</string>
-  <string name="item_details_identity_section_personal_email_title">Email address</string>
-  <string name="item_details_identity_section_personal_gender_title">Gender</string>
-  <string name="item_details_identity_section_personal_phone_title">Phone number</string>
-  <string name="item_details_identity_section_personal_birthday_title">Birthday</string>
+  <string name="item_details_identity_section_personal_last_name_title">姓</string>
+  <string name="item_details_identity_section_personal_full_name_title">フルネーム</string>
+  <string name="item_details_identity_section_personal_email_title">メールアドレス</string>
+  <string name="item_details_identity_section_personal_gender_title">性別</string>
+  <string name="item_details_identity_section_personal_phone_title">電話番号</string>
+  <string name="item_details_identity_section_personal_birthday_title">誕生日</string>
   <string name="item_details_identity_section_address_title">Address details</string>
-  <string name="item_details_identity_section_address_organization_title">Organization</string>
+  <string name="item_details_identity_section_address_organization_title">組織</string>
   <string name="item_details_identity_section_address_street_address_title">Street address, P.O. box</string>
   <string name="item_details_identity_section_address_floor_title">Floor</string>
-  <string name="item_details_identity_section_address_city_title">City</string>
+  <string name="item_details_identity_section_address_city_title">市</string>
   <string name="item_details_identity_section_address_zip_or_postal_code_title">ZIP or postal code</string>
   <string name="item_details_identity_section_address_state_or_province_title">都道府県</string>
   <string name="item_details_identity_section_address_county_title">County</string>
@@ -161,7 +161,7 @@
   <string name="item_details_identity_section_contact_social_security_number_title">社会保障番号</string>
   <string name="item_details_identity_section_contact_passport_number_title">パスポート番号</string>
   <string name="item_details_identity_section_contact_license_number_title">License number</string>
-  <string name="item_details_identity_section_contact_website_title">Website</string>
+  <string name="item_details_identity_section_contact_website_title">ウェブサイト</string>
   <string name="item_details_identity_section_contact_x_handle_title">X-Handle</string>
   <string name="item_details_identity_section_contact_secondary_phone_number_title">Secondary phone number</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
@@ -170,20 +170,20 @@
   <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
   <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
   <string name="item_details_identity_section_work_title">Work details</string>
-  <string name="item_details_identity_section_work_company_title">Company</string>
+  <string name="item_details_identity_section_work_company_title">会社</string>
   <string name="item_details_identity_section_work_occupation_title">Occupation</string>
   <string name="item_details_identity_section_work_email_title">Work email address</string>
   <string name="item_details_identity_section_work_phone_number_title">Work phone number</string>
   <string name="item_details_identity_section_work_personal_website_title">Personal website</string>
   <string name="item_details_shared_section_note_title">メモ</string>
-  <string name="item_details_shared_section_item_history_last_autofill_title">Last autofill</string>
-  <string name="item_details_shared_section_item_history_created_title">Created</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">最後の自動入力</string>
+  <string name="item_details_shared_section_item_history_created_title">作成した</string>
   <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">アイテムの履歴を表示</string>
-  <string name="item_details_shared_section_more_info_header_title">More info</string>
+  <string name="item_details_shared_section_more_info_header_title">詳細はこちら</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
-  <string name="item_details_shared_section_more_info_item_id">Item ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_item_id">アイテム ID</string>
+  <string name="item_details_shared_section_more_info_share_id">保管庫 ID</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">アプリのバージョンはサポートされなくなりました。アプリを更新してください。</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">パスキー</string>
@@ -211,7 +211,7 @@
     <item quantity="other">%d 秒</item>
   </plurals>
   <!-- Snack bars -->
-  <string name="snack_bar_message_item_note_copied">Note copied</string>
+  <string name="snack_bar_message_item_note_copied">メモをコピーしました</string>
   <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
   <string name="snack_bar_message_item_monitor_excluded_success">アイテムは監視から正常に除外されました</string>
   <string name="snack_bar_message_item_monitor_excluded_error">監視からアイテムを除外する際にエラーが発生しました</string>

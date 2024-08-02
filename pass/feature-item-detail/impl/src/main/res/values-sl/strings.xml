@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">Pri izključevanju predmeta iz spremljanja je prišlo do napake</string>
   <string name="item_monitor_include_message">Predmet je bil vključen v spremljanje.</string>
   <string name="item_monitor_include_message_error">Pri vključitvi predmeta v nadzor je prišlo do napake</string>
+  <string name="alias_change_status_error">There was an error changing the alias status</string>
   <string name="login_item_generate_totp_error">Napaka pri ustvarjanju kode 2FA</string>
   <string name="login_item_view_alias_button">Prikaži vzdevek</string>
   <string name="login_item_monitor_widget_weak_pass_title">Šibko geslo.</string>
@@ -104,4 +105,6 @@
   <string name="passkey_detail_bottomsheet_domain">Domena</string>
   <string name="passkey_detail_bottomsheet_key">Ključ</string>
   <string name="passkey_detail_bottomsheet_created">Ustvarjeno</string>
+  <string name="alias_toggle_tooltip_title">Disable Alias</string>
+  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
 </resources>

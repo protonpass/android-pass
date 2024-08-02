@@ -34,7 +34,6 @@
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Utilitzeu el codi PIN en lloc</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Utilitzeu la empremta digital en lloc</string>
   <string name="auth_unlock_button">Desbloqueja</string>
-  <string name="auth_error_verifying_password">S\'ha produït un error en verificar la vostra contrasenya.</string>
   <string name="auth_error_empty_password">La contrasenya no pot estar buida.</string>
   <string name="auth_error_pin_cannot_be_empty">El codi PIN no pot estar buit.</string>
   <string name="auth_extra_password_label">Introduïu la vostra contrasenya d\'inici de sessió</string>
@@ -45,4 +44,9 @@
     <item quantity="one">Contrasenya incorrecta. %d intent restant.</item>
     <item quantity="other">Contrasenya incorrecta. %d intents restants.</item>
   </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="one">%d attempt remaining</item>
+    <item quantity="other">%d attempts remaining</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">Too many failed pin attempts. All your users are being logged out.</string>
 </resources>

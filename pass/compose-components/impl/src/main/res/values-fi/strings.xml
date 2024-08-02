@@ -235,7 +235,7 @@
   <string name="snack_bar_message_item_delete_error">Virhe poistettaessa kohdetta</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Ota SimpleLogin-synkronointi käyttöön</string>
-  <string name="simple_login_widget_message">We detected that you have 16 aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
+  <string name="simple_login_widget_message">Havaitsimme, että sinulla on SimpleLoginissa 16 aliasta, jotka puuttuvat Proton Passista. Haluaisitko tuoda ne?</string>
   <string name="simple_login_widget_action">Synkronoi aliakset</string>
-  <string name="simple_login_widget_close_content_description">Button to close simple login aliases sync widget</string>
+  <string name="simple_login_widget_close_content_description">Painike SimpleLoginin aliasten synkronoinnin widgetin sulkemiseksi</string>
 </resources>

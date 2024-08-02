@@ -36,7 +36,6 @@
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Použít raději PIN</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Použít raději otisk prstu</string>
   <string name="auth_unlock_button">Odemknout</string>
-  <string name="auth_error_verifying_password">Chyba při ověřování hesla</string>
   <string name="auth_error_empty_password">Heslo nemůže být prázdné</string>
   <string name="auth_error_pin_cannot_be_empty">PIN kód nemůže být prázdný</string>
   <string name="auth_extra_password_label">Zadejte své dodatečné heslo</string>
@@ -49,4 +48,11 @@
     <item quantity="many">Nesprávné heslo. Zbývá %d pokusů</item>
     <item quantity="other">Nesprávné heslo. Zbývá %d pokusů</item>
   </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="one">Zbývá %d pokus</item>
+    <item quantity="few">Zbývají %d pokusy</item>
+    <item quantity="many">Zbývá %d pokusů</item>
+    <item quantity="other">Zbývá %d pokusů</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">Příliš mnoho chybných pokusů PIN. Všichni vaši uživatelé jsou odhlašováni.</string>
 </resources>

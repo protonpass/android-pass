@@ -193,8 +193,6 @@ com.squareup:javapoet:1.13.0
 com.squareup:kotlinpoet-javapoet:1.14.2
 com.squareup:kotlinpoet:1.14.2
 commons-codec:commons-codec:1.15
-dev.chrisbanes.haze:haze-android:0.7.0
-dev.chrisbanes.haze:haze:0.7.0
 dev.chrisbanes.snapper:snapper:0.2.2
 io.coil-kt:coil-base:2.4.0
 io.coil-kt:coil-compose-base:2.2.2
@@ -337,8 +335,6 @@ me.proton.core:util-kotlin:26.0.1
 me.proton.pass.common:lib:0.8.2
 net.java.dev.jna:jna:5.13.0
 org.checkerframework:checker-qual:3.12.0
-org.jetbrains.compose.foundation:foundation:1.6.0
-org.jetbrains.compose.ui:ui:1.6.0
 org.jetbrains.kotlin:kotlin-android-extensions-runtime:1.9.22
 org.jetbrains.kotlin:kotlin-parcelize-runtime:1.9.22
 org.jetbrains.kotlin:kotlin-reflect:1.9.22

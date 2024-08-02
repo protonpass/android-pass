@@ -20,9 +20,16 @@ package proton.android.pass.features.sl.sync.details.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.toOption
 import proton.android.pass.features.sl.sync.details.presentation.SimpleLoginSyncDetailsViewModel
+import proton.android.pass.features.sl.sync.details.ui.dialogs.SimpleLoginSyncDetailsOptionType
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 
 @Composable
@@ -32,8 +39,13 @@ fun SimpleLoginSyncDetailsScreen(
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
 
+    var dialogOptionTypeOption by remember {
+        mutableStateOf<Option<SimpleLoginSyncDetailsOptionType>>(None)
+    }
+
     SimpleLoginSyncDetailsContent(
         state = state,
+        dialogOptionTypeOption = dialogOptionTypeOption,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SimpleLoginSyncDetailsUiEvent.OnBackClicked -> {
@@ -42,16 +54,22 @@ fun SimpleLoginSyncDetailsScreen(
                 }
 
                 SimpleLoginSyncDetailsUiEvent.OnDomainClicked -> {
-                    // Will be implemented in IDTEAM-3659
+                    dialogOptionTypeOption = SimpleLoginSyncDetailsOptionType.Domain.toOption()
                 }
 
                 SimpleLoginSyncDetailsUiEvent.OnMailboxClicked -> {
-                    // Will be implemented in IDTEAM-3659
+                    dialogOptionTypeOption = SimpleLoginSyncDetailsOptionType.Mailbox.toOption()
                 }
 
                 SimpleLoginSyncDetailsUiEvent.OnSyncSettingsClicked -> {
                     SimpleLoginSyncNavDestination.Settings
                         .also(onNavigated)
+                }
+
+                is SimpleLoginSyncDetailsUiEvent.OnDefaultVaultClicked -> {
+                    SimpleLoginSyncNavDestination.SelectVault(
+                        shareId = uiEvent.shareId
+                    ).also(onNavigated)
                 }
             }
         }

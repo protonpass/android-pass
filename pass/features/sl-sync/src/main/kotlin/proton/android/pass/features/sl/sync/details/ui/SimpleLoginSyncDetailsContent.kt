@@ -23,17 +23,23 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTopBarBackButtonType
 import proton.android.pass.composecomponents.impl.loading.PassFullScreenLoading
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.details.presentation.SimpleLoginSyncDetailsState
+import proton.android.pass.features.sl.sync.details.ui.dialogs.SimpleLoginSyncDetailsOptionType
+import proton.android.pass.features.sl.sync.details.ui.dialogs.SimpleLoginSyncDetailsOptionsDialog
 
 @Composable
 internal fun SimpleLoginSyncDetailsContent(
     modifier: Modifier = Modifier,
     onUiEvent: (SimpleLoginSyncDetailsUiEvent) -> Unit,
-    state: SimpleLoginSyncDetailsState
+    state: SimpleLoginSyncDetailsState,
+    dialogOptionTypeOption: Option<SimpleLoginSyncDetailsOptionType>
 ) = with(state) {
     Scaffold(
         modifier = modifier,
@@ -57,6 +63,38 @@ internal fun SimpleLoginSyncDetailsContent(
                 pendingAliasesCount = pendingAliasesCount,
                 onUiEvent = onUiEvent
             )
+        }
+    }
+
+    if (dialogOptionTypeOption is Some) {
+        when (val dialogOptionType = dialogOptionTypeOption.value) {
+            SimpleLoginSyncDetailsOptionType.Domain -> {
+                SimpleLoginSyncDetailsOptionsDialog(
+                    titleResId = R.string.simple_login_sync_details_dialog_title_domains,
+                    optionType = dialogOptionType,
+                    selectedOption = defaultDomain,
+                    options = availableDomains.toPersistentList(),
+                    onSelectOption = { optionType, selectedOption ->
+                    },
+                    onDismiss = {
+
+                    }
+                )
+            }
+
+            SimpleLoginSyncDetailsOptionType.Mailbox -> {
+                SimpleLoginSyncDetailsOptionsDialog(
+                    titleResId = R.string.simple_login_sync_details_dialog_title_mailboxes,
+                    optionType = dialogOptionType,
+                    selectedOption = defaultMailbox,
+                    options = availableMailboxes.toPersistentList(),
+                    onSelectOption = { optionType, selectedOption ->
+                    },
+                    onDismiss = {
+
+                    }
+                )
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="generate_password_copy">Copiar y cerrar</string>
-  <string name="password_copied_to_clipboard">Contraseña copiada</string>
+  <string name="password_copied_to_clipboard">Se ha copiado la contraseña.</string>
   <string name="bottomsheet_generate_password_title">Generar contraseña</string>
   <string name="password_type">Tipo</string>
   <string name="special_characters">Caracteres especiales (!&amp;*)</string>

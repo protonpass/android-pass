@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">監視からアイテムを除外する際にエラーが発生しました</string>
   <string name="item_monitor_include_message">アイテムが監視対象に正常に追加されました</string>
   <string name="item_monitor_include_message_error">監視中のアイテムにエラーが発生しました</string>
+  <string name="alias_change_status_error">There was an error changing the alias status</string>
   <string name="login_item_generate_totp_error">2要素認証コードの生成中エラー</string>
   <string name="login_item_view_alias_button">エイリアスを表示</string>
   <string name="login_item_monitor_widget_weak_pass_title">弱いパスワード</string>
@@ -100,5 +101,7 @@
   <string name="passkey_detail_bottomsheet_username">ユーザー名</string>
   <string name="passkey_detail_bottomsheet_domain">ドメイン</string>
   <string name="passkey_detail_bottomsheet_key">鍵</string>
-  <string name="passkey_detail_bottomsheet_created">Created</string>
+  <string name="passkey_detail_bottomsheet_created">作成した</string>
+  <string name="alias_toggle_tooltip_title">Disable Alias</string>
+  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
 </resources>

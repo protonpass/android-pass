@@ -36,7 +36,6 @@
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Вместо этого ввести PIN-код</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Вместо этого ввести отпечаток ключа</string>
   <string name="auth_unlock_button">Разблокировать</string>
-  <string name="auth_error_verifying_password">Возникла ошибка при проверке вашего пароля</string>
   <string name="auth_error_empty_password">Пароль не может быть пустым</string>
   <string name="auth_error_pin_cannot_be_empty">PIN-код не может быть пустым</string>
   <string name="auth_extra_password_label">Введите дополнительный пароль</string>
@@ -49,4 +48,11 @@
     <item quantity="many">Неправильный пароль. Осталось %d попыток</item>
     <item quantity="other">Неправильный пароль. Осталось %d попыток</item>
   </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="one">%d attempt remaining</item>
+    <item quantity="few">%d attempts remaining</item>
+    <item quantity="many">%d attempts remaining</item>
+    <item quantity="other">%d attempts remaining</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">Too many failed pin attempts. All your users are being logged out.</string>
 </resources>

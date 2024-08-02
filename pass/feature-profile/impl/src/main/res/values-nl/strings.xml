@@ -12,7 +12,7 @@
   <string name="profile_option_autofill">Autom. aanvullen</string>
   <string name="profile_option_autofill_subtitle">Vul automatisch uw gebruikersnamen en wachtwoorden in.</string>
   <string name="profile_option_secure_links">Secure links</string>
-  <string name="profile_option_aliases">Aliases</string>
+  <string name="profile_option_aliases">Aliassen</string>
   <string name="profile_error_biometry_failed_to_start">Kan de biometrische authenticatie niet starten</string>
   <string name="profile_error_biometry_failed_to_authenticate">Authenticatie mislukt</string>
   <string name="profile_fingerprint_lock_enabled">Vingerafdrukontgrendeling ingeschakeld</string>
@@ -68,10 +68,10 @@
     <item quantity="other">Na %d uren</item>
   </plurals>
   <string name="profile_less_than_a_minute">Minder dan een minuut</string>
-  <string name="account_switcher_manage_account">Manage account</string>
-  <string name="account_switcher_sign_in">Sign in</string>
-  <string name="account_switcher_sign_out">Sign out</string>
-  <string name="account_switcher_switch_to">Switch to</string>
-  <string name="account_switcher_add_account">Add account</string>
-  <string name="account_switcher_remove">Remove</string>
+  <string name="account_switcher_manage_account">Account beheren</string>
+  <string name="account_switcher_sign_in">Inloggen</string>
+  <string name="account_switcher_sign_out">Afmelden</string>
+  <string name="account_switcher_switch_to">Wisselen naar</string>
+  <string name="account_switcher_add_account">Account toevoegen</string>
+  <string name="account_switcher_remove">Verwijderen</string>
 </resources>

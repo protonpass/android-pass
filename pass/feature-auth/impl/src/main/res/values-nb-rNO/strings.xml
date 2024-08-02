@@ -34,7 +34,6 @@
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Angi PIN-kode istedenfor</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Bruk fingeravtrykk istedenfor</string>
   <string name="auth_unlock_button">Lås opp</string>
-  <string name="auth_error_verifying_password">Feil ved bekreftelse av passordet ditt</string>
   <string name="auth_error_empty_password">Passord kan ikke være tomt</string>
   <string name="auth_error_pin_cannot_be_empty">PIN-kode kan ikke være tom</string>
   <string name="auth_extra_password_label">Angi det ekstra passordet ditt</string>
@@ -45,4 +44,9 @@
     <item quantity="one">Feil passord. %d forsøk gjenstår</item>
     <item quantity="other">Feil passord. %d forsøk gjenstår</item>
   </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="one">%d forsøk gjenstår</item>
+    <item quantity="other">%d forsøk gjenstår</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">For mange mislykkede PIN-forsøk. Alle brukerne dine blir logget av.</string>
 </resources>

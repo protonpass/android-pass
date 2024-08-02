@@ -113,7 +113,7 @@
     Pattern used when displaying a date in the same year as we are.
     It would translate to 12 Feb 12:34
     -->
-  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_compact_month">dd LLL HH:mm</string>
+  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_compact_month"/>
   <!--
     Pattern used when displaying a date including the year.
     It would translate to
@@ -124,7 +124,7 @@
    Pattern used when displaying a date including the year.
    It would translate to 12 Feb 2023 12:34
    -->
-  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_with_year_compact_month">dd LLL yyyy HH:mm</string>
+  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_with_year_compact_month"/>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Địa chỉ bí danh</string>
   <string name="item_details_alias_section_mailboxes_title">Chuyển tiếp đến</string>
@@ -193,7 +193,7 @@
   <string name="dialog_upgrade_plan_action_confirm">Nâng cấp</string>
   <string name="dialog_upgrade_plan_action_cancel">Để sau</string>
   <!-- Words -->
-  <string name="email_address">Email address</string>
+  <string name="email_address">Địa chỉ email</string>
   <string name="password">Mật khẩu</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Nút để tắt đi hướng dẫn và không bao giờ hiện lại nó</string>

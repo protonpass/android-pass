@@ -16,21 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.details.ui
+package proton.android.pass.features.sl.sync.details.ui.dialogs
 
-import proton.android.pass.domain.ShareId
-
-internal sealed interface SimpleLoginSyncDetailsUiEvent {
-
-    data object OnBackClicked : SimpleLoginSyncDetailsUiEvent
-
-    data object OnDomainClicked : SimpleLoginSyncDetailsUiEvent
-
-    data object OnMailboxClicked : SimpleLoginSyncDetailsUiEvent
-
-    data object OnSyncSettingsClicked : SimpleLoginSyncDetailsUiEvent
-
-    @JvmInline
-    value class OnDefaultVaultClicked(internal val shareId: ShareId) : SimpleLoginSyncDetailsUiEvent
-
+enum class SimpleLoginSyncDetailsOptionType {
+    Domain,
+    Mailbox
 }

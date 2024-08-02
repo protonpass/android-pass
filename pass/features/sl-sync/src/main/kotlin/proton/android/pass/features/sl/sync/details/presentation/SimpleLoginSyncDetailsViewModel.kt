@@ -19,13 +19,54 @@
 package proton.android.pass.features.sl.sync.details.presentation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.common.api.toOption
+import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import javax.inject.Inject
 
 @HiltViewModel
-class SimpleLoginSyncDetailsViewModel @Inject constructor() : ViewModel() {
+class SimpleLoginSyncDetailsViewModel @Inject constructor(
+    observeSimpleLoginSyncStatus: ObserveSimpleLoginSyncStatus
+) : ViewModel() {
 
-    internal val state = MutableStateFlow(SimpleLoginSyncDetailsState.Initial)
+    private val defaultDomainFlow = MutableStateFlow("")
+
+    private val defaultMailboxFlow = MutableStateFlow("")
+
+    internal val state: StateFlow<SimpleLoginSyncDetailsState> = combine(
+        defaultDomainFlow,
+        defaultMailboxFlow,
+        observeSimpleLoginSyncStatus()
+    ) { defaultDomain, defaultMailbox, syncStatus ->
+        SimpleLoginSyncDetailsState(
+            defaultDomain = defaultDomain,
+            defaultMailbox = defaultMailbox,
+            availableDomains = listOf(
+                "default.domain.com",
+                "domain1.com",
+                "domain2.com",
+                "domain3.com"
+            ),
+            availableMailboxes = listOf(
+                "mailboxDefault",
+                "mailbox1",
+                "mailbox2",
+                "mailbox3"
+            ),
+            defaultVaultOption = syncStatus.value()?.defaultVault.toOption(),
+            pendingAliasesCountOption = syncStatus.value()?.pendingAliasCount.toOption(),
+            isLoading = false
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
+        initialValue = SimpleLoginSyncDetailsState.Initial
+    )
 
 }

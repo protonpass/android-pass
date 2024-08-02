@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">Det uppstod ett fel när objekt skulle exkluderas från övervakning</string>
   <string name="item_monitor_include_message">Objekt inkluderat i övervakning</string>
   <string name="item_monitor_include_message_error">Det uppstod ett fel när objekt skulle inkluderas i övervakning</string>
+  <string name="alias_change_status_error">Det uppstod ett fel när statusen för alias skulle ändras</string>
   <string name="login_item_generate_totp_error">Gick inte generera 2FA-kod</string>
   <string name="login_item_view_alias_button">Visa alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Svagt lösenord</string>
@@ -102,4 +103,6 @@
   <string name="passkey_detail_bottomsheet_domain">Domän</string>
   <string name="passkey_detail_bottomsheet_key">Nyckel</string>
   <string name="passkey_detail_bottomsheet_created">Skapad</string>
+  <string name="alias_toggle_tooltip_title">Inaktivera alias</string>
+  <string name="alias_toggle_tooltip_description">Tryck här för att inaktivera detta alias och sluta ta emot e-post.</string>
 </resources>

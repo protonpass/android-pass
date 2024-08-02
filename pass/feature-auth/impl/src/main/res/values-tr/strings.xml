@@ -34,7 +34,6 @@
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Bunun yerine PIN kodunu yazın</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Bunun yerine parmak izi kullanın</string>
   <string name="auth_unlock_button">Kilidi aç</string>
-  <string name="auth_error_verifying_password">Parolanız onaylanırken sorun çıktı</string>
   <string name="auth_error_empty_password">Parola boş olamaz</string>
   <string name="auth_error_pin_cannot_be_empty">PIN kodu boş olamaz</string>
   <string name="auth_extra_password_label">Ek parolanızı yazın</string>
@@ -45,4 +44,9 @@
     <item quantity="one">Parola geçersiz. %d kez daha deneyebilirsiniz</item>
     <item quantity="other">Parola geçersiz. %d kez daha deneyebilirsiniz</item>
   </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="one">%d attempt remaining</item>
+    <item quantity="other">%d attempts remaining</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">Too many failed pin attempts. All your users are being logged out.</string>
 </resources>

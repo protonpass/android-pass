@@ -118,7 +118,7 @@
   <string name="identity_field_company_title">Bedrijf</string>
   <string name="identity_field_job_title_title">Functie</string>
   <string name="identity_field_first_name_title">Voornaam</string>
-  <string name="identity_field_last_name_title">Last name</string>
+  <string name="identity_field_last_name_title">Achternaam</string>
   <string name="identity_field_middle_name_title">Middle name</string>
   <string name="identity_field_birthdate_title">Birthdate</string>
   <string name="identity_field_gender_title">Geslacht</string>
@@ -134,7 +134,7 @@
   <string name="identity_field_work_email_title">Work email address</string>
   <string name="identity_add_field_first_name">Voornaam</string>
   <string name="identity_add_field_middle_name">Middle name</string>
-  <string name="identity_add_field_last_name">Last name</string>
+  <string name="identity_add_field_last_name">Achternaam</string>
   <string name="identity_add_field_birthdate">Birthdate</string>
   <string name="identity_add_field_gender">Geslacht</string>
   <string name="identity_add_field_floor">Floor</string>

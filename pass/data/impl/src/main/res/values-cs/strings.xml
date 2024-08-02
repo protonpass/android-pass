@@ -20,4 +20,5 @@
   <string name="sync_channel">Synchronizace</string>
   <string name="sync_channel_description">Kanál upozornění pro synchronizaci položek</string>
   <string name="syncing_vaults">Synchronizace trezorů a položek</string>
+  <string name="logging_out_free_users">Odhlášení dalších bezplatných uživatelů</string>
 </resources>

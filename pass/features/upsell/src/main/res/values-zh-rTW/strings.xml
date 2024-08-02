@@ -29,6 +29,6 @@
   <string name="upsell_paid_feature_secure_links">Secure links</string>
   <string name="upsell_paid_feature_authenticator_essential">要求組織雙重驗證</string>
   <string name="upsell_paid_feature_sso_essential">單一登入整合 (即將到來)</string>
-  <string name="upsell_button_upgrade">Get Pass Plus</string>
+  <string name="upsell_button_upgrade">取得Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">取得Pass Business</string>
 </resources>

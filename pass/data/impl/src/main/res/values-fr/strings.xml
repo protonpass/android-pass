@@ -20,4 +20,5 @@
   <string name="sync_channel">Synchroniser</string>
   <string name="sync_channel_description">Canal de notification pour la synchronisation d\'éléments</string>
   <string name="syncing_vaults">Synchronisation des coffres-forts et des éléments</string>
+  <string name="logging_out_free_users">Déconnexion des utilisateurs gratuits supplémentaires</string>
 </resources>

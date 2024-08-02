@@ -50,7 +50,7 @@
   <string name="bottomsheet_custom_field_option_remove_content_description">Borrar el campo personalizado</string>
   <string name="bottomsheet_custom_section_option_remove">Borrar la sección</string>
   <string name="create_login_add_custom_field_button">Añadir otro campo</string>
-  <string name="custom_field_hidden_placeholder">Añadir el texto oculto</string>
+  <string name="custom_field_hidden_placeholder">Añadir texto oculto</string>
   <string name="custom_field_hidden_icon_content_description">Icono de campo personalizado oculto</string>
   <string name="custom_field_text_placeholder">Añadir texto</string>
   <string name="custom_field_dialog_title">Nombre de campo personalizado</string>
@@ -93,7 +93,7 @@
   <string name="field_card_cvv_hint">123</string>
   <string name="field_card_pin_title">Código PIN</string>
   <string name="field_card_pin_hint">123456</string>
-  <string name="field_card_expiration_date_title">Fecha de caducidad</string>
+  <string name="field_card_expiration_date_title">Fecha de expiración</string>
   <string name="field_card_expiration_date_hint">MM / AA</string>
   <string name="field_card_expiration_date_error">Entra una fecha válida en formato MM/AA.</string>
   <string name="create_credit_card_item_creation_error">No se ha podido crear la tarjeta de crédito.</string>
@@ -150,13 +150,13 @@
   <string name="identity_add_field_custom_field">Campo personalizado</string>
   <string name="identity_section_personal_details">Detalles personales</string>
   <string name="identity_section_address_details">Detalles de dirección</string>
-  <string name="identity_section_contact_details">Datos del contacto</string>
+  <string name="identity_section_contact_details">Detalles de contacto</string>
   <string name="identity_section_work_details">Detalles de trabajo</string>
   <string name="identity_add_more_fields">Añadir otro campo</string>
   <string name="identity_bottomsheet_add_field">Añadir un campo</string>
   <string name="create_identity_init_error">Problema al recuperar los detalles de la identidad</string>
   <string name="create_identity_item_creation_error">No se ha podido crear la identidad.</string>
-  <string name="create_identity_item_creation_success">La identidad ha sido creada.</string>
+  <string name="create_identity_item_creation_success">Se ha creado la identidad.</string>
   <string name="update_identity_item_creation_success">Se ha actualizado la identidad.</string>
   <string name="update_identity_item_creation_error">No se ha podido actualizar la identidad.</string>
   <!--  Common create items  -->

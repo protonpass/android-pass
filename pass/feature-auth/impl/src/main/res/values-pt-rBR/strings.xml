@@ -34,7 +34,6 @@
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Insira o PIN em vez disso</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Insira a impressão digital em vez disso</string>
   <string name="auth_unlock_button">Desbloquear</string>
-  <string name="auth_error_verifying_password">Erro ao verificar a sua senha</string>
   <string name="auth_error_empty_password">A senha não pode estar em branco</string>
   <string name="auth_error_pin_cannot_be_empty">O código PIN não pode estar vazio</string>
   <string name="auth_extra_password_label">Digite sua senha adicional</string>
@@ -45,4 +44,9 @@
     <item quantity="one">A senha é incorreta. Resta %d tentativa.</item>
     <item quantity="other">A senha é incorreta. Restam %d tentativas.</item>
   </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="one">%d tentativa restante</item>
+    <item quantity="other">%d tentativas restantes</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">Muitas tentativas de acesso com PIN falharam. Todos os seus usuários estão sendo desconectados.</string>
 </resources>

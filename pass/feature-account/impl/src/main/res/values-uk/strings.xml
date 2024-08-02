@@ -16,20 +16,20 @@
   <string name="manage_subscription_icon_content_description">Кнопка керування передплатою</string>
   <string name="account_settings_list_item_password_header">Змінити пароль</string>
   <string name="account_settings_list_item_recovery_header">Резервна е-пошта</string>
-  <string name="account_settings_list_item_security_keys">Security keys</string>
+  <string name="account_settings_list_item_security_keys">Ключі безпеки</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Не встановлено</string>
   <string name="account_settings_list_item_password_hint_grace">Очікується скидання пароля</string>
   <string name="account_settings_list_item_password_hint_insecure">Скидання пароля готове</string>
-  <string name="account_settings_list_item_extra_password_header">Extra password for Proton Pass</string>
-  <string name="account_settings_list_item_extra_password_header_set">Set extra password for Proton Pass</string>
-  <string name="account_settings_list_item_extra_password_active">Active</string>
-  <string name="account_settings_list_item_extra_password_description">The extra password will be required to use Pass. It acts as an additional password on top of your Proton password.</string>
-  <string name="account_settings_list_item_security_keys_hint_not_set">Not set</string>
+  <string name="account_settings_list_item_extra_password_header">Додатковий пароль для Proton Pass</string>
+  <string name="account_settings_list_item_extra_password_header_set">Встановити додатковий пароль для Proton Pass</string>
+  <string name="account_settings_list_item_extra_password_active">Активні</string>
+  <string name="account_settings_list_item_extra_password_description">Додатковий пароль буде потрібен для використання Pass. Він діє як додатковий пароль до вашого пароля Proton.</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Не встановлено</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
-    <item quantity="one">%d security key set</item>
-    <item quantity="few">%d security keys set</item>
-    <item quantity="many">%d security keys set</item>
-    <item quantity="other">%d security keys set</item>
+    <item quantity="one">Встановлено %d ключ безпеки</item>
+    <item quantity="few">Встановлено %d ключі безпеки</item>
+    <item quantity="many">Встановлено %d ключів безпеки</item>
+    <item quantity="other">Встановлено %d ключів безпеки</item>
   </plurals>
 </resources>

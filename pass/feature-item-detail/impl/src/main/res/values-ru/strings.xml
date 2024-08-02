@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">Произошла ошибка при исключении элемента из мониторинга</string>
   <string name="item_monitor_include_message">Элемент успешно включен в мониторинг</string>
   <string name="item_monitor_include_message_error">Произошла ошибка при включении элемента в мониторинг</string>
+  <string name="alias_change_status_error">There was an error changing the alias status</string>
   <string name="login_item_generate_totp_error">Ошибка при генерации кода 2FA</string>
   <string name="login_item_view_alias_button">Посмотреть псевдоним</string>
   <string name="login_item_monitor_widget_weak_pass_title">Ненадежный пароль</string>
@@ -104,4 +105,6 @@
   <string name="passkey_detail_bottomsheet_domain">Домен</string>
   <string name="passkey_detail_bottomsheet_key">Ключ</string>
   <string name="passkey_detail_bottomsheet_created">Создано</string>
+  <string name="alias_toggle_tooltip_title">Disable Alias</string>
+  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
 </resources>

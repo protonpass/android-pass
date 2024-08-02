@@ -17,22 +17,22 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="sync_item_empty">Empty vault</string>
+  <string name="sync_item_empty">Kho rỗng</string>
   <plurals name="sync_item_count">
-    <item quantity="other">Downloaded %d items</item>
+    <item quantity="other">Đã tải %d mục</item>
   </plurals>
   <plurals name="sync_finished_item_count">
-    <item quantity="other">%d items synchronized</item>
+    <item quantity="other">Cập nhật %d mục</item>
   </plurals>
-  <string name="sync_progress_item_count">Downloading %1$d of %2$d items</string>
+  <string name="sync_progress_item_count">Đang tải %1$d/%2$d mục</string>
   <string name="sync_dialog_title">Đang đồng bộ nội dung…</string>
-  <string name="sync_dialog_title_error">Sync failed</string>
-  <string name="sync_dialog_title_success">Sync completed</string>
+  <string name="sync_dialog_title_error">Đồng bộ hóa không thành công</string>
+  <string name="sync_dialog_title_success">Đồng bộ hoàn tất</string>
   <string name="sync_dialog_subtitle">Chúng tôi đang tải về và giải mã nội dung của bạn. Điều này sẽ mất một vài phút.</string>
-  <string name="sync_dialog_subtitle_error">There was an error downloading and decrypting your items. Please try again.</string>
-  <string name="sync_dialog_subtitle_success">Your items were successfully downloaded and decrypted.</string>
+  <string name="sync_dialog_subtitle_error">Lỗi khi tải xuống và giải mã data của bạn. Vui lòng thử lại.</string>
+  <string name="sync_dialog_subtitle_success">Các mục của bạn đã được tải xuống và giải mã thành công.</string>
   <string name="sync_item_not_started">Chưa bắt đầu</string>
-  <string name="sync_item_failed">Sync failed</string>
-  <string name="sync_dialog_title_inserting">Inserting items…</string>
-  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
+  <string name="sync_item_failed">Đồng bộ hóa không thành công</string>
+  <string name="sync_dialog_title_inserting">Đang tạo các mục</string>
+  <string name="sync_dialog_subtitle_inserting">Hoàn tất bước cuối cùng.</string>
 </resources>

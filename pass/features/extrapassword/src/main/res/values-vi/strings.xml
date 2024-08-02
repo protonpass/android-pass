@@ -17,21 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="configure_extra_password_continue">Continue</string>
+  <string name="configure_extra_password_continue">Tiếp tục</string>
   <string name="configure_extra_password_title">Thiết lập mật khẩu phụ</string>
-  <string name="configure_extra_password_enter_extra_password">Extra password</string>
+  <string name="configure_extra_password_enter_extra_password">Mật khẩu phụ</string>
   <string name="configure_extra_password_repeat_extra_password">Nhập lại mật khẩu</string>
   <string name="configure_extra_password_description">Bạn sẽ được hỏi mật khẩu phụ khi đăng nhập và khi chuyển từ một ứng dụng Proton khác sang Proton Pass trên trình duyệt.</string>
   <string name="configure_extra_password_warning">Lưu ý: bạn sẽ không thể truy cập vào tài khoản Proton Pass nếu không có mật khẩu này.</string>
   <string name="configure_extra_password_mismatch">Mất khẩu không hợp lệ</string>
-  <string name="extra_password_options_remove">Remove</string>
-  <string name="info_extra_password_title">Extra password</string>
+  <string name="extra_password_options_remove">Loại bỏ</string>
+  <string name="info_extra_password_title">Mật khẩu phụ</string>
   <string name="info_extra_password_body">Bảo vật Proton Pass với mật khẩu phụ</string>
   <string name="info_extra_password_button">Thiết lập mật khẩu phụ</string>
-  <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>
-  <string name="configure_extra_password_password_too_short">Extra password must have at least 8 characters</string>
+  <string name="configure_extra_password_cannot_be_blank">Mật khẩu không thể để trống</string>
+  <string name="configure_extra_password_password_too_short">Mật khẩu phụ phải có ít nhất 8 ký tự.</string>
   <string name="confirm_extra_password_title">Thiết lập mật khẩu phụ</string>
   <string name="confirm_extra_password_body">Bạn sẽ bị đăng xuất và phải đăng nhập lại trên các thiết bị khác.</string>
-  <string name="confirm_extra_password_error">Could not set extra password</string>
+  <string name="confirm_extra_password_error">Không thể đặt thêm mật khẩu phụ</string>
   <string name="confirm_extra_password_success">Mật khẩu phụ đã được kích hoạt</string>
 </resources>

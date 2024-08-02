@@ -11,8 +11,8 @@
   <string name="profile_option_rating">Оцінити програму</string>
   <string name="profile_option_autofill">Автозаповнення</string>
   <string name="profile_option_autofill_subtitle">Автоматично заповнюйте ім\'я користувача і паролі.</string>
-  <string name="profile_option_secure_links">Secure links</string>
-  <string name="profile_option_aliases">Aliases</string>
+  <string name="profile_option_secure_links">Безпечні посилання</string>
+  <string name="profile_option_aliases">Псевдоніми</string>
   <string name="profile_error_biometry_failed_to_start">Не вдалося запустити біометричну автентифікацію</string>
   <string name="profile_error_biometry_failed_to_authenticate">Не вдалося здійснити автентифікацію</string>
   <string name="profile_fingerprint_lock_enabled">Блокування відбитком пальця увімкнено</string>
@@ -74,10 +74,10 @@
     <item quantity="other">За %d годин</item>
   </plurals>
   <string name="profile_less_than_a_minute">Менш ніж за хвилину</string>
-  <string name="account_switcher_manage_account">Manage account</string>
-  <string name="account_switcher_sign_in">Sign in</string>
-  <string name="account_switcher_sign_out">Sign out</string>
-  <string name="account_switcher_switch_to">Switch to</string>
-  <string name="account_switcher_add_account">Add account</string>
-  <string name="account_switcher_remove">Remove</string>
+  <string name="account_switcher_manage_account">Керування обліковим записом</string>
+  <string name="account_switcher_sign_in">Увійти</string>
+  <string name="account_switcher_sign_out">Вийти</string>
+  <string name="account_switcher_switch_to">Перейти до</string>
+  <string name="account_switcher_add_account">Додати обліковий запис</string>
+  <string name="account_switcher_remove">Вилучити</string>
 </resources>

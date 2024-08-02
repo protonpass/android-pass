@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">Đã xảy ra lỗi khi tiến hành loại bỏ nội dung khỏi giám sát</string>
   <string name="item_monitor_include_message">Nội dung được thêm vào giám sát thành công</string>
   <string name="item_monitor_include_message_error">Đã xảy ra lỗi khi tiến hành thêm nội dung vào giám sát</string>
+  <string name="alias_change_status_error">Đã xảy ra lỗi khi thay đổi trạng thái alias</string>
   <string name="login_item_generate_totp_error">Lỗi khi tạo mã 2FA</string>
   <string name="login_item_view_alias_button">Xem bí danh</string>
   <string name="login_item_monitor_widget_weak_pass_title">Mật khẩu yếu</string>
@@ -91,8 +92,8 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Bạn không thể chỉnh sửa nội dung này vì nó nằm trong thùng rác. Hãy chuyển nó ra trước khi chỉnh sửa.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Không thể chia sẽ</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Bạn không có đủ quyền để chia sẻ kho lưu trữ này.</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
-  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Bạn đã đạt đến giới hạn chia sẻ kho. Để chia sẻ nhiều kho hơn, vui lòng nâng cấp gói hiện tại của bạn.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Bạn không thể chỉnh sửa nội dung này vì nó nằm trong thùng rác. Hãy chuyển nó ra trước khi chỉnh sửa.</string>
   <string name="password_score_vulnerable">Dễ bị bẻ khóa</string>
   <string name="password_score_weak">Yếu</string>
   <string name="password_score_strong">Mạnh</string>
@@ -101,4 +102,6 @@
   <string name="passkey_detail_bottomsheet_domain">Tên miền</string>
   <string name="passkey_detail_bottomsheet_key">Chìa khóa</string>
   <string name="passkey_detail_bottomsheet_created">Đã tạo</string>
+  <string name="alias_toggle_tooltip_title">Disable Alias</string>
+  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
 </resources>

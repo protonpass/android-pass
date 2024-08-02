@@ -34,7 +34,6 @@
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Stattdessen PIN eingeben</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Stattdessen Fingerabdruck verwenden</string>
   <string name="auth_unlock_button">Entsperren</string>
-  <string name="auth_error_verifying_password">Fehler beim Verifizieren deines Passworts.</string>
   <string name="auth_error_empty_password">Passwort kann nicht leer sein</string>
   <string name="auth_error_pin_cannot_be_empty">Der PIN-Code darf nicht leer sein</string>
   <string name="auth_extra_password_label">Gib dein zusätzliches Passwort ein.</string>
@@ -45,4 +44,9 @@
     <item quantity="one">Ungültiges Passwort. %d Versuch verbleibend</item>
     <item quantity="other">Ungültiges Passwort. %d Versuche verbleibend</item>
   </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="one">%d Versuch verbleibend</item>
+    <item quantity="other">%d Versuche verbleibend</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">Zu viele fehlgeschlagene PIN-Versuche. Alle deine Benutzer werden abgemeldet.</string>
 </resources>

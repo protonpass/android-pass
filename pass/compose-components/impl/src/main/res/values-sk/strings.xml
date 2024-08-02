@@ -28,7 +28,7 @@
   <string name="bottomsheet_unpin_item">Odopnúť</string>
   <string name="bottomsheet_view_item_history">Zobraziť históriu</string>
   <string name="bottomsheet_monitor_exclude">Vylúčiť z monitorovania</string>
-  <string name="bottomsheet_monitor_include">Zaharnúť do monitorovania</string>
+  <string name="bottomsheet_monitor_include">Zahrnúť do monitorovania</string>
   <string name="bottomsheet_migrate_item">Presunúť do iného trezoru</string>
   <string name="bottomsheet_copy_item_note">Kopírovať poznámku</string>
   <string name="bottomsheet_delete_permanently">Odstrániť natrvalo</string>
@@ -208,7 +208,7 @@
     <item quantity="one">%d deň</item>
     <item quantity="few">%d dní</item>
     <item quantity="many">%d dni</item>
-    <item quantity="other">%d dni</item>
+    <item quantity="other">%d dní</item>
   </plurals>
   <plurals name="time_unit_hours">
     <item quantity="one">%d hodina</item>
@@ -246,8 +246,8 @@
   <string name="snack_bar_message_item_delete_success">Položka bola úspešne odstránená</string>
   <string name="snack_bar_message_item_delete_error">Pri odstraňovaní tejto položky došlo k chybe</string>
   <!-- Simple Login -->
-  <string name="simple_login_widget_title">Enable SimpleLogin sync</string>
-  <string name="simple_login_widget_message">We detected that you have 16 aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
-  <string name="simple_login_widget_action">Sync aliases</string>
-  <string name="simple_login_widget_close_content_description">Button to close simple login aliases sync widget</string>
+  <string name="simple_login_widget_title">Zapnúť SimpleLogin synchronizáciu</string>
+  <string name="simple_login_widget_message">Zistili sme, že máte 16 aliasov, ktoré sú prítomné v SimpleLogin, ale chýbajú v Proton Pass. Chcete ich importovať?</string>
+  <string name="simple_login_widget_action">Synchronizovať aliasy</string>
+  <string name="simple_login_widget_close_content_description">Tlačidlo na zatvorenie widgetu na synchronizáciu SimpleLogin aliasov</string>
 </resources>

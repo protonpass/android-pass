@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">Er is een fout opgetreden bij het uitsluiten van het item van de monitoring</string>
   <string name="item_monitor_include_message">Item succesvol opgenomen in monitoring</string>
   <string name="item_monitor_include_message_error">Er is een fout opgetreden bij het opnemen van het item in de monitoring</string>
+  <string name="alias_change_status_error">There was an error changing the alias status</string>
   <string name="login_item_generate_totp_error">Fout bij genereren van 2FA-code</string>
   <string name="login_item_view_alias_button">Alias bekijken</string>
   <string name="login_item_monitor_widget_weak_pass_title">Zwak wachtwoord</string>
@@ -102,4 +103,6 @@
   <string name="passkey_detail_bottomsheet_domain">Domein</string>
   <string name="passkey_detail_bottomsheet_key">Sleutel</string>
   <string name="passkey_detail_bottomsheet_created">Aangemaakt</string>
+  <string name="alias_toggle_tooltip_title">Disable Alias</string>
+  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
 </resources>

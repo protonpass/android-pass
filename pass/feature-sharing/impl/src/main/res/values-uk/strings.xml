@@ -40,7 +40,7 @@
   <string name="share_with_email_hint">Адреса електронної пошти</string>
   <string name="share_with_email_error">Недійсна адреса електронної пошти</string>
   <string name="share_with_email_cannot_invite_outside_org">Ви не можете запрошувати людей поза вашою організацією, зв\'яжіться з адміністратором для отримання додаткової інформації</string>
-  <string name="share_with_email_email_already_added">You have already added this email address</string>
+  <string name="share_with_email_email_already_added">Ви вже додали цю поштову адресу</string>
   <string name="share_permissions_title">Задати рівень доступу</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s запрошує вас отримати доступ до елементів у</string>
   <string name="sharing_join_shared_vault">Приєднатися та синхронізувати</string>
@@ -69,9 +69,9 @@
   <string name="share_manage_vault_share_with_more_people">Поділитися з іншими людьми</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Залишилось %d запрошення</item>
-    <item quantity="few">%d invites left</item>
-    <item quantity="many">%d invites left</item>
-    <item quantity="other">%d invites left</item>
+    <item quantity="few">Залишилось %d запрошення</item>
+    <item quantity="many">Залишилось %d запрошень</item>
+    <item quantity="other">Залишилось %d запрошень</item>
   </plurals>
   <plurals name="share_manage_vault_item_count">
     <item quantity="one">%d елемент</item>
@@ -110,7 +110,7 @@
     <item quantity="one">Це сховище може мати до %1$d учасника. У вас ще є %2$d запрошення.</item>
     <item quantity="few">Це сховище може мати до %1$d учасників. У вас ще є %2$d запрошення.</item>
     <item quantity="many">Це сховище може мати до %1$d учасників. У вас ще є %2$d запрошень.</item>
-    <item quantity="other">This vault can have up to %1$d members. You still have %2$d invites left.</item>
+    <item quantity="other">Це сховище може мати до %1$d учасників. У вас ще є %2$d запрошень.</item>
   </plurals>
   <string name="sharing_limit_reached">Це сховище досягло ліміту учасників та запрошених.</string>
   <string name="sharing_invites_info_upgrade_text">Покращте зараз, щоб запросити більше.</string>
@@ -125,16 +125,16 @@
   <string name="share_with_suggestions_title">Пропозиції</string>
   <string name="share_with_recents_title">Нещодавні</string>
   <string name="share_with_remove_email_content_description">Видалити пошту</string>
-  <string name="share_with_secure_link_title">Via secure link</string>
-  <string name="share_with_secure_link_description">Generate a secure link to this item.</string>
-  <string name="share_with_manage_shared_vault_title">Manage vault access</string>
+  <string name="share_with_secure_link_title">Через безпечне посилання</string>
+  <string name="share_with_secure_link_description">Згенерувати безпечне посилання на цей елемент.</string>
+  <string name="share_with_manage_shared_vault_title">Керування доступом до сховища</string>
   <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">The item\'s vault is currently shared with %d user.</item>
-    <item quantity="few">The item\'s vault is currently shared with %d users.</item>
-    <item quantity="many">The item\'s vault is currently shared with %d users.</item>
-    <item quantity="other">The item\'s vault is currently shared with %d users.</item>
+    <item quantity="one">Наразі сховище елемента знаходиться у спільному доступі з %d користувачем.</item>
+    <item quantity="few">Наразі сховище елемента знаходиться у спільному доступі з %d користувачами.</item>
+    <item quantity="many">Наразі сховище елемента знаходиться у спільному доступі з %d користувачами.</item>
+    <item quantity="other">Наразі сховище елемента знаходиться у спільному доступі з %d користувачами.</item>
   </plurals>
-  <string name="share_with_view_shared_vault_members_title">View vault members</string>
+  <string name="share_with_view_shared_vault_members_title">Перегляд учасників сховища</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Встановити рівень доступу для всіх учасників</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Встановити рівень доступу для %s</string>
   <string name="sharing_edit_permissions_remove_user">Видалити користувача</string>

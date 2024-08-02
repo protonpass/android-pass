@@ -24,23 +24,26 @@
   </plurals>
   <string name="auth_unlock_app_title">Mở khóa Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Nhập mật khẩu chủ cho %s</string>
-  <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Nhập mật khẩu phụ cho %s</string>
   <string name="auth_unlock_app_subtitle_account_switch">Nhập mật khẩu chủ cho:</string>
-  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Enter the extra password for:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Nhập mật khẩu phụ cho:</string>
   <string name="auth_master_password_label">Mật khẩu chủ</string>
   <string name="auth_action_reveal_password">Hiển thị mật khẩu chủ</string>
   <string name="auth_action_conceal_password">Ẩn mật khẩu chủ</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Sử dụng PIN thay thế</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Sử dụng vân tay thay thế</string>
   <string name="auth_unlock_button">Mở khóa</string>
-  <string name="auth_error_verifying_password">Lỗi xác minh mật khẩu.</string>
   <string name="auth_error_empty_password">Mật khẩu không được để trống</string>
   <string name="auth_error_pin_cannot_be_empty">Mã PIN không được để trống</string>
   <string name="auth_extra_password_label">Nhập mật khẩu phụ</string>
-  <string name="auth_extra_password_error">Error on authenticating with extra password</string>
-  <string name="auth_extra_password_too_many_attempts">Too many failed login attempts. You have been logged out.</string>
+  <string name="auth_extra_password_error">Lỗi với mật khẩu phụ</string>
+  <string name="auth_extra_password_too_many_attempts">Quá nhiều lần đăng nhập không thành công. Bạn đã được đăng xuất.</string>
   <string name="auth_error_wrong_password_no_attempts">Sai mật khẩu</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="other">Mật khẩu không chính xác. %d lần thử còn lại</item>
   </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="other">Còn lại %d lần thử</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">Quá nhiều lần đăng nhập không thành công. Bạn đã được đăng xuất.</string>
 </resources>

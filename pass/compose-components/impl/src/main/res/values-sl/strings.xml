@@ -42,7 +42,7 @@
   <string name="action_view_details">Prikaži podrobnosti</string>
   <string name="action_see_all">Poglejte vse</string>
   <string name="action_confirm">Potrdi</string>
-  <string name="action_cancel">Cancel</string>
+  <string name="action_cancel">Prekliči</string>
   <string name="action_continue">Nadaljuj</string>
   <string name="action_retry">Poskusi znova</string>
   <string name="action_edit">Uredi</string>
@@ -182,14 +182,14 @@
   <string name="item_details_identity_section_work_phone_number_title">Službena telefonska številka</string>
   <string name="item_details_identity_section_work_personal_website_title">Osebno spletno mesto</string>
   <string name="item_details_shared_section_note_title">Opomba</string>
-  <string name="item_details_shared_section_item_history_last_autofill_title">Last autofill</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">Zadnje samodejno izpolnjevanje</string>
   <string name="item_details_shared_section_item_history_created_title">Ustvarjeno</string>
   <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Prikaži zgodovino predmeta</string>
   <string name="item_details_shared_section_more_info_header_title">Več informacij</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
   <string name="item_details_shared_section_more_info_item_id">ID predmeta</string>
-  <string name="item_details_shared_section_more_info_share_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_share_id">ID trezorja</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Ta različica ni več podprta, zato priporočamo posodobitev aplikacije.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Identifikacijski ključ</string>
@@ -229,7 +229,7 @@
     <item quantity="other">%d sekunde</item>
   </plurals>
   <!-- Snack bars -->
-  <string name="snack_bar_message_item_note_copied">Note copied</string>
+  <string name="snack_bar_message_item_note_copied">Opomba je kopirana</string>
   <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
   <string name="snack_bar_message_item_monitor_excluded_success">Predmet je bil izključen iz spremljanja.</string>
   <string name="snack_bar_message_item_monitor_excluded_error">Pri izključevanju predmeta iz spremljanja je prišlo do napake</string>

@@ -17,12 +17,12 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="sync_item_empty">Empty vault</string>
+  <string name="sync_item_empty">Пусте сховище</string>
   <plurals name="sync_item_count">
-    <item quantity="one">Downloaded %d item</item>
-    <item quantity="few">Downloaded %d items</item>
-    <item quantity="many">Downloaded %d items</item>
-    <item quantity="other">Downloaded %d items</item>
+    <item quantity="one">Завантажено %d елемент</item>
+    <item quantity="few">Завантажено %d елементи</item>
+    <item quantity="many">Завантажено %d елементів</item>
+    <item quantity="other">Завантажено %d елементів</item>
   </plurals>
   <plurals name="sync_finished_item_count">
     <item quantity="one">%d item synchronized</item>
@@ -40,5 +40,5 @@
   <string name="sync_item_not_started">Не розпочато</string>
   <string name="sync_item_failed">Помилка синхронізації</string>
   <string name="sync_dialog_title_inserting">Inserting items…</string>
-  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
+  <string name="sync_dialog_subtitle_inserting">Завершення останнього кроку, майже все.</string>
 </resources>

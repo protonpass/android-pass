@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">Virhe poissuljettaessa kohdetta valvonnasta</string>
   <string name="item_monitor_include_message">Kohde sisällytettiin valvontaan</string>
   <string name="item_monitor_include_message_error">Virhe lisättäessä kohdetta valvontaan</string>
+  <string name="alias_change_status_error">Virhe aliaksen tilan muuttamisessa</string>
   <string name="login_item_generate_totp_error">Virhe luotaessa kaksivaiheisen tunnistautumisen todennuskoodia</string>
   <string name="login_item_view_alias_button">Näytä alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Heikko salasana</string>
@@ -102,4 +103,6 @@
   <string name="passkey_detail_bottomsheet_domain">Verkkotunnus</string>
   <string name="passkey_detail_bottomsheet_key">Avain</string>
   <string name="passkey_detail_bottomsheet_created">Luotu</string>
+  <string name="alias_toggle_tooltip_title">Poista alias käytöstä</string>
+  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
 </resources>

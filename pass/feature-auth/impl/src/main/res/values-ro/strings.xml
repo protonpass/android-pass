@@ -35,7 +35,6 @@
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Folosire cod PIN</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Folosire amprentă</string>
   <string name="auth_unlock_button">Deblocare</string>
-  <string name="auth_error_verifying_password">Eroare la verificarea parolei.</string>
   <string name="auth_error_empty_password">Parola nu poate fi goală.</string>
   <string name="auth_error_pin_cannot_be_empty">Codul PIN nu poate fi gol.</string>
   <string name="auth_extra_password_label">Introduceți parola suplimentară</string>
@@ -47,4 +46,10 @@
     <item quantity="few">Parola nu este corectă. Încercări rămase: [%d]</item>
     <item quantity="other">Parola nu este corectă. Încercări rămase: [%d]</item>
   </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="one">Încercări rămase: %d</item>
+    <item quantity="few">Încercări rămase: %d</item>
+    <item quantity="other">Încercări rămase: %d</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">Prea multe încercări eșuate. Toți utilizatorii dvs. sunt deconectați.</string>
 </resources>

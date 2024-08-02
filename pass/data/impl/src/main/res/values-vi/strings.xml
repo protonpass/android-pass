@@ -20,4 +20,5 @@
   <string name="sync_channel">Đồng bộ</string>
   <string name="sync_channel_description">Kênh thông báo đồng bộ hóa các nội dung</string>
   <string name="syncing_vaults">Đang đồng bộ các kho chứa và nội dung</string>
+  <string name="logging_out_free_users">Logging out extra free users</string>
 </resources>

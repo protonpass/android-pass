@@ -18,46 +18,46 @@
   -->
 <resources>
   <!--Create screen-->
-  <string name="secure_links_create_title">Share secure link</string>
+  <string name="secure_links_create_title">Chia sẻ liên kết an toàn</string>
   <string name="secure_links_create_row_expiration_title">Liên kết vô hiệu sau</string>
-  <string name="secure_links_create_row_expiration_options_one_hour">1 hour</string>
-  <string name="secure_links_create_row_expiration_options_one_day">1 day</string>
-  <string name="secure_links_create_row_expiration_options_seven_days">7 days</string>
-  <string name="secure_links_create_row_expiration_options_fourteen_days">14 days</string>
-  <string name="secure_links_create_row_expiration_options_thirty_days">30 days</string>
+  <string name="secure_links_create_row_expiration_options_one_hour">1 giờ</string>
+  <string name="secure_links_create_row_expiration_options_one_day">1 ngày</string>
+  <string name="secure_links_create_row_expiration_options_seven_days">7 ngày</string>
+  <string name="secure_links_create_row_expiration_options_fourteen_days">14 ngày</string>
+  <string name="secure_links_create_row_expiration_options_thirty_days">30 ngày</string>
   <string name="secure_links_create_row_max_views_title">Giới hạn số lượt xem</string>
-  <string name="secure_links_create_row_max_views_subtitle">Maximum views: %d</string>
-  <string name="secure_links_create_button_generate">Generate secure link</string>
-  <string name="secure_links_create_snackbar_message_error">There was an error generating secure link</string>
+  <string name="secure_links_create_row_max_views_subtitle">Lượt xem tối đa%d</string>
+  <string name="secure_links_create_button_generate">Tạo chia sẻ liên kết an toàn</string>
+  <string name="secure_links_create_snackbar_message_error">Đã xảy ra lỗi khi tạo liên kết an toàn</string>
   <!--Overview screen-->
-  <string name="secure_links_overview_widget_expiration_title">Expires in:</string>
-  <string name="secure_links_overview_widget_max_views_title">Can be viewed:</string>
-  <string name="secure_links_overview_widget_open_times_title">Opened:</string>
+  <string name="secure_links_overview_widget_expiration_title">Hết hạn vào:</string>
+  <string name="secure_links_overview_widget_max_views_title">Có thể được xem:</string>
+  <string name="secure_links_overview_widget_open_times_title">Đã mở:</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="other">%d lần</item>
   </plurals>
-  <string name="secure_links_overview_widget_max_views_unlimited">Unlimited</string>
+  <string name="secure_links_overview_widget_max_views_unlimited">Không giới hạn</string>
   <string name="secure_links_overview_button_view_all_links">Xem tất cả các liên kết bảo mật</string>
   <!--List screen-->
-  <string name="secure_links_list_title">Secure links</string>
-  <string name="secure_links_list_empty_title">No secure links</string>
-  <string name="secure_links_list_empty_subtitle">You can start creating secure links from an item details sharing options</string>
+  <string name="secure_links_list_title">Các liên kết bảo mật</string>
+  <string name="secure_links_list_empty_title">Không có liên kết an toàn</string>
+  <string name="secure_links_list_empty_subtitle">Bạn có thể bắt đầu tạo liên kết an toàn từ tùy chọn chia sẻ.</string>
   <string name="secure_links_list_expiration_description">Hết hạn trong %s</string>
-  <string name="secure_links_list_expired_description">Expired</string>
+  <string name="secure_links_list_expired_description">Đã hết hạn</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="other">%d lượt xem</item>
   </plurals>
-  <string name="secure_links_list_snackbar_message_links_fetch_error">There was an error fetching secure links</string>
-  <string name="secure_links_list_header_title_inactive">Inactive links</string>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">Đã xảy ra lỗi khi tải liên kết an toàn</string>
+  <string name="secure_links_list_header_title_inactive">Liên kết không hoạt động</string>
   <!--Shared-->
-  <string name="secure_links_shared_action_copy_link">Copy link</string>
-  <string name="secure_links_shared_action_share_link">Share link</string>
-  <string name="secure_links_shared_action_delete_link">Remove link</string>
-  <string name="secure_links_shared_action_delete_link_inactive">Remove inactive link</string>
-  <string name="secure_links_shared_action_delete_links_inactive">Remove all inactive links</string>
+  <string name="secure_links_shared_action_copy_link">Sao chép liên kết</string>
+  <string name="secure_links_shared_action_share_link">Chia sẻ liên kết</string>
+  <string name="secure_links_shared_action_delete_link">Xóa liên kết</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Xóa liên kết không hoạt động</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Xóa liên kết không hoạt động</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Đã sao chép liên kết an toàn</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Secure link deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_error">There was an error deleting secure link</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Inactive secure links deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">There was an error deleting inactive secure links</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Huỷ xoá liên kết an toàn</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">Đã xảy ra lỗi khi xoá liên kết an toàn</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Huỷ xóa liên kết an toàn</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Đã xảy ra lỗi khi xoá liên kết an toàn</string>
 </resources>

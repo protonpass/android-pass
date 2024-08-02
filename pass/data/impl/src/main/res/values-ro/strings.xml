@@ -20,4 +20,5 @@
   <string name="sync_channel">Sincronizare</string>
   <string name="sync_channel_description">Canal de notificare pentru sincronizarea articolelor.</string>
   <string name="syncing_vaults">Sincronizare seifuri și articole</string>
+  <string name="logging_out_free_users">Logging out extra free users</string>
 </resources>

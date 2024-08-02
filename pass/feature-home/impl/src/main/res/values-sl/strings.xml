@@ -40,7 +40,7 @@
   <string name="bottomsheet_copy_cvv">Kopiraj varnostno kodo</string>
   <string name="bottomsheet_copy_note">Kopiraj opombo</string>
   <string name="bottomsheet_edit">Uredi</string>
-  <string name="bottomsheet_copy_full_name">Copy full name</string>
+  <string name="bottomsheet_copy_full_name">Kopiraj ime in priimek</string>
   <!-- Clipboard -->
   <string name="alias_copied_to_clipboard">Vzdevek je kopiran</string>
   <string name="note_copied_to_clipboard">Opomba je kopirana</string>

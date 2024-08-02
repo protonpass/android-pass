@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">Es gab einen Fehler beim Ausschließen des Eintrags aus der Überwachung.</string>
   <string name="item_monitor_include_message">Eintrag erfolgreich in die Überwachung einbezogen.</string>
   <string name="item_monitor_include_message_error">Es gab einen Fehler beim Einbeziehen des Eintrags in die Überwachung.</string>
+  <string name="alias_change_status_error">Es ist ein Fehler beim Ändern des Alias-Status aufgetreten</string>
   <string name="login_item_generate_totp_error">Fehler beim Generieren des 2FA-Codes</string>
   <string name="login_item_view_alias_button">Alias anzeigen</string>
   <string name="login_item_monitor_widget_weak_pass_title">Schwaches Kennwort</string>
@@ -102,4 +103,6 @@
   <string name="passkey_detail_bottomsheet_domain">Domain</string>
   <string name="passkey_detail_bottomsheet_key">Key</string>
   <string name="passkey_detail_bottomsheet_created">Erstellt</string>
+  <string name="alias_toggle_tooltip_title">Disable Alias</string>
+  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
 </resources>

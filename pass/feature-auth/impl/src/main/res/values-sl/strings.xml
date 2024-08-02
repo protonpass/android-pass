@@ -36,7 +36,6 @@
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Namesto tega vnesite PIN</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Namesto tega vnesite prstni odtis</string>
   <string name="auth_unlock_button">Odkleni</string>
-  <string name="auth_error_verifying_password">Napaka pri preverjanju gesla</string>
   <string name="auth_error_empty_password">Geslo ne more biti prazno.</string>
   <string name="auth_error_pin_cannot_be_empty">PIN vnos ne sme biti prazen.</string>
   <string name="auth_extra_password_label">Vnesite dodatno geslo</string>
@@ -49,4 +48,11 @@
     <item quantity="few">Napačno geslo. Še %d poskusov</item>
     <item quantity="other">Napačno geslo. Še %d poskusov</item>
   </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="one">%d attempt remaining</item>
+    <item quantity="two">%d attempts remaining</item>
+    <item quantity="few">%d attempts remaining</item>
+    <item quantity="other">%d attempts remaining</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">Too many failed pin attempts. All your users are being logged out.</string>
 </resources>

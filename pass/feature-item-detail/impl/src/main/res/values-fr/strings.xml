@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">Une erreur s\'est produite lors du retrait d\'un élément de la surveillance.</string>
   <string name="item_monitor_include_message">L\'élément a été inclus dans la surveillance.</string>
   <string name="item_monitor_include_message_error">Une erreur s\'est produite lors de l\'ajout d\'un élément à la surveillance.</string>
+  <string name="alias_change_status_error">Une erreur s\'est produite lors de la modification du statut de l\'alias.</string>
   <string name="login_item_generate_totp_error">Une erreur s\'est produite pendant la génération du code A2F.</string>
   <string name="login_item_view_alias_button">Afficher l\'alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Mot de passe faible</string>
@@ -102,4 +103,6 @@
   <string name="passkey_detail_bottomsheet_domain">Domaine</string>
   <string name="passkey_detail_bottomsheet_key">Clé</string>
   <string name="passkey_detail_bottomsheet_created">Créé le</string>
+  <string name="alias_toggle_tooltip_title">Désactiver l\'alias</string>
+  <string name="alias_toggle_tooltip_description">Appuyez ici pour désactiver cet alias et ne plus recevoir d\'e-mails.</string>
 </resources>

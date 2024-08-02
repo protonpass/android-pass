@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">Виникла помилка виключення елемента з моніторингу</string>
   <string name="item_monitor_include_message">Елемент успішно включений у моніторинг</string>
   <string name="item_monitor_include_message_error">Сталася помилка включення елемента в моніторинг</string>
+  <string name="alias_change_status_error">Виникла помилка при зміні стану псевдоніма</string>
   <string name="login_item_generate_totp_error">Помилка під час генерування коду 2FA</string>
   <string name="login_item_view_alias_button">Переглянути псевдонім</string>
   <string name="login_item_monitor_widget_weak_pass_title">Слабкий пароль</string>
@@ -39,7 +40,7 @@
     <item quantity="one">%d запис входу використовує той самий пароль</item>
     <item quantity="few">%d записи входу використовують той самий пароль</item>
     <item quantity="many">%d записів входу використовують той самий пароль</item>
-    <item quantity="other">%d other logins use the same password</item>
+    <item quantity="other">%d записів входу використовують той самий пароль</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Налаштуйте 2FA для більшої безпеки</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Цей сервіс пропонує 2FA. Увімкніть це для додаткової безпеки облікового запису.</string>
@@ -95,7 +96,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Не може поширювати</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">У вас недостатньо прав для надання спільного доступу до цього сховища.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Ви досягли ліміту спільного доступу до сховища. Щоб отримати доступ до більшої кількості сховищ, будь ласка, оновіть свій поточний тарифний план.</string>
-  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Ви не можете поділитися цим елементом, тому що він в смітнику. Витягніть його зі смітника, перш ніж ділитися ним.</string>
   <string name="password_score_vulnerable">Вразливий</string>
   <string name="password_score_weak">Простий</string>
   <string name="password_score_strong">Надійний</string>
@@ -104,4 +105,6 @@
   <string name="passkey_detail_bottomsheet_domain">Домен</string>
   <string name="passkey_detail_bottomsheet_key">Ключ</string>
   <string name="passkey_detail_bottomsheet_created">Створено</string>
+  <string name="alias_toggle_tooltip_title">Вимкнути псевдонім</string>
+  <string name="alias_toggle_tooltip_description">Натисніть тут, щоб вимкнути цей псевдонім і припинити отримувати листи.</string>
 </resources>

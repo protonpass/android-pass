@@ -6,8 +6,8 @@
   <string name="restart_to_complete_the_update">Перезапустіть, щоб завершити оновлення</string>
   <string name="action_restart">Перезапустити</string>
   <string name="shortcut_share_logs_title">Поділитися журналом</string>
-  <string name="no_account_found">No account found</string>
-  <string name="no_session_found">No session found</string>
-  <string name="auth_with_extra_password_failed">Auth with extra password failed</string>
-  <string name="error_login_in_user">Error login in user</string>
+  <string name="no_account_found">Не знайдено облікового запису</string>
+  <string name="no_session_found">Сеанс не знайдено</string>
+  <string name="auth_with_extra_password_failed">Не вдалося увійти з додатковим паролем</string>
+  <string name="error_login_in_user">Помилка входу користувача</string>
 </resources>

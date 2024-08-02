@@ -24,10 +24,10 @@
   <string name="account_settings_list_item_extra_password_header_set">Set extra password for Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Actief</string>
   <string name="account_settings_list_item_extra_password_description">The extra password will be required to use Pass. It acts as an additional password on top of your Proton password.</string>
-  <string name="account_settings_list_item_security_keys_hint_not_set">Not set</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Niet ingesteld</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
-    <item quantity="one">%d security key set</item>
-    <item quantity="other">%d security keys set</item>
+    <item quantity="one">%d beveiligingssleutel ingesteld</item>
+    <item quantity="other">%d beveiligingssleutels ingesteld</item>
   </plurals>
 </resources>

@@ -20,12 +20,12 @@
   <string name="item_details_toolbar_content_description_menu_button">Pulsante per la visualizzazione delle opzioni di menu</string>
   <string name="item_details_toolbar_content_description_share_button">Pulsante per la condivisione di un elemento</string>
   <!-- Item details forbidden actions -->
-  <string name="item_details_forbidden_actions_edit_title">Cannot edit</string>
+  <string name="item_details_forbidden_actions_edit_title">Impossibile modificare</string>
   <string name="item_details_forbidden_actions_edit_permission">Non disponi delle autorizzazioni necessarie per modificare questo elemento.</string>
   <string name="item_details_forbidden_actions_edit_trash">Non puoi modificare questo elemento perché è stato spostato nel cestino. Spostalo fuori dal cestino per poterlo modificare.</string>
   <string name="item_details_forbidden_actions_edit_upgrade">Puoi modificare solamente gli elementi nelle tue casseforti più vecchie. Effettua l\'upgrade per modificare questo elemento.</string>
-  <string name="item_details_forbidden_actions_share_title">Cannot share</string>
+  <string name="item_details_forbidden_actions_share_title">Impossibile condividere</string>
   <string name="item_details_forbidden_actions_share_limit">Hai raggiunto il limite di condivisione delle casseforti. Effettua l\'upgrade per condividere più casseforti.</string>
   <string name="item_details_forbidden_actions_share_permission">Non disponi delle autorizzazioni necessarie per condividere questa cassaforte.</string>
-  <string name="item_details_forbidden_actions_share_trash">You cannot share this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
+  <string name="item_details_forbidden_actions_share_trash">Non puoi condividere questo elemento perché è stato spostato nel cestino. Spostalo fuori dal cestino per poterlo modificare.</string>
 </resources>

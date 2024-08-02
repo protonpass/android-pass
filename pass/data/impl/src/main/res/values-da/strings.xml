@@ -20,4 +20,5 @@
   <string name="sync_channel">Synk</string>
   <string name="sync_channel_description">Notifikationskanal for elementsynkronisering</string>
   <string name="syncing_vaults">Synkroniserer bokse og elementer</string>
+  <string name="logging_out_free_users">Ekstra gratis brugere logges ud</string>
 </resources>

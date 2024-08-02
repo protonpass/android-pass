@@ -34,7 +34,6 @@
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Ange PIN istället</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Ange fingeravtryck istället</string>
   <string name="auth_unlock_button">Lås upp</string>
-  <string name="auth_error_verifying_password">Det gick inte att verifiera ditt lösenord</string>
   <string name="auth_error_empty_password">Lösenord kan inte vara tomt</string>
   <string name="auth_error_pin_cannot_be_empty">PIN kan inte vara tom</string>
   <string name="auth_extra_password_label">Ange ditt extra lösenord</string>
@@ -45,4 +44,9 @@
     <item quantity="one">Felaktigt lösenord. %d försök återstår</item>
     <item quantity="other">Felaktigt lösenord. %d försök återstår</item>
   </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="one">%d försök återstår</item>
+    <item quantity="other">%d försök återstår</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">För många misslyckade PIN-försök. Alla dina användare loggas ut.</string>
 </resources>

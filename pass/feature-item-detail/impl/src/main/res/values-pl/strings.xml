@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">Wystąpił błąd podczas wykluczania elementu z monitoringu</string>
   <string name="item_monitor_include_message">Element został uwzględniony w monitoringu</string>
   <string name="item_monitor_include_message_error">Wystąpił błąd podczas uwzględniania elementu w monitoringu</string>
+  <string name="alias_change_status_error">There was an error changing the alias status</string>
   <string name="login_item_generate_totp_error">Wystąpił błąd podczas generowania kodu uwierzytelniającego</string>
   <string name="login_item_view_alias_button">Pokaż alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Słabe hasło</string>
@@ -95,7 +96,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nie można udostępnić</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nie masz wystarczających uprawnień do udostępnienia sejfu.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Osiągnięto maksymalną liczbę udostępnionych sejfów. Ulepsz plan, aby udostępnić więcej sejfów.</string>
-  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Nie można udostępniać elementu znajdującego się w Koszu. Przenieś element z Kosza, aby go udostępnić.</string>
   <string name="password_score_vulnerable">Bardzo słabe</string>
   <string name="password_score_weak">Słabe</string>
   <string name="password_score_strong">Silne</string>
@@ -104,4 +105,6 @@
   <string name="passkey_detail_bottomsheet_domain">Domena</string>
   <string name="passkey_detail_bottomsheet_key">Klucz</string>
   <string name="passkey_detail_bottomsheet_created">Utworzono</string>
+  <string name="alias_toggle_tooltip_title">Wyłącz alias</string>
+  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
 </resources>

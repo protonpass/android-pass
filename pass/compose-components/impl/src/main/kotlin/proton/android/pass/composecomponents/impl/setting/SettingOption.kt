@@ -41,7 +41,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.composecomponents.impl.item.placeholder
+import proton.android.pass.composecomponents.impl.modifiers.placeholder
 import me.proton.core.presentation.R as CoreR
 
 @Composable

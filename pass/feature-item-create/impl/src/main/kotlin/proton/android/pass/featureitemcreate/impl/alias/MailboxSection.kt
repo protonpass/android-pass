@@ -43,7 +43,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerStro
 import proton.android.pass.composecomponents.impl.form.ChevronDownIcon
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.icon.ForwardIcon
-import proton.android.pass.composecomponents.impl.item.placeholder
+import proton.android.pass.composecomponents.impl.modifiers.placeholder
 import proton.android.pass.featureitemcreate.impl.R
 
 @Composable

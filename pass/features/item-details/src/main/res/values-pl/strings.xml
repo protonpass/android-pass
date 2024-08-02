@@ -27,5 +27,5 @@
   <string name="item_details_forbidden_actions_share_title">Nie można udostępnić</string>
   <string name="item_details_forbidden_actions_share_limit">Osiągnięto maksymalną liczbę udostępnionych sejfów. Ulepsz plan, aby udostępnić więcej sejfów.</string>
   <string name="item_details_forbidden_actions_share_permission">Nie masz wystarczających uprawnień do udostępnienia sejfu.</string>
-  <string name="item_details_forbidden_actions_share_trash">You cannot share this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
+  <string name="item_details_forbidden_actions_share_trash">Nie można udostępniać elementu znajdującego się w Koszu. Przenieś element z Kosza, aby go edytować.</string>
 </resources>

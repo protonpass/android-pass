@@ -235,7 +235,7 @@
   <string name="snack_bar_message_item_delete_error">Une erreur s\'est produite lors de la suppression de cet élément</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Activer la synchronisation avec SimpleLogin</string>
-  <string name="simple_login_widget_message">Nous avons détecté que vous avez 16 alias qui sont présents dans SimpleLogin mais manquants dans Proton Pass. Souhaitez-vous les importer ?</string>
+  <string name="simple_login_widget_message">Nous avons détecté que vous avez 16 alias qui sont présents dans SimpleLogin mais manquants dans Proton Pass. Souhaitez-vous les importer ?</string>
   <string name="simple_login_widget_action">Synchroniser les alias</string>
   <string name="simple_login_widget_close_content_description">Bouton pour fermer le widget de synchronisation des alias de SimpleLogin</string>
 </resources>

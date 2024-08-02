@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- Details screen -->
+  <string name="simple_login_sync_details_title">Aliasser</string>
+  <string name="simple_login_sync_details_domain_label">Domæne</string>
+  <string name="simple_login_sync_details_domain_title">Standarddomæne for aliasser</string>
+  <string name="simple_login_sync_details_mailboxes_label">Postkasser</string>
+  <string name="simple_login_sync_details_mailboxes_title">Standardpostkasse til aliasser</string>
+  <string name="simple_login_sync_details_vault_title">SimpleLogin-synkronisering</string>
+  <!-- Settings screen -->
+  <string name="simple_login_sync_settings_title">Synkroniser aliasser</string>
+  <!-- Shared -->
+  <string name="simple_login_sync_shared_default_vault_title">Standard SL-boks</string>
+  <string name="simple_login_sync_shared_default_vault_description">SimpleLogin-alias vil blive importeret til denne boks.</string>
+</resources>

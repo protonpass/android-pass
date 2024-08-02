@@ -25,7 +25,7 @@
   <string name="configure_extra_password_warning">Pozor: Če izgubite to geslo, ne boste mogli dostopati do svojega računa Pass.</string>
   <string name="configure_extra_password_mismatch">Gesli se ne ujemata</string>
   <string name="extra_password_options_remove">Odstrani</string>
-  <string name="info_extra_password_title">Extra password</string>
+  <string name="info_extra_password_title">Dodatno geslo</string>
   <string name="info_extra_password_body">Protect Proton Pass with an extra password.</string>
   <string name="info_extra_password_button">Nastavite dodatno geslo</string>
   <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>

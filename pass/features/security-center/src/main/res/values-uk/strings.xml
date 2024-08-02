@@ -58,7 +58,7 @@
   <string name="security_center_missing_tfa_top_bar_title">Неактивна 2FA</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Для додаткової безпеки налаштуйте двоетапну автентифікацію для наступних облікових записів.</string>
   <!-- Excluded items screen -->
-  <string name="security_center_excluded_items_top_bar_title">Excluded items</string>
+  <string name="security_center_excluded_items_top_bar_title">Виключені елементи</string>
   <!-- Dark web monitor -->
   <string name="security_center_dark_web_monitor_top_bar_title">Моніторинг Темного Вебу</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Last check: %s</string>
@@ -81,7 +81,7 @@
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error loading custom email addresses</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Could not get email addresses</string>
   <string name="security_center_dark_web_monitor_custom_email_option_verify">Перевірити</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_remove">Remove</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_remove">Вилучити</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Останній витік %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="one">Знайдено в %s витоку</item>
@@ -124,7 +124,7 @@
   <string name="security_center_verify_report_title_none">Не виявлено витоків для</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Використано в</string>
-  <string name="security_center_email_report_breaches_header">Breaches</string>
+  <string name="security_center_email_report_breaches_header">Витоки</string>
   <string name="security_center_email_report_resolved_breaches_header">Вирішені витоки</string>
   <string name="security_center_email_report_mark_as_resolved">Позначити як вирішене</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_success">Breach has been marked as resolved</string>
@@ -171,7 +171,7 @@
   <string name="security_center_alias_list_custom_email_message">Псевдоніми з власними доменами не відстежуються, будь ласка, додайте їх як власну пошту для відстеження.</string>
   <string name="security_center_alias_list_options_menu">Alias screen options menu</string>
   <!-- Dark web help dialogs -->
-  <string name="dark_web_help_dialog_title">Data Security</string>
+  <string name="dark_web_help_dialog_title">Безпека даних</string>
   <string name="dark_web_help_dialog_subtitle">Proton ніколи не передає вашу інформацію третім особам. Всі дані отримані з пошуків появи доменів Proton в dark web.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Cannot add custom email</string>

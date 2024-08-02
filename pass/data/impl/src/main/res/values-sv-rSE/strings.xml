@@ -20,4 +20,5 @@
   <string name="sync_channel">Synkronisera</string>
   <string name="sync_channel_description">Aviseringskanal för objektsynkronisering</string>
   <string name="syncing_vaults">Synkroniserar valv och objekt</string>
+  <string name="logging_out_free_users">Loggar ut extra gratisanvändare</string>
 </resources>

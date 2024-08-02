@@ -228,7 +228,7 @@
   <string name="snack_bar_message_item_unpinned_success">Objekt lossat</string>
   <string name="snack_bar_message_item_unpinned_error">Det gick inte att lossa detta objekt</string>
   <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
-  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
+  <string name="snack_bar_message_item_trashed_error">Det gick inte kasta detta objekt</string>
   <string name="snack_bar_message_item_restore_success">Objekt återställt</string>
   <string name="snack_bar_message_item_restore_error">Det gick inte återställa detta objekt</string>
   <string name="snack_bar_message_item_delete_success">Objekt borttaget</string>

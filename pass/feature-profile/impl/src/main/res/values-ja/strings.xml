@@ -12,7 +12,7 @@
   <string name="profile_option_autofill">自動入力</string>
   <string name="profile_option_autofill_subtitle">ユーザー名とパスワードを自動的に入力します。</string>
   <string name="profile_option_secure_links">Secure links</string>
-  <string name="profile_option_aliases">Aliases</string>
+  <string name="profile_option_aliases">エイリアス</string>
   <string name="profile_error_biometry_failed_to_start">生体認証を開始できませんでした</string>
   <string name="profile_error_biometry_failed_to_authenticate">認証に失敗しました</string>
   <string name="profile_fingerprint_lock_enabled">指紋ロックが有効</string>
@@ -65,10 +65,10 @@
     <item quantity="other">%d 時間後</item>
   </plurals>
   <string name="profile_less_than_a_minute">一分未満</string>
-  <string name="account_switcher_manage_account">Manage account</string>
-  <string name="account_switcher_sign_in">Sign in</string>
-  <string name="account_switcher_sign_out">Sign out</string>
-  <string name="account_switcher_switch_to">Switch to</string>
-  <string name="account_switcher_add_account">Add account</string>
-  <string name="account_switcher_remove">Remove</string>
+  <string name="account_switcher_manage_account">アカウントを管理</string>
+  <string name="account_switcher_sign_in">サインイン</string>
+  <string name="account_switcher_sign_out">ログアウト</string>
+  <string name="account_switcher_switch_to">切り替え:</string>
+  <string name="account_switcher_add_account">アカウントを追加</string>
+  <string name="account_switcher_remove">削除</string>
 </resources>

@@ -30,9 +30,9 @@
   <string name="bottomsheet_monitor_exclude">Виключити з моніторингу</string>
   <string name="bottomsheet_monitor_include">Включати у моніторинг</string>
   <string name="bottomsheet_migrate_item">Перемістити в інше сховище</string>
-  <string name="bottomsheet_copy_item_note">Copy note</string>
+  <string name="bottomsheet_copy_item_note">Копіювати нотатку</string>
   <string name="bottomsheet_delete_permanently">Видалити остаточно</string>
-  <string name="bottomsheet_restore">Restore</string>
+  <string name="bottomsheet_restore">Відновити</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Відкрити меню дій елемента</string>
   <string name="action_upgrade_now">Покращити</string>
@@ -42,7 +42,7 @@
   <string name="action_view_details">Переглянути подробиці</string>
   <string name="action_see_all">Переглянути все</string>
   <string name="action_confirm">Підтвердити</string>
-  <string name="action_cancel">Cancel</string>
+  <string name="action_cancel">Скасувати</string>
   <string name="action_continue">Продовжити</string>
   <string name="action_retry">Повторити</string>
   <string name="action_edit">Змінити</string>
@@ -146,50 +146,50 @@
   <string name="item_details_login_section_primary_totp_title">Токен 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Вебсайти</string>
   <string name="item_details_identity_section_personal_title">Персональні подробиці</string>
-  <string name="item_details_identity_section_personal_first_name_title">First name</string>
-  <string name="item_details_identity_section_personal_middle_name_title">Middle name</string>
-  <string name="item_details_identity_section_personal_last_name_title">Last name</string>
-  <string name="item_details_identity_section_personal_full_name_title">Full name</string>
-  <string name="item_details_identity_section_personal_email_title">Email address</string>
-  <string name="item_details_identity_section_personal_gender_title">Gender</string>
-  <string name="item_details_identity_section_personal_phone_title">Phone number</string>
-  <string name="item_details_identity_section_personal_birthday_title">Birthday</string>
+  <string name="item_details_identity_section_personal_first_name_title">Ім\'я</string>
+  <string name="item_details_identity_section_personal_middle_name_title">Середнє ім\'я</string>
+  <string name="item_details_identity_section_personal_last_name_title">Прізвище</string>
+  <string name="item_details_identity_section_personal_full_name_title">Повне ім\'я</string>
+  <string name="item_details_identity_section_personal_email_title">Адреса пошти</string>
+  <string name="item_details_identity_section_personal_gender_title">Стать</string>
+  <string name="item_details_identity_section_personal_phone_title">Номер телефону</string>
+  <string name="item_details_identity_section_personal_birthday_title">День народження</string>
   <string name="item_details_identity_section_address_title">Деталі адреси</string>
-  <string name="item_details_identity_section_address_organization_title">Organization</string>
+  <string name="item_details_identity_section_address_organization_title">Організація</string>
   <string name="item_details_identity_section_address_street_address_title">Вулична адреса, поштова скринька</string>
-  <string name="item_details_identity_section_address_floor_title">Floor</string>
-  <string name="item_details_identity_section_address_city_title">City</string>
-  <string name="item_details_identity_section_address_zip_or_postal_code_title">ZIP or postal code</string>
+  <string name="item_details_identity_section_address_floor_title">Поверх</string>
+  <string name="item_details_identity_section_address_city_title">Місто</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">Поштовий індекс</string>
   <string name="item_details_identity_section_address_state_or_province_title">Область або район</string>
-  <string name="item_details_identity_section_address_county_title">County</string>
-  <string name="item_details_identity_section_address_country_or_region_title">Country or region</string>
+  <string name="item_details_identity_section_address_county_title">Округ</string>
+  <string name="item_details_identity_section_address_country_or_region_title">Країна або регіон</string>
   <string name="item_details_identity_section_contact_title">Подробиці контакту</string>
   <string name="item_details_identity_section_contact_social_security_number_title">Номер соціального страхування</string>
   <string name="item_details_identity_section_contact_passport_number_title">Номер паспорта</string>
-  <string name="item_details_identity_section_contact_license_number_title">License number</string>
-  <string name="item_details_identity_section_contact_website_title">Website</string>
-  <string name="item_details_identity_section_contact_x_handle_title">X-Handle</string>
-  <string name="item_details_identity_section_contact_secondary_phone_number_title">Secondary phone number</string>
+  <string name="item_details_identity_section_contact_license_number_title">Номер ліцензії</string>
+  <string name="item_details_identity_section_contact_website_title">Вебсайт</string>
+  <string name="item_details_identity_section_contact_x_handle_title">Профіль X</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">Додатковий номер телефону</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
   <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
   <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
   <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
   <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
-  <string name="item_details_identity_section_work_title">Work details</string>
-  <string name="item_details_identity_section_work_company_title">Company</string>
-  <string name="item_details_identity_section_work_occupation_title">Occupation</string>
+  <string name="item_details_identity_section_work_title">Робочі деталі</string>
+  <string name="item_details_identity_section_work_company_title">Компанія</string>
+  <string name="item_details_identity_section_work_occupation_title">Вид діяльності</string>
   <string name="item_details_identity_section_work_email_title">Робоча адреса електронної пошти</string>
   <string name="item_details_identity_section_work_phone_number_title">Номер робочого телефону</string>
-  <string name="item_details_identity_section_work_personal_website_title">Personal website</string>
+  <string name="item_details_identity_section_work_personal_website_title">Персональний вебсайт</string>
   <string name="item_details_shared_section_note_title">Примітка</string>
-  <string name="item_details_shared_section_item_history_last_autofill_title">Last autofill</string>
-  <string name="item_details_shared_section_item_history_created_title">Created</string>
-  <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">Останнє автозаповнення</string>
+  <string name="item_details_shared_section_item_history_created_title">Створено</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">Змінено (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Дивитися історію елемента</string>
-  <string name="item_details_shared_section_more_info_header_title">More info</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
-  <string name="item_details_shared_section_more_info_item_id">Item ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_header_title">Докладніше</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">Додаткові значки інформації про елемент</string>
+  <string name="item_details_shared_section_more_info_item_id">ID елемента</string>
+  <string name="item_details_shared_section_more_info_share_id">ID сховища</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Поточна версія програми більше не підтримується, будь ласка, оновіть програму.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Ключ доступу</string>
@@ -229,8 +229,8 @@
     <item quantity="other">%d секунди</item>
   </plurals>
   <!-- Snack bars -->
-  <string name="snack_bar_message_item_note_copied">Note copied</string>
-  <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
+  <string name="snack_bar_message_item_note_copied">Вміст нотатки скопійовано</string>
+  <string name="snack_bar_message_item_migration_error">Сталася помилка при міграції цього елемента</string>
   <string name="snack_bar_message_item_monitor_excluded_success">Елемент успішно виключено з моніторингу</string>
   <string name="snack_bar_message_item_monitor_excluded_error">Виникла помилка виключення елемента з моніторингу</string>
   <string name="snack_bar_message_item_monitor_included_success">Елемент успішно включений у моніторинг</string>
@@ -239,15 +239,15 @@
   <string name="snack_bar_message_item_pinned_error">Помилка закріплення цього елемента</string>
   <string name="snack_bar_message_item_unpinned_success">Елемент успішно відкріплено</string>
   <string name="snack_bar_message_item_unpinned_error">Помилка відкріплення цього елемента</string>
-  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
-  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
-  <string name="snack_bar_message_item_restore_success">Item successfully restored</string>
-  <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
-  <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
-  <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
+  <string name="snack_bar_message_item_trashed_success">Елемент успішно переміщено в смітник</string>
+  <string name="snack_bar_message_item_trashed_error">Виникла помилка при видаленні цього елемента</string>
+  <string name="snack_bar_message_item_restore_success">Елемент успішно відновлено</string>
+  <string name="snack_bar_message_item_restore_error">Виникла помилка при відновленні цього елемента</string>
+  <string name="snack_bar_message_item_delete_success">Елемент успішно видалено</string>
+  <string name="snack_bar_message_item_delete_error">Виникла помилка при видаленні цього елемента</string>
   <!-- Simple Login -->
-  <string name="simple_login_widget_title">Enable SimpleLogin sync</string>
-  <string name="simple_login_widget_message">We detected that you have 16 aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
-  <string name="simple_login_widget_action">Sync aliases</string>
-  <string name="simple_login_widget_close_content_description">Button to close simple login aliases sync widget</string>
+  <string name="simple_login_widget_title">Увімкнути синхронізацію SimpleLogin</string>
+  <string name="simple_login_widget_message">Ми виявили, що у вас є 16 псевдонімів, які присутні в SimpleLogin, але відсутні в Proton Pass. Бажаєте їх імпортувати?</string>
+  <string name="simple_login_widget_action">Синхронізувати псевдоніми</string>
+  <string name="simple_login_widget_close_content_description">Кнопка закриття віджету синхронізації псевдонімів SimpleLogin</string>
 </resources>

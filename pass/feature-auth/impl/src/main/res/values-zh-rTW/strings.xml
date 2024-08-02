@@ -33,7 +33,6 @@
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">改為輸入 PIN</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">改為輸入指紋</string>
   <string name="auth_unlock_button">解鎖</string>
-  <string name="auth_error_verifying_password">驗證密碼時發生錯誤</string>
   <string name="auth_error_empty_password">密碼不能為空</string>
   <string name="auth_error_pin_cannot_be_empty">Pin碼不能為空白</string>
   <string name="auth_extra_password_label">Enter your extra password</string>
@@ -43,4 +42,8 @@
   <plurals name="auth_error_wrong_password">
     <item quantity="other">密碼錯誤。剩餘 %d 次嘗試</item>
   </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="other">%d attempts remaining</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">Too many failed pin attempts. All your users are being logged out.</string>
 </resources>

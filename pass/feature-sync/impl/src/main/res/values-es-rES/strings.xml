@@ -26,7 +26,7 @@
     <item quantity="one">%d elemento sincronizado</item>
     <item quantity="other">%d elementos sincronizados</item>
   </plurals>
-  <string name="sync_progress_item_count">Downloading %1$d of %2$d items</string>
+  <string name="sync_progress_item_count">Descargando %1$d de %2$d elementos</string>
   <string name="sync_dialog_title">Sincronizando elementos…</string>
   <string name="sync_dialog_title_error">Error de sincronización</string>
   <string name="sync_dialog_title_success">Sincronización completada</string>
@@ -36,5 +36,5 @@
   <string name="sync_item_not_started">No iniciado</string>
   <string name="sync_item_failed">Error de sincronización</string>
   <string name="sync_dialog_title_inserting">Insertando elementos…</string>
-  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
+  <string name="sync_dialog_subtitle_inserting">Se está terminando el último paso. Falta poco.</string>
 </resources>

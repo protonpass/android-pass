@@ -20,4 +20,5 @@
   <string name="sync_channel">Sinkronkan</string>
   <string name="sync_channel_description">Kanal notifikasi untuk proses sinkronisasi item</string>
   <string name="syncing_vaults">Menyinkronkan brankas dan item</string>
+  <string name="logging_out_free_users">Logging out extra free users</string>
 </resources>

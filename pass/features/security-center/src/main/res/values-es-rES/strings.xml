@@ -28,7 +28,7 @@
   <string name="security_center_home_row_data_breaches_subtitle">Se han detectado vulneraciones.</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
   <string name="security_center_home_row_sentinel_subtitle">Programa de protección avanzada de cuentas</string>
-  <string name="security_center_home_row_insecure_passwords_title">Contraseñas débiles</string>
+  <string name="security_center_home_row_insecure_passwords_title">Contraseñas poco seguras</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Cambia las contraseñas</string>
   <string name="security_center_home_row_reused_passwords_title">Contraseñas reusadas</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Genera contraseñas únicas</string>
@@ -48,7 +48,7 @@
   <string name="security_center_sentinel_snackbar_message_disable_canceled">Se ha cancelado la desactivación de la protección de Proton Sentinel.</string>
   <string name="security_center_sentinel_snackbar_message_disable_error">Se ha producido un error al desactivar la protección Proton Sentinel. Inténtalo de nuevo.</string>
   <!-- Weak passwords screen -->
-  <string name="security_center_weak_pass_top_bar_title">Contraseñas débiles</string>
+  <string name="security_center_weak_pass_top_bar_title">Contraseñas poco seguras</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Las contraseñas débiles son fáciles de adivinar. Genera contraseñas seguras para mantener tus cuentas seguras.</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Contraseñas reusadas</string>

@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">Pri vylučovaní položky z monitorovania došlo k chybe</string>
   <string name="item_monitor_include_message">Položka bola úspešne zahrnutá do monitorovania</string>
   <string name="item_monitor_include_message_error">Pri zahrňovaní položky do monitorovania došlo k chybe</string>
+  <string name="alias_change_status_error">Pri zmene statusu aliasu došlo k chybe</string>
   <string name="login_item_generate_totp_error">Chyba pri generovaní 2FA kódu</string>
   <string name="login_item_view_alias_button">Zobraziť alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Slabé heslo</string>
@@ -95,7 +96,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nemožno zdieľať</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Na zdieľanie tohto trezora nemáte dostatočné oprávnenia.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Dosiahli ste limit zdieľania trezoru. Ak chcete zdieľať viac trezorov, upgradujte svoj aktuálny plán.</string>
-  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Túto položku nemôžete zdieľať, pretože je v koši. Pred zdieľaním ju premiestnite z koša, prosím.</string>
   <string name="password_score_vulnerable">Zraniteľné</string>
   <string name="password_score_weak">Slabé</string>
   <string name="password_score_strong">Silné</string>
@@ -104,4 +105,6 @@
   <string name="passkey_detail_bottomsheet_domain">Doména</string>
   <string name="passkey_detail_bottomsheet_key">Kľúč</string>
   <string name="passkey_detail_bottomsheet_created">Vytvorené</string>
+  <string name="alias_toggle_tooltip_title">Vypnúť alias</string>
+  <string name="alias_toggle_tooltip_description">Ťuknutím sem tento alias zakážete a prestanete dostávať emaily.</string>
 </resources>

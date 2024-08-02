@@ -20,4 +20,5 @@
   <string name="sync_channel">Synchronisieren</string>
   <string name="sync_channel_description">Benachrichtigungskanal für das Synchronisieren von Einträgen</string>
   <string name="syncing_vaults">Tresore und Einträge werden synchronisiert</string>
+  <string name="logging_out_free_users">Logging out extra free users</string>
 </resources>

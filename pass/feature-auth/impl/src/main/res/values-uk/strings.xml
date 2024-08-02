@@ -27,20 +27,19 @@
   </plurals>
   <string name="auth_unlock_app_title">Розблокувати Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Введіть основний пароль для %s</string>
-  <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Введіть додатковий пароль для %s</string>
   <string name="auth_unlock_app_subtitle_account_switch">Введіть основний пароль для:</string>
-  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Enter the extra password for:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Введіть додатковий пароль для:</string>
   <string name="auth_master_password_label">Основний пароль</string>
   <string name="auth_action_reveal_password">Показати основний пароль</string>
   <string name="auth_action_conceal_password">Приховати основний пароль</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Введіть PIN-код натомість</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Скористайтесь відбитком пальця натомість</string>
   <string name="auth_unlock_button">Розблокувати</string>
-  <string name="auth_error_verifying_password">Помилка під час перевірки пароля</string>
   <string name="auth_error_empty_password">Потрібно ввести пароль</string>
   <string name="auth_error_pin_cannot_be_empty">Потрібно ввести PIN-код</string>
   <string name="auth_extra_password_label">Уведіть ваш додатковий пароль</string>
-  <string name="auth_extra_password_error">Error on authenticating with extra password</string>
+  <string name="auth_extra_password_error">Помилка при автентифікації з додатковим паролем</string>
   <string name="auth_extra_password_too_many_attempts">Занадто багато невдалих спроб входу. Ви вийшли з системи.</string>
   <string name="auth_error_wrong_password_no_attempts">Неправильний пароль</string>
   <plurals name="auth_error_wrong_password">
@@ -49,4 +48,11 @@
     <item quantity="many">Неправильний пароль. Залишилося %d спроб</item>
     <item quantity="other">Неправильний пароль. Залишилося %d спроб</item>
   </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="one">Залишилася %d спроба</item>
+    <item quantity="few">Залишилося %d спроби</item>
+    <item quantity="many">Залишилося %d спроб</item>
+    <item quantity="other">Залишилося %d спроб</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">Забагато невдалих спроб вводу Pin-коду. Усі ваші користувачі вийшли із системи.</string>
 </resources>

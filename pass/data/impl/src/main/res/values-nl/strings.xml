@@ -20,4 +20,5 @@
   <string name="sync_channel">Synchroniseren</string>
   <string name="sync_channel_description">Notificatie kanaal voor item synchronisatie</string>
   <string name="syncing_vaults">Synchroniseer kluizen en items</string>
+  <string name="logging_out_free_users">Logging out extra free users</string>
 </resources>

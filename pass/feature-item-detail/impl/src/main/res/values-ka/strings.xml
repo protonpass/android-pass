@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">მონიტორინგიდან ელემენტის ამოღების შეცდომა</string>
   <string name="item_monitor_include_message">ელემენტის მონიტორინგში ჩასმა წარმატებულია</string>
   <string name="item_monitor_include_message_error">ელემენტის მონიტორინგში ჩასმის შეცდომა</string>
+  <string name="alias_change_status_error">შეცდომა ფსევდონიმის სტატუის შეცვლისას</string>
   <string name="login_item_generate_totp_error">2FA კოდის გენერაციის შეცდომა</string>
   <string name="login_item_view_alias_button">ფსევდონიმის ნახვა</string>
   <string name="login_item_monitor_widget_weak_pass_title">პაროლი სუსტია</string>
@@ -93,7 +94,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">გაზიარება შეუძლებელია</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">ამ საცავის გაზიარებისთვის საკმარისი წვდომები არ გაგაჩნიათ.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">მიაღწიეთ საცავის გაზიარების ზღვარს. იმისთვის, რომ მეტი საცავი გააზიაროთ, ასწიეთ თქვენი სატარიფო გეგმა.</string>
-  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">ამ ელემენტის გაზიარება არ შეგიძლიათ, რადგან ის ნაგვის ყუთშია. გამოიტანეთ ის ნაგვის ყუთიდან, სანამ გ.ააზიარებთ.</string>
   <string name="password_score_vulnerable">მოწყვლადი</string>
   <string name="password_score_weak">სუსტი</string>
   <string name="password_score_strong">ძლიერი</string>
@@ -102,4 +103,6 @@
   <string name="passkey_detail_bottomsheet_domain">დომენი</string>
   <string name="passkey_detail_bottomsheet_key">გასაღები</string>
   <string name="passkey_detail_bottomsheet_created">შექმნილია</string>
+  <string name="alias_toggle_tooltip_title">Disable Alias</string>
+  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
 </resources>

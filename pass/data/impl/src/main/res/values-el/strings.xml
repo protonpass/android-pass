@@ -20,4 +20,5 @@
   <string name="sync_channel">Συγχρονισμός</string>
   <string name="sync_channel_description">Κανάλι ειδοποιήσεων για συγχρονισμό στοιχείων</string>
   <string name="syncing_vaults">Συγχρονισμός κρυπτών και στοιχείων</string>
+  <string name="logging_out_free_users">Αποσύνδεση επιπλέον δωρεάν χρηστών</string>
 </resources>

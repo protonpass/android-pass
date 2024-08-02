@@ -40,11 +40,11 @@
   <string name="bottomsheet_copy_cvv">Копіювати код безпеки</string>
   <string name="bottomsheet_copy_note">Копіювати нотатку</string>
   <string name="bottomsheet_edit">Редагувати</string>
-  <string name="bottomsheet_copy_full_name">Copy full name</string>
+  <string name="bottomsheet_copy_full_name">Копіювати повне ім\'я</string>
   <!-- Clipboard -->
   <string name="alias_copied_to_clipboard">Псевдонім скопійовано</string>
   <string name="note_copied_to_clipboard">Нотатку скопійовано</string>
-  <string name="full_name_copied_to_clipboard">Full name copied</string>
+  <string name="full_name_copied_to_clipboard">Повне ім\'я скопійовано</string>
   <string name="email_copied_to_clipboard">Адресу електронної пошти скопійовано</string>
   <string name="username_copied_to_clipboard">Ім\'я користувача скопійовано</string>
   <string name="password_copied_to_clipboard">Пароль скопійовано</string>
@@ -103,31 +103,31 @@
     <item quantity="one">Відновити %d елемент?</item>
     <item quantity="few">Відновити %d елементи?</item>
     <item quantity="many">Відновити %d елементів?</item>
-    <item quantity="other">Restore %d items?</item>
+    <item quantity="other">Відновити %d елементів?</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
     <item quantity="one">Ви впевнені, що хочете відновити елемент зі смітника?</item>
     <item quantity="few">Ви впевнені, що хочете відновити %d елементи зі смітника?</item>
     <item quantity="many">Ви впевнені, що хочете відновити %d елементів зі смітника?</item>
-    <item quantity="other">Are you sure you want to restore the %d trashed items?</item>
+    <item quantity="other">Ви впевнені, що хочете відновити %d елементів зі смітника?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
     <item quantity="one">Перемістити %d елемент до смітника?</item>
     <item quantity="few">Перемістити %d елементи до смітника?</item>
     <item quantity="many">Перемістити %d елементів до смітника?</item>
-    <item quantity="other">Move to trash %d items?</item>
+    <item quantity="other">Перемістити %d елементів до смітника?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
     <item quantity="one">Ви впевнені, що хочете перемістити елемент у смітник?</item>
     <item quantity="few">Ви впевнені, що хочете перемістити %d елементи у смітник?</item>
     <item quantity="many">Ви впевнені, що хочете перемістити %d елементів у смітник?</item>
-    <item quantity="other">Are you sure you want to move %d items to the trash?</item>
+    <item quantity="other">Ви впевнені, що хочете перемістити %d елементів у смітник?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Видалити назавжди %d елемент?</item>
     <item quantity="few">Видалити назавжди %d елементи?</item>
     <item quantity="many">Видалити назавжди %d елементів?</item>
-    <item quantity="other">Delete permanently %d items?</item>
+    <item quantity="other">Видалити назавжди %d елементів?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="one">Ви впевнені, що хочете видалити позицію? Не підлягає відновленню.</item>

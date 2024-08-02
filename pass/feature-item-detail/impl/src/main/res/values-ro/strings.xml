@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">A apărut o eroare la excluderea articolului din monitorizare.</string>
   <string name="item_monitor_include_message">Articolul a fost inclus în monitorizare.</string>
   <string name="item_monitor_include_message_error">A apărut o eroare la includerea articolului în monitorizare.</string>
+  <string name="alias_change_status_error">A apărut o eroare la modificarea stării aliasului.</string>
   <string name="login_item_generate_totp_error">Eroare generare cod A2F.</string>
   <string name="login_item_view_alias_button">Afișare alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Parolă slabă</string>
@@ -103,4 +104,6 @@
   <string name="passkey_detail_bottomsheet_domain">Domeniu</string>
   <string name="passkey_detail_bottomsheet_key">Cheia</string>
   <string name="passkey_detail_bottomsheet_created">Creată la</string>
+  <string name="alias_toggle_tooltip_title">Disable Alias</string>
+  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
 </resources>

@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">Der opstod en fejl, da et element blev undtaget fra monitorering</string>
   <string name="item_monitor_include_message">Element inkluderet i monitorering</string>
   <string name="item_monitor_include_message_error">Der opstod en fejl, da elementet blev inkluderet i monitorering</string>
+  <string name="alias_change_status_error">Der opstod en fejl ved ændring af alias-status</string>
   <string name="login_item_generate_totp_error">Fejl i generering af 2FA-kode</string>
   <string name="login_item_view_alias_button">Vis alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Svag adgangskode</string>
@@ -102,4 +103,6 @@
   <string name="passkey_detail_bottomsheet_domain">Domæne</string>
   <string name="passkey_detail_bottomsheet_key">Nøgle</string>
   <string name="passkey_detail_bottomsheet_created">Oprettet</string>
+  <string name="alias_toggle_tooltip_title">Deaktiver alias</string>
+  <string name="alias_toggle_tooltip_description">Tryk her for at slå dette alias fra og stoppe med at modtage mails.</string>
 </resources>

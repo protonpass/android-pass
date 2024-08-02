@@ -101,13 +101,13 @@
   <string name="credit_card_init_error">クレジット カードの詳細を取得する際の問題</string>
   <string name="credit_card_item_update_error">クレジットカードを更新できませんでした</string>
   <!-- Create Identity -->
-  <string name="identity_field_full_name_title">Full name</string>
-  <string name="identity_field_email_title">Email</string>
-  <string name="identity_field_phone_number_title">Phone number</string>
-  <string name="identity_field_organization_title">Organization</string>
+  <string name="identity_field_full_name_title">フルネーム</string>
+  <string name="identity_field_email_title">メール</string>
+  <string name="identity_field_phone_number_title">電話番号</string>
+  <string name="identity_field_organization_title">組織</string>
   <string name="identity_field_street_address_title">Street address, P.O. box</string>
   <string name="identity_field_zip_or_postal_code_title">Zip or Postal code</string>
-  <string name="identity_field_city_title">City</string>
+  <string name="identity_field_city_title">市</string>
   <string name="identity_field_state_or_province_title">都道府県</string>
   <string name="identity_field_country_or_region_title">国または地域</string>
   <string name="identity_field_social_security_number_title">社会保障番号</string>
@@ -115,13 +115,13 @@
   <string name="identity_field_license_number_title">License number</string>
   <string name="identity_field_website_title">ウェブサイト</string>
   <string name="identity_field_xhandle_title">X handle</string>
-  <string name="identity_field_company_title">Company</string>
+  <string name="identity_field_company_title">会社</string>
   <string name="identity_field_job_title_title">Job title</string>
-  <string name="identity_field_first_name_title">First name</string>
-  <string name="identity_field_last_name_title">Last name</string>
+  <string name="identity_field_first_name_title">名</string>
+  <string name="identity_field_last_name_title">姓</string>
   <string name="identity_field_middle_name_title">Middle name</string>
   <string name="identity_field_birthdate_title">Birthdate</string>
-  <string name="identity_field_gender_title">Gender</string>
+  <string name="identity_field_gender_title">性別</string>
   <string name="identity_field_floor_title">Floor</string>
   <string name="identity_field_county_title">County</string>
   <string name="identity_field_linkedin_title">Linkedin</string>
@@ -132,11 +132,11 @@
   <string name="identity_field_personal_website_title">Personal website URL</string>
   <string name="identity_field_work_phone_number_title">Work phone number</string>
   <string name="identity_field_work_email_title">Work email address</string>
-  <string name="identity_add_field_first_name">First name</string>
+  <string name="identity_add_field_first_name">名</string>
   <string name="identity_add_field_middle_name">Middle name</string>
-  <string name="identity_add_field_last_name">Last name</string>
+  <string name="identity_add_field_last_name">姓</string>
   <string name="identity_add_field_birthdate">Birthdate</string>
-  <string name="identity_add_field_gender">Gender</string>
+  <string name="identity_add_field_gender">性別</string>
   <string name="identity_add_field_floor">Floor</string>
   <string name="identity_add_field_county">County</string>
   <string name="identity_add_field_linkedin">Linkedin</string>
@@ -160,7 +160,7 @@
   <string name="update_identity_item_creation_success">Identity updated</string>
   <string name="update_identity_item_creation_error">Could not update identity</string>
   <!--  Common create items  -->
-  <string name="title_create">Create</string>
+  <string name="title_create">作成</string>
   <string name="changes_saved">変更の保存</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">2FA 秘密鍵 (TOTP)</string>

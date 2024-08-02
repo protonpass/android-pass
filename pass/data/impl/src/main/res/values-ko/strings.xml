@@ -20,4 +20,5 @@
   <string name="sync_channel">동기화</string>
   <string name="sync_channel_description">항목 동기화를 위한 알림 채널</string>
   <string name="syncing_vaults">금고와 항목을 동기화하는 중</string>
+  <string name="logging_out_free_users">추가 무료 사용자 로그아웃</string>
 </resources>

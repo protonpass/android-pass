@@ -25,7 +25,7 @@
   <string name="configure_extra_password_warning">注意: このパスワードを紛失すると、Pass アカウントにアクセスできなくなります。</string>
   <string name="configure_extra_password_mismatch">パスワードが一致しません</string>
   <string name="extra_password_options_remove">削除</string>
-  <string name="info_extra_password_title">Extra password</string>
+  <string name="info_extra_password_title">追加パスワード</string>
   <string name="info_extra_password_body">Protect Proton Pass with an extra password.</string>
   <string name="info_extra_password_button">追加のパスワードを設定する</string>
   <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>

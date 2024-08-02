@@ -247,7 +247,7 @@
   <string name="snack_bar_message_item_delete_error">Wystąpił błąd podczas usuwania elementu</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Włącz synchronizację SimpleLogin</string>
-  <string name="simple_login_widget_message">We detected that you have 16 aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
+  <string name="simple_login_widget_message">Masz 16 aliasów SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</string>
   <string name="simple_login_widget_action">Synchronizuj aliasy</string>
-  <string name="simple_login_widget_close_content_description">Button to close simple login aliases sync widget</string>
+  <string name="simple_login_widget_close_content_description">Przycisk zamknięcia widżetu synchronizacji aliasów SimpleLogin</string>
 </resources>

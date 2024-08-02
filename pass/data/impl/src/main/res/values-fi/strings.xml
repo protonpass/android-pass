@@ -20,4 +20,5 @@
   <string name="sync_channel">Synkronoi</string>
   <string name="sync_channel_description">Ilmoituskanava kohteiden synkronointia varten</string>
   <string name="syncing_vaults">Holveja ja kohteita synkronoidaan</string>
+  <string name="logging_out_free_users">Logging out extra free users</string>
 </resources>

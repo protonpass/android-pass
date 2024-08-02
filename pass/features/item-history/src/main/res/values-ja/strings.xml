@@ -22,10 +22,10 @@
   <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">現在のアイテムは %1$s のバージョンに戻ります</string>
   <string name="item_history_restore_snackbar_message_error">アイテムのリビジョンを復元中にエラーが発生しました</string>
   <string name="item_history_restore_snackbar_message_success">アイテムのリビジョンが正常に復元されました</string>
-  <string name="item_history_restore_tab_title_current">Current</string>
+  <string name="item_history_restore_tab_title_current">現在</string>
   <string name="item_history_timeline_title">履歴</string>
-  <string name="item_history_timeline_node_child_title">Modified</string>
-  <string name="item_history_timeline_node_leaf_title">Created</string>
+  <string name="item_history_timeline_node_child_title">修正済み</string>
+  <string name="item_history_timeline_node_leaf_title">作成した</string>
   <string name="item_history_timeline_node_root_title">現在のバージョン</string>
   <string name="item_history_timeline_snackbar_message_error">アイテムのリビジョンの取得中にエラーが発生しました</string>
 </resources>

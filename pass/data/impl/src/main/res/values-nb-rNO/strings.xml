@@ -20,4 +20,5 @@
   <string name="sync_channel">Synkroniser</string>
   <string name="sync_channel_description">Varslingskanal for elementsynkronisering</string>
   <string name="syncing_vaults">Synkroniserer hvelv og elementer</string>
+  <string name="logging_out_free_users">Logger av ekstra gratis brukere</string>
 </resources>

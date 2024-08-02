@@ -21,7 +21,7 @@
   <string name="configure_extra_password_title">Définissez un mot de passe supplémentaire</string>
   <string name="configure_extra_password_enter_extra_password">Mot de passe supplémentaire</string>
   <string name="configure_extra_password_repeat_extra_password">Confirmez le mot de passe</string>
-  <string name="configure_extra_password_description">Ce mot de passe vous sera demandé lorsque vous vous connectez et passer d\'une autre application Proton à Proton Pass sur le web.</string>
+  <string name="configure_extra_password_description">Ce mot de passe vous sera demandé lorsque vous vous connectez et passez d\'une autre application Proton à Proton Pass sur le web.</string>
   <string name="configure_extra_password_warning">Avertissement : vous ne pourrez plus accéder à votre compte Pass si vous perdez ce mot de passe.</string>
   <string name="configure_extra_password_mismatch">Les mots de passe ne correspondent pas.</string>
   <string name="extra_password_options_remove">Retirer</string>

@@ -20,4 +20,5 @@
   <string name="sync_channel">Eşitle</string>
   <string name="sync_channel_description">Ögelerin eşitlenmesi için bildirim kanalı</string>
   <string name="syncing_vaults">Kasalar ve ögeler eşitleniyor</string>
+  <string name="logging_out_free_users">Logging out extra free users</string>
 </resources>

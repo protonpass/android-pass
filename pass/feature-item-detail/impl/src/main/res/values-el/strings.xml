@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">Παρουσιάστηκε σφάλμα κατά την εξαίρεση στοιχείου από την παρακολούθηση</string>
   <string name="item_monitor_include_message">Το στοιχείο συμπεριλήφθηκε επιτυχώς στην παρακολούθηση</string>
   <string name="item_monitor_include_message_error">Παρουσιάστηκε σφάλμα κατά τη συμπερίληψη στοιχείου στην παρακολούθηση</string>
+  <string name="alias_change_status_error">Παρουσιάστηκε σφάλμα κατά την αλλαγή της κατάστασης ψευδωνύμου</string>
   <string name="login_item_generate_totp_error">Σφάλμα κατά τη δημιουργία κωδικού 2FA</string>
   <string name="login_item_view_alias_button">Προβολή ψευδωνύμου</string>
   <string name="login_item_monitor_widget_weak_pass_title">Αδύναμος Κωδικός Πρόσβασης</string>
@@ -102,4 +103,6 @@
   <string name="passkey_detail_bottomsheet_domain">Τομέας</string>
   <string name="passkey_detail_bottomsheet_key">Κλειδί</string>
   <string name="passkey_detail_bottomsheet_created">Δημιουργήθηκε</string>
+  <string name="alias_toggle_tooltip_title">Απενεργοποίηση Ψευδωνύμου</string>
+  <string name="alias_toggle_tooltip_description">Πατήστε εδώ για να απενεργοποιήσετε αυτό το ψευδώνυμο και να σταματήσετε να λαμβάνετε μηνύματα ηλεκτρονικού ταχυδρομείου.</string>
 </resources>

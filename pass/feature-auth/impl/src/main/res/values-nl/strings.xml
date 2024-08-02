@@ -34,7 +34,6 @@
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Geef PIN in in de plaats</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Gebruik vingerafdruk in de plaats</string>
   <string name="auth_unlock_button">Ontgrendelen</string>
-  <string name="auth_error_verifying_password">Fout bij het verifiëren van uw wachtwoord</string>
   <string name="auth_error_empty_password">Wachtwoord kan niet leeg zijn</string>
   <string name="auth_error_pin_cannot_be_empty">Pincode mag niet leeg zijn</string>
   <string name="auth_extra_password_label">Enter your extra password</string>
@@ -45,4 +44,9 @@
     <item quantity="one">Incorrect wachtwoord. %d resterende poging</item>
     <item quantity="other">Incorrect wachtwoord. %d resterende pogingen</item>
   </plurals>
+  <plurals name="auth_attempts_remaining">
+    <item quantity="one">%d attempt remaining</item>
+    <item quantity="other">%d attempts remaining</item>
+  </plurals>
+  <string name="auth_pin_too_many_attempts">Too many failed pin attempts. All your users are being logged out.</string>
 </resources>

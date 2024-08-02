@@ -31,6 +31,7 @@
   <string name="item_monitor_exclude_message_error">항목을 모니터링에서 제외하는 중 오류 발생</string>
   <string name="item_monitor_include_message">성공적으로 항목을 모니터링에서 포함함</string>
   <string name="item_monitor_include_message_error">항목을 모니터링에서 포함하는 중 오류 발생</string>
+  <string name="alias_change_status_error">별칭 상태 전환 중 오류 발생했습니다.</string>
   <string name="login_item_generate_totp_error">2단계 인증 코드 구성에 오류가 발생했습니다</string>
   <string name="login_item_view_alias_button">별칭 보기</string>
   <string name="login_item_monitor_widget_weak_pass_title">약한 비밀번호</string>
@@ -101,4 +102,6 @@
   <string name="passkey_detail_bottomsheet_domain">도메인</string>
   <string name="passkey_detail_bottomsheet_key">키</string>
   <string name="passkey_detail_bottomsheet_created">생성함</string>
+  <string name="alias_toggle_tooltip_title">Disable Alias</string>
+  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
 </resources>

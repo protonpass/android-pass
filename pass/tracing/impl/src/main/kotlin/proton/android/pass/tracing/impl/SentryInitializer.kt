@@ -75,6 +75,7 @@ class SentryInitializer : Initializer<Unit> {
                             options.dsn = appConfig.sentryDSN
                             options.release = appConfig.versionName
                             options.environment = appConfig.flavor.toValue()
+                            options.isAttachAnrThreadDump = true
                             if (!appConfig.isDebug) {
                                 options.addIntegration(
                                     TimberLoggerIntegration(

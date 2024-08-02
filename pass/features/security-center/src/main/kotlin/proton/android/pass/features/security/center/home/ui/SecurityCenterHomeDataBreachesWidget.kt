@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -55,7 +54,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
-import proton.android.pass.composecomponents.impl.utils.PassBlurEffect
+import proton.android.pass.composecomponents.impl.modifiers.compatOverlayBlur
 import proton.android.pass.composecomponents.impl.utils.passFormattedDateText
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.shared.ui.DateUtils
@@ -181,18 +180,17 @@ private fun BreachRow(
             style = ProtonTheme.typography.defaultNorm
         )
 
-        PassBlurEffect(
-            blurRadius = 4.dp,
-            shape = CircleShape,
-            noiseFactor = 0.2f
-        ) { blurModifier ->
-            Text(
-                modifier = blurModifier.padding(1.dp),
-                text = value,
-                color = PassTheme.colors.passwordInteractionNormMajor2,
-                style = ProtonTheme.typography.defaultNorm
-            )
-        }
+        Text(
+            modifier = Modifier
+                .compatOverlayBlur(
+                    blurRadius = 4.dp,
+                    fallbackColor = PassTheme.colors.passwordInteractionNormMinor2
+                )
+                .padding(1.dp),
+            text = value,
+            color = PassTheme.colors.passwordInteractionNormMajor2,
+            style = ProtonTheme.typography.defaultNorm
+        )
     }
 }
 

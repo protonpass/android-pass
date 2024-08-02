@@ -45,7 +45,7 @@ import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.modifiers.contentDiff
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailMainSectionContainer
-import proton.android.pass.composecomponents.impl.item.placeholder
+import proton.android.pass.composecomponents.impl.modifiers.placeholder
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.ItemDiffType

@@ -32,7 +32,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Weak
-import proton.android.pass.composecomponents.impl.item.placeholder
+import proton.android.pass.composecomponents.impl.modifiers.placeholder
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailBreachState
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent

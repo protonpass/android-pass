@@ -24,6 +24,8 @@
     <string name="simple_login_sync_details_mailboxes_label">Mailboxes</string>
     <string name="simple_login_sync_details_mailboxes_title">Default mailbox for aliases</string>
     <string name="simple_login_sync_details_vault_title">SimpleLogin sync</string>
+    <string name="simple_login_sync_details_dialog_title_domains">Default domain for aliases</string>
+    <string name="simple_login_sync_details_dialog_title_mailboxes">Default mailbox for aliases</string>
 
     <!-- Settings screen -->
     <string name="simple_login_sync_settings_title">Sync aliases</string>

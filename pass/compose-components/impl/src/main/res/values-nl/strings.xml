@@ -115,7 +115,7 @@
     Pattern used when displaying a date in the same year as we are.
     It would translate to 12 Feb 12:34
     -->
-  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_compact_month">dd LLL HH:mm</string>
+  <string name="date_full_date_format_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL HH:mm</string>
   <!--
     Pattern used when displaying a date including the year.
     It would translate to
@@ -126,7 +126,7 @@
    Pattern used when displaying a date including the year.
    It would translate to 12 Feb 2023 12:34
    -->
-  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_with_year_compact_month">dd LLL yyyy HH:mm</string>
+  <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Alias adres</string>
   <string name="item_details_alias_section_mailboxes_title">Doorsturen naar</string>
@@ -184,8 +184,8 @@
   <string name="item_details_shared_section_item_history_button_view">Bekijk item geschiedenis</string>
   <string name="item_details_shared_section_more_info_header_title">Meer informatie</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
-  <string name="item_details_shared_section_more_info_item_id">Item ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Kluis ID</string>
+  <string name="item_details_shared_section_more_info_item_id">Item-ID</string>
+  <string name="item_details_shared_section_more_info_share_id">Kluis-ID</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">De app versie wordt niet meer ondersteund. Update uw app alstublieft.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Toegangssleutel</string>
@@ -235,7 +235,11 @@
   <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Enable SimpleLogin sync</string>
-  <string name="simple_login_widget_message">We detected that you have 16 aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
+  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">We detected that you have %s that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
+  <plurals name="simple_login_widget_pending_aliases">
+    <item quantity="one">%d alias</item>
+    <item quantity="other">%d aliases</item>
+  </plurals>
   <string name="simple_login_widget_action">Sync aliases</string>
   <string name="simple_login_widget_close_content_description">Button to close simple login aliases sync widget</string>
 </resources>

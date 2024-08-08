@@ -17,14 +17,14 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="item_details_snackbar_message_alias_copied">El alias ha sido copiado.</string>
+  <string name="item_details_snackbar_message_alias_copied">Se ha copiado el alias.</string>
   <string name="item_details_snackbar_message_birthdate_copied">Se ha copiado la fecha de nacimiento.</string>
-  <string name="item_details_snackbar_message_card_number_copied">El número de la tarjeta ha sido copiado.</string>
+  <string name="item_details_snackbar_message_card_number_copied">Se ha copiado el número de la tarjeta.</string>
   <string name="item_details_snackbar_message_city_copied">Se ha copiado la ciudad.</string>
   <string name="item_details_snackbar_message_company_copied">Se ha copiado la empresa.</string>
   <string name="item_details_snackbar_message_country_or_region_copied">Se ha copiado el país o la región.</string>
   <string name="item_details_snackbar_message_county_copied">Se ha copiado la provincia.</string>
-  <string name="item_details_snackbar_message_custom_field_copied">El campo personalizado ha sido copiado.</string>
+  <string name="item_details_snackbar_message_custom_field_copied">Se ha copiado el campo personalizado.</string>
   <string name="item_details_snackbar_message_cvv_copied">El código de seguridad ha sido copiado.</string>
   <string name="item_details_snackbar_message_email_copied">La dirección de correo electrónico ha sido copiada.</string>
   <string name="item_details_snackbar_message_facebook_copied">Se ha copiado la cuenta Facebook.</string>
@@ -49,7 +49,7 @@
   <string name="item_details_snackbar_message_street_address_copied">Se ha copiado la dirección de calle.</string>
   <string name="item_details_snackbar_message_totp_copied">Se ha copiado el TOTP.</string>
   <string name="item_details_snackbar_message_username_copied">Se ha copiado el nombre de usuario.</string>
-  <string name="item_details_snackbar_message_website_copied">El URL del sitio web ha sido copiado.</string>
+  <string name="item_details_snackbar_message_website_copied">Se ha copiado la URL del sitio web.</string>
   <string name="item_details_snackbar_message_x_handle_copied">Se ha copiado el nombre de usuario de X.</string>
   <string name="item_details_snackbar_message_yahoo_copied">Se ha copiado la cuenta Yahoo.</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">Se ha copiado el código postal.</string>

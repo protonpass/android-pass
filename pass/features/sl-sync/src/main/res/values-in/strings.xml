@@ -20,13 +20,13 @@
   <!-- Details screen -->
   <string name="simple_login_sync_details_title">Alias</string>
   <string name="simple_login_sync_details_domain_label">Domain</string>
-  <string name="simple_login_sync_details_domain_title">Default domain for aliases</string>
+  <string name="simple_login_sync_details_domain_title">Domain bawaan untuk alias</string>
   <string name="simple_login_sync_details_mailboxes_label">Kotak surat</string>
-  <string name="simple_login_sync_details_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_details_vault_title">SimpleLogin sync</string>
+  <string name="simple_login_sync_details_mailboxes_title">Kotak surat bawaan untuk alias</string>
+  <string name="simple_login_sync_details_vault_title">Sinkronisasi SimpleLogin</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sinkronkan alias</string>
   <!-- Shared -->
-  <string name="simple_login_sync_shared_default_vault_title">Default SL vault</string>
-  <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliases will be imported into this vault.</string>
+  <string name="simple_login_sync_shared_default_vault_title">Brankas SL bawaan</string>
+  <string name="simple_login_sync_shared_default_vault_description">Alias SimpleLogin akan diimpor ke brankas ini.</string>
 </resources>

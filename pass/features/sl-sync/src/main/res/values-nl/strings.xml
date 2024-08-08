@@ -18,15 +18,15 @@
   -->
 <resources>
   <!-- Details screen -->
-  <string name="simple_login_sync_details_title">Aliases</string>
-  <string name="simple_login_sync_details_domain_label">Domain</string>
-  <string name="simple_login_sync_details_domain_title">Default domain for aliases</string>
-  <string name="simple_login_sync_details_mailboxes_label">Mailboxes</string>
-  <string name="simple_login_sync_details_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_details_vault_title">SimpleLogin sync</string>
+  <string name="simple_login_sync_details_title">Aliassen</string>
+  <string name="simple_login_sync_details_domain_label">Domein</string>
+  <string name="simple_login_sync_details_domain_title">Standaarddomein voor aliassen</string>
+  <string name="simple_login_sync_details_mailboxes_label">Postvakken</string>
+  <string name="simple_login_sync_details_mailboxes_title">Standaard mailbox voor aliassen</string>
+  <string name="simple_login_sync_details_vault_title">SimpleLogin synchronisatie</string>
   <!-- Settings screen -->
-  <string name="simple_login_sync_settings_title">Sync aliases</string>
+  <string name="simple_login_sync_settings_title">Synchroniseer aliassen</string>
   <!-- Shared -->
-  <string name="simple_login_sync_shared_default_vault_title">Default SL vault</string>
-  <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliases will be imported into this vault.</string>
+  <string name="simple_login_sync_shared_default_vault_title">Standaard SL kluis</string>
+  <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliassen worden geïmporteerd in deze kluis.</string>
 </resources>

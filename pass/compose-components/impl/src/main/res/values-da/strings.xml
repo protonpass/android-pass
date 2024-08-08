@@ -115,7 +115,7 @@
     Pattern used when displaying a date in the same year as we are.
     It would translate to 12 Feb 12:34
     -->
-  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_compact_month">dd LLL HH:mm</string>
+  <string name="date_full_date_format_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL HH:mm</string>
   <!--
     Pattern used when displaying a date including the year.
     It would translate to
@@ -126,7 +126,7 @@
    Pattern used when displaying a date including the year.
    It would translate to 12 Feb 2023 12:34
    -->
-  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_with_year_compact_month">dd LLL åååå TT:mm</string>
+  <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL åååå TT:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Alias-adresse</string>
   <string name="item_details_alias_section_mailboxes_title">Videresendes til</string>
@@ -235,7 +235,11 @@
   <string name="snack_bar_message_item_delete_error">Der var en fejl ved sletning af dette element</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Aktivér SimpleLogin-synkronisering</string>
-  <string name="simple_login_widget_message">Vi har konstateret, at du har 16 aliasser, som findes i SimpleLogin, men som mangler i Proton Pass. Vil du gerne importere dem?</string>
+  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">Vi har konstateret, at du har %s, som findes i SimpleLogin, men som mangler i Proton Pass. Vil du gerne importere dem?</string>
+  <plurals name="simple_login_widget_pending_aliases">
+    <item quantity="one">%d alias</item>
+    <item quantity="other">%d aliasser</item>
+  </plurals>
   <string name="simple_login_widget_action">Synkroniser aliasser</string>
   <string name="simple_login_widget_close_content_description">Knap til at lukke synkroniseringswidget til enkle login-alias</string>
 </resources>

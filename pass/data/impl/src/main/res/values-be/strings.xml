@@ -20,5 +20,5 @@
   <string name="sync_channel">Сінхранізацыя</string>
   <string name="sync_channel_description">Канал апавяшчэнняў для сінхранізацыі элементаў</string>
   <string name="syncing_vaults">Сінхранізацыя сховішчаў і элементаў</string>
-  <string name="logging_out_free_users">Logging out extra free users</string>
+  <string name="logging_out_free_users">Адбываецца выхад з сістэмы дадатковых бясплатных карыстальнікаў</string>
 </resources>

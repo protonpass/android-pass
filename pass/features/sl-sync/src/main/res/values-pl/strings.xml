@@ -20,13 +20,13 @@
   <!-- Details screen -->
   <string name="simple_login_sync_details_title">Aliasy</string>
   <string name="simple_login_sync_details_domain_label">Domena</string>
-  <string name="simple_login_sync_details_domain_title">Default domain for aliases</string>
+  <string name="simple_login_sync_details_domain_title">Domyślna domena dla aliasów</string>
   <string name="simple_login_sync_details_mailboxes_label">Skrzynki pocztowe</string>
   <string name="simple_login_sync_details_mailboxes_title">Domyślna skrzynka pocztowa dla aliasów</string>
-  <string name="simple_login_sync_details_vault_title">SimpleLogin sync</string>
+  <string name="simple_login_sync_details_vault_title">Synchronizacja SimpleLogin</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Synchronizuj aliasy</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Domyślny sejf SimpleLogin</string>
-  <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliases will be imported into this vault.</string>
+  <string name="simple_login_sync_shared_default_vault_description">Aliasy SimpleLogin zostaną zaimportowane do tego sejfu.</string>
 </resources>

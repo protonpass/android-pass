@@ -17,24 +17,24 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="sync_item_empty">Empty vault</string>
+  <string name="sync_item_empty">Lege kluis</string>
   <plurals name="sync_item_count">
-    <item quantity="one">Downloaded %d item</item>
-    <item quantity="other">Downloaded %d items</item>
+    <item quantity="one">%d item gedownload</item>
+    <item quantity="other">%d items gedownload</item>
   </plurals>
   <plurals name="sync_finished_item_count">
-    <item quantity="one">%d item synchronized</item>
-    <item quantity="other">%d items synchronized</item>
+    <item quantity="one">%d item gesynchroniseerd</item>
+    <item quantity="other">%d items gesynchroniseerd</item>
   </plurals>
-  <string name="sync_progress_item_count">Downloading %1$d of %2$d items</string>
+  <string name="sync_progress_item_count">%1$d van %2$d items aan het downloaden</string>
   <string name="sync_dialog_title">Aan het synchroniseren...</string>
-  <string name="sync_dialog_title_error">Sync failed</string>
-  <string name="sync_dialog_title_success">Sync completed</string>
+  <string name="sync_dialog_title_error">Synchronisatie mislukt</string>
+  <string name="sync_dialog_title_success">Synchronisatie voltooid</string>
   <string name="sync_dialog_subtitle">We downloaden en decrypten uw items. Dit kan een paar minuten duren.</string>
-  <string name="sync_dialog_subtitle_error">There was an error downloading and decrypting your items. Please try again.</string>
-  <string name="sync_dialog_subtitle_success">Your items were successfully downloaded and decrypted.</string>
+  <string name="sync_dialog_subtitle_error">Er is een fout opgetreden tijdens het downloaden en ontsleutelen van uw items. Probeer het opnieuw.</string>
+  <string name="sync_dialog_subtitle_success">Uw items zijn succesvol gedownload en ontsleuteld.</string>
   <string name="sync_item_not_started">Niet begonnen</string>
-  <string name="sync_item_failed">Sync failed</string>
-  <string name="sync_dialog_title_inserting">Inserting items…</string>
-  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
+  <string name="sync_item_failed">Synchronisatie mislukt</string>
+  <string name="sync_dialog_title_inserting">Items invoeren…</string>
+  <string name="sync_dialog_subtitle_inserting">Laatste stap wordt voltooid, bijna klaar.</string>
 </resources>

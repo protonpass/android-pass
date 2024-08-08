@@ -104,5 +104,5 @@
   <string name="passkey_detail_bottomsheet_key">Avain</string>
   <string name="passkey_detail_bottomsheet_created">Luotu</string>
   <string name="alias_toggle_tooltip_title">Poista alias käytöstä</string>
-  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
+  <string name="alias_toggle_tooltip_description">Paina tästä poistaaksesi tämän aliaksen käytöstä ja lopettaaksesi sähköpostien vastaanottamisen.</string>
 </resources>

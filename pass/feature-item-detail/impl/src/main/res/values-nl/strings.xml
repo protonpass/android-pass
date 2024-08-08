@@ -31,7 +31,7 @@
   <string name="item_monitor_exclude_message_error">Er is een fout opgetreden bij het uitsluiten van het item van de monitoring</string>
   <string name="item_monitor_include_message">Item succesvol opgenomen in monitoring</string>
   <string name="item_monitor_include_message_error">Er is een fout opgetreden bij het opnemen van het item in de monitoring</string>
-  <string name="alias_change_status_error">There was an error changing the alias status</string>
+  <string name="alias_change_status_error">Er is een fout opgetreden bij het wijzigen van de aliasstatus</string>
   <string name="login_item_generate_totp_error">Fout bij genereren van 2FA-code</string>
   <string name="login_item_view_alias_button">Alias bekijken</string>
   <string name="login_item_monitor_widget_weak_pass_title">Zwak wachtwoord</string>
@@ -94,7 +94,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan niet delen</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">U heeft onvoldoende machtigingen om deze kluis te delen.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">U heeft de limiet van het delen van kluis bereikt. Upgrade uw huidige abonnement om meer kluizen te delen.</string>
-  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">U kunt dit item niet delen omdat het in de prullenbak zit. Verplaats het uit de prullenbak voordat u het deelt.</string>
   <string name="password_score_vulnerable">Kwetsbaar</string>
   <string name="password_score_weak">Zwak</string>
   <string name="password_score_strong">Sterk</string>
@@ -103,6 +103,6 @@
   <string name="passkey_detail_bottomsheet_domain">Domein</string>
   <string name="passkey_detail_bottomsheet_key">Sleutel</string>
   <string name="passkey_detail_bottomsheet_created">Aangemaakt</string>
-  <string name="alias_toggle_tooltip_title">Disable Alias</string>
-  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
+  <string name="alias_toggle_tooltip_title">Alias Uitschakelen</string>
+  <string name="alias_toggle_tooltip_description">Tik hier om deze alias uit te schakelen en geen e-mails meer te ontvangen.</string>
 </resources>

@@ -20,5 +20,5 @@
   <string name="sync_channel">Synchronizacja</string>
   <string name="sync_channel_description">Kanał powiadomień dla synchronizacji elementów</string>
   <string name="syncing_vaults">Synchronizacja sejfów i elementów</string>
-  <string name="logging_out_free_users">Logging out extra free users</string>
+  <string name="logging_out_free_users">Trwa wylogowywanie dodatkowych darmowych użytkowników</string>
 </resources>

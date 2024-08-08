@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Home -->
-  <string name="home_empty_vault_title">Tu bóveda está vacía</string>
+  <string name="home_empty_vault_title">Tu caja fuerte está vacía.</string>
   <string name="home_empty_vault_subtitle">Comience creando su primer elemento.</string>
   <string name="home_empty_read_only_vault_title">Esta caja fuerte está vacía.</string>
   <string name="home_empty_read_only_vault_subtitle">No puedes añadir elementos a una caja fuerte de solo lectura.</string>
@@ -42,7 +42,7 @@
   <string name="bottomsheet_edit">Editar</string>
   <string name="bottomsheet_copy_full_name">Copiar el nombre completo</string>
   <!-- Clipboard -->
-  <string name="alias_copied_to_clipboard">Se ha copiado e alias.</string>
+  <string name="alias_copied_to_clipboard">Se ha copiado el alias.</string>
   <string name="note_copied_to_clipboard">Se ha copiado la nota.</string>
   <string name="full_name_copied_to_clipboard">Se ha copiado el nombre completo.</string>
   <string name="email_copied_to_clipboard">La dirección de correo electrónico ha sido copiada.</string>

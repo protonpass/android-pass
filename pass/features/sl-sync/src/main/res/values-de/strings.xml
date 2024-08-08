@@ -18,15 +18,15 @@
   -->
 <resources>
   <!-- Details screen -->
-  <string name="simple_login_sync_details_title">Aliases</string>
+  <string name="simple_login_sync_details_title">Aliasse</string>
   <string name="simple_login_sync_details_domain_label">Domain</string>
-  <string name="simple_login_sync_details_domain_title">Default domain for aliases</string>
-  <string name="simple_login_sync_details_mailboxes_label">Mailboxes</string>
-  <string name="simple_login_sync_details_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_details_vault_title">SimpleLogin sync</string>
+  <string name="simple_login_sync_details_domain_title">Standarddomain für Aliasse</string>
+  <string name="simple_login_sync_details_mailboxes_label">Postfächer</string>
+  <string name="simple_login_sync_details_mailboxes_title">Standardpostfach für Aliasse</string>
+  <string name="simple_login_sync_details_vault_title">SimpleLogin-Synchronisierung</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Aliasse synchronisieren</string>
   <!-- Shared -->
-  <string name="simple_login_sync_shared_default_vault_title">Default SL vault</string>
-  <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliases will be imported into this vault.</string>
+  <string name="simple_login_sync_shared_default_vault_title">Standard-SL-Tresor</string>
+  <string name="simple_login_sync_shared_default_vault_description">SimpleLogin-Aliasse werden in diesen Tresor importiert.</string>
 </resources>

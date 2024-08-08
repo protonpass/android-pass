@@ -18,10 +18,10 @@
   -->
 <resources>
   <!-- Details screen -->
-  <string name="simple_login_sync_details_title">Aliases</string>
-  <string name="simple_login_sync_details_domain_label">Domain</string>
+  <string name="simple_login_sync_details_title">Àlies</string>
+  <string name="simple_login_sync_details_domain_label">Domini</string>
   <string name="simple_login_sync_details_domain_title">Default domain for aliases</string>
-  <string name="simple_login_sync_details_mailboxes_label">Mailboxes</string>
+  <string name="simple_login_sync_details_mailboxes_label">Bústies de correu</string>
   <string name="simple_login_sync_details_mailboxes_title">Default mailbox for aliases</string>
   <string name="simple_login_sync_details_vault_title">SimpleLogin sync</string>
   <!-- Settings screen -->

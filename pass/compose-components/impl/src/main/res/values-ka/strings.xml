@@ -115,7 +115,7 @@
     Pattern used when displaying a date in the same year as we are.
     It would translate to 12 Feb 12:34
     -->
-  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_compact_month">dd LLL HH:mm</string>
+  <string name="date_full_date_format_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL HH:mm</string>
   <!--
     Pattern used when displaying a date including the year.
     It would translate to
@@ -126,7 +126,7 @@
    Pattern used when displaying a date including the year.
    It would translate to 12 Feb 2023 12:34
    -->
-  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_with_year_compact_month">dd LLL yyyy HH:mm</string>
+  <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">ფსევდონიმის მისამართი</string>
   <string name="item_details_alias_section_mailboxes_title">გადამისამართება</string>
@@ -235,7 +235,11 @@
   <string name="snack_bar_message_item_delete_error">შეცდომა ამ ელემენტი წაშლისას</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">SimpleLogin-ის სინქრონიზაციის ჩართვა</string>
-  <string name="simple_login_widget_message">We detected that you have 16 aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
+  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">აღმოვაჩინეთ, რომ გაქვთ %s, რმელიც არსებობს SimpleLogin-ში, მაგრამ არა Proton Pass-ში. გნებავთ მათი შემოტანა?</string>
+  <plurals name="simple_login_widget_pending_aliases">
+    <item quantity="one">%d ფსევდონიმი</item>
+    <item quantity="other">%d ფსევდონიმი</item>
+  </plurals>
   <string name="simple_login_widget_action">ფსევდონიმების სინქი</string>
   <string name="simple_login_widget_close_content_description">ღილაკი SimpleLogin-ის ფსევდონიმების სინქრონიზაციის ვიჯეტის დასახურად</string>
 </resources>

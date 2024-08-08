@@ -27,10 +27,10 @@
   <string name="extra_password_options_remove">Borrar</string>
   <string name="info_extra_password_title">Contraseña adicional</string>
   <string name="info_extra_password_body">Protege Proton Pass con una contraseña adicional.</string>
-  <string name="info_extra_password_button">Configura la contraseña adicional</string>
+  <string name="info_extra_password_button">Establece la contraseña adicional</string>
   <string name="configure_extra_password_cannot_be_blank">La contraseña no puede estar en blanco.</string>
   <string name="configure_extra_password_password_too_short">La contraseña adicional debe tener al menos 8 caracteres.</string>
-  <string name="confirm_extra_password_title">Configura la contraseña adicional</string>
+  <string name="confirm_extra_password_title">Establece la contraseña adicional</string>
   <string name="confirm_extra_password_body">Se cerrará la sesión y tendrás que volver a iniciarla en todos los dispositivos.</string>
   <string name="confirm_extra_password_error">No se ha podido configurar la contraseña adicional.</string>
   <string name="confirm_extra_password_success">La contraseña adicional está configurada.</string>

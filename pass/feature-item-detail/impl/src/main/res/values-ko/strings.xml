@@ -102,6 +102,6 @@
   <string name="passkey_detail_bottomsheet_domain">도메인</string>
   <string name="passkey_detail_bottomsheet_key">키</string>
   <string name="passkey_detail_bottomsheet_created">생성함</string>
-  <string name="alias_toggle_tooltip_title">Disable Alias</string>
-  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
+  <string name="alias_toggle_tooltip_title">별칭 비활성화</string>
+  <string name="alias_toggle_tooltip_description">별칭을 비활성화하고 이메일 수발신을 중단하려면 여기를 탭하세요.</string>
 </resources>

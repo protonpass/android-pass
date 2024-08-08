@@ -16,7 +16,7 @@
   <string name="home_snackbar_alias_moved_to_trash">Alias verplaatst naar prullenbak</string>
   <string name="home_snackbar_note_moved_to_trash">Notitie verplaatst naar prullenbak</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Kredietkaart verplaatst naar prullenbak</string>
-  <string name="home_snackbar_identity_moved_to_trash">Identity moved to trash</string>
+  <string name="home_snackbar_identity_moved_to_trash">Identiteit verplaatst naar prullenbak</string>
   <string name="home_snackbar_move_to_trash_error">Item kon niet verplaatst worden naar prullenbak.</string>
   <string name="home_snackbar_items_move_to_trash_success">Items verplaatst naar de prullenbak</string>
   <string name="home_snackbar_items_move_to_trash_error">Items konden niet verplaatst worden naar de prullenbak</string>
@@ -40,11 +40,11 @@
   <string name="bottomsheet_copy_cvv">Beveiligingscode kopiëren</string>
   <string name="bottomsheet_copy_note">Notitie kopiëren</string>
   <string name="bottomsheet_edit">Bewerken</string>
-  <string name="bottomsheet_copy_full_name">Copy full name</string>
+  <string name="bottomsheet_copy_full_name">Kopieer volledige naam</string>
   <!-- Clipboard -->
   <string name="alias_copied_to_clipboard">Alias gekopieerd</string>
   <string name="note_copied_to_clipboard">Notitie gekopieerd</string>
-  <string name="full_name_copied_to_clipboard">Full name copied</string>
+  <string name="full_name_copied_to_clipboard">Volledige naam gekopieerd</string>
   <string name="email_copied_to_clipboard">E-mailadres gekopieerd</string>
   <string name="username_copied_to_clipboard">Gebruikersnaam gekopieerd</string>
   <string name="password_copied_to_clipboard">Wachtwoord gekopieerd</string>

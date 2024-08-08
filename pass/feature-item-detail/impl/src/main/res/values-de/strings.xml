@@ -103,6 +103,6 @@
   <string name="passkey_detail_bottomsheet_domain">Domain</string>
   <string name="passkey_detail_bottomsheet_key">Key</string>
   <string name="passkey_detail_bottomsheet_created">Erstellt</string>
-  <string name="alias_toggle_tooltip_title">Disable Alias</string>
-  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
+  <string name="alias_toggle_tooltip_title">Alias deaktivieren</string>
+  <string name="alias_toggle_tooltip_description">Tippe hier, um diesen Alias zu deaktivieren und keine E-Mails mehr zu erhalten.</string>
 </resources>

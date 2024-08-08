@@ -36,7 +36,7 @@
   <string name="share_with_email_hint">E-mailadres</string>
   <string name="share_with_email_error">Ongeldig e-mailadres</string>
   <string name="share_with_email_cannot_invite_outside_org">U kunt geen mensen buiten uw organisatie uitnodigen, neem contact op met de beheerder voor meer informatie</string>
-  <string name="share_with_email_email_already_added">You have already added this email address</string>
+  <string name="share_with_email_email_already_added">U hebt dit e-mailadres al toegevoegd</string>
   <string name="share_permissions_title">Stel toegangsniveau in</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s nodigt u uit met toegang tot items in</string>
   <string name="sharing_join_shared_vault">Samenvoegen en synchroniseren.</string>
@@ -115,14 +115,14 @@
   <string name="share_with_suggestions_title">Suggesties</string>
   <string name="share_with_recents_title">Recente</string>
   <string name="share_with_remove_email_content_description">E-mailadres verwijderen</string>
-  <string name="share_with_secure_link_title">Via secure link</string>
-  <string name="share_with_secure_link_description">Generate a secure link to this item.</string>
-  <string name="share_with_manage_shared_vault_title">Manage vault access</string>
+  <string name="share_with_secure_link_title">Via beveiligde link</string>
+  <string name="share_with_secure_link_description">Genereer een beveiligde link naar dit item.</string>
+  <string name="share_with_manage_shared_vault_title">Toegang kluis beheren</string>
   <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">The item\'s vault is currently shared with %d user.</item>
-    <item quantity="other">The item\'s vault is currently shared with %d users.</item>
+    <item quantity="one">De kluis van het item wordt momenteel gedeeld met %d gebruiker.</item>
+    <item quantity="other">De kluis van het item wordt momenteel gedeeld met %d gebruikers.</item>
   </plurals>
-  <string name="share_with_view_shared_vault_members_title">View vault members</string>
+  <string name="share_with_view_shared_vault_members_title">Bekijk kluisleden</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Stel toegangsniveau in voor alle leden</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Stel toegangsniveau in voor %s</string>
   <string name="sharing_edit_permissions_remove_user">Gebruiker verwijderen</string>

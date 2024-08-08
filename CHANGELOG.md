@@ -6,6 +6,21 @@
 
 ### Other
 
+## 1.24.2 (2024-08-08)
+
+### Features :tada:
+
+- Autofill improvements.
+
+### Fixes :bug:
+
+- Extra password getting stuck during login.
+
+### Other
+
+- Updated translations.
+- Updated depndencies.
+
 ## 1.24.1 (2024-07-25)
 
 ### Fixes :bug:

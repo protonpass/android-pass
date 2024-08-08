@@ -20,5 +20,5 @@
   <string name="sync_channel">სინქრონიზაცია</string>
   <string name="sync_channel_description">შეტყობინებების არხი ელემენტების სინქრონიზაციისთვის</string>
   <string name="syncing_vaults">საცავებისა და ელემენტების სინქრონიზაცია</string>
-  <string name="logging_out_free_users">Logging out extra free users</string>
+  <string name="logging_out_free_users">დამატებითი უფასო მომხმარებლების გაყვანა</string>
 </resources>

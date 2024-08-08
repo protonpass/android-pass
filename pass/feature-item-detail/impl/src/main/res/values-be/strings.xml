@@ -31,7 +31,7 @@
   <string name="item_monitor_exclude_message_error">Адбылася памылка падчас выключэння элемента з назірання</string>
   <string name="item_monitor_include_message">Элемент паспяхова ўключаны ў назіранне</string>
   <string name="item_monitor_include_message_error">Адбылася памылка падчас уключэння элемента ў назіранне</string>
-  <string name="alias_change_status_error">There was an error changing the alias status</string>
+  <string name="alias_change_status_error">Адбылася памылка падчас змянення статусу псеўданіма</string>
   <string name="login_item_generate_totp_error">Памылка генерацыі кода 2ФА</string>
   <string name="login_item_view_alias_button">Паглядзець псеўданім</string>
   <string name="login_item_monitor_widget_weak_pass_title">Ненадзейны пароль</string>
@@ -105,6 +105,6 @@
   <string name="passkey_detail_bottomsheet_domain">Дамен</string>
   <string name="passkey_detail_bottomsheet_key">Ключ</string>
   <string name="passkey_detail_bottomsheet_created">Створана</string>
-  <string name="alias_toggle_tooltip_title">Disable Alias</string>
-  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
+  <string name="alias_toggle_tooltip_title">Адключыць псеўданім</string>
+  <string name="alias_toggle_tooltip_description">Націсніце тут, каб адключыць гэты псеўданім і спыніць атрыманне лістоў.</string>
 </resources>

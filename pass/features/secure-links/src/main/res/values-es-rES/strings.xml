@@ -31,7 +31,7 @@
   <string name="secure_links_create_snackbar_message_error">Se ha producido un error al generar el enlace seguro.</string>
   <!--Overview screen-->
   <string name="secure_links_overview_widget_expiration_title">Expira en:</string>
-  <string name="secure_links_overview_widget_max_views_title">Puede ser visto:</string>
+  <string name="secure_links_overview_widget_max_views_title">Leer:</string>
   <string name="secure_links_overview_widget_open_times_title">Abierto:</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="one">%d vez</item>

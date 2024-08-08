@@ -18,15 +18,15 @@
   -->
 <resources>
   <!-- Details screen -->
-  <string name="simple_login_sync_details_title">Aliases</string>
-  <string name="simple_login_sync_details_domain_label">Domain</string>
-  <string name="simple_login_sync_details_domain_title">Default domain for aliases</string>
-  <string name="simple_login_sync_details_mailboxes_label">Mailboxes</string>
-  <string name="simple_login_sync_details_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_details_vault_title">SimpleLogin sync</string>
+  <string name="simple_login_sync_details_title">Takma adlar</string>
+  <string name="simple_login_sync_details_domain_label">Etki alanı</string>
+  <string name="simple_login_sync_details_domain_title">Takma adların varsayılan etki alanı</string>
+  <string name="simple_login_sync_details_mailboxes_label">Posta kutuları</string>
+  <string name="simple_login_sync_details_mailboxes_title">Takma adların varsayılan posta kutusu</string>
+  <string name="simple_login_sync_details_vault_title">SimpleLogin eşitleme</string>
   <!-- Settings screen -->
-  <string name="simple_login_sync_settings_title">Sync aliases</string>
+  <string name="simple_login_sync_settings_title">Takma adları eşitle</string>
   <!-- Shared -->
-  <string name="simple_login_sync_shared_default_vault_title">Default SL vault</string>
-  <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliases will be imported into this vault.</string>
+  <string name="simple_login_sync_shared_default_vault_title">Varsayılan SimpleLogin kasası</string>
+  <string name="simple_login_sync_shared_default_vault_description">SimpleLogin takma adlarının içe aktarılacağı kasa.</string>
 </resources>

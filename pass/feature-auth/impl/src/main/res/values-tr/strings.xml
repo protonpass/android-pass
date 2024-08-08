@@ -45,8 +45,8 @@
     <item quantity="other">Parola geçersiz. %d kez daha deneyebilirsiniz</item>
   </plurals>
   <plurals name="auth_attempts_remaining">
-    <item quantity="one">%d attempt remaining</item>
-    <item quantity="other">%d attempts remaining</item>
+    <item quantity="one">%d deneme hakkı kaldı</item>
+    <item quantity="other">%d deneme hakkı kaldı</item>
   </plurals>
-  <string name="auth_pin_too_many_attempts">Too many failed pin attempts. All your users are being logged out.</string>
+  <string name="auth_pin_too_many_attempts">Çok fazla sayıda başarısız PIN kodu denemesi yapıldığından tüm kullanıcılarınızın oturumu kapatıldı.</string>
 </resources>

@@ -55,7 +55,7 @@
   <string name="custom_field_text_placeholder">Añadir texto</string>
   <string name="custom_field_dialog_title">Nombre de campo personalizado</string>
   <string name="custom_field_dialog_body">Dé un nombre a su campo personalizado</string>
-  <string name="custom_field_dialog_placeholder">P. ej., ID de usuario, PIN</string>
+  <string name="custom_field_dialog_placeholder">P. ej.: ID de usuario, código PIN</string>
   <string name="custom_section_dialog_title">Ingrese un título de sección</string>
   <string name="custom_section_dialog_placeholder">Título</string>
   <string name="custom_field_options_content_description">Opciones del campo personalizado</string>

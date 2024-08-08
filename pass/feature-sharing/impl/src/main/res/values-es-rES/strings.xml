@@ -88,7 +88,7 @@
   <string name="sharing_bottomsheet_cancel_invite">Cancelar la invitación</string>
   <string name="sharing_transfer_ownership_confirm_title">Transferir la propiedad</string>
   <string name="sharing_transfer_ownership_confirm_message">¿Transferir la propiedad de esta caja fuerte a %s?</string>
-  <string name="sharing_snackbar_cancel_invite_success">La invitación ha sido cancelada.</string>
+  <string name="sharing_snackbar_cancel_invite_success">Se ha cancelado la invitación.</string>
   <string name="sharing_snackbar_cancel_invite_error">Error al cancelar la invitación</string>
   <string name="sharing_snackbar_resend_invite_success">Se ha reenviado la invitación</string>
   <string name="sharing_snackbar_resend_invite_error">Error al reenviar la invitación</string>

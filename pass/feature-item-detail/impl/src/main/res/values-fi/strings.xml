@@ -98,7 +98,7 @@
   <string name="password_score_vulnerable">Haavoittuvainen</string>
   <string name="password_score_weak">Heikko</string>
   <string name="password_score_strong">Vahva</string>
-  <string name="passkey_detail_bottomsheet_title">Suojausavain</string>
+  <string name="passkey_detail_bottomsheet_title">Avainkoodi</string>
   <string name="passkey_detail_bottomsheet_username">Käyttäjätunnus</string>
   <string name="passkey_detail_bottomsheet_domain">Verkkotunnus</string>
   <string name="passkey_detail_bottomsheet_key">Avain</string>

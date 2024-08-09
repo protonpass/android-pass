@@ -16,7 +16,7 @@
   <string name="manage_subscription_icon_content_description">Hallitse tilausta -painike</string>
   <string name="account_settings_list_item_password_header">Vaihda salasana</string>
   <string name="account_settings_list_item_recovery_header">Palautusosoite</string>
-  <string name="account_settings_list_item_security_keys">Todennuslaitteet</string>
+  <string name="account_settings_list_item_security_keys">Suojausavaimet</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Ei määritetty</string>
   <string name="account_settings_list_item_password_hint_grace">Salasanan nollaus odottaa</string>
   <string name="account_settings_list_item_password_hint_insecure">Salasanan nollaus on valmis</string>
@@ -27,7 +27,7 @@
   <string name="account_settings_list_item_security_keys_hint_not_set">Ei asetettu</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
-    <item quantity="one">%d todennuslaite asetettu</item>
-    <item quantity="other">%d todennuslaitetta asetettu</item>
+    <item quantity="one">%d suojausavain asetettu</item>
+    <item quantity="other">%d suojausavainta asetettu</item>
   </plurals>
 </resources>

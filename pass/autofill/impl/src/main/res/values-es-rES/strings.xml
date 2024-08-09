@@ -3,7 +3,7 @@
   <string name="autofill_authenticate_prompt">Obtener de Proton Pass</string>
   <string name="error_loading_items">No se han podido cargar los elementos.</string>
   <string name="inline_suggestions_open_app">Abrir Proton Pass</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Mejorar para utilizar el relleno automático</string>
+  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Mejorar para usar el relleno automático</string>
   <string name="autofill_associate_web_app_name_dialog_title">Utilizar los datos de inicio de sesión de \"%s\" en esta aplicación o este sitio web.</string>
   <string name="autofill_dialog_associate_and_autofill">Utilizar siempre</string>
   <string name="autofill_dialog_just_autofill">Utilizar una vez</string>

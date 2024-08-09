@@ -110,7 +110,7 @@
   <string name="identity_field_city_title">Ciudad</string>
   <string name="identity_field_state_or_province_title">Estado o provincia</string>
   <string name="identity_field_country_or_region_title">País o región</string>
-  <string name="identity_field_social_security_number_title">Número de seguro social</string>
+  <string name="identity_field_social_security_number_title">Número de seguridad social</string>
   <string name="identity_field_passport_number_title">Número de pasaporte</string>
   <string name="identity_field_license_number_title">Número de licencia</string>
   <string name="identity_field_website_title">Sitio web</string>

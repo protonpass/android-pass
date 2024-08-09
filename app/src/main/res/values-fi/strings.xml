@@ -8,6 +8,6 @@
   <string name="shortcut_share_logs_title">Jaa lokitiedot</string>
   <string name="no_account_found">Tiliä ei löytynyt</string>
   <string name="no_session_found">Istuntoa ei löytynyt</string>
-  <string name="auth_with_extra_password_failed">Todennus lisäsalasanalla epäonnistui</string>
+  <string name="auth_with_extra_password_failed">Tunnistautuminen lisäsalasanalla epäonnistui</string>
   <string name="error_login_in_user">Virhe käyttäjän kirjautumisessa</string>
 </resources>

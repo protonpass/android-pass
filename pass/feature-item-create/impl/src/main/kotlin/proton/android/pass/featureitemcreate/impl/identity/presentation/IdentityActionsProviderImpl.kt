@@ -569,6 +569,8 @@ class IdentityActionsProviderImpl @Inject constructor(
         customFields: List<UICustomFieldContent>,
         updateState: (List<UICustomFieldContent>) -> IdentityItemFormState
     ): IdentityItemFormState {
+        if (index >= customFields.size) return identityItemFormMutableState
+
         val fieldContent: UICustomFieldContent = customFields[index]
         return if (fieldContent is UICustomFieldContent.Hidden) {
             val fieldChange = when {

@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.24.3 (2024-08-12)
+
+### Fixes :bug:
+
+- Crashes when removing an identity custom field.
+
 ## 1.24.2 (2024-08-08)
 
 ### Features :tada:
@@ -19,7 +25,7 @@
 ### Other
 
 - Updated translations.
-- Updated depndencies.
+- Updated dependencies.
 
 ## 1.24.1 (2024-07-25)
 

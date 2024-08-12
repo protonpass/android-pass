@@ -76,6 +76,10 @@ sentry.properties
 .idea/runConfigurations.xml
 .idea/misc.xml
 .idea/appInsightsSettings.xml
+.idea/detekt.xml
+.idea/kotlinc.xml
+.idea/migrations.xml
+.idea/other.xml
 
 # Generated files
 .idea/**/contentModel.xml

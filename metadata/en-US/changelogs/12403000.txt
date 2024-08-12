@@ -1,0 +1,5 @@
+## 1.24.3 (2024-08-12)
+
+### Fixes :bug:
+
+- Crashes when removing an identity custom field.

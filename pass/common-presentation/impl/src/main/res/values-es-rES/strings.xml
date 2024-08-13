@@ -25,8 +25,8 @@
   <string name="item_details_snackbar_message_country_or_region_copied">Se ha copiado el país o la región.</string>
   <string name="item_details_snackbar_message_county_copied">Se ha copiado la provincia.</string>
   <string name="item_details_snackbar_message_custom_field_copied">Se ha copiado el campo personalizado.</string>
-  <string name="item_details_snackbar_message_cvv_copied">El código de seguridad ha sido copiado.</string>
-  <string name="item_details_snackbar_message_email_copied">La dirección de correo electrónico ha sido copiada.</string>
+  <string name="item_details_snackbar_message_cvv_copied">Se ha copiado el código de seguridad.</string>
+  <string name="item_details_snackbar_message_email_copied">Se ha copiado la dirección de correo electrónico.</string>
   <string name="item_details_snackbar_message_facebook_copied">Se ha copiado la cuenta Facebook.</string>
   <string name="item_details_snackbar_message_first_name_copied">Se ha copiado el nombre.</string>
   <string name="item_details_snackbar_message_floor_copied">Se ha copiado el piso.</string>
@@ -46,7 +46,7 @@
   <string name="item_details_snackbar_message_reddit_copied">Se ha copiado la cuenta Reddit.</string>
   <string name="item_details_snackbar_message_social_security_number_copied">Se ha copiado el número de seguridad.</string>
   <string name="item_details_snackbar_message_state_or_province_copied">Se ha copiado el estado o la provincia.</string>
-  <string name="item_details_snackbar_message_street_address_copied">Se ha copiado la dirección de calle.</string>
+  <string name="item_details_snackbar_message_street_address_copied">Se ha copiado la calle.</string>
   <string name="item_details_snackbar_message_totp_copied">Se ha copiado el TOTP.</string>
   <string name="item_details_snackbar_message_username_copied">Se ha copiado el nombre de usuario.</string>
   <string name="item_details_snackbar_message_website_copied">Se ha copiado la URL del sitio web.</string>

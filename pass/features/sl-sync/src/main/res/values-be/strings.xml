@@ -18,15 +18,15 @@
   -->
 <resources>
   <!-- Details screen -->
-  <string name="simple_login_sync_details_title">Aliases</string>
-  <string name="simple_login_sync_details_domain_label">Domain</string>
-  <string name="simple_login_sync_details_domain_title">Default domain for aliases</string>
-  <string name="simple_login_sync_details_mailboxes_label">Mailboxes</string>
-  <string name="simple_login_sync_details_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_details_vault_title">SimpleLogin sync</string>
+  <string name="simple_login_sync_details_title">Псеўданімы</string>
+  <string name="simple_login_sync_details_domain_label">Дамен</string>
+  <string name="simple_login_sync_details_domain_title">Прадвызначаны дамен для псеўданімаў</string>
+  <string name="simple_login_sync_details_mailboxes_label">Паштовыя скрыні</string>
+  <string name="simple_login_sync_details_mailboxes_title">Прадвызначаная паштовая скрыня для псеўданімаў</string>
+  <string name="simple_login_sync_details_vault_title">Сінхранізацыя SimpleLogin</string>
   <!-- Settings screen -->
-  <string name="simple_login_sync_settings_title">Sync aliases</string>
+  <string name="simple_login_sync_settings_title">Сінхранізацыя псеўданімаў</string>
   <!-- Shared -->
-  <string name="simple_login_sync_shared_default_vault_title">Default SL vault</string>
-  <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliases will be imported into this vault.</string>
+  <string name="simple_login_sync_shared_default_vault_title">Прадвызначанае сховішча SL</string>
+  <string name="simple_login_sync_shared_default_vault_description">Псеўданімы SimpleLogin будуць імпартаваны ў гэта сховішча.</string>
 </resources>

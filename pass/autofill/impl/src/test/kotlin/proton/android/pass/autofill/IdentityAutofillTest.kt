@@ -88,6 +88,11 @@ class IdentityAutofillTest : BaseAutofillTest() {
         runIdentityAutofillTest("identity/chrome_proton_contact.json")
     }
 
+    @Test
+    fun `can autofill wallapop address`() {
+        runIdentityAutofillTest("identity/app_com.wallapop.com_address.json")
+    }
+
     private fun runIdentityAutofillTest(file: String) {
         runAutofillTest(
             file = file,

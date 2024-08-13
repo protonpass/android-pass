@@ -1,0 +1,401 @@
+{
+  "rootContent": {
+    "id": 87307754,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": -986493652,
+        "className": "android.widget.FrameLayout",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": -986463861,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": -986434070,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "errorView"
+                ]
+              },
+              {
+                "id": -986404279,
+                "className": "android.widget.ScrollView",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -986374488,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      "",
+                      "returnSenderAddressDescription"
+                    ]
+                  },
+                  {
+                    "id": -986344697,
+                    "className": "android.view.ViewGroup",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -986314906,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "countryNameTextView"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "countryFieldLayout"
+                    ]
+                  },
+                  {
+                    "id": -986285115,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -986255324,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": -986642607,
+                            "className": "android.widget.EditText",
+                            "expectedAutofill": "identity_full_name",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "isFocused": true,
+                            "inputType": 1,
+                            "hintKeywordList": [
+                              "",
+                              "Name and surname"
+                            ]
+                          },
+                          {
+                            "id": -986225533,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true
+                          },
+                          {
+                            "id": -986195742,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true
+                          }
+                        ]
+                      },
+                      {
+                        "id": -986165951,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "textinput_counter"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "shippingFullNameView"
+                    ]
+                  },
+                  {
+                    "id": -986136160,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -986106369,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": -986612816,
+                            "className": "android.widget.EditText",
+                            "expectedAutofill": "identity_address",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "inputType": 1,
+                            "hintKeywordList": [
+                              "",
+                              "Street name and number"
+                            ]
+                          },
+                          {
+                            "id": -986076578,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true
+                          },
+                          {
+                            "id": -986046787,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true
+                          }
+                        ]
+                      },
+                      {
+                        "id": -986016996,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "textinput_counter"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "shippingDirectionView"
+                    ]
+                  },
+                  {
+                    "id": -985987205,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -985957414,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": -986583025,
+                            "className": "android.widget.EditText",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "inputType": 1,
+                            "hintKeywordList": [
+                              "",
+                              "Floor and door number"
+                            ]
+                          },
+                          {
+                            "id": -985927623,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true
+                          },
+                          {
+                            "id": -985897832,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true
+                          }
+                        ]
+                      },
+                      {
+                        "id": -985868041,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "textinput_counter"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "shippingFlatAndDoorView"
+                    ]
+                  },
+                  {
+                    "id": -985838250,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -986553234,
+                        "className": "android.widget.EditText",
+                        "expectedAutofill": "identity_postal_code",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "inputType": 2,
+                        "hintKeywordList": [
+                          "",
+                          "Postal code"
+                        ]
+                      },
+                      {
+                        "id": -985808459,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true
+                      },
+                      {
+                        "id": -985778668,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "shippingPostalCodeView"
+                    ]
+                  },
+                  {
+                    "id": -985748877,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -985719086,
+                        "className": "android.widget.EditText",
+                        "expectedAutofill": "identity_city",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "City"
+                        ]
+                      },
+                      {
+                        "id": -985689295,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true
+                      },
+                      {
+                        "id": -985659504,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "shippingCityView"
+                    ]
+                  },
+                  {
+                    "id": -985629713,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -986523443,
+                        "className": "android.widget.EditText",
+                        "expectedAutofill": "identity_phone",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "inputType": 3,
+                        "hintKeywordList": [
+                          "",
+                          "Mobile phone number"
+                        ]
+                      },
+                      {
+                        "id": -985599922,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true
+                      },
+                      {
+                        "id": -985570131,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "shippingPhoneView"
+                    ]
+                  },
+                  {
+                    "id": -985540340,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      "",
+                      "shippingPhoneLegalUseExplanation"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "scrollview"
+                ]
+              },
+              {
+                "id": -985510549,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -985480758,
+                    "className": "android.view.ViewGroup",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -985450967,
+                        "className": "android.view.ViewGroup",
+                        "isImportantForAutofill": true
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "saveAddressView"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "cta_container"
+                ]
+              },
+              {
+                "id": -985421176,
+                "className": "android.view.View",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "pageLoadedGroup"
+                ]
+              },
+              {
+                "id": -985391385,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -985361594,
+                    "className": "android.view.ViewGroup",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -985331803,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "Add your address",
+                        "hintKeywordList": [
+                          "Add your address",
+                          "toolbarTitle"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "toolbar"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "addressAppBar"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "content"
+            ]
+          },
+          {
+            "id": -985302012,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "action_mode_bar_stub"
+            ]
+          }
+        ],
+        "hintKeywordList": [
+          "action_bar_root"
+        ]
+      }
+    ]
+  },
+  "packageName": "com.wallapop"
+}

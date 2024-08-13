@@ -545,22 +545,28 @@ class IdentityActionsProviderImpl @Inject constructor(
                     )
                 )
             }
-            is ExtraSectionCustomField -> handleFieldFocusChange(
-                index,
-                focused,
-                identityItemFormMutableState.uiExtraSections[customExtraField.index].customFields
-            ) { updatedFields ->
-                identityItemFormMutableState.copy(
-                    uiExtraSections = identityItemFormMutableState.uiExtraSections.toMutableList()
-                        .apply {
-                            set(
-                                customExtraField.index,
-                                identityItemFormMutableState.uiExtraSections[customExtraField.index].copy(
-                                    customFields = updatedFields
-                                )
-                            )
-                        }
-                )
+            is ExtraSectionCustomField -> {
+                if (customExtraField.index >= identityItemFormMutableState.uiExtraSections.size) {
+                    identityItemFormMutableState
+                } else {
+                    handleFieldFocusChange(
+                        index,
+                        focused,
+                        identityItemFormMutableState.uiExtraSections[customExtraField.index].customFields
+                    ) { updatedFields ->
+                        identityItemFormMutableState.copy(
+                            uiExtraSections = identityItemFormMutableState.uiExtraSections.toMutableList()
+                                .apply {
+                                    set(
+                                        customExtraField.index,
+                                        identityItemFormMutableState.uiExtraSections[customExtraField.index].copy(
+                                            customFields = updatedFields
+                                        )
+                                    )
+                                }
+                        )
+                    }
+                }
             }
         }
     }

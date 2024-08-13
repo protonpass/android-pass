@@ -14,3 +14,4 @@ VERSION_CODE=$("${REPO_ROOT}/scripts/versionCode.sh" "${VERSION}")
 
 echo -e "versionName=${VERSION}\nversionCode=${VERSION_CODE}" > metadata/fdroid_version.txt
 
+touch "metadata/en-US/changelogs/${VERSION_CODE}.txt"

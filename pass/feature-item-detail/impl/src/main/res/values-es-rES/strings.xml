@@ -13,9 +13,9 @@
   <!-- Note details -->
   <string name="field_detail_note_title">Nota</string>
   <string name="note_detail_copy_note_to_clipboard">Copiar la nota</string>
-  <string name="note_copied_to_clipboard">La nota ha sido copiada al portapapeles.</string>
+  <string name="note_copied_to_clipboard">Se ha copiado la nota al portapapeles.</string>
   <!-- Login details -->
-  <string name="email_copied_to_clipboard">La dirección de correo electrónico ha sido copiada.</string>
+  <string name="email_copied_to_clipboard">Se ha copiado la dirección de correo electrónico.</string>
   <string name="username_copied_to_clipboard">Se ha copiado el nombre de usuario.</string>
   <string name="password_copied_to_clipboard">Se ha copiado la contraseña.</string>
   <string name="website_copied_to_clipboard">Sitio web copiado</string>

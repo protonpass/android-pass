@@ -105,7 +105,7 @@
   <string name="identity_field_email_title">Correo electrónico</string>
   <string name="identity_field_phone_number_title">Número de teléfono</string>
   <string name="identity_field_organization_title">Organización</string>
-  <string name="identity_field_street_address_title">Dirección de calle, apartado postal</string>
+  <string name="identity_field_street_address_title">Calle, apartado postal</string>
   <string name="identity_field_zip_or_postal_code_title">Código postal</string>
   <string name="identity_field_city_title">Ciudad</string>
   <string name="identity_field_state_or_province_title">Estado o provincia</string>

@@ -1,0 +1,5 @@
+## 1.24.4 (2024-08-13)
+
+### Fixes :bug:
+
+- Crashes when editing an identity custom section.

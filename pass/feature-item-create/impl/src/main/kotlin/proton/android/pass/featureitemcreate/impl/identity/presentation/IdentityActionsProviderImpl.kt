@@ -460,20 +460,22 @@ class IdentityActionsProviderImpl @Inject constructor(
                 )
             )
 
-            is ExtraSectionCustomField -> identityItemFormMutableState.copy(
-                uiExtraSections = identityItemFormMutableState.uiExtraSections.toMutableList()
-                    .apply {
-                        set(
-                            customExtraField.index,
-                            identityItemFormMutableState.uiExtraSections[index].copy(
-                                customFields = identityItemFormMutableState.uiExtraSections[index]
-                                    .customFields
-                                    .toMutableList()
-                                    .apply { set(index, updated) }
-                            )
-                        )
-                    }
-            )
+            is ExtraSectionCustomField -> {
+                val sectionIndex = customExtraField.index
+
+                val extraSections = identityItemFormMutableState.uiExtraSections
+                val sectionToUpdate = extraSections[sectionIndex]
+                val newSectionContent = sectionToUpdate.copy(
+                    customFields = sectionToUpdate
+                        .customFields
+                        .toMutableList()
+                        .apply { set(index, updated) }
+                )
+                val updatedExtraSections = extraSections.toMutableList()
+                    .apply { set(sectionIndex, newSectionContent) }
+
+                identityItemFormMutableState.copy(uiExtraSections = updatedExtraSections)
+            }
         }
     }
 

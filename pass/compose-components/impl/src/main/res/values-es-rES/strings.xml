@@ -152,7 +152,7 @@
   <string name="item_details_identity_section_personal_birthday_title">Fecha de nacimiento</string>
   <string name="item_details_identity_section_address_title">Detalles de la dirección</string>
   <string name="item_details_identity_section_address_organization_title">Organización</string>
-  <string name="item_details_identity_section_address_street_address_title">Dirección de calle, apartado postal</string>
+  <string name="item_details_identity_section_address_street_address_title">Calle, apartado postal</string>
   <string name="item_details_identity_section_address_floor_title">Piso</string>
   <string name="item_details_identity_section_address_city_title">Ciudad</string>
   <string name="item_details_identity_section_address_zip_or_postal_code_title">Código postal</string>
@@ -225,11 +225,11 @@
   <string name="snack_bar_message_item_monitor_included_error">Se ha producido un error al incluir un elemento en el monitoreo.</string>
   <string name="snack_bar_message_item_pinned_success">Se ha anclado el elemento.</string>
   <string name="snack_bar_message_item_pinned_error">Se ha producido un error al anclar este elemento.</string>
-  <string name="snack_bar_message_item_unpinned_success">El elemento ha sido desanclado.</string>
+  <string name="snack_bar_message_item_unpinned_success">Se ha desanclado el elemento.</string>
   <string name="snack_bar_message_item_unpinned_error">Se ha producido un error al desanclar este elemento.</string>
   <string name="snack_bar_message_item_trashed_success">Se ha eliminado el elemento.</string>
   <string name="snack_bar_message_item_trashed_error">Se ha producido un error al eliminar este elemento</string>
-  <string name="snack_bar_message_item_restore_success">Elemento restaurado</string>
+  <string name="snack_bar_message_item_restore_success">Se ha restaurado el elemento.</string>
   <string name="snack_bar_message_item_restore_error">Se ha producido un error al restaurar este elemento.</string>
   <string name="snack_bar_message_item_delete_success">Elemento eliminado</string>
   <string name="snack_bar_message_item_delete_error">Se ha producido un error al eliminar este elemento.</string>

@@ -83,7 +83,7 @@
   <string name="trash_empty_list_message">Einträge, die in den Papierkorb verschoben wurden, erscheinen hier.</string>
   <string name="bottomsheet_trash_all_items_title">Papierkorb</string>
   <string name="bottomsheet_restore_all_items">Alle Einträge wiederherstellen</string>
-  <string name="bottomsheet_empty_trash">Leerer Papierkorb</string>
+  <string name="bottomsheet_empty_trash">Papierkorb leeren</string>
   <string name="bottomsheet_select_items">Einträge auswählen</string>
   <string name="trash_error_clearing_trash">Fehler beim Leeren des Papierkorbs</string>
   <string name="trash_success_restoring_items">Einträge wiederhergestellt</string>

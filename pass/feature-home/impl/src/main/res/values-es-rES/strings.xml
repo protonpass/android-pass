@@ -48,7 +48,7 @@
   <string name="email_copied_to_clipboard">Se ha copiado la dirección de correo electrónico.</string>
   <string name="username_copied_to_clipboard">Se ha copiado el nombre de usuario.</string>
   <string name="password_copied_to_clipboard">Se ha copiado la contraseña.</string>
-  <string name="credit_card_number_copied_to_clipboard">El número de tarjeta ha sido copiado.</string>
+  <string name="credit_card_number_copied_to_clipboard">Se ha copiado el número de tarjeta.</string>
   <string name="credit_card_cvv_copied_to_clipboard">Se ha copiado el código de seguridad.</string>
   <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">El contenido es demasiado largo. Se ha copiado parcialmente al portapapeles.</string>
   <!-- Vault drawer -->
@@ -126,7 +126,7 @@
   <string name="recent_search_clear">Borrar</string>
   <string name="recent_search_remove_item">Borrar de las búsquedas recientes</string>
   <!-- Pinning -->
-  <string name="home_snackbar_items_pinned_success">Los elementos han sido anclados correctamente.</string>
+  <string name="home_snackbar_items_pinned_success">Se han anclado los elementos.</string>
   <string name="home_snackbar_items_pinned_partial_success">Error al anclar algunos elementos</string>
   <string name="home_snackbar_items_pinned_error">Error al anclar los elementos</string>
   <string name="home_snackbar_items_unpinned_success">Los elementos han sido desanclados correctamente.</string>

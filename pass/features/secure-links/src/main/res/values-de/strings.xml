@@ -42,7 +42,7 @@
   <!--List screen-->
   <string name="secure_links_list_title">Sichere Links</string>
   <string name="secure_links_list_empty_title">Keine sicheren Links</string>
-  <string name="secure_links_list_empty_subtitle">You can start creating secure links from an item details sharing options</string>
+  <string name="secure_links_list_empty_subtitle">Du kannst mit der Erstellung sicherer Links aus den Optionen zur Freigabe von Eintragsdetails beginnen</string>
   <string name="secure_links_list_expiration_description">Läuft ab in %s</string>
   <string name="secure_links_list_expired_description">Abgelaufen</string>
   <plurals name="secure_links_list_viewed_times_description">

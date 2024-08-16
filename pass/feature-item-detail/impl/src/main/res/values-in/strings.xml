@@ -103,5 +103,5 @@
   <string name="passkey_detail_bottomsheet_key">Kunci</string>
   <string name="passkey_detail_bottomsheet_created">Dibuat</string>
   <string name="alias_toggle_tooltip_title">Nonaktifkan Alias</string>
-  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
+  <string name="alias_toggle_tooltip_description">Ketuk di sini untuk menonaktifkan alias ini dan berhenti menerima email.</string>
 </resources>

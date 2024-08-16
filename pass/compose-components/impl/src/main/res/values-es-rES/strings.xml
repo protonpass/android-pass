@@ -231,7 +231,7 @@
   <string name="snack_bar_message_item_trashed_error">Se ha producido un error al eliminar este elemento</string>
   <string name="snack_bar_message_item_restore_success">Se ha restaurado el elemento.</string>
   <string name="snack_bar_message_item_restore_error">Se ha producido un error al restaurar este elemento.</string>
-  <string name="snack_bar_message_item_delete_success">Elemento eliminado</string>
+  <string name="snack_bar_message_item_delete_success">Se ha eliminado el elemento.</string>
   <string name="snack_bar_message_item_delete_error">Se ha producido un error al eliminar este elemento.</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Activar la sincronización de SimpleLogin</string>

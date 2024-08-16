@@ -229,7 +229,7 @@
   <string name="snack_bar_message_item_delete_error">Terdapat kesalahan dalam menghapus item ini</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Aktifkan sinkronisasi SimpleLogin</string>
-  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">We detected that you have %s that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
+  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">Kami mendeteksi bahwa Anda memiliki %s yang ada dalam SimpleLogin tetapi belum ada di Proton Pass. Apakah Anda ingin mengimpornya?</string>
   <plurals name="simple_login_widget_pending_aliases">
     <item quantity="other">%d alias</item>
   </plurals>

@@ -95,7 +95,7 @@
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Se ha producido un error al enviar el código de verificación. Intenta de nuevo más tarde.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Se ha producido un error al borrar el correo. Intenta de nuevo más tarde.</string>
   <!-- Add custom email monitoring -->
-  <string name="security_center_custom_email_top_bar_title">Seguimiento personalizado del correo electrónico</string>
+  <string name="security_center_custom_email_top_bar_title">Monitoreo de correo electrónico personalizado</string>
   <string name="security_center_custom_email_email_address_placeholder">Dirección de correo electrónico</string>
   <string name="security_center_custom_email_invalid_address">La dirección de correo electrónico no es válida.</string>
   <string name="security_center_custom_email_continue">Continuar</string>

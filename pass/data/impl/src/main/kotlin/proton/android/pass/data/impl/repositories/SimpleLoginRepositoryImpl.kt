@@ -38,8 +38,12 @@ import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSource
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
+import proton.android.pass.data.impl.responses.SimpleLoginAliasDomainData
+import proton.android.pass.data.impl.responses.SimpleLoginAliasMailboxData
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserAccessData
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import javax.inject.Inject
 
@@ -100,6 +104,33 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         userAccessDataRepository.refresh(userId)
     }
 
+    override fun observeAliasDomains(): Flow<List<SimpleLoginAliasDomain>> = accountManager.getPrimaryUserId()
+        .flatMapLatest { userId ->
+            if (userId == null) {
+                emptyList()
+            } else {
+                remoteSimpleLoginDataSource.getSimpleLoginAliasSettings(userId)
+                    .also {
+                        println("JIBIRI: settings: $it")
+                    }
+
+                remoteSimpleLoginDataSource.getSimpleLoginAliasDomains(userId)
+                    .domains
+                    .map { simpleLoginAliasDomainData -> simpleLoginAliasDomainData.toDomain() }
+            }.let(::flowOf)
+        }
+
+    override fun observeAliasMailboxes(): Flow<List<SimpleLoginAliasMailbox>> = accountManager.getPrimaryUserId()
+        .flatMapLatest { userId ->
+            if (userId == null) {
+                emptyList()
+            } else {
+                remoteSimpleLoginDataSource.getSimpleLoginAliasMailboxes(userId)
+                    .mailboxes
+                    .map { simpleLoginAliasMailboxData -> simpleLoginAliasMailboxData.toDomain() }
+            }.let(::flowOf)
+        }
+
     private suspend fun UserAccessData.toSimpleLoginSyncStatus(
         userId: UserId,
         isSimpleLoginSyncPreferenceEnabled: Boolean
@@ -111,6 +142,17 @@ class SimpleLoginRepositoryImpl @Inject constructor(
             userId = userId,
             shareId = simpleLoginSyncDefaultShareId.let(::ShareId)
         ).first()
+    )
+
+    private fun SimpleLoginAliasDomainData.toDomain() = SimpleLoginAliasDomain(
+        domain = domain,
+        isDefault = isDefault
+    )
+
+    private fun SimpleLoginAliasMailboxData.toDomain() = SimpleLoginAliasMailbox(
+        id = mailboxId,
+        email = email,
+        isDefault = isDefault
     )
 
 }

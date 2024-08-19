@@ -79,6 +79,9 @@ import proton.android.pass.data.impl.responses.LastEventIdResponse
 import proton.android.pass.data.impl.responses.MigrateItemsResponse
 import proton.android.pass.data.impl.responses.OrganizationGetResponse
 import proton.android.pass.data.impl.responses.PendingInvitesResponse
+import proton.android.pass.data.impl.responses.SimpleLoginAliasDomainsResponse
+import proton.android.pass.data.impl.responses.SimpleLoginAliasMailboxesResponse
+import proton.android.pass.data.impl.responses.SimpleLoginAliasSettingsResponse
 import proton.android.pass.data.impl.responses.SimpleLoginSyncStatusResponse
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.responses.UpdateGlobalMonitorStateRequest
@@ -440,6 +443,15 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     @POST("$PREFIX/alias_sync/sync")
     suspend fun enableSimpleLoginSync(@Body request: SimpleLoginEnableSyncRequest): CodeOnlyResponse
+
+    @GET("$PREFIX/user/alias/domain")
+    suspend fun getSimpleLoginAliasDomains(): SimpleLoginAliasDomainsResponse
+
+    @GET("$PREFIX/user/alias/mailbox")
+    suspend fun getSimpleLoginAliasMailboxes(): SimpleLoginAliasMailboxesResponse
+
+    @GET("$PREFIX/user/alias/settings")
+    suspend fun getSimpleLoginAliasSettings(): SimpleLoginAliasSettingsResponse
 
     // Core
     @GET("core/v4/keys/all")

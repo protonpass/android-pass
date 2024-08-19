@@ -67,32 +67,32 @@ internal fun SimpleLoginSyncDetailsContent(
     }
 
     if (dialogOptionTypeOption is Some) {
-        when (val dialogOptionType = dialogOptionTypeOption.value) {
+        when (dialogOptionTypeOption.value) {
             SimpleLoginSyncDetailsOptionType.Domain -> {
                 SimpleLoginSyncDetailsOptionsDialog(
                     titleResId = R.string.simple_login_sync_details_dialog_title_domains,
-                    optionType = dialogOptionType,
-                    selectedOption = defaultDomain,
-                    options = availableDomains.toPersistentList(),
-                    onSelectOption = { optionType, selectedOption ->
+                    selectedOption = selectedAliasDomain,
+                    options = aliasDomains.map { it.domain }.toPersistentList(),
+                    onSelectOption = { selectedOptionIndex ->
+                        SimpleLoginSyncDetailsUiEvent.OnDomainSelected(
+                            aliasDomain = aliasDomains[selectedOptionIndex]
+                        ).also(onUiEvent)
                     },
-                    onDismiss = {
-
-                    }
+                    onDismiss = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnOptionsDialogDismissed) }
                 )
             }
 
             SimpleLoginSyncDetailsOptionType.Mailbox -> {
                 SimpleLoginSyncDetailsOptionsDialog(
                     titleResId = R.string.simple_login_sync_details_dialog_title_mailboxes,
-                    optionType = dialogOptionType,
                     selectedOption = defaultMailbox,
-                    options = availableMailboxes.toPersistentList(),
-                    onSelectOption = { optionType, selectedOption ->
+                    options = aliasMailboxes.map { it.email }.toPersistentList(),
+                    onSelectOption = { selectedOptionIndex ->
+                        SimpleLoginSyncDetailsUiEvent.OnMailboxSelected(
+                            aliasMailbox = aliasMailboxes[selectedOptionIndex]
+                        ).also(onUiEvent)
                     },
-                    onDismiss = {
-
-                    }
+                    onDismiss = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnOptionsDialogDismissed) }
                 )
             }
         }

@@ -26,47 +26,62 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
+import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailboxes
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import javax.inject.Inject
 
 @HiltViewModel
 class SimpleLoginSyncDetailsViewModel @Inject constructor(
+    observeSimpleLoginAliasDomains: ObserveSimpleLoginAliasDomains,
+    observeSimpleLoginAliasMailboxes: ObserveSimpleLoginAliasMailboxes,
     observeSimpleLoginSyncStatus: ObserveSimpleLoginSyncStatus
 ) : ViewModel() {
 
-    private val defaultDomainFlow = MutableStateFlow("")
+    private val aliasDomainsFlow = observeSimpleLoginAliasDomains()
 
-    private val defaultMailboxFlow = MutableStateFlow("")
+    private val aliasMailboxesFlow = observeSimpleLoginAliasMailboxes()
+
+    private val selectedDomainOptionFlow = MutableStateFlow<Option<String>>(None)
+
+    private val selectedMailboxIdOptionFlow = MutableStateFlow<Option<String>>(None)
 
     internal val state: StateFlow<SimpleLoginSyncDetailsState> = combine(
-        defaultDomainFlow,
-        defaultMailboxFlow,
-        observeSimpleLoginSyncStatus()
-    ) { defaultDomain, defaultMailbox, syncStatus ->
+        aliasDomainsFlow,
+        aliasMailboxesFlow,
+        observeSimpleLoginSyncStatus(),
+        selectedDomainOptionFlow,
+        selectedMailboxIdOptionFlow
+    ) { aliasDomains, aliasMailboxes, syncStatus, selectedDomainOption, selectedMailboxIdOption ->
         SimpleLoginSyncDetailsState(
-            defaultDomain = defaultDomain,
-            defaultMailbox = defaultMailbox,
-            availableDomains = listOf(
-                "default.domain.com",
-                "domain1.com",
-                "domain2.com",
-                "domain3.com"
-            ),
-            availableMailboxes = listOf(
-                "mailboxDefault",
-                "mailbox1",
-                "mailbox2",
-                "mailbox3"
-            ),
+            aliasDomains = aliasDomains,
+            aliasMailboxes = aliasMailboxes,
             defaultVaultOption = syncStatus.value()?.defaultVault.toOption(),
             pendingAliasesCountOption = syncStatus.value()?.pendingAliasCount.toOption(),
-            isLoading = false
+            isLoading = false,
+            selectedDomainOption = selectedDomainOption,
+            selectedMailboxIdOption = selectedMailboxIdOption
+
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
         initialValue = SimpleLoginSyncDetailsState.Initial
     )
+
+    internal fun onSelectAliasDomain(selectedAliasDomain: SimpleLoginAliasDomain) {
+        selectedDomainOptionFlow.update { selectedAliasDomain.domain.some() }
+    }
+
+    internal fun onSelectAliasMailbox(selectedAliasMailbox: SimpleLoginAliasMailbox) {
+        selectedMailboxIdOptionFlow.update { selectedAliasMailbox.id.some() }
+    }
 
 }

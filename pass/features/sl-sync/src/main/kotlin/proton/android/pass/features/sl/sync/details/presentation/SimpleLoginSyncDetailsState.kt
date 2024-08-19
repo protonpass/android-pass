@@ -23,17 +23,39 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 
 @Stable
 internal data class SimpleLoginSyncDetailsState(
-    internal val defaultDomain: String,
-    internal val defaultMailbox: String,
-    internal val availableDomains: List<String>,
-    internal val availableMailboxes: List<String>,
+    internal val aliasDomains: List<SimpleLoginAliasDomain>,
+    internal val aliasMailboxes: List<SimpleLoginAliasMailbox>,
     internal val defaultVaultOption: Option<Vault>,
     internal val pendingAliasesCountOption: Option<Int>,
-    internal val isLoading: Boolean
+    internal val isLoading: Boolean,
+    private val selectedDomainOption: Option<String>,
+    private val selectedMailboxIdOption: Option<String>
 ) {
+
+    internal val defaultDomain: String = aliasDomains
+        .firstOrNull { aliasDomain -> aliasDomain.isDefault }
+        ?.domain
+        .orEmpty()
+
+    internal val defaultMailbox: String = aliasMailboxes
+        .firstOrNull { aliasMailbox -> aliasMailbox.isDefault }
+        ?.email
+        .orEmpty()
+
+    internal val selectedAliasDomain: String = when (selectedDomainOption) {
+        None -> defaultDomain
+        is Some -> selectedDomainOption.value
+    }
+
+    internal val selectedAliasMailboxId: String = when (selectedMailboxIdOption) {
+        None -> defaultMailbox
+        is Some -> selectedMailboxIdOption.value
+    }
 
     internal val pendingAliasesCount: Int = when (pendingAliasesCountOption) {
         None -> 0
@@ -43,13 +65,13 @@ internal data class SimpleLoginSyncDetailsState(
     internal companion object {
 
         internal val Initial: SimpleLoginSyncDetailsState = SimpleLoginSyncDetailsState(
-            defaultDomain = "",
-            defaultMailbox = "",
-            availableDomains = emptyList(),
-            availableMailboxes = emptyList(),
+            aliasDomains = emptyList(),
+            aliasMailboxes = emptyList(),
             defaultVaultOption = None,
             pendingAliasesCountOption = None,
-            isLoading = true
+            isLoading = true,
+            selectedDomainOption = None,
+            selectedMailboxIdOption = None
         )
 
     }

@@ -16,27 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.data.api.usecases.simplelogin
 
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
-import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
-import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
-import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 
-interface SimpleLoginRepository {
+interface ObserveSimpleLoginAliasDomains {
 
-    fun observeSyncStatus(): Flow<Option<SimpleLoginSyncStatus>>
-
-    fun disableSyncPreference()
-
-    fun observeSyncPreference(): Flow<Boolean>
-
-    suspend fun enableSync(defaultShareId: ShareId)
-
-    fun observeAliasDomains(): Flow<List<SimpleLoginAliasDomain>>
-
-    fun observeAliasMailboxes(): Flow<List<SimpleLoginAliasMailbox>>
+    operator fun invoke(): Flow<List<SimpleLoginAliasDomain>>
 
 }

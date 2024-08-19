@@ -16,27 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.data.fakes.usecases.simplelogin
 
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
+import kotlinx.coroutines.flow.MutableStateFlow
+import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailboxes
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
-import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface SimpleLoginRepository {
+@Singleton
+class FakeObserveSimpleLoginAliasMailboxes @Inject constructor() :
+    ObserveSimpleLoginAliasMailboxes {
 
-    fun observeSyncStatus(): Flow<Option<SimpleLoginSyncStatus>>
+    private val simpleLoginAliasMailboxesFlow = MutableStateFlow<List<SimpleLoginAliasMailbox>>(emptyList())
 
-    fun disableSyncPreference()
-
-    fun observeSyncPreference(): Flow<Boolean>
-
-    suspend fun enableSync(defaultShareId: ShareId)
-
-    fun observeAliasDomains(): Flow<List<SimpleLoginAliasDomain>>
-
-    fun observeAliasMailboxes(): Flow<List<SimpleLoginAliasMailbox>>
+    override fun invoke(): Flow<List<SimpleLoginAliasMailbox>> = simpleLoginAliasMailboxesFlow
 
 }

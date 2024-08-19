@@ -168,6 +168,8 @@ import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.data.api.usecases.simplelogin.DisableSimpleLoginSyncPreference
 import proton.android.pass.data.api.usecases.simplelogin.EnableSimpleLoginSync
+import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
+import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailboxes
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
@@ -318,6 +320,8 @@ import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinksCount
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeDisableSimpleLoginSyncPreference
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeEnableSimpleLoginSyncImpl
+import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLoginAliasDomains
+import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLoginAliasMailboxes
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLoginSyncStatus
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
@@ -799,5 +803,15 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindEnableSimpleLoginSync(impl: FakeEnableSimpleLoginSyncImpl): EnableSimpleLoginSync
+
+    @Binds
+    abstract fun bindObserveSimpleLoginAliasDomains(
+        impl: FakeObserveSimpleLoginAliasDomains
+    ): ObserveSimpleLoginAliasDomains
+
+    @Binds
+    abstract fun bindObserveSimpleLoginAliasMailboxes(
+        impl: FakeObserveSimpleLoginAliasMailboxes
+    ): ObserveSimpleLoginAliasMailboxes
 
 }

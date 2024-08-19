@@ -71,6 +71,18 @@ fun SimpleLoginSyncDetailsScreen(
                         shareId = uiEvent.shareId
                     ).also(onNavigated)
                 }
+
+                SimpleLoginSyncDetailsUiEvent.OnOptionsDialogDismissed -> {
+                    dialogOptionTypeOption = None
+                }
+
+                is SimpleLoginSyncDetailsUiEvent.OnDomainSelected -> {
+                    viewModel.onSelectAliasDomain(selectedAliasDomain = uiEvent.aliasDomain)
+                }
+
+                is SimpleLoginSyncDetailsUiEvent.OnMailboxSelected -> {
+                    viewModel.onSelectAliasMailbox(selectedAliasMailbox = uiEvent.aliasMailbox)
+                }
             }
         }
     )

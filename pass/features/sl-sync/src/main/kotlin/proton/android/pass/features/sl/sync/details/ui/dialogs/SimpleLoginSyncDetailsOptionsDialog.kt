@@ -37,10 +37,9 @@ import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 internal fun SimpleLoginSyncDetailsOptionsDialog(
     modifier: Modifier = Modifier,
     @StringRes titleResId: Int,
-    optionType: SimpleLoginSyncDetailsOptionType,
     selectedOption: String,
     options: ImmutableList<String>,
-    onSelectOption: (SimpleLoginSyncDetailsOptionType, String) -> Unit,
+    onSelectOption: (Int) -> Unit,
     onDismiss: () -> Unit
 ) {
     NoPaddingDialog(
@@ -67,7 +66,7 @@ internal fun SimpleLoginSyncDetailsOptionsDialog(
                     SimpleLoginSyncDetailsOptionsDialogRow(
                         text = currentOption,
                         isSelected = currentOption == selectedOption,
-                        onSelected = { onSelectOption(optionType, currentOption) },
+                        onSelected = { onSelectOption(index) }
                     )
                 }
             }

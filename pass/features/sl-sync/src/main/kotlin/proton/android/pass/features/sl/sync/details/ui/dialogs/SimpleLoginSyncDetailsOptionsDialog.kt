@@ -20,17 +20,24 @@ package proton.android.pass.features.sl.sync.details.ui.dialogs
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.ImmutableList
 import me.proton.core.compose.component.ProtonDialogTitle
+import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 
 @Composable
@@ -40,12 +47,18 @@ internal fun SimpleLoginSyncDetailsOptionsDialog(
     selectedOption: String,
     options: ImmutableList<String>,
     onSelectOption: (Int) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    onUpdate: () -> Unit,
+    isLoading: Boolean
 ) {
     NoPaddingDialog(
         modifier = modifier.padding(horizontal = Spacing.medium),
         backgroundColor = PassTheme.colors.backgroundStrong,
-        onDismissRequest = onDismiss
+        onDismissRequest = {
+            if (!isLoading) {
+                onDismiss()
+            }
+        }
     ) {
         Column(
             modifier = Modifier.fillMaxWidth()
@@ -68,6 +81,46 @@ internal fun SimpleLoginSyncDetailsOptionsDialog(
                         isSelected = currentOption == selectedOption,
                         onSelected = { onSelectOption(index) }
                     )
+                }
+            }
+
+            if (isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(alignment = Alignment.End)
+                        .padding(
+                            end = Spacing.medium,
+                            bottom = Spacing.medium
+                        )
+                )
+            } else {
+                Row(
+                    modifier = Modifier
+                        .align(alignment = Alignment.End)
+                        .padding(
+                            end = Spacing.medium,
+                            bottom = Spacing.medium
+                        ),
+                ) {
+                    TextButton(
+                        onClick = onDismiss
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.action_close),
+                            style = ProtonTheme.typography.body2Regular,
+                            color = PassTheme.colors.interactionNormMajor2
+                        )
+                    }
+
+                    TextButton(
+                        onClick = onUpdate
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.action_update),
+                            style = ProtonTheme.typography.body2Regular,
+                            color = PassTheme.colors.interactionNormMajor2
+                        )
+                    }
                 }
             }
         }

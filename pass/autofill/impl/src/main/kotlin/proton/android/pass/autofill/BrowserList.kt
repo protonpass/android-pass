@@ -61,6 +61,7 @@ val BROWSERS = setOf(
     "io.github.forkmaintainers.iceraven",
     "mark.via",
     "mark.via.gp",
+    "net.quetta.browser",
     "net.slions.fulguris.full.download",
     "net.slions.fulguris.full.download.debug",
     "net.slions.fulguris.full.playstore",

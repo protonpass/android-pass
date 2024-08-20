@@ -177,6 +177,8 @@ import proton.android.pass.data.api.usecases.simplelogin.EnableSimpleLoginSync
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailboxes
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
+import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasDomain
+import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
@@ -342,6 +344,8 @@ import proton.android.pass.data.impl.usecases.simplelogin.EnableSimpleLoginSyncI
 import proton.android.pass.data.impl.usecases.simplelogin.ObserveSimpleLoginAliasDomainsImpl
 import proton.android.pass.data.impl.usecases.simplelogin.ObserveSimpleLoginAliasMailboxesImpl
 import proton.android.pass.data.impl.usecases.simplelogin.ObserveSimpleLoginSyncStatusImpl
+import proton.android.pass.data.impl.usecases.simplelogin.UpdateSimpleLoginAliasDomainImpl
+import proton.android.pass.data.impl.usecases.simplelogin.UpdateSimpleLoginAliasMailboxImpl
 import proton.android.pass.data.impl.usecases.sync.ForceSyncItemsImpl
 import proton.android.pass.data.impl.usecases.tooltips.DisableTooltipImpl
 import proton.android.pass.data.impl.usecases.tooltips.ObserveTooltipEnabledImpl
@@ -861,8 +865,18 @@ abstract class DataUseCaseModule {
     ): ObserveSimpleLoginAliasDomains
 
     @[Binds Singleton]
+    abstract fun bindUpdateSimpleLoginAliasDomain(
+        impl: UpdateSimpleLoginAliasDomainImpl
+    ): UpdateSimpleLoginAliasDomain
+
+    @[Binds Singleton]
     abstract fun bindObserveSimpleLoginAliasMailboxes(
         impl: ObserveSimpleLoginAliasMailboxesImpl
     ): ObserveSimpleLoginAliasMailboxes
+
+    @[Binds Singleton]
+    abstract fun bindUpdateSimpleLoginAliasMailbox(
+        impl: UpdateSimpleLoginAliasMailboxImpl
+    ): UpdateSimpleLoginAliasMailbox
 
 }

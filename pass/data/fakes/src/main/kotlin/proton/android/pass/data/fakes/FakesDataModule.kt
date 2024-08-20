@@ -171,6 +171,8 @@ import proton.android.pass.data.api.usecases.simplelogin.EnableSimpleLoginSync
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailboxes
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
+import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasDomain
+import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
@@ -323,6 +325,8 @@ import proton.android.pass.data.fakes.usecases.simplelogin.FakeEnableSimpleLogin
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLoginAliasDomains
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLoginAliasMailboxes
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLoginSyncStatus
+import proton.android.pass.data.fakes.usecases.simplelogin.FakeUpdateSimpleLoginAliasDomain
+import proton.android.pass.data.fakes.usecases.simplelogin.FakeUpdateSimpleLoginAliasMailbox
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
@@ -810,8 +814,18 @@ abstract class FakesDataModule {
     ): ObserveSimpleLoginAliasDomains
 
     @Binds
+    abstract fun bindUpdateSimpleLoginAliasDomain(
+        impl: FakeUpdateSimpleLoginAliasDomain
+    ): UpdateSimpleLoginAliasDomain
+
+    @Binds
     abstract fun bindObserveSimpleLoginAliasMailboxes(
         impl: FakeObserveSimpleLoginAliasMailboxes
     ): ObserveSimpleLoginAliasMailboxes
+
+    @Binds
+    abstract fun bindUpdateSimpleLoginAliasMailbox(
+        impl: FakeUpdateSimpleLoginAliasMailbox
+    ): UpdateSimpleLoginAliasMailbox
 
 }

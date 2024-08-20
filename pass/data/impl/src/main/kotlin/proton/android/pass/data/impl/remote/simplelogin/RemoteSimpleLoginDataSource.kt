@@ -20,6 +20,8 @@ package proton.android.pass.data.impl.remote.simplelogin
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
+import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDomainRequest
+import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasMailboxRequest
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.SimpleLoginAliasDomainsResponse
 import proton.android.pass.data.impl.responses.SimpleLoginAliasMailboxesResponse
@@ -30,11 +32,24 @@ interface RemoteSimpleLoginDataSource {
 
     suspend fun getSimpleLoginSyncStatus(userId: UserId): SimpleLoginSyncStatusResponse
 
-    suspend fun enableSimpleLoginSync(userId: UserId, request: SimpleLoginEnableSyncRequest): CodeOnlyResponse
+    suspend fun enableSimpleLoginSync(
+        userId: UserId,
+        request: SimpleLoginEnableSyncRequest
+    ): CodeOnlyResponse
 
     suspend fun getSimpleLoginAliasDomains(userId: UserId): SimpleLoginAliasDomainsResponse
 
+    suspend fun updateSimpleLoginAliasDomain(
+        userId: UserId,
+        request: SimpleLoginUpdateAliasDomainRequest
+    ): SimpleLoginAliasSettingsResponse
+
     suspend fun getSimpleLoginAliasMailboxes(userId: UserId): SimpleLoginAliasMailboxesResponse
+
+    suspend fun updateSimpleLoginAliasMailbox(
+        userId: UserId,
+        request: SimpleLoginUpdateAliasMailboxRequest
+    ): SimpleLoginAliasSettingsResponse
 
     suspend fun getSimpleLoginAliasSettings(userId: UserId): SimpleLoginAliasSettingsResponse
 

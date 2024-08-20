@@ -43,7 +43,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun SimpleLoginSyncDetailsSections(
     modifier: Modifier = Modifier,
     defaultDomain: String,
-    defaultMailbox: String,
+    defaultMailboxEmail: String,
     defaultVaultOption: Option<Vault>,
     pendingAliasesCount: Int,
     onUiEvent: (SimpleLoginSyncDetailsUiEvent) -> Unit
@@ -62,7 +62,7 @@ internal fun SimpleLoginSyncDetailsSections(
         SimpleLoginSyncSectionRow(
             label = stringResource(id = R.string.simple_login_sync_details_mailboxes_label),
             title = stringResource(id = R.string.simple_login_sync_details_mailboxes_title),
-            subtitle = defaultMailbox,
+            subtitle = defaultMailboxEmail,
             onClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnMailboxClicked) }
         )
 

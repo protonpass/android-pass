@@ -83,6 +83,14 @@ fun SimpleLoginSyncDetailsScreen(
                 is SimpleLoginSyncDetailsUiEvent.OnMailboxSelected -> {
                     viewModel.onSelectAliasMailbox(selectedAliasMailbox = uiEvent.aliasMailbox)
                 }
+
+                SimpleLoginSyncDetailsUiEvent.OnUpdateDomainClicked -> {
+                    viewModel.onUpdateAliasDomain()
+                }
+
+                SimpleLoginSyncDetailsUiEvent.OnUpdateMailboxClicked -> {
+                    viewModel.onUpdateAliasMailbox()
+                }
             }
         }
     )

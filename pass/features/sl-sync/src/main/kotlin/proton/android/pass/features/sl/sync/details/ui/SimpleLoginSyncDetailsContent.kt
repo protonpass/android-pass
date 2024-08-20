@@ -58,7 +58,7 @@ internal fun SimpleLoginSyncDetailsContent(
             SimpleLoginSyncDetailsSections(
                 modifier = Modifier.padding(paddingValues = innerPaddingValue),
                 defaultDomain = defaultDomain,
-                defaultMailbox = defaultMailbox,
+                defaultMailboxEmail = defaultMailboxEmail,
                 defaultVaultOption = defaultVaultOption,
                 pendingAliasesCount = pendingAliasesCount,
                 onUiEvent = onUiEvent
@@ -73,26 +73,30 @@ internal fun SimpleLoginSyncDetailsContent(
                     titleResId = R.string.simple_login_sync_details_dialog_title_domains,
                     selectedOption = selectedAliasDomain,
                     options = aliasDomains.map { it.domain }.toPersistentList(),
+                    isLoading = isUpdating,
                     onSelectOption = { selectedOptionIndex ->
                         SimpleLoginSyncDetailsUiEvent.OnDomainSelected(
                             aliasDomain = aliasDomains[selectedOptionIndex]
                         ).also(onUiEvent)
                     },
-                    onDismiss = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnOptionsDialogDismissed) }
+                    onDismiss = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnOptionsDialogDismissed) },
+                    onUpdate = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnUpdateDomainClicked) }
                 )
             }
 
             SimpleLoginSyncDetailsOptionType.Mailbox -> {
                 SimpleLoginSyncDetailsOptionsDialog(
                     titleResId = R.string.simple_login_sync_details_dialog_title_mailboxes,
-                    selectedOption = defaultMailbox,
+                    selectedOption = selectedAliasMailboxEmail,
                     options = aliasMailboxes.map { it.email }.toPersistentList(),
+                    isLoading = isUpdating,
                     onSelectOption = { selectedOptionIndex ->
                         SimpleLoginSyncDetailsUiEvent.OnMailboxSelected(
                             aliasMailbox = aliasMailboxes[selectedOptionIndex]
                         ).also(onUiEvent)
                     },
-                    onDismiss = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnOptionsDialogDismissed) }
+                    onDismiss = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnOptionsDialogDismissed) },
+                    onUpdate = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnUpdateMailboxClicked) }
                 )
             }
         }

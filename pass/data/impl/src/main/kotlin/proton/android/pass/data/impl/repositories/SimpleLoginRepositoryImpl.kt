@@ -38,6 +38,8 @@ import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSource
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
+import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDomainRequest
+import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasMailboxRequest
 import proton.android.pass.data.impl.responses.SimpleLoginAliasDomainData
 import proton.android.pass.data.impl.responses.SimpleLoginAliasMailboxData
 import proton.android.pass.domain.ShareId
@@ -88,7 +90,8 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         localSimpleLoginDataSource.disableSyncPreference()
     }
 
-    override fun observeSyncPreference(): Flow<Boolean> = localSimpleLoginDataSource.observeSyncPreference()
+    override fun observeSyncPreference(): Flow<Boolean> =
+        localSimpleLoginDataSource.observeSyncPreference()
 
     override suspend fun enableSync(defaultShareId: ShareId) {
         val userId = accountManager.getPrimaryUserId()
@@ -104,32 +107,62 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         userAccessDataRepository.refresh(userId)
     }
 
-    override fun observeAliasDomains(): Flow<List<SimpleLoginAliasDomain>> = accountManager.getPrimaryUserId()
-        .flatMapLatest { userId ->
-            if (userId == null) {
-                emptyList()
-            } else {
-                remoteSimpleLoginDataSource.getSimpleLoginAliasSettings(userId)
-                    .also {
-                        println("JIBIRI: settings: $it")
-                    }
+    override fun observeAliasDomains(): Flow<List<SimpleLoginAliasDomain>> =
+        accountManager.getPrimaryUserId()
+            .flatMapLatest { userId ->
+                if (userId == null) {
+                    emptyList()
+                } else {
+                    remoteSimpleLoginDataSource.getSimpleLoginAliasSettings(userId)
+                        .also {
+                            println("JIBIRI: settings: $it")
+                        }
 
-                remoteSimpleLoginDataSource.getSimpleLoginAliasDomains(userId)
-                    .domains
-                    .map { simpleLoginAliasDomainData -> simpleLoginAliasDomainData.toDomain() }
-            }.let(::flowOf)
-        }
+                    remoteSimpleLoginDataSource.getSimpleLoginAliasDomains(userId)
+                        .domains
+                        .map { simpleLoginAliasDomainData -> simpleLoginAliasDomainData.toDomain() }
+                }.let(::flowOf)
+            }
 
-    override fun observeAliasMailboxes(): Flow<List<SimpleLoginAliasMailbox>> = accountManager.getPrimaryUserId()
-        .flatMapLatest { userId ->
-            if (userId == null) {
-                emptyList()
-            } else {
-                remoteSimpleLoginDataSource.getSimpleLoginAliasMailboxes(userId)
-                    .mailboxes
-                    .map { simpleLoginAliasMailboxData -> simpleLoginAliasMailboxData.toDomain() }
-            }.let(::flowOf)
-        }
+    override suspend fun updateAliasDomain(domain: String) {
+        accountManager.getPrimaryUserId()
+            .firstOrNull()
+            ?.also { userId ->
+                remoteSimpleLoginDataSource.updateSimpleLoginAliasDomain(
+                    userId = userId,
+                    request = SimpleLoginUpdateAliasDomainRequest(
+                        defaultAliasDomain = domain.takeIf { it.isNotEmpty() }
+                    )
+                )
+            }
+            ?: throw UserIdNotAvailableError()
+    }
+
+    override fun observeAliasMailboxes(): Flow<List<SimpleLoginAliasMailbox>> =
+        accountManager.getPrimaryUserId()
+            .flatMapLatest { userId ->
+                if (userId == null) {
+                    emptyList()
+                } else {
+                    remoteSimpleLoginDataSource.getSimpleLoginAliasMailboxes(userId)
+                        .mailboxes
+                        .map { simpleLoginAliasMailboxData -> simpleLoginAliasMailboxData.toDomain() }
+                }.let(::flowOf)
+            }
+
+    override suspend fun updateAliasMailbox(mailboxId: String) {
+        accountManager.getPrimaryUserId()
+            .firstOrNull()
+            ?.also { userId ->
+                remoteSimpleLoginDataSource.updateSimpleLoginAliasMailbox(
+                    userId = userId,
+                    request = SimpleLoginUpdateAliasMailboxRequest(
+                        defaultMailboxID = mailboxId
+                    )
+                )
+            }
+            ?: throw UserIdNotAvailableError()
+    }
 
     private suspend fun UserAccessData.toSimpleLoginSyncStatus(
         userId: UserId,

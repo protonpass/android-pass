@@ -47,4 +47,8 @@ internal sealed interface SimpleLoginSyncDetailsUiEvent {
         internal val aliasMailbox: SimpleLoginAliasMailbox
     ) : SimpleLoginSyncDetailsUiEvent
 
+    data object OnUpdateDomainClicked : SimpleLoginSyncDetailsUiEvent
+
+    data object OnUpdateMailboxClicked : SimpleLoginSyncDetailsUiEvent
+
 }

@@ -22,6 +22,8 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
+import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDomainRequest
+import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasMailboxRequest
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.SimpleLoginAliasDomainsResponse
 import proton.android.pass.data.impl.responses.SimpleLoginAliasMailboxesResponse
@@ -51,9 +53,25 @@ class RemoteSimpleLoginDataSourceImpl @Inject constructor(
         .invoke { getSimpleLoginAliasDomains() }
         .valueOrThrow
 
+    override suspend fun updateSimpleLoginAliasDomain(
+        userId: UserId,
+        request: SimpleLoginUpdateAliasDomainRequest
+    ): SimpleLoginAliasSettingsResponse = apiProvider
+        .get<PasswordManagerApi>(userId)
+        .invoke { updateSimpleLoginAliasDomain(request) }
+        .valueOrThrow
+
     override suspend fun getSimpleLoginAliasMailboxes(userId: UserId): SimpleLoginAliasMailboxesResponse = apiProvider
         .get<PasswordManagerApi>(userId)
         .invoke { getSimpleLoginAliasMailboxes() }
+        .valueOrThrow
+
+    override suspend fun updateSimpleLoginAliasMailbox(
+        userId: UserId,
+        request: SimpleLoginUpdateAliasMailboxRequest
+    ): SimpleLoginAliasSettingsResponse = apiProvider
+        .get<PasswordManagerApi>(userId)
+        .invoke { updateSimpleLoginAliasMailbox(request) }
         .valueOrThrow
 
     override suspend fun getSimpleLoginAliasSettings(userId: UserId): SimpleLoginAliasSettingsResponse = apiProvider

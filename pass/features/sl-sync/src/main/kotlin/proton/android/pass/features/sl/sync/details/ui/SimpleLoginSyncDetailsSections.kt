@@ -55,7 +55,7 @@ internal fun SimpleLoginSyncDetailsSections(
         SimpleLoginSyncSectionRow(
             label = stringResource(id = R.string.simple_login_sync_details_domain_label),
             title = stringResource(id = R.string.simple_login_sync_details_domain_title),
-            subtitle = defaultDomain,
+            subtitle = defaultDomain.ifEmpty { "Not Selected" },
             onClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnDomainClicked) }
         )
 

@@ -33,8 +33,9 @@ internal data class SimpleLoginSyncDetailsState(
     internal val defaultVaultOption: Option<Vault>,
     internal val pendingAliasesCountOption: Option<Int>,
     internal val isLoading: Boolean,
+    internal val isUpdating: Boolean,
     private val selectedDomainOption: Option<String>,
-    private val selectedMailboxIdOption: Option<String>
+    private val selectedMailboxOption: Option<SimpleLoginAliasMailbox>
 ) {
 
     internal val defaultDomain: String = aliasDomains
@@ -42,19 +43,26 @@ internal data class SimpleLoginSyncDetailsState(
         ?.domain
         .orEmpty()
 
-    internal val defaultMailbox: String = aliasMailboxes
-        .firstOrNull { aliasMailbox -> aliasMailbox.isDefault }
-        ?.email
-        .orEmpty()
+    private val defaultMailbox: SimpleLoginAliasMailbox? =
+        aliasMailboxes.firstOrNull { aliasMailbox ->
+            aliasMailbox.isDefault
+        }
+
+    internal val defaultMailboxEmail: String = defaultMailbox?.email.orEmpty()
 
     internal val selectedAliasDomain: String = when (selectedDomainOption) {
         None -> defaultDomain
         is Some -> selectedDomainOption.value
     }
 
-    internal val selectedAliasMailboxId: String = when (selectedMailboxIdOption) {
-        None -> defaultMailbox
-        is Some -> selectedMailboxIdOption.value
+    internal val selectedAliasMailboxId: String = when (selectedMailboxOption) {
+        None -> defaultMailbox?.id.orEmpty()
+        is Some -> selectedMailboxOption.value.id
+    }
+
+    internal val selectedAliasMailboxEmail: String = when (selectedMailboxOption) {
+        None -> defaultMailbox?.email.orEmpty()
+        is Some -> selectedMailboxOption.value.email
     }
 
     internal val pendingAliasesCount: Int = when (pendingAliasesCountOption) {
@@ -70,8 +78,9 @@ internal data class SimpleLoginSyncDetailsState(
             defaultVaultOption = None,
             pendingAliasesCountOption = None,
             isLoading = true,
+            isUpdating = false,
             selectedDomainOption = None,
-            selectedMailboxIdOption = None
+            selectedMailboxOption = None
         )
 
     }

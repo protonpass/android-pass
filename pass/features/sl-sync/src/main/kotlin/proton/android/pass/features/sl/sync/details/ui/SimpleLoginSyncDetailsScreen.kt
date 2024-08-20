@@ -19,6 +19,7 @@
 package proton.android.pass.features.sl.sync.details.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,6 +29,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
+import proton.android.pass.features.sl.sync.details.presentation.SimpleLoginSyncDetailsEvent
 import proton.android.pass.features.sl.sync.details.presentation.SimpleLoginSyncDetailsViewModel
 import proton.android.pass.features.sl.sync.details.ui.dialogs.SimpleLoginSyncDetailsOptionType
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
@@ -43,14 +45,31 @@ fun SimpleLoginSyncDetailsScreen(
         mutableStateOf<Option<SimpleLoginSyncDetailsOptionType>>(None)
     }
 
+    LaunchedEffect(state.event) {
+        when (state.event) {
+            SimpleLoginSyncDetailsEvent.OnFetchAliasDomainsError,
+            SimpleLoginSyncDetailsEvent.OnFetchAliasMailboxesError -> {
+                onNavigated(SimpleLoginSyncNavDestination.Back)
+            }
+
+            SimpleLoginSyncDetailsEvent.OnUpdateAliasDomainError,
+            SimpleLoginSyncDetailsEvent.OnUpdateAliasMailboxError -> {
+                dialogOptionTypeOption = None
+            }
+
+            SimpleLoginSyncDetailsEvent.Idle -> {}
+        }
+
+        onConsumeEvent(event = state.event)
+    }
+
     SimpleLoginSyncDetailsContent(
         state = state,
         dialogOptionTypeOption = dialogOptionTypeOption,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SimpleLoginSyncDetailsUiEvent.OnBackClicked -> {
-                    SimpleLoginSyncNavDestination.Back
-                        .also(onNavigated)
+                    onNavigated(SimpleLoginSyncNavDestination.Back)
                 }
 
                 SimpleLoginSyncDetailsUiEvent.OnDomainClicked -> {
@@ -62,8 +81,7 @@ fun SimpleLoginSyncDetailsScreen(
                 }
 
                 SimpleLoginSyncDetailsUiEvent.OnSyncSettingsClicked -> {
-                    SimpleLoginSyncNavDestination.Settings
-                        .also(onNavigated)
+                    onNavigated(SimpleLoginSyncNavDestination.Settings)
                 }
 
                 is SimpleLoginSyncDetailsUiEvent.OnDefaultVaultClicked -> {
@@ -77,19 +95,19 @@ fun SimpleLoginSyncDetailsScreen(
                 }
 
                 is SimpleLoginSyncDetailsUiEvent.OnDomainSelected -> {
-                    viewModel.onSelectAliasDomain(selectedAliasDomain = uiEvent.aliasDomain)
+                    onSelectAliasDomain(selectedAliasDomain = uiEvent.aliasDomain)
                 }
 
                 is SimpleLoginSyncDetailsUiEvent.OnMailboxSelected -> {
-                    viewModel.onSelectAliasMailbox(selectedAliasMailbox = uiEvent.aliasMailbox)
+                    onSelectAliasMailbox(selectedAliasMailbox = uiEvent.aliasMailbox)
                 }
 
                 SimpleLoginSyncDetailsUiEvent.OnUpdateDomainClicked -> {
-                    viewModel.onUpdateAliasDomain()
+                    onUpdateAliasDomain()
                 }
 
                 SimpleLoginSyncDetailsUiEvent.OnUpdateMailboxClicked -> {
-                    viewModel.onUpdateAliasMailbox()
+                    onUpdateAliasMailbox()
                 }
             }
         }

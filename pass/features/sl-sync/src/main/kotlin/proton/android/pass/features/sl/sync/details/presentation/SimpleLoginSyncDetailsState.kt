@@ -34,6 +34,7 @@ internal data class SimpleLoginSyncDetailsState(
     internal val pendingAliasesCountOption: Option<Int>,
     internal val isLoading: Boolean,
     internal val isUpdating: Boolean,
+    internal val event: SimpleLoginSyncDetailsEvent,
     private val selectedDomainOption: Option<String>,
     private val selectedMailboxOption: Option<SimpleLoginAliasMailbox>
 ) {
@@ -79,6 +80,7 @@ internal data class SimpleLoginSyncDetailsState(
             pendingAliasesCountOption = None,
             isLoading = true,
             isUpdating = false,
+            event = SimpleLoginSyncDetailsEvent.Idle,
             selectedDomainOption = None,
             selectedMailboxOption = None
         )

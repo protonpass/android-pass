@@ -25,18 +25,18 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.runCatching
 import proton.android.pass.common.api.some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailboxes
+import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasSettings
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasDomain
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasMailbox
@@ -50,33 +50,36 @@ import javax.inject.Inject
 class SimpleLoginSyncDetailsViewModel @Inject constructor(
     observeSimpleLoginAliasDomains: ObserveSimpleLoginAliasDomains,
     observeSimpleLoginAliasMailboxes: ObserveSimpleLoginAliasMailboxes,
+    observeSimpleLoginAliasSettings: ObserveSimpleLoginAliasSettings,
     observeSimpleLoginSyncStatus: ObserveSimpleLoginSyncStatus,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val updateSimpleLoginAliasDomain: UpdateSimpleLoginAliasDomain,
     private val updateSimpleLoginAliasMailbox: UpdateSimpleLoginAliasMailbox
 ) : ViewModel() {
 
+    private val modelOptionFlow = combine(
+        observeSimpleLoginAliasDomains(),
+        observeSimpleLoginAliasMailboxes(),
+        observeSimpleLoginAliasSettings(),
+        observeSimpleLoginSyncStatus()
+    ) { aliasDomains, aliasMailboxes, aliasSettings, syncStatusOption ->
+        SimpleLoginSyncDetailsModel(
+            aliasDomains = aliasDomains,
+            aliasMailboxes = aliasMailboxes,
+            aliasSettings = aliasSettings,
+            syncStatusOption = syncStatusOption
+        ).some()
+    }.catch { error ->
+        PassLogger.w(TAG, "There was an error while observing SL alias details")
+        PassLogger.e(TAG, error)
+        snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.FetchAliasDomainsError)
+        eventFlow.update { SimpleLoginSyncDetailsEvent.OnFetchAliasDomainsError }
+        emit(None)
+    }
+
     private val eventFlow = MutableStateFlow<SimpleLoginSyncDetailsEvent>(
         value = SimpleLoginSyncDetailsEvent.Idle
     )
-
-    private val aliasDomainsFlow = observeSimpleLoginAliasDomains()
-        .catch { error ->
-            PassLogger.w(TAG, "There was an error while observing SL alias domains")
-            PassLogger.e(TAG, error)
-            snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.FetchAliasDomainsError)
-            eventFlow.update { SimpleLoginSyncDetailsEvent.OnFetchAliasDomainsError }
-            emit(emptyList())
-        }
-
-    private val aliasMailboxesFlow = observeSimpleLoginAliasMailboxes()
-        .catch { error ->
-            PassLogger.w(TAG, "There was an error while observing SL alias mailboxes")
-            PassLogger.e(TAG, error)
-            snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.FetchAliasMailboxesError)
-            eventFlow.update { SimpleLoginSyncDetailsEvent.OnFetchAliasMailboxesError }
-            emit(emptyList())
-        }
 
     private val selectedDomainOptionFlow = MutableStateFlow<Option<String>>(None)
 
@@ -84,34 +87,14 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
 
     private val isUpdatingFlow = MutableStateFlow(false)
 
-    internal val state: StateFlow<SimpleLoginSyncDetailsState> = combineN(
-        aliasDomainsFlow,
-        aliasMailboxesFlow,
-        observeSimpleLoginSyncStatus(),
+    internal val state: StateFlow<SimpleLoginSyncDetailsState> = combine(
+        isUpdatingFlow,
+        eventFlow,
+        modelOptionFlow,
         selectedDomainOptionFlow,
         selectedMailboxOptionFlow,
-        isUpdatingFlow,
-        eventFlow
-    ) { aliasDomains,
-        aliasMailboxes,
-        syncStatus,
-        selectedDomainOption,
-        selectedMailboxOption,
-        isUpdating,
-        event ->
-        SimpleLoginSyncDetailsState(
-            aliasDomains = aliasDomains,
-            aliasMailboxes = aliasMailboxes,
-            defaultVaultOption = syncStatus.value()?.defaultVault.toOption(),
-            pendingAliasesCountOption = syncStatus.value()?.pendingAliasCount.toOption(),
-            isLoading = false,
-            selectedDomainOption = selectedDomainOption,
-            selectedMailboxOption = selectedMailboxOption,
-            isUpdating = isUpdating,
-            event = event
-
-        )
-    }.stateIn(
+        ::SimpleLoginSyncDetailsState
+    ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
         initialValue = SimpleLoginSyncDetailsState.Initial

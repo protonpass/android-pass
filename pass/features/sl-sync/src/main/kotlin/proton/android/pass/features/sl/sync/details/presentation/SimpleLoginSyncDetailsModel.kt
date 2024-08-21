@@ -16,34 +16,37 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.features.sl.sync.details.presentation
 
-import kotlinx.coroutines.flow.Flow
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.domain.ShareId
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
+import proton.android.pass.domain.Vault
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 
-interface SimpleLoginRepository {
+internal data class SimpleLoginSyncDetailsModel(
+    internal val aliasDomains: List<SimpleLoginAliasDomain>,
+    internal val aliasMailboxes: List<SimpleLoginAliasMailbox>,
+    private val aliasSettings: SimpleLoginAliasSettings,
+    private val syncStatusOption: Option<SimpleLoginSyncStatus>
+) {
 
-    fun observeSyncStatus(): Flow<Option<SimpleLoginSyncStatus>>
+    internal val defaultDomain: String = aliasSettings.defaultDomain.orEmpty()
 
-    fun disableSyncPreference()
+    internal val defaultMailboxId: String = aliasSettings.defaultMailboxId
 
-    fun observeSyncPreference(): Flow<Boolean>
+    internal val defaultVault: Option<Vault> = when (syncStatusOption) {
+        None -> None
+        is Some -> syncStatusOption.value.defaultVault.some()
+    }
 
-    suspend fun enableSync(defaultShareId: ShareId)
-
-    fun observeAliasDomains(): Flow<List<SimpleLoginAliasDomain>>
-
-    suspend fun updateAliasDomain(domain: String)
-
-    fun observeAliasMailboxes(): Flow<List<SimpleLoginAliasMailbox>>
-
-    suspend fun updateAliasMailbox(mailboxId: String)
-
-    fun observeAliasSettings(): Flow<SimpleLoginAliasSettings>
+    internal val pendingAliasesCount: Int = when (syncStatusOption) {
+        None -> 0
+        is Some -> syncStatusOption.value.pendingAliasCount
+    }
 
 }

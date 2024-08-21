@@ -19,7 +19,6 @@
 package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
@@ -28,7 +27,7 @@ import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 
 interface SimpleLoginRepository {
 
-    fun observeSyncStatus(): Flow<Option<SimpleLoginSyncStatus>>
+    fun observeSyncStatus(): Flow<SimpleLoginSyncStatus>
 
     fun disableSyncPreference()
 

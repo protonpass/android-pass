@@ -1928,8 +1928,9 @@ fun NavGraphBuilder.appGraph(
                     )
                 )
 
-                SimpleLoginSyncNavDestination.Settings -> appNavigator.navigate(
-                    destination = SimpleLoginSyncSettingsNavItem
+                is SimpleLoginSyncNavDestination.Settings -> appNavigator.navigate(
+                    destination = SimpleLoginSyncSettingsNavItem,
+                    route = SimpleLoginSyncSettingsNavItem.createNavRoute(destination.shareId)
                 )
             }
         }

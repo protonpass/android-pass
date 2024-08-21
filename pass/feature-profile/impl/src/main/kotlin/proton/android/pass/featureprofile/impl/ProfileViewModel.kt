@@ -59,6 +59,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.data.api.usecases.DefaultBrowser
 import proton.android.pass.data.api.usecases.GetDefaultBrowser
@@ -256,10 +257,11 @@ class ProfileViewModel @Inject constructor(
         .distinctUntilChanged()
 
     private val simpleLoginSyncStatusOptionFlow = observeSimpleLoginSyncStatus()
+        .mapLatest { simpleLoginSyncStatus -> simpleLoginSyncStatus.toOption() }
+        .onStart { emit(None) }
         .catch { error ->
             PassLogger.w(TAG, "There was an error observing SL sync status")
             PassLogger.w(TAG, error)
-
             emit(None)
         }
         .distinctUntilChanged()

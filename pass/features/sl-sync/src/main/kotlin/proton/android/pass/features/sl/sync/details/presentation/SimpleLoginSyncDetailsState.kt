@@ -52,8 +52,8 @@ internal data class SimpleLoginSyncDetailsState(
 
     internal val defaultMailboxEmail: String = defaultMailbox?.email.orEmpty()
 
-    internal val defaultVaultOption: Option<Vault> = when (modelOption) {
-        None -> None
+    internal val defaultVault: Vault? = when (modelOption) {
+        None -> null
         is Some -> modelOption.value.defaultVault
     }
 
@@ -93,6 +93,11 @@ internal data class SimpleLoginSyncDetailsState(
     internal val selectedAliasMailboxEmail: String = when (selectedMailboxOption) {
         None -> defaultMailbox?.email.orEmpty()
         is Some -> selectedMailboxOption.value.email
+    }
+
+    internal val isSyncEnabled: Boolean = when (modelOption) {
+        None -> false
+        is Some -> modelOption.value.isSyncEnabled
     }
 
     internal val pendingAliasesCount: Int = when (modelOption) {

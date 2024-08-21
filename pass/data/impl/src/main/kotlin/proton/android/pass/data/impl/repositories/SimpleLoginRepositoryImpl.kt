@@ -121,14 +121,14 @@ class SimpleLoginRepositoryImpl @Inject constructor(
                 }.let(::flowOf)
             }
 
-    override suspend fun updateAliasDomain(domain: String) {
+    override suspend fun updateAliasDomain(domain: String?) {
         accountManager.getPrimaryUserId()
             .firstOrNull()
             ?.also { userId ->
                 remoteSimpleLoginDataSource.updateSimpleLoginAliasDomain(
                     userId = userId,
                     request = SimpleLoginUpdateAliasDomainRequest(
-                        defaultAliasDomain = domain.takeIf { it.isNotEmpty() }
+                        defaultAliasDomain = domain
                     )
                 )
                     .settings

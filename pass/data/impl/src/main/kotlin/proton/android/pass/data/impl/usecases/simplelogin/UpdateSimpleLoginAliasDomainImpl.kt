@@ -26,7 +26,7 @@ class UpdateSimpleLoginAliasDomainImpl @Inject constructor(
     private val repository: SimpleLoginRepository
 ): UpdateSimpleLoginAliasDomain {
 
-    override suspend fun invoke(domain: String) {
+    override suspend fun invoke(domain: String?) {
         repository.updateAliasDomain(domain)
     }
 

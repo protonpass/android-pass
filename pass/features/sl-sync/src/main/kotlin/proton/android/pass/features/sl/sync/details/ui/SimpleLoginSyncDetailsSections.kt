@@ -25,9 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
@@ -44,7 +41,8 @@ internal fun SimpleLoginSyncDetailsSections(
     modifier: Modifier = Modifier,
     defaultDomain: String?,
     defaultMailboxEmail: String,
-    defaultVaultOption: Option<Vault>,
+    defaultVault: Vault?,
+    isSyncEnabled: Boolean,
     pendingAliasesCount: Int,
     canSelectDomain: Boolean,
     canSelectMailbox: Boolean,
@@ -72,54 +70,54 @@ internal fun SimpleLoginSyncDetailsSections(
             isClickable = canSelectMailbox
         )
 
-        when (defaultVaultOption) {
-            None -> {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
-                ) {
-                    SimpleLoginSyncLabelText(
-                        text = stringResource(id = R.string.simple_login_sync_details_vault_title)
-                    )
-
-                    PassSingleActionWidget(
-                        title = stringResource(id = CompR.string.simple_login_widget_title),
-                        message = stringResource(
-                            id = CompR.string.simple_login_widget_message,
-                            pluralStringResource(
-                                id = CompR.plurals.simple_login_widget_pending_aliases,
-                                count = pendingAliasesCount,
-                                pendingAliasesCount
-                            )
-                        ),
-                        actionText = stringResource(id = CompR.string.simple_login_widget_action),
-                        onActionClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnSyncSettingsClicked) }
-                    )
-                }
+        if (isSyncEnabled && defaultVault != null) {
+            with(defaultVault) {
+                SimpleLoginSyncSectionRow(
+                    leadingIcon = {
+                        VaultIcon(
+                            backgroundColor = color.toColor(isBackground = true),
+                            icon = icon.toResource(),
+                            iconColor = color.toColor()
+                        )
+                    },
+                    label = stringResource(id = R.string.simple_login_sync_details_vault_title),
+                    title = stringResource(id = R.string.simple_login_sync_shared_default_vault_title),
+                    subtitle = name,
+                    description = stringResource(
+                        id = R.string.simple_login_sync_shared_default_vault_description
+                    ),
+                    onClick = {
+                        SimpleLoginSyncDetailsUiEvent.OnDefaultVaultClicked(
+                            shareId = shareId
+                        ).also(onUiEvent)
+                    }
+                )
             }
+        } else {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+            ) {
+                SimpleLoginSyncLabelText(
+                    text = stringResource(id = R.string.simple_login_sync_details_vault_title)
+                )
 
-            is Some -> {
-                with(defaultVaultOption.value) {
-                    SimpleLoginSyncSectionRow(
-                        leadingIcon = {
-                            VaultIcon(
-                                backgroundColor = color.toColor(isBackground = true),
-                                icon = icon.toResource(),
-                                iconColor = color.toColor()
-                            )
-                        },
-                        label = stringResource(id = R.string.simple_login_sync_details_vault_title),
-                        title = stringResource(id = R.string.simple_login_sync_shared_default_vault_title),
-                        subtitle = name,
-                        description = stringResource(
-                            id = R.string.simple_login_sync_shared_default_vault_description
-                        ),
-                        onClick = {
-                            SimpleLoginSyncDetailsUiEvent.OnDefaultVaultClicked(
-                                shareId = shareId
-                            ).also(onUiEvent)
-                        }
-                    )
-                }
+                PassSingleActionWidget(
+                    title = stringResource(id = CompR.string.simple_login_widget_title),
+                    message = stringResource(
+                        id = CompR.string.simple_login_widget_message,
+                        pluralStringResource(
+                            id = CompR.plurals.simple_login_widget_pending_aliases,
+                            count = pendingAliasesCount,
+                            pendingAliasesCount
+                        )
+                    ),
+                    actionText = stringResource(id = CompR.string.simple_login_widget_action),
+                    onActionClick = {
+                        SimpleLoginSyncDetailsUiEvent.OnSyncSettingsClicked(
+                            shareId = defaultVault?.shareId
+                        ).also(onUiEvent)
+                    }
+                )
             }
         }
     }

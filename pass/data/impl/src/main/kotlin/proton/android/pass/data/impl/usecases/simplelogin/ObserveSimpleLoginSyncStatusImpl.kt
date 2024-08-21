@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.usecases.simplelogin
 
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
@@ -29,6 +28,6 @@ class ObserveSimpleLoginSyncStatusImpl @Inject constructor(
     private val repository: SimpleLoginRepository
 ) : ObserveSimpleLoginSyncStatus {
 
-    override fun invoke(): Flow<Option<SimpleLoginSyncStatus>> = repository.observeSyncStatus()
+    override fun invoke(): Flow<SimpleLoginSyncStatus> = repository.observeSyncStatus()
 
 }

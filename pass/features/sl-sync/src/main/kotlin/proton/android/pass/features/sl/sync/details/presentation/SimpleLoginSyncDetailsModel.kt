@@ -18,10 +18,6 @@
 
 package proton.android.pass.features.sl.sync.details.presentation
 
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.some
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
@@ -32,21 +28,17 @@ internal data class SimpleLoginSyncDetailsModel(
     internal val aliasDomains: List<SimpleLoginAliasDomain>,
     internal val aliasMailboxes: List<SimpleLoginAliasMailbox>,
     private val aliasSettings: SimpleLoginAliasSettings,
-    private val syncStatusOption: Option<SimpleLoginSyncStatus>
+    private val syncStatus: SimpleLoginSyncStatus
 ) {
 
     internal val defaultDomain: String? = aliasSettings.defaultDomain
 
     internal val defaultMailboxId: String = aliasSettings.defaultMailboxId
 
-    internal val defaultVault: Option<Vault> = when (syncStatusOption) {
-        None -> None
-        is Some -> syncStatusOption.value.defaultVault.some()
-    }
+    internal val defaultVault: Vault = syncStatus.defaultVault
 
-    internal val pendingAliasesCount: Int = when (syncStatusOption) {
-        None -> 0
-        is Some -> syncStatusOption.value.pendingAliasCount
-    }
+    internal val pendingAliasesCount: Int = syncStatus.pendingAliasCount
+
+    internal val isSyncEnabled: Boolean = syncStatus.isSyncEnabled
 
 }

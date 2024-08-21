@@ -29,13 +29,8 @@ internal enum class SimpleLoginSyncDetailsSnackBarMessage(
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
 
-    FetchAliasDomainsError(
-        id = R.string.simple_login_sync_details_snackbar_alias_domain_fetching_error,
-        type = SnackbarType.ERROR
-    ),
-
-    FetchAliasMailboxesError(
-        id = R.string.simple_login_sync_details_snackbar_alias_mailboxes_fetching_error,
+    FetchAliasDetailsError(
+        id = R.string.simple_login_sync_details_snackbar_alias_details_fetch_error,
         type = SnackbarType.ERROR
     ),
 
@@ -57,6 +52,6 @@ internal enum class SimpleLoginSyncDetailsSnackBarMessage(
     UpdateAliasMailboxSuccess(
         id = R.string.simple_login_sync_details_snackbar_alias_mailbox_update_success,
         type = SnackbarType.SUCCESS
-    ),
+    )
 
 }

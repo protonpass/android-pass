@@ -73,8 +73,8 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
     }.catch { error ->
         PassLogger.w(TAG, "There was an error while observing SL alias details")
         PassLogger.e(TAG, error)
-        snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.FetchAliasDomainsError)
-        eventFlow.update { SimpleLoginSyncDetailsEvent.OnFetchAliasDomainsError }
+        snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.FetchAliasDetailsError)
+        eventFlow.update { SimpleLoginSyncDetailsEvent.OnFetchAliasDetailsError }
         emit(None)
     }
 

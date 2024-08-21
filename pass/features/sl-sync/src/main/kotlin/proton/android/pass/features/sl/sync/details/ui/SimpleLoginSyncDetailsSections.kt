@@ -42,7 +42,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 @Composable
 internal fun SimpleLoginSyncDetailsSections(
     modifier: Modifier = Modifier,
-    defaultDomain: String,
+    defaultDomain: String?,
     defaultMailboxEmail: String,
     defaultVaultOption: Option<Vault>,
     pendingAliasesCount: Int,
@@ -57,7 +57,9 @@ internal fun SimpleLoginSyncDetailsSections(
         SimpleLoginSyncSectionRow(
             label = stringResource(id = R.string.simple_login_sync_details_domain_label),
             title = stringResource(id = R.string.simple_login_sync_details_domain_title),
-            subtitle = defaultDomain.ifEmpty { "Not Selected" },
+            subtitle = defaultDomain ?: stringResource(
+                id = R.string.simple_login_sync_details_domain_option_blank
+            ),
             onClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnDomainClicked) },
             isClickable = canSelectDomain
         )

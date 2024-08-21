@@ -82,7 +82,7 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
         value = SimpleLoginSyncDetailsEvent.Idle
     )
 
-    private val selectedDomainOptionFlow = MutableStateFlow<Option<String>>(None)
+    private val selectedDomainOptionFlow = MutableStateFlow<Option<String?>>(None)
 
     private val selectedMailboxOptionFlow = MutableStateFlow<Option<SimpleLoginAliasMailbox>>(None)
 
@@ -105,8 +105,8 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
         eventFlow.compareAndSet(event, SimpleLoginSyncDetailsEvent.Idle)
     }
 
-    internal fun onSelectAliasDomain(selectedAliasDomain: SimpleLoginAliasDomain) {
-        selectedDomainOptionFlow.update { selectedAliasDomain.domain.some() }
+    internal fun onSelectAliasDomain(selectedAliasDomain: SimpleLoginAliasDomain?) {
+        selectedDomainOptionFlow.update { selectedAliasDomain?.domain?.some() ?: null.some() }
     }
 
     internal fun onSelectAliasMailbox(selectedAliasMailbox: SimpleLoginAliasMailbox) {

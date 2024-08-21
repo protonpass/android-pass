@@ -25,6 +25,6 @@ import javax.inject.Singleton
 @Singleton
 class FakeUpdateSimpleLoginAliasDomain @Inject constructor() : UpdateSimpleLoginAliasDomain {
 
-    override suspend fun invoke(domain: String) = Unit
+    override suspend fun invoke(domain: String?) = Unit
 
 }

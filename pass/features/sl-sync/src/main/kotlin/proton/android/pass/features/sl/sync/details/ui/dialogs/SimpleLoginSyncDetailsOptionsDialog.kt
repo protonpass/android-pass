@@ -37,15 +37,16 @@ import me.proton.core.compose.component.ProtonDialogTitle
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
+import proton.android.pass.features.sl.sync.R
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun SimpleLoginSyncDetailsOptionsDialog(
     modifier: Modifier = Modifier,
     @StringRes titleResId: Int,
-    selectedOption: String,
-    options: ImmutableList<String>,
+    selectedOption: String?,
+    options: ImmutableList<String?>,
     onSelectOption: (Int) -> Unit,
     onDismiss: () -> Unit,
     onUpdate: () -> Unit,
@@ -77,7 +78,9 @@ internal fun SimpleLoginSyncDetailsOptionsDialog(
                     val currentOption = remember { options[index] }
 
                     SimpleLoginSyncDetailsOptionsDialogRow(
-                        text = currentOption,
+                        text = currentOption ?: stringResource(
+                            id = R.string.simple_login_sync_details_domain_option_blank
+                        ),
                         isSelected = currentOption == selectedOption,
                         onSelected = { onSelectOption(index) }
                     )
@@ -106,7 +109,7 @@ internal fun SimpleLoginSyncDetailsOptionsDialog(
                         onClick = onDismiss
                     ) {
                         Text(
-                            text = stringResource(id = R.string.action_close),
+                            text = stringResource(id = CompR.string.action_close),
                             style = ProtonTheme.typography.body2Regular,
                             color = PassTheme.colors.interactionNormMajor2
                         )
@@ -116,7 +119,7 @@ internal fun SimpleLoginSyncDetailsOptionsDialog(
                         onClick = onUpdate
                     ) {
                         Text(
-                            text = stringResource(id = R.string.action_update),
+                            text = stringResource(id = CompR.string.action_update),
                             style = ProtonTheme.typography.body2Regular,
                             color = PassTheme.colors.interactionNormMajor2
                         )

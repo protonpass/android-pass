@@ -18,6 +18,9 @@
 
 package proton.android.pass.features.sl.sync.details.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -51,9 +54,19 @@ internal fun SimpleLoginSyncDetailsContent(
             )
         }
     ) { innerPaddingValue ->
-        if (isLoading) {
+        AnimatedVisibility(
+            visible = isLoading,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
             PassFullScreenLoading()
-        } else {
+        }
+
+        AnimatedVisibility(
+            visible = !isLoading,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
             SimpleLoginSyncDetailsSections(
                 modifier = Modifier.padding(paddingValues = innerPaddingValue),
                 defaultDomain = defaultDomain,

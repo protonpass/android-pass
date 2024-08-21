@@ -23,12 +23,9 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
@@ -59,33 +56,20 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     private val remoteSimpleLoginDataSource: RemoteSimpleLoginDataSource
 ) : SimpleLoginRepository {
 
-    private val simpleLoginSyncStatus = accountManager.getPrimaryUserId()
-        .flatMapLatest { userId ->
-            if (userId == null) {
-                flowOf(None)
-            } else {
-                combine(
-                    userAccessDataRepository.observe(userId),
-                    localSimpleLoginDataSource.observeSyncPreference()
-                ) { userAccessData, isSimpleLoginSyncPreferenceEnabled ->
-                    userAccessData?.toSimpleLoginSyncStatus(
-                        userId = userId,
-                        isSimpleLoginSyncPreferenceEnabled = isSimpleLoginSyncPreferenceEnabled
-                    ).toOption()
-                }
-            }
-        }
-
     override fun observeSyncStatus(): Flow<Option<SimpleLoginSyncStatus>> = flow {
-        emit(simpleLoginSyncStatus.first())
+        withUserId { userId ->
+            combine(
+                userAccessDataRepository.observe(userId),
+                localSimpleLoginDataSource.observeSyncPreference()
+            ) { userAccessData, isSimpleLoginSyncPreferenceEnabled ->
+                userAccessData?.toSimpleLoginSyncStatus(
+                    userId = userId,
+                    isSimpleLoginSyncPreferenceEnabled = isSimpleLoginSyncPreferenceEnabled
+                ).toOption()
+            }.also { simpleLoginSyncStatus -> emitAll(simpleLoginSyncStatus) }
 
-        val userId = accountManager.getPrimaryUserId()
-            .firstOrNull()
-            ?: throw UserIdNotAvailableError()
-
-        userAccessDataRepository.refresh(userId)
-
-        emitAll(simpleLoginSyncStatus)
+            userAccessDataRepository.refresh(userId)
+        }
     }
 
     override fun disableSyncPreference() {
@@ -95,11 +79,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     override fun observeSyncPreference(): Flow<Boolean> =
         localSimpleLoginDataSource.observeSyncPreference()
 
-    override suspend fun enableSync(defaultShareId: ShareId) {
-        val userId = accountManager.getPrimaryUserId()
-            .firstOrNull()
-            ?: throw UserIdNotAvailableError()
-
+    override suspend fun enableSync(defaultShareId: ShareId) = withUserId { userId ->
         SimpleLoginEnableSyncRequest(
             defaultShareId = defaultShareId.id
         ).also { request ->
@@ -109,76 +89,61 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         userAccessDataRepository.refresh(userId)
     }
 
-    override fun observeAliasDomains(): Flow<List<SimpleLoginAliasDomain>> =
-        accountManager.getPrimaryUserId()
-            .flatMapLatest { userId ->
-                if (userId == null) {
-                    emptyList()
-                } else {
-                    remoteSimpleLoginDataSource.getSimpleLoginAliasDomains(userId)
-                        .domains
-                        .map { simpleLoginAliasDomainData -> simpleLoginAliasDomainData.toDomain() }
-                }.let(::flowOf)
-            }
-
-    override suspend fun updateAliasDomain(domain: String?) {
-        accountManager.getPrimaryUserId()
-            .firstOrNull()
-            ?.also { userId ->
-                remoteSimpleLoginDataSource.updateSimpleLoginAliasDomain(
-                    userId = userId,
-                    request = SimpleLoginUpdateAliasDomainRequest(
-                        defaultAliasDomain = domain
-                    )
-                )
-                    .settings
-                    .toDomain()
-                    .also(localSimpleLoginDataSource::updateAliasSettings)
-            }
-            ?: throw UserIdNotAvailableError()
+    override fun observeAliasDomains(): Flow<List<SimpleLoginAliasDomain>> = flow {
+        withUserId { userId ->
+            remoteSimpleLoginDataSource.getSimpleLoginAliasDomains(userId).domains
+                .map { simpleLoginAliasDomainData -> simpleLoginAliasDomainData.toDomain() }
+                .also { simpleLoginAliasDomains -> emit(simpleLoginAliasDomains) }
+        }
     }
 
-    override fun observeAliasMailboxes(): Flow<List<SimpleLoginAliasMailbox>> =
-        accountManager.getPrimaryUserId()
-            .flatMapLatest { userId ->
-                if (userId == null) {
-                    emptyList()
-                } else {
-                    remoteSimpleLoginDataSource.getSimpleLoginAliasMailboxes(userId)
-                        .mailboxes
-                        .map { simpleLoginAliasMailboxData -> simpleLoginAliasMailboxData.toDomain() }
-                }.let(::flowOf)
-            }
+    override suspend fun updateAliasDomain(domain: String?) = withUserId { userId ->
+        remoteSimpleLoginDataSource.updateSimpleLoginAliasDomain(
+            userId = userId,
+            request = SimpleLoginUpdateAliasDomainRequest(
+                defaultAliasDomain = domain
+            )
+        )
+            .settings
+            .toDomain()
+            .also(localSimpleLoginDataSource::updateAliasSettings)
+    }
 
-    override suspend fun updateAliasMailbox(mailboxId: String) {
-        accountManager.getPrimaryUserId()
-            .firstOrNull()
-            ?.also { userId ->
-                remoteSimpleLoginDataSource.updateSimpleLoginAliasMailbox(
-                    userId = userId,
-                    request = SimpleLoginUpdateAliasMailboxRequest(
-                        defaultMailboxID = mailboxId
-                    )
-                )
-                    .settings
-                    .toDomain()
-                    .also(localSimpleLoginDataSource::updateAliasSettings)
-            }
-            ?: throw UserIdNotAvailableError()
+    override fun observeAliasMailboxes(): Flow<List<SimpleLoginAliasMailbox>> = flow {
+        withUserId { userId ->
+            remoteSimpleLoginDataSource.getSimpleLoginAliasMailboxes(userId).mailboxes
+                .map { simpleLoginAliasMailboxData -> simpleLoginAliasMailboxData.toDomain() }
+                .also { simpleLoginAliasMailboxes -> emit(simpleLoginAliasMailboxes) }
+        }
+    }
+
+    override suspend fun updateAliasMailbox(mailboxId: String) = withUserId { userId ->
+        remoteSimpleLoginDataSource.updateSimpleLoginAliasMailbox(
+            userId = userId,
+            request = SimpleLoginUpdateAliasMailboxRequest(
+                defaultMailboxID = mailboxId
+            )
+        )
+            .settings
+            .toDomain()
+            .also(localSimpleLoginDataSource::updateAliasSettings)
     }
 
     override fun observeAliasSettings(): Flow<SimpleLoginAliasSettings> = flow {
+        withUserId { userId ->
+            remoteSimpleLoginDataSource.getSimpleLoginAliasSettings(userId)
+                .settings
+                .toDomain()
+                .also(localSimpleLoginDataSource::updateAliasSettings)
+        }
+        emitAll(localSimpleLoginDataSource.observeAliasSettings())
+    }
+
+    private suspend fun <T> withUserId(block: suspend (UserId) -> T) {
         accountManager.getPrimaryUserId()
             .firstOrNull()
-            ?.also { userId ->
-                remoteSimpleLoginDataSource.getSimpleLoginAliasSettings(userId)
-                    .settings
-                    .toDomain()
-                    .also(localSimpleLoginDataSource::updateAliasSettings)
-            }
+            ?.also { userId -> block(userId) }
             ?: throw UserIdNotAvailableError()
-
-        emitAll(localSimpleLoginDataSource.observeAliasSettings())
     }
 
     private suspend fun UserAccessData.toSimpleLoginSyncStatus(

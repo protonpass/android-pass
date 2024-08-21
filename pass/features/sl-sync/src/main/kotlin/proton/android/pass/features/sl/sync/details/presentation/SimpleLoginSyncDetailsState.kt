@@ -19,6 +19,9 @@
 package proton.android.pass.features.sl.sync.details.presentation
 
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.mutableStateListOf
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -31,12 +34,12 @@ internal data class SimpleLoginSyncDetailsState(
     internal val isUpdating: Boolean,
     internal val event: SimpleLoginSyncDetailsEvent,
     private val modelOption: Option<SimpleLoginSyncDetailsModel>,
-    private val selectedDomainOption: Option<String>,
+    private val selectedDomainOption: Option<String?>,
     private val selectedMailboxOption: Option<SimpleLoginAliasMailbox>
 ) {
 
-    internal val defaultDomain: String = when (modelOption) {
-        None -> ""
+    internal val defaultDomain: String? = when (modelOption) {
+        None -> null
         is Some -> modelOption.value.defaultDomain
     }
 
@@ -54,21 +57,30 @@ internal data class SimpleLoginSyncDetailsState(
         is Some -> modelOption.value.defaultVault
     }
 
-    internal val aliasDomains: List<SimpleLoginAliasDomain> = when (modelOption) {
+    private val aliasDomains: List<SimpleLoginAliasDomain> = when (modelOption) {
         None -> emptyList()
         is Some -> modelOption.value.aliasDomains
     }
 
+    internal val aliasDomainOptions: ImmutableList<String?> = mutableStateListOf<String?>().apply {
+        add(null) // This is to support the "Not selected" option
+        addAll(aliasDomains.map { it.domain })
+    }.toPersistentList()
+
     internal val canSelectDomain: Boolean = aliasDomains.size > 1
 
-    internal val aliasMailboxes: List<SimpleLoginAliasMailbox> = when (modelOption) {
+    private val aliasMailboxes: List<SimpleLoginAliasMailbox> = when (modelOption) {
         None -> emptyList()
         is Some -> modelOption.value.aliasMailboxes
     }
 
+    internal val aliasMailboxOptions: ImmutableList<String> = aliasMailboxes
+        .map { it.email }
+        .toPersistentList()
+
     internal val canSelectMailbox: Boolean = aliasMailboxes.size > 1
 
-    internal val selectedAliasDomain: String = when (selectedDomainOption) {
+    internal val selectedAliasDomain: String? = when (selectedDomainOption) {
         None -> defaultDomain
         is Some -> selectedDomainOption.value
     }
@@ -92,6 +104,12 @@ internal data class SimpleLoginSyncDetailsState(
         None -> true
         is Some -> false
     }
+
+    // The -1 is required since we added a null item to the beginning of the list to support the "Not selected" option
+    internal fun getAliasDomain(position: Int): SimpleLoginAliasDomain? = aliasDomains
+        .getOrNull(position.minus(1))
+
+    internal fun getAliasMailbox(position: Int): SimpleLoginAliasMailbox = aliasMailboxes[position]
 
     internal companion object {
 

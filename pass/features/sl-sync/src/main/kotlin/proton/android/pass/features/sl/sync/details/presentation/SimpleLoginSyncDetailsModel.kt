@@ -35,7 +35,7 @@ internal data class SimpleLoginSyncDetailsModel(
     private val syncStatusOption: Option<SimpleLoginSyncStatus>
 ) {
 
-    internal val defaultDomain: String = aliasSettings.defaultDomain.orEmpty()
+    internal val defaultDomain: String? = aliasSettings.defaultDomain
 
     internal val defaultMailboxId: String = aliasSettings.defaultMailboxId
 

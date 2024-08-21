@@ -23,7 +23,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTopBarBackButtonType
@@ -74,11 +73,11 @@ internal fun SimpleLoginSyncDetailsContent(
                 SimpleLoginSyncDetailsOptionsDialog(
                     titleResId = R.string.simple_login_sync_details_dialog_title_domains,
                     selectedOption = selectedAliasDomain,
-                    options = aliasDomains.map { it.domain }.toPersistentList(),
+                    options = aliasDomainOptions,
                     isLoading = isUpdating,
                     onSelectOption = { selectedOptionIndex ->
                         SimpleLoginSyncDetailsUiEvent.OnDomainSelected(
-                            aliasDomain = aliasDomains[selectedOptionIndex]
+                            aliasDomain = getAliasDomain(selectedOptionIndex)
                         ).also(onUiEvent)
                     },
                     onDismiss = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnOptionsDialogDismissed) },
@@ -90,11 +89,11 @@ internal fun SimpleLoginSyncDetailsContent(
                 SimpleLoginSyncDetailsOptionsDialog(
                     titleResId = R.string.simple_login_sync_details_dialog_title_mailboxes,
                     selectedOption = selectedAliasMailboxEmail,
-                    options = aliasMailboxes.map { it.email }.toPersistentList(),
+                    options = aliasMailboxOptions,
                     isLoading = isUpdating,
                     onSelectOption = { selectedOptionIndex ->
                         SimpleLoginSyncDetailsUiEvent.OnMailboxSelected(
-                            aliasMailbox = aliasMailboxes[selectedOptionIndex]
+                            aliasMailbox = getAliasMailbox(selectedOptionIndex)
                         ).also(onUiEvent)
                     },
                     onDismiss = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnOptionsDialogDismissed) },

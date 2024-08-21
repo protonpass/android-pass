@@ -39,7 +39,7 @@ internal sealed interface SimpleLoginSyncDetailsUiEvent {
 
     @JvmInline
     value class OnDomainSelected(
-        internal val aliasDomain: SimpleLoginAliasDomain
+        internal val aliasDomain: SimpleLoginAliasDomain?
     ) : SimpleLoginSyncDetailsUiEvent
 
     @JvmInline

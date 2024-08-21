@@ -47,8 +47,7 @@ fun SimpleLoginSyncDetailsScreen(
 
     LaunchedEffect(state.event) {
         when (state.event) {
-            SimpleLoginSyncDetailsEvent.OnFetchAliasDomainsError,
-            SimpleLoginSyncDetailsEvent.OnFetchAliasMailboxesError -> {
+            SimpleLoginSyncDetailsEvent.OnFetchAliasDetailsError -> {
                 onNavigated(SimpleLoginSyncNavDestination.Back)
             }
 

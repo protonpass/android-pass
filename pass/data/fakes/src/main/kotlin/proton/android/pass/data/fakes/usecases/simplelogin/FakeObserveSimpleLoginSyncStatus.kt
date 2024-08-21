@@ -20,8 +20,7 @@ package proton.android.pass.data.fakes.usecases.simplelogin
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
+import kotlinx.coroutines.flow.filterNotNull
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import javax.inject.Inject
@@ -30,8 +29,8 @@ import javax.inject.Singleton
 @Singleton
 class FakeObserveSimpleLoginSyncStatus @Inject constructor() : ObserveSimpleLoginSyncStatus {
 
-    private val simpleLoginSyncStatusOptionFlow = MutableStateFlow(None)
+    private val simpleLoginSyncStatusFlow = MutableStateFlow<SimpleLoginSyncStatus?>(null)
 
-    override fun invoke(): Flow<Option<SimpleLoginSyncStatus>> = simpleLoginSyncStatusOptionFlow
+    override fun invoke(): Flow<SimpleLoginSyncStatus> = simpleLoginSyncStatusFlow.filterNotNull()
 
 }

@@ -63,12 +63,12 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
         observeSimpleLoginAliasMailboxes(),
         observeSimpleLoginAliasSettings(),
         observeSimpleLoginSyncStatus(),
-    ) { aliasDomains, aliasMailboxes, aliasSettings, syncStatusOption ->
+    ) { aliasDomains, aliasMailboxes, aliasSettings, syncStatus ->
         SimpleLoginSyncDetailsModel(
             aliasDomains = aliasDomains,
             aliasMailboxes = aliasMailboxes,
             aliasSettings = aliasSettings,
-            syncStatusOption = syncStatusOption
+            syncStatus = syncStatus
         ).some()
     }.catch { error ->
         PassLogger.w(TAG, "There was an error while observing SL alias details")

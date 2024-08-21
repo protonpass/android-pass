@@ -38,7 +38,7 @@ interface SimpleLoginRepository {
 
     fun observeAliasDomains(): Flow<List<SimpleLoginAliasDomain>>
 
-    suspend fun updateAliasDomain(domain: String)
+    suspend fun updateAliasDomain(domain: String?)
 
     fun observeAliasMailboxes(): Flow<List<SimpleLoginAliasMailbox>>
 

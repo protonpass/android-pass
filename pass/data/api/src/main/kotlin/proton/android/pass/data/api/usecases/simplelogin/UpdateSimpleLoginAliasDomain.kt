@@ -20,6 +20,6 @@ package proton.android.pass.data.api.usecases.simplelogin
 
 interface UpdateSimpleLoginAliasDomain {
 
-    suspend operator fun invoke(domain: String)
+    suspend operator fun invoke(domain: String?)
 
 }

@@ -75,8 +75,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         localSimpleLoginDataSource.disableSyncPreference()
     }
 
-    override fun observeSyncPreference(): Flow<Boolean> =
-        localSimpleLoginDataSource.observeSyncPreference()
+    override fun observeSyncPreference(): Flow<Boolean> = localSimpleLoginDataSource.observeSyncPreference()
 
     override suspend fun enableSync(defaultShareId: ShareId) = withUserId { userId ->
         remoteSimpleLoginDataSource.enableSimpleLoginSync(

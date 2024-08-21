@@ -32,10 +32,7 @@ interface RemoteSimpleLoginDataSource {
 
     suspend fun getSimpleLoginSyncStatus(userId: UserId): SimpleLoginSyncStatusResponse
 
-    suspend fun enableSimpleLoginSync(
-        userId: UserId,
-        request: SimpleLoginEnableSyncRequest
-    ): CodeOnlyResponse
+    suspend fun enableSimpleLoginSync(userId: UserId, request: SimpleLoginEnableSyncRequest): CodeOnlyResponse
 
     suspend fun getSimpleLoginAliasDomains(userId: UserId): SimpleLoginAliasDomainsResponse
 

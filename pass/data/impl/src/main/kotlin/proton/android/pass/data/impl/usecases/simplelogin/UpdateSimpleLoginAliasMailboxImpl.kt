@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 class UpdateSimpleLoginAliasMailboxImpl @Inject constructor(
     private val repository: SimpleLoginRepository
-): UpdateSimpleLoginAliasMailbox {
+) : UpdateSimpleLoginAliasMailbox {
 
     override suspend fun invoke(mailboxId: String) {
         repository.updateAliasMailbox(mailboxId)

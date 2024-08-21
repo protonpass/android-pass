@@ -103,7 +103,7 @@ internal fun SimpleLoginSyncDetailsOptionsDialog(
                         .padding(
                             end = Spacing.medium,
                             bottom = Spacing.medium
-                        ),
+                        )
                 ) {
                     TextButton(
                         onClick = onDismiss

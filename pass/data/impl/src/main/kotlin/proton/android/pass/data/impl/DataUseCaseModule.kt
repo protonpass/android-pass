@@ -867,9 +867,7 @@ abstract class DataUseCaseModule {
     ): ObserveSimpleLoginAliasDomains
 
     @[Binds Singleton]
-    abstract fun bindUpdateSimpleLoginAliasDomain(
-        impl: UpdateSimpleLoginAliasDomainImpl
-    ): UpdateSimpleLoginAliasDomain
+    abstract fun bindUpdateSimpleLoginAliasDomain(impl: UpdateSimpleLoginAliasDomainImpl): UpdateSimpleLoginAliasDomain
 
     @[Binds Singleton]
     abstract fun bindObserveSimpleLoginAliasMailboxes(

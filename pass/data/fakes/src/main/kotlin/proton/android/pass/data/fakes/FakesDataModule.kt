@@ -816,9 +816,7 @@ abstract class FakesDataModule {
     ): ObserveSimpleLoginAliasDomains
 
     @Binds
-    abstract fun bindUpdateSimpleLoginAliasDomain(
-        impl: FakeUpdateSimpleLoginAliasDomain
-    ): UpdateSimpleLoginAliasDomain
+    abstract fun bindUpdateSimpleLoginAliasDomain(impl: FakeUpdateSimpleLoginAliasDomain): UpdateSimpleLoginAliasDomain
 
     @Binds
     abstract fun bindObserveSimpleLoginAliasMailboxes(

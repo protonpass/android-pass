@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
@@ -120,8 +121,12 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
                 .onError { error ->
                     PassLogger.w(TAG, "There was an error updating SL alias domain")
                     PassLogger.e(TAG, error)
-                    snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasDomainError)
                     eventFlow.update { SimpleLoginSyncDetailsEvent.OnUpdateAliasDomainError }
+                    snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasDomainError)
+                }
+                .onSuccess {
+                    eventFlow.update { SimpleLoginSyncDetailsEvent.OnAliasDomainUpdated }
+                    snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasDomainSuccess)
                 }
 
             isUpdatingFlow.update { false }
@@ -136,8 +141,12 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
                 .onError { error ->
                     PassLogger.w(TAG, "There was an error updating SL alias mailbox")
                     PassLogger.e(TAG, error)
-                    snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasMailboxError)
                     eventFlow.update { SimpleLoginSyncDetailsEvent.OnUpdateAliasMailboxError }
+                    snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasMailboxError)
+                }
+                .onSuccess {
+                    eventFlow.update { SimpleLoginSyncDetailsEvent.OnAliasMailboxUpdated }
+                    snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasMailboxSuccess)
                 }
 
             isUpdatingFlow.update { false }

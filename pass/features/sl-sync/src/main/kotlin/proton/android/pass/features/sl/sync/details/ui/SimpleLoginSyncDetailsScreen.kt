@@ -81,12 +81,14 @@ fun SimpleLoginSyncDetailsScreen(
                     dialogOptionTypeOption = SimpleLoginSyncDetailsOptionType.Mailbox.toOption()
                 }
 
-                SimpleLoginSyncDetailsUiEvent.OnSyncSettingsClicked -> {
-                    onNavigated(SimpleLoginSyncNavDestination.Settings)
+                is SimpleLoginSyncDetailsUiEvent.OnSyncSettingsClicked -> {
+                    SimpleLoginSyncNavDestination.Settings(
+                        shareId = uiEvent.shareId
+                    ).also(onNavigated)
                 }
 
                 is SimpleLoginSyncDetailsUiEvent.OnDefaultVaultClicked -> {
-                    SimpleLoginSyncNavDestination.SelectVault(
+                    SimpleLoginSyncNavDestination.Settings(
                         shareId = uiEvent.shareId
                     ).also(onNavigated)
                 }

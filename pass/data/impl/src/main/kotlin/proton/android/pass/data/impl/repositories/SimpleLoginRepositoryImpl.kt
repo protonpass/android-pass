@@ -21,13 +21,12 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
@@ -56,7 +55,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     private val remoteSimpleLoginDataSource: RemoteSimpleLoginDataSource
 ) : SimpleLoginRepository {
 
-    override fun observeSyncStatus(): Flow<Option<SimpleLoginSyncStatus>> = flow {
+    override fun observeSyncStatus(): Flow<SimpleLoginSyncStatus> = flow {
         withUserId { userId ->
             combine(
                 userAccessDataRepository.observe(userId),
@@ -65,8 +64,8 @@ class SimpleLoginRepositoryImpl @Inject constructor(
                 userAccessData?.toSimpleLoginSyncStatus(
                     userId = userId,
                     isSimpleLoginSyncPreferenceEnabled = isSimpleLoginSyncPreferenceEnabled
-                ).toOption()
-            }.also { simpleLoginSyncStatus -> emitAll(simpleLoginSyncStatus) }
+                )
+            }.also { simpleLoginSyncStatus -> emitAll(simpleLoginSyncStatus.filterNotNull()) }
 
             userAccessDataRepository.refresh(userId)
         }
@@ -80,11 +79,12 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         localSimpleLoginDataSource.observeSyncPreference()
 
     override suspend fun enableSync(defaultShareId: ShareId) = withUserId { userId ->
-        SimpleLoginEnableSyncRequest(
-            defaultShareId = defaultShareId.id
-        ).also { request ->
-            remoteSimpleLoginDataSource.enableSimpleLoginSync(userId, request)
-        }
+        remoteSimpleLoginDataSource.enableSimpleLoginSync(
+            userId = userId,
+            request = SimpleLoginEnableSyncRequest(
+                defaultShareId = defaultShareId.id
+            )
+        )
 
         userAccessDataRepository.refresh(userId)
     }

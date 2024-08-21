@@ -28,8 +28,10 @@
     <string name="simple_login_sync_details_dialog_title_mailboxes">Default mailbox for aliases</string>
     <string name="simple_login_sync_details_snackbar_alias_domain_fetching_error">There was an error fetching SL alias domains</string>
     <string name="simple_login_sync_details_snackbar_alias_mailboxes_fetching_error">There was an error fetching SL alias mailboxes</string>
-    <string name="simple_login_sync_details_snackbar_alias_domain_updating_error">There was an error updating SL alias domain</string>
-    <string name="simple_login_sync_details_snackbar_alias_mailbox_updating_error">There was an error updating SL alias mailbox</string>
+    <string name="simple_login_sync_details_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
+    <string name="simple_login_sync_details_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
+    <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">There was an error updating SL alias mailbox</string>
+    <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">SL alias mailbox successfully updated</string>
 
     <!-- Settings screen -->
     <string name="simple_login_sync_settings_title">Sync aliases</string>

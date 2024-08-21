@@ -52,6 +52,8 @@ fun SimpleLoginSyncDetailsScreen(
                 onNavigated(SimpleLoginSyncNavDestination.Back)
             }
 
+            SimpleLoginSyncDetailsEvent.OnAliasDomainUpdated,
+            SimpleLoginSyncDetailsEvent.OnAliasMailboxUpdated,
             SimpleLoginSyncDetailsEvent.OnUpdateAliasDomainError,
             SimpleLoginSyncDetailsEvent.OnUpdateAliasMailboxError -> {
                 dialogOptionTypeOption = None

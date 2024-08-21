@@ -22,9 +22,7 @@ internal sealed interface SimpleLoginSyncDetailsEvent {
 
     data object Idle : SimpleLoginSyncDetailsEvent
 
-    data object OnFetchAliasDomainsError : SimpleLoginSyncDetailsEvent
-
-    data object OnFetchAliasMailboxesError : SimpleLoginSyncDetailsEvent
+    data object OnFetchAliasDetailsError : SimpleLoginSyncDetailsEvent
 
     data object OnAliasDomainUpdated : SimpleLoginSyncDetailsEvent
 

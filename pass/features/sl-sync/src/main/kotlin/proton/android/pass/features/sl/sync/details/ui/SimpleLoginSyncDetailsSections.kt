@@ -46,6 +46,8 @@ internal fun SimpleLoginSyncDetailsSections(
     defaultMailboxEmail: String,
     defaultVaultOption: Option<Vault>,
     pendingAliasesCount: Int,
+    canSelectDomain: Boolean,
+    canSelectMailbox: Boolean,
     onUiEvent: (SimpleLoginSyncDetailsUiEvent) -> Unit
 ) {
     Column(
@@ -56,14 +58,16 @@ internal fun SimpleLoginSyncDetailsSections(
             label = stringResource(id = R.string.simple_login_sync_details_domain_label),
             title = stringResource(id = R.string.simple_login_sync_details_domain_title),
             subtitle = defaultDomain.ifEmpty { "Not Selected" },
-            onClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnDomainClicked) }
+            onClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnDomainClicked) },
+            isClickable = canSelectDomain
         )
 
         SimpleLoginSyncSectionRow(
             label = stringResource(id = R.string.simple_login_sync_details_mailboxes_label),
             title = stringResource(id = R.string.simple_login_sync_details_mailboxes_title),
             subtitle = defaultMailboxEmail,
-            onClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnMailboxClicked) }
+            onClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnMailboxClicked) },
+            isClickable = canSelectMailbox
         )
 
         when (defaultVaultOption) {

@@ -23,6 +23,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 
 interface SimpleLoginRepository {
@@ -42,5 +43,7 @@ interface SimpleLoginRepository {
     fun observeAliasMailboxes(): Flow<List<SimpleLoginAliasMailbox>>
 
     suspend fun updateAliasMailbox(mailboxId: String)
+
+    fun observeAliasSettings(): Flow<SimpleLoginAliasSettings>
 
 }

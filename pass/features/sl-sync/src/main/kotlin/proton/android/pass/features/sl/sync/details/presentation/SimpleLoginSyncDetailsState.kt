@@ -66,7 +66,7 @@ internal data class SimpleLoginSyncDetailsState(
         is Some -> modelOption.value.aliasMailboxes
     }
 
-    internal val canSelectMailbox: Boolean = aliasMailboxes.size > 1
+    internal val canSelectMailbox: Boolean = true
 
     internal val selectedAliasDomain: String = when (selectedDomainOption) {
         None -> defaultDomain

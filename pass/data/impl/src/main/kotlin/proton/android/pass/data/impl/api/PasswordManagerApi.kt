@@ -457,7 +457,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     @GET("$PREFIX/user/alias/mailbox")
     suspend fun getSimpleLoginAliasMailboxes(): SimpleLoginAliasMailboxesResponse
 
-    @PUT("$PREFIX/user/alias/settings/default_alias_mailbox")
+    @PUT("$PREFIX/user/alias/settings/default_mailbox_id")
     suspend fun updateSimpleLoginAliasMailbox(
         @Body request: SimpleLoginUpdateAliasMailboxRequest
     ): SimpleLoginAliasSettingsResponse

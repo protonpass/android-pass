@@ -40,13 +40,23 @@ internal enum class SimpleLoginSyncDetailsSnackBarMessage(
     ),
 
     UpdateAliasDomainError(
-        id = R.string.simple_login_sync_details_snackbar_alias_domain_updating_error,
+        id = R.string.simple_login_sync_details_snackbar_alias_domain_update_error,
         type = SnackbarType.ERROR
     ),
 
+    UpdateAliasDomainSuccess(
+        id = R.string.simple_login_sync_details_snackbar_alias_domain_update_success,
+        type = SnackbarType.SUCCESS
+    ),
+
     UpdateAliasMailboxError(
-        id = R.string.simple_login_sync_details_snackbar_alias_mailbox_updating_error,
+        id = R.string.simple_login_sync_details_snackbar_alias_mailbox_update_error,
         type = SnackbarType.ERROR
+    ),
+
+    UpdateAliasMailboxSuccess(
+        id = R.string.simple_login_sync_details_snackbar_alias_mailbox_update_success,
+        type = SnackbarType.SUCCESS
     ),
 
 }

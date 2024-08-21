@@ -19,11 +19,16 @@
 package proton.android.pass.data.impl.local.simplelogin
 
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
 
 interface LocalSimpleLoginDataSource {
 
     fun disableSyncPreference()
 
     fun observeSyncPreference(): Flow<Boolean>
+
+    fun observeAliasSettings(): Flow<SimpleLoginAliasSettings>
+
+    fun updateAliasSettings(newAliasSettings: SimpleLoginAliasSettings)
 
 }

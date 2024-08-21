@@ -42,10 +42,12 @@ import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDomainReques
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasMailboxRequest
 import proton.android.pass.data.impl.responses.SimpleLoginAliasDomainData
 import proton.android.pass.data.impl.responses.SimpleLoginAliasMailboxData
+import proton.android.pass.data.impl.responses.SimpleLoginAliasSettingsData
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserAccessData
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import javax.inject.Inject
 
@@ -113,11 +115,6 @@ class SimpleLoginRepositoryImpl @Inject constructor(
                 if (userId == null) {
                     emptyList()
                 } else {
-                    remoteSimpleLoginDataSource.getSimpleLoginAliasSettings(userId)
-                        .also {
-                            println("JIBIRI: settings: $it")
-                        }
-
                     remoteSimpleLoginDataSource.getSimpleLoginAliasDomains(userId)
                         .domains
                         .map { simpleLoginAliasDomainData -> simpleLoginAliasDomainData.toDomain() }
@@ -134,6 +131,9 @@ class SimpleLoginRepositoryImpl @Inject constructor(
                         defaultAliasDomain = domain.takeIf { it.isNotEmpty() }
                     )
                 )
+                    .settings
+                    .toDomain()
+                    .also(localSimpleLoginDataSource::updateAliasSettings)
             }
             ?: throw UserIdNotAvailableError()
     }
@@ -160,8 +160,25 @@ class SimpleLoginRepositoryImpl @Inject constructor(
                         defaultMailboxID = mailboxId
                     )
                 )
+                    .settings
+                    .toDomain()
+                    .also(localSimpleLoginDataSource::updateAliasSettings)
             }
             ?: throw UserIdNotAvailableError()
+    }
+
+    override fun observeAliasSettings(): Flow<SimpleLoginAliasSettings> = flow {
+        accountManager.getPrimaryUserId()
+            .firstOrNull()
+            ?.also { userId ->
+                remoteSimpleLoginDataSource.getSimpleLoginAliasSettings(userId)
+                    .settings
+                    .toDomain()
+                    .also(localSimpleLoginDataSource::updateAliasSettings)
+            }
+            ?: throw UserIdNotAvailableError()
+
+        emitAll(localSimpleLoginDataSource.observeAliasSettings())
     }
 
     private suspend fun UserAccessData.toSimpleLoginSyncStatus(
@@ -186,6 +203,11 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         id = mailboxId,
         email = email,
         isDefault = isDefault
+    )
+
+    private fun SimpleLoginAliasSettingsData.toDomain() = SimpleLoginAliasSettings(
+        defaultDomain = defaultAliasDomain,
+        defaultMailboxId = defaultMailboxId
     )
 
 }

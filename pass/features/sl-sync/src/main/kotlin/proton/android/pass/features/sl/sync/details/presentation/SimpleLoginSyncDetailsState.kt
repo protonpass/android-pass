@@ -28,28 +28,45 @@ import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 
 @Stable
 internal data class SimpleLoginSyncDetailsState(
-    internal val aliasDomains: List<SimpleLoginAliasDomain>,
-    internal val aliasMailboxes: List<SimpleLoginAliasMailbox>,
-    internal val defaultVaultOption: Option<Vault>,
-    internal val pendingAliasesCountOption: Option<Int>,
-    internal val isLoading: Boolean,
     internal val isUpdating: Boolean,
     internal val event: SimpleLoginSyncDetailsEvent,
+    private val modelOption: Option<SimpleLoginSyncDetailsModel>,
     private val selectedDomainOption: Option<String>,
     private val selectedMailboxOption: Option<SimpleLoginAliasMailbox>
 ) {
 
-    internal val defaultDomain: String = aliasDomains
-        .firstOrNull { aliasDomain -> aliasDomain.isDefault }
-        ?.domain
-        .orEmpty()
+    internal val defaultDomain: String = when (modelOption) {
+        None -> ""
+        is Some -> modelOption.value.defaultDomain
+    }
 
-    private val defaultMailbox: SimpleLoginAliasMailbox? =
-        aliasMailboxes.firstOrNull { aliasMailbox ->
-            aliasMailbox.isDefault
-        }
+    private val defaultMailbox: SimpleLoginAliasMailbox? = when (modelOption) {
+        None -> null
+        is Some -> modelOption.value
+            .aliasMailboxes
+            .firstOrNull { aliasMailbox -> aliasMailbox.id == modelOption.value.defaultMailboxId }
+    }
 
     internal val defaultMailboxEmail: String = defaultMailbox?.email.orEmpty()
+
+    internal val defaultVaultOption: Option<Vault> = when (modelOption) {
+        None -> None
+        is Some -> modelOption.value.defaultVault
+    }
+
+    internal val aliasDomains: List<SimpleLoginAliasDomain> = when (modelOption) {
+        None -> emptyList()
+        is Some -> modelOption.value.aliasDomains
+    }
+
+    internal val canSelectDomain: Boolean = aliasDomains.size > 1
+
+    internal val aliasMailboxes: List<SimpleLoginAliasMailbox> = when (modelOption) {
+        None -> emptyList()
+        is Some -> modelOption.value.aliasMailboxes
+    }
+
+    internal val canSelectMailbox: Boolean = aliasMailboxes.size > 1
 
     internal val selectedAliasDomain: String = when (selectedDomainOption) {
         None -> defaultDomain
@@ -66,21 +83,22 @@ internal data class SimpleLoginSyncDetailsState(
         is Some -> selectedMailboxOption.value.email
     }
 
-    internal val pendingAliasesCount: Int = when (pendingAliasesCountOption) {
+    internal val pendingAliasesCount: Int = when (modelOption) {
         None -> 0
-        is Some -> pendingAliasesCountOption.value
+        is Some -> modelOption.value.pendingAliasesCount
+    }
+
+    internal val isLoading: Boolean = when (modelOption) {
+        None -> true
+        is Some -> false
     }
 
     internal companion object {
 
         internal val Initial: SimpleLoginSyncDetailsState = SimpleLoginSyncDetailsState(
-            aliasDomains = emptyList(),
-            aliasMailboxes = emptyList(),
-            defaultVaultOption = None,
-            pendingAliasesCountOption = None,
-            isLoading = true,
             isUpdating = false,
             event = SimpleLoginSyncDetailsEvent.Idle,
+            modelOption = None,
             selectedDomainOption = None,
             selectedMailboxOption = None
         )

@@ -19,7 +19,11 @@
 package proton.android.pass.data.impl.local.simplelogin
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.simplelogin.SimpleLoginSyncStatusPreference
 import javax.inject.Inject
@@ -27,6 +31,8 @@ import javax.inject.Inject
 class LocalSimpleLoginDataSourceImpl @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository
 ) : LocalSimpleLoginDataSource {
+
+    private val aliasSettingsFlow = MutableStateFlow<SimpleLoginAliasSettings?>(null)
 
     override fun disableSyncPreference() {
         userPreferencesRepository.setSimpleLoginSyncStatusPreference(
@@ -37,5 +43,12 @@ class LocalSimpleLoginDataSourceImpl @Inject constructor(
     override fun observeSyncPreference(): Flow<Boolean> = userPreferencesRepository
         .observeSimpleLoginSyncStatusPreference()
         .map { simpleLoginSyncStatusPreference -> simpleLoginSyncStatusPreference.value }
+
+    override fun observeAliasSettings(): Flow<SimpleLoginAliasSettings> = aliasSettingsFlow
+        .filterNotNull()
+
+    override fun updateAliasSettings(newAliasSettings: SimpleLoginAliasSettings) {
+        aliasSettingsFlow.update { newAliasSettings }
+    }
 
 }

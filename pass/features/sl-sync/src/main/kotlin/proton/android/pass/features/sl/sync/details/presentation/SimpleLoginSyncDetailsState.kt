@@ -45,9 +45,10 @@ internal data class SimpleLoginSyncDetailsState(
 
     private val defaultMailbox: SimpleLoginAliasMailbox? = when (modelOption) {
         None -> null
-        is Some -> modelOption.value
-            .aliasMailboxes
-            .firstOrNull { aliasMailbox -> aliasMailbox.id == modelOption.value.defaultMailboxId }
+        is Some ->
+            modelOption.value
+                .aliasMailboxes
+                .firstOrNull { aliasMailbox -> aliasMailbox.id == modelOption.value.defaultMailboxId }
     }
 
     internal val defaultMailboxEmail: String = defaultMailbox?.email.orEmpty()

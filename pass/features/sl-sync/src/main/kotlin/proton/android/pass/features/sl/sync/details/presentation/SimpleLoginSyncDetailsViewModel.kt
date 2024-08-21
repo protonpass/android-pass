@@ -62,7 +62,7 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
         observeSimpleLoginAliasDomains(),
         observeSimpleLoginAliasMailboxes(),
         observeSimpleLoginAliasSettings(),
-        observeSimpleLoginSyncStatus()
+        observeSimpleLoginSyncStatus(),
     ) { aliasDomains, aliasMailboxes, aliasSettings, syncStatusOption ->
         SimpleLoginSyncDetailsModel(
             aliasDomains = aliasDomains,

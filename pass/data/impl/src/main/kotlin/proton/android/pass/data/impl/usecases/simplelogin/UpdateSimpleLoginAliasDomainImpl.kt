@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 class UpdateSimpleLoginAliasDomainImpl @Inject constructor(
     private val repository: SimpleLoginRepository
-): UpdateSimpleLoginAliasDomain {
+) : UpdateSimpleLoginAliasDomain {
 
     override suspend fun invoke(domain: String?) {
         repository.updateAliasDomain(domain)

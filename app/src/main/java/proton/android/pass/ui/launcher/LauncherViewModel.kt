@@ -243,12 +243,13 @@ class LauncherViewModel @Inject constructor(
     private fun getState(accounts: List<Account>): AccountState {
 
         // Check the case where there are either no accounts or all accounts are not ready
-        if (accounts.isEmpty() || accounts.all { it.isDisabled() }) {
-            if (accounts.isNotEmpty()) {
-                PassLogger.i(TAG, "On AccountNeeded has accounts states: ${accounts.map { it.state }}")
-            } else {
-                PassLogger.i(TAG, "On AccountNeeded has no accounts")
-            }
+        if (accounts.isEmpty()) {
+            PassLogger.i(TAG, "On AccountNeeded has no accounts")
+            return AccountState.AccountNeeded
+        }
+
+        if (accounts.all { it.isDisabled() }) {
+            PassLogger.i(TAG, "On AccountNeeded has accounts states: ${accounts.map { it.state }}")
             return AccountState.AccountNeeded
         }
 

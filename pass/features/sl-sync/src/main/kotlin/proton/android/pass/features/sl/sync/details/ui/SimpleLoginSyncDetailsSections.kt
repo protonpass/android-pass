@@ -21,6 +21,8 @@ package proton.android.pass.features.sl.sync.details.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
@@ -49,8 +51,10 @@ internal fun SimpleLoginSyncDetailsSections(
     onUiEvent: (SimpleLoginSyncDetailsUiEvent) -> Unit
 ) {
     Column(
-        modifier = modifier.padding(all = Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+        modifier = modifier
+            .padding(all = Spacing.medium)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium),
     ) {
         SimpleLoginSyncSectionRow(
             label = stringResource(id = R.string.simple_login_sync_details_domain_label),

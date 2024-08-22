@@ -95,7 +95,8 @@ internal fun SimpleLoginSyncDetailsContent(
                         ).also(onUiEvent)
                     },
                     onDismiss = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnOptionsDialogDismissed) },
-                    onUpdate = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnUpdateDomainClicked) }
+                    onUpdate = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnUpdateDomainClicked) },
+                    canUpdate = canUpdateDomain
                 )
             }
 
@@ -111,7 +112,8 @@ internal fun SimpleLoginSyncDetailsContent(
                         ).also(onUiEvent)
                     },
                     onDismiss = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnOptionsDialogDismissed) },
-                    onUpdate = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnUpdateMailboxClicked) }
+                    onUpdate = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnUpdateMailboxClicked) },
+                    canUpdate = canUpdateMailbox
                 )
             }
         }

@@ -19,6 +19,7 @@
 package proton.android.pass.features.sl.sync.details.ui.dialogs
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -50,7 +51,8 @@ internal fun SimpleLoginSyncDetailsOptionsDialog(
     onSelectOption: (Int) -> Unit,
     onDismiss: () -> Unit,
     onUpdate: () -> Unit,
-    isLoading: Boolean
+    isLoading: Boolean,
+    canUpdate: Boolean
 ) {
     NoPaddingDialog(
         modifier = modifier.padding(horizontal = Spacing.medium),
@@ -74,7 +76,7 @@ internal fun SimpleLoginSyncDetailsOptionsDialog(
             )
 
             LazyColumn(
-                modifier = Modifier.weight(weight = 1f)
+                modifier = Modifier.weight(weight = 1f, fill = false)
             ) {
                 items(options.size) { index ->
                     val currentOption = remember { options[index] }
@@ -117,14 +119,20 @@ internal fun SimpleLoginSyncDetailsOptionsDialog(
                         )
                     }
 
-                    TextButton(
-                        onClick = onUpdate
-                    ) {
-                        Text(
-                            text = stringResource(id = CompR.string.action_update),
-                            style = ProtonTheme.typography.body2Regular,
-                            color = PassTheme.colors.interactionNormMajor2
-                        )
+                    AnimatedVisibility(visible = canUpdate) {
+                        TextButton(
+                            onClick = {
+                                if (canUpdate) {
+                                    onUpdate()
+                                }
+                            }
+                        ) {
+                            Text(
+                                text = stringResource(id = CompR.string.action_update),
+                                style = ProtonTheme.typography.body2Regular,
+                                color = PassTheme.colors.interactionNormMajor2
+                            )
+                        }
                     }
                 }
             }

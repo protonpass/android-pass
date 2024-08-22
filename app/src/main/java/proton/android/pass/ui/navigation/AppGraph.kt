@@ -1917,8 +1917,9 @@ fun NavGraphBuilder.appGraph(
     simpleLoginSyncNavGraph(
         onNavigated = { destination ->
             when (destination) {
-                SimpleLoginSyncNavDestination.Back -> appNavigator.navigateBack(
-                    comesFromBottomsheet = false
+                is SimpleLoginSyncNavDestination.Back -> appNavigator.navigateBack(
+                    comesFromBottomsheet = false,
+                    force = destination.force
                 )
 
                 is SimpleLoginSyncNavDestination.SelectVault -> appNavigator.navigate(

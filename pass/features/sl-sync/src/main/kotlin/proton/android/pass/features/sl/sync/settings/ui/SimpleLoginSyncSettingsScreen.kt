@@ -50,9 +50,9 @@ fun SimpleLoginSyncSettingsScreen(
         when (state.event) {
             SimpleLoginSyncSettingsEvent.Idle -> {}
 
-            SimpleLoginSyncSettingsEvent.OnSyncEnabled ->
-                SimpleLoginSyncNavDestination.Back
-                    .also(onNavigated)
+            SimpleLoginSyncSettingsEvent.OnSyncEnabled -> {
+                onNavigated(SimpleLoginSyncNavDestination.Back())
+            }
         }
 
         onConsumeEvent(state.event)
@@ -63,8 +63,7 @@ fun SimpleLoginSyncSettingsScreen(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SimpleLoginSettingsSyncUiEvent.OnCloseClicked -> {
-                    SimpleLoginSyncNavDestination.Back
-                        .also(onNavigated)
+                    onNavigated(SimpleLoginSyncNavDestination.Back())
                 }
 
                 SimpleLoginSettingsSyncUiEvent.OnConfirmClicked -> {

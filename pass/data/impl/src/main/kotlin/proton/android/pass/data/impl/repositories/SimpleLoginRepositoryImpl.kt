@@ -60,14 +60,28 @@ class SimpleLoginRepositoryImpl @Inject constructor(
             combine(
                 userAccessDataRepository.observe(userId),
                 localSimpleLoginDataSource.observeSyncPreference()
-            ) { userAccessData, isSimpleLoginSyncPreferenceEnabled ->
-                userAccessData?.toSimpleLoginSyncStatus(
-                    userId = userId,
-                    isSimpleLoginSyncPreferenceEnabled = isSimpleLoginSyncPreferenceEnabled
-                )
+            ) { nullableUserAccessData, isSimpleLoginSyncPreferenceEnabled ->
+                nullableUserAccessData?.let { userAccessData ->
+                    userAccessData.toSimpleLoginSyncStatus(
+                        userId = userId,
+                        isSimpleLoginSyncPreferenceEnabled = isSimpleLoginSyncPreferenceEnabled
+                    ).let { simpleLoginSyncStatus ->
+                        if (simpleLoginSyncStatus.isSyncEnabled) {
+                            simpleLoginSyncStatus
+                        } else {
+                            // when SL sync is disabled userAccessData.pendingAliasCount always returns 0
+                            // in order to get the real pendingAliasCount we need to fetch it from other endpoint
+                            // https://confluence.protontech.ch/pages/viewpage.action?pageId=157843213#SLPasssync-Clientscenarios
+                            simpleLoginSyncStatus.copy(
+                                pendingAliasCount = remoteSimpleLoginDataSource
+                                    .getSimpleLoginSyncStatus(userId)
+                                    .syncStatus
+                                    .pendingAliasCount
+                            )
+                        }
+                    }
+                }
             }.also { simpleLoginSyncStatus -> emitAll(simpleLoginSyncStatus.filterNotNull()) }
-
-            userAccessDataRepository.refresh(userId)
         }
     }
 

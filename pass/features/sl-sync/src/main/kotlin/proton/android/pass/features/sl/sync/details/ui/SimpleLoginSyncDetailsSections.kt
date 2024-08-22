@@ -54,7 +54,7 @@ internal fun SimpleLoginSyncDetailsSections(
         modifier = modifier
             .padding(all = Spacing.medium)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium),
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
         SimpleLoginSyncSectionRow(
             label = stringResource(id = R.string.simple_login_sync_details_domain_label),

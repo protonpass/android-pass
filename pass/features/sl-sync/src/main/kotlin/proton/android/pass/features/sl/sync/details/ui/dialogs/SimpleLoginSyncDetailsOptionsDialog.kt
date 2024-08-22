@@ -73,7 +73,9 @@ internal fun SimpleLoginSyncDetailsOptionsDialog(
                 title = stringResource(id = titleResId)
             )
 
-            LazyColumn {
+            LazyColumn(
+                modifier = Modifier.weight(weight = 1f)
+            ) {
                 items(options.size) { index ->
                     val currentOption = remember { options[index] }
 

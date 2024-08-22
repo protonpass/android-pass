@@ -26,11 +26,11 @@ data class SimpleLoginSyncStatusResponse(
     @SerialName("Code")
     val code: Int,
     @SerialName("SyncStatus")
-    val syncStatus: SimpleLoginSyncStatus
+    val syncStatus: SimpleLoginSyncStatusData
 )
 
 @Serializable
-data class SimpleLoginSyncStatus(
+data class SimpleLoginSyncStatusData(
     @SerialName("Enabled")
     val enabled: Boolean,
     @SerialName("PendingAliasCount")

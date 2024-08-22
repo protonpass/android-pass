@@ -111,6 +111,10 @@ internal data class SimpleLoginSyncDetailsState(
         is Some -> false
     }
 
+    internal val canUpdateDomain: Boolean = defaultDomain != selectedAliasDomain
+
+    internal val canUpdateMailbox: Boolean = defaultMailboxEmail != selectedAliasMailboxEmail
+
     // The -1 is required since we added a null item to the beginning of the list to support the "Not selected" option
     internal fun getAliasDomain(position: Int): SimpleLoginAliasDomain? = aliasDomains
         .getOrNull(position.minus(1))

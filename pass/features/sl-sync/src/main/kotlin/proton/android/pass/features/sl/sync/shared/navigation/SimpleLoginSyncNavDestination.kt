@@ -22,7 +22,8 @@ import proton.android.pass.domain.ShareId
 
 sealed interface SimpleLoginSyncNavDestination {
 
-    data object Back : SimpleLoginSyncNavDestination
+    @JvmInline
+    value class Back(val force: Boolean = false) : SimpleLoginSyncNavDestination
 
     @JvmInline
     value class SelectVault(val shareId: ShareId) : SimpleLoginSyncNavDestination

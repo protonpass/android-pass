@@ -72,7 +72,7 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
         ).some()
     }.catch { error ->
         PassLogger.w(TAG, "There was an error while observing SL alias details")
-        PassLogger.e(TAG, error)
+        PassLogger.w(TAG, error)
         snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.FetchAliasDetailsError)
         eventFlow.update { SimpleLoginSyncDetailsEvent.OnFetchAliasDetailsError }
         emit(None)
@@ -120,7 +120,7 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
             runCatching { updateSimpleLoginAliasDomain(domain = state.value.selectedAliasDomain) }
                 .onError { error ->
                     PassLogger.w(TAG, "There was an error updating SL alias domain")
-                    PassLogger.e(TAG, error)
+                    PassLogger.w(TAG, error)
                     eventFlow.update { SimpleLoginSyncDetailsEvent.OnUpdateAliasDomainError }
                     snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasDomainError)
                 }
@@ -140,7 +140,7 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
             runCatching { updateSimpleLoginAliasMailbox(mailboxId = state.value.selectedAliasMailboxId) }
                 .onError { error ->
                     PassLogger.w(TAG, "There was an error updating SL alias mailbox")
-                    PassLogger.e(TAG, error)
+                    PassLogger.w(TAG, error)
                     eventFlow.update { SimpleLoginSyncDetailsEvent.OnUpdateAliasMailboxError }
                     snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasMailboxError)
                 }

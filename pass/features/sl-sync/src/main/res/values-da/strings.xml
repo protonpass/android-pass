@@ -26,6 +26,8 @@
   <string name="simple_login_sync_details_vault_title">SimpleLogin-synkronisering</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Synkroniser aliasser</string>
+  <string name="simple_login_sync_enable_snackbar_error">Der opstod en fejl ved synkronisering af SimpleLogin-aliaser</string>
+  <string name="simple_login_sync_enable_snackbar_success">Synkronisering af SimpleLogin-aliaser er aktiveret</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Standard SL-boks</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin-alias vil blive importeret til denne boks.</string>

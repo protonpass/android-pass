@@ -23,7 +23,7 @@
   <string name="account_settings_list_item_extra_password_header">Dodatočné heslo pre Proton Pass</string>
   <string name="account_settings_list_item_extra_password_header_set">Nastavte ďalšie heslo pre službu Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Aktívne</string>
-  <string name="account_settings_list_item_extra_password_description">Na používanie Pass bude vyžadované extra heslo. Slúži ako heslo navyše k vášmu Proton heslu.</string>
+  <string name="account_settings_list_item_extra_password_description">Na používanie Pass bude vyžadované ďalšie heslo. Slúži ako dodatočné heslo k vášmu Proton heslu.</string>
   <string name="account_settings_list_item_security_keys_hint_not_set">Nenastavené</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">

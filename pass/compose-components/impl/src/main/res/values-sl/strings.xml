@@ -168,7 +168,7 @@
   <string name="item_details_identity_section_contact_passport_number_title">Številka potnega lista</string>
   <string name="item_details_identity_section_contact_license_number_title">Registrska številka</string>
   <string name="item_details_identity_section_contact_website_title">Spletna stran</string>
-  <string name="item_details_identity_section_contact_x_handle_title">X-Handle</string>
+  <string name="item_details_identity_section_contact_x_handle_title">X vzdevek</string>
   <string name="item_details_identity_section_contact_secondary_phone_number_title">Dodatna telefonska številka</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
   <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
@@ -184,10 +184,10 @@
   <string name="item_details_shared_section_note_title">Opomba</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">Zadnje samodejno izpolnjevanje</string>
   <string name="item_details_shared_section_item_history_created_title">Ustvarjeno</string>
-  <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">Spremenjeno (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Prikaži zgodovino predmeta</string>
   <string name="item_details_shared_section_more_info_header_title">Več informacij</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">Ikona za informacije o predmetu</string>
   <string name="item_details_shared_section_more_info_item_id">ID predmeta</string>
   <string name="item_details_shared_section_more_info_share_id">ID trezorja</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Ta različica ni več podprta, zato priporočamo posodobitev aplikacije.</string>
@@ -230,7 +230,7 @@
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Opomba je kopirana</string>
-  <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
+  <string name="snack_bar_message_item_migration_error">Pri prenašanju predmeta je prišlo do napake</string>
   <string name="snack_bar_message_item_monitor_excluded_success">Predmet je bil izključen iz spremljanja.</string>
   <string name="snack_bar_message_item_monitor_excluded_error">Pri izključevanju predmeta iz spremljanja je prišlo do napake</string>
   <string name="snack_bar_message_item_monitor_included_success">Predmet je bil vključen v spremljanje.</string>
@@ -239,21 +239,21 @@
   <string name="snack_bar_message_item_pinned_error">Pri pripenjanju tega predmeta je prišlo do napake</string>
   <string name="snack_bar_message_item_unpinned_success">Predmet je bil odpet.</string>
   <string name="snack_bar_message_item_unpinned_error">Pri odpenjanju tega predmeta je prišlo do napake</string>
-  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
-  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
-  <string name="snack_bar_message_item_restore_success">Item successfully restored</string>
-  <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
-  <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
-  <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
+  <string name="snack_bar_message_item_trashed_success">Predmet je bil uspešno premaknjen v smetnjak</string>
+  <string name="snack_bar_message_item_trashed_error">Pri premikanju predmeta v smetnjak je prišlo do napake</string>
+  <string name="snack_bar_message_item_restore_success">Predmet je bil uspešno obnovljen</string>
+  <string name="snack_bar_message_item_restore_error">Pri obnavljanju predmeta je prišlo do napake</string>
+  <string name="snack_bar_message_item_delete_success">Predmet je izbrisan</string>
+  <string name="snack_bar_message_item_delete_error">Pri brisanju predmeta je prišlo do napake</string>
   <!-- Simple Login -->
-  <string name="simple_login_widget_title">Enable SimpleLogin sync</string>
-  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">We detected that you have %s that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
+  <string name="simple_login_widget_title">Omogočanje sinhronizacije SimpleLogin</string>
+  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">Zaznali smo, da imate v SimpleLogin %s , ki niso vidne v programu Proton Pass. Ali jih želite uvoziti?</string>
   <plurals name="simple_login_widget_pending_aliases">
-    <item quantity="one">%d alias</item>
-    <item quantity="two">%d aliases</item>
-    <item quantity="few">%d aliases</item>
-    <item quantity="other">%d aliases</item>
+    <item quantity="one">%d vzdevek</item>
+    <item quantity="two">%d vzdevka</item>
+    <item quantity="few">%d vzdevki</item>
+    <item quantity="other">%d vzdevekov</item>
   </plurals>
-  <string name="simple_login_widget_action">Sync aliases</string>
-  <string name="simple_login_widget_close_content_description">Button to close simple login aliases sync widget</string>
+  <string name="simple_login_widget_action">Sinhroniziranje vzdevkov</string>
+  <string name="simple_login_widget_close_content_description">Gumb za zaprtje gradnika za sinhronizacijo vzdevkov SimpleLogin</string>
 </resources>

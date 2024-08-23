@@ -172,7 +172,7 @@
   <string name="item_details_identity_section_work_title">Work details</string>
   <string name="item_details_identity_section_work_company_title">会社</string>
   <string name="item_details_identity_section_work_occupation_title">Occupation</string>
-  <string name="item_details_identity_section_work_email_title">Work email address</string>
+  <string name="item_details_identity_section_work_email_title">仕事用メールアドレス</string>
   <string name="item_details_identity_section_work_phone_number_title">Work phone number</string>
   <string name="item_details_identity_section_work_personal_website_title">Personal website</string>
   <string name="item_details_shared_section_note_title">メモ</string>

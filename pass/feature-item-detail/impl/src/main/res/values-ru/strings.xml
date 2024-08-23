@@ -96,7 +96,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Невозможно поделиться</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">У вас недостаточно прав для совместного использования этого хранилища.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Вы достигли предела общего доступа к хранилищу. Для того, чтобы поделиться большим количеством хранилищ, улучшите ваш текущий тариф.</string>
-  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Вы не можете поделиться этим элементом, потому что он находится в корзине. Переместите его из корзины перед тем, как делиться доступом.</string>
   <string name="password_score_vulnerable">Уязвимый</string>
   <string name="password_score_weak">Слабый</string>
   <string name="password_score_strong">Надежный</string>
@@ -105,6 +105,6 @@
   <string name="passkey_detail_bottomsheet_domain">Домен</string>
   <string name="passkey_detail_bottomsheet_key">Ключ</string>
   <string name="passkey_detail_bottomsheet_created">Создано</string>
-  <string name="alias_toggle_tooltip_title">Disable Alias</string>
+  <string name="alias_toggle_tooltip_title">Отключить псевдоним</string>
   <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
 </resources>

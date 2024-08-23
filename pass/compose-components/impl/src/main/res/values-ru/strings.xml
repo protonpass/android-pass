@@ -246,14 +246,14 @@
   <string name="snack_bar_message_item_delete_success">Элемент успешно удален.</string>
   <string name="snack_bar_message_item_delete_error">Произошла ошибка при удалении этого элемента</string>
   <!-- Simple Login -->
-  <string name="simple_login_widget_title">Enable SimpleLogin sync</string>
+  <string name="simple_login_widget_title">Включить синхронизацию с SimpleLogin</string>
   <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">We detected that you have %s that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
   <plurals name="simple_login_widget_pending_aliases">
-    <item quantity="one">%d alias</item>
-    <item quantity="few">%d aliases</item>
-    <item quantity="many">%d aliases</item>
-    <item quantity="other">%d aliases</item>
+    <item quantity="one">%d псевдоним</item>
+    <item quantity="few">%d псевдонима</item>
+    <item quantity="many">%d псевдонимов</item>
+    <item quantity="other">%d псевдонимов</item>
   </plurals>
-  <string name="simple_login_widget_action">Sync aliases</string>
+  <string name="simple_login_widget_action">Синхронизировать псевдонимы</string>
   <string name="simple_login_widget_close_content_description">Button to close simple login aliases sync widget</string>
 </resources>

@@ -49,10 +49,10 @@
     <item quantity="other">Napačno geslo. Še %d poskusov</item>
   </plurals>
   <plurals name="auth_attempts_remaining">
-    <item quantity="one">%d attempt remaining</item>
-    <item quantity="two">%d attempts remaining</item>
-    <item quantity="few">%d attempts remaining</item>
-    <item quantity="other">%d attempts remaining</item>
+    <item quantity="one">Še %d poskus</item>
+    <item quantity="two">Še %d poskusa</item>
+    <item quantity="few">%d preostalih poskusov</item>
+    <item quantity="other">%d preostalih poskusov</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Too many failed pin attempts. All your users are being logged out.</string>
 </resources>

@@ -26,6 +26,8 @@
   <string name="simple_login_sync_details_vault_title">Sincronización de SimpleLogin</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sincronizar alias</string>
+  <string name="simple_login_sync_enable_snackbar_error">Hubo un error al activar la sincronización de alias de SimpleLogin</string>
+  <string name="simple_login_sync_enable_snackbar_success">Se activó la sincronización de alias de SimpleLogin.</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Bóveda SL por defecto</string>
   <string name="simple_login_sync_shared_default_vault_description">Los alias de SimpleLogin se importarán a esta bóveda.</string>

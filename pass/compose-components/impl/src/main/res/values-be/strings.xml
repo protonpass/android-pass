@@ -255,5 +255,5 @@
     <item quantity="other">%d псеўданімаў</item>
   </plurals>
   <string name="simple_login_widget_action">Сінхранізаваць псеўданімы</string>
-  <string name="simple_login_widget_close_content_description">Кнопка для закрыцця віджэта сінхранізацыі псеўданіма SimpleLogin</string>
+  <string name="simple_login_widget_close_content_description">Кнопка для закрыцця віджэта сінхранізацыі псеўданімаў SimpleLogin</string>
 </resources>

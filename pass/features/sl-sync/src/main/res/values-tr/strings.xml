@@ -26,6 +26,8 @@
   <string name="simple_login_sync_details_vault_title">SimpleLogin eşitleme</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Takma adları eşitle</string>
+  <string name="simple_login_sync_enable_snackbar_error">SimpleLogin takma adları eşitlemesi açılırken bir sorun çıktı</string>
+  <string name="simple_login_sync_enable_snackbar_success">SimpleLogin takma adları eşitlemesi açıldı</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Varsayılan SimpleLogin kasası</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin takma adlarının içe aktarılacağı kasa.</string>

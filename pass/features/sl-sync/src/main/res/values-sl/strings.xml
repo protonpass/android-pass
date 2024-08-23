@@ -18,15 +18,17 @@
   -->
 <resources>
   <!-- Details screen -->
-  <string name="simple_login_sync_details_title">Aliases</string>
-  <string name="simple_login_sync_details_domain_label">Domain</string>
-  <string name="simple_login_sync_details_domain_title">Default domain for aliases</string>
-  <string name="simple_login_sync_details_mailboxes_label">Mailboxes</string>
-  <string name="simple_login_sync_details_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_details_vault_title">SimpleLogin sync</string>
+  <string name="simple_login_sync_details_title">Vzdevki</string>
+  <string name="simple_login_sync_details_domain_label">Domena</string>
+  <string name="simple_login_sync_details_domain_title">Privzeta domena za vzdevke</string>
+  <string name="simple_login_sync_details_mailboxes_label">Poštni predali</string>
+  <string name="simple_login_sync_details_mailboxes_title">Privzeti nabiralnik za vzdevke</string>
+  <string name="simple_login_sync_details_vault_title">Sinhronizacija SimpleLogin</string>
   <!-- Settings screen -->
-  <string name="simple_login_sync_settings_title">Sync aliases</string>
+  <string name="simple_login_sync_settings_title">Sinhroniziranje vzdevkov</string>
+  <string name="simple_login_sync_enable_snackbar_error">There was an error enabling SimpleLogin aliases sync</string>
+  <string name="simple_login_sync_enable_snackbar_success">SimpleLogin aliases sync successfully enabled</string>
   <!-- Shared -->
-  <string name="simple_login_sync_shared_default_vault_title">Default SL vault</string>
-  <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliases will be imported into this vault.</string>
+  <string name="simple_login_sync_shared_default_vault_title">Privzeti trezor SL</string>
+  <string name="simple_login_sync_shared_default_vault_description">Vzdevki SimpleLogin bodo uvoženi v ta trezor.</string>
 </resources>

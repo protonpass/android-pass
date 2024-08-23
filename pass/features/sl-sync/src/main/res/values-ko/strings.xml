@@ -26,6 +26,8 @@
   <string name="simple_login_sync_details_vault_title">SimpleLogin 동기화</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">별칭 동기화</string>
+  <string name="simple_login_sync_enable_snackbar_error">SimpleLogin 별칭 동기화 활성화 중 오류가 발생했습니다.</string>
+  <string name="simple_login_sync_enable_snackbar_success">SimpleLogin 별칭 동기화가 성공적으로 활성화되었습니다.</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">기본 SL 금고</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin 별칭이 이 금고에 불러와집니다.</string>

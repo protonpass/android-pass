@@ -26,6 +26,8 @@
   <string name="simple_login_sync_details_vault_title">Sincronizar SimpleLogin</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sincronizar alias</string>
+  <string name="simple_login_sync_enable_snackbar_error">Ocorreu um erro ao ativar a sincronização de alias com SimpleLogin</string>
+  <string name="simple_login_sync_enable_snackbar_success">A sincronização de aliases do SimpleLogin foram ativados com sucesso</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Cofre padrão SL</string>
   <string name="simple_login_sync_shared_default_vault_description">Os aliases do SimpleLogin serão importados para esse cofre.</string>

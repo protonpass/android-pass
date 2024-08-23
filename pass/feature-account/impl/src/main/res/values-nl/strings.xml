@@ -16,7 +16,7 @@
   <string name="manage_subscription_icon_content_description">Abonnement beheren knop</string>
   <string name="account_settings_list_item_password_header">Wachtwoord wijzigen</string>
   <string name="account_settings_list_item_recovery_header">Herstel e-mailadres</string>
-  <string name="account_settings_list_item_security_keys">Security keys</string>
+  <string name="account_settings_list_item_security_keys">Beveiligingssleutels</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Niet ingesteld</string>
   <string name="account_settings_list_item_password_hint_grace">Wachtwoord opnieuw instellen aangevraagd</string>
   <string name="account_settings_list_item_password_hint_insecure">Nieuw wachtwoord aanvragen klaar</string>

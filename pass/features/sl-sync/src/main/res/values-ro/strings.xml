@@ -26,6 +26,8 @@
   <string name="simple_login_sync_details_vault_title">Sincronizare SimpleLogin</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sincronizare aliasuri</string>
+  <string name="simple_login_sync_enable_snackbar_error">A apărut o eroare la activarea sincronizării aliasurilor SimpleLogin.</string>
+  <string name="simple_login_sync_enable_snackbar_success">S-a reușit activarea sincronizării aliasurilor SimpleLogin.</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Seif SL implicit</string>
   <string name="simple_login_sync_shared_default_vault_description">Aliasurile SimpleLogin vor fi importate în acest seif.</string>

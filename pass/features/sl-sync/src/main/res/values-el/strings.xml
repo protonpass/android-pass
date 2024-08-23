@@ -26,6 +26,8 @@
   <string name="simple_login_sync_details_vault_title">Συγχρονισμός SimpleLogin</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Συγχρονισμός ψευδωνύμων</string>
+  <string name="simple_login_sync_enable_snackbar_error">Παρουσιάστηκε σφάλμα κατά την ενεργοποίηση του συγχρονισμού ψευδωνύμων SimpleLogin</string>
+  <string name="simple_login_sync_enable_snackbar_success">Ο συγχρονισμός ψευδώνυμων SimpleLogin έχει ενεργοποιηθεί με επιτυχία</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Προεπιλεγμένη SL κρύπτη</string>
   <string name="simple_login_sync_shared_default_vault_description">Τα ψευδώνυμα SimpleLogin θα εισαχθούν σε αυτή την κρύπτη.</string>

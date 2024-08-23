@@ -26,6 +26,8 @@
   <string name="simple_login_sync_details_vault_title">SimpleLogin-Synchronisierung</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Aliasse synchronisieren</string>
+  <string name="simple_login_sync_enable_snackbar_error">Es gab einen Fehler bei der Aktivierung der SimpleLogin-Alias- Synchronisierung</string>
+  <string name="simple_login_sync_enable_snackbar_success">SimpleLogin-Alias-Synchronisierung erfolgreich aktiviert</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Standard-SL-Tresor</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin-Aliasse werden in diesen Tresor importiert.</string>

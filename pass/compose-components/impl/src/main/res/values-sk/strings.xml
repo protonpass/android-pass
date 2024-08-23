@@ -187,7 +187,7 @@
   <string name="item_details_shared_section_item_history_modified_times_title">Upravené (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Zobraziť históriu položky</string>
   <string name="item_details_shared_section_more_info_header_title">Viac informácií</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">Ikona pre Viac informácií o položke</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">Ikona pre viac informácií o položke</string>
   <string name="item_details_shared_section_more_info_item_id">ID položky</string>
   <string name="item_details_shared_section_more_info_share_id">ID trezoru</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Verzia aplikácie už nie je podporovaná, aktualizujte ju.</string>
@@ -214,7 +214,7 @@
     <item quantity="one">%d hodina</item>
     <item quantity="few">%d hodín</item>
     <item quantity="many">%d hodiny</item>
-    <item quantity="other">%d hodiny</item>
+    <item quantity="other">%d hodín</item>
   </plurals>
   <plurals name="time_unit_minutes">
     <item quantity="one">%d minúta</item>
@@ -226,7 +226,7 @@
     <item quantity="one">%d sekunda</item>
     <item quantity="few">%d sekúnd</item>
     <item quantity="many">%d sekundy</item>
-    <item quantity="other">%d sekundy</item>
+    <item quantity="other">%d sekúnd</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Poznámka skopírovaná</string>

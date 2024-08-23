@@ -26,7 +26,9 @@
   <string name="simple_login_sync_details_vault_title">SimpleLogin synchronisatie</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Synchroniseer aliassen</string>
+  <string name="simple_login_sync_enable_snackbar_error">There was an error enabling SimpleLogin aliases sync</string>
+  <string name="simple_login_sync_enable_snackbar_success">SimpleLogin aliases sync successfully enabled</string>
   <!-- Shared -->
-  <string name="simple_login_sync_shared_default_vault_title">Standaard SL kluis</string>
+  <string name="simple_login_sync_shared_default_vault_title">Standaard SL-kluis</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliassen worden geïmporteerd in deze kluis.</string>
 </resources>

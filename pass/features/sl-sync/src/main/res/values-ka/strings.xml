@@ -26,6 +26,8 @@
   <string name="simple_login_sync_details_vault_title">SimpleLogin-ის სინქრონიზაცია</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">ფსევდონიმების სინქი</string>
+  <string name="simple_login_sync_enable_snackbar_error">შეცდომა SimpleLogin-ის ფსევდონიმების სინქრონიზაციის ჩართვისას</string>
+  <string name="simple_login_sync_enable_snackbar_success">SimpleLogin-ის ფსევდონიების სინქრონიზაცია წარმატებით ჩაირთო</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">ნაგულისხმევი SL-ის საცავი</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin-ის ფსევდონიმების შემოტანა ამ საცავში მოხდება.</string>

@@ -26,6 +26,8 @@
   <string name="simple_login_sync_details_vault_title">SimpleLogin sync</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sync aliases</string>
+  <string name="simple_login_sync_enable_snackbar_error">There was an error enabling SimpleLogin aliases sync</string>
+  <string name="simple_login_sync_enable_snackbar_success">SimpleLogin aliases sync successfully enabled</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Caixa forta SL per defecte</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliases will be imported into this vault.</string>

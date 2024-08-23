@@ -26,6 +26,8 @@
   <string name="simple_login_sync_details_vault_title">Сінхранізацыя SimpleLogin</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Сінхранізацыя псеўданімаў</string>
+  <string name="simple_login_sync_enable_snackbar_error">Адбылася памылка пры ўключэнні сінхранізацыі псеўданімаў SimpleLogin</string>
+  <string name="simple_login_sync_enable_snackbar_success">Сінхранізацыя псеўданімаў SimpleLogin паспяхова ўключана</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Прадвызначанае сховішча SL</string>
   <string name="simple_login_sync_shared_default_vault_description">Псеўданімы SimpleLogin будуць імпартаваны ў гэта сховішча.</string>

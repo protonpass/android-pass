@@ -143,7 +143,7 @@
   <string name="item_details_login_section_websites_title">Websites</string>
   <string name="item_details_identity_section_personal_title">Persoonlijke gegevens</string>
   <string name="item_details_identity_section_personal_first_name_title">Voornaam</string>
-  <string name="item_details_identity_section_personal_middle_name_title">Middle name</string>
+  <string name="item_details_identity_section_personal_middle_name_title">Tussenvoegsel</string>
   <string name="item_details_identity_section_personal_last_name_title">Achternaam</string>
   <string name="item_details_identity_section_personal_full_name_title">Volledige naam</string>
   <string name="item_details_identity_section_personal_email_title">E-mailadres</string>
@@ -153,18 +153,18 @@
   <string name="item_details_identity_section_address_title">Adresgegevens</string>
   <string name="item_details_identity_section_address_organization_title">Bedrijf</string>
   <string name="item_details_identity_section_address_street_address_title">Straatadres, postbus</string>
-  <string name="item_details_identity_section_address_floor_title">Floor</string>
+  <string name="item_details_identity_section_address_floor_title">Verdieping</string>
   <string name="item_details_identity_section_address_city_title">Stad</string>
-  <string name="item_details_identity_section_address_zip_or_postal_code_title">ZIP or postal code</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">Postcode</string>
   <string name="item_details_identity_section_address_state_or_province_title">Provincie</string>
-  <string name="item_details_identity_section_address_county_title">County</string>
+  <string name="item_details_identity_section_address_county_title">Provincie</string>
   <string name="item_details_identity_section_address_country_or_region_title">Country or region</string>
   <string name="item_details_identity_section_contact_title">Contactgegevens</string>
   <string name="item_details_identity_section_contact_social_security_number_title">Burgerservicenummer (Rijksregisternummer)</string>
   <string name="item_details_identity_section_contact_passport_number_title">Paspoortnummer</string>
   <string name="item_details_identity_section_contact_license_number_title">Licentienummer</string>
   <string name="item_details_identity_section_contact_website_title">Website</string>
-  <string name="item_details_identity_section_contact_x_handle_title">X-Handle</string>
+  <string name="item_details_identity_section_contact_x_handle_title">X-gebruikersnaam</string>
   <string name="item_details_identity_section_contact_secondary_phone_number_title">Secondary phone number</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
   <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
@@ -174,13 +174,13 @@
   <string name="item_details_identity_section_work_title">Werk gegevens</string>
   <string name="item_details_identity_section_work_company_title">Bedrijf</string>
   <string name="item_details_identity_section_work_occupation_title">Occupation</string>
-  <string name="item_details_identity_section_work_email_title">Work email address</string>
-  <string name="item_details_identity_section_work_phone_number_title">Work phone number</string>
-  <string name="item_details_identity_section_work_personal_website_title">Personal website</string>
+  <string name="item_details_identity_section_work_email_title">E-mailadres werk</string>
+  <string name="item_details_identity_section_work_phone_number_title">Telefoonnummer werk</string>
+  <string name="item_details_identity_section_work_personal_website_title">Persoonlijke website</string>
   <string name="item_details_shared_section_note_title">Notitie</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">Laatste automatische aanvulling</string>
   <string name="item_details_shared_section_item_history_created_title">Aangemaakt</string>
-  <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">Gewijzigd: (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Bekijk item geschiedenis</string>
   <string name="item_details_shared_section_more_info_header_title">Meer informatie</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
@@ -238,8 +238,8 @@
   <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">We detected that you have %s that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
   <plurals name="simple_login_widget_pending_aliases">
     <item quantity="one">%d alias</item>
-    <item quantity="other">%d aliases</item>
+    <item quantity="other">%d aliassen</item>
   </plurals>
-  <string name="simple_login_widget_action">Sync aliases</string>
+  <string name="simple_login_widget_action">Synchroniseer aliassen</string>
   <string name="simple_login_widget_close_content_description">Button to close simple login aliases sync widget</string>
 </resources>

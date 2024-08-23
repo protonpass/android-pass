@@ -138,7 +138,7 @@
   <string name="identity_add_field_birthdate">Dátum narodenia</string>
   <string name="identity_add_field_gender">Pohlavie</string>
   <string name="identity_add_field_floor">Poschodie</string>
-  <string name="identity_add_field_county">Kraj</string>
+  <string name="identity_add_field_county">Krajina</string>
   <string name="identity_add_field_linkedin">Linkedin</string>
   <string name="identity_add_field_reddit">Používateľské meno v Reddit</string>
   <string name="identity_add_field_facebook">Facebook URL</string>

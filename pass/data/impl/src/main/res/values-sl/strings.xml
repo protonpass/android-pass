@@ -20,5 +20,5 @@
   <string name="sync_channel">Sinhronizacija</string>
   <string name="sync_channel_description">Kanal za obvestila za sinhronizacijo predmetov</string>
   <string name="syncing_vaults">Sinhronizacija trezorjev in predmetov</string>
-  <string name="logging_out_free_users">Logging out extra free users</string>
+  <string name="logging_out_free_users">Odjava dodatnih brezplačnih uporabnikov</string>
 </resources>

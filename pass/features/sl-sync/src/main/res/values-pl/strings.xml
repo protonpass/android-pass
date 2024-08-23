@@ -26,6 +26,8 @@
   <string name="simple_login_sync_details_vault_title">Synchronizacja SimpleLogin</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Synchronizuj aliasy</string>
+  <string name="simple_login_sync_enable_snackbar_error">There was an error enabling SimpleLogin aliases sync</string>
+  <string name="simple_login_sync_enable_snackbar_success">SimpleLogin aliases sync successfully enabled</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Domyślny sejf SimpleLogin</string>
   <string name="simple_login_sync_shared_default_vault_description">Aliasy SimpleLogin zostaną zaimportowane do tego sejfu.</string>

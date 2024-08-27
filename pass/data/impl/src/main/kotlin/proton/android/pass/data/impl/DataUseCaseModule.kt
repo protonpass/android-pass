@@ -178,6 +178,7 @@ import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAlias
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailboxes
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasSettings
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
+import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasDomain
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
@@ -346,6 +347,7 @@ import proton.android.pass.data.impl.usecases.simplelogin.ObserveSimpleLoginAlia
 import proton.android.pass.data.impl.usecases.simplelogin.ObserveSimpleLoginAliasMailboxesImpl
 import proton.android.pass.data.impl.usecases.simplelogin.ObserveSimpleLoginAliasSettingsImpl
 import proton.android.pass.data.impl.usecases.simplelogin.ObserveSimpleLoginSyncStatusImpl
+import proton.android.pass.data.impl.usecases.simplelogin.SyncSimpleLoginPendingAliasesImpl
 import proton.android.pass.data.impl.usecases.simplelogin.UpdateSimpleLoginAliasDomainImpl
 import proton.android.pass.data.impl.usecases.simplelogin.UpdateSimpleLoginAliasMailboxImpl
 import proton.android.pass.data.impl.usecases.sync.ForceSyncItemsImpl
@@ -883,5 +885,10 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveSimpleLoginAliasSettings(
         impl: ObserveSimpleLoginAliasSettingsImpl
     ): ObserveSimpleLoginAliasSettings
+
+    @[Binds Singleton]
+    abstract fun bindSyncSimpleLoginPendingAliases(
+        impl: SyncSimpleLoginPendingAliasesImpl
+    ): SyncSimpleLoginPendingAliases
 
 }

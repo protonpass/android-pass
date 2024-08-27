@@ -27,23 +27,30 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.impl.extensions.toRequest
 import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSource
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
+import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesData
+import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesRequest
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDomainRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasMailboxRequest
 import proton.android.pass.data.impl.responses.SimpleLoginAliasDomainData
 import proton.android.pass.data.impl.responses.SimpleLoginAliasMailboxData
 import proton.android.pass.data.impl.responses.SimpleLoginAliasSettingsData
+import proton.android.pass.data.impl.responses.SimpleLoginPendingAliasesData
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserAccessData
+import proton.android.pass.domain.simplelogin.SimpleLoginAlias
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
+import proton.android.pass.domain.simplelogin.SimpleLoginPendingAliases
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import javax.inject.Inject
 
@@ -110,16 +117,18 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateAliasDomain(domain: String?) = withUserId { userId ->
-        remoteSimpleLoginDataSource.updateSimpleLoginAliasDomain(
-            userId = userId,
-            request = SimpleLoginUpdateAliasDomainRequest(
-                defaultAliasDomain = domain
+    override suspend fun updateAliasDomain(domain: String?) {
+        withUserId { userId ->
+            remoteSimpleLoginDataSource.updateSimpleLoginAliasDomain(
+                userId = userId,
+                request = SimpleLoginUpdateAliasDomainRequest(
+                    defaultAliasDomain = domain
+                )
             )
-        )
-            .settings
-            .toDomain()
-            .also(localSimpleLoginDataSource::updateAliasSettings)
+                .settings
+                .toDomain()
+                .also(localSimpleLoginDataSource::updateAliasSettings)
+        }
     }
 
     override fun observeAliasMailboxes(): Flow<List<SimpleLoginAliasMailbox>> = flow {
@@ -130,16 +139,18 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateAliasMailbox(mailboxId: String) = withUserId { userId ->
-        remoteSimpleLoginDataSource.updateSimpleLoginAliasMailbox(
-            userId = userId,
-            request = SimpleLoginUpdateAliasMailboxRequest(
-                defaultMailboxID = mailboxId
+    override suspend fun updateAliasMailbox(mailboxId: String) {
+        withUserId { userId ->
+            remoteSimpleLoginDataSource.updateSimpleLoginAliasMailbox(
+                userId = userId,
+                request = SimpleLoginUpdateAliasMailboxRequest(
+                    defaultMailboxID = mailboxId
+                )
             )
-        )
-            .settings
-            .toDomain()
-            .also(localSimpleLoginDataSource::updateAliasSettings)
+                .settings
+                .toDomain()
+                .also(localSimpleLoginDataSource::updateAliasSettings)
+        }
     }
 
     override fun observeAliasSettings(): Flow<SimpleLoginAliasSettings> = flow {
@@ -152,12 +163,41 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         emitAll(localSimpleLoginDataSource.observeAliasSettings())
     }
 
-    private suspend fun <T> withUserId(block: suspend (UserId) -> T) {
-        accountManager.getPrimaryUserId()
-            .firstOrNull()
-            ?.also { userId -> block(userId) }
-            ?: throw UserIdNotAvailableError()
+    override suspend fun getPendingAliases(): SimpleLoginPendingAliases = withUserId { userId ->
+        remoteSimpleLoginDataSource.getSimpleLoginPendingAliases(userId)
+            .pendingAliases
+            .toDomain()
     }
+
+    override suspend fun createPendingAliases(
+        defaultShareId: ShareId,
+        pendingAliasesItems: List<Pair<String, EncryptedCreateItem>>
+    ) {
+        if (pendingAliasesItems.isEmpty()) {
+            return
+        }
+
+        withUserId { userId ->
+            remoteSimpleLoginDataSource.createSimpleLoginPendingAliases(
+                userId = userId,
+                shareId = defaultShareId,
+                request = SimpleLoginCreatePendingAliasesRequest(
+                    items = pendingAliasesItems.map { (pendingAliasId, pendingAliasesItem) ->
+                        SimpleLoginCreatePendingAliasesData(
+                            pendingAliasId = pendingAliasId,
+                            item = pendingAliasesItem.toRequest()
+                        )
+                    }
+                )
+            )
+        }
+    }
+
+    private suspend fun <T> withUserId(block: suspend (UserId) -> T): T = accountManager
+        .getPrimaryUserId()
+        .firstOrNull()
+        ?.let { userId -> block(userId) }
+        ?: throw UserIdNotAvailableError()
 
     private suspend fun UserAccessData.toSimpleLoginSyncStatus(
         userId: UserId,
@@ -186,6 +226,18 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     private fun SimpleLoginAliasSettingsData.toDomain() = SimpleLoginAliasSettings(
         defaultDomain = defaultAliasDomain,
         defaultMailboxId = defaultMailboxId
+    )
+
+    private fun SimpleLoginPendingAliasesData.toDomain() = SimpleLoginPendingAliases(
+        aliases = aliases.map { alias ->
+            SimpleLoginAlias(
+                id = alias.pendingAliasID,
+                email = alias.aliasEmail,
+                note = alias.aliasNote
+            )
+        },
+        total = total,
+        lastToken = lastToken
     )
 
 }

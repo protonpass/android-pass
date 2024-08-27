@@ -19,14 +19,18 @@
 package proton.android.pass.data.impl.remote.simplelogin
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesRequest
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDomainRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasMailboxRequest
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
+import proton.android.pass.data.impl.responses.GetItemsResponse
 import proton.android.pass.data.impl.responses.SimpleLoginAliasDomainsResponse
 import proton.android.pass.data.impl.responses.SimpleLoginAliasMailboxesResponse
 import proton.android.pass.data.impl.responses.SimpleLoginAliasSettingsResponse
+import proton.android.pass.data.impl.responses.SimpleLoginPendingAliasesResponse
 import proton.android.pass.data.impl.responses.SimpleLoginSyncStatusResponse
+import proton.android.pass.domain.ShareId
 
 interface RemoteSimpleLoginDataSource {
 
@@ -49,5 +53,13 @@ interface RemoteSimpleLoginDataSource {
     ): SimpleLoginAliasSettingsResponse
 
     suspend fun getSimpleLoginAliasSettings(userId: UserId): SimpleLoginAliasSettingsResponse
+
+    suspend fun getSimpleLoginPendingAliases(userId: UserId): SimpleLoginPendingAliasesResponse
+
+    suspend fun createSimpleLoginPendingAliases(
+        userId: UserId,
+        shareId: ShareId,
+        request: SimpleLoginCreatePendingAliasesRequest
+    ): GetItemsResponse
 
 }

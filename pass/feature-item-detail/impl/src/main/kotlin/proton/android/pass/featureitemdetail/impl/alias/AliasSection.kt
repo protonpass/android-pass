@@ -39,6 +39,7 @@ fun AliasSection(
     isAliasEnabled: Boolean,
     isAliasSyncEnabled: Boolean,
     isAliasToggleTooltipEnabled: Boolean,
+    isAliasStateToggling: Boolean,
     mailboxes: PersistentList<AliasMailbox>,
     isLoading: Boolean,
     onCopyAlias: (String) -> Unit,
@@ -54,6 +55,7 @@ fun AliasSection(
             isAliasEnabled = isAliasEnabled,
             isAliasSyncEnabled = isAliasSyncEnabled,
             isAliasToggleTooltipEnabled = isAliasToggleTooltipEnabled,
+            isAliasStateToggling = isAliasStateToggling,
             onCopyAlias = { onCopyAlias(it) },
             onCreateLoginFromAlias = onCreateLoginFromAlias,
             onToggleAliasState = onToggleAliasState,
@@ -69,22 +71,24 @@ fun AliasSection(
     }
 }
 
-class ThemedAliasMailboxesPreviewProvider :
+internal class ThemedAliasMailboxesPreviewProvider :
     ThemePairPreviewProvider<List<AliasMailbox>>(AliasMailboxesPreviewProvider())
 
-@Preview
-@Composable
-fun AliasSectionPreview(
+@[Preview Composable]
+internal fun AliasSectionPreview(
     @PreviewParameter(ThemedAliasMailboxesPreviewProvider::class) input: Pair<Boolean, List<AliasMailbox>>
 ) {
-    PassTheme(isDark = input.first) {
+    val (isDark, mailboxes) = input
+
+    PassTheme(isDark = isDark) {
         Surface {
             AliasSection(
                 alias = "myalias@myalias.com",
                 isAliasEnabled = false,
                 isAliasSyncEnabled = false,
                 isAliasToggleTooltipEnabled = false,
-                mailboxes = input.second.toPersistentList(),
+                isAliasStateToggling = false,
+                mailboxes = mailboxes.toPersistentList(),
                 isLoading = false,
                 onCopyAlias = {},
                 onCreateLoginFromAlias = {},

@@ -65,11 +65,14 @@ fun AliasAddressRow(
     isAliasEnabled: Boolean,
     isAliasSyncEnabled: Boolean,
     isAliasToggleTooltipEnabled: Boolean,
+    isAliasStateToggling: Boolean,
     onCopyAlias: (String) -> Unit,
     onCreateLoginFromAlias: (String) -> Unit,
     onToggleAliasState: (Boolean) -> Unit,
     onDismissTooltip: () -> Unit
 ) {
+    println("JIBIRI: AliasAddressRow -> isAliasToggling: $isAliasStateToggling")
+
     Box(modifier = modifier) {
         val position = remember { mutableStateOf(IntOffset.Zero) }
         val size = remember { mutableStateOf(IntSize.Zero) }
@@ -112,6 +115,7 @@ fun AliasAddressRow(
                 Switch(
                     modifier = Modifier.findPositionAndSizeForTooltip(position, size),
                     checked = isAliasEnabled,
+                    enabled = !isAliasStateToggling,
                     onCheckedChange = onToggleAliasState,
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = PassTheme.colors.aliasInteractionNorm,
@@ -143,6 +147,7 @@ fun AliasAddressRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark
                 isAliasEnabled = true,
                 isAliasSyncEnabled = true,
                 isAliasToggleTooltipEnabled = false,
+                isAliasStateToggling = false,
                 onCopyAlias = {},
                 onCreateLoginFromAlias = {},
                 onToggleAliasState = {},

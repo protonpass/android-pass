@@ -52,6 +52,7 @@
     <compatibility-package android:name="com.qwant.liberty" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.sec.android.app.sbrowser" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.sec.android.app.sbrowser.beta" android:maxLongVersionCode="10000000000" />
+    <compatibility-package android:name="com.startpage.app" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.stoutner.privacybrowser.free" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.stoutner.privacybrowser.standard" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.vivaldi.browser" android:maxLongVersionCode="10000000000" />

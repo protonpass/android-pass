@@ -565,7 +565,7 @@ fun HomeScreen(
                                 }
 
                                 is ItemContents.Alias -> AliasIcon(
-                                    activeAlias = !contents.isDisabled
+                                    activeAlias = contents.isEnabled
                                 )
                                 is ItemContents.Note -> NoteIcon()
                                 is ItemContents.CreditCard -> CreditCardIcon()

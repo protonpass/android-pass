@@ -77,7 +77,7 @@ fun AliasDetail(
                         onNavigate(ItemDetailNavigation.OnMigrate)
                     }
                 }
-                viewModel.clearEvent()
+                viewModel.onConsumeEvent(state.event)
             }
 
             var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
@@ -189,6 +189,7 @@ fun AliasDetail(
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
                         isAliasSyncEnabled = state.isSLAliasSyncEnabled,
                         isAliasToggleTooltipEnabled = state.isAliasToggleTooltipEnabled,
+                        isAliasStateToggling = state.isAliasStateToggling,
                         onCopyAlias = { viewModel.onCopyAlias(it) },
                         onCreateLoginFromAlias = { alias ->
                             val event = ItemDetailNavigation.OnCreateLoginFromAlias(

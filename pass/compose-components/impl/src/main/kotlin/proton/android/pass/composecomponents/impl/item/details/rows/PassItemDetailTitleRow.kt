@@ -70,7 +70,7 @@ internal fun PassItemDetailTitleRow(
                 AliasIcon(
                     size = 60,
                     shape = PassTheme.shapes.squircleMediumLargeShape,
-                    activeAlias = !itemContents.isDisabled
+                    activeAlias = itemContents.isEnabled
                 )
             }
         }

@@ -59,8 +59,7 @@ class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
                         itemContents = ItemContents.Alias(
                             title = alias.email,
                             note = alias.note,
-                            aliasEmail = alias.email,
-                            isDisabled = false
+                            aliasEmail = alias.email
                         )
                     ).request
                 }

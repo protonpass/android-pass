@@ -160,8 +160,12 @@ sealed class ItemContents {
         override val title: String,
         override val note: String,
         val aliasEmail: String,
-        val isDisabled: Boolean
-    ) : ItemContents()
+        private val isDisabled: Boolean? = null
+    ) : ItemContents() {
+
+        val isEnabled: Boolean = isDisabled != true
+
+    }
 
     @Stable
     @Serializable

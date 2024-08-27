@@ -62,7 +62,7 @@ fun AliasDetailContent(
         AliasTitle(
             modifier = Modifier.padding(Spacing.none, Spacing.mediumSmall),
             title = contents.title,
-            isActive = !contents.isDisabled,
+            isActive = contents.isEnabled,
             vault = vault,
             onVaultClick = onVaultClick,
             isPinned = itemUiModel.isPinned
@@ -70,7 +70,7 @@ fun AliasDetailContent(
 
         AliasSection(
             alias = contents.aliasEmail,
-            isAliasDisabled = contents.isDisabled,
+            isAliasEnabled = contents.isEnabled,
             isAliasSyncEnabled = isAliasSyncEnabled,
             isAliasToggleTooltipEnabled = isAliasToggleTooltipEnabled,
             mailboxes = mailboxes,

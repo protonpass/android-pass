@@ -174,8 +174,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
             itemContents = ItemContents.Alias(
                 title = title,
                 note = note,
-                aliasEmail = alias,
-                isDisabled = false
+                aliasEmail = alias
             )
         )
 

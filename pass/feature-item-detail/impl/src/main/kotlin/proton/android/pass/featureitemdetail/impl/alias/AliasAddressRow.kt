@@ -62,7 +62,7 @@ import me.proton.core.presentation.R as CoreR
 fun AliasAddressRow(
     modifier: Modifier = Modifier,
     alias: String,
-    isAliasDisabled: Boolean,
+    isAliasEnabled: Boolean,
     isAliasSyncEnabled: Boolean,
     isAliasToggleTooltipEnabled: Boolean,
     onCopyAlias: (String) -> Unit,
@@ -111,7 +111,7 @@ fun AliasAddressRow(
             if (isAliasSyncEnabled) {
                 Switch(
                     modifier = Modifier.findPositionAndSizeForTooltip(position, size),
-                    checked = !isAliasDisabled,
+                    checked = isAliasEnabled,
                     onCheckedChange = onToggleAliasState,
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = PassTheme.colors.aliasInteractionNorm,
@@ -121,7 +121,7 @@ fun AliasAddressRow(
             }
         }
 
-        if (isAliasSyncEnabled && !isAliasDisabled && isAliasToggleTooltipEnabled) {
+        if (isAliasSyncEnabled && isAliasEnabled && isAliasToggleTooltipEnabled) {
             PassTooltipPopup(
                 title = stringResource(id = R.string.alias_toggle_tooltip_title),
                 description = stringResource(id = R.string.alias_toggle_tooltip_description),
@@ -140,7 +140,7 @@ fun AliasAddressRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark
         Surface {
             AliasAddressRow(
                 alias = "some@alias.test",
-                isAliasDisabled = false,
+                isAliasEnabled = true,
                 isAliasSyncEnabled = true,
                 isAliasToggleTooltipEnabled = false,
                 onCopyAlias = {},

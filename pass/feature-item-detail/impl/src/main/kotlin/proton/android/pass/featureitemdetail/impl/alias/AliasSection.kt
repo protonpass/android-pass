@@ -36,7 +36,7 @@ import proton.android.pass.domain.AliasMailbox
 fun AliasSection(
     modifier: Modifier = Modifier,
     alias: String,
-    isAliasDisabled: Boolean,
+    isAliasEnabled: Boolean,
     isAliasSyncEnabled: Boolean,
     isAliasToggleTooltipEnabled: Boolean,
     mailboxes: PersistentList<AliasMailbox>,
@@ -51,7 +51,7 @@ fun AliasSection(
     ) {
         AliasAddressRow(
             alias = alias,
-            isAliasDisabled = isAliasDisabled,
+            isAliasEnabled = isAliasEnabled,
             isAliasSyncEnabled = isAliasSyncEnabled,
             isAliasToggleTooltipEnabled = isAliasToggleTooltipEnabled,
             onCopyAlias = { onCopyAlias(it) },
@@ -81,7 +81,7 @@ fun AliasSectionPreview(
         Surface {
             AliasSection(
                 alias = "myalias@myalias.com",
-                isAliasDisabled = false,
+                isAliasEnabled = false,
                 isAliasSyncEnabled = false,
                 isAliasToggleTooltipEnabled = false,
                 mailboxes = input.second.toPersistentList(),

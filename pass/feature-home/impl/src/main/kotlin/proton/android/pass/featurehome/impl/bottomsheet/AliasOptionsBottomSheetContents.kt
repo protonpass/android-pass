@@ -77,7 +77,7 @@ fun AliasOptionsBottomSheetContents(
             },
             leftIcon = {
                 AliasIcon(
-                    activeAlias = !contents.isDisabled
+                    activeAlias = contents.isEnabled
                 )
             }
         )

@@ -26,13 +26,15 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.data.api.usecases.RefreshInvites
+import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.minutes
 
 class PerformSyncImpl @Inject constructor(
     private val applyPendingEvents: ApplyPendingEvents,
-    private val refreshInvites: RefreshInvites
+    private val refreshInvites: RefreshInvites,
+    private val syncPendingAliases: SyncSimpleLoginPendingAliases
 ) : PerformSync {
 
     override suspend fun invoke(userId: UserId) = coroutineScope {
@@ -41,24 +43,34 @@ class PerformSyncImpl @Inject constructor(
         val pendingEvents = async { performPendingEvents(userId) }
         pendingEvents.invokeOnCompletion { error ->
             if (error == null) {
-                PassLogger.i(TAG, "Pending events for $userId  finished")
+                PassLogger.i(TAG, "Pending events for $userId finished")
             } else {
                 PassLogger.w(TAG, error)
-                PassLogger.i(TAG, "Pending events for $userId  error")
+                PassLogger.i(TAG, "Pending events for $userId error")
             }
         }
 
         val refreshInvites = async { performRefreshInvites(userId) }
         refreshInvites.invokeOnCompletion { error ->
             if (error == null) {
-                PassLogger.i(TAG, "Refresh invites for $userId  finished")
+                PassLogger.i(TAG, "Refresh invites for $userId finished")
             } else {
                 PassLogger.w(TAG, error)
-                PassLogger.i(TAG, "Refresh invites for $userId  error")
+                PassLogger.i(TAG, "Refresh invites for $userId error")
             }
         }
 
-        awaitAll(pendingEvents, refreshInvites)
+        val pendingSlAliases = async { syncPendingSlAliases() }
+        pendingSlAliases.invokeOnCompletion { error ->
+            if (error == null) {
+                PassLogger.i(TAG, "Pending SL aliases sync finished for $userId")
+            } else {
+                PassLogger.i(TAG, "Pending SL aliases sync error for $userId")
+                PassLogger.w(TAG, error)
+            }
+        }
+
+        awaitAll(pendingEvents, refreshInvites, pendingSlAliases)
     }
         .firstOrNull { syncResult -> syncResult.isFailure }
         ?.exceptionOrNull()
@@ -74,6 +86,13 @@ class PerformSyncImpl @Inject constructor(
 
     private suspend fun performRefreshInvites(userId: UserId): Result<Unit> =
         runCatching { withTimeout(2.minutes) { refreshInvites(userId) } }
+            .fold(
+                onSuccess = { Result.success(Unit) },
+                onFailure = { Result.failure(it) }
+            )
+
+    private suspend fun syncPendingSlAliases(): Result<Unit> =
+        runCatching { withTimeout(2.minutes) { syncPendingAliases() } }
             .fold(
                 onSuccess = { Result.success(Unit) },
                 onFailure = { Result.failure(it) }

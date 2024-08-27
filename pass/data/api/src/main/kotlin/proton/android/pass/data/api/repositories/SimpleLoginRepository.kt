@@ -19,10 +19,12 @@
 package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
+import proton.android.pass.domain.simplelogin.SimpleLoginPendingAliases
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 
 interface SimpleLoginRepository {
@@ -44,5 +46,12 @@ interface SimpleLoginRepository {
     suspend fun updateAliasMailbox(mailboxId: String)
 
     fun observeAliasSettings(): Flow<SimpleLoginAliasSettings>
+
+    suspend fun getPendingAliases(): SimpleLoginPendingAliases
+
+    suspend fun createPendingAliases(
+        defaultShareId: ShareId,
+        pendingAliasesItems: List<Pair<String, EncryptedCreateItem>>
+    )
 
 }

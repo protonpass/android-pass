@@ -118,8 +118,13 @@ class AliasDetailViewModel @Inject constructor(
     getUserPlan: GetUserPlan
 ) : ViewModel() {
 
-    private val shareId: ShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
-    private val itemId: ItemId = ItemId(savedStateHandle.require(CommonNavArgId.ItemId.key))
+    private val shareId: ShareId = savedStateHandle
+        .require<String>(CommonNavArgId.ShareId.key)
+        .let(::ShareId)
+
+    private val itemId: ItemId = savedStateHandle
+        .require<String>(CommonNavArgId.ItemId.key)
+        .let(::ItemId)
 
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
@@ -159,7 +164,9 @@ class AliasDetailViewModel @Inject constructor(
         ::AliasItemFeatures
     )
 
-    val uiState: StateFlow<AliasDetailUiState> = combineN(
+    private val isAliasStateTogglingFlow = MutableStateFlow(false)
+
+    internal val uiState: StateFlow<AliasDetailUiState> = combineN(
         aliasItemDetailsResultFlow,
         getAliasDetails(shareId, itemId).asLoadingResult(),
         isLoadingState,
@@ -169,7 +176,8 @@ class AliasDetailViewModel @Inject constructor(
         shareActionFlow,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
         eventState,
-        itemFeaturesFlow
+        itemFeaturesFlow,
+        isAliasStateTogglingFlow
     ) { itemLoadingResult,
         aliasDetailsResult,
         isLoading,
@@ -179,7 +187,8 @@ class AliasDetailViewModel @Inject constructor(
         shareAction,
         itemActions,
         event,
-        itemFeatures ->
+        itemFeatures,
+        isAliasStateToggling ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 if (!isPermanentlyDeleted.value()) {
@@ -216,102 +225,121 @@ class AliasDetailViewModel @Inject constructor(
                     event = event,
                     isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
                     isSLAliasSyncEnabled = itemFeatures.slAliasSyncEnabled,
-                    isAliasToggleTooltipEnabled = itemFeatures.isAliasToggleTooltipEnabled
+                    isAliasToggleTooltipEnabled = itemFeatures.isAliasToggleTooltipEnabled,
+                    isAliasStateToggling = isAliasStateToggling
                 )
             }
         }
-    }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Lazily,
-            initialValue = AliasDetailUiState.NotInitialised
-        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Lazily,
+        initialValue = AliasDetailUiState.NotInitialised
+    )
 
-    fun onCopyAlias(alias: String) {
+    internal fun onCopyAlias(alias: String) {
+        clipboardManager.copyToClipboard(alias)
+
         viewModelScope.launch {
-            clipboardManager.copyToClipboard(alias)
             snackbarDispatcher(AliasCopiedToClipboard)
         }
     }
 
-    fun onMoveToTrash(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
-        isLoadingState.update { IsLoadingState.Loading }
-        runCatching { trashItem(items = mapOf(shareId to listOf(itemId))) }
-            .onSuccess {
-                isItemSentToTrashState.update { IsSentToTrashState.Sent }
-                snackbarDispatcher(ItemMovedToTrash)
-            }
-            .onFailure {
-                snackbarDispatcher(ItemNotMovedToTrash)
-                PassLogger.d(TAG, it, "Could not delete item")
-            }
-        isLoadingState.update { IsLoadingState.NotLoading }
-    }
+    internal fun onMoveToTrash(shareId: ShareId, itemId: ItemId) {
+        viewModelScope.launch {
+            isLoadingState.update { IsLoadingState.Loading }
 
-    fun onPermanentlyDelete(itemUiModel: ItemUiModel) = viewModelScope.launch {
-        isLoadingState.update { IsLoadingState.Loading }
-        runCatching {
-            deleteItem(items = mapOf(itemUiModel.shareId to listOf(itemUiModel.id)))
-        }.onSuccess {
-            telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemUiModel.contents)))
-            isPermanentlyDeletedState.update { IsPermanentlyDeletedState.Deleted }
-            snackbarDispatcher(DetailSnackbarMessages.ItemPermanentlyDeleted)
-            PassLogger.i(TAG, "Item deleted successfully")
-        }.onFailure {
-            snackbarDispatcher(DetailSnackbarMessages.ItemNotPermanentlyDeleted)
-            PassLogger.i(TAG, it, "Could not delete item")
+            runCatching { trashItem(items = mapOf(shareId to listOf(itemId))) }
+                .onSuccess {
+                    isItemSentToTrashState.update { IsSentToTrashState.Sent }
+                    snackbarDispatcher(ItemMovedToTrash)
+                }
+                .onFailure {
+                    snackbarDispatcher(ItemNotMovedToTrash)
+                    PassLogger.d(TAG, it, "Could not delete item")
+                }
+
+            isLoadingState.update { IsLoadingState.NotLoading }
         }
-        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
-    fun onItemRestore(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
-        isLoadingState.update { IsLoadingState.Loading }
-        runCatching {
-            restoreItem(items = mapOf(shareId to listOf(itemId)))
-        }.onSuccess {
-            isRestoredFromTrashState.update { IsRestoredFromTrashState.Restored }
-            PassLogger.i(TAG, "Item restored successfully")
-            snackbarDispatcher(ItemRestored)
-        }.onFailure {
-            PassLogger.i(TAG, it, "Error restoring item")
-            snackbarDispatcher(ItemNotRestored)
+    internal fun onPermanentlyDelete(itemUiModel: ItemUiModel) {
+        viewModelScope.launch {
+            isLoadingState.update { IsLoadingState.Loading }
+
+            runCatching {
+                deleteItem(items = mapOf(itemUiModel.shareId to listOf(itemUiModel.id)))
+            }.onSuccess {
+                telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemUiModel.contents)))
+                isPermanentlyDeletedState.update { IsPermanentlyDeletedState.Deleted }
+                snackbarDispatcher(DetailSnackbarMessages.ItemPermanentlyDeleted)
+                PassLogger.i(TAG, "Item deleted successfully")
+            }.onFailure {
+                snackbarDispatcher(DetailSnackbarMessages.ItemNotPermanentlyDeleted)
+                PassLogger.i(TAG, it, "Could not delete item")
+            }
+
+            isLoadingState.update { IsLoadingState.NotLoading }
         }
-        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
-    fun clearEvent() = viewModelScope.launch {
-        eventState.update { ItemDetailEvent.Unknown }
-    }
+    internal fun onItemRestore(shareId: ShareId, itemId: ItemId) {
+        viewModelScope.launch {
+            isLoadingState.update { IsLoadingState.Loading }
 
-    fun onMigrate() = viewModelScope.launch {
-        bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
-        eventState.update { ItemDetailEvent.MoveToVault }
-    }
-
-    internal fun pinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
-        isLoadingState.update { IsLoadingState.Loading }
-
-        runCatching { pinItem.invoke(shareId, itemId) }
-            .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedSuccess) }
-            .onFailure { error ->
-                PassLogger.w(TAG, error, "An error occurred pinning Alias item")
-                snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError)
+            runCatching {
+                restoreItem(items = mapOf(shareId to listOf(itemId)))
+            }.onSuccess {
+                isRestoredFromTrashState.update { IsRestoredFromTrashState.Restored }
+                PassLogger.i(TAG, "Item restored successfully")
+                snackbarDispatcher(ItemRestored)
+            }.onFailure {
+                PassLogger.i(TAG, it, "Error restoring item")
+                snackbarDispatcher(ItemNotRestored)
             }
 
-        isLoadingState.update { IsLoadingState.NotLoading }
+            isLoadingState.update { IsLoadingState.NotLoading }
+        }
     }
 
-    internal fun unpinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
-        isLoadingState.update { IsLoadingState.Loading }
+    internal fun onConsumeEvent(event: ItemDetailEvent) {
+        eventState.compareAndSet(event, ItemDetailEvent.Unknown)
+    }
 
-        runCatching { unpinItem.invoke(shareId, itemId) }
-            .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedSuccess) }
-            .onFailure { error ->
-                PassLogger.w(TAG, error, "An error occurred unpinning Alias item")
-                snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError)
-            }
+    internal fun onMigrate() {
+        viewModelScope.launch {
+            bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
+            eventState.update { ItemDetailEvent.MoveToVault }
+        }
+    }
 
-        isLoadingState.update { IsLoadingState.NotLoading }
+    internal fun pinItem(shareId: ShareId, itemId: ItemId) {
+        viewModelScope.launch {
+            isLoadingState.update { IsLoadingState.Loading }
+
+            runCatching { pinItem.invoke(shareId, itemId) }
+                .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedSuccess) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, error, "An error occurred pinning Alias item")
+                    snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError)
+                }
+
+            isLoadingState.update { IsLoadingState.NotLoading }
+        }
+    }
+
+    internal fun unpinItem(shareId: ShareId, itemId: ItemId) {
+        viewModelScope.launch {
+            isLoadingState.update { IsLoadingState.Loading }
+
+            runCatching { unpinItem.invoke(shareId, itemId) }
+                .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedSuccess) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, error, "An error occurred unpinning Alias item")
+                    snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError)
+                }
+
+            isLoadingState.update { IsLoadingState.NotLoading }
+        }
     }
 
     internal fun toggleAliasState(
@@ -320,6 +348,8 @@ class AliasDetailViewModel @Inject constructor(
         state: Boolean
     ) {
         viewModelScope.launch {
+            isAliasStateTogglingFlow.update { true }
+
             runCatching { changeAliasStatus(shareId, itemId, state) }
                 .onSuccess {
                     PassLogger.i(TAG, "Alias status changed successfully")
@@ -329,16 +359,21 @@ class AliasDetailViewModel @Inject constructor(
                     PassLogger.w(TAG, "Error changing alias status")
                     PassLogger.w(TAG, it)
                 }
+            isAliasStateTogglingFlow.update { false }
+
         }
     }
 
-    fun dismissAliasToggleTooltip() {
+    internal fun dismissAliasToggleTooltip() {
         viewModelScope.launch {
             disableTooltip(Tooltip.AliasToggle)
         }
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "AliasDetailViewModel"
+
     }
+
 }

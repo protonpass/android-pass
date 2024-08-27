@@ -138,8 +138,7 @@ fun TrashItemBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvider::
                     contents = ItemContents.Alias(
                         title = "My Alias",
                         note = "Note",
-                        aliasEmail = "alias.email@proton.me",
-                        isDisabled = false
+                        aliasEmail = "alias.email@proton.me"
                     ),
                     createTime = Clock.System.now(),
                     state = 0,

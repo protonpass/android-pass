@@ -147,7 +147,7 @@ fun AliasDetail(
                             },
                             icon = {
                                 AliasIcon(
-                                    activeAlias = !contents.isDisabled
+                                    activeAlias = contents.isEnabled
                                 )
                             }
                         )

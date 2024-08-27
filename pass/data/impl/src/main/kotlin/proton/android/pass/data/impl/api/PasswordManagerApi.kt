@@ -39,6 +39,7 @@ import proton.android.pass.data.impl.requests.ItemReadRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.SetupExtraPasswordRequest
+import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesRequest
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDomainRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasMailboxRequest
@@ -84,6 +85,7 @@ import proton.android.pass.data.impl.responses.PendingInvitesResponse
 import proton.android.pass.data.impl.responses.SimpleLoginAliasDomainsResponse
 import proton.android.pass.data.impl.responses.SimpleLoginAliasMailboxesResponse
 import proton.android.pass.data.impl.responses.SimpleLoginAliasSettingsResponse
+import proton.android.pass.data.impl.responses.SimpleLoginPendingAliasesResponse
 import proton.android.pass.data.impl.responses.SimpleLoginSyncStatusResponse
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.responses.UpdateGlobalMonitorStateRequest
@@ -464,6 +466,15 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     @GET("$PREFIX/user/alias/settings")
     suspend fun getSimpleLoginAliasSettings(): SimpleLoginAliasSettingsResponse
+
+    @GET("$PREFIX/alias_sync/pending")
+    suspend fun getSimpleLoginPendingAliases(): SimpleLoginPendingAliasesResponse
+
+    @POST("$PREFIX/alias_sync/share/{shareId}/create")
+    suspend fun createSimpleLoginPendingAliases(
+        @Path("shareId") shareId: String,
+        @Body request: SimpleLoginCreatePendingAliasesRequest
+    ): GetItemsResponse
 
     // Core
     @GET("core/v4/keys/all")

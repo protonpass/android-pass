@@ -31,6 +31,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -67,7 +69,41 @@ internal fun ExpandableEmailUsernameInput(
     isInvalidEmail: Boolean,
     isUsernameSplitTooltipEnabled: Boolean
 ) {
-    val isExpanded = rememberSaveable { mutableStateOf(username.isNotEmpty()) }
+    val isExpanded = rememberSaveable {
+        email.isNotEmpty()
+            .and(username.isNotEmpty())
+            .let(::mutableStateOf)
+    }
+
+    val emailLabelResId by remember {
+        derivedStateOf {
+            if (isExpanded.value) {
+                R.string.field_email_title
+            } else {
+                R.string.field_username_or_email_title
+            }
+        }
+    }
+
+    val emailPlaceholderResId by remember {
+        derivedStateOf {
+            if (isExpanded.value) {
+                R.string.field_email_hint
+            } else {
+                R.string.field_username_or_email_hint
+            }
+        }
+    }
+
+    val emailOrUsername by remember(email) {
+        derivedStateOf {
+            if (isExpanded.value) {
+                email
+            } else {
+                email.ifEmpty { username }
+            }
+        }
+    }
 
     val emailIconTint = if (isInvalidEmail) {
         PassTheme.colors.signalDanger
@@ -79,7 +115,9 @@ internal fun ExpandableEmailUsernameInput(
         modifier = modifier
     ) {
         EmailInput(
-            email = email,
+            emailLabelResId = emailLabelResId,
+            emailPlaceholderResId = emailPlaceholderResId,
+            email = emailOrUsername,
             isInvalid = isInvalidEmail,
             isEditable = canUpdateUsername && isEditAllowed,
             onEmailChange = { newEmail ->
@@ -99,7 +137,8 @@ internal fun ExpandableEmailUsernameInput(
                     val position = remember { mutableStateOf(IntOffset.Zero) }
                     val size = remember { mutableStateOf(IntSize.Zero) }
                     Box(
-                        modifier = Modifier.clickable { isExpanded.value = true }
+                        modifier = Modifier
+                            .clickable { isExpanded.value = true }
                             .findPositionAndSizeForTooltip(position, size)
                     ) {
                         Icon(
@@ -196,6 +235,7 @@ internal fun ExpandableEmailUsernameInputPreview(
                 onEvent = {},
                 onFocusChange = { _, _ -> },
                 onAliasOptionsClick = {},
+                onExpandClick = {},
                 canUpdateUsername = params.canUpdateUsername,
                 isEditAllowed = params.isEditAllowed,
                 isInvalidEmail = params.isInvalidEmail,

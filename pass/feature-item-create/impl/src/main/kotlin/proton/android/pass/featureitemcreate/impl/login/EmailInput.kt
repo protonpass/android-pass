@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.login
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -33,6 +34,8 @@ import proton.android.pass.featureitemcreate.impl.R
 @Composable
 internal fun EmailInput(
     modifier: Modifier = Modifier,
+    @StringRes emailLabelResId: Int,
+    @StringRes emailPlaceholderResId: Int,
     email: String,
     onEmailChange: (String) -> Unit,
     onFocusChange: (Boolean) -> Unit,
@@ -58,12 +61,12 @@ internal fun EmailInput(
         leadingIcon = leadingIcon,
         label = {
             ProtonTextFieldLabel(
-                text = stringResource(id = R.string.field_email_title),
+                text = stringResource(id = emailLabelResId),
                 isError = isInvalid
             )
         },
         placeholder = {
-            ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.field_email_hint))
+            ProtonTextFieldPlaceHolder(text = stringResource(id = emailPlaceholderResId))
         },
         trailingIcon = trailingIcon
     )

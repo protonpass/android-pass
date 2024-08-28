@@ -61,8 +61,10 @@ data class LoginItemFormState(
             add(LoginItemValidationErrors.BlankTitle)
         }
 
-        if (isUsernameSplitEnabled && email.isNotBlank() && !emailValidator.isValid(email)) {
-            add(LoginItemValidationErrors.InvalidEmail)
+        if(isUsernameSplitEnabled) {
+            if(username.isNotBlank() && email.isNotBlank() && !emailValidator.isValid(email)) {
+                add(LoginItemValidationErrors.InvalidEmail)
+            }
         }
 
         urls.forEachIndexed { idx, url ->

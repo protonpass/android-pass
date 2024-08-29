@@ -22,12 +22,14 @@ import androidx.datastore.core.DataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import me.proton.android.pass.preferences.BoolFlagPrefProto
 import me.proton.android.pass.preferences.BooleanPrefProto
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import proton.android.pass.log.api.PassLogger
@@ -181,5 +183,48 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
         } else {
             throw exception
         }
+    }
+
+    override fun observeForAllUsers(featureFlag: FeatureFlag): Flow<Boolean> = accountManager.getAccounts()
+        .flatMapLatest { accounts ->
+            combine(
+                accounts.map { account ->
+                    observeIsFeatureEnabled(featureFlag, account.userId)
+                }
+            ) { areFeaturesEnabled ->
+                areFeaturesEnabled.any { it }
+            }
+        }
+
+    private fun observeIsFeatureEnabled(featureFlag: FeatureFlag, userId: UserId?): Flow<Boolean> =
+        featureFlag.key?.let { featureFlagKey ->
+            featureFlagManager.observe(
+                userId = userId,
+                featureId = FeatureId(id = featureFlagKey)
+            ).flatMapLatest { remoteFeatureFlag ->
+                dataStore.data
+                    .catch { exception -> handleExceptions(exception) }
+                    .map { preferences ->
+                        fromBooleanPrefProto(
+                            pref = getPrefProto(featureFlag, preferences),
+                            default = remoteFeatureFlag?.value ?: featureFlag.isEnabledDefault
+                        )
+                    }
+            }
+        } ?: dataStore.data
+            .catch { exception -> handleExceptions(exception) }
+            .map { preferences -> fromBooleanPrefProto(getPrefProto(featureFlag, preferences)) }
+
+    private fun getPrefProto(featureFlag: FeatureFlag, preferences: FeatureFlagsPreferences) = with(preferences) {
+        when (featureFlag) {
+            AUTOFILL_DEBUG_MODE -> autofillDebugModeEnabled
+            SECURITY_CENTER_V1 -> securityCenterV1Enabled
+            IDENTITY_V1 -> identityItemTypeEnabled
+            USERNAME_SPLIT -> usernameSplitEnabled
+            ACCESS_KEY_V1 -> accessKeyV1Enabled
+            SECURE_LINK_V1 -> publicLinkV1Enabled
+            ACCOUNT_SWITCH_V1 -> accountSwitchV1Enabled
+            SL_ALIASES_SYNC -> simpleLoginAliasesSyncEnabled
+        }.value
     }
 }

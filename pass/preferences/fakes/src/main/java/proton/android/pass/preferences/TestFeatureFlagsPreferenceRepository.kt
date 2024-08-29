@@ -20,6 +20,7 @@ package proton.android.pass.preferences
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import proton.android.pass.preferences.FeatureFlag.ACCESS_KEY_V1
@@ -28,8 +29,8 @@ import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.IDENTITY_V1
 import proton.android.pass.preferences.FeatureFlag.SECURE_LINK_V1
 import proton.android.pass.preferences.FeatureFlag.SECURITY_CENTER_V1
-import proton.android.pass.preferences.FeatureFlag.USERNAME_SPLIT
 import proton.android.pass.preferences.FeatureFlag.SL_ALIASES_SYNC
+import proton.android.pass.preferences.FeatureFlag.USERNAME_SPLIT
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -61,5 +62,7 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
         }
         return Result.success(Unit)
     }
+
+    override fun observeForAllUsers(featureFlag: FeatureFlag): Flow<Boolean> = flowOf(false)
 
 }

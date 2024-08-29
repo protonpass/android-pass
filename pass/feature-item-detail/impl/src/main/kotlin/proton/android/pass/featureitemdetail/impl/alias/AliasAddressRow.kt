@@ -71,8 +71,6 @@ fun AliasAddressRow(
     onToggleAliasState: (Boolean) -> Unit,
     onDismissTooltip: () -> Unit
 ) {
-    println("JIBIRI: AliasAddressRow -> isAliasToggling: $isAliasStateToggling")
-
     Box(modifier = modifier) {
         val position = remember { mutableStateOf(IntOffset.Zero) }
         val size = remember { mutableStateOf(IntSize.Zero) }

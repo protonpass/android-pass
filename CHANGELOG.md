@@ -6,6 +6,16 @@
 
 ### Other
 
+## 1.24.6 (2024-08-29)
+
+### Fixes :bug:
+
+- Issues when login with two-factor authentication.
+
+### Other
+
+- Updated translations.
+
 ## 1.24.5 (2024-08-29)
 
 ### Fixes :bug:

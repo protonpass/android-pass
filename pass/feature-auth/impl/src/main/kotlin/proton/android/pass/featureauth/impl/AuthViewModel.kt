@@ -136,7 +136,7 @@ class AuthViewModel @Inject constructor(
         .distinctUntilChanged()
 
     private val accountSwitcherFlow = combine(
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ACCOUNT_SWITCH_V1)
+        featureFlagsPreferencesRepository.observeForAllUsers(FeatureFlag.ACCOUNT_SWITCH_V1)
             .map { it && origin == AuthOrigin.AUTO_LOCK },
         combine(
             accountManager.getAccounts(AccountState.Ready),

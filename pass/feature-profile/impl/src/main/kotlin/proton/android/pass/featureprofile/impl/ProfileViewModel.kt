@@ -202,7 +202,7 @@ class ProfileViewModel @Inject constructor(
     private val ffFlow = combine(
         featureFlagsPreferencesRepository[FeatureFlag.IDENTITY_V1],
         featureFlagsPreferencesRepository[FeatureFlag.SECURE_LINK_V1],
-        featureFlagsPreferencesRepository[FeatureFlag.ACCOUNT_SWITCH_V1],
+        featureFlagsPreferencesRepository.observeForAllUsers(FeatureFlag.ACCOUNT_SWITCH_V1),
         featureFlagsPreferencesRepository[FeatureFlag.SL_ALIASES_SYNC],
         ::FeatureFlags
     )

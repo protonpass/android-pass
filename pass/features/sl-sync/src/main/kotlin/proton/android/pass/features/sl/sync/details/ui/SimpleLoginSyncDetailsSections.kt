@@ -45,6 +45,7 @@ internal fun SimpleLoginSyncDetailsSections(
     defaultMailboxEmail: String,
     defaultVault: Vault?,
     isSyncEnabled: Boolean,
+    hasPendingAliases: Boolean,
     pendingAliasesCount: Int,
     canSelectDomain: Boolean,
     canSelectMailbox: Boolean,
@@ -97,7 +98,7 @@ internal fun SimpleLoginSyncDetailsSections(
                     }
                 )
             }
-        } else {
+        } else if (hasPendingAliases) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
             ) {

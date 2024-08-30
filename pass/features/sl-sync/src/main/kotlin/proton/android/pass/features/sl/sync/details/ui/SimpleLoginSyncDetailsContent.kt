@@ -73,6 +73,7 @@ internal fun SimpleLoginSyncDetailsContent(
                 defaultMailboxEmail = defaultMailboxEmail,
                 defaultVault = defaultVault,
                 isSyncEnabled = isSyncEnabled,
+                hasPendingAliases = hasPendingAliases,
                 pendingAliasesCount = pendingAliasesCount,
                 canSelectDomain = canSelectDomain,
                 canSelectMailbox = canSelectMailbox,

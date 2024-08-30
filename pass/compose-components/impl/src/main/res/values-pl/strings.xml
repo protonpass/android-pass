@@ -46,6 +46,8 @@
   <string name="action_continue">Kontynuuj</string>
   <string name="action_retry">Spróbuj ponownie</string>
   <string name="action_edit">Edytuj</string>
+  <string name="action_update">Zaktualizuj</string>
+  <string name="action_close">Zamknij</string>
   <!-- Empty list -->
   <string name="empty_list_title">Dodaj pierwszy element</string>
   <string name="empty_search_results_title">Nie znaleziono żadnych wyników</string>

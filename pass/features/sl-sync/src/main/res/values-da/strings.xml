@@ -21,9 +21,17 @@
   <string name="simple_login_sync_details_title">Aliasser</string>
   <string name="simple_login_sync_details_domain_label">Domæne</string>
   <string name="simple_login_sync_details_domain_title">Standarddomæne for aliasser</string>
+  <string name="simple_login_sync_details_domain_option_blank">Ikke valgt</string>
   <string name="simple_login_sync_details_mailboxes_label">Postkasser</string>
   <string name="simple_login_sync_details_mailboxes_title">Standardpostkasse til aliasser</string>
   <string name="simple_login_sync_details_vault_title">SimpleLogin-synkronisering</string>
+  <string name="simple_login_sync_details_dialog_title_domains">Standarddomæne for aliasser</string>
+  <string name="simple_login_sync_details_dialog_title_mailboxes">Standardpostkasse til aliasser</string>
+  <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">Der opstod en fejl ved indsamling af SL-alias-oplysninger</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_error">Der opstod en fejl ved opdatering af SL-alias-domænet</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">SL-alias-domæne er blevet opdateret</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">Der opstod en fejl ved opdatering af SL-alias-postkassen</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">SL-alias-postkassen er blevet opdateret</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Synkroniser aliasser</string>
   <string name="simple_login_sync_enable_snackbar_error">Der opstod en fejl ved synkronisering af SimpleLogin-aliaser</string>

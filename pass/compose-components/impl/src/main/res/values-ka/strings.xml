@@ -44,6 +44,8 @@
   <string name="action_continue">გაგრძელება</string>
   <string name="action_retry">თავიდან</string>
   <string name="action_edit">ჩასწორება</string>
+  <string name="action_update">განახლება</string>
+  <string name="action_close">დახურვა</string>
   <!-- Empty list -->
   <string name="empty_list_title">დაამატეთ თქვენი პირველი ელემენტი</string>
   <string name="empty_search_results_title">შედეგების გარეშე</string>

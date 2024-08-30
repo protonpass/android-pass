@@ -21,9 +21,17 @@
   <string name="simple_login_sync_details_title">Aliases</string>
   <string name="simple_login_sync_details_domain_label">Domínio</string>
   <string name="simple_login_sync_details_domain_title">Aliases padrão de links</string>
+  <string name="simple_login_sync_details_domain_option_blank">Não selecionado</string>
   <string name="simple_login_sync_details_mailboxes_label">Caixas de correio</string>
   <string name="simple_login_sync_details_mailboxes_title">Caixa de correio padrão para aliases</string>
   <string name="simple_login_sync_details_vault_title">Sincronizar SimpleLogin</string>
+  <string name="simple_login_sync_details_dialog_title_domains">Aliases padrão de links</string>
+  <string name="simple_login_sync_details_dialog_title_mailboxes">Caixa de correio padrão para aliases</string>
+  <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">Houve um erro ao buscar os detalhes do alias do SL</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_error">Ocorreu um erro ao atualizar o domínio de alias do SL</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">Domínio de alias SL atualizado com sucesso</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">Ocorreu um erro ao atualizar a caixa de correio de alias do SL</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">Caixa de correio de alias do SL atualizada com sucesso</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sincronizar alias</string>
   <string name="simple_login_sync_enable_snackbar_error">Ocorreu um erro ao ativar a sincronização de alias com SimpleLogin</string>

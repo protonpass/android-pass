@@ -21,9 +21,17 @@
   <string name="simple_login_sync_details_title">별칭</string>
   <string name="simple_login_sync_details_domain_label">도메인</string>
   <string name="simple_login_sync_details_domain_title">별칭에 대한 기본 도매인</string>
+  <string name="simple_login_sync_details_domain_option_blank">선택되지 않음</string>
   <string name="simple_login_sync_details_mailboxes_label">메일함</string>
   <string name="simple_login_sync_details_mailboxes_title">별칭에 대한 기본 메일함</string>
   <string name="simple_login_sync_details_vault_title">SimpleLogin 동기화</string>
+  <string name="simple_login_sync_details_dialog_title_domains">별칭에 대한 기본 도메인</string>
+  <string name="simple_login_sync_details_dialog_title_mailboxes">별칭에 대한 기본 메일함</string>
+  <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">SL 별칭 사항 가져오기 중 오류가 발생했습니다.</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_error">SL 별칭 사항 업데이트 중 오류가 발생했습니다.</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">SL 별칭 도메인이 성공적으로 업데이트되었습니다.</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">SL 별칭 메일함 업데이트 중 오류가 발생했습니다.</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">SL 별칭 메일함을 성공적으로 업데이트했습니다.</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">별칭 동기화</string>
   <string name="simple_login_sync_enable_snackbar_error">SimpleLogin 별칭 동기화 활성화 중 오류가 발생했습니다.</string>

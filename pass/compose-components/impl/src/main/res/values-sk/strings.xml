@@ -46,6 +46,8 @@
   <string name="action_continue">Pokračovať</string>
   <string name="action_retry">Opakovať</string>
   <string name="action_edit">Upraviť</string>
+  <string name="action_update">Update</string>
+  <string name="action_close">Close</string>
   <!-- Empty list -->
   <string name="empty_list_title">Pridajte prvú položku</string>
   <string name="empty_search_results_title">Žiadne nájdené výsledky</string>

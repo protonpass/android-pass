@@ -35,7 +35,7 @@
   <string name="share_with_title">Jaa henkilöille</string>
   <string name="share_with_email_hint">Sähköpostiosoite</string>
   <string name="share_with_email_error">Virheellinen sähköpostiosoite</string>
-  <string name="share_with_email_cannot_invite_outside_org">Et voi kutsua organisaatiosi ulkopuolisia henkilöitä. Lisätietoja saat organisaatiosi ylläpidolta.</string>
+  <string name="share_with_email_cannot_invite_outside_org">Et voi kutsua henkilöitä organisaatiosi ulkopuolelta. Saat lisätietoja organisaatiosi ylläpidolta.</string>
   <string name="share_with_email_email_already_added">Olet jo lisännyt tämän sähköpostiosoitteen</string>
   <string name="share_permissions_title">Aseta käyttöoikeustaso</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s kutsui sinut käyttämään sisältöä holvista</string>

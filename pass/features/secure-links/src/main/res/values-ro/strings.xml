@@ -28,7 +28,7 @@
   <string name="secure_links_create_row_max_views_title">Restricționare număr de vizualizări</string>
   <string name="secure_links_create_row_max_views_subtitle">Maxim vizualizări: %d</string>
   <string name="secure_links_create_button_generate">Generare legătură web sigură</string>
-  <string name="secure_links_create_snackbar_message_error">A apărut o eroare la generarea legăturii web sigure.</string>
+  <string name="secure_links_create_snackbar_message_error">A apărut o eroare la generarea legăturii web securizate.</string>
   <!--Overview screen-->
   <string name="secure_links_overview_widget_expiration_title">Expiră peste:</string>
   <string name="secure_links_overview_widget_max_views_title">Se poate accesa:</string>
@@ -39,9 +39,9 @@
     <item quantity="other">de %d de ori</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">Nelimitat</string>
-  <string name="secure_links_overview_button_view_all_links">Afișare toate legăturile web sigure</string>
+  <string name="secure_links_overview_button_view_all_links">Afișare toate legăturile web securizate</string>
   <!--List screen-->
-  <string name="secure_links_list_title">Legături web sigure</string>
+  <string name="secure_links_list_title">Legături web securizate</string>
   <string name="secure_links_list_empty_title">Nu există legături web</string>
   <string name="secure_links_list_empty_subtitle">Puteți începe să creați legături web securizate din opțiunile de partajare a detaliilor unui articol.</string>
   <string name="secure_links_list_expiration_description">Expiră peste %s</string>
@@ -51,7 +51,7 @@
     <item quantity="few">%d vizualizări</item>
     <item quantity="other">%d de vizualizări</item>
   </plurals>
-  <string name="secure_links_list_snackbar_message_links_fetch_error">A apărut o eroare la preluarea legăturilor web sigure.</string>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">A apărut o eroare la preluarea legăturilor web securizate.</string>
   <string name="secure_links_list_header_title_inactive">Legături web inactive</string>
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">Copiere legătură web</string>
@@ -60,8 +60,8 @@
   <string name="secure_links_shared_action_delete_link_inactive">Eliminare legătură web inactivă</string>
   <string name="secure_links_shared_action_delete_links_inactive">Eliminare toate legăturile web inactive</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Legătura web securizată a fost copiată.</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Ștergerea legăturii web sigure a fost anulată.</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_error">A apărut o eroare la ștergerea legăturii web sigure.</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Ștergerea legăturii web securizate a fost anulată.</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">A apărut o eroare la ștergerea legăturii web securizate.</string>
   <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Ștergerea legăturilor web inactive a fost anulată.</string>
   <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">A apărut o eroare la ștergerea legăturilor web inactive.</string>
 </resources>

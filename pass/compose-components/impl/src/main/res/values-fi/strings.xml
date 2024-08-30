@@ -44,6 +44,8 @@
   <string name="action_continue">Jatka</string>
   <string name="action_retry">Yritä uudelleen</string>
   <string name="action_edit">Muokkaa</string>
+  <string name="action_update">Update</string>
+  <string name="action_close">Close</string>
   <!-- Empty list -->
   <string name="empty_list_title">Lisää ensimmäinen kohteesi</string>
   <string name="empty_search_results_title">Tuloksia ei löytynyt</string>
@@ -139,7 +141,7 @@
   <string name="item_details_login_section_username_title">Käyttäjätunnus</string>
   <string name="item_details_login_section_username_or_username_title">Käyttäjätunnus tai sähköpostiosoite</string>
   <string name="item_details_login_section_password_title">Salasana</string>
-  <string name="item_details_login_section_primary_totp_title">2FA-tunniste (TOTP)</string>
+  <string name="item_details_login_section_primary_totp_title">Vahvistuskoodi (TOTP)</string>
   <string name="item_details_login_section_websites_title">Verkkosivustot</string>
   <string name="item_details_identity_section_personal_title">Henkilötiedot</string>
   <string name="item_details_identity_section_personal_first_name_title">Etunimi</string>
@@ -188,7 +190,7 @@
   <string name="item_details_shared_section_more_info_share_id">Holvin ID</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Tätä sovellusversiota ei enää tueta. Päivitä sovelluksesi.</string>
   <!-- Passkeys -->
-  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Avainkoodi</string>
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Pääsyavain</string>
   <!-- Upgrade -->
   <string name="dialog_upgrade_plan_title">Päivitetäänkö tilaus?</string>
   <string name="dialog_upgrade_plan_message">Tämä ominaisuus ei ole ilmaistason käyttäjien käytettävissä. Jos haluat nauttia tästä ja muista hienouksista, päivitä tilauksesi ja kokeile sitä!</string>
@@ -234,8 +236,8 @@
   <string name="snack_bar_message_item_delete_success">Kohde poistettiin</string>
   <string name="snack_bar_message_item_delete_error">Virhe poistettaessa kohdetta</string>
   <!-- Simple Login -->
-  <string name="simple_login_widget_title">Ota SimpleLogin-synkronointi käyttöön</string>
-  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">Havaitsimme, että sinulla on SimpleLoginissa %s aliasta, jotka puuttuvat Proton Passista. Haluaisitko tuoda ne?</string>
+  <string name="simple_login_widget_title">Käytä SimpleLogin-synkronointia</string>
+  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">Havaitsimme sinulla olevan SimpleLoginissa %s Proton Passista puuttuvaa aliasta. Haluaisitko tuoda ne?</string>
   <plurals name="simple_login_widget_pending_aliases">
     <item quantity="one">%d alias</item>
     <item quantity="other">%d aliasta</item>

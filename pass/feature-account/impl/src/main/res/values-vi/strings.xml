@@ -27,6 +27,6 @@
   <string name="account_settings_list_item_security_keys_hint_not_set">Chưa đặt</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
-    <item quantity="other">%d security keys set</item>
+    <item quantity="other">%d khóa bảo vệ đã thiết lập</item>
   </plurals>
 </resources>

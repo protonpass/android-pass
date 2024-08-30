@@ -32,9 +32,9 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.setting.SettingToggle
 
 @Composable
-internal fun DisplayUsernameSection(
+internal fun DisplaySection(
     modifier: Modifier = Modifier,
-    isEnabled: Boolean,
+    isDisplayUsernameFieldEnabled: Boolean,
     onEvent: (SettingsContentEvent) -> Unit
 ) {
     Column(
@@ -49,7 +49,7 @@ internal fun DisplayUsernameSection(
         Box(modifier = Modifier.roundedContainerNorm()) {
             SettingToggle(
                 text = stringResource(R.string.settings_preference_display_username),
-                isChecked = isEnabled,
+                isChecked = isDisplayUsernameFieldEnabled,
                 onClick = { newIsEnabled ->
                     onEvent(SettingsContentEvent.OnDisplayUsernameToggled(newIsEnabled))
                 }

@@ -69,8 +69,8 @@ internal fun SettingsContent(
                 onEvent = onEvent
             )
 
-            DisplayUsernameSection(
-                isEnabled = true,
+            DisplaySection(
+                isDisplayUsernameFieldEnabled = state.displayUsernameFieldPreference.value,
                 onEvent = onEvent
             )
 

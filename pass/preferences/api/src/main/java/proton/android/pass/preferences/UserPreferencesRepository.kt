@@ -24,6 +24,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ShareId
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
+import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
 import proton.android.pass.preferences.simplelogin.SimpleLoginSyncStatusPreference
 
 @Suppress("TooManyFunctions", "ComplexInterface")
@@ -94,4 +95,9 @@ interface UserPreferencesRepository {
     fun setAliasTrashDialogStatusPreference(preference: AliasTrashDialogStatusPreference): Result<Unit>
 
     fun observeAliasTrashDialogStatusPreference(): Flow<AliasTrashDialogStatusPreference>
+
+    fun setDisplayUsernameFieldPreference(preference: SettingsDisplayUsernameFieldPreference): Result<Unit>
+
+    fun observeDisplayUsernameFieldPreference(): Flow<SettingsDisplayUsernameFieldPreference>
+
 }

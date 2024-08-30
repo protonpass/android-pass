@@ -25,6 +25,7 @@ import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseFaviconsPreference
+import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
 
 internal sealed interface SettingsEvent {
 
@@ -53,6 +54,7 @@ internal data class SettingsUiState(
     val allowScreenshots: AllowScreenshotsPreference,
     val telemetryStatus: TelemetryStatus,
     val event: SettingsEvent,
+    val displayUsernameFieldPreference: SettingsDisplayUsernameFieldPreference,
     private val syncStateLoadingResult: LoadingResult<SyncState>
 ) {
 
@@ -74,7 +76,8 @@ internal data class SettingsUiState(
             useFavicons = UseFaviconsPreference.Enabled,
             allowScreenshots = AllowScreenshotsPreference.Disabled,
             telemetryStatus = TelemetryStatus.Hide,
-            event = SettingsEvent.Unknown
+            event = SettingsEvent.Unknown,
+            displayUsernameFieldPreference = SettingsDisplayUsernameFieldPreference.Disabled,
         )
 
     }

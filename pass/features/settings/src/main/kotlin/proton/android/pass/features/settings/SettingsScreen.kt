@@ -66,7 +66,9 @@ fun SettingsScreen(
                 SettingsContentEvent.Privacy -> { openWebsite(context, "https://proton.me/legal/privacy") }
                 SettingsContentEvent.Terms -> { openWebsite(context, "https://proton.me/legal/terms") }
                 SettingsContentEvent.Up -> onNavigate(SettingsNavigation.Close)
-                is SettingsContentEvent.OnDisplayUsernameToggled -> {}
+                is SettingsContentEvent.OnDisplayUsernameToggled -> {
+                    viewModel.onToggleDisplayUsernameField(isEnabled = it.isEnabled)
+                }
             }
         }
     )

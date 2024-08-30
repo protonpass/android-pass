@@ -42,6 +42,7 @@ import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
 import proton.android.pass.telemetry.api.CanConfigureTelemetry
 import javax.inject.Inject
 
@@ -75,20 +76,28 @@ class SettingsViewModel @Inject constructor(
             .getAllowScreenshotsPreference()
             .distinctUntilChanged()
 
+    private val displayUsernameFieldPreferenceFlow: Flow<SettingsDisplayUsernameFieldPreference> =
+        preferencesRepository
+            .observeDisplayUsernameFieldPreference()
+            .distinctUntilChanged()
+
     private val eventState: MutableStateFlow<SettingsEvent> =
         MutableStateFlow(SettingsEvent.Unknown)
 
     private data class PreferencesState(
         val theme: ThemePreference,
         val copyTotpToClipboard: CopyTotpToClipboard,
-        val useFavicons: UseFaviconsPreference
+        val useFavicons: UseFaviconsPreference,
+        val displayUsernameFieldPreference: SettingsDisplayUsernameFieldPreference
     )
 
     private val preferencesState: Flow<PreferencesState> = combine(
         themeState,
         copyTotpToClipboardState,
-        useFaviconsState
-    ) { theme, totp, favicons -> PreferencesState(theme, totp, favicons) }
+        useFaviconsState,
+        displayUsernameFieldPreferenceFlow,
+        ::PreferencesState
+    )
 
     internal val state: StateFlow<SettingsUiState> = combine(
         preferencesState,
@@ -113,7 +122,8 @@ class SettingsViewModel @Inject constructor(
             useFavicons = preferences.useFavicons,
             allowScreenshots = allowScreenshots,
             telemetryStatus = telemetryStatus,
-            event = event
+            event = event,
+            displayUsernameFieldPreference = preferences.displayUsernameFieldPreference,
         )
     }.stateIn(
         scope = viewModelScope,
@@ -161,6 +171,11 @@ class SettingsViewModel @Inject constructor(
                 PassLogger.w(TAG, "Error performing sync")
                 PassLogger.w(TAG, error)
             }
+    }
+
+    internal fun onToggleDisplayUsernameField(isEnabled: Boolean) {
+        SettingsDisplayUsernameFieldPreference.from(isEnabled)
+            .also(preferencesRepository::setDisplayUsernameFieldPreference)
     }
 
     private companion object {

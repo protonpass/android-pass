@@ -106,6 +106,8 @@ internal data class SimpleLoginSyncDetailsState(
         is Some -> modelOption.value.pendingAliasesCount
     }
 
+    internal val hasPendingAliases: Boolean = pendingAliasesCount > 0
+
     internal val isLoading: Boolean = when (modelOption) {
         None -> true
         is Some -> false

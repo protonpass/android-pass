@@ -28,6 +28,7 @@ import androidx.compose.material.Switch
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
@@ -47,16 +48,23 @@ fun SettingToggle(
         modifier = modifier
             .clickable { onClick(!isChecked) }
             .fillMaxWidth()
-            .padding(16.dp, 26.dp),
+            .padding(
+                horizontal = Spacing.medium,
+                vertical = 26.dp
+            ),
         verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
-        Row(horizontalArrangement = Arrangement.SpaceBetween) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(
                 modifier = Modifier.weight(1f),
                 text = text,
                 style = ProtonTheme.typography.defaultWeak,
                 color = PassTheme.colors.textNorm
             )
+            
             Switch(
                 checked = isChecked,
                 colors = SwitchDefaults.colors(

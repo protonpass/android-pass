@@ -21,9 +21,17 @@
   <string name="simple_login_sync_details_title">Takma adlar</string>
   <string name="simple_login_sync_details_domain_label">Etki alanı</string>
   <string name="simple_login_sync_details_domain_title">Takma adların varsayılan etki alanı</string>
+  <string name="simple_login_sync_details_domain_option_blank">Not selected</string>
   <string name="simple_login_sync_details_mailboxes_label">Posta kutuları</string>
   <string name="simple_login_sync_details_mailboxes_title">Takma adların varsayılan posta kutusu</string>
   <string name="simple_login_sync_details_vault_title">SimpleLogin eşitleme</string>
+  <string name="simple_login_sync_details_dialog_title_domains">Default domain for aliases</string>
+  <string name="simple_login_sync_details_dialog_title_mailboxes">Default mailbox for aliases</string>
+  <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">There was an error updating SL alias mailbox</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">SL alias mailbox successfully updated</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Takma adları eşitle</string>
   <string name="simple_login_sync_enable_snackbar_error">SimpleLogin takma adları eşitlemesi açılırken bir sorun çıktı</string>

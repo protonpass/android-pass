@@ -44,6 +44,8 @@
   <string name="action_continue">Fortsätt</string>
   <string name="action_retry">Försök igen</string>
   <string name="action_edit">Redigera</string>
+  <string name="action_update">Uppdatera</string>
+  <string name="action_close">Stäng</string>
   <!-- Empty list -->
   <string name="empty_list_title">Lägg till ditt första objekt</string>
   <string name="empty_search_results_title">Inga resultat hittades</string>

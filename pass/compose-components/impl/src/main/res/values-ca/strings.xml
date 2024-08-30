@@ -44,6 +44,8 @@
   <string name="action_continue">Continua</string>
   <string name="action_retry">Torna a provar</string>
   <string name="action_edit">Editar</string>
+  <string name="action_update">Actualitza</string>
+  <string name="action_close">Tanca</string>
   <!-- Empty list -->
   <string name="empty_list_title">Afegeix el primer element</string>
   <string name="empty_search_results_title">No s\'han trobat resultats</string>
@@ -237,8 +239,8 @@
   <string name="simple_login_widget_title">Enable SimpleLogin sync</string>
   <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">We detected that you have %s that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
   <plurals name="simple_login_widget_pending_aliases">
-    <item quantity="one">%d alias</item>
-    <item quantity="other">%d aliases</item>
+    <item quantity="one">%d àlies</item>
+    <item quantity="other">%d àlies</item>
   </plurals>
   <string name="simple_login_widget_action">Sync aliases</string>
   <string name="simple_login_widget_close_content_description">Button to close simple login aliases sync widget</string>

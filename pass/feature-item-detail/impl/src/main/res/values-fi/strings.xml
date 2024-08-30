@@ -31,8 +31,8 @@
   <string name="item_monitor_exclude_message_error">Virhe poissuljettaessa kohdetta valvonnasta</string>
   <string name="item_monitor_include_message">Kohde sisällytettiin valvontaan</string>
   <string name="item_monitor_include_message_error">Virhe lisättäessä kohdetta valvontaan</string>
-  <string name="alias_change_status_error">Virhe aliaksen tilan muuttamisessa</string>
-  <string name="login_item_generate_totp_error">Virhe luotaessa kaksivaiheisen tunnistautumisen todennuskoodia</string>
+  <string name="alias_change_status_error">Virhe muutettaessa aliaksen tilaa</string>
+  <string name="login_item_generate_totp_error">Virhe luotaessa kaksivaiheisen tunnistautumisen vahvistuskoodia</string>
   <string name="login_item_view_alias_button">Näytä alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Heikko salasana</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Tämä tili on vaarassa. Käy vaihtamassa salasanasi palvelun tiliasetuksista.</string>
@@ -48,7 +48,7 @@
   <string name="field_username_or_email">Käyttäjätunnus tai sähköpostiosoite</string>
   <string name="field_password">Salasana</string>
   <string name="websites_section_title">Verkkosivustot</string>
-  <string name="totp_section_title">Todennuskoodi (TOTP)</string>
+  <string name="totp_section_title">Vahvistuskoodi (TOTP)</string>
   <string name="action_reveal_password">Näytä salasana</string>
   <string name="action_conceal_password">Piilota salasana</string>
   <string name="action_reveal_number">Näytä numero</string>
@@ -93,16 +93,16 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Et voi muokata kohdetta, koska se on roskakorissa. Siirrä se ensin pois roskakorista.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Jakaminen ei ole mahdollista</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Oikeutesi eivät riitä tämän holvin jakamiseen.</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">Olet saavuttanut holvien jakamisrajan. Jos haluat jakaa lisää holveja, päivitä nykyinen tilauksesi.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Olet saavuttanut holvien jakorajoituksen. Jaa lisää holveja päivittämällä nykyinen tilauksesi.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Et voi jakaa kohdetta, koska se on roskakorissa. Siirrä se ensin pois roskakorista.</string>
   <string name="password_score_vulnerable">Haavoittuvainen</string>
   <string name="password_score_weak">Heikko</string>
   <string name="password_score_strong">Vahva</string>
-  <string name="passkey_detail_bottomsheet_title">Avainkoodi</string>
+  <string name="passkey_detail_bottomsheet_title">Pääsyavain</string>
   <string name="passkey_detail_bottomsheet_username">Käyttäjätunnus</string>
   <string name="passkey_detail_bottomsheet_domain">Verkkotunnus</string>
   <string name="passkey_detail_bottomsheet_key">Avain</string>
   <string name="passkey_detail_bottomsheet_created">Luotu</string>
   <string name="alias_toggle_tooltip_title">Poista alias käytöstä</string>
-  <string name="alias_toggle_tooltip_description">Paina tästä poistaaksesi tämän aliaksen käytöstä ja lopettaaksesi sähköpostien vastaanottamisen.</string>
+  <string name="alias_toggle_tooltip_description">Poista alias käytöstä ja lopeta viestien vastaanotto napauttamalla tästä.</string>
 </resources>

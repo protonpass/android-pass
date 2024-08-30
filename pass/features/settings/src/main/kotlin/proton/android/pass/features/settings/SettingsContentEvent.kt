@@ -41,4 +41,8 @@ internal sealed interface SettingsContentEvent {
     data object Terms : SettingsContentEvent
 
     data object Up : SettingsContentEvent
+
+    @JvmInline
+    value class OnDisplayUsernameToggled(val isEnabled: Boolean) : SettingsContentEvent
+
 }

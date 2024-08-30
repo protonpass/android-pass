@@ -89,4 +89,6 @@ internal sealed interface LoginContentEvent {
     @JvmInline
     value class OnTooltipDismissed(val tooltip: Tooltip) : LoginContentEvent
 
+    data object OnUsernameOrEmailManuallyExpanded : LoginContentEvent
+
 }

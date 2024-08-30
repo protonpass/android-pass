@@ -66,7 +66,7 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
     ) { aliasDomains, aliasMailboxes, aliasSettings, syncStatus ->
         SimpleLoginSyncDetailsModel(
             aliasDomains = aliasDomains,
-            aliasMailboxes = aliasMailboxes,
+            aliasMailboxes = aliasMailboxes.filter { aliasMailbox -> aliasMailbox.isVerified },
             aliasSettings = aliasSettings,
             syncStatus = syncStatus
         ).some()

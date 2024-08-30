@@ -27,6 +27,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.ShareId
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
+import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
 import proton.android.pass.preferences.simplelogin.SimpleLoginSyncStatusPreference
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -82,6 +83,8 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
     private val simpleLoginSyncStatusPreference = MutableStateFlow(SimpleLoginSyncStatusPreference.Disabled)
 
     private val aliasTrashDialogStatusPreference = MutableStateFlow(AliasTrashDialogStatusPreference.Disabled)
+
+    private val displayUsernameFieldPreference = MutableStateFlow(SettingsDisplayUsernameFieldPreference.Disabled)
 
     override fun setAppLockState(state: AppLockState): Result<Unit> {
         appLockState.tryEmit(state)
@@ -228,4 +231,13 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
 
     override fun observeAliasTrashDialogStatusPreference(): Flow<AliasTrashDialogStatusPreference> =
         aliasTrashDialogStatusPreference
+
+    override fun setDisplayUsernameFieldPreference(preference: SettingsDisplayUsernameFieldPreference): Result<Unit> {
+        displayUsernameFieldPreference.tryEmit(preference)
+        return Result.success(Unit)
+    }
+
+    override fun observeDisplayUsernameFieldPreference(): Flow<SettingsDisplayUsernameFieldPreference> =
+        displayUsernameFieldPreference
+
 }

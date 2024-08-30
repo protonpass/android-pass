@@ -64,7 +64,7 @@ fun SettingToggle(
                 style = ProtonTheme.typography.defaultWeak,
                 color = PassTheme.colors.textNorm
             )
-            
+
             Switch(
                 checked = isChecked,
                 colors = SwitchDefaults.colors(

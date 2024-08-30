@@ -220,7 +220,8 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     private fun SimpleLoginAliasMailboxData.toDomain() = SimpleLoginAliasMailbox(
         id = mailboxId,
         email = email,
-        isDefault = isDefault
+        isDefault = isDefault,
+        isVerified = verified
     )
 
     private fun SimpleLoginAliasSettingsData.toDomain() = SimpleLoginAliasSettings(

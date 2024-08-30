@@ -21,9 +21,17 @@
   <string name="simple_login_sync_details_title">Aliasse</string>
   <string name="simple_login_sync_details_domain_label">Domain</string>
   <string name="simple_login_sync_details_domain_title">Standarddomain für Aliasse</string>
+  <string name="simple_login_sync_details_domain_option_blank">Not selected</string>
   <string name="simple_login_sync_details_mailboxes_label">Postfächer</string>
   <string name="simple_login_sync_details_mailboxes_title">Standardpostfach für Aliasse</string>
   <string name="simple_login_sync_details_vault_title">SimpleLogin-Synchronisierung</string>
+  <string name="simple_login_sync_details_dialog_title_domains">Default domain for aliases</string>
+  <string name="simple_login_sync_details_dialog_title_mailboxes">Default mailbox for aliases</string>
+  <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">There was an error updating SL alias mailbox</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">SL alias mailbox successfully updated</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Aliasse synchronisieren</string>
   <string name="simple_login_sync_enable_snackbar_error">Es gab einen Fehler bei der Aktivierung der SimpleLogin-Alias- Synchronisierung</string>

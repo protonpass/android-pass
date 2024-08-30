@@ -43,6 +43,8 @@
   <string name="action_continue">Tiếp tục</string>
   <string name="action_retry">Thử lại</string>
   <string name="action_edit">Chỉnh sửa</string>
+  <string name="action_update">Update</string>
+  <string name="action_close">Close</string>
   <!-- Empty list -->
   <string name="empty_list_title">Thêm nội dung đầu tiên của bạn</string>
   <string name="empty_search_results_title">Không có kết quả được tìm thấy</string>

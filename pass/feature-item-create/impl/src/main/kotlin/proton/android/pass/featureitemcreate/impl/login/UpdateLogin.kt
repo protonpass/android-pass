@@ -212,6 +212,10 @@ internal fun UpdateLogin(
                     is LoginContentEvent.OnTooltipDismissed -> {
                         viewModel.onTooltipDismissed(it.tooltip)
                     }
+
+                    LoginContentEvent.OnUsernameOrEmailManuallyExpanded -> {
+                        viewModel.onUsernameOrEmailManuallyExpanded()
+                    }
                 }
             }
         )

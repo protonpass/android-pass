@@ -62,14 +62,22 @@ internal fun SettingsContent(
                 theme = state.themePreference,
                 onEvent = onEvent
             )
+
             PrivacySection(
                 useFavicons = state.useFavicons.value(),
                 allowScreenshots = state.allowScreenshots.value(),
                 onEvent = onEvent
             )
+
+            DisplayUsernameSection(
+                isEnabled = true,
+                onEvent = onEvent
+            )
+
             AboutSection(
                 onEvent = onEvent
             )
+
             ApplicationSection(
                 telemetryStatus = state.telemetryStatus,
                 onEvent = onEvent

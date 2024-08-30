@@ -44,6 +44,8 @@
   <string name="action_continue">İlerle</string>
   <string name="action_retry">Yeniden dene</string>
   <string name="action_edit">Düzenle</string>
+  <string name="action_update">Update</string>
+  <string name="action_close">Close</string>
   <!-- Empty list -->
   <string name="empty_list_title">İlk ögenizi ekleyin</string>
   <string name="empty_search_results_title">Herhangi bir sonuç bulunamadı</string>

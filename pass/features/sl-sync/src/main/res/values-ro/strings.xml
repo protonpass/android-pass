@@ -21,9 +21,17 @@
   <string name="simple_login_sync_details_title">Aliasuri</string>
   <string name="simple_login_sync_details_domain_label">Domeniu</string>
   <string name="simple_login_sync_details_domain_title">Domeniu implicit pentru aliasuri</string>
+  <string name="simple_login_sync_details_domain_option_blank">Neselectat</string>
   <string name="simple_login_sync_details_mailboxes_label">Conturi de e-mail</string>
   <string name="simple_login_sync_details_mailboxes_title">E-mail implicit pentru aliasuri</string>
   <string name="simple_login_sync_details_vault_title">Sincronizare SimpleLogin</string>
+  <string name="simple_login_sync_details_dialog_title_domains">Domeniu implicit pentru aliasuri</string>
+  <string name="simple_login_sync_details_dialog_title_mailboxes">Cont de e-mail implicit pentru aliasuri</string>
+  <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">A apărut o eroare la preluarea detaliilor aliasului SimpleLogin.</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_error">A apărut o eroare la actualizarea domeniului aliasului SimpleLogin.</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">Domeniul aliasului SimpleLogin a fost actualizat.</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">A apărut o eroare la actualizarea contului aliasului SimpleLogin.</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">Contul aliasului SimpleLogin a fost actualizat.</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sincronizare aliasuri</string>
   <string name="simple_login_sync_enable_snackbar_error">A apărut o eroare la activarea sincronizării aliasurilor SimpleLogin.</string>

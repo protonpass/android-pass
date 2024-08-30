@@ -45,6 +45,8 @@
   <string name="action_continue">Continuare</string>
   <string name="action_retry">Reîncercare</string>
   <string name="action_edit">Editare</string>
+  <string name="action_update">Actualizare</string>
+  <string name="action_close">Închidere</string>
   <!-- Empty list -->
   <string name="empty_list_title">Adăugați primul articol</string>
   <string name="empty_search_results_title">Nu s-au găsit rezultate</string>

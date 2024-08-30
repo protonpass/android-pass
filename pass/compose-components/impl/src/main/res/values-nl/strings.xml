@@ -44,6 +44,8 @@
   <string name="action_continue">Doorgaan</string>
   <string name="action_retry">Opnieuw proberen</string>
   <string name="action_edit">Bewerk</string>
+  <string name="action_update">Update</string>
+  <string name="action_close">Close</string>
   <!-- Empty list -->
   <string name="empty_list_title">Voeg uw eerste item toe</string>
   <string name="empty_search_results_title">Geen resultaten gevonden</string>

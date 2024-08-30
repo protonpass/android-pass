@@ -46,6 +46,8 @@
   <string name="action_continue">Працягнуць</string>
   <string name="action_retry">Паўтарыць</string>
   <string name="action_edit">Рэдагаваць</string>
+  <string name="action_update">Абнавіць</string>
+  <string name="action_close">Закрыць</string>
   <!-- Empty list -->
   <string name="empty_list_title">Дадайце свой першы элемент</string>
   <string name="empty_search_results_title">Нічога не знойдзена</string>

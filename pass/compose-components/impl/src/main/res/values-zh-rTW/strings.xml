@@ -43,6 +43,8 @@
   <string name="action_continue">繼續</string>
   <string name="action_retry">重試</string>
   <string name="action_edit">編輯</string>
+  <string name="action_update">Update</string>
+  <string name="action_close">Close</string>
   <!-- Empty list -->
   <string name="empty_list_title">加入您的第一個項目</string>
   <string name="empty_search_results_title">查無結果</string>

@@ -23,7 +23,7 @@
   <string name="settings_option_terms_of_service">Käyttöehdot</string>
   <string name="settings_privacy_section_title">Yksityisyys</string>
   <string name="settings_use_favicons_preference_title">Käytä sivustokuvakkeita</string>
-  <string name="settings_use_favicons_preference_subtitle">Valitse näytetäänkö kohteissasi niiden verkkosivustojen kuvakkeet.</string>
+  <string name="settings_use_favicons_preference_subtitle">Valitse näytetäänkö kohteille verkkosivustojen kuvakkeet.</string>
   <string name="settings_allow_screenshots_preference_title">Salli kuvakaappaukset</string>
   <string name="settings_allow_screenshots_preference_subtitle">Mahdollistaa kuvankaappauksen sovelluksesta.</string>
   <string name="settings_clear_icon_cache_success">Kuvakevälimuisti tyhjennettiin</string>
@@ -40,8 +40,8 @@
   <string name="view_logs_title">Näytä lokitiedot</string>
   <string name="clipboard_bottomsheet_title">Leikepöytä</string>
   <string name="clipboard_option_clear_clipboard_label">Tyhjennä leikepöytä</string>
-  <string name="clipboard_option_copy_totp_code">Kopioi todennuskoodit</string>
-  <string name="clipboard_option_copy_totp_code_hint">Kopioi todennuskoodit automaattitäytön yhteydessä automaattisesti.</string>
+  <string name="clipboard_option_copy_totp_code">Kopioi vahvistuskoodit</string>
+  <string name="clipboard_option_copy_totp_code_hint">Kopioi vahvistuskoodit automaattitäytön yhteydessä automaattisesti.</string>
   <string name="clipboard_option_clear_clipboard_never">Ei koskaan</string>
   <string name="clipboard_option_clear_clipboard_after_60_seconds">Minuutin kuluttua</string>
   <string name="clipboard_option_clear_clipboard_after_180_seconds">Kolmen minuutin kuluttua</string>

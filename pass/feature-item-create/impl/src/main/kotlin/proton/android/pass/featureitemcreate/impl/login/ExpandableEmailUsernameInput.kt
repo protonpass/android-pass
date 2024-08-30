@@ -138,7 +138,10 @@ internal fun ExpandableEmailUsernameInput(
                     val size = remember { mutableStateOf(IntSize.Zero) }
                     Box(
                         modifier = Modifier
-                            .clickable { isExpanded.value = true }
+                            .clickable {
+                                isExpanded.value = true
+                                onEvent(LoginContentEvent.OnUsernameOrEmailManuallyExpanded)
+                            }
                             .findPositionAndSizeForTooltip(position, size)
                     ) {
                         Icon(
@@ -235,7 +238,6 @@ internal fun ExpandableEmailUsernameInputPreview(
                 onEvent = {},
                 onFocusChange = { _, _ -> },
                 onAliasOptionsClick = {},
-                onExpandClick = {},
                 canUpdateUsername = params.canUpdateUsername,
                 isEditAllowed = params.isEditAllowed,
                 isInvalidEmail = params.isInvalidEmail,

@@ -39,6 +39,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
+import java.util.Date
 
 class DeleteVaultViewModelTest {
 
@@ -150,7 +151,8 @@ class DeleteVaultViewModelTest {
         shareId = ShareId("123"),
         name = VAULT_NAME,
         color = ShareColor.Color2,
-        icon = ShareIcon.Icon1
+        icon = ShareIcon.Icon1,
+        createTime = Date()
     )
 
     companion object {

@@ -67,6 +67,7 @@ import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
+import java.util.Date
 import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
 import proton.android.pass.featuretrash.R as TrashR
@@ -153,6 +154,7 @@ class HomeScreenTest {
                 name = "Vault canNavigateToCreateVault",
                 color = ShareColor.Color1,
                 icon = ShareIcon.Icon1,
+                createTime = Date()
             ),
             activeItemCount = 0,
             trashedItemCount = 0
@@ -311,6 +313,7 @@ class HomeScreenTest {
                     name = "Vault ${shareId.id}",
                     color = ShareColor.Color1,
                     icon = ShareIcon.Icon1,
+                    createTime = Date()
                 )
             }
 

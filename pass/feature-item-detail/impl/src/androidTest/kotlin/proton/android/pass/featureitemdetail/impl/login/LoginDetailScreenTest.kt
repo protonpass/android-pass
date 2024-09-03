@@ -61,6 +61,7 @@ import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.totp.api.TotpManager
 import proton.android.pass.totp.fakes.TestObserveTotpFromUri
+import java.util.Date
 import javax.inject.Inject
 import kotlin.test.assertEquals
 
@@ -337,7 +338,8 @@ class LoginDetailScreenTest {
             vault = Vault(
                 userId = UserId(""),
                 shareId = ShareId(SHARE_ID),
-                name = vaultName
+                name = vaultName,
+                createTime = Date()
             ),
             hasMoreThanOneVault = hasManyVaults
         )

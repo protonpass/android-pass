@@ -72,6 +72,7 @@ import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.fakes.TestTotpManager
+import java.util.Date
 
 internal class CreateLoginViewModelTest {
 
@@ -128,7 +129,7 @@ internal class CreateLoginViewModelTest {
     @Test
     fun `when a create item event without title should return a BlankTitle validation error`() = runTest {
         val vault =
-            VaultWithItemCount(Vault(UserId(""), ShareId("shareId"), "Share"), 1, 0)
+            VaultWithItemCount(Vault(UserId(""), ShareId("shareId"), "Share", createTime = Date()), 1, 0)
         observeVaults.sendResult(Result.success(listOf(vault)))
 
         instance.createItem()
@@ -335,7 +336,7 @@ internal class CreateLoginViewModelTest {
     }
 
     private fun sendInitialVault(shareId: ShareId): VaultWithItemCount {
-        val vault = VaultWithItemCount(Vault(UserId(""), shareId, "Share"), 1, 0)
+        val vault = VaultWithItemCount(Vault(UserId(""), shareId, "Share", createTime = Date()), 1, 0)
         observeVaults.sendResult(Result.success(listOf(vault)))
         return vault
     }

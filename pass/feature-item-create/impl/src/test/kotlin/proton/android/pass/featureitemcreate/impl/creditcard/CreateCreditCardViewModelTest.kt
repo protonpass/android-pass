@@ -53,6 +53,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.totp.fakes.TestTotpManager
+import java.util.Date
 
 class CreateCreditCardViewModelTest {
 
@@ -92,7 +93,7 @@ class CreateCreditCardViewModelTest {
     @Test
     fun `create item without title should return a BlankTitle validation error`() = runTest {
         val vault = VaultWithItemCount(
-            vault = Vault(UserId(""), ShareId("shareId"), "Share"),
+            vault = Vault(UserId(""), ShareId("shareId"), "Share", createTime = Date()),
             activeItemCount = 1,
             trashedItemCount = 0
         )
@@ -208,7 +209,7 @@ class CreateCreditCardViewModelTest {
 
     private fun sendInitialVault(shareId: ShareId): VaultWithItemCount {
         val vault = VaultWithItemCount(
-            vault = Vault(UserId(""), shareId, "Share"),
+            vault = Vault(UserId(""), shareId, "Share", createTime = Date()),
             activeItemCount = 1,
             trashedItemCount = 0
         )

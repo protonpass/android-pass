@@ -41,6 +41,7 @@ import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestShare
+import java.util.Date
 
 class EditVaultViewModelTest {
 
@@ -84,7 +85,8 @@ class EditVaultViewModelTest {
             shareId = ShareId(SHARE_ID),
             name = "some name",
             color = ShareColor.Color4,
-            icon = ShareIcon.Icon7
+            icon = ShareIcon.Icon7,
+            createTime = Date()
         )
 
         getVaultById.emitValue(vault)
@@ -107,7 +109,8 @@ class EditVaultViewModelTest {
             shareId = ShareId(SHARE_ID),
             name = "some name",
             color = ShareColor.Color4,
-            icon = ShareIcon.Icon7
+            icon = ShareIcon.Icon7,
+            createTime = Date()
         )
         getVaultById.emitValue(vault)
         updateVault.setResult(Result.success(TestShare.create().copy(id = vault.shareId)))
@@ -144,7 +147,8 @@ class EditVaultViewModelTest {
             shareId = ShareId(SHARE_ID),
             name = "some name",
             color = ShareColor.Color4,
-            icon = ShareIcon.Icon7
+            icon = ShareIcon.Icon7,
+            createTime = Date()
         )
         getVaultById.emitValue(vault)
         updateVault.setResult(Result.failure(IllegalStateException("test")))

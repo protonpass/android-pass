@@ -47,6 +47,7 @@ import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestItem
+import java.util.Date
 
 class MigrateConfirmVaultForMigrateItemsViewModelTest {
 
@@ -151,7 +152,8 @@ class MigrateConfirmVaultForMigrateItemsViewModelTest {
         vault = Vault(
             userId = UserId(""),
             shareId = SHARE_ID,
-            name = "source"
+            name = "source",
+            createTime = Date()
         ),
         activeItemCount = 1,
         trashedItemCount = 0

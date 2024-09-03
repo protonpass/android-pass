@@ -20,10 +20,7 @@ package proton.android.pass.featuresettings.impl
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.repositories.SyncState
-import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
@@ -56,7 +53,6 @@ internal data class SettingsUiState(
     val allowScreenshots: AllowScreenshotsPreference,
     val telemetryStatus: TelemetryStatus,
     val event: SettingsEvent,
-    val defaultVault: Option<VaultWithItemCount>,
     private val syncStateLoadingResult: LoadingResult<SyncState>
 ) {
 
@@ -78,8 +74,7 @@ internal data class SettingsUiState(
             useFavicons = UseFaviconsPreference.Enabled,
             allowScreenshots = AllowScreenshotsPreference.Disabled,
             telemetryStatus = TelemetryStatus.Hide,
-            event = SettingsEvent.Unknown,
-            defaultVault = None
+            event = SettingsEvent.Unknown
         )
 
     }

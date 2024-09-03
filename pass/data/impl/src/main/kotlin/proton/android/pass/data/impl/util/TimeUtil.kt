@@ -18,9 +18,15 @@
 
 package proton.android.pass.data.impl.util
 
+import java.sql.Date
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 
 object TimeUtil {
     fun getNowUtc(): Long = OffsetDateTime.now(ZoneOffset.UTC).toEpochSecond()
+
+    fun Long.toDate(): Date {
+        val correctedTimestamp = if (this < 1_000_000_000_000L) this * 1000 else this
+        return Date(correctedTimestamp)
+    }
 }

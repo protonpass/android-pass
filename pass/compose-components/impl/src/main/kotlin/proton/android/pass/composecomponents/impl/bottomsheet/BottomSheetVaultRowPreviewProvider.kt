@@ -25,6 +25,7 @@ import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
+import java.util.Date
 
 class BottomSheetVaultRowPreviewProvider : PreviewParameterProvider<VaultRowInput> {
     override val values: Sequence<VaultRowInput>
@@ -42,7 +43,8 @@ class BottomSheetVaultRowPreviewProvider : PreviewParameterProvider<VaultRowInpu
                                             name = "some vault",
                                             color = ShareColor.Color2,
                                             icon = ShareIcon.Icon10,
-                                            shared = isShared
+                                            shared = isShared,
+                                            createTime = Date()
                                         ),
                                         activeItemCount = 2,
                                         trashedItemCount = 0

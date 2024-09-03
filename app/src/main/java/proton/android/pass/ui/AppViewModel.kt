@@ -74,30 +74,31 @@ class AppViewModel @Inject constructor(
         .connectivity
         .distinctUntilChanged()
 
+    val needsAuthState = needsBiometricAuth()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = runBlocking { needsBiometricAuth().first() }
+        )
 
     val appUiState: StateFlow<AppUiState> = combine(
         snackbarDispatcher.snackbarMessage,
         themePreference,
         networkStatus,
-        needsBiometricAuth(),
         inAppUpdatesManager.observeInAppUpdateState()
-    ) { snackbarMessage, theme, networkStatus, needsAuth, inAppUpdateState ->
+    ) { snackbarMessage, theme, networkStatus, inAppUpdateState ->
         AppUiState(
             snackbarMessage = snackbarMessage,
             theme = theme,
             networkStatus = networkStatus,
-            needsAuth = needsAuth,
             inAppUpdateState = inAppUpdateState
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = run {
-            val (theme, needsAuth) = runBlocking {
-                preferenceRepository.getThemePreference()
-                    .first() to needsBiometricAuth().first()
-            }
-            AppUiState.default(theme, needsAuth)
+            val theme = runBlocking { preferenceRepository.getThemePreference().first() }
+            AppUiState.default(theme)
         }
     )
 

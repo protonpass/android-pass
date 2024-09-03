@@ -57,6 +57,7 @@ import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
+import java.util.Date
 import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -108,6 +109,7 @@ class CreateAliasScreenTest {
                 userId = USER_ID,
                 shareId = ShareId(SHARE_ID),
                 name = "Test vault",
+                createTime = Date()
             ),
             activeItemCount = 0,
             trashedItemCount = 0

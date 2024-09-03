@@ -44,6 +44,7 @@ import proton.android.pass.navigation.api.DestinationShareNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
+import java.util.Date
 
 internal class MigrateConfirmVaultViewModelTest {
 
@@ -126,7 +127,8 @@ internal class MigrateConfirmVaultViewModelTest {
         vault = Vault(
             userId = UserId(""),
             shareId = SHARE_ID,
-            name = "source"
+            name = "source",
+            createTime = Date()
         ),
         activeItemCount = 1,
         trashedItemCount = 0

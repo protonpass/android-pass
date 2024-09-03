@@ -37,6 +37,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestUtils
+import java.util.Date
 
 class VaultOptionsViewModelTest {
 
@@ -321,7 +322,8 @@ class VaultOptionsViewModelTest {
             name = "Test vault",
             isOwned = owned,
             members = if (shared) 2 else 1,
-            shared = shared
+            shared = shared,
+            createTime = Date()
         )
 
         observeVaults.sendResult(Result.success(listOf(defaultVault)))
@@ -334,7 +336,8 @@ class VaultOptionsViewModelTest {
         name = "Some vault",
         isOwned = owned,
         members = 1,
-        shared = false
+        shared = false,
+        createTime = Date()
     )
 
     private fun setNavShareId(shareId: ShareId) {

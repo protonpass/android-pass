@@ -38,6 +38,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.Vault
 import proton.android.pass.test.domain.TestItem
+import java.util.Date
 
 internal class GetItemActionsImplTest {
 
@@ -270,7 +271,8 @@ internal class GetItemActionsImplTest {
         name = "testVault",
         shareId = shareId,
         isOwned = owned,
-        role = role
+        role = role,
+        createTime = Date()
     )
 
     private fun setItem(state: ItemState = ItemState.Active) {

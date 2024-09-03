@@ -47,6 +47,7 @@ import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
+import java.util.Date
 
 class SharingSummaryViewModelTest {
 
@@ -176,7 +177,8 @@ class SharingSummaryViewModelTest {
             shareId = ShareId(id = TEST_SHARE_ID),
             name = "Evangeline Potter",
             color = ShareColor.Color1,
-            icon = ShareIcon.Icon1
+            icon = ShareIcon.Icon1,
+            createTime = Date()
         ),
         activeItemCount = 5521, trashedItemCount = 6902
     )

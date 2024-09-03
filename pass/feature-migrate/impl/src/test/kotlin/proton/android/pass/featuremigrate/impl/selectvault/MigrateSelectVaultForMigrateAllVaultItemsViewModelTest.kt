@@ -36,6 +36,7 @@ import proton.android.pass.featuremigrate.impl.MigrateModeValue
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
+import java.util.Date
 
 class MigrateSelectVaultForMigrateAllVaultItemsViewModelTest {
 
@@ -87,7 +88,8 @@ class MigrateSelectVaultForMigrateAllVaultItemsViewModelTest {
             vault = Vault(
                 userId = UserId(""),
                 shareId = SHARE_ID,
-                name = "vault1"
+                name = "vault1",
+                createTime = Date()
             ),
             activeItemCount = 1,
             trashedItemCount = 0
@@ -96,7 +98,8 @@ class MigrateSelectVaultForMigrateAllVaultItemsViewModelTest {
             vault = Vault(
                 userId = UserId(""),
                 shareId = ShareId("OTHER_SHARE_ID"),
-                name = "vault2"
+                name = "vault2",
+                createTime = Date()
             ),
             activeItemCount = 1,
             trashedItemCount = 0

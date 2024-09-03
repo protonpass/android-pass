@@ -19,8 +19,9 @@
 package proton.android.pass.data.api.usecases.organization
 
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.common.api.Option
 import proton.android.pass.domain.OrganizationSettings
 
 interface ObserveOrganizationSettings {
-    operator fun invoke(): Flow<OrganizationSettings>
+    operator fun invoke(): Flow<Option<OrganizationSettings>>
 }

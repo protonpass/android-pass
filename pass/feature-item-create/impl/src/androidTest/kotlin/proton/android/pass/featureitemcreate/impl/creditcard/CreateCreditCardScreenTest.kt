@@ -51,6 +51,7 @@ import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
+import java.util.Date
 import javax.inject.Inject
 import kotlin.test.assertEquals
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -92,6 +93,7 @@ class CreateCreditCardScreenTest {
                 userId = USER_ID,
                 shareId = ShareId(SHARE_ID),
                 name = "Test vault",
+                createTime = Date()
             ),
             activeItemCount = 0,
             trashedItemCount = 0

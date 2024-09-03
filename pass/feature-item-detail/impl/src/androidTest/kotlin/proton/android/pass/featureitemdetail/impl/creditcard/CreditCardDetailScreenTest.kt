@@ -59,6 +59,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
+import java.util.Date
 import javax.inject.Inject
 import kotlin.test.assertEquals
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -376,7 +377,8 @@ class CreditCardDetailScreenTest {
             vault = Vault(
                 userId = UserId(""),
                 shareId = ShareId(SHARE_ID),
-                name = vaultName
+                name = vaultName,
+                createTime = Date()
             ),
             hasMoreThanOneVault = hasManyVaults
         )

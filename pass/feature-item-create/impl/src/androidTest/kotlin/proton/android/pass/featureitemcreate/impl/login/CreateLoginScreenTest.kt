@@ -72,6 +72,7 @@ import proton.android.pass.test.waitUntilExists
 import proton.android.pass.test.writeTextAndWait
 import proton.android.pass.totp.api.TotpSpec
 import proton.android.pass.totp.fakes.TestTotpManager
+import java.util.Date
 import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -129,6 +130,7 @@ class CreateLoginScreenTest {
                 userId = USER_ID,
                 shareId = ShareId(SHARE_ID),
                 name = "Test vault",
+                createTime = Date()
             ),
             activeItemCount = 0,
             trashedItemCount = 0

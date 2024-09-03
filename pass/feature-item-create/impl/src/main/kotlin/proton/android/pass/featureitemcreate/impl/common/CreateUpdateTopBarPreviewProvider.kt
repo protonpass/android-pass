@@ -26,6 +26,7 @@ import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import java.util.Date
 
 class CreateUpdateTopBarPreviewProvider : PreviewParameterProvider<CreateUpdateTopBarPreview> {
     override val values: Sequence<CreateUpdateTopBarPreview>
@@ -90,7 +91,8 @@ class CreateUpdateTopBarPreviewProvider : PreviewParameterProvider<CreateUpdateT
                     shareId = ShareId(id = ""),
                     name = "Personal",
                     color = ShareColor.Color2,
-                    icon = ShareIcon.Icon13
+                    icon = ShareIcon.Icon13,
+                    createTime = Date()
                 )
             ),
             CreateUpdateTopBarPreview(
@@ -103,7 +105,8 @@ class CreateUpdateTopBarPreviewProvider : PreviewParameterProvider<CreateUpdateT
                     shareId = ShareId(id = ""),
                     name = "Vault with a long title that should be truncated",
                     color = ShareColor.Color2,
-                    icon = ShareIcon.Icon13
+                    icon = ShareIcon.Icon13,
+                    createTime = Date()
                 )
             )
         )

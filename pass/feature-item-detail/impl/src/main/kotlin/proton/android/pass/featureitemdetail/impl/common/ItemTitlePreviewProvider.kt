@@ -29,6 +29,7 @@ import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import java.util.Date
 
 class ThemeItemTitleProvider : ThemePairPreviewProvider<ItemTitleInput>(ItemTitlePreviewProvider())
 
@@ -49,7 +50,8 @@ class ItemTitlePreviewProvider : PreviewParameterProvider<ItemTitleInput> {
                         shareId = ShareId("123"),
                         name = "A vault",
                         color = ShareColor.Color1,
-                        icon = ShareIcon.Icon1
+                        icon = ShareIcon.Icon1,
+                        createTime = Date()
                     ),
                     isPinned = false,
                     isHistoryFeatureEnabled = false
@@ -69,7 +71,8 @@ class ItemTitlePreviewProvider : PreviewParameterProvider<ItemTitleInput> {
                         shareId = ShareId("123"),
                         name = "A vault",
                         color = ShareColor.Color1,
-                        icon = ShareIcon.Icon1
+                        icon = ShareIcon.Icon1,
+                        createTime = Date()
                     ),
                     isPinned = true,
                     isHistoryFeatureEnabled = false

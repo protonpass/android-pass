@@ -46,6 +46,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
+import java.util.Date
 
 class MemberOptionsViewModelTest {
 
@@ -267,7 +268,8 @@ class MemberOptionsViewModelTest {
             userId = UserId(""),
             name = "test",
             shareId = ShareId(USER_SHARE_ID),
-            isOwned = owned
+            isOwned = owned,
+            createTime = Date()
         )
         observeVaults.sendResult(Result.success(listOf(vault)))
     }
@@ -276,7 +278,8 @@ class MemberOptionsViewModelTest {
         userId = UserId(""),
         name = "Some vault $shareId",
         shareId = ShareId(shareId),
-        isOwned = owned
+        isOwned = owned,
+        createTime = Date()
     )
 
     companion object {

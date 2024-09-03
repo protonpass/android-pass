@@ -62,6 +62,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
+import java.util.Date
 
 class NoteDetailViewModelTest {
 
@@ -341,7 +342,8 @@ class NoteDetailViewModelTest {
             shareId = ShareId(SHARE_ID),
             name = VAULT_NAME,
             color = ShareColor.Color1,
-            icon = ShareIcon.Icon1
+            icon = ShareIcon.Icon1,
+            createTime = Date()
         )
     }
 

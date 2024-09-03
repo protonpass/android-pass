@@ -54,6 +54,7 @@ import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
+import java.util.Date
 
 class CreateAliasViewModelTest {
 
@@ -274,7 +275,7 @@ class CreateAliasViewModelTest {
             Result.success(
                 listOf(
                     VaultWithItemCount(
-                        vault = Vault(UserId(""), ShareId("ShareId"), "name"),
+                        vault = Vault(UserId(""), ShareId("ShareId"), "name", createTime = Date()),
                         activeItemCount = 1,
                         trashedItemCount = 0
                     )

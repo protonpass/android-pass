@@ -46,6 +46,7 @@ import proton.android.pass.preferences.LastItemAutofillPreference
 import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
+import java.util.Date
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -159,19 +160,22 @@ class GetSuggestedLoginItemsImplTest {
                 userId = UserId(""),
                 shareId = firstShareId,
                 name = "default",
-                role = ShareRole.Admin
+                role = ShareRole.Admin,
+                createTime = Date()
             ),
             Vault(
                 userId = UserId(""),
                 shareId = secondShareId,
                 name = "other",
-                role = ShareRole.Admin
+                role = ShareRole.Admin,
+                createTime = Date()
             ),
             Vault(
                 userId = UserId(""),
                 shareId = ShareId("789"),
                 name = "another",
-                role = ShareRole.Read
+                role = ShareRole.Read,
+                createTime = Date()
             )
         )
 

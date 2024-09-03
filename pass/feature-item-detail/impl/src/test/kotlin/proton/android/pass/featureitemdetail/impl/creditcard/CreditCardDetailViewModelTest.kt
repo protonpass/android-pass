@@ -52,6 +52,7 @@ import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
+import java.util.Date
 
 class CreditCardDetailViewModelTest {
 
@@ -419,7 +420,8 @@ class CreditCardDetailViewModelTest {
         private val TEST_VAULT = Vault(
             userId = UserId(""),
             shareId = ShareId(SHARE_ID),
-            name = "Vault"
+            name = "Vault",
+            createTime = Date()
         )
     }
 

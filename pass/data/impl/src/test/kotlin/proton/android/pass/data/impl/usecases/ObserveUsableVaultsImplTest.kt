@@ -34,6 +34,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.Vault
+import java.util.Date
 
 class ObserveUsableVaultsImplTest {
 
@@ -154,7 +155,8 @@ class ObserveUsableVaultsImplTest {
                 userId = UserId(""),
                 shareId = shareId,
                 role = role,
-                name = "unused"
+                name = "unused",
+                createTime = Date()
             )
         }
 

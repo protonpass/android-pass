@@ -71,7 +71,8 @@ fun PassAppContent(
     appUiState: AppUiState,
     onNavigate: (AppNavigation) -> Unit,
     onSnackbarMessageDelivered: () -> Unit,
-    onCompleteUpdate: () -> Unit
+    onCompleteUpdate: () -> Unit,
+    needsAuth: Boolean
 ) {
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
 
@@ -150,7 +151,7 @@ fun PassAppContent(
                             progress = appUiState.inAppUpdateState.progress
                         )
                     }
-                    if (appUiState.needsAuth) {
+                    if (needsAuth) {
                         val unAuthBottomSheetState = rememberModalBottomSheetState(
                             initialValue = ModalBottomSheetValue.Hidden,
                             skipHalfExpanded = true

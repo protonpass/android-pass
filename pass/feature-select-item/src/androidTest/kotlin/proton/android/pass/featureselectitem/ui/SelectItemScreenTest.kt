@@ -65,6 +65,7 @@ import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
 import proton.android.pass.test.waitUntilExists
+import java.util.Date
 import javax.inject.Inject
 
 @HiltAndroidTest
@@ -334,6 +335,7 @@ class SelectItemScreenTest {
                 userId = UserId(""),
                 shareId = shareId,
                 name = "testVault-$it",
+                createTime = Date()
             )
         }
         observeVaults.sendResult(Result.success(vaultList))

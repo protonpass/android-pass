@@ -52,6 +52,7 @@ import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants
 import proton.android.pass.test.waitUntilExists
+import java.util.Date
 import javax.inject.Inject
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -259,6 +260,7 @@ class SelectVaultBottomSheetTest {
                     userId = UserId(""),
                     shareId = shareIdForIndex(0),
                     name = vaultNameForIndex(0),
+                    createTime = Date()
                 ),
                 activeItemCount = 1,
                 trashedItemCount = 1
@@ -268,7 +270,8 @@ class SelectVaultBottomSheetTest {
                     userId = UserId(""),
                     shareId = shareIdForIndex(1),
                     name = vaultNameForIndex(1),
-                    role = ShareRole.Read
+                    role = ShareRole.Read,
+                    createTime = Date()
                 ),
                 activeItemCount = 1,
                 trashedItemCount = 1
@@ -302,6 +305,7 @@ class SelectVaultBottomSheetTest {
                     userId = UserId(""),
                     shareId = shareIdForIndex(it),
                     name = vaultNameForIndex(it),
+                    createTime = Date()
                 ),
                 activeItemCount = 1,
                 trashedItemCount = 1

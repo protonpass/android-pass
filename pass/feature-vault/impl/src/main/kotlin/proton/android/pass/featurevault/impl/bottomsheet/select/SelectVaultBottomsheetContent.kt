@@ -49,6 +49,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featurevault.impl.R
+import java.util.Date
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
@@ -92,6 +93,7 @@ fun SelectVaultBottomsheetContent(
                         is VaultStatus.Disabled -> when (it.status.reason) {
                             VaultStatus.Reason.ReadOnly ->
                                 stringResource(R.string.bottomsheet_select_vault_read_only) to false
+
                             VaultStatus.Reason.Downgraded -> {
                                 stringResource(R.string.bottomsheet_select_vault_only_oldest_vaults) to false
                             }
@@ -122,7 +124,8 @@ fun SelectVaultBottomsheetContentPreview(
         vault = Vault(
             userId = UserId(id = ""),
             shareId = ShareId("123"),
-            name = "vault 1"
+            name = "vault 1",
+            createTime = Date()
         ),
         activeItemCount = 12,
         trashedItemCount = 0
@@ -143,7 +146,8 @@ fun SelectVaultBottomsheetContentPreview(
                                     shareId = ShareId("other"),
                                     name = "vault 2",
                                     color = ShareColor.Color2,
-                                    icon = ShareIcon.Icon2
+                                    icon = ShareIcon.Icon2,
+                                    createTime = Date()
                                 ),
                                 activeItemCount = 1,
                                 trashedItemCount = 0
@@ -157,7 +161,8 @@ fun SelectVaultBottomsheetContentPreview(
                                     shareId = ShareId("another"),
                                     name = "vault 3",
                                     color = ShareColor.Color3,
-                                    icon = ShareIcon.Icon3
+                                    icon = ShareIcon.Icon3,
+                                    createTime = Date()
                                 ),
                                 activeItemCount = 1,
                                 trashedItemCount = 0

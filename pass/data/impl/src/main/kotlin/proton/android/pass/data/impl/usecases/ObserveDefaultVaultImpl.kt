@@ -72,10 +72,13 @@ class ObserveDefaultVaultImpl @Inject constructor(
             return
         }
 
-        val defaultVault = vaults.firstOrNull { it.role.toPermissions().canCreate() } ?: run {
-            PassLogger.w(TAG, "There are no writable vaults")
-            return
-        }
+        val defaultVault = vaults
+            .filter { it.role.toPermissions().canCreate() }
+            .minByOrNull { it.createTime }
+            ?: run {
+                PassLogger.w(TAG, "There are no writable vaults")
+                return
+            }
 
         preferencesRepository.setDefaultVault(userId, defaultVault.shareId)
             .onSuccess {

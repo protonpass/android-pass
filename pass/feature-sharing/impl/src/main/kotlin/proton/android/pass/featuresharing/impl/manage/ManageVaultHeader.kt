@@ -42,6 +42,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featuresharing.impl.R
+import java.util.Date
 
 @Composable
 fun ManageVaultHeader(modifier: Modifier = Modifier, vault: VaultWithItemCount?) {
@@ -88,7 +89,8 @@ fun ManageVaultHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDa
                     vault = Vault(
                         userId = UserId(id = ""),
                         shareId = ShareId("123"),
-                        name = "Vault name"
+                        name = "Vault name",
+                        createTime = Date()
                     ),
                     activeItemCount = 3,
                     trashedItemCount = 0

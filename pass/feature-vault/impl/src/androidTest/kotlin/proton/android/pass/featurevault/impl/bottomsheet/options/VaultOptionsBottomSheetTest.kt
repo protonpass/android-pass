@@ -42,6 +42,7 @@ import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import java.util.Date
 import javax.inject.Inject
 
 @HiltAndroidTest
@@ -110,7 +111,8 @@ class VaultOptionsBottomSheetTest {
             name = "Test vault",
             isOwned = true,
             members = 1,
-            shared = false
+            shared = false,
+            createTime = Date()
         )
         val anotherVault = Vault(
             userId = UserId(""),
@@ -118,7 +120,8 @@ class VaultOptionsBottomSheetTest {
             name = "another vault",
             isOwned = true,
             members = 1,
-            shared = false
+            shared = false,
+            createTime = Date()
         )
         observeVaults.sendResult(Result.success(listOf(vaultToDelete, anotherVault)))
         runTest(R.string.bottomsheet_delete_vault) { event, checker ->
@@ -180,7 +183,8 @@ class VaultOptionsBottomSheetTest {
             name = "Test vault",
             isOwned = owned,
             members = if (shared) 2 else 1,
-            shared = shared
+            shared = shared,
+            createTime = Date()
         )
         observeVaults.sendResult(Result.success(listOf(vault)))
     }

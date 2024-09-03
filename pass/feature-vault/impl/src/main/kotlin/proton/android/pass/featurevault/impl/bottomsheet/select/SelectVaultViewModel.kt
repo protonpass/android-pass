@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
@@ -35,6 +36,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
+import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
@@ -46,6 +48,7 @@ import javax.inject.Inject
 class SelectVaultViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val canCreateItemInVault: CanCreateItemInVault,
+    private val setDefaultVault: SetDefaultVault,
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandle: SavedStateHandleProvider
@@ -112,6 +115,19 @@ class SelectVaultViewModel @Inject constructor(
             PassLogger.w(TAG, "Error finding current vault")
             snackbarDispatcher(VaultSnackbarMessage.CannotFindVaultError)
             SelectVaultUiState.Error
+        }
+    }
+
+    fun setLastUsedVault(shareId: ShareId) {
+        viewModelScope.launch {
+            runCatching { setDefaultVault(shareId) }
+                .onSuccess {
+                    PassLogger.d(TAG, "Last used vault set to $shareId")
+                }
+                .onFailure {
+                    PassLogger.w(TAG, "Error setting last used vault")
+                    PassLogger.w(TAG, it)
+                }
         }
     }
 

@@ -38,7 +38,10 @@ fun SelectVaultBottomsheet(
         is SelectVaultUiState.Success -> SelectVaultBottomsheetContent(
             modifier = modifier,
             state = state,
-            onVaultClick = { onNavigate(VaultNavigation.VaultSelected(it)) },
+            onVaultClick = {
+                viewModel.setLastUsedVault(it)
+                onNavigate(VaultNavigation.VaultSelected(it))
+            },
             onUpgrade = { onNavigate(VaultNavigation.Upgrade) }
         )
 

@@ -21,6 +21,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import timber.log.Timber
+import java.util.Date
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -58,12 +59,14 @@ class FeatureHomeApp : Application() {
             Vault(
                 userId = UserId(""),
                 shareId = ShareId(SHARE_ID),
-                name = "Main vault"
+                name = "Main vault",
+                createTime = Date()
             ),
             Vault(
                 userId = UserId(""),
                 shareId = ShareId("OtherShareID"),
-                name = "Other vault"
+                name = "Other vault",
+                createTime = Date()
             )
         )
         val vaultsWithItemCount = vaults.map {

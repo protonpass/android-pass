@@ -38,6 +38,7 @@ import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
+import java.util.Date
 
 class LeaveVaultViewModelTest {
 
@@ -134,7 +135,8 @@ class LeaveVaultViewModelTest {
         shareId = ShareId("123"),
         name = VAULT_NAME,
         color = ShareColor.Color2,
-        icon = ShareIcon.Icon1
+        icon = ShareIcon.Icon1,
+        createTime = Date()
     )
 
     companion object {

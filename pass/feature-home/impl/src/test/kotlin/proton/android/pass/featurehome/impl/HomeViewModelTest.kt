@@ -77,6 +77,7 @@ import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestUser
+import java.util.Date
 
 internal class HomeViewModelTest {
 
@@ -221,7 +222,8 @@ internal class HomeViewModelTest {
                     shareId = shareId,
                     name = "Vault ${shareId.id}",
                     color = ShareColor.Color1,
-                    icon = ShareIcon.Icon1
+                    icon = ShareIcon.Icon1,
+                    createTime = Date()
                 )
             }
 

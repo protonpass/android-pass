@@ -44,6 +44,7 @@ import proton.android.pass.domain.Vault
 import proton.android.pass.featuresharing.impl.ShowEditVaultArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.MainDispatcherRule
+import java.util.Date
 
 class SharingWithViewModelTest {
 
@@ -144,7 +145,8 @@ class SharingWithViewModelTest {
         val testVault = Vault(
             userId = UserId(""),
             shareId = ShareId(id = SHARE_ID),
-            name = "vault name"
+            name = "vault name",
+            createTime = Date()
         )
         observeVaultById.emitValue(testVault.some())
         viewModel.onEmailChange(invitedEmail)

@@ -36,9 +36,10 @@ import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.BiometryType
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.data.api.usecases.ClearPin
-import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
+import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToAuthenticateError
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToStartError
@@ -60,7 +61,7 @@ class AppLockTypeViewModel @Inject constructor(
     private val biometryManager: BiometryManager,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clearPin: ClearPin,
-    private val observeOrganizationSettings: ObserveOrganizationSettings
+    private val observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock
 ) : ViewModel() {
     private val eventState: MutableStateFlow<AppLockTypeEvent> =
         MutableStateFlow(AppLockTypeEvent.Unknown)
@@ -70,7 +71,7 @@ class AppLockTypeViewModel @Inject constructor(
     val state: StateFlow<AppLockTypeUiState> = combine(
         flow { emit(biometryManager.getBiometryStatus()) },
         userPreferencesRepository.getAppLockTypePreference(),
-        observeOrganizationSettings().map { it.isEnforced() },
+        observeAnyAccountHasEnforcedLock().map { if (it is Some) it.value.isEnforced() else false },
         eventState
     ) { biometryStatus, appLockTypePreference, isForceLockMandatory, event ->
         AppLockTypeUiState(

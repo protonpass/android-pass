@@ -56,6 +56,7 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
@@ -68,7 +69,7 @@ import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.UpgradeInfo
-import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
+import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.data.api.usecases.simplelogin.DisableSimpleLoginSyncPreference
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
@@ -103,7 +104,7 @@ class ProfileViewModel @Inject constructor(
     observeMFACount: ObserveMFACount,
     observeUpgradeInfo: ObserveUpgradeInfo,
     getDefaultBrowser: GetDefaultBrowser,
-    observeOrganizationSettings: ObserveOrganizationSettings,
+    observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock,
     observeSecureLinksCount: ObserveSecureLinksCount,
     accountManager: AccountManager,
     observeSimpleLoginSyncStatus: ObserveSimpleLoginSyncStatus
@@ -123,10 +124,10 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private val appLockSectionStateFlow: Flow<AppLockSectionState> = observeOrganizationSettings()
+    private val appLockSectionStateFlow: Flow<AppLockSectionState> = observeAnyAccountHasEnforcedLock()
         .flatMapLatest { orgSettings ->
-            if (orgSettings.isEnforced()) {
-                val seconds = orgSettings.secondsToForceLock()
+            if (orgSettings is Some && orgSettings.value.isEnforced()) {
+                val seconds = orgSettings.value.secondsToForceLock()
                 combine(
                     userPreferencesRepository.getAppLockTypePreference(),
                     userPreferencesRepository.getBiometricSystemLockPreference()

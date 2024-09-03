@@ -21,7 +21,8 @@ package proton.android.pass.biometry
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
+import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
@@ -30,7 +31,7 @@ class NeedsBiometricAuthImpl @Inject constructor(
     private val authTimeHolder: BiometryAuthTimeHolder,
     private val bootCountRetriever: BootCountRetriever,
     private val elapsedTimeProvider: ElapsedTimeProvider,
-    private val observeOrganizationSettings: ObserveOrganizationSettings
+    private val observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock
 ) : NeedsBiometricAuth {
 
     override fun invoke(): Flow<Boolean> = combine(
@@ -38,9 +39,9 @@ class NeedsBiometricAuthImpl @Inject constructor(
         preferencesRepository.getHasAuthenticated().distinctUntilChanged(),
         preferencesRepository.getAppLockTimePreference().distinctUntilChanged(),
         authTimeHolder.getBiometryAuthData().distinctUntilChanged(),
-        observeOrganizationSettings().distinctUntilChanged()
+        observeAnyAccountHasEnforcedLock().distinctUntilChanged()
     ) { appLockState, hasAuthenticated, appLockTimePreference, biometryAuthTime, organizationSettings ->
-        NeedsAuthChecker.needsAuth(
+        val needsAuth = NeedsAuthChecker.needsAuth(
             appLockState = appLockState,
             hasAuthenticated = hasAuthenticated,
             appLockTimePreference = appLockTimePreference,
@@ -49,6 +50,12 @@ class NeedsBiometricAuthImpl @Inject constructor(
             lastBootCount = biometryAuthTime.bootCount,
             bootCount = bootCountRetriever.get(),
             organizationSettings = organizationSettings
-        ).value()
+        )
+        PassLogger.d(TAG, "NeedsAuthResult: $needsAuth")
+        needsAuth.value()
+    }
+
+    companion object {
+        private const val TAG = "NeedsBiometricAuthImpl"
     }
 }

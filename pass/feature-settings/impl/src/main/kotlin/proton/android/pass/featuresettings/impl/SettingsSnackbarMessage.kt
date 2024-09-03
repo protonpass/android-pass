@@ -30,7 +30,5 @@ enum class SettingsSnackbarMessage(
     ErrorPerformingOperation(R.string.settings_error_performing_operation, SnackbarType.ERROR),
     ClearIconCacheSuccess(R.string.settings_clear_icon_cache_success, SnackbarType.SUCCESS),
     ClearIconCacheError(R.string.settings_clear_icon_cache_error, SnackbarType.ERROR),
-    PreferenceUpdated(R.string.settings_preference_updated, SnackbarType.SUCCESS),
-    ChangeDefaultVaultSuccess(R.string.settings_default_vault_updated, SnackbarType.SUCCESS),
-    ChangeDefaultVaultError(R.string.settings_default_vault_update_error, SnackbarType.ERROR)
+    PreferenceUpdated(R.string.settings_preference_updated, SnackbarType.SUCCESS)
 }

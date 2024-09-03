@@ -20,6 +20,7 @@ package proton.android.pass.domain
 
 import androidx.compose.runtime.Stable
 import me.proton.core.domain.entity.UserId
+import java.util.Date
 
 @Stable
 data class Vault(
@@ -32,7 +33,8 @@ data class Vault(
     val role: ShareRole = ShareRole.Admin,
     val members: Int = 1,
     val shared: Boolean = false,
-    val maxMembers: Int = 10
+    val maxMembers: Int = 10,
+    val createTime: Date
 )
 
 fun List<Vault>.sorted(): List<Vault> = sortedBy { it.name.lowercase() }

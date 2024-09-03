@@ -41,7 +41,4 @@ internal sealed interface SettingsContentEvent {
     data object Terms : SettingsContentEvent
 
     data object Up : SettingsContentEvent
-
-    data object DefaultVault : SettingsContentEvent
-
 }

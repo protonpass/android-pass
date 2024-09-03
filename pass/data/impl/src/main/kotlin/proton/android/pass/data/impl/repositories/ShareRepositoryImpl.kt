@@ -58,6 +58,7 @@ import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
+import proton.android.pass.data.impl.util.TimeUtil.toDate
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
@@ -511,7 +512,7 @@ class ShareRepositoryImpl @Inject constructor(
             vaultId = VaultId(entity.vaultId),
             content = entity.encryptedContent.toOption(),
             expirationTime = entity.expirationTime?.let { Date(it) },
-            createTime = Date(entity.createTime),
+            createTime = entity.createTime.toDate(),
             color = color,
             icon = icon,
             shareRole = ShareRole.fromValue(entity.shareRoleId),

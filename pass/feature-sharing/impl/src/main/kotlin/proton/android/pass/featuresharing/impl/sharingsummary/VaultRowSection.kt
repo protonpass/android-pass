@@ -41,6 +41,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featuresharing.impl.R
+import java.util.Date
 
 @Composable
 fun VaultRowSection(modifier: Modifier = Modifier, vaultWithItemCount: VaultWithItemCount?) {
@@ -76,7 +77,8 @@ fun VaultRowSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark
                         shareId = ShareId("id"),
                         name = "Vault name",
                         color = ShareColor.Color1,
-                        icon = ShareIcon.Icon1
+                        icon = ShareIcon.Icon1,
+                        createTime = Date()
                     ),
                     activeItemCount = 1,
                     trashedItemCount = 2

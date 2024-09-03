@@ -21,6 +21,8 @@ package proton.android.pass.data.fakes.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.domain.OrganizationSettings
 import javax.inject.Inject
@@ -29,12 +31,12 @@ import javax.inject.Singleton
 @Singleton
 class TestObserveOrganizationSettings @Inject constructor() : ObserveOrganizationSettings {
 
-    private val flow: MutableStateFlow<OrganizationSettings> =
-        MutableStateFlow(OrganizationSettings.NotAnOrganization)
+    private val flow: MutableStateFlow<Option<OrganizationSettings>> =
+        MutableStateFlow(Some(OrganizationSettings.NotAnOrganization))
 
     fun emitValue(value: OrganizationSettings) {
-        flow.update { value }
+        flow.update { Some(value) }
     }
 
-    override fun invoke(): Flow<OrganizationSettings> = flow
+    override fun invoke(): Flow<Option<OrganizationSettings>> = flow
 }

@@ -28,6 +28,8 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.transpose
 import proton.android.pass.data.api.usecases.CanAddressesBeInvitedResult
 import proton.android.pass.data.api.usecases.CheckCanAddressesBeInvited
@@ -47,7 +49,7 @@ class CheckCanAddressesBeInvitedImpl @Inject constructor(
 ) : CheckCanAddressesBeInvited {
 
     override suspend fun invoke(shareId: ShareId, addresses: List<String>): CanAddressesBeInvitedResult {
-        val settings = observeOrganizationSettings().firstOrNull() ?: run {
+        val settingsOption = observeOrganizationSettings().firstOrNull() ?: run {
             PassLogger.w(TAG, "Organization settings not available")
             return CanAddressesBeInvitedResult.None(
                 reason = CanAddressesBeInvitedResult.CannotInviteAddressReason.Unknown
@@ -60,14 +62,20 @@ class CheckCanAddressesBeInvitedImpl @Inject constructor(
             )
         }
 
-        return when (settings) {
-            OrganizationSettings.NotAnOrganization -> CanAddressesBeInvitedResult.All(addresses)
-            is OrganizationSettings.Organization -> when (settings.shareMode) {
-                OrganizationShareMode.Unrestricted -> CanAddressesBeInvitedResult.All(addresses)
-                OrganizationShareMode.OrganizationOnly -> checkAddressesCanBeInvited(
-                    shareId,
-                    addresses
-                )
+        return when (settingsOption) {
+            None -> CanAddressesBeInvitedResult.None(
+                reason = CanAddressesBeInvitedResult.CannotInviteAddressReason.Unknown
+            )
+
+            is Some -> when (val settings = settingsOption.value) {
+                OrganizationSettings.NotAnOrganization -> CanAddressesBeInvitedResult.All(addresses)
+                is OrganizationSettings.Organization -> when (settings.shareMode) {
+                    OrganizationShareMode.Unrestricted -> CanAddressesBeInvitedResult.All(addresses)
+                    OrganizationShareMode.OrganizationOnly -> checkAddressesCanBeInvited(
+                        shareId,
+                        addresses
+                    )
+                }
             }
         }
     }
@@ -108,6 +116,7 @@ class CheckCanAddressesBeInvitedImpl @Inject constructor(
             aggregated.can.isEmpty() -> CanAddressesBeInvitedResult.None(
                 reason = CanAddressesBeInvitedResult.CannotInviteAddressReason.CannotInviteOutsideOrg
             )
+
             else -> CanAddressesBeInvitedResult.Some(
                 canBe = aggregated.can,
                 cannotBe = aggregated.cannot,

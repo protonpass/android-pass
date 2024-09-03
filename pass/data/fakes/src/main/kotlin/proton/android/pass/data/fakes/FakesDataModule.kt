@@ -150,6 +150,7 @@ import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
+import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
@@ -242,6 +243,7 @@ import proton.android.pass.data.fakes.usecases.TestMigrateItems
 import proton.android.pass.data.fakes.usecases.TestMigrateVault
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
+import proton.android.pass.data.fakes.usecases.TestObserveAnyAccountHasEnforcedLock
 import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUserSettings
@@ -646,6 +648,11 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveOrganizationSettings(impl: TestObserveOrganizationSettings): ObserveOrganizationSettings
+
+    @Binds
+    abstract fun bindObserveAnyAccountHasEnforcedLock(
+        impl: TestObserveAnyAccountHasEnforcedLock
+    ): ObserveAnyAccountHasEnforcedLock
 
     @Binds
     abstract fun bindCheckCanAddressesBeInvited(impl: TestCheckAddressesCanBeInvited): CheckCanAddressesBeInvited

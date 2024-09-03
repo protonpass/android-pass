@@ -92,7 +92,7 @@ class SharingWithViewModel @Inject constructor(
     private val enteredEmailsState: MutableStateFlow<List<EnteredEmailState>> =
         MutableStateFlow(emptyList())
     private val selectedEmailIndexFlow: MutableStateFlow<Option<Int>> = MutableStateFlow(None)
-    private val organizationSettingsFlow: Flow<LoadingResult<OrganizationSettings>> =
+    private val organizationSettingsFlow: Flow<LoadingResult<Option<OrganizationSettings>>> =
         observeOrganizationSettings().asLoadingResult().distinctUntilChanged()
     private val errorMessageFlow: MutableStateFlow<ErrorMessage> =
         MutableStateFlow(ErrorMessage.None)
@@ -157,17 +157,19 @@ class SharingWithViewModel @Inject constructor(
         organizationSettingsFlow,
         errorMessageFlow
     ) { emails, vault, isLoading, event, suggestionsUiState, selectedEmailIndex,
-        scrollToBottom, continueEnabled, organizationSettings, errorMessage ->
+        scrollToBottom, continueEnabled, organizationSettingsResult, errorMessage ->
         val vaultValue = vault.value()
 
-        val canOnlyPickFromSelection = organizationSettings.map { settings ->
-            when (settings) {
-                OrganizationSettings.NotAnOrganization -> false
-                is OrganizationSettings.Organization -> when (settings.shareMode) {
-                    OrganizationShareMode.Unrestricted -> false
-                    OrganizationShareMode.OrganizationOnly -> true
+        val canOnlyPickFromSelection = organizationSettingsResult.map { organizationSettingsOption ->
+            organizationSettingsOption.map {
+                when (it) {
+                    OrganizationSettings.NotAnOrganization -> false
+                    is OrganizationSettings.Organization -> when (it.shareMode) {
+                        OrganizationShareMode.Unrestricted -> false
+                        OrganizationShareMode.OrganizationOnly -> true
+                    }
                 }
-            }
+            }.value() ?: true
         }.getOrNull() ?: true
 
         SharingWithUIState(

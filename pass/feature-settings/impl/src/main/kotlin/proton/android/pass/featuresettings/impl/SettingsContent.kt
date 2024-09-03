@@ -67,10 +67,6 @@ internal fun SettingsContent(
                 allowScreenshots = state.allowScreenshots.value(),
                 onEvent = onEvent
             )
-            DefaultVaultSection(
-                defaultVault = state.defaultVault.map { it.vault },
-                onEvent = onEvent
-            )
             AboutSection(
                 onEvent = onEvent
             )

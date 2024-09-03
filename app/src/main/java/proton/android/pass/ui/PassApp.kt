@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.LifecycleEffect
 import proton.android.pass.commonui.api.PassTheme
@@ -37,6 +38,9 @@ fun PassApp(
     onNavigate: (AppNavigation) -> Unit,
     appViewModel: AppViewModel = hiltViewModel()
 ) {
+    val needsAuth by appViewModel.needsAuthState.collectAsStateWithLifecycle(
+        minActiveState = Lifecycle.State.CREATED
+    )
     val appUiState by appViewModel.appUiState.collectAsStateWithLifecycle()
     val isDark = isDark(appUiState.theme)
     SystemUIEffect(isDark = isDark)
@@ -51,6 +55,7 @@ fun PassApp(
                 .systemBarsPadding()
                 .imePadding(),
             appUiState = appUiState,
+            needsAuth = needsAuth,
             onNavigate = {
                 if (it is AppNavigation.Finish) {
                     appViewModel.onStop()

@@ -55,6 +55,7 @@ import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import java.util.Date
 
 @Composable
 fun VaultNameSubtitle(
@@ -128,7 +129,8 @@ fun VaultNameSubtitlePreview(@PreviewParameter(ThemedBooleanPreviewProvider::cla
                     color = ShareColor.Color1,
                     icon = ShareIcon.Icon1,
                     members = members,
-                    shared = input.second
+                    shared = input.second,
+                    createTime = Date()
                 ),
                 onClick = {}
             )

@@ -52,6 +52,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featuresharing.impl.R
+import java.util.Date
 
 @Composable
 internal fun ShareThisVaultRow(
@@ -128,7 +129,8 @@ internal fun ShareThisVaultRowPreview(@PreviewParameter(ThemePreviewProvider::cl
                     vault = Vault(
                         userId = UserId(id = ""),
                         shareId = ShareId("Share"),
-                        name = "Test vault with a very very long name"
+                        name = "Test vault with a very very long name",
+                        createTime = Date()
                     ),
                     activeItemCount = 1,
                     trashedItemCount = 1

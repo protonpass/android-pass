@@ -153,6 +153,7 @@ import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
+import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
@@ -322,6 +323,7 @@ import proton.android.pass.data.impl.usecases.items.ObserveMonitoredItemsImpl
 import proton.android.pass.data.impl.usecases.items.OpenItemRevisionImpl
 import proton.android.pass.data.impl.usecases.items.RestoreItemRevisionImpl
 import proton.android.pass.data.impl.usecases.items.UpdateItemFlagImpl
+import proton.android.pass.data.impl.usecases.organization.ObserveAnyAccountHasEnforcedLockImpl
 import proton.android.pass.data.impl.usecases.organization.ObserveOrganizationSettingsImpl
 import proton.android.pass.data.impl.usecases.organization.RefreshOrganizationSettingsImpl
 import proton.android.pass.data.impl.usecases.passkeys.GetPasskeyByIdImpl
@@ -692,6 +694,11 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindRefreshOrganizationSettings(impl: RefreshOrganizationSettingsImpl): RefreshOrganizationSettings
+
+    @Binds
+    abstract fun bindObserveAnyAccountHasEnforcedLock(
+        impl: ObserveAnyAccountHasEnforcedLockImpl
+    ): ObserveAnyAccountHasEnforcedLock
 
     @Binds
     abstract fun bindGetPasskeyById(impl: GetPasskeyByIdImpl): GetPasskeyById

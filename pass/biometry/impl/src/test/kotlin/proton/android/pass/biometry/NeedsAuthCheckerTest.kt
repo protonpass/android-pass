@@ -44,7 +44,7 @@ class NeedsAuthCheckerTest {
             now = Clock.System.now().toEpochMilliseconds(),
             lastBootCount = Some(0),
             bootCount = 0,
-            organizationSettings = OrganizationSettings.NotAnOrganization
+            organizationSettings = OrganizationSettings.NotAnOrganization.some()
         )
 
         assertThat(res).isInstanceOf(NoNeedsAuthReason.AuthDisabled::class.java)
@@ -60,7 +60,7 @@ class NeedsAuthCheckerTest {
             now = Clock.System.now().toEpochMilliseconds(),
             lastBootCount = Some(0),
             bootCount = 0,
-            organizationSettings = OrganizationSettings.NotAnOrganization
+            organizationSettings = OrganizationSettings.NotAnOrganization.some()
         )
 
         assertThat(res).isInstanceOf(NeedsAuthReason.LockImmediatelyAndHadNotAuthenticated::class.java)
@@ -76,7 +76,7 @@ class NeedsAuthCheckerTest {
             now = Clock.System.now().toEpochMilliseconds(),
             lastBootCount = Some(0),
             bootCount = 0,
-            organizationSettings = OrganizationSettings.NotAnOrganization
+            organizationSettings = OrganizationSettings.NotAnOrganization.some()
         )
 
         assertThat(res).isInstanceOf(NoNeedsAuthReason.LockImmediatelyButHadAuthenticated::class.java)
@@ -95,7 +95,7 @@ class NeedsAuthCheckerTest {
             now = now.toEpochMilliseconds(),
             lastBootCount = Some(0),
             bootCount = 0,
-            organizationSettings = OrganizationSettings.NotAnOrganization
+            organizationSettings = OrganizationSettings.NotAnOrganization.some()
         )
 
         assertThat(res).isInstanceOf(NoNeedsAuthReason.LockTimeNotElapsed::class.java)
@@ -115,7 +115,7 @@ class NeedsAuthCheckerTest {
             now = now.toEpochMilliseconds(),
             lastBootCount = None,
             bootCount = 0,
-            organizationSettings = OrganizationSettings.NotAnOrganization
+            organizationSettings = OrganizationSettings.NotAnOrganization.some()
         )
 
         assertThat(res).isInstanceOf(NeedsAuthReason.LockTimeElapsed::class.java)
@@ -134,7 +134,7 @@ class NeedsAuthCheckerTest {
             now = now.toEpochMilliseconds(),
             lastBootCount = Some(0),
             bootCount = 0,
-            organizationSettings = OrganizationSettings.NotAnOrganization
+            organizationSettings = OrganizationSettings.NotAnOrganization.some()
         )
 
         assertThat(res).isInstanceOf(NeedsAuthReason.LastUnlockTimeInTheFuture::class.java)
@@ -153,7 +153,7 @@ class NeedsAuthCheckerTest {
             now = now.toEpochMilliseconds(),
             lastBootCount = Some(1),
             bootCount = 2,
-            organizationSettings = OrganizationSettings.NotAnOrganization
+            organizationSettings = OrganizationSettings.NotAnOrganization.some()
         )
 
 
@@ -178,7 +178,7 @@ class NeedsAuthCheckerTest {
             now = now.toEpochMilliseconds(),
             lastBootCount = Some(0),
             bootCount = 0,
-            organizationSettings = organizationSettings
+            organizationSettings = organizationSettings.some()
         )
 
         assertThat(result).isInstanceOf(NeedsAuthReason.LockTimeElapsed::class.java)
@@ -200,7 +200,7 @@ class NeedsAuthCheckerTest {
             now = Clock.System.now().toEpochMilliseconds(),
             lastBootCount = Some(0),
             bootCount = 0,
-            organizationSettings = organizationSettings
+            organizationSettings = organizationSettings.some()
         )
 
         assertThat(result).isInstanceOf(NoNeedsAuthReason.AuthDisabled::class.java)

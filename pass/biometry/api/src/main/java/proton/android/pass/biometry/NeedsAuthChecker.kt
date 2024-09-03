@@ -64,13 +64,18 @@ object NeedsAuthChecker {
         now: Long,
         lastBootCount: Option<Long>,
         bootCount: Long,
-        organizationSettings: OrganizationSettings
+        organizationSettings: Option<OrganizationSettings>
     ): NeedsAuthResult {
-        if (organizationSettings.isEnforced() && hasAuthenticated is HasAuthenticated.NotAuthenticated) {
+        if (
+            organizationSettings is Some &&
+            organizationSettings.value.isEnforced() &&
+            hasAuthenticated is HasAuthenticated.NotAuthenticated
+        ) {
             return checkUnlockTime(
                 lastUnlockTime = lastUnlockTime,
                 now = now,
-                appLockDuration = organizationSettings.secondsToForceLock().toDuration(DurationUnit.SECONDS)
+                appLockDuration = organizationSettings.value.secondsToForceLock()
+                    .toDuration(DurationUnit.SECONDS)
             )
         }
 

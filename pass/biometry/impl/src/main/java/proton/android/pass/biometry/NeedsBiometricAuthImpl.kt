@@ -19,8 +19,9 @@
 package proton.android.pass.biometry
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import proton.android.pass.common.api.combineN
+import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -31,16 +32,18 @@ class NeedsBiometricAuthImpl @Inject constructor(
     private val authTimeHolder: BiometryAuthTimeHolder,
     private val bootCountRetriever: BootCountRetriever,
     private val elapsedTimeProvider: ElapsedTimeProvider,
-    private val observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock
+    private val observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock,
+    private val appLifecycleProvider: PassAppLifecycleProvider
 ) : NeedsBiometricAuth {
 
-    override fun invoke(): Flow<Boolean> = combine(
+    override fun invoke(): Flow<Boolean> = combineN(
         preferencesRepository.getAppLockState().distinctUntilChanged(),
         preferencesRepository.getHasAuthenticated().distinctUntilChanged(),
         preferencesRepository.getAppLockTimePreference().distinctUntilChanged(),
         authTimeHolder.getBiometryAuthData().distinctUntilChanged(),
-        observeAnyAccountHasEnforcedLock().distinctUntilChanged()
-    ) { appLockState, hasAuthenticated, appLockTimePreference, biometryAuthTime, organizationSettings ->
+        observeAnyAccountHasEnforcedLock().distinctUntilChanged(),
+        appLifecycleProvider.state // needed to notify the flow on app state change
+    ) { appLockState, hasAuthenticated, appLockTimePreference, biometryAuthTime, organizationSettings, _ ->
         val needsAuth = NeedsAuthChecker.needsAuth(
             appLockState = appLockState,
             hasAuthenticated = hasAuthenticated,

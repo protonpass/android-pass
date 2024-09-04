@@ -1013,9 +1013,11 @@ class HomeViewModel @Inject constructor(
                     clearSelection()
                 }
             }
-        }.onFailure {
+        }.onFailure { error ->
             PassLogger.w(TAG, "Error unpinning items")
-            PassLogger.w(TAG, it)
+            PassLogger.w(TAG, error)
+            selectionState.update { it.copy(pinningLoadingState = IsLoadingState.NotLoading) }
+            snackbarDispatcher(ItemsUnpinnedError)
         }
     }
 
@@ -1114,9 +1116,10 @@ class HomeViewModel @Inject constructor(
             topBarState = SelectionTopBarState(
                 isTrash = isTrash,
                 selectedItemCount = selectedItems.size,
-                areAllSelectedPinned = selectedItems.all { it.isPinned },
-                pinningLoadingState = pinningLoadingState,
-
+                pinningState = PinningState(
+                    areAllSelectedPinned = selectedItems.all { it.isPinned },
+                    pinningLoadingState = pinningLoadingState
+                ),
                 // Actions are only enabled if there are selected items and the pinning operation
                 // is not in progress
                 actionsEnabled = selectedItems.isNotEmpty() && !pinningLoadingState.value()

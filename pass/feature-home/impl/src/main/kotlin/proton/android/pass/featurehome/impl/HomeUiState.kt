@@ -114,23 +114,30 @@ internal data class HomeUiState(
 internal data class SelectionTopBarState(
     val isTrash: Boolean,
     val selectedItemCount: Int,
-    val areAllSelectedPinned: Boolean,
-    val pinningLoadingState: IsLoadingState,
+    val pinningState: PinningState,
     val actionsEnabled: Boolean
 ) {
-
     internal companion object {
-
         internal val Initial = SelectionTopBarState(
             isTrash = false,
             selectedItemCount = 0,
-            areAllSelectedPinned = false,
-            pinningLoadingState = IsLoadingState.NotLoading,
+            pinningState = PinningState.Initial,
             actionsEnabled = true
         )
-
     }
+}
 
+@Immutable
+internal data class PinningState(
+    val areAllSelectedPinned: Boolean,
+    val pinningLoadingState: IsLoadingState
+) {
+    internal companion object {
+        internal val Initial = PinningState(
+            areAllSelectedPinned = false,
+            pinningLoadingState = IsLoadingState.NotLoading
+        )
+    }
 }
 
 @Immutable

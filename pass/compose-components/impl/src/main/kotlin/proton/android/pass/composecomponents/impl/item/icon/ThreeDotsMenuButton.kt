@@ -38,8 +38,13 @@ import proton.android.pass.composecomponents.impl.R
 @Composable
 fun ThreeDotsMenuButton(
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     backgroundColor: Color? = null,
-    dotsColor: Color = PassTheme.colors.textWeak,
+    dotsColor: Color = if (enabled) {
+        PassTheme.colors.textWeak
+    } else {
+        PassTheme.colors.textDisabled
+    },
     onClick: () -> Unit
 ) {
     IconButton(
@@ -47,6 +52,7 @@ fun ThreeDotsMenuButton(
             backgroundColor != null,
             ifTrue = { backgroundColor?.let { background(it) } ?: Modifier }
         ),
+        enabled = enabled,
         onClick = onClick
     ) {
         Icon(

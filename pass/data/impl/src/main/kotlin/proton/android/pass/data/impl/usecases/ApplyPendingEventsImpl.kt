@@ -23,6 +23,7 @@ import androidx.work.WorkManager
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.extension.primary
@@ -69,6 +70,10 @@ class ApplyPendingEventsImpl @Inject constructor(
 
     override suspend fun invoke(userId: UserId) {
         PassLogger.i(TAG, "Applying pending events started")
+        if (itemSyncStatusRepository.observeSyncState().first().isSyncing) {
+            PassLogger.i(TAG, "Sync in progress, skipping")
+            return
+        }
 
         shareRepository.refreshShares(userId).let { refreshSharesResult ->
             PassLogger.i(TAG, "Shares for user: $userId refreshed")

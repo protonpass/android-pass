@@ -18,10 +18,14 @@
 
 package proton.android.pass.featurehome.impl
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
@@ -29,25 +33,27 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
-import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun SelectionModeTopBar(
@@ -66,7 +72,7 @@ internal fun SelectionModeTopBar(
         navigationIcon = {
             IconButton(onClick = { onEvent(HomeUiEvent.StopBulk) }) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_arrow_back),
+                    painter = painterResource(CoreR.drawable.ic_arrow_back),
                     contentDescription = null,
                     tint = PassTheme.colors.textNorm
                 )
@@ -89,7 +95,7 @@ private fun RowScope.NonTrashSelectionModeTopBar(selectionState: SelectionTopBar
         onClick = { onEvent(HomeUiEvent.MoveItemsActionClick) }
     ) {
         Icon(
-            painter = painterResource(R.drawable.ic_proton_folder_arrow_in),
+            painter = painterResource(CoreR.drawable.ic_proton_folder_arrow_in),
             contentDescription = null,
             tint = if (selectionState.actionsEnabled) {
                 PassTheme.colors.textNorm
@@ -103,7 +109,7 @@ private fun RowScope.NonTrashSelectionModeTopBar(selectionState: SelectionTopBar
         onClick = { onEvent(HomeUiEvent.MoveToTrashItemsActionClick) }
     ) {
         Icon(
-            painter = painterResource(R.drawable.ic_proton_trash),
+            painter = painterResource(CoreR.drawable.ic_proton_trash),
             contentDescription = null,
             tint = if (selectionState.actionsEnabled) {
                 PassTheme.colors.textNorm
@@ -112,58 +118,71 @@ private fun RowScope.NonTrashSelectionModeTopBar(selectionState: SelectionTopBar
             }
         )
     }
+
     var showMenu by remember { mutableStateOf(false) }
-    ThreeDotsMenuButton(onClick = { showMenu = true })
+    ThreeDotsMenuButton(enabled = selectionState.actionsEnabled, onClick = { showMenu = true })
     DropdownMenu(
-        expanded = showMenu,
+        modifier = Modifier.background(PassTheme.colors.inputBackgroundNorm),
+        expanded = showMenu && selectionState.selectedItemCount != 0,
         onDismissRequest = { showMenu = false }
     ) {
-        DropdownMenuItem(onClick = { }) {
-            when (selectionState.pinningLoadingState) {
-                IsLoadingState.NotLoading -> {
-                    IconButton(
-                        enabled = selectionState.actionsEnabled,
-                        onClick = {
-                            val event = if (selectionState.areAllSelectedPinned) {
-                                HomeUiEvent.UnpinItemsActionClick
-                            } else {
-                                HomeUiEvent.PinItemsActionClick
-                            }
-                            onEvent(event)
-                        }
-                    ) {
-                        val iconRes = if (selectionState.areAllSelectedPinned) {
-                            proton.android.pass.composecomponents.impl.R.drawable.ic_unpin_angled
-                        } else {
-                            proton.android.pass.composecomponents.impl.R.drawable.ic_pin_angled
-                        }
-                        Icon(
-                            painter = painterResource(iconRes),
-                            contentDescription = null,
-                            tint = if (selectionState.actionsEnabled) {
-                                PassTheme.colors.textNorm
-                            } else {
-                                PassTheme.colors.textDisabled
-                            }
-                        )
-                    }
-                }
+        PinDropDownMenuItem(
+            enabled = selectionState.actionsEnabled,
+            pinningState = selectionState.pinningState,
+            onEvent = onEvent
+        )
+    }
+}
 
-                IsLoadingState.Loading -> {
-                    Box(
-                        modifier = Modifier.minimumInteractiveComponentSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(24.dp),
-                            strokeWidth = 2.dp
-                        )
+@Composable
+private fun PinDropDownMenuItem(
+    modifier: Modifier = Modifier,
+    enabled: Boolean,
+    pinningState: PinningState,
+    onEvent: (HomeUiEvent) -> Unit
+) {
+    DropdownMenuItem(
+        modifier = modifier,
+        enabled = enabled,
+        onClick = {
+            val event = if (pinningState.areAllSelectedPinned) {
+                HomeUiEvent.UnpinItemsActionClick
+            } else {
+                HomeUiEvent.PinItemsActionClick
+            }
+            onEvent(event)
+        }
+    ) {
+        Row(
+            modifier = Modifier.weight(1f),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.small)
+        ) {
+            val (text, icon) = if (pinningState.areAllSelectedPinned) {
+                Pair(stringResource(R.string.bulk_action_unpin), CompR.drawable.ic_unpin_angled)
+            } else {
+                Pair(stringResource(R.string.bulk_action_pin), CompR.drawable.ic_pin_angled)
+            }
+            Text.Body1Regular(modifier = Modifier.weight(1f), text = text)
+            Spacer(modifier = Modifier.width(100.dp))
+            if (pinningState.pinningLoadingState is IsLoadingState.Loading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    strokeWidth = 2.dp
+                )
+            } else {
+                Icon.Default(
+                    id = icon,
+                    tint = if (enabled) {
+                        PassTheme.colors.textNorm
+                    } else {
+                        PassTheme.colors.textDisabled
                     }
-                }
+                )
             }
         }
     }
 }
+
 
 @Composable
 private fun RowScope.TrashSelectionModeTopBar(selectionState: SelectionTopBarState, onEvent: (HomeUiEvent) -> Unit) {
@@ -172,7 +191,7 @@ private fun RowScope.TrashSelectionModeTopBar(selectionState: SelectionTopBarSta
         onClick = { onEvent(HomeUiEvent.RestoreItemsActionClick) }
     ) {
         Icon(
-            painter = painterResource(R.drawable.ic_proton_clock_rotate_left),
+            painter = painterResource(CoreR.drawable.ic_proton_clock_rotate_left),
             contentDescription = null,
             tint = if (selectionState.actionsEnabled) {
                 PassTheme.colors.textNorm
@@ -186,7 +205,7 @@ private fun RowScope.TrashSelectionModeTopBar(selectionState: SelectionTopBarSta
         onClick = { onEvent(HomeUiEvent.PermanentlyDeleteItemsActionClick) }
     ) {
         Icon(
-            painter = painterResource(R.drawable.ic_proton_trash_cross),
+            painter = painterResource(CoreR.drawable.ic_proton_trash_cross),
             contentDescription = null,
             tint = if (selectionState.actionsEnabled) {
                 PassTheme.colors.textNorm
@@ -206,8 +225,7 @@ fun SelectionModeTopBarPreview(@PreviewParameter(ThemedBooleanPreviewProvider::c
                 selectionState = SelectionTopBarState(
                     isTrash = input.second,
                     selectedItemCount = 2,
-                    areAllSelectedPinned = false,
-                    pinningLoadingState = IsLoadingState.NotLoading,
+                    pinningState = PinningState(false, IsLoadingState.NotLoading),
                     actionsEnabled = true
                 ),
                 onEvent = {}

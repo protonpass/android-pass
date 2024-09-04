@@ -18,7 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.item.icon
 
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.background
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
@@ -30,21 +30,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
 fun ThreeDotsMenuButton(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    dotsColor: Color = PassTheme.colors.textHint,
-    dotsSize: Dp = 24.dp
+    backgroundColor: Color? = null,
+    dotsColor: Color = PassTheme.colors.textWeak,
+    onClick: () -> Unit
 ) {
     IconButton(
-        modifier = modifier.size(size = dotsSize),
+        modifier = modifier.applyIf(
+            backgroundColor != null,
+            ifTrue = { backgroundColor?.let { background(it) } ?: Modifier }
+        ),
         onClick = onClick
     ) {
         Icon(

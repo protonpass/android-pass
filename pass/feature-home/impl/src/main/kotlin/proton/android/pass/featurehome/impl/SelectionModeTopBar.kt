@@ -23,12 +23,18 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -40,8 +46,8 @@ import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun SelectionModeTopBar(
@@ -78,49 +84,6 @@ internal fun SelectionModeTopBar(
 
 @Composable
 private fun RowScope.NonTrashSelectionModeTopBar(selectionState: SelectionTopBarState, onEvent: (HomeUiEvent) -> Unit) {
-    when (selectionState.pinningLoadingState) {
-        IsLoadingState.NotLoading -> {
-            IconButton(
-                enabled = selectionState.actionsEnabled,
-                onClick = {
-                    val event = if (selectionState.areAllSelectedPinned) {
-                        HomeUiEvent.UnpinItemsActionClick
-                    } else {
-                        HomeUiEvent.PinItemsActionClick
-                    }
-                    onEvent(event)
-                }
-            ) {
-                val iconRes = if (selectionState.areAllSelectedPinned) {
-                    CompR.drawable.ic_unpin_angled
-                } else {
-                    CompR.drawable.ic_pin_angled
-                }
-                Icon(
-                    painter = painterResource(iconRes),
-                    contentDescription = null,
-                    tint = if (selectionState.actionsEnabled) {
-                        PassTheme.colors.textNorm
-                    } else {
-                        PassTheme.colors.textDisabled
-                    }
-                )
-            }
-        }
-
-        IsLoadingState.Loading -> {
-            Box(
-                modifier = Modifier.minimumInteractiveComponentSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(24.dp),
-                    strokeWidth = 2.dp
-                )
-            }
-        }
-    }
-
     IconButton(
         enabled = selectionState.actionsEnabled,
         onClick = { onEvent(HomeUiEvent.MoveItemsActionClick) }
@@ -148,6 +111,57 @@ private fun RowScope.NonTrashSelectionModeTopBar(selectionState: SelectionTopBar
                 PassTheme.colors.textDisabled
             }
         )
+    }
+    var showMenu by remember { mutableStateOf(false) }
+    ThreeDotsMenuButton(onClick = { showMenu = true })
+    DropdownMenu(
+        expanded = showMenu,
+        onDismissRequest = { showMenu = false }
+    ) {
+        DropdownMenuItem(onClick = { }) {
+            when (selectionState.pinningLoadingState) {
+                IsLoadingState.NotLoading -> {
+                    IconButton(
+                        enabled = selectionState.actionsEnabled,
+                        onClick = {
+                            val event = if (selectionState.areAllSelectedPinned) {
+                                HomeUiEvent.UnpinItemsActionClick
+                            } else {
+                                HomeUiEvent.PinItemsActionClick
+                            }
+                            onEvent(event)
+                        }
+                    ) {
+                        val iconRes = if (selectionState.areAllSelectedPinned) {
+                            proton.android.pass.composecomponents.impl.R.drawable.ic_unpin_angled
+                        } else {
+                            proton.android.pass.composecomponents.impl.R.drawable.ic_pin_angled
+                        }
+                        Icon(
+                            painter = painterResource(iconRes),
+                            contentDescription = null,
+                            tint = if (selectionState.actionsEnabled) {
+                                PassTheme.colors.textNorm
+                            } else {
+                                PassTheme.colors.textDisabled
+                            }
+                        )
+                    }
+                }
+
+                IsLoadingState.Loading -> {
+                    Box(
+                        modifier = Modifier.minimumInteractiveComponentSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            strokeWidth = 2.dp
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 

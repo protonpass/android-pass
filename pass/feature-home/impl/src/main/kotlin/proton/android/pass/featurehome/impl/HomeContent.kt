@@ -31,7 +31,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -42,7 +41,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.PersistentSet
@@ -57,7 +55,6 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
-import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
@@ -67,6 +64,7 @@ import proton.android.pass.composecomponents.impl.item.ItemsList
 import proton.android.pass.composecomponents.impl.item.header.ItemCount
 import proton.android.pass.composecomponents.impl.item.header.ItemListHeader
 import proton.android.pass.composecomponents.impl.item.header.SortingButton
+import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.pinning.PinCarousel
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
@@ -75,7 +73,6 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.HomeContentTestTag.DRAWER_ICON_TEST_TAG
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
-import me.proton.core.presentation.R as CoreR
 
 @Suppress("ComplexMethod")
 @ExperimentalComposeUiApi
@@ -153,16 +150,10 @@ internal fun HomeContent(
                             } else {
                                 Color.Transparent to PassTheme.colors.textWeak
                             }
-                        CircleIconButton(
+                        ThreeDotsMenuButton(
                             backgroundColor = backgroundColor,
-                            onClick = { onEvent(HomeUiEvent.ActionsClick) }
-                        ) {
-                            Icon(
-                                painter = painterResource(CoreR.drawable.ic_proton_three_dots_vertical),
-                                contentDescription = null,
-                                tint = iconColor
-                            )
-                        }
+                            dotsColor = iconColor
+                        ) { onEvent(HomeUiEvent.ActionsClick) }
                     }
                 )
             }
@@ -250,7 +241,12 @@ internal fun HomeContent(
                             listItemCount
                         }
                         ItemCount(
-                            modifier = Modifier.padding(Spacing.medium, Spacing.none, Spacing.none, Spacing.none),
+                            modifier = Modifier.padding(
+                                Spacing.medium,
+                                Spacing.none,
+                                Spacing.none,
+                                Spacing.none
+                            ),
                             showSearchResults = isPinningOrSearch && uiState.searchUiState.searchQuery.isNotEmpty(),
                             itemType = uiState.homeListUiState.searchFilterType,
                             itemCount = itemCount.takeIf { !uiState.searchUiState.isProcessingSearch.value() },

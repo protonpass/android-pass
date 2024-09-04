@@ -38,6 +38,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
+import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 
 @Composable
 fun SearchTopBar(
@@ -103,15 +104,7 @@ fun SearchTopBarPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) i
                 onEnterSearch = {},
                 actions = {
                     if (input.second) {
-                        IconButton(onClick = {}) {
-                            Icon(
-                                painter = painterResource(
-                                    id = R.drawable.ic_proton_three_dots_vertical
-                                ),
-                                contentDescription = null,
-                                tint = PassTheme.colors.textWeak
-                            )
-                        }
+                        ThreeDotsMenuButton { }
                     }
                 }
             )

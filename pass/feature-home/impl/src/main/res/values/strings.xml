@@ -156,4 +156,6 @@
     <string name="home_snackbar_items_unpinned_success">Items unpinned successfully</string>
     <string name="home_snackbar_items_unpinned_partial_success">Error unpinning some of the items</string>
     <string name="home_snackbar_items_unpinned_error">Error unpinning the items</string>
+    <string name="bulk_action_unpin">Unpin</string>
+    <string name="bulk_action_pin">Pin</string>
 </resources>

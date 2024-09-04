@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -73,12 +74,10 @@ fun ActionableItemRow(
                         )
                         .padding(horizontal = 8.dp, vertical = 10.2.dp)
                 },
-                ifFalse = {
-                    padding(horizontal = 16.dp, vertical = 6.dp)
-                }
+                ifFalse = { padding(start = Spacing.medium, top = 6.dp, bottom = 6.dp) }
             ),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
         ItemRowContents(
             modifier = Modifier.weight(1f),

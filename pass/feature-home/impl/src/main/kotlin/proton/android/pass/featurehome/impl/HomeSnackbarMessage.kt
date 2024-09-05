@@ -79,7 +79,12 @@ enum class HomeSnackbarMessage(
     ItemsUnpinnedPartialSuccess(R.string.home_snackbar_items_unpinned_partial_success, SnackbarType.ERROR),
     ItemsUnpinnedError(R.string.home_snackbar_items_unpinned_error, SnackbarType.ERROR),
 
+    AliasItemsDisabledSuccess(R.string.home_snackbar_items_alias_disabled_success, SnackbarType.SUCCESS),
+    AliasItemsDisabledPartialSuccess(R.string.home_snackbar_items_alias_disabled_partial_success, SnackbarType.ERROR),
     AliasItemsDisabledError(R.string.home_snackbar_items_alias_disabled_error, SnackbarType.ERROR),
+
+    AliasItemsEnabledSuccess(R.string.home_snackbar_items_alias_enabled_success, SnackbarType.SUCCESS),
+    AliasItemsEnabledPartialSuccess(R.string.home_snackbar_items_alias_enabled_partial_success, SnackbarType.ERROR),
     AliasItemsEnabledError(R.string.home_snackbar_items_alias_enabled_error, SnackbarType.ERROR)
 }
 

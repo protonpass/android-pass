@@ -115,6 +115,7 @@ internal data class SelectionTopBarState(
     val isTrash: Boolean,
     val selectedItemCount: Int,
     val pinningState: PinningState,
+    val aliasState: AliasState,
     val actionsEnabled: Boolean
 ) {
     internal companion object {
@@ -122,6 +123,7 @@ internal data class SelectionTopBarState(
             isTrash = false,
             selectedItemCount = 0,
             pinningState = PinningState.Initial,
+            aliasState = AliasState.Initial,
             actionsEnabled = true
         )
     }
@@ -136,6 +138,21 @@ internal data class PinningState(
         internal val Initial = PinningState(
             areAllSelectedPinned = false,
             pinningLoadingState = IsLoadingState.NotLoading
+        )
+    }
+}
+
+@Immutable
+internal data class AliasState(
+    val areAllSelectedAliases: Boolean,
+    val areAllSelectedDisabled: Boolean,
+    val aliasLoadingState: IsLoadingState
+) {
+    internal companion object {
+        internal val Initial = AliasState(
+            areAllSelectedAliases = false,
+            areAllSelectedDisabled = false,
+            aliasLoadingState = IsLoadingState.NotLoading
         )
     }
 }

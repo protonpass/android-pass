@@ -22,8 +22,7 @@ import proton.android.pass.domain.items.ItemCategory
 
 object ItemCategoryMother {
 
-    fun random(): ItemCategory = ItemCategory.values()
-        .toList()
+    fun random(): ItemCategory = ItemCategory.entries
         .shuffled()
         .first()
 

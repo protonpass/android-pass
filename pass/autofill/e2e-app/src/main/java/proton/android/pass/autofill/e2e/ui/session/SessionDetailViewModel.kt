@@ -31,7 +31,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import proton.android.pass.autofill.debug.AutofillDebugSaver
 import proton.android.pass.autofill.debug.DebugUtils

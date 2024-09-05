@@ -118,14 +118,14 @@ internal fun AccountPasswordAndRecoveryInfo(state: AccountUiState, onEvent: (Acc
 
         SettingOption(
             label = stringResource(R.string.account_settings_list_item_security_keys),
-            text = SecurityKeysSettingsItemHint(state.registeredSecurityKeys),
+            text = securityKeysSettingsItemHint(state.registeredSecurityKeys),
             onClick = { onEvent(AccountContentEvent.SecurityKeys) }
         )
     }
 }
 
 @Composable
-fun SecurityKeysSettingsItemHint(registeredSecurityKeys: List<Fido2RegisteredKey>?): String = when {
+fun securityKeysSettingsItemHint(registeredSecurityKeys: List<Fido2RegisteredKey>?): String = when {
     registeredSecurityKeys.isNullOrEmpty() ->
         stringResource(R.string.account_settings_list_item_security_keys_hint_not_set)
 

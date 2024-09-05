@@ -63,7 +63,7 @@ class UserPreferencesRepositoryImpl @Inject constructor(
 
     override fun getHasAuthenticated(): Flow<HasAuthenticated> = getPreference {
         inMemoryPreferences.get<Boolean>(HasAuthenticated::class.java.name)
-            ?.let { HasAuthenticated.from(it) }
+            ?.let { value -> HasAuthenticated.from(value) }
             ?: HasAuthenticated.from(fromBooleanPrefProto(it.hasAuthenticatedWithBiometry))
     }
 

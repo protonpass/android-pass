@@ -79,7 +79,7 @@ class ManageVaultMemberRowPreviewProvider : PreviewParameterProvider<VaultMember
             )
 
             // New user invite
-            for (status in VaultMember.NewUserInvitePending.InviteState.values()) {
+            for (status in VaultMember.NewUserInvitePending.InviteState.entries) {
                 yield(
                     VaultMemberRowInput(
                         VaultMemberContent.Member(

@@ -105,7 +105,7 @@ class ThemeAndPasswordScoreProvider :
 
 class PasswordScorePreviewProvider : PreviewParameterProvider<PasswordScore> {
     override val values: Sequence<PasswordScore>
-        get() = PasswordScore.values().asSequence()
+        get() = PasswordScore.entries.asSequence()
 }
 
 @Preview

@@ -61,7 +61,7 @@ class AppLockTypeViewModel @Inject constructor(
     private val biometryManager: BiometryManager,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clearPin: ClearPin,
-    private val observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock
+    observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock
 ) : ViewModel() {
     private val eventState: MutableStateFlow<AppLockTypeEvent> =
         MutableStateFlow(AppLockTypeEvent.Unknown)

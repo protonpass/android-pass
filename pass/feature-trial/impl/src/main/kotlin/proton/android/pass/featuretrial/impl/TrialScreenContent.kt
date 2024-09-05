@@ -23,13 +23,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.CrossBackIconButton
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TrialScreenContent(
     modifier: Modifier = Modifier,

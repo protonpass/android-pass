@@ -175,8 +175,7 @@ class SelectPasskeyAppViewModel @Inject constructor(
     }
 
     private suspend fun performPasskeyAuth(data: SelectPasskeyRequestData.UsePasskey) {
-        val passkey = getPasskeyById(data.shareId, data.itemId, data.passkeyId)
-        when (passkey) {
+        when (val passkey = getPasskeyById(data.shareId, data.itemId, data.passkeyId)) {
             None -> {
                 PassLogger.w(TAG, "Passkey not found")
                 eventFlow.update { SelectPasskeyAppEvent.Cancel }

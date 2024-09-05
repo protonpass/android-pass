@@ -30,6 +30,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -88,7 +89,10 @@ fun ActionableItemRow(
             canLoadExternalImages = canLoadExternalImages
         )
         if (showMenuIcon && selectionModeState is ItemSelectionModeState.NotInSelectionMode) {
-            ThreeDotsMenuButton(onClick = { onItemMenuClick(item) })
+            ThreeDotsMenuButton(
+                contentDescription = stringResource(id = R.string.action_content_description_menu),
+                onClick = { onItemMenuClick(item) }
+            )
         }
     }
 }

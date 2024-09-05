@@ -822,6 +822,17 @@ fun HomeScreen(
                         HomeUiEvent.SecurityCenterClick -> {
                             onNavigateEvent(HomeNavigation.SecurityCenter)
                         }
+
+                        HomeUiEvent.DisableAliasItemsActionClick -> {
+                            homeViewModel.disableSelectedAliasItems(
+                                items = homeUiState.homeListUiState.selectionState.selectedItems
+                            )
+                        }
+                        HomeUiEvent.EnableAliasItemsActionClick -> {
+                            homeViewModel.enableSelectedAliasItems(
+                                items = homeUiState.homeListUiState.selectionState.selectedItems
+                            )
+                        }
                     }
                 }
             )

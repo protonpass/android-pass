@@ -177,15 +177,22 @@ private fun AliasDropDownMenuItem(
             }
             Text.Body1Regular(modifier = Modifier.weight(1f), text = text)
             Spacer(modifier = Modifier.width(100.dp))
-            Icon.Default(
-                modifier = Modifier.size(24.dp),
-                id = icon,
-                tint = if (enabled) {
-                    PassTheme.colors.textNorm
-                } else {
-                    PassTheme.colors.textDisabled
-                }
-            )
+            if (aliasState.aliasLoadingState is IsLoadingState.Loading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    strokeWidth = 2.dp
+                )
+            } else {
+                Icon.Default(
+                    modifier = Modifier.size(24.dp),
+                    id = icon,
+                    tint = if (enabled) {
+                        PassTheme.colors.textNorm
+                    } else {
+                        PassTheme.colors.textDisabled
+                    }
+                )
+            }
         }
     }
 }

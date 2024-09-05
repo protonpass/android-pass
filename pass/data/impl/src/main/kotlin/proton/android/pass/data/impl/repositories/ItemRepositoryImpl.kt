@@ -322,6 +322,30 @@ class ItemRepositoryImpl @Inject constructor(
         localItemDataSource.updateItemFlags(shareId, itemId, updatedFlags)
     }
 
+    override suspend fun updateLocalItemsFlags(
+        items: List<Pair<ShareId, ItemId>>,
+        flag: ItemFlag,
+        isFlagEnabled: Boolean
+    ) {
+        items.groupBy { it.first }
+            .map { (shareId, itemIds) ->
+                localItemDataSource.getByIdList(shareId, itemIds.map { it.second })
+            }
+            .flatten()
+            .forEach {
+                val updatedFlags = if (!isFlagEnabled) {
+                    it.flags or flag.value
+                } else {
+                    it.flags and flag.value.inv()
+                }
+                localItemDataSource.updateItemFlags(
+                    ShareId(it.shareId),
+                    ItemId(it.id),
+                    updatedFlags
+                )
+            }
+    }
+
     override fun observeItems(
         userId: UserId,
         shareSelection: ShareSelection,

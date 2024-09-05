@@ -19,7 +19,7 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -27,12 +27,14 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.canCreate
 import proton.android.pass.domain.toPermissions
@@ -51,41 +53,52 @@ class ObserveDefaultVaultImpl @Inject constructor(
 
     override fun invoke(): Flow<Option<VaultWithItemCount>> = observeCurrentUser()
         .flatMapLatest { user ->
-            preferencesRepository.getDefaultVault(user.userId)
-                .map { user.userId to it }
-        }
-        .flatMapLatest { (userId, defaultVault) ->
-            when (defaultVault) {
-                None -> {
-                    setDefaultVault(userId)
-                    flowOf(None)
+            combine(
+                observeVaults(),
+                preferencesRepository.getDefaultVault(user.userId).map { it.map(::ShareId) }
+            ) { vaults, defaultVaultShareIdOption ->
+                determineDefaultVault(vaults, defaultVaultShareIdOption, user.userId)
+            }.flatMapLatest { shareIdOption ->
+                when (shareIdOption) {
+                    None -> flowOf(None)
+                    is Some -> getVaultWithItemCount(shareId = shareIdOption.value)
+                        .map { it.toOption() }
                 }
-
-                is Some -> getVaultWithItemCount(shareId = ShareId(defaultVault.value))
-                    .map { it.toOption() }
             }
         }
 
-    private suspend fun setDefaultVault(userId: UserId) {
-        val vaults = observeVaults().firstOrNull() ?: run {
-            PassLogger.w(TAG, "There are no vaults")
-            return
-        }
-
-        val defaultVault = vaults
+    private fun determineDefaultVault(
+        vaults: List<Vault>,
+        defaultVaultShareIdOption: Option<ShareId>,
+        userId: UserId
+    ): Option<ShareId> {
+        val oldestVault = vaults
             .filter { it.role.toPermissions().canCreate() }
             .minByOrNull { it.createTime }
-            ?: run {
-                PassLogger.w(TAG, "There are no writable vaults")
-                return
-            }
+            ?: return None.also { PassLogger.w(TAG, "There are no writable vaults") }
 
-        preferencesRepository.setDefaultVault(userId, defaultVault.shareId)
+        return when (defaultVaultShareIdOption) {
+            None -> {
+                setDefaultVault(userId, oldestVault.shareId)
+                oldestVault.shareId.some()
+            }
+            is Some -> {
+                if (vaults.none { it.shareId == defaultVaultShareIdOption.value }) {
+                    oldestVault.shareId.some()
+                } else {
+                    defaultVaultShareIdOption
+                }
+            }
+        }
+    }
+
+    private fun setDefaultVault(userId: UserId, shareId: ShareId) {
+        preferencesRepository.setDefaultVault(userId, shareId)
             .onSuccess {
-                PassLogger.i(TAG, "Set default vault to ${defaultVault.shareId.id}")
+                PassLogger.i(TAG, "Set default vault to ${shareId.id}")
             }
             .onFailure {
-                PassLogger.w(TAG, "Error setting default vault to ${defaultVault.shareId.id}")
+                PassLogger.w(TAG, "Error setting default vault to ${shareId.id}")
                 PassLogger.w(TAG, it)
             }
     }

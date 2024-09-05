@@ -51,8 +51,6 @@ sealed interface HomeUiEvent {
 
     data object PermanentlyDeleteItemsActionClick : HomeUiEvent
 
-    data object PinItemsActionClick : HomeUiEvent
-
     data object ProfileClick : HomeUiEvent
 
     data object Refresh : HomeUiEvent
@@ -79,6 +77,12 @@ sealed interface HomeUiEvent {
 
     data object StopSeeAllPinned : HomeUiEvent
 
+    data object PinItemsActionClick : HomeUiEvent
+
     data object UnpinItemsActionClick : HomeUiEvent
+
+    data object EnableAliasItemsActionClick : HomeUiEvent
+
+    data object DisableAliasItemsActionClick : HomeUiEvent
 
 }

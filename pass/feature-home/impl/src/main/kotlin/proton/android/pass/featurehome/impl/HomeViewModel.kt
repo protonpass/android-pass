@@ -124,6 +124,8 @@ import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.canUpdate
 import proton.android.pass.domain.toPermissions
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasItemsDisabledError
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasItemsEnabledError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ClearTrashError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.CreditCardMovedToTrash
@@ -1105,10 +1107,51 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun disableSelectedAliasItems(items: ImmutableList<ItemUiModel>) = viewModelScope.launch {
+        val aliasItems = items.filter { it.contents is ItemContents.Alias }.toShareIdItemId()
+        if (aliasItems.isEmpty()) {
+            PassLogger.w(TAG, "No items to be disabled")
+            return@launch
+        }
+
+        selectionState.update { it.copy(aliasLoadingState = IsLoadingState.Loading) }
+        runCatching {
+            // disable aliases
+        }.onSuccess {
+
+        }.onFailure { error ->
+            PassLogger.w(TAG, "Error disabling alias items")
+            PassLogger.w(TAG, error)
+            selectionState.update { it.copy(pinningLoadingState = IsLoadingState.NotLoading) }
+            snackbarDispatcher(AliasItemsDisabledError)
+        }
+    }
+
+    fun enableSelectedAliasItems(items: ImmutableList<ItemUiModel>) = viewModelScope.launch {
+        val aliasItems = items.filter { it.contents is ItemContents.Alias }.toShareIdItemId()
+        if (aliasItems.isEmpty()) {
+            PassLogger.w(TAG, "No items to be enabled")
+            return@launch
+        }
+
+        selectionState.update { it.copy(aliasLoadingState = IsLoadingState.Loading) }
+        runCatching {
+            // enable aliases
+        }.onSuccess {
+
+        }.onFailure { error ->
+            PassLogger.w(TAG, "Error enabling alias items")
+            PassLogger.w(TAG, error)
+            selectionState.update { it.copy(aliasLoadingState = IsLoadingState.NotLoading) }
+            snackbarDispatcher(AliasItemsEnabledError)
+        }
+    }
+
     private data class SelectionState(
         val selectedItems: List<ItemUiModel>,
         val isInSelectMode: Boolean,
-        val pinningLoadingState: IsLoadingState
+        val pinningLoadingState: IsLoadingState,
+        val aliasLoadingState: IsLoadingState
     ) {
         fun toState(isTrash: Boolean) = HomeSelectionState(
             selectedItems = selectedItems.toPersistentList(),
@@ -1120,9 +1163,18 @@ class HomeViewModel @Inject constructor(
                     areAllSelectedPinned = selectedItems.all { it.isPinned },
                     pinningLoadingState = pinningLoadingState
                 ),
+                aliasState = AliasState(
+                    areAllSelectedAliases = selectedItems.all { it.contents is ItemContents.Alias },
+                    areAllSelectedDisabled = selectedItems.all {
+                        (it.contents as? ItemContents.Alias)?.isEnabled == false
+                    },
+                    aliasLoadingState = aliasLoadingState
+                ),
                 // Actions are only enabled if there are selected items and the pinning operation
                 // is not in progress
-                actionsEnabled = selectedItems.isNotEmpty() && !pinningLoadingState.value()
+                actionsEnabled = selectedItems.isNotEmpty() &&
+                    !pinningLoadingState.value() &&
+                    !aliasLoadingState.value()
             )
         )
 
@@ -1130,7 +1182,8 @@ class HomeViewModel @Inject constructor(
             val Initial = SelectionState(
                 selectedItems = emptyList(),
                 isInSelectMode = false,
-                pinningLoadingState = IsLoadingState.NotLoading
+                pinningLoadingState = IsLoadingState.NotLoading,
+                aliasLoadingState = IsLoadingState.NotLoading
             )
         }
     }

@@ -35,16 +35,16 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
+import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.HiddenState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
+import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldNameDialog
+import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldNameNavigation
+import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldTypeNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
-import proton.android.pass.domain.CustomFieldContent
-import proton.android.pass.domain.HiddenState
-import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldNameDialog
-import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldTypeNavArgId
-import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldNameNavigation
 import javax.inject.Inject
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -80,7 +80,7 @@ class CustomExtraFieldNameDialogTest {
     fun testAddTotpField() {
         performTest(
             CustomFieldType.Totp,
-            proton.android.pass.domain.CustomFieldContent.Totp(
+            CustomFieldContent.Totp(
                 label = LABEL,
                 value = HiddenState.Empty(TestEncryptionContext.encrypt(""))
             )
@@ -91,7 +91,7 @@ class CustomExtraFieldNameDialogTest {
     fun testAddHiddenField() {
         performTest(
             CustomFieldType.Hidden,
-            proton.android.pass.domain.CustomFieldContent.Hidden(
+            CustomFieldContent.Hidden(
                 label = LABEL,
                 value = HiddenState.Empty(TestEncryptionContext.encrypt(""))
             )

@@ -23,6 +23,6 @@ enum class ShareType(val value: Int) {
     Item(2);
 
     companion object {
-        val map = values().associateBy { it.value }
+        val map = entries.associateBy { it.value }
     }
 }

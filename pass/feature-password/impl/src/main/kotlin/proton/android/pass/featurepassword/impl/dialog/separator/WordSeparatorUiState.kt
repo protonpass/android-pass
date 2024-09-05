@@ -38,7 +38,7 @@ data class WordSeparatorUiState(
 ) {
     companion object {
         val Initial = WordSeparatorUiState(
-            options = WordSeparator.values().toList().toPersistentList(),
+            options = WordSeparator.entries.toPersistentList(),
             selected = None,
             event = WordSeparatorUiEvent.Unknown
         )

@@ -42,9 +42,7 @@ data class EncryptionKey(private val key: ByteArray) {
 
         other as EncryptionKey
 
-        if (!key.contentEquals(other.key)) return false
-
-        return true
+        return key.contentEquals(other.key)
     }
 
     override fun hashCode(): Int = key.contentHashCode()

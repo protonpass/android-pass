@@ -27,7 +27,7 @@ enum class RequestFlags(val value: Int) {
     FLAG_IME_SHOWING(0x80);
 
     companion object {
-        fun fromValue(input: Int): List<RequestFlags> = values()
+        fun fromValue(input: Int): List<RequestFlags> = entries
             .filter { flag -> input.and(flag.value) == flag.value }
     }
 }

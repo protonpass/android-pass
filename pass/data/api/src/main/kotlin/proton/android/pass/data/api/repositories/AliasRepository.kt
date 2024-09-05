@@ -33,6 +33,7 @@ interface AliasRepository {
         shareId: ShareId,
         itemId: ItemId
     ): Flow<AliasDetails>
+
     fun updateAliasMailboxes(
         userId: UserId,
         shareId: ShareId,
@@ -46,4 +47,22 @@ interface AliasRepository {
         itemId: ItemId,
         enable: Boolean
     )
+
+    suspend fun changeAliasStatus(
+        userId: UserId,
+        items: List<Pair<ShareId, ItemId>>,
+        enabled: Boolean
+    ): AliasItemsChangeStatusResult
+}
+
+
+sealed interface AliasItemsChangeStatusResult {
+    @JvmInline
+    value class AllChanged(val items: List<Pair<ShareId, ItemId>>) : AliasItemsChangeStatusResult
+
+    @JvmInline
+    value class SomeChanged(val items: List<Pair<ShareId, ItemId>>) : AliasItemsChangeStatusResult
+
+    @JvmInline
+    value class NoneChanged(val exception: Throwable) : AliasItemsChangeStatusResult
 }

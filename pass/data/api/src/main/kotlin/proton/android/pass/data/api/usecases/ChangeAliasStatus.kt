@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.api.usecases
 
+import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
@@ -27,4 +28,5 @@ interface ChangeAliasStatus {
         itemId: ItemId,
         enabled: Boolean
     )
+    suspend operator fun invoke(items: List<Pair<ShareId, ItemId>>, enabled: Boolean): AliasItemsChangeStatusResult
 }

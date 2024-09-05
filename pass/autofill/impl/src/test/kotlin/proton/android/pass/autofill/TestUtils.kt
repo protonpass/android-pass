@@ -18,7 +18,6 @@
 
 package proton.android.pass.autofill
 
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import proton.android.pass.autofill.debug.AutofillDebugSaver
 import proton.android.pass.autofill.entities.AutofillNode
@@ -52,7 +51,7 @@ object TestUtils {
     ) {
         val expectedContents = node.expectedAutofill
         if (expectedContents != null) {
-            val expectedAutofill = ExpectedAutofill.values()
+            val expectedAutofill = ExpectedAutofill.entries
                 .firstOrNull { it.value == expectedContents }
                 ?: throw IllegalStateException(
                     "Unknown expectedAutofill: $expectedContents. Must be one of ${ExpectedAutofill.all()}"

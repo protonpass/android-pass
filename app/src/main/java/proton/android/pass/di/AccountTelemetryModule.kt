@@ -33,17 +33,17 @@ import me.proton.core.telemetry.domain.repository.TelemetryRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
-public interface AccountTelemetryModule {
+interface AccountTelemetryModule {
 
     @Binds
-    public fun bindTelemetryRepository(impl: TelemetryRepositoryImpl): TelemetryRepository
+    fun bindTelemetryRepository(impl: TelemetryRepositoryImpl): TelemetryRepository
 
     @Binds
-    public fun bindTelemetryLocalDataSource(impl: TelemetryLocalDataSourceImpl): TelemetryLocalDataSource
+    fun bindTelemetryLocalDataSource(impl: TelemetryLocalDataSourceImpl): TelemetryLocalDataSource
 
     @Binds
-    public fun bindTelemetryRemoteDataSource(impl: TelemetryRemoteDataSourceImpl): TelemetryRemoteDataSource
+    fun bindTelemetryRemoteDataSource(impl: TelemetryRemoteDataSourceImpl): TelemetryRemoteDataSource
 
     @Binds
-    public fun bindTelemetryWorkerManager(impl: TelemetryWorkerManagerImpl): TelemetryWorkerManager
+    fun bindTelemetryWorkerManager(impl: TelemetryWorkerManagerImpl): TelemetryWorkerManager
 }

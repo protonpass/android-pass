@@ -60,10 +60,9 @@ fun PassSnackbar(
         content = { Text(message) },
         action = {
             Row {
-                val label = actionLabel
-                if (!label.isNullOrBlank()) {
+                if (!actionLabel.isNullOrBlank()) {
                     TextButton(onClick = { performAction() }) {
-                        Text(text = label)
+                        Text(text = actionLabel)
                     }
                 }
                 IconButton(

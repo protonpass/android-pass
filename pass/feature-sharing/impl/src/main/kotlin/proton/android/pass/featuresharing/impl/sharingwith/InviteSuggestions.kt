@@ -36,7 +36,7 @@ import androidx.compose.material.TabRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -75,7 +75,7 @@ fun InviteSuggestions(
         )
         when (state) {
             is SuggestionsUIState.Content -> {
-                var selectedIndex by remember { mutableStateOf(0) }
+                var selectedIndex by remember { mutableIntStateOf(0) }
                 if (state.planEmails.isNotEmpty()) {
                     TabRow(
                         modifier = Modifier.clip(CircleShape),
@@ -84,7 +84,7 @@ fun InviteSuggestions(
                         indicator = { },
                         divider = { }
                     ) {
-                        InviteSuggestionTabs.values().forEachIndexed { index, tab ->
+                        InviteSuggestionTabs.entries.forEachIndexed { index, tab ->
                             val selected = selectedIndex == index
                             Tab(
                                 modifier = Modifier
@@ -113,7 +113,7 @@ fun InviteSuggestions(
                         }
                     }
                 }
-                when (InviteSuggestionTabs.values()[selectedIndex]) {
+                when (InviteSuggestionTabs.entries[selectedIndex]) {
                     InviteSuggestionTabs.Recents -> InviteSuggestionList(
                         modifier = Modifier.weight(1f),
                         items = state.recentEmails,

@@ -18,13 +18,31 @@
 
 package proton.android.pass.commonrust.api
 
+@Suppress("UnusedPrivateMember")
 sealed class AliasPrefixError(override val message: String) : RuntimeException(message) {
-    data object DotAtTheBeginning : AliasPrefixError("DotAtTheBeginning")
-    data object DotAtTheEnd : AliasPrefixError("DotAtTheEnd")
-    data object InvalidCharacter : AliasPrefixError("InvalidCharacter")
-    data object PrefixEmpty : AliasPrefixError("PrefixEmpty")
-    data object PrefixTooLong : AliasPrefixError("PrefixTooLong")
-    data object TwoConsecutiveDots : AliasPrefixError("TwoConsecutiveDots")
+    data object DotAtTheBeginning : AliasPrefixError("DotAtTheBeginning") {
+        private fun readResolve(): Any = DotAtTheBeginning
+    }
+
+    data object DotAtTheEnd : AliasPrefixError("DotAtTheEnd") {
+        private fun readResolve(): Any = DotAtTheEnd
+    }
+
+    data object InvalidCharacter : AliasPrefixError("InvalidCharacter") {
+        private fun readResolve(): Any = InvalidCharacter
+    }
+
+    data object PrefixEmpty : AliasPrefixError("PrefixEmpty") {
+        private fun readResolve(): Any = PrefixEmpty
+    }
+
+    data object PrefixTooLong : AliasPrefixError("PrefixTooLong") {
+        private fun readResolve(): Any = PrefixTooLong
+    }
+
+    data object TwoConsecutiveDots : AliasPrefixError("TwoConsecutiveDots") {
+        private fun readResolve(): Any = TwoConsecutiveDots
+    }
 }
 
 interface AliasPrefixValidator {

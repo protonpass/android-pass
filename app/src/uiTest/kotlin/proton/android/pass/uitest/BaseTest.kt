@@ -28,7 +28,6 @@ import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.data.User
 import me.proton.test.fusion.FusionConfig
 import org.junit.Rule
-import proton.android.pass.BuildConfig
 import proton.android.pass.ui.MainActivity
 import proton.android.pass.uitest.robot.Robot
 import proton.android.pass.uitest.rule.HiltInjectRule

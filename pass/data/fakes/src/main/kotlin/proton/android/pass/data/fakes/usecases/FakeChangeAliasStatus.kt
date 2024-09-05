@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.fakes.usecases
 
+import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -32,4 +33,7 @@ class FakeChangeAliasStatus @Inject constructor() : ChangeAliasStatus {
         itemId: ItemId,
         enabled: Boolean
     ) = Unit
+
+    override suspend fun invoke(items: List<Pair<ShareId, ItemId>>, enabled: Boolean): AliasItemsChangeStatusResult =
+        AliasItemsChangeStatusResult.AllChanged(emptyList())
 }

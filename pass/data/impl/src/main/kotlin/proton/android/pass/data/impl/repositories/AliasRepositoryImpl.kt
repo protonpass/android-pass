@@ -19,10 +19,15 @@
 package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.firstError
+import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.remote.RemoteAliasDataSource
@@ -81,6 +86,33 @@ class AliasRepositoryImpl @Inject constructor(
     ) {
         val request = ChangeAliasStatusRequest(enable)
         remoteDataSource.changeAliasStatus(userId, shareId, itemId, request)
+    }
+
+    override suspend fun changeAliasStatus(
+        userId: UserId,
+        items: List<Pair<ShareId, ItemId>>,
+        enabled: Boolean
+    ): AliasItemsChangeStatusResult = coroutineScope {
+        val results: List<Result<Pair<ShareId, ItemId>>> = items.map { (shareId, itemId) ->
+            async {
+                runCatching {
+                    changeAliasStatus(userId, shareId, itemId, enabled)
+                        .let { shareId to itemId }
+                }
+            }
+        }.awaitAll().toList()
+        val (successes, failures) = results.partition { it.isSuccess }
+        when {
+            failures.isEmpty() && successes.isNotEmpty() -> AliasItemsChangeStatusResult.AllChanged(
+                items = successes.map { it.getOrThrow() }
+            )
+            successes.isEmpty() -> AliasItemsChangeStatusResult.NoneChanged(
+                exception = failures.firstError() ?: IllegalStateException("No results")
+            )
+            else -> AliasItemsChangeStatusResult.SomeChanged(
+                items = successes.map { it.getOrThrow() }
+            )
+        }
     }
 
     private fun mapMailboxes(input: List<AliasMailboxResponse>): List<AliasMailbox> =

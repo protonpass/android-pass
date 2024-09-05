@@ -91,9 +91,11 @@ import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchSta
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
+import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.repositories.BulkMoveToVaultEvent
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.PinItemsResult
+import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -126,6 +128,8 @@ import proton.android.pass.domain.canUpdate
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasItemsDisabledError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasItemsEnabledError
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasItemsEnabledPartialSuccess
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasItemsEnabledSuccess
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ClearTrashError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.CreditCardMovedToTrash
@@ -192,6 +196,7 @@ class HomeViewModel @Inject constructor(
     private val unpinItem: UnpinItem,
     private val pinItems: PinItems,
     private val unpinItems: UnpinItems,
+    private val changeAliasStatus: ChangeAliasStatus,
     private val observeCurrentUser: ObserveCurrentUser,
     observeVaults: ObserveVaults,
     clock: Clock,
@@ -1116,9 +1121,21 @@ class HomeViewModel @Inject constructor(
 
         selectionState.update { it.copy(aliasLoadingState = IsLoadingState.Loading) }
         runCatching {
-            // disable aliases
+            changeAliasStatus(aliasItems, false)
         }.onSuccess {
-
+            when (it) {
+                is AliasItemsChangeStatusResult.AllChanged -> {
+                    snackbarDispatcher(AliasItemsEnabledSuccess)
+                    clearSelection()
+                }
+                is AliasItemsChangeStatusResult.NoneChanged -> {
+                    snackbarDispatcher(AliasItemsDisabledError)
+                }
+                is AliasItemsChangeStatusResult.SomeChanged -> {
+                    snackbarDispatcher(AliasItemsEnabledSuccess)
+                    clearSelection()
+                }
+            }
         }.onFailure { error ->
             PassLogger.w(TAG, "Error disabling alias items")
             PassLogger.w(TAG, error)
@@ -1136,9 +1153,21 @@ class HomeViewModel @Inject constructor(
 
         selectionState.update { it.copy(aliasLoadingState = IsLoadingState.Loading) }
         runCatching {
-            // enable aliases
+            changeAliasStatus(aliasItems, true)
         }.onSuccess {
-
+            when (it) {
+                is AliasItemsChangeStatusResult.AllChanged -> {
+                    snackbarDispatcher(AliasItemsEnabledSuccess)
+                    clearSelection()
+                }
+                is AliasItemsChangeStatusResult.NoneChanged -> {
+                    snackbarDispatcher(AliasItemsEnabledError)
+                }
+                is AliasItemsChangeStatusResult.SomeChanged -> {
+                    snackbarDispatcher(AliasItemsEnabledPartialSuccess)
+                    clearSelection()
+                }
+            }
         }.onFailure { error ->
             PassLogger.w(TAG, "Error enabling alias items")
             PassLogger.w(TAG, error)

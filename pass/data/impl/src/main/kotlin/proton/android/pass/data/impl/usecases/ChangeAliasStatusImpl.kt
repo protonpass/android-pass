@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
+import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
@@ -44,5 +45,19 @@ class ChangeAliasStatusImpl @Inject constructor(
             ?: throw UserIdNotAvailableError()
         aliasRepository.changeAliasStatus(userId, shareId, itemId, enabled)
         itemRepository.updateLocalItemFlags(shareId, itemId, ItemFlag.AliasDisabled, enabled)
+    }
+
+    override suspend fun invoke(items: List<Pair<ShareId, ItemId>>, enabled: Boolean): AliasItemsChangeStatusResult {
+        val userId = accountManager.getPrimaryUserId().firstOrNull()
+            ?: throw UserIdNotAvailableError()
+        val result = aliasRepository.changeAliasStatus(userId, items, enabled)
+        when (result) {
+            is AliasItemsChangeStatusResult.AllChanged ->
+                itemRepository.updateLocalItemsFlags(result.items, ItemFlag.AliasDisabled, enabled)
+            is AliasItemsChangeStatusResult.SomeChanged ->
+                itemRepository.updateLocalItemsFlags(result.items, ItemFlag.AliasDisabled, enabled)
+            is AliasItemsChangeStatusResult.NoneChanged -> {}
+        }
+        return result
     }
 }

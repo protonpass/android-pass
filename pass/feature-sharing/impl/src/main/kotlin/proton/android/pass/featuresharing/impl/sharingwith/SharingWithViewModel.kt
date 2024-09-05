@@ -279,8 +279,9 @@ class SharingWithViewModel @Inject constructor(
                     it
                 }
             }
+            editingEmailState = ""
+            editingEmailStateFlow.update { "" }
             checkedEmails + email
-
         } else {
             enteredEmailsState.update {
                 if (it.contains(email)) {

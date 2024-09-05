@@ -40,6 +40,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
+import proton.android.pass.data.fakes.usecases.FakeChangeAliasStatus
 import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakeUnpinItem
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
@@ -283,7 +284,8 @@ internal class HomeViewModelTest {
             observeAppNeedsUpdate = TestObserveAppNeedsUpdate(),
             appDispatchers = TestAppDispatchers(),
             featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository(),
-            observeCurrentUser = observeCurrentUser
+            observeCurrentUser = observeCurrentUser,
+            changeAliasStatus = FakeChangeAliasStatus()
         )
     }
 

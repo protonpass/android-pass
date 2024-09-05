@@ -156,6 +156,12 @@
     <string name="home_snackbar_items_unpinned_success">Items unpinned successfully</string>
     <string name="home_snackbar_items_unpinned_partial_success">Error unpinning some of the items</string>
     <string name="home_snackbar_items_unpinned_error">Error unpinning the items</string>
+
+    <string name="home_snackbar_items_alias_enabled_error">Error enabling aliases</string>
+    <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
+
     <string name="bulk_action_unpin">Unpin</string>
     <string name="bulk_action_pin">Pin</string>
+    <string name="bulk_action_enable_alias">Enable alias</string>
+    <string name="bulk_action_disable_alias">Disable alias</string>
 </resources>

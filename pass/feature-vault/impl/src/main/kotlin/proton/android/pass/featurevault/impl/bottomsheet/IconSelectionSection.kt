@@ -55,7 +55,7 @@ fun IconSelectionSection(
     onIconSelected: (ShareIcon) -> Unit
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
-        ShareIcon.values().toList().chunked(ITEMS_PER_COLUMN).forEach { rowIcons ->
+        ShareIcon.entries.chunked(ITEMS_PER_COLUMN).forEach { rowIcons ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

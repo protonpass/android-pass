@@ -55,7 +55,7 @@ fun SortingButton(
 
 class SortingTypePreviewProvider : PreviewParameterProvider<SearchSortingType> {
     override val values: Sequence<SearchSortingType>
-        get() = SearchSortingType.values().asSequence()
+        get() = SearchSortingType.entries.asSequence()
 }
 
 class ThemeAndSortingTypeProvider :

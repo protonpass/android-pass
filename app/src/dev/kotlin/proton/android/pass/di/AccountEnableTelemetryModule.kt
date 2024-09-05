@@ -33,11 +33,11 @@ class CanConfigureTelemetryImpl @Inject constructor(): CanConfigureTelemetry {
 
 @Module
 @InstallIn(SingletonComponent::class)
-public interface AccountEnableTelemetryModule {
+interface AccountEnableTelemetryModule {
 
     @Binds
-    public fun bindCanConfigureTelemetry(impl: CanConfigureTelemetryImpl): CanConfigureTelemetry
+    fun bindCanConfigureTelemetry(impl: CanConfigureTelemetryImpl): CanConfigureTelemetry
 
     @Binds
-    public fun bindIsTelemetryEnabled(impl: IsTelemetryEnabledImpl): IsTelemetryEnabled
+    fun bindIsTelemetryEnabled(impl: IsTelemetryEnabledImpl): IsTelemetryEnabled
 }

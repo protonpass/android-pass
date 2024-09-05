@@ -24,7 +24,7 @@ import me.proton.core.compose.component.ProtonSnackbarType
 class SnackbarTypePreviewProvider : PreviewParameterProvider<ProtonSnackbarType> {
     override val values: Sequence<ProtonSnackbarType>
         get() = sequence {
-            ProtonSnackbarType.values().forEach { yield(it) }
+            ProtonSnackbarType.entries.forEach { yield(it) }
         }
 }
 

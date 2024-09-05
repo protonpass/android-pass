@@ -38,7 +38,7 @@ data class PasswordModeUiState(
 ) {
     companion object {
         val Initial = PasswordModeUiState(
-            options = PasswordGenerationMode.values().toList().toPersistentList(),
+            options = PasswordGenerationMode.entries.toPersistentList(),
             selected = None,
             event = PasswordModeUiEvent.Unknown
         )

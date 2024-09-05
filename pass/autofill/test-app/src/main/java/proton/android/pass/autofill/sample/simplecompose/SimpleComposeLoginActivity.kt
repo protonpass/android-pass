@@ -50,8 +50,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.headline
-import me.proton.core.compose.theme.subheadline
 import proton.android.pass.autofill.sample.LoginResultActivity
 
 class SimpleComposeLoginActivity : AppCompatActivity() {

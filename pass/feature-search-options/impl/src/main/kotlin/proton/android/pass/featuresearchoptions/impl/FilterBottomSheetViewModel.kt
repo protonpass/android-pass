@@ -43,7 +43,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FilterBottomSheetViewModel @Inject constructor(
     private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
-    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeItemCount: ObserveItemCount
 ) : ViewModel() {
 

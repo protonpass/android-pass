@@ -103,13 +103,12 @@ private fun canShowSection(
     cvv: HiddenState,
     expirationDate: String
 ): Boolean {
-    if (cardHolder.isBlank() &&
-        !number.hasContent() &&
-        pin is HiddenState.Empty &&
-        cvv is HiddenState.Empty &&
-        expirationDate.isBlank()
-    ) return false
-
-    return true
+    return !(
+        cardHolder.isBlank() &&
+            !number.hasContent() &&
+            pin is HiddenState.Empty &&
+            cvv is HiddenState.Empty &&
+            expirationDate.isBlank()
+        )
 }
 

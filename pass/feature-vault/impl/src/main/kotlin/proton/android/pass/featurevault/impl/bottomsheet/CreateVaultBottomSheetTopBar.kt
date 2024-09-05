@@ -24,7 +24,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -41,7 +40,6 @@ import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.featurevault.impl.R
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CreateVaultBottomSheetTopBar(
     modifier: Modifier = Modifier,

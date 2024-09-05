@@ -139,7 +139,7 @@ class ItemRepositoryImplTest {
             shareItems("share7", 2000, database),
         ).toMap()
 
-        instance.setShareItems(USER_ID, contents, {})
+        instance.setShareItems(USER_ID, contents) {}
 
         // Assert all items are stored
         contents.forEach { (shareId, items) ->

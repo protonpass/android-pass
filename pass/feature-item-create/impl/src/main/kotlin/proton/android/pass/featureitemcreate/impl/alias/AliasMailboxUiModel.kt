@@ -33,5 +33,5 @@ data class AliasMailboxUiModel(
         email = aliasMailbox.email
     )
 
-    fun toDomain(): AliasMailbox = proton.android.pass.domain.AliasMailbox(id = id, email = email)
+    fun toDomain(): AliasMailbox = AliasMailbox(id = id, email = email)
 }

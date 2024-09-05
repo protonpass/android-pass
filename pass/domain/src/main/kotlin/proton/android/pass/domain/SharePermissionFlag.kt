@@ -27,6 +27,6 @@ enum class SharePermissionFlag(val value: Int) {
     Delete(1 shl 5);
 
     companion object {
-        val map = values().associateBy { it.value }
+        val map = entries.associateBy { it.value }
     }
 }

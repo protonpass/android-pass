@@ -27,7 +27,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -60,7 +60,7 @@ fun GeneratePasswordWordsCountRow(
             style = ProtonTheme.typography.defaultSmallNorm
         )
 
-        var sliderPosition by remember { mutableStateOf(count.toFloat()) }
+        var sliderPosition by remember { mutableFloatStateOf(count.toFloat()) }
         val valueRange = remember { 1.toFloat()..10.toFloat() }
         Slider(
             modifier = Modifier.weight(SLIDER_CONTENT_WEIGHT),

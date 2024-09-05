@@ -24,7 +24,7 @@ import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 
 @Suppress("UnnecessaryAbstractClass")
-abstract class BaseRepository constructor(
+abstract class BaseRepository(
     open val userAddressRepository: UserAddressRepository
 ) {
 

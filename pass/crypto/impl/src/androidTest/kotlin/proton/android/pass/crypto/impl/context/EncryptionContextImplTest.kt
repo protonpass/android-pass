@@ -49,7 +49,7 @@ class EncryptionContextImplTest {
         }
     }
 
-    fun provideKey(): EncryptionKey = EncryptionKey(
+    private fun provideKey(): EncryptionKey = EncryptionKey(
         ByteArray(
             32,
             init = { 0xab.toByte() })

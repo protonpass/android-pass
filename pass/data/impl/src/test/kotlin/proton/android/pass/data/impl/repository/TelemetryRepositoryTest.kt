@@ -94,8 +94,8 @@ class TelemetryRepositoryTest {
 
         val deserializedDimensions = DimensionsSerializer.deserialize(item.dimensions)
         assertThat(deserializedDimensions.size).isEqualTo(2)
-        assertThat(deserializedDimensions.get("some")!!.content).isEqualTo("dimension")
-        assertThat(deserializedDimensions.get("other")!!.content).isEqualTo("value")
+        assertThat(deserializedDimensions["some"]!!.content).isEqualTo("dimension")
+        assertThat(deserializedDimensions["other"]!!.content).isEqualTo("value")
     }
 
     @Test
@@ -133,7 +133,7 @@ class TelemetryRepositoryTest {
             assertThat(it.event).isEqualTo(event)
             assertThat(it.measurementGroup).isEqualTo(TelemetryRepositoryImpl.MEASUREMENT_GROUP)
 
-            assertThat(it.dimensions.get(TelemetryRepositoryImpl.PLAN_NAME_KEY)!!.content)
+            assertThat(it.dimensions[TelemetryRepositoryImpl.PLAN_NAME_KEY]!!.content)
                 .isEqualTo(plan)
         }
 

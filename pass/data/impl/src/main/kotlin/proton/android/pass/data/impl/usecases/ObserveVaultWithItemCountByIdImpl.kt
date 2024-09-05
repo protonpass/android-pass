@@ -42,7 +42,7 @@ class ObserveVaultWithItemCountByIdImpl @Inject constructor(
     private fun observeItemsForVault(vault: Vault): Flow<VaultWithItemCount> =
         itemRepository.observeItemCount(listOf(vault.shareId))
             .map {
-                val count = it.get(vault.shareId)
+                val count = it[vault.shareId]
                     ?: throw IllegalStateException("Count should contain the ShareId")
                 VaultWithItemCount(
                     vault = vault,

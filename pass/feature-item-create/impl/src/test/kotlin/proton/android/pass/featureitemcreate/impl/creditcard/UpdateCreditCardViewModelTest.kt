@@ -70,8 +70,8 @@ class UpdateCreditCardViewModelTest {
             accountManager = accountManager,
             snackbarDispatcher = snackbarDispatcher,
             savedStateHandleProvider = TestSavedStateHandleProvider().apply {
-                get().set(CommonOptionalNavArgId.ShareId.key, SHARE_ID)
-                get().set(CommonNavArgId.ItemId.key, ITEM_ID)
+                get()[CommonOptionalNavArgId.ShareId.key] = SHARE_ID
+                get()[CommonNavArgId.ItemId.key] = ITEM_ID
             },
             encryptionContextProvider = TestEncryptionContextProvider(),
             telemetryManager = telemetryManager,

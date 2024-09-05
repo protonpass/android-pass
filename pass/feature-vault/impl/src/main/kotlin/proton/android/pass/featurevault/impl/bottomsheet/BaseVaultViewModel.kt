@@ -35,7 +35,7 @@ abstract class BaseVaultViewModel : ViewModel() {
 
     protected val formFlow: MutableStateFlow<CreateVaultFormValues> =
         MutableStateFlow(CreateVaultFormValues())
-    protected val hasEditedTitleFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val hasEditedTitleFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     protected val isLoadingFlow: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
     protected val eventFlow: MutableStateFlow<IsVaultCreatedEvent> =

@@ -67,7 +67,7 @@ fun ThemeSelectionBottomSheetContents(
 private fun themeItemList(
     themePreference: ThemePreference,
     onThemeSelected: (ThemePreference) -> Unit
-): ImmutableList<BottomSheetItem> = ThemePreference.values()
+): ImmutableList<BottomSheetItem> = ThemePreference.entries
     .map {
         object : BottomSheetItem {
             override val title: @Composable () -> Unit

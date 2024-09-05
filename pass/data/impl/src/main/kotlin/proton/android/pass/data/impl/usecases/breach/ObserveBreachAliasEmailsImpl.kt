@@ -70,6 +70,6 @@ class ObserveBreachAliasEmailsImpl @Inject constructor(
                 .asFlow()
         }
         .flatMapMerge { it }
-        .runningFold(mapOf<AliasKeyId, AliasData>()) { acc, map -> acc + map }
+        .runningFold(mapOf()) { acc, map -> acc + map }
 
 }

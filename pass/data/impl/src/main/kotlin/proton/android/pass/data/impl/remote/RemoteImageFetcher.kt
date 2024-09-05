@@ -76,7 +76,7 @@ class RemoteImageFetcherImpl @Inject constructor(
     ): ExceptionHandleResult {
         if (e.response.code != HTTP_UNPROCESSABLE_CONTENT) throw e
 
-        val knownError = FetchImageError.values()
+        val knownError = FetchImageError.entries
             .firstOrNull { it.code == e.protonData.code }
 
         when (knownError) {

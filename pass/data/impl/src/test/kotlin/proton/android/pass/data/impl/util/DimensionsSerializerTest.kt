@@ -46,7 +46,7 @@ class DimensionsSerializerTest {
         val res = DimensionsSerializer.deserialize("{\"key\":\"value\"}")
         assertThat(res.size).isEqualTo(1)
 
-        val value = res.get("key")
+        val value = res["key"]
         assertThat(value).isNotNull()
         assertThat(value!!.content).isEqualTo("value")
     }

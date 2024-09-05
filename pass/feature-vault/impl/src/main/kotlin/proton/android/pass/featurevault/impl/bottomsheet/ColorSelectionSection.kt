@@ -50,7 +50,7 @@ fun ColorSelectionSection(
     onColorSelected: (ShareColor) -> Unit
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
-        ShareColor.values().toList().chunked(ITEMS_PER_COLUMN).forEach { rowColors ->
+        ShareColor.entries.chunked(ITEMS_PER_COLUMN).forEach { rowColors ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

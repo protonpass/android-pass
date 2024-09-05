@@ -47,6 +47,7 @@ import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.composecomponents.impl.R.drawable.ic_unpin_angled
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.text.Text
@@ -170,13 +171,14 @@ private fun AliasDropDownMenuItem(
             horizontalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
             val (text, icon) = if (aliasState.areAllSelectedDisabled) {
-                Pair(stringResource(R.string.bulk_action_enable_alias), CompR.drawable.ic_unpin_angled)
+                Pair(stringResource(R.string.bulk_action_enable_alias), CoreR.drawable.ic_proton_alias)
             } else {
-                Pair(stringResource(R.string.bulk_action_disable_alias), CompR.drawable.ic_pin_angled)
+                Pair(stringResource(R.string.bulk_action_disable_alias), CompR.drawable.ic_alias_slash)
             }
             Text.Body1Regular(modifier = Modifier.weight(1f), text = text)
             Spacer(modifier = Modifier.width(100.dp))
             Icon.Default(
+                modifier = Modifier.size(24.dp),
                 id = icon,
                 tint = if (enabled) {
                     PassTheme.colors.textNorm
@@ -212,7 +214,7 @@ private fun PinDropDownMenuItem(
             horizontalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
             val (text, icon) = if (pinningState.areAllSelectedPinned) {
-                Pair(stringResource(R.string.bulk_action_unpin), CompR.drawable.ic_unpin_angled)
+                Pair(stringResource(R.string.bulk_action_unpin), ic_unpin_angled)
             } else {
                 Pair(stringResource(R.string.bulk_action_pin), CompR.drawable.ic_pin_angled)
             }
@@ -225,6 +227,7 @@ private fun PinDropDownMenuItem(
                 )
             } else {
                 Icon.Default(
+                    modifier = Modifier.size(24.dp),
                     id = icon,
                     tint = if (enabled) {
                         PassTheme.colors.textNorm

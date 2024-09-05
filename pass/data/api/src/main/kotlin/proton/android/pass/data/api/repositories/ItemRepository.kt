@@ -87,6 +87,12 @@ interface ItemRepository {
         isFlagEnabled: Boolean
     )
 
+    suspend fun updateLocalItemsFlags(
+        items: List<Pair<ShareId, ItemId>>,
+        flag: ItemFlag,
+        isFlagEnabled: Boolean
+    )
+
     fun observeItems(
         userId: UserId,
         shareSelection: ShareSelection,

@@ -21,7 +21,6 @@ package proton.android.pass.featurehome.impl
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -89,48 +88,103 @@ internal fun SelectionModeTopBar(
 }
 
 @Composable
-private fun RowScope.NonTrashSelectionModeTopBar(selectionState: SelectionTopBarState, onEvent: (HomeUiEvent) -> Unit) {
-    IconButton(
-        enabled = selectionState.actionsEnabled,
-        onClick = { onEvent(HomeUiEvent.MoveItemsActionClick) }
-    ) {
-        Icon(
-            painter = painterResource(CoreR.drawable.ic_proton_folder_arrow_in),
-            contentDescription = null,
-            tint = if (selectionState.actionsEnabled) {
-                PassTheme.colors.textNorm
-            } else {
-                PassTheme.colors.textDisabled
-            }
-        )
-    }
-    IconButton(
-        enabled = selectionState.actionsEnabled,
-        onClick = { onEvent(HomeUiEvent.MoveToTrashItemsActionClick) }
-    ) {
-        Icon(
-            painter = painterResource(CoreR.drawable.ic_proton_trash),
-            contentDescription = null,
-            tint = if (selectionState.actionsEnabled) {
-                PassTheme.colors.textNorm
-            } else {
-                PassTheme.colors.textDisabled
-            }
-        )
-    }
-
-    var showMenu by remember { mutableStateOf(false) }
-    ThreeDotsMenuButton(enabled = selectionState.actionsEnabled, onClick = { showMenu = true })
-    DropdownMenu(
-        modifier = Modifier.background(PassTheme.colors.inputBackgroundNorm),
-        expanded = showMenu && selectionState.selectedItemCount != 0,
-        onDismissRequest = { showMenu = false }
-    ) {
-        PinDropDownMenuItem(
+private fun NonTrashSelectionModeTopBar(
+    modifier: Modifier = Modifier,
+    selectionState: SelectionTopBarState,
+    onEvent: (HomeUiEvent) -> Unit
+) {
+    Row(modifier = modifier) {
+        IconButton(
             enabled = selectionState.actionsEnabled,
-            pinningState = selectionState.pinningState,
-            onEvent = onEvent
-        )
+            onClick = { onEvent(HomeUiEvent.MoveItemsActionClick) }
+        ) {
+            Icon(
+                painter = painterResource(CoreR.drawable.ic_proton_folder_arrow_in),
+                contentDescription = null,
+                tint = if (selectionState.actionsEnabled) {
+                    PassTheme.colors.textNorm
+                } else {
+                    PassTheme.colors.textDisabled
+                }
+            )
+        }
+        IconButton(
+            enabled = selectionState.actionsEnabled,
+            onClick = { onEvent(HomeUiEvent.MoveToTrashItemsActionClick) }
+        ) {
+            Icon(
+                painter = painterResource(CoreR.drawable.ic_proton_trash),
+                contentDescription = null,
+                tint = if (selectionState.actionsEnabled) {
+                    PassTheme.colors.textNorm
+                } else {
+                    PassTheme.colors.textDisabled
+                }
+            )
+        }
+
+        var showMenu by remember { mutableStateOf(false) }
+        ThreeDotsMenuButton(enabled = selectionState.actionsEnabled, onClick = { showMenu = true })
+        DropdownMenu(
+            modifier = Modifier.background(PassTheme.colors.inputBackgroundNorm),
+            expanded = showMenu && selectionState.selectedItemCount != 0,
+            onDismissRequest = { showMenu = false }
+        ) {
+            PinDropDownMenuItem(
+                enabled = selectionState.actionsEnabled,
+                pinningState = selectionState.pinningState,
+                onEvent = onEvent
+            )
+            if (selectionState.aliasState.areAllSelectedAliases) {
+                AliasDropDownMenuItem(
+                    enabled = selectionState.actionsEnabled,
+                    aliasState = selectionState.aliasState,
+                    onEvent = onEvent
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun AliasDropDownMenuItem(
+    modifier: Modifier = Modifier,
+    enabled: Boolean,
+    aliasState: AliasState,
+    onEvent: (HomeUiEvent) -> Unit
+) {
+    DropdownMenuItem(
+        modifier = modifier,
+        enabled = enabled,
+        onClick = {
+            val event = if (aliasState.areAllSelectedDisabled) {
+                HomeUiEvent.EnableAliasItemsActionClick
+            } else {
+                HomeUiEvent.DisableAliasItemsActionClick
+            }
+            onEvent(event)
+        }
+    ) {
+        Row(
+            modifier = Modifier.weight(1f),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.small)
+        ) {
+            val (text, icon) = if (aliasState.areAllSelectedDisabled) {
+                Pair(stringResource(R.string.bulk_action_enable_alias), CompR.drawable.ic_unpin_angled)
+            } else {
+                Pair(stringResource(R.string.bulk_action_disable_alias), CompR.drawable.ic_pin_angled)
+            }
+            Text.Body1Regular(modifier = Modifier.weight(1f), text = text)
+            Spacer(modifier = Modifier.width(100.dp))
+            Icon.Default(
+                id = icon,
+                tint = if (enabled) {
+                    PassTheme.colors.textNorm
+                } else {
+                    PassTheme.colors.textDisabled
+                }
+            )
+        }
     }
 }
 
@@ -185,34 +239,40 @@ private fun PinDropDownMenuItem(
 
 
 @Composable
-private fun RowScope.TrashSelectionModeTopBar(selectionState: SelectionTopBarState, onEvent: (HomeUiEvent) -> Unit) {
-    IconButton(
-        enabled = selectionState.actionsEnabled,
-        onClick = { onEvent(HomeUiEvent.RestoreItemsActionClick) }
-    ) {
-        Icon(
-            painter = painterResource(CoreR.drawable.ic_proton_clock_rotate_left),
-            contentDescription = null,
-            tint = if (selectionState.actionsEnabled) {
-                PassTheme.colors.textNorm
-            } else {
-                PassTheme.colors.textDisabled
-            }
-        )
-    }
-    IconButton(
-        enabled = selectionState.actionsEnabled,
-        onClick = { onEvent(HomeUiEvent.PermanentlyDeleteItemsActionClick) }
-    ) {
-        Icon(
-            painter = painterResource(CoreR.drawable.ic_proton_trash_cross),
-            contentDescription = null,
-            tint = if (selectionState.actionsEnabled) {
-                PassTheme.colors.textNorm
-            } else {
-                PassTheme.colors.textDisabled
-            }
-        )
+private fun TrashSelectionModeTopBar(
+    modifier: Modifier = Modifier,
+    selectionState: SelectionTopBarState,
+    onEvent: (HomeUiEvent) -> Unit
+) {
+    Row(modifier = modifier) {
+        IconButton(
+            enabled = selectionState.actionsEnabled,
+            onClick = { onEvent(HomeUiEvent.RestoreItemsActionClick) }
+        ) {
+            Icon(
+                painter = painterResource(CoreR.drawable.ic_proton_clock_rotate_left),
+                contentDescription = null,
+                tint = if (selectionState.actionsEnabled) {
+                    PassTheme.colors.textNorm
+                } else {
+                    PassTheme.colors.textDisabled
+                }
+            )
+        }
+        IconButton(
+            enabled = selectionState.actionsEnabled,
+            onClick = { onEvent(HomeUiEvent.PermanentlyDeleteItemsActionClick) }
+        ) {
+            Icon(
+                painter = painterResource(CoreR.drawable.ic_proton_trash_cross),
+                contentDescription = null,
+                tint = if (selectionState.actionsEnabled) {
+                    PassTheme.colors.textNorm
+                } else {
+                    PassTheme.colors.textDisabled
+                }
+            )
+        }
     }
 }
 
@@ -226,6 +286,11 @@ fun SelectionModeTopBarPreview(@PreviewParameter(ThemedBooleanPreviewProvider::c
                     isTrash = input.second,
                     selectedItemCount = 2,
                     pinningState = PinningState(false, IsLoadingState.NotLoading),
+                    aliasState = AliasState(
+                        areAllSelectedAliases = false,
+                        areAllSelectedDisabled = false,
+                        aliasLoadingState = IsLoadingState.NotLoading
+                    ),
                     actionsEnabled = true
                 ),
                 onEvent = {}

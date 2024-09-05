@@ -861,7 +861,7 @@ enum class InputTypeFlags(val value: Int) {
     DATETIME_VARIATION_TIME(0x00000020);
 
     companion object {
-        fun fromValue(input: InputTypeValue): List<InputTypeFlags> = values()
+        fun fromValue(input: InputTypeValue): List<InputTypeFlags> = entries
             .filter { flag -> input.value.and(flag.value) == flag.value }
     }
 }

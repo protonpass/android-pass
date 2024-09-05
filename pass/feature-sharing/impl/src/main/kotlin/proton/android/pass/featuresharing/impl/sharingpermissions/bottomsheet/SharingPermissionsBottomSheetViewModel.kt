@@ -98,13 +98,13 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
     private fun getMode(): SharingPermissionMode {
         val savedState = savedStateHandleProvider.get()
         val mode = savedState.require<String>(EditPermissionsModeNavArgId.key)
-        val modeAsEnum = EditPermissionsMode.values().firstOrNull { it.name == mode }
+        val modeAsEnum = EditPermissionsMode.entries.firstOrNull { it.name == mode }
         return when (modeAsEnum) {
             null -> throw IllegalArgumentException("Unknown mode: $mode")
             EditPermissionsMode.SingleUser -> {
                 val email = savedState.require<String>(EmailNavArgId.key)
                 val permission = savedState.require<String>(PermissionNavArgId.key)
-                val permissionAsEnum = SharingType.values().firstOrNull { it.name == permission }
+                val permissionAsEnum = SharingType.entries.firstOrNull { it.name == permission }
                 when (permissionAsEnum) {
                     null -> throw IllegalArgumentException("Unknown permission: $permission")
                     else -> SharingPermissionMode.SetOne(email, permissionAsEnum)

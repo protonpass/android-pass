@@ -88,7 +88,7 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
 }
 
 sealed interface SearchOptionsUIState
-object EmptySearchOptionsUIState : SearchOptionsUIState
+data object EmptySearchOptionsUIState : SearchOptionsUIState
 
 data class SuccessSearchOptionsUIState(
     val filterType: SearchFilterType,

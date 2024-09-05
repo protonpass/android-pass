@@ -32,7 +32,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -50,7 +49,6 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.heroNorm
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TrialContent(
     modifier: Modifier = Modifier,

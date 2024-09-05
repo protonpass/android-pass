@@ -16,10 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.alias.mailboxes
+package proton.android.pass.featureitemcreate.impl.alias
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
 
 class AliasToBeCreatedPreviewProvider : PreviewParameterProvider<AliasToBeCreatedInput> {
     override val values: Sequence<AliasToBeCreatedInput>

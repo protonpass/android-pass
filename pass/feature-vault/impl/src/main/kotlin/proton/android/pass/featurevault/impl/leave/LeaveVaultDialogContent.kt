@@ -34,7 +34,6 @@ import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
-import proton.android.pass.composecomponents.impl.uievents.value
 import proton.android.pass.featurevault.impl.R
 
 private const val TAG_VAULT_NAME = "__VAULT_NAME__"

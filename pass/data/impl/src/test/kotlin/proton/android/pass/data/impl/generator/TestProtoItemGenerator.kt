@@ -34,7 +34,4 @@ object TestProtoItemGenerator {
                 .build()
         )
         .build()
-
-
-    fun generateByteArray() = generate().toByteArray()
 }

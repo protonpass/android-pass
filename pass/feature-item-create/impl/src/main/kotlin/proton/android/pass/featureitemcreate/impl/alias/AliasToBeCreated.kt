@@ -39,8 +39,6 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.featureitemcreate.impl.R
-import proton.android.pass.featureitemcreate.impl.alias.mailboxes.AliasToBeCreatedInput
-import proton.android.pass.featureitemcreate.impl.alias.mailboxes.AliasToBeCreatedPreviewProvider
 
 @Composable
 fun AliasToBeCreated(

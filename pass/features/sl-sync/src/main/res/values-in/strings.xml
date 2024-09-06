@@ -21,17 +21,17 @@
   <string name="simple_login_sync_details_title">Alias</string>
   <string name="simple_login_sync_details_domain_label">Domain</string>
   <string name="simple_login_sync_details_domain_title">Domain bawaan untuk alias</string>
-  <string name="simple_login_sync_details_domain_option_blank">Not selected</string>
+  <string name="simple_login_sync_details_domain_option_blank">Tidak dipilih</string>
   <string name="simple_login_sync_details_mailboxes_label">Kotak surat</string>
   <string name="simple_login_sync_details_mailboxes_title">Kotak surat bawaan untuk alias</string>
   <string name="simple_login_sync_details_vault_title">Sinkronisasi SimpleLogin</string>
-  <string name="simple_login_sync_details_dialog_title_domains">Default domain for aliases</string>
-  <string name="simple_login_sync_details_dialog_title_mailboxes">Default mailbox for aliases</string>
-  <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
-  <string name="simple_login_sync_details_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
-  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
-  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">There was an error updating SL alias mailbox</string>
-  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">SL alias mailbox successfully updated</string>
+  <string name="simple_login_sync_details_dialog_title_domains">Domain bawaan untuk alias</string>
+  <string name="simple_login_sync_details_dialog_title_mailboxes">Kotak surat bawaan untuk alias</string>
+  <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">Terdapat masalah dalam memperoleh rincian alias SL</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_error">Terdapat masalah dalam memperbarui domain alias SL</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">Domain alias SL berhasil diperbarui</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">Terdapat masalah dalam memperbarui kotak surat alias SL</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">Alias kotak surat SL berhasil diperbarui</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sinkronkan alias</string>
   <string name="simple_login_sync_enable_snackbar_error">Ada kesalahan mengaktifkan sinkroniasi alias SimpleLogin</string>

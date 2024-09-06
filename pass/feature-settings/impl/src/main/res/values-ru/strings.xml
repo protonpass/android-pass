@@ -31,12 +31,6 @@
   <string name="settings_share_telemetry">Анонимно делиться данными об использовании</string>
   <string name="settings_share_crashes">Делиться анонимными отчётами об ошибках</string>
   <string name="settings_preference_updated">Настройки были обновлены</string>
-  <string name="settings_default_vault_updated">Хранилище по умолчанию было обновлено</string>
-  <string name="settings_default_vault_update_error">Хранилище по умолчанию не может быть обновлено</string>
-  <string name="settings_default_vault_section_title">Хранилища</string>
-  <string name="settings_default_vault_vault_selector_title">Хранилище по умолчанию</string>
-  <string name="settings_default_vault_section_subtitle">Хранилище, в котором по умолчанию будут создаваться ваши элементы.</string>
-  <string name="settings_default_vault_disabled_reason">Вы не можете писать в это хранилище.</string>
   <string name="view_logs_title">Просмотр журналов</string>
   <string name="clipboard_bottomsheet_title">Буфер обмена</string>
   <string name="clipboard_option_clear_clipboard_label">Очистить буфер обмена</string>

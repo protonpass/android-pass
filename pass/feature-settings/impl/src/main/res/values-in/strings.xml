@@ -31,12 +31,6 @@
   <string name="settings_share_telemetry">Bagikan statistik pemakaian anonim</string>
   <string name="settings_share_crashes">Bagikan laporan crash anonim</string>
   <string name="settings_preference_updated">Preferensi Anda telah diperbarui</string>
-  <string name="settings_default_vault_updated">Brankas bawaan Anda telah diperbarui</string>
-  <string name="settings_default_vault_update_error">Tidak dapat memperbarui brankas bawaan</string>
-  <string name="settings_default_vault_section_title">Brankas</string>
-  <string name="settings_default_vault_vault_selector_title">Brankas bawaan</string>
-  <string name="settings_default_vault_section_subtitle">Brankas tempat item Anda akan dihasilkan secara bawaan</string>
-  <string name="settings_default_vault_disabled_reason">Anda tidak dapat mengisi brankas ini.</string>
   <string name="view_logs_title">Lihat log</string>
   <string name="clipboard_bottomsheet_title">Papan klip</string>
   <string name="clipboard_option_clear_clipboard_label">Bersihkan papan klip</string>

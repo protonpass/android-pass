@@ -31,12 +31,6 @@
   <string name="settings_share_telemetry">Delite anonimno uporabo</string>
   <string name="settings_share_crashes">Delite anonimna poročila o zrušitvah</string>
   <string name="settings_preference_updated">Vaša nastavitev je bila posodobljena</string>
-  <string name="settings_default_vault_updated">Vaš privzeti trezor je posodobljen</string>
-  <string name="settings_default_vault_update_error">Privzetega trezorja ni bilo mogoče posodobiti</string>
-  <string name="settings_default_vault_section_title">Trezorji</string>
-  <string name="settings_default_vault_vault_selector_title">Privzeti trezor</string>
-  <string name="settings_default_vault_section_subtitle">Trezor, kjer bodo vaši predmeti privzeto ustvarjeni.</string>
-  <string name="settings_default_vault_disabled_reason">V ta trezor ne morete pisati.</string>
   <string name="view_logs_title">Prikaži dnevnik</string>
   <string name="clipboard_bottomsheet_title">Odložišče</string>
   <string name="clipboard_option_clear_clipboard_label">Počisti odložišče</string>

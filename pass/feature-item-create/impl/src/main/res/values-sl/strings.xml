@@ -52,7 +52,7 @@
   <string name="create_login_add_custom_field_button">Dodajte drugo polje</string>
   <string name="custom_field_hidden_placeholder">Dodajte skrito besedilo</string>
   <string name="custom_field_hidden_icon_content_description">Skrita ikona za polje po meri</string>
-  <string name="custom_field_text_placeholder">Dodajte tekst</string>
+  <string name="custom_field_text_placeholder">Dodaj besedilo</string>
   <string name="custom_field_dialog_title">Ime polja po meri</string>
   <string name="custom_field_dialog_body">Poimenujte svoje polje po meri</string>
   <string name="custom_field_dialog_placeholder">Npr., uporabnikov ID, PIN</string>
@@ -109,7 +109,7 @@
   <string name="identity_field_zip_or_postal_code_title">Poštna številka</string>
   <string name="identity_field_city_title">Mesto</string>
   <string name="identity_field_state_or_province_title">Država ali pokrajina</string>
-  <string name="identity_field_country_or_region_title">Dežela ali regija</string>
+  <string name="identity_field_country_or_region_title">Država ali regija</string>
   <string name="identity_field_social_security_number_title">Številka socialnega zavarovanja</string>
   <string name="identity_field_passport_number_title">Številka potnega lista</string>
   <string name="identity_field_license_number_title">Registrska številka</string>

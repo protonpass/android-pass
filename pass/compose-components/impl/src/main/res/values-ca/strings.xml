@@ -236,12 +236,12 @@
   <string name="snack_bar_message_item_delete_success">L\'element s\'ha eliminat correctament.</string>
   <string name="snack_bar_message_item_delete_error">S\'ha produït un error en eliminar a la paperera aquest element.</string>
   <!-- Simple Login -->
-  <string name="simple_login_widget_title">Enable SimpleLogin sync</string>
+  <string name="simple_login_widget_title">Activa la sincronització amb SimpleLogin</string>
   <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">We detected that you have %s that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
   <plurals name="simple_login_widget_pending_aliases">
     <item quantity="one">%d àlies</item>
     <item quantity="other">%d àlies</item>
   </plurals>
-  <string name="simple_login_widget_action">Sync aliases</string>
+  <string name="simple_login_widget_action">Sincronitza els àlies</string>
   <string name="simple_login_widget_close_content_description">Button to close simple login aliases sync widget</string>
 </resources>

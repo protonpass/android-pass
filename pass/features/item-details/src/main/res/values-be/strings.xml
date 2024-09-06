@@ -25,7 +25,7 @@
   <string name="item_details_forbidden_actions_edit_trash">Вы не можаце рэдагаваць гэты элемент, бо ён знаходзіцца ў сметніцы. Дастаньце яго адтуль, а потым паўтарыце спробу.</string>
   <string name="item_details_forbidden_actions_edit_upgrade">Вам дазволена толькі рэдагаваць элементы ў сваіх больш старых сховішчах. Палепшыце свой бягучы тарыфны план, каб рэдагаваць гэты элемент.</string>
   <string name="item_details_forbidden_actions_share_title">Немагчыма абагуліць</string>
-  <string name="item_details_forbidden_actions_share_limit">Вы дасягнулі максімальнай колькасці абагуленняў сховішчаў. Для таго, каб абагуліць больш сховішчаў, палепшыце свой бягучы тарыфны план.</string>
+  <string name="item_details_forbidden_actions_share_limit">Вы дасягнулі максімальнай колькасці абагуленняў сховішчаў. Палепшыце свой бягучы тарыфны план, каб абагуляць больш сховішчаў.</string>
   <string name="item_details_forbidden_actions_share_permission">У вас недастаткова правоў, каб абагуліць гэта сховішча.</string>
   <string name="item_details_forbidden_actions_share_trash">Вы не можаце абагуліць гэты элемент, бо ён знаходзіцца ў сметніцы. Дастаньце яго адтуль, а потым паўтарыце спробу.</string>
 </resources>

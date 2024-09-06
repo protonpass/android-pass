@@ -31,12 +31,6 @@
   <string name="settings_share_telemetry">Telemetria anonima</string>
   <string name="settings_share_crashes">Segnalazioni anonime</string>
   <string name="settings_preference_updated">Preferenza aggiornata</string>
-  <string name="settings_default_vault_updated">Cassaforte predefinita aggiornata</string>
-  <string name="settings_default_vault_update_error">Aggiornamento della cassaforte predefinita non riuscito</string>
-  <string name="settings_default_vault_section_title">Casseforti</string>
-  <string name="settings_default_vault_vault_selector_title">Cassaforte predefinita</string>
-  <string name="settings_default_vault_section_subtitle">La cassaforte dove verranno creati i tuoi elementi per impostazione predefinita.</string>
-  <string name="settings_default_vault_disabled_reason">Non puoi creare o eliminare elementi in questa cassaforte.</string>
   <string name="view_logs_title">Visualizza i log</string>
   <string name="clipboard_bottomsheet_title">Appunti</string>
   <string name="clipboard_option_clear_clipboard_label">Cancellazione degli appunti</string>

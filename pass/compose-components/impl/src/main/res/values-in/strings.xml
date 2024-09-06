@@ -43,8 +43,8 @@
   <string name="action_continue">Lanjutkan</string>
   <string name="action_retry">Coba lagi</string>
   <string name="action_edit">Sunting</string>
-  <string name="action_update">Update</string>
-  <string name="action_close">Close</string>
+  <string name="action_update">Perbarui</string>
+  <string name="action_close">Tutup</string>
   <!-- Empty list -->
   <string name="empty_list_title">Tambahkan item pertama Anda</string>
   <string name="empty_search_results_title">Hasil tidak ditemukan</string>

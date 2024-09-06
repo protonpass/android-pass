@@ -27,6 +27,6 @@
   <string name="account_settings_list_item_security_keys_hint_not_set">설정하지 않음</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
-    <item quantity="other">%d개 보안 링크 설정됨</item>
+    <item quantity="other">%d개 보안 키 설정됨</item>
   </plurals>
 </resources>

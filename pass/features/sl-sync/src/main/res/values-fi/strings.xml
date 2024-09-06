@@ -21,17 +21,17 @@
   <string name="simple_login_sync_details_title">Aliakset</string>
   <string name="simple_login_sync_details_domain_label">Verkkotunnus</string>
   <string name="simple_login_sync_details_domain_title">Aliasten oletusverkkotunnus</string>
-  <string name="simple_login_sync_details_domain_option_blank">Not selected</string>
+  <string name="simple_login_sync_details_domain_option_blank">Ei valittuna</string>
   <string name="simple_login_sync_details_mailboxes_label">Postilaatikot</string>
   <string name="simple_login_sync_details_mailboxes_title">Aliasten oletuspostilaatikko</string>
   <string name="simple_login_sync_details_vault_title">SimpleLogin-synkronointi</string>
-  <string name="simple_login_sync_details_dialog_title_domains">Default domain for aliases</string>
-  <string name="simple_login_sync_details_dialog_title_mailboxes">Default mailbox for aliases</string>
-  <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
-  <string name="simple_login_sync_details_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
-  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
-  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">There was an error updating SL alias mailbox</string>
-  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">SL alias mailbox successfully updated</string>
+  <string name="simple_login_sync_details_dialog_title_domains">Aliasten oletusverkkotunnus</string>
+  <string name="simple_login_sync_details_dialog_title_mailboxes">Aliasten oletuspostilaatikko</string>
+  <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">Virhe noutaessa SL-aliaksen tietoja</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_error">Virhe muuttaessa SL-aliaksen verkkotunnusta</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">SL-aliaksen verkkotunnus muutettiin</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">Virhe muuttaessa SL-aliaksen postilaatikkoa</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">SL-aliaksen postilaatikko muutetiin</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Synkronoi aliakset</string>
   <string name="simple_login_sync_enable_snackbar_error">SimpleLogin-aliasten synkronoinnin käyttöönotossa tapahtui virhe</string>

@@ -44,8 +44,8 @@
   <string name="action_continue">Συνέχεια</string>
   <string name="action_retry">Δοκιμάστε ξανά</string>
   <string name="action_edit">Επεξεργασία</string>
-  <string name="action_update">Update</string>
-  <string name="action_close">Close</string>
+  <string name="action_update">Ενημέρωση</string>
+  <string name="action_close">Κλείσιμο</string>
   <!-- Empty list -->
   <string name="empty_list_title">Προσθέστε το πρώτο σας στοιχείο</string>
   <string name="empty_search_results_title">Δε βρέθηκε αποτέλεσμα</string>

@@ -76,7 +76,7 @@
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Alamat email tidak dapat diperoleh</string>
   <string name="security_center_dark_web_monitor_custom_email_option_verify">Verifikasi</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Hapus</string>
-  <string name="security_center_dark_web_monitor_latest_breach_on">Kebocoran terbaru pada %s</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Kebocoran terkini pada %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="other">Ditemukan dalam %s kebocoran</item>
   </plurals>
@@ -165,6 +165,6 @@
   <string name="dark_web_help_dialog_title">Keamanan Data</string>
   <string name="dark_web_help_dialog_subtitle">Proton tidak pernah membagikan informasi Anda dengan pihak ketiga. Seluruh data yang tersedia berasal dari hasil kemunculan domain Proton pada pencarian di dark web.</string>
   <!-- Cannot add custom emails -->
-  <string name="dark_web_cannot_add_custom_emails_dialog_title">Tidak dapat menambahkan surel kustom.</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_title">Email khusus tidak dapat ditambahkan</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Anda telah mencapai batas jumlah email khusus yang dapat dibuat.</string>
 </resources>

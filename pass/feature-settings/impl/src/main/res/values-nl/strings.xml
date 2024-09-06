@@ -31,12 +31,6 @@
   <string name="settings_share_telemetry">Deel anoniem gebruik</string>
   <string name="settings_share_crashes">Anonieme crashrapporten delen</string>
   <string name="settings_preference_updated">Uw voorkeur is bijgewerkt</string>
-  <string name="settings_default_vault_updated">Uw standaard kluis is bijgewerkt</string>
-  <string name="settings_default_vault_update_error">Kan de standaard kluis niet bijwerken</string>
-  <string name="settings_default_vault_section_title">Kluizen</string>
-  <string name="settings_default_vault_vault_selector_title">Standaard kluis</string>
-  <string name="settings_default_vault_section_subtitle">De kluis waar uw items standaard worden gemaakt.</string>
-  <string name="settings_default_vault_disabled_reason">U kunt niet naar deze kluis schrijven.</string>
   <string name="view_logs_title">Logboeken bekijken</string>
   <string name="clipboard_bottomsheet_title">Klembord</string>
   <string name="clipboard_option_clear_clipboard_label">Klembord wissen</string>

@@ -4,7 +4,7 @@
     <item quantity="one">Ali želite %d predmet premakniti v naslednji trezor?</item>
     <item quantity="two">Ali želite %d predmeta premakniti v naslednji trezor?</item>
     <item quantity="few">Ali želite %d predmete premakniti v naslednji trezor?</item>
-    <item quantity="other">Ali želite %d predmete premakniti v naslednji trezor?</item>
+    <item quantity="other">Ali želite %d predmetov premakniti v naslednji trezor?</item>
   </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Želite premakniti vse predmete v naslednji trezor?</string>
   <string name="migrate_item_confirm_confirm_button">Premakni</string>

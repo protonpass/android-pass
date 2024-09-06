@@ -31,12 +31,6 @@
   <string name="settings_share_telemetry">Anonymné zdieľanie údajov o používaní</string>
   <string name="settings_share_crashes">Zdieľať anonymné hlásenia o zlyhaniach</string>
   <string name="settings_preference_updated">Vaša predvoľba bola aktualizovaná</string>
-  <string name="settings_default_vault_updated">Váš predvolený trezor bol aktualizovaný</string>
-  <string name="settings_default_vault_update_error">Predvolený trezor sa nepodarilo aktualizovať</string>
-  <string name="settings_default_vault_section_title">Trezory</string>
-  <string name="settings_default_vault_vault_selector_title">Predvolený trezor</string>
-  <string name="settings_default_vault_section_subtitle">Trezor, v ktorom budú vaše položky predvolene vytvorené.</string>
-  <string name="settings_default_vault_disabled_reason">Do tohto trezora nemôžete zapisovať.</string>
   <string name="view_logs_title">Zobraziť záznamy</string>
   <string name="clipboard_bottomsheet_title">Schránka</string>
   <string name="clipboard_option_clear_clipboard_label">Vyčistiť schránku</string>

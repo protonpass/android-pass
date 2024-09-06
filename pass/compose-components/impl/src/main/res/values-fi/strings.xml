@@ -44,8 +44,8 @@
   <string name="action_continue">Jatka</string>
   <string name="action_retry">Yritä uudelleen</string>
   <string name="action_edit">Muokkaa</string>
-  <string name="action_update">Update</string>
-  <string name="action_close">Close</string>
+  <string name="action_update">Vaihda</string>
+  <string name="action_close">Sulje</string>
   <!-- Empty list -->
   <string name="empty_list_title">Lisää ensimmäinen kohteesi</string>
   <string name="empty_search_results_title">Tuloksia ei löytynyt</string>

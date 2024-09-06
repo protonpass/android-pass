@@ -31,12 +31,6 @@
   <string name="settings_share_telemetry">Надсилати анонімні дані про використання</string>
   <string name="settings_share_crashes">Надсилати анонімні звіти про збої</string>
   <string name="settings_preference_updated">Налаштування оновлено</string>
-  <string name="settings_default_vault_updated">Ваше типове сховище оновлено</string>
-  <string name="settings_default_vault_update_error">Не вдалося оновити типове сховище</string>
-  <string name="settings_default_vault_section_title">Сховища</string>
-  <string name="settings_default_vault_vault_selector_title">Типове сховище</string>
-  <string name="settings_default_vault_section_subtitle">Сховище, де по стандарту будуть створюватися ваші елементи.</string>
-  <string name="settings_default_vault_disabled_reason">Ви не можете писати до цього сховища.</string>
   <string name="view_logs_title">Переглянути журнали</string>
   <string name="clipboard_bottomsheet_title">Буфер обміну</string>
   <string name="clipboard_option_clear_clipboard_label">Очистити буфер обміну</string>

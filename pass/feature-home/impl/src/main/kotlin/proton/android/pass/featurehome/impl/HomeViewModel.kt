@@ -94,6 +94,7 @@ import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.repositories.BulkMoveToVaultEvent
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
+import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.PinItemsResult
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.ClearTrash
@@ -198,6 +199,7 @@ class HomeViewModel @Inject constructor(
     private val unpinItems: UnpinItems,
     private val changeAliasStatus: ChangeAliasStatus,
     private val observeCurrentUser: ObserveCurrentUser,
+    private val syncStatusRepository: ItemSyncStatusRepository,
     observeVaults: ObserveVaults,
     clock: Clock,
     observeItems: ObserveItems,
@@ -312,25 +314,31 @@ class HomeViewModel @Inject constructor(
                 VaultSelectionOption.Trash -> ShareSelection.AllShares to ItemState.Trashed
             }
 
-            observeItems(
-                selection = shareSelection,
-                itemState = itemState,
+            syncStatusRepository.observeSyncState()
+                .flatMapLatest {
+                    if (it.isVisibleSyncing) {
+                        emptyFlow()
+                    } else {
+                        observeItems(
+                            selection = shareSelection,
+                            itemState = itemState,
 
-                // We observe them all, because otherwise in the All part of the search we would not
-                // know how many ItemTypes are there for the other ItemTypes.
-                // We filter out the results using the filterByType function
-                filter = ItemTypeFilter.All
-            ).asResultWithoutLoading()
-                .map { itemResult ->
-                    itemResult.map { list ->
-                        encryptionContextProvider.withEncryptionContext {
-                            list.map { it.toUiModel(this@withEncryptionContext) }
-                        }
+                            // We observe them all, because otherwise in the All part of the search we would not
+                            // know how many ItemTypes are there for the other ItemTypes.
+                            // We filter out the results using the filterByType function
+                            filter = ItemTypeFilter.All
+                        ).asResultWithoutLoading()
+                            .map { itemResult ->
+                                itemResult.map { list ->
+                                    encryptionContextProvider.withEncryptionContext {
+                                        list.map { it.toUiModel(this@withEncryptionContext) }
+                                    }
+                                }
+                            }
+                            .distinctUntilChanged()
                     }
                 }
-                .distinctUntilChanged()
         }
-
 
     private val filteredSearchEntriesFlow = combine(
         itemUiModelFlow.onEach {

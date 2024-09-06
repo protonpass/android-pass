@@ -61,6 +61,9 @@ class App : Application(), ImageLoaderFactory {
         MainInitializer.init(this)
         userPreferencesRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
 
+        val currentHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler(PassExceptionHandler(currentHandler))
+
         registerActivityLifecycleCallbacks(
             activityLifecycleCallbacks(
                 onActivityCreated = { activity, _ ->

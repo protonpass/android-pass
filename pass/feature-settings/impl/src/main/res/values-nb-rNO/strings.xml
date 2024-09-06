@@ -31,12 +31,6 @@
   <string name="settings_share_telemetry">Del anonym bruk</string>
   <string name="settings_share_crashes">Del anonyme programkrasjrapporter</string>
   <string name="settings_preference_updated">Din preferanse er oppdatert</string>
-  <string name="settings_default_vault_updated">Standardhvelvet ditt er oppdatert</string>
-  <string name="settings_default_vault_update_error">Kunne ikke oppdatere standardhvelvet</string>
-  <string name="settings_default_vault_section_title">Hvelv</string>
-  <string name="settings_default_vault_vault_selector_title">Standard hvelv</string>
-  <string name="settings_default_vault_section_subtitle">Hvelvet der elementene dine opprettes som standard.</string>
-  <string name="settings_default_vault_disabled_reason">Du kan ikke skrive i dette hvelvet.</string>
   <string name="view_logs_title">Se logger</string>
   <string name="clipboard_bottomsheet_title">Utklippstavle</string>
   <string name="clipboard_option_clear_clipboard_label">Tøm utklippstavle</string>

@@ -46,8 +46,8 @@
   <string name="action_continue">Pokračovat</string>
   <string name="action_retry">Zkusit znovu</string>
   <string name="action_edit">Upravit</string>
-  <string name="action_update">Update</string>
-  <string name="action_close">Close</string>
+  <string name="action_update">Aktualizovat</string>
+  <string name="action_close">Zavřít</string>
   <!-- Empty list -->
   <string name="empty_list_title">Přidejte svou první položku</string>
   <string name="empty_search_results_title">Nebyl nalezen žádný výsledek</string>

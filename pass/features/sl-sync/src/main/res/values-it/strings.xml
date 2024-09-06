@@ -27,11 +27,11 @@
   <string name="simple_login_sync_details_vault_title">Sincronizzazione SimpleLogin</string>
   <string name="simple_login_sync_details_dialog_title_domains">Dominio predefinito per gli alias</string>
   <string name="simple_login_sync_details_dialog_title_mailboxes">Casella di posta predefinita per gli alias</string>
-  <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">Si è verificato un errore durante il recupero dei dettagli dell\'alias SL</string>
-  <string name="simple_login_sync_details_snackbar_alias_domain_update_error">Si è verificato un errore durante l\'aggiornamento del dominio per gli alias SL</string>
-  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">Dominio per gli alias SL aggiornato correttamente</string>
-  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">Si è verificato un errore durante l\'aggiornamento della casella di posta per gli alias SL</string>
-  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">Casella di posta per gli alias SL aggiornata correttamente</string>
+  <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">Caricamento dei dettagli dell\'alias non riuscito</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_error">Aggiornamento del dominio per gli alias non riuscito</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">Dominio per gli alias aggiornato</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">Aggiornamento della casella di posta per gli alias non riuscito</string>
+  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">Casella di posta per gli alias aggiornata</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sincronizza gli alias</string>
   <string name="simple_login_sync_enable_snackbar_error">Abilitazione della sincronizzazione degli alias non riuscita</string>

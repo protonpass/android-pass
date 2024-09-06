@@ -34,13 +34,13 @@
   <string name="alias_change_status_error">Pri spreminjanju statusa vzdevka je prišlo do napak</string>
   <string name="login_item_generate_totp_error">Napaka pri ustvarjanju kode 2FA</string>
   <string name="login_item_view_alias_button">Prikaži vzdevek</string>
-  <string name="login_item_monitor_widget_weak_pass_title">Šibko geslo.</string>
-  <string name="login_item_monitor_widget_weak_pass_subtitle">Vaš račun je ranljiv, pojdite v nastavitve in spremenite geslo.</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Šibko geslo</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Ta račun je ranljiv, obiščite storitev in spremenite geslo.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d druga prijava uporablja isto geslo</item>
     <item quantity="two">%d drugi prijavi uporabljata isto geslo</item>
     <item quantity="few">%d druge prijave uporabljajo isto geslo</item>
-    <item quantity="other">%d druge prijave uporabljajo isto geslo</item>
+    <item quantity="other">%d drugih prijav uporablja isto geslo</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Nastavite 2FA za večjo varnost</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Ta storitev ponuja 2FA. Omogočite ga za dodatno varnost računa.</string>
@@ -54,7 +54,7 @@
   <string name="action_reveal_password">Razkrij geslo</string>
   <string name="action_conceal_password">Skrij geslo</string>
   <string name="action_reveal_number">Pokaži številko</string>
-  <string name="action_conceal_number">Skrij številka</string>
+  <string name="action_conceal_number">Skrij številko</string>
   <string name="share_button_content_description">Odpri gumb za skupno rabo</string>
   <string name="open_menu_icon_content_description">Gumb za odpiranje menija</string>
   <string name="mfa_limit_reached">Dosežena je omejitev za 2FA</string>
@@ -73,7 +73,7 @@
   <string name="credit_card_verifcation_number_copied_to_clipboard">Varnostna koda je bila kopirana v odložišče</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Premakni v smetnjak</string>
-  <string name="migrate_item_detail_bottom_sheet">Premakni se v drug trezor</string>
+  <string name="migrate_item_detail_bottom_sheet">Premakni v drug trezor</string>
   <!-- More info -->
   <string name="date_today">Danes %s</string>
   <string name="date_yesterday">Včeraj %s</string>
@@ -97,7 +97,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nimate dovolj dovoljenj za skupno rabo tega trezorja.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Dosegli ste omejitev skupne rabe trezorja. Če želite deliti več trezorjev, nadgradite svoj trenutni paket.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Tega predmeta ne morete urejati, ker je v smetnjaku. Pred urejanjem ga premaknite iz smetnjaka.</string>
-  <string name="password_score_vulnerable">Slab</string>
+  <string name="password_score_vulnerable">Ranljivo</string>
   <string name="password_score_weak">Šibko</string>
   <string name="password_score_strong">Močno</string>
   <string name="passkey_detail_bottomsheet_title">Identifikacijski ključ</string>

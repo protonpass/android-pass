@@ -20,6 +20,5 @@ package proton.android.pass.domain.simplelogin
 
 data class SimpleLoginAlias(
     val id: String,
-    val email: String,
-    val note: String
+    val email: String
 )

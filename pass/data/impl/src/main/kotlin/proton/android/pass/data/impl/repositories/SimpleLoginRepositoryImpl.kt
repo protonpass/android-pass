@@ -233,8 +233,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         aliases = aliases.map { alias ->
             SimpleLoginAlias(
                 id = alias.pendingAliasID,
-                email = alias.aliasEmail,
-                note = alias.aliasNote
+                email = alias.aliasEmail
             )
         },
         total = total,

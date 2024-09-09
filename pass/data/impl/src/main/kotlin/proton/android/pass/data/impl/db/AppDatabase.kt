@@ -29,6 +29,10 @@ import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
+import me.proton.core.auth.data.db.AuthConverters
+import me.proton.core.auth.data.db.AuthDatabase
+import me.proton.core.auth.data.entity.AuthDeviceEntity
+import me.proton.core.auth.data.entity.DeviceSecretEntity
 import me.proton.core.challenge.data.db.ChallengeConverters
 import me.proton.core.challenge.data.db.ChallengeDatabase
 import me.proton.core.challenge.data.entity.ChallengeFrameEntity
@@ -128,6 +132,8 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
         PushEntity::class,
         TelemetryEventEntity::class,
         RecoveryFileEntity::class,
+        DeviceSecretEntity::class,
+        AuthDeviceEntity::class,
         // Pass
         ItemEntity::class,
         ShareEntity::class,
@@ -192,7 +198,8 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
     EventManagerConverters::class,
     ChallengeConverters::class,
     NotificationConverters::class,
-    PushConverters::class
+    PushConverters::class,
+    AuthConverters::class
 )
 abstract class AppDatabase :
     BaseDatabase(),
@@ -214,10 +221,11 @@ abstract class AppDatabase :
     NotificationDatabase,
     PushDatabase,
     TelemetryDatabase,
-    DeviceRecoveryDatabase {
+    DeviceRecoveryDatabase,
+    AuthDatabase {
 
     companion object {
-        const val VERSION = 54
+        const val VERSION = 55
 
         const val DB_NAME = "db-passkey"
 
@@ -242,7 +250,8 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_44_45,
             AppDatabaseMigrations.MIGRATION_46_47,
             AppDatabaseMigrations.MIGRATION_48_49,
-            AppDatabaseMigrations.MIGRATION_51_52
+            AppDatabaseMigrations.MIGRATION_51_52,
+            AppDatabaseMigrations.MIGRATION_54_55
         )
 
         fun buildDatabase(context: Context): AppDatabase = databaseBuilder<AppDatabase>(context, DB_NAME)

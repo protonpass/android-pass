@@ -16,24 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.upsell.ui
+package proton.android.pass.features.report.navigation
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import proton.android.pass.features.upsell.navigation.ReportNavDestination
-import proton.android.pass.features.upsell.presentation.ReportState
-import proton.android.pass.features.upsell.presentation.ReportViewModel
+sealed interface ReportNavDestination {
 
-@Composable
-fun ReportScreen(
-    modifier: Modifier = Modifier,
-    onNavigated: (ReportNavDestination) -> Unit,
-    viewModel: ReportViewModel = hiltViewModel()
-) {
-    ReportContent(
-        modifier = modifier,
-        onNavigated = onNavigated,
-        state = ReportState(true)
-    )
+    data object Close : ReportNavDestination
 }

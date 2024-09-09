@@ -16,11 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.upsell.navigation
+package proton.android.pass.features.report.navigation
 
-sealed interface ReportNavDestination {
+sealed interface ReportNavContentEvent {
 
-    data object Back : ReportNavDestination
+    data object Close : ReportNavContentEvent
+    data object OpenAutofillSettings : ReportNavContentEvent
 
-    data object Upgrade : ReportNavDestination
 }

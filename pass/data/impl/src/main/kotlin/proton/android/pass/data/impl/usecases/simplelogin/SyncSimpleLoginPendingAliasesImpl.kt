@@ -58,8 +58,8 @@ class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
                         shareKey = shareKey,
                         itemContents = ItemContents.Alias(
                             title = alias.email,
-                            note = alias.note,
-                            aliasEmail = alias.email
+                            aliasEmail = alias.email,
+                            note = ""
                         )
                     ).request
                 }

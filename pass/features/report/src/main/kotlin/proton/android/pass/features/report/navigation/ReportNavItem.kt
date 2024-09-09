@@ -16,15 +16,8 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.upsell.navigation
+package proton.android.pass.features.report.navigation
 
-import androidx.navigation.NavGraphBuilder
-import proton.android.pass.features.upsell.ui.ReportScreen
-import proton.android.pass.navigation.api.composable
+import proton.android.pass.navigation.api.NavItem
 
-fun NavGraphBuilder.reportNavGraph(onNavigated: (ReportNavDestination) -> Unit) {
-
-    composable(navItem = ReportNavItem) {
-        ReportScreen(onNavigated = onNavigated)
-    }
-}
+data object ReportNavItem : NavItem(baseRoute = "report/screen")

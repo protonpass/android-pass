@@ -72,7 +72,6 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.plan.presentation.onUpgradeResult
-import me.proton.core.report.presentation.ReportOrchestrator
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.biometry.ResetAuthPreferences
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
@@ -91,7 +90,6 @@ class LauncherViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val authOrchestrator: AuthOrchestrator,
     private val plansOrchestrator: PlansOrchestrator,
-    private val reportOrchestrator: ReportOrchestrator,
     private val userSettingsOrchestrator: UserSettingsOrchestrator,
     private val userPlanWorkerLauncher: UserPlanWorkerLauncher,
     private val refreshPlan: RefreshPlan,
@@ -122,7 +120,6 @@ class LauncherViewModel @Inject constructor(
     internal fun register(context: ComponentActivity) {
         authOrchestrator.register(context as ActivityResultCaller)
         plansOrchestrator.register(context)
-        reportOrchestrator.register(context)
         userSettingsOrchestrator.register(context)
 
         authOrchestrator.onAddAccountResult { result ->
@@ -221,10 +218,6 @@ class LauncherViewModel @Inject constructor(
                 }
                 .startUpgradeWorkflow(userId)
         }
-    }
-
-    internal fun report() = viewModelScope.launch {
-        reportOrchestrator.startBugReport()
     }
 
     internal fun passwordManagement() = viewModelScope.launch {

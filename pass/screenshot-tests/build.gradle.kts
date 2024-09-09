@@ -71,6 +71,7 @@ dependencies {
     implementation(projects.pass.features.secureLinks)
     implementation(projects.pass.features.securityCenter)
     implementation(projects.pass.features.slSync)
+    implementation(projects.pass.features.report)
     implementation(projects.pass.features.upsell)
 
     testImplementation(libs.androidx.compose.ui)

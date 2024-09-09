@@ -27,7 +27,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Switch
@@ -109,17 +111,26 @@ fun AliasAddressRow(
                     textDecoration = TextDecoration.Underline
                 )
             }
+
             if (isAliasSyncEnabled) {
-                Switch(
-                    modifier = Modifier.findPositionAndSizeForTooltip(position, size),
-                    checked = isAliasEnabled,
-                    enabled = !isAliasStateToggling,
-                    onCheckedChange = onToggleAliasState,
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = PassTheme.colors.aliasInteractionNorm,
-                        checkedTrackColor = PassTheme.colors.aliasInteractionNormMajor1
+                if (isAliasStateToggling) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .padding(horizontal = Spacing.small)
+                            .size(size = 32.dp),
+                        color = PassTheme.colors.aliasInteractionNorm
                     )
-                )
+                } else {
+                    Switch(
+                        modifier = Modifier.findPositionAndSizeForTooltip(position, size),
+                        checked = isAliasEnabled,
+                        onCheckedChange = onToggleAliasState,
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = PassTheme.colors.aliasInteractionNorm,
+                            checkedTrackColor = PassTheme.colors.aliasInteractionNormMajor1
+                        )
+                    )
+                }
             }
         }
 

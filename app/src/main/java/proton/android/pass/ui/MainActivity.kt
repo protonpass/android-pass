@@ -121,7 +121,6 @@ class MainActivity : FragmentActivity() {
 
                             is AppNavigation.SignIn -> launcherViewModel.signIn(it.userId)
                             is AppNavigation.ForceSignOut -> launcherViewModel.disable(it.userId)
-                            is AppNavigation.Report -> launcherViewModel.report()
                             is AppNavigation.Subscription -> launcherViewModel.subscription()
                             is AppNavigation.Upgrade -> launcherViewModel.upgrade()
                             is AppNavigation.Restart -> restartApp()

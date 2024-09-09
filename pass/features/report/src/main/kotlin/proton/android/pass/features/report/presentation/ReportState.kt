@@ -16,14 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.upsell.presentation
+package proton.android.pass.features.report.presentation
 
-import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import proton.android.pass.commonui.api.SavedStateHandleProvider
-import javax.inject.Inject
+import androidx.compose.runtime.Stable
 
-@HiltViewModel
-class ReportViewModel @Inject constructor(
-    savedStateHandleProvider: SavedStateHandleProvider
-) : ViewModel()
+@Stable
+internal data class ReportState(private val test: Boolean)

@@ -16,9 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.upsell.presentation
+package proton.android.pass.features.report.ui
 
-import androidx.compose.runtime.Stable
-
-@Stable
-internal data class ReportState(private val test: Boolean)
+enum class ReportReason {
+    Autofill,
+    Sharing,
+    Sync,
+    Passkeys,
+    Other
+}

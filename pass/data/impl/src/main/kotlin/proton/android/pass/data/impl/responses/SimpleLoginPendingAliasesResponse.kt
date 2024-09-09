@@ -42,7 +42,5 @@ data class SimpleLoginAliasData(
     @SerialName("PendingAliasID")
     val pendingAliasID: String,
     @SerialName("AliasEmail")
-    val aliasEmail: String,
-    @SerialName("AliasNote")
-    val aliasNote: String
+    val aliasEmail: String
 )

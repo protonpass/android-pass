@@ -178,8 +178,10 @@ import proton.android.pass.features.sl.sync.details.navigation.SimpleLoginSyncDe
 import proton.android.pass.features.sl.sync.settings.navigation.SimpleLoginSyncSettingsNavItem
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 import proton.android.pass.features.sl.sync.shared.navigation.simpleLoginSyncNavGraph
+import proton.android.pass.features.upsell.navigation.ReportNavDestination
 import proton.android.pass.features.upsell.navigation.UpsellNavDestination
 import proton.android.pass.features.upsell.navigation.UpsellNavItem
+import proton.android.pass.features.upsell.navigation.reportNavGraph
 import proton.android.pass.features.upsell.navigation.upsellNavGraph
 import proton.android.pass.featuresearchoptions.impl.FilterBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsBottomsheet
@@ -1931,6 +1933,15 @@ fun NavGraphBuilder.appGraph(
                     destination = SimpleLoginSyncSettingsNavItem,
                     route = SimpleLoginSyncSettingsNavItem.createNavRoute(destination.shareId)
                 )
+            }
+        }
+    )
+
+    reportNavGraph(
+        onNavigated = { destination ->
+            when (destination) {
+                ReportNavDestination.Back -> appNavigator.navigateBack()
+                ReportNavDestination.Upgrade -> {}
             }
         }
     )

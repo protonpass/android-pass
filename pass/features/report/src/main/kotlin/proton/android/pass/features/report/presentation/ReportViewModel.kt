@@ -119,6 +119,10 @@ class ReportViewModel @Inject constructor(
         reportReasonFlow.update { value.some() }
     }
 
+    fun clearReason() {
+        reportReasonFlow.update { None }
+    }
+
     companion object {
         private const val TAG = "ReportViewModel"
     }

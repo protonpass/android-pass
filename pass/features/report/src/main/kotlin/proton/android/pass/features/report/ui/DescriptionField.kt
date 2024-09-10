@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
@@ -32,6 +33,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
+import proton.android.pass.features.report.R
 import proton.android.pass.features.report.presentation.DescriptionError
 
 @Composable
@@ -54,11 +56,10 @@ fun DescriptionField(
         singleLine = false,
         textStyle = ProtonTheme.typography.defaultNorm(enabled),
         editable = enabled,
-        label = { ProtonTextFieldLabel(text = "What's the issue") },
+        label = { ProtonTextFieldLabel(text = stringResource(R.string.description_field_label)) },
         placeholder = {
             ProtonTextFieldPlaceHolder(
-                text = "Describe the issue the more detailed possible," +
-                    " if it's there any error let us know what it says.",
+                text = stringResource(R.string.description_field_hint),
                 maxLines = Int.MAX_VALUE
             )
         }

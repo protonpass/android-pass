@@ -30,10 +30,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import me.proton.core.presentation.compose.R
+import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
+import proton.android.pass.features.report.R
 import proton.android.pass.features.report.navigation.ReportNavContentEvent
+import me.proton.core.presentation.compose.R as CoreR
 
 @Composable
 internal fun ImageAttach(
@@ -49,8 +51,8 @@ internal fun ImageAttach(
     Column(modifier = modifier) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
             TransparentTextButton(
-                text = "Attach image",
-                prefixIcon = R.drawable.ic_proton_plus,
+                text = stringResource(R.string.attach_image_button),
+                prefixIcon = CoreR.drawable.ic_proton_plus,
                 onClick = {
                     runCatching {
                         pickMedia.launch(PickVisualMediaRequest(ImageOnly))

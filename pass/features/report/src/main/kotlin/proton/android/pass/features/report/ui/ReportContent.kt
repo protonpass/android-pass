@@ -29,22 +29,20 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.CrossBackCircleIconButton
+import proton.android.pass.features.report.R
 import proton.android.pass.features.report.navigation.ReportNavContentEvent
 import proton.android.pass.features.report.presentation.ReportFormData
 import proton.android.pass.features.report.presentation.ReportState
@@ -79,7 +77,7 @@ internal fun ReportContent(
         topBar = {
             ProtonTopAppBar(
                 backgroundColor = PassTheme.colors.itemDetailBackground,
-                title = { Text.Body1Regular("Report an issue") },
+                title = { Text.Body1Regular(stringResource(R.string.report_toolbar_title)) },
                 navigationIcon = {
                     CrossBackCircleIconButton(
                         modifier = Modifier.padding(Spacing.mediumSmall, Spacing.extraSmall),
@@ -137,18 +135,4 @@ fun navigateToTipsPage(scope: CoroutineScope, pagerState: PagerState) {
 @OptIn(ExperimentalFoundationApi::class)
 fun navigateToFormPage(scope: CoroutineScope, pagerState: PagerState) {
     scope.launch { pagerState.scrollToPage(2) }
-}
-
-@Preview
-@Composable
-fun ReportContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
-        Surface {
-            ReportContent(
-                formState = ReportFormData(),
-                state = ReportState.Initial.copy(reportReasonOption = Some(ReportReason.Autofill)),
-                onEvent = {}
-            )
-        }
-    }
 }

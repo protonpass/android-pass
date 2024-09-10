@@ -21,6 +21,7 @@ package proton.android.pass.features.report.ui
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.Spacing
@@ -28,6 +29,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
+import proton.android.pass.features.report.R
 import proton.android.pass.features.report.presentation.EmailError
 
 @Composable
@@ -47,7 +49,7 @@ fun EmailField(
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm(enabled),
         editable = enabled,
-        label = { ProtonTextFieldLabel(text = "Email") },
-        placeholder = { ProtonTextFieldPlaceHolder(text = "email") }
+        label = { ProtonTextFieldLabel(text = stringResource(R.string.email_field_label)) },
+        placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(R.string.email_field_hint)) }
     )
 }

@@ -27,6 +27,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,7 +45,11 @@ import proton.android.pass.composecomponents.impl.text.Text
 
 @Composable
 internal fun ReportCategoriesPage(modifier: Modifier = Modifier, onReasonClicked: (ReportReason) -> Unit) {
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(state = rememberScrollState())
+    ) {
         Text.Headline(
             modifier = Modifier.padding(horizontal = Spacing.medium),
             text = "What is your issue?"
@@ -54,14 +60,14 @@ internal fun ReportCategoriesPage(modifier: Modifier = Modifier, onReasonClicked
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { onReasonClicked(reportReason) }
-                    .padding(horizontal = Spacing.medium, vertical = Spacing.mediumSmall),
+                    .padding(Spacing.medium),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text.Body1Regular(reportReason.name)
                 Icon.Default(R.drawable.ic_chevron_tiny_right)
             }
-            if (index < ReportReason.entries.size - 1) {
+            if (index != ReportReason.entries.lastIndex) {
                 PassDivider(Modifier.padding(horizontal = Spacing.medium))
             }
         }

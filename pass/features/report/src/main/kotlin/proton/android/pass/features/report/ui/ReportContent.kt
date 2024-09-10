@@ -28,46 +28,56 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.CrossBackCircleIconButton
 import proton.android.pass.features.report.navigation.ReportNavContentEvent
+import proton.android.pass.features.report.presentation.ReportFormData
 import proton.android.pass.features.report.presentation.ReportState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun ReportContent(
     modifier: Modifier = Modifier,
-    onEvent: (ReportNavContentEvent) -> Unit,
-    state: ReportState
+    formState: ReportFormData,
+    state: ReportState,
+    onEvent: (ReportNavContentEvent) -> Unit
 ) {
     val pagerState: PagerState = rememberPagerState(initialPage = 0, pageCount = { 3 })
-    var reason: ReportReason? by rememberSaveable { mutableStateOf(null) }
     val scope = rememberCoroutineScope()
     BackHandler { onEvent(ReportNavContentEvent.Close) }
+    LaunchedEffect(state.reportReasonOption) {
+        if (state.reportReasonOption is Some) {
+            when (state.reportReasonOption.value) {
+                ReportReason.Autofill,
+                ReportReason.Sharing,
+                ReportReason.Sync,
+                ReportReason.Passkeys -> navigateToTipsPage(scope, pagerState)
+
+                ReportReason.Other -> navigateToFormPage(scope, pagerState)
+            }
+        }
+    }
     Scaffold(
         modifier = modifier,
         topBar = {
             ProtonTopAppBar(
-                modifier = modifier,
                 backgroundColor = PassTheme.colors.itemDetailBackground,
-                title = {
-                    Text.Body1Regular("Report an issue")
-                },
+                title = { Text.Body1Regular("Report an issue") },
                 navigationIcon = {
                     CrossBackCircleIconButton(
                         modifier = Modifier.padding(Spacing.mediumSmall, Spacing.extraSmall),
@@ -83,42 +93,30 @@ internal fun ReportContent(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues = innerPaddingValues)
-                .verticalScroll(state = rememberScrollState())
         ) {
             Spacer(modifier = Modifier.height(Spacing.medium))
             HorizontalPager(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier,
                 state = pagerState,
                 userScrollEnabled = false
             ) { page ->
                 when (page) {
-                    0 -> ReportCategoriesPage {
-                        reason = it
-                        when (it) {
-                            ReportReason.Autofill,
-                            ReportReason.Sharing,
-                            ReportReason.Sync,
-                            ReportReason.Passkeys -> navigateToTipsPage(scope, pagerState)
+                    0 -> ReportCategoriesPage(
+                        onReasonClicked = { onEvent(ReportNavContentEvent.OnReasonChange(it)) }
+                    )
 
-                            ReportReason.Other -> navigateToFormPage(scope, pagerState)
-                        }
-                    }
+                    1 -> ReportTipsPage(
+                        reportReasonOption = state.reportReasonOption,
+                        onEvent = onEvent,
+                        onReportIssue = { navigateToFormPage(scope, pagerState) },
+                        onCancel = { navigateToReasonsPage(scope, pagerState) }
+                    )
 
-                    1 -> reason?.let {
-                        ReportTipsPage(
-                            reportReason = it,
-                            onEvent = onEvent,
-                            onReportIssue = { navigateToFormPage(scope, pagerState) },
-                            onCancel = { navigateToReasonsPage(scope, pagerState) }
-                        )
-                    } ?: run { navigateToReasonsPage(scope, pagerState) }
-
-                    2 -> reason?.let {
-                        ReportFormPage(
-                            reportReason = it,
-                            onEvent = onEvent
-                        )
-                    } ?: run { navigateToReasonsPage(scope, pagerState) }
+                    2 -> ReportFormPage(
+                        state = state,
+                        formState = formState,
+                        onEvent = onEvent
+                    )
                 }
             }
         }
@@ -138,4 +136,18 @@ fun navigateToTipsPage(scope: CoroutineScope, pagerState: PagerState) {
 @OptIn(ExperimentalFoundationApi::class)
 fun navigateToFormPage(scope: CoroutineScope, pagerState: PagerState) {
     scope.launch { pagerState.scrollToPage(2) }
+}
+
+@Preview
+@Composable
+fun ReportContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            ReportContent(
+                formState = ReportFormData(),
+                state = ReportState.Initial.copy(reportReasonOption = Some(ReportReason.Autofill)),
+                onEvent = {}
+            )
+        }
+    }
 }

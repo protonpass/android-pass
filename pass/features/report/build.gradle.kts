@@ -71,6 +71,7 @@ dependencies {
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.composeComponents.impl)
+    implementation(projects.pass.data.api)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.log.api)
 
@@ -79,6 +80,8 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.core.accountManager.domain)
+    implementation(libs.core.user.domain)
     implementation(libs.core.report.domain)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)

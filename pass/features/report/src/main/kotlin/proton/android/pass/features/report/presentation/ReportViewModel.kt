@@ -25,22 +25,28 @@ import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.report.domain.entity.BugReport
-import me.proton.core.report.domain.entity.BugReportValidationError
-import me.proton.core.report.domain.entity.validate
-import me.proton.core.report.domain.usecase.SendBugReport
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.user.domain.UserManager
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.onSuccess
+import proton.android.pass.common.api.runCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.report.Report
+import proton.android.pass.data.api.usecases.report.SendReport
+import proton.android.pass.features.report.presentation.ReportFormData.Companion.validate
 import proton.android.pass.features.report.ui.ReportReason
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -48,16 +54,31 @@ import javax.inject.Inject
 @HiltViewModel
 class ReportViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
+    accountManager: AccountManager,
+    userManager: UserManager,
     private val autofillManager: AutofillManager,
-    private val sendBugReport: SendBugReport
+    private val sendReport: SendReport
 ) : ViewModel() {
+
+    init {
+        viewModelScope.launch {
+            val userId = accountManager.getPrimaryUserId().firstOrNull()
+            val user = userId?.let { userManager.getUser(it) }
+            val email = user?.email ?: "unknown"
+            val username = user?.name ?: userId?.id ?: "unknown"
+            formState = formState.copy(
+                email = email,
+                username = username
+            )
+        }
+    }
 
     @OptIn(SavedStateHandleSaveableApi::class)
     var formState by savedStateHandleProvider.get()
         .saveable { mutableStateOf(ReportFormData()) }
 
     private val reportReasonFlow: MutableStateFlow<Option<ReportReason>> = MutableStateFlow(None)
-    private val isLoadingStateFlow = MutableStateFlow(IsLoadingState.NotLoading)
+    private val isLoadingStateFlow: MutableStateFlow<IsLoadingState> = MutableStateFlow(IsLoadingState.NotLoading)
     private val formValidationErrorsStateFlow =
         MutableStateFlow(persistentListOf<ReportValidationError>())
 
@@ -78,19 +99,28 @@ class ReportViewModel @Inject constructor(
 
     fun trySendingBugReport() {
         viewModelScope.launch {
-            val bugReport = BugReport(
-                title = formState.title,
-                description = formState.description,
-                email = formState.email,
-                username = formState.username,
-                shouldAttachLog = formState.attachLog
-            )
-            val formErrors: List<BugReportValidationError> = bugReport.validate()
-
-            if (formErrors.isEmpty()) {
-                sendBugReport(bugReport)
+            val errors: List<ReportValidationError> = formState.validate()
+            formValidationErrorsStateFlow.update { errors.toPersistentList() }
+            if (errors.isEmpty()) {
+                val report = Report(
+                    title = "Report from Pass Android: ${reportReasonFlow.value}",
+                    description = formState.description,
+                    email = formState.email,
+                    username = formState.username,
+                    shouldAttachLog = formState.attachLog
+                )
+                isLoadingStateFlow.update { IsLoadingState.Loading }
+                runCatching { sendReport(report) }
+                    .onSuccess {
+                        PassLogger.i(TAG, "Report sent successfully")
+                    }
+                    .onError {
+                        PassLogger.w(TAG, "Error sending report")
+                        PassLogger.w(TAG, it)
+                    }
+                isLoadingStateFlow.update { IsLoadingState.NotLoading }
             } else {
-                PassLogger.i(TAG, "Form errors: $formErrors")
+                PassLogger.i(TAG, "Form errors: $errors")
             }
         }
     }

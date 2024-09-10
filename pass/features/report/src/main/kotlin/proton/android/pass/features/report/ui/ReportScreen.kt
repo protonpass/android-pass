@@ -19,11 +19,12 @@
 package proton.android.pass.features.report.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.report.navigation.ReportNavContentEvent
 import proton.android.pass.features.report.navigation.ReportNavDestination
-import proton.android.pass.features.report.presentation.ReportState
 import proton.android.pass.features.report.presentation.ReportViewModel
 
 @Composable
@@ -32,6 +33,7 @@ fun ReportScreen(
     onNavigated: (ReportNavDestination) -> Unit,
     viewModel: ReportViewModel = hiltViewModel()
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
     ReportContent(
         modifier = modifier,
         onEvent = { event ->
@@ -39,8 +41,13 @@ fun ReportScreen(
                 ReportNavContentEvent.Close -> onNavigated(ReportNavDestination.Close)
                 ReportNavContentEvent.OpenAutofillSettings -> viewModel.openAutofillSettings()
                 ReportNavContentEvent.SubmitReport -> viewModel.trySendingBugReport()
+                is ReportNavContentEvent.OnDescriptionChange -> viewModel.onDescriptionChange(event.value)
+                is ReportNavContentEvent.OnEmailChange -> viewModel.onEmailChange(event.value)
+                is ReportNavContentEvent.OnSendLogsChange -> viewModel.onSendLogsChange(event.value)
+                is ReportNavContentEvent.OnReasonChange -> viewModel.onReasonChange(event.value)
             }
         },
-        state = ReportState(true)
+        formState = viewModel.formState,
+        state = state
     )
 }

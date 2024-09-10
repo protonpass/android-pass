@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.report.presentation
 
+import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -66,10 +67,7 @@ class ReportViewModel @Inject constructor(
             val user = userId?.let { userManager.getUser(it) }
             val email = user?.email ?: "unknown"
             val username = user?.name ?: userId?.id ?: "unknown"
-            formState = formState.copy(
-                email = email,
-                username = username
-            )
+            formState = ReportFormData(email = email, username = username)
         }
     }
 
@@ -151,6 +149,18 @@ class ReportViewModel @Inject constructor(
 
     fun clearReason() {
         reportReasonFlow.update { None }
+    }
+
+    fun onImageSelected(value: Uri) {
+        formState = formState.copy(
+            extraFiles = formState.extraFiles + value
+        )
+    }
+
+    fun onImageRemoved(value: Uri) {
+        formState = formState.copy(
+            extraFiles = formState.extraFiles - value
+        )
     }
 
     companion object {

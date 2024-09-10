@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.report.navigation
 
+import android.net.Uri
 import proton.android.pass.features.report.ui.ReportReason
 
 sealed interface ReportNavContentEvent {
@@ -38,4 +39,10 @@ sealed interface ReportNavContentEvent {
 
     @JvmInline
     value class OnSendLogsChange(val value: Boolean) : ReportNavContentEvent
+
+    @JvmInline
+    value class OnImageSelected(val value: Uri) : ReportNavContentEvent
+
+    @JvmInline
+    value class OnImageRemoved(val value: Uri) : ReportNavContentEvent
 }

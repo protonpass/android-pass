@@ -8,6 +8,7 @@ dependencies {
     implementation(libs.core.account.domain)
     implementation(libs.core.cryptoCommon)
     implementation(libs.core.domain)
+    implementation(libs.core.report.domain)
     implementation(libs.core.user.domain)
     implementation(libs.core.userSettings.domain)
 

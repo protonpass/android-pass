@@ -25,6 +25,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.log.api.LogFile
 import proton.android.pass.log.api.ShareLogs
 import java.io.File
 

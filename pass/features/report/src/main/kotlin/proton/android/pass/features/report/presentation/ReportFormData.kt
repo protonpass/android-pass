@@ -18,13 +18,10 @@
 
 package proton.android.pass.features.report.presentation
 
-import me.proton.core.report.domain.entity.BugReportExtra
-
 data class ReportFormData(
-    val subject: String = "",
+    val title: String = "",
     val description: String = "",
     val email: String = "",
     val username: String = "",
-    val attachLog: Boolean = false,
-    val extras: List<BugReportExtra> = emptyList()
+    val attachLog: Boolean = true
 )

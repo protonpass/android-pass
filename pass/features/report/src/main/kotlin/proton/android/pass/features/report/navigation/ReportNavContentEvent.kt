@@ -18,10 +18,23 @@
 
 package proton.android.pass.features.report.navigation
 
+import proton.android.pass.features.report.ui.ReportReason
+
 sealed interface ReportNavContentEvent {
 
     data object Close : ReportNavContentEvent
     data object OpenAutofillSettings : ReportNavContentEvent
     data object SubmitReport : ReportNavContentEvent
 
+    @JvmInline
+    value class OnReasonChange(val value: ReportReason) : ReportNavContentEvent
+
+    @JvmInline
+    value class OnEmailChange(val value: String) : ReportNavContentEvent
+
+    @JvmInline
+    value class OnDescriptionChange(val value: String) : ReportNavContentEvent
+
+    @JvmInline
+    value class OnSendLogsChange(val value: Boolean) : ReportNavContentEvent
 }

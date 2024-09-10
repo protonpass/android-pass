@@ -19,6 +19,42 @@
 package proton.android.pass.features.report.presentation
 
 import androidx.compose.runtime.Stable
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.features.report.ui.ReportReason
 
 @Stable
-internal data class ReportState(private val test: Boolean)
+internal data class ReportState(
+    internal val reportReasonOption: Option<ReportReason>,
+    private val isLoadingState: IsLoadingState,
+    private val formValidationErrors: ImmutableList<ReportValidationError>
+) {
+    val isLoading: Boolean
+        get() = isLoadingState is IsLoadingState.Loading
+    val emailErrors: List<EmailError>
+        get() = formValidationErrors.filterIsInstance<EmailError>()
+    val descriptionErrors: List<DescriptionError>
+        get() = formValidationErrors.filterIsInstance<DescriptionError>()
+
+    companion object {
+        val Initial = ReportState(
+            reportReasonOption = None,
+            isLoadingState = IsLoadingState.NotLoading,
+            formValidationErrors = persistentListOf()
+        )
+    }
+}
+
+sealed interface ReportValidationError
+
+interface EmailError : ReportValidationError
+interface DescriptionError : ReportValidationError
+
+object EmailBlank : EmailError
+object EmailInvalid : EmailError
+object DescriptionBlank : DescriptionError
+object DescriptionTooShort : DescriptionError
+object DescriptionTooLong : DescriptionError

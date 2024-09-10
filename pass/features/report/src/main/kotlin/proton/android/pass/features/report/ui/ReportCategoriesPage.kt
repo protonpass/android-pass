@@ -33,15 +33,17 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.features.report.R
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun ReportCategoriesPage(modifier: Modifier = Modifier, onReasonClicked: (ReportReason) -> Unit) {
@@ -52,7 +54,7 @@ internal fun ReportCategoriesPage(modifier: Modifier = Modifier, onReasonClicked
     ) {
         Text.Headline(
             modifier = Modifier.padding(horizontal = Spacing.medium),
-            text = "What is your issue?"
+            text = stringResource(R.string.categories_title)
         )
         Spacer(Modifier.height(Spacing.medium))
         ReportReason.entries.forEachIndexed { index, reportReason ->
@@ -65,7 +67,7 @@ internal fun ReportCategoriesPage(modifier: Modifier = Modifier, onReasonClicked
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text.Body1Regular(reportReason.name)
-                Icon.Default(R.drawable.ic_chevron_tiny_right)
+                Icon.Default(CompR.drawable.ic_chevron_tiny_right)
             }
             if (index != ReportReason.entries.lastIndex) {
                 PassDivider(Modifier.padding(horizontal = Spacing.medium))

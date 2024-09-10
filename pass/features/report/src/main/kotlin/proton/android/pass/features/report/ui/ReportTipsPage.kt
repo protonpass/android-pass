@@ -35,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -46,6 +47,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.Button
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.features.report.R
 import proton.android.pass.features.report.navigation.ReportNavContentEvent
 
 @Composable
@@ -63,20 +65,20 @@ internal fun ReportTipsPage(
         val reportReason = reportReasonOption.value() ?: return
 
         val reportReasonTitle = when (reportReason) {
-            ReportReason.Autofill -> "Autofill"
-            ReportReason.Sharing -> "Sharing"
-            ReportReason.Sync -> "Sync"
-            ReportReason.Passkeys -> "Passkeys"
-            ReportReason.Other -> "Other"
+            ReportReason.Autofill -> stringResource(R.string.report_reason_autofill)
+            ReportReason.Sharing -> stringResource(R.string.report_reason_sharing)
+            ReportReason.Sync -> stringResource(R.string.report_reason_sync)
+            ReportReason.Passkeys -> stringResource(R.string.report_reason_passkeys)
+            ReportReason.Other -> stringResource(R.string.report_reason_other)
         }
         Text.Headline(
             modifier = Modifier.padding(horizontal = Spacing.medium),
-            text = "Quick fixes for $reportReasonTitle"
+            text = stringResource(R.string.tips_title, reportReasonTitle)
         )
         Spacer(Modifier.height(Spacing.small))
         Text.Body1Regular(
             modifier = Modifier.padding(horizontal = Spacing.medium),
-            text = "These tips could help you solve your issue faster."
+            text = stringResource(R.string.tips_subtitle)
         )
         Spacer(Modifier.height(Spacing.medium))
 
@@ -84,24 +86,24 @@ internal fun ReportTipsPage(
         when (reportReason) {
             ReportReason.Autofill -> {
                 TipRow(
-                    text = "Try disabling and enabling the autofill service. If that doesn't work try another browser.",
+                    text = stringResource(R.string.autofill_tip_restart),
                     onClick = { onEvent(ReportNavContentEvent.OpenAutofillSettings) }
                 )
             }
 
             ReportReason.Sharing -> {
                 TipRow(
-                    text = "Having issues with vault sharing? Check our guide.",
+                    text = stringResource(R.string.sharing_tip_vault_sharing_guide),
                     onClick = { openWebsite(context, PASS_VAULT_SHARE) }
                 )
                 TipRow(
-                    text = "Having issues with secure links? Check our guide.",
+                    text = stringResource(R.string.sharing_tip_secure_links_guide),
                     onClick = { openWebsite(context, PASS_SECURE_LINK) }
                 )
             }
 
             ReportReason.Sync -> {
-                TipRow(text = "Is your screen empty? try doing a force sync.")
+                TipRow(text = stringResource(R.string.sync_tip_force_refresh))
             }
 
             ReportReason.Passkeys -> {
@@ -113,7 +115,7 @@ internal fun ReportTipsPage(
         }
         Spacer(Modifier.weight(1f))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Text.Body1Regular("Didn't work?", color = PassTheme.colors.textWeak)
+            Text.Body1Regular(stringResource(R.string.hint_tips_screen), color = PassTheme.colors.textWeak)
         }
         Spacer(Modifier.height(Spacing.small))
         Button.Circular(
@@ -125,7 +127,7 @@ internal fun ReportTipsPage(
             elevation = ButtonDefaults.elevation(0.dp),
             onClick = onReportIssue
         ) {
-            Text.Body1Regular("Contact us")
+            Text.Body1Regular(stringResource(R.string.contact_us_button))
         }
         Spacer(Modifier.height(Spacing.small))
         Button.Circular(
@@ -137,7 +139,7 @@ internal fun ReportTipsPage(
             elevation = ButtonDefaults.elevation(0.dp),
             onClick = { onEvent(ReportNavContentEvent.CancelTips) }
         ) {
-            Text.Body1Regular("Cancel")
+            Text.Body1Regular(stringResource(R.string.cancel_tips_button))
         }
     }
 }

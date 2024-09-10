@@ -22,5 +22,6 @@ sealed interface ReportNavContentEvent {
 
     data object Close : ReportNavContentEvent
     data object OpenAutofillSettings : ReportNavContentEvent
+    data object SubmitReport : ReportNavContentEvent
 
 }

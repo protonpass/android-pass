@@ -49,6 +49,7 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.util.kotlin.CoreLogger
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.log.api.LogFile
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.tracing.impl.SentryInitializer
 import proton.android.pass.tracing.impl.initSentryLogger

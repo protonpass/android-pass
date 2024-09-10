@@ -19,9 +19,24 @@
 package proton.android.pass.features.report.presentation
 
 data class ReportFormData(
-    val title: String = "",
     val description: String = "",
     val email: String = "",
     val username: String = "",
     val attachLog: Boolean = true
-)
+) {
+
+
+    companion object {
+        private const val DESCRIPTION_MIN_LENGTH: Int = 10
+        private const val DESCRIPTION_MAX_LENGTH: Int = 1000
+
+        fun ReportFormData.validate(): List<ReportValidationError> = buildList {
+            when {
+                email.isBlank() -> add(EmailBlank)
+                description.isBlank() -> add(DescriptionBlank)
+                description.length < DESCRIPTION_MIN_LENGTH -> add(DescriptionTooShort)
+                description.length > DESCRIPTION_MAX_LENGTH -> add(DescriptionTooLong)
+            }
+        }
+    }
+}

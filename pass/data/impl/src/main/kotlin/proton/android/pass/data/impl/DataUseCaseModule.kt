@@ -160,6 +160,7 @@ import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.api.usecases.passkeys.StorePasskey
+import proton.android.pass.data.api.usecases.report.SendReport
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
@@ -330,6 +331,7 @@ import proton.android.pass.data.impl.usecases.passkeys.GetPasskeyByIdImpl
 import proton.android.pass.data.impl.usecases.passkeys.GetPasskeysForDomainImpl
 import proton.android.pass.data.impl.usecases.passkeys.ObserveItemsWithPasskeysImpl
 import proton.android.pass.data.impl.usecases.passkeys.StorePasskeyImpl
+import proton.android.pass.data.impl.usecases.report.SendReportImpl
 import proton.android.pass.data.impl.usecases.searchentry.AddSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteAllSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteSearchEntryImpl
@@ -897,5 +899,8 @@ abstract class DataUseCaseModule {
     abstract fun bindSyncSimpleLoginPendingAliases(
         impl: SyncSimpleLoginPendingAliasesImpl
     ): SyncSimpleLoginPendingAliases
+
+    @[Binds Singleton]
+    abstract fun bindSendReport(impl: SendReportImpl): SendReport
 
 }

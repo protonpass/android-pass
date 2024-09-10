@@ -70,6 +70,8 @@ internal fun ReportContent(
 
                 ReportReason.Other -> navigateToFormPage(scope, pagerState)
             }
+        } else {
+            navigateToReasonsPage(scope, pagerState)
         }
     }
     Scaffold(
@@ -108,8 +110,7 @@ internal fun ReportContent(
                     1 -> ReportTipsPage(
                         reportReasonOption = state.reportReasonOption,
                         onEvent = onEvent,
-                        onReportIssue = { navigateToFormPage(scope, pagerState) },
-                        onCancel = { navigateToReasonsPage(scope, pagerState) }
+                        onReportIssue = { navigateToFormPage(scope, pagerState) }
                     )
 
                     2 -> ReportFormPage(

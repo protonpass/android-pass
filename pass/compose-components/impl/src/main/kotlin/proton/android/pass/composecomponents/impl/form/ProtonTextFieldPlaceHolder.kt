@@ -30,13 +30,14 @@ import me.proton.core.compose.theme.defaultWeak
 fun ProtonTextFieldPlaceHolder(
     modifier: Modifier = Modifier,
     text: String,
+    maxLines: Int = 1,
     textStyle: TextStyle = ProtonTheme.typography.defaultWeak
 ) {
     Text(
         modifier = modifier,
         text = text,
         style = textStyle,
-        maxLines = 1,
+        maxLines = maxLines,
         overflow = TextOverflow.Ellipsis
     )
 }

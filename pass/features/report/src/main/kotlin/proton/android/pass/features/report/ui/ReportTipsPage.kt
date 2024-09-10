@@ -53,8 +53,7 @@ internal fun ReportTipsPage(
     modifier: Modifier = Modifier,
     reportReasonOption: Option<ReportReason>,
     onEvent: (ReportNavContentEvent) -> Unit,
-    onReportIssue: () -> Unit,
-    onCancel: () -> Unit
+    onReportIssue: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -136,7 +135,7 @@ internal fun ReportTipsPage(
             color = Color.Transparent,
             contentPadding = PaddingValues(Spacing.mediumSmall),
             elevation = ButtonDefaults.elevation(0.dp),
-            onClick = onCancel
+            onClick = { onEvent(ReportNavContentEvent.CancelTips) }
         ) {
             Text.Body1Regular("Cancel")
         }
@@ -155,8 +154,7 @@ fun ReportTipsPagePreview(@PreviewParameter(ThemePreviewProvider::class) isDark:
             ReportTipsPage(
                 reportReasonOption = ReportReason.Autofill.some(),
                 onEvent = {},
-                onReportIssue = {},
-                onCancel = {}
+                onReportIssue = {}
             )
         }
     }

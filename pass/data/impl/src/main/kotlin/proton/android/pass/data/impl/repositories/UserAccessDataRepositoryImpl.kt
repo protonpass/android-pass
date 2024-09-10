@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
@@ -45,10 +46,20 @@ class UserAccessDataRepositoryImpl @Inject constructor(
     }
 
     override suspend fun refresh(userId: UserId) {
-        remoteUserAccessDataDataSource.getUserAccessData(userId)
-            .also { response ->
-                localUserAccessDataDataSource.store(response.toEntity(userId))
-            }
+        val userAccessDataResponse = remoteUserAccessDataDataSource.getUserAccessData(userId)
+        val userAccessData = observe(userId).first()
+
+        when {
+            userAccessData == null -> userAccessDataResponse
+            userAccessData.isSimpleLoginSyncEnabled -> userAccessDataResponse
+            else -> userAccessDataResponse.copy(
+                accessResponse = userAccessDataResponse.accessResponse.copy(
+                    userData = userAccessDataResponse.accessResponse.userData.copy(
+                        pendingAliasToSync = userAccessData.simpleLoginSyncPendingAliasCount
+                    )
+                )
+            )
+        }.also { response -> localUserAccessDataDataSource.store(response.toEntity(userId)) }
     }
 
     private fun UserAccessResponse.toEntity(userId: UserId) = UserAccessDataEntity(

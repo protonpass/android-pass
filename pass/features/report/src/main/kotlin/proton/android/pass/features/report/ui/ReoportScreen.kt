@@ -38,6 +38,7 @@ fun ReportScreen(
             when (event) {
                 ReportNavContentEvent.Close -> onNavigated(ReportNavDestination.Close)
                 ReportNavContentEvent.OpenAutofillSettings -> viewModel.openAutofillSettings()
+                ReportNavContentEvent.SubmitReport -> viewModel.trySendingBugReport()
             }
         },
         state = ReportState(true)

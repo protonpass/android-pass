@@ -53,6 +53,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.tracing.impl.SentryInitializer
 import proton.android.pass.tracing.impl.initSentryLogger
 import timber.log.Timber
+import java.io.File
 import java.text.DecimalFormat
 
 class LoggerInitializer : Initializer<Unit> {
@@ -66,7 +67,7 @@ class LoggerInitializer : Initializer<Unit> {
         if (entryPoint.appConfig().isDebug) {
             Timber.plant(Timber.DebugTree())
         }
-        Timber.plant(FileLoggingTree(context))
+        Timber.plant(FileLoggingTree(entryPoint.logFile()))
 
         // Forward Core Logs to Timber, using TimberLogger.
         initSentryLogger(CoreLogger)
@@ -82,6 +83,9 @@ class LoggerInitializer : Initializer<Unit> {
     @InstallIn(SingletonComponent::class)
     interface LoggerInitializerEntryPoint {
         fun appConfig(): AppConfig
+
+        @LogFile
+        fun logFile(): File
     }
 }
 

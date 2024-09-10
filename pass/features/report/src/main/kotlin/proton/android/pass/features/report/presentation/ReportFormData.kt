@@ -18,13 +18,18 @@
 
 package proton.android.pass.features.report.presentation
 
+import android.net.Uri
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class ReportFormData(
     val description: String = "",
     val email: String = "",
     val username: String = "",
-    val attachLog: Boolean = true
-) {
-
+    val attachLog: Boolean = true,
+    val extraFiles: Set<Uri> = emptySet()
+) : Parcelable {
 
     companion object {
         private const val DESCRIPTION_MIN_LENGTH: Int = 10

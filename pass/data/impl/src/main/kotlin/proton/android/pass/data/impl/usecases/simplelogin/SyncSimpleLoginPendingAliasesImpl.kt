@@ -39,10 +39,6 @@ class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
             return
         }
 
-        if (!syncStatus.hasPendingAliases) {
-            return
-        }
-
         var hasMorePendingAliases: Boolean
         val pendingAliasedDefaultShareId = syncStatus.defaultVault.shareId
         val shareKey = shareKeyRepository.getLatestKeyForShare(pendingAliasedDefaultShareId).first()

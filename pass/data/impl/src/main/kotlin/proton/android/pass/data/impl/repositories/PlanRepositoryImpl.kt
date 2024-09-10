@@ -26,10 +26,9 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.impl.db.entities.PlanEntity
-import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
 import proton.android.pass.data.impl.local.LocalPlanDataSource
-import proton.android.pass.data.impl.local.LocalUserAccessDataDataSource
 import proton.android.pass.data.impl.remote.RemotePlanDataSource
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
@@ -41,7 +40,7 @@ import kotlin.math.ceil
 class PlanRepositoryImpl @Inject constructor(
     private val remotePlanDataSource: RemotePlanDataSource,
     private val localPlanDataSource: LocalPlanDataSource,
-    private val localUserAccessDataDataSource: LocalUserAccessDataDataSource,
+    private val userAccessDataRepository: UserAccessDataRepository,
     private val clock: Clock
 ) : PlanRepository {
 
@@ -70,27 +69,16 @@ class PlanRepositoryImpl @Inject constructor(
         .filterNotNull()
         .map { it.toPlan() }
 
-
     private suspend fun refreshPlan(userId: UserId) {
         runCatching {
-            val response = remotePlanDataSource.sendUserAccessAndGetPlan(userId)
             localPlanDataSource.storePlan(
                 userId = userId,
-                planResponse = response.accessResponse.planResponse
+                planResponse = remotePlanDataSource.sendUserAccessAndGetPlan(userId)
+                    .accessResponse
+                    .planResponse
             )
-            localUserAccessDataDataSource.store(
-                UserAccessDataEntity(
-                    userId = userId.id,
-                    pendingInvites = response.accessResponse.pendingInvites,
-                    waitingNewUserInvites = response.accessResponse.waitingNewUserInvites,
-                    minVersionUpgrade = response.accessResponse.minVersionUpgrade,
-                    protonMonitorEnabled = response.accessResponse.monitorResponse.protonMonitorEnabled,
-                    aliasMonitorEnabled = response.accessResponse.monitorResponse.aliasMonitorEnabled,
-                    isSimpleLoginSyncEnabled = response.accessResponse.userData.isAliasSyncEnabled,
-                    simpleLoginSyncDefaultShareId = response.accessResponse.userData.defaultShareID,
-                    simpleLoginSyncPendingAliasCount = response.accessResponse.userData.pendingAliasToSync
-                )
-            )
+
+            userAccessDataRepository.refresh(userId)
         }.onSuccess {
             PassLogger.i(TAG, "Plan refreshed")
         }.onFailure {

@@ -20,17 +20,16 @@ package proton.android.pass.featurehome.impl.empty
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -49,14 +48,17 @@ fun HomeEmptyList(
 ) {
     Column(
         modifier = modifier
+            .verticalScroll(rememberScrollState())
             .padding(Spacing.medium),
         verticalArrangement = Arrangement.Center
     ) {
+        HomeEmptyHeader(
+            modifier = Modifier.padding(bottom = Spacing.large)
+        )
+
         Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
         ) {
-            HomeEmptyHeader()
-            Spacer(modifier = Modifier.height(16.dp))
             HomeEmptyButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.home_empty_vault_create_login),
@@ -65,6 +67,7 @@ fun HomeEmptyList(
                 icon = CoreR.drawable.ic_proton_user,
                 onClick = onCreateLoginClick
             )
+
             HomeEmptyButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.home_empty_vault_create_alias),
@@ -73,6 +76,7 @@ fun HomeEmptyList(
                 icon = CoreR.drawable.ic_proton_alias,
                 onClick = onCreateAliasClick
             )
+
             HomeEmptyButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.home_empty_vault_create_note),
@@ -81,6 +85,7 @@ fun HomeEmptyList(
                 icon = CoreR.drawable.ic_proton_notepad_checklist,
                 onClick = onCreateNoteClick
             )
+
             HomeEmptyButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.home_empty_vault_create_credit_card),
@@ -89,6 +94,7 @@ fun HomeEmptyList(
                 icon = CoreR.drawable.ic_proton_credit_card,
                 onClick = onCreateCreditCardClick
             )
+
             if (isIdentityEnabled) {
                 HomeEmptyButton(
                     modifier = Modifier.fillMaxWidth(),

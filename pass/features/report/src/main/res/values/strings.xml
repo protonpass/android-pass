@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <string name="description_field_label">What is your issue?</string>
+    <string name="description_field_hint">Describe the issue the more detailed possible, if it\'s there any error let us know what it says.</string>
+    <string name="email_field_label">Email</string>
+    <string name="email_field_hint">email</string>
+    <string name="attach_image_button">Attach image</string>
+    <string name="categories_title">What is your issue?</string>
+    <string name="report_toolbar_title">Report an issue</string>
+    <string name="send_report_button">Send report</string>
+    <string name="cancel_tips_button">Cancel</string>
+    <string name="contact_us_button">Contact us</string>
+    <string name="hint_tips_screen">Didn\'t work?</string>
+    <string name="report_reason_autofill">Autofill</string>
+    <string name="report_reason_sharing">Sharing</string>
+    <string name="report_reason_sync">Sync</string>
+    <string name="report_reason_passkeys">Passkeys</string>
+    <string name="report_reason_other">Other</string>
+    <string name="tips_title">Quick fixes for %1$s</string>
+    <string name="tips_subtitle">These tips could help you solve your issue faster.</string>
+    <string name="autofill_tip_restart">Try disabling and enabling the autofill service. If that doesn\'t work try another browser.</string>
+    <string name="sharing_tip_vault_sharing_guide">Having issues with vault sharing? Check our guide.</string>
+    <string name="sharing_tip_secure_links_guide">Having issues with secure links? Check our guide.</string>
+    <string name="sync_tip_force_refresh">Is your screen empty? try doing a force sync.</string>
+    <string name="send_logs_label">Send logs</string>
+</resources>

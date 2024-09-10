@@ -19,7 +19,6 @@
 package proton.android.pass.log.impl
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +41,7 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-class FileLoggingTree(private val context: Context) : Timber.Tree() {
+class FileLoggingTree(@LogFile private val cacheFile: File) : Timber.Tree() {
     private val mutex = Mutex()
     private val dateTimeFormatter = DateTimeFormatter
         .ofPattern("yyyy-MM-dd hh:mm:ss.SSS", Locale.getDefault())
@@ -52,16 +51,8 @@ class FileLoggingTree(private val context: Context) : Timber.Tree() {
 
     init {
         try {
-            val cacheDir = File(context.cacheDir, LOGS_DIR)
-            if (!cacheDir.exists()) {
-                cacheDir.mkdirs()
-            }
-            val cacheFile = File(cacheDir, LOGS_FILE)
-            if (!cacheFile.exists()) {
-                cacheFile.createNewFile()
-            }
             if (shouldRotate(cacheFile)) {
-                rotateLog(cacheDir, cacheFile)
+                rotateLog(cacheFile)
             }
         } catch (e: IOException) {
             PassLogger.e(TAG, e, "Could not create log file")
@@ -70,10 +61,10 @@ class FileLoggingTree(private val context: Context) : Timber.Tree() {
 
     private fun shouldRotate(logFile: File) = logFile.length() >= MAX_FILE_SIZE
 
-    private fun rotateLog(cacheDir: File, cacheFile: File) {
+    private fun rotateLog(cacheFile: File) {
         runBlocking(Dispatchers.IO) {
             try {
-                val temporaryFile = File.createTempFile("temp.log", null, cacheDir)
+                val temporaryFile = File.createTempFile("temp.log", null, cacheFile.parentFile)
                 cacheFile.copyTo(temporaryFile, overwrite = true)
                 var lines = temporaryFile.bufferedReader().use {
                     it.lines().count()
@@ -108,7 +99,6 @@ class FileLoggingTree(private val context: Context) : Timber.Tree() {
         if (priority < Log.INFO) return
         scope.launch(Dispatchers.IO) {
             try {
-                val cacheFile = File(context.cacheDir, "$LOGS_DIR/$LOGS_FILE")
                 if (cacheFile.exists()) {
                     mutex.withLock {
                         BufferedWriter(FileWriter(cacheFile, true))
@@ -175,8 +165,6 @@ class FileLoggingTree(private val context: Context) : Timber.Tree() {
         private const val TAG = "FileLoggingTree"
         private const val MAX_FILE_SIZE: Long = 4 * 1024 * 1024 // 4 MB
         private const val ROTATION_LINES: Long = 500
-        private const val LOGS_DIR = "logs"
-        private const val LOGS_FILE = "pass.log"
         private const val ID_LENGTH = 88
         private const val ID_OFFSET = 4
     }

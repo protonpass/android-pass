@@ -18,17 +18,58 @@
 
 package proton.android.pass.features.report.presentation
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import me.proton.core.report.domain.entity.BugReport
+import me.proton.core.report.domain.entity.BugReportValidationError
+import me.proton.core.report.domain.entity.validate
+import me.proton.core.report.domain.usecase.SendBugReport
 import proton.android.pass.autofill.api.AutofillManager
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 @HiltViewModel
 class ReportViewModel @Inject constructor(
-    private val autofillManager: AutofillManager
+    savedStateHandleProvider: SavedStateHandleProvider,
+    private val autofillManager: AutofillManager,
+    private val sendBugReport: SendBugReport
 ) : ViewModel() {
+
+    @OptIn(SavedStateHandleSaveableApi::class)
+    private var reportFormData by savedStateHandleProvider.get()
+        .saveable { mutableStateOf(ReportFormData()) }
 
     fun openAutofillSettings() {
         autofillManager.openAutofillSelector()
+    }
+
+    fun trySendingBugReport() {
+        viewModelScope.launch {
+            val snapshotData = reportFormData
+            val bugReport = BugReport(
+                title = snapshotData.subject,
+                description = snapshotData.description,
+                email = snapshotData.email,
+                username = snapshotData.username,
+                shouldAttachLog = snapshotData.attachLog
+            )
+            val formErrors: List<BugReportValidationError> = bugReport.validate()
+
+            if (formErrors.isEmpty()) {
+                sendBugReport(bugReport)
+            } else {
+                PassLogger.i(TAG, "Form errors: $formErrors")
+            }
+        }
+    }
+
+    companion object {
+        private const val TAG = "ReportViewModel"
     }
 }

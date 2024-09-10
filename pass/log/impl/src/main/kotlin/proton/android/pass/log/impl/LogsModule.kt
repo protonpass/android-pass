@@ -18,11 +18,15 @@
 
 package proton.android.pass.log.impl
 
+import android.content.Context
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.log.api.ShareLogs
+import java.io.File
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -30,4 +34,23 @@ abstract class LogsModule {
 
     @Binds
     abstract fun bindShareLogs(impl: ShareLogsImpl): ShareLogs
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object LogsModuleProvides {
+
+    @LogFile
+    @Provides
+    fun provideLogFile(@ApplicationContext context: Context): File {
+        val cacheDir = File(context.cacheDir, "logs")
+        if (!cacheDir.exists()) {
+            cacheDir.mkdirs()
+        }
+        val file = File(cacheDir, "pass.log")
+        if (!file.exists()) {
+            file.createNewFile()
+        }
+        return file
+    }
 }

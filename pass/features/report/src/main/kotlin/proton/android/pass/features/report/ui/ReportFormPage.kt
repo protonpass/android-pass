@@ -19,6 +19,7 @@
 package proton.android.pass.features.report.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Button
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -27,11 +28,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.features.report.navigation.ReportNavContentEvent
 
 @Composable
-internal fun ReportFormPage(modifier: Modifier = Modifier, reportReason: ReportReason) {
+internal fun ReportFormPage(
+    modifier: Modifier = Modifier,
+    reportReason: ReportReason,
+    onEvent: (ReportNavContentEvent) -> Unit
+) {
     Column(modifier = modifier) {
-        Text("Page 3")
+        Button({ onEvent(ReportNavContentEvent.SubmitReport) }) {
+            Text("Submit")
+        }
     }
 }
 
@@ -41,7 +49,8 @@ fun ReportFormPagePreview(@PreviewParameter(ThemePreviewProvider::class) isDark:
     PassTheme(isDark = isDark) {
         Surface {
             ReportFormPage(
-                reportReason = ReportReason.Other
+                reportReason = ReportReason.Other,
+                onEvent = {}
             )
         }
     }

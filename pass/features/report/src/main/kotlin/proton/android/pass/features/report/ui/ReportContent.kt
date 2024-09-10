@@ -115,7 +115,8 @@ internal fun ReportContent(
 
                     2 -> reason?.let {
                         ReportFormPage(
-                            reportReason = it
+                            reportReason = it,
+                            onEvent = onEvent
                         )
                     } ?: run { navigateToReasonsPage(scope, pagerState) }
                 }

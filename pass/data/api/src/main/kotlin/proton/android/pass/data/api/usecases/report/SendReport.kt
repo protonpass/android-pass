@@ -16,28 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.di
+package proton.android.pass.data.api.usecases.report
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import me.proton.core.report.domain.provider.BugReportLogProvider
-import proton.android.pass.log.impl.LogFile
-import java.io.File
-
-@Module
-@InstallIn(SingletonComponent::class)
-object ReportModule {
-
-    @Provides
-    fun provideBugReportLogProvider(@LogFile file: File): BugReportLogProvider = object : BugReportLogProvider {
-
-        override suspend fun getLog(): File = file
-
-        override suspend fun releaseLog(log: File) {
-            // No-op
-        }
-    }
-
+interface SendReport {
+    suspend operator fun invoke(report: Report)
 }
+
+data class Report(
+    val title: String,
+    val description: String,
+    val username: String,
+    val email: String,
+    val shouldAttachLog: Boolean
+)

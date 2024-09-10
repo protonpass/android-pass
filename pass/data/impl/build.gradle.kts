@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.core.push)
     implementation(libs.core.telemetry.data)
     implementation(libs.core.telemetry.domain)
+    implementation(libs.core.report.domain)
     implementation(libs.core.user)
     implementation(libs.core.userRecovery)
     implementation(libs.core.userSettings)

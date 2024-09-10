@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.log.impl
+package proton.android.pass.log.api
 
 import javax.inject.Qualifier
 

@@ -32,6 +32,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -40,6 +41,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.Button
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.features.report.R
 import proton.android.pass.features.report.navigation.ReportNavContentEvent
 import proton.android.pass.features.report.presentation.ReportFormData
 import proton.android.pass.features.report.presentation.ReportState
@@ -85,7 +87,7 @@ internal fun ReportFormPage(
             elevation = ButtonDefaults.elevation(0.dp),
             onClick = { onEvent(ReportNavContentEvent.SubmitReport) }
         ) {
-            Text.Body1Regular("Send report")
+            Text.Body1Regular(stringResource(R.string.send_report_button))
         }
     }
 }

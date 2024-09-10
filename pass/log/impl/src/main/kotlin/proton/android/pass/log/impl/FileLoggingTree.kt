@@ -29,6 +29,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaInstant
+import proton.android.pass.log.api.LogFile
 import proton.android.pass.log.api.PassLogger
 import timber.log.Timber
 import java.io.BufferedWriter

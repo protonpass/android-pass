@@ -19,8 +19,11 @@
 package proton.android.pass.data.impl.core.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.network.data.protonApi.GenericResponse
+import okhttp3.RequestBody
 import proton.android.pass.data.impl.core.responses.CoreCodeResponse
 import proton.android.pass.data.impl.core.responses.CoreSettingsResponse
+import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -38,4 +41,6 @@ interface CoreApi : BaseRetrofitApi {
     @DELETE("$ROOT_PATH/settings/highsecurity")
     suspend fun disableHighSecuritySetting(): CoreCodeResponse
 
+    @POST("$ROOT_PATH/reports/bug")
+    suspend fun sendBugReport(@Body body: RequestBody): GenericResponse
 }

@@ -27,6 +27,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -36,6 +38,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -47,12 +51,18 @@ import proton.android.pass.features.report.navigation.ReportNavContentEvent
 @Composable
 internal fun ReportTipsPage(
     modifier: Modifier = Modifier,
-    reportReason: ReportReason,
+    reportReasonOption: Option<ReportReason>,
     onEvent: (ReportNavContentEvent) -> Unit,
     onReportIssue: () -> Unit,
     onCancel: () -> Unit
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(state = rememberScrollState())
+    ) {
+        val reportReason = reportReasonOption.value() ?: return
+
         val reportReasonTitle = when (reportReason) {
             ReportReason.Autofill -> "Autofill"
             ReportReason.Sharing -> "Sharing"
@@ -102,9 +112,7 @@ internal fun ReportTipsPage(
             ReportReason.Other ->
                 throw IllegalStateException("$reportReason should not be shown here")
         }
-
         Spacer(Modifier.weight(1f))
-
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Text.Body1Regular("Didn't work?", color = PassTheme.colors.textWeak)
         }
@@ -145,7 +153,7 @@ fun ReportTipsPagePreview(@PreviewParameter(ThemePreviewProvider::class) isDark:
     PassTheme(isDark = isDark) {
         Surface {
             ReportTipsPage(
-                reportReason = ReportReason.Other,
+                reportReasonOption = ReportReason.Autofill.some(),
                 onEvent = {},
                 onReportIssue = {},
                 onCancel = {}

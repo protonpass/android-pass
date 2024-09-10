@@ -214,8 +214,8 @@ com.squareup:kotlinpoet:1.14.2
 commons-codec:commons-codec:1.15
 dev.chrisbanes.snapper:snapper:0.2.2
 io.coil-kt:coil-base:2.4.0
-io.coil-kt:coil-compose-base:2.4.2
-io.coil-kt:coil-compose:2.4.2
+io.coil-kt:coil-compose-base:2.4.0
+io.coil-kt:coil-compose:2.4.0
 io.coil-kt:coil-gif:2.2.2
 io.coil-kt:coil-svg:2.4.0
 io.coil-kt:coil:2.4.0
@@ -247,8 +247,8 @@ me.proton.core:auth-domain:27.2.0
 me.proton.core:auth-fido-dagger:27.2.0
 me.proton.core:auth-fido-domain:27.2.0
 me.proton.core:auth-fido-play:27.2.0
-me.proton.core:auth-presentation:27.2.0
 me.proton.core:auth-presentation-compose:27.2.0
+me.proton.core:auth-presentation:27.2.0
 me.proton.core:auth:27.2.0
 me.proton.core:challenge-dagger:27.2.0
 me.proton.core:challenge-data:27.2.0

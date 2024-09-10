@@ -27,8 +27,10 @@ import androidx.compose.material.Checkbox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.features.report.R
 import proton.android.pass.features.report.navigation.ReportNavContentEvent
 import proton.android.pass.features.report.presentation.ReportFormData
 
@@ -46,7 +48,7 @@ internal fun SendLogs(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text.Body1Regular("Send logs")
+        Text.Body1Regular(stringResource(R.string.send_logs_label))
         Checkbox(
             checked = formState.attachLog,
             onCheckedChange = { onEvent(ReportNavContentEvent.OnSendLogsChange(it)) }

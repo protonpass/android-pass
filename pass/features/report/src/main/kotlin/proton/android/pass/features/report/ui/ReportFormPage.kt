@@ -73,6 +73,7 @@ internal fun ReportFormPage(
             error = state.descriptionErrors.firstOrNull(),
             onChange = { onEvent(ReportNavContentEvent.OnDescriptionChange(it)) }
         )
+        ImageAttach(images = formState.extraFiles, onEvent = onEvent)
         Spacer(Modifier.weight(1f))
         SendLogs(formState = formState, onEvent = onEvent)
         Button.Circular(

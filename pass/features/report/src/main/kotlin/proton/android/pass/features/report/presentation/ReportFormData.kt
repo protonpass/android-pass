@@ -16,12 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.report.navigation
+package proton.android.pass.features.report.presentation
 
-sealed interface ReportNavContentEvent {
+import me.proton.core.report.domain.entity.BugReportExtra
 
-    data object Close : ReportNavContentEvent
-    data object OpenAutofillSettings : ReportNavContentEvent
-    data object SubmitReport : ReportNavContentEvent
-
-}
+data class ReportFormData(
+    val subject: String = "",
+    val description: String = "",
+    val email: String = "",
+    val username: String = "",
+    val attachLog: Boolean = false,
+    val extras: List<BugReportExtra> = emptyList()
+)

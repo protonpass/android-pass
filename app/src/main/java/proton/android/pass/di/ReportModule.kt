@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,41 +16,28 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.log.impl
+package proton.android.pass.di
 
-import android.content.Context
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.log.api.ShareLogs
+import me.proton.core.report.domain.provider.BugReportLogProvider
+import proton.android.pass.log.impl.LogFile
 import java.io.File
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class LogsModule {
+object ReportModule {
 
-    @Binds
-    abstract fun bindShareLogs(impl: ShareLogsImpl): ShareLogs
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-object LogsModuleProvides {
-
-    @LogFile
     @Provides
-    fun provideLogFile(@ApplicationContext context: Context): File {
-        val cacheDir = File(context.cacheDir, "logs")
-        if (!cacheDir.exists()) {
-            cacheDir.mkdirs()
+    fun provideBugReportLogProvider(@LogFile file: File): BugReportLogProvider = object : BugReportLogProvider {
+
+        override suspend fun getLog(): File = file
+
+        override suspend fun releaseLog(log: File) {
+            // No-op
         }
-        val file = File(cacheDir, "pass.log")
-        if (!file.exists()) {
-            file.createNewFile()
-        }
-        return file
     }
+
 }

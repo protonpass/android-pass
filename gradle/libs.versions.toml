@@ -237,6 +237,7 @@ core-presentation = { module = "me.proton.core:presentation", version.ref = "cor
 core-presentation-compose = { module = "me.proton.core:presentation-compose", version.ref = "core" }
 core-push = { module = "me.proton.core:push", version.ref = "core" }
 core-report = { module = "me.proton.core:report", version.ref = "core" }
+core-report-domain = { module = "me.proton.core:report-domain", version.ref = "core" }
 core-test-android = { module = "me.proton.core:test-android", version.ref = "core" }
 core-test-android-instrumented = { module = "me.proton.core:test-android-instrumented", version.ref = "core" }
 core-test-kotlin = { module = "me.proton.core:test-kotlin", version.ref = "core" }

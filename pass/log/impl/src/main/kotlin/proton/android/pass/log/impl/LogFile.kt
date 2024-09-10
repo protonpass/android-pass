@@ -16,12 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.report.navigation
+package proton.android.pass.log.impl
 
-sealed interface ReportNavContentEvent {
+import javax.inject.Qualifier
 
-    data object Close : ReportNavContentEvent
-    data object OpenAutofillSettings : ReportNavContentEvent
-    data object SubmitReport : ReportNavContentEvent
-
-}
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class LogFile

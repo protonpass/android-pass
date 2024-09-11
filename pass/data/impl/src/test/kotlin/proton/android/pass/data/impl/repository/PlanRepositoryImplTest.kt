@@ -26,9 +26,9 @@ import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
+import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
 import proton.android.pass.data.impl.db.entities.PlanEntity
 import proton.android.pass.data.impl.fakes.TestLocalPlanDataSource
-import proton.android.pass.data.impl.fakes.TestLocalUserAccessDataDataSource
 import proton.android.pass.data.impl.fakes.TestRemotePlanDataSource
 import proton.android.pass.data.impl.repositories.PlanRepositoryImpl
 import proton.android.pass.data.impl.responses.AccessResponse
@@ -37,6 +37,7 @@ import proton.android.pass.data.impl.responses.PlanResponse
 import proton.android.pass.data.impl.responses.UserAccessResponse
 import proton.android.pass.data.impl.responses.UserDataResponse
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.UserAccessData
 import proton.android.pass.test.FixedClock
 import kotlin.time.Duration.Companion.days
 
@@ -46,19 +47,19 @@ internal class PlanRepositoryImplTest {
     private lateinit var local: TestLocalPlanDataSource
     private lateinit var remote: TestRemotePlanDataSource
     private lateinit var clock: FixedClock
-    private lateinit var localUserAccessDataDataSource: TestLocalUserAccessDataDataSource
+    private lateinit var userAccessDataRepository: TestUserAccessDataRepository
 
     @Before
     fun setup() {
         local = TestLocalPlanDataSource()
         remote = TestRemotePlanDataSource()
         clock = FixedClock(Clock.System.now())
-        localUserAccessDataDataSource = TestLocalUserAccessDataDataSource()
+        userAccessDataRepository = TestUserAccessDataRepository()
         instance = PlanRepositoryImpl(
             remotePlanDataSource = remote,
             localPlanDataSource = local,
             clock = clock,
-            localUserAccessDataDataSource = localUserAccessDataDataSource
+            userAccessDataRepository = userAccessDataRepository
         )
     }
 
@@ -206,10 +207,25 @@ internal class PlanRepositoryImplTest {
         )
         remote.setResult(Result.success(userAccessResponse))
 
+        userAccessDataRepository.sendValue(
+            value = UserAccessData(
+                pendingInvites = userAccessResponse.accessResponse.pendingInvites,
+                waitingNewUserInvites = userAccessResponse.accessResponse.waitingNewUserInvites,
+                needsUpdate = userAccessResponse.accessResponse.planResponse.hideUpgrade,
+                protonMonitorEnabled = userAccessResponse.accessResponse.monitorResponse.protonMonitorEnabled,
+                aliasMonitorEnabled = userAccessResponse.accessResponse.monitorResponse.aliasMonitorEnabled,
+                minVersionUpgrade = userAccessResponse.accessResponse.minVersionUpgrade,
+                isSimpleLoginSyncEnabled = userAccessResponse.accessResponse.userData.isAliasSyncEnabled,
+                simpleLoginSyncDefaultShareId = userAccessResponse.accessResponse.userData.defaultShareID,
+                simpleLoginSyncPendingAliasCount = userAccessResponse.accessResponse.userData.pendingAliasToSync
+
+            )
+        )
+
         val plan = instance.sendUserAccessAndObservePlan(USER_ID, forceRefresh = true).first()
         assertThat(plan.planType).isInstanceOf(PlanType.Paid::class.java)
 
-        val userAccessData = localUserAccessDataDataSource.observe(USER_ID).first()
+        val userAccessData = userAccessDataRepository.observe(USER_ID).first()
         assertThat(userAccessData).isNotNull()
         assertThat(userAccessData!!.pendingInvites).isEqualTo(pendingInvites)
         assertThat(userAccessData.waitingNewUserInvites).isEqualTo(waitingNewUserInvites)

@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -32,7 +33,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun AliasIcon(
@@ -58,6 +61,14 @@ fun AliasIcon(
         else -> null
     }
 ) {
+    val iconResourceId = remember(activeAlias) {
+        if (activeAlias) {
+            CoreR.drawable.ic_proton_alias
+        } else {
+            R.drawable.ic_alias_slash
+        }
+    }
+
     BoxedIcon(
         modifier = modifier,
         backgroundColor = backgroundColor,
@@ -67,35 +78,37 @@ fun AliasIcon(
     ) {
         Icon(
             modifier = Modifier.padding(Spacing.extraSmall),
-            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
+            painter = painterResource(id = iconResourceId),
             contentDescription = null,
             tint = foregroundColor
         )
     }
 }
 
-class AliasIconPreviewProvider : PreviewParameterProvider<AliasIconParams> {
-    override val values: Sequence<AliasIconParams>
-        get() = sequence {
-            for (isEnabled in listOf(true, false)) {
-                for (isActive in listOf(true, false)) {
-                    yield(AliasIconParams(isEnabled, isActive))
-                }
+internal class AliasIconPreviewProvider : PreviewParameterProvider<AliasIconParams> {
+    override val values: Sequence<AliasIconParams> = sequence {
+        for (isEnabled in listOf(true, false)) {
+            for (isActive in listOf(true, false)) {
+                yield(AliasIconParams(isEnabled, isActive))
             }
         }
+    }
 }
 
-data class AliasIconParams(
+internal data class AliasIconParams(
     val enabled: Boolean,
     val active: Boolean
 )
 
-class ThemeAndAliasIconProvider :
-    ThemePairPreviewProvider<AliasIconParams>(AliasIconPreviewProvider())
+internal class ThemeAndAliasIconProvider : ThemePairPreviewProvider<AliasIconParams>(
+    AliasIconPreviewProvider()
+)
 
 @Preview
 @Composable
-fun AliasIconPreview(@PreviewParameter(ThemeAndAliasIconProvider::class) input: Pair<Boolean, AliasIconParams>) {
+internal fun AliasIconPreview(
+    @PreviewParameter(ThemeAndAliasIconProvider::class) input: Pair<Boolean, AliasIconParams>
+) {
     PassTheme(isDark = input.first) {
         Surface {
             AliasIcon(

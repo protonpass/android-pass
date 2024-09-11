@@ -1,20 +1,44 @@
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="16dp"
-    android:height="16dp"
-    android:viewportWidth="16"
-    android:viewportHeight="16">
-  <path
-      android:pathData="M2.361,1.654C2.169,1.455 1.853,1.448 1.654,1.639C1.455,1.831 1.448,2.147 1.639,2.346L13.639,14.846C13.83,15.045 14.147,15.052 14.346,14.861C14.545,14.67 14.552,14.353 14.361,14.154L13.389,13.141C13.769,12.703 14,12.13 14,11.503C14,10.123 12.881,9.003 11.5,9.003C10.91,9.003 10.368,9.208 9.94,9.549L8.936,8.503H14.5C14.776,8.503 15,8.279 15,8.003C15,7.727 14.776,7.503 14.5,7.503H13.401L12.411,3.519C12.114,2.32 10.812,1.675 9.678,2.165L8.594,2.632C8.215,2.796 7.785,2.796 7.406,2.632L6.322,2.165C5.33,1.737 4.209,2.177 3.745,3.096L2.361,1.654ZM4.523,3.906L7.938,7.463H12.361L11.441,3.76C11.292,3.161 10.641,2.838 10.074,3.083L8.99,3.55C8.358,3.823 7.642,3.823 7.01,3.55L5.926,3.083C5.359,2.838 4.708,3.161 4.559,3.76L4.523,3.906ZM10.638,10.276L12.691,12.415C12.885,12.162 13,11.846 13,11.503C13,10.675 12.328,10.003 11.5,10.003C11.179,10.003 10.882,10.104 10.638,10.276Z"
-      android:fillColor="#000000"
-      android:fillType="evenOdd"/>
-  <path
-      android:pathData="M6.243,8.503L5.245,7.463H3.639L3.969,6.134L3.151,5.282L2.599,7.503H1.5C1.224,7.503 1,7.727 1,8.003C1,8.279 1.224,8.503 1.5,8.503H6.243Z"
-      android:fillColor="#000000"/>
-  <path
-      android:pathData="M8.179,10.519L7.318,9.623C7.034,9.726 6.779,9.892 6.572,10.103C6.122,9.44 5.362,9.003 4.5,9.003C3.119,9.003 2,10.123 2,11.503C2,12.884 3.119,14.003 4.5,14.003C5.881,14.003 7,12.884 7,11.503C7,10.951 7.448,10.503 8,10.503C8.061,10.503 8.121,10.509 8.179,10.519ZM6,11.503C6,12.332 5.328,13.003 4.5,13.003C3.672,13.003 3,12.332 3,11.503C3,10.675 3.672,10.003 4.5,10.003C5.328,10.003 6,10.675 6,11.503Z"
-      android:fillColor="#000000"
-      android:fillType="evenOdd"/>
-  <path
-      android:pathData="M8.99,11.365C8.997,11.41 9,11.456 9,11.503C9,12.884 10.119,14.003 11.5,14.003L11.523,14.003L8.99,11.365Z"
-      android:fillColor="#000000"/>
+    android:width="24dp"
+    android:height="24dp"
+    android:autoMirrored="true"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <path
+        android:fillColor="#0C0C14"
+        android:fillType="evenOdd"
+        android:pathData="M3.541,2.48a0.75,0.75 0,1 0,-1.082 1.04l18,18.75a0.75,0.75 0,1 0,1.082 -1.04l-1.458,-1.518a3.75,3.75 0,0 0,-5.172 -5.388l-1.507,-1.57h8.346a0.75,0.75 0,0 0,0 -1.5h-1.648l-1.485,-5.976a3,3 0,0 0,-4.1 -2.031l-1.626,0.701a2.25,2.25 0,0 1,-1.782 0l-1.626,-0.701a3.002,3.002 0,0 0,-3.865 1.397L3.54,2.48ZM6.784,5.86l5.123,5.336h6.634l-1.38,-5.555a1.5,1.5 0,0 0,-2.05 -1.016l-1.626,0.702a3.75,3.75 0,0 1,-2.97 0l-1.626,-0.702a1.5,1.5 0,0 0,-2.05 1.016l-0.055,0.219ZM15.957,15.415 L19.037,18.623a2.25,2.25 0,0 0,-3.08 -3.209Z" />
+
+    <path
+        android:fillColor="#0C0C14"
+        android:pathData="m9.365,12.755 l-1.498,-1.56H5.46l0.495,-1.993 -1.228,-1.28 -0.827,3.333H2.25a0.75,0.75 0,1 0,0 1.5h7.115Z" />
+
+    <path
+        android:fillColor="#0C0C14"
+        android:fillType="evenOdd"
+        android:pathData="m12.268,15.779 l-1.291,-1.345a3.002,3.002 0,0 0,-1.12 0.721,3.75 3.75,0 1,0 0.643,2.1 1.5,1.5 0,0 1,1.768 -1.476ZM9,17.255a2.25,2.25 0,1 1,-4.5 0,2.25 2.25,0 0,1 4.5,0Z" />
+
+    <path
+        android:fillColor="#0C0C14"
+        android:pathData="M13.486,17.047c0.01,0.068 0.014,0.137 0.014,0.208a3.75,3.75 0,0 0,3.75 3.75h0.035l-3.8,-3.958Z" />
+
 </vector>

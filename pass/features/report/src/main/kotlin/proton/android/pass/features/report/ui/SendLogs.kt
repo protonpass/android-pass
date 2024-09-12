@@ -51,7 +51,7 @@ internal fun SendLogs(
     ) {
         Text.Body1Regular(stringResource(R.string.send_logs_label))
         Checkbox(
-            enabled = isLoading,
+            enabled = !isLoading,
             checked = formState.attachLog,
             onCheckedChange = { onEvent(ReportNavContentEvent.OnSendLogsChange(it)) }
         )

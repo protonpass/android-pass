@@ -80,6 +80,7 @@ import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.TrashItemRevision
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateItemFlagsRequest
+import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.util.TimeUtil
 import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.Item
@@ -446,12 +447,8 @@ class ItemRepositoryImpl @Inject constructor(
             )
 
             runCatching { remoteItemDataSource.sendToTrash(userId, shareId, body) }
-                .onSuccess {
-                    localItemDataSource.setItemStates(
-                        shareId,
-                        items.map { ItemId(it.id) },
-                        ItemState.Trashed
-                    )
+                .onSuccess { trashItemsResponse ->
+                    handleTrashItemsResponse(items, trashItemsResponse)
                 }
                 .onFailure {
                     PassLogger.w(TAG, "Error trashing items for share")
@@ -485,12 +482,8 @@ class ItemRepositoryImpl @Inject constructor(
             )
 
             runCatching { remoteItemDataSource.untrash(userId, shareId, body) }
-                .onSuccess {
-                    localItemDataSource.setItemStates(
-                        shareId,
-                        items.map { ItemId(it.id) },
-                        ItemState.Active
-                    )
+                .onSuccess { trashItemsResponse ->
+                    handleTrashItemsResponse(items, trashItemsResponse)
                 }
                 .onFailure {
                     PassLogger.w(TAG, "Error untrashing items for share")
@@ -500,6 +493,29 @@ class ItemRepositoryImpl @Inject constructor(
         .transpose()
         .map { }
 
+    private suspend fun handleTrashItemsResponse(
+        itemEntities: List<ItemEntity>,
+        trashItemsResponse: TrashItemsResponse
+    ) {
+        itemEntities
+            .associateBy { itemEntity ->
+                itemEntity.id
+            }
+            .let { itemEntitiesMap ->
+                trashItemsResponse.items.mapNotNull { trashItemRevision ->
+                    itemEntitiesMap[trashItemRevision.itemId]?.copy(
+                        createTime = trashItemRevision.revisionTime.toLong(),
+                        modifyTime = trashItemRevision.modifyTime.toLong(),
+                        revision = trashItemRevision.revision,
+                        state = trashItemRevision.state,
+                        flags = trashItemRevision.flags
+                    )
+                }
+            }
+            .also { updatedItemEntities ->
+                localItemDataSource.upsertItems(updatedItemEntities)
+            }
+    }
 
     override suspend fun clearTrash(userId: UserId) {
         coroutineScope {

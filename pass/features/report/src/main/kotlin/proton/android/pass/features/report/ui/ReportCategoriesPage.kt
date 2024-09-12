@@ -64,15 +64,15 @@ internal fun ReportCategoriesPage(modifier: Modifier = Modifier, onReasonClicked
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable { onReasonClicked(reportReason) }
-                        .padding(Spacing.medium),
+                        .padding(horizontal = Spacing.medium, vertical = Spacing.medium + Spacing.small),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text.Body1Regular(reportReason.name)
-                    Icon.Default(CompR.drawable.ic_chevron_tiny_right)
+                    Icon.Default(CompR.drawable.ic_chevron_tiny_right, tint = PassTheme.colors.textHint)
                 }
                 if (index != ReportReason.entries.lastIndex) {
-                    PassDivider(Modifier.padding(horizontal = Spacing.medium))
+                    PassDivider()
                 }
             }
         }

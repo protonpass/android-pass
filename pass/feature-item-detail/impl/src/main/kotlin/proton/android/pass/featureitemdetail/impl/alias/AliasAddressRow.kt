@@ -51,7 +51,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.tooltips.PassTooltipPopup
@@ -61,7 +61,7 @@ import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun AliasAddressRow(
+internal fun AliasAddressRow(
     modifier: Modifier = Modifier,
     alias: String,
     isAliasEnabled: Boolean,
@@ -73,6 +73,14 @@ fun AliasAddressRow(
     onToggleAliasState: (Boolean) -> Unit,
     onDismissTooltip: () -> Unit
 ) {
+    val titleResourceId = remember(isAliasEnabled) {
+        if (isAliasEnabled) {
+            R.string.field_alias_title
+        } else {
+            R.string.field_alias_disabled_title
+        }
+    }
+
     Box(modifier = modifier) {
         val position = remember { mutableStateOf(IntOffset.Zero) }
         val size = remember { mutableStateOf(IntSize.Zero) }
@@ -92,7 +100,7 @@ fun AliasAddressRow(
             Column(Modifier.weight(1f)) {
                 SectionTitle(
                     modifier = Modifier.padding(start = Spacing.small),
-                    text = stringResource(R.string.field_alias_title)
+                    text = stringResource(id = titleResourceId)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -148,12 +156,16 @@ fun AliasAddressRow(
 
 @Preview
 @Composable
-fun AliasAddressRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun AliasAddressRowPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, isAliasEnabled) = input
+
     PassTheme(isDark = isDark) {
         Surface {
             AliasAddressRow(
                 alias = "some@alias.test",
-                isAliasEnabled = true,
+                isAliasEnabled = isAliasEnabled,
                 isAliasSyncEnabled = true,
                 isAliasToggleTooltipEnabled = false,
                 isAliasStateToggling = false,

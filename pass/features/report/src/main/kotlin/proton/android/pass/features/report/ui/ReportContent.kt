@@ -36,11 +36,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.composecomponents.impl.topbar.IconTopAppBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.CrossBackCircleIconButton
 import proton.android.pass.features.report.R
 import proton.android.pass.features.report.navigation.ReportNavContentEvent
@@ -75,9 +74,10 @@ internal fun ReportContent(
     Scaffold(
         modifier = modifier,
         topBar = {
-            ProtonTopAppBar(
+            IconTopAppBar(
+                modifier = Modifier,
                 backgroundColor = PassTheme.colors.itemDetailBackground,
-                title = { Text.Body1Regular(stringResource(R.string.report_toolbar_title)) },
+                title = stringResource(R.string.report_toolbar_title),
                 navigationIcon = {
                     CrossBackCircleIconButton(
                         modifier = Modifier.padding(Spacing.mediumSmall, Spacing.extraSmall),
@@ -106,7 +106,6 @@ internal fun ReportContent(
                     )
 
                     1 -> ReportTipsPage(
-                        modifier = Modifier,
                         passkeySupportOption = state.passkeySupportOption,
                         reportReasonOption = state.reportReasonOption,
                         onEvent = onEvent,

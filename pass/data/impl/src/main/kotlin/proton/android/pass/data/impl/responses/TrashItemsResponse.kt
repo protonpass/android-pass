@@ -38,5 +38,7 @@ data class TrashItemsRevisions(
     @SerialName("ModifyTime")
     val modifyTime: Int,
     @SerialName("RevisionTime")
-    val revisionTime: Int
+    val revisionTime: Int,
+    @SerialName("Flags")
+    val flags: Int
 )

@@ -106,6 +106,8 @@ internal fun ReportContent(
                     )
 
                     1 -> ReportTipsPage(
+                        modifier = Modifier,
+                        passkeySupportOption = state.passkeySupportOption,
                         reportReasonOption = state.reportReasonOption,
                         onEvent = onEvent,
                         onReportIssue = { navigateToFormPage(scope, pagerState) }

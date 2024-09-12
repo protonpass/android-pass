@@ -39,6 +39,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
@@ -57,20 +58,22 @@ internal fun ReportCategoriesPage(modifier: Modifier = Modifier, onReasonClicked
             text = stringResource(R.string.categories_title)
         )
         Spacer(Modifier.height(Spacing.medium))
-        ReportReason.entries.forEachIndexed { index, reportReason ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onReasonClicked(reportReason) }
-                    .padding(Spacing.medium),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text.Body1Regular(reportReason.name)
-                Icon.Default(CompR.drawable.ic_chevron_tiny_right)
-            }
-            if (index != ReportReason.entries.lastIndex) {
-                PassDivider(Modifier.padding(horizontal = Spacing.medium))
+        Column(modifier = Modifier.padding(horizontal = Spacing.medium).roundedContainerNorm()) {
+            ReportReason.entries.forEachIndexed { index, reportReason ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onReasonClicked(reportReason) }
+                        .padding(Spacing.medium),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text.Body1Regular(reportReason.name)
+                    Icon.Default(CompR.drawable.ic_chevron_tiny_right)
+                }
+                if (index != ReportReason.entries.lastIndex) {
+                    PassDivider(Modifier.padding(horizontal = Spacing.medium))
+                }
             }
         }
     }

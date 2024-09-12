@@ -154,6 +154,7 @@
 
     <!-- Items -->
     <string name="item_details_alias_section_alias_title">Alias address</string>
+    <string name="item_details_alias_section_alias_disabled_title">Alias address (disabled)</string>
     <string name="item_details_alias_section_mailboxes_title">Forwarding to</string>
 
     <string name="item_details_credit_card_section_cardholder_title">Name on card</string>

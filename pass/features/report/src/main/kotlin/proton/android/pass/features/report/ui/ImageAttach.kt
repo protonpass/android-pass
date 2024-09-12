@@ -20,6 +20,7 @@ package proton.android.pass.features.report.ui
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResultRegistryOwner
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia.ImageOnly
@@ -30,6 +31,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
@@ -45,10 +47,15 @@ internal fun ImageAttach(
     images: Set<Uri>,
     onEvent: (ReportNavContentEvent) -> Unit
 ) {
-    val pickMedia = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) {
-        if (it != null) {
-            onEvent(ReportNavContentEvent.OnImageSelected(it))
+    val context = LocalContext.current
+    val pickMedia = if (context is ActivityResultRegistryOwner) {
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) {
+            if (it != null) {
+                onEvent(ReportNavContentEvent.OnImageSelected(it))
+            }
         }
+    } else {
+        null
     }
     Column(modifier = modifier) {
         if (images.size < MAX_IMAGES) {
@@ -58,7 +65,7 @@ internal fun ImageAttach(
                     prefixIcon = CoreR.drawable.ic_proton_plus,
                     onClick = {
                         runCatching {
-                            pickMedia.launch(PickVisualMediaRequest(ImageOnly))
+                            pickMedia?.launch(PickVisualMediaRequest(ImageOnly))
                         }
                     }
                 )

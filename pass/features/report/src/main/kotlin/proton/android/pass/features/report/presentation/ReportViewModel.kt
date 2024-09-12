@@ -42,6 +42,7 @@ import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.user.domain.UserManager
 import proton.android.pass.autofill.api.AutofillManager
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.onError
@@ -56,6 +57,7 @@ import proton.android.pass.features.report.presentation.ReportFormData.Companion
 import proton.android.pass.features.report.ui.ReportReason
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.passkeys.api.CheckPasskeySupport
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
@@ -68,7 +70,8 @@ class ReportViewModel @Inject constructor(
     userManager: UserManager,
     private val autofillManager: AutofillManager,
     private val sendReport: SendReport,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val checkPasskeySupport: CheckPasskeySupport
 ) : ViewModel() {
 
     init {
@@ -93,6 +96,7 @@ class ReportViewModel @Inject constructor(
         MutableStateFlow(persistentListOf<ReportValidationError>())
 
     internal val state = combine(
+        oneShot { checkPasskeySupport().some() },
         reportEventFlow,
         reportReasonFlow,
         isLoadingStateFlow,

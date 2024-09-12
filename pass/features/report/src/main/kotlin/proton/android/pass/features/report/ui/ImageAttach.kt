@@ -51,7 +51,7 @@ internal fun ImageAttach(
         }
     }
     Column(modifier = modifier) {
-        if (images.size <= MAX_IMAGES) {
+        if (images.size < MAX_IMAGES) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 TransparentTextButton(
                     text = stringResource(R.string.attach_image_button),

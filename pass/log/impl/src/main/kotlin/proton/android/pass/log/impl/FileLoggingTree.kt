@@ -29,7 +29,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaInstant
-import proton.android.pass.log.api.LogFile
+import proton.android.pass.log.api.LogFileUri
 import proton.android.pass.log.api.PassLogger
 import timber.log.Timber
 import java.io.BufferedWriter
@@ -42,7 +42,7 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-class FileLoggingTree(@LogFile private val cacheFile: File) : Timber.Tree() {
+class FileLoggingTree(@LogFileUri private val cacheFile: File) : Timber.Tree() {
     private val mutex = Mutex()
     private val dateTimeFormatter = DateTimeFormatter
         .ofPattern("yyyy-MM-dd hh:mm:ss.SSS", Locale.getDefault())

@@ -18,6 +18,8 @@
 
 package proton.android.pass.data.api.usecases.report
 
+import java.io.File
+
 interface SendReport {
     suspend operator fun invoke(report: Report)
 }
@@ -27,5 +29,6 @@ data class Report(
     val description: String,
     val username: String,
     val email: String,
-    val shouldAttachLog: Boolean
+    val shouldAttachLog: Boolean,
+    val extraFiles: Set<File>
 )

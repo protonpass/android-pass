@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,10 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.log.api
+package proton.android.pass.features.report.presentation
 
-import javax.inject.Qualifier
+import androidx.annotation.StringRes
+import proton.android.pass.features.report.R
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class LogFile
+enum class ReportSnackbarMessage(
+    @StringRes override val id: Int,
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
+) : SnackbarMessage {
+    ReportSendingSuccess(R.string.report_sending_success, SnackbarType.SUCCESS),
+    ReportSendingError(R.string.report_sending_error, SnackbarType.ERROR)
+}

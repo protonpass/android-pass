@@ -38,10 +38,12 @@ package proton.android.pass.log.impl
 
 import android.app.ActivityManager
 import android.content.Context
+import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.os.LocaleList
 import android.os.StatFs
+import androidx.core.net.toFile
 import androidx.startup.Initializer
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -49,12 +51,11 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.util.kotlin.CoreLogger
 import proton.android.pass.appconfig.api.AppConfig
-import proton.android.pass.log.api.LogFile
+import proton.android.pass.log.api.LogFileUri
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.tracing.impl.SentryInitializer
 import proton.android.pass.tracing.impl.initSentryLogger
 import timber.log.Timber
-import java.io.File
 import java.text.DecimalFormat
 
 class LoggerInitializer : Initializer<Unit> {
@@ -68,7 +69,7 @@ class LoggerInitializer : Initializer<Unit> {
         if (entryPoint.appConfig().isDebug) {
             Timber.plant(Timber.DebugTree())
         }
-        Timber.plant(FileLoggingTree(entryPoint.logFile()))
+        Timber.plant(FileLoggingTree(entryPoint.logFileUri().toFile()))
 
         // Forward Core Logs to Timber, using TimberLogger.
         initSentryLogger(CoreLogger)
@@ -85,8 +86,8 @@ class LoggerInitializer : Initializer<Unit> {
     interface LoggerInitializerEntryPoint {
         fun appConfig(): AppConfig
 
-        @LogFile
-        fun logFile(): File
+        @LogFileUri
+        fun logFileUri(): Uri
     }
 }
 

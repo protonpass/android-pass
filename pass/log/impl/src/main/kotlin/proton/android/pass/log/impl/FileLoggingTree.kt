@@ -19,7 +19,9 @@
 package proton.android.pass.log.impl
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.util.Log
+import androidx.core.net.toFile
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -42,7 +44,7 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-class FileLoggingTree(@LogFileUri private val cacheFile: File) : Timber.Tree() {
+class FileLoggingTree(@LogFileUri private val logFileUri: Uri) : Timber.Tree() {
     private val mutex = Mutex()
     private val dateTimeFormatter = DateTimeFormatter
         .ofPattern("yyyy-MM-dd hh:mm:ss.SSS", Locale.getDefault())
@@ -52,8 +54,9 @@ class FileLoggingTree(@LogFileUri private val cacheFile: File) : Timber.Tree() {
 
     init {
         try {
-            if (shouldRotate(cacheFile)) {
-                rotateLog(cacheFile)
+            val file = logFileUri.toFile()
+            if (shouldRotate(file)) {
+                rotateLog(file)
             }
         } catch (e: IOException) {
             PassLogger.e(TAG, e, "Could not create log file")
@@ -100,9 +103,10 @@ class FileLoggingTree(@LogFileUri private val cacheFile: File) : Timber.Tree() {
         if (priority < Log.INFO) return
         scope.launch(Dispatchers.IO) {
             try {
-                if (cacheFile.exists()) {
+                val file = logFileUri.toFile()
+                if (file.exists()) {
                     mutex.withLock {
-                        BufferedWriter(FileWriter(cacheFile, true))
+                        BufferedWriter(FileWriter(file, true))
                             .use { writer ->
                                 writer.append(buildLog(priority, tag, message))
                                 writer.newLine()

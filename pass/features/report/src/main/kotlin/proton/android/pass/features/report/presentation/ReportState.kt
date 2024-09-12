@@ -28,6 +28,7 @@ import proton.android.pass.features.report.ui.ReportReason
 
 @Stable
 internal data class ReportState(
+    internal val reportEvent: ReportEvent,
     internal val reportReasonOption: Option<ReportReason>,
     private val isLoadingState: IsLoadingState,
     private val formValidationErrors: ImmutableList<ReportValidationError>
@@ -41,6 +42,7 @@ internal data class ReportState(
 
     companion object {
         val Initial = ReportState(
+            reportEvent = ReportEvent.Idle,
             reportReasonOption = None,
             isLoadingState = IsLoadingState.NotLoading,
             formValidationErrors = persistentListOf()

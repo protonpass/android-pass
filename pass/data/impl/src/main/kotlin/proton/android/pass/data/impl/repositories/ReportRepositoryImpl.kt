@@ -18,7 +18,11 @@
 
 package proton.android.pass.data.impl.repositories
 
+import android.net.Uri
 import android.webkit.MimeTypeMap
+import androidx.core.net.toFile
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.report.domain.entity.BugReportMeta
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -27,7 +31,8 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import proton.android.pass.data.api.repositories.ReportRepository
 import proton.android.pass.data.api.usecases.report.Report
 import proton.android.pass.data.impl.core.api.CoreApi
-import proton.android.pass.log.api.LogFile
+import proton.android.pass.log.api.LogFileUri
+import proton.android.pass.log.api.PassLogger
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Provider
@@ -35,7 +40,7 @@ import javax.inject.Provider
 class ReportRepositoryImpl @Inject constructor(
     private val apiProvider: ApiProvider,
     private val bugReportMetaProvider: Provider<BugReportMeta>,
-    @LogFile private val logFile: File?
+    @LogFileUri private val logFileUri: Uri?
 ) : ReportRepository {
 
     private val File.mimeType: String?
@@ -48,23 +53,31 @@ class ReportRepositoryImpl @Inject constructor(
     override suspend fun sendReport(report: Report) {
         apiProvider.get<CoreApi>()
             .invoke {
-                sendBugReport(
-                    getMultipartBodyBuilder(
-                        report = report,
-                        meta = bugReportMetaProvider.get(),
-                        logFile = logFile.takeIf { report.shouldAttachLog },
-                        extraFiles = emptyList()
-                    ).build()
-                )
+                val logFileUriTemp = logFileUri.takeIf { report.shouldAttachLog }
+                val logFile = logFileUriTemp?.toFile()
+                val logFileSize = logFile?.length() ?: 0
+                val extraFilesSize = report.extraFiles.sumOf { it.length() }
+                PassLogger.i(TAG, "Log file size: $logFileSize bytes")
+                PassLogger.i(TAG, "Total extra files size: $extraFilesSize bytes")
+                val body = getMultipartBodyBuilder(
+                    report = report,
+                    meta = bugReportMetaProvider.get(),
+                    logFile = logFile,
+                    extraFiles = report.extraFiles
+                ).build()
+                PassLogger.i(TAG, "Bug report size: ${body.size} bytes")
+                val total = logFileSize + extraFilesSize + body.size
+                PassLogger.i(TAG, "Total size: $total bytes")
+                sendBugReport(body)
             }
             .valueOrThrow
     }
 
-    private fun getMultipartBodyBuilder(
+    private suspend fun getMultipartBodyBuilder(
         report: Report,
         meta: BugReportMeta,
         logFile: File?,
-        extraFiles: List<File>
+        extraFiles: Set<File>
     ): MultipartBody.Builder = MultipartBody.Builder()
         .setType(MultipartBody.FORM)
         .addFormDataPart(name = "OS", value = meta.osName)
@@ -95,5 +108,11 @@ class ReportRepositoryImpl @Inject constructor(
                 }
         }
 
-    private fun File.validateFile(): File? = if (exists() && length() > 0) this else null
+    private suspend fun File.validateFile(): File? = withContext(Dispatchers.IO) {
+        if (exists() && length() > 0) this@validateFile else null
+    }
+
+    companion object {
+        private const val TAG = "ReportRepositoryImpl"
+    }
 }

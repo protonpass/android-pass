@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
 import me.proton.core.presentation.R as CoreR
@@ -43,6 +44,8 @@ fun TipRow(
 ) {
     Row(
         modifier = modifier
+            .padding(horizontal = Spacing.medium, vertical = Spacing.small)
+            .roundedContainerNorm()
             .clickable(enabled = onClick != null, onClick = onClick ?: {})
             .padding(horizontal = Spacing.medium, vertical = Spacing.mediumSmall),
         verticalAlignment = Alignment.CenterVertically,

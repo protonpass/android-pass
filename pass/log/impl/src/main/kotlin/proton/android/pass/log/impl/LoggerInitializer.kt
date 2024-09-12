@@ -43,7 +43,6 @@ import android.os.Build
 import android.os.Environment
 import android.os.LocaleList
 import android.os.StatFs
-import androidx.core.net.toFile
 import androidx.startup.Initializer
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -69,7 +68,7 @@ class LoggerInitializer : Initializer<Unit> {
         if (entryPoint.appConfig().isDebug) {
             Timber.plant(Timber.DebugTree())
         }
-        Timber.plant(FileLoggingTree(entryPoint.logFileUri().toFile()))
+        Timber.plant(FileLoggingTree(entryPoint.logFileUri()))
 
         // Forward Core Logs to Timber, using TimberLogger.
         initSentryLogger(CoreLogger)

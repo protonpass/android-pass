@@ -1221,12 +1221,12 @@ class ItemRepositoryImpl @Inject constructor(
             }
         )
         runCatching { remoteItemDataSource.untrash(userId, shareId, body) }
-            .onSuccess {
-                localItemDataSource.setItemStates(
-                    shareId,
-                    items.map { ItemId(it.id) },
-                    ItemState.Active
-                )
+            .onSuccess { trashItemsResponse ->
+                handleTrashItemsResponse(items, trashItemsResponse)
+            }
+            .onFailure { error ->
+                PassLogger.w(TAG, "Error restoring items for share")
+                PassLogger.w(TAG, error)
             }
     }.transpose().map { }
 

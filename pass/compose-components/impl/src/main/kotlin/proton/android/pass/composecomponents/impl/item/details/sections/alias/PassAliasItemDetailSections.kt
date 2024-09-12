@@ -60,6 +60,7 @@ internal fun PassAliasItemDetailSections(
     ) {
         PassAliasItemDetailMainSection(
             alias = aliasEmail,
+            isAliasEnabled = isEnabled,
             itemColors = itemColors,
             itemDiffs = itemDiffs,
             mailboxes = mailboxes,

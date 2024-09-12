@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -56,6 +57,7 @@ import me.proton.core.presentation.R as CoreR
 internal fun PassAliasItemDetailMainSection(
     modifier: Modifier = Modifier,
     alias: String,
+    isAliasEnabled: Boolean,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.Alias,
     mailboxes: ImmutableList<AliasMailbox>,
@@ -66,6 +68,7 @@ internal fun PassAliasItemDetailMainSection(
     sections.add {
         PassAliasItemDetailAddressRow(
             alias = alias,
+            isAliasEnabled = isAliasEnabled,
             itemColors = itemColors,
             itemDiffType = itemDiffs.aliasEmail,
             onEvent = onEvent
@@ -89,10 +92,19 @@ internal fun PassAliasItemDetailMainSection(
 private fun PassAliasItemDetailAddressRow(
     modifier: Modifier = Modifier,
     alias: String,
+    isAliasEnabled: Boolean,
     itemColors: PassItemColors,
     itemDiffType: ItemDiffType,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
+    val titleResourceId = remember(isAliasEnabled) {
+        if (isAliasEnabled) {
+            R.string.item_details_alias_section_alias_title
+        } else {
+            R.string.item_details_alias_section_alias_disabled_title
+        }
+    }
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -117,7 +129,7 @@ private fun PassAliasItemDetailAddressRow(
         Column {
             SectionTitle(
                 modifier = Modifier.padding(start = Spacing.small),
-                text = stringResource(R.string.item_details_alias_section_alias_title)
+                text = stringResource(id = titleResourceId)
             )
 
             Spacer(modifier = Modifier.height(Spacing.small))

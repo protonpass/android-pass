@@ -42,4 +42,7 @@
     <string name="send_logs_label">Send logs</string>
     <string name="report_sending_success">Report sent successfully.</string>
     <string name="report_sending_error">Could not send the report.</string>
+    <string name="tips_passkey_supported">Your device is supported, if you have any issues check our guide.</string>
+    <string name="tips_passkey_android_not_supported">Your android version is too low. Try upgrading your device.</string>
+    <string name="tips_passkeys_credential_manager_not_supported">The manufacturer of the device doesn\'t provide a credential manager.</string>
 </resources>

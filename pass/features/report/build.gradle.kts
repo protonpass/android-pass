@@ -75,6 +75,7 @@ dependencies {
     implementation(projects.pass.data.api)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
+    implementation(projects.pass.passkeys.api)
     implementation(projects.pass.log.api)
 
     implementation(libs.androidx.compose.material)

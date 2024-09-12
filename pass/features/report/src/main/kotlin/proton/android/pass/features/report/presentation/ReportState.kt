@@ -25,9 +25,11 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.features.report.ui.ReportReason
+import proton.android.pass.passkeys.api.PasskeySupport
 
 @Stable
 internal data class ReportState(
+    internal val passkeySupportOption: Option<PasskeySupport>,
     internal val reportEvent: ReportEvent,
     internal val reportReasonOption: Option<ReportReason>,
     private val isLoadingState: IsLoadingState,
@@ -42,6 +44,7 @@ internal data class ReportState(
 
     companion object {
         val Initial = ReportState(
+            passkeySupportOption = None,
             reportEvent = ReportEvent.Idle,
             reportReasonOption = None,
             isLoadingState = IsLoadingState.NotLoading,
@@ -56,7 +59,6 @@ interface EmailError : ReportValidationError
 interface DescriptionError : ReportValidationError
 
 object EmailBlank : EmailError
-object EmailInvalid : EmailError
 object DescriptionBlank : DescriptionError
 object DescriptionTooShort : DescriptionError
 object DescriptionTooLong : DescriptionError

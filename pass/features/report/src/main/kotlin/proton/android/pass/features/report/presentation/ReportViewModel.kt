@@ -132,6 +132,7 @@ class ReportViewModel @Inject constructor(
                 }
                     .onSuccess {
                         PassLogger.i(TAG, "Report sent successfully")
+                        reportEventFlow.update { ReportEvent.Close }
                         snackbarDispatcher(ReportSnackbarMessage.ReportSendingSuccess)
                     }
                     .onError {

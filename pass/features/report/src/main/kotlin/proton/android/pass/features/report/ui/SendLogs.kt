@@ -37,6 +37,7 @@ import proton.android.pass.features.report.presentation.ReportFormData
 @Composable
 internal fun SendLogs(
     modifier: Modifier = Modifier,
+    isLoading: Boolean,
     formState: ReportFormData,
     onEvent: (ReportNavContentEvent) -> Unit
 ) {
@@ -50,6 +51,7 @@ internal fun SendLogs(
     ) {
         Text.Body1Regular(stringResource(R.string.send_logs_label))
         Checkbox(
+            enabled = isLoading,
             checked = formState.attachLog,
             onCheckedChange = { onEvent(ReportNavContentEvent.OnSendLogsChange(it)) }
         )

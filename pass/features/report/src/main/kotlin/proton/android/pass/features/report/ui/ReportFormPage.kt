@@ -71,7 +71,7 @@ internal fun ReportFormPage(
         )
         ImageAttach(images = formState.extraFiles, onEvent = onEvent)
         Spacer(Modifier.weight(1f))
-        SendLogs(formState = formState, onEvent = onEvent)
+        SendLogs(isLoading = state.isLoading, formState = formState, onEvent = onEvent)
         LoadingCircleButton(
             modifier = Modifier
                 .fillMaxWidth()

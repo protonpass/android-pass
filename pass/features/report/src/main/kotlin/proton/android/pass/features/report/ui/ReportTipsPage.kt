@@ -39,7 +39,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import proton.android.pass.commonui.api.PassTheme
@@ -49,10 +51,14 @@ import proton.android.pass.composecomponents.impl.buttons.Button
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.report.R
 import proton.android.pass.features.report.navigation.ReportNavContentEvent
+import proton.android.pass.passkeys.api.PasskeySupport
+import proton.android.pass.passkeys.api.PasskeySupport.NotSupportedReason.AndroidVersion
+import proton.android.pass.passkeys.api.PasskeySupport.NotSupportedReason.CredentialManagerUnsupported
 
 @Composable
 internal fun ReportTipsPage(
     modifier: Modifier = Modifier,
+    passkeySupportOption: Option<PasskeySupport>,
     reportReasonOption: Option<ReportReason>,
     onEvent: (ReportNavContentEvent) -> Unit,
     onReportIssue: () -> Unit
@@ -107,7 +113,36 @@ internal fun ReportTipsPage(
             }
 
             ReportReason.Passkeys -> {
-                TipRow(text = "Check your browser settings")
+                when (passkeySupportOption) {
+                    None -> {}
+                    is Some -> {
+                        when (val passkeySupport = passkeySupportOption.value) {
+                            is PasskeySupport.NotSupported -> {
+                                when (passkeySupport.reason) {
+                                    AndroidVersion ->
+                                        TipRow(text = stringResource(R.string.tips_passkey_android_not_supported))
+
+                                    CredentialManagerUnsupported ->
+                                        TipRow(
+                                            text = stringResource(
+                                                R.string.tips_passkeys_credential_manager_not_supported
+                                            )
+                                        )
+
+                                    PasskeySupport.NotSupportedReason.Unknown -> {}
+                                }
+                            }
+
+                            PasskeySupport.Supported -> {
+                                TipRow(
+                                    text = stringResource(R.string.tips_passkey_supported),
+                                    onClick = { openWebsite(context, PASS_PASSKEYS) }
+                                )
+                            }
+                        }
+                    }
+                }
+
             }
 
             ReportReason.Other ->
@@ -115,7 +150,10 @@ internal fun ReportTipsPage(
         }
         Spacer(Modifier.weight(1f))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Text.Body1Regular(stringResource(R.string.hint_tips_screen), color = PassTheme.colors.textWeak)
+            Text.Body1Regular(
+                stringResource(R.string.hint_tips_screen),
+                color = PassTheme.colors.textWeak
+            )
         }
         Spacer(Modifier.height(Spacing.small))
         Button.Circular(
@@ -144,9 +182,9 @@ internal fun ReportTipsPage(
     }
 }
 
+private const val PASS_PASSKEYS = "https://proton.me/support/pass-use-passkeys"
 private const val PASS_VAULT_SHARE = "https://proton.me/support/pass-android-share"
 private const val PASS_SECURE_LINK = "https://proton.me/support/secure-link-sharing-android"
-
 
 @Preview
 @Composable
@@ -154,6 +192,7 @@ fun ReportTipsPagePreview(@PreviewParameter(ThemePreviewProvider::class) isDark:
     PassTheme(isDark = isDark) {
         Surface {
             ReportTipsPage(
+                passkeySupportOption = None,
                 reportReasonOption = ReportReason.Autofill.some(),
                 onEvent = {},
                 onReportIssue = {}

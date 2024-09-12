@@ -40,4 +40,6 @@
     <string name="sharing_tip_secure_links_guide">Having issues with secure links? Check our guide.</string>
     <string name="sync_tip_force_refresh">Is your screen empty? try doing a force sync.</string>
     <string name="send_logs_label">Send logs</string>
+    <string name="report_sending_success">Report sent successfully.</string>
+    <string name="report_sending_error">Could not send the report.</string>
 </resources>

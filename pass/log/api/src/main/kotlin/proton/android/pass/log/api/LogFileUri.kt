@@ -16,19 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.report
+package proton.android.pass.log.api
 
-import java.io.File
+import javax.inject.Qualifier
 
-interface SendReport {
-    suspend operator fun invoke(report: Report)
-}
-
-data class Report(
-    val title: String,
-    val description: String,
-    val username: String,
-    val email: String,
-    val shouldAttachLog: Boolean,
-    val extraFiles: Set<File>
-)
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class LogFileUri

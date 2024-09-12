@@ -19,12 +19,14 @@
 package proton.android.pass.features.report.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.report.navigation.ReportNavContentEvent
 import proton.android.pass.features.report.navigation.ReportNavDestination
+import proton.android.pass.features.report.presentation.ReportEvent
 import proton.android.pass.features.report.presentation.ReportViewModel
 
 @Composable
@@ -34,6 +36,14 @@ fun ReportScreen(
     viewModel: ReportViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state.reportEvent) {
+        when (state.reportEvent) {
+            is ReportEvent.Idle -> {}
+            is ReportEvent.Close -> onNavigated(ReportNavDestination.Close)
+        }
+        viewModel.onEventConsumed(state.reportEvent)
+    }
     ReportContent(
         modifier = modifier,
         onEvent = { event ->

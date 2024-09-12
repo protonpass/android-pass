@@ -18,15 +18,19 @@
 
 package proton.android.pass.features.report.presentation
 
+import android.content.Context
 import android.net.Uri
+import android.webkit.MimeTypeMap
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -34,6 +38,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.user.domain.UserManager
 import proton.android.pass.autofill.api.AutofillManager
@@ -50,15 +55,20 @@ import proton.android.pass.data.api.usecases.report.SendReport
 import proton.android.pass.features.report.presentation.ReportFormData.Companion.validate
 import proton.android.pass.features.report.ui.ReportReason
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
+import java.io.File
+import java.io.FileOutputStream
 import javax.inject.Inject
 
 @HiltViewModel
 class ReportViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     savedStateHandleProvider: SavedStateHandleProvider,
     accountManager: AccountManager,
     userManager: UserManager,
     private val autofillManager: AutofillManager,
-    private val sendReport: SendReport
+    private val sendReport: SendReport,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     init {
@@ -75,12 +85,15 @@ class ReportViewModel @Inject constructor(
     var formState by savedStateHandleProvider.get()
         .saveable { mutableStateOf(ReportFormData()) }
 
+    private val reportEventFlow: MutableStateFlow<ReportEvent> = MutableStateFlow(ReportEvent.Idle)
     private val reportReasonFlow: MutableStateFlow<Option<ReportReason>> = MutableStateFlow(None)
-    private val isLoadingStateFlow: MutableStateFlow<IsLoadingState> = MutableStateFlow(IsLoadingState.NotLoading)
+    private val isLoadingStateFlow: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.NotLoading)
     private val formValidationErrorsStateFlow =
         MutableStateFlow(persistentListOf<ReportValidationError>())
 
     internal val state = combine(
+        reportEventFlow,
         reportReasonFlow,
         isLoadingStateFlow,
         formValidationErrorsStateFlow,
@@ -100,27 +113,58 @@ class ReportViewModel @Inject constructor(
             val errors: List<ReportValidationError> = formState.validate()
             formValidationErrorsStateFlow.update { errors.toPersistentList() }
             if (errors.isEmpty()) {
-                val report = Report(
-                    title = "Report from Pass Android: ${reportReasonFlow.value}",
-                    description = formState.description,
-                    email = formState.email,
-                    username = formState.username,
-                    shouldAttachLog = formState.attachLog
-                )
                 isLoadingStateFlow.update { IsLoadingState.Loading }
-                runCatching { sendReport(report) }
+                runCatching {
+                    val title =
+                        "Report from Pass Android: ${reportReasonFlow.value.value() ?: "Empty"}"
+                    val extraFiles = formState.extraFiles.mapIndexed { index, uri ->
+                        fileFromContentUri(context, index, uri)
+                    }.toSet()
+                    val report = Report(
+                        title = title,
+                        description = formState.description,
+                        email = formState.email,
+                        username = formState.username,
+                        shouldAttachLog = formState.attachLog,
+                        extraFiles = extraFiles
+                    )
+                    sendReport(report)
+                }
                     .onSuccess {
                         PassLogger.i(TAG, "Report sent successfully")
+                        snackbarDispatcher(ReportSnackbarMessage.ReportSendingSuccess)
                     }
                     .onError {
                         PassLogger.w(TAG, "Error sending report")
                         PassLogger.w(TAG, it)
+                        snackbarDispatcher(ReportSnackbarMessage.ReportSendingError)
                     }
                 isLoadingStateFlow.update { IsLoadingState.NotLoading }
             } else {
                 PassLogger.i(TAG, "Form errors: $errors")
             }
         }
+    }
+
+    private suspend fun fileFromContentUri(
+        context: Context,
+        index: Int,
+        uri: Uri
+    ): File = withContext(Dispatchers.IO) {
+        val fileType = context.contentResolver.getType(uri)
+        val fileExtension = MimeTypeMap.getSingleton().getExtensionFromMimeType(fileType)
+        val fileName = "extra_report_file_$index${fileExtension?.let { ".$it" } ?: ""}"
+        val tempFile = File(context.cacheDir, fileName).apply { createNewFile() }
+        context.contentResolver.openInputStream(uri)?.use { inputStream ->
+            FileOutputStream(tempFile).use { outputStream ->
+                val buffer = ByteArray(BUFFER_SIZE)
+                var length: Int
+                while (inputStream.read(buffer).also { length = it } > 0) {
+                    outputStream.write(buffer, 0, length)
+                }
+            }
+        }
+        tempFile
     }
 
     fun onDescriptionChange(value: String) {
@@ -163,9 +207,18 @@ class ReportViewModel @Inject constructor(
         )
     }
 
+    fun onEventConsumed(event: ReportEvent) {
+        reportEventFlow.compareAndSet(event, ReportEvent.Idle)
+    }
+
     companion object {
         private const val TAG = "ReportViewModel"
+
+        private const val BUFFER_SIZE = 8192
     }
 }
 
-
+sealed interface ReportEvent {
+    data object Idle : ReportEvent
+    data object Close : ReportEvent
+}

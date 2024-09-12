@@ -20,7 +20,6 @@ package proton.android.pass.features.report.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,7 +27,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -39,7 +37,7 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.buttons.Button
+import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.report.R
 import proton.android.pass.features.report.navigation.ReportNavContentEvent
@@ -78,17 +76,17 @@ internal fun ReportFormPage(
         ImageAttach(images = formState.extraFiles, onEvent = onEvent)
         Spacer(Modifier.weight(1f))
         SendLogs(formState = formState, onEvent = onEvent)
-        Button.Circular(
+        LoadingCircleButton(
             modifier = Modifier
-                .padding(Spacing.medium)
-                .fillMaxWidth(),
-            color = PassTheme.colors.loginInteractionNormMajor1,
-            contentPadding = PaddingValues(Spacing.mediumSmall),
-            elevation = ButtonDefaults.elevation(0.dp),
+                .fillMaxWidth()
+                .padding(start = Spacing.medium, end = Spacing.medium, bottom = Spacing.medium),
+            text = {
+                Text.Body1Regular(stringResource(R.string.send_report_button))
+            },
+            color = PassTheme.colors.interactionNormMajor1,
+            isLoading = state.isLoading,
             onClick = { onEvent(ReportNavContentEvent.SubmitReport) }
-        ) {
-            Text.Body1Regular(stringResource(R.string.send_report_button))
-        }
+        )
     }
 }
 

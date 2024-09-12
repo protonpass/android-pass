@@ -34,6 +34,8 @@ import proton.android.pass.data.impl.core.api.CoreApi
 import proton.android.pass.log.api.LogFileUri
 import proton.android.pass.log.api.PassLogger
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -91,10 +93,12 @@ class ReportRepositoryImpl @Inject constructor(
         .addFormDataPart(name = "Email", value = report.email)
         .apply {
             logFile?.validateFile()?.let { file ->
+                val tempFile = File.createTempFile(file.nameWithoutExtension, ".${file.extension}")
+                Files.copy(file.toPath(), tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING)
                 addFormDataPart(
                     name = "Logs",
-                    filename = file.name,
-                    body = file.asRequestBody(file.mimeType?.toMediaTypeOrNull())
+                    filename = tempFile.name,
+                    body = tempFile.asRequestBody(tempFile.mimeType?.toMediaTypeOrNull())
                 )
             }
             extraFiles

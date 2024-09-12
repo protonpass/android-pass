@@ -122,7 +122,7 @@ internal fun ReportTipsPage(
             modifier = Modifier
                 .padding(horizontal = Spacing.medium)
                 .fillMaxWidth(),
-            color = PassTheme.colors.loginInteractionNormMajor1,
+            color = PassTheme.colors.interactionNormMajor1,
             contentPadding = PaddingValues(Spacing.mediumSmall),
             elevation = ButtonDefaults.elevation(0.dp),
             onClick = onReportIssue

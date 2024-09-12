@@ -37,6 +37,8 @@ import proton.android.pass.features.report.R
 import proton.android.pass.features.report.navigation.ReportNavContentEvent
 import me.proton.core.presentation.compose.R as CoreR
 
+private const val MAX_IMAGES = 4
+
 @Composable
 internal fun ImageAttach(
     modifier: Modifier = Modifier,
@@ -49,16 +51,18 @@ internal fun ImageAttach(
         }
     }
     Column(modifier = modifier) {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-            TransparentTextButton(
-                text = stringResource(R.string.attach_image_button),
-                prefixIcon = CoreR.drawable.ic_proton_plus,
-                onClick = {
-                    runCatching {
-                        pickMedia.launch(PickVisualMediaRequest(ImageOnly))
+        if (images.size <= MAX_IMAGES) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                TransparentTextButton(
+                    text = stringResource(R.string.attach_image_button),
+                    prefixIcon = CoreR.drawable.ic_proton_plus,
+                    onClick = {
+                        runCatching {
+                            pickMedia.launch(PickVisualMediaRequest(ImageOnly))
+                        }
                     }
-                }
-            )
+                )
+            }
         }
         Column {
             images.forEach { image ->

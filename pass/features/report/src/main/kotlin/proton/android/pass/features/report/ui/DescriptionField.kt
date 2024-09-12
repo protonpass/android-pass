@@ -18,6 +18,8 @@
 
 package proton.android.pass.features.report.ui
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -25,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
@@ -47,9 +50,11 @@ fun DescriptionField(
     val focusRequester = remember { FocusRequester() }
     ProtonTextField(
         modifier = modifier
+            .defaultMinSize(minHeight = 120.dp)
             .focusRequester(focusRequester)
             .roundedContainerNorm()
             .padding(Spacing.medium),
+        verticalArrangement = Arrangement.Top,
         value = value,
         onChange = onChange,
         moveToNextOnEnter = true,

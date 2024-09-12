@@ -192,8 +192,8 @@ fun ReportTipsPagePreview(@PreviewParameter(ThemePreviewProvider::class) isDark:
     PassTheme(isDark = isDark) {
         Surface {
             ReportTipsPage(
-                passkeySupportOption = None,
-                reportReasonOption = ReportReason.Autofill.some(),
+                passkeySupportOption = PasskeySupport.NotSupported(AndroidVersion).some(),
+                reportReasonOption = ReportReason.Passkeys.some(),
                 onEvent = {},
                 onReportIssue = {}
             )

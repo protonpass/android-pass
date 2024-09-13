@@ -11,7 +11,7 @@
   <string name="profile_option_rating">Valora l\'aplicació</string>
   <string name="profile_option_autofill">Emplenament automàtic</string>
   <string name="profile_option_autofill_subtitle">Ompliu automàticament els vostres noms d\'usuari i contrasenyes.</string>
-  <string name="profile_option_secure_links">Enllaces segurs</string>
+  <string name="profile_option_secure_links">Enllaços segurs</string>
   <string name="profile_option_aliases">Àlies</string>
   <string name="profile_error_biometry_failed_to_start">No s\'ha pogut iniciar l\'autenticació biomètrica</string>
   <string name="profile_error_biometry_failed_to_authenticate">No s’ha pogut autenticar</string>

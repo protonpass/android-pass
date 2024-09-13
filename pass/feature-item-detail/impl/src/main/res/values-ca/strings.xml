@@ -58,7 +58,7 @@
   <string name="mfa_limit_reached">S\'ha assolit el límit de 2FA</string>
   <string name="mfa_icon_content_description">Icona de 2FA</string>
   <string name="custom_field_text_icon_description">Camp de text personalitzat</string>
-  <string name="custom_field_hidden_icon_description">Camp personalitzat ocult</string>
+  <string name="custom_field_hidden_icon_description">Camp personalitzat amagat</string>
   <string name="custom_field_totp_icon_description">Camp personalitzat 2FA</string>
   <!-- Credit card details -->
   <string name="credit_card_cardholder_field_name">Nom a la targeta</string>

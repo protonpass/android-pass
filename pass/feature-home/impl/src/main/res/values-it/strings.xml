@@ -132,14 +132,14 @@
   <string name="home_snackbar_items_unpinned_success">Elementi non più fissati</string>
   <string name="home_snackbar_items_unpinned_partial_success">Annullamento del fissaggio di alcuni elementi non riuscito</string>
   <string name="home_snackbar_items_unpinned_error">Annullamento del fissaggio degli elementi non riuscito</string>
-  <string name="home_snackbar_items_alias_enabled_success">Alias enabled successfully</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the alias</string>
-  <string name="home_snackbar_items_alias_enabled_error">Error enabling aliases</string>
-  <string name="home_snackbar_items_alias_disabled_success">Alias disabled successfully</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the alias</string>
-  <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
-  <string name="bulk_action_unpin">Unpin</string>
-  <string name="bulk_action_pin">Pin</string>
-  <string name="bulk_action_enable_alias">Enable alias</string>
-  <string name="bulk_action_disable_alias">Disable alias</string>
+  <string name="home_snackbar_items_alias_enabled_success">Alias ​​abilitato</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Abilitazione di alcuni alias non riuscita</string>
+  <string name="home_snackbar_items_alias_enabled_error">Abilitazione degli alias non riuscita</string>
+  <string name="home_snackbar_items_alias_disabled_success">Alias ​​disabilitato</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Disabilitazione di alcuni alias non riuscita</string>
+  <string name="home_snackbar_items_alias_disabled_error">Disabilitazione degli alias non riuscita</string>
+  <string name="bulk_action_unpin">Non fissare</string>
+  <string name="bulk_action_pin">Fissa</string>
+  <string name="bulk_action_enable_alias">Abilita l\'alias</string>
+  <string name="bulk_action_disable_alias">Disabilita l\'alias</string>
 </resources>

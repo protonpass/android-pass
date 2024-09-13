@@ -132,14 +132,14 @@
   <string name="home_snackbar_items_unpinned_success">Τα στοιχεία ξεκαρφιτσώθηκαν με επιτυχία</string>
   <string name="home_snackbar_items_unpinned_partial_success">Σφάλμα κατά το ξεκαρφίτσωμα ορισμένων στοιχείων</string>
   <string name="home_snackbar_items_unpinned_error">Σφάλμα κατά το ξεκαρφίτσωμα στοιχείων</string>
-  <string name="home_snackbar_items_alias_enabled_success">Alias enabled successfully</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the alias</string>
-  <string name="home_snackbar_items_alias_enabled_error">Error enabling aliases</string>
-  <string name="home_snackbar_items_alias_disabled_success">Alias disabled successfully</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the alias</string>
-  <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
-  <string name="bulk_action_unpin">Unpin</string>
-  <string name="bulk_action_pin">Pin</string>
-  <string name="bulk_action_enable_alias">Enable alias</string>
-  <string name="bulk_action_disable_alias">Disable alias</string>
+  <string name="home_snackbar_items_alias_enabled_success">Το ψευδώνυμο ενεργοποιήθηκε με επιτυχία</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Σφάλμα κατά την ενεργοποίηση ορισμένων ψευδωνύμων</string>
+  <string name="home_snackbar_items_alias_enabled_error">Σφάλμα κατά την ενεργοποίηση ψευδωνύμων</string>
+  <string name="home_snackbar_items_alias_disabled_success">Το ψευδώνυμο απενεργοποιήθηκε με επιτυχία</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Σφάλμα κατά την απενεργοποίηση ορισμένων ψευδωνύμων</string>
+  <string name="home_snackbar_items_alias_disabled_error">Σφάλμα κατά την απενεργοποίηση ψευδωνύμων</string>
+  <string name="bulk_action_unpin">Ξεκαρφίτσωμα</string>
+  <string name="bulk_action_pin">Καρφίτσωμα</string>
+  <string name="bulk_action_enable_alias">Ενεργοποίηση ψευδωνύμου</string>
+  <string name="bulk_action_disable_alias">Απενεργοποίηση ψευδωνύμου</string>
 </resources>

@@ -20,11 +20,13 @@ package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
@@ -62,10 +64,15 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     private val remoteSimpleLoginDataSource: RemoteSimpleLoginDataSource
 ) : SimpleLoginRepository {
 
-    override fun observeSyncStatus(): Flow<SimpleLoginSyncStatus> = flow {
-        withUserId { userId ->
-            refreshSyncStatus(userId)
+    private val userIdFlow = accountManager.getPrimaryUserId()
+        .filterNotNull()
+        .distinctUntilChanged()
 
+    override fun observeSyncStatus(): Flow<SimpleLoginSyncStatus> = userIdFlow
+        .onEach { userId ->
+            refreshSyncStatus(userId)
+        }
+        .flatMapLatest { userId ->
             combine(
                 userAccessDataRepository.observe(userId),
                 localSimpleLoginDataSource.observeSyncPreference()
@@ -75,10 +82,8 @@ class SimpleLoginRepositoryImpl @Inject constructor(
                     isSimpleLoginSyncPreferenceEnabled = isSimpleLoginSyncPreferenceEnabled
                 )
             }
-                .filterNotNull()
-                .also { simpleLoginSyncStatusFlow -> emitAll(simpleLoginSyncStatusFlow) }
         }
-    }
+        .filterNotNull()
 
     override fun disableSyncPreference() {
         localSimpleLoginDataSource.disableSyncPreference()
@@ -97,13 +102,12 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         refreshSyncStatus(userId)
     }
 
-    override fun observeAliasDomains(): Flow<List<SimpleLoginAliasDomain>> = flow {
-        withUserId { userId ->
-            remoteSimpleLoginDataSource.getSimpleLoginAliasDomains(userId).domains
+    override fun observeAliasDomains(): Flow<List<SimpleLoginAliasDomain>> = userIdFlow
+        .mapLatest { userId ->
+            remoteSimpleLoginDataSource.getSimpleLoginAliasDomains(userId)
+                .domains
                 .map { simpleLoginAliasDomainData -> simpleLoginAliasDomainData.toDomain() }
-                .also { simpleLoginAliasDomains -> emit(simpleLoginAliasDomains) }
         }
-    }
 
     override suspend fun updateAliasDomain(domain: String?) {
         withUserId { userId ->
@@ -119,13 +123,12 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun observeAliasMailboxes(): Flow<List<SimpleLoginAliasMailbox>> = flow {
-        withUserId { userId ->
-            remoteSimpleLoginDataSource.getSimpleLoginAliasMailboxes(userId).mailboxes
+    override fun observeAliasMailboxes(): Flow<List<SimpleLoginAliasMailbox>> = userIdFlow
+        .mapLatest { userId ->
+            remoteSimpleLoginDataSource.getSimpleLoginAliasMailboxes(userId)
+                .mailboxes
                 .map { simpleLoginAliasMailboxData -> simpleLoginAliasMailboxData.toDomain() }
-                .also { simpleLoginAliasMailboxes -> emit(simpleLoginAliasMailboxes) }
         }
-    }
 
     override suspend fun updateAliasMailbox(mailboxId: String) {
         withUserId { userId ->
@@ -141,15 +144,16 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun observeAliasSettings(): Flow<SimpleLoginAliasSettings> = flow {
-        withUserId { userId ->
+    override fun observeAliasSettings(): Flow<SimpleLoginAliasSettings> = userIdFlow
+        .onEach { userId ->
             remoteSimpleLoginDataSource.getSimpleLoginAliasSettings(userId)
                 .settings
                 .toDomain()
                 .also(localSimpleLoginDataSource::updateAliasSettings)
         }
-        emitAll(localSimpleLoginDataSource.observeAliasSettings())
-    }
+        .flatMapLatest {
+            localSimpleLoginDataSource.observeAliasSettings()
+        }
 
     override suspend fun getPendingAliases(): SimpleLoginPendingAliases = withUserId { userId ->
         remoteSimpleLoginDataSource.getSimpleLoginPendingAliases(userId)

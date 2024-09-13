@@ -27,9 +27,9 @@
   <string name="account_settings_list_item_security_keys_hint_not_set">Ni nastavljeno</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
-    <item quantity="one">%d Varnostni ključ nastavljen</item>
-    <item quantity="two">%d Varnostna ključa nastavljena</item>
-    <item quantity="few">%d Varnostni ključi nastavljeni</item>
-    <item quantity="other">%d Varnostni ključi nastavljeni</item>
+    <item quantity="one">%d varnostni ključ nastavljen</item>
+    <item quantity="two">%d varnostna ključa nastavljena</item>
+    <item quantity="few">%d varnostni ključi nastavljeni</item>
+    <item quantity="other">%d varnostnih ključev nastavljenih</item>
   </plurals>
 </resources>

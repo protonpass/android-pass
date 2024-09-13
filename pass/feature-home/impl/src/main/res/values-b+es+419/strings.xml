@@ -132,14 +132,14 @@
   <string name="home_snackbar_items_unpinned_success">Elementos desanclados con éxito</string>
   <string name="home_snackbar_items_unpinned_partial_success">Error al desanclar algunos elementos</string>
   <string name="home_snackbar_items_unpinned_error">Error al desanclar los elementos</string>
-  <string name="home_snackbar_items_alias_enabled_success">Alias enabled successfully</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the alias</string>
-  <string name="home_snackbar_items_alias_enabled_error">Error enabling aliases</string>
-  <string name="home_snackbar_items_alias_disabled_success">Alias disabled successfully</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the alias</string>
-  <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
-  <string name="bulk_action_unpin">Unpin</string>
-  <string name="bulk_action_pin">Pin</string>
-  <string name="bulk_action_enable_alias">Enable alias</string>
-  <string name="bulk_action_disable_alias">Disable alias</string>
+  <string name="home_snackbar_items_alias_enabled_success">Se activó el alias.</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Error al activar algunos alias</string>
+  <string name="home_snackbar_items_alias_enabled_error">Error al activar los alias</string>
+  <string name="home_snackbar_items_alias_disabled_success">Se desactivó el alias.</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Error al desactivar algunos alias</string>
+  <string name="home_snackbar_items_alias_disabled_error">Error al desactivar los alias</string>
+  <string name="bulk_action_unpin">Desanclar</string>
+  <string name="bulk_action_pin">Anclar</string>
+  <string name="bulk_action_enable_alias">Activar el alias</string>
+  <string name="bulk_action_disable_alias">Desactivar el alias</string>
 </resources>

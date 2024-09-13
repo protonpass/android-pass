@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.asAnnotatedString
@@ -93,7 +94,7 @@ internal fun AliasAddressRow(
             horizontalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
             Icon(
-                painter = painterResource(CoreR.drawable.ic_proton_alias),
+                painter = painterResource(CoreR.drawable.ic_proton_envelope),
                 contentDescription = null,
                 tint = PassTheme.colors.aliasInteractionNorm
             )
@@ -111,7 +112,7 @@ internal fun AliasAddressRow(
                 )
                 Text(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
+                        .clip(RoundedCornerShape(size = Radius.small))
                         .clickable { onCreateLoginFromAlias(alias) }
                         .padding(Spacing.small),
                     text = stringResource(R.string.alias_create_login_from_alias),

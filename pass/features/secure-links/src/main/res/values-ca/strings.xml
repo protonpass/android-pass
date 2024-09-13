@@ -40,7 +40,7 @@
   <string name="secure_links_overview_widget_max_views_unlimited">Il·limitat</string>
   <string name="secure_links_overview_button_view_all_links">Mostra tots els enllaços segurs</string>
   <!--List screen-->
-  <string name="secure_links_list_title">Enllaces segurs</string>
+  <string name="secure_links_list_title">Enllaços segurs</string>
   <string name="secure_links_list_empty_title">No hi ha enllaços segurs</string>
   <string name="secure_links_list_empty_subtitle">Podeu començar a crear enllaços segurs des de les opcions per a compartir els detalls d\'un element</string>
   <string name="secure_links_list_expiration_description">Caduca en %s</string>

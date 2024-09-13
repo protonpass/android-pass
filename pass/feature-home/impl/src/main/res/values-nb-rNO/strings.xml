@@ -132,14 +132,14 @@
   <string name="home_snackbar_items_unpinned_success">Elementer løsnet</string>
   <string name="home_snackbar_items_unpinned_partial_success">Feil ved løsing av noen av elementene</string>
   <string name="home_snackbar_items_unpinned_error">Feil ved løsing av elementene</string>
-  <string name="home_snackbar_items_alias_enabled_success">Alias enabled successfully</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the alias</string>
-  <string name="home_snackbar_items_alias_enabled_error">Error enabling aliases</string>
-  <string name="home_snackbar_items_alias_disabled_success">Alias disabled successfully</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the alias</string>
-  <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
-  <string name="bulk_action_unpin">Unpin</string>
-  <string name="bulk_action_pin">Pin</string>
-  <string name="bulk_action_enable_alias">Enable alias</string>
-  <string name="bulk_action_disable_alias">Disable alias</string>
+  <string name="home_snackbar_items_alias_enabled_success">Alias aktivert</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Feil ved aktivering av noen av aliasene</string>
+  <string name="home_snackbar_items_alias_enabled_error">Feil ved aktivering av aliaser</string>
+  <string name="home_snackbar_items_alias_disabled_success">Alias deaktivert</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Feil ved deaktivering av noen av aliasene</string>
+  <string name="home_snackbar_items_alias_disabled_error">Feil ved deaktivering av aliaser</string>
+  <string name="bulk_action_unpin">Løs</string>
+  <string name="bulk_action_pin">Fest</string>
+  <string name="bulk_action_enable_alias">Aktiver alias</string>
+  <string name="bulk_action_disable_alias">Deaktiver alias</string>
 </resources>

@@ -29,7 +29,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onStart
@@ -124,29 +126,30 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private val appLockSectionStateFlow: Flow<AppLockSectionState> = observeAnyAccountHasEnforcedLock()
-        .flatMapLatest { orgSettings ->
-            if (orgSettings is Some && orgSettings.value.isEnforced()) {
-                val seconds = orgSettings.value.secondsToForceLock()
-                combine(
-                    userPreferencesRepository.getAppLockTypePreference(),
-                    userPreferencesRepository.getBiometricSystemLockPreference()
-                ) { type, biometricSystemLock ->
-                    when (type) {
-                        AppLockTypePreference.Biometrics ->
-                            EnforcedAppLockSectionState.Biometric(seconds, biometricSystemLock)
+    private val appLockSectionStateFlow: Flow<AppLockSectionState> =
+        observeAnyAccountHasEnforcedLock()
+            .flatMapLatest { orgSettings ->
+                if (orgSettings is Some && orgSettings.value.isEnforced()) {
+                    val seconds = orgSettings.value.secondsToForceLock()
+                    combine(
+                        userPreferencesRepository.getAppLockTypePreference(),
+                        userPreferencesRepository.getBiometricSystemLockPreference()
+                    ) { type, biometricSystemLock ->
+                        when (type) {
+                            AppLockTypePreference.Biometrics ->
+                                EnforcedAppLockSectionState.Biometric(seconds, biometricSystemLock)
 
-                        AppLockTypePreference.Pin ->
-                            EnforcedAppLockSectionState.Pin(seconds)
+                            AppLockTypePreference.Pin ->
+                                EnforcedAppLockSectionState.Pin(seconds)
 
-                        AppLockTypePreference.None ->
-                            EnforcedAppLockSectionState.Password(seconds)
+                            AppLockTypePreference.None ->
+                                EnforcedAppLockSectionState.Password(seconds)
+                        }
                     }
+                } else {
+                    userAppLockSectionStateFlow
                 }
-            } else {
-                userAppLockSectionStateFlow
             }
-        }
 
     private val autofillStatusFlow: Flow<AutofillSupportedStatus> = autofillManager
         .getAutofillStatus()
@@ -257,15 +260,27 @@ class ProfileViewModel @Inject constructor(
         .map { (_, readyUserIds) -> readyUserIds }
         .distinctUntilChanged()
 
-    private val simpleLoginSyncStatusOptionFlow = observeSimpleLoginSyncStatus()
-        .mapLatest { simpleLoginSyncStatus -> simpleLoginSyncStatus.toOption() }
-        .onStart { emit(None) }
-        .catch { error ->
-            PassLogger.w(TAG, "There was an error observing SL sync status")
-            PassLogger.w(TAG, error)
-            emit(None)
-        }
+    private val simpleLoginSyncStatusOptionFlow = accountManager.getPrimaryUserId()
         .distinctUntilChanged()
+        .flatMapLatest {
+            flow {
+                // We emit None in first place by 2 reasons:
+                // 1. To not delay the profile screen load.
+                // 2. To clean the previous user's account sync status (if any).
+                emit(None)
+
+                observeSimpleLoginSyncStatus()
+                    .mapLatest { simpleLoginSyncStatus -> simpleLoginSyncStatus.toOption() }
+                    .catch { error ->
+                        PassLogger.w(TAG, "There was an error observing SL sync status")
+                        PassLogger.w(TAG, error)
+                        emit(None)
+                    }
+                    .also { syncStatusOptionFlow ->
+                        emitAll(syncStatusOptionFlow.distinctUntilChanged())
+                    }
+            }
+        }
 
     internal val state: StateFlow<ProfileUiState> = combineN(
         appLockSectionStateFlow,

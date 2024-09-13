@@ -122,7 +122,7 @@ private fun PassAliasItemDetailAddressRow(
         horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         Icon(
-            painter = painterResource(CoreR.drawable.ic_proton_alias),
+            painter = painterResource(CoreR.drawable.ic_proton_envelope),
             contentDescription = null,
             tint = itemColors.norm
         )

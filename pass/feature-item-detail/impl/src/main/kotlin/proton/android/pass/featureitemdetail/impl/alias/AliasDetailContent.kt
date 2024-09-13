@@ -83,10 +83,12 @@ fun AliasDetailContent(
             onDismissTooltip = onDismissTooltip
         )
 
-        NoteSection(
-            text = contents.note,
-            accentColor = PassTheme.colors.aliasInteractionNorm
-        )
+        if (contents.note.isNotBlank()) {
+            NoteSection(
+                text = contents.note,
+                accentColor = PassTheme.colors.aliasInteractionNorm
+            )
+        }
 
         PassItemDetailsHistorySection(
             lastAutofillAtOption = itemUiModel.lastAutofillTime.toOption(),

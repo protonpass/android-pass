@@ -320,6 +320,7 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
     searchOptionsGraph(
         onNavigateEvent = {
             when (it) {
+                SearchOptionsNavigation.ResetFilters,
                 is SearchOptionsNavigation.SelectSorting -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
                 }

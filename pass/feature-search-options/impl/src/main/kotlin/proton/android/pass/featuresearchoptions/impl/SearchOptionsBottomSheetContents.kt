@@ -45,7 +45,8 @@ import proton.android.pass.composecomponents.impl.R as ComponentsR
 fun SearchOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     state: SearchOptionsUIState,
-    onNavigateEvent: (SearchOptionsNavigation) -> Unit
+    onNavigateEvent: (SearchOptionsNavigation) -> Unit,
+    onResetSearchOptions: () -> Unit
 ) {
     val items = mutableListOf<BottomSheetItem>()
     if (state is SuccessSearchOptionsUIState && state.showBulkActionsOption) {
@@ -53,6 +54,7 @@ fun SearchOptionsBottomSheetContents(
     }
     items.add(filtering(state, onNavigateEvent))
     items.add(sorting(state, onNavigateEvent))
+    items.add(resetSearchOptions(onResetSearchOptions))
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
         items = items.withDividers().toPersistentList()
@@ -136,6 +138,18 @@ private fun sorting(state: SearchOptionsUIState, onNavigateEvent: (SearchOptions
         override val isDivider = false
     }
 
+private fun resetSearchOptions(onResetSearchOptions: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(R.string.reset_filters)) }
+    override val subtitle: (@Composable () -> Unit)? = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_cross_circle) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onResetSearchOptions() }
+    override val isDivider = false
+}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
@@ -150,7 +164,8 @@ fun SearchOptionsBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvid
                     count = 2,
                     showBulkActionsOption = true
                 ),
-                onNavigateEvent = {}
+                onNavigateEvent = {},
+                onResetSearchOptions = {}
             )
         }
     }

@@ -264,7 +264,11 @@ fun AliasDetail(
                             )
                         },
                         onTrash = {
-
+                            shouldShowDisableOrTrashDialog = false
+                            viewModel.onMoveToTrash(
+                                state.itemUiModel.shareId,
+                                state.itemUiModel.id
+                            )
                         },
                         onDismiss = {
                             shouldShowDisableOrTrashDialog = false

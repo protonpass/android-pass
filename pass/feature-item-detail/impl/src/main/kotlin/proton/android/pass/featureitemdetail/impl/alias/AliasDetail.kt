@@ -92,6 +92,8 @@ fun AliasDetail(
             )
 
             val contents = state.itemUiModel.contents as ItemContents.Alias
+            var shouldShowDisableOrTrashDialog by rememberSaveable { mutableStateOf(false) }
+
             PassModalBottomSheetLayout(
                 sheetState = bottomSheetState,
                 sheetContent = {
@@ -109,10 +111,14 @@ fun AliasDetail(
                             onMoveToTrash = {
                                 scope.launch { bottomSheetState.hide() }
                                 if (state.isSLAliasSyncEnabled) {
-                                    viewModel.onMoveToTrash(
-                                        state.itemUiModel.shareId,
-                                        state.itemUiModel.id
-                                    )
+                                    if (contents.isEnabled && !state.isAliasTrashDialogChecked) {
+                                        shouldShowDisableOrTrashDialog = true
+                                    } else {
+                                        viewModel.onMoveToTrash(
+                                            state.itemUiModel.shareId,
+                                            state.itemUiModel.id
+                                        )
+                                    }
                                 } else {
                                     shouldShowMoveToTrashItemDialog = true
                                 }
@@ -243,6 +249,23 @@ fun AliasDetail(
                     },
                     onDismiss = { shouldShowDeleteItemDialog = false }
                 )
+
+                if (shouldShowDisableOrTrashDialog) {
+                    AliasDisableOrTrashDialog(
+                        isChecked = state.isAliasTrashDialogChecked,
+                        isLoading = state.isAliasStateToggling,
+                        onCheckedChange = viewModel::onAliasTrashDialogStatusChanged,
+                        onDisable = {
+
+                        },
+                        onTrash = {
+
+                        },
+                        onDismiss = {
+                            shouldShowDisableOrTrashDialog = false
+                        }
+                    )
+                }
             }
         }
     }

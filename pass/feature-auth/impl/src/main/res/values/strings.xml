@@ -16,7 +16,6 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
-
 <resources>
     <string name="enter_your_pin_code">Enter your PIN Code</string>
     <string name="unlock">Unlock</string>
@@ -24,8 +23,6 @@
         <item quantity="one">Incorrect PIN. %d attempt remaining.</item>
         <item quantity="other">Incorrect PIN. %d attempts remaining.</item>
     </plurals>
-
-
     <string name="auth_unlock_app_title">Unlock Proton Pass</string>
     <string name="auth_unlock_app_subtitle">Enter the master password for %s</string>
     <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
@@ -35,7 +32,7 @@
     <string name="auth_action_reveal_password">Reveal master password</string>
     <string name="auth_action_conceal_password">Conceal master password</string>
     <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Enter PIN instead</string>
-    <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Enter fingerprint instead</string>
+    <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
     <string name="auth_unlock_button">Unlock</string>
     <string name="auth_error_empty_password">Password cannot be empty</string>
     <string name="auth_error_pin_cannot_be_empty">PIN cannot be empty</string>

@@ -81,6 +81,8 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
 
     private val simpleLoginSyncStatusPreference = MutableStateFlow(SimpleLoginSyncStatusPreference.Disabled)
 
+    private val aliasTrashDialogStatusPreference = MutableStateFlow(AliasTrashDialogStatusPreference.Disabled)
+
     override fun setAppLockState(state: AppLockState): Result<Unit> {
         appLockState.tryEmit(state)
         return Result.success(Unit)
@@ -219,4 +221,11 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
     override fun observeSimpleLoginSyncStatusPreference(): Flow<SimpleLoginSyncStatusPreference> =
         simpleLoginSyncStatusPreference
 
+    override fun setAliasTrashDialogStatusPreference(preference: AliasTrashDialogStatusPreference): Result<Unit> {
+        aliasTrashDialogStatusPreference.tryEmit(preference)
+        return Result.success(Unit)
+    }
+
+    override fun observeAliasTrashDialogStatusPreference(): Flow<AliasTrashDialogStatusPreference> =
+        aliasTrashDialogStatusPreference
 }

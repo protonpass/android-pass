@@ -104,7 +104,7 @@ sealed interface AutofillEvent {
     value class AutofillSuggestionSelected(val item: AutofillItem) : AutofillEvent
 }
 
-@Suppress("LongParameterList", "LongMethod", "ComplexMethod")
+@Suppress("LongParameterList", "LongMethod", "ComplexMethod", "ThrowsCount")
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 fun NavGraphBuilder.autofillActivityGraph(
@@ -178,10 +178,10 @@ fun NavGraphBuilder.autofillActivityGraph(
                 is SearchOptionsNavigation.SelectSorting -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
-
-                SearchOptionsNavigation.Filter -> TODO()
-                SearchOptionsNavigation.Sorting -> TODO()
-                SearchOptionsNavigation.BulkActions -> TODO()
+                SearchOptionsNavigation.ResetFilters,
+                SearchOptionsNavigation.Filter,
+                SearchOptionsNavigation.Sorting,
+                SearchOptionsNavigation.BulkActions -> throw IllegalStateException("Action not supported")
             }
         }
     )

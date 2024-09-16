@@ -139,6 +139,9 @@ import proton.android.pass.features.item.trash.shared.navigation.ItemTrashNavDes
 import proton.android.pass.features.item.trash.shared.navigation.itemTrashNavGraph
 import proton.android.pass.features.item.trash.trashdelete.navigation.ItemTrashDeleteNavItem
 import proton.android.pass.features.item.trash.trashmenu.navigation.ItemTrashMenuNavItem
+import proton.android.pass.features.report.navigation.ReportNavDestination
+import proton.android.pass.features.report.navigation.ReportNavItem
+import proton.android.pass.features.report.navigation.reportNavGraph
 import proton.android.pass.features.secure.links.create.navigation.SecureLinksCreateNavItem
 import proton.android.pass.features.secure.links.list.navigation.SecureLinksListNavItem
 import proton.android.pass.features.secure.links.listmenu.navigation.SecureLinksListMenuNavItem
@@ -178,11 +181,8 @@ import proton.android.pass.features.sl.sync.details.navigation.SimpleLoginSyncDe
 import proton.android.pass.features.sl.sync.settings.navigation.SimpleLoginSyncSettingsNavItem
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 import proton.android.pass.features.sl.sync.shared.navigation.simpleLoginSyncNavGraph
-import proton.android.pass.features.report.navigation.ReportNavDestination
-import proton.android.pass.features.report.navigation.ReportNavItem
 import proton.android.pass.features.upsell.navigation.UpsellNavDestination
 import proton.android.pass.features.upsell.navigation.UpsellNavItem
-import proton.android.pass.features.report.navigation.reportNavGraph
 import proton.android.pass.features.upsell.navigation.upsellNavGraph
 import proton.android.pass.featuresearchoptions.impl.FilterBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsBottomsheet
@@ -388,6 +388,7 @@ fun NavGraphBuilder.appGraph(
     searchOptionsGraph(
         onNavigateEvent = {
             when (it) {
+                SearchOptionsNavigation.ResetFilters,
                 is SearchOptionsNavigation.SelectSorting -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
                 }

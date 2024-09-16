@@ -37,7 +37,7 @@ import proton.android.pass.featureselectitem.navigation.SelectItemState
 import proton.android.pass.featureselectitem.navigation.selectItemGraph
 import proton.android.pass.navigation.api.AppNavigator
 
-@Suppress("CyclomaticComplexMethod", "ComplexMethod", "LongMethod", "LongParameterList")
+@Suppress("CyclomaticComplexMethod", "ComplexMethod", "LongMethod", "LongParameterList", "ThrowsCount")
 fun NavGraphBuilder.selectPasskeyActivityGraph(
     appNavigator: AppNavigator,
     domain: String,
@@ -133,6 +133,10 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
 
                 SearchOptionsNavigation.BulkActions -> {
                     throw IllegalStateException("Cannot perform bulk actions on SelectPasskey")
+                }
+
+                SearchOptionsNavigation.ResetFilters -> {
+                    throw IllegalStateException("Cannot reset filters on SelectPasskey")
                 }
             }
         }

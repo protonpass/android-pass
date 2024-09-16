@@ -22,26 +22,30 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.zip
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.domain.ItemState
+import proton.android.pass.featuresearchoptions.api.FilterOption
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
+import proton.android.pass.featuresearchoptions.api.SortingOption
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchOptionsBottomSheetViewModel @Inject constructor(
-    homeSearchOptionsRepository: HomeSearchOptionsRepository,
+    private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
     observeItemCount: ObserveItemCount,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
@@ -49,8 +53,11 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
     private val bulkActionsEnabled: Boolean =
         savedStateHandleProvider.get().require(EnableBulkActionsNavArgId.key)
 
+    private val searchOptionsEventFlow: MutableStateFlow<SearchOptionsEvent> =
+        MutableStateFlow(SearchOptionsEvent.Idle)
+
     @OptIn(ExperimentalCoroutinesApi::class)
-    val state: StateFlow<SearchOptionsUIState> = homeSearchOptionsRepository.observeSearchOptions()
+    private val itemCountAndSearchOptionsFlow = homeSearchOptionsRepository.observeSearchOptions()
         .flatMapLatest {
             when (val vault = it.vaultSelectionOption) {
                 VaultSelectionOption.AllVaults -> observeItemCount()
@@ -65,26 +72,46 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
                 itemCount to searchOptions
             }
         }
-        .map { (summary, options) ->
-            SuccessSearchOptionsUIState(
-                filterType = options.filterOption.searchFilterType,
-                sortingType = options.sortingOption.searchSortingType,
-                count = when (options.filterOption.searchFilterType) {
-                    SearchFilterType.All -> summary.total
-                    SearchFilterType.Login -> summary.login
-                    SearchFilterType.Alias -> summary.alias
-                    SearchFilterType.Note -> summary.note
-                    SearchFilterType.CreditCard -> summary.creditCard
-                    SearchFilterType.Identity -> summary.identities
-                }.toInt(),
-                showBulkActionsOption = bulkActionsEnabled
-            )
-        }
+
+    val state: StateFlow<SearchOptionsUIState> = combine(
+        itemCountAndSearchOptionsFlow,
+        searchOptionsEventFlow
+    ) { (summary, options), event ->
+        SuccessSearchOptionsUIState(
+            filterType = options.filterOption.searchFilterType,
+            sortingType = options.sortingOption.searchSortingType,
+            count = when (options.filterOption.searchFilterType) {
+                SearchFilterType.All -> summary.total
+                SearchFilterType.Login -> summary.login
+                SearchFilterType.Alias -> summary.alias
+                SearchFilterType.Note -> summary.note
+                SearchFilterType.CreditCard -> summary.creditCard
+                SearchFilterType.Identity -> summary.identities
+            }.toInt(),
+            showBulkActionsOption = bulkActionsEnabled,
+            event = event
+        )
+    }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
             initialValue = EmptySearchOptionsUIState
         )
+
+    fun onEventConsumed(event: SearchOptionsEvent) {
+        searchOptionsEventFlow.compareAndSet(event, SearchOptionsEvent.Idle)
+    }
+
+    fun resetFilters() {
+        homeSearchOptionsRepository.setFilterOption(FilterOption(SearchFilterType.All))
+        homeSearchOptionsRepository.setSortingOption(SortingOption(SearchSortingType.MostRecent))
+        searchOptionsEventFlow.update { SearchOptionsEvent.Close }
+    }
+}
+
+sealed interface SearchOptionsEvent {
+    data object Idle : SearchOptionsEvent
+    data object Close : SearchOptionsEvent
 }
 
 sealed interface SearchOptionsUIState
@@ -94,5 +121,6 @@ data class SuccessSearchOptionsUIState(
     val filterType: SearchFilterType,
     val sortingType: SearchSortingType,
     val count: Int,
-    val showBulkActionsOption: Boolean
+    val showBulkActionsOption: Boolean,
+    val event: SearchOptionsEvent = SearchOptionsEvent.Idle
 ) : SearchOptionsUIState

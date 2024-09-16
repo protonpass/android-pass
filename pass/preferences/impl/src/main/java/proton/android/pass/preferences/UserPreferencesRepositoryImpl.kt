@@ -245,6 +245,21 @@ class UserPreferencesRepositoryImpl @Inject constructor(
             ).let(SimpleLoginSyncStatusPreference::from)
         }
 
+    override fun setAliasTrashDialogStatusPreference(preference: AliasTrashDialogStatusPreference): Result<Unit> =
+        setPreference { userPreferencesBuilder ->
+            preference.value
+                .toBooleanPrefProto()
+                .let(userPreferencesBuilder::setAliasTrashDialogStatus)
+        }
+
+    override fun observeAliasTrashDialogStatusPreference(): Flow<AliasTrashDialogStatusPreference> =
+        getPreference { userPreferences ->
+            fromBooleanPrefProto(
+                pref = userPreferences.aliasTrashDialogStatus,
+                default = false
+            ).let(AliasTrashDialogStatusPreference::from)
+        }
+
     private fun setPreference(mapper: suspend (UserPreferences.Builder) -> UserPreferences.Builder): Result<Unit> =
         runBlocking {
             setPreferenceSuspend(mapper)

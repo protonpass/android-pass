@@ -7,5 +7,4 @@ option java_multiple_files = true;
 
 message TooltipsPreferences {
   BooleanPrefProto username_split_enabled = 1;
-  BooleanPrefProto alias_toggle_enabled = 2;
 }

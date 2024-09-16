@@ -6,7 +6,6 @@
     <string name="sort_by_creation_asc">Oldest to newest</string>
     <string name="sort_by_creation_desc">Newest to oldest</string>
     <string name="sort_by_modification_date">Recently used</string>
-
     <!-- List header results -->
     <string name="item_list_header_all_search_results">All</string>
     <string name="item_list_header_pinned_search_results">Pinned</string>
@@ -19,7 +18,6 @@
         <item quantity="other">results</item>
     </plurals>
     <string name="item_list_header_identities_type">Identities</string>
-
     <!-- Bottomsheets -->
     <string name="bottomsheet_confirm_button">Confirm</string>
     <string name="bottomsheet_cancel_button">Cancel</string>
@@ -33,7 +31,6 @@
     <string name="bottomsheet_copy_item_note">Copy note</string>
     <string name="bottomsheet_delete_permanently">Delete permanently</string>
     <string name="bottomsheet_restore">Restore</string>
-
     <!-- Actions -->
     <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Open item action menu</string>
     <string name="action_upgrade_now">Upgrade now</string>
@@ -49,41 +46,32 @@
     <string name="action_edit">Edit</string>
     <string name="action_update">Update</string>
     <string name="action_close">Close</string>
-
     <!-- Empty list -->
     <string name="empty_list_title">Add your first item</string>
     <string name="empty_search_results_title">No result found</string>
     <string name="empty_list_open_extension">Visit web extension</string>
     <string name="empty_list_create_item_button">Create new item</string>
-
     <!-- Field -->
     <string name="field_title_title">Title</string>
     <string name="field_title_hint">Untitled</string>
     <string name="field_title_required">Title required</string>
     <string name="small_cross_icon_content_description">Small cross icon</string>
-
     <string name="field_note_title">Note</string>
     <string name="field_note_hint">Add note</string>
-
     <string name="linked_apps_title">Linked apps</string>
-
     <!-- Indicator that indicates lack of internet connectivity -->
     <string name="indicator_no_network">Offline</string>
-
     <!-- Icon content description -->
     <string name="missing_app_icon_content_description">Missing app icon</string>
     <string name="add_item_icon_content_description">Add item icon</string>
     <string name="navigate_back_icon_content_description">Navigate back icon</string>
-
     <!-- Vault selector -->
     <string name="vault_selector_title">Vault</string>
-
     <!-- Bottom bar -->
     <string name="bottom_bar_list_items_icon_content_description">List items</string>
     <string name="bottom_bar_add_item_icon_content_description">Add item</string>
     <string name="bottom_bar_profile_icon_content_description">Profile</string>
     <string name="bottom_bar_security_center_icon_content_description">Security center</string>
-
     <!-- List group by most recents -->
     <string name="most_recent_today">Today</string>
     <string name="most_recent_yesterday">Yesterday</string>
@@ -94,36 +82,28 @@
     <string name="most_recent_last_90_days">Last 90 days</string>
     <string name="most_recent_within_the_last_year">Within the last year</string>
     <string name="most_recent_more_than_1_year">Older than 1 year</string>
-
     <!-- Search Top Bar -->
     <string name="search_topbar_icon_content_description">Search icon</string>
-
     <!-- Select Vault BottomSheet -->
     <plurals name="bottomsheet_select_vault_item_count">
         <item quantity="one">1 item</item>
         <item quantity="other">%d items</item>
     </plurals>
-
     <!-- Confirm close dialog -->
     <string name="confirm_close_dialog_title">Discard changes?</string>
     <string name="confirm_close_dialog_message">You have unsaved changes, are you sure you want to discard them?</string>
     <string name="confirm_close_dialog_close_button">Discard</string>
-
     <!-- Upgrade -->
     <string name="upgrade">Upgrade</string>
-
     <!-- Advanced options -->
     <string name="show_advanced_options">Advanced options</string>
     <string name="hide_advanced_options">Hide advanced options</string>
-
     <!-- Labels -->
     <string name="label_password_strength_strong">Strong</string>
     <string name="label_password_strength_vulnerable">Vulnerable</string>
     <string name="label_password_strength_weak">Weak</string>
-
     <!-- Pinning -->
     <string name="pinning_carousel_see_all">See all</string>
-
     <!-- Dates -->
     <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Today %s</string>
     <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Yesterday %s</string>
@@ -133,13 +113,11 @@
     12 February 12:34
     -->
     <string name="date_full_date_format">dd LLLL HH:mm</string>
-
     <!--
     Pattern used when displaying a date in the same year as we are.
     It would translate to 12 Feb 12:34
     -->
     <string name="date_full_date_format_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL HH:mm</string>
-
     <!--
     Pattern used when displaying a date including the year.
     It would translate to
@@ -151,25 +129,21 @@
    It would translate to 12 Feb 2023 12:34
    -->
     <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
-
     <!-- Items -->
     <string name="item_details_alias_section_alias_title">Alias address</string>
     <string name="item_details_alias_section_alias_disabled_title">Alias address (disabled)</string>
     <string name="item_details_alias_section_mailboxes_title">Forwarding to</string>
-
     <string name="item_details_credit_card_section_cardholder_title">Name on card</string>
     <string name="item_details_credit_card_section_card_number_title">Card number</string>
     <string name="item_details_credit_card_section_expiration_date_title">Expiration date</string>
     <string name="item_details_credit_card_section_cvv_title">Security code</string>
     <string name="item_details_credit_card_section_pin_title">PIN code</string>
-
     <string name="item_details_login_section_email_title">Email address</string>
     <string name="item_details_login_section_username_title">Username</string>
     <string name="item_details_login_section_username_or_username_title">Username or email address</string>
     <string name="item_details_login_section_password_title">Password</string>
     <string name="item_details_login_section_primary_totp_title">2FA token (TOTP)</string>
     <string name="item_details_login_section_websites_title">Websites</string>
-
     <string name="item_details_identity_section_personal_title">Personal details</string>
     <string name="item_details_identity_section_personal_first_name_title">First name</string>
     <string name="item_details_identity_section_personal_middle_name_title">Middle name</string>
@@ -206,7 +180,6 @@
     <string name="item_details_identity_section_work_email_title">Work email address</string>
     <string name="item_details_identity_section_work_phone_number_title">Work phone number</string>
     <string name="item_details_identity_section_work_personal_website_title">Personal website</string>
-
     <string name="item_details_shared_section_note_title">Note</string>
     <string name="item_details_shared_section_item_history_last_autofill_title">Last autofill</string>
     <string name="item_details_shared_section_item_history_created_title">Created</string>
@@ -219,20 +192,16 @@
     <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
     <!-- Passkeys -->
     <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
-
     <!-- Upgrade -->
     <string name="dialog_upgrade_plan_title">Upgrade plan?</string>
     <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>
     <string name="dialog_upgrade_plan_action_confirm">Upgrade</string>
     <string name="dialog_upgrade_plan_action_cancel">Not now</string>
-
     <!-- Words -->
     <string name="email_address">Email address</string>
     <string name="password">Password</string>
-
     <!-- Tooltips -->
     <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
-
     <!-- Time units -->
     <plurals name="time_unit_days">
         <item quantity="one">%d day</item>
@@ -250,7 +219,6 @@
         <item quantity="one">%d second</item>
         <item quantity="other">%d seconds</item>
     </plurals>
-
     <!-- Snack bars -->
     <string name="snack_bar_message_item_note_copied">Note copied</string>
     <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
@@ -268,7 +236,6 @@
     <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
     <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
     <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
-
     <!-- Simple Login -->
     <string name="simple_login_widget_title">Enable SimpleLogin sync</string>
     <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">We detected that you have %s that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
@@ -277,5 +244,5 @@
         <item quantity="other">%d aliases</item>
     </plurals>
     <string name="simple_login_widget_action">Sync aliases</string>
-    <string name="simple_login_widget_close_content_description">Button to close simple login aliases sync widget</string>
+    <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

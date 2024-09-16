@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="snackbar_create_vault_success">Vault created</string>
     <string name="snackbar_create_vault_error">Vault not created</string>
     <string name="snackbar_cannot_create_more_vaults_error">Cannot create more vaults</string>
@@ -13,25 +12,21 @@
     <string name="snackbar_retrieve_vault_error">Vault not found</string>
     <string name="snackbar_find_vault_error">Cannot find selected vault</string>
     <string name="snackbar_get_vault_list_error">Vault list could not be loaded</string>
-
     <string name="vault_delete_dialog_title">Delete vault</string>
     <string name="vault_delete_dialog_body">This will permanently delete the vault __VAULT_NAME__ and all its contents. Enter the vault name to confirm deletion.</string>
     <string name="vault_delete_dialog_placeholder">Vault name</string>
     <string name="vault_delete_dialog_cancel_action">Cancel</string>
     <string name="vault_delete_dialog_delete_action">Delete</string>
-
     <string name="vault_leave_dialog_title">Leave vault</string>
     <string name="vault_leave_dialog_body">This will remove your access from the vault __VAULT_NAME__ and all its contents. Are you sure you want to leave?</string>
     <string name="vault_leave_dialog_cancel_action">Cancel</string>
     <string name="vault_leave_dialog_leave_action">Leave</string>
-
     <string name="bottomsheet_close_icon_content_description">Close Create Vault</string>
     <string name="bottomsheet_create_vault_button">Create vault</string>
     <string name="bottomsheet_edit_vault_button">Save</string>
     <string name="bottomsheet_cannot_create_more_vaults">You have reached the limit of vaults you can create. Create unlimited vaults when you upgrade your subscription.</string>
     <string name="bottomsheet_cannot_select_not_primary_vault">To interact with your other vaults, you need to upgrade your account.</string>
     <string name="bottomsheet_upgrade_now">Upgrade now</string>
-
     <string name="bottomsheet_edit">Edit</string>
     <string name="bottomsheet_migrate">Move all items to another vault</string>
     <string name="bottomsheet_delete_vault">Delete vault</string>
@@ -39,9 +34,7 @@
     <string name="bottomsheet_leave_vault">Leave vault</string>
     <string name="bottomsheet_view_members">View members</string>
     <string name="bottomsheet_manage_access">Manage access</string>
-
-    <string name="bottomsheet_select_vault_read_only">You can only read</string>
+    <string name="bottomsheet_select_vault_read_only">You can only view</string>
     <string name="bottomsheet_select_vault_only_oldest_vaults">You can only create items in your oldest vaults</string>
-
     <string name="vault_title">Vault</string>
 </resources>

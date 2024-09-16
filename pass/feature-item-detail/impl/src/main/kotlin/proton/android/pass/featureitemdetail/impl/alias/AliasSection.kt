@@ -38,14 +38,12 @@ fun AliasSection(
     alias: String,
     isAliasEnabled: Boolean,
     isAliasSyncEnabled: Boolean,
-    isAliasToggleTooltipEnabled: Boolean,
     isAliasStateToggling: Boolean,
     mailboxes: PersistentList<AliasMailbox>,
     isLoading: Boolean,
     onCopyAlias: (String) -> Unit,
     onCreateLoginFromAlias: (String) -> Unit,
-    onToggleAliasState: (Boolean) -> Unit,
-    onDismissTooltip: () -> Unit
+    onToggleAliasState: (Boolean) -> Unit
 ) {
     RoundedCornersColumn(
         modifier = modifier.fillMaxWidth()
@@ -54,12 +52,10 @@ fun AliasSection(
             alias = alias,
             isAliasEnabled = isAliasEnabled,
             isAliasSyncEnabled = isAliasSyncEnabled,
-            isAliasToggleTooltipEnabled = isAliasToggleTooltipEnabled,
             isAliasStateToggling = isAliasStateToggling,
             onCopyAlias = { onCopyAlias(it) },
             onCreateLoginFromAlias = onCreateLoginFromAlias,
-            onToggleAliasState = onToggleAliasState,
-            onDismissTooltip = onDismissTooltip
+            onToggleAliasState = onToggleAliasState
         )
         if (!mailboxes.isEmpty() || isLoading) {
             Divider(color = PassTheme.colors.inputBorderNorm)
@@ -86,14 +82,12 @@ internal fun AliasSectionPreview(
                 alias = "myalias@myalias.com",
                 isAliasEnabled = false,
                 isAliasSyncEnabled = false,
-                isAliasToggleTooltipEnabled = false,
                 isAliasStateToggling = false,
                 mailboxes = mailboxes.toPersistentList(),
                 isLoading = false,
                 onCopyAlias = {},
                 onCreateLoginFromAlias = {},
-                onToggleAliasState = {},
-                onDismissTooltip = {}
+                onToggleAliasState = {}
             )
         }
     }

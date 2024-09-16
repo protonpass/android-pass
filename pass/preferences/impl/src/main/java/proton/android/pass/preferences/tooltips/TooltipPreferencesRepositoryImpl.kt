@@ -36,7 +36,6 @@ internal class TooltipPreferencesRepositoryImpl @Inject constructor(
 
     override fun observeEnabled(preference: TooltipPreference): Flow<Boolean> = when (preference) {
         TooltipPreference.UsernameSplit -> observeTooltipPreference { usernameSplitEnabled }
-        TooltipPreference.AliasToggle -> observeTooltipPreference { aliasToggleEnabled }
     }
 
     private fun observeTooltipPreference(
@@ -64,10 +63,6 @@ internal class TooltipPreferencesRepositoryImpl @Inject constructor(
             when (preference) {
                 TooltipPreference.UsernameSplit -> setTooltipPreference {
                     usernameSplitEnabled = boolFlagPrefProto
-                }
-
-                TooltipPreference.AliasToggle -> setTooltipPreference {
-                    aliasToggleEnabled = boolFlagPrefProto
                 }
             }
         }

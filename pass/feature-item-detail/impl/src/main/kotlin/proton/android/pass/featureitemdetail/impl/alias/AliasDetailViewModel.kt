@@ -87,8 +87,10 @@ import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.AliasTrashDialogStatusPreference
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -108,6 +110,7 @@ class AliasDetailViewModel @Inject constructor(
     private val unpinItem: UnpinItem,
     private val changeAliasStatus: ChangeAliasStatus,
     private val disableTooltip: DisableTooltip,
+    private val userPreferencesRepository: UserPreferencesRepository,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     getAliasDetails: GetAliasDetails,
@@ -161,6 +164,7 @@ class AliasDetailViewModel @Inject constructor(
         getUserPlan().map { it.isPaidPlan },
         featureFlagsRepository[FeatureFlag.SL_ALIASES_SYNC],
         observeTooltipEnabled(Tooltip.AliasToggle),
+        userPreferencesRepository.observeAliasTrashDialogStatusPreference().map { it.value },
         ::AliasItemFeatures
     )
 
@@ -226,7 +230,8 @@ class AliasDetailViewModel @Inject constructor(
                     isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
                     isSLAliasSyncEnabled = itemFeatures.slAliasSyncEnabled,
                     isAliasToggleTooltipEnabled = itemFeatures.isAliasToggleTooltipEnabled,
-                    isAliasStateToggling = isAliasStateToggling
+                    isAliasStateToggling = isAliasStateToggling,
+                    isAliasTrashDialogChecked = itemFeatures.isAliasTrashDialogChecked
                 )
             }
         }
@@ -360,7 +365,6 @@ class AliasDetailViewModel @Inject constructor(
                     PassLogger.w(TAG, it)
                 }
             isAliasStateTogglingFlow.update { false }
-
         }
     }
 
@@ -368,6 +372,14 @@ class AliasDetailViewModel @Inject constructor(
         viewModelScope.launch {
             disableTooltip(Tooltip.AliasToggle)
         }
+    }
+
+    internal fun onAliasTrashDialogStatusChanged(isEnabled: Boolean) {
+        if (isEnabled) {
+            AliasTrashDialogStatusPreference.Enabled
+        } else {
+            AliasTrashDialogStatusPreference.Disabled
+        }.also(userPreferencesRepository::setAliasTrashDialogStatusPreference)
     }
 
     private companion object {

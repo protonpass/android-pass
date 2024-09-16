@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="profile_screen_title">Profile</string>
-
     <string name="profile_option_settings">Settings</string>
     <string name="profile_option_account">Account</string>
     <string name="profile_help_center">Help center</string>
@@ -14,7 +13,6 @@
     <string name="profile_option_autofill_subtitle">Automatically fill in your usernames and passwords.</string>
     <string name="profile_option_secure_links">Secure links</string>
     <string name="profile_option_aliases">Aliases</string>
-
     <string name="profile_error_biometry_failed_to_start">Could not start the biometric authentication</string>
     <string name="profile_error_biometry_failed_to_authenticate">Failed to authenticate</string>
     <string name="profile_fingerprint_lock_enabled">Fingerprint lock enabled</string>
@@ -24,7 +22,6 @@
     <string name="feedback_option_reddit">Check out Proton on Reddit</string>
     <string name="feedback_option_mail">Send us a message</string>
     <string name="feedback_option_vote_new_features">Vote for new features</string>
-
     <string name="app_lock_immediately">Immediately</string>
     <string name="app_lock_one_minute">After 1 minute</string>
     <string name="app_lock_two_minutes">After 2 minutes</string>
@@ -32,7 +29,6 @@
     <string name="app_lock_ten_minutes">After 10 minutes</string>
     <string name="app_lock_one_hour">After 1 hour</string>
     <string name="app_lock_four_hours">After 4 hours</string>
-
     <string name="profile_account_plan_name_trial">Pass Plus trial</string>
     <string name="app_lock_config_none">None</string>
     <string name="app_lock_config_biometric">Biometric</string>
@@ -53,28 +49,20 @@
     <string name="profile_option_lock_with">Lock with</string>
     <string name="profile_option_unlock_with">Unlock with</string>
     <string name="profile_option_change_pin_code">Change PIN Code</string>
-
-    <string
-        name="profile_option_autofill_samsung_not_supported"
-        comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser"
-    >Samsung Browser is set as the default browser. It does not support autofill by external password managers.</string>
-
+    <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Internet is set as the default browser. It does not support autofill by external password managers.</string>
     <string name="profile_passkey_support_section_title">Passkeys</string>
     <string name="profile_passkey_support_subtitle_supported">Passkeys are supported</string>
-    <string name="profile_passkey_support_subtitle_not_supported_android_version">Your android version does not support passkeys</string>
+    <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
     <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Your device does not support passkeys</string>
     <string name="profile_passkey_support_subtitle_not_supported_unknown">Could not check support for passkeys</string>
-
     <plurals name="profile_after_days">
         <item quantity="one">After %d day</item>
         <item quantity="other">After %d days</item>
     </plurals>
-
     <plurals name="profile_after_minutes">
         <item quantity="one">After %d minute</item>
         <item quantity="other">After %d minutes</item>
     </plurals>
-
     <plurals name="profile_after_hours">
         <item quantity="one">After %d hour</item>
         <item quantity="other">After %d hours</item>
@@ -86,5 +74,4 @@
     <string name="account_switcher_switch_to">Switch to</string>
     <string name="account_switcher_add_account">Add account</string>
     <string name="account_switcher_remove">Remove</string>
-
 </resources>

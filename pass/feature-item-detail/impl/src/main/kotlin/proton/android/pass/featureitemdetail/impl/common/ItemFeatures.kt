@@ -25,7 +25,6 @@ internal interface ItemFeatures {
 internal data class AliasItemFeatures(
     override val isHistoryEnabled: Boolean,
     internal val slAliasSyncEnabled: Boolean,
-    internal val isAliasToggleTooltipEnabled: Boolean,
     internal val isAliasTrashDialogChecked: Boolean
 ) : ItemFeatures
 

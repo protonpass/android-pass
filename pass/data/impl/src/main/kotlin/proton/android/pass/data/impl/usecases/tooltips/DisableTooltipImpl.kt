@@ -30,7 +30,6 @@ class DisableTooltipImpl @Inject constructor(
 
     override suspend fun invoke(tooltip: Tooltip) = when (tooltip) {
         Tooltip.UsernameSplit -> TooltipPreference.UsernameSplit
-        Tooltip.AliasToggle -> TooltipPreference.AliasToggle
     }.let { tooltipPreference ->
         tooltipPreferencesRepository.setEnabled(preference = tooltipPreference, isEnabled = false)
     }

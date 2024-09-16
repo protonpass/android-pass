@@ -32,4 +32,5 @@ message UserPreferences {
   MonitorStatusPrefProto monitor_status = 18;
   map<string, string> default_vault_per_user = 19;
   BooleanPrefProto simple_login_sync_status = 20;
+  BooleanPrefProto alias_trash_dialog_status = 21;
 }

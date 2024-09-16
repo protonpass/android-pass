@@ -90,4 +90,8 @@ interface UserPreferencesRepository {
     fun setSimpleLoginSyncStatusPreference(preference: SimpleLoginSyncStatusPreference): Result<Unit>
 
     fun observeSimpleLoginSyncStatusPreference(): Flow<SimpleLoginSyncStatusPreference>
+
+    fun setAliasTrashDialogStatusPreference(preference: AliasTrashDialogStatusPreference): Result<Unit>
+
+    fun observeAliasTrashDialogStatusPreference(): Flow<AliasTrashDialogStatusPreference>
 }

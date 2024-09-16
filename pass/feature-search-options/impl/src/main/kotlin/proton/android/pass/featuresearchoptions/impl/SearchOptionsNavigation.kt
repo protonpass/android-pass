@@ -21,6 +21,7 @@ package proton.android.pass.featuresearchoptions.impl
 sealed interface SearchOptionsNavigation {
     data object Sorting : SearchOptionsNavigation
     data object Filter : SearchOptionsNavigation
+    data object ResetFilters : SearchOptionsNavigation
     data object SelectSorting : SearchOptionsNavigation
     data object BulkActions : SearchOptionsNavigation
 }

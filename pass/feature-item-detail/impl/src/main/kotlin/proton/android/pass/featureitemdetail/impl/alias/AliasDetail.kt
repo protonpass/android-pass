@@ -194,7 +194,6 @@ fun AliasDetail(
                         isLoading = state.isLoadingMailboxes,
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
                         isAliasSyncEnabled = state.isSLAliasSyncEnabled,
-                        isAliasToggleTooltipEnabled = state.isAliasToggleTooltipEnabled,
                         isAliasStateToggling = state.isAliasStateToggling,
                         onCopyAlias = { viewModel.onCopyAlias(it) },
                         onCreateLoginFromAlias = { alias ->
@@ -223,8 +222,7 @@ fun AliasDetail(
                                 itemId = state.itemUiModel.id,
                                 state = it
                             )
-                        },
-                        onDismissTooltip = viewModel::dismissAliasToggleTooltip
+                        }
                     )
                 }
 

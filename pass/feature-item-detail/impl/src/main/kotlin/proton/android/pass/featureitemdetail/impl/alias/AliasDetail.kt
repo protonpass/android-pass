@@ -253,7 +253,6 @@ fun AliasDetail(
                 if (shouldShowDisableOrTrashDialog) {
                     AliasDisableOrTrashDialog(
                         isChecked = state.isAliasTrashDialogChecked,
-                        isLoading = state.isAliasStateToggling,
                         onCheckedChange = viewModel::onAliasTrashDialogStatusChanged,
                         onDisable = {
                             shouldShowDisableOrTrashDialog = false

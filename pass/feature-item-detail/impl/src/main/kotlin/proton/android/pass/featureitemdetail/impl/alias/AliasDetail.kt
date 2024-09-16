@@ -256,7 +256,12 @@ fun AliasDetail(
                         isLoading = state.isAliasStateToggling,
                         onCheckedChange = viewModel::onAliasTrashDialogStatusChanged,
                         onDisable = {
-
+                            shouldShowDisableOrTrashDialog = false
+                            viewModel.toggleAliasState(
+                                shareId = state.itemUiModel.shareId,
+                                itemId = state.itemUiModel.id,
+                                state = false
+                            )
                         },
                         onTrash = {
 

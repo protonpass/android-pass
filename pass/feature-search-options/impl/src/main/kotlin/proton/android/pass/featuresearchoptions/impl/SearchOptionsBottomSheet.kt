@@ -20,6 +20,7 @@ package proton.android.pass.featuresearchoptions.impl
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -34,10 +35,19 @@ fun SearchOptionsBottomSheet(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    val event = (state as? SuccessSearchOptionsUIState)?.event ?: SearchOptionsEvent.Idle
+    LaunchedEffect(event) {
+        when (event) {
+            SearchOptionsEvent.Close -> onNavigateEvent(SearchOptionsNavigation.ResetFilters)
+            SearchOptionsEvent.Idle -> {}
+        }
+        viewModel.onEventConsumed(event)
+    }
     SearchOptionsBottomSheetContents(
         modifier = modifier,
         state = state,
-        onNavigateEvent = onNavigateEvent
+        onNavigateEvent = onNavigateEvent,
+        onResetSearchOptions = { viewModel.resetFilters() }
     )
 }
 

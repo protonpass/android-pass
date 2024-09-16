@@ -63,12 +63,12 @@ internal fun ReportContent(
                 ReportReason.Autofill,
                 ReportReason.Sharing,
                 ReportReason.Sync,
-                ReportReason.Passkeys -> navigateToTipsPage(scope, pagerState)
+                ReportReason.Passkeys -> navigateToPage(scope, pagerState, ReportPage.Tips)
 
-                ReportReason.Other -> navigateToFormPage(scope, pagerState)
+                ReportReason.Other -> navigateToPage(scope, pagerState, ReportPage.Form)
             }
         } else {
-            navigateToReasonsPage(scope, pagerState)
+            navigateToPage(scope, pagerState, ReportPage.Categories)
         }
     }
     Scaffold(
@@ -101,18 +101,18 @@ internal fun ReportContent(
                 userScrollEnabled = false
             ) { page ->
                 when (page) {
-                    0 -> ReportCategoriesPage(
+                    ReportPage.Categories.value -> ReportCategoriesPage(
                         onReasonClicked = { onEvent(ReportNavContentEvent.OnReasonChange(it)) }
                     )
 
-                    1 -> ReportTipsPage(
+                    ReportPage.Tips.value -> ReportTipsPage(
                         passkeySupportOption = state.passkeySupportOption,
                         reportReasonOption = state.reportReasonOption,
                         onEvent = onEvent,
-                        onReportIssue = { navigateToFormPage(scope, pagerState) }
+                        onReportIssue = { navigateToPage(scope, pagerState, ReportPage.Form) }
                     )
 
-                    2 -> ReportFormPage(
+                    ReportPage.Form.value -> ReportFormPage(
                         state = state,
                         formState = formState,
                         onEvent = onEvent
@@ -123,17 +123,17 @@ internal fun ReportContent(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
-fun navigateToReasonsPage(scope: CoroutineScope, pagerState: PagerState) {
-    scope.launch { pagerState.scrollToPage(0) }
+internal enum class ReportPage(internal val value: Int) {
+    Categories(value = 0),
+    Tips(value = 1),
+    Form(value = 2)
 }
 
 @OptIn(ExperimentalFoundationApi::class)
-fun navigateToTipsPage(scope: CoroutineScope, pagerState: PagerState) {
-    scope.launch { pagerState.scrollToPage(1) }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-fun navigateToFormPage(scope: CoroutineScope, pagerState: PagerState) {
-    scope.launch { pagerState.scrollToPage(2) }
+internal fun navigateToPage(
+    scope: CoroutineScope,
+    pagerState: PagerState,
+    reportPage: ReportPage
+) {
+    scope.launch { pagerState.scrollToPage(reportPage.value) }
 }

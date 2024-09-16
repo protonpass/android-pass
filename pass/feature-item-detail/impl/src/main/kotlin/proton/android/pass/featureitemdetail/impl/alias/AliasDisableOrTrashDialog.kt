@@ -29,7 +29,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -55,17 +54,12 @@ internal fun AliasDisableOrTrashDialog(
     onCheckedChange: (Boolean) -> Unit = {},
     onDisable: () -> Unit,
     onTrash: () -> Unit,
-    onDismiss: () -> Unit,
-    isLoading: Boolean
+    onDismiss: () -> Unit
 ) {
     NoPaddingDialog(
         modifier = modifier.padding(horizontal = Spacing.medium),
         backgroundColor = PassTheme.colors.backgroundStrong,
-        onDismissRequest = {
-            if (!isLoading) {
-                onDismiss()
-            }
-        }
+        onDismissRequest = { onDismiss() }
     ) {
         Column(
             modifier = Modifier
@@ -108,36 +102,25 @@ internal fun AliasDisableOrTrashDialog(
                 )
             }
 
-            if (isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .align(alignment = Alignment.End)
-                        .padding(
-                            end = Spacing.medium,
-                            bottom = Spacing.medium
-                        )
+            Column(
+                modifier = Modifier
+                    .align(alignment = Alignment.End)
+                    .padding(bottom = Spacing.medium)
+            ) {
+                AliasDisableOrTrashDialogButton(
+                    textResId = R.string.alias_dialog_disable_or_trash_button_text_disable,
+                    onClick = onDisable
                 )
-            } else {
-                Column(
-                    modifier = Modifier
-                        .align(alignment = Alignment.End)
-                        .padding(bottom = Spacing.medium)
-                ) {
-                    AliasDisableOrTrashDialogButton(
-                        textResId = R.string.alias_dialog_disable_or_trash_button_text_disable,
-                        onClick = onDisable
-                    )
 
-                    AliasDisableOrTrashDialogButton(
-                        textResId = R.string.alias_dialog_disable_or_trash_button_text_trash,
-                        onClick = onTrash
-                    )
+                AliasDisableOrTrashDialogButton(
+                    textResId = R.string.alias_dialog_disable_or_trash_button_text_trash,
+                    onClick = onTrash
+                )
 
-                    AliasDisableOrTrashDialogButton(
-                        textResId = CompR.string.action_cancel,
-                        onClick = onDismiss
-                    )
-                }
+                AliasDisableOrTrashDialogButton(
+                    textResId = CompR.string.action_cancel,
+                    onClick = onDismiss
+                )
             }
         }
     }
@@ -170,7 +153,6 @@ internal fun AliasDisableOrTrashDialogPreview(
     PassTheme(isDark = isDark) {
         Surface {
             AliasDisableOrTrashDialog(
-                isLoading = false,
                 isChecked = isChecked,
                 onCheckedChange = {},
                 onDisable = {},

@@ -31,11 +31,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -67,42 +64,30 @@ internal fun ExpandableEmailUsernameInput(
     canUpdateUsername: Boolean,
     isEditAllowed: Boolean,
     isInvalidEmail: Boolean,
-    isUsernameSplitTooltipEnabled: Boolean
+    isUsernameSplitTooltipEnabled: Boolean,
+    isExpanded: Boolean
 ) {
-    val isExpanded = rememberSaveable {
-        email.isNotEmpty()
-            .and(username.isNotEmpty())
-            .let(::mutableStateOf)
-    }
 
-    val emailLabelResId by remember {
-        derivedStateOf {
-            if (isExpanded.value) {
-                R.string.field_email_title
-            } else {
-                R.string.field_username_or_email_title
-            }
+    val emailLabelResId = remember(isExpanded) {
+        if (isExpanded) {
+            R.string.field_email_title
+        } else {
+            R.string.field_username_or_email_title
         }
     }
 
-    val emailPlaceholderResId by remember {
-        derivedStateOf {
-            if (isExpanded.value) {
-                R.string.field_email_hint
-            } else {
-                R.string.field_username_or_email_hint
-            }
+    val emailPlaceholderResId = remember(isExpanded) {
+        if (isExpanded) {
+            R.string.field_email_hint
+        } else {
+            R.string.field_username_or_email_hint
         }
     }
 
-    val emailOrUsername by remember(email) {
-        derivedStateOf {
-            if (isExpanded.value) {
-                email
-            } else {
-                email.ifEmpty { username }
-            }
-        }
+    val emailOrUsername = if (isExpanded) {
+        email
+    } else {
+        email.ifEmpty { username }
     }
 
     val emailIconTint = if (isInvalidEmail) {
@@ -127,7 +112,7 @@ internal fun ExpandableEmailUsernameInput(
                 onFocusChange(LoginField.Email, isFocused)
             },
             leadingIcon = {
-                if (isExpanded.value) {
+                if (isExpanded) {
                     Icon(
                         painter = painterResource(CoreR.drawable.ic_proton_envelope),
                         contentDescription = null,
@@ -139,7 +124,6 @@ internal fun ExpandableEmailUsernameInput(
                     Box(
                         modifier = Modifier
                             .clickable {
-                                isExpanded.value = true
                                 onEvent(LoginContentEvent.OnUsernameOrEmailManuallyExpanded)
                             }
                             .findPositionAndSizeForTooltip(position, size)
@@ -201,7 +185,7 @@ internal fun ExpandableEmailUsernameInput(
             }
         )
 
-        AnimatedVisibility(visible = isExpanded.value) {
+        AnimatedVisibility(visible = isExpanded) {
             Divider(color = PassTheme.colors.inputBorderNorm)
 
             UsernameInput(
@@ -241,7 +225,8 @@ internal fun ExpandableEmailUsernameInputPreview(
                 canUpdateUsername = params.canUpdateUsername,
                 isEditAllowed = params.isEditAllowed,
                 isInvalidEmail = params.isInvalidEmail,
-                isUsernameSplitTooltipEnabled = false
+                isUsernameSplitTooltipEnabled = false,
+                isExpanded = params.isExpanded
             )
         }
     }

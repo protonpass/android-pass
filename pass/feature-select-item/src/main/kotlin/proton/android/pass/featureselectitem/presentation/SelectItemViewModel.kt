@@ -21,6 +21,7 @@ package proton.android.pass.featureselectitem.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
@@ -34,16 +35,22 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getAccounts
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -74,21 +81,22 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
+import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
-import proton.android.pass.data.api.usecases.ObserveActiveItems
+import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
-import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.ObserveUsableVaults
+import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.Vault
-import proton.android.pass.domain.canCreate
-import proton.android.pass.domain.toPermissions
 import proton.android.pass.featuresearchoptions.api.AutofillSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.SortingOption
@@ -112,15 +120,16 @@ import javax.inject.Inject
 class SelectItemViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val getSuggestedLoginItems: GetSuggestedLoginItems,
+    private val getSuggestedAutofillItems: GetSuggestedAutofillItems,
     private val observeItemsWithPasskeys: ObserveItemsWithPasskeys,
+    accountManager: AccountManager,
     preferenceRepository: UserPreferencesRepository,
-    observeActiveItems: ObserveActiveItems,
+    observeItems: ObserveItems,
     observePinnedItems: ObservePinnedItems,
-    observeVaults: ObserveVaults,
     autofillSearchOptionsRepository: AutofillSearchOptionsRepository,
-    getUserPlan: GetUserPlan,
+    observeUsableVaults: ObserveUsableVaults,
     observeUpgradeInfo: ObserveUpgradeInfo,
+    getUserPlan: GetUserPlan,
     clock: Clock
 ) : ViewModel() {
 
@@ -157,95 +166,66 @@ class SelectItemViewModel @Inject constructor(
         val isProcessingSearch: IsProcessingSearchState
     )
 
-    private val planFlow = getUserPlan()
-        .asLoadingResult()
-        .distinctUntilChanged()
-
-    private val vaultsFlow = observeVaults().asLoadingResult()
-
-    private val shareIdToSharesFlow = vaultsFlow
-        .map { vaultsResult ->
-            val vaults = vaultsResult.getOrNull() ?: emptyList()
-            vaults.associate { it.shareId to ShareUiModel.fromVault(it) }
-                .toPersistentMap()
-        }
-        .distinctUntilChanged()
-
-    private data class SelectItemFilters(
-        val filter: ItemTypeFilter,
-        val shareSelection: ShareSelection,
-        val state: SelectItemState
-    )
-
-    private val itemFiltersFlow: Flow<LoadingResult<SelectItemFilters>> = combine(
-        planFlow,
-        vaultsFlow,
-        selectItemStateFlow
-    ) { planRes, vaultsRes, appStateOption ->
-        val vaults = when (vaultsRes) {
-            is LoadingResult.Success -> vaultsRes.data
-            is LoadingResult.Error -> {
-                PassLogger.w(TAG, "Error observing vaults")
-                PassLogger.w(TAG, vaultsRes.exception)
-                return@combine LoadingResult.Error(vaultsRes.exception)
-            }
-
-            LoadingResult.Loading -> return@combine LoadingResult.Loading
-        }
-        val plan = when (planRes) {
-            is LoadingResult.Success -> planRes.data
-            is LoadingResult.Error -> {
-                PassLogger.w(TAG, "Error observing plan")
-                PassLogger.w(TAG, planRes.exception)
-                return@combine LoadingResult.Error(planRes.exception)
-            }
-
-            LoadingResult.Loading -> return@combine LoadingResult.Loading
-        }
-        val shareSelection = getShareSelection(plan.planType, vaults)
-        val state = appStateOption.value() ?: return@combine LoadingResult.Loading
-        val res = SelectItemFilters(
-            filter = state.itemTypeFilter,
-            shareSelection = shareSelection,
-            state = state
-        )
-        LoadingResult.Success(res)
-    }
-
-    private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = itemFiltersFlow
-        .flatMapLatest {
-            val filters = when (it) {
-                is LoadingResult.Error -> {
-                    PassLogger.w(TAG, "Error observing plan")
-                    PassLogger.w(TAG, it.exception)
-                    return@flatMapLatest flowOf(LoadingResult.Error(it.exception))
+    private val usableVaultsByUserIdFlow: Flow<Map<UserId, List<Vault>>> =
+        accountManager.getAccounts(AccountState.Ready)
+            .flatMapLatest { accounts ->
+                val flows = accounts.map { account ->
+                    observeUsableVaults(account.userId).map { account.userId to it }
                 }
-
-                LoadingResult.Loading -> return@flatMapLatest flowOf(LoadingResult.Loading)
-                is LoadingResult.Success -> it.data
+                combine(flows) { arrayOfPairs -> arrayOfPairs.toMap() }
             }
 
-            when (filters.state) {
-                is SelectItemState.Autofill,
-                is SelectItemState.Passkey.Register -> observeActiveItems(
-                    filter = filters.filter,
-                    shareSelection = filters.shareSelection
-                ).asResultWithoutLoading()
+    private val shareIdToSharesFlow: Flow<Map<UserId, PersistentMap<ShareId, ShareUiModel>>> =
+        usableVaultsByUserIdFlow
+            .mapLatest { map ->
+                map.mapValues { entry ->
+                    entry.value.associate { vault -> vault.shareId to ShareUiModel.fromVault(vault) }
+                        .toPersistentMap()
+                }
+            }
+            .distinctUntilChanged()
 
 
-                is SelectItemState.Passkey.Select -> observeItemsWithPasskeys(
-                    shareSelection = filters.shareSelection
-                ).asResultWithoutLoading()
+    private val itemUiModelFlow = combine(
+        selectItemStateFlow,
+        usableVaultsByUserIdFlow
+    ) { selectItemState, usableVaultsByUserId ->
+        when (val state = selectItemState.value()) {
+            is SelectItemState.Autofill,
+            is SelectItemState.Passkey.Register -> {
+                val flows = usableVaultsByUserId.map { (userId, usableVaults) ->
+                    observeItems(
+                        userId = userId,
+                        filter = state.itemTypeFilter,
+                        selection = ShareSelection.Shares(usableVaults.map { it.shareId }),
+                        itemState = ItemState.Active
+                    )
+                }
+                combine(flows) { it.toList().flatten() }
             }
 
+
+            is SelectItemState.Passkey.Select -> {
+                val flows = usableVaultsByUserId.map { (userId, usableVaults) ->
+                    observeItemsWithPasskeys(
+                        userId = userId,
+                        shareSelection = ShareSelection.Shares(usableVaults.map { it.shareId })
+                    )
+                }
+                combine(flows) { it.toList().flatten() }
+            }
+
+            else -> flowOf(emptyList())
         }
-        .map { itemResult ->
+    }
+        .flatMapLatest { itemResult ->
             itemResult.map { list ->
                 encryptionContextProvider.withEncryptionContext {
                     list.map { it.toUiModel(this@withEncryptionContext) }
                 }
             }
         }
+        .asLoadingResult()
         .distinctUntilChanged()
 
     private val sortedListItemFlow: Flow<LoadingResult<List<GroupedItemList>>> = combine(
@@ -276,28 +256,26 @@ class SelectItemViewModel @Inject constructor(
     }.flowOn(Dispatchers.Default)
 
     private val pinnedItemsFlow: Flow<LoadingResult<List<Item>>> = combine(
-        itemFiltersFlow,
+        usableVaultsByUserIdFlow,
         selectItemStateFlow
-    ) { items, selectItemState ->
-        items to selectItemState
-    }.flatMapLatest { (items, selectItemState) ->
+    ) { vaultsByUserId: Map<UserId, List<Vault>>, selectItemState: Option<SelectItemState> ->
         when (selectItemState) {
-            None -> flowOf(LoadingResult.Loading)
+            None -> flowOf(emptyList())
             is Some -> if (selectItemState.value.showPinnedItems) {
-                when (items) {
-                    is LoadingResult.Error -> flowOf(LoadingResult.Error(items.exception))
-                    LoadingResult.Loading -> flowOf(LoadingResult.Loading)
-                    is LoadingResult.Success -> observePinnedItems(
-                        filter = items.data.filter,
-                        shareSelection = items.data.shareSelection
-                    ).asLoadingResult()
+                val flows: List<Flow<List<Item>>> = vaultsByUserId.map { (userId, usableVaults) ->
+                    observePinnedItems(
+                        userId = userId,
+                        filter = selectItemState.value.itemTypeFilter,
+                        shareSelection = ShareSelection.Shares(usableVaults.map { it.shareId })
+                    )
                 }
+                combine(flows) { it.toList().flatten() }
             } else {
                 // Do not show pinned items
-                flowOf(LoadingResult.Success(emptyList()))
+                flowOf(emptyList())
             }
         }
-    }
+    }.flatMapLatest { it }.asLoadingResult()
 
     private val pinningUiStateFlow = combine(
         pinnedItemsFlow,
@@ -387,7 +365,7 @@ class SelectItemViewModel @Inject constructor(
         shareIdToSharesFlow,
         shouldScrollToTopFlow,
         preferenceRepository.getUseFaviconsPreference(),
-        planFlow,
+        getUserPlan().asLoadingResult(),
         observeUpgradeInfo().asLoadingResult(),
         selectItemStateFlow
     ) { itemsResult,
@@ -435,7 +413,7 @@ class SelectItemViewModel @Inject constructor(
             isRefreshing = isRefreshing,
             itemClickedEvent = itemClicked,
             items = items,
-            shares = shares,
+            shares = shares.values.reduce { acc, persistentMap -> acc.putAll(persistentMap) },
             sortingType = sortingSelection.searchSortingType,
             shouldScrollToTop = shouldScrollToTop,
             canLoadExternalImages = useFavicons.value(),
@@ -449,7 +427,7 @@ class SelectItemViewModel @Inject constructor(
         selectItemListUiStateFlow,
         searchWrapper,
         pinningUiStateFlow,
-        planFlow,
+        getUserPlan().asLoadingResult(),
         shareIdToSharesFlow
     ) { selectItemListUiState,
         search,
@@ -535,16 +513,6 @@ class SelectItemViewModel @Inject constructor(
         itemClickedFlow.update { AutofillItemClickedEvent.None }
     }
 
-    private fun getShareSelection(planType: PlanType, vaults: List<Vault>): ShareSelection = when (planType) {
-        is PlanType.Paid,
-        is PlanType.Trial -> ShareSelection.AllShares
-
-        is PlanType.Free,
-        is PlanType.Unknown -> vaults.filter { vault -> vault.role.toPermissions().canCreate() }
-            .map { writeableVault -> writeableVault.shareId }
-            .let { writeableVaults -> ShareSelection.Shares(writeableVaults) }
-    }
-
     private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) = when (sortingOption.searchSortingType) {
         SearchSortingType.MostRecent -> sortMostRecent()
         SearchSortingType.TitleAsc -> sortByTitleAsc()
@@ -562,37 +530,43 @@ class SelectItemViewModel @Inject constructor(
             SearchSortingType.CreationDesc -> groupAndSortByCreationDesc()
         }
 
-    private fun getSuggestionsForState(state: SelectItemState): Flow<LoadingResult<List<Item>>> = when (state) {
+    private fun getSuggestionsForState(state: SelectItemState) = when (state) {
         is SelectItemState.Autofill -> getSuggestionsForAutofill(state)
         is SelectItemState.Passkey -> getSuggestionsForPasskey(state)
     }
 
-    private fun getSuggestionsForAutofill(state: SelectItemState.Autofill): Flow<LoadingResult<List<Item>>> =
-        when (state) {
-            is SelectItemState.Autofill.Login -> {
-                getSuggestedLoginItems(
-                    packageName = state.suggestionsPackageName,
-                    url = state.suggestionsUrl
-                ).asResultWithoutLoading()
-            }
-
-            is SelectItemState.Autofill.CreditCard -> flowOf(LoadingResult.Success(emptyList()))
-            is SelectItemState.Autofill.Identity -> flowOf(LoadingResult.Success(emptyList()))
+    private fun getSuggestionsForAutofill(state: SelectItemState.Autofill) = when (state) {
+        is SelectItemState.Autofill.Login -> {
+            getSuggestedAutofillItems(
+                itemTypeFilter = ItemTypeFilter.Logins,
+                packageName = state.suggestionsPackageName,
+                url = state.suggestionsUrl
+            )
+                .filterIsInstance<SuggestedAutofillItemsResult.Items>()
+                .map { it.items }
+                .asResultWithoutLoading()
         }
+
+        is SelectItemState.Autofill.CreditCard -> flowOf(LoadingResult.Success(emptyList()))
+        is SelectItemState.Autofill.Identity -> flowOf(LoadingResult.Success(emptyList()))
+    }
 
     private fun getSuggestionsForPasskey(state: SelectItemState.Passkey): Flow<LoadingResult<List<Item>>> =
         when (state) {
             is SelectItemState.Passkey.Register -> {
-                getSuggestedLoginItems(
+                getSuggestedAutofillItems(
+                    itemTypeFilter = ItemTypeFilter.Logins,
                     packageName = None,
                     url = state.suggestionsUrl
-                ).asResultWithoutLoading()
+                )
+                    .filterIsInstance<SuggestedAutofillItemsResult.Items>()
+                    .map { it.items }
+                    .asResultWithoutLoading()
             }
 
             // TBD: Implement getSuggestionsForPasskey
             is SelectItemState.Passkey.Select -> flowOf(LoadingResult.Success(emptyList()))
         }
-
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L

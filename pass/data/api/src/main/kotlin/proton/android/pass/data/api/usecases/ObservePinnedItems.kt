@@ -19,12 +19,14 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ShareSelection
 
 interface ObservePinnedItems {
 
     operator fun invoke(
+        userId: UserId? = null,
         filter: ItemTypeFilter = ItemTypeFilter.All,
         shareSelection: ShareSelection = ShareSelection.AllShares
     ): Flow<List<Item>>

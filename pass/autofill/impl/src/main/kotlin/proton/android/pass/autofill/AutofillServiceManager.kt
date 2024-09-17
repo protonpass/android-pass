@@ -104,10 +104,10 @@ class AutofillServiceManager @Inject constructor(
     ): List<Dataset> = when (val suggestedItemsResult = getSuggestedItems(suggestionType, autofillData)) {
         SuggestedItemsResult.ShowUpgrade -> upgradeSuggestion(request, autofillData)
         is SuggestedItemsResult.Items -> itemsSuggestions(
-                request = request,
-                autofillData = autofillData,
-                suggestedItems = suggestedItemsResult.items
-            )
+            request = request,
+            autofillData = autofillData,
+            suggestedItems = suggestedItemsResult.items
+        )
     }
 
     @RequiresApi(Build.VERSION_CODES.R)

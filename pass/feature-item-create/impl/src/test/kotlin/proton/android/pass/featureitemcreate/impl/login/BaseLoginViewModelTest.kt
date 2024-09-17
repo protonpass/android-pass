@@ -59,6 +59,7 @@ internal class BaseLoginViewModelTest {
     private lateinit var encryptionContextProvider: EncryptionContextProvider
     private lateinit var draftRepository: DraftRepository
     private lateinit var passwordStrengthCalculator: TestPasswordStrengthCalculator
+    private lateinit var emailValidator: TestEmailValidator
 
     @Before
     fun setUp() {
@@ -68,6 +69,7 @@ internal class BaseLoginViewModelTest {
         draftRepository = TestDraftRepository()
         encryptionContextProvider = TestEncryptionContextProvider()
         passwordStrengthCalculator = TestPasswordStrengthCalculator()
+        emailValidator = TestEmailValidator()
         baseLoginViewModel = object : BaseLoginViewModel(
             accountManager = TestAccountManager(),
             snackbarDispatcher = TestSnackbarDispatcher(),
@@ -80,7 +82,7 @@ internal class BaseLoginViewModelTest {
             passwordStrengthCalculator = passwordStrengthCalculator,
             savedStateHandleProvider = TestSavedStateHandleProvider(),
             featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
-            emailValidator = TestEmailValidator(),
+            emailValidator = emailValidator,
             observeTooltipEnabled = FakeObserveTooltipEnabled(),
             disableTooltip = FakeDisableTooltip()
         ) {}
@@ -94,13 +96,38 @@ internal class BaseLoginViewModelTest {
     }
 
     @Test
-    internal fun `WHEN email changes THEN state email should be updated`() = runTest {
+    internal fun `GIVEN form is collapsed WHEN email changes THEN email is updated and username is cleared`() =
+        runTest {
+            val emailInput = "user@email.com"
+
+            baseLoginViewModel.onEmailChanged(emailInput)
+
+            assertThat(baseLoginViewModel.loginItemFormState.email).isEqualTo(emailInput)
+            assertThat(baseLoginViewModel.loginItemFormState.username).isEqualTo("")
+        }
+
+    @Test
+    internal fun `GIVEN form is expanded WHEN email changes THEN state email should be updated`() = runTest {
         val emailInput = "user@email.com"
+        baseLoginViewModel.onUsernameOrEmailManuallyExpanded()
 
         baseLoginViewModel.onEmailChanged(emailInput)
 
         assertThat(baseLoginViewModel.loginItemFormState.email).isEqualTo(emailInput)
     }
+
+    @Test
+    internal fun `GIVEN email validation fails WHEN email changes THEN email is cleared and username is updated`() =
+        runTest {
+            val emailInput = "invalid email"
+            val isValidEmail = false
+            emailValidator.setResult(isValidEmail)
+
+            baseLoginViewModel.onEmailChanged(emailInput)
+
+            assertThat(baseLoginViewModel.loginItemFormState.email).isEqualTo("")
+            assertThat(baseLoginViewModel.loginItemFormState.username).isEqualTo(emailInput)
+        }
 
     @Test
     internal fun `WHEN username changes THEN state username should be updated`() = runTest {

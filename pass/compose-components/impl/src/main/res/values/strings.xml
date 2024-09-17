@@ -238,10 +238,9 @@
     <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
     <!-- Simple Login -->
     <string name="simple_login_widget_title">Enable SimpleLogin sync</string>
-    <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">We detected that you have %s that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
-    <plurals name="simple_login_widget_pending_aliases">
-        <item quantity="one">%d alias</item>
-        <item quantity="other">%d aliases</item>
+    <plurals name="simple_login_widget_pending_aliases_message">
+        <item quantity="one">We detected that you have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to import it?</item>
+        <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
     </plurals>
     <string name="simple_login_widget_action">Sync aliases</string>
     <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>

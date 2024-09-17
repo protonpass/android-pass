@@ -288,7 +288,8 @@ class UpdateLoginViewModel @Inject constructor(
                     packageInfoSet = item.packageInfoSet.map(::PackageInfoUi).toSet(),
                     primaryTotp = UIHiddenState.Revealed(encrypt(decryptedTotp), decryptedTotp),
                     customFields = sanitisedToEditCustomField,
-                    passkeys = itemContents.passkeys.map { UIPasskeyContent.from(it) }
+                    passkeys = itemContents.passkeys.map { UIPasskeyContent.from(it) },
+                    isExpandedInitially = itemContents.itemEmail.isNotBlank() && itemContents.itemUsername.isNotBlank()
                 )
             }
         }

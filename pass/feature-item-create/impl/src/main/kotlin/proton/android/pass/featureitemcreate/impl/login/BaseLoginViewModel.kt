@@ -728,19 +728,22 @@ abstract class BaseLoginViewModel(
             }
     }
 
-    internal fun onUsernameOrEmailManuallyExpanded() = loginItemFormState.email.let { email ->
-        if(email.isBlank()) {
-            return
-        }
-
-        if(emailValidator.isValid(email)) {
-            return
-        }
-
-        loginItemFormMutableState = loginItemFormState.copy(
-            email = "",
-            username = email
-        )
+    internal fun onUsernameOrEmailManuallyExpanded() {
+        loginItemFormState.email
+            .let { currentEmail ->
+                if (currentEmail.isBlank() || emailValidator.isValid(currentEmail)) {
+                    loginItemFormState.copy(isExpandedByUser = true)
+                } else {
+                    loginItemFormState.copy(
+                        email = "",
+                        username = currentEmail,
+                        isExpandedByUser = true
+                    )
+                }
+            }
+            .also { updatedLoginItemFormState ->
+                loginItemFormMutableState = updatedLoginItemFormState
+            }
     }
 
     private fun updateCustomFieldHiddenOnFocusChange(field: LoginCustomField.CustomFieldHidden, isFocused: Boolean) {

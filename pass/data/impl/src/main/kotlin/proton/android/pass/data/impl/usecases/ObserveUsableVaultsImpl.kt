@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveUsableVaults
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -37,17 +38,19 @@ class ObserveUsableVaultsImpl @Inject constructor(
     private val getUserPlan: GetUserPlan,
     private val observeVaults: ObserveVaults
 ) : ObserveUsableVaults {
-    override fun invoke(): Flow<ShareSelection> = getUserPlan().flatMapLatest { userPlan ->
-        when (userPlan.planType) {
-            is PlanType.Paid,
-            is PlanType.Trial -> flowOf(ShareSelection.AllShares)
 
-            is PlanType.Free,
-            is PlanType.Unknown -> writeableVaults()
+    override fun invoke(userId: UserId?): Flow<ShareSelection> = getUserPlan(userId)
+        .flatMapLatest { userPlan ->
+            when (userPlan.planType) {
+                is PlanType.Paid,
+                is PlanType.Trial -> flowOf(ShareSelection.AllShares)
+
+                is PlanType.Free,
+                is PlanType.Unknown -> writeableVaults(userId)
+            }
         }
-    }
 
-    private fun writeableVaults(): Flow<ShareSelection> = observeVaults()
+    private fun writeableVaults(userId: UserId?): Flow<ShareSelection> = observeVaults(userId)
         .mapLatest { vaults ->
             val writeableVaults = vaults
                 .filter { it.role.toPermissions().canCreate() }

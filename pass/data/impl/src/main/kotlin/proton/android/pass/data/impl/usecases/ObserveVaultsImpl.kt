@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -36,7 +37,7 @@ class ObserveVaultsImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ObserveVaults {
 
-    override fun invoke(): Flow<List<Vault>> = observeAllShares()
+    override fun invoke(userId: UserId?): Flow<List<Vault>> = observeAllShares(userId)
         .map { shares ->
             encryptionContextProvider.withEncryptionContext {
                 shares.map { share ->

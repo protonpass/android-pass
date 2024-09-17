@@ -23,6 +23,5 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Plan
 
 interface GetUserPlan {
-    operator fun invoke(): Flow<Plan>
-    operator fun invoke(userId: UserId): Flow<Plan>
+    operator fun invoke(userId: UserId? = null): Flow<Plan>
 }

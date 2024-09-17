@@ -33,9 +33,11 @@ class GetUserPlanImpl @Inject constructor(
     private val planRepository: PlanRepository
 ) : GetUserPlan {
 
-    override fun invoke(): Flow<Plan> = accountManager.getPrimaryUserId()
-        .filterNotNull()
-        .flatMapLatest { invoke(it) }
-
-    override fun invoke(userId: UserId): Flow<Plan> = planRepository.observePlan(userId)
+    override fun invoke(userId: UserId?): Flow<Plan> = if (userId != null) {
+        planRepository.observePlan(userId)
+    } else {
+        accountManager.getPrimaryUserId()
+            .filterNotNull()
+            .flatMapLatest { planRepository.observePlan(it) }
+    }
 }

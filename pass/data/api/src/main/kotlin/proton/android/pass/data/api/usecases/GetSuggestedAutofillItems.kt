@@ -19,8 +19,20 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.domain.Item
 
-interface GetSuggestedIdentityItems {
-    operator fun invoke(): Flow<List<Item>>
+interface GetSuggestedAutofillItems {
+    operator fun invoke(
+        itemTypeFilter: ItemTypeFilter,
+        packageName: Option<String> = None,
+        url: Option<String> = None
+    ): Flow<SuggestedAutofillItemsResult>
+}
+
+sealed interface SuggestedAutofillItemsResult {
+    @JvmInline
+    value class Items(val items: List<Item>) : SuggestedAutofillItemsResult
+    data object ShowUpgrade : SuggestedAutofillItemsResult
 }

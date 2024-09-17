@@ -55,9 +55,7 @@ import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetPublicSuffixList
 import proton.android.pass.data.api.usecases.GetShareById
-import proton.android.pass.data.api.usecases.GetSuggestedCreditCardItems
-import proton.android.pass.data.api.usecases.GetSuggestedIdentityItems
-import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
+import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.GetVaultMembers
@@ -224,9 +222,7 @@ import proton.android.pass.data.impl.usecases.GetItemByIdImpl
 import proton.android.pass.data.impl.usecases.GetItemByIdWithVaultImpl
 import proton.android.pass.data.impl.usecases.GetPublicSuffixListImpl
 import proton.android.pass.data.impl.usecases.GetShareByIdImpl
-import proton.android.pass.data.impl.usecases.GetSuggestedCreditCardItemsImpl
-import proton.android.pass.data.impl.usecases.GetSuggestedIdentityItemsImpl
-import proton.android.pass.data.impl.usecases.GetSuggestedLoginItemsImpl
+import proton.android.pass.data.impl.usecases.GetSuggestedAutofillItemsImpl
 import proton.android.pass.data.impl.usecases.GetUserPlanImpl
 import proton.android.pass.data.impl.usecases.GetVaultByIdImpl
 import proton.android.pass.data.impl.usecases.GetVaultMembersImpl
@@ -405,13 +401,7 @@ abstract class DataUseCaseModule {
     abstract fun bindGetAliasDetails(impl: GetAliasDetailsImpl): GetAliasDetails
 
     @Binds
-    abstract fun bindGetSuggestedLoginItems(impl: GetSuggestedLoginItemsImpl): GetSuggestedLoginItems
-
-    @Binds
-    abstract fun bindGetSuggestedCreditCardItems(impl: GetSuggestedCreditCardItemsImpl): GetSuggestedCreditCardItems
-
-    @Binds
-    abstract fun bindGetSuggestedIdentityItems(impl: GetSuggestedIdentityItemsImpl): GetSuggestedIdentityItems
+    abstract fun bindGetSuggestedAutofillItems(impl: GetSuggestedAutofillItemsImpl): GetSuggestedAutofillItems
 
     @Binds
     abstract fun bindObserveAccounts(impl: ObserveAccountsImpl): ObserveAccounts

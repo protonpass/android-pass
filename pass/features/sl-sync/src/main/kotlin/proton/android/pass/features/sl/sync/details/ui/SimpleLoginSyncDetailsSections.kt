@@ -108,13 +108,10 @@ internal fun SimpleLoginSyncDetailsSections(
 
                 PassSingleActionWidget(
                     title = stringResource(id = CompR.string.simple_login_widget_title),
-                    message = stringResource(
-                        id = CompR.string.simple_login_widget_message,
-                        pluralStringResource(
-                            id = CompR.plurals.simple_login_widget_pending_aliases,
-                            count = pendingAliasesCount,
-                            pendingAliasesCount
-                        )
+                    message = pluralStringResource(
+                        id = CompR.plurals.simple_login_widget_pending_aliases_message,
+                        count = pendingAliasesCount,
+                        pendingAliasesCount
                     ),
                     actionText = stringResource(id = CompR.string.simple_login_widget_action),
                     onActionClick = {

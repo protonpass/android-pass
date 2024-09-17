@@ -47,11 +47,16 @@ data class LoginItemFormState(
     val primaryTotp: UIHiddenState,
     val customFields: List<UICustomFieldContent>,
     val passkeys: List<UIPasskeyContent>,
-    val passkeyToBeGenerated: UIPasskeyContent?
+    val passkeyToBeGenerated: UIPasskeyContent?,
+    val isExpandedInitially: Boolean,
+    val isExpandedByUser: Boolean
 ) : Parcelable {
 
     @IgnoredOnParcel
     internal val hasPasskeys: Boolean = passkeys.isNotEmpty()
+
+    @IgnoredOnParcel
+    internal val isExpanded: Boolean = isExpandedInitially || isExpandedByUser
 
     internal fun validate(
         emailValidator: EmailValidator,
@@ -61,8 +66,8 @@ data class LoginItemFormState(
             add(LoginItemValidationErrors.BlankTitle)
         }
 
-        if(isUsernameSplitEnabled) {
-            if(username.isNotBlank() && email.isNotBlank() && !emailValidator.isValid(email)) {
+        if (isUsernameSplitEnabled) {
+            if (email.isNotBlank() && isExpanded && !emailValidator.isValid(email)) {
                 add(LoginItemValidationErrors.InvalidEmail)
             }
         }
@@ -106,7 +111,8 @@ data class LoginItemFormState(
             encryptionContext.decrypt(primaryTotp.encrypted.toEncryptedByteArray())
                 .contentEquals(encryptionContext.decrypt(other.primaryTotp.encrypted.toEncryptedByteArray())) &&
             customFields.size == other.customFields.size &&
-            customFields.zip(other.customFields).all { (a, b) -> a.compare(b, encryptionContext) }
+            customFields.zip(other.customFields)
+                .all { (a, b) -> a.compare(b, encryptionContext) }
 
     internal companion object {
 
@@ -122,7 +128,9 @@ data class LoginItemFormState(
             packageInfoSet = emptySet(),
             customFields = emptyList(),
             passkeys = emptyList(),
-            passkeyToBeGenerated = null
+            passkeyToBeGenerated = null,
+            isExpandedInitially = false,
+            isExpandedByUser = false
         )
 
     }

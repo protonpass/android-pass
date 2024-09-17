@@ -24,10 +24,9 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.util.android.sentry.TimberLogger
 import me.proton.core.util.kotlin.CoreLogger
 import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.data.api.usecases.SuggestedCreditCardItemsResult
-import proton.android.pass.data.fakes.usecases.FakeGetSuggestedIdentityItems
-import proton.android.pass.data.fakes.usecases.TestGetSuggestedCreditCardItems
-import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
+import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
+import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.domain.ItemId
 import proton.android.pass.preferences.FeatureFlag
@@ -42,13 +41,7 @@ class E2EApp : Application() {
     lateinit var accountManager: TestAccountManager
 
     @Inject
-    lateinit var loginItems: TestGetSuggestedLoginItems
-
-    @Inject
-    lateinit var creditCardItems: TestGetSuggestedCreditCardItems
-
-    @Inject
-    lateinit var identityItems: FakeGetSuggestedIdentityItems
+    lateinit var autofillItems: TestGetSuggestedAutofillItems
 
     @Inject
     lateinit var featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
@@ -76,7 +69,10 @@ class E2EApp : Application() {
                 password = "pass2"
             )
         )
-        loginItems.sendValue(Result.success(logins))
+        autofillItems.sendValue(
+            itemTypeFilter = ItemTypeFilter.Logins,
+            value = Result.success(SuggestedAutofillItemsResult.Items(logins))
+        )
 
         val creditCards = listOf(
             TestObserveItems.createCreditCard(
@@ -96,7 +92,10 @@ class E2EApp : Application() {
                 title = "Second card"
             )
         )
-        creditCardItems.sendValue(Result.success(SuggestedCreditCardItemsResult.Items(creditCards)))
+        autofillItems.sendValue(
+            itemTypeFilter = ItemTypeFilter.CreditCards,
+            value = Result.success(SuggestedAutofillItemsResult.Items(creditCards))
+        )
 
         val identities = listOf(
             TestObserveItems.createIdentity(
@@ -108,7 +107,11 @@ class E2EApp : Application() {
                 fullName = "Tony Stark"
             )
         )
-        identityItems.sendValue(Result.success(identities))
+
+        autofillItems.sendValue(
+            itemTypeFilter = ItemTypeFilter.Identity,
+            value = Result.success(SuggestedAutofillItemsResult.Items(identities))
+        )
     }
 
     private fun setupLogger() {

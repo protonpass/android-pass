@@ -20,14 +20,13 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveUsableVaults
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.domain.PlanType
-import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.Vault
 import proton.android.pass.domain.canCreate
 import proton.android.pass.domain.toPermissions
 import javax.inject.Inject
@@ -39,22 +38,17 @@ class ObserveUsableVaultsImpl @Inject constructor(
     private val observeVaults: ObserveVaults
 ) : ObserveUsableVaults {
 
-    override fun invoke(userId: UserId?): Flow<ShareSelection> = getUserPlan(userId)
+    override fun invoke(userId: UserId?): Flow<List<Vault>> = getUserPlan(userId)
         .flatMapLatest { userPlan ->
             when (userPlan.planType) {
                 is PlanType.Paid,
-                is PlanType.Trial -> flowOf(ShareSelection.AllShares)
+                is PlanType.Trial -> observeVaults(userId)
 
                 is PlanType.Free,
-                is PlanType.Unknown -> writeableVaults(userId)
+                is PlanType.Unknown -> observeVaults(userId)
+                    .mapLatest { vaults ->
+                        vaults.filter { it.role.toPermissions().canCreate() }
+                    }
             }
-        }
-
-    private fun writeableVaults(userId: UserId?): Flow<ShareSelection> = observeVaults(userId)
-        .mapLatest { vaults ->
-            val writeableVaults = vaults
-                .filter { it.role.toPermissions().canCreate() }
-                .map { it.shareId }
-            ShareSelection.Shares(writeableVaults)
         }
 }

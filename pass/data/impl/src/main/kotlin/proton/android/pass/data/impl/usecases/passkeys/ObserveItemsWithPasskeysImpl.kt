@@ -21,8 +21,10 @@ package proton.android.pass.data.impl.usecases.passkeys
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.impl.extensions.toDomain
@@ -38,24 +40,27 @@ class ObserveItemsWithPasskeysImpl @Inject constructor(
     private val localItemDataSource: LocalItemDataSource,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ObserveItemsWithPasskeys {
-    override fun invoke(shareSelection: ShareSelection): Flow<List<Item>> = accountManager.getPrimaryUserId()
-        .filterNotNull()
-        .flatMapLatest { userId ->
-            when (shareSelection) {
-                is ShareSelection.Share -> localItemDataSource.observeItemsWithPasskeys(
-                    userId = userId,
-                    shareIds = listOf(shareSelection.shareId)
-                )
-                is ShareSelection.Shares -> localItemDataSource.observeItemsWithPasskeys(
-                    userId = userId,
-                    shareIds = shareSelection.shareIds
-                )
-                ShareSelection.AllShares -> localItemDataSource.observeAllItemsWithPasskeys(userId)
+    override fun invoke(userId: UserId?, shareSelection: ShareSelection): Flow<List<Item>> =
+        (userId?.let(::flowOf) ?: accountManager.getPrimaryUserId())
+            .filterNotNull()
+            .flatMapLatest {
+                when (shareSelection) {
+                    is ShareSelection.Share -> localItemDataSource.observeItemsWithPasskeys(
+                        userId = it,
+                        shareIds = listOf(shareSelection.shareId)
+                    )
+
+                    is ShareSelection.Shares -> localItemDataSource.observeItemsWithPasskeys(
+                        userId = it,
+                        shareIds = shareSelection.shareIds
+                    )
+
+                    ShareSelection.AllShares -> localItemDataSource.observeAllItemsWithPasskeys(it)
+                }
             }
-        }
-        .mapLatest { items ->
-            encryptionContextProvider.withEncryptionContext {
-                items.map { it.toDomain(this@withEncryptionContext) }
+            .mapLatest { items ->
+                encryptionContextProvider.withEncryptionContext {
+                    items.map { it.toDomain(this@withEncryptionContext) }
+                }
             }
-        }
 }

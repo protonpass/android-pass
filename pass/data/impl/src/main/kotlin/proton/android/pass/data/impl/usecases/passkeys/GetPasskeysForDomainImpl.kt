@@ -31,6 +31,7 @@ import proton.android.pass.data.impl.util.DomainUtils
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareSelection
 import proton.android.pass.log.api.PassLogger
 
 import javax.inject.Inject
@@ -49,7 +50,7 @@ class GetPasskeysForDomainImpl @Inject constructor(
         }
 
         val allItemsWithPasskeys = observeUsableVaults().flatMapLatest {
-            observeItemsWithPasskeys(it)
+            observeItemsWithPasskeys(shareSelection = ShareSelection.Shares(it.map { vault -> vault.shareId }))
         }.first()
 
         val loginItems = encryptionContextProvider.withEncryptionContext {
@@ -83,6 +84,7 @@ class GetPasskeysForDomainImpl @Inject constructor(
                 is PasskeySelection.Allowed -> domainPasskeys.filter { passkey ->
                     selection.allowedPasskeys.any { it == passkey.id }
                 }
+
                 PasskeySelection.All -> domainPasskeys
             }
 

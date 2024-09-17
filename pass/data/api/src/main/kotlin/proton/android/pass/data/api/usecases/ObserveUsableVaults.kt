@@ -20,8 +20,8 @@ package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.Vault
 
 interface ObserveUsableVaults {
-    operator fun invoke(userId: UserId? = null): Flow<ShareSelection>
+    operator fun invoke(userId: UserId? = null): Flow<List<Vault>>
 }

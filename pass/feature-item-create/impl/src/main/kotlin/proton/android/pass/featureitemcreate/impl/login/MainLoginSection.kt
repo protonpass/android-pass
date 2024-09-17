@@ -59,7 +59,8 @@ internal fun MainLoginSection(
                     selectedShareId ?: return@ExpandableEmailUsernameInput
                     onEvent(LoginContentEvent.OnAliasOptions(selectedShareId, hasReachedAliasLimit))
                 },
-                isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled
+                isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled,
+                isExpanded = loginItemFormState.isExpanded
             )
         } else {
             // Here we're using email field and email callback to support proto backwards compatibility

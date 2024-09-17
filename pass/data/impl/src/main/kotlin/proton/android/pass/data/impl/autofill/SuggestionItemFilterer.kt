@@ -43,10 +43,14 @@ class SuggestionItemFiltererImpl @Inject constructor(
         packageName: Option<String>,
         url: Option<String>
     ): List<Item> = items.filter {
-        if (it.itemType is ItemType.Login) {
-            isMatch(packageName, url, it, it.itemType as ItemType.Login)
-        } else {
-            false
+        when (it.itemType) {
+            is ItemType.Login -> isMatch(packageName, url, it, it.itemType as ItemType.Login)
+            is ItemType.CreditCard -> true
+            is ItemType.Identity -> true
+            is ItemType.Alias,
+            is ItemType.Note,
+            ItemType.Password,
+            ItemType.Unknown -> throw IllegalArgumentException("Unsupported item type")
         }
     }
 

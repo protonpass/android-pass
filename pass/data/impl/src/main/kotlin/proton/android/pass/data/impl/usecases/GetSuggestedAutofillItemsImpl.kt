@@ -22,6 +22,7 @@ import proton.android.pass.data.impl.autofill.SuggestionSorter
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.ShareSelection
 import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
 
@@ -102,7 +103,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
         observeItems(
             userId = account.userId,
             filter = itemTypeFilter,
-            selection = usableVaults,
+            selection = ShareSelection.Shares(usableVaults.map { it.shareId }),
             itemState = ItemState.Active
         )
             .map { items -> suggestionItemFilter.filter(items, packageName, url) }

@@ -262,7 +262,23 @@ abstract class BaseLoginViewModel(
     internal fun onEmailChanged(newEmail: String) {
         onUserEditedContent()
         removeValidationErrors(LoginItemValidationErrors.InvalidEmail)
-        loginItemFormMutableState = loginItemFormMutableState.copy(email = newEmail)
+        when {
+            loginItemFormState.isExpanded -> loginItemFormState.copy(
+                email = newEmail
+            )
+
+            emailValidator.isValid(newEmail) -> loginItemFormState.copy(
+                email = newEmail,
+                username = ""
+            )
+
+            else -> loginItemFormState.copy(
+                email = "",
+                username = newEmail
+            )
+        }.also { updatedLoginItemFormState ->
+            loginItemFormMutableState = updatedLoginItemFormState
+        }
     }
 
     internal fun onUsernameChanged(newUsername: String) {
@@ -729,21 +745,7 @@ abstract class BaseLoginViewModel(
     }
 
     internal fun onUsernameOrEmailManuallyExpanded() {
-        loginItemFormState.email
-            .let { currentEmail ->
-                if (currentEmail.isBlank() || emailValidator.isValid(currentEmail)) {
-                    loginItemFormState.copy(isExpandedByUser = true)
-                } else {
-                    loginItemFormState.copy(
-                        email = "",
-                        username = currentEmail,
-                        isExpandedByUser = true
-                    )
-                }
-            }
-            .also { updatedLoginItemFormState ->
-                loginItemFormMutableState = updatedLoginItemFormState
-            }
+        loginItemFormMutableState = loginItemFormState.copy(isExpandedByUser = true)
     }
 
     private fun updateCustomFieldHiddenOnFocusChange(field: LoginCustomField.CustomFieldHidden, isFocused: Boolean) {

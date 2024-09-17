@@ -44,10 +44,9 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.GetSuggestedCreditCardItems
-import proton.android.pass.data.api.usecases.GetSuggestedIdentityItems
-import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
-import proton.android.pass.data.api.usecases.SuggestedCreditCardItemsResult
+import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
+import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.domain.Item
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
@@ -57,9 +56,7 @@ import kotlin.math.min
 
 class AutofillServiceManager @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val getSuggestedLoginItems: GetSuggestedLoginItems,
-    private val getSuggestedCreditCardItems: GetSuggestedCreditCardItems,
-    private val getSuggestedIdentityItems: GetSuggestedIdentityItems,
+    private val getSuggestedAutofillItems: GetSuggestedAutofillItems,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val needsBiometricAuth: NeedsBiometricAuth,
     @AppIcon private val appIcon: Int,
@@ -105,13 +102,12 @@ class AutofillServiceManager @Inject constructor(
         autofillData: AutofillData,
         suggestionType: SuggestionType
     ): List<Dataset> = when (val suggestedItemsResult = getSuggestedItems(suggestionType, autofillData)) {
-        SuggestedItemsResult.Hide -> emptyList()
         SuggestedItemsResult.ShowUpgrade -> upgradeSuggestion(request, autofillData)
-        is SuggestedItemsResult.Show -> itemsSuggestions(
-            request = request,
-            autofillData = autofillData,
-            suggestedItems = suggestedItemsResult.items
-        )
+        is SuggestedItemsResult.Items -> itemsSuggestions(
+                request = request,
+                autofillData = autofillData,
+                suggestedItems = suggestedItemsResult.items
+            )
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -169,41 +165,31 @@ class AutofillServiceManager @Inject constructor(
     private suspend fun getSuggestedItems(
         suggestionType: SuggestionType,
         autofillData: AutofillData
-    ): SuggestedItemsResult = when (suggestionType) {
-        SuggestionType.CreditCard -> {
-            when (val cardsResult = getSuggestedCreditCardItems().firstOrNull()) {
-                SuggestedCreditCardItemsResult.Hide -> SuggestedItemsResult.Hide
-                is SuggestedCreditCardItemsResult.Items -> SuggestedItemsResult.Show(
-                    items = cardsResult.items
-                )
-
-                SuggestedCreditCardItemsResult.ShowUpgrade -> SuggestedItemsResult.ShowUpgrade
-                null -> SuggestedItemsResult.Hide
-            }
+    ): SuggestedItemsResult {
+        val (packageName, url) = PackageNameUrlSuggestionAdapter.adapt(
+            packageName = autofillData.packageInfo.packageName,
+            url = autofillData.assistInfo.url
+        )
+        val itemTypeFilter = when (suggestionType) {
+            SuggestionType.CreditCard -> ItemTypeFilter.CreditCards
+            SuggestionType.Identity -> ItemTypeFilter.Identity
+            SuggestionType.Login -> ItemTypeFilter.Logins
         }
-
-        SuggestionType.Login -> {
-            val (packageName, url) = PackageNameUrlSuggestionAdapter.adapt(
-                packageName = autofillData.packageInfo.packageName,
-                url = autofillData.assistInfo.url
-            )
-
-            val items = getSuggestedLoginItems(
-                packageName = packageName,
-                url = url
-            ).firstOrNull() ?: emptyList()
-            SuggestedItemsResult.Show(items)
-        }
-
-        SuggestionType.Identity -> {
-            val items = getSuggestedIdentityItems().firstOrNull() ?: emptyList()
-            SuggestedItemsResult.Show(items)
+        val result = getSuggestedAutofillItems(
+            itemTypeFilter = itemTypeFilter,
+            packageName = packageName,
+            url = url
+        ).firstOrNull()
+        return when (result) {
+            is SuggestedAutofillItemsResult.Items -> SuggestedItemsResult.Items(result.items)
+            SuggestedAutofillItemsResult.ShowUpgrade -> SuggestedItemsResult.ShowUpgrade
+            null -> SuggestedItemsResult.Items(emptyList())
         }
     }
 
     suspend fun createMenuPresentationDataset(autofillData: AutofillData): List<Dataset> {
         val suggestedItemsResult = when (autofillData.assistInfo.cluster) {
-            NodeCluster.Empty -> SuggestedItemsResult.Show(emptyList())
+            NodeCluster.Empty -> SuggestedItemsResult.Items(emptyList())
             is NodeCluster.Login,
             is NodeCluster.SignUp -> getSuggestedItems(SuggestionType.Login, autofillData)
 
@@ -212,12 +198,15 @@ class AutofillServiceManager @Inject constructor(
         }
 
         return when (suggestedItemsResult) {
-            SuggestedItemsResult.Hide -> emptyList()
             SuggestedItemsResult.ShowUpgrade -> createUpgradePresentationDataset(autofillData)
-            is SuggestedItemsResult.Show -> createMenuPresentationDatasetWithItems(
-                autofillData = autofillData,
-                suggestedItems = suggestedItemsResult.items
-            )
+            is SuggestedItemsResult.Items -> if (suggestedItemsResult.items.isNotEmpty()) {
+                createMenuPresentationDatasetWithItems(
+                    autofillData = autofillData,
+                    suggestedItems = suggestedItemsResult.items
+                )
+            } else {
+                emptyList()
+            }
         }
     }
 
@@ -486,9 +475,8 @@ sealed interface SuggestionType {
 }
 
 sealed interface SuggestedItemsResult {
-    data object Hide : SuggestedItemsResult
     data object ShowUpgrade : SuggestedItemsResult
 
     @JvmInline
-    value class Show(val items: List<Item>) : SuggestedItemsResult
+    value class Items(val items: List<Item>) : SuggestedItemsResult
 }

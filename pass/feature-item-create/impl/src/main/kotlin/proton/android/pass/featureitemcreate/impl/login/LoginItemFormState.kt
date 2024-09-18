@@ -47,15 +47,16 @@ data class LoginItemFormState(
     val customFields: List<UICustomFieldContent>,
     val passkeys: List<UIPasskeyContent>,
     val passkeyToBeGenerated: UIPasskeyContent?,
-    val isExpandedInitially: Boolean,
-    val isExpandedByUser: Boolean
+    private val isExpandedByContent: Boolean,
+    private val isExpandedByUser: Boolean,
+    private val isExpandedByPreference: Boolean
 ) : Parcelable {
 
     @IgnoredOnParcel
     internal val hasPasskeys: Boolean = passkeys.isNotEmpty()
 
     @IgnoredOnParcel
-    internal val isExpanded: Boolean = isExpandedInitially || isExpandedByUser
+    internal val isExpanded: Boolean = isExpandedByContent || isExpandedByUser || isExpandedByPreference
 
     internal fun validate(): Set<LoginItemValidationErrors> = mutableSetOf<LoginItemValidationErrors>().apply {
         if (title.isBlank()) {
@@ -119,8 +120,9 @@ data class LoginItemFormState(
             customFields = emptyList(),
             passkeys = emptyList(),
             passkeyToBeGenerated = null,
-            isExpandedInitially = false,
-            isExpandedByUser = false
+            isExpandedByContent = false,
+            isExpandedByUser = false,
+            isExpandedByPreference = false
         )
 
     }

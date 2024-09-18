@@ -77,7 +77,7 @@ internal data class SettingsUiState(
             allowScreenshots = AllowScreenshotsPreference.Disabled,
             telemetryStatus = TelemetryStatus.Hide,
             event = SettingsEvent.Unknown,
-            displayUsernameFieldPreference = SettingsDisplayUsernameFieldPreference.Disabled,
+            displayUsernameFieldPreference = SettingsDisplayUsernameFieldPreference.Disabled
         )
 
     }

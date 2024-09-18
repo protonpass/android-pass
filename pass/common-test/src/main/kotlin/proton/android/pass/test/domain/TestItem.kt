@@ -19,12 +19,14 @@
 package proton.android.pass.test.domain
 
 import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encrypt
 import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
@@ -69,7 +71,10 @@ object TestItem {
         itemType: ItemType? = null,
         title: String? = null,
         note: String? = null,
-        content: ByteArray? = null
+        content: ByteArray? = null,
+        lastAutofillTime: Long? = null,
+        createTime: Long = Clock.System.now().toEpochMilliseconds(),
+        modificationTime: Long = createTime
     ): Item {
         val itemTypeParam = itemType ?: ItemType.Login(
             itemEmail = randomString(),
@@ -88,7 +93,6 @@ object TestItem {
         } else {
             TestKeyStoreCrypto.encrypt(PlainByteArray(byteArrayOf(0x00)))
         }
-        val now = Clock.System.now()
         return Item(
             id = ItemId(randomString()),
             itemUuid = UUID.randomUUID().toString(),
@@ -100,9 +104,9 @@ object TestItem {
             content = itemContent,
             packageInfoSet = emptySet(),
             state = 0,
-            createTime = now,
-            modificationTime = now,
-            lastAutofillTime = None,
+            createTime = Instant.fromEpochMilliseconds(createTime),
+            modificationTime = Instant.fromEpochMilliseconds(modificationTime),
+            lastAutofillTime = lastAutofillTime?.let { Instant.fromEpochMilliseconds(it) }.toOption(),
             isPinned = Random.nextBoolean(),
             flags = Random.nextInt()
         )

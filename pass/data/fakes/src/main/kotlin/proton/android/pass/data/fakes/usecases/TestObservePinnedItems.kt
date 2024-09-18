@@ -20,6 +20,7 @@ package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Clock
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.None
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
@@ -53,7 +54,11 @@ class TestObservePinnedItems @Inject constructor() : ObservePinnedItems {
         flow.tryEmit(defaultValues.asList())
     }
 
-    override fun invoke(filter: ItemTypeFilter, shareSelection: ShareSelection): Flow<List<Item>> = flow
+    override fun invoke(
+        userId: UserId?,
+        filter: ItemTypeFilter,
+        shareSelection: ShareSelection
+    ): Flow<List<Item>> = flow
 
     data class DefaultValues(
         val login: Item,

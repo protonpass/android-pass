@@ -32,7 +32,6 @@ import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
-import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.Vault
 import java.util.Date
 
@@ -70,7 +69,10 @@ class ObserveUsableVaultsImplTest {
         )
 
         val res = instance().first()
-        assertThat(res).isEqualTo(ShareSelection.Shares(listOf(vault1, vault2)))
+        assertThat(res).hasSize(2)
+        assertThat(res.map { it.shareId }).containsExactly(vault1, vault2)
+        assertThat(res.map { it.role }).containsExactly(ShareRole.Write, ShareRole.Write)
+
     }
 
     @Test
@@ -89,7 +91,10 @@ class ObserveUsableVaultsImplTest {
         )
 
         val res = instance().first()
-        assertThat(res).isEqualTo(ShareSelection.Shares(listOf(vault1, vault2)))
+        assertThat(res).hasSize(2)
+        assertThat(res.map { it.shareId }).containsExactly(vault1, vault2)
+        assertThat(res.map { it.role }).containsExactly(ShareRole.Write, ShareRole.Write)
+
     }
 
     @Test
@@ -108,7 +113,9 @@ class ObserveUsableVaultsImplTest {
         )
 
         val res = instance().first()
-        assertThat(res).isEqualTo(ShareSelection.AllShares)
+        assertThat(res).hasSize(3)
+        assertThat(res.map { it.shareId }).containsExactly(vault1, vault2, vault3)
+        assertThat(res.map { it.role }).containsExactly(ShareRole.Write, ShareRole.Write, ShareRole.Read)
     }
 
     @Test
@@ -127,7 +134,9 @@ class ObserveUsableVaultsImplTest {
         )
 
         val res = instance().first()
-        assertThat(res).isEqualTo(ShareSelection.AllShares)
+        assertThat(res).hasSize(3)
+        assertThat(res.map { it.shareId }).containsExactly(vault1, vault2, vault3)
+        assertThat(res.map { it.role }).containsExactly(ShareRole.Write, ShareRole.Write, ShareRole.Read)
     }
 
     @Test
@@ -146,7 +155,9 @@ class ObserveUsableVaultsImplTest {
         )
 
         val res = instance().first()
-        assertThat(res).isEqualTo(ShareSelection.AllShares)
+        assertThat(res).hasSize(3)
+        assertThat(res.map { it.shareId }).containsExactly(vault1, vault2, vault3)
+        assertThat(res.map { it.role }).containsExactly(ShareRole.Write, ShareRole.Write, ShareRole.Read)
     }
 
     private fun setVaults(vaults: Map<ShareId, ShareRole>) {

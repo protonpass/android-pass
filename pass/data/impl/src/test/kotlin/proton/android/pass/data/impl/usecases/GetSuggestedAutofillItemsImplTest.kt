@@ -20,6 +20,8 @@ package proton.android.pass.data.impl.usecases
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
@@ -28,27 +30,29 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.account.fakes.TestKeyStoreCrypto
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
+import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.ItemTypeFilter
-import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
+import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
+import proton.android.pass.data.fakes.usecases.TestGetUserPlan
+import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUsableVaults
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
-import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.Vault
 import proton.android.pass.preferences.LastItemAutofillPreference
 import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
 import java.util.Date
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 private typealias Filter = (Item) -> Boolean
 
@@ -77,77 +81,66 @@ class FakeSuggestionSorter : SuggestionSorter {
 }
 
 @RunWith(JUnit4::class)
-class GetSuggestedLoginItemsImplTest {
+class GetSuggestedAutofillItemsImplTest {
 
     @get:Rule
     val dispatcher = MainDispatcherRule()
 
-    private lateinit var observeActiveItems: TestObserveActiveItems
+    private lateinit var accountManager: TestAccountManager
+    private lateinit var observeItems: TestObserveItems
+    private lateinit var getUserPlan: TestGetUserPlan
     private lateinit var filter: FakeSuggestionItemFilterer
-    private lateinit var getSuggestedLoginItems: GetSuggestedLoginItems
+    private lateinit var getSuggestedAutofillItems: GetSuggestedAutofillItems
     private lateinit var observeVaults: TestObserveUsableVaults
     private lateinit var internalSettingsRepository: TestInternalSettingsRepository
 
     @Before
     fun setUp() {
-        observeActiveItems = TestObserveActiveItems()
+        accountManager = TestAccountManager()
+        observeItems = TestObserveItems()
+        getUserPlan = TestGetUserPlan()
         filter = FakeSuggestionItemFilterer()
         observeVaults = TestObserveUsableVaults()
         internalSettingsRepository = TestInternalSettingsRepository()
-        getSuggestedLoginItems = GetSuggestedLoginItemsImpl(
+        getSuggestedAutofillItems = GetSuggestedAutofillItemsImpl(
+            accountManager = accountManager,
             observeUsableVaults = observeVaults,
-            observeActiveItems = observeActiveItems,
+            observeItems = observeItems,
             suggestionItemFilter = filter,
             suggestionSorter = FakeSuggestionSorter(),
-            internalSettingsRepository = internalSettingsRepository
+            internalSettingsRepository = internalSettingsRepository,
+            getUserPlan = getUserPlan
         )
     }
 
     @Test
     fun `filter is invoked`() = runTest {
-        emitDefaultVault()
 
         val fixedTitle = "item1"
         val item1 = TestItem.random(title = fixedTitle)
         val item2 = TestItem.random()
 
-
-        observeActiveItems.sendItemList(listOf(item1, item2))
+        observeVaults.emit(Result.success(emptyList()))
+        observeItems.emitValue(listOf(item1, item2))
         filter.setFilter { TestKeyStoreCrypto.decrypt(it.title) == fixedTitle }
 
-        getSuggestedLoginItems.invoke(None, None).test {
-            assertEquals(awaitItem(), listOf(item1))
+        getSuggestedAutofillItems(itemTypeFilter = ItemTypeFilter.Logins).test {
+            assertEquals(awaitItem(), SuggestedAutofillItemsResult.Items(listOf(item1)))
         }
-
-        val memory = observeActiveItems.getMemory()
-        val expected = TestObserveActiveItems.Payload(
-            filter = ItemTypeFilter.Logins,
-            shareSelection = ShareSelection.AllShares
-        )
-        assertThat(memory).isEqualTo(listOf(expected))
     }
 
     @Test
     fun `error is propagated`() = runTest {
-        emitDefaultVault()
-
         val message = "test exception"
-
+        observeVaults.emit(Result.success(emptyList()))
         filter.setFilter { true }
-        observeActiveItems.sendException(Exception(message))
+        observeItems.sendException(Exception(message))
 
-        getSuggestedLoginItems.invoke(None, None).test {
+        getSuggestedAutofillItems(itemTypeFilter = ItemTypeFilter.Logins).test {
             val e = awaitError()
             assertTrue(e is Exception)
             assertEquals(e.message, message)
         }
-
-        val memory = observeActiveItems.getMemory()
-        val expected = TestObserveActiveItems.Payload(
-            filter = ItemTypeFilter.Logins,
-            shareSelection = ShareSelection.AllShares
-        )
-        assertThat(memory).isEqualTo(listOf(expected))
     }
 
     @Test
@@ -179,30 +172,51 @@ class GetSuggestedLoginItemsImplTest {
             )
         )
 
-        val shareSelection = ShareSelection.Shares(vaults.map { it.shareId })
-        observeVaults.emit(Result.success(shareSelection))
+        observeVaults.emit(Result.success(vaults))
 
         filter.setFilter { true }
 
         val items = listOf(TestItem.random())
-        observeActiveItems.sendItemList(items)
+        observeItems.emitValue(items)
 
         // WHEN
-        val res = getSuggestedLoginItems.invoke(None, None).first()
+        getSuggestedAutofillItems(itemTypeFilter = ItemTypeFilter.Logins).test {
 
-        // THEN
-        assertThat(res).isEqualTo(items)
-
-        val memory = observeActiveItems.getMemory()
-        val expected = TestObserveActiveItems.Payload(
-            filter = ItemTypeFilter.Logins,
-            shareSelection = shareSelection
-        )
-        assertThat(memory).isEqualTo(listOf(expected))
+            // THEN
+            assertThat(awaitItem()).isEqualTo(SuggestedAutofillItemsResult.Items(items))
+        }
     }
 
-    private fun emitDefaultVault() {
-        observeVaults.emit(Result.success(ShareSelection.AllShares))
+    @Test
+    fun `when plan is free and credit cards, then show upgrade`() = runTest {
+        getUserPlan.setResult(Result.success(buildPlan(PlanType.Free("", ""))))
+        observeItems.emitValue(listOf(TestObserveItems.createCreditCard()))
+        filter.setFilter { true }
+
+        val result = getSuggestedAutofillItems(itemTypeFilter = ItemTypeFilter.CreditCards).first()
+        assertThat(result).isInstanceOf(SuggestedAutofillItemsResult.ShowUpgrade::class.java)
     }
+
+    @Test
+    fun `when plan is paid and no credit cards, show empty list`() = runTest {
+        getUserPlan.setResult(Result.success(buildPlan(PlanType.Paid.Plus("", ""))))
+        observeItems.emitValue(emptyList())
+        filter.setFilter { true }
+
+        val result = getSuggestedAutofillItems(itemTypeFilter = ItemTypeFilter.CreditCards).first()
+        assertThat(result).isInstanceOf(SuggestedAutofillItemsResult.Items::class.java)
+
+        val items = (result as SuggestedAutofillItemsResult.Items).items
+        assertThat(items).isEmpty()
+    }
+
+    private fun buildPlan(planType: PlanType) = Plan(
+        planType = planType,
+        hideUpgrade = false,
+        vaultLimit = PlanLimit.Unlimited,
+        aliasLimit = PlanLimit.Unlimited,
+        totpLimit = PlanLimit.Unlimited,
+        updatedAt = 0
+    )
 }
 

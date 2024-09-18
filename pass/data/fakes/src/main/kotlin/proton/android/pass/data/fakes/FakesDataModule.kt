@@ -60,9 +60,7 @@ import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetShareById
-import proton.android.pass.data.api.usecases.GetSuggestedCreditCardItems
-import proton.android.pass.data.api.usecases.GetSuggestedIdentityItems
-import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
+import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.GetVaultMembers
@@ -189,7 +187,6 @@ import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
 import proton.android.pass.data.fakes.usecases.FakeChangeAliasStatus
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.FakeGetSuggestedIdentityItems
 import proton.android.pass.data.fakes.usecases.FakeObserveAddressesByUserId
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.FakePinItem
@@ -230,8 +227,7 @@ import proton.android.pass.data.fakes.usecases.TestGetItemByAliasEmail
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestGetPasskeyById
 import proton.android.pass.data.fakes.usecases.TestGetShareById
-import proton.android.pass.data.fakes.usecases.TestGetSuggestedCreditCardItems
-import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
+import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
 import proton.android.pass.data.fakes.usecases.TestGetVaultMembers
@@ -344,13 +340,7 @@ import javax.inject.Singleton
 abstract class FakesDataModule {
 
     @Binds
-    abstract fun bindGetSuggestedLoginItems(impl: TestGetSuggestedLoginItems): GetSuggestedLoginItems
-
-    @Binds
-    abstract fun bindGetSuggestedCreditCardItems(impl: TestGetSuggestedCreditCardItems): GetSuggestedCreditCardItems
-
-    @Binds
-    abstract fun bindGetSuggestedIdentityItems(impl: FakeGetSuggestedIdentityItems): GetSuggestedIdentityItems
+    abstract fun bindGetSuggestedAutofillItems(impl: TestGetSuggestedAutofillItems): GetSuggestedAutofillItems
 
     @Binds
     abstract fun bindItemRepository(impl: TestItemRepository): ItemRepository

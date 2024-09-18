@@ -85,6 +85,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.totp.api.TotpManager
 
 @Suppress("TooManyFunctions", "LargeClass")
@@ -98,6 +99,7 @@ abstract class BaseLoginViewModel(
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
     private val emailValidator: EmailValidator,
     private val disableTooltip: DisableTooltip,
+    private val userPreferencesRepository: UserPreferencesRepository,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandleProvider: SavedStateHandleProvider,
@@ -132,6 +134,7 @@ abstract class BaseLoginViewModel(
             launch { observeNewCustomField() }
             launch { observeRemoveCustomField() }
             launch { observeRenameCustomField() }
+            launch { observeDisplayUsernameFieldPreference() }
         }
     }
 
@@ -817,6 +820,15 @@ abstract class BaseLoginViewModel(
                             renameCustomField(customField)
                         }
                 }
+            }
+    }
+
+    private suspend fun observeDisplayUsernameFieldPreference() {
+        userPreferencesRepository.observeDisplayUsernameFieldPreference()
+            .collect { displayUsernameFieldPreference ->
+                loginItemFormMutableState = loginItemFormState.copy(
+                    isExpandedByPreference = displayUsernameFieldPreference.value
+                )
             }
     }
 

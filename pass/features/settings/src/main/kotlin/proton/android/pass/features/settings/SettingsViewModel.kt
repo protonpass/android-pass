@@ -123,7 +123,7 @@ class SettingsViewModel @Inject constructor(
             allowScreenshots = allowScreenshots,
             telemetryStatus = telemetryStatus,
             event = event,
-            displayUsernameFieldPreference = preferences.displayUsernameFieldPreference,
+            displayUsernameFieldPreference = preferences.displayUsernameFieldPreference
         )
     }.stateIn(
         scope = viewModelScope,

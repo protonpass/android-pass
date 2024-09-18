@@ -92,6 +92,7 @@ import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.GeneratePasskey
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
@@ -120,7 +121,8 @@ class CreateLoginViewModel @Inject constructor(
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     emailValidator: EmailValidator,
     observeTooltipEnabled: ObserveTooltipEnabled,
-    disableTooltip: DisableTooltip
+    disableTooltip: DisableTooltip,
+    userPreferencesRepository: UserPreferencesRepository
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -135,7 +137,8 @@ class CreateLoginViewModel @Inject constructor(
     featureFlagsRepository = featureFlagsRepository,
     emailValidator = emailValidator,
     observeTooltipEnabled = observeTooltipEnabled,
-    disableTooltip = disableTooltip
+    disableTooltip = disableTooltip,
+    userPreferencesRepository = userPreferencesRepository
 ) {
     private val navShareId: Option<ShareId> = savedStateHandleProvider.get()
         .get<String>(CommonOptionalNavArgId.ShareId.key)

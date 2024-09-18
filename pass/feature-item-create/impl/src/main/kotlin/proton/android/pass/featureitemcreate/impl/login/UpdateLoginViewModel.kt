@@ -83,6 +83,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
@@ -107,7 +108,8 @@ class UpdateLoginViewModel @Inject constructor(
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     emailValidator: EmailValidator,
     observeTooltipEnabled: ObserveTooltipEnabled,
-    disableTooltip: DisableTooltip
+    disableTooltip: DisableTooltip,
+    userPreferencesRepository: UserPreferencesRepository
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -122,7 +124,8 @@ class UpdateLoginViewModel @Inject constructor(
     featureFlagsRepository = featureFlagsRepository,
     emailValidator = emailValidator,
     observeTooltipEnabled = observeTooltipEnabled,
-    disableTooltip = disableTooltip
+    disableTooltip = disableTooltip,
+    userPreferencesRepository = userPreferencesRepository
 ) {
     private val navShareId: ShareId = savedStateHandleProvider.get()
         .require<String>(CommonNavArgId.ShareId.key)
@@ -283,7 +286,7 @@ class UpdateLoginViewModel @Inject constructor(
                     primaryTotp = UIHiddenState.Revealed(encrypt(decryptedTotp), decryptedTotp),
                     customFields = sanitisedToEditCustomField,
                     passkeys = itemContents.passkeys.map { UIPasskeyContent.from(it) },
-                    isExpandedInitially = itemContents.itemEmail.isNotBlank() && itemContents.itemUsername.isNotBlank()
+                    isExpandedByContent = itemContents.itemEmail.isNotBlank() && itemContents.itemUsername.isNotBlank()
                 )
             }
         }

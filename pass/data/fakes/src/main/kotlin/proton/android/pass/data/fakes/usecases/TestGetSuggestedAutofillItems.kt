@@ -21,19 +21,26 @@ package proton.android.pass.data.fakes.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
-import proton.android.pass.data.api.usecases.GetSuggestedCreditCardItems
-import proton.android.pass.data.api.usecases.SuggestedCreditCardItemsResult
+import proton.android.pass.common.api.Option
+import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
+import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestGetSuggestedCreditCardItems @Inject constructor() : GetSuggestedCreditCardItems {
+class TestGetSuggestedAutofillItems @Inject constructor() : GetSuggestedAutofillItems {
 
-    private val resultFlow = MutableStateFlow<Result<SuggestedCreditCardItemsResult>>(
-        Result.success(SuggestedCreditCardItemsResult.Items(emptyList()))
-    )
+    private val resultFlow: MutableStateFlow<Map<ItemTypeFilter, Result<SuggestedAutofillItemsResult>>> =
+        MutableStateFlow(emptyMap())
 
-    fun sendValue(value: Result<SuggestedCreditCardItemsResult>) = resultFlow.tryEmit(value)
+    fun sendValue(itemTypeFilter: ItemTypeFilter, value: Result<SuggestedAutofillItemsResult>) {
+        resultFlow.value += itemTypeFilter to value
+    }
 
-    override fun invoke(): Flow<SuggestedCreditCardItemsResult> = resultFlow.map { it.getOrThrow() }
+    override fun invoke(
+        itemTypeFilter: ItemTypeFilter,
+        packageName: Option<String>,
+        url: Option<String>
+    ): Flow<SuggestedAutofillItemsResult> = resultFlow.map { it.getValue(itemTypeFilter).getOrThrow() }
 }

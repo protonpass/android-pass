@@ -19,6 +19,8 @@
 package proton.android.pass.data.impl.autofill
 
 import kotlinx.datetime.Clock
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.minus
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.None
@@ -179,5 +181,32 @@ class SuggestionSorterImplTest {
         )
 
         assertEquals(res, listOf(item2, item1))
+    }
+
+    @Test
+    fun `sort credit cards`() {
+        val currentTime = Clock.System.now()
+        val card1 = TestItem.random(
+            itemType = TestItemType.creditCard(),
+            lastAutofillTime = currentTime.toEpochMilliseconds()
+        )
+        val card2 = TestItem.random(
+            itemType = TestItemType.creditCard(),
+            lastAutofillTime = currentTime.minus(60, DateTimeUnit.SECOND).toEpochMilliseconds()
+        )
+        val card3 = TestItem.random(
+            itemType = TestItemType.creditCard(),
+            modificationTime = currentTime.minus(120, DateTimeUnit.SECOND).toEpochMilliseconds()
+        )
+        val card4 = TestItem.random(
+            itemType = TestItemType.creditCard(),
+            modificationTime = currentTime.minus(180, DateTimeUnit.SECOND).toEpochMilliseconds()
+        )
+
+        val items = listOf(card4, card3, card2, card1)
+        val res = instance.sort(items, None, None)
+
+        // The result should be sorted by last autofill time descending, then by modification time descending
+        assertEquals(res, listOf(card1, card2, card3, card4))
     }
 }

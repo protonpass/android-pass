@@ -19,6 +19,7 @@
 package proton.android.pass.test.domain
 
 import proton.android.pass.account.fakes.TestKeyStoreCrypto
+import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.entity.PackageInfo
@@ -45,4 +46,18 @@ object TestItemType {
         passkeys = passkeys
     )
 
+    fun creditCard(
+        cardNumber: String = TestUtils.randomString(),
+        cardHolder: String = TestUtils.randomString(),
+        expirationDate: String = TestUtils.randomString(),
+        cvv: String = TestUtils.randomString(),
+        pin: String = TestUtils.randomString()
+    ): ItemType.CreditCard = ItemType.CreditCard(
+        cardHolder = cardHolder,
+        number = cardNumber,
+        cvv = cvv,
+        pin = pin,
+        creditCardType = CreditCardType.MasterCard,
+        expirationDate = expirationDate
+    )
 }

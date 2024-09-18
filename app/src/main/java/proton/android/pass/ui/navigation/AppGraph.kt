@@ -755,8 +755,13 @@ fun NavGraphBuilder.appGraph(
                     route = AliasOptionsBottomSheet.createNavRoute(it.shareId, it.showUpgrade)
                 )
 
-                BaseLoginNavigation.DeleteAlias ->
-                    appNavigator.navigateBackWithResult(CLEAR_ALIAS_NAV_PARAMETER_KEY, true)
+                BaseLoginNavigation.DeleteAlias -> dismissBottomSheet {
+                    appNavigator.navigateBackWithResult(
+                        key = CLEAR_ALIAS_NAV_PARAMETER_KEY,
+                        value = true,
+                        comesFromBottomsheet = true
+                    )
+                }
 
                 is BaseLoginNavigation.EditAlias -> {
                     appNavigator.navigate(

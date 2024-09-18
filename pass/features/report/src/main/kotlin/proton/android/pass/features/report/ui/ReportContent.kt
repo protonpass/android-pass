@@ -40,7 +40,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.topbar.IconTopAppBar
-import proton.android.pass.composecomponents.impl.topbar.iconbutton.CrossBackCircleIconButton
+import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 import proton.android.pass.features.report.R
 import proton.android.pass.features.report.navigation.ReportNavContentEvent
 import proton.android.pass.features.report.presentation.ReportFormData
@@ -56,7 +56,17 @@ internal fun ReportContent(
 ) {
     val pagerState: PagerState = rememberPagerState(initialPage = 0, pageCount = { 3 })
     val scope = rememberCoroutineScope()
-    BackHandler { onEvent(ReportNavContentEvent.Close) }
+    val backHandler = {
+        if (pagerState.canScrollBackward) {
+            if (pagerState.currentPage == ReportPage.Tips.value) {
+                onEvent(ReportNavContentEvent.CancelReason)
+            }
+            scope.launch { pagerState.scrollToPage(pagerState.currentPage - 1) }
+        } else {
+            onEvent(ReportNavContentEvent.Close)
+        }
+    }
+    BackHandler { backHandler() }
     LaunchedEffect(state.reportReasonOption) {
         if (state.reportReasonOption is Some) {
             when (state.reportReasonOption.value) {
@@ -67,23 +77,20 @@ internal fun ReportContent(
 
                 ReportReason.Other -> navigateToPage(scope, pagerState, ReportPage.Form)
             }
-        } else {
-            navigateToPage(scope, pagerState, ReportPage.Categories)
         }
     }
     Scaffold(
         modifier = modifier,
         topBar = {
             IconTopAppBar(
-                modifier = Modifier,
                 backgroundColor = PassTheme.colors.itemDetailBackground,
                 title = stringResource(R.string.report_toolbar_title),
                 navigationIcon = {
-                    CrossBackCircleIconButton(
+                    BackArrowCircleIconButton(
                         modifier = Modifier.padding(Spacing.mediumSmall, Spacing.extraSmall),
                         color = PassTheme.colors.interactionNorm,
                         backgroundColor = PassTheme.colors.interactionNormMinor1,
-                        onUpClick = { onEvent(ReportNavContentEvent.Close) }
+                        onUpClick = { backHandler() }
                     )
                 }
             )

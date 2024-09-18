@@ -48,6 +48,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.Button
+import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.report.R
 import proton.android.pass.features.report.navigation.ReportNavContentEvent
@@ -119,6 +120,22 @@ internal fun ReportTipsPage(
                 when (passkeySupportOption) {
                     None -> {}
                     is Some -> {
+                        val passKeyLabelText =
+                            if (passkeySupportOption.value is PasskeySupport.Supported) {
+                                stringResource(R.string.tips_passkey_supported)
+                            } else {
+                                stringResource(R.string.tips_passkey_not_supported)
+                            }
+                        Text.Body1Regular(
+                            modifier = Modifier
+                                .padding(Spacing.medium)
+                                .roundedContainer(
+                                    backgroundColor = PassTheme.colors.interactionNormMinor1,
+                                    borderColor = Color.Transparent
+                                )
+                                .padding(Spacing.small),
+                            text = passKeyLabelText
+                        )
                         when (val passkeySupport = passkeySupportOption.value) {
                             is PasskeySupport.NotSupported -> {
                                 when (passkeySupport.reason) {
@@ -138,7 +155,7 @@ internal fun ReportTipsPage(
 
                             PasskeySupport.Supported -> {
                                 TipRow(
-                                    text = stringResource(R.string.tips_passkey_supported),
+                                    text = stringResource(R.string.tips_passkey_check_guide),
                                     onClick = { openWebsite(context, PASS_PASSKEYS) }
                                 )
                             }
@@ -178,7 +195,7 @@ internal fun ReportTipsPage(
             color = Color.Transparent,
             contentPadding = PaddingValues(Spacing.mediumSmall),
             elevation = ButtonDefaults.elevation(0.dp),
-            onClick = { onEvent(ReportNavContentEvent.CancelTips) }
+            onClick = { onEvent(ReportNavContentEvent.Close) }
         ) {
             Text.Body1Regular(stringResource(R.string.cancel_tips_button))
         }

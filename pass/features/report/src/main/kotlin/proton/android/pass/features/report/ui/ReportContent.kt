@@ -64,8 +64,17 @@ internal fun ReportContent(
             if (pagerState.currentPage == ReportPage.Tips.value) {
                 onEvent(ReportNavContentEvent.CancelReason)
             }
-            val pagesToRollback = if (state.reportReasonOption.value() == ReportReason.Other) 2 else 1
-            scope.launch { pagerState.scrollToPage(pagerState.currentPage - pagesToRollback) }
+
+            when (state.reportReasonOption.value()) {
+                ReportReason.Other -> {
+                    onEvent(ReportNavContentEvent.CancelReason)
+                    navigateToPage(scope, pagerState, ReportPage.Categories)
+                }
+
+                else -> {
+                    scope.launch { pagerState.scrollToPage(pagerState.currentPage - 1) }
+                }
+            }
         } else {
             onEvent(ReportNavContentEvent.Close)
         }

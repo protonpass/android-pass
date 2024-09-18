@@ -48,5 +48,6 @@
     <string name="tips_passkeys_credential_manager_not_supported">The manufacturer of the device doesn\'t provide a credential manager.</string>
     <string name="tips_passkey_supported">Passkeys supported</string>
     <string name="tips_passkey_not_supported">Passkeys not supported</string>
+    <string name="report_steps">Step %1$d of 3</string>
 
 </resources>

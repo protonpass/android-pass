@@ -39,9 +39,7 @@ class TestGetUserPlan @Inject constructor() : GetUserPlan {
         result.tryEmit(value)
     }
 
-    override fun invoke(): Flow<Plan> = result.map { it.getOrThrow() }
-
-    override fun invoke(userId: UserId) = invoke()
+    override fun invoke(userId: UserId?): Flow<Plan> = result.map { it.getOrThrow() }
 
     companion object {
         val DEFAULT_PLAN = Plan(

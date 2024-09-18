@@ -44,10 +44,13 @@ class SuggestionSorterImpl @Inject constructor(
         items: List<Item>,
         url: Option<String>,
         lastItemAutofill: Option<LastItemAutofillPreference>
-    ): List<Item> = when (url) {
-        is Some -> sortWithUrl(items, url.value)
-        else -> items
-    }.putLastItemAutofillOnTop(lastItemAutofill)
+    ): List<Item> {
+        return when {
+            items.all { it.itemType is ItemType.Login } -> sortLoginsWithUrl(items, url)
+            items.all { it.itemType is ItemType.CreditCard } -> sortCreditCards(items)
+            else -> items
+        }.putLastItemAutofillOnTop(lastItemAutofill)
+    }
 
     private fun List<Item>.putLastItemAutofillOnTop(
         lastItemAutofillOption: Option<LastItemAutofillPreference>
@@ -68,11 +71,14 @@ class SuggestionSorterImpl @Inject constructor(
         else -> this
     }
 
-    private fun sortWithUrl(items: List<Item>, url: String): List<Item> {
-        val parsed = hostParser.parse(url).fold(
-            onSuccess = { it },
-            onFailure = { return items }
-        )
+    private fun sortLoginsWithUrl(items: List<Item>, url: Option<String>): List<Item> {
+        val parsed = when (url) {
+            is Some -> hostParser.parse(url.value).fold(
+                onSuccess = { it },
+                onFailure = { return items }
+            )
+            is None -> return items
+        }
 
         return when (parsed) {
             is HostInfo.Ip -> items // If it's an IP, there's no sorting that we can perform
@@ -88,13 +94,6 @@ class SuggestionSorterImpl @Inject constructor(
         }
     }
 
-    /**
-     * Logic:
-     * If user is on sub.domain.com:
-     *   show sub.domain.com items on top,
-     *   then domain.com items,
-     *   and lastly other.domain.com items
-     */
     private fun sortBySubdomain(parsed: HostInfo.Host, items: List<LoginItem>): List<Item> {
         val sameSubdomainItems = mutableListOf<Item>()
         val domainItems = mutableListOf<Item>()
@@ -131,12 +130,6 @@ class SuggestionSorterImpl @Inject constructor(
         return finalList
     }
 
-    /**
-     * Logic:
-     * If user is on domain.com
-     *   show domain.com items on top,
-     *   then sub.domain.com items
-     */
     private fun sortByDomain(parsed: HostInfo.Host, items: List<LoginItem>): List<Item> {
         val domainItems = mutableListOf<Item>()
         val subdomainItems = mutableListOf<Item>()
@@ -172,6 +165,16 @@ class SuggestionSorterImpl @Inject constructor(
             }
         }
         return res
+    }
+
+    private fun sortCreditCards(items: List<Item>): List<Item> {
+        val creditCards = items.filter { it.itemType is ItemType.CreditCard }
+        return creditCards.sortedByDescending {
+            when (val autofillTime = it.lastAutofillTime) {
+                None -> it.modificationTime
+                is Some -> autofillTime.value
+            }
+        }
     }
 
     internal data class LoginItem(

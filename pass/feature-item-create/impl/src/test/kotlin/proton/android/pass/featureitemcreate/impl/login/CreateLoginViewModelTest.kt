@@ -65,6 +65,7 @@ import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.passkeys.fakes.TestGeneratePasskey
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
+import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -121,7 +122,8 @@ internal class CreateLoginViewModelTest {
             featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
             emailValidator = TestEmailValidator(),
             observeTooltipEnabled = FakeObserveTooltipEnabled(),
-            disableTooltip = FakeDisableTooltip()
+            disableTooltip = FakeDisableTooltip(),
+            userPreferencesRepository = TestPreferenceRepository()
         )
     }
 

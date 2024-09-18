@@ -43,10 +43,9 @@ import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
-import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.data.fakes.usecases.TestObserveUsableVaults
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -84,7 +83,7 @@ class SelectItemScreenTest {
     lateinit var getSuggestedLoginItems: TestGetSuggestedAutofillItems
 
     @Inject
-    lateinit var observeVaults: TestObserveVaults
+    lateinit var observeUsableVaults: TestObserveUsableVaults
 
     @Inject
     lateinit var getUserPlan: TestGetUserPlan
@@ -93,7 +92,7 @@ class SelectItemScreenTest {
     lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
 
     @Inject
-    lateinit var observeActiveItems: TestObserveActiveItems
+    lateinit var observeItems: TestObserveItems
 
     @Before
     fun setup() {
@@ -341,7 +340,7 @@ class SelectItemScreenTest {
                 createTime = Date()
             )
         }
-        observeVaults.sendResult(Result.success(vaultList))
+        observeUsableVaults.emit(Result.success(vaultList))
 
         val shareId = vaultList.first().shareId
         val suggestionsList = (0 until suggestions).map {
@@ -390,7 +389,7 @@ class SelectItemScreenTest {
             )
         }
         val otherItemsPlusSuggestionsList = otherItemsList + suggestionsList
-        observeActiveItems.sendItemList(otherItemsPlusSuggestionsList)
+        observeItems.emitValue(otherItemsPlusSuggestionsList)
 
         val plan = Plan(
             planType = planType,

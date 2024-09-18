@@ -49,12 +49,14 @@ fun SearchOptionsBottomSheetContents(
     onResetSearchOptions: () -> Unit
 ) {
     val items = mutableListOf<BottomSheetItem>()
-    if (state is SuccessSearchOptionsUIState && state.showBulkActionsOption) {
+    if (state.showBulkActionsOption) {
         items.add(selectItems(onNavigateEvent))
     }
     items.add(filtering(state, onNavigateEvent))
     items.add(sorting(state, onNavigateEvent))
-    items.add(resetSearchOptions(onResetSearchOptions))
+    if (state.showResetAction) {
+        items.add(resetSearchOptions(onResetSearchOptions))
+    }
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
         items = items.withDividers().toPersistentList()
@@ -82,17 +84,15 @@ private fun filtering(
         get() = { BottomSheetItemTitle(text = stringResource(R.string.show)) }
     override val subtitle: (@Composable () -> Unit)
         get() = {
-            (state as? SuccessSearchOptionsUIState)?.let {
-                val title = when (it.filterType) {
-                    SearchFilterType.All -> stringResource(id = R.string.item_type_filter_all)
-                    SearchFilterType.Login -> stringResource(id = R.string.item_type_filter_login)
-                    SearchFilterType.Alias -> stringResource(id = R.string.item_type_filter_alias)
-                    SearchFilterType.Note -> stringResource(id = R.string.item_type_filter_note)
-                    SearchFilterType.CreditCard -> stringResource(id = R.string.item_type_filter_credit_card)
-                    SearchFilterType.Identity -> stringResource(id = R.string.item_type_filter_identity)
-                }
-                BottomSheetItemSubtitle(text = "$title (${it.count})")
+            val title = when (state.filterType) {
+                SearchFilterType.All -> stringResource(id = R.string.item_type_filter_all)
+                SearchFilterType.Login -> stringResource(id = R.string.item_type_filter_login)
+                SearchFilterType.Alias -> stringResource(id = R.string.item_type_filter_alias)
+                SearchFilterType.Note -> stringResource(id = R.string.item_type_filter_note)
+                SearchFilterType.CreditCard -> stringResource(id = R.string.item_type_filter_credit_card)
+                SearchFilterType.Identity -> stringResource(id = R.string.item_type_filter_identity)
             }
+            BottomSheetItemSubtitle(text = "$title (${state.count})")
         }
     override val leftIcon: (@Composable () -> Unit)
         get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_filter) }
@@ -109,25 +109,23 @@ private fun sorting(state: SearchOptionsUIState, onNavigateEvent: (SearchOptions
             get() = { BottomSheetItemTitle(text = stringResource(R.string.sort_by)) }
         override val subtitle: (@Composable () -> Unit)
             get() = {
-                (state as? SuccessSearchOptionsUIState)?.let {
-                    val title = when (it.sortingType) {
-                        SearchSortingType.MostRecent ->
-                            stringResource(id = ComponentsR.string.sort_by_modification_date)
+                val title = when (state.sortingType) {
+                    SearchSortingType.MostRecent ->
+                        stringResource(id = ComponentsR.string.sort_by_modification_date)
 
-                        SearchSortingType.TitleAsc ->
-                            stringResource(id = ComponentsR.string.sort_by_title_asc)
+                    SearchSortingType.TitleAsc ->
+                        stringResource(id = ComponentsR.string.sort_by_title_asc)
 
-                        SearchSortingType.TitleDesc ->
-                            stringResource(id = ComponentsR.string.sort_by_title_desc)
+                    SearchSortingType.TitleDesc ->
+                        stringResource(id = ComponentsR.string.sort_by_title_desc)
 
-                        SearchSortingType.CreationAsc ->
-                            stringResource(id = ComponentsR.string.sort_by_creation_asc)
+                    SearchSortingType.CreationAsc ->
+                        stringResource(id = ComponentsR.string.sort_by_creation_asc)
 
-                        SearchSortingType.CreationDesc ->
-                            stringResource(id = ComponentsR.string.sort_by_creation_desc)
-                    }
-                    BottomSheetItemSubtitle(text = title)
+                    SearchSortingType.CreationDesc ->
+                        stringResource(id = ComponentsR.string.sort_by_creation_desc)
                 }
+                BottomSheetItemSubtitle(text = title)
             }
         override val leftIcon: (@Composable () -> Unit)
             get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_arrow_down_arrow_up) }
@@ -158,7 +156,7 @@ fun SearchOptionsBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvid
     PassTheme(isDark = isDark) {
         Surface {
             SearchOptionsBottomSheetContents(
-                state = SuccessSearchOptionsUIState(
+                state = SearchOptionsUIState(
                     filterType = SearchFilterType.All,
                     sortingType = SearchSortingType.MostRecent,
                     count = 2,

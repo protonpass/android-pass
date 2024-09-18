@@ -87,18 +87,27 @@ fun NavGraphBuilder.createLoginGraph(
             val navTotpUri by navBackStack.savedStateHandle
                 .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
                 .collectAsStateWithLifecycle()
+
             LaunchedEffect(navTotpUri) {
                 navBackStack.savedStateHandle.remove<String?>(TOTP_NAV_PARAMETER_KEY)
             }
+
             val navTotpIndex by navBackStack.savedStateHandle
                 .getStateFlow<Int?>(INDEX_NAV_PARAMETER_KEY, null)
                 .collectAsStateWithLifecycle()
+
             LaunchedEffect(navTotpIndex) {
                 navBackStack.savedStateHandle.remove<Int?>(INDEX_NAV_PARAMETER_KEY)
             }
+
             val clearAlias by navBackStack.savedStateHandle
                 .getStateFlow(CLEAR_ALIAS_NAV_PARAMETER_KEY, false)
                 .collectAsStateWithLifecycle()
+
+            LaunchedEffect(clearAlias) {
+                navBackStack.savedStateHandle.remove<Boolean?>(CLEAR_ALIAS_NAV_PARAMETER_KEY)
+            }
+
             val selectVault by navBackStack.savedStateHandle
                 .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
                 .collectAsStateWithLifecycle()

@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.image.api.ClearIconCache
@@ -39,6 +40,8 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.CopyTotpToClipboard
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -54,7 +57,8 @@ class SettingsViewModel @Inject constructor(
     private val clearIconCache: ClearIconCache,
     private val deviceSettingsRepository: DeviceSettingsRepository,
     private val canConfigureTelemetry: CanConfigureTelemetry,
-    syncStatusRepository: ItemSyncStatusRepository
+    syncStatusRepository: ItemSyncStatusRepository,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val themeState: Flow<ThemePreference> = preferencesRepository
@@ -99,13 +103,14 @@ class SettingsViewModel @Inject constructor(
         ::PreferencesState
     )
 
-    internal val state: StateFlow<SettingsUiState> = combine(
+    internal val state: StateFlow<SettingsUiState> = combineN(
         preferencesState,
         deviceSettingsRepository.observeDeviceSettings(),
         allowScreenshotsState,
         syncStatusRepository.observeSyncState().asLoadingResult(),
-        eventState
-    ) { preferences, deviceSettings, allowScreenshots, syncStateLoadingResult, event ->
+        eventState,
+        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT)
+    ) { preferences, deviceSettings, allowScreenshots, syncStateLoadingResult, event, isUsernameSplitEnabled ->
         val telemetryStatus = if (canConfigureTelemetry()) {
             TelemetryStatus.Show(
                 shareTelemetry = deviceSettings.isTelemetryEnabled,
@@ -123,7 +128,8 @@ class SettingsViewModel @Inject constructor(
             allowScreenshots = allowScreenshots,
             telemetryStatus = telemetryStatus,
             event = event,
-            displayUsernameFieldPreference = preferences.displayUsernameFieldPreference
+            displayUsernameFieldPreference = preferences.displayUsernameFieldPreference,
+            isUsernameSplitEnabled = isUsernameSplitEnabled
         )
     }.stateIn(
         scope = viewModelScope,

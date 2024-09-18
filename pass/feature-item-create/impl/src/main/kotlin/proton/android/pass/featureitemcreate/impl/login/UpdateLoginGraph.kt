@@ -30,6 +30,7 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.custo
 import proton.android.pass.featureitemcreate.impl.common.CustomFieldPrefix
 import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.featureitemcreate.impl.dialogs.customfield.customFieldNameDialogGraph
+import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.aliasOptionsBottomSheetGraph
 import proton.android.pass.featureitemcreate.impl.totp.INDEX_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
@@ -47,7 +48,7 @@ object EditLogin : NavItem(
     fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 }
 
-@Suppress("LongParameterList")
+@Suppress("LongParameterList", "LongMethod")
 fun NavGraphBuilder.updateLoginGraph(onNavigate: (BaseLoginNavigation) -> Unit) {
     navigation(
         route = EDIT_LOGIN_GRAPH,
@@ -57,16 +58,29 @@ fun NavGraphBuilder.updateLoginGraph(onNavigate: (BaseLoginNavigation) -> Unit) 
             val navTotpUri by navBackStack.savedStateHandle
                 .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
                 .collectAsStateWithLifecycle()
+
             LaunchedEffect(navTotpUri) {
                 navBackStack.savedStateHandle.remove<String?>(TOTP_NAV_PARAMETER_KEY)
             }
+
             val navTotpIndex by navBackStack.savedStateHandle
                 .getStateFlow<Int?>(INDEX_NAV_PARAMETER_KEY, null)
                 .collectAsStateWithLifecycle()
+
             LaunchedEffect(navTotpIndex) {
                 navBackStack.savedStateHandle.remove<Int?>(INDEX_NAV_PARAMETER_KEY)
             }
+
+            val clearAlias by navBackStack.savedStateHandle
+                .getStateFlow(CLEAR_ALIAS_NAV_PARAMETER_KEY, false)
+                .collectAsStateWithLifecycle()
+
+            LaunchedEffect(clearAlias) {
+                navBackStack.savedStateHandle.remove<Boolean?>(CLEAR_ALIAS_NAV_PARAMETER_KEY)
+            }
+
             UpdateLogin(
+                clearAlias = clearAlias,
                 navTotpUri = navTotpUri,
                 navTotpIndex = navTotpIndex,
                 onNavigate = onNavigate

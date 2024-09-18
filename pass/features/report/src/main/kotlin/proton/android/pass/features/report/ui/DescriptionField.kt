@@ -37,7 +37,10 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.features.report.R
+import proton.android.pass.features.report.presentation.DescriptionBlank
 import proton.android.pass.features.report.presentation.DescriptionError
+import proton.android.pass.features.report.presentation.DescriptionTooLong
+import proton.android.pass.features.report.presentation.DescriptionTooShort
 
 @Composable
 fun DescriptionField(
@@ -61,6 +64,13 @@ fun DescriptionField(
         singleLine = false,
         textStyle = ProtonTheme.typography.defaultNorm(enabled),
         editable = enabled,
+        isError = error != null,
+        errorMessage = when (error) {
+            DescriptionBlank -> stringResource(R.string.description_cannot_be_blank)
+            DescriptionTooShort -> stringResource(R.string.description_is_too_short)
+            DescriptionTooLong -> stringResource(R.string.description_is_too_long)
+            else -> ""
+        },
         label = { ProtonTextFieldLabel(text = stringResource(R.string.description_field_label)) },
         placeholder = {
             ProtonTextFieldPlaceHolder(

@@ -69,10 +69,12 @@ internal fun SettingsContent(
                 onEvent = onEvent
             )
 
-            DisplaySection(
-                isDisplayUsernameFieldEnabled = state.displayUsernameFieldPreference.value,
-                onEvent = onEvent
-            )
+            if (state.isUsernameSplitEnabled) {
+                DisplaySection(
+                    isDisplayUsernameFieldEnabled = state.displayUsernameFieldPreference.value,
+                    onEvent = onEvent
+                )
+            }
 
             AboutSection(
                 onEvent = onEvent

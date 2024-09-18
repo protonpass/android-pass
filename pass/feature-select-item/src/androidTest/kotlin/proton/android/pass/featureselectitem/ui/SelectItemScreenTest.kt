@@ -38,6 +38,8 @@ import org.junit.Test
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
@@ -171,6 +173,7 @@ class SelectItemScreenTest {
                                         checker.call()
                                     }
                                 }
+
                                 else -> {}
                             }
                         }
@@ -361,7 +364,10 @@ class SelectItemScreenTest {
                 )
             )
         }
-        getSuggestedLoginItems.sendValue(Result.success(suggestionsList))
+        getSuggestedLoginItems.sendValue(
+            itemTypeFilter = ItemTypeFilter.Logins,
+            value = Result.success(SuggestedAutofillItemsResult.Items(suggestionsList))
+        )
 
         val otherItemsList = (0 until otherItems).map {
             TestObserveItems.createItem(

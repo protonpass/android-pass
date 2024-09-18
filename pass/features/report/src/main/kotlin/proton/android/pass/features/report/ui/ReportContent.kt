@@ -23,11 +23,13 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,6 +41,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.topbar.IconTopAppBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 import proton.android.pass.features.report.R
@@ -61,7 +64,8 @@ internal fun ReportContent(
             if (pagerState.currentPage == ReportPage.Tips.value) {
                 onEvent(ReportNavContentEvent.CancelReason)
             }
-            scope.launch { pagerState.scrollToPage(pagerState.currentPage - 1) }
+            val pagesToRollback = if (state.reportReasonOption.value() == ReportReason.Other) 2 else 1
+            scope.launch { pagerState.scrollToPage(pagerState.currentPage - pagesToRollback) }
         } else {
             onEvent(ReportNavContentEvent.Close)
         }
@@ -101,6 +105,15 @@ internal fun ReportContent(
                 .fillMaxSize()
                 .padding(paddingValues = innerPaddingValues)
         ) {
+            LinearProgressIndicator(
+                modifier = Modifier.fillMaxWidth(),
+                progress = (pagerState.currentPage.toFloat() + 1) / 3,
+                color = PassTheme.colors.interactionNorm
+            )
+            Text.Body1Regular(
+                modifier = Modifier.padding(Spacing.medium),
+                text = stringResource(R.string.report_steps, pagerState.currentPage + 1)
+            )
             Spacer(modifier = Modifier.height(Spacing.medium))
             HorizontalPager(
                 modifier = Modifier,

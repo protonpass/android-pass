@@ -20,6 +20,7 @@ package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
@@ -51,16 +52,20 @@ import javax.inject.Singleton
 @Singleton
 class TestObserveItems @Inject constructor() : ObserveItems {
 
-    private val fallback: MutableSharedFlow<List<Item>> = testFlow()
+    private val fallback: MutableSharedFlow<Result<List<Item>>> = testFlow()
     private val flowsMap = mutableMapOf<Params, MutableSharedFlow<List<Item>>>()
 
     fun emitValue(value: List<Item>) {
-        fallback.tryEmit(value)
+        fallback.tryEmit(Result.success(value))
     }
 
     fun emit(params: Params, value: List<Item>) {
         flowsMap[params] = flowsMap[params] ?: testFlow()
         flowsMap[params]?.tryEmit(value)
+    }
+
+    fun sendException(exception: Exception) {
+        fallback.tryEmit(Result.failure(exception))
     }
 
     override fun invoke(
@@ -79,7 +84,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
             securityCheckFilter = securityCheckFilter,
             isBreachedFilter = isBreachedFilter
         )
-    ] ?: fallback
+    ] ?: fallback.map { it.getOrThrow() }
 
     data class DefaultValues(
         val login: Item,

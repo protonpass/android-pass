@@ -39,7 +39,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.data.api.usecases.UpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
+import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveItems
@@ -79,7 +79,7 @@ class SelectItemScreenTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var getSuggestedLoginItems: TestGetSuggestedLoginItems
+    lateinit var getSuggestedLoginItems: TestGetSuggestedAutofillItems
 
     @Inject
     lateinit var observeVaults: TestObserveVaults

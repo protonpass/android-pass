@@ -47,6 +47,7 @@ import proton.android.pass.featureitemcreate.impl.login.dialog.ConfirmDeletePass
 @Composable
 internal fun UpdateLogin(
     modifier: Modifier = Modifier,
+    clearAlias: Boolean,
     draftAlias: AliasItemFormState? = null,
     navTotpUri: String? = null,
     navTotpIndex: Int? = null,
@@ -91,6 +92,12 @@ internal fun UpdateLogin(
         }
 
         viewModel.consumeEvent(uiState.uiEvent)
+    }
+
+    LaunchedEffect(clearAlias) {
+        if (clearAlias) {
+            viewModel.onRemoveAlias()
+        }
     }
 
     Box(

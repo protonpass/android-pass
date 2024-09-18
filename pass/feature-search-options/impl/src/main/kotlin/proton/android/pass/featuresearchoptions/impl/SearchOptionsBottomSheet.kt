@@ -35,13 +35,12 @@ fun SearchOptionsBottomSheet(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    val event = (state as? SuccessSearchOptionsUIState)?.event ?: SearchOptionsEvent.Idle
-    LaunchedEffect(event) {
-        when (event) {
+    LaunchedEffect(state.event) {
+        when (state.event) {
             SearchOptionsEvent.Close -> onNavigateEvent(SearchOptionsNavigation.ResetFilters)
             SearchOptionsEvent.Idle -> {}
         }
-        viewModel.onEventConsumed(event)
+        viewModel.onEventConsumed(state.event)
     }
     SearchOptionsBottomSheetContents(
         modifier = modifier,
@@ -50,4 +49,3 @@ fun SearchOptionsBottomSheet(
         onResetSearchOptions = { viewModel.resetFilters() }
     )
 }
-

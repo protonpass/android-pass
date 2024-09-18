@@ -77,7 +77,7 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
         itemCountAndSearchOptionsFlow,
         searchOptionsEventFlow
     ) { (summary, options), event ->
-        SuccessSearchOptionsUIState(
+        SearchOptionsUIState(
             filterType = options.filterOption.searchFilterType,
             sortingType = options.sortingOption.searchSortingType,
             count = when (options.filterOption.searchFilterType) {
@@ -95,7 +95,7 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
-            initialValue = EmptySearchOptionsUIState
+            initialValue = SearchOptionsUIState.Empty
         )
 
     fun onEventConsumed(event: SearchOptionsEvent) {
@@ -114,13 +114,21 @@ sealed interface SearchOptionsEvent {
     data object Close : SearchOptionsEvent
 }
 
-sealed interface SearchOptionsUIState
-data object EmptySearchOptionsUIState : SearchOptionsUIState
-
-data class SuccessSearchOptionsUIState(
+data class SearchOptionsUIState(
     val filterType: SearchFilterType,
     val sortingType: SearchSortingType,
     val count: Int,
     val showBulkActionsOption: Boolean,
     val event: SearchOptionsEvent = SearchOptionsEvent.Idle
-) : SearchOptionsUIState
+) {
+    val showResetAction = filterType != SearchFilterType.All || sortingType != SearchSortingType.MostRecent
+
+    companion object {
+        val Empty = SearchOptionsUIState(
+            filterType = SearchFilterType.All,
+            sortingType = SearchSortingType.MostRecent,
+            count = 0,
+            showBulkActionsOption = false
+        )
+    }
+}

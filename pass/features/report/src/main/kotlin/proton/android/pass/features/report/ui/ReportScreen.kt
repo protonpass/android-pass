@@ -55,7 +55,7 @@ fun ReportScreen(
                 is ReportNavContentEvent.OnEmailChange -> viewModel.onEmailChange(event.value)
                 is ReportNavContentEvent.OnSendLogsChange -> viewModel.onSendLogsChange(event.value)
                 is ReportNavContentEvent.OnReasonChange -> viewModel.onReasonChange(event.value)
-                ReportNavContentEvent.CancelTips -> viewModel.clearReason()
+                ReportNavContentEvent.CancelReason -> viewModel.clearReason()
                 is ReportNavContentEvent.OnImageSelected -> viewModel.onImageSelected(event.value)
                 is ReportNavContentEvent.OnImageRemoved -> viewModel.onImageRemoved(event.value)
             }

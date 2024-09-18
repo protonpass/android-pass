@@ -21,6 +21,7 @@ package proton.android.pass.data.fakes.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.domain.Vault
 import javax.inject.Inject
@@ -33,6 +34,7 @@ class TestObserveVaults @Inject constructor() : ObserveVaults {
         MutableStateFlow<Result<List<Vault>>>(Result.success(emptyList()))
 
     fun sendResult(result: Result<List<Vault>>) = observeVaultsFlow.tryEmit(result)
-    override fun invoke(): Flow<List<Vault>> = observeVaultsFlow
+
+    override fun invoke(userId: UserId?): Flow<List<Vault>> = observeVaultsFlow
         .map { it.getOrThrow() }
 }

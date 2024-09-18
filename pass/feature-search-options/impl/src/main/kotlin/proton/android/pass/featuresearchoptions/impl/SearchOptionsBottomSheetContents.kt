@@ -158,7 +158,7 @@ fun SearchOptionsBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvid
             SearchOptionsBottomSheetContents(
                 state = SearchOptionsUIState(
                     filterType = SearchFilterType.All,
-                    sortingType = SearchSortingType.MostRecent,
+                    sortingType = SearchSortingType.TitleAsc,
                     count = 2,
                     showBulkActionsOption = true
                 ),

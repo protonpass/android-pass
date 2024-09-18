@@ -94,6 +94,13 @@ class SuggestionSorterImpl @Inject constructor(
         }
     }
 
+    /**
+     * Logic:
+     * If user is on sub.domain.com:
+     *   show sub.domain.com items on top,
+     *   then domain.com items,
+     *   and lastly other.domain.com items
+     */
     private fun sortBySubdomain(parsed: HostInfo.Host, items: List<LoginItem>): List<Item> {
         val sameSubdomainItems = mutableListOf<Item>()
         val domainItems = mutableListOf<Item>()
@@ -130,6 +137,12 @@ class SuggestionSorterImpl @Inject constructor(
         return finalList
     }
 
+    /**
+     * Logic:
+     * If user is on domain.com
+     *   show domain.com items on top,
+     *   then sub.domain.com items
+     */
     private fun sortByDomain(parsed: HostInfo.Host, items: List<LoginItem>): List<Item> {
         val domainItems = mutableListOf<Item>()
         val subdomainItems = mutableListOf<Item>()

@@ -36,6 +36,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
@@ -92,6 +93,7 @@ import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
@@ -357,7 +359,39 @@ class SelectItemViewModel @Inject constructor(
     private val itemClickedFlow: MutableStateFlow<AutofillItemClickedEvent> =
         MutableStateFlow(AutofillItemClickedEvent.None)
 
+    data class AccountsData(
+        val primaryUserId: UserId,
+        val primaryUserPlan: Plan,
+        val usersReady: List<UserId>
+    ) {
+        fun displayOnlyPrimaryVaultMessage(shareCount: Int): Boolean = if (usersReady.size == 1) {
+            when (primaryUserPlan.planType) {
+                is PlanType.Free -> when (val limit = primaryUserPlan.vaultLimit) {
+                    PlanLimit.Unlimited -> false
+                    is PlanLimit.Limited -> shareCount > limit.limit
+                }
+
+                else -> false
+            }
+        } else {
+            false
+        }
+    }
+
+    private val accountDataFlow = combine(
+        accountManager.getPrimaryUserId().filterNotNull()
+            .flatMapLatest { userId -> getUserPlan(userId).map { userId to it } },
+        accountManager.getAccounts(AccountState.Ready)
+    ) { (primaryUserId, plan), accounts ->
+        AccountsData(
+            primaryUserId = primaryUserId,
+            primaryUserPlan = plan,
+            usersReady = accounts.map { it.userId }
+        )
+    }
+
     private val selectItemListUiStateFlow = combineN(
+        accountDataFlow,
         resultsFlow,
         isRefreshing,
         itemClickedFlow,
@@ -365,21 +399,19 @@ class SelectItemViewModel @Inject constructor(
         shareIdToSharesFlow,
         shouldScrollToTopFlow,
         preferenceRepository.getUseFaviconsPreference(),
-        getUserPlan().asLoadingResult(),
         observeUpgradeInfo().asLoadingResult(),
         selectItemStateFlow
-    ) { itemsResult,
+    ) { accountData,
+        itemsResult,
         isRefreshing,
         itemClicked,
         sortingSelection,
         shares,
         shouldScrollToTop,
         useFavicons,
-        planRes,
         upgradeInfo,
         selectItemState ->
-        val isLoading =
-            IsLoadingState.from(itemsResult is LoadingResult.Loading || planRes is LoadingResult.Loading)
+        val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
         val items = when (itemsResult) {
             LoadingResult.Loading -> SelectItemListItems.Initial
             is LoadingResult.Success -> itemsResult.data
@@ -394,17 +426,6 @@ class SelectItemViewModel @Inject constructor(
             }
         }
 
-        val displayOnlyPrimaryVaultMessage = planRes.getOrNull()?.run {
-            when (planType) {
-                is PlanType.Free -> when (val limit = vaultLimit) {
-                    PlanLimit.Unlimited -> false
-                    is PlanLimit.Limited -> shares.size > limit.limit
-                }
-
-                else -> false
-            }
-        } ?: false
-
         val canUpgrade = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false
         val showCreateButton = selectItemState.map { it.showCreateButton }.value() ?: false
 
@@ -417,7 +438,9 @@ class SelectItemViewModel @Inject constructor(
             sortingType = sortingSelection.searchSortingType,
             shouldScrollToTop = shouldScrollToTop,
             canLoadExternalImages = useFavicons.value(),
-            displayOnlyPrimaryVaultMessage = displayOnlyPrimaryVaultMessage,
+            displayOnlyPrimaryVaultMessage = accountData.displayOnlyPrimaryVaultMessage(
+                shareCount = shares[accountData.primaryUserId]?.size ?: 0
+            ),
             canUpgrade = canUpgrade,
             displayCreateButton = showCreateButton
         )

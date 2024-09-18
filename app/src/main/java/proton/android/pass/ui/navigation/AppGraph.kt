@@ -609,7 +609,9 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.List -> appNavigator.popUpTo(Home)
                 ProfileNavigation.CreateItem -> appNavigator.navigate(CreateItemBottomsheet)
                 ProfileNavigation.Feedback -> appNavigator.navigate(FeedbackBottomsheet)
-                ProfileNavigation.Report -> appNavigator.navigate(ReportNavItem)
+                ProfileNavigation.Report -> dismissBottomSheet {
+                    appNavigator.navigate(ReportNavItem)
+                }
                 ProfileNavigation.FeatureFlags -> appNavigator.navigate(FeatureFlagRoute)
                 ProfileNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 ProfileNavigation.Finish -> onNavigate(AppNavigation.Finish)

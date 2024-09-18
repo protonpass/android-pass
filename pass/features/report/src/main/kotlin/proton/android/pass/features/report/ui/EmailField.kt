@@ -30,6 +30,7 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.features.report.R
+import proton.android.pass.features.report.presentation.EmailBlank
 import proton.android.pass.features.report.presentation.EmailError
 
 @Composable
@@ -49,6 +50,11 @@ fun EmailField(
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm(enabled),
         editable = enabled,
+        isError = error != null,
+        errorMessage = when (error) {
+            EmailBlank -> stringResource(R.string.email_cannot_be_blank)
+            else -> ""
+        },
         label = { ProtonTextFieldLabel(text = stringResource(R.string.email_field_label)) },
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(R.string.email_field_hint)) }
     )

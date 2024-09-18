@@ -35,7 +35,8 @@
     <string name="report_reason_other">Other</string>
     <string name="tips_title">Quick fixes for %1$s</string>
     <string name="tips_subtitle">These tips could help you solve your issue faster.</string>
-    <string name="autofill_tip_restart">Try disabling and enabling the autofill service. If that doesn\'t work try another browser.</string>
+    <string name="autofill_tip_restart">Try disabling and enabling the autofill service.</string>
+    <string name="autofill_tip_browser">Try another browser.</string>
     <string name="sharing_tip_vault_sharing_guide">Having issues with vault sharing? Check our guide.</string>
     <string name="sharing_tip_secure_links_guide">Having issues with secure links? Check our guide.</string>
     <string name="sync_tip_force_refresh">Is your screen empty? Try doing a force sync.</string>

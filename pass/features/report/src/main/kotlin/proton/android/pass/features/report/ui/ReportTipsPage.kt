@@ -95,6 +95,9 @@ internal fun ReportTipsPage(
                     text = stringResource(R.string.autofill_tip_restart),
                     onClick = { onEvent(ReportNavContentEvent.OpenAutofillSettings) }
                 )
+                TipRow(
+                    text = stringResource(R.string.autofill_tip_browser)
+                )
             }
 
             ReportReason.Sharing -> {

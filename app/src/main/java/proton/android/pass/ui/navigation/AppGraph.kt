@@ -135,6 +135,8 @@ import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestin
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
+import proton.android.pass.features.item.options.shared.navigation.ItemOptionsNavDestination
+import proton.android.pass.features.item.options.shared.navigation.itemOptionsNavGraph
 import proton.android.pass.features.item.trash.shared.navigation.ItemTrashNavDestination
 import proton.android.pass.features.item.trash.shared.navigation.itemTrashNavGraph
 import proton.android.pass.features.item.trash.trashdelete.navigation.ItemTrashDeleteNavItem
@@ -1947,6 +1949,16 @@ fun NavGraphBuilder.appGraph(
         onNavigated = { destination ->
             when (destination) {
                 ReportNavDestination.Close -> appNavigator.navigateBack()
+            }
+        }
+    )
+
+    itemOptionsNavGraph(
+        onNavigated = { destination ->
+            when (destination) {
+                ItemOptionsNavDestination.Back -> appNavigator.navigateBack(
+                    comesFromBottomsheet = false
+                )
             }
         }
     )

@@ -135,6 +135,7 @@ import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestin
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
+import proton.android.pass.features.item.options.aliases.trash.dialogs.navigation.ItemOptionsAliasTrashDialogNavItem
 import proton.android.pass.features.item.options.shared.navigation.ItemOptionsNavDestination
 import proton.android.pass.features.item.options.shared.navigation.itemOptionsNavGraph
 import proton.android.pass.features.item.trash.shared.navigation.ItemTrashNavDestination
@@ -384,6 +385,14 @@ fun NavGraphBuilder.appGraph(
                 HomeNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
 
                 HomeNavigation.UpgradeDialog -> appNavigator.navigate(destination = HomeUpgradeDialog)
+
+                is HomeNavigation.TrashAlias -> appNavigator.navigate(
+                    destination = ItemOptionsAliasTrashDialogNavItem,
+                    route = ItemOptionsAliasTrashDialogNavItem.createNavRoute(
+                        shareId = it.shareId,
+                        itemId = it.itemId
+                    )
+                )
             }
         }
     )

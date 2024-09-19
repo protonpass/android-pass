@@ -20,6 +20,7 @@ package proton.android.pass.features.item.options.aliases.trash.dialogs.presenta
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -39,6 +40,7 @@ import proton.android.pass.preferences.AliasTrashDialogStatusPreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
+@HiltViewModel
 class ItemOptionsAliasTrashDialogViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     private val userPreferencesRepository: UserPreferencesRepository,

@@ -21,14 +21,17 @@ package proton.android.pass.features.item.options.aliases.trash.dialogs.ui
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -38,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonDialogTitle
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
@@ -89,7 +93,8 @@ internal fun ItemOptionsAliasTrashDialogContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        ItemOptionsAliasTrashDialogUiEvent.OnRemindMeChange(!isRemindMeEnabled)
+                        ItemOptionsAliasTrashDialogUiEvent
+                            .OnRemindMeChange(!isRemindMeEnabled)
                             .also(onUiEvent)
                     }
                     .offset(x = -Spacing.small),
@@ -112,38 +117,50 @@ internal fun ItemOptionsAliasTrashDialogContent(
                 )
             }
 
-            Column(
-                modifier = Modifier
-                    .align(alignment = Alignment.End)
-                    .padding(bottom = Spacing.medium)
-            ) {
-                AliasDisableOrTrashDialogButton(
-                    textResId = R.string.item_options_alias_trash_dialog_button_text_disable,
-                    onClick = {
-                        onUiEvent(ItemOptionsAliasTrashDialogUiEvent.OnDisable)
-                    }
-                )
+            if (isLoading) {
+                Box(
+                    modifier = Modifier
+                        .align(alignment = Alignment.End)
+                        .padding(bottom = Spacing.medium)
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.height(48.dp)
+                    )
+                }
+            } else {
+                Column(
+                    modifier = Modifier
+                        .align(alignment = Alignment.End)
+                        .padding(bottom = Spacing.medium)
+                ) {
+                    ItemOptionsAliasTrashDialogButton(
+                        textResId = R.string.item_options_alias_trash_dialog_button_text_disable,
+                        onClick = {
+                            onUiEvent(ItemOptionsAliasTrashDialogUiEvent.OnDisable)
+                        }
+                    )
 
-                AliasDisableOrTrashDialogButton(
-                    textResId = R.string.item_options_alias_trash_dialog_button_text_trash,
-                    onClick = {
-                        onUiEvent(ItemOptionsAliasTrashDialogUiEvent.OnTrash)
-                    }
-                )
+                    ItemOptionsAliasTrashDialogButton(
+                        textResId = R.string.item_options_alias_trash_dialog_button_text_trash,
+                        onClick = {
+                            onUiEvent(ItemOptionsAliasTrashDialogUiEvent.OnTrash)
+                        }
+                    )
 
-                AliasDisableOrTrashDialogButton(
-                    textResId = CompR.string.action_cancel,
-                    onClick = {
-                        onUiEvent(ItemOptionsAliasTrashDialogUiEvent.OnDismiss)
-                    }
-                )
+                    ItemOptionsAliasTrashDialogButton(
+                        textResId = CompR.string.action_cancel,
+                        onClick = {
+                            onUiEvent(ItemOptionsAliasTrashDialogUiEvent.OnDismiss)
+                        }
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-private fun ColumnScope.AliasDisableOrTrashDialogButton(
+private fun ColumnScope.ItemOptionsAliasTrashDialogButton(
     modifier: Modifier = Modifier,
     @StringRes textResId: Int,
     onClick: () -> Unit
@@ -161,7 +178,7 @@ private fun ColumnScope.AliasDisableOrTrashDialogButton(
 }
 
 @[Preview Composable]
-internal fun AliasDisableOrTrashDialogPreview(
+internal fun ItemOptionsAliasTrashDialogPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
     val (isDark, isRemindMeEnabled) = input

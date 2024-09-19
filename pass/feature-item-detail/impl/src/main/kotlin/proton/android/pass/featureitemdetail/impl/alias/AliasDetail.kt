@@ -92,7 +92,6 @@ fun AliasDetail(
             )
 
             val contents = state.itemUiModel.contents as ItemContents.Alias
-            var shouldShowDisableOrTrashDialog by rememberSaveable { mutableStateOf(false) }
 
             PassModalBottomSheetLayout(
                 sheetState = bottomSheetState,
@@ -112,7 +111,10 @@ fun AliasDetail(
                                 scope.launch { bottomSheetState.hide() }
                                 if (state.isSLAliasSyncEnabled) {
                                     if (contents.isEnabled && !state.isAliasTrashDialogChecked) {
-                                        shouldShowDisableOrTrashDialog = true
+                                        ItemDetailNavigation.OnTrashAlias(
+                                            shareId = state.itemUiModel.shareId,
+                                            itemId = state.itemUiModel.id
+                                        ).also(onNavigate)
                                     } else {
                                         viewModel.onMoveToTrash(
                                             state.itemUiModel.shareId,
@@ -247,31 +249,6 @@ fun AliasDetail(
                     },
                     onDismiss = { shouldShowDeleteItemDialog = false }
                 )
-
-                if (shouldShowDisableOrTrashDialog) {
-                    AliasDisableOrTrashDialog(
-                        isChecked = state.isAliasTrashDialogChecked,
-                        onCheckedChange = viewModel::onAliasTrashDialogStatusChanged,
-                        onDisable = {
-                            shouldShowDisableOrTrashDialog = false
-                            viewModel.toggleAliasState(
-                                shareId = state.itemUiModel.shareId,
-                                itemId = state.itemUiModel.id,
-                                state = false
-                            )
-                        },
-                        onTrash = {
-                            shouldShowDisableOrTrashDialog = false
-                            viewModel.onMoveToTrash(
-                                state.itemUiModel.shareId,
-                                state.itemUiModel.id
-                            )
-                        },
-                        onDismiss = {
-                            shouldShowDisableOrTrashDialog = false
-                        }
-                    )
-                }
             }
         }
     }

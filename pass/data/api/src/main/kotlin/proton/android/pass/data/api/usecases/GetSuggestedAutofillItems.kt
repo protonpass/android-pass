@@ -19,6 +19,7 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.Item
@@ -27,7 +28,8 @@ interface GetSuggestedAutofillItems {
     operator fun invoke(
         itemTypeFilter: ItemTypeFilter,
         packageName: Option<String> = None,
-        url: Option<String> = None
+        url: Option<String> = None,
+        userId: Option<UserId> = None
     ): Flow<SuggestedAutofillItemsResult>
 }
 

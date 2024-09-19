@@ -356,12 +356,24 @@ fun HomeScreen(
                             }
                         },
                         onMoveToTrash = remember {
-                            {
-                                if (homeUiState.isSLAliasSyncEnabled) {
-                                    homeViewModel.sendItemsToTrash(listOf(it))
-                                } else {
-                                    scope.launch { bottomSheetState.hide() }
-                                    aliasToBeTrashed = it
+                            { itemUiModel ->
+                                when {
+                                    homeUiState.shouldDisplayTrashAliasDialog(itemUiModel) -> {
+                                        scope.launch { bottomSheetState.hide() }
+
+                                        HomeNavigation.TrashAlias(
+                                            shareId = itemUiModel.shareId,
+                                            itemId = itemUiModel.id
+                                        ).also(onNavigateEvent)
+                                    }
+
+                                    homeUiState.isSLAliasSyncEnabled -> {
+                                        homeViewModel.sendItemsToTrash(listOf(itemUiModel))
+                                    }
+
+                                    else -> {
+                                        aliasToBeTrashed = itemUiModel
+                                    }
                                 }
                             }
                         },

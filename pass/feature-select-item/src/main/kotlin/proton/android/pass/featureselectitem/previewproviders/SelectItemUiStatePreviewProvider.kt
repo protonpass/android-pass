@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.datetime.Clock
+import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -32,6 +33,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
+import proton.android.pass.featureselectitem.ui.AccountSwitchUIState
 import proton.android.pass.featureselectitem.ui.AutofillItemClickedEvent
 import proton.android.pass.featureselectitem.ui.PinningUiState
 import proton.android.pass.featureselectitem.ui.SearchInMode
@@ -64,7 +66,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     canLoadExternalImages = false,
                     displayOnlyPrimaryVaultMessage = false,
                     canUpgrade = false,
-                    displayCreateButton = true
+                    displayCreateButton = true,
+                    accountSwitchState = AccountSwitchUIState(None, emptyList())
                 ),
                 SearchUiState.Initial,
                 PinningUiState.Initial
@@ -93,7 +96,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     canLoadExternalImages = false,
                     displayOnlyPrimaryVaultMessage = true,
                     canUpgrade = false,
-                    displayCreateButton = true
+                    displayCreateButton = true,
+                    accountSwitchState = AccountSwitchUIState(None, emptyList())
                 ),
                 SearchUiState.Initial,
                 PinningUiState.Initial
@@ -110,7 +114,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     canLoadExternalImages = false,
                     displayOnlyPrimaryVaultMessage = false,
                     canUpgrade = false,
-                    displayCreateButton = true
+                    displayCreateButton = true,
+                    accountSwitchState = AccountSwitchUIState(None, emptyList())
                 ),
                 SearchUiState(
                     searchQuery = "query",

@@ -24,6 +24,9 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.ShareUiModel
@@ -59,6 +62,16 @@ data class SelectItemUiState(
     }
 }
 
+data class AccountSwitchUIState(
+    val selectedAccount: Option<UserId>,
+    val accountList: List<AccountRowUIState>
+)
+
+data class AccountRowUIState(
+    val userId: UserId,
+    val email: String
+)
+
 data class SelectItemListUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
@@ -70,7 +83,8 @@ data class SelectItemListUiState(
     val canLoadExternalImages: Boolean,
     val displayOnlyPrimaryVaultMessage: Boolean,
     val canUpgrade: Boolean,
-    val displayCreateButton: Boolean
+    val displayCreateButton: Boolean,
+    val accountSwitchState: AccountSwitchUIState
 ) {
 
     val itemCount: Int =
@@ -88,7 +102,11 @@ data class SelectItemListUiState(
             canLoadExternalImages = false,
             displayOnlyPrimaryVaultMessage = false,
             canUpgrade = true,
-            displayCreateButton = false
+            displayCreateButton = false,
+            accountSwitchState = AccountSwitchUIState(
+                selectedAccount = None,
+                accountList = emptyList()
+            )
         )
     }
 }

@@ -4,12 +4,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -39,10 +42,16 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
     override fun invoke(
         itemTypeFilter: ItemTypeFilter,
         packageName: Option<String>,
-        url: Option<String>
-    ): Flow<SuggestedAutofillItemsResult> = accountManager.getAccounts(AccountState.Ready)
-        .flatMapLatest { accounts ->
-            val accountFlows = accounts.map { account ->
+        url: Option<String>,
+        userId: Option<UserId>
+    ): Flow<SuggestedAutofillItemsResult> = if (userId is Some) {
+        flowOf(listOf(userId.value))
+    } else {
+        accountManager.getAccounts(AccountState.Ready)
+            .map { list -> list.map(Account::userId) }
+    }
+        .flatMapLatest { list ->
+            val accountFlows = list.map { userId ->
                 when (itemTypeFilter) {
                     ItemTypeFilter.Notes,
                     ItemTypeFilter.Aliases,
@@ -51,7 +60,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
                     ItemTypeFilter.Logins,
                     ItemTypeFilter.Identity ->
                         getSuggestedItemsForAccount(
-                            account = account,
+                            userId = userId,
                             itemTypeFilter = itemTypeFilter,
                             packageName = packageName,
                             url = url
@@ -60,12 +69,12 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
                     ItemTypeFilter.CreditCards ->
                         combine(
                             getSuggestedItemsForAccount(
-                                account = account,
+                                userId = userId,
                                 itemTypeFilter = itemTypeFilter,
                                 packageName = packageName,
                                 url = url
                             ),
-                            getUserPlan(account.userId)
+                            getUserPlan(userId)
                         ) { items, plan ->
                             when (plan.planType) {
                                 is PlanType.Free -> if (items.isEmpty()) {
@@ -87,21 +96,22 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
                 if (results.all { it is SuggestedAutofillItemsResult.ShowUpgrade }) {
                     SuggestedAutofillItemsResult.ShowUpgrade
                 } else {
-                    val combinedItems = results.filterIsInstance<SuggestedAutofillItemsResult.Items>()
-                        .flatMap { it.items }
+                    val combinedItems =
+                        results.filterIsInstance<SuggestedAutofillItemsResult.Items>()
+                            .flatMap { it.items }
                     SuggestedAutofillItemsResult.Items(combinedItems)
                 }
             }
         }
 
     private fun getSuggestedItemsForAccount(
-        account: Account,
+        userId: UserId,
         itemTypeFilter: ItemTypeFilter,
         packageName: Option<String>,
         url: Option<String>
-    ): Flow<List<Item>> = observeUsableVaults(account.userId).flatMapLatest { usableVaults ->
+    ): Flow<List<Item>> = observeUsableVaults(userId).flatMapLatest { usableVaults ->
         observeItems(
-            userId = account.userId,
+            userId = userId,
             filter = itemTypeFilter,
             selection = ShareSelection.Shares(usableVaults.map { it.shareId }),
             itemState = ItemState.Active

@@ -21,6 +21,7 @@ package proton.android.pass.data.fakes.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -41,6 +42,7 @@ class TestGetSuggestedAutofillItems @Inject constructor() : GetSuggestedAutofill
     override fun invoke(
         itemTypeFilter: ItemTypeFilter,
         packageName: Option<String>,
-        url: Option<String>
+        url: Option<String>,
+        userId: Option<UserId>
     ): Flow<SuggestedAutofillItemsResult> = resultFlow.map { it.getValue(itemTypeFilter).getOrThrow() }
 }

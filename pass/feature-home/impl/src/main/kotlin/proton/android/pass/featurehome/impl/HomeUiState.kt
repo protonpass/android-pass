@@ -34,6 +34,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAct
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
@@ -90,6 +91,14 @@ internal data class HomeUiState(
             homeListUiState.shares[selection.shareId]?.role == ShareRole.Read
 
         is VaultSelectionOption.Trash -> false
+    }
+
+    internal fun shouldDisplayTrashAliasDialog(itemUiModel: ItemUiModel): Boolean {
+        if (!isSLAliasSyncEnabled) {
+            return false
+        }
+
+        return (itemUiModel.contents as? ItemContents.Alias)?.isEnabled == true
     }
 
     internal companion object {

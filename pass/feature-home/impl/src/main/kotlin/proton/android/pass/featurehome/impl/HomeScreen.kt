@@ -357,10 +357,10 @@ fun HomeScreen(
                         },
                         onMoveToTrash = remember {
                             {
-                                scope.launch { bottomSheetState.hide() }
                                 if (homeUiState.isSLAliasSyncEnabled) {
                                     homeViewModel.sendItemsToTrash(listOf(it))
                                 } else {
+                                    scope.launch { bottomSheetState.hide() }
                                     aliasToBeTrashed = it
                                 }
                             }
@@ -440,7 +440,10 @@ fun HomeScreen(
                         onCopyNumber = remember {
                             {
                                 scope.launch { bottomSheetState.hide() }
-                                homeViewModel.copyToClipboard(it, HomeClipboardType.CreditCardNumber)
+                                homeViewModel.copyToClipboard(
+                                    it,
+                                    HomeClipboardType.CreditCardNumber
+                                )
                             }
                         },
                         onCopyCvv = remember {
@@ -554,7 +557,8 @@ fun HomeScreen(
                                 is ItemContents.Login -> {
                                     val sortedPackages =
                                         contents.packageInfoSet.sortedBy { it.packageName.value }
-                                    val packageName = sortedPackages.firstOrNull()?.packageName?.value
+                                    val packageName =
+                                        sortedPackages.firstOrNull()?.packageName?.value
                                     val website = contents.urls.firstOrNull()
                                     LoginIcon(
                                         text = item.contents.title,
@@ -567,6 +571,7 @@ fun HomeScreen(
                                 is ItemContents.Alias -> AliasIcon(
                                     activeAlias = contents.isEnabled
                                 )
+
                                 is ItemContents.Note -> NoteIcon()
                                 is ItemContents.CreditCard -> CreditCardIcon()
                                 is ItemContents.Identity -> IdentityIcon()
@@ -828,6 +833,7 @@ fun HomeScreen(
                                 items = homeUiState.homeListUiState.selectionState.selectedItems
                             )
                         }
+
                         HomeUiEvent.EnableAliasItemsActionClick -> {
                             homeViewModel.enableSelectedAliasItems(
                                 items = homeUiState.homeListUiState.selectionState.selectedItems

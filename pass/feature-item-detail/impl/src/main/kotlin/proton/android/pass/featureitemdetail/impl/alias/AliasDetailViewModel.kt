@@ -84,7 +84,6 @@ import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.AliasTrashDialogStatusPreference
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -106,7 +105,7 @@ class AliasDetailViewModel @Inject constructor(
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
     private val changeAliasStatus: ChangeAliasStatus,
-    private val userPreferencesRepository: UserPreferencesRepository,
+    userPreferencesRepository: UserPreferencesRepository,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     getAliasDetails: GetAliasDetails,
@@ -359,14 +358,6 @@ class AliasDetailViewModel @Inject constructor(
                 }
             isAliasStateTogglingFlow.update { false }
         }
-    }
-
-    internal fun onAliasTrashDialogStatusChanged(isEnabled: Boolean) {
-        if (isEnabled) {
-            AliasTrashDialogStatusPreference.Enabled
-        } else {
-            AliasTrashDialogStatusPreference.Disabled
-        }.also(userPreferencesRepository::setAliasTrashDialogStatusPreference)
     }
 
     private companion object {

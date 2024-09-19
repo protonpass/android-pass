@@ -40,6 +40,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.pin
+import proton.android.pass.composecomponents.impl.bottomsheet.trash
 import proton.android.pass.composecomponents.impl.bottomsheet.unpin
 import proton.android.pass.composecomponents.impl.bottomsheet.viewHistory
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
@@ -93,7 +94,7 @@ fun AliasOptionsBottomSheetContents(
 
             if (itemUiModel.canModify) {
                 add(edit(itemUiModel, onEdit))
-                add(moveToTrash(itemUiModel, onMoveToTrash))
+                add(trash(action) { onMoveToTrash(itemUiModel) })
             }
 
             if (isRecentSearch) {

@@ -649,42 +649,48 @@ class HomeViewModel @Inject constructor(
         isRefreshing.update { IsRefreshingState.NotRefreshing }
     }
 
-    fun sendItemsToTrash(items: List<ItemUiModel>) = viewModelScope.launch(coroutineExceptionHandler) {
-        if (items.isEmpty()) return@launch
-        actionStateFlow.update { ActionState.Loading }
+    internal fun sendItemsToTrash(items: List<ItemUiModel>) {
+        viewModelScope.launch(coroutineExceptionHandler) {
+            if (items.isEmpty()) return@launch
 
-        val mappedItems = items.toShareIdItemId().toPersistentSet()
-        val itemTypes = homeUiState.value.homeListUiState.items
-            .flatMap { it.items }
-            .filter { (itemId: ItemId, shareId: ShareId) -> mappedItems.contains(shareId to itemId) }
+            actionStateFlow.update { ActionState.Loading }
+            bottomSheetItemActionFlow.update { BottomSheetItemAction.Trash }
 
-        val groupedItems = groupItems(mappedItems)
-        runCatching { trashItems(items = groupedItems) }
-            .onSuccess {
-                clearSelection()
-                if (itemTypes.size == 1) {
-                    when (itemTypes.first().contents) {
-                        is ItemContents.Alias -> snackbarDispatcher(AliasMovedToTrash)
-                        is ItemContents.Login -> snackbarDispatcher(LoginMovedToTrash)
-                        is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
-                        is ItemContents.CreditCard -> snackbarDispatcher(CreditCardMovedToTrash)
-                        is ItemContents.Identity -> snackbarDispatcher(IdentityMovedToTrash)
-                        is ItemContents.Unknown -> {}
+            val mappedItems = items.toShareIdItemId().toPersistentSet()
+            val itemTypes = homeUiState.value.homeListUiState.items
+                .flatMap { it.items }
+                .filter { (itemId: ItemId, shareId: ShareId) -> mappedItems.contains(shareId to itemId) }
+
+            val groupedItems = groupItems(mappedItems)
+            runCatching { trashItems(items = groupedItems) }
+                .onSuccess {
+                    clearSelection()
+                    if (itemTypes.size == 1) {
+                        when (itemTypes.first().contents) {
+                            is ItemContents.Alias -> snackbarDispatcher(AliasMovedToTrash)
+                            is ItemContents.Login -> snackbarDispatcher(LoginMovedToTrash)
+                            is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
+                            is ItemContents.CreditCard -> snackbarDispatcher(CreditCardMovedToTrash)
+                            is ItemContents.Identity -> snackbarDispatcher(IdentityMovedToTrash)
+                            is ItemContents.Unknown -> {}
+                        }
+                    } else {
+                        snackbarDispatcher(ItemsMovedToTrashSuccess)
                     }
-                } else {
-                    snackbarDispatcher(ItemsMovedToTrashSuccess)
                 }
-            }
-            .onFailure {
-                PassLogger.w(TAG, "Trash items failed")
-                PassLogger.w(TAG, it)
-                if (itemTypes.size == 1) {
-                    snackbarDispatcher(MoveToTrashError)
-                } else {
-                    snackbarDispatcher(ItemsMovedToTrashError)
+                .onFailure {
+                    PassLogger.w(TAG, "Trash items failed")
+                    PassLogger.w(TAG, it)
+                    if (itemTypes.size == 1) {
+                        snackbarDispatcher(MoveToTrashError)
+                    } else {
+                        snackbarDispatcher(ItemsMovedToTrashError)
+                    }
                 }
-            }
-        actionStateFlow.update { ActionState.Done }
+
+            actionStateFlow.update { ActionState.Done }
+            bottomSheetItemActionFlow.update { BottomSheetItemAction.None }
+        }
     }
 
     fun copyToClipboard(text: String, homeClipboardType: HomeClipboardType) {
@@ -1136,9 +1142,11 @@ class HomeViewModel @Inject constructor(
                     snackbarDispatcher(AliasItemsEnabledSuccess)
                     clearSelection()
                 }
+
                 is AliasItemsChangeStatusResult.NoneChanged -> {
                     snackbarDispatcher(AliasItemsDisabledError)
                 }
+
                 is AliasItemsChangeStatusResult.SomeChanged -> {
                     snackbarDispatcher(AliasItemsEnabledSuccess)
                     clearSelection()
@@ -1168,9 +1176,11 @@ class HomeViewModel @Inject constructor(
                     snackbarDispatcher(AliasItemsEnabledSuccess)
                     clearSelection()
                 }
+
                 is AliasItemsChangeStatusResult.NoneChanged -> {
                     snackbarDispatcher(AliasItemsEnabledError)
                 }
+
                 is AliasItemsChangeStatusResult.SomeChanged -> {
                     snackbarDispatcher(AliasItemsEnabledPartialSuccess)
                     clearSelection()

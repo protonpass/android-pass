@@ -259,7 +259,11 @@ fun trash(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem =
             null
         }
 
-    override val onClick: (() -> Unit) = onClick
+    override val onClick: (() -> Unit) = if (action is BottomSheetItemAction.Trash) {
+        {}
+    } else {
+        onClick
+    }
 
     override val isDivider = false
 

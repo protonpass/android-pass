@@ -21,6 +21,7 @@ package proton.android.pass.features.report.presentation
 import android.net.Uri
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import proton.android.pass.commonrust.api.EmailValidator
 
 @Parcelize
 data class ReportFormData(
@@ -35,9 +36,10 @@ data class ReportFormData(
         private const val DESCRIPTION_MIN_LENGTH: Int = 10
         private const val DESCRIPTION_MAX_LENGTH: Int = 1000
 
-        fun ReportFormData.validate(): List<ReportValidationError> = buildList {
+        fun ReportFormData.validate(emailValidator: EmailValidator): List<ReportValidationError> = buildList {
             when {
                 email.isBlank() -> add(EmailBlank)
+                emailValidator.isValid(email).not() -> add(EmailInvalid)
                 description.isBlank() -> add(DescriptionBlank)
                 description.length < DESCRIPTION_MIN_LENGTH -> add(DescriptionTooShort)
                 description.length > DESCRIPTION_MAX_LENGTH -> add(DescriptionTooLong)

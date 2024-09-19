@@ -23,6 +23,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentMap
@@ -46,12 +47,15 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.User
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -103,6 +107,8 @@ import proton.android.pass.featuresearchoptions.api.AutofillSearchOptionsReposit
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.SortingOption
 import proton.android.pass.featureselectitem.navigation.SelectItemState
+import proton.android.pass.featureselectitem.ui.AccountRowUIState
+import proton.android.pass.featureselectitem.ui.AccountSwitchUIState
 import proton.android.pass.featureselectitem.ui.AutofillItemClickedEvent
 import proton.android.pass.featureselectitem.ui.PinningUiState
 import proton.android.pass.featureselectitem.ui.SearchInMode
@@ -125,6 +131,7 @@ class SelectItemViewModel @Inject constructor(
     private val getSuggestedAutofillItems: GetSuggestedAutofillItems,
     private val observeItemsWithPasskeys: ObserveItemsWithPasskeys,
     accountManager: AccountManager,
+    userManager: UserManager,
     preferenceRepository: UserPreferencesRepository,
     observeItems: ObserveItems,
     observePinnedItems: ObservePinnedItems,
@@ -136,6 +143,8 @@ class SelectItemViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val selectItemStateFlow: MutableStateFlow<Option<SelectItemState>> =
+        MutableStateFlow(None)
+    private val selectedAccountFlow: MutableStateFlow<Option<UserId>> =
         MutableStateFlow(None)
 
     private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
@@ -190,19 +199,28 @@ class SelectItemViewModel @Inject constructor(
 
     private val itemUiModelFlow = combine(
         selectItemStateFlow,
-        usableVaultsByUserIdFlow
-    ) { selectItemState, usableVaultsByUserId ->
+        usableVaultsByUserIdFlow,
+        selectedAccountFlow
+    ) { selectItemState, usableVaultsByUserId, selectedAccount ->
         when (val state = selectItemState.value()) {
             is SelectItemState.Autofill,
             is SelectItemState.Passkey.Register -> {
-                val flows = usableVaultsByUserId.map { (userId, usableVaults) ->
-                    observeItems(
-                        userId = userId,
-                        filter = state.itemTypeFilter,
-                        selection = ShareSelection.Shares(usableVaults.map { it.shareId }),
-                        itemState = ItemState.Active
-                    )
-                }
+                val flows = usableVaultsByUserId
+                    .filter {
+                        if (selectedAccount is Some) {
+                            it.key == selectedAccount.value
+                        } else {
+                            true
+                        }
+                    }
+                    .map { (userId, usableVaults) ->
+                        observeItems(
+                            userId = userId,
+                            filter = state.itemTypeFilter,
+                            selection = ShareSelection.Shares(usableVaults.map { it.shareId }),
+                            itemState = ItemState.Active
+                        )
+                    }
                 combine(flows) { it.toList().flatten() }
             }
 
@@ -258,13 +276,19 @@ class SelectItemViewModel @Inject constructor(
     }.flowOn(Dispatchers.Default)
 
     private val pinnedItemsFlow: Flow<LoadingResult<List<Item>>> = combine(
+        selectedAccountFlow,
         usableVaultsByUserIdFlow,
         selectItemStateFlow
-    ) { vaultsByUserId: Map<UserId, List<Vault>>, selectItemState: Option<SelectItemState> ->
+    ) { selectedAccount, vaultsByUserId, selectItemState: Option<SelectItemState> ->
         when (selectItemState) {
             None -> flowOf(emptyList())
             is Some -> if (selectItemState.value.showPinnedItems) {
-                val flows: List<Flow<List<Item>>> = vaultsByUserId.map { (userId, usableVaults) ->
+                val vaults = if (selectedAccount is Some) {
+                    vaultsByUserId.filter { it.key == selectedAccount.value }
+                } else {
+                    vaultsByUserId
+                }
+                val flows = vaults.map { (userId, usableVaults) ->
                     observePinnedItems(
                         userId = userId,
                         filter = selectItemState.value.itemTypeFilter,
@@ -360,38 +384,50 @@ class SelectItemViewModel @Inject constructor(
         MutableStateFlow(AutofillItemClickedEvent.None)
 
     data class AccountsData(
-        val primaryUserId: UserId,
-        val primaryUserPlan: Plan,
-        val usersReady: List<UserId>
+        val accountsMap: Map<User, Plan>,
+        val selectedAccount: Option<UserId>
     ) {
-        fun displayOnlyPrimaryVaultMessage(shareCount: Int): Boolean = if (usersReady.size == 1) {
-            when (primaryUserPlan.planType) {
-                is PlanType.Free -> when (val limit = primaryUserPlan.vaultLimit) {
-                    PlanLimit.Unlimited -> false
-                    is PlanLimit.Limited -> shareCount > limit.limit
+        fun displayOnlyPrimaryVaultMessage(allShares: Map<UserId, PersistentMap<ShareId, ShareUiModel>>): Boolean =
+            if (accountsMap.size == 1) {
+                val (user, plan) = accountsMap.entries.first()
+                val userShares = allShares[user.userId] ?: persistentMapOf()
+                when (plan.planType) {
+                    is PlanType.Free -> when (val limit = plan.vaultLimit) {
+                        PlanLimit.Unlimited -> false
+                        is PlanLimit.Limited -> userShares.size > limit.limit
+                    }
+
+                    else -> false
                 }
-
-                else -> false
+            } else {
+                false
             }
-        } else {
-            false
-        }
-    }
 
-    private val accountDataFlow = combine(
-        accountManager.getPrimaryUserId().filterNotNull()
-            .flatMapLatest { userId -> getUserPlan(userId).map { userId to it } },
-        accountManager.getAccounts(AccountState.Ready)
-    ) { (primaryUserId, plan), accounts ->
-        AccountsData(
-            primaryUserId = primaryUserId,
-            primaryUserPlan = plan,
-            usersReady = accounts.map { it.userId }
+        fun toAccountSwitchUIState(): AccountSwitchUIState = AccountSwitchUIState(
+            selectedAccount,
+            accountsMap.map { AccountRowUIState(it.key.userId, it.key.email.orEmpty()) }
         )
     }
 
+    private val usersAndPlansFlow = accountManager.getAccounts(AccountState.Ready)
+        .flatMapLatest { accountList ->
+            val flows = accountList.map { account ->
+                combine(
+                    userManager.observeUser(account.userId).filterNotNull(),
+                    getUserPlan(account.userId),
+                    ::Pair
+                )
+            }
+            combine(flows) { it.toMap() }
+        }
+    private val accountsDataFlow = combine(
+        usersAndPlansFlow,
+        selectedAccountFlow,
+        ::AccountsData
+    )
+
     private val selectItemListUiStateFlow = combineN(
-        accountDataFlow,
+        accountsDataFlow,
         resultsFlow,
         isRefreshing,
         itemClickedFlow,
@@ -438,11 +474,10 @@ class SelectItemViewModel @Inject constructor(
             sortingType = sortingSelection.searchSortingType,
             shouldScrollToTop = shouldScrollToTop,
             canLoadExternalImages = useFavicons.value(),
-            displayOnlyPrimaryVaultMessage = accountData.displayOnlyPrimaryVaultMessage(
-                shareCount = shares[accountData.primaryUserId]?.size ?: 0
-            ),
+            displayOnlyPrimaryVaultMessage = accountData.displayOnlyPrimaryVaultMessage(shares),
             canUpgrade = canUpgrade,
-            displayCreateButton = showCreateButton
+            displayCreateButton = showCreateButton,
+            accountSwitchState = accountData.toAccountSwitchUIState()
         )
     }
 
@@ -560,11 +595,14 @@ class SelectItemViewModel @Inject constructor(
 
     private fun getSuggestionsForAutofill(state: SelectItemState.Autofill) = when (state) {
         is SelectItemState.Autofill.Login -> {
-            getSuggestedAutofillItems(
-                itemTypeFilter = ItemTypeFilter.Logins,
-                packageName = state.suggestionsPackageName,
-                url = state.suggestionsUrl
-            )
+            selectedAccountFlow.flatMapLatest { userId ->
+                getSuggestedAutofillItems(
+                    itemTypeFilter = ItemTypeFilter.Logins,
+                    packageName = state.suggestionsPackageName,
+                    url = state.suggestionsUrl,
+                    userId = userId
+                )
+            }
                 .filterIsInstance<SuggestedAutofillItemsResult.Items>()
                 .map { it.items }
                 .asResultWithoutLoading()
@@ -577,11 +615,14 @@ class SelectItemViewModel @Inject constructor(
     private fun getSuggestionsForPasskey(state: SelectItemState.Passkey): Flow<LoadingResult<List<Item>>> =
         when (state) {
             is SelectItemState.Passkey.Register -> {
-                getSuggestedAutofillItems(
-                    itemTypeFilter = ItemTypeFilter.Logins,
-                    packageName = None,
-                    url = state.suggestionsUrl
-                )
+                selectedAccountFlow.flatMapLatest { userId ->
+                    getSuggestedAutofillItems(
+                        itemTypeFilter = ItemTypeFilter.Logins,
+                        packageName = None,
+                        url = state.suggestionsUrl,
+                        userId = userId
+                    )
+                }
                     .filterIsInstance<SuggestedAutofillItemsResult.Items>()
                     .map { it.items }
                     .asResultWithoutLoading()
@@ -590,6 +631,10 @@ class SelectItemViewModel @Inject constructor(
             // TBD: Implement getSuggestionsForPasskey
             is SelectItemState.Passkey.Select -> flowOf(LoadingResult.Success(emptyList()))
         }
+
+    fun onAccountSwitch(userId: Option<UserId>) = viewModelScope.launch {
+        selectedAccountFlow.update { userId }
+    }
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L

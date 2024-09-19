@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,25 +16,27 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.featureselectitem.ui
 
-import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.domain.Item
+import proton.android.pass.commonuimodels.api.ItemUiModel
 
-interface GetSuggestedAutofillItems {
-    operator fun invoke(
-        itemTypeFilter: ItemTypeFilter,
-        packageName: Option<String> = None,
-        url: Option<String> = None,
-        userId: Option<UserId> = None
-    ): Flow<SuggestedAutofillItemsResult>
-}
+sealed interface SelectItemEvent {
+    data class ItemClicked(val item: ItemUiModel, val isSuggestion: Boolean) : SelectItemEvent
 
-sealed interface SuggestedAutofillItemsResult {
     @JvmInline
-    value class Items(val items: List<Item>) : SuggestedAutofillItemsResult
-    data object ShowUpgrade : SuggestedAutofillItemsResult
+    value class ItemOptionsClicked(val item: ItemUiModel) : SelectItemEvent
+
+    @JvmInline
+    value class SearchQueryChange(val query: String) : SelectItemEvent
+    data object EnterSearch : SelectItemEvent
+    data object StopSearching : SelectItemEvent
+    data object StopPinningMode : SelectItemEvent
+    data object ScrolledToTop : SelectItemEvent
+    data object SeeAllPinned : SelectItemEvent
+
+
+    @JvmInline
+    value class SwitchAccount(val userId: Option<UserId>) : SelectItemEvent
 }

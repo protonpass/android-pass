@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -48,10 +49,22 @@ internal fun ImageAttach(
     onEvent: (ReportNavContentEvent) -> Unit
 ) {
     val context = LocalContext.current
+    val currentImages = rememberUpdatedState(images)
     val pickMedia = if (context is ActivityResultRegistryOwner) {
-        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) {
-            if (it != null) {
-                onEvent(ReportNavContentEvent.OnImageSelected(it))
+        when (val remainingImages = MAX_IMAGES - currentImages.value.size) {
+            0 -> null
+            1 -> {
+                rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { result ->
+                    result?.let { uri ->
+                        onEvent(ReportNavContentEvent.OnImagesSelected(setOf(uri)))
+                    }
+                }
+            }
+
+            else -> {
+                rememberLauncherForActivityResult(
+                    ActivityResultContracts.PickMultipleVisualMedia(remainingImages)
+                ) { onEvent(ReportNavContentEvent.OnImagesSelected(it.toSet())) }
             }
         }
     } else {

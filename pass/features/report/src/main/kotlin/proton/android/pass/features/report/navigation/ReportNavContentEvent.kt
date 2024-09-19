@@ -41,7 +41,7 @@ sealed interface ReportNavContentEvent {
     value class OnSendLogsChange(val value: Boolean) : ReportNavContentEvent
 
     @JvmInline
-    value class OnImageSelected(val value: Uri) : ReportNavContentEvent
+    value class OnImagesSelected(val value: Set<Uri>) : ReportNavContentEvent
 
     @JvmInline
     value class OnImageRemoved(val value: Uri) : ReportNavContentEvent

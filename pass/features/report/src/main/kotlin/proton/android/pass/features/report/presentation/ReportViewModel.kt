@@ -202,7 +202,7 @@ class ReportViewModel @Inject constructor(
         reportReasonFlow.update { None }
     }
 
-    fun onImageSelected(value: Uri) {
+    fun onImagesSelected(value: Set<Uri>) {
         formState = formState.copy(
             extraFiles = formState.extraFiles + value
         )

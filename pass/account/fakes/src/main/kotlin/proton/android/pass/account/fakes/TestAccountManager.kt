@@ -88,6 +88,6 @@ class TestAccountManager @Inject constructor() : AccountManager(Product.Pass) {
     }
 
     companion object {
-        const val USER_ID = "TestAccountManager-DefaultUserId"
+        const val USER_ID = "DefaultUserId"
     }
 }

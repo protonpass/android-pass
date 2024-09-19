@@ -59,6 +59,7 @@ interface EmailError : ReportValidationError
 interface DescriptionError : ReportValidationError
 
 object EmailBlank : EmailError
+object EmailInvalid : EmailError
 object DescriptionBlank : DescriptionError
 object DescriptionTooShort : DescriptionError
 object DescriptionTooLong : DescriptionError

@@ -53,5 +53,6 @@
     <string name="description_is_too_short">Description is too short</string>
     <string name="description_is_too_long">Description is too long</string>
     <string name="email_cannot_be_blank">Email cannot be blank</string>
+    <string name="email_invalid">Invalid email address</string>
 
 </resources>

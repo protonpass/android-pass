@@ -49,6 +49,7 @@ import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
 import proton.android.pass.common.api.some
+import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.report.Report
@@ -71,7 +72,8 @@ class ReportViewModel @Inject constructor(
     private val autofillManager: AutofillManager,
     private val sendReport: SendReport,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val checkPasskeySupport: CheckPasskeySupport
+    private val checkPasskeySupport: CheckPasskeySupport,
+    private val emailValidator: EmailValidator
 ) : ViewModel() {
 
     init {
@@ -114,7 +116,7 @@ class ReportViewModel @Inject constructor(
 
     fun trySendingBugReport() {
         viewModelScope.launch {
-            val errors: List<ReportValidationError> = formState.validate()
+            val errors: List<ReportValidationError> = formState.validate(emailValidator)
             formValidationErrorsStateFlow.update { errors.toPersistentList() }
             if (errors.isEmpty()) {
                 isLoadingStateFlow.update { IsLoadingState.Loading }

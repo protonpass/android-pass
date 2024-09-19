@@ -1175,6 +1175,14 @@ fun NavGraphBuilder.appGraph(
                         itemId = it.itemId
                     )
                 )
+
+                is ItemDetailNavigation.OnTrashAlias -> appNavigator.navigate(
+                    destination = ItemOptionsAliasTrashDialogNavItem,
+                    route = ItemOptionsAliasTrashDialogNavItem.createNavRoute(
+                        shareId = it.shareId,
+                        itemId = it.itemId
+                    )
+                )
             }
         }
     )

@@ -80,6 +80,8 @@ sealed interface ItemDetailNavigation {
 
     data class ViewReusedPasswords(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
 
+    data class OnTrashAlias(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
+
 }
 
 enum class ItemDetailCannotPerformActionType {

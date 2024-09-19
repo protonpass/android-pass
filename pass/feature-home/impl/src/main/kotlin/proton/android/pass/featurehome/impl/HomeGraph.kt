@@ -153,4 +153,6 @@ sealed interface HomeNavigation {
 
     data object UpgradeDialog : HomeNavigation
 
+    data class TrashAlias(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+
 }

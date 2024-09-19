@@ -116,12 +116,12 @@ internal fun ReportContent(
         ) {
             LinearProgressIndicator(
                 modifier = Modifier.fillMaxWidth(),
-                progress = (pagerState.currentPage.toFloat() + 1) / 3,
+                progress = (pagerState.currentPage.toFloat() + 1) / ReportPage.entries.count(),
                 color = PassTheme.colors.interactionNorm
             )
             Text.Body1Regular(
                 modifier = Modifier.padding(Spacing.medium),
-                text = stringResource(R.string.report_steps, pagerState.currentPage + 1)
+                text = stringResource(R.string.report_steps, pagerState.currentPage + 1, ReportPage.entries.count())
             )
             Spacer(modifier = Modifier.height(Spacing.medium))
             HorizontalPager(

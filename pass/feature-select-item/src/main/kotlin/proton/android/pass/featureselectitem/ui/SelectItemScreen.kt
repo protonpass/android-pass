@@ -51,22 +51,26 @@ fun SelectItemScreen(
     SelectItemScreenContent(
         modifier = modifier,
         uiState = uiState,
-        onItemClicked = { item, isSuggestion ->
-            if (isSuggestion) {
-                viewModel.onSuggestionClicked(item)
-            } else {
-                viewModel.onItemClicked(item)
+        onEvent = { event ->
+            when (event) {
+                is SelectItemEvent.ItemClicked -> if (event.isSuggestion) {
+                    viewModel.onSuggestionClicked(event.item)
+                } else {
+                    viewModel.onItemClicked(event.item)
+                }
+
+                is SelectItemEvent.ItemOptionsClicked ->
+                    onNavigate(SelectItemNavigation.ItemOptions(event.item.shareId, event.item.id))
+
+                is SelectItemEvent.SearchQueryChange -> viewModel.onSearchQueryChange(event.query)
+                SelectItemEvent.EnterSearch -> viewModel.onEnterSearch()
+                SelectItemEvent.StopSearching -> viewModel.onStopSearching()
+                SelectItemEvent.ScrolledToTop -> viewModel.onScrolledToTop()
+                SelectItemEvent.SeeAllPinned -> viewModel.onEnterSeeAllPinsMode()
+                SelectItemEvent.StopPinningMode -> viewModel.onStopPinningMode()
+                is SelectItemEvent.SwitchAccount -> viewModel.onAccountSwitch(event.userId)
             }
         },
-        onItemOptionsClicked = { item ->
-            onNavigate(SelectItemNavigation.ItemOptions(item.shareId, item.id))
-        },
-        onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
-        onEnterSearch = { viewModel.onEnterSearch() },
-        onStopSearching = { viewModel.onStopSearching() },
-        onScrolledToTop = { viewModel.onScrolledToTop() },
-        onSeeAllPinned = { viewModel.onEnterSeeAllPinsMode() },
-        onStopPinningMode = { viewModel.onStopPinningMode() },
         onNavigate = onNavigate
     )
 }
@@ -82,10 +86,12 @@ private fun OnItemSelectLaunchEffect(
             is AutofillItemClickedEvent.ItemClicked -> {
                 onNavigate(SelectItemNavigation.ItemSelected(event.item))
             }
+
             is AutofillItemClickedEvent.SuggestionClicked -> {
                 onNavigate(SelectItemNavigation.SuggestionSelected(event.item))
 
             }
+
             else -> Unit
         }
         clearEvent()

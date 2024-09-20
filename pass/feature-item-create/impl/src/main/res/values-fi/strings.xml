@@ -94,7 +94,7 @@
   <string name="field_card_pin_title">PIN-koodi</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Voimassaolo päättyy</string>
-  <string name="field_card_expiration_date_hint">KK/VV</string>
+  <string name="field_card_expiration_date_hint">MM/YY</string>
   <string name="field_card_expiration_date_error">Syötä kelvollinen aika muodossa KK/VV</string>
   <string name="create_credit_card_item_creation_error">Maksukorttia ei voitu luoda</string>
   <string name="create_credit_card_item_creation_success">Maksukortti luotiin</string>
@@ -128,7 +128,7 @@
   <string name="identity_field_reddit_title">Reddit-tunnus</string>
   <string name="identity_field_facebook_title">Facebook-osoite</string>
   <string name="identity_field_yahoo_title">Yahoo-tunnus</string>
-  <string name="identity_field_instagram_title">Instagram-tunnus</string>
+  <string name="identity_field_instagram_title">Instagram username</string>
   <string name="identity_field_personal_website_title">Henkilökohtainen verkkosivusto</string>
   <string name="identity_field_work_phone_number_title">Työpuhelin</string>
   <string name="identity_field_work_email_title">Työsähköposti</string>
@@ -143,7 +143,7 @@
   <string name="identity_add_field_reddit">Reddit-tunnus</string>
   <string name="identity_add_field_facebook">Facebook-osoite</string>
   <string name="identity_add_field_yahoo">Yahoo-tunnus</string>
-  <string name="identity_add_field_instagram">Instagram-tunnus</string>
+  <string name="identity_add_field_instagram">Instagram username</string>
   <string name="identity_add_field_personal_website">Henkilökohtainen verkkosivusto</string>
   <string name="identity_add_field_work_phone_number">Työpuhelin</string>
   <string name="identity_add_field_work_email_address">Työsähköposti</string>

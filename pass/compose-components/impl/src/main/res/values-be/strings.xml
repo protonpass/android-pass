@@ -135,6 +135,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Адрас псеўданіма</string>
+  <string name="item_details_alias_section_alias_disabled_title">Адрас псеўданіма (адключана)</string>
   <string name="item_details_alias_section_mailboxes_title">Перасылаецца на</string>
   <string name="item_details_credit_card_section_cardholder_title">Імя на картцы</string>
   <string name="item_details_credit_card_section_card_number_title">Нумар карткі</string>
@@ -249,13 +250,12 @@
   <string name="snack_bar_message_item_delete_error">Адбылася памылка падчас выдалення гэтага элемента</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Уключыць сінхранізацыю SimpleLogin</string>
-  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">Мы выявілі, што ў вас ёсць %s, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Магчыма, што вы хочаце імпартаваць іх?</string>
-  <plurals name="simple_login_widget_pending_aliases">
-    <item quantity="one">%d псеўданім</item>
-    <item quantity="few">%d псеўданімы</item>
-    <item quantity="many">%d псеўданімаў</item>
-    <item quantity="other">%d псеўданімаў</item>
+  <plurals name="simple_login_widget_pending_aliases_message">
+    <item quantity="one">Мы выявілі, што ў вас ёсць %d псеўданім, які прысутнічае ў SimpleLogin, але адсутнічае ў Proton Pass. Магчыма, што вы хочаце імпартаваць яго?</item>
+    <item quantity="few">Мы выявілі, што ў вас ёсць %d псеўданімы, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Магчыма, што вы хочаце імпартаваць іх?</item>
+    <item quantity="many">Мы выявілі, што ў вас ёсць %d псеўданімаў, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Магчыма, што вы хочаце імпартаваць іх?</item>
+    <item quantity="other">Мы выявілі, што ў вас ёсць %d псеўданімаў, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Магчыма, што вы хочаце імпартаваць іх?</item>
   </plurals>
   <string name="simple_login_widget_action">Сінхранізаваць псеўданімы</string>
-  <string name="simple_login_widget_close_content_description">Кнопка для закрыцця віджэта сінхранізацыі псеўданімаў SimpleLogin</string>
+  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

@@ -21,7 +21,7 @@
   <string name="configure_extra_password_title">Ek parolayı ayarla</string>
   <string name="configure_extra_password_enter_extra_password">Ek parola</string>
   <string name="configure_extra_password_repeat_extra_password">Parola onayı</string>
-  <string name="configure_extra_password_description">Oturum açarken ve başka bir Proton uygulamasından Proton Pass İnternet uygulamasına geçerken sizden bu parola istenir.</string>
+  <string name="configure_extra_password_description">Oturum açarken ve başka bir Proton uygulamasından Proton Pass internet uygulamasına geçerken sizden bu parola istenir.</string>
   <string name="configure_extra_password_warning">Dikkat: Bu parolayı kaybederseniz Pass hesabınıza erişemezsiniz.</string>
   <string name="configure_extra_password_mismatch">Parola ile onayı aynı değil</string>
   <string name="extra_password_options_remove">Kaldır</string>

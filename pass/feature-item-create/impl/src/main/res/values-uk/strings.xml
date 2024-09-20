@@ -94,7 +94,7 @@
   <string name="field_card_pin_title">PIN-код</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Термін дії</string>
-  <string name="field_card_expiration_date_hint">ММ / ГГ</string>
+  <string name="field_card_expiration_date_hint">MM/YY</string>
   <string name="field_card_expiration_date_error">Введіть дійсну дату у форматі ММ/РР</string>
   <string name="create_credit_card_item_creation_error">Не вдалося створити кредитну картку</string>
   <string name="create_credit_card_item_creation_success">Кредитну картку створено</string>
@@ -128,7 +128,7 @@
   <string name="identity_field_reddit_title">Ім\'я користувача Reddit</string>
   <string name="identity_field_facebook_title">URL-адреса Facebook</string>
   <string name="identity_field_yahoo_title">Ім\'я користувача Yahoo</string>
-  <string name="identity_field_instagram_title">Instagram обробник</string>
+  <string name="identity_field_instagram_title">Instagram username</string>
   <string name="identity_field_personal_website_title">URL-адреса персонального вебсайту</string>
   <string name="identity_field_work_phone_number_title">Номер робочого телефону</string>
   <string name="identity_field_work_email_title">Робоча адреса електронної пошти</string>
@@ -143,7 +143,7 @@
   <string name="identity_add_field_reddit">Ім\'я користувача Reddit</string>
   <string name="identity_add_field_facebook">URL-адреса Facebook</string>
   <string name="identity_add_field_yahoo">Ім\'я користувача Yahoo</string>
-  <string name="identity_add_field_instagram">Instagram обробник</string>
+  <string name="identity_add_field_instagram">Instagram username</string>
   <string name="identity_add_field_personal_website">URL-адреса персонального вебсайту</string>
   <string name="identity_add_field_work_phone_number">Номер робочого телефону</string>
   <string name="identity_add_field_work_email_address">Робоча адреса електронної пошти</string>

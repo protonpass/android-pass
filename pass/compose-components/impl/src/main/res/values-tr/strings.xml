@@ -131,6 +131,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Takma ad adresi</string>
+  <string name="item_details_alias_section_alias_disabled_title">Takma adres (kullanımdan kaldırılmış)</string>
   <string name="item_details_alias_section_mailboxes_title">Şuraya iletiliyor</string>
   <string name="item_details_credit_card_section_cardholder_title">Kart üzerindeki isim</string>
   <string name="item_details_credit_card_section_card_number_title">Kart numarası</string>
@@ -237,11 +238,10 @@
   <string name="snack_bar_message_item_delete_error">Bu öge silinirken bir sorun çıktı</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">SimpleLogin eşitlemesini aç</string>
-  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">SimpleLogin üzerinde bulunan ancak Proton Pass üzerinde bulunmayan %s kullandığınızı gördük. Bunları içe aktarmak ister misiniz?</string>
-  <plurals name="simple_login_widget_pending_aliases">
-    <item quantity="one">%d takma ad</item>
-    <item quantity="other">%d takma ad</item>
+  <plurals name="simple_login_widget_pending_aliases_message">
+    <item quantity="one">SimpleLogin üzerinde bulunan ancak Proton Pass üzerinde bulunmayan %d takma adınızın olduğunu gördük. Bunu içe aktarmak ister misiniz?</item>
+    <item quantity="other">SimpleLogin üzerinde bulunan ancak Proton Pass üzerinde bulunmayan %d takma adınızın olduğunu gördük. Bunları içe aktarmak ister misiniz?</item>
   </plurals>
   <string name="simple_login_widget_action">Takma adları eşitle</string>
-  <string name="simple_login_widget_close_content_description">SimpleLogin takma adlarını eşitleme gerecini kapatan düğme</string>
+  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

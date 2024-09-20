@@ -32,7 +32,7 @@
   <string name="auth_action_reveal_password">Afficher le mot de passe principal</string>
   <string name="auth_action_conceal_password">Masquer le mot de passe principal</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Saisissez le code PIN à la place</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Utilisez l\'empreinte digitale à la place</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Utiliser l\'empreinte digitale à la place</string>
   <string name="auth_unlock_button">Déverrouiller</string>
   <string name="auth_error_empty_password">Le mot de passe ne peut être vide.</string>
   <string name="auth_error_pin_cannot_be_empty">Le code PIN ne peut pas être vide.</string>

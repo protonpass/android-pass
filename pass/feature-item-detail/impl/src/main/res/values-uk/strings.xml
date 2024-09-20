@@ -7,6 +7,7 @@
   <string name="top_bar_edit_button_text">Редагувати</string>
   <!-- Alias details -->
   <string name="field_alias_title">Адреса псевдоніма</string>
+  <string name="field_alias_disabled_title">Alias address (disabled)</string>
   <string name="alias_copied_to_clipboard">Псевдонім скопійовано</string>
   <string name="alias_detail_field_mailboxes_title">Пересилання на</string>
   <string name="alias_create_login_from_alias">Створити запис входу</string>
@@ -18,7 +19,7 @@
   <string name="email_copied_to_clipboard">Адресу електронної пошти скопійовано</string>
   <string name="username_copied_to_clipboard">Ім\'я користувача скопійовано</string>
   <string name="password_copied_to_clipboard">Пароль скопійовано</string>
-  <string name="website_copied_to_clipboard">Вебсайт скопійовано</string>
+  <string name="website_copied_to_clipboard">Web address copied</string>
   <string name="totp_copied_to_clipboard">TOTP скопійовано</string>
   <string name="field_copied_to_clipboard">Поле скопійовано</string>
   <string name="move_item_to_trash_message">Елемент переміщено до смітника</string>
@@ -105,6 +106,4 @@
   <string name="passkey_detail_bottomsheet_domain">Домен</string>
   <string name="passkey_detail_bottomsheet_key">Ключ</string>
   <string name="passkey_detail_bottomsheet_created">Створено</string>
-  <string name="alias_toggle_tooltip_title">Вимкнути псевдонім</string>
-  <string name="alias_toggle_tooltip_description">Натисніть тут, щоб вимкнути цей псевдонім і припинити отримувати листи.</string>
 </resources>

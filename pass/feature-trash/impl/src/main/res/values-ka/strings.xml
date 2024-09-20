@@ -7,4 +7,9 @@
   <string name="alias_dialog_move_to_trash_title">გადავიტანო ნაგვის ყუთში?</string>
   <string name="alias_dialog_move_to_trash_content">თუ ფსევდონიმს ნაგვის ყუთში გადაიტანს, ის შეწყვეტს ელფოსტების გადამისამართებას თქვენს საფოსტო ყუთში</string>
   <string name="alias_dialog_move_to_trash_confirm">დასტური</string>
+  <string name="alias_dialog_disable_or_trash_title">ნაგვის ყუთში გადატანა</string>
+  <string name="alias_dialog_disable_or_trash_message">ნაგვის ყუთში მოთავსებული ფსევდონიმები ელფოსტის გადაგზავნას გააგრძელებენ. თუ გნებავთ, შეწყვიტოთ ამ მისამართზე ელფოსტის მიღება, გათიშეთ ის.</string>
+  <string name="alias_dialog_disable_or_trash_checkbox_text">აღარ შემახსენო</string>
+  <string name="alias_dialog_disable_or_trash_button_text_disable">გათიშეთ ის</string>
+  <string name="alias_dialog_disable_or_trash_button_text_trash">ნაგვის ყუთში გადატანა</string>
 </resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="description_field_label">Quale è il problema?</string>
+  <string name="description_field_hint">Descrivi il problema nel modo più dettagliato possibile, se c\'è qualche errore facci sapere cosa dice.</string>
+  <string name="email_field_label">Email</string>
+  <string name="email_field_hint">email</string>
+  <string name="attach_image_button">Allega immagine</string>
+  <string name="categories_title">Quale è il problema?</string>
+  <string name="report_toolbar_title">Segnala un problema</string>
+  <string name="send_report_button">Invia la segnalazione</string>
+  <string name="cancel_tips_button">Annulla</string>
+  <string name="contact_us_button">Contattaci</string>
+  <string name="hint_tips_screen">Non ha funzionato?</string>
+  <string name="report_reason_autofill">Compilazione automatica</string>
+  <string name="report_reason_sharing">Condivisione</string>
+  <string name="report_reason_sync">Sincronizzazione</string>
+  <string name="report_reason_passkeys">Passkey</string>
+  <string name="report_reason_other">Altro</string>
+  <string name="tips_title">Soluzioni rapide per %1$s</string>
+  <string name="tips_subtitle">Questi suggerimenti potrebbero aiutarti a risolvere il tuo problema più velocemente.</string>
+  <string name="autofill_tip_restart">Try disabling and enabling the autofill service.</string>
+  <string name="autofill_tip_browser">Try another browser.</string>
+  <string name="sharing_tip_vault_sharing_guide">Hai problemi con la condivisione della cassaforte? Controlla la nostra guida.</string>
+  <string name="sharing_tip_secure_links_guide">Hai problemi con i collegamenti sicuri? Controlla la nostra guida.</string>
+  <string name="sync_tip_force_refresh">Il tuo schermo è vuoto? Prova a eseguire una sincronizzazione forzata.</string>
+  <string name="send_logs_label">Invia log</string>
+  <string name="report_sending_success">Segnalazione inviata correttamente.</string>
+  <string name="report_sending_error">Impossibile inviare la segnalazione.</string>
+  <string name="tips_passkey_check_guide">If you have any issues check our guide.</string>
+  <string name="tips_passkey_android_not_supported">La tua versione di Android è troppo vecchia. Prova ad aggiornare il tuo dispositivo.</string>
+  <string name="tips_passkeys_credential_manager_not_supported">Il produttore del dispositivo non fornisce un gestore di credenziali.</string>
+  <string name="tips_passkey_supported">Passkeys supported</string>
+  <string name="tips_passkey_not_supported">Passkeys not supported</string>
+  <string name="report_steps" comment="Indicator showing report progress">Step %1$d of %2$d</string>
+  <string name="description_cannot_be_blank">Description cannot be blank</string>
+  <string name="description_is_too_short">Description is too short</string>
+  <string name="description_is_too_long">Description is too long</string>
+  <string name="email_cannot_be_blank">Email cannot be blank</string>
+  <string name="email_invalid">Invalid email address</string>
+</resources>

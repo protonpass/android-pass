@@ -7,6 +7,7 @@
   <string name="top_bar_edit_button_text">Upraviť</string>
   <!-- Alias details -->
   <string name="field_alias_title">Alias adresy</string>
+  <string name="field_alias_disabled_title">Aliasová adresa (vypnutá)</string>
   <string name="alias_copied_to_clipboard">Alias skopírovaný</string>
   <string name="alias_detail_field_mailboxes_title">Preposielať na</string>
   <string name="alias_create_login_from_alias">Vytvoriť prihlásenie</string>
@@ -18,7 +19,7 @@
   <string name="email_copied_to_clipboard">Emailová adresa skopírovaná</string>
   <string name="username_copied_to_clipboard">Požívateľské meno skopírované</string>
   <string name="password_copied_to_clipboard">Heslo skopírované</string>
-  <string name="website_copied_to_clipboard">Webová stránka skopírovaná</string>
+  <string name="website_copied_to_clipboard">Web address copied</string>
   <string name="totp_copied_to_clipboard">TOTP skopírované</string>
   <string name="field_copied_to_clipboard">Pole skopírované</string>
   <string name="move_item_to_trash_message">Položka presunutá do koša</string>
@@ -105,6 +106,4 @@
   <string name="passkey_detail_bottomsheet_domain">Doména</string>
   <string name="passkey_detail_bottomsheet_key">Kľúč</string>
   <string name="passkey_detail_bottomsheet_created">Vytvorené</string>
-  <string name="alias_toggle_tooltip_title">Vypnúť alias</string>
-  <string name="alias_toggle_tooltip_description">Ťuknutím sem tento alias zakážete a prestanete dostávať emaily.</string>
 </resources>

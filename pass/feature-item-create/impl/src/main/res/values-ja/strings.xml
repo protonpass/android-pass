@@ -94,7 +94,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">有効期限</string>
-  <string name="field_card_expiration_date_hint">MM / YY</string>
+  <string name="field_card_expiration_date_hint">MM/YY</string>
   <string name="field_card_expiration_date_error">Enter a valid date in MM/YY format</string>
   <string name="create_credit_card_item_creation_error">クレジットカードを作成できませんでした</string>
   <string name="create_credit_card_item_creation_success">クレジットカードが作成されました</string>
@@ -128,7 +128,7 @@
   <string name="identity_field_reddit_title">Reddit username</string>
   <string name="identity_field_facebook_title">Facebook URL</string>
   <string name="identity_field_yahoo_title">Yahoo username</string>
-  <string name="identity_field_instagram_title">Instagram handle</string>
+  <string name="identity_field_instagram_title">Instagram username</string>
   <string name="identity_field_personal_website_title">Personal website URL</string>
   <string name="identity_field_work_phone_number_title">Work phone number</string>
   <string name="identity_field_work_email_title">仕事用メールアドレス</string>
@@ -143,7 +143,7 @@
   <string name="identity_add_field_reddit">Reddit username</string>
   <string name="identity_add_field_facebook">Facebook URL</string>
   <string name="identity_add_field_yahoo">Yahoo username</string>
-  <string name="identity_add_field_instagram">Instagram handle</string>
+  <string name="identity_add_field_instagram">Instagram username</string>
   <string name="identity_add_field_personal_website">Personal website URL</string>
   <string name="identity_add_field_work_phone_number">Work phone number</string>
   <string name="identity_add_field_work_email_address">仕事用メールアドレス</string>

@@ -7,6 +7,7 @@
   <string name="top_bar_edit_button_text">Επεξεργασία</string>
   <!-- Alias details -->
   <string name="field_alias_title">Ψευδώνυμη διεύθυνση</string>
+  <string name="field_alias_disabled_title">Διεύθυνση ψευδωνύμου (απενεργοποιημένη)</string>
   <string name="alias_copied_to_clipboard">Το ψευδώνυμο αντιγράφηκε</string>
   <string name="alias_detail_field_mailboxes_title">Προώθηση σε</string>
   <string name="alias_create_login_from_alias">Δημιουργία σύνδεσης</string>
@@ -18,7 +19,7 @@
   <string name="email_copied_to_clipboard">Έγινε αντιγραφή διεύθυνσης ηλεκτρονικού ταχυδρομείου</string>
   <string name="username_copied_to_clipboard">Το όνομα χρήστη αντιγράφηκε</string>
   <string name="password_copied_to_clipboard">Ο κωδικός πρόσβασης αντιγράφηκε</string>
-  <string name="website_copied_to_clipboard">Ο ιστότοπος αντιγράφηκε</string>
+  <string name="website_copied_to_clipboard">Web address copied</string>
   <string name="totp_copied_to_clipboard">Αντιγραφή TOTP</string>
   <string name="field_copied_to_clipboard">Το πεδίο αντιγράφηκε</string>
   <string name="move_item_to_trash_message">Στοιχείο μετακινήθηκε στα διαγραμμένα</string>
@@ -103,6 +104,4 @@
   <string name="passkey_detail_bottomsheet_domain">Τομέας</string>
   <string name="passkey_detail_bottomsheet_key">Κλειδί</string>
   <string name="passkey_detail_bottomsheet_created">Δημιουργήθηκε</string>
-  <string name="alias_toggle_tooltip_title">Απενεργοποίηση Ψευδωνύμου</string>
-  <string name="alias_toggle_tooltip_description">Πατήστε εδώ για να απενεργοποιήσετε αυτό το ψευδώνυμο και να σταματήσετε να λαμβάνετε μηνύματα ηλεκτρονικού ταχυδρομείου.</string>
 </resources>

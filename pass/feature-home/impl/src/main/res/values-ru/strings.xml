@@ -9,7 +9,7 @@
   <string name="home_empty_vault_create_alias">Создать псевдоним hide-my-email</string>
   <string name="home_empty_vault_create_note">Создать заметку</string>
   <string name="home_empty_vault_create_credit_card">Создать кредитную карту</string>
-  <string name="home_empty_vault_create_identity">Создать личные данные</string>
+  <string name="home_empty_vault_create_identity">Create an identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Ошибка загрузки событий</string>
   <string name="error_refreshing">Ошибка выполнения обновления</string>
   <string name="home_snackbar_login_moved_to_trash">Логин перемещён в корзину</string>
@@ -147,10 +147,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Ошибка при откреплении некоторых элементов</string>
   <string name="home_snackbar_items_unpinned_error">Ошибка при откреплении элементов</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias enabled successfully</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the alias</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
   <string name="home_snackbar_items_alias_enabled_error">Error enabling aliases</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias disabled successfully</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the alias</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
   <string name="bulk_action_unpin">Unpin</string>
   <string name="bulk_action_pin">Pin</string>

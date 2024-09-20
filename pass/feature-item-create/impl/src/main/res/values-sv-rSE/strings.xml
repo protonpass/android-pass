@@ -94,7 +94,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Utgångsdatum</string>
-  <string name="field_card_expiration_date_hint">MM/ÅÅ</string>
+  <string name="field_card_expiration_date_hint">MM/YY</string>
   <string name="field_card_expiration_date_error">Ange ett giltigt datum i formatet MM/ÅÅ</string>
   <string name="create_credit_card_item_creation_error">Kunde inte skapa kreditkort</string>
   <string name="create_credit_card_item_creation_success">Kreditkort skapat</string>
@@ -128,7 +128,7 @@
   <string name="identity_field_reddit_title">Reddit-användarnamn</string>
   <string name="identity_field_facebook_title">Facebook-URL</string>
   <string name="identity_field_yahoo_title">Yahoo-användarnamn</string>
-  <string name="identity_field_instagram_title">Instagram-användarnamn</string>
+  <string name="identity_field_instagram_title">Instagram username</string>
   <string name="identity_field_personal_website_title">Personlig webbplats-URL</string>
   <string name="identity_field_work_phone_number_title">Telefonnummer arbete</string>
   <string name="identity_field_work_email_title">E-post arbete</string>
@@ -143,7 +143,7 @@
   <string name="identity_add_field_reddit">Reddit-användarnamn</string>
   <string name="identity_add_field_facebook">Facebook-URL</string>
   <string name="identity_add_field_yahoo">Yahoo-användarnamn</string>
-  <string name="identity_add_field_instagram">Instagram-användarnamn</string>
+  <string name="identity_add_field_instagram">Instagram username</string>
   <string name="identity_add_field_personal_website">Personlig webbplats-URL</string>
   <string name="identity_add_field_work_phone_number">Telefonnummer arbete</string>
   <string name="identity_add_field_work_email_address">E-post arbete</string>

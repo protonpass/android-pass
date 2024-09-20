@@ -131,6 +131,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Dirección del alias</string>
+  <string name="item_details_alias_section_alias_disabled_title">Dirección del alias (desactivada)</string>
   <string name="item_details_alias_section_mailboxes_title">Reenviando a</string>
   <string name="item_details_credit_card_section_cardholder_title">Titular de la tarjeta</string>
   <string name="item_details_credit_card_section_card_number_title">Número de tarjeta</string>
@@ -237,11 +238,10 @@
   <string name="snack_bar_message_item_delete_error">Ocurrió un error al eliminar este elemento</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Activar sincronización de SimpleLogin</string>
-  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">Hemos detectado que tiene %s en SimpleLogin pero no aparecen en Proton Pass. ¿Desea importarlos?</string>
-  <plurals name="simple_login_widget_pending_aliases">
-    <item quantity="one">%d alias</item>
-    <item quantity="other">%d alias</item>
+  <plurals name="simple_login_widget_pending_aliases_message">
+    <item quantity="one">Hemos detectado que tiene %d alias en SimpleLogin pero no aparece en Proton Pass. ¿Desea importarlo?</item>
+    <item quantity="other">Hemos detectado que tiene %d alias en SimpleLogin pero no aparecen en Proton Pass. ¿Desea importarlos?</item>
   </plurals>
   <string name="simple_login_widget_action">Sincronizar alias</string>
-  <string name="simple_login_widget_close_content_description">Botón para cerrar el widget de sincronización de alias de SimpleLogin</string>
+  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

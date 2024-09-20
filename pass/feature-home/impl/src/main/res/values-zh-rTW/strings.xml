@@ -9,7 +9,7 @@
   <string name="home_empty_vault_create_alias">創建 Hide-my-email 別名</string>
   <string name="home_empty_vault_create_note">創建備註</string>
   <string name="home_empty_vault_create_credit_card">創建一張信用卡</string>
-  <string name="home_empty_vault_create_identity">創建新身份</string>
+  <string name="home_empty_vault_create_identity">Create an identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">載入項目時發生錯誤</string>
   <string name="error_refreshing">重新整理時發生錯誤</string>
   <string name="home_snackbar_login_moved_to_trash">登入項目已移至垃圾桶</string>
@@ -126,10 +126,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">取消標註部分項目錯誤</string>
   <string name="home_snackbar_items_unpinned_error">取消標註項目錯誤</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias enabled successfully</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the alias</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
   <string name="home_snackbar_items_alias_enabled_error">Error enabling aliases</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias disabled successfully</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the alias</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
   <string name="bulk_action_unpin">Unpin</string>
   <string name="bulk_action_pin">Pin</string>

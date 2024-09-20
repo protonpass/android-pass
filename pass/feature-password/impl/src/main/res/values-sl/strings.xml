@@ -6,9 +6,9 @@
   <string name="password_type">Vrsta</string>
   <string name="special_characters">Posebni znaki (!&amp;*)</string>
   <plurals name="character_count">
-    <item quantity="one">%s znakov</item>
-    <item quantity="two">%s znakov</item>
-    <item quantity="few">%s znakov</item>
+    <item quantity="one">%s znak</item>
+    <item quantity="two">%s znaka</item>
+    <item quantity="few">%s znaki</item>
     <item quantity="other">%s znakov</item>
   </plurals>
   <plurals name="word_count">

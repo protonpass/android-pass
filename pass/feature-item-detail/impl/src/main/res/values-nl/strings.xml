@@ -7,6 +7,7 @@
   <string name="top_bar_edit_button_text">Bewerken</string>
   <!-- Alias details -->
   <string name="field_alias_title">Alias-adres</string>
+  <string name="field_alias_disabled_title">Alias address (disabled)</string>
   <string name="alias_copied_to_clipboard">Alias gekopieerd</string>
   <string name="alias_detail_field_mailboxes_title">Doorsturen naar</string>
   <string name="alias_create_login_from_alias">Login aanmaken</string>
@@ -18,7 +19,7 @@
   <string name="email_copied_to_clipboard">E-mailadres gekopieerd</string>
   <string name="username_copied_to_clipboard">Gebruikersnaam gekopieerd</string>
   <string name="password_copied_to_clipboard">Wachtwoord gekopieerd</string>
-  <string name="website_copied_to_clipboard">Website gekopieerd</string>
+  <string name="website_copied_to_clipboard">Web address copied</string>
   <string name="totp_copied_to_clipboard">TOTP gekopieerd</string>
   <string name="field_copied_to_clipboard">Veld gekopieerd</string>
   <string name="move_item_to_trash_message">Item verplaatst naar prullenbak</string>
@@ -103,6 +104,4 @@
   <string name="passkey_detail_bottomsheet_domain">Domein</string>
   <string name="passkey_detail_bottomsheet_key">Sleutel</string>
   <string name="passkey_detail_bottomsheet_created">Aangemaakt</string>
-  <string name="alias_toggle_tooltip_title">Alias Uitschakelen</string>
-  <string name="alias_toggle_tooltip_description">Tik hier om deze alias uit te schakelen en geen e-mails meer te ontvangen.</string>
 </resources>

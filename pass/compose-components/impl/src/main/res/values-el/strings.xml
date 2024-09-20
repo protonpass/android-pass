@@ -131,6 +131,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Ψευδώνυμη διεύθυνση</string>
+  <string name="item_details_alias_section_alias_disabled_title">Διεύθυνση ψευδωνύμου (απενεργοποιημένη)</string>
   <string name="item_details_alias_section_mailboxes_title">Προώθηση σε</string>
   <string name="item_details_credit_card_section_cardholder_title">Όνομα στην κάρτα</string>
   <string name="item_details_credit_card_section_card_number_title">Αριθμός κάρτας</string>
@@ -237,11 +238,10 @@
   <string name="snack_bar_message_item_delete_error">Παρουσιάστηκε σφάλμα κατά το διαγραφή αυτού του στοιχείου</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Ενεργοποιήστε το συγχρονισμό SimpleLogin</string>
-  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">Εντοπίσαμε ότι έχετε %s που υπάρχουν στο SimpleLogin αλλά λείπουν στο Proton Pass. Θέλετε να τα εισαγάγετε;</string>
-  <plurals name="simple_login_widget_pending_aliases">
-    <item quantity="one">%d ψευδώνυμο</item>
-    <item quantity="other">%d ψευδώνυμα</item>
+  <plurals name="simple_login_widget_pending_aliases_message">
+    <item quantity="one">We detected that you have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to import it?</item>
+    <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
   </plurals>
   <string name="simple_login_widget_action">Συγχρονισμός ψευδωνύμων</string>
-  <string name="simple_login_widget_close_content_description">Κουμπί για να κλείσετε τα SimpleLogin ψευδώνυμα widget συγχρονισμού</string>
+  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

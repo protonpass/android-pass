@@ -7,4 +7,9 @@
   <string name="alias_dialog_move_to_trash_title">Siirretäänkö roskakoriin?</string>
   <string name="alias_dialog_move_to_trash_content">Jos siirrät aliaksen roskakoriin, se ei enää ohjaa viestejä postilaatikkoosi.</string>
   <string name="alias_dialog_move_to_trash_confirm">Vahvista</string>
+  <string name="alias_dialog_disable_or_trash_title">Siirrä roskakoriin</string>
+  <string name="alias_dialog_disable_or_trash_message">Roskakorissa olevat aliakset jatkavat sähköpostien välittämistä. Jos haluat lopettaa sähköpostien vastaanottamisen tähän osoitteeseen, poista se sen sijaan käytöstä.</string>
+  <string name="alias_dialog_disable_or_trash_checkbox_text">Älä muistuta uudelleen</string>
+  <string name="alias_dialog_disable_or_trash_button_text_disable">Poista käytöstä sen sijaan</string>
+  <string name="alias_dialog_disable_or_trash_button_text_trash">Siirrä roskakoriin</string>
 </resources>

@@ -7,6 +7,7 @@
   <string name="top_bar_edit_button_text">Modifier</string>
   <!-- Alias details -->
   <string name="field_alias_title">Adresse de l\'alias</string>
+  <string name="field_alias_disabled_title">Adresse de l\'alias (désactivée)</string>
   <string name="alias_copied_to_clipboard">L\'alias a été copié.</string>
   <string name="alias_detail_field_mailboxes_title">Transfert vers</string>
   <string name="alias_create_login_from_alias">Créer un identifiant</string>
@@ -103,6 +104,4 @@
   <string name="passkey_detail_bottomsheet_domain">Domaine</string>
   <string name="passkey_detail_bottomsheet_key">Clé</string>
   <string name="passkey_detail_bottomsheet_created">Créé le</string>
-  <string name="alias_toggle_tooltip_title">Désactiver l\'alias</string>
-  <string name="alias_toggle_tooltip_description">Appuyez ici pour désactiver cet alias et ne plus recevoir d\'e-mails.</string>
 </resources>

@@ -94,7 +94,7 @@
   <string name="field_card_pin_title">PIN-კოდი</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">ვადის ამოწურვის თარიღი</string>
-  <string name="field_card_expiration_date_hint">თთ /წწ</string>
+  <string name="field_card_expiration_date_hint">MM/YY</string>
   <string name="field_card_expiration_date_error">შეიყვანეთ სწორი თარიღი თთ/წწ ფორმატში</string>
   <string name="create_credit_card_item_creation_error">საკრედიტო ბარათის შექმნის შეცდომა</string>
   <string name="create_credit_card_item_creation_success">საკრედიტო ბარათი შეიქმნა</string>
@@ -128,7 +128,7 @@
   <string name="identity_field_reddit_title">Reddit-ის მომხმარებლის სახელი</string>
   <string name="identity_field_facebook_title">Facebook URL</string>
   <string name="identity_field_yahoo_title">Yahoo-ის მომხმარებლის სახელი</string>
-  <string name="identity_field_instagram_title">Instagram-ის წარწერა</string>
+  <string name="identity_field_instagram_title">Instagram username</string>
   <string name="identity_field_personal_website_title">პირადი ვებგვერდის URL</string>
   <string name="identity_field_work_phone_number_title">სამსახურის ტელეფონის ნომერი</string>
   <string name="identity_field_work_email_title">სამსახურის ელფოსტის მისამართი</string>
@@ -143,7 +143,7 @@
   <string name="identity_add_field_reddit">Reddit-ის მომხმარებლის სახელი</string>
   <string name="identity_add_field_facebook">Facebook URL</string>
   <string name="identity_add_field_yahoo">Yahoo-ის მომხმარებლის სახელი</string>
-  <string name="identity_add_field_instagram">Instagram-ის წარწერა</string>
+  <string name="identity_add_field_instagram">Instagram username</string>
   <string name="identity_add_field_personal_website">პირადი ვებგვერდის URL</string>
   <string name="identity_add_field_work_phone_number">სამსახურის ტელეფონის ნომერი</string>
   <string name="identity_add_field_work_email_address">სამსახურის ელფოსტის მისამართი</string>

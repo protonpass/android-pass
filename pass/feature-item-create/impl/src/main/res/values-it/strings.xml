@@ -94,7 +94,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Data di scadenza</string>
-  <string name="field_card_expiration_date_hint">MM / AA</string>
+  <string name="field_card_expiration_date_hint">MM/YY</string>
   <string name="field_card_expiration_date_error">Inserisci una data valida nel formato MM/AA</string>
   <string name="create_credit_card_item_creation_error">Creazione della carta non riuscita</string>
   <string name="create_credit_card_item_creation_success">Carta creata</string>
@@ -128,7 +128,7 @@
   <string name="identity_field_reddit_title">Nome utente di Reddit</string>
   <string name="identity_field_facebook_title">URL di Facebook</string>
   <string name="identity_field_yahoo_title">Nome utente di Yahoo</string>
-  <string name="identity_field_instagram_title">Nome utente di Instagram</string>
+  <string name="identity_field_instagram_title">Instagram username</string>
   <string name="identity_field_personal_website_title">URL del sito web personale</string>
   <string name="identity_field_work_phone_number_title">Numero di telefono lavorativo</string>
   <string name="identity_field_work_email_title">Indirizzo email lavorativo</string>
@@ -143,7 +143,7 @@
   <string name="identity_add_field_reddit">Nome utente di Reddit</string>
   <string name="identity_add_field_facebook">URL di Facebook</string>
   <string name="identity_add_field_yahoo">Nome utente di Yahoo</string>
-  <string name="identity_add_field_instagram">Nome utente di Instagram</string>
+  <string name="identity_add_field_instagram">Instagram username</string>
   <string name="identity_add_field_personal_website">URL del sito web personale</string>
   <string name="identity_add_field_work_phone_number">Numero di telefono lavorativo</string>
   <string name="identity_add_field_work_email_address">Indirizzo email lavorativo</string>

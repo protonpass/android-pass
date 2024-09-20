@@ -131,6 +131,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Endereço de alias</string>
+  <string name="item_details_alias_section_alias_disabled_title">Endereço de alias (desativado)</string>
   <string name="item_details_alias_section_mailboxes_title">Encaminhamento para</string>
   <string name="item_details_credit_card_section_cardholder_title">Nome no cartão</string>
   <string name="item_details_credit_card_section_card_number_title">Número do cartão</string>
@@ -233,15 +234,14 @@
   <string name="snack_bar_message_item_trashed_error">Houve um erro ao excluir este item</string>
   <string name="snack_bar_message_item_restore_success">Item restaurado com sucesso</string>
   <string name="snack_bar_message_item_restore_error">Houve um erro ao restaurar este item</string>
-  <string name="snack_bar_message_item_delete_success">Item apagado com sucesso</string>
+  <string name="snack_bar_message_item_delete_success">Item excluído com sucesso</string>
   <string name="snack_bar_message_item_delete_error">Houve um erro ao excluir este item</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Ativar sincronização com SimpleLogin</string>
-  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">Detectamos que você tem %s que estão presentes no SimpleLogin, mas estão faltando no Proton Pass. Você gostaria de importá-los?</string>
-  <plurals name="simple_login_widget_pending_aliases">
-    <item quantity="one">%d alias</item>
-    <item quantity="other">%d aliases</item>
+  <plurals name="simple_login_widget_pending_aliases_message">
+    <item quantity="one">Detectamos que você tem %d alias presente no SimpleLogin, mas ausente no Proton Pass. Você gostaria de importá-lo?</item>
+    <item quantity="other">Detectamos que você tem %d aliases presentes no SimpleLogin, mas ausentes no Proton Pass. Você gostaria de importá-los?</item>
   </plurals>
   <string name="simple_login_widget_action">Sincronizar alias</string>
-  <string name="simple_login_widget_close_content_description">Botão para fechar o widget de sincronização com alias do SimpleLogin</string>
+  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

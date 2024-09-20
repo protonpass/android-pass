@@ -551,7 +551,8 @@ class HomeViewModel @Inject constructor(
         pinningUiStateFlow,
         bottomSheetItemActionFlow,
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT),
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC)
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
+        preferencesRepository.observeAliasTrashDialogStatusPreference()
     ) { homeListUiState,
         searchUiState,
         userPlan,
@@ -559,7 +560,8 @@ class HomeViewModel @Inject constructor(
         pinningUiState,
         bottomSheetItemAction,
         isUsernameSplitEnabled,
-        isSLAliasSyncEnabled ->
+        isSLAliasSyncEnabled,
+        aliasTrashDialogStatusPreference ->
         HomeUiState(
             homeListUiState = homeListUiState,
             searchUiState = searchUiState,
@@ -569,7 +571,8 @@ class HomeViewModel @Inject constructor(
             action = bottomSheetItemAction,
             isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() ?: true,
             isUsernameSplitEnabled = isUsernameSplitEnabled,
-            isSLAliasSyncEnabled = isSLAliasSyncEnabled
+            isSLAliasSyncEnabled = isSLAliasSyncEnabled,
+            aliasTrashDialogStatusPreference = aliasTrashDialogStatusPreference
         )
     }
         .stateIn(

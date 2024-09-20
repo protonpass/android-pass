@@ -68,6 +68,7 @@ dependencies {
     implementation(projects.pass.featureTrial.impl)
     implementation(projects.pass.featureVault.impl)
     implementation(projects.pass.features.itemHistory)
+    implementation(projects.pass.features.itemOptions)
     implementation(projects.pass.features.secureLinks)
     implementation(projects.pass.features.securityCenter)
     implementation(projects.pass.features.slSync)

@@ -27,11 +27,11 @@
   <string name="security_center_home_row_data_breaches_title">Alerta da Dark Web</string>
   <string name="security_center_home_row_data_breaches_subtitle">Violações detectadas</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_home_row_sentinel_subtitle">Programa avançado de proteção de conta</string>
+  <string name="security_center_home_row_sentinel_subtitle">Programa avançado de proteção de contas</string>
   <string name="security_center_home_row_insecure_passwords_title">Senhas fracas</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Altere suas senhas</string>
   <string name="security_center_home_row_reused_passwords_title">Senhas reutilizadas</string>
-  <string name="security_center_home_row_reused_passwords_subtitle">Gere senhas exclusivas</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">Gerar senhas originais</string>
   <string name="security_center_home_row_missing_tfa_title">A2F inativa</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Configure A2F para mais segurança</string>
   <string name="security_center_home_row_excludes_items_title">Excluído do monitoramento</string>
@@ -44,9 +44,9 @@
   <string name="security_center_sentinel_button_enable">Ativar Proton Sentinel</string>
   <string name="security_center_sentinel_button_disable">Desativar Proton Sentinel</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">A proteção do Proton Sentinel foi cancelada</string>
-  <string name="security_center_sentinel_snackbar_message_enable_error">Houve um erro ao ativar a proteção da Proton Sentinel. Tente novamente.</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">Houve um erro ao ativar a proteção do Proton Sentinel. Tente novamente.</string>
   <string name="security_center_sentinel_snackbar_message_disable_canceled">A desativação da proteção do Proton Sentinel foi cancelada</string>
-  <string name="security_center_sentinel_snackbar_message_disable_error">Houve um erro ao desativar a proteção da Proton Sentinel. Tente novamente.</string>
+  <string name="security_center_sentinel_snackbar_message_disable_error">Houve um erro ao desativar a proteção do Proton Sentinel. Tente novamente.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Senhas fracas</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Senhas fracas são mais fáceis de adivinhar. Gere senhas fortes para manter suas contas seguras.</string>
@@ -86,7 +86,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">Nenhuma violação detectada</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Endereço da Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Aliases do hide-my-email</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Erro ao recuperar o endereço da Proton</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Erro ao recuperar o aliases de Hide-my-email</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Não monitorado</string>
   <string name="security_center_dark_web_monitor_see_all">Ver tudo</string>
@@ -118,7 +118,7 @@
   <string name="security_center_verify_report_title_none">Nenhuma violação detectada para</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Usada em</string>
-  <string name="security_center_email_report_breaches_header">Vulnerações</string>
+  <string name="security_center_email_report_breaches_header">Violações</string>
   <string name="security_center_email_report_resolved_breaches_header">Violações resolvidas</string>
   <string name="security_center_email_report_mark_as_resolved">Marcar como resolvido</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_success">A violação foi marcada como resolvida.</string>
@@ -142,8 +142,8 @@
   <string name="security_center_proton_list_top_bar_title">Endereço da Proton</string>
   <string name="security_center_proton_list_no_breaches_detected">Nenhuma violação detectada</string>
   <string name="security_center_proton_list_excluded_from_monitoring">Excluir do monitoramento</string>
-  <string name="security_center_proton_list_error">Não foi possível carregar os endereço.</string>
-  <string name="security_center_proton_list_included_in_monitoring">Ative o monitoramento para ser notificação se seus endereços da Proton forem vazados.</string>
+  <string name="security_center_proton_list_error">Não foi possível carregar os endereços.</string>
+  <string name="security_center_proton_list_included_in_monitoring">Ative o monitoramento para ser notificado se seus endereços Proton forem vazados.</string>
   <string name="security_center_proton_list_options_menu">Menu de opções de tela da Proton</string>
   <string name="security_center_proton_list_not_monitored">Não monitorado</string>
   <!-- Address Bottomsheet options -->
@@ -159,14 +159,14 @@
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Aliases do hide-my-email</string>
   <string name="security_center_alias_list_excluded_from_monitoring">Excluído do monitoramento</string>
-  <string name="security_center_alias_list_error">Não foi possível carregar os endereço.</string>
-  <string name="security_center_alias_list_included_in_monitoring">Ative o monitoramento para ser notificação se seus aliases do Hide-my-email forem vazados.</string>
+  <string name="security_center_alias_list_error">Não foi possível carregar os endereços.</string>
+  <string name="security_center_alias_list_included_in_monitoring">Ative o monitoramento para ser notificado se seus aliases do Hide-my-email forem vazados.</string>
   <string name="security_center_alias_list_monitored">Monitorado</string>
   <string name="security_center_alias_list_custom_email_message">Os e-mails aliases com domínios personalizados não são monitorados, por favor adicione-os como um e-mail personalizado para monitoramento.</string>
   <string name="security_center_alias_list_options_menu">Menu de opções de tela de alias</string>
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Segurança de dados</string>
-  <string name="dark_web_help_dialog_subtitle">A Proton nunca compartilha suas informações com terceiros. Todos os dados vêm de pesquisas sobre o aparecimento de domínios Proton na dark web.</string>
+  <string name="dark_web_help_dialog_subtitle">A Proton nunca compartilha suas informações com terceiros. Esses dados são provenientes de investigações sobre a aparição de domínios da Proton na dark web.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Não foi possível adicionar e-mail personalizado</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Você atingiu o limite de e-mails personalizados</string>

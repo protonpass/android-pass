@@ -19,7 +19,7 @@
 <resources>
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
-  <string name="security_center_home_dark_web_monitoring_title">Overvåking av mørkt nett</string>
+  <string name="security_center_home_dark_web_monitoring_title">Overvåking av det mørke nettet</string>
   <string name="security_center_home_widget_breaches_title">Sikkerhetsbrudd oppdaget</string>
   <string name="security_center_home_widget_breaches_subtitle">E-postadressen din ble lekket i minst 1 datainnbrudd.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">Bli varslet hvis e-posten, passordet eller andre personlige data ble lekket.</string>
@@ -60,7 +60,7 @@
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Ekskluderte elementer</string>
   <!-- Dark web monitor -->
-  <string name="security_center_dark_web_monitor_top_bar_title">Overvåking av mørkt nett</string>
+  <string name="security_center_dark_web_monitor_top_bar_title">Overvåking av det mørke nettet</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Siste sjekk:%s</string>
   <string name="security_center_dark_web_monitor_custom_emails_title">Tilpassede e-postadresser</string>
   <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Ikke verifisert</string>
@@ -86,7 +86,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">Ingen brudd oppdaget</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton-adresser</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-aliaser</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Feil ved henting av Proton-adresser</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Feil ved henting av Hide-my-email-aliaser</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Ikke overvåket</string>
   <string name="security_center_dark_web_monitor_see_all">Se alle</string>

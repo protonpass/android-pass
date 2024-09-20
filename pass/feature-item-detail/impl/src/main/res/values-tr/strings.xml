@@ -7,6 +7,7 @@
   <string name="top_bar_edit_button_text">Düzenle</string>
   <!-- Alias details -->
   <string name="field_alias_title">Takma ad adresi</string>
+  <string name="field_alias_disabled_title">Takma adres (kullanımdan kaldırılmış)</string>
   <string name="alias_copied_to_clipboard">Takma ad kopyalandı</string>
   <string name="alias_detail_field_mailboxes_title">Şuraya iletiliyor</string>
   <string name="alias_create_login_from_alias">Oturum açma kaydı oluştur</string>
@@ -18,7 +19,7 @@
   <string name="email_copied_to_clipboard">E-posta adresi kopyalandı</string>
   <string name="username_copied_to_clipboard">Kullanıcı adı kopyalandı</string>
   <string name="password_copied_to_clipboard">Parola kopyalandı</string>
-  <string name="website_copied_to_clipboard">Site kopyalandı</string>
+  <string name="website_copied_to_clipboard">Web address copied</string>
   <string name="totp_copied_to_clipboard">Tek kullanımlık parola kopyalandı</string>
   <string name="field_copied_to_clipboard">Alan kopyalandı</string>
   <string name="move_item_to_trash_message">Öge çöpe atıldı</string>
@@ -103,6 +104,4 @@
   <string name="passkey_detail_bottomsheet_domain">Etki alanı</string>
   <string name="passkey_detail_bottomsheet_key">Anahtar</string>
   <string name="passkey_detail_bottomsheet_created">Oluşturulma</string>
-  <string name="alias_toggle_tooltip_title">Takma adı kullanımdan kaldır</string>
-  <string name="alias_toggle_tooltip_description">Bu takma adı kullanımdan kaldırıp e-posta almasını durdurmak için buraya dokunun.</string>
 </resources>

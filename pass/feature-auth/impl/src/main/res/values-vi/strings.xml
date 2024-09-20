@@ -31,7 +31,7 @@
   <string name="auth_action_reveal_password">Hiển thị mật khẩu chủ</string>
   <string name="auth_action_conceal_password">Ẩn mật khẩu chủ</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Sử dụng PIN thay thế</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Sử dụng vân tay thay thế</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
   <string name="auth_unlock_button">Mở khóa</string>
   <string name="auth_error_empty_password">Mật khẩu không được để trống</string>
   <string name="auth_error_pin_cannot_be_empty">Mã PIN không được để trống</string>

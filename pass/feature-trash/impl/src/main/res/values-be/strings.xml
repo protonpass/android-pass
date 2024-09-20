@@ -7,4 +7,9 @@
   <string name="alias_dialog_move_to_trash_title">Перамясціць у сметніцу?</string>
   <string name="alias_dialog_move_to_trash_content">Калі вы перамясціце псеўданім у сметніцу, ён перастане перасылаць лісты ў вашу паштовую скрыню.</string>
   <string name="alias_dialog_move_to_trash_confirm">Пацвердзіць</string>
+  <string name="alias_dialog_disable_or_trash_title">Перамясціць у Сметніцу</string>
+  <string name="alias_dialog_disable_or_trash_message">Псеўданімы перамешчаныя ў Сметніцу працягнуць перасылаць лісты. Спачатку адключыце псеўданім, калі хочаце спыніць атрыманне лістоў на гэты адрас.</string>
+  <string name="alias_dialog_disable_or_trash_checkbox_text">Больш не нагадваць</string>
+  <string name="alias_dialog_disable_or_trash_button_text_disable">Адключыць</string>
+  <string name="alias_dialog_disable_or_trash_button_text_trash">Перамясціць у сметніцу</string>
 </resources>

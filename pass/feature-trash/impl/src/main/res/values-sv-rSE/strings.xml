@@ -7,4 +7,9 @@
   <string name="alias_dialog_move_to_trash_title">Flytta till papperskorg?</string>
   <string name="alias_dialog_move_to_trash_content">Om du flyttar ett alias till papperskorgen kommer det att sluta vidarebefordra e-post till din brevlåda.</string>
   <string name="alias_dialog_move_to_trash_confirm">Bekräfta</string>
+  <string name="alias_dialog_disable_or_trash_title">Flytta till papperskorg</string>
+  <string name="alias_dialog_disable_or_trash_message">Alias ​​i papperskorg fortsätter att vidarebefordra e-post. Om du vill sluta ta emot e-post på denna adress, inaktivera den istället.</string>
+  <string name="alias_dialog_disable_or_trash_checkbox_text">Påminn mig inte igen</string>
+  <string name="alias_dialog_disable_or_trash_button_text_disable">Inaktivera istället</string>
+  <string name="alias_dialog_disable_or_trash_button_text_trash">Flytta till papperskorg</string>
 </resources>

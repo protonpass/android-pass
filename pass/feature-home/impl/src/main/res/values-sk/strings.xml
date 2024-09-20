@@ -9,7 +9,7 @@
   <string name="home_empty_vault_create_alias">Vytvoriť Hide-my-email alias</string>
   <string name="home_empty_vault_create_note">Vytvoriť poznámku</string>
   <string name="home_empty_vault_create_credit_card">Vytvoriť platobnú kartu</string>
-  <string name="home_empty_vault_create_identity">Vytvoriť identitu</string>
+  <string name="home_empty_vault_create_identity">Create an identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Chyba pri načítaní položiek</string>
   <string name="error_refreshing">Chyba pri obnovení</string>
   <string name="home_snackbar_login_moved_to_trash">Prihlásenie presunuté do koša</string>
@@ -147,10 +147,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Chyba pri odopínaní niektorých položiek</string>
   <string name="home_snackbar_items_unpinned_error">Chyba pri odopínaní položiek</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias bol úspešne zapnutý</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Chyba pri zapínaní niektorého z aliasov</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
   <string name="home_snackbar_items_alias_enabled_error">Chyba pri zapínaní aliasov</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias bol úspešne vypnutý</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Chyba pri vypínaní niektorého z aliasov</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">Chyba pri vypínaní aliasov</string>
   <string name="bulk_action_unpin">Odopnúť</string>
   <string name="bulk_action_pin">Pripnúť</string>

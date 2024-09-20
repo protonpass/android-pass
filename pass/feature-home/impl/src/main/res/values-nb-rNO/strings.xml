@@ -9,7 +9,7 @@
   <string name="home_empty_vault_create_alias">Opprett et Hide-my-email-alias</string>
   <string name="home_empty_vault_create_note">Opprett et notat</string>
   <string name="home_empty_vault_create_credit_card">Opprett et kredittkort</string>
-  <string name="home_empty_vault_create_identity">Skap en identitet</string>
+  <string name="home_empty_vault_create_identity">Create an identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Feil ved lasting av elementer</string>
   <string name="error_refreshing">Feil under utførelse av oppdatering</string>
   <string name="home_snackbar_login_moved_to_trash">Pålogging flyttet til papirkurven</string>
@@ -133,10 +133,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Feil ved løsing av noen av elementene</string>
   <string name="home_snackbar_items_unpinned_error">Feil ved løsing av elementene</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias aktivert</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Feil ved aktivering av noen av aliasene</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
   <string name="home_snackbar_items_alias_enabled_error">Feil ved aktivering av aliaser</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias deaktivert</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Feil ved deaktivering av noen av aliasene</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">Feil ved deaktivering av aliaser</string>
   <string name="bulk_action_unpin">Løs</string>
   <string name="bulk_action_pin">Fest</string>

@@ -6,13 +6,13 @@
   <!-- Create item bottomsheet -->
   <string name="action_login">Autentificare</string>
   <string name="action_alias">Alias</string>
-  <string name="action_note">Notă</string>
+  <string name="action_note">Notiță</string>
   <string name="action_credit_card">Card de credit</string>
   <string name="action_password">Parolă</string>
   <string name="action_identity">Identitate</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Adăugați detalii de autentificare pentru o aplicație sau site</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Obțineți un alias de e-mail pentru a-l utiliza la aplicațiile noi.</string>
-  <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Notați-vă un PIN, cod sau o notă.</string>
+  <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Notați-vă un PIN, cod sau o notiță.</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Stocați în siguranță informații de plată.</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Completați detaliile personale</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Generați o parolă sigură.</string>
@@ -60,10 +60,10 @@
   <string name="custom_section_dialog_placeholder">Titlu</string>
   <string name="custom_field_options_content_description">Opțiuni câmp personal</string>
   <!-- Create Note -->
-  <string name="create_note_item_creation_error">Nu s-a putut crea nota.</string>
-  <string name="create_note_item_update_error">Nu s-a putut actualiza nota.</string>
-  <string name="create_note_init_error">Problemă preluare detalii note.</string>
-  <string name="note_created">S-a creat nota.</string>
+  <string name="create_note_item_creation_error">Nu s-a putut crea notița.</string>
+  <string name="create_note_item_update_error">Nu s-a putut actualiza notița.</string>
+  <string name="create_note_init_error">Problemă preluare detalii notiță.</string>
+  <string name="note_created">S-a creat notița.</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Adresă alias</string>
   <string name="field_mailboxes_creation_title">Redirecționare către</string>
@@ -83,7 +83,7 @@
   <string name="cannot_retrieve_alias_options">Nu se pot prelua informațiile aliasului.</string>
   <string name="alias_mailbox_dialog_title">Redirecționare către</string>
   <!-- Create note -->
-  <string name="note_hint">Notă</string>
+  <string name="note_hint">Notiță</string>
   <!-- Create Credit Card -->
   <string name="field_cardholder_name_title">Titular card</string>
   <string name="field_cardholder_name_hint">Numele complet</string>
@@ -94,7 +94,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Data de expirare</string>
-  <string name="field_card_expiration_date_hint">LL/AA</string>
+  <string name="field_card_expiration_date_hint">MM/YY</string>
   <string name="field_card_expiration_date_error">Introduceți o dată validă în format LL/AA.</string>
   <string name="create_credit_card_item_creation_error">Nu s-a putut crea cardul de credit.</string>
   <string name="create_credit_card_item_creation_success">S-a creat cardul de credit.</string>
@@ -128,7 +128,7 @@
   <string name="identity_field_reddit_title">Nume utilizator Reddit</string>
   <string name="identity_field_facebook_title">Adresa URL de Facebook</string>
   <string name="identity_field_yahoo_title">Nume utilizator Yahoo</string>
-  <string name="identity_field_instagram_title">Nume utilizator Instagram</string>
+  <string name="identity_field_instagram_title">Instagram username</string>
   <string name="identity_field_personal_website_title">URL site web personal</string>
   <string name="identity_field_work_phone_number_title">Telefon serviciu</string>
   <string name="identity_field_work_email_title">Adresă de e-mail serviciu</string>
@@ -143,7 +143,7 @@
   <string name="identity_add_field_reddit">Nume utilizator Reddit</string>
   <string name="identity_add_field_facebook">Adresa URL de Facebook</string>
   <string name="identity_add_field_yahoo">Nume utilizator Yahoo</string>
-  <string name="identity_add_field_instagram">Nume utilizator Instagram</string>
+  <string name="identity_add_field_instagram">Instagram username</string>
   <string name="identity_add_field_personal_website">URL site web personal</string>
   <string name="identity_add_field_work_phone_number">Telefon serviciu</string>
   <string name="identity_add_field_work_email_address">Adresă de e-mail serviciu</string>

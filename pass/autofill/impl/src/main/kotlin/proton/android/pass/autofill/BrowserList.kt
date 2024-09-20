@@ -5,6 +5,8 @@ val BROWSERS = setOf(
     "alook.browser.google",
     "app.vanadium.browser",
     "app.vanadium.webview",
+    "com.aloha.browser",
+    "com.alohamobile.browser",
     "com.amazon.cloud9",
     "com.android.browser",
     "com.android.chrome",

@@ -22,4 +22,6 @@ sealed interface ItemOptionsNavDestination {
 
     data object Back : ItemOptionsNavDestination
 
+    data object TrashItem : ItemOptionsNavDestination
+
 }

@@ -34,6 +34,7 @@ import proton.android.pass.featureitemdetail.impl.note.NoteDetail
 fun ItemDetailContent(
     modifier: Modifier = Modifier,
     uiState: ItemDetailScreenUiState,
+    isItemMovedToTrash: Boolean,
     onNavigate: (ItemDetailNavigation) -> Unit
 ) {
     Box(
@@ -50,6 +51,7 @@ fun ItemDetailContent(
                 onNavigate = onNavigate
             )
             ItemTypeUiState.Alias -> AliasDetail(
+                isItemMovedToTrash = isItemMovedToTrash,
                 onNavigate = onNavigate
             )
             ItemTypeUiState.CreditCard -> CreditCardDetail(

@@ -58,17 +58,17 @@ class ItemOptionsAliasTrashDialogViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
-    private val isLoadingStateFlow = MutableStateFlow<IsLoadingState>(
-        value = IsLoadingState.NotLoading
-    )
-
     private val eventFlow = MutableStateFlow<ItemOptionsAliasTrashDialogEvent>(
         value = ItemOptionsAliasTrashDialogEvent.Idle
     )
 
+    private val isLoadingStateFlow = MutableStateFlow<IsLoadingState>(
+        value = IsLoadingState.NotLoading
+    )
+
     internal val stateFlow = combine(
-        isLoadingStateFlow,
         eventFlow,
+        isLoadingStateFlow,
         userPreferencesRepository.observeAliasTrashDialogStatusPreference(),
         ::ItemOptionsAliasTrashDialogState
     ).stateIn(

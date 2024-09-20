@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="description_field_label">Care este problema?</string>
+  <string name="description_field_hint">Descrieți problema cu cât mai multe detalii posibile. Dacă este o eroare spuneți-ne care este mesajul acesteia.</string>
+  <string name="email_field_label">E-mail</string>
+  <string name="email_field_hint">e-mail</string>
+  <string name="attach_image_button">Atașare imagine</string>
+  <string name="categories_title">Care este problema?</string>
+  <string name="report_toolbar_title">Raportare o problemă</string>
+  <string name="send_report_button">Trimitere raport</string>
+  <string name="cancel_tips_button">Anulare</string>
+  <string name="contact_us_button">Contactați-ne</string>
+  <string name="hint_tips_screen">Nu a funcționat?</string>
+  <string name="report_reason_autofill">Autocompletare</string>
+  <string name="report_reason_sharing">Partajare</string>
+  <string name="report_reason_sync">Sincronizare</string>
+  <string name="report_reason_passkeys">Chei de acces</string>
+  <string name="report_reason_other">Altă problemă</string>
+  <string name="tips_title">Rezolvări rapide pentru %1$s</string>
+  <string name="tips_subtitle">Aceste sfaturi v-ar putea ajuta la rezolvarea mai rapidă a problemei.</string>
+  <string name="autofill_tip_restart">Try disabling and enabling the autofill service.</string>
+  <string name="autofill_tip_browser">Try another browser.</string>
+  <string name="sharing_tip_vault_sharing_guide">Aveți probleme cu partajarea seifului? Consultați ghidul nostru.</string>
+  <string name="sharing_tip_secure_links_guide">Aveți probleme cu legăturile web securizate? Consultați ghidul nostru.</string>
+  <string name="sync_tip_force_refresh">Ecranul este gol? Încercați o forțare a sincronizării.</string>
+  <string name="send_logs_label">Trimitere jurnale</string>
+  <string name="report_sending_success">Raportul a fost trimis.</string>
+  <string name="report_sending_error">Raportul nu s-a putut trimite.</string>
+  <string name="tips_passkey_check_guide">If you have any issues check our guide.</string>
+  <string name="tips_passkey_android_not_supported">Versiunea de Android este prea mică. Încercați să actualizați dispozitivul.</string>
+  <string name="tips_passkeys_credential_manager_not_supported">Producătorul dispozitivului nu furnizează un manager de acreditări.</string>
+  <string name="tips_passkey_supported">Passkeys supported</string>
+  <string name="tips_passkey_not_supported">Passkeys not supported</string>
+  <string name="report_steps" comment="Indicator showing report progress">Step %1$d of %2$d</string>
+  <string name="description_cannot_be_blank">Description cannot be blank</string>
+  <string name="description_is_too_short">Description is too short</string>
+  <string name="description_is_too_long">Description is too long</string>
+  <string name="email_cannot_be_blank">Email cannot be blank</string>
+  <string name="email_invalid">Invalid email address</string>
+</resources>

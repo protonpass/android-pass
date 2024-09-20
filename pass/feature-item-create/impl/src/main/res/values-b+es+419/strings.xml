@@ -94,7 +94,7 @@
   <string name="field_card_pin_title">Código PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Fecha de expiración</string>
-  <string name="field_card_expiration_date_hint">MM / AA</string>
+  <string name="field_card_expiration_date_hint">MM/YY</string>
   <string name="field_card_expiration_date_error">Ingrese una fecha válida en formato MM/AA</string>
   <string name="create_credit_card_item_creation_error">No se pudo crear la tarjeta de crédito.</string>
   <string name="create_credit_card_item_creation_success">La tarjeta de crédito fue creada.</string>
@@ -128,7 +128,7 @@
   <string name="identity_field_reddit_title">Nombre de usuario de Reddit</string>
   <string name="identity_field_facebook_title">URL de Facebook</string>
   <string name="identity_field_yahoo_title">Nombre de usuario de Yahoo</string>
-  <string name="identity_field_instagram_title">Nombre de usuario de Instagram</string>
+  <string name="identity_field_instagram_title">Instagram username</string>
   <string name="identity_field_personal_website_title">URL de sitio web personal</string>
   <string name="identity_field_work_phone_number_title">Número de teléfono del trabajo</string>
   <string name="identity_field_work_email_title">Dirección de correo del trabajo</string>
@@ -143,7 +143,7 @@
   <string name="identity_add_field_reddit">Nombre de usuario de Reddit</string>
   <string name="identity_add_field_facebook">URL de Facebook</string>
   <string name="identity_add_field_yahoo">Nombre de usuario de Yahoo</string>
-  <string name="identity_add_field_instagram">Nombre de usuario de Instagram</string>
+  <string name="identity_add_field_instagram">Instagram username</string>
   <string name="identity_add_field_personal_website">URL de sitio web personal</string>
   <string name="identity_add_field_work_phone_number">Número de teléfono del trabajo</string>
   <string name="identity_add_field_work_email_address">Dirección de correo del trabajo</string>

@@ -7,6 +7,7 @@
   <string name="top_bar_edit_button_text">Изменить</string>
   <!-- Alias details -->
   <string name="field_alias_title">Адрес псевдонима</string>
+  <string name="field_alias_disabled_title">Адрес псевдонима (отключен)</string>
   <string name="alias_copied_to_clipboard">Псевдоним скопирован</string>
   <string name="alias_detail_field_mailboxes_title">Пересылка на</string>
   <string name="alias_create_login_from_alias">Создать логин</string>
@@ -18,7 +19,7 @@
   <string name="email_copied_to_clipboard">Адрес электронной почты скопирован</string>
   <string name="username_copied_to_clipboard">Имя пользователя скопировано</string>
   <string name="password_copied_to_clipboard">Пароль скопирован</string>
-  <string name="website_copied_to_clipboard">Веб-сайт скопирован</string>
+  <string name="website_copied_to_clipboard">Web address copied</string>
   <string name="totp_copied_to_clipboard">TOTP скопирован</string>
   <string name="field_copied_to_clipboard">Поле скопировано</string>
   <string name="move_item_to_trash_message">Элемент перемещен в корзину</string>
@@ -105,6 +106,4 @@
   <string name="passkey_detail_bottomsheet_domain">Домен</string>
   <string name="passkey_detail_bottomsheet_key">Ключ</string>
   <string name="passkey_detail_bottomsheet_created">Создано</string>
-  <string name="alias_toggle_tooltip_title">Отключить псевдоним</string>
-  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
 </resources>

@@ -94,7 +94,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Koniec platnosti</string>
-  <string name="field_card_expiration_date_hint">MM / RR</string>
+  <string name="field_card_expiration_date_hint">MM/YY</string>
   <string name="field_card_expiration_date_error">Zadajte platný dátum vo formáte MM/RR</string>
   <string name="create_credit_card_item_creation_error">Nepodarilo sa vytvoriť platobnú kartu</string>
   <string name="create_credit_card_item_creation_success">Platobná karta vytvorená</string>
@@ -128,7 +128,7 @@
   <string name="identity_field_reddit_title">Používateľské meno v Reddit</string>
   <string name="identity_field_facebook_title">Facebook URL</string>
   <string name="identity_field_yahoo_title">Používateľské meno v Yahoo</string>
-  <string name="identity_field_instagram_title">Používateľské meno v Instagrame</string>
+  <string name="identity_field_instagram_title">Instagram username</string>
   <string name="identity_field_personal_website_title">URL osobnej stránky</string>
   <string name="identity_field_work_phone_number_title">Pracovné telefónne číslo</string>
   <string name="identity_field_work_email_title">Pracovná emailová adresa</string>
@@ -143,7 +143,7 @@
   <string name="identity_add_field_reddit">Používateľské meno v Reddit</string>
   <string name="identity_add_field_facebook">Facebook URL</string>
   <string name="identity_add_field_yahoo">Používateľské meno v Yahoo</string>
-  <string name="identity_add_field_instagram">Používateľské meno v Instagrame</string>
+  <string name="identity_add_field_instagram">Instagram username</string>
   <string name="identity_add_field_personal_website">URL osobnej stránky</string>
   <string name="identity_add_field_work_phone_number">Pracovné telefónne číslo</string>
   <string name="identity_add_field_work_email_address">Pracovná emailová adresa</string>

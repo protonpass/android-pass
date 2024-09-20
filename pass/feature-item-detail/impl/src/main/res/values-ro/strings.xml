@@ -7,18 +7,19 @@
   <string name="top_bar_edit_button_text">Editare</string>
   <!-- Alias details -->
   <string name="field_alias_title">Adresă alias</string>
+  <string name="field_alias_disabled_title">Adresă alias (dezactivată)</string>
   <string name="alias_copied_to_clipboard">Alias copiat</string>
   <string name="alias_detail_field_mailboxes_title">Se redirecționează către</string>
   <string name="alias_create_login_from_alias">Creare autentificare</string>
   <!-- Note details -->
-  <string name="field_detail_note_title">Notă</string>
-  <string name="note_detail_copy_note_to_clipboard">Copiere notă</string>
-  <string name="note_copied_to_clipboard">Nota a fost copiată în memorie.</string>
+  <string name="field_detail_note_title">Notiță</string>
+  <string name="note_detail_copy_note_to_clipboard">Copiere notiță</string>
+  <string name="note_copied_to_clipboard">Notița a fost copiată în memorie.</string>
   <!-- Login details -->
   <string name="email_copied_to_clipboard">Adresa de e-mail a fost copiată</string>
   <string name="username_copied_to_clipboard">Nume de utilizator copiat</string>
   <string name="password_copied_to_clipboard">Parola s-a copiat</string>
-  <string name="website_copied_to_clipboard">Site web copiat.</string>
+  <string name="website_copied_to_clipboard">Web address copied</string>
   <string name="totp_copied_to_clipboard">TOTP copiat.</string>
   <string name="field_copied_to_clipboard">Câmp copiat.</string>
   <string name="move_item_to_trash_message">Articolul s-a mutat în gunoi.</string>
@@ -104,6 +105,4 @@
   <string name="passkey_detail_bottomsheet_domain">Domeniu</string>
   <string name="passkey_detail_bottomsheet_key">Cheia</string>
   <string name="passkey_detail_bottomsheet_created">Creată la</string>
-  <string name="alias_toggle_tooltip_title">Dezactivare alias</string>
-  <string name="alias_toggle_tooltip_description">Atingeți aici pentru a dezactiva acest alias și să opriți primirea de mesaje pentru acesta.</string>
 </resources>

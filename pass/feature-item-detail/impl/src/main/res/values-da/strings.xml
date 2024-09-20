@@ -7,6 +7,7 @@
   <string name="top_bar_edit_button_text">Redigér</string>
   <!-- Alias details -->
   <string name="field_alias_title">Alias-adresse</string>
+  <string name="field_alias_disabled_title">Alias-adresse (deaktiveret)</string>
   <string name="alias_copied_to_clipboard">Alias kopieret</string>
   <string name="alias_detail_field_mailboxes_title">Videresendes til</string>
   <string name="alias_create_login_from_alias">Opret login</string>
@@ -18,7 +19,7 @@
   <string name="email_copied_to_clipboard">E-mailadresse kopieret</string>
   <string name="username_copied_to_clipboard">Brugernavn kopieret</string>
   <string name="password_copied_to_clipboard">Adgangskode kopieret</string>
-  <string name="website_copied_to_clipboard">Websted kopieret</string>
+  <string name="website_copied_to_clipboard">Web address copied</string>
   <string name="totp_copied_to_clipboard">TOTP kopieret</string>
   <string name="field_copied_to_clipboard">Felt kopieret</string>
   <string name="move_item_to_trash_message">Element flyttet til papirkurv</string>
@@ -103,6 +104,4 @@
   <string name="passkey_detail_bottomsheet_domain">Domæne</string>
   <string name="passkey_detail_bottomsheet_key">Nøgle</string>
   <string name="passkey_detail_bottomsheet_created">Oprettet</string>
-  <string name="alias_toggle_tooltip_title">Deaktiver alias</string>
-  <string name="alias_toggle_tooltip_description">Tryk her for at slå dette alias fra og stoppe med at modtage mails.</string>
 </resources>

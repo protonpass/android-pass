@@ -9,7 +9,7 @@
   <string name="home_empty_vault_create_alias">Bir hide-my-email takma adı oluştur</string>
   <string name="home_empty_vault_create_note">Not oluştur</string>
   <string name="home_empty_vault_create_credit_card">Kredi kartı ekle</string>
-  <string name="home_empty_vault_create_identity">Bir kimlik oluşturun</string>
+  <string name="home_empty_vault_create_identity">Create an identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Ögeler yüklenirken sorun çıktı</string>
   <string name="error_refreshing">Yenileme sırasında sorun çıktı</string>
   <string name="home_snackbar_login_moved_to_trash">Oturum açma kaydı çöpe atıldı</string>
@@ -133,10 +133,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Bazı ögelerin sabitlemesi kaldırılırken sorun çıktı</string>
   <string name="home_snackbar_items_unpinned_error">Ögelerin sabitlemesi kaldırılırken sorun çıktı</string>
   <string name="home_snackbar_items_alias_enabled_success">Takma ad kullanıma alındı</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Bazı takma adlarınız kullanıma alınırken sorun çıktı</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
   <string name="home_snackbar_items_alias_enabled_error">Takma adlar kullanıma alınırken sorun çıktı</string>
   <string name="home_snackbar_items_alias_disabled_success">Takma ad kullanımdan kaldırıldı</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Bazı takma adlarınız kullanımdan kaldırılırken sorun çıktı</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">Takma adlar kullanımdan kaldırılırken sorun çıktı</string>
   <string name="bulk_action_unpin">Sabitlemeyi kaldır</string>
   <string name="bulk_action_pin">Sabitle</string>

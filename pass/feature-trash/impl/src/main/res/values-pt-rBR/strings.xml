@@ -7,4 +7,9 @@
   <string name="alias_dialog_move_to_trash_title">Mover para a lixeira?</string>
   <string name="alias_dialog_move_to_trash_content">Se você mover um alias para a lixeira, deixará de encaminhar os e-mails para a sua caixa de correio.</string>
   <string name="alias_dialog_move_to_trash_confirm">Confirmar</string>
+  <string name="alias_dialog_disable_or_trash_title">Mover para a Lixeira</string>
+  <string name="alias_dialog_disable_or_trash_message">Os alíases na Lixeira continuarão encaminhando e-mails. Se você quiser parar de receber e-mails nesse endereço, desative-o.</string>
+  <string name="alias_dialog_disable_or_trash_checkbox_text">Não lembrar novamente</string>
+  <string name="alias_dialog_disable_or_trash_button_text_disable">Em vez disso, desative</string>
+  <string name="alias_dialog_disable_or_trash_button_text_trash">Mover para a lixeira</string>
 </resources>

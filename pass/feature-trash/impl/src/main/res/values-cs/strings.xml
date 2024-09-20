@@ -7,4 +7,9 @@
   <string name="alias_dialog_move_to_trash_title">Přesunout do koše?</string>
   <string name="alias_dialog_move_to_trash_content">Pokud alias přesunete do koše, přestane přeposílat e-maily do vaší e-mailové schránky.</string>
   <string name="alias_dialog_move_to_trash_confirm">Potvrdit</string>
+  <string name="alias_dialog_disable_or_trash_title">Přesunout do koše</string>
+  <string name="alias_dialog_disable_or_trash_message">Aliasy v koši budou nadále přeposílat e-maily. Pokud chcete přestat dostávat e-maily na tuto adresu, deaktivujte ji.</string>
+  <string name="alias_dialog_disable_or_trash_checkbox_text">Znovu nepřipomínat</string>
+  <string name="alias_dialog_disable_or_trash_button_text_disable">Místo toho deaktivovat</string>
+  <string name="alias_dialog_disable_or_trash_button_text_trash">Přesunout do koše</string>
 </resources>

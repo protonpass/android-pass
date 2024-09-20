@@ -7,6 +7,7 @@
   <string name="top_bar_edit_button_text">Muokkaa</string>
   <!-- Alias details -->
   <string name="field_alias_title">Aliaksen osoite</string>
+  <string name="field_alias_disabled_title">Aliasosoite (ei käytössä)</string>
   <string name="alias_copied_to_clipboard">Alias kopioitiin</string>
   <string name="alias_detail_field_mailboxes_title">Ohjaa osoitteeseen</string>
   <string name="alias_create_login_from_alias">Luo kirjautumistieto</string>
@@ -18,7 +19,7 @@
   <string name="email_copied_to_clipboard">Sähköpostiosoite kopioitiin</string>
   <string name="username_copied_to_clipboard">Käyttäjätunnus kopioitiin</string>
   <string name="password_copied_to_clipboard">Salasana kopioitiin</string>
-  <string name="website_copied_to_clipboard">Verkkosivuston osoite kopioitiin</string>
+  <string name="website_copied_to_clipboard">Web address copied</string>
   <string name="totp_copied_to_clipboard">TOTP-koodi kopioitiin</string>
   <string name="field_copied_to_clipboard">Kenttä kopioitiin</string>
   <string name="move_item_to_trash_message">Kohde siirrettiin roskakoriin</string>
@@ -103,6 +104,4 @@
   <string name="passkey_detail_bottomsheet_domain">Verkkotunnus</string>
   <string name="passkey_detail_bottomsheet_key">Avain</string>
   <string name="passkey_detail_bottomsheet_created">Luotu</string>
-  <string name="alias_toggle_tooltip_title">Poista alias käytöstä</string>
-  <string name="alias_toggle_tooltip_description">Poista alias käytöstä ja lopeta viestien vastaanotto napauttamalla tästä.</string>
 </resources>

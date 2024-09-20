@@ -29,7 +29,7 @@
   <string name="bottomsheet_monitor_exclude">Excludere din monitorizare</string>
   <string name="bottomsheet_monitor_include">Includere în monitorizare</string>
   <string name="bottomsheet_migrate_item">Mutare în alt seif</string>
-  <string name="bottomsheet_copy_item_note">Copiere notă</string>
+  <string name="bottomsheet_copy_item_note">Copiere notiță</string>
   <string name="bottomsheet_delete_permanently">Ștergere permanentă</string>
   <string name="bottomsheet_restore">Restaurare</string>
   <!-- Actions -->
@@ -57,8 +57,8 @@
   <string name="field_title_hint">Nedenumit</string>
   <string name="field_title_required">Titlul este obligatoriu</string>
   <string name="small_cross_icon_content_description">Pictogramă cruce mică</string>
-  <string name="field_note_title">Notă</string>
-  <string name="field_note_hint">Adăugare notă</string>
+  <string name="field_note_title">Notiță</string>
+  <string name="field_note_hint">Adăugare notiță</string>
   <string name="linked_apps_title">Aplicații legate</string>
   <!-- Indicator that indicates lack of internet connectivity -->
   <string name="indicator_no_network">Deconectat</string>
@@ -133,6 +133,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">zz LLL aaaa HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Adresă alias</string>
+  <string name="item_details_alias_section_alias_disabled_title">Adresă alias (dezactivată)</string>
   <string name="item_details_alias_section_mailboxes_title">Transferare către</string>
   <string name="item_details_credit_card_section_cardholder_title">Titular card</string>
   <string name="item_details_credit_card_section_card_number_title">Număr card</string>
@@ -181,7 +182,7 @@
   <string name="item_details_identity_section_work_email_title">Adresă de e-mail serviciu</string>
   <string name="item_details_identity_section_work_phone_number_title">Telefon serviciu</string>
   <string name="item_details_identity_section_work_personal_website_title">Site web personal</string>
-  <string name="item_details_shared_section_note_title">Notă</string>
+  <string name="item_details_shared_section_note_title">Notiță</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">Ultima autocompletare</string>
   <string name="item_details_shared_section_item_history_created_title">Creată la</string>
   <string name="item_details_shared_section_item_history_modified_times_title">Modificat: (%d)</string>
@@ -225,7 +226,7 @@
     <item quantity="other">%d de secunde</item>
   </plurals>
   <!-- Snack bars -->
-  <string name="snack_bar_message_item_note_copied">Nota a fost copiată.</string>
+  <string name="snack_bar_message_item_note_copied">Notița a fost copiată.</string>
   <string name="snack_bar_message_item_migration_error">A apărut o eroare la migrarea acestui articol.</string>
   <string name="snack_bar_message_item_monitor_excluded_success">Articolul a fost exclus din monitorizare.</string>
   <string name="snack_bar_message_item_monitor_excluded_error">A apărut o eroare la excluderea articolului din monitorizare.</string>
@@ -243,12 +244,11 @@
   <string name="snack_bar_message_item_delete_error">A apărut o eroare la ștergerea acestui articol.</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Activare sincronizare SimpleLogin</string>
-  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">S-a detectat că în SimpleLogin există %s, dar nu există în Proton Pass. Doriți importarea?</string>
-  <plurals name="simple_login_widget_pending_aliases">
-    <item quantity="one">%d alias</item>
-    <item quantity="few">%d aliasuri</item>
-    <item quantity="other">%d de aliasuri</item>
+  <plurals name="simple_login_widget_pending_aliases_message">
+    <item quantity="one">Am detectat că aveți %d alias care există în SimpleLogin, dar lipsește în Proton Pass. Doriți să-l importați?</item>
+    <item quantity="few">Am detectat că aveți %d aliasuri care există în SimpleLogin, dar lipsesc în Proton Pass. Doriți să le importați?</item>
+    <item quantity="other">Am detectat că aveți %d de aliasuri care există în SimpleLogin, dar lipsesc în Proton Pass. Doriți să le importați?</item>
   </plurals>
   <string name="simple_login_widget_action">Sincronizare aliasuri</string>
-  <string name="simple_login_widget_close_content_description">Buton de închidere modul de sincronizare aliasuri SimpleLogin</string>
+  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

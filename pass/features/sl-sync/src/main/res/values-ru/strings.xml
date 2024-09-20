@@ -18,13 +18,13 @@
   -->
 <resources>
   <!-- Details screen -->
-  <string name="simple_login_sync_details_title">Aliases</string>
-  <string name="simple_login_sync_details_domain_label">Domain</string>
-  <string name="simple_login_sync_details_domain_title">Default domain for aliases</string>
+  <string name="simple_login_sync_details_title">Псевдонимы</string>
+  <string name="simple_login_sync_details_domain_label">Домен</string>
+  <string name="simple_login_sync_details_domain_title">Домен по умолчанию для псевдонимов</string>
   <string name="simple_login_sync_details_domain_option_blank">Не выбрано</string>
-  <string name="simple_login_sync_details_mailboxes_label">Mailboxes</string>
-  <string name="simple_login_sync_details_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_details_vault_title">SimpleLogin sync</string>
+  <string name="simple_login_sync_details_mailboxes_label">Почтовые ящики</string>
+  <string name="simple_login_sync_details_mailboxes_title">Почтовый ящик по умолчанию для псевдонимов</string>
+  <string name="simple_login_sync_details_vault_title">Синхронизация SimpleLogin</string>
   <string name="simple_login_sync_details_dialog_title_domains">Домен по умолчанию для псевдонимов</string>
   <string name="simple_login_sync_details_dialog_title_mailboxes">Почтовый ящик по умолчанию для псевдонимов</string>
   <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">Произошла ошибка при получении информации о псевдониме SL</string>
@@ -33,10 +33,10 @@
   <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">Произошла ошибка при обновлении почтового ящика псевдонима SL</string>
   <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">Почтовый ящик псевдонима SL успешно обновлен</string>
   <!-- Settings screen -->
-  <string name="simple_login_sync_settings_title">Sync aliases</string>
-  <string name="simple_login_sync_enable_snackbar_error">There was an error enabling SimpleLogin aliases sync</string>
-  <string name="simple_login_sync_enable_snackbar_success">SimpleLogin aliases sync successfully enabled</string>
+  <string name="simple_login_sync_settings_title">Синхронизировать псевдонимы</string>
+  <string name="simple_login_sync_enable_snackbar_error">Произошла ошибка при включении синхронизации псевдонимов SimpleLogin</string>
+  <string name="simple_login_sync_enable_snackbar_success">Успешно включена синхронизация псевдонимов SimpleLogin</string>
   <!-- Shared -->
-  <string name="simple_login_sync_shared_default_vault_title">Default SL vault</string>
-  <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliases will be imported into this vault.</string>
+  <string name="simple_login_sync_shared_default_vault_title">Хранилище SL по умолчанию</string>
+  <string name="simple_login_sync_shared_default_vault_description">Псевдонимы SimpleLogin будут импортированы в это хранилище.</string>
 </resources>

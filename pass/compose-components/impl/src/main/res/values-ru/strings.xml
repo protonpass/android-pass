@@ -51,7 +51,7 @@
   <!-- Empty list -->
   <string name="empty_list_title">Добавьте свой первый элемент</string>
   <string name="empty_search_results_title">Ничего не найдено</string>
-  <string name="empty_list_open_extension">Посетить веб-расширение</string>
+  <string name="empty_list_open_extension">Посетить дополнение</string>
   <string name="empty_list_create_item_button">Создать новый элемент</string>
   <!-- Field -->
   <string name="field_title_title">Заголовок</string>
@@ -121,7 +121,7 @@
     Pattern used when displaying a date in the same year as we are.
     It would translate to 12 Feb 12:34
     -->
-  <string name="date_full_date_format_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL HH:mm</string>
+  <string name="date_full_date_format_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">дд МММ ЧЧ:мм</string>
   <!--
     Pattern used when displaying a date including the year.
     It would translate to
@@ -132,9 +132,10 @@
    Pattern used when displaying a date including the year.
    It would translate to 12 Feb 2023 12:34
    -->
-  <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
+  <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">дд МММ гггг ЧЧ:мм</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Адрес псевдонима</string>
+  <string name="item_details_alias_section_alias_disabled_title">Адрес псевдонима (отключен)</string>
   <string name="item_details_alias_section_mailboxes_title">Пересылка на</string>
   <string name="item_details_credit_card_section_cardholder_title">Имя на карте</string>
   <string name="item_details_credit_card_section_card_number_title">Номер карты</string>
@@ -249,13 +250,12 @@
   <string name="snack_bar_message_item_delete_error">Произошла ошибка при удалении этого элемента</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Включить синхронизацию с SimpleLogin</string>
-  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">We detected that you have %s that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
-  <plurals name="simple_login_widget_pending_aliases">
-    <item quantity="one">%d псевдоним</item>
-    <item quantity="few">%d псевдонима</item>
-    <item quantity="many">%d псевдонимов</item>
-    <item quantity="other">%d псевдонимов</item>
+  <plurals name="simple_login_widget_pending_aliases_message">
+    <item quantity="one">We detected that you have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to import it?</item>
+    <item quantity="few">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
+    <item quantity="many">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
+    <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
   </plurals>
   <string name="simple_login_widget_action">Синхронизировать псевдонимы</string>
-  <string name="simple_login_widget_close_content_description">Button to close simple login aliases sync widget</string>
+  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

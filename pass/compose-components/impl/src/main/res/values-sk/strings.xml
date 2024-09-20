@@ -135,6 +135,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Adresa aliasu</string>
+  <string name="item_details_alias_section_alias_disabled_title">Aliasová adresa (vypnutá)</string>
   <string name="item_details_alias_section_mailboxes_title">Preposielať na</string>
   <string name="item_details_credit_card_section_cardholder_title">Meno na karte</string>
   <string name="item_details_credit_card_section_card_number_title">Číslo karty</string>
@@ -249,13 +250,12 @@
   <string name="snack_bar_message_item_delete_error">Pri odstraňovaní tejto položky došlo k chybe</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Zapnúť SimpleLogin synchronizáciu</string>
-  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">Zistili sme, že máte %s, ktoré sú prítomné v SimpleLogin, ale chýbajú v Proton Pass. Chcete ich importovať?</string>
-  <plurals name="simple_login_widget_pending_aliases">
-    <item quantity="one">%d alias</item>
-    <item quantity="few">%d aliasy</item>
-    <item quantity="many">%d aliasov</item>
-    <item quantity="other">%d aliasov</item>
+  <plurals name="simple_login_widget_pending_aliases_message">
+    <item quantity="one">We detected that you have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to import it?</item>
+    <item quantity="few">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
+    <item quantity="many">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
+    <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
   </plurals>
   <string name="simple_login_widget_action">Synchronizovať aliasy</string>
-  <string name="simple_login_widget_close_content_description">Tlačidlo na zatvorenie widgetu na synchronizáciu SimpleLogin aliasov</string>
+  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

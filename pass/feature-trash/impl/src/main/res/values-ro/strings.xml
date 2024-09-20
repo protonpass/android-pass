@@ -7,4 +7,9 @@
   <string name="alias_dialog_move_to_trash_title">Mutare în gunoi?</string>
   <string name="alias_dialog_move_to_trash_content">Dacă mutați un alias în gunoi, nu va mai redirecționa mesajele primite pe numele său.</string>
   <string name="alias_dialog_move_to_trash_confirm">Confirmare</string>
+  <string name="alias_dialog_disable_or_trash_title">Mutare în «Gunoi»</string>
+  <string name="alias_dialog_disable_or_trash_message">Aliasurile din «Gunoi» vor continua să redirecționeze mesajele primite. Dacă doriți să nu mai primiți mesaje la această adresă, dezactivați-o.</string>
+  <string name="alias_dialog_disable_or_trash_checkbox_text">Nu-mi mai reaminti</string>
+  <string name="alias_dialog_disable_or_trash_button_text_disable">Dezactivare</string>
+  <string name="alias_dialog_disable_or_trash_button_text_trash">Mutare în gunoi</string>
 </resources>

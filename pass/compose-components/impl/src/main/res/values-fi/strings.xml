@@ -131,6 +131,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Aliasosoite</string>
+  <string name="item_details_alias_section_alias_disabled_title">Aliasosoite (ei käytössä)</string>
   <string name="item_details_alias_section_mailboxes_title">Ohjaa osoitteeseen</string>
   <string name="item_details_credit_card_section_cardholder_title">Kortinhaltijan nimi</string>
   <string name="item_details_credit_card_section_card_number_title">Kortin numero</string>
@@ -237,11 +238,10 @@
   <string name="snack_bar_message_item_delete_error">Virhe poistettaessa kohdetta</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Käytä SimpleLogin-synkronointia</string>
-  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">Havaitsimme sinulla olevan SimpleLoginissa %s Proton Passista puuttuvaa aliasta. Haluaisitko tuoda ne?</string>
-  <plurals name="simple_login_widget_pending_aliases">
-    <item quantity="one">%d alias</item>
-    <item quantity="other">%d aliasta</item>
+  <plurals name="simple_login_widget_pending_aliases_message">
+    <item quantity="one">Havaitsimme, että sinulla on SimpleLoginissa %d Proton Passista puuttuva alias. Haluaisitko tuoda sen?</item>
+    <item quantity="other">Havaitsimme, että sinulla on SimpleLoginissa %d Proton Passista puuttuvaa aliasta. Haluaisitko tuoda ne?</item>
   </plurals>
   <string name="simple_login_widget_action">Synkronoi aliakset</string>
-  <string name="simple_login_widget_close_content_description">Painike SimpleLoginin aliasten synkronoinnin widgetin sulkemiseksi</string>
+  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

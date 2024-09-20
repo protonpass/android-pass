@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="description_field_label">Vad är ditt problem?</string>
+  <string name="description_field_hint">Beskriv problemet så mer detaljerat som möjligt. Om det är något fel, berätta vad det står.</string>
+  <string name="email_field_label">E-post</string>
+  <string name="email_field_hint">e-post</string>
+  <string name="attach_image_button">Bifoga bild</string>
+  <string name="categories_title">Vad är ditt problem?</string>
+  <string name="report_toolbar_title">Rapportera ett problem</string>
+  <string name="send_report_button">Skicka rapport</string>
+  <string name="cancel_tips_button">Avbryt</string>
+  <string name="contact_us_button">Kontakta oss</string>
+  <string name="hint_tips_screen">Fungerade det inte?</string>
+  <string name="report_reason_autofill">Autofill</string>
+  <string name="report_reason_sharing">Delning</string>
+  <string name="report_reason_sync">Synkronisera</string>
+  <string name="report_reason_passkeys">Passkeys</string>
+  <string name="report_reason_other">Annat</string>
+  <string name="tips_title">Snabba åtgärder för %1$s</string>
+  <string name="tips_subtitle">Dessa tips kan hjälpa dig att lösa ditt problem snabbare.</string>
+  <string name="autofill_tip_restart">Try disabling and enabling the autofill service.</string>
+  <string name="autofill_tip_browser">Try another browser.</string>
+  <string name="sharing_tip_vault_sharing_guide">Har du problem med valvdelning? Kolla vår guide.</string>
+  <string name="sharing_tip_secure_links_guide">Har du problem med säkra länkar? Kolla vår guide.</string>
+  <string name="sync_tip_force_refresh">Is your screen empty? Try doing a force sync.</string>
+  <string name="send_logs_label">Skicka loggar</string>
+  <string name="report_sending_success">Rapport skickad.</string>
+  <string name="report_sending_error">Kunde inte skicka rapporten.</string>
+  <string name="tips_passkey_check_guide">If you have any issues check our guide.</string>
+  <string name="tips_passkey_android_not_supported">Din Android-version är för låg. Prova uppgradera din enhet.</string>
+  <string name="tips_passkeys_credential_manager_not_supported">The manufacturer of the device doesn\'t provide a credential manager.</string>
+  <string name="tips_passkey_supported">Passkeys supported</string>
+  <string name="tips_passkey_not_supported">Passkeys not supported</string>
+  <string name="report_steps" comment="Indicator showing report progress">Step %1$d of %2$d</string>
+  <string name="description_cannot_be_blank">Description cannot be blank</string>
+  <string name="description_is_too_short">Description is too short</string>
+  <string name="description_is_too_long">Description is too long</string>
+  <string name="email_cannot_be_blank">Email cannot be blank</string>
+  <string name="email_invalid">Invalid email address</string>
+</resources>

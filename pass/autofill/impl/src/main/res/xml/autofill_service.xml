@@ -9,6 +9,8 @@
     <compatibility-package android:name="alook.browser.google" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="app.vanadium.browser" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="app.vanadium.webview" android:maxLongVersionCode="10000000000" />
+    <compatibility-package android:name="com.aloha.browser" android:maxLongVersionCode="10000000000" />
+    <compatibility-package android:name="com.alohamobile.browser" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.amazon.cloud9" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.android.browser" android:maxLongVersionCode="10000000000" />
     <compatibility-package android:name="com.android.chrome" android:maxLongVersionCode="10000000000" />

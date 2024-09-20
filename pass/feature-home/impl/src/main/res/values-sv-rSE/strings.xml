@@ -9,7 +9,7 @@
   <string name="home_empty_vault_create_alias">Skapa ett Hide-my-email-alias</string>
   <string name="home_empty_vault_create_note">Skapa en anteckning</string>
   <string name="home_empty_vault_create_credit_card">Skapa ett kreditkort</string>
-  <string name="home_empty_vault_create_identity">Skapa en identitet</string>
+  <string name="home_empty_vault_create_identity">Create an identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Fel vid laddning av objekt</string>
   <string name="error_refreshing">Kunde inte utföra uppdatering</string>
   <string name="home_snackbar_login_moved_to_trash">Inloggning flyttad till papperskorg</string>
@@ -133,10 +133,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Det gick inte lossa några av objekten</string>
   <string name="home_snackbar_items_unpinned_error">Det gick inte lossa objekten</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias aktiverat</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Fel vid aktivering för några alias</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
   <string name="home_snackbar_items_alias_enabled_error">Fel vid aktivering av alias</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias inaktiverat</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Fel vid inaktivering för några alias</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">Fel vid inaktivering av alias</string>
   <string name="bulk_action_unpin">Lossa</string>
   <string name="bulk_action_pin">Fäst</string>

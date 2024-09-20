@@ -135,6 +135,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Alias</string>
+  <string name="item_details_alias_section_alias_disabled_title">Adres aliasu (wyłączony)</string>
   <string name="item_details_alias_section_mailboxes_title">Przekaż do</string>
   <string name="item_details_credit_card_section_cardholder_title">Właściciel karty</string>
   <string name="item_details_credit_card_section_card_number_title">Numer karty</string>
@@ -249,13 +250,12 @@
   <string name="snack_bar_message_item_delete_error">Wystąpił błąd podczas usuwania elementu</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Włącz synchronizację SimpleLogin</string>
-  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">Masz %s SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</string>
-  <plurals name="simple_login_widget_pending_aliases">
-    <item quantity="one">%d alias</item>
-    <item quantity="few">%d aliasy</item>
-    <item quantity="many">%d aliasów</item>
-    <item quantity="other">%d aliasów</item>
+  <plurals name="simple_login_widget_pending_aliases_message">
+    <item quantity="one">Masz %d alias SimpleLogin, który nie jest widoczny w Proton Pass. Czy chcesz go zaimportować?</item>
+    <item quantity="few">Masz %d aliasy SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</item>
+    <item quantity="many">Masz %d aliasów SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</item>
+    <item quantity="other">Masz %d aliasów SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</item>
   </plurals>
   <string name="simple_login_widget_action">Synchronizuj aliasy</string>
-  <string name="simple_login_widget_close_content_description">Przycisk zamknięcia widżetu synchronizacji aliasów SimpleLogin</string>
+  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

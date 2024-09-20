@@ -94,7 +94,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Ημερομηνία λήξης</string>
-  <string name="field_card_expiration_date_hint">ΜΜ / ΕΕ</string>
+  <string name="field_card_expiration_date_hint">MM/YY</string>
   <string name="field_card_expiration_date_error">Εισαγάγετε μια έγκυρη ημερομηνία σε μορφή ΜΜ/ΕΕ</string>
   <string name="create_credit_card_item_creation_error">Δεν ήταν δυνατή η δημιουργία πιστωτικής κάρτας</string>
   <string name="create_credit_card_item_creation_success">Η πιστωτική κάρτα δημιουργήθηκε</string>
@@ -128,7 +128,7 @@
   <string name="identity_field_reddit_title">Όνομα χρήστη Reddit</string>
   <string name="identity_field_facebook_title">Διαδικτυακή διεύθυνση Facebook</string>
   <string name="identity_field_yahoo_title">Όνομα χρήστη Yahoo</string>
-  <string name="identity_field_instagram_title">Όνομα χρήστη Instagram</string>
+  <string name="identity_field_instagram_title">Instagram username</string>
   <string name="identity_field_personal_website_title">Διαδικτυακή διεύθυνση προσωπικού ιστότοπου</string>
   <string name="identity_field_work_phone_number_title">Αριθμός τηλεφώνου εργασίας</string>
   <string name="identity_field_work_email_title">Διεύθυνση ηλεκτρονικού ταχυδρομείου εργασίας</string>
@@ -143,7 +143,7 @@
   <string name="identity_add_field_reddit">Όνομα χρήστη Reddit</string>
   <string name="identity_add_field_facebook">Διαδικτυακή διεύθυνση Facebook</string>
   <string name="identity_add_field_yahoo">Όνομα χρήστη Yahoo</string>
-  <string name="identity_add_field_instagram">Όνομα χρήστη Instagram</string>
+  <string name="identity_add_field_instagram">Instagram username</string>
   <string name="identity_add_field_personal_website">Διαδικτυακή διεύθυνση προσωπικού ιστότοπου</string>
   <string name="identity_add_field_work_phone_number">Αριθμός τηλεφώνου εργασίας</string>
   <string name="identity_add_field_work_email_address">Διεύθυνση ηλεκτρονικού ταχυδρομείου εργασίας</string>

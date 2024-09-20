@@ -94,7 +94,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Tanggal kedaluwarsa</string>
-  <string name="field_card_expiration_date_hint">BB / TT</string>
+  <string name="field_card_expiration_date_hint">MM/YY</string>
   <string name="field_card_expiration_date_error">Masukkan tanggal yang valid dalam format BB/TT</string>
   <string name="create_credit_card_item_creation_error">Tidak dapat membuat kartu kredit</string>
   <string name="create_credit_card_item_creation_success">Kartu kredit dibuat</string>
@@ -128,7 +128,7 @@
   <string name="identity_field_reddit_title">Nama pengguna Reddit</string>
   <string name="identity_field_facebook_title">URL Facebook</string>
   <string name="identity_field_yahoo_title">Nama pengguna Yahoo</string>
-  <string name="identity_field_instagram_title">Akun Instagram</string>
+  <string name="identity_field_instagram_title">Instagram username</string>
   <string name="identity_field_personal_website_title">URL situs web pribadi</string>
   <string name="identity_field_work_phone_number_title">Nomor telepon kantor</string>
   <string name="identity_field_work_email_title">Alamat email kantor</string>
@@ -143,7 +143,7 @@
   <string name="identity_add_field_reddit">Nama pengguna Reddit</string>
   <string name="identity_add_field_facebook">URL Facebook</string>
   <string name="identity_add_field_yahoo">Nama pengguna Yahoo</string>
-  <string name="identity_add_field_instagram">Akun Instagram</string>
+  <string name="identity_add_field_instagram">Instagram username</string>
   <string name="identity_add_field_personal_website">URL situs web pribadi</string>
   <string name="identity_add_field_work_phone_number">Nomor telepon kantor</string>
   <string name="identity_add_field_work_email_address">Alamat email kantor</string>

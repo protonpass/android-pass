@@ -26,7 +26,7 @@
   <string name="app_lock_one_minute">Po 1 minuti</string>
   <string name="app_lock_two_minutes">Po 2 minutah</string>
   <string name="app_lock_five_minutes">Čez 5 minut</string>
-  <string name="app_lock_ten_minutes">Po 10 minut</string>
+  <string name="app_lock_ten_minutes">Čez 10 minut</string>
   <string name="app_lock_one_hour">Po 1 uri</string>
   <string name="app_lock_four_hours">Po 4 urah</string>
   <string name="profile_account_plan_name_trial">Pass Plus preizkus</string>
@@ -49,10 +49,10 @@
   <string name="profile_option_lock_with">Zakleni z</string>
   <string name="profile_option_unlock_with">Odkleni z</string>
   <string name="profile_option_change_pin_code">Spremeni kodo PIN</string>
-  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Brskalnik Samsung je nastavljen kot privzeti brskalnik. Ne podpira samodejnega izpolnjevanja od zunanjih upraviteljev gesel.</string>
+  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Internet is set as the default browser. It does not support autofill by external password managers.</string>
   <string name="profile_passkey_support_section_title">Identifikacijski ključ</string>
   <string name="profile_passkey_support_subtitle_supported">Podprt je identifikacijski ključ</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Vaša različica Androida ne podpira identifikacijskega ključa</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Vaša naprava ne podpira identifikacijskega ključa</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Ni bilo mogoče preveriti podpore za identifikacijski ključ</string>
   <plurals name="profile_after_days">

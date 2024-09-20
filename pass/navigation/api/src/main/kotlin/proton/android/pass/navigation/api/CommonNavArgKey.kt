@@ -16,12 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.options.shared.navigation
+package proton.android.pass.navigation.api
 
-sealed interface ItemOptionsNavDestination {
+object CommonNavArgKey {
 
-    data object Back : ItemOptionsNavDestination
-
-    data object TrashItem : ItemOptionsNavDestination
+    const val ITEM_MOVED_TO_TRASH = "item_moved_to_trash_key"
 
 }

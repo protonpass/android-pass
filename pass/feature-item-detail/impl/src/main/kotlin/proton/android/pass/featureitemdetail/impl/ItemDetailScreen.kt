@@ -28,6 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun ItemDetailScreen(
     modifier: Modifier = Modifier,
+    isItemMovedToTrash: Boolean,
     onNavigate: (ItemDetailNavigation) -> Unit,
     viewModel: ItemDetailViewModel = hiltViewModel()
 ) {
@@ -48,6 +49,7 @@ fun ItemDetailScreen(
     ItemDetailContent(
         modifier = modifier,
         uiState = uiState,
+        isItemMovedToTrash = isItemMovedToTrash,
         onNavigate = onNavigate
     )
 }

@@ -61,6 +61,7 @@ import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 @Composable
 fun AliasDetail(
     modifier: Modifier = Modifier,
+    isItemMovedToTrash: Boolean,
     onNavigate: (ItemDetailNavigation) -> Unit,
     viewModel: AliasDetailViewModel = hiltViewModel()
 ) {
@@ -82,7 +83,7 @@ fun AliasDetail(
 
             var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
             var shouldShowMoveToTrashItemDialog by rememberSaveable { mutableStateOf(false) }
-            if (state.isItemSentToTrash || state.isPermanentlyDeleted || state.isRestoredFromTrash) {
+            if (state.requiresBackNavigation || isItemMovedToTrash) {
                 LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
             }
             val scope = rememberCoroutineScope()

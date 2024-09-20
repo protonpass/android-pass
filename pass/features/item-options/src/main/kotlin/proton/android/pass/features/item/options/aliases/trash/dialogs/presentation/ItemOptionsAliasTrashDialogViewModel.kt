@@ -36,6 +36,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AliasTrashDialogStatusPreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -45,7 +46,8 @@ class ItemOptionsAliasTrashDialogViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val changeAliasStatus: ChangeAliasStatus,
-    private val trashItems: TrashItems
+    private val trashItems: TrashItems,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -88,9 +90,11 @@ class ItemOptionsAliasTrashDialogViewModel @Inject constructor(
                     PassLogger.w(TAG, "There was an error while disabling alias item")
                     PassLogger.w(TAG, error)
                     eventFlow.update { ItemOptionsAliasTrashDialogEvent.OnDisableError }
+                    snackbarDispatcher(ItemOptionsAliasTrashDialogSnackBarMessage.DisableAliasError)
                 }
                 .onSuccess {
                     eventFlow.update { ItemOptionsAliasTrashDialogEvent.OnDisableSuccess }
+                    snackbarDispatcher(ItemOptionsAliasTrashDialogSnackBarMessage.DisableAliasSuccess)
                 }
 
             isLoadingStateFlow.update { IsLoadingState.NotLoading }
@@ -111,9 +115,11 @@ class ItemOptionsAliasTrashDialogViewModel @Inject constructor(
                     PassLogger.w(TAG, "There was an error while trashing alias item")
                     PassLogger.w(TAG, error)
                     eventFlow.update { ItemOptionsAliasTrashDialogEvent.OnTrashSuccess }
+                    snackbarDispatcher(ItemOptionsAliasTrashDialogSnackBarMessage.TrashAliasError)
                 }
                 .onSuccess {
                     eventFlow.update { ItemOptionsAliasTrashDialogEvent.OnTrashError }
+                    snackbarDispatcher(ItemOptionsAliasTrashDialogSnackBarMessage.TrashAliasSuccess)
                 }
 
             isLoadingStateFlow.update { IsLoadingState.NotLoading }

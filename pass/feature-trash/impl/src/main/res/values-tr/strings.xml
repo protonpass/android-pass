@@ -7,4 +7,9 @@
   <string name="alias_dialog_move_to_trash_title">Çöpe atılsın mı?</string>
   <string name="alias_dialog_move_to_trash_content">Bir takma adı çöpe atarsanız e-postaları gelen kutunuza iletmeyi bırakır.</string>
   <string name="alias_dialog_move_to_trash_confirm">Onayla</string>
+  <string name="alias_dialog_disable_or_trash_title">Move to Trash</string>
+  <string name="alias_dialog_disable_or_trash_message">Aliases in Trash will continue forwarding emails. If you want to stop receiving emails on this address, disable it instead.</string>
+  <string name="alias_dialog_disable_or_trash_checkbox_text">Bir daha hatırlatma</string>
+  <string name="alias_dialog_disable_or_trash_button_text_disable">Onun yerine kullanımdan kaldır</string>
+  <string name="alias_dialog_disable_or_trash_button_text_trash">Move to trash</string>
 </resources>

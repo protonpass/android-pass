@@ -7,6 +7,7 @@
   <string name="top_bar_edit_button_text">編集</string>
   <!-- Alias details -->
   <string name="field_alias_title">エイリアスのアドレス</string>
+  <string name="field_alias_disabled_title">Alias address (disabled)</string>
   <string name="alias_copied_to_clipboard">コピーされたエイリアス</string>
   <string name="alias_detail_field_mailboxes_title">転送先</string>
   <string name="alias_create_login_from_alias">ログイン情報を作成</string>
@@ -18,7 +19,7 @@
   <string name="email_copied_to_clipboard">メールアドレスをコピーしました</string>
   <string name="username_copied_to_clipboard">ユーザー名をコピーしました</string>
   <string name="password_copied_to_clipboard">パスワードをコピーしました</string>
-  <string name="website_copied_to_clipboard">コピーされたウェブサイト</string>
+  <string name="website_copied_to_clipboard">Web address copied</string>
   <string name="totp_copied_to_clipboard">コピーされた TOTP コード</string>
   <string name="field_copied_to_clipboard">コピーされたフィールド</string>
   <string name="move_item_to_trash_message">項目をごみ箱に移動されました</string>
@@ -102,6 +103,4 @@
   <string name="passkey_detail_bottomsheet_domain">ドメイン</string>
   <string name="passkey_detail_bottomsheet_key">鍵</string>
   <string name="passkey_detail_bottomsheet_created">作成した</string>
-  <string name="alias_toggle_tooltip_title">Disable Alias</string>
-  <string name="alias_toggle_tooltip_description">Tap here to disable this alias and stop receiving emails.</string>
 </resources>

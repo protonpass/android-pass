@@ -25,12 +25,12 @@
     <item quantity="other">Завантажено %d елементів</item>
   </plurals>
   <plurals name="sync_finished_item_count">
-    <item quantity="one">%d item synchronized</item>
-    <item quantity="few">%d items synchronized</item>
-    <item quantity="many">%d items synchronized</item>
-    <item quantity="other">%d items synchronized</item>
+    <item quantity="one">%d елемент синхронізовано</item>
+    <item quantity="few">%d елементів синхронізовано</item>
+    <item quantity="many">%d елементів синхронізовано</item>
+    <item quantity="other">%d елементів синхронізовано</item>
   </plurals>
-  <string name="sync_progress_item_count">Downloading %1$d of %2$d items</string>
+  <string name="sync_progress_item_count">Завантажено %1$d з %2$d елементів</string>
   <string name="sync_dialog_title">Синхронізація елементів…</string>
   <string name="sync_dialog_title_error">Помилка синхронізації</string>
   <string name="sync_dialog_title_success">Синхронізацію завершено</string>
@@ -39,6 +39,6 @@
   <string name="sync_dialog_subtitle_success">Ваші елементи успішно завантажено та розшифровано.</string>
   <string name="sync_item_not_started">Не розпочато</string>
   <string name="sync_item_failed">Помилка синхронізації</string>
-  <string name="sync_dialog_title_inserting">Inserting items…</string>
+  <string name="sync_dialog_title_inserting">Вставка елементів…</string>
   <string name="sync_dialog_subtitle_inserting">Завершення останнього кроку, майже все.</string>
 </resources>

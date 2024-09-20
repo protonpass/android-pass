@@ -7,6 +7,7 @@
   <string name="top_bar_edit_button_text">Editar</string>
   <!-- Alias details -->
   <string name="field_alias_title">Dirección de alias</string>
+  <string name="field_alias_disabled_title">Dirección del alias (desactivada)</string>
   <string name="alias_copied_to_clipboard">Alias copiado</string>
   <string name="alias_detail_field_mailboxes_title">Reenviando a</string>
   <string name="alias_create_login_from_alias">Crear inicio de sesión</string>
@@ -18,7 +19,7 @@
   <string name="email_copied_to_clipboard">Dirección de correo electrónico copiada</string>
   <string name="username_copied_to_clipboard">Nombre de usuario copiado</string>
   <string name="password_copied_to_clipboard">Contraseña copiada</string>
-  <string name="website_copied_to_clipboard">Sitio web copiado</string>
+  <string name="website_copied_to_clipboard">Web address copied</string>
   <string name="totp_copied_to_clipboard">TOTP copiado</string>
   <string name="field_copied_to_clipboard">Campo copiado</string>
   <string name="move_item_to_trash_message">Elemento movido a la papelera</string>
@@ -103,6 +104,4 @@
   <string name="passkey_detail_bottomsheet_domain">Dominio</string>
   <string name="passkey_detail_bottomsheet_key">Clave</string>
   <string name="passkey_detail_bottomsheet_created">Creada</string>
-  <string name="alias_toggle_tooltip_title">Desactivar alias</string>
-  <string name="alias_toggle_tooltip_description">Pulse aquí para desactivar este alias y dejar de recibir correos.</string>
 </resources>

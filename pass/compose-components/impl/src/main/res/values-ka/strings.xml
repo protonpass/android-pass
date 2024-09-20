@@ -131,6 +131,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">ფსევდონიმის მისამართი</string>
+  <string name="item_details_alias_section_alias_disabled_title">ფსევდონიმის მისამართი (გათიშულია)</string>
   <string name="item_details_alias_section_mailboxes_title">გადამისამართება</string>
   <string name="item_details_credit_card_section_cardholder_title">სრული სახელი</string>
   <string name="item_details_credit_card_section_card_number_title">ბარათის ნომერი</string>
@@ -237,11 +238,10 @@
   <string name="snack_bar_message_item_delete_error">შეცდომა ამ ელემენტი წაშლისას</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">SimpleLogin-ის სინქრონიზაციის ჩართვა</string>
-  <string name="simple_login_widget_message" comment="The argument will be replaced by a plurals string and it'll look like follows: We detected that you have 5 aliases that are...">აღმოვაჩინეთ, რომ გაქვთ %s, რმელიც არსებობს SimpleLogin-ში, მაგრამ არა Proton Pass-ში. გნებავთ მათი შემოტანა?</string>
-  <plurals name="simple_login_widget_pending_aliases">
-    <item quantity="one">%d ფსევდონიმი</item>
-    <item quantity="other">%d ფსევდონიმი</item>
+  <plurals name="simple_login_widget_pending_aliases_message">
+    <item quantity="one">აღმოვაჩინეთ, რომ გაქვთ %d ფსევდონიმი, რომელიც არსებობს SimpleLogin-ში, მაგრამ არა Proton Pass-ში. გნებავთ მათი შემოტანა?</item>
+    <item quantity="other">აღმოვაჩინეთ, რომ გაქვთ %d ფსევდონიმი, რომელიც არსებობს SimpleLogin-ში, მაგრამ არა Proton Pass-ში. გნებავთ მათი შემოტანა?</item>
   </plurals>
   <string name="simple_login_widget_action">ფსევდონიმების სინქი</string>
-  <string name="simple_login_widget_close_content_description">ღილაკი SimpleLogin-ის ფსევდონიმების სინქრონიზაციის ვიჯეტის დასახურად</string>
+  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

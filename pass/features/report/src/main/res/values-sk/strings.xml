@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="description_field_label">Aký máte problém?</string>
+  <string name="description_field_hint">Opíšte problém čo najpodrobnejšie, ak je tam nejaká chyba, dajte nám vedieť, čo je tam napísané.</string>
+  <string name="email_field_label">Email</string>
+  <string name="email_field_hint">email</string>
+  <string name="attach_image_button">Pripojiť obrázok</string>
+  <string name="categories_title">Aký máte problém?</string>
+  <string name="report_toolbar_title">Nahlásiť problém</string>
+  <string name="send_report_button">Odoslať hlásenie</string>
+  <string name="cancel_tips_button">Zrušiť</string>
+  <string name="contact_us_button">Kontaktujte nás</string>
+  <string name="hint_tips_screen">Nefunguje?</string>
+  <string name="report_reason_autofill">Automatické vypĺňanie</string>
+  <string name="report_reason_sharing">Zdieľanie</string>
+  <string name="report_reason_sync">Synchronizovať</string>
+  <string name="report_reason_passkeys">Prístupové kľúče</string>
+  <string name="report_reason_other">Ostatné</string>
+  <string name="tips_title">Rýchle riešenia pre %1$s</string>
+  <string name="tips_subtitle">Tieto tipy by vám mohli pomôcť rýchlejšie vyriešiť váš problém.</string>
+  <string name="autofill_tip_restart">Try disabling and enabling the autofill service.</string>
+  <string name="autofill_tip_browser">Try another browser.</string>
+  <string name="sharing_tip_vault_sharing_guide">Máte problémy so zdieľaním trezoru? Pozrite si nášho sprievodcu.</string>
+  <string name="sharing_tip_secure_links_guide">Máte problémy so zabezpečenými odkazmi? Pozrite si nášho sprievodcu.</string>
+  <string name="sync_tip_force_refresh">Je vaša obrazovka prázdna? Skúste vykonať vynútenú synchronizáciu.</string>
+  <string name="send_logs_label">Odoslať záznamy</string>
+  <string name="report_sending_success">Hlásenie bolo úspešne odoslané.</string>
+  <string name="report_sending_error">Hlásenie nie je možné odoslať.</string>
+  <string name="tips_passkey_check_guide">If you have any issues check our guide.</string>
+  <string name="tips_passkey_android_not_supported">Vaša verzia systému Android je príliš nízka. Skúste zariadenie aktualizovať.</string>
+  <string name="tips_passkeys_credential_manager_not_supported">Výrobca zariadenia neponúka správcu poverení.</string>
+  <string name="tips_passkey_supported">Passkeys supported</string>
+  <string name="tips_passkey_not_supported">Passkeys not supported</string>
+  <string name="report_steps" comment="Indicator showing report progress">Step %1$d of %2$d</string>
+  <string name="description_cannot_be_blank">Description cannot be blank</string>
+  <string name="description_is_too_short">Description is too short</string>
+  <string name="description_is_too_long">Description is too long</string>
+  <string name="email_cannot_be_blank">Email cannot be blank</string>
+  <string name="email_invalid">Invalid email address</string>
+</resources>

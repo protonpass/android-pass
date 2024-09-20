@@ -7,6 +7,7 @@
   <string name="top_bar_edit_button_text">Edytuj</string>
   <!-- Alias details -->
   <string name="field_alias_title">Alias</string>
+  <string name="field_alias_disabled_title">Adres aliasu (wyłączony)</string>
   <string name="alias_copied_to_clipboard">Alias został skopiowany</string>
   <string name="alias_detail_field_mailboxes_title">Przekaż do</string>
   <string name="alias_create_login_from_alias">Utwórz dane logowania</string>
@@ -18,7 +19,7 @@
   <string name="email_copied_to_clipboard">Adres e-mail został skopiowany</string>
   <string name="username_copied_to_clipboard">Nazwa użytkownika została skopiowana</string>
   <string name="password_copied_to_clipboard">Hasło zostało skopiowane</string>
-  <string name="website_copied_to_clipboard">Strona internetowa została skopiowana</string>
+  <string name="website_copied_to_clipboard">Web address copied</string>
   <string name="totp_copied_to_clipboard">Kod TOTP został skopiowany</string>
   <string name="field_copied_to_clipboard">Pole zostało skopiowane</string>
   <string name="move_item_to_trash_message">Element został przeniesiony do Kosza</string>
@@ -105,6 +106,4 @@
   <string name="passkey_detail_bottomsheet_domain">Domena</string>
   <string name="passkey_detail_bottomsheet_key">Klucz</string>
   <string name="passkey_detail_bottomsheet_created">Utworzono</string>
-  <string name="alias_toggle_tooltip_title">Wyłącz alias</string>
-  <string name="alias_toggle_tooltip_description">Kliknij, aby wyłączyć alias i zatrzymać otrzymywanie wiadomości.</string>
 </resources>

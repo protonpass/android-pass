@@ -40,9 +40,12 @@ fun ItemOptionsAliasTrashDialog(
 
             ItemOptionsAliasTrashDialogEvent.OnDisableError,
             ItemOptionsAliasTrashDialogEvent.OnDisableSuccess,
-            ItemOptionsAliasTrashDialogEvent.OnTrashError,
-            ItemOptionsAliasTrashDialogEvent.OnTrashSuccess -> {
+            ItemOptionsAliasTrashDialogEvent.OnTrashError -> {
                 onNavigated(ItemOptionsNavDestination.Back)
+            }
+
+            ItemOptionsAliasTrashDialogEvent.OnTrashSuccess -> {
+                onNavigated(ItemOptionsNavDestination.TrashItem)
             }
         }
 

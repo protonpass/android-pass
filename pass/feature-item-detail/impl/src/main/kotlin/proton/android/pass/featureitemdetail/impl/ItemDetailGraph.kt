@@ -18,7 +18,10 @@
 
 package proton.android.pass.featureitemdetail.impl
 
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import me.proton.core.compose.navigation.requireArguments
@@ -32,6 +35,7 @@ import proton.android.pass.featureitemdetail.impl.login.passkey.bottomsheet.navi
 import proton.android.pass.featureitemdetail.impl.login.reusedpass.navigation.LoginItemDetailsReusedPassNavItem
 import proton.android.pass.featureitemdetail.impl.login.reusedpass.ui.LoginItemDetailReusedPassScreen
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.CommonNavArgKey
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
@@ -143,8 +147,17 @@ object ViewItem : NavItem(
 fun NavGraphBuilder.itemDetailGraph(onNavigate: (ItemDetailNavigation) -> Unit) {
     composable(
         navItem = ViewItem
-    ) {
+    ) { navBackStack ->
+        val isItemMovedToTrash by navBackStack.savedStateHandle
+            .getStateFlow(CommonNavArgKey.ITEM_MOVED_TO_TRASH, false)
+            .collectAsStateWithLifecycle()
+
+        LaunchedEffect(isItemMovedToTrash) {
+            navBackStack.savedStateHandle.remove<Boolean?>(CommonNavArgKey.ITEM_MOVED_TO_TRASH)
+        }
+
         ItemDetailScreen(
+            isItemMovedToTrash = isItemMovedToTrash,
             onNavigate = onNavigate
         )
     }

@@ -6,6 +6,23 @@
 
 ### Other
 
+## 1.25.0 (2024-09-20)
+
+### Features :tada:
+
+- Revamped report screen
+- Add new reset filters option
+
+### Fixes :bug:
+
+- Fixed alias detachment
+
+### Other
+
+- Select last used vault as default vault
+- Updated translations.
+- Updated core libraries.
+
 ## 1.24.6 (2024-08-29)
 
 ### Fixes :bug:

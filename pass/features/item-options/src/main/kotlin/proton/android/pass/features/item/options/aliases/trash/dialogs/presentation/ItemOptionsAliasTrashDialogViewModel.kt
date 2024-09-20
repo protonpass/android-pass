@@ -114,11 +114,11 @@ class ItemOptionsAliasTrashDialogViewModel @Inject constructor(
                 .onFailure { error ->
                     PassLogger.w(TAG, "There was an error while trashing alias item")
                     PassLogger.w(TAG, error)
-                    eventFlow.update { ItemOptionsAliasTrashDialogEvent.OnTrashSuccess }
+                    eventFlow.update { ItemOptionsAliasTrashDialogEvent.OnTrashError }
                     snackbarDispatcher(ItemOptionsAliasTrashDialogSnackBarMessage.TrashAliasError)
                 }
                 .onSuccess {
-                    eventFlow.update { ItemOptionsAliasTrashDialogEvent.OnTrashError }
+                    eventFlow.update { ItemOptionsAliasTrashDialogEvent.OnTrashSuccess }
                     snackbarDispatcher(ItemOptionsAliasTrashDialogSnackBarMessage.TrashAliasSuccess)
                 }
 

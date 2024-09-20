@@ -234,6 +234,7 @@ import proton.android.pass.featurevault.impl.delete.DeleteVaultDialog
 import proton.android.pass.featurevault.impl.leave.LeaveVaultDialog
 import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
+import proton.android.pass.navigation.api.CommonNavArgKey
 import proton.android.pass.ui.AppNavigation
 
 @Suppress("LongMethod", "ComplexMethod", "ThrowsCount")
@@ -1976,6 +1977,13 @@ fun NavGraphBuilder.appGraph(
                 ItemOptionsNavDestination.Back -> appNavigator.navigateBack(
                     comesFromBottomsheet = false
                 )
+
+                ItemOptionsNavDestination.TrashItem -> {
+                    appNavigator.navigateBackWithResult(
+                        key = CommonNavArgKey.ITEM_MOVED_TO_TRASH,
+                        value = true
+                    )
+                }
             }
         }
     )

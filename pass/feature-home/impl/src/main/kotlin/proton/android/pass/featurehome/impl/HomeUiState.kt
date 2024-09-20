@@ -41,6 +41,7 @@ import proton.android.pass.domain.ShareRole
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
+import proton.android.pass.preferences.AliasTrashDialogStatusPreference
 
 internal sealed interface ActionState {
 
@@ -74,7 +75,8 @@ internal data class HomeUiState(
     val action: BottomSheetItemAction,
     val isFreePlan: Boolean,
     val isUsernameSplitEnabled: Boolean,
-    val isSLAliasSyncEnabled: Boolean
+    val isSLAliasSyncEnabled: Boolean,
+    private val aliasTrashDialogStatusPreference: AliasTrashDialogStatusPreference
 ) {
     internal fun shouldShowRecentSearchHeader() =
         homeListUiState.items.isNotEmpty() && searchUiState.inSearchMode && searchUiState.isInSuggestionsMode
@@ -93,12 +95,10 @@ internal data class HomeUiState(
         is VaultSelectionOption.Trash -> false
     }
 
-    internal fun shouldDisplayTrashAliasDialog(itemUiModel: ItemUiModel): Boolean {
-        if (!isSLAliasSyncEnabled) {
-            return false
-        }
-
-        return (itemUiModel.contents as? ItemContents.Alias)?.isEnabled == true
+    internal fun shouldDisplayTrashAliasDialog(itemUiModel: ItemUiModel): Boolean = when {
+        !isSLAliasSyncEnabled -> false
+        aliasTrashDialogStatusPreference.value -> false
+        else -> (itemUiModel.contents as? ItemContents.Alias)?.isEnabled == true
     }
 
     internal companion object {
@@ -112,7 +112,8 @@ internal data class HomeUiState(
             action = BottomSheetItemAction.None,
             isFreePlan = true,
             isUsernameSplitEnabled = false,
-            isSLAliasSyncEnabled = false
+            isSLAliasSyncEnabled = false,
+            aliasTrashDialogStatusPreference = AliasTrashDialogStatusPreference.Disabled
         )
 
     }

@@ -185,10 +185,13 @@ internal fun ItemOptionsAliasTrashDialogPreview(
 
     PassTheme(isDark = isDark) {
         Surface {
-            ItemOptionsAliasTrashDialogState(
-                isLoadingState = IsLoadingState.NotLoading,
-                event = ItemOptionsAliasTrashDialogEvent.Idle,
-                preference = AliasTrashDialogStatusPreference.from(isRemindMeEnabled)
+            ItemOptionsAliasTrashDialogContent(
+                state = ItemOptionsAliasTrashDialogState(
+                    isLoadingState = IsLoadingState.NotLoading,
+                    event = ItemOptionsAliasTrashDialogEvent.Idle,
+                    preference = AliasTrashDialogStatusPreference.from(isRemindMeEnabled)
+                ),
+                onUiEvent = {}
             )
         }
     }

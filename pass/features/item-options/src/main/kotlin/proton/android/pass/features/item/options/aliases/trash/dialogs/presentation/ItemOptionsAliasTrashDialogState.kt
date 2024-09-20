@@ -24,8 +24,8 @@ import proton.android.pass.preferences.AliasTrashDialogStatusPreference
 
 @Stable
 internal data class ItemOptionsAliasTrashDialogState(
-    internal val isLoadingState: IsLoadingState,
     internal val event: ItemOptionsAliasTrashDialogEvent,
+    private val isLoadingState: IsLoadingState,
     private val preference: AliasTrashDialogStatusPreference
 ) {
 
@@ -36,8 +36,8 @@ internal data class ItemOptionsAliasTrashDialogState(
     internal companion object {
 
         internal val Initial = ItemOptionsAliasTrashDialogState(
-            isLoadingState = IsLoadingState.NotLoading,
             event = ItemOptionsAliasTrashDialogEvent.Idle,
+            isLoadingState = IsLoadingState.NotLoading,
             preference = AliasTrashDialogStatusPreference.Disabled
         )
 

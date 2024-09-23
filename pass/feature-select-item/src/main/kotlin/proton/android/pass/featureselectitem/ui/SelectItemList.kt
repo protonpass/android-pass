@@ -94,7 +94,13 @@ fun SelectItemList(
             } else {
                 EmptyList(
                     emptyListMessage = stringResource(id = R.string.error_credentials_not_found),
-                    onCreateItemClick = { onNavigate(SelectItemNavigation.AddItem) }
+                    onCreateItemClick = {
+                        if (listUiState.accountSwitchState.accountList.size > 1) {
+                            onNavigate(SelectItemNavigation.SelectAccount)
+                        } else {
+                            onNavigate(SelectItemNavigation.AddItem)
+                        }
+                    }
                 )
             }
         },

@@ -22,6 +22,6 @@ import me.proton.core.domain.entity.UserId
 
 data class AccountRowUIState(
     val userId: UserId,
-    val email: String,
+    val email: String?,
     val isPrimary: Boolean
 )

@@ -63,7 +63,7 @@ class AccountSwitchViewModel @Inject constructor(
         val accountRowUiStateList = users.map {
             AccountRowUIState(
                 userId = it.userId,
-                email = it.email ?: "Unknown",
+                email = it.email,
                 isPrimary = primary?.userId == it.userId
             )
         }.toPersistentList()

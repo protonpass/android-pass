@@ -19,26 +19,27 @@
 package proton.android.pass.uitest.flow
 
 import dagger.hilt.android.testing.HiltAndroidTest
-import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.plan.test.MinimalSubscriptionTests
-import me.proton.core.test.quark.Quark
-import me.proton.core.test.quark.data.User
+import me.proton.core.plan.test.robot.SubscriptionRobot
+import me.proton.core.test.rule.ProtonRule
+import me.proton.core.test.rule.extension.protonAndroidComposeRule
+import org.junit.Rule
 import proton.android.pass.features.onboarding.OnBoardingPageName
-import proton.android.pass.uitest.BaseTest
+import proton.android.pass.ui.MainActivity
 import proton.android.pass.uitest.robot.HomeRobot
 import proton.android.pass.uitest.robot.OnBoardingRobot
 
 @HiltAndroidTest
-class SubscriptionFlowTest : BaseTest(), MinimalSubscriptionTests {
+open class SubscriptionFlowTest : MinimalSubscriptionTests() {
 
-    override val quark: Quark = BaseTest.quark
-    override val users: User.Users = BaseTest.users
+    // TODO: rework and fix account tests - CP-8721.
 
-    override fun startSubscription(user: User) {
-        AddAccountRobot
-            .clickSignIn()
-            .login(user)
+    @get:Rule
+    val protonRule: ProtonRule = protonAndroidComposeRule<MainActivity>(
+        logoutBefore = true
+    )
 
+    override fun startSubscription(): SubscriptionRobot {
         OnBoardingRobot
             .onBoardingScreenDisplayed()
             .clickSkip(OnBoardingPageName.Autofill)
@@ -51,5 +52,6 @@ class SubscriptionFlowTest : BaseTest(), MinimalSubscriptionTests {
             .clickAccount()
             .accountScreenDisplayed()
             .clickSubscription()
+        return SubscriptionRobot
     }
 }

@@ -17,8 +17,8 @@
   -->
 
 <resources>
-    <!-- Details screen -->
-    <string name="simple_login_sync_details_title">Aliases</string>
+    <!-- Management screen -->
+    <string name="simple_login_sync_details_title">Alias management</string>
     <string name="simple_login_sync_details_domain_label">Domain</string>
     <string name="simple_login_sync_details_domain_title">Default domain for aliases</string>
     <string name="simple_login_sync_details_domain_option_blank">Not selected</string>

@@ -64,7 +64,9 @@ fun accountItem(accountRowUIState: AccountRowUIState, onClick: (UserId) -> Unit)
     object : BottomSheetItem {
 
         override val title: @Composable () -> Unit = {
-            BottomSheetItemTitle(text = accountRowUIState.email)
+            BottomSheetItemTitle(
+                text = accountRowUIState.email ?: stringResource(R.string.unknown_email)
+            )
         }
 
         override val subtitle: @Composable (() -> Unit)? = null

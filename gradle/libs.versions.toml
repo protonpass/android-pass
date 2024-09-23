@@ -247,6 +247,7 @@ core-report-domain = { module = "me.proton.core:report-domain", version.ref = "c
 core-test-android = { module = "me.proton.core:test-android", version.ref = "core" }
 core-test-android-instrumented = { module = "me.proton.core:test-android-instrumented", version.ref = "core" }
 core-test-kotlin = { module = "me.proton.core:test-kotlin", version.ref = "core" }
+core-test-android-test-rule = { module = "me.proton.core:test-rule", version.ref = "core" }
 core-telemetry-data = { module = "me.proton.core:telemetry-data", version.ref = "core" }
 core-telemetry-domain = { module = "me.proton.core:telemetry-domain", version.ref = "core" }
 core-telemetry-presentation = { module = "me.proton.core:telemetry-presentation", version.ref = "core" }

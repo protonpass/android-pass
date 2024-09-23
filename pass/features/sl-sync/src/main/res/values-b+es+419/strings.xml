@@ -18,20 +18,20 @@
   -->
 <resources>
   <!-- Details screen -->
-  <string name="simple_login_sync_details_title">Alias</string>
-  <string name="simple_login_sync_details_domain_label">Dominio</string>
-  <string name="simple_login_sync_details_domain_title">Dominio por defecto para alias</string>
-  <string name="simple_login_sync_details_domain_option_blank">Sin seleccionar</string>
-  <string name="simple_login_sync_details_mailboxes_label">Buzones</string>
-  <string name="simple_login_sync_details_mailboxes_title">Buzón por defecto para alias</string>
-  <string name="simple_login_sync_details_vault_title">Sincronización de SimpleLogin</string>
-  <string name="simple_login_sync_details_dialog_title_domains">Dominio por defecto para los alias</string>
-  <string name="simple_login_sync_details_dialog_title_mailboxes">Buzón por defecto para los alias</string>
-  <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">Ocurrió un error al recuperar los detalles del alias SL.</string>
-  <string name="simple_login_sync_details_snackbar_alias_domain_update_error">Ocurrió un error al actualizar el dominio del alias SL.</string>
-  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">Se actualizó el dominio del alias SL.</string>
-  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">Ocurrió un error al actualizar el buzón del alias SL.</string>
-  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">Se actualizó el buzón del alias SL.</string>
+  <string name="simple_login_sync_management_title">Alias</string>
+  <string name="simple_login_sync_management_domain_label">Dominio</string>
+  <string name="simple_login_sync_management_domain_title">Dominio por defecto para alias</string>
+  <string name="simple_login_sync_management_domain_option_blank">Sin seleccionar</string>
+  <string name="simple_login_sync_management_mailboxes_label">Buzones</string>
+  <string name="simple_login_sync_management_mailboxes_title">Buzón por defecto para alias</string>
+  <string name="simple_login_sync_management_vault_title">Sincronización de SimpleLogin</string>
+  <string name="simple_login_sync_management_dialog_title_domains">Dominio por defecto para los alias</string>
+  <string name="simple_login_sync_management_dialog_title_mailboxes">Buzón por defecto para los alias</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Ocurrió un error al recuperar los detalles del alias SL.</string>
+  <string name="simple_login_sync_management_snackbar_alias_domain_update_error">Ocurrió un error al actualizar el dominio del alias SL.</string>
+  <string name="simple_login_sync_management_snackbar_alias_domain_update_success">Se actualizó el dominio del alias SL.</string>
+  <string name="simple_login_sync_management_snackbar_alias_mailbox_update_error">Ocurrió un error al actualizar el buzón del alias SL.</string>
+  <string name="simple_login_sync_management_snackbar_alias_mailbox_update_success">Se actualizó el buzón del alias SL.</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sincronizar alias</string>
   <string name="simple_login_sync_enable_snackbar_error">Hubo un error al activar la sincronización de alias de SimpleLogin</string>

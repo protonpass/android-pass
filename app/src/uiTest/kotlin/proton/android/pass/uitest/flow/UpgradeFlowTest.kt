@@ -19,24 +19,28 @@
 package proton.android.pass.uitest.flow
 
 import dagger.hilt.android.testing.HiltAndroidTest
-import me.proton.core.auth.test.robot.AddAccountRobot
+import me.proton.core.plan.test.BillingPlan
 import me.proton.core.plan.test.MinimalUpgradeTests
-import me.proton.core.test.quark.Quark
+import me.proton.core.plan.test.robot.SubscriptionRobot
+import me.proton.core.test.rule.ProtonRule
+import me.proton.core.test.rule.extension.protonAndroidComposeRule
+import org.junit.Rule
 import proton.android.pass.features.onboarding.OnBoardingPageName
-import proton.android.pass.uitest.BaseTest
+import proton.android.pass.ui.MainActivity
 import proton.android.pass.uitest.robot.HomeRobot
 import proton.android.pass.uitest.robot.OnBoardingRobot
 
 @HiltAndroidTest
-class UpgradeFlowTest : BaseTest(), MinimalUpgradeTests {
+open class UpgradeFlowTest : MinimalUpgradeTests {
 
-    override val quark: Quark = BaseTest.quark
+    // TODO: rework and fix account tests - CP-8721.
 
-    override fun startUpgrade() {
-        val freeUser = users.getUser { !it.isPaid }
-        AddAccountRobot
-            .clickSignIn()
-            .login(freeUser)
+    @get:Rule
+    val protonRule: ProtonRule = protonAndroidComposeRule<MainActivity>(
+        logoutBefore = true
+    )
+
+    override fun startUpgrade(): SubscriptionRobot {
 
         OnBoardingRobot
             .onBoardingScreenDisplayed()
@@ -50,5 +54,9 @@ class UpgradeFlowTest : BaseTest(), MinimalUpgradeTests {
             .clickAccount()
             .accountScreenDisplayed()
             .clickUpgrade()
+
+        return SubscriptionRobot
     }
+
+    override fun providePlans(): List<BillingPlan> = emptyList()
 }

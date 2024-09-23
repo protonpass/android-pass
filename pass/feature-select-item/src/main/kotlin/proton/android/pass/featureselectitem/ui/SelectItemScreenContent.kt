@@ -85,7 +85,13 @@ internal fun SelectItemScreenContent(
             if (uiState.listUiState.displayCreateButton) {
                 PassFloatingActionButton(
                     visible = showFab,
-                    onClick = { onNavigate(SelectItemNavigation.AddItem) }
+                    onClick = {
+                        if (uiState.listUiState.accountSwitchState.accountList.size > 1) {
+                            onNavigate(SelectItemNavigation.SelectAccount)
+                        } else {
+                            onNavigate(SelectItemNavigation.AddItem)
+                        }
+                    }
                 )
             }
         },

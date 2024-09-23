@@ -63,7 +63,6 @@ internal fun ExpandableEmailUsernameInput(
     onAliasOptionsClick: () -> Unit,
     canUpdateUsername: Boolean,
     isEditAllowed: Boolean,
-    isInvalidEmail: Boolean,
     isUsernameSplitTooltipEnabled: Boolean,
     isExpanded: Boolean
 ) {
@@ -90,12 +89,6 @@ internal fun ExpandableEmailUsernameInput(
         email.ifEmpty { username }
     }
 
-    val emailIconTint = if (isInvalidEmail) {
-        PassTheme.colors.signalDanger
-    } else {
-        ProtonTheme.colors.iconWeak
-    }
-
     Column(
         modifier = modifier
     ) {
@@ -103,7 +96,6 @@ internal fun ExpandableEmailUsernameInput(
             emailLabelResId = emailLabelResId,
             emailPlaceholderResId = emailPlaceholderResId,
             email = emailOrUsername,
-            isInvalid = isInvalidEmail,
             isEditable = canUpdateUsername && isEditAllowed,
             onEmailChange = { newEmail ->
                 onEvent(LoginContentEvent.OnEmailChanged(newEmail))
@@ -115,8 +107,7 @@ internal fun ExpandableEmailUsernameInput(
                 if (isExpanded) {
                     Icon(
                         painter = painterResource(CoreR.drawable.ic_proton_envelope),
-                        contentDescription = null,
-                        tint = emailIconTint
+                        contentDescription = null
                     )
                 } else {
                     val position = remember { mutableStateOf(IntOffset.Zero) }
@@ -132,7 +123,7 @@ internal fun ExpandableEmailUsernameInput(
                             modifier = Modifier.padding(horizontal = 2.dp),
                             painter = painterResource(id = CoreR.drawable.ic_proton_envelope),
                             contentDescription = null,
-                            tint = emailIconTint
+                            tint = ProtonTheme.colors.iconWeak
                         )
 
                         Icon(
@@ -224,7 +215,6 @@ internal fun ExpandableEmailUsernameInputPreview(
                 onAliasOptionsClick = {},
                 canUpdateUsername = params.canUpdateUsername,
                 isEditAllowed = params.isEditAllowed,
-                isInvalidEmail = params.isInvalidEmail,
                 isUsernameSplitTooltipEnabled = false,
                 isExpanded = params.isExpanded
             )

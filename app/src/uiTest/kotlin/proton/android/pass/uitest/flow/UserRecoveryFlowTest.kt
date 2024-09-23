@@ -24,7 +24,10 @@ import javax.inject.Inject
 
 @HiltAndroidTest
 @UninstallModules(CoreDeviceRecoveryFeaturesModule::class)
-class UserRecoveryFlowTest : BaseTest(), MinimalUserRecoveryTest {
+open class UserRecoveryFlowTest : BaseTest(), MinimalUserRecoveryTest {
+
+    // TODO: rework and fix account tests. Migrate to ProtonRule - CP-8721.
+
     @get:Rule
     val grantPermissionRule: GrantPermissionRule = if (Build.VERSION.SDK_INT >= 33) {
         GrantPermissionRule.grant(Manifest.permission.POST_NOTIFICATIONS)

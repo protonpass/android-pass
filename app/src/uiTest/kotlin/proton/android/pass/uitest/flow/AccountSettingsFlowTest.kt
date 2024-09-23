@@ -2,23 +2,24 @@ package proton.android.pass.uitest.flow
 
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.accountmanager.test.robot.AccountSettingsRobot
-import me.proton.core.test.quark.Quark
+import me.proton.core.test.rule.ProtonRule
+import me.proton.core.test.rule.extension.protonAndroidComposeRule
 import me.proton.core.usersettings.test.MinimalUserSettingsTest
-import org.junit.Before
+import org.junit.Rule
 import proton.android.pass.features.onboarding.OnBoardingPageName
-import proton.android.pass.uitest.BaseTest
+import proton.android.pass.ui.MainActivity
 import proton.android.pass.uitest.robot.HomeRobot
 import proton.android.pass.uitest.robot.OnBoardingRobot
 
 @HiltAndroidTest
-class AccountSettingsFlowTest : BaseTest(), MinimalUserSettingsTest {
+open class AccountSettingsFlowTest : MinimalUserSettingsTest {
 
-    override val quark: Quark = BaseTest.quark
+    // TODO: rework and fix account tests - CP-8721.
 
-    @Before
-    fun preventHumanVerification() {
-        quark.jailUnban()
-    }
+    @get:Rule
+    override val protonRule: ProtonRule = protonAndroidComposeRule<MainActivity>(
+        logoutBefore = true
+    )
 
     private fun startAccountSettings(): AccountSettingsRobot {
         OnBoardingRobot.onBoardingScreenDisplayed()

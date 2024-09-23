@@ -18,17 +18,32 @@
 
 package proton.android.pass.uitest.flow
 
+import androidx.test.core.app.ApplicationProvider
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.auth.test.MinimalSignUpExternalTests
-import proton.android.pass.uitest.BaseTest
+import me.proton.core.test.rule.ProtonRule
+import me.proton.core.test.rule.extension.protonAndroidComposeRule
+import org.junit.Rule
+import proton.android.pass.initializer.MainInitializer
+import proton.android.pass.ui.MainActivity
 import proton.android.pass.uitest.robot.OnBoardingRobot
+import proton.android.pass.uitest.robot.Robot
 
 @HiltAndroidTest
-class SignUpFlowTest : BaseTest(), MinimalSignUpExternalTests {
+open class SignUpFlowTest : MinimalSignUpExternalTests {
 
-    override val isCongratsDisplayed = true
+    // TODO: rework and fix account tests - CP-8721.
 
-    override fun verifyAfter() {
+    @get:Rule
+    val protonRule: ProtonRule = protonAndroidComposeRule<MainActivity>(
+        logoutBefore = true
+    )
+
+    private inline fun <T : Robot> T.verify(crossinline block: T.() -> Any): T = apply { block() }
+
+    val isCongratsDisplayed = true
+
+    fun verifyAfter() {
         OnBoardingRobot.verify { onBoardingScreenDisplayed() }
     }
 }

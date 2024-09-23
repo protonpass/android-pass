@@ -16,10 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.details.navigation
+package proton.android.pass.features.sl.sync.management.presentation
 
-import proton.android.pass.navigation.api.NavItem
+internal sealed interface SimpleLoginSyncManagementEvent {
 
-object SimpleLoginSyncDetailsNavItem : NavItem(
-    baseRoute = "sl/sync/details"
-)
+    data object Idle : SimpleLoginSyncManagementEvent
+
+    data object OnFetchAliasManagementError : SimpleLoginSyncManagementEvent
+
+    data object OnAliasDomainUpdated : SimpleLoginSyncManagementEvent
+
+    data object OnUpdateAliasDomainError : SimpleLoginSyncManagementEvent
+
+    data object OnAliasMailboxUpdated : SimpleLoginSyncManagementEvent
+
+    data object OnUpdateAliasMailboxError : SimpleLoginSyncManagementEvent
+
+}

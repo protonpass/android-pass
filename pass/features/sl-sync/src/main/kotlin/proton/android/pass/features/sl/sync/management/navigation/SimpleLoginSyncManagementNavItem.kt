@@ -16,9 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.details.ui.dialogs
+package proton.android.pass.features.sl.sync.management.navigation
 
-enum class SimpleLoginSyncDetailsOptionType {
-    Domain,
-    Mailbox
-}
+import proton.android.pass.navigation.api.NavItem
+
+object SimpleLoginSyncManagementNavItem : NavItem(
+    baseRoute = "sl/sync/details"
+)

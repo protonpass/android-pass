@@ -86,7 +86,7 @@ internal fun SelectItemScreenContent(
                 PassFloatingActionButton(
                     visible = showFab,
                     onClick = {
-                        if (uiState.listUiState.accountSwitchState.accountList.size > 1) {
+                        if (uiState.listUiState.accountSwitchState.hasMultipleAccounts) {
                             onNavigate(SelectItemNavigation.SelectAccount)
                         } else {
                             onNavigate(SelectItemNavigation.AddItem)
@@ -141,7 +141,7 @@ internal fun SelectItemScreenContent(
             modifier = Modifier.padding(padding)
         ) {
             with(uiState.listUiState.accountSwitchState) {
-                if (accountList.size > 1) {
+                if (hasMultipleAccounts) {
                     var isExpanded by remember { mutableStateOf(false) }
                     Row(
                         modifier = Modifier.fillMaxWidth(),

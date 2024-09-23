@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.details.ui.dialogs
+package proton.android.pass.features.sl.sync.management.ui.dialogs
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility

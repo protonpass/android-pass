@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.details.ui
+package proton.android.pass.features.sl.sync.management.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -49,7 +49,7 @@ internal fun SimpleLoginSyncDetailsSections(
     pendingAliasesCount: Int,
     canSelectDomain: Boolean,
     canSelectMailbox: Boolean,
-    onUiEvent: (SimpleLoginSyncDetailsUiEvent) -> Unit
+    onUiEvent: (SimpleLoginSyncManagementUiEvent) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -63,7 +63,7 @@ internal fun SimpleLoginSyncDetailsSections(
             subtitle = defaultDomain ?: stringResource(
                 id = R.string.simple_login_sync_details_domain_option_blank
             ),
-            onClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnDomainClicked) },
+            onClick = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnDomainClicked) },
             isClickable = canSelectDomain
         )
 
@@ -71,7 +71,7 @@ internal fun SimpleLoginSyncDetailsSections(
             label = stringResource(id = R.string.simple_login_sync_details_mailboxes_label),
             title = stringResource(id = R.string.simple_login_sync_details_mailboxes_title),
             subtitle = defaultMailboxEmail,
-            onClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnMailboxClicked) },
+            onClick = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnMailboxClicked) },
             isClickable = canSelectMailbox
         )
 
@@ -92,7 +92,7 @@ internal fun SimpleLoginSyncDetailsSections(
                         id = R.string.simple_login_sync_shared_default_vault_description
                     ),
                     onClick = {
-                        SimpleLoginSyncDetailsUiEvent.OnDefaultVaultClicked(
+                        SimpleLoginSyncManagementUiEvent.OnDefaultVaultClicked(
                             shareId = shareId
                         ).also(onUiEvent)
                     }
@@ -115,7 +115,7 @@ internal fun SimpleLoginSyncDetailsSections(
                     ),
                     actionText = stringResource(id = CompR.string.simple_login_widget_action),
                     onActionClick = {
-                        SimpleLoginSyncDetailsUiEvent.OnSyncSettingsClicked(
+                        SimpleLoginSyncManagementUiEvent.OnSyncSettingsClicked(
                             shareId = defaultVault?.shareId
                         ).also(onUiEvent)
                     }

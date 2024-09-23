@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.details.ui
+package proton.android.pass.features.sl.sync.management.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,38 +29,38 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
-import proton.android.pass.features.sl.sync.details.presentation.SimpleLoginSyncDetailsEvent
-import proton.android.pass.features.sl.sync.details.presentation.SimpleLoginSyncDetailsViewModel
-import proton.android.pass.features.sl.sync.details.ui.dialogs.SimpleLoginSyncDetailsOptionType
+import proton.android.pass.features.sl.sync.management.presentation.SimpleLoginSyncManagementEvent
+import proton.android.pass.features.sl.sync.management.presentation.SimpleLoginSyncManagementViewModel
+import proton.android.pass.features.sl.sync.management.ui.dialogs.SimpleLoginSyncManagementOptionType
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 
 @Composable
 fun SimpleLoginSyncDetailsScreen(
     onNavigated: (SimpleLoginSyncNavDestination) -> Unit,
-    viewModel: SimpleLoginSyncDetailsViewModel = hiltViewModel()
+    viewModel: SimpleLoginSyncManagementViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
 
     var dialogOptionTypeOption by remember {
-        mutableStateOf<Option<SimpleLoginSyncDetailsOptionType>>(None)
+        mutableStateOf<Option<SimpleLoginSyncManagementOptionType>>(None)
     }
 
     LaunchedEffect(state.event) {
         when (state.event) {
-            SimpleLoginSyncDetailsEvent.OnFetchAliasDetailsError -> {
+            SimpleLoginSyncManagementEvent.OnFetchAliasManagementError -> {
                 SimpleLoginSyncNavDestination.Back(
                     force = true // Needed, otherwise navigation sometimes discards it as duplicated
                 ).also(onNavigated)
             }
 
-            SimpleLoginSyncDetailsEvent.OnAliasDomainUpdated,
-            SimpleLoginSyncDetailsEvent.OnAliasMailboxUpdated,
-            SimpleLoginSyncDetailsEvent.OnUpdateAliasDomainError,
-            SimpleLoginSyncDetailsEvent.OnUpdateAliasMailboxError -> {
+            SimpleLoginSyncManagementEvent.OnAliasDomainUpdated,
+            SimpleLoginSyncManagementEvent.OnAliasMailboxUpdated,
+            SimpleLoginSyncManagementEvent.OnUpdateAliasDomainError,
+            SimpleLoginSyncManagementEvent.OnUpdateAliasMailboxError -> {
                 dialogOptionTypeOption = None
             }
 
-            SimpleLoginSyncDetailsEvent.Idle -> {}
+            SimpleLoginSyncManagementEvent.Idle -> {}
         }
 
         onConsumeEvent(event = state.event)
@@ -71,47 +71,47 @@ fun SimpleLoginSyncDetailsScreen(
         dialogOptionTypeOption = dialogOptionTypeOption,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
-                SimpleLoginSyncDetailsUiEvent.OnBackClicked -> {
+                SimpleLoginSyncManagementUiEvent.OnBackClicked -> {
                     onNavigated(SimpleLoginSyncNavDestination.Back())
                 }
 
-                SimpleLoginSyncDetailsUiEvent.OnDomainClicked -> {
-                    dialogOptionTypeOption = SimpleLoginSyncDetailsOptionType.Domain.toOption()
+                SimpleLoginSyncManagementUiEvent.OnDomainClicked -> {
+                    dialogOptionTypeOption = SimpleLoginSyncManagementOptionType.Domain.toOption()
                 }
 
-                SimpleLoginSyncDetailsUiEvent.OnMailboxClicked -> {
-                    dialogOptionTypeOption = SimpleLoginSyncDetailsOptionType.Mailbox.toOption()
+                SimpleLoginSyncManagementUiEvent.OnMailboxClicked -> {
+                    dialogOptionTypeOption = SimpleLoginSyncManagementOptionType.Mailbox.toOption()
                 }
 
-                is SimpleLoginSyncDetailsUiEvent.OnSyncSettingsClicked -> {
+                is SimpleLoginSyncManagementUiEvent.OnSyncSettingsClicked -> {
                     SimpleLoginSyncNavDestination.Settings(
                         shareId = uiEvent.shareId
                     ).also(onNavigated)
                 }
 
-                is SimpleLoginSyncDetailsUiEvent.OnDefaultVaultClicked -> {
+                is SimpleLoginSyncManagementUiEvent.OnDefaultVaultClicked -> {
                     SimpleLoginSyncNavDestination.Settings(
                         shareId = uiEvent.shareId
                     ).also(onNavigated)
                 }
 
-                SimpleLoginSyncDetailsUiEvent.OnOptionsDialogDismissed -> {
+                SimpleLoginSyncManagementUiEvent.OnOptionsDialogDismissed -> {
                     dialogOptionTypeOption = None
                 }
 
-                is SimpleLoginSyncDetailsUiEvent.OnDomainSelected -> {
+                is SimpleLoginSyncManagementUiEvent.OnDomainSelected -> {
                     onSelectAliasDomain(selectedAliasDomain = uiEvent.aliasDomain)
                 }
 
-                is SimpleLoginSyncDetailsUiEvent.OnMailboxSelected -> {
+                is SimpleLoginSyncManagementUiEvent.OnMailboxSelected -> {
                     onSelectAliasMailbox(selectedAliasMailbox = uiEvent.aliasMailbox)
                 }
 
-                SimpleLoginSyncDetailsUiEvent.OnUpdateDomainClicked -> {
+                SimpleLoginSyncManagementUiEvent.OnUpdateDomainClicked -> {
                     onUpdateAliasDomain()
                 }
 
-                SimpleLoginSyncDetailsUiEvent.OnUpdateMailboxClicked -> {
+                SimpleLoginSyncManagementUiEvent.OnUpdateMailboxClicked -> {
                     onUpdateAliasMailbox()
                 }
             }

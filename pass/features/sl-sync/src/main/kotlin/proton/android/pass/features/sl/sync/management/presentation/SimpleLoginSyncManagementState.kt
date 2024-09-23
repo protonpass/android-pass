@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.details.presentation
+package proton.android.pass.features.sl.sync.management.presentation
 
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateListOf
@@ -30,10 +30,10 @@ import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 
 @Stable
-internal data class SimpleLoginSyncDetailsState(
+internal data class SimpleLoginSyncManagementState(
     internal val isUpdating: Boolean,
-    internal val event: SimpleLoginSyncDetailsEvent,
-    private val modelOption: Option<SimpleLoginSyncDetailsModel>,
+    internal val event: SimpleLoginSyncManagementEvent,
+    private val modelOption: Option<SimpleLoginSyncManagementModel>,
     private val selectedDomainOption: Option<String?>,
     private val selectedMailboxOption: Option<SimpleLoginAliasMailbox>
 ) {
@@ -122,9 +122,9 @@ internal data class SimpleLoginSyncDetailsState(
 
     internal companion object {
 
-        internal val Initial: SimpleLoginSyncDetailsState = SimpleLoginSyncDetailsState(
+        internal val Initial: SimpleLoginSyncManagementState = SimpleLoginSyncManagementState(
             isUpdating = false,
-            event = SimpleLoginSyncDetailsEvent.Idle,
+            event = SimpleLoginSyncManagementEvent.Idle,
             modelOption = None,
             selectedDomainOption = None,
             selectedMailboxOption = None

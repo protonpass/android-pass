@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.details.presentation
+package proton.android.pass.features.sl.sync.management.presentation
 
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
@@ -24,7 +24,7 @@ import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 
-internal data class SimpleLoginSyncDetailsModel(
+internal data class SimpleLoginSyncManagementModel(
     internal val aliasDomains: List<SimpleLoginAliasDomain>,
     internal val aliasMailboxes: List<SimpleLoginAliasMailbox>,
     private val aliasSettings: SimpleLoginAliasSettings,

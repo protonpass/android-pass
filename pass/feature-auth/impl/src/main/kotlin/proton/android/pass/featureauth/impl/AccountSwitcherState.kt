@@ -29,4 +29,7 @@ data class AccountItem(
 data class AccountSwitcherState(
     val isAccountSwitchV1Enabled: Boolean,
     val accounts: ImmutableMap<UserId, AccountItem>
-)
+) {
+    val hasMultipleAccounts: Boolean
+        get() = accounts.size > 1
+}

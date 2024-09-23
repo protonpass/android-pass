@@ -18,4 +18,5 @@
 
 <resources>
     <string name="account_switch_title">Select account</string>
+    <string name="unknown_email">Unknown email</string>
 </resources>

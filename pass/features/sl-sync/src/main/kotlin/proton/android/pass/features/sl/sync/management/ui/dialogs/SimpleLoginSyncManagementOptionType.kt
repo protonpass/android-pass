@@ -16,20 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.details.presentation
+package proton.android.pass.features.sl.sync.management.ui.dialogs
 
-internal sealed interface SimpleLoginSyncDetailsEvent {
-
-    data object Idle : SimpleLoginSyncDetailsEvent
-
-    data object OnFetchAliasDetailsError : SimpleLoginSyncDetailsEvent
-
-    data object OnAliasDomainUpdated : SimpleLoginSyncDetailsEvent
-
-    data object OnUpdateAliasDomainError : SimpleLoginSyncDetailsEvent
-
-    data object OnAliasMailboxUpdated : SimpleLoginSyncDetailsEvent
-
-    data object OnUpdateAliasMailboxError : SimpleLoginSyncDetailsEvent
-
+enum class SimpleLoginSyncManagementOptionType {
+    Domain,
+    Mailbox
 }

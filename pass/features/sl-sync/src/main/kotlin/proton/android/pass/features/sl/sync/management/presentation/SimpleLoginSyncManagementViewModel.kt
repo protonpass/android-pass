@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.details.presentation
+package proton.android.pass.features.sl.sync.management.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -31,7 +31,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
@@ -41,7 +40,6 @@ import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAlias
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasSettings
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasDomain
-import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasMailbox
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.log.api.PassLogger
@@ -49,14 +47,13 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
-class SimpleLoginSyncDetailsViewModel @Inject constructor(
+class SimpleLoginSyncManagementViewModel @Inject constructor(
     observeSimpleLoginAliasDomains: ObserveSimpleLoginAliasDomains,
     observeSimpleLoginAliasMailboxes: ObserveSimpleLoginAliasMailboxes,
     observeSimpleLoginAliasSettings: ObserveSimpleLoginAliasSettings,
     observeSimpleLoginSyncStatus: ObserveSimpleLoginSyncStatus,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val updateSimpleLoginAliasDomain: UpdateSimpleLoginAliasDomain,
-    private val updateSimpleLoginAliasMailbox: UpdateSimpleLoginAliasMailbox
+    private val updateSimpleLoginAliasDomain: UpdateSimpleLoginAliasDomain
 ) : ViewModel() {
 
     private val modelOptionFlow = combine(
@@ -65,7 +62,7 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
         observeSimpleLoginAliasSettings(),
         observeSimpleLoginSyncStatus()
     ) { aliasDomains, aliasMailboxes, aliasSettings, syncStatus ->
-        SimpleLoginSyncDetailsModel(
+        SimpleLoginSyncManagementModel(
             aliasDomains = aliasDomains,
             aliasMailboxes = aliasMailboxes.filter { aliasMailbox -> aliasMailbox.isVerified },
             aliasSettings = aliasSettings,
@@ -74,13 +71,13 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
     }.catch { error ->
         PassLogger.w(TAG, "There was an error while observing SL alias details")
         PassLogger.w(TAG, error)
-        snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.FetchAliasDetailsError)
-        eventFlow.update { SimpleLoginSyncDetailsEvent.OnFetchAliasDetailsError }
+        snackbarDispatcher(SimpleLoginSyncManagementSnackBarMessage.FetchAliasDetailsError)
+        eventFlow.update { SimpleLoginSyncManagementEvent.OnFetchAliasManagementError }
         emit(None)
     }
 
-    private val eventFlow = MutableStateFlow<SimpleLoginSyncDetailsEvent>(
-        value = SimpleLoginSyncDetailsEvent.Idle
+    private val eventFlow = MutableStateFlow<SimpleLoginSyncManagementEvent>(
+        value = SimpleLoginSyncManagementEvent.Idle
     )
 
     private val selectedDomainOptionFlow = MutableStateFlow<Option<String?>>(None)
@@ -89,21 +86,21 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
 
     private val isUpdatingFlow = MutableStateFlow(false)
 
-    internal val state: StateFlow<SimpleLoginSyncDetailsState> = combine(
+    internal val state: StateFlow<SimpleLoginSyncManagementState> = combine(
         isUpdatingFlow,
         eventFlow,
         modelOptionFlow,
         selectedDomainOptionFlow,
         selectedMailboxOptionFlow,
-        ::SimpleLoginSyncDetailsState
+        ::SimpleLoginSyncManagementState
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
-        initialValue = SimpleLoginSyncDetailsState.Initial
+        initialValue = SimpleLoginSyncManagementState.Initial
     )
 
-    internal fun onConsumeEvent(event: SimpleLoginSyncDetailsEvent) {
-        eventFlow.compareAndSet(event, SimpleLoginSyncDetailsEvent.Idle)
+    internal fun onConsumeEvent(event: SimpleLoginSyncManagementEvent) {
+        eventFlow.compareAndSet(event, SimpleLoginSyncManagementEvent.Idle)
     }
 
     internal fun onSelectAliasDomain(selectedAliasDomain: SimpleLoginAliasDomain?) {
@@ -122,42 +119,14 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
                 .onError { error ->
                     PassLogger.w(TAG, "There was an error updating SL alias domain")
                     PassLogger.w(TAG, error)
-                    eventFlow.update { SimpleLoginSyncDetailsEvent.OnUpdateAliasDomainError }
-                    snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasDomainError)
+                    eventFlow.update { SimpleLoginSyncManagementEvent.OnUpdateAliasDomainError }
+                    snackbarDispatcher(SimpleLoginSyncManagementSnackBarMessage.UpdateAliasDomainError)
                 }
                 .onSuccess {
-                    eventFlow.update { SimpleLoginSyncDetailsEvent.OnAliasDomainUpdated }
-                    snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasDomainSuccess)
+                    eventFlow.update { SimpleLoginSyncManagementEvent.OnAliasDomainUpdated }
+                    snackbarDispatcher(SimpleLoginSyncManagementSnackBarMessage.UpdateAliasDomainSuccess)
                 }
 
-            isUpdatingFlow.update { false }
-        }
-    }
-
-    internal fun onUpdateAliasMailbox() {
-        viewModelScope.launch {
-            isUpdatingFlow.update { true }
-
-            when (val mailboxId = state.value.selectedAliasMailboxId) {
-                None -> {
-                    eventFlow.update { SimpleLoginSyncDetailsEvent.OnAliasMailboxUpdated }
-                    snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasMailboxSuccess)
-                }
-                is Some -> {
-                    runCatching { updateSimpleLoginAliasMailbox(mailboxId = mailboxId.value) }
-                        .onError { error ->
-                            PassLogger.w(TAG, "There was an error updating SL alias mailbox")
-                            PassLogger.w(TAG, error)
-                            eventFlow.update { SimpleLoginSyncDetailsEvent.OnUpdateAliasMailboxError }
-                            snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasMailboxError)
-                        }
-                        .onSuccess {
-                            eventFlow.update { SimpleLoginSyncDetailsEvent.OnAliasMailboxUpdated }
-                            snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasMailboxSuccess)
-                        }
-
-                }
-            }
             isUpdatingFlow.update { false }
         }
     }

@@ -17,4 +17,5 @@
   -->
 
 <resources>
+    <string name="account_switch_title">Select account</string>
 </resources>

@@ -95,9 +95,14 @@ fun NavGraphBuilder.selectItemGraph(
 }
 
 sealed interface SelectItemNavigation {
+    data object SelectAccount : SelectItemNavigation
     data object AddItem : SelectItemNavigation
-    data class ItemSelected(val item: ItemUiModel) : SelectItemNavigation
-    data class SuggestionSelected(val item: ItemUiModel) : SelectItemNavigation
+
+    @JvmInline
+    value class ItemSelected(val item: ItemUiModel) : SelectItemNavigation
+
+    @JvmInline
+    value class SuggestionSelected(val item: ItemUiModel) : SelectItemNavigation
     data object SortingBottomsheet : SelectItemNavigation
     data class ItemOptions(val shareId: ShareId, val itemId: ItemId) : SelectItemNavigation
     data object Cancel : SelectItemNavigation

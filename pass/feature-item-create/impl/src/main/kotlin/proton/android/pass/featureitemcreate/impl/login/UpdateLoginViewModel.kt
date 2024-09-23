@@ -82,7 +82,6 @@ import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.Up
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -105,8 +104,8 @@ class UpdateLoginViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandleProvider: SavedStateHandleProvider,
     draftRepository: DraftRepository,
-    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
-    private val emailValidator: EmailValidator,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    emailValidator: EmailValidator,
     observeTooltipEnabled: ObserveTooltipEnabled,
     disableTooltip: DisableTooltip
 ) : BaseLoginViewModel(
@@ -226,16 +225,11 @@ class UpdateLoginViewModel @Inject constructor(
     }
 
     @Suppress("LongMethod")
-    private suspend fun onItemReceived(item: Item) {
-        val isUsernameSplitEnabled = featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT).first()
+    private fun onItemReceived(item: Item) {
         encryptionContextProvider.withEncryptionContext {
             val default = LoginItemFormState.default(this)
             if (loginItemFormState.compare(default, this)) {
-                val itemContents = item.toItemContents(
-                    encryptionContext = this@withEncryptionContext,
-                    isUsernameSplitEnabled = isUsernameSplitEnabled,
-                    emailValidator = emailValidator
-                ) as ItemContents.Login
+                val itemContents = item.toItemContents(this@withEncryptionContext) as ItemContents.Login
 
                 val decryptedTotp = handleTotp(
                     encryptionContext = this@withEncryptionContext,

@@ -83,7 +83,7 @@ internal fun SimpleLoginSyncDetailsOptionsDialog(
 
                     SimpleLoginSyncDetailsOptionsDialogRow(
                         text = currentOption ?: stringResource(
-                            id = R.string.simple_login_sync_details_domain_option_blank
+                            id = R.string.simple_login_sync_management_domain_option_blank
                         ),
                         isSelected = currentOption == selectedOption,
                         onSelected = { onSelectOption(index) }

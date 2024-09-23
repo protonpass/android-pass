@@ -18,20 +18,20 @@
   -->
 <resources>
   <!-- Details screen -->
-  <string name="simple_login_sync_details_title">Alias</string>
-  <string name="simple_login_sync_details_domain_label">Dominio</string>
-  <string name="simple_login_sync_details_domain_title">Dominio predefinito per gli alias</string>
-  <string name="simple_login_sync_details_domain_option_blank">Non selezionato</string>
-  <string name="simple_login_sync_details_mailboxes_label">Caselle di posta</string>
-  <string name="simple_login_sync_details_mailboxes_title">Casella di posta predefinita per gli alias</string>
-  <string name="simple_login_sync_details_vault_title">Sincronizzazione SimpleLogin</string>
-  <string name="simple_login_sync_details_dialog_title_domains">Dominio predefinito per gli alias</string>
-  <string name="simple_login_sync_details_dialog_title_mailboxes">Casella di posta predefinita per gli alias</string>
-  <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">Caricamento dei dettagli dell\'alias non riuscito</string>
-  <string name="simple_login_sync_details_snackbar_alias_domain_update_error">Aggiornamento del dominio per gli alias non riuscito</string>
-  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">Dominio per gli alias aggiornato</string>
-  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">Aggiornamento della casella di posta per gli alias non riuscito</string>
-  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">Casella di posta per gli alias aggiornata</string>
+  <string name="simple_login_sync_management_title">Alias</string>
+  <string name="simple_login_sync_management_domain_label">Dominio</string>
+  <string name="simple_login_sync_management_domain_title">Dominio predefinito per gli alias</string>
+  <string name="simple_login_sync_management_domain_option_blank">Non selezionato</string>
+  <string name="simple_login_sync_management_mailboxes_label">Caselle di posta</string>
+  <string name="simple_login_sync_management_mailboxes_title">Casella di posta predefinita per gli alias</string>
+  <string name="simple_login_sync_management_vault_title">Sincronizzazione SimpleLogin</string>
+  <string name="simple_login_sync_management_dialog_title_domains">Dominio predefinito per gli alias</string>
+  <string name="simple_login_sync_management_dialog_title_mailboxes">Casella di posta predefinita per gli alias</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Caricamento dei dettagli dell\'alias non riuscito</string>
+  <string name="simple_login_sync_management_snackbar_alias_domain_update_error">Aggiornamento del dominio per gli alias non riuscito</string>
+  <string name="simple_login_sync_management_snackbar_alias_domain_update_success">Dominio per gli alias aggiornato</string>
+  <string name="simple_login_sync_management_snackbar_alias_mailbox_update_error">Aggiornamento della casella di posta per gli alias non riuscito</string>
+  <string name="simple_login_sync_management_snackbar_alias_mailbox_update_success">Casella di posta per gli alias aggiornata</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sincronizza gli alias</string>
   <string name="simple_login_sync_enable_snackbar_error">Abilitazione della sincronizzazione degli alias non riuscita</string>

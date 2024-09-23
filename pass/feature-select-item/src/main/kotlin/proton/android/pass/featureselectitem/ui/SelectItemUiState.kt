@@ -65,7 +65,10 @@ data class SelectItemUiState(
 data class AccountSwitchUIState(
     val selectedAccount: Option<UserId>,
     val accountList: List<AccountRowUIState>
-)
+) {
+    val hasMultipleAccounts: Boolean
+        get() = accountList.size > 1
+}
 
 data class AccountRowUIState(
     val userId: UserId,

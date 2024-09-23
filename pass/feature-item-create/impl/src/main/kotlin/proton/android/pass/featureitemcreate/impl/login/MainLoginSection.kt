@@ -34,7 +34,6 @@ internal fun MainLoginSection(
     canUpdateUsername: Boolean,
     isEditAllowed: Boolean,
     isTotpError: Boolean,
-    isInvalidEmail: Boolean,
     totpUiState: TotpUiState,
     selectedShareId: ShareId?,
     hasReachedAliasLimit: Boolean,
@@ -49,7 +48,6 @@ internal fun MainLoginSection(
         if (isUsernameSplitEnabled) {
             ExpandableEmailUsernameInput(
                 email = loginItemFormState.email,
-                isInvalidEmail = isInvalidEmail,
                 username = loginItemFormState.username,
                 canUpdateUsername = canUpdateUsername,
                 isEditAllowed = isEditAllowed,

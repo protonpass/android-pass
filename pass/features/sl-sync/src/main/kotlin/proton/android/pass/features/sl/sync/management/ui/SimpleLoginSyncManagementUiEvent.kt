@@ -16,40 +16,40 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.details.ui
+package proton.android.pass.features.sl.sync.management.ui
 
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 
-internal sealed interface SimpleLoginSyncDetailsUiEvent {
+internal sealed interface SimpleLoginSyncManagementUiEvent {
 
-    data object OnBackClicked : SimpleLoginSyncDetailsUiEvent
+    data object OnBackClicked : SimpleLoginSyncManagementUiEvent
 
-    data object OnDomainClicked : SimpleLoginSyncDetailsUiEvent
+    data object OnDomainClicked : SimpleLoginSyncManagementUiEvent
 
-    data object OnMailboxClicked : SimpleLoginSyncDetailsUiEvent
-
-    @JvmInline
-    value class OnSyncSettingsClicked(internal val shareId: ShareId?) : SimpleLoginSyncDetailsUiEvent
+    data object OnMailboxClicked : SimpleLoginSyncManagementUiEvent
 
     @JvmInline
-    value class OnDefaultVaultClicked(internal val shareId: ShareId) : SimpleLoginSyncDetailsUiEvent
+    value class OnSyncSettingsClicked(internal val shareId: ShareId?) : SimpleLoginSyncManagementUiEvent
 
-    data object OnOptionsDialogDismissed : SimpleLoginSyncDetailsUiEvent
+    @JvmInline
+    value class OnDefaultVaultClicked(internal val shareId: ShareId) : SimpleLoginSyncManagementUiEvent
+
+    data object OnOptionsDialogDismissed : SimpleLoginSyncManagementUiEvent
 
     @JvmInline
     value class OnDomainSelected(
         internal val aliasDomain: SimpleLoginAliasDomain?
-    ) : SimpleLoginSyncDetailsUiEvent
+    ) : SimpleLoginSyncManagementUiEvent
 
     @JvmInline
     value class OnMailboxSelected(
         internal val aliasMailbox: SimpleLoginAliasMailbox
-    ) : SimpleLoginSyncDetailsUiEvent
+    ) : SimpleLoginSyncManagementUiEvent
 
-    data object OnUpdateDomainClicked : SimpleLoginSyncDetailsUiEvent
+    data object OnUpdateDomainClicked : SimpleLoginSyncManagementUiEvent
 
-    data object OnUpdateMailboxClicked : SimpleLoginSyncDetailsUiEvent
+    data object OnUpdateMailboxClicked : SimpleLoginSyncManagementUiEvent
 
 }

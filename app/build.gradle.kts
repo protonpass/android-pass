@@ -496,8 +496,8 @@ dependencies {
     androidTestImplementation(libs.bundles.core.test) {
         exclude(module = "protobuf-lite")
     }
+    androidTestImplementation(libs.core.test.android.test.rule)
     androidTestUtil(libs.androidx.test.orchestrator)
-
     baselineProfile(projects.appmacrobenchmark)
 }
 

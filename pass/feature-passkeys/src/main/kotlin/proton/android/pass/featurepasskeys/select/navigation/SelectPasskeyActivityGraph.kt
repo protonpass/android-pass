@@ -114,6 +114,9 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
                 SelectItemNavigation.Upgrade -> {
                     onNavigate(SelectPasskeyNavigation.Upgrade)
                 }
+
+                SelectItemNavigation.SelectAccount ->
+                    throw IllegalStateException("Cannot select account on SelectPasskey")
             }
         }
     )

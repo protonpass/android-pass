@@ -82,6 +82,9 @@ import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 import proton.android.pass.featurepassword.impl.dialog.mode.PasswordModeDialog
 import proton.android.pass.featurepassword.impl.dialog.separator.WordSeparatorDialog
 import proton.android.pass.featurepassword.impl.generatePasswordBottomsheetGraph
+import proton.android.pass.features.report.navigation.AccountSwitchNavItem
+import proton.android.pass.features.report.navigation.AccountSwitchNavigation
+import proton.android.pass.features.report.navigation.accountSwitchNavGraph
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
 import proton.android.pass.featuresearchoptions.impl.SortingBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SortingLocation
@@ -136,7 +139,8 @@ fun NavGraphBuilder.autofillActivityGraph(
                 )
 
                 is AuthNavigation.SignOut,
-                AuthNavigation.ForceSignOutAllUsers -> {}
+                AuthNavigation.ForceSignOutAllUsers -> {
+                }
             }
         }
     )
@@ -169,6 +173,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                 )
 
                 SelectItemNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
+                SelectItemNavigation.SelectAccount -> appNavigator.navigate(AccountSwitchNavItem)
             }
         }
     )
@@ -178,6 +183,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                 is SearchOptionsNavigation.SelectSorting -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
+
                 SearchOptionsNavigation.ResetFilters,
                 SearchOptionsNavigation.Filter,
                 SearchOptionsNavigation.Sorting,
@@ -282,13 +288,19 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
                     destination = CustomFieldOptionsBottomSheetNavItem.CreateLogin,
-                    route = CustomFieldOptionsBottomSheetNavItem.CreateLogin.buildRoute(it.index, it.currentValue)
+                    route = CustomFieldOptionsBottomSheetNavItem.CreateLogin.buildRoute(
+                        it.index,
+                        it.currentValue
+                    )
                 )
 
                 is BaseLoginNavigation.EditCustomField -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem.CreateLogin,
-                        route = EditCustomFieldNameDialogNavItem.CreateLogin.buildRoute(it.index, it.currentValue),
+                        route = EditCustomFieldNameDialogNavItem.CreateLogin.buildRoute(
+                            it.index,
+                            it.currentValue
+                        ),
                         backDestination = CreateLogin
                     )
                 }
@@ -410,14 +422,20 @@ fun NavGraphBuilder.autofillActivityGraph(
                 is BaseIdentityNavigation.EditCustomField -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem.CreateIdentity,
-                        route = EditCustomFieldNameDialogNavItem.CreateIdentity.buildRoute(it.index, it.title),
+                        route = EditCustomFieldNameDialogNavItem.CreateIdentity.buildRoute(
+                            it.index,
+                            it.title
+                        ),
                         backDestination = CreateIdentity
                     )
                 }
 
                 is BaseIdentityNavigation.CustomFieldOptions -> appNavigator.navigate(
                     destination = CustomFieldOptionsBottomSheetNavItem.CreateIdentity,
-                    route = CustomFieldOptionsBottomSheetNavItem.CreateIdentity.buildRoute(it.index, it.title)
+                    route = CustomFieldOptionsBottomSheetNavItem.CreateIdentity.buildRoute(
+                        it.index,
+                        it.title
+                    )
                 )
 
                 BaseIdentityNavigation.RemovedCustomField -> dismissBottomSheet {
@@ -454,6 +472,7 @@ fun NavGraphBuilder.autofillActivityGraph(
         is NodeCluster.CreditCard -> AutofillCreditCard
         is NodeCluster.Login,
         is NodeCluster.SignUp -> AutofillLogin
+
         is NodeCluster.Identity -> AutofillIdentity
 
         NodeCluster.Empty -> AutofillLogin
@@ -527,6 +546,14 @@ fun NavGraphBuilder.autofillActivityGraph(
         when (it) {
             ItemOptionsNavigation.Close -> dismissBottomSheet {
                 appNavigator.navigateBack(comesFromBottomsheet = true)
+            }
+        }
+    }
+
+    accountSwitchNavGraph {
+        when (it) {
+            AccountSwitchNavigation.CreateItem -> dismissBottomSheet {
+                appNavigator.navigate(CreateItemBottomsheet)
             }
         }
     }

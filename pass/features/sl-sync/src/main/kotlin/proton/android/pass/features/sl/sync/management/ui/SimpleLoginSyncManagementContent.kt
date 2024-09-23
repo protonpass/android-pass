@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.details.ui
+package proton.android.pass.features.sl.sync.management.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -32,16 +32,16 @@ import proton.android.pass.commonui.api.PassTopBarBackButtonType
 import proton.android.pass.composecomponents.impl.loading.PassFullScreenLoading
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.sl.sync.R
-import proton.android.pass.features.sl.sync.details.presentation.SimpleLoginSyncDetailsState
-import proton.android.pass.features.sl.sync.details.ui.dialogs.SimpleLoginSyncDetailsOptionType
-import proton.android.pass.features.sl.sync.details.ui.dialogs.SimpleLoginSyncDetailsOptionsDialog
+import proton.android.pass.features.sl.sync.management.presentation.SimpleLoginSyncManagementState
+import proton.android.pass.features.sl.sync.management.ui.dialogs.SimpleLoginSyncManagementOptionType
+import proton.android.pass.features.sl.sync.management.ui.dialogs.SimpleLoginSyncDetailsOptionsDialog
 
 @Composable
 internal fun SimpleLoginSyncDetailsContent(
     modifier: Modifier = Modifier,
-    onUiEvent: (SimpleLoginSyncDetailsUiEvent) -> Unit,
-    state: SimpleLoginSyncDetailsState,
-    dialogOptionTypeOption: Option<SimpleLoginSyncDetailsOptionType>
+    onUiEvent: (SimpleLoginSyncManagementUiEvent) -> Unit,
+    state: SimpleLoginSyncManagementState,
+    dialogOptionTypeOption: Option<SimpleLoginSyncManagementOptionType>
 ) = with(state) {
     Scaffold(
         modifier = modifier,
@@ -50,7 +50,7 @@ internal fun SimpleLoginSyncDetailsContent(
                 modifier = modifier,
                 backButton = PassTopBarBackButtonType.BackArrow,
                 title = stringResource(id = R.string.simple_login_sync_details_title),
-                onUpClick = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnBackClicked) }
+                onUpClick = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnBackClicked) }
             )
         }
     ) { innerPaddingValue ->
@@ -84,36 +84,36 @@ internal fun SimpleLoginSyncDetailsContent(
 
     if (dialogOptionTypeOption is Some) {
         when (dialogOptionTypeOption.value) {
-            SimpleLoginSyncDetailsOptionType.Domain -> {
+            SimpleLoginSyncManagementOptionType.Domain -> {
                 SimpleLoginSyncDetailsOptionsDialog(
                     titleResId = R.string.simple_login_sync_details_dialog_title_domains,
                     selectedOption = selectedAliasDomain,
                     options = aliasDomainOptions,
                     isLoading = isUpdating,
                     onSelectOption = { selectedOptionIndex ->
-                        SimpleLoginSyncDetailsUiEvent.OnDomainSelected(
+                        SimpleLoginSyncManagementUiEvent.OnDomainSelected(
                             aliasDomain = getAliasDomain(selectedOptionIndex)
                         ).also(onUiEvent)
                     },
-                    onDismiss = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnOptionsDialogDismissed) },
-                    onUpdate = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnUpdateDomainClicked) },
+                    onDismiss = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnOptionsDialogDismissed) },
+                    onUpdate = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnUpdateDomainClicked) },
                     canUpdate = canUpdateDomain
                 )
             }
 
-            SimpleLoginSyncDetailsOptionType.Mailbox -> {
+            SimpleLoginSyncManagementOptionType.Mailbox -> {
                 SimpleLoginSyncDetailsOptionsDialog(
                     titleResId = R.string.simple_login_sync_details_dialog_title_mailboxes,
                     selectedOption = selectedAliasMailboxEmail,
                     options = aliasMailboxOptions,
                     isLoading = isUpdating,
                     onSelectOption = { selectedOptionIndex ->
-                        SimpleLoginSyncDetailsUiEvent.OnMailboxSelected(
+                        SimpleLoginSyncManagementUiEvent.OnMailboxSelected(
                             aliasMailbox = getAliasMailbox(selectedOptionIndex)
                         ).also(onUiEvent)
                     },
-                    onDismiss = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnOptionsDialogDismissed) },
-                    onUpdate = { onUiEvent(SimpleLoginSyncDetailsUiEvent.OnUpdateMailboxClicked) },
+                    onDismiss = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnOptionsDialogDismissed) },
+                    onUpdate = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnUpdateMailboxClicked) },
                     canUpdate = canUpdateMailbox
                 )
             }

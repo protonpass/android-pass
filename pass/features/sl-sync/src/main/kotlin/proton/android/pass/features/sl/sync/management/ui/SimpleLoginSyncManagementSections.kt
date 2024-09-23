@@ -58,18 +58,18 @@ internal fun SimpleLoginSyncDetailsSections(
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
         SimpleLoginSyncSectionRow(
-            label = stringResource(id = R.string.simple_login_sync_details_domain_label),
-            title = stringResource(id = R.string.simple_login_sync_details_domain_title),
+            label = stringResource(id = R.string.simple_login_sync_management_domain_label),
+            title = stringResource(id = R.string.simple_login_sync_management_domain_title),
             subtitle = defaultDomain ?: stringResource(
-                id = R.string.simple_login_sync_details_domain_option_blank
+                id = R.string.simple_login_sync_management_domain_option_blank
             ),
             onClick = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnDomainClicked) },
             isClickable = canSelectDomain
         )
 
         SimpleLoginSyncSectionRow(
-            label = stringResource(id = R.string.simple_login_sync_details_mailboxes_label),
-            title = stringResource(id = R.string.simple_login_sync_details_mailboxes_title),
+            label = stringResource(id = R.string.simple_login_sync_management_mailboxes_label),
+            title = stringResource(id = R.string.simple_login_sync_management_mailboxes_title),
             subtitle = defaultMailboxEmail,
             onClick = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnMailboxClicked) },
             isClickable = canSelectMailbox
@@ -85,7 +85,7 @@ internal fun SimpleLoginSyncDetailsSections(
                             iconColor = color.toColor()
                         )
                     },
-                    label = stringResource(id = R.string.simple_login_sync_details_vault_title),
+                    label = stringResource(id = R.string.simple_login_sync_management_vault_title),
                     title = stringResource(id = R.string.simple_login_sync_shared_default_vault_title),
                     subtitle = name,
                     description = stringResource(
@@ -103,7 +103,7 @@ internal fun SimpleLoginSyncDetailsSections(
                 verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
             ) {
                 SimpleLoginSyncLabelText(
-                    text = stringResource(id = R.string.simple_login_sync_details_vault_title)
+                    text = stringResource(id = R.string.simple_login_sync_management_vault_title)
                 )
 
                 PassSingleActionWidget(

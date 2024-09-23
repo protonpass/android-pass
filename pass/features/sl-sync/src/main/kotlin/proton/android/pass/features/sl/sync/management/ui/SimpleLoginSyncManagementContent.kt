@@ -49,7 +49,7 @@ internal fun SimpleLoginSyncDetailsContent(
             PassExtendedTopBar(
                 modifier = modifier,
                 backButton = PassTopBarBackButtonType.BackArrow,
-                title = stringResource(id = R.string.simple_login_sync_details_title),
+                title = stringResource(id = R.string.simple_login_sync_management_title),
                 onUpClick = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnBackClicked) }
             )
         }
@@ -86,7 +86,7 @@ internal fun SimpleLoginSyncDetailsContent(
         when (dialogOptionTypeOption.value) {
             SimpleLoginSyncManagementOptionType.Domain -> {
                 SimpleLoginSyncDetailsOptionsDialog(
-                    titleResId = R.string.simple_login_sync_details_dialog_title_domains,
+                    titleResId = R.string.simple_login_sync_management_dialog_title_domains,
                     selectedOption = selectedAliasDomain,
                     options = aliasDomainOptions,
                     isLoading = isUpdating,
@@ -103,7 +103,7 @@ internal fun SimpleLoginSyncDetailsContent(
 
             SimpleLoginSyncManagementOptionType.Mailbox -> {
                 SimpleLoginSyncDetailsOptionsDialog(
-                    titleResId = R.string.simple_login_sync_details_dialog_title_mailboxes,
+                    titleResId = R.string.simple_login_sync_management_dialog_title_mailboxes,
                     selectedOption = selectedAliasMailboxEmail,
                     options = aliasMailboxOptions,
                     isLoading = isUpdating,

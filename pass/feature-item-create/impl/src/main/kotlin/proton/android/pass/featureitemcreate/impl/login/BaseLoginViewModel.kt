@@ -261,7 +261,6 @@ abstract class BaseLoginViewModel(
 
     internal fun onEmailChanged(newEmail: String) {
         onUserEditedContent()
-        removeValidationErrors(LoginItemValidationErrors.InvalidEmail)
         when {
             loginItemFormState.isExpanded -> loginItemFormState.copy(
                 email = newEmail
@@ -408,10 +407,7 @@ abstract class BaseLoginViewModel(
             customFields = customFields
         )
 
-        val loginItemValidationErrors = loginItemFormState.validate(
-            emailValidator = emailValidator,
-            isUsernameSplitEnabled = baseLoginUiState.value.isUsernameSplitEnabled
-        )
+        val loginItemValidationErrors = loginItemFormState.validate()
         if (loginItemValidationErrors.isNotEmpty()) {
             loginItemValidationErrorsState.update { loginItemValidationErrors }
             return false

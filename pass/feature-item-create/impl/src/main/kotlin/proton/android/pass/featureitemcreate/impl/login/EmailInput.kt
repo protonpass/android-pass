@@ -41,8 +41,7 @@ internal fun EmailInput(
     onFocusChange: (Boolean) -> Unit,
     leadingIcon: @Composable () -> Unit,
     trailingIcon: @Composable () -> Unit,
-    isEditable: Boolean,
-    isInvalid: Boolean
+    isEditable: Boolean
 ) {
     ProtonTextField(
         modifier = modifier.padding(
@@ -53,7 +52,6 @@ internal fun EmailInput(
         ),
         value = email,
         editable = isEditable,
-        isError = isInvalid,
         errorMessage = stringResource(id = R.string.field_email_error),
         onChange = onEmailChange,
         onFocusChange = onFocusChange,
@@ -61,8 +59,7 @@ internal fun EmailInput(
         leadingIcon = leadingIcon,
         label = {
             ProtonTextFieldLabel(
-                text = stringResource(id = emailLabelResId),
-                isError = isInvalid
+                text = stringResource(id = emailLabelResId)
             )
         },
         placeholder = {

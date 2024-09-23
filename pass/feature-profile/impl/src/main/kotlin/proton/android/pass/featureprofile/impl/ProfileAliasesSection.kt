@@ -36,7 +36,7 @@ internal fun ProfileAliasesSection(modifier: Modifier = Modifier, onclick: () ->
         modifier = modifier.roundedContainerNorm()
     ) {
         SettingOption(
-            text = stringResource(R.string.profile_option_aliases),
+            text = stringResource(R.string.profile_option_alias_management),
             onClick = onclick
         )
     }

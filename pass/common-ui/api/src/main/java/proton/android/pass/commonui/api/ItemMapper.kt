@@ -18,7 +18,6 @@
 
 package proton.android.pass.commonui.api
 
-import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
@@ -38,28 +37,6 @@ fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     shareId = shareId,
     userId = userId,
     contents = toItemContents(context),
-    state = state,
-    createTime = createTime,
-    modificationTime = modificationTime,
-    lastAutofillTime = lastAutofillTime.value(),
-    isPinned = isPinned,
-    category = itemType.category,
-    revision = revision
-)
-
-fun Item.toUiModel(
-    encryptionContext: EncryptionContext,
-    isUsernameSplitEnabled: Boolean,
-    emailValidator: EmailValidator
-): ItemUiModel = ItemUiModel(
-    id = id,
-    shareId = shareId,
-    userId = userId,
-    contents = toItemContents(
-        encryptionContext = encryptionContext,
-        isUsernameSplitEnabled = isUsernameSplitEnabled,
-        emailValidator = emailValidator
-    ),
     state = state,
     createTime = createTime,
     modificationTime = modificationTime,
@@ -190,39 +167,6 @@ private fun Item.createIdentity(encryptionContext: EncryptionContext, type: Item
         )
     }
 )
-
-fun Item.toItemContents(
-    encryptionContext: EncryptionContext,
-    isUsernameSplitEnabled: Boolean,
-    emailValidator: EmailValidator
-): ItemContents = when (itemType) {
-    is ItemType.Alias,
-    is ItemType.CreditCard,
-    is ItemType.Note,
-    is ItemType.Identity,
-    ItemType.Password,
-    ItemType.Unknown -> toItemContents(encryptionContext)
-
-    is ItemType.Login -> (this.toItemContents(encryptionContext) as ItemContents.Login)
-        .let { loginContents ->
-            if (isUsernameSplitEnabled) {
-                val hasEmailAsEmailOrUsername = emailValidator.isValid(loginContents.itemEmail)
-                val itemEmail = if (hasEmailAsEmailOrUsername) loginContents.itemEmail else ""
-                val itemUsername = when {
-                    hasEmailAsEmailOrUsername -> loginContents.itemUsername
-                    loginContents.itemEmail.isEmpty() -> loginContents.itemUsername
-                    else -> loginContents.itemEmail
-                }
-
-                loginContents.copy(
-                    itemEmail = itemEmail,
-                    itemUsername = itemUsername
-                )
-            } else {
-                loginContents
-            }
-        }
-}
 
 private fun concealedOrEmpty(value: String, encryptionContext: EncryptionContext): HiddenState {
     val asByteArray = encryptionContext.decrypt(value.toEncryptedByteArray())

@@ -18,20 +18,20 @@
   -->
 <resources>
   <!-- Details screen -->
-  <string name="simple_login_sync_details_title">Aliasy</string>
-  <string name="simple_login_sync_details_domain_label">Doména</string>
-  <string name="simple_login_sync_details_domain_title">Výchozí doména pro aliasy</string>
-  <string name="simple_login_sync_details_domain_option_blank">Nevybráno</string>
-  <string name="simple_login_sync_details_mailboxes_label">E-mailové schránky</string>
-  <string name="simple_login_sync_details_mailboxes_title">Výchozí e-mailová schránka pro aliasy</string>
-  <string name="simple_login_sync_details_vault_title">Synchronizace SimpleLogin</string>
-  <string name="simple_login_sync_details_dialog_title_domains">Výchozí doména pro aliasy</string>
-  <string name="simple_login_sync_details_dialog_title_mailboxes">Výchozí e-mailová schránka pro aliasy</string>
-  <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">Došlo k chybě při získávání detailů SL aliasu</string>
-  <string name="simple_login_sync_details_snackbar_alias_domain_update_error">Došlo k chybě při aktualizaci domény SL aliasu</string>
-  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">Doména SL aliasu úspěšně aktualizována</string>
-  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">Došlo k chybě při aktualizaci e-mailové schránky SL alias</string>
-  <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">E-mailová schránka SL aliasu úspěšně aktualizována</string>
+  <string name="simple_login_sync_management_title">Aliasy</string>
+  <string name="simple_login_sync_management_domain_label">Doména</string>
+  <string name="simple_login_sync_management_domain_title">Výchozí doména pro aliasy</string>
+  <string name="simple_login_sync_management_domain_option_blank">Nevybráno</string>
+  <string name="simple_login_sync_management_mailboxes_label">E-mailové schránky</string>
+  <string name="simple_login_sync_management_mailboxes_title">Výchozí e-mailová schránka pro aliasy</string>
+  <string name="simple_login_sync_management_vault_title">Synchronizace SimpleLogin</string>
+  <string name="simple_login_sync_management_dialog_title_domains">Výchozí doména pro aliasy</string>
+  <string name="simple_login_sync_management_dialog_title_mailboxes">Výchozí e-mailová schránka pro aliasy</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Došlo k chybě při získávání detailů SL aliasu</string>
+  <string name="simple_login_sync_management_snackbar_alias_domain_update_error">Došlo k chybě při aktualizaci domény SL aliasu</string>
+  <string name="simple_login_sync_management_snackbar_alias_domain_update_success">Doména SL aliasu úspěšně aktualizována</string>
+  <string name="simple_login_sync_management_snackbar_alias_mailbox_update_error">Došlo k chybě při aktualizaci e-mailové schránky SL alias</string>
+  <string name="simple_login_sync_management_snackbar_alias_mailbox_update_success">E-mailová schránka SL aliasu úspěšně aktualizována</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Synchronizovat aliasy</string>
   <string name="simple_login_sync_enable_snackbar_error">Došlo k chybě při povolování synchronizace SimpleLogin aliasů</string>

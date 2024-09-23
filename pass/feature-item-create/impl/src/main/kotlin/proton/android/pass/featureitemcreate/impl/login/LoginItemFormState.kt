@@ -23,7 +23,6 @@ import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.common.api.PasswordStrength
-import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.crypto.api.context.EncryptionContext
@@ -58,18 +57,9 @@ data class LoginItemFormState(
     @IgnoredOnParcel
     internal val isExpanded: Boolean = isExpandedInitially || isExpandedByUser
 
-    internal fun validate(
-        emailValidator: EmailValidator,
-        isUsernameSplitEnabled: Boolean
-    ): Set<LoginItemValidationErrors> = mutableSetOf<LoginItemValidationErrors>().apply {
+    internal fun validate(): Set<LoginItemValidationErrors> = mutableSetOf<LoginItemValidationErrors>().apply {
         if (title.isBlank()) {
             add(LoginItemValidationErrors.BlankTitle)
-        }
-
-        if (isUsernameSplitEnabled) {
-            if (email.isNotBlank() && isExpanded && !emailValidator.isValid(email)) {
-                add(LoginItemValidationErrors.InvalidEmail)
-            }
         }
 
         urls.forEachIndexed { idx, url ->
@@ -140,8 +130,6 @@ data class LoginItemFormState(
 internal sealed interface LoginItemValidationErrors {
 
     data object BlankTitle : LoginItemValidationErrors
-
-    data object InvalidEmail : LoginItemValidationErrors
 
     @JvmInline
     value class InvalidUrl(val index: Int) : LoginItemValidationErrors

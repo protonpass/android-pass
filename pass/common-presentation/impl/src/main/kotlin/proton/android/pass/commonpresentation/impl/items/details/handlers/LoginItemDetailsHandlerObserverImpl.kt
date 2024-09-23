@@ -20,7 +20,6 @@ package proton.android.pass.commonpresentation.impl.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -29,7 +28,6 @@ import kotlinx.coroutines.flow.onStart
 import proton.android.pass.common.api.combineN
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
-import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
@@ -60,8 +58,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
     private val totpManager: TotpManager,
-    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
-    private val emailValidator: EmailValidator
+    private val featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : ItemDetailsHandlerObserver<ItemContents.Login>() {
 
     override fun observe(item: Item): Flow<ItemDetailState> = combineN(
@@ -97,19 +94,11 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     }
 
     private fun observeLoginItemContents(item: Item): Flow<ItemContents.Login> = flow {
-        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT).first()
-            .let { isUsernameSplitEnabled ->
-                encryptionContextProvider.withEncryptionContext {
-                    item.toItemContents(
-                        encryptionContext = this@withEncryptionContext,
-                        isUsernameSplitEnabled = isUsernameSplitEnabled,
-                        emailValidator = emailValidator
-                    ) as ItemContents.Login
-                }
-            }
-            .let { loginItemContents ->
-                emit(loginItemContents)
-            }
+        encryptionContextProvider.withEncryptionContext {
+            item.toItemContents(this@withEncryptionContext) as ItemContents.Login
+        }.let { loginItemContents ->
+            emit(loginItemContents)
+        }
     }
 
     private fun observePrimaryTotp(item: Item): Flow<Totp?> = observeLoginItemContents(item)

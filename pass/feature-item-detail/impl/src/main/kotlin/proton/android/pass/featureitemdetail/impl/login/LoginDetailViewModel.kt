@@ -50,7 +50,6 @@ import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
-import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -153,8 +152,7 @@ class LoginDetailViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     insecurePasswordChecker: InsecurePasswordChecker,
     duplicatedPasswordChecker: DuplicatedPasswordChecker,
-    missingTfaChecker: MissingTfaChecker,
-    emailValidator: EmailValidator
+    missingTfaChecker: MissingTfaChecker
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandle.get()
@@ -225,20 +223,15 @@ class LoginDetailViewModel @Inject constructor(
 
     private val loginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> = combine(
         loginItemDetailsResultFlow,
-        canPerformPaidActionFlow,
-        itemFeaturesFlow
-    ) { detailsResult, paidActionResult, itemFeatures ->
+        canPerformPaidActionFlow
+    ) { detailsResult, paidActionResult ->
         paidActionResult.flatMap { isPaid ->
             detailsResult.map { details ->
                 val itemType = details.item.itemType as ItemType.Login
                 val alias = getAliasForItem(itemType)
 
                 val (itemUiModel, passwordScore) = encryptionContextProvider.withEncryptionContext {
-                    val model = details.item.toUiModel(
-                        encryptionContext = this@withEncryptionContext,
-                        isUsernameSplitEnabled = itemFeatures.isUsernameSplitEnabled,
-                        emailValidator = emailValidator
-                    )
+                    val model = details.item.toUiModel(this@withEncryptionContext)
                     val contents = model.contents as ItemContents.Login
 
                     val isPasswordEmpty =

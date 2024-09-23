@@ -21,6 +21,8 @@ package proton.android.pass.featurepasskeys.select.navigation
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.None
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsBottomSheet
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsNavigation
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.itemOptionsGraph
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
@@ -152,4 +154,12 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
             }
         }
     )
+
+    itemOptionsGraph {
+        when (it) {
+            ItemOptionsNavigation.Close -> dismissBottomSheet {
+                appNavigator.navigateBack(comesFromBottomsheet = true)
+            }
+        }
+    }
 }

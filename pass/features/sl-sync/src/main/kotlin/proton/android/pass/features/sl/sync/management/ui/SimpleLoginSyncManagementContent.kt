@@ -26,14 +26,11 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTopBarBackButtonType
 import proton.android.pass.composecomponents.impl.loading.PassFullScreenLoading
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.management.presentation.SimpleLoginSyncManagementState
-import proton.android.pass.features.sl.sync.management.ui.dialogs.SimpleLoginSyncManagementOptionType
 import proton.android.pass.features.sl.sync.management.ui.dialogs.SimpleLoginSyncDetailsOptionsDialog
 
 @Composable
@@ -41,7 +38,7 @@ internal fun SimpleLoginSyncDetailsContent(
     modifier: Modifier = Modifier,
     onUiEvent: (SimpleLoginSyncManagementUiEvent) -> Unit,
     state: SimpleLoginSyncManagementState,
-    dialogOptionTypeOption: Option<SimpleLoginSyncManagementOptionType>
+    shouldShowAliasDomainDialog: Boolean
 ) = with(state) {
     Scaffold(
         modifier = modifier,
@@ -67,56 +64,34 @@ internal fun SimpleLoginSyncDetailsContent(
             enter = fadeIn(),
             exit = fadeOut()
         ) {
-            SimpleLoginSyncDetailsSections(
+            SimpleLoginSyncManagementSections(
                 modifier = Modifier.padding(paddingValues = innerPaddingValue),
                 defaultDomain = defaultDomain,
-                defaultMailboxEmail = defaultMailboxEmail,
+                aliasMailboxes = aliasMailboxes,
                 defaultVault = defaultVault,
                 isSyncEnabled = isSyncEnabled,
                 hasPendingAliases = hasPendingAliases,
                 pendingAliasesCount = pendingAliasesCount,
                 canSelectDomain = canSelectDomain,
-                canSelectMailbox = canSelectMailbox,
                 onUiEvent = onUiEvent
             )
         }
     }
 
-    if (dialogOptionTypeOption is Some) {
-        when (dialogOptionTypeOption.value) {
-            SimpleLoginSyncManagementOptionType.Domain -> {
-                SimpleLoginSyncDetailsOptionsDialog(
-                    titleResId = R.string.simple_login_sync_management_dialog_title_domains,
-                    selectedOption = selectedAliasDomain,
-                    options = aliasDomainOptions,
-                    isLoading = isUpdating,
-                    onSelectOption = { selectedOptionIndex ->
-                        SimpleLoginSyncManagementUiEvent.OnDomainSelected(
-                            aliasDomain = getAliasDomain(selectedOptionIndex)
-                        ).also(onUiEvent)
-                    },
-                    onDismiss = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnOptionsDialogDismissed) },
-                    onUpdate = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnUpdateDomainClicked) },
-                    canUpdate = canUpdateDomain
-                )
-            }
-
-            SimpleLoginSyncManagementOptionType.Mailbox -> {
-                SimpleLoginSyncDetailsOptionsDialog(
-                    titleResId = R.string.simple_login_sync_management_dialog_title_mailboxes,
-                    selectedOption = selectedAliasMailboxEmail,
-                    options = aliasMailboxOptions,
-                    isLoading = isUpdating,
-                    onSelectOption = { selectedOptionIndex ->
-                        SimpleLoginSyncManagementUiEvent.OnMailboxSelected(
-                            aliasMailbox = getAliasMailbox(selectedOptionIndex)
-                        ).also(onUiEvent)
-                    },
-                    onDismiss = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnOptionsDialogDismissed) },
-                    onUpdate = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnUpdateMailboxClicked) },
-                    canUpdate = canUpdateMailbox
-                )
-            }
-        }
+    if (shouldShowAliasDomainDialog) {
+        SimpleLoginSyncDetailsOptionsDialog(
+            titleResId = R.string.simple_login_sync_management_dialog_title_domains,
+            selectedOption = selectedAliasDomain,
+            options = aliasDomainOptions,
+            isLoading = isUpdating,
+            onSelectOption = { selectedOptionIndex ->
+                SimpleLoginSyncManagementUiEvent.OnDomainSelected(
+                    aliasDomain = getAliasDomain(selectedOptionIndex)
+                ).also(onUiEvent)
+            },
+            onDismiss = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnOptionsDialogDismissed) },
+            onUpdate = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnUpdateDomainClicked) },
+            canUpdate = canUpdateDomain
+        )
     }
 }

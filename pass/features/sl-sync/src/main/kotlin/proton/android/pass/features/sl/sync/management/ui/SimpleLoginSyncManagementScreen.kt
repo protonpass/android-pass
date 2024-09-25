@@ -26,12 +26,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.toOption
 import proton.android.pass.features.sl.sync.management.presentation.SimpleLoginSyncManagementEvent
 import proton.android.pass.features.sl.sync.management.presentation.SimpleLoginSyncManagementViewModel
-import proton.android.pass.features.sl.sync.management.ui.dialogs.SimpleLoginSyncManagementOptionType
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 
 @Composable
@@ -41,9 +37,7 @@ fun SimpleLoginSyncDetailsScreen(
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
 
-    var dialogOptionTypeOption by remember {
-        mutableStateOf<Option<SimpleLoginSyncManagementOptionType>>(None)
-    }
+    var shouldShowAliasDomainDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(state.event) {
         when (state.event) {
@@ -57,7 +51,7 @@ fun SimpleLoginSyncDetailsScreen(
             SimpleLoginSyncManagementEvent.OnAliasMailboxUpdated,
             SimpleLoginSyncManagementEvent.OnUpdateAliasDomainError,
             SimpleLoginSyncManagementEvent.OnUpdateAliasMailboxError -> {
-                dialogOptionTypeOption = None
+                shouldShowAliasDomainDialog = false
             }
 
             SimpleLoginSyncManagementEvent.Idle -> {}
@@ -68,7 +62,7 @@ fun SimpleLoginSyncDetailsScreen(
 
     SimpleLoginSyncDetailsContent(
         state = state,
-        dialogOptionTypeOption = dialogOptionTypeOption,
+        shouldShowAliasDomainDialog = shouldShowAliasDomainDialog,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SimpleLoginSyncManagementUiEvent.OnBackClicked -> {
@@ -76,11 +70,7 @@ fun SimpleLoginSyncDetailsScreen(
                 }
 
                 SimpleLoginSyncManagementUiEvent.OnDomainClicked -> {
-                    dialogOptionTypeOption = SimpleLoginSyncManagementOptionType.Domain.toOption()
-                }
-
-                SimpleLoginSyncManagementUiEvent.OnMailboxClicked -> {
-                    dialogOptionTypeOption = SimpleLoginSyncManagementOptionType.Mailbox.toOption()
+                    shouldShowAliasDomainDialog = true
                 }
 
                 is SimpleLoginSyncManagementUiEvent.OnSyncSettingsClicked -> {
@@ -96,7 +86,7 @@ fun SimpleLoginSyncDetailsScreen(
                 }
 
                 SimpleLoginSyncManagementUiEvent.OnOptionsDialogDismissed -> {
-                    dialogOptionTypeOption = None
+                    shouldShowAliasDomainDialog = false
                 }
 
                 is SimpleLoginSyncManagementUiEvent.OnDomainSelected -> {
@@ -113,6 +103,14 @@ fun SimpleLoginSyncDetailsScreen(
 
                 SimpleLoginSyncManagementUiEvent.OnUpdateMailboxClicked -> {
                     onUpdateAliasMailbox()
+                }
+
+                SimpleLoginSyncManagementUiEvent.OnAddMailboxClicked -> {
+                    // Will be implemented in IDTEAM-3911
+                }
+
+                is SimpleLoginSyncManagementUiEvent.OnMailboxMenuClicked -> {
+                    // Will be implemented in IDTEAM-3911
                 }
             }
         }

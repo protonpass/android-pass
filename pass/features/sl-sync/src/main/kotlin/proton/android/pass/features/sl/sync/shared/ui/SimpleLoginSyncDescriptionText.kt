@@ -18,20 +18,18 @@
 
 package proton.android.pass.features.sl.sync.shared.ui
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.body3Norm
 
 @Composable
 internal fun SimpleLoginSyncDescriptionText(modifier: Modifier = Modifier, text: String) {
     Text(
-        modifier = modifier.padding(horizontal = Spacing.small),
+        modifier = modifier,
         text = text,
-        style = PassTheme.typography.body3Norm(),
-        color = PassTheme.colors.textWeak
+        style = ProtonTheme.typography.captionWeak.copy(PassTheme.colors.textWeak)
     )
 }

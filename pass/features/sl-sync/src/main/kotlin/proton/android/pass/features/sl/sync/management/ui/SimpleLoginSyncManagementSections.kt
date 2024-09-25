@@ -71,9 +71,13 @@ internal fun SimpleLoginSyncManagementSections(
         SimpleLoginSyncManagementMailboxSection(
             aliasMailboxes = aliasMailboxes,
             onAddClick = {
-
+                onUiEvent(SimpleLoginSyncManagementUiEvent.OnAddMailboxClicked)
             },
-            onMenuClick = {}
+            onMenuClick = { aliasMailbox ->
+                SimpleLoginSyncManagementUiEvent.OnMailboxMenuClicked(
+                    aliasMailbox = aliasMailbox
+                ).also(onUiEvent)
+            }
         )
 
         if (isSyncEnabled && defaultVault != null) {

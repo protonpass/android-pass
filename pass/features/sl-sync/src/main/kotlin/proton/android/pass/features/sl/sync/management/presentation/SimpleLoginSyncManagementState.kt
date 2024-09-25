@@ -21,6 +21,7 @@ package proton.android.pass.features.sl.sync.management.presentation
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateListOf
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -51,8 +52,6 @@ internal data class SimpleLoginSyncManagementState(
                 .firstOrNull { aliasMailbox -> aliasMailbox.id == modelOption.value.defaultMailboxId }
     }
 
-    internal val defaultMailboxEmail: String = defaultMailbox?.email.orEmpty()
-
     internal val defaultVault: Vault? = when (modelOption) {
         None -> null
         is Some -> modelOption.value.defaultVault
@@ -70,16 +69,10 @@ internal data class SimpleLoginSyncManagementState(
 
     internal val canSelectDomain: Boolean = aliasDomains.size > 1
 
-    private val aliasMailboxes: List<SimpleLoginAliasMailbox> = when (modelOption) {
-        None -> emptyList()
-        is Some -> modelOption.value.aliasMailboxes
+    internal val aliasMailboxes: ImmutableList<SimpleLoginAliasMailbox> = when (modelOption) {
+        None -> persistentListOf()
+        is Some -> modelOption.value.aliasMailboxes.toPersistentList()
     }
-
-    internal val aliasMailboxOptions: ImmutableList<String> = aliasMailboxes
-        .map { it.email }
-        .toPersistentList()
-
-    internal val canSelectMailbox: Boolean = aliasMailboxes.size > 1
 
     internal val selectedAliasDomain: String? = when (selectedDomainOption) {
         None -> defaultDomain
@@ -87,11 +80,6 @@ internal data class SimpleLoginSyncManagementState(
     }
 
     internal val selectedAliasMailboxId: Option<Long> = selectedMailboxOption.map { it.id }
-
-    internal val selectedAliasMailboxEmail: String = when (selectedMailboxOption) {
-        None -> defaultMailbox?.email.orEmpty()
-        is Some -> selectedMailboxOption.value.email
-    }
 
     internal val isSyncEnabled: Boolean = when (modelOption) {
         None -> false
@@ -112,13 +100,9 @@ internal data class SimpleLoginSyncManagementState(
 
     internal val canUpdateDomain: Boolean = defaultDomain != selectedAliasDomain
 
-    internal val canUpdateMailbox: Boolean = defaultMailboxEmail != selectedAliasMailboxEmail
-
     // The -1 is required since we added a null item to the beginning of the list to support the "Not selected" option
     internal fun getAliasDomain(position: Int): SimpleLoginAliasDomain? = aliasDomains
         .getOrNull(position.minus(1))
-
-    internal fun getAliasMailbox(position: Int): SimpleLoginAliasMailbox = aliasMailboxes[position]
 
     internal companion object {
 

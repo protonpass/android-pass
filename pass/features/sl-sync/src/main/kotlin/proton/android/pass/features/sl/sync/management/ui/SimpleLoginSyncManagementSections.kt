@@ -27,35 +27,36 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.widgets.PassSingleActionWidget
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.shared.ui.SimpleLoginSyncLabelText
 import proton.android.pass.features.sl.sync.shared.ui.SimpleLoginSyncSectionRow
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-internal fun SimpleLoginSyncDetailsSections(
+internal fun SimpleLoginSyncManagementSections(
     modifier: Modifier = Modifier,
     defaultDomain: String?,
-    defaultMailboxEmail: String,
+    aliasMailboxes: ImmutableList<SimpleLoginAliasMailbox>,
     defaultVault: Vault?,
     isSyncEnabled: Boolean,
     hasPendingAliases: Boolean,
     pendingAliasesCount: Int,
     canSelectDomain: Boolean,
-    canSelectMailbox: Boolean,
     onUiEvent: (SimpleLoginSyncManagementUiEvent) -> Unit
 ) {
     Column(
         modifier = modifier
             .padding(all = Spacing.medium)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.large)
     ) {
         SimpleLoginSyncSectionRow(
             label = stringResource(id = R.string.simple_login_sync_management_domain_label),
@@ -67,12 +68,12 @@ internal fun SimpleLoginSyncDetailsSections(
             isClickable = canSelectDomain
         )
 
-        SimpleLoginSyncSectionRow(
-            label = stringResource(id = R.string.simple_login_sync_management_mailboxes_label),
-            title = stringResource(id = R.string.simple_login_sync_management_mailboxes_title),
-            subtitle = defaultMailboxEmail,
-            onClick = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnMailboxClicked) },
-            isClickable = canSelectMailbox
+        SimpleLoginSyncManagementMailboxSection(
+            aliasMailboxes = aliasMailboxes,
+            onAddClick = {
+
+            },
+            onMenuClick = {}
         )
 
         if (isSyncEnabled && defaultVault != null) {

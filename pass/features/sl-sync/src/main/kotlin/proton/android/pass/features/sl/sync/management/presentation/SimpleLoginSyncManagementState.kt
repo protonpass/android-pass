@@ -35,21 +35,12 @@ internal data class SimpleLoginSyncManagementState(
     internal val isUpdating: Boolean,
     internal val event: SimpleLoginSyncManagementEvent,
     private val modelOption: Option<SimpleLoginSyncManagementModel>,
-    private val selectedDomainOption: Option<String?>,
-    private val selectedMailboxOption: Option<SimpleLoginAliasMailbox>
+    private val selectedDomainOption: Option<String?>
 ) {
 
     internal val defaultDomain: String? = when (modelOption) {
         None -> null
         is Some -> modelOption.value.defaultDomain
-    }
-
-    private val defaultMailbox: SimpleLoginAliasMailbox? = when (modelOption) {
-        None -> null
-        is Some ->
-            modelOption.value
-                .aliasMailboxes
-                .firstOrNull { aliasMailbox -> aliasMailbox.id == modelOption.value.defaultMailboxId }
     }
 
     internal val defaultVault: Vault? = when (modelOption) {
@@ -78,8 +69,6 @@ internal data class SimpleLoginSyncManagementState(
         None -> defaultDomain
         is Some -> selectedDomainOption.value
     }
-
-    internal val selectedAliasMailboxId: Option<Long> = selectedMailboxOption.map { it.id }
 
     internal val isSyncEnabled: Boolean = when (modelOption) {
         None -> false
@@ -110,8 +99,7 @@ internal data class SimpleLoginSyncManagementState(
             isUpdating = false,
             event = SimpleLoginSyncManagementEvent.Idle,
             modelOption = None,
-            selectedDomainOption = None,
-            selectedMailboxOption = None
+            selectedDomainOption = None
         )
 
     }

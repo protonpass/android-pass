@@ -41,7 +41,6 @@ import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAlias
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
-import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
@@ -82,8 +81,6 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
 
     private val selectedDomainOptionFlow = MutableStateFlow<Option<String?>>(None)
 
-    private val selectedMailboxOptionFlow = MutableStateFlow<Option<SimpleLoginAliasMailbox>>(None)
-
     private val isUpdatingFlow = MutableStateFlow(false)
 
     internal val state: StateFlow<SimpleLoginSyncManagementState> = combine(
@@ -91,7 +88,6 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
         eventFlow,
         modelOptionFlow,
         selectedDomainOptionFlow,
-        selectedMailboxOptionFlow,
         ::SimpleLoginSyncManagementState
     ).stateIn(
         scope = viewModelScope,
@@ -105,10 +101,6 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
 
     internal fun onSelectAliasDomain(selectedAliasDomain: SimpleLoginAliasDomain?) {
         selectedDomainOptionFlow.update { selectedAliasDomain?.domain?.some() ?: null.some() }
-    }
-
-    internal fun onSelectAliasMailbox(selectedAliasMailbox: SimpleLoginAliasMailbox) {
-        selectedMailboxOptionFlow.update { selectedAliasMailbox.some() }
     }
 
     internal fun onUpdateAliasDomain() {

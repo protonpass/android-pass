@@ -23,10 +23,9 @@
     <string name="simple_login_sync_management_domain_title">Default domain for aliases</string>
     <string name="simple_login_sync_management_domain_option_blank">Not selected</string>
     <string name="simple_login_sync_management_mailboxes_label">Mailboxes</string>
-    <string name="simple_login_sync_management_mailboxes_title">Default mailbox for aliases</string>
+    <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
     <string name="simple_login_sync_management_vault_title">SimpleLogin sync</string>
     <string name="simple_login_sync_management_dialog_title_domains">Default domain for aliases</string>
-    <string name="simple_login_sync_management_dialog_title_mailboxes">Default mailbox for aliases</string>
     <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
     <string name="simple_login_sync_management_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
     <string name="simple_login_sync_management_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>

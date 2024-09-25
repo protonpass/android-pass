@@ -93,16 +93,8 @@ fun SimpleLoginSyncDetailsScreen(
                     onSelectAliasDomain(selectedAliasDomain = uiEvent.aliasDomain)
                 }
 
-                is SimpleLoginSyncManagementUiEvent.OnMailboxSelected -> {
-                    onSelectAliasMailbox(selectedAliasMailbox = uiEvent.aliasMailbox)
-                }
-
                 SimpleLoginSyncManagementUiEvent.OnUpdateDomainClicked -> {
                     onUpdateAliasDomain()
-                }
-
-                SimpleLoginSyncManagementUiEvent.OnUpdateMailboxClicked -> {
-                    onUpdateAliasMailbox()
                 }
 
                 SimpleLoginSyncManagementUiEvent.OnAddMailboxClicked -> {

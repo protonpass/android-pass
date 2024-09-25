@@ -41,14 +41,7 @@ internal sealed interface SimpleLoginSyncManagementUiEvent {
         internal val aliasDomain: SimpleLoginAliasDomain?
     ) : SimpleLoginSyncManagementUiEvent
 
-    @JvmInline
-    value class OnMailboxSelected(
-        internal val aliasMailbox: SimpleLoginAliasMailbox
-    ) : SimpleLoginSyncManagementUiEvent
-
     data object OnUpdateDomainClicked : SimpleLoginSyncManagementUiEvent
-
-    data object OnUpdateMailboxClicked : SimpleLoginSyncManagementUiEvent
 
     data object OnAddMailboxClicked : SimpleLoginSyncManagementUiEvent
 

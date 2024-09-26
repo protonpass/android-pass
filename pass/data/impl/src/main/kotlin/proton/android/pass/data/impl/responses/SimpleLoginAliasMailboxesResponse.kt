@@ -37,4 +37,6 @@ data class SimpleLoginAliasMailboxData(
     val isDefault: Boolean,
     @SerialName("Verified")
     val verified: Boolean
+//    @SerialName("AliasCount")
+//    val aliasCount: Int
 )

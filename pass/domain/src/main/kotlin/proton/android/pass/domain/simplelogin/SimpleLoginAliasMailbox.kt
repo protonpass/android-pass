@@ -22,5 +22,6 @@ data class SimpleLoginAliasMailbox(
     val id: Long,
     val email: String,
     val isDefault: Boolean,
-    val isVerified: Boolean
+    val isVerified: Boolean,
+    val aliasCount: Int
 )

@@ -23,6 +23,6 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 
-interface GetVaultById {
+interface GetVaultByShareId {
     operator fun invoke(userId: UserId? = null, shareId: ShareId): Flow<Vault>
 }

@@ -28,7 +28,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.fakes.usecases.TestGetVaultById
+import proton.android.pass.data.fakes.usecases.TestGetVaultByShareId
 import proton.android.pass.data.fakes.usecases.TestLeaveVault
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
@@ -46,17 +46,17 @@ class LeaveVaultViewModelTest {
     val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: LeaveVaultViewModel
-    private lateinit var getVaultById: TestGetVaultById
+    private lateinit var getVaultById: TestGetVaultByShareId
     private lateinit var leaveVault: TestLeaveVault
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
 
     @Before
     fun setup() {
-        getVaultById = TestGetVaultById()
+        getVaultById = TestGetVaultByShareId()
         leaveVault = TestLeaveVault()
         snackbarDispatcher = TestSnackbarDispatcher()
         instance = LeaveVaultViewModel(
-            getVaultById = getVaultById,
+            getVaultByShareId = getVaultById,
             leaveVault = leaveVault,
             savedStateHandle = TestSavedStateHandleProvider().apply {
                 get()[CommonNavArgId.ShareId.key] = "123"

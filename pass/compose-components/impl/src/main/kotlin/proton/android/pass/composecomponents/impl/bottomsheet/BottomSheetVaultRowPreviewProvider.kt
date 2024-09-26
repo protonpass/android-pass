@@ -24,6 +24,7 @@ import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.VaultWithItemCount
 import java.util.Date
 
@@ -40,6 +41,7 @@ class BottomSheetVaultRowPreviewProvider : PreviewParameterProvider<VaultRowInpu
                                         vault = Vault(
                                             userId = UserId("123"),
                                             shareId = ShareId("123"),
+                                            vaultId = VaultId("123"),
                                             name = "some vault",
                                             color = ShareColor.Color2,
                                             icon = ShareIcon.Icon10,

@@ -20,6 +20,6 @@ package proton.android.pass.data.api.usecases.simplelogin
 
 interface UpdateSimpleLoginAliasMailbox {
 
-    suspend operator fun invoke(mailboxId: String)
+    suspend operator fun invoke(mailboxId: Long)
 
 }

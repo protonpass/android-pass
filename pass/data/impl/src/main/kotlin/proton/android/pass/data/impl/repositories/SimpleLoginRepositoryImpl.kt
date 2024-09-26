@@ -130,7 +130,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
                 .map { simpleLoginAliasMailboxData -> simpleLoginAliasMailboxData.toDomain() }
         }
 
-    override suspend fun updateAliasMailbox(mailboxId: String) {
+    override suspend fun updateAliasMailbox(mailboxId: Long) {
         withUserId { userId ->
             remoteSimpleLoginDataSource.updateSimpleLoginAliasMailbox(
                 userId = userId,

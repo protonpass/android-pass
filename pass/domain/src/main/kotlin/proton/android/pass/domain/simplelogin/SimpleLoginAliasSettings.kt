@@ -20,5 +20,5 @@ package proton.android.pass.domain.simplelogin
 
 data class SimpleLoginAliasSettings(
     val defaultDomain: String?,
-    val defaultMailboxId: String
+    val defaultMailboxId: Long
 )

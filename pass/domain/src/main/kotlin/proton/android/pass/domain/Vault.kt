@@ -26,6 +26,7 @@ import java.util.Date
 data class Vault(
     val userId: UserId,
     val shareId: ShareId,
+    val vaultId: VaultId,
     val name: String,
     val color: ShareColor = ShareColor.Color1,
     val icon: ShareIcon = ShareIcon.Icon1,

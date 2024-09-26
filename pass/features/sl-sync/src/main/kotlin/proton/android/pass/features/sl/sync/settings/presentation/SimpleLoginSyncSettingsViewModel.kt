@@ -39,7 +39,7 @@ import proton.android.pass.common.api.runCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
-import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.simplelogin.EnableSimpleLoginSync
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
@@ -50,7 +50,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SimpleLoginSyncSettingsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
-    getVaultById: GetVaultById,
+    getVaultByShareId: GetVaultByShareId,
     private val enableSimpleLoginSync: EnableSimpleLoginSync,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
@@ -74,7 +74,7 @@ class SimpleLoginSyncSettingsViewModel @Inject constructor(
         }.let { shareIdOption ->
             when (shareIdOption) {
                 None -> None
-                is Some -> getVaultById(shareId = shareIdOption.value)
+                is Some -> getVaultByShareId(shareId = shareIdOption.value)
                     .first()
                     .let(::Some)
             }

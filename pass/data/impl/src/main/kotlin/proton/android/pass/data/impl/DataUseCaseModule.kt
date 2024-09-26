@@ -57,7 +57,7 @@ import proton.android.pass.data.api.usecases.GetPublicSuffixList
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.GetUserPlan
-import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.GetVaultMembers
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.InviteToVault
@@ -224,7 +224,7 @@ import proton.android.pass.data.impl.usecases.GetPublicSuffixListImpl
 import proton.android.pass.data.impl.usecases.GetShareByIdImpl
 import proton.android.pass.data.impl.usecases.GetSuggestedAutofillItemsImpl
 import proton.android.pass.data.impl.usecases.GetUserPlanImpl
-import proton.android.pass.data.impl.usecases.GetVaultByIdImpl
+import proton.android.pass.data.impl.usecases.GetVaultByShareIdImpl
 import proton.android.pass.data.impl.usecases.GetVaultMembersImpl
 import proton.android.pass.data.impl.usecases.GetVaultWithItemCountByIdImpl
 import proton.android.pass.data.impl.usecases.InviteToVaultImpl
@@ -464,7 +464,7 @@ abstract class DataUseCaseModule {
     abstract fun bindUpdateVault(impl: UpdateVaultImpl): UpdateVault
 
     @Binds
-    abstract fun bindGetVaultById(impl: GetVaultByIdImpl): GetVaultById
+    abstract fun bindGetVaultByShareId(impl: GetVaultByShareIdImpl): GetVaultByShareId
 
     @Binds
     abstract fun bindSendUserAccess(impl: UserPlanWorkerLauncherImpl): UserPlanWorkerLauncher

@@ -27,7 +27,7 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDet
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -36,13 +36,13 @@ import proton.android.pass.domain.ItemState
 import javax.inject.Inject
 
 class NoteItemDetailsHandlerObserverImpl @Inject constructor(
-    private val getVaultById: GetVaultById,
+    private val getVaultByShareId: GetVaultByShareId,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemDetailsHandlerObserver<ItemContents.Note>() {
 
     override fun observe(item: Item): Flow<ItemDetailState> = combine(
         observeNoteItemContents(item),
-        getVaultById(shareId = item.shareId)
+        getVaultByShareId(shareId = item.shareId)
     ) { noteItemContents, vault ->
         ItemDetailState.Note(
             itemContents = noteItemContents,

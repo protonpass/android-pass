@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
@@ -31,11 +31,11 @@ import proton.android.pass.domain.VaultWithItemCount
 import javax.inject.Inject
 
 class GetVaultWithItemCountByIdImpl @Inject constructor(
-    private val getVaultById: GetVaultById,
+    private val getVaultByShareId: GetVaultByShareId,
     private val itemRepository: ItemRepository
 ) : GetVaultWithItemCountById {
     override fun invoke(userId: UserId?, shareId: ShareId): Flow<VaultWithItemCount> =
-        getVaultById(userId = userId, shareId = shareId)
+        getVaultByShareId(userId = userId, shareId = shareId)
             .flatMapLatest { observeItemsForVault(it) }
 
     private fun observeItemsForVault(vault: Vault): Flow<VaultWithItemCount> =

@@ -29,7 +29,7 @@ import org.junit.Test
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.fakes.usecases.TestDeleteVault
-import proton.android.pass.data.fakes.usecases.TestGetVaultById
+import proton.android.pass.data.fakes.usecases.TestGetVaultByShareId
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
@@ -47,17 +47,17 @@ class DeleteVaultViewModelTest {
     val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: DeleteVaultViewModel
-    private lateinit var getVaultById: TestGetVaultById
+    private lateinit var getVaultById: TestGetVaultByShareId
     private lateinit var deleteVault: TestDeleteVault
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
 
     @Before
     fun setup() {
-        getVaultById = TestGetVaultById()
+        getVaultById = TestGetVaultByShareId()
         deleteVault = TestDeleteVault()
         snackbarDispatcher = TestSnackbarDispatcher()
         instance = DeleteVaultViewModel(
-            getVaultById = getVaultById,
+            getVaultByShareId = getVaultById,
             deleteVault = deleteVault,
             savedStateHandle = TestSavedStateHandle.create().apply {
                 set(CommonNavArgId.ShareId.key, "123")

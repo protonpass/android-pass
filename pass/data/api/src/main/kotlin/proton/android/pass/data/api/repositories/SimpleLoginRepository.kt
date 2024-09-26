@@ -43,7 +43,7 @@ interface SimpleLoginRepository {
 
     fun observeAliasMailboxes(): Flow<List<SimpleLoginAliasMailbox>>
 
-    suspend fun updateAliasMailbox(mailboxId: String)
+    suspend fun updateAliasMailbox(mailboxId: Long)
 
     fun observeAliasSettings(): Flow<SimpleLoginAliasSettings>
 

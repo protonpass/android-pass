@@ -86,10 +86,7 @@ internal data class SimpleLoginSyncDetailsState(
         is Some -> selectedDomainOption.value
     }
 
-    internal val selectedAliasMailboxId: String = when (selectedMailboxOption) {
-        None -> defaultMailbox?.id.orEmpty()
-        is Some -> selectedMailboxOption.value.id
-    }
+    internal val selectedAliasMailboxId: Option<Long> = selectedMailboxOption.map { it.id }
 
     internal val selectedAliasMailboxEmail: String = when (selectedMailboxOption) {
         None -> defaultMailbox?.email.orEmpty()

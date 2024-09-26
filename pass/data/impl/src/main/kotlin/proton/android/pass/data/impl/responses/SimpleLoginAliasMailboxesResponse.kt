@@ -30,7 +30,7 @@ data class SimpleLoginAliasMailboxesResponse(
 @Serializable
 data class SimpleLoginAliasMailboxData(
     @SerialName("MailboxID")
-    val mailboxId: String,
+    val mailboxId: Long,
     @SerialName("Email")
     val email: String,
     @SerialName("IsDefault")

@@ -33,7 +33,7 @@ internal data class SimpleLoginSyncDetailsModel(
 
     internal val defaultDomain: String? = aliasSettings.defaultDomain
 
-    internal val defaultMailboxId: String = aliasSettings.defaultMailboxId
+    internal val defaultMailboxId: Long = aliasSettings.defaultMailboxId
 
     internal val defaultVault: Vault = syncStatus.defaultVault
 

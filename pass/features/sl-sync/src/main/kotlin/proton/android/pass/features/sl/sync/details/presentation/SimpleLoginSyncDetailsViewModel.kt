@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
@@ -137,18 +138,26 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             isUpdatingFlow.update { true }
 
-            runCatching { updateSimpleLoginAliasMailbox(mailboxId = state.value.selectedAliasMailboxId) }
-                .onError { error ->
-                    PassLogger.w(TAG, "There was an error updating SL alias mailbox")
-                    PassLogger.w(TAG, error)
-                    eventFlow.update { SimpleLoginSyncDetailsEvent.OnUpdateAliasMailboxError }
-                    snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasMailboxError)
-                }
-                .onSuccess {
+            when (val mailboxId = state.value.selectedAliasMailboxId) {
+                None -> {
                     eventFlow.update { SimpleLoginSyncDetailsEvent.OnAliasMailboxUpdated }
                     snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasMailboxSuccess)
                 }
+                is Some -> {
+                    runCatching { updateSimpleLoginAliasMailbox(mailboxId = mailboxId.value) }
+                        .onError { error ->
+                            PassLogger.w(TAG, "There was an error updating SL alias mailbox")
+                            PassLogger.w(TAG, error)
+                            eventFlow.update { SimpleLoginSyncDetailsEvent.OnUpdateAliasMailboxError }
+                            snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasMailboxError)
+                        }
+                        .onSuccess {
+                            eventFlow.update { SimpleLoginSyncDetailsEvent.OnAliasMailboxUpdated }
+                            snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasMailboxSuccess)
+                        }
 
+                }
+            }
             isUpdatingFlow.update { false }
         }
     }

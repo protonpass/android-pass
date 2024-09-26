@@ -76,6 +76,9 @@ class ReportViewModel @Inject constructor(
     private val emailValidator: EmailValidator
 ) : ViewModel() {
 
+    @OptIn(SavedStateHandleSaveableApi::class)
+    var formState by savedStateHandleProvider.get().saveable { mutableStateOf(ReportFormData()) }
+
     init {
         viewModelScope.launch {
             val userId = accountManager.getPrimaryUserId().firstOrNull()
@@ -85,10 +88,6 @@ class ReportViewModel @Inject constructor(
             formState = ReportFormData(email = email, username = username)
         }
     }
-
-    @OptIn(SavedStateHandleSaveableApi::class)
-    var formState by savedStateHandleProvider.get()
-        .saveable { mutableStateOf(ReportFormData()) }
 
     private val reportEventFlow: MutableStateFlow<ReportEvent> = MutableStateFlow(ReportEvent.Idle)
     private val reportReasonFlow: MutableStateFlow<Option<ReportReason>> = MutableStateFlow(None)

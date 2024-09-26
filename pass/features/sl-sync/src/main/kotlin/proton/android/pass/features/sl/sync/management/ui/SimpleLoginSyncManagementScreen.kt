@@ -106,7 +106,7 @@ fun SimpleLoginSyncDetailsScreen(
                 }
 
                 SimpleLoginSyncManagementUiEvent.OnUpsell -> {
-                    // Will be implemented in IDTEAM-3912
+                    onNavigated(SimpleLoginSyncNavDestination.Upsell)
                 }
             }
         }

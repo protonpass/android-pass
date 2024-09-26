@@ -32,5 +32,5 @@ data class SimpleLoginAliasSettingsData(
     @SerialName("DefaultAliasDomain")
     val defaultAliasDomain: String?,
     @SerialName("DefaultMailboxID")
-    val defaultMailboxId: String
+    val defaultMailboxId: Long
 )

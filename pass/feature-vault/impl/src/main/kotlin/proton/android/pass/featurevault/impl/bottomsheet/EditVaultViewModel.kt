@@ -28,7 +28,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
@@ -44,7 +44,7 @@ class EditVaultViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val updateVault: UpdateVault,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val getVaultById: GetVaultById,
+    private val getVaultByShareId: GetVaultByShareId,
     savedStateHandle: SavedStateHandle
 ) : BaseVaultViewModel() {
 
@@ -58,7 +58,7 @@ class EditVaultViewModel @Inject constructor(
     fun onStart() = viewModelScope.launch(coroutineExceptionHandler) {
         formFlow.update { CreateVaultFormValues() }
 
-        getVaultById(shareId = shareId)
+        getVaultByShareId(shareId = shareId)
             .asLoadingResult()
             .collect {
                 when (it) {

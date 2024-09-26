@@ -35,7 +35,7 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.LeaveVault
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
@@ -49,7 +49,7 @@ import javax.inject.Inject
 class LeaveVaultViewModel @Inject constructor(
     private val leaveVault: LeaveVault,
     private val snackbarDispatcher: SnackbarDispatcher,
-    getVaultById: GetVaultById,
+    getVaultByShareId: GetVaultByShareId,
     savedStateHandle: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -60,7 +60,7 @@ class LeaveVaultViewModel @Inject constructor(
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
 
-    private val vaultState: Flow<LoadingResult<Vault>> = getVaultById(shareId = shareId)
+    private val vaultState: Flow<LoadingResult<Vault>> = getVaultByShareId(shareId = shareId)
         .asLoadingResult()
         .distinctUntilChanged()
 

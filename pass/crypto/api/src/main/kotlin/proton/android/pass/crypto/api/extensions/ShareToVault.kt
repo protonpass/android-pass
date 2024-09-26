@@ -37,6 +37,7 @@ fun Share.toVault(encryptionContext: EncryptionContext): Option<Vault> = content
         Vault(
             shareId = id,
             userId = userId,
+            vaultId = vaultId,
             name = parsed.name,
             color = color,
             icon = icon,

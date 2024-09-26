@@ -47,6 +47,7 @@ import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
 import java.util.Date
 import me.proton.core.presentation.R as CoreR
 
@@ -100,6 +101,7 @@ fun CustomizeVaultPreview(@PreviewParameter(ThemePreviewProvider::class) isDark:
                 vault = Vault(
                     userId = UserId(id = ""),
                     shareId = ShareId("1234"),
+                    vaultId = VaultId("123"),
                     name = "Vault name",
                     createTime = Date()
                 ),

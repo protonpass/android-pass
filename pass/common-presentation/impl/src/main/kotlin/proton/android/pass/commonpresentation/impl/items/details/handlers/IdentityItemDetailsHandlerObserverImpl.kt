@@ -26,7 +26,7 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDet
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -36,7 +36,7 @@ import proton.android.pass.domain.ItemState
 import javax.inject.Inject
 
 class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
-    private val observeVaultById: GetVaultById,
+    private val observeVaultById: GetVaultByShareId,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemDetailsHandlerObserver<ItemContents.Identity>() {
 

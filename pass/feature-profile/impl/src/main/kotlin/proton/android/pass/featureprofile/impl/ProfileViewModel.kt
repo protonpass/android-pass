@@ -196,13 +196,6 @@ class ProfileViewModel @Inject constructor(
             emit(ProfilePasskeySupportSection.Hide)
         }.distinctUntilChanged()
 
-    private val secureLinksCountFlow = observeSecureLinksCount()
-        .catch { error ->
-            PassLogger.w(TAG, "Error retrieving secure links count")
-            PassLogger.w(TAG, error)
-        }
-        .distinctUntilChanged()
-
     private val ffFlow = combine(
         featureFlagsPreferencesRepository[FeatureFlag.IDENTITY_V1],
         featureFlagsPreferencesRepository[FeatureFlag.SECURE_LINK_V1],
@@ -291,7 +284,7 @@ class ProfileViewModel @Inject constructor(
         oneShot { getDefaultBrowser() }.asLoadingResult(),
         passkeySupportFlow,
         ffFlow,
-        secureLinksCountFlow,
+        observeSecureLinksCount(),
         accountsFlow,
         simpleLoginSyncStatusOptionFlow
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event, browser,

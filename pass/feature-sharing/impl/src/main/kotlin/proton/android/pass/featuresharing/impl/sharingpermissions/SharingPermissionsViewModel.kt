@@ -34,7 +34,7 @@ import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.BulkInviteRepository
-import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featuresharing.impl.common.toUiState
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -43,7 +43,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SharingPermissionsViewModel @Inject constructor(
     bulkInviteRepository: BulkInviteRepository,
-    getVaultById: GetVaultById,
+    getVaultByShareId: GetVaultByShareId,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -56,7 +56,7 @@ class SharingPermissionsViewModel @Inject constructor(
 
     val state: StateFlow<SharingPermissionsUIState> = combine(
         bulkInviteRepository.observeAddresses(),
-        getVaultById(shareId = shareId).asLoadingResult(),
+        getVaultByShareId(shareId = shareId).asLoadingResult(),
         eventState
     ) { addresses, vault, event ->
         val uiEvent = if (event == SharingPermissionsEvents.Unknown && addresses.isEmpty()) {

@@ -35,7 +35,7 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.DeleteVault
-import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
@@ -45,7 +45,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DeleteVaultViewModel @Inject constructor(
-    private val getVaultById: GetVaultById,
+    private val getVaultByShareId: GetVaultByShareId,
     private val deleteVault: DeleteVault,
     private val savedStateHandle: SavedStateHandle,
     private val snackbarDispatcher: SnackbarDispatcher
@@ -85,7 +85,7 @@ class DeleteVaultViewModel @Inject constructor(
     )
 
     fun onStart() = viewModelScope.launch(coroutineExceptionHandler) {
-        getVaultById(shareId = shareId)
+        getVaultByShareId(shareId = shareId)
             .asLoadingResult()
             .collect { res ->
                 when (res) {

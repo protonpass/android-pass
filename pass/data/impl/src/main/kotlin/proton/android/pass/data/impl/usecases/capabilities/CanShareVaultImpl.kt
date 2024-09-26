@@ -21,7 +21,7 @@ package proton.android.pass.data.impl.usecases.capabilities
 import kotlinx.coroutines.flow.first
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetUserPlan
-import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
 import proton.android.pass.domain.ShareId
@@ -31,13 +31,13 @@ import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class CanShareVaultImpl @Inject constructor(
-    private val getVaultById: GetVaultById,
+    private val getVaultByShareId: GetVaultByShareId,
     private val getShareById: GetShareById,
     private val getUserPlan: GetUserPlan
 ) : CanShareVault {
 
     override suspend fun invoke(shareId: ShareId): CanShareVaultStatus {
-        val vault = runCatching { getVaultById(shareId = shareId).first() }.getOrElse {
+        val vault = runCatching { getVaultByShareId(shareId = shareId).first() }.getOrElse {
             PassLogger.w(TAG, "canShare vault not found")
             PassLogger.w(TAG, it)
             return CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.Unknown)

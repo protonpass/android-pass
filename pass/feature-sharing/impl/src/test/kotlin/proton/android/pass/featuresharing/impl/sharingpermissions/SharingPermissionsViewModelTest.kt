@@ -27,7 +27,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
-import proton.android.pass.data.fakes.usecases.TestGetVaultById
+import proton.android.pass.data.fakes.usecases.TestGetVaultByShareId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featuresharing.impl.common.AddressPermissionUiState
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -36,7 +36,7 @@ import proton.android.pass.test.MainDispatcherRule
 class SharingPermissionsViewModelTest {
 
     private lateinit var viewModel: SharingPermissionsViewModel
-    private lateinit var getVaultById: TestGetVaultById
+    private lateinit var getVaultById: TestGetVaultByShareId
     private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
     private lateinit var bulkInviteRepository: TestBulkInviteRepository
 
@@ -45,7 +45,7 @@ class SharingPermissionsViewModelTest {
 
     @Before
     fun setUp() {
-        getVaultById = TestGetVaultById()
+        getVaultById = TestGetVaultByShareId()
         bulkInviteRepository = TestBulkInviteRepository().apply {
             runBlocking { storeAddresses(listOf(TEST_EMAIL)) }
         }
@@ -53,7 +53,7 @@ class SharingPermissionsViewModelTest {
             get()[CommonNavArgId.ShareId.key] = TEST_SHARE_ID
         }
         viewModel = SharingPermissionsViewModel(
-            getVaultById = getVaultById,
+            getVaultByShareId = getVaultById,
             savedStateHandleProvider = savedStateHandleProvider,
             bulkInviteRepository = bulkInviteRepository
         )

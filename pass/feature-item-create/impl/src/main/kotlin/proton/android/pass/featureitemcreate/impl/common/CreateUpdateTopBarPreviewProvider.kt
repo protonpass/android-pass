@@ -26,6 +26,7 @@ import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
 import java.util.Date
 
 class CreateUpdateTopBarPreviewProvider : PreviewParameterProvider<CreateUpdateTopBarPreview> {
@@ -89,6 +90,7 @@ class CreateUpdateTopBarPreviewProvider : PreviewParameterProvider<CreateUpdateT
                 vault = Vault(
                     userId = UserId(id = ""),
                     shareId = ShareId(id = ""),
+                    vaultId = VaultId("123"),
                     name = "Personal",
                     color = ShareColor.Color2,
                     icon = ShareIcon.Icon13,
@@ -103,6 +105,7 @@ class CreateUpdateTopBarPreviewProvider : PreviewParameterProvider<CreateUpdateT
                 vault = Vault(
                     userId = UserId(id = ""),
                     shareId = ShareId(id = ""),
+                    vaultId = VaultId("123"),
                     name = "Vault with a long title that should be truncated",
                     color = ShareColor.Color2,
                     icon = ShareIcon.Icon13,

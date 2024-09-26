@@ -40,6 +40,7 @@ import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featuresharing.impl.R
 import java.util.Date
@@ -89,6 +90,7 @@ fun ManageVaultHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDa
                     vault = Vault(
                         userId = UserId(id = ""),
                         shareId = ShareId("123"),
+                        vaultId = VaultId("123"),
                         name = "Vault name",
                         createTime = Date()
                     ),

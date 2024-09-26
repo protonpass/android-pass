@@ -55,6 +55,7 @@ import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
 import java.util.Date
 
 @Composable
@@ -125,6 +126,7 @@ fun VaultNameSubtitlePreview(@PreviewParameter(ThemedBooleanPreviewProvider::cla
                 vault = Vault(
                     userId = UserId(id = ""),
                     shareId = ShareId("123"),
+                    vaultId = VaultId("123"),
                     name = "Vault Name",
                     color = ShareColor.Color1,
                     icon = ShareIcon.Icon1,

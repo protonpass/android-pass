@@ -41,7 +41,7 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
@@ -60,7 +60,7 @@ class SecureLinksOverviewViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeSecureLink: ObserveSecureLink,
     observeItemById: ObserveItemById,
-    observeVaultById: GetVaultById,
+    observeVaultById: GetVaultByShareId,
     userPreferencesRepository: UserPreferencesRepository,
     encryptionContextProvider: EncryptionContextProvider,
     private val clipboardManager: ClipboardManager,

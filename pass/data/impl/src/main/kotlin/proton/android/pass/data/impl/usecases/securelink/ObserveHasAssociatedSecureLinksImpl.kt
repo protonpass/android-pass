@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.usecases.securelink
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -26,6 +27,7 @@ import proton.android.pass.data.api.usecases.securelink.ObserveHasAssociatedSecu
 import proton.android.pass.data.impl.repositories.SecureLinkRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class ObserveHasAssociatedSecureLinksImpl @Inject constructor(
@@ -41,5 +43,16 @@ class ObserveHasAssociatedSecureLinksImpl @Inject constructor(
                 }
             }
         }
+        .catch { error ->
+            PassLogger.w(TAG, "There was an error while observing item associated secure links")
+            PassLogger.w(TAG, error)
+            emit(false)
+        }
+
+    private companion object {
+
+        private const val TAG = "ObserveHasAssociatedSecureLinks"
+
+    }
 
 }

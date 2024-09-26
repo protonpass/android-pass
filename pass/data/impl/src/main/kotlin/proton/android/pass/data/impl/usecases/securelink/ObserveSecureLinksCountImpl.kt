@@ -19,10 +19,12 @@
 package proton.android.pass.data.impl.usecases.securelink
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.data.impl.repositories.SecureLinkRepository
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class ObserveSecureLinksCountImpl @Inject constructor(
@@ -34,5 +36,16 @@ class ObserveSecureLinksCountImpl @Inject constructor(
         .flatMapLatest { user ->
             repository.observeSecureLinksCount(user.userId)
         }
+        .catch { error ->
+            PassLogger.w(TAG, "Error retrieving secure links count")
+            PassLogger.w(TAG, error)
+            emit(0)
+        }
+
+    private companion object {
+
+        private const val TAG = "ObserveSecureLinksCountImpl"
+
+    }
 
 }

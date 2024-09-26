@@ -38,7 +38,7 @@ import proton.android.pass.common.api.flatMap
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetItemById
-import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
@@ -58,7 +58,7 @@ class ItemOptionsViewModel @Inject constructor(
     private val getItemById: GetItemById,
     private val clipboardManager: ClipboardManager,
     private val encryptionContextProvider: EncryptionContextProvider,
-    getVaultById: GetVaultById
+    getVaultByShareId: GetVaultByShareId
 ) : ViewModel() {
 
     private val shareId = ShareId(getNavArg(CommonNavArgId.ShareId.key))
@@ -69,7 +69,7 @@ class ItemOptionsViewModel @Inject constructor(
     private val loadingFlow: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
 
-    private val canModifyFlow: Flow<Boolean> = getVaultById(shareId = shareId)
+    private val canModifyFlow: Flow<Boolean> = getVaultByShareId(shareId = shareId)
         .map { vault -> vault.role.toPermissions().canUpdate() }
         .catch {
             PassLogger.w(TAG, "Error getting vault by id")

@@ -29,7 +29,7 @@ import org.junit.Test
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
-import proton.android.pass.data.fakes.usecases.TestGetVaultById
+import proton.android.pass.data.fakes.usecases.TestGetVaultByShareId
 import proton.android.pass.data.fakes.usecases.TestUpdateVault
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
@@ -52,19 +52,19 @@ class EditVaultViewModelTest {
     private lateinit var instance: EditVaultViewModel
     private lateinit var snackbar: TestSnackbarDispatcher
     private lateinit var updateVault: TestUpdateVault
-    private lateinit var getVaultById: TestGetVaultById
+    private lateinit var getVaultById: TestGetVaultByShareId
 
     @Before
     fun setup() {
         snackbar = TestSnackbarDispatcher()
         updateVault = TestUpdateVault()
-        getVaultById = TestGetVaultById()
+        getVaultById = TestGetVaultByShareId()
         encryptionContextProvider = TestEncryptionContextProvider()
         instance = EditVaultViewModel(
             snackbarDispatcher = snackbar,
             updateVault = updateVault,
             encryptionContextProvider = encryptionContextProvider,
-            getVaultById = getVaultById,
+            getVaultByShareId = getVaultById,
             savedStateHandle = TestSavedStateHandle.create().apply {
                 set(CommonNavArgId.ShareId.key, SHARE_ID)
             }

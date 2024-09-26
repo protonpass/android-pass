@@ -39,6 +39,7 @@ import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featuresharing.impl.R
 import java.util.Date
@@ -75,6 +76,7 @@ fun VaultRowSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark
                     vault = Vault(
                         userId = UserId(id = ""),
                         shareId = ShareId("id"),
+                        vaultId = VaultId("123"),
                         name = "Vault name",
                         color = ShareColor.Color1,
                         icon = ShareIcon.Icon1,

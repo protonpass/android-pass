@@ -50,6 +50,7 @@ import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featuresharing.impl.R
 import java.util.Date
@@ -129,6 +130,7 @@ internal fun ShareThisVaultRowPreview(@PreviewParameter(ThemePreviewProvider::cl
                     vault = Vault(
                         userId = UserId(id = ""),
                         shareId = ShareId("Share"),
+                        vaultId = VaultId("123"),
                         name = "Test vault with a very very long name",
                         createTime = Date()
                     ),

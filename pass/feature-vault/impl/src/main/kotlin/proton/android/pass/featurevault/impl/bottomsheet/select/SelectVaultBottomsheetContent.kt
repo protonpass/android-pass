@@ -47,6 +47,7 @@ import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featurevault.impl.R
 import java.util.Date
@@ -124,6 +125,7 @@ fun SelectVaultBottomsheetContentPreview(
         vault = Vault(
             userId = UserId(id = ""),
             shareId = ShareId("123"),
+            vaultId = VaultId("123"),
             name = "vault 1",
             createTime = Date()
         ),
@@ -144,6 +146,7 @@ fun SelectVaultBottomsheetContentPreview(
                                 vault = Vault(
                                     userId = UserId(id = ""),
                                     shareId = ShareId("other"),
+                                    vaultId = VaultId("123"),
                                     name = "vault 2",
                                     color = ShareColor.Color2,
                                     icon = ShareIcon.Icon2,
@@ -159,6 +162,7 @@ fun SelectVaultBottomsheetContentPreview(
                                 vault = Vault(
                                     userId = UserId(id = ""),
                                     shareId = ShareId("another"),
+                                    vaultId = VaultId("123"),
                                     name = "vault 3",
                                     color = ShareColor.Color3,
                                     icon = ShareIcon.Icon3,

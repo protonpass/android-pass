@@ -33,7 +33,7 @@ import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
-import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.impl.extensions.toRequest
 import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSource
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
@@ -59,7 +59,7 @@ import javax.inject.Inject
 class SimpleLoginRepositoryImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val userAccessDataRepository: UserAccessDataRepository,
-    private val observeVaultById: GetVaultById,
+    private val observeVaultById: GetVaultByShareId,
     private val localSimpleLoginDataSource: LocalSimpleLoginDataSource,
     private val remoteSimpleLoginDataSource: RemoteSimpleLoginDataSource
 ) : SimpleLoginRepository {

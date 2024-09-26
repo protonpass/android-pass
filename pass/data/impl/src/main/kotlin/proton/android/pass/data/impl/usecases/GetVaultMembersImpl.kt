@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.flowOf
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.common.api.FlowUtils.oneShot
-import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.GetVaultMembers
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.VaultMember
@@ -46,14 +46,14 @@ import javax.inject.Inject
 
 class GetVaultMembersImpl @Inject constructor(
     private val apiProvider: ApiProvider,
-    private val getVaultById: GetVaultById,
+    private val getVaultByShareId: GetVaultByShareId,
     private val observeCurrentUser: ObserveCurrentUser
 ) : GetVaultMembers {
 
     override fun invoke(shareId: ShareId): Flow<List<VaultMember>> = observeCurrentUser()
         .flatMapLatest { user ->
             val userId = user.userId
-            val vault = getVaultById(userId = userId, shareId = shareId).firstOrNull()
+            val vault = getVaultByShareId(userId = userId, shareId = shareId).firstOrNull()
                 ?: return@flatMapLatest flowOf(emptyList())
 
             val vaultPermissions = vault.role.toPermissions()

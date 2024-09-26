@@ -28,10 +28,15 @@
     <string name="upsell_paid_feature_unlimited_aliases">Unlimited hide-my-email aliases</string>
     <string name="upsell_paid_feature_vault_sharing">Vault sharing (up to 10 people)</string>
     <string name="upsell_paid_feature_secure_links">Secure links</string>
+    <string name="upsell_paid_feature_advance_alias_management">Advanced alias management</string>
 
     <string name="upsell_paid_feature_authenticator_essential">Require 2FA for organization</string>
     <string name="upsell_paid_feature_sso_essential">SSO integration (coming soon)</string>
 
+    <string name="upsell_paid_feature_advance_alias_management_title">Manage your aliases</string>
+    <string name="upsell_paid_feature_advance_alias_management_subtitle">Advanced alias management is available with Pass Unlimited. Upgrade for immediate access.</string>
+
     <string name="upsell_button_upgrade">Get Pass Plus</string>
     <string name="upsell_button_upgrade_essentials">Get Pass Business</string>
+    <string name="upsell_button_upgrade_unlimited">Get Pass Unlimited</string>
 </resources>

@@ -22,7 +22,7 @@ package proton.android.pass.domain
 @JvmInline
 value class ShareRoleId(val id: String)
 
-sealed interface ShareRole {
+sealed interface ShareRole : Comparable<ShareRole> {
 
     val value: String
 
@@ -39,10 +39,20 @@ sealed interface ShareRole {
         override val value: String = roleId.id
     }
 
+    override fun compareTo(other: ShareRole): Int = this.priority().compareTo(other.priority())
+
+    private fun priority(): Int = when (this) {
+        Admin -> SHARE_ROLE_ADMIN.toInt()
+        Write -> SHARE_ROLE_WRITE.toInt()
+        Read -> SHARE_ROLE_READ.toInt()
+        is Custom -> SHARE_ROLE_CUSTOM.toInt()
+    }
+
     companion object {
         const val SHARE_ROLE_ADMIN = "1"
         const val SHARE_ROLE_WRITE = "2"
         const val SHARE_ROLE_READ = "3"
+        const val SHARE_ROLE_CUSTOM = "4"
 
         fun fromValue(value: String): ShareRole = when (value) {
             SHARE_ROLE_ADMIN -> Admin

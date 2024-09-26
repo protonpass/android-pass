@@ -33,6 +33,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
 
     internal val canUpgrade: Boolean = when (paidFeature) {
         PaidFeature.SentinelEssential -> false
+        PaidFeature.AdvanceAliasManagement,
         PaidFeature.DarkWebMonitoring,
         PaidFeature.SecureLinks,
         PaidFeature.SentinelFree,
@@ -41,6 +42,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
 
     @DrawableRes
     internal val logo: Int = when (paidFeature) {
+        PaidFeature.AdvanceAliasManagement -> R.drawable.logo_feature_pass_unlimited
         PaidFeature.SentinelEssential,
         PaidFeature.DarkWebMonitoring,
         PaidFeature.SentinelFree,
@@ -50,6 +52,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
 
     @StringRes
     internal val title: Int = when (paidFeature) {
+        PaidFeature.AdvanceAliasManagement -> R.string.upsell_paid_feature_advance_alias_management_title
         PaidFeature.SentinelEssential,
         PaidFeature.DarkWebMonitoring,
         PaidFeature.SentinelFree,
@@ -59,6 +62,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
 
     @StringRes
     internal val subtitle: Int = when (paidFeature) {
+        PaidFeature.AdvanceAliasManagement -> R.string.upsell_paid_feature_advance_alias_management_subtitle
         PaidFeature.DarkWebMonitoring -> R.string.upsell_dark_web_monitoring_subtitle
         PaidFeature.SecureLinks,
         PaidFeature.SentinelEssential,
@@ -69,6 +73,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
 
     @StringRes
     internal val submitText: Int = when (paidFeature) {
+        PaidFeature.AdvanceAliasManagement -> R.string.upsell_button_upgrade_unlimited
         PaidFeature.SentinelEssential -> R.string.upsell_button_upgrade_essentials
         PaidFeature.DarkWebMonitoring,
         PaidFeature.SentinelFree,
@@ -77,6 +82,15 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
     }
 
     internal val features: ImmutableList<Pair<Int, Int>> = when (paidFeature) {
+        PaidFeature.AdvanceAliasManagement -> persistentListOf(
+            CoreR.drawable.ic_proton_mailbox to R.string.upsell_paid_feature_advance_alias_management,
+            CompR.drawable.ic_shield_union to R.string.upsell_paid_feature_dark_web_monitoring,
+            CoreR.drawable.ic_proton_user to R.string.upsell_paid_feature_sentinel,
+            CoreR.drawable.ic_proton_lock to R.string.upsell_paid_feature_authenticator,
+            CoreR.drawable.ic_proton_alias to R.string.upsell_paid_feature_unlimited_aliases,
+            CoreR.drawable.ic_proton_users_plus to R.string.upsell_paid_feature_vault_sharing
+        )
+
         PaidFeature.SentinelEssential -> persistentListOf(
             CoreR.drawable.ic_proton_user to R.string.upsell_paid_feature_sentinel,
             CoreR.drawable.ic_proton_lock to R.string.upsell_paid_feature_authenticator_essential,

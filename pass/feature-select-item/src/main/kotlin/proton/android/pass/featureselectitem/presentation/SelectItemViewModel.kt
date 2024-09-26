@@ -86,6 +86,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.ItemFilterProcessor
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -196,7 +197,6 @@ class SelectItemViewModel @Inject constructor(
             }
             .distinctUntilChanged()
 
-
     private val itemUiModelFlow = combine(
         selectItemStateFlow,
         usableVaultsByUserIdFlow,
@@ -206,30 +206,23 @@ class SelectItemViewModel @Inject constructor(
             is SelectItemState.Autofill,
             is SelectItemState.Passkey.Register -> {
                 val flows = usableVaultsByUserId
-                    .filter {
-                        if (selectedAccount is Some) {
-                            it.key == selectedAccount.value
-                        } else {
-                            true
-                        }
-                    }
+                    .filter { it.matchesSelectedAccount(selectedAccount) }
                     .map { (userId, usableVaults) ->
                         observeItems(
                             userId = userId,
                             filter = state.itemTypeFilter,
-                            selection = ShareSelection.Shares(usableVaults.map { it.shareId }),
+                            selection = ShareSelection.Shares(usableVaults.map(Vault::shareId)),
                             itemState = ItemState.Active
-                        )
+                        ).map { usableVaults to it }
                     }
-                combine(flows) { it.toList().flatten() }
+                combine(flows, ItemFilterProcessor::processAllowedItems)
             }
-
 
             is SelectItemState.Passkey.Select -> {
                 val flows = usableVaultsByUserId.map { (userId, usableVaults) ->
                     observeItemsWithPasskeys(
                         userId = userId,
-                        shareSelection = ShareSelection.Shares(usableVaults.map { it.shareId })
+                        shareSelection = ShareSelection.Shares(usableVaults.map(Vault::shareId))
                     )
                 }
                 combine(flows) { it.toList().flatten() }
@@ -635,6 +628,13 @@ class SelectItemViewModel @Inject constructor(
     fun onAccountSwitch(userId: Option<UserId>) = viewModelScope.launch {
         selectedAccountFlow.update { userId }
     }
+
+    private fun <K, V> Map.Entry<K, V>.matchesSelectedAccount(selectedAccount: Option<UserId>): Boolean =
+        if (selectedAccount is Some) {
+            this.key == selectedAccount.value
+        } else {
+            true
+        }
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L

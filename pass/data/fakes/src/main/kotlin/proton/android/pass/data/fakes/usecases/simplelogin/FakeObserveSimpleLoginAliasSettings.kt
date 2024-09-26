@@ -31,7 +31,7 @@ class FakeObserveSimpleLoginAliasSettings @Inject constructor() : ObserveSimpleL
     private val simpleLoginAliasSettingsFlow = MutableStateFlow(
         SimpleLoginAliasSettings(
             defaultDomain = null,
-            defaultMailboxId = "MailboxId"
+            defaultMailboxId = 1
         )
     )
 

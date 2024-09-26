@@ -18,24 +18,33 @@
 
 package proton.android.pass.features.sl.sync.management.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.overlineNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.icon.PassUnlimitedIcon
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
@@ -44,6 +53,7 @@ import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.shared.ui.SimpleLoginSyncAddButton
 import proton.android.pass.features.sl.sync.shared.ui.SimpleLoginSyncDescriptionText
 import proton.android.pass.features.sl.sync.shared.ui.SimpleLoginSyncLabelText
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun SimpleLoginSyncManagementMailboxSection(
@@ -57,7 +67,8 @@ internal fun SimpleLoginSyncManagementMailboxSection(
         verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
         ) {
             SimpleLoginSyncLabelText(
                 modifier = Modifier.weight(1f, fill = true),
@@ -67,6 +78,8 @@ internal fun SimpleLoginSyncManagementMailboxSection(
             SimpleLoginSyncAddButton(
                 onClick = onAddClick
             )
+
+            PassUnlimitedIcon()
         }
 
         SimpleLoginSyncManagementMailboxes(
@@ -106,9 +119,52 @@ private fun SimpleLoginSyncManagementMailboxes(
                         text = aliasMailbox.email.asAnnotatedString()
                     )
 
-                    SectionTitle(
-                        text = "3 aliases"
-                    )
+                    if (aliasMailbox.isDefault) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
+                        ) {
+
+                            Text(
+                                modifier = Modifier
+                                    .clip(shape = RoundedCornerShape(size = Radius.medium))
+                                    .background(color = PassTheme.colors.interactionNormMajor2)
+                                    .padding(
+                                        horizontal = Spacing.small,
+                                        vertical = Spacing.extraSmall
+                                    ),
+                                text = stringResource(
+                                    id = R.string.simple_login_sync_management_mailbox_default
+                                ),
+                                style = ProtonTheme.typography.overlineNorm,
+                                color = PassTheme.colors.textInvert
+                            )
+
+                            SectionTitle(
+                                text = pluralStringResource(
+                                    id = CompR.plurals.aliases_count,
+                                    count = aliasMailbox.aliasCount,
+                                    aliasMailbox.aliasCount
+                                )
+                            )
+                        }
+                    } else {
+                        if (aliasMailbox.isVerified) {
+                            pluralStringResource(
+                                id = CompR.plurals.aliases_count,
+                                count = aliasMailbox.aliasCount,
+                                aliasMailbox.aliasCount
+                            )
+                        } else {
+                            stringResource(
+                                id = R.string.simple_login_sync_management_mailbox_unverified
+                            )
+                        }.also { mailboxDescriptionText ->
+                            SectionTitle(
+                                text = mailboxDescriptionText
+                            )
+                        }
+                    }
                 }
 
                 ThreeDotsMenuButton(
@@ -131,7 +187,8 @@ internal fun SimpleLoginSyncMailboxSectionPreview(@PreviewParameter(ThemePreview
                         id = "1",
                         email = "user@email.com",
                         isDefault = true,
-                        isVerified = true
+                        isVerified = true,
+                        aliasCount = 5
                     )
                 ),
                 onAddClick = {},

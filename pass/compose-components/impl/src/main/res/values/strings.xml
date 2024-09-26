@@ -219,6 +219,10 @@
         <item quantity="one">%d second</item>
         <item quantity="other">%d seconds</item>
     </plurals>
+    <plurals name="aliases_count">
+        <item quantity="one">%d alias</item>
+        <item quantity="other">%d aliases</item>
+    </plurals>
     <!-- Snack bars -->
     <string name="snack_bar_message_item_note_copied">Note copied</string>
     <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>

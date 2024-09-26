@@ -50,6 +50,7 @@ internal fun SimpleLoginSyncManagementSections(
     hasPendingAliases: Boolean,
     pendingAliasesCount: Int,
     canSelectDomain: Boolean,
+    canManageAliases: Boolean,
     onUiEvent: (SimpleLoginSyncManagementUiEvent) -> Unit
 ) {
     Column(
@@ -70,8 +71,13 @@ internal fun SimpleLoginSyncManagementSections(
 
         SimpleLoginSyncManagementMailboxSection(
             aliasMailboxes = aliasMailboxes,
+            canManageAliases = canManageAliases,
             onAddClick = {
-                onUiEvent(SimpleLoginSyncManagementUiEvent.OnAddMailboxClicked)
+                if (canManageAliases) {
+                    SimpleLoginSyncManagementUiEvent.OnAddMailboxClicked
+                } else {
+                    SimpleLoginSyncManagementUiEvent.OnUpsell
+                }.also(onUiEvent)
             },
             onMenuClick = { aliasMailbox ->
                 SimpleLoginSyncManagementUiEvent.OnMailboxMenuClicked(

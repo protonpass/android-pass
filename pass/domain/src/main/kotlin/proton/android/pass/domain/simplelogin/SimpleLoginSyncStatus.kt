@@ -24,7 +24,8 @@ data class SimpleLoginSyncStatus(
     val isSyncEnabled: Boolean,
     val isPreferenceEnabled: Boolean,
     val pendingAliasCount: Int,
-    val defaultVault: Vault
+    val defaultVault: Vault,
+    val canManageAliases: Boolean
 ) {
 
     val hasPendingAliases: Boolean = pendingAliasCount > 0

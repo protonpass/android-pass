@@ -104,6 +104,10 @@ fun SimpleLoginSyncDetailsScreen(
                 is SimpleLoginSyncManagementUiEvent.OnMailboxMenuClicked -> {
                     // Will be implemented in IDTEAM-3911
                 }
+
+                SimpleLoginSyncManagementUiEvent.OnUpsell -> {
+                    // Will be implemented in IDTEAM-3912
+                }
             }
         }
     )

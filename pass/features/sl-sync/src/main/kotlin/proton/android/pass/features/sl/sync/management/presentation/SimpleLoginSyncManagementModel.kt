@@ -41,4 +41,6 @@ internal data class SimpleLoginSyncManagementModel(
 
     internal val isSyncEnabled: Boolean = syncStatus.isSyncEnabled
 
+    internal val canManageAliases: Boolean = syncStatus.canManageAliases
+
 }

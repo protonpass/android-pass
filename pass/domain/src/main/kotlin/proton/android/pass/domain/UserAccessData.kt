@@ -27,5 +27,6 @@ data class UserAccessData(
     val isSimpleLoginSyncEnabled: Boolean,
     val minVersionUpgrade: String?,
     val simpleLoginSyncDefaultShareId: String,
-    val simpleLoginSyncPendingAliasCount: Int
+    val simpleLoginSyncPendingAliasCount: Int,
+    val canManageSimpleLoginAliases: Boolean = true
 )

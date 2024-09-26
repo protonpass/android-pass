@@ -14,6 +14,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.data.api.ItemFilterProcessor
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -75,7 +76,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
         val accountFlows = userIds.map { userId ->
             getSuggestedItemsForAccount(userId, itemTypeFilter, packageName, url)
         }
-        return combine(accountFlows) { array -> processAccountFlows(array, url) }
+        return combine(accountFlows) { array -> processAllowedItemsFlows(array, url) }
     }
 
     private fun handleCreditCards(
@@ -96,12 +97,11 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
         }
     }
 
-    private suspend fun processAccountFlows(
+    private suspend fun processAllowedItemsFlows(
         array: Array<Pair<List<Vault>, List<Item>>>,
         url: Option<String>
     ): SuggestedAutofillItemsResult {
-        val distinctVaults = getDistinctVaults(array.map { it.first }.flatten())
-        val filteredItems = filterItemsByVaults(array.map { it.second }.flatten(), distinctVaults)
+        val filteredItems = ItemFilterProcessor.processAllowedItems(array)
         val sortedItems = sortSuggestions(filteredItems, url)
         return SuggestedAutofillItemsResult.Items(sortedItems)
     }
@@ -110,10 +110,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
         array: Array<Triple<List<Vault>, List<Item>, Plan>>,
         url: Option<String>
     ): SuggestedAutofillItemsResult {
-        val distinctVaults = getDistinctVaults(array.map { it.first }.flatten())
-        val filteredItems = array.map { (_, items, plan) ->
-            if (plan.hasPlanWithAccess) items else emptyList()
-        }.flatten().filter { item -> distinctVaults.any { it.shareId == item.shareId } }
+        val filteredItems = ItemFilterProcessor.processCreditCard(array)
         val sortedItems = sortSuggestions(filteredItems, url)
         val plans = array.map { it.third }
         return when {
@@ -125,16 +122,6 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
             else -> SuggestedAutofillItemsResult.Items(emptyList())
         }
     }
-
-    private fun getDistinctVaults(vaultsList: List<Vault>): List<Vault> = vaultsList.groupBy { it.vaultId }
-        .mapValues { (_, vaults) ->
-            vaults.sortedWith(compareBy({ !it.isOwned }, Vault::role)).first()
-        }
-        .values
-        .toList()
-
-    private fun filterItemsByVaults(items: List<Item>, vaults: List<Vault>): List<Item> =
-        items.filter { item -> vaults.any { it.shareId == item.shareId } }
 
     private fun getSuggestedItemsForAccount(
         userId: UserId,
@@ -159,4 +146,3 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
         return suggestionSorter.sort(items, url, lastAutofillItem)
     }
 }
-

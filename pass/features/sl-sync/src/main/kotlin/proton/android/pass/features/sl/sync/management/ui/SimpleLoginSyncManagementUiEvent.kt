@@ -50,4 +50,6 @@ internal sealed interface SimpleLoginSyncManagementUiEvent {
         internal val aliasMailbox: SimpleLoginAliasMailbox
     ) : SimpleLoginSyncManagementUiEvent
 
+    data object OnUpsell : SimpleLoginSyncManagementUiEvent
+
 }

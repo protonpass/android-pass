@@ -195,9 +195,6 @@ class SecureLinkRepositoryImpl @Inject constructor(
         emit(secureLinksLocalDataSource.getCount(userId))
 
         runCatching { fetchSecureLinksFromRemote(userId) }
-//            .onFailure { error ->
-//                throw error
-//            }
             .onSuccess { remoteSecureLinks ->
                 syncSecureLinks(userId, remoteSecureLinks)
             }

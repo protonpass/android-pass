@@ -35,6 +35,8 @@ data class Plan(
     val isPaidPlan: Boolean = planType is PlanType.Paid
 
     val isTrialPlan: Boolean = planType is PlanType.Trial
+
+    val hasPlanWithAccess = planType is PlanType.Paid || planType is PlanType.Trial
 }
 
 sealed interface PlanLimit {

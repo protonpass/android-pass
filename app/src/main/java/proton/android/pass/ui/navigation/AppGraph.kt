@@ -25,6 +25,7 @@ import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.featurefeatureflags.impl.featureFlagsGraph
@@ -1977,6 +1978,13 @@ fun NavGraphBuilder.appGraph(
                 is SimpleLoginSyncNavDestination.Settings -> appNavigator.navigate(
                     destination = SimpleLoginSyncSettingsNavItem,
                     route = SimpleLoginSyncSettingsNavItem.createNavRoute(destination.shareId)
+                )
+
+                SimpleLoginSyncNavDestination.Upsell -> appNavigator.navigate(
+                    destination = UpsellNavItem,
+                    route = UpsellNavItem.createNavRoute(
+                        paidFeature = PaidFeature.AdvanceAliasManagement
+                    )
                 )
             }
         }

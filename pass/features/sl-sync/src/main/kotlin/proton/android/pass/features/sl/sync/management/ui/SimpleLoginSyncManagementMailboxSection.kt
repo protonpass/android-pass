@@ -59,6 +59,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun SimpleLoginSyncManagementMailboxSection(
     modifier: Modifier = Modifier,
     aliasMailboxes: ImmutableList<SimpleLoginAliasMailbox>,
+    canManageAliases: Boolean,
     onAddClick: () -> Unit,
     onMenuClick: (SimpleLoginAliasMailbox) -> Unit
 ) {
@@ -79,7 +80,9 @@ internal fun SimpleLoginSyncManagementMailboxSection(
                 onClick = onAddClick
             )
 
-            PassUnlimitedIcon()
+            if (!canManageAliases) {
+                PassUnlimitedIcon()
+            }
         }
 
         SimpleLoginSyncManagementMailboxes(
@@ -124,7 +127,6 @@ private fun SimpleLoginSyncManagementMailboxes(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
                         ) {
-
                             Text(
                                 modifier = Modifier
                                     .clip(shape = RoundedCornerShape(size = Radius.medium))
@@ -184,7 +186,7 @@ internal fun SimpleLoginSyncMailboxSectionPreview(@PreviewParameter(ThemePreview
             SimpleLoginSyncManagementMailboxSection(
                 aliasMailboxes = persistentListOf(
                     SimpleLoginAliasMailbox(
-                        id = "1",
+                        id = 1L,
                         email = "user@email.com",
                         isDefault = true,
                         isVerified = true,
@@ -192,7 +194,8 @@ internal fun SimpleLoginSyncMailboxSectionPreview(@PreviewParameter(ThemePreview
                     )
                 ),
                 onAddClick = {},
-                onMenuClick = {}
+                onMenuClick = {},
+                canManageAliases = false
             )
         }
     }

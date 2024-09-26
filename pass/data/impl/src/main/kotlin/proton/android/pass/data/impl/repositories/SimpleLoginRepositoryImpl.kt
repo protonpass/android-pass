@@ -55,6 +55,7 @@ import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
 import proton.android.pass.domain.simplelogin.SimpleLoginPendingAliases
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import javax.inject.Inject
+import kotlin.random.Random
 
 class SimpleLoginRepositoryImpl @Inject constructor(
     private val accountManager: AccountManager,
@@ -222,6 +223,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         isSyncEnabled = isSimpleLoginSyncEnabled,
         isPreferenceEnabled = isSimpleLoginSyncPreferenceEnabled,
         pendingAliasCount = simpleLoginSyncPendingAliasCount,
+        canManageAliases = canManageSimpleLoginAliases,
         defaultVault = observeVaultById(
             userId = userId,
             shareId = simpleLoginSyncDefaultShareId.let(::ShareId)
@@ -234,7 +236,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     )
 
     private fun SimpleLoginAliasMailboxData.toDomain() = SimpleLoginAliasMailbox(
-        id = mailboxId,
+        id = Random.nextLong(),
         email = email,
         isDefault = isDefault,
         isVerified = verified,
@@ -243,7 +245,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
 
     private fun SimpleLoginAliasSettingsData.toDomain() = SimpleLoginAliasSettings(
         defaultDomain = defaultAliasDomain,
-        defaultMailboxId = defaultMailboxId
+        defaultMailboxId = Random.nextLong()
     )
 
     private fun SimpleLoginPendingAliasesData.toDomain() = SimpleLoginPendingAliases(

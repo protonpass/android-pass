@@ -35,6 +35,8 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.account.fakes.FakeUserManager
+import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
@@ -94,6 +96,12 @@ class SelectItemScreenTest {
 
     @Inject
     lateinit var observeItems: TestObserveItems
+
+    @Inject
+    lateinit var accountManager: TestAccountManager
+
+    @Inject
+    lateinit var userManager: FakeUserManager
 
     @Before
     fun setup() {
@@ -332,17 +340,20 @@ class SelectItemScreenTest {
         otherItems: Int,
         planType: PlanType
     ): SetupData {
+        val userId = UserId("test-user-id")
+        accountManager.setAccounts(listOf(TestAccountManager.DEFAULT_ACCOUNT.copy(userId = userId)))
+        userManager.setUser(FakeUserManager.DEFAULT_USER.copy(userId = userId))
         val vaultList = (0 until vaults).map {
             val shareId = ShareId("shareid-test-$it")
             Vault(
-                userId = UserId(""),
+                userId = userId,
                 shareId = shareId,
                 vaultId = VaultId("vaultid-test-$it"),
                 name = "testVault-$it",
                 createTime = Date()
             )
         }
-        observeUsableVaults.emit(Result.success(vaultList))
+        observeUsableVaults.emit(Result.success(vaultList), userId)
 
         val shareId = vaultList.first().shareId
         val suggestionsList = (0 until suggestions).map {
@@ -401,7 +412,7 @@ class SelectItemScreenTest {
             totpLimit = PlanLimit.Limited(1),
             updatedAt = Clock.System.now().epochSeconds
         )
-        getUserPlan.setResult(Result.success(plan))
+        getUserPlan.setResult(Result.success(plan), userId)
 
         observeUpgradeInfo.setResult(
             UpgradeInfo(

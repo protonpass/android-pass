@@ -25,6 +25,8 @@ internal sealed interface SimpleLoginSyncMailboxCreateUiEvent {
     data object OnCreateClicked : SimpleLoginSyncMailboxCreateUiEvent
 
     @JvmInline
-    value class OnEmailChanged(internal val email: String) : SimpleLoginSyncMailboxCreateUiEvent
+    value class OnMailboxEmailChanged(
+        internal val newMailboxEmail: String
+    ) : SimpleLoginSyncMailboxCreateUiEvent
 
 }

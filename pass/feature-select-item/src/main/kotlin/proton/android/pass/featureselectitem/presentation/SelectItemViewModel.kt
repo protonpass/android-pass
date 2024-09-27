@@ -197,16 +197,38 @@ class SelectItemViewModel @Inject constructor(
             }
             .distinctUntilChanged()
 
+    private val usersAndPlansFlow = accountManager.getAccounts(AccountState.Ready)
+        .flatMapLatest { accountList ->
+            val flows = accountList.map { account ->
+                combine(
+                    userManager.observeUser(account.userId).filterNotNull(),
+                    getUserPlan(account.userId),
+                    ::Pair
+                )
+            }
+            combine(flows) { it.toMap() }
+        }
+
     private val itemUiModelFlow = combine(
         selectItemStateFlow,
         usableVaultsByUserIdFlow,
-        selectedAccountFlow
-    ) { selectItemState, usableVaultsByUserId, selectedAccount ->
+        selectedAccountFlow,
+        usersAndPlansFlow
+    ) { selectItemState, usableVaultsByUserId, selectedAccount, usersAndPlans ->
         when (val state = selectItemState.value()) {
             is SelectItemState.Autofill,
             is SelectItemState.Passkey.Register -> {
                 val flows = usableVaultsByUserId
                     .filter { it.matchesSelectedAccount(selectedAccount) }
+                    .filter { (userId, _) ->
+                        if (state.itemTypeFilter == ItemTypeFilter.CreditCards) {
+                            usersAndPlans.keys.find { it.userId == userId }?.let { user ->
+                                usersAndPlans[user]?.let(Plan::hasPlanWithAccess) ?: false
+                            } ?: false
+                        } else {
+                            true
+                        }
+                    }
                     .map { (userId, usableVaults) ->
                         observeItems(
                             userId = userId,
@@ -402,17 +424,6 @@ class SelectItemViewModel @Inject constructor(
         )
     }
 
-    private val usersAndPlansFlow = accountManager.getAccounts(AccountState.Ready)
-        .flatMapLatest { accountList ->
-            val flows = accountList.map { account ->
-                combine(
-                    userManager.observeUser(account.userId).filterNotNull(),
-                    getUserPlan(account.userId),
-                    ::Pair
-                )
-            }
-            combine(flows) { it.toMap() }
-        }
     private val accountsDataFlow = combine(
         usersAndPlansFlow,
         selectedAccountFlow,

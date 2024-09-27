@@ -19,19 +19,29 @@
 package proton.android.pass.features.sl.sync.mailboxes.create.ui
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
+import me.proton.core.compose.theme.subheadlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTopBarBackButtonType
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
+import proton.android.pass.composecomponents.impl.form.ProtonTextField
+import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.mailboxes.create.presentation.SimpleLoginSyncMailboxCreateState
@@ -53,10 +63,17 @@ internal fun SimpleLoginSyncMailboxCreateContent(
                 onUpClick = { onUiEvent(SimpleLoginSyncMailboxCreateUiEvent.OnBackClicked) },
                 actions = {
                     LoadingCircleButton(
-                        modifier = Modifier.padding(Spacing.mediumSmall, Spacing.small),
+                        modifier = Modifier.padding(
+                            horizontal = Spacing.mediumSmall,
+                            vertical = Spacing.small
+                        ),
                         isLoading = isLoading,
                         buttonEnabled = canCreateMailbox,
-                        color = PassTheme.colors.interactionNormMajor1,
+                        color = if (canCreateMailbox) {
+                            PassTheme.colors.interactionNormMajor1
+                        } else {
+                            PassTheme.colors.interactionNormMajor1.copy(alpha = 0.6f)
+                        },
                         text = {
                             Text(
                                 text = stringResource(id = CompR.string.action_continue),
@@ -73,6 +90,42 @@ internal fun SimpleLoginSyncMailboxCreateContent(
             )
         }
     ) { innerPaddingValue ->
+        val focusRequester = remember { FocusRequester() }
 
+        ProtonTextField(
+            modifier = Modifier
+                .padding(paddingValues = innerPaddingValue)
+                .padding(
+                    horizontal = Spacing.medium,
+                    vertical = Spacing.large
+                )
+                .focusRequester(focusRequester = focusRequester),
+            value = mailboxEmail,
+            textStyle = ProtonTheme.typography.subheadlineNorm,
+            keyboardOptions = KeyboardOptions(
+                autoCorrect = false,
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next
+            ),
+            isError = false,
+            errorMessage = "",
+            placeholder = {
+                ProtonTextFieldPlaceHolder(
+                    text = stringResource(CompR.string.email_address),
+                    textStyle = ProtonTheme.typography.subheadlineNorm
+                        .copy(color = ProtonTheme.colors.textHint)
+                )
+            },
+            moveToNextOnEnter = true,
+            onChange = { newMailboxEmail ->
+                SimpleLoginSyncMailboxCreateUiEvent.OnMailboxEmailChanged(
+                    newMailboxEmail = newMailboxEmail
+                ).also(onUiEvent)
+            }
+        )
+
+        LaunchedEffect(focusRequester) {
+            focusRequester.requestFocus()
+        }
     }
 }

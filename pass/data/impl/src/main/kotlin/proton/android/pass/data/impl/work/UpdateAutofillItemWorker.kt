@@ -29,6 +29,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -41,7 +42,8 @@ import proton.android.pass.log.api.PassLogger
 class UpdateAutofillItemWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted private val workerParameters: WorkerParameters,
-    private val itemRepository: ItemRepository
+    private val itemRepository: ItemRepository,
+    private val shareRepository: ShareRepository
 ) : CoroutineWorker(appContext, workerParameters) {
 
     override suspend fun doWork(): Result {
@@ -94,10 +96,10 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
     private suspend fun updateLastUsed(inputData: InputData): Result {
         PassLogger.d(TAG, "Start update last used")
         return runCatching {
-            itemRepository.updateItemLastUsed(
-                inputData.shareId,
-                inputData.itemId
-            )
+            val userIdOption = itemRepository.findUserId(inputData.shareId, inputData.itemId)
+            val userId = userIdOption.value() ?: throw IllegalStateException("User not found")
+            val share = shareRepository.getById(userId, inputData.shareId)
+            itemRepository.updateItemLastUsed(share.vaultId, inputData.itemId)
         }.fold(
             onSuccess = {
                 PassLogger.d(TAG, "Completed update last used")

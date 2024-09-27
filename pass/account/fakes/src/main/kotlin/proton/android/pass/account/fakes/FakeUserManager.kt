@@ -20,6 +20,7 @@ package proton.android.pass.account.fakes
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -39,28 +40,7 @@ import javax.inject.Singleton
 @Singleton
 class FakeUserManager @Inject constructor() : UserManager {
 
-    private val state: MutableStateFlow<User> = MutableStateFlow(
-        User(
-            userId = UserId(USER_ID),
-            email = EMAIL,
-            name = "name",
-            displayName = null,
-            currency = "",
-            type = Type.Proton,
-            credit = 0,
-            createdAtUtc = 0,
-            usedSpace = 0,
-            maxSpace = 0,
-            maxUpload = 0,
-            role = null,
-            private = false,
-            services = 0,
-            subscribed = 0,
-            delinquent = null,
-            keys = listOf(),
-            recovery = null
-        )
-    )
+    private val state: MutableStateFlow<User> = MutableStateFlow(DEFAULT_USER)
 
     override suspend fun addUser(user: User, addresses: List<UserAddress>) {
         state.emit(user)
@@ -92,6 +72,10 @@ class FakeUserManager @Inject constructor() : UserManager {
     }
 
     override fun observeUser(sessionUserId: SessionUserId, refresh: Boolean): Flow<User?> = state
+
+    fun setUser(user: User) {
+        state.update { user }
+    }
 
     override suspend fun reactivateKey(userKey: UserKey): User {
         throw IllegalStateException("Not implemented")
@@ -133,5 +117,25 @@ class FakeUserManager @Inject constructor() : UserManager {
     companion object {
         const val USER_ID = "DefaultUserId"
         const val EMAIL = "DefaultEmail"
+        val DEFAULT_USER = User(
+            userId = UserId(USER_ID),
+            email = EMAIL,
+            name = "name",
+            displayName = null,
+            currency = "",
+            type = Type.Proton,
+            credit = 0,
+            createdAtUtc = 0,
+            usedSpace = 0,
+            maxSpace = 0,
+            maxUpload = 0,
+            role = null,
+            private = false,
+            services = 0,
+            subscribed = 0,
+            delinquent = null,
+            keys = listOf(),
+            recovery = null
+        )
     }
 }

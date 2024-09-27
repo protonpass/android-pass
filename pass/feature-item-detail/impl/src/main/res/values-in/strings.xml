@@ -7,7 +7,7 @@
   <string name="top_bar_edit_button_text">Sunting</string>
   <!-- Alias details -->
   <string name="field_alias_title">Alamat alias</string>
-  <string name="field_alias_disabled_title">Alias address (disabled)</string>
+  <string name="field_alias_disabled_title">Alamat alias (dinonaktifkan)</string>
   <string name="alias_copied_to_clipboard">Alias disalin</string>
   <string name="alias_detail_field_mailboxes_title">Meneruskan ke</string>
   <string name="alias_create_login_from_alias">Buat entri masuk</string>

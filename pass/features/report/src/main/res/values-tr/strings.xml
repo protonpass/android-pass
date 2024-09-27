@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Sorununuz nedir?</string>
-  <string name="description_field_hint">Sorununuzu olabildiğince ayrıntılı olarak anlatın. Bir hata iletisi görüyorsanız ne dendiğini bize aktarın.</string>
+  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
   <string name="email_field_label">E-posta adresi</string>
   <string name="email_field_hint">E-posta adresi</string>
   <string name="attach_image_button">Görsel ekle</string>
@@ -35,23 +35,23 @@
   <string name="report_reason_other">Diğer</string>
   <string name="tips_title">%1$s için hızlı çözümler</string>
   <string name="tips_subtitle">Bu ipuçları sorununuzu daha hızlı çözmenize yardımcı olabilir.</string>
-  <string name="autofill_tip_restart">Try disabling and enabling the autofill service.</string>
-  <string name="autofill_tip_browser">Try another browser.</string>
+  <string name="autofill_tip_restart">Otomatik doldurma hizmetini kullanımdan kaldırıp yeniden kullanıma almayı deneyin.</string>
+  <string name="autofill_tip_browser">Başka bir tarayıcı kullanın.</string>
   <string name="sharing_tip_vault_sharing_guide">Kasaları paylaşmak ile ilgili bir sorun mu yaşıyorsunuz? Rehberimize bakın.</string>
   <string name="sharing_tip_secure_links_guide">Güvenli bağlantılar ile ilgili bir sorun mu yaşıyorsunuz? Rehberimize bakın.</string>
   <string name="sync_tip_force_refresh">Ekranınız boş mu? Zorla eşitlemeyi deneyin.</string>
   <string name="send_logs_label">Günlükleri gönder</string>
   <string name="report_sending_success">Bildiriminiz gönderildi.</string>
   <string name="report_sending_error">Bildiriminiz gönderilemedi.</string>
-  <string name="tips_passkey_check_guide">If you have any issues check our guide.</string>
-  <string name="tips_passkey_android_not_supported">Android sürümünüz çok eski. Aygıtınızı yükseltmeyi deneyin.</string>
+  <string name="tips_passkey_check_guide">Herhangi bir sorun yaşarsanız rehberimize bakın.</string>
+  <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
   <string name="tips_passkeys_credential_manager_not_supported">Aygıtın üreticisi bir kimlik doğrulama yönetimi sunmuyor.</string>
-  <string name="tips_passkey_supported">Passkeys supported</string>
-  <string name="tips_passkey_not_supported">Passkeys not supported</string>
-  <string name="report_steps" comment="Indicator showing report progress">Step %1$d of %2$d</string>
-  <string name="description_cannot_be_blank">Description cannot be blank</string>
-  <string name="description_is_too_short">Description is too short</string>
-  <string name="description_is_too_long">Description is too long</string>
-  <string name="email_cannot_be_blank">Email cannot be blank</string>
-  <string name="email_invalid">Invalid email address</string>
+  <string name="tips_passkey_supported">Geçiş anahtarları destekleniyor</string>
+  <string name="tips_passkey_not_supported">Geçiş anahtarları desteklenmiyor</string>
+  <string name="report_steps" comment="Indicator showing report progress">%1$d / %2$d. adım</string>
+  <string name="description_cannot_be_blank">Açıklama boş olamaz</string>
+  <string name="description_is_too_short">Açıklama çok kısa</string>
+  <string name="description_is_too_long">Açıklama çok uzun</string>
+  <string name="email_cannot_be_blank">E-posta adresi boş olamaz.</string>
+  <string name="email_invalid">E-posta adresi geçersiz</string>
 </resources>

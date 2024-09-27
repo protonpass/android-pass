@@ -107,6 +107,7 @@ dependencies {
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(projects.pass.account.fakes)
     androidTestImplementation(projects.pass.clipboard.fakes)
     androidTestImplementation(projects.pass.common.fakes)
     androidTestImplementation(projects.pass.commonRust.fakes)

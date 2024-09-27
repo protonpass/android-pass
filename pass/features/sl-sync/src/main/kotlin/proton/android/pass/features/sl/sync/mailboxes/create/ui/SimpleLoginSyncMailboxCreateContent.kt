@@ -107,6 +107,7 @@ internal fun SimpleLoginSyncMailboxCreateContent(
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next
             ),
+            editable = canEditMailboxEmail,
             isError = showInvalidMailboxEmailError,
             errorMessage = "Invalid email address",
             placeholder = {

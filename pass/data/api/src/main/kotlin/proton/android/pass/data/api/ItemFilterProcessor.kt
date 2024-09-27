@@ -35,6 +35,8 @@ data object ItemFilterProcessor {
         .values
         .toList()
 
-    private fun filterItemsByVaults(items: List<Item>, vaults: List<Vault>): List<Item> =
-        items.filter { item -> vaults.any { it.shareId == item.shareId } }
+    private fun filterItemsByVaults(items: List<Item>, vaults: List<Vault>): List<Item> {
+        val vaultShareIds = vaults.map { it.shareId }.toSet()
+        return items.filter { it.shareId in vaultShareIds }
+    }
 }

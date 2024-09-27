@@ -23,6 +23,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
 import proton.android.pass.data.impl.db.entities.ItemEntity
+import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.domain.ItemStateValues
 
 data class SummaryRow(
@@ -359,4 +360,30 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         itemId: String,
         flags: Int
     )
+
+
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE} AS item
+        JOIN ${ShareEntity.TABLE} AS share
+        ON item.${ItemEntity.Columns.SHARE_ID} = share.${ShareEntity.Columns.ID}
+        WHERE share.${ShareEntity.Columns.VAULT_ID} = :vaultId
+          AND item.${ItemEntity.Columns.ID} = :itemId
+          AND item.${ItemEntity.Columns.USER_ID} IN (:userIds)
+        """
+    )
+    abstract fun getByVaultIdAndItemId(
+        userIds: List<String>,
+        vaultId: String,
+        itemId: String
+    ): List<ItemEntity>
+
+    @Query(
+        """
+        SELECT ${ItemEntity.Columns.USER_ID} FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.ID} = :itemId
+        """
+    )
+    abstract fun findUserId(shareId: String, itemId: String): String?
 }

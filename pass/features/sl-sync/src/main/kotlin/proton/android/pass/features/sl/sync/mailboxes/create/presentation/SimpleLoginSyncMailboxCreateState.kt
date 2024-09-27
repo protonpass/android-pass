@@ -16,23 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.shared.navigation
+package proton.android.pass.features.sl.sync.mailboxes.create.presentation
 
-import proton.android.pass.domain.ShareId
+import androidx.compose.runtime.Stable
 
-sealed interface SimpleLoginSyncNavDestination {
+@Stable
+internal data class SimpleLoginSyncMailboxCreateState(
+    internal val mailboxEmail: String
+) {
 
-    @JvmInline
-    value class Back(val force: Boolean = false) : SimpleLoginSyncNavDestination
+    internal companion object {
 
-    data object CreateMailbox : SimpleLoginSyncNavDestination
+        internal val Initial = SimpleLoginSyncMailboxCreateState(mailboxEmail = "")
 
-    @JvmInline
-    value class SelectVault(val shareId: ShareId) : SimpleLoginSyncNavDestination
-
-    @JvmInline
-    value class Settings(val shareId: ShareId?) : SimpleLoginSyncNavDestination
-
-    data object Upsell : SimpleLoginSyncNavDestination
+    }
 
 }

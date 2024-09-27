@@ -98,7 +98,7 @@ fun SimpleLoginSyncDetailsScreen(
                 }
 
                 SimpleLoginSyncManagementUiEvent.OnAddMailboxClicked -> {
-                    // Will be implemented in IDTEAM-3911
+                    onNavigated(SimpleLoginSyncNavDestination.CreateMailbox)
                 }
 
                 is SimpleLoginSyncManagementUiEvent.OnMailboxMenuClicked -> {

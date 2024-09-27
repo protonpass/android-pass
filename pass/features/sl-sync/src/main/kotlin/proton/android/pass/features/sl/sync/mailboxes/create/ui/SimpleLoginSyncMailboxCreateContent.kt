@@ -107,8 +107,8 @@ internal fun SimpleLoginSyncMailboxCreateContent(
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next
             ),
-            isError = false,
-            errorMessage = "",
+            isError = showInvalidMailboxEmailError,
+            errorMessage = "Invalid email address",
             placeholder = {
                 ProtonTextFieldPlaceHolder(
                     text = stringResource(CompR.string.email_address),

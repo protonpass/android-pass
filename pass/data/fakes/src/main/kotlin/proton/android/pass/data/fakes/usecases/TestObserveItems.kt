@@ -267,6 +267,6 @@ class TestObserveItems @Inject constructor() : ObserveItems {
         val filter: ItemTypeFilter = ItemTypeFilter.All,
         val userId: UserId? = null,
         val securityCheckFilter: ItemSecurityCheckFilter = ItemSecurityCheckFilter.All,
-        val isBreachedFilter: ItemIsBreachedFilter = ItemIsBreachedFilter.NotBreached
+        val isBreachedFilter: ItemIsBreachedFilter = ItemIsBreachedFilter.All
     )
 }

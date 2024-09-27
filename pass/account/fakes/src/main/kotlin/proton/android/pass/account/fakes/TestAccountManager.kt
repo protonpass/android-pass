@@ -21,7 +21,7 @@ package proton.android.pass.account.fakes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
@@ -38,18 +38,8 @@ class TestAccountManager @Inject constructor() : AccountManager(Product.Pass) {
     private val primaryUserIdFlow: MutableStateFlow<UserId?> =
         MutableStateFlow(UserId(USER_ID))
 
-    private val accountFlow: MutableStateFlow<Account> =
-        MutableStateFlow(
-            Account(
-                userId = UserId(USER_ID),
-                state = AccountState.Ready,
-                details = AccountDetails(null, null),
-                username = null,
-                email = null,
-                sessionId = null,
-                sessionState = null
-            )
-        )
+    private val accountFlow: MutableStateFlow<Account> = MutableStateFlow(DEFAULT_ACCOUNT)
+    private val accountsFlow = MutableStateFlow(listOf(DEFAULT_ACCOUNT))
 
     override suspend fun addAccount(account: Account, session: Session) {
         // no-op
@@ -57,7 +47,11 @@ class TestAccountManager @Inject constructor() : AccountManager(Product.Pass) {
 
     override fun getAccount(userId: UserId): Flow<Account?> = accountFlow
 
-    override fun getAccounts(): Flow<List<Account>> = accountFlow.map { listOf(it) }
+    override fun getAccounts(): Flow<List<Account>> = accountsFlow
+
+    fun setAccounts(accounts: List<Account>) {
+        accountsFlow.update { accounts }
+    }
 
     override suspend fun getPreviousPrimaryUserId(): UserId? = null
 
@@ -89,5 +83,14 @@ class TestAccountManager @Inject constructor() : AccountManager(Product.Pass) {
 
     companion object {
         const val USER_ID = "DefaultUserId"
+        val DEFAULT_ACCOUNT = Account(
+            userId = UserId(USER_ID),
+            state = AccountState.Ready,
+            details = AccountDetails(null, null),
+            username = null,
+            email = null,
+            sessionId = null,
+            sessionState = null
+        )
     }
 }

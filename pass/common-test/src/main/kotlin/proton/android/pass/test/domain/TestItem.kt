@@ -43,9 +43,9 @@ object TestItem {
         itemId: ItemId = ItemId(id = "item-id"),
         shareId: ShareId = ShareId(id = "share-id"),
         packageInfoSet: Set<PackageInfo> = emptySet(),
-        keyStoreCrypto: KeyStoreCrypto? = null
+        keyStoreCrypto: KeyStoreCrypto = TestKeyStoreCrypto,
+        title: String = "item-title"
     ): Item {
-        val title = "item-title"
         val note = "item-note"
         val now = Clock.System.now()
         return Item(
@@ -54,8 +54,8 @@ object TestItem {
             revision = 0,
             shareId = shareId,
             itemType = itemType,
-            title = keyStoreCrypto?.let { title.encrypt(it) } ?: title,
-            note = keyStoreCrypto?.let { note.encrypt(it) } ?: note,
+            title = title.encrypt(keyStoreCrypto),
+            note = note.encrypt(keyStoreCrypto),
             content = EncryptedByteArray(byteArrayOf()),
             packageInfoSet = packageInfoSet,
             state = 0,
@@ -106,7 +106,8 @@ object TestItem {
             state = 0,
             createTime = Instant.fromEpochMilliseconds(createTime),
             modificationTime = Instant.fromEpochMilliseconds(modificationTime),
-            lastAutofillTime = lastAutofillTime?.let { Instant.fromEpochMilliseconds(it) }.toOption(),
+            lastAutofillTime = lastAutofillTime?.let { Instant.fromEpochMilliseconds(it) }
+                .toOption(),
             isPinned = Random.nextBoolean(),
             flags = Random.nextInt()
         )

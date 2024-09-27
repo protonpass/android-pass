@@ -23,7 +23,6 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -40,11 +39,10 @@ import proton.android.pass.data.fakes.usecases.TestObserveVaultById
 import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
-import proton.android.pass.domain.Vault
 import proton.android.pass.featuresharing.impl.ShowEditVaultArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.MainDispatcherRule
-import java.util.Date
+import proton.android.pass.test.domain.TestVault
 
 class SharingWithViewModelTest {
 
@@ -142,11 +140,8 @@ class SharingWithViewModelTest {
         val invitedEmail = "myemail@proton.me"
         checkAddressesCanBeInvited.setAddressCanBeInvited(invitedEmail)
 
-        val testVault = Vault(
-            userId = UserId(""),
-            shareId = ShareId(id = SHARE_ID),
-            name = "vault name",
-            createTime = Date()
+        val testVault = TestVault.create(
+            shareId = ShareId(id = SHARE_ID)
         )
         observeVaultById.emitValue(testVault.some())
         viewModel.onEmailChange(invitedEmail)

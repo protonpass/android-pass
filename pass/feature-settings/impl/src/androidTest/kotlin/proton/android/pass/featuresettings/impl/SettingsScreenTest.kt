@@ -34,6 +34,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
 import proton.android.pass.image.fakes.TestClearIconCache
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.TestPreferenceRepository
@@ -72,12 +73,14 @@ class SettingsScreenTest {
                     Vault(
                         userId = UserId(""),
                         shareId = ShareId("1"),
+                        vaultId = VaultId("vault-id"),
                         name = "Vault 1",
                         createTime = Date()
                     ),
                     Vault(
                         userId = UserId(""),
                         shareId = ShareId("2"),
+                        vaultId = VaultId("vault-id-2"),
                         name = "Vault 2",
                         createTime = Date()
                     )

@@ -25,7 +25,6 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -34,10 +33,7 @@ import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestInviteToVault
-import proton.android.pass.domain.ShareColor
-import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentError
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage.InviteSentSuccess
@@ -47,7 +43,7 @@ import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import java.util.Date
+import proton.android.pass.test.domain.TestVault
 
 class SharingSummaryViewModelTest {
 
@@ -172,13 +168,8 @@ class SharingSummaryViewModelTest {
     }
 
     private fun createVaultWithItemCount() = VaultWithItemCount(
-        vault = Vault(
-            userId = UserId(""),
-            shareId = ShareId(id = TEST_SHARE_ID),
-            name = "Evangeline Potter",
-            color = ShareColor.Color1,
-            icon = ShareIcon.Icon1,
-            createTime = Date()
+        vault = TestVault.create(
+            shareId = ShareId(id = TEST_SHARE_ID)
         ),
         activeItemCount = 5521, trashedItemCount = 6902
     )

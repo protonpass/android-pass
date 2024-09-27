@@ -58,6 +58,7 @@ import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featurehome.impl.HomeContentTestTag.DRAWER_ICON_TEST_TAG
 import proton.android.pass.preferences.HasCompletedOnBoarding
@@ -151,6 +152,7 @@ class HomeScreenTest {
             vault = Vault(
                 userId = UserId(""),
                 shareId = ShareId("ShareId-canNavigateToCreateVault"),
+                vaultId = VaultId("vaultId-canNavigateToCreateVault"),
                 name = "Vault canNavigateToCreateVault",
                 color = ShareColor.Color1,
                 icon = ShareIcon.Icon1,
@@ -310,6 +312,7 @@ class HomeScreenTest {
                 Vault(
                     userId = UserId(""),
                     shareId = shareId,
+                    vaultId = VaultId("vaultId"),
                     name = "Vault ${shareId.id}",
                     color = ShareColor.Color1,
                     icon = ShareIcon.Icon1,

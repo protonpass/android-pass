@@ -19,6 +19,7 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.VaultWithItemCount
 import timber.log.Timber
 import java.util.Date
@@ -59,12 +60,14 @@ class FeatureHomeApp : Application() {
             Vault(
                 userId = UserId(""),
                 shareId = ShareId(SHARE_ID),
+                vaultId = VaultId("main_vault"),
                 name = "Main vault",
                 createTime = Date()
             ),
             Vault(
                 userId = UserId(""),
                 shareId = ShareId("OtherShareID"),
+                vaultId = VaultId("other_vault"),
                 name = "Other vault",
                 createTime = Date()
             )

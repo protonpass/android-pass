@@ -109,7 +109,7 @@ internal fun SimpleLoginSyncMailboxCreateContent(
             ),
             editable = canEditMailboxEmail,
             isError = showInvalidMailboxEmailError,
-            errorMessage = "Invalid email address",
+            errorMessage = stringResource(id = CompR.string.email_address_invalid),
             placeholder = {
                 ProtonTextFieldPlaceHolder(
                     text = stringResource(CompR.string.email_address),

@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.remote.simplelogin
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.requests.SimpleLoginCreateAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesRequest
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDomainRequest
@@ -95,6 +96,14 @@ class RemoteSimpleLoginDataSourceImpl @Inject constructor(
     ): GetItemsResponse = apiProvider
         .get<PasswordManagerApi>(userId)
         .invoke { createSimpleLoginPendingAliases(shareId = shareId.id, request = request) }
+        .valueOrThrow
+
+    override suspend fun createSimpleLoginAliasMailbox(
+        userId: UserId,
+        request: SimpleLoginCreateAliasMailboxRequest
+    ): CodeOnlyResponse = apiProvider
+        .get<PasswordManagerApi>(userId)
+        .invoke { createSimpleLoginAliasMailbox(request = request) }
         .valueOrThrow
 
 }

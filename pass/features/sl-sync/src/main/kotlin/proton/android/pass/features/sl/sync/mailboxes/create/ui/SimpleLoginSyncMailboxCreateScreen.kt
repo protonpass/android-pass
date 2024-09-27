@@ -58,8 +58,8 @@ fun SimpleLoginSyncMailboxCreateScreen(
                     onCreateMailbox()
                 }
 
-                is SimpleLoginSyncMailboxCreateUiEvent.OnEmailChanged -> {
-                    onMailboxEmailChanged(uiEvent.email)
+                is SimpleLoginSyncMailboxCreateUiEvent.OnMailboxEmailChanged -> {
+                    onMailboxEmailChanged(uiEvent.newMailboxEmail)
                 }
             }
         }

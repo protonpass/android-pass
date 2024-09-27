@@ -7,9 +7,4 @@
   <string name="alias_dialog_move_to_trash_title">Przenieść do Kosza?</string>
   <string name="alias_dialog_move_to_trash_content">Jeśli przeniesiesz alias do Kosza, przekierowanie wiadomości zostanie zatrzymane.</string>
   <string name="alias_dialog_move_to_trash_confirm">Potwierdź</string>
-  <string name="alias_dialog_disable_or_trash_title">Przenieś do Kosza</string>
-  <string name="alias_dialog_disable_or_trash_message">Aliasy w Koszu będą nadal przekierowywać wiadomości. Wyłącz alias, jeśli chcesz zatrzymać otrzymywanie wiadomości na ten adres.</string>
-  <string name="alias_dialog_disable_or_trash_checkbox_text">Don\'t remind me again</string>
-  <string name="alias_dialog_disable_or_trash_button_text_disable">Wyłącz</string>
-  <string name="alias_dialog_disable_or_trash_button_text_trash">Przenieś do Kosza</string>
 </resources>

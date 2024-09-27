@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Qual é o problema?</string>
-  <string name="description_field_hint">Descreva o problema o mais detalhadamente possível; se houver algum erro, diga-nos o que ele diz.</string>
+  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
   <string name="email_field_label">E-mail</string>
   <string name="email_field_hint">email</string>
   <string name="attach_image_button">Anexar imagem</string>
@@ -35,23 +35,23 @@
   <string name="report_reason_other">Outro</string>
   <string name="tips_title">Correções rápidas para %1$s</string>
   <string name="tips_subtitle">Essas dicas podem ajudá-lo a resolver seu problema rapidamente.</string>
-  <string name="autofill_tip_restart">Try disabling and enabling the autofill service.</string>
-  <string name="autofill_tip_browser">Try another browser.</string>
+  <string name="autofill_tip_restart">Tente desativar e ativar o serviço de preenchimento automático.</string>
+  <string name="autofill_tip_browser">Tente usar outro navegador</string>
   <string name="sharing_tip_vault_sharing_guide">Está tendo problemas com o compartilhamento do cofre? Consulte nosso guia.</string>
   <string name="sharing_tip_secure_links_guide">Está tendo problemas com links seguros? Consulte nosso guia.</string>
   <string name="sync_tip_force_refresh">Sua tela está vazia? Tente fazer uma sincronização forçada.</string>
   <string name="send_logs_label">Enviar registros</string>
   <string name="report_sending_success">Relatório enviado com sucesso.</string>
   <string name="report_sending_error">Não foi possível enviar o relatório.</string>
-  <string name="tips_passkey_check_guide">If you have any issues check our guide.</string>
-  <string name="tips_passkey_android_not_supported">Sua versão do Android é muito antiga. Tente atualizar seu dispositivo.</string>
+  <string name="tips_passkey_check_guide">Se você tiver algum problema, consulte nosso guia.</string>
+  <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
   <string name="tips_passkeys_credential_manager_not_supported">O fabricante do dispositivo não fornece um gerenciador de credenciais.</string>
-  <string name="tips_passkey_supported">Passkeys supported</string>
-  <string name="tips_passkey_not_supported">Passkeys not supported</string>
-  <string name="report_steps" comment="Indicator showing report progress">Step %1$d of %2$d</string>
-  <string name="description_cannot_be_blank">Description cannot be blank</string>
-  <string name="description_is_too_short">Description is too short</string>
-  <string name="description_is_too_long">Description is too long</string>
-  <string name="email_cannot_be_blank">Email cannot be blank</string>
-  <string name="email_invalid">Invalid email address</string>
+  <string name="tips_passkey_supported">Chaves de acesso suportadas</string>
+  <string name="tips_passkey_not_supported">As chaves de acesso não são suportadas</string>
+  <string name="report_steps" comment="Indicator showing report progress">Etapa %1$d de %2$d</string>
+  <string name="description_cannot_be_blank">A descrição não pode estar em branco</string>
+  <string name="description_is_too_short">A descrição é muito curta</string>
+  <string name="description_is_too_long">A descrição é muito longa</string>
+  <string name="email_cannot_be_blank">O e-mail não pode estar em branco</string>
+  <string name="email_invalid">Endereço de e-mail inválido</string>
 </resources>

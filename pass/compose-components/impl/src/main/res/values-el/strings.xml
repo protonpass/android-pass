@@ -239,8 +239,8 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Ενεργοποιήστε το συγχρονισμό SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">We detected that you have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to import it?</item>
-    <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
+    <item quantity="one">Εντοπίσαμε ότι έχετε %d ψευδώνυμο που υπάρχει στο SimpleLogin αλλά λείπει στο Proton Pass. Θέλετε να το εισαγάγετε;</item>
+    <item quantity="other">Εντοπίσαμε ότι έχετε %d ψευδώνυμα που υπάρχουν στο SimpleLogin αλλά λείπουν στο Proton Pass. Θέλετε να τα εισαγάγετε;</item>
   </plurals>
   <string name="simple_login_widget_action">Συγχρονισμός ψευδωνύμων</string>
   <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>

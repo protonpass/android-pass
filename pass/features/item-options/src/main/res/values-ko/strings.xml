@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_options_alias_trash_dialog_title">휴지통으로 이동</string>
+  <string name="item_options_alias_trash_dialog_message">휴지통 내 별칭이 계속 이메일 가져오기를 진행합니다. 이 주소에 대한 수신을 중단하려면 별칭을 비활성화하십시오.</string>
+  <string name="item_options_alias_trash_dialog_checkbox_text">다시 보지 않기</string>
+  <string name="item_options_alias_trash_dialog_button_text_disable">대신 비활성화</string>
+  <string name="item_options_alias_trash_dialog_button_text_trash">휴지통으로 이동</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">별칭 비활성화 중 오류 발생했습니다.</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">별칭 비활성화됨</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">별칭 상태 전환 중 오류 발생했습니다.</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">별칭을 휴지통으로 이동했습니다</string>
+</resources>

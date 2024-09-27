@@ -7,9 +7,4 @@
   <string name="alias_dialog_move_to_trash_title">Déplacer dans la corbeille ?</string>
   <string name="alias_dialog_move_to_trash_content">Si vous déplacez un alias dans la corbeille, il ne transférera plus de messages vers votre messagerie.</string>
   <string name="alias_dialog_move_to_trash_confirm">Confirmer</string>
-  <string name="alias_dialog_disable_or_trash_title">Déplacer dans la corbeille</string>
-  <string name="alias_dialog_disable_or_trash_message">Les alias dans la corbeille continueront à transférer les e-mails. Si vous souhaitez arrêter de recevoir des e-mails à cette adresse, désactivez-la à la place.</string>
-  <string name="alias_dialog_disable_or_trash_checkbox_text">Ne plus me le rappeler</string>
-  <string name="alias_dialog_disable_or_trash_button_text_disable">Désactiver à la place</string>
-  <string name="alias_dialog_disable_or_trash_button_text_trash">Déplacer dans la corbeille</string>
 </resources>

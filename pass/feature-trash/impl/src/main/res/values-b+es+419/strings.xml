@@ -7,9 +7,4 @@
   <string name="alias_dialog_move_to_trash_title">¿Mover a la papelera?</string>
   <string name="alias_dialog_move_to_trash_content">Si mueve un alias a la papelera, dejará de reenviar correos a el buzón.</string>
   <string name="alias_dialog_move_to_trash_confirm">Confirmar</string>
-  <string name="alias_dialog_disable_or_trash_title">Move to Trash</string>
-  <string name="alias_dialog_disable_or_trash_message">Aliases in Trash will continue forwarding emails. If you want to stop receiving emails on this address, disable it instead.</string>
-  <string name="alias_dialog_disable_or_trash_checkbox_text">Don\'t remind me again</string>
-  <string name="alias_dialog_disable_or_trash_button_text_disable">Disable instead</string>
-  <string name="alias_dialog_disable_or_trash_button_text_trash">Move to trash</string>
 </resources>

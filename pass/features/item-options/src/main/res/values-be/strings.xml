@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_options_alias_trash_dialog_title">Перамясціць у Сметніцу</string>
+  <string name="item_options_alias_trash_dialog_message">Псеўданімы перамешчаныя ў Сметніцу працягнуць перасылаць лісты. Спачатку адключыце псеўданім, калі хочаце спыніць атрыманне лістоў на гэты адрас.</string>
+  <string name="item_options_alias_trash_dialog_checkbox_text">Больш не нагадваць</string>
+  <string name="item_options_alias_trash_dialog_button_text_disable">Адключыць</string>
+  <string name="item_options_alias_trash_dialog_button_text_trash">Перамясціць у сметніцу</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">Адбылася памылка падчас адключэння псеўданіма</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Псеўданім адключаны</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">Адбылася памылка падчас перамяшчэння псеўданіма ў сметніцу</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Псеўданім перамешчаны ў сметніцу</string>
+</resources>

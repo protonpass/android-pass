@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
+import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -33,6 +34,7 @@ import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultId
 
 class TestLocalItemDataSource : LocalItemDataSource {
 
@@ -178,6 +180,18 @@ class TestLocalItemDataSource : LocalItemDataSource {
         itemId: ItemId,
         flags: Int
     ) {
+        throw IllegalStateException("Not yet implemented")
+    }
+
+    override fun getByVaultIdAndItemId(
+        userIds: List<UserId>,
+        vaultId: VaultId,
+        itemId: ItemId
+    ): List<ItemEntity> {
+        throw IllegalStateException("Not yet implemented")
+    }
+
+    override fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId> {
         throw IllegalStateException("Not yet implemented")
     }
 

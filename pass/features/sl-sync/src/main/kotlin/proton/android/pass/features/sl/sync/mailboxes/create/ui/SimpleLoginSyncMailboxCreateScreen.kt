@@ -19,9 +19,11 @@
 package proton.android.pass.features.sl.sync.mailboxes.create.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.features.sl.sync.mailboxes.create.presentation.SimpleLoginSyncMailboxCreateEvent
 import proton.android.pass.features.sl.sync.mailboxes.create.presentation.SimpleLoginSyncMailboxCreateViewModel
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 
@@ -31,6 +33,17 @@ fun SimpleLoginSyncMailboxCreateScreen(
     viewModel: SimpleLoginSyncMailboxCreateViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by stateFlow.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state.event) {
+        when (state.event) {
+            SimpleLoginSyncMailboxCreateEvent.Idle -> {}
+            SimpleLoginSyncMailboxCreateEvent.OnMailboxCreated -> {
+                // Will be implemented in IDTEAM-3917
+            }
+        }
+
+        onConsumeEvent(event = state.event)
+    }
 
     SimpleLoginSyncMailboxCreateContent(
         state = state,
@@ -51,5 +64,4 @@ fun SimpleLoginSyncMailboxCreateScreen(
             }
         }
     )
-
 }

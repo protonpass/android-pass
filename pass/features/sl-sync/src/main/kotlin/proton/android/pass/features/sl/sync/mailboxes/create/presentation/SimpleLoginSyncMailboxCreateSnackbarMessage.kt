@@ -18,28 +18,26 @@
 
 package proton.android.pass.features.sl.sync.mailboxes.create.presentation
 
-import androidx.compose.runtime.Stable
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import androidx.annotation.StringRes
+import proton.android.pass.features.sl.sync.R
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 
-@Stable
-internal data class SimpleLoginSyncMailboxCreateState(
-    internal val mailboxEmail: String,
-    internal val event: SimpleLoginSyncMailboxCreateEvent,
-    private val isLoadingState: IsLoadingState
-) {
+internal enum class SimpleLoginSyncMailboxCreateSnackbarMessage(
+    @StringRes
+    override val id: Int,
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
+) : SnackbarMessage {
 
-    internal val isLoading: Boolean = isLoadingState == IsLoadingState.Loading
+    CreateMailboxError(
+        id = R.string.simple_login_sync_mailbox_create_message_error,
+        type = SnackbarType.ERROR
+    ),
 
-    internal val canCreateMailbox: Boolean = mailboxEmail.isNotBlank() && !isLoading
-
-    internal companion object {
-
-        internal val Initial = SimpleLoginSyncMailboxCreateState(
-            mailboxEmail = "",
-            event = SimpleLoginSyncMailboxCreateEvent.Idle,
-            isLoadingState = IsLoadingState.NotLoading
-        )
-
-    }
+    CreateMailboxSuccess(
+        id = R.string.simple_login_sync_mailbox_create_message_success,
+        type = SnackbarType.SUCCESS
+    )
 
 }

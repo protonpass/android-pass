@@ -22,7 +22,6 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -30,16 +29,12 @@ import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.fakes.usecases.TestDeleteVault
 import proton.android.pass.data.fakes.usecases.TestGetVaultByShareId
-import proton.android.pass.domain.ShareColor
-import proton.android.pass.domain.ShareIcon
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
-import java.util.Date
+import proton.android.pass.test.domain.TestVault
 
 class DeleteVaultViewModelTest {
 
@@ -142,18 +137,9 @@ class DeleteVaultViewModelTest {
     }
 
     private fun performSetup() {
-        getVaultById.emitValue(testVault())
+        getVaultById.emitValue(TestVault.create(name = VAULT_NAME))
         instance.onStart()
     }
-
-    private fun testVault(): Vault = Vault(
-        userId = UserId(""),
-        shareId = ShareId("123"),
-        name = VAULT_NAME,
-        color = ShareColor.Color2,
-        icon = ShareIcon.Icon1,
-        createTime = Date()
-    )
 
     companion object {
         private const val VAULT_NAME = "vault"

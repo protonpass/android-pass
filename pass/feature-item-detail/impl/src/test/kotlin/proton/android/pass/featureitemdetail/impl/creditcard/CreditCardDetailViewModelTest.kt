@@ -21,7 +21,6 @@ package proton.android.pass.featureitemdetail.impl.creditcard
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -46,13 +45,12 @@ import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
-import java.util.Date
+import proton.android.pass.test.domain.TestVault
 
 class CreditCardDetailViewModelTest {
 
@@ -417,12 +415,7 @@ class CreditCardDetailViewModelTest {
         private const val SHARE_ID = "shareid-123"
         private const val ITEM_ID = "itemid-456"
 
-        private val TEST_VAULT = Vault(
-            userId = UserId(""),
-            shareId = ShareId(SHARE_ID),
-            name = "Vault",
-            createTime = Date()
-        )
+        private val TEST_VAULT = TestVault.create(shareId = ShareId(SHARE_ID), name = "Vault")
     }
 
 }

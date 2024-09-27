@@ -33,13 +33,15 @@ import javax.inject.Singleton
 @Singleton
 class TestGetUserPlan @Inject constructor() : GetUserPlan {
 
-    private var result = MutableStateFlow(Result.success(DEFAULT_PLAN))
+    private val userPlans = mutableMapOf<UserId, MutableStateFlow<Result<Plan>>>()
 
-    fun setResult(value: Result<Plan>) {
-        result.tryEmit(value)
+    fun setResult(value: Result<Plan>, userId: UserId = DEFAULT_USER_ID) {
+        userPlans[userId]?.tryEmit(value) ?: run { userPlans[userId] = MutableStateFlow(value) }
     }
 
-    override fun invoke(userId: UserId?): Flow<Plan> = result.map { it.getOrThrow() }
+    override fun invoke(userId: UserId?): Flow<Plan> = userPlans.getOrPut(userId ?: DEFAULT_USER_ID) {
+        MutableStateFlow(Result.success(DEFAULT_PLAN))
+    }.map { it.getOrThrow() }
 
     companion object {
         val DEFAULT_PLAN = Plan(
@@ -50,5 +52,6 @@ class TestGetUserPlan @Inject constructor() : GetUserPlan {
             totpLimit = PlanLimit.Limited(10),
             updatedAt = Clock.System.now().epochSeconds
         )
+        val DEFAULT_USER_ID = UserId("default-user-id")
     }
 }

@@ -58,6 +58,7 @@ import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
@@ -129,6 +130,7 @@ class CreateLoginScreenTest {
             vault = Vault(
                 userId = USER_ID,
                 shareId = ShareId(SHARE_ID),
+                vaultId = VaultId("vault-id"),
                 name = "Test vault",
                 createTime = Date()
             ),

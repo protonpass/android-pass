@@ -16,23 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.shared.navigation
+package proton.android.pass.features.sl.sync.mailboxes.create.navigation
 
-import proton.android.pass.domain.ShareId
+import proton.android.pass.navigation.api.NavItem
 
-sealed interface SimpleLoginSyncNavDestination {
-
-    @JvmInline
-    value class Back(val force: Boolean = false) : SimpleLoginSyncNavDestination
-
-    data object CreateMailbox : SimpleLoginSyncNavDestination
-
-    @JvmInline
-    value class SelectVault(val shareId: ShareId) : SimpleLoginSyncNavDestination
-
-    @JvmInline
-    value class Settings(val shareId: ShareId?) : SimpleLoginSyncNavDestination
-
-    data object Upsell : SimpleLoginSyncNavDestination
-
-}
+object SimpleLoginSyncMailboxCreateNavItem : NavItem(
+    baseRoute = "sl/sync/mailboxes/create"
+)

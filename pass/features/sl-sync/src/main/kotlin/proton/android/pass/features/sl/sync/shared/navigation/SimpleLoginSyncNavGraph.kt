@@ -23,6 +23,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.sl.sync.mailboxes.create.navigation.SimpleLoginSyncMailboxCreateNavItem
+import proton.android.pass.features.sl.sync.mailboxes.create.ui.SimpleLoginSyncMailboxCreateScreen
 import proton.android.pass.features.sl.sync.management.navigation.SimpleLoginSyncManagementNavItem
 import proton.android.pass.features.sl.sync.management.ui.SimpleLoginSyncDetailsScreen
 import proton.android.pass.features.sl.sync.settings.navigation.SimpleLoginSyncSettingsNavItem
@@ -46,6 +48,10 @@ fun NavGraphBuilder.simpleLoginSyncNavGraph(onNavigated: (SimpleLoginSyncNavDest
             onNavigated = onNavigated,
             selectedShareIdOption = selectedShareIdArg?.let(::ShareId).toOption()
         )
+    }
+
+    composable(navItem = SimpleLoginSyncMailboxCreateNavItem) {
+        SimpleLoginSyncMailboxCreateScreen(onNavigated = onNavigated)
     }
 
 }

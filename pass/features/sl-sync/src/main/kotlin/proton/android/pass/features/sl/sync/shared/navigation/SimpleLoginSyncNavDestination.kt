@@ -25,6 +25,8 @@ sealed interface SimpleLoginSyncNavDestination {
     @JvmInline
     value class Back(val force: Boolean = false) : SimpleLoginSyncNavDestination
 
+    data object CreateMailbox : SimpleLoginSyncNavDestination
+
     @JvmInline
     value class SelectVault(val shareId: ShareId) : SimpleLoginSyncNavDestination
 

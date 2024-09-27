@@ -212,6 +212,7 @@ import proton.android.pass.features.sharing.manage.bottomsheet.MemberOptionsBott
 import proton.android.pass.features.sharing.sharingGraph
 import proton.android.pass.features.sharing.sharingpermissions.bottomsheet.SharingEditPermissions
 import proton.android.pass.features.sl.sync.details.navigation.SimpleLoginSyncDetailsNavItem
+import proton.android.pass.features.sl.sync.mailboxes.create.navigation.SimpleLoginSyncMailboxCreateNavItem
 import proton.android.pass.features.sl.sync.management.navigation.SimpleLoginSyncManagementNavItem
 import proton.android.pass.features.sl.sync.settings.navigation.SimpleLoginSyncSettingsNavItem
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
@@ -1966,6 +1967,10 @@ fun NavGraphBuilder.appGraph(
                 is SimpleLoginSyncNavDestination.Back -> appNavigator.navigateBack(
                     comesFromBottomsheet = false,
                     force = destination.force
+                )
+
+                SimpleLoginSyncNavDestination.CreateMailbox -> appNavigator.navigate(
+                    destination = SimpleLoginSyncMailboxCreateNavItem
                 )
 
                 is SimpleLoginSyncNavDestination.SelectVault -> appNavigator.navigate(

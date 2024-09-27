@@ -43,8 +43,8 @@
   <string name="action_continue">Tiếp tục</string>
   <string name="action_retry">Thử lại</string>
   <string name="action_edit">Chỉnh sửa</string>
-  <string name="action_update">Update</string>
-  <string name="action_close">Close</string>
+  <string name="action_update">Cập nhật</string>
+  <string name="action_close">Đóng</string>
   <!-- Empty list -->
   <string name="empty_list_title">Thêm nội dung đầu tiên của bạn</string>
   <string name="empty_search_results_title">Không có kết quả được tìm thấy</string>
@@ -129,7 +129,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale"/>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Địa chỉ bí danh</string>
-  <string name="item_details_alias_section_alias_disabled_title">Alias address (disabled)</string>
+  <string name="item_details_alias_section_alias_disabled_title">Địa chỉ bí danh (đã tắt)</string>
   <string name="item_details_alias_section_mailboxes_title">Chuyển tiếp đến</string>
   <string name="item_details_credit_card_section_cardholder_title">Tên trên thẻ</string>
   <string name="item_details_credit_card_section_card_number_title">Số thẻ</string>
@@ -233,7 +233,7 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Bật SimpleLogin sync</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
+    <item quantity="other">Chúng tôi nhận thấy bạn có %d bí danh trong SimpleLogin nhưng chưa có trong Proton Pass. Bạn muốn nhập chúng vào không?</item>
   </plurals>
   <string name="simple_login_widget_action"/>
   <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>

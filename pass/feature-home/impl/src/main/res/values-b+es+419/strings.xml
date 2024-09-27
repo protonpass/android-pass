@@ -9,7 +9,7 @@
   <string name="home_empty_vault_create_alias">Crear un alias de Hide-my-email</string>
   <string name="home_empty_vault_create_note">Crear una nota</string>
   <string name="home_empty_vault_create_credit_card">Crear una tarjeta de crédito</string>
-  <string name="home_empty_vault_create_identity">Create an identity</string>
+  <string name="home_empty_vault_create_identity">Crear una identidad</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Error al cargar los elementos</string>
   <string name="error_refreshing">Error al ejecutar la actualización</string>
   <string name="home_snackbar_login_moved_to_trash">Inicio de sesión movido a la papelera</string>
@@ -133,10 +133,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Error al desanclar algunos elementos</string>
   <string name="home_snackbar_items_unpinned_error">Error al desanclar los elementos</string>
   <string name="home_snackbar_items_alias_enabled_success">Se activó el alias.</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Error al activar algunos alias</string>
   <string name="home_snackbar_items_alias_enabled_error">Error al activar los alias</string>
   <string name="home_snackbar_items_alias_disabled_success">Se desactivó el alias.</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Error al desactivar algunos alias</string>
   <string name="home_snackbar_items_alias_disabled_error">Error al desactivar los alias</string>
   <string name="bulk_action_unpin">Desanclar</string>
   <string name="bulk_action_pin">Anclar</string>

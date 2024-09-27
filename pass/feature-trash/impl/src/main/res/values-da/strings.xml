@@ -7,9 +7,4 @@
   <string name="alias_dialog_move_to_trash_title">Flyt til papirkurv?</string>
   <string name="alias_dialog_move_to_trash_content">Hvis du flytter et alias til papirkurven, vil det stoppe med at videresende e-mails til din postkasse.</string>
   <string name="alias_dialog_move_to_trash_confirm">Bekræft</string>
-  <string name="alias_dialog_disable_or_trash_title">Flyt til papirkurv</string>
-  <string name="alias_dialog_disable_or_trash_message">Aliasser i papirkurven vil fortsat videresende mails. Hvis du vil stoppe med at modtage mails på denne adresse, skal du deaktivere den i stedet.</string>
-  <string name="alias_dialog_disable_or_trash_checkbox_text">Påmind mig ikke igen</string>
-  <string name="alias_dialog_disable_or_trash_button_text_disable">Deaktiver i stedet</string>
-  <string name="alias_dialog_disable_or_trash_button_text_trash">Flyt til papirkurv</string>
 </resources>

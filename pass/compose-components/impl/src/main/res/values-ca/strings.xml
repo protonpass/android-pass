@@ -131,7 +131,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Adreça d\'àlies</string>
-  <string name="item_details_alias_section_alias_disabled_title">Alias address (disabled)</string>
+  <string name="item_details_alias_section_alias_disabled_title">Adreça de l\'àlies (desactivada)</string>
   <string name="item_details_alias_section_mailboxes_title">Reenviant a</string>
   <string name="item_details_credit_card_section_cardholder_title">Nom a la targeta</string>
   <string name="item_details_credit_card_section_card_number_title">Número de targeta</string>

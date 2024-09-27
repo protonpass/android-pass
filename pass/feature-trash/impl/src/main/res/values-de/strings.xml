@@ -7,9 +7,4 @@
   <string name="alias_dialog_move_to_trash_title">In Papierkorb verschieben?</string>
   <string name="alias_dialog_move_to_trash_content">Wenn du einen Alias in den Papierkorb verschiebst, wird er keine E-Mails mehr an dein Postfach weiterleiten.</string>
   <string name="alias_dialog_move_to_trash_confirm">Bestätigen</string>
-  <string name="alias_dialog_disable_or_trash_title">In den Papierkorb verschieben</string>
-  <string name="alias_dialog_disable_or_trash_message">Aliases in Trash will continue forwarding emails. If you want to stop receiving emails on this address, disable it instead.</string>
-  <string name="alias_dialog_disable_or_trash_checkbox_text">Nicht erneut erinnern</string>
-  <string name="alias_dialog_disable_or_trash_button_text_disable">Stattdessen deaktivieren</string>
-  <string name="alias_dialog_disable_or_trash_button_text_trash">In den Papierkorb verschieben</string>
 </resources>

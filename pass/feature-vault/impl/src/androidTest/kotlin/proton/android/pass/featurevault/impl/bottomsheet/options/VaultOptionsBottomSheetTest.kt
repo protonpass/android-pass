@@ -37,6 +37,7 @@ import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
 import proton.android.pass.featurevault.impl.R
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -108,6 +109,7 @@ class VaultOptionsBottomSheetTest {
         val vaultToDelete = Vault(
             userId = UserId(""),
             shareId = ShareId(SHARE_ID),
+            vaultId = VaultId("vault-id"),
             name = "Test vault",
             isOwned = true,
             members = 1,
@@ -117,6 +119,7 @@ class VaultOptionsBottomSheetTest {
         val anotherVault = Vault(
             userId = UserId(""),
             shareId = ShareId("OtherShare"),
+            vaultId = VaultId("vault-id-2"),
             name = "another vault",
             isOwned = true,
             members = 1,
@@ -180,6 +183,7 @@ class VaultOptionsBottomSheetTest {
         val vault = Vault(
             userId = UserId(""),
             shareId = ShareId(SHARE_ID),
+            vaultId = VaultId("vault-id"),
             name = "Test vault",
             isOwned = owned,
             members = if (shared) 2 else 1,

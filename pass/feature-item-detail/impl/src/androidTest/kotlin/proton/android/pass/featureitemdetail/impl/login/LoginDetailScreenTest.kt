@@ -48,6 +48,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavScope
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailScopeNavArgId
@@ -338,6 +339,7 @@ class LoginDetailScreenTest {
             vault = Vault(
                 userId = UserId(""),
                 shareId = ShareId(SHARE_ID),
+                vaultId = VaultId("vault-id"),
                 name = vaultName,
                 createTime = Date()
             ),

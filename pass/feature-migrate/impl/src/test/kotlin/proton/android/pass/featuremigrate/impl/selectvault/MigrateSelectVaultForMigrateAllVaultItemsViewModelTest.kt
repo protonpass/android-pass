@@ -21,7 +21,6 @@ package proton.android.pass.featuremigrate.impl.selectvault
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -29,14 +28,13 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import java.util.Date
+import proton.android.pass.test.domain.TestVault
 
 class MigrateSelectVaultForMigrateAllVaultItemsViewModelTest {
 
@@ -85,22 +83,12 @@ class MigrateSelectVaultForMigrateAllVaultItemsViewModelTest {
 
     private fun initialVaults(): Pair<VaultWithItemCount, VaultWithItemCount> = Pair(
         VaultWithItemCount(
-            vault = Vault(
-                userId = UserId(""),
-                shareId = SHARE_ID,
-                name = "vault1",
-                createTime = Date()
-            ),
+            vault = TestVault.create(shareId = SHARE_ID),
             activeItemCount = 1,
             trashedItemCount = 0
         ),
         VaultWithItemCount(
-            vault = Vault(
-                userId = UserId(""),
-                shareId = ShareId("OTHER_SHARE_ID"),
-                name = "vault2",
-                createTime = Date()
-            ),
+            vault = TestVault.create(shareId = ShareId("OTHER_SHARE_ID")),
             activeItemCount = 1,
             trashedItemCount = 0
         )

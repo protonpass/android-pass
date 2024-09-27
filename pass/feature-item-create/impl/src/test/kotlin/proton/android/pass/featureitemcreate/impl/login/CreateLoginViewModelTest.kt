@@ -50,7 +50,6 @@ import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemcreate.impl.ItemCreate
@@ -71,8 +70,8 @@ import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestUser
+import proton.android.pass.test.domain.TestVault
 import proton.android.pass.totp.fakes.TestTotpManager
-import java.util.Date
 
 internal class CreateLoginViewModelTest {
 
@@ -128,9 +127,9 @@ internal class CreateLoginViewModelTest {
 
     @Test
     fun `when a create item event without title should return a BlankTitle validation error`() = runTest {
-        val vault =
-            VaultWithItemCount(Vault(UserId(""), ShareId("shareId"), "Share", createTime = Date()), 1, 0)
-        observeVaults.sendResult(Result.success(listOf(vault)))
+        val vault = TestVault.create(shareId = ShareId("shareId"), name = "Share")
+        val vaultWithItemCount = VaultWithItemCount(vault, 1, 0)
+        observeVaults.sendResult(Result.success(listOf(vaultWithItemCount)))
 
         instance.createItem()
 
@@ -139,8 +138,8 @@ internal class CreateLoginViewModelTest {
                 .isEqualTo(
                     CreateLoginUiState.Initial.copy(
                         ShareUiState.Success(
-                            vaultList = listOf(vault),
-                            currentVault = vault
+                            vaultList = listOf(vaultWithItemCount),
+                            currentVault = vaultWithItemCount
                         ),
                         BaseLoginUiState.Initial.copy(
                             validationErrors = persistentSetOf(LoginItemValidationErrors.BlankTitle),
@@ -336,8 +335,9 @@ internal class CreateLoginViewModelTest {
     }
 
     private fun sendInitialVault(shareId: ShareId): VaultWithItemCount {
-        val vault = VaultWithItemCount(Vault(UserId(""), shareId, "Share", createTime = Date()), 1, 0)
-        observeVaults.sendResult(Result.success(listOf(vault)))
-        return vault
+        val vault = TestVault.create(shareId = shareId, name = "Share")
+        val vaultWithItemCount = VaultWithItemCount(vault, 1, 0)
+        observeVaults.sendResult(Result.success(listOf(vaultWithItemCount)))
+        return vaultWithItemCount
     }
 }

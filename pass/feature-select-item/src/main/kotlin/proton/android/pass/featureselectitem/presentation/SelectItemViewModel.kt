@@ -215,7 +215,7 @@ class SelectItemViewModel @Inject constructor(
                             itemState = ItemState.Active
                         ).map { usableVaults to it }
                     }
-                combine(flows, ItemFilterProcessor::processAllowedItems)
+                combine(flows, ItemFilterProcessor::removeDuplicates)
             }
 
             is SelectItemState.Passkey.Select -> {

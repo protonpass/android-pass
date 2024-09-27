@@ -31,6 +31,8 @@ internal data class SimpleLoginSyncMailboxCreateState(
 
     internal val isLoading: Boolean = isLoadingState == IsLoadingState.Loading
 
+    internal val canEditMailboxEmail: Boolean = !isLoading
+
     internal val canCreateMailbox: Boolean = mailboxEmail.isNotBlank()
         .and(!isLoading)
         .and(!showInvalidMailboxEmailError)

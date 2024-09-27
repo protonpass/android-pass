@@ -37,6 +37,7 @@ import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.impl.extensions.toRequest
 import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSource
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
+import proton.android.pass.data.impl.requests.SimpleLoginCreateAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesData
 import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesRequest
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
@@ -129,6 +130,15 @@ class SimpleLoginRepositoryImpl @Inject constructor(
                 .mailboxes
                 .map { simpleLoginAliasMailboxData -> simpleLoginAliasMailboxData.toDomain() }
         }
+
+    override suspend fun createAliasMailbox(email: String) {
+        withUserId { userId ->
+            remoteSimpleLoginDataSource.createSimpleLoginAliasMailbox(
+                userId = userId,
+                request = SimpleLoginCreateAliasMailboxRequest(email = email)
+            )
+        }
+    }
 
     override suspend fun updateAliasMailbox(mailboxId: Long) {
         withUserId { userId ->

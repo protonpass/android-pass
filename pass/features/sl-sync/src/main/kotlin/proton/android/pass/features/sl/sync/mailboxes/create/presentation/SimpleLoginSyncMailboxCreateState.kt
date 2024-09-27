@@ -19,15 +19,26 @@
 package proton.android.pass.features.sl.sync.mailboxes.create.presentation
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 @Stable
 internal data class SimpleLoginSyncMailboxCreateState(
-    internal val mailboxEmail: String
+    internal val mailboxEmail: String,
+    internal val event: SimpleLoginSyncMailboxCreateEvent,
+    private val isLoadingState: IsLoadingState
 ) {
+
+    internal val isLoading: Boolean = isLoadingState == IsLoadingState.Loading
+
+    internal val canCreateMailbox: Boolean = mailboxEmail.isNotBlank() && !isLoading
 
     internal companion object {
 
-        internal val Initial = SimpleLoginSyncMailboxCreateState(mailboxEmail = "")
+        internal val Initial = SimpleLoginSyncMailboxCreateState(
+            mailboxEmail = "",
+            event = SimpleLoginSyncMailboxCreateEvent.Idle,
+            isLoadingState = IsLoadingState.NotLoading
+        )
 
     }
 

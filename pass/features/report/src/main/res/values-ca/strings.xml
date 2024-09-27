@@ -17,22 +17,22 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="description_field_label">What is your issue?</string>
-  <string name="description_field_hint">Describe the issue the more detailed possible, if it\'s there any error let us know what it says.</string>
-  <string name="email_field_label">Email</string>
-  <string name="email_field_hint">email</string>
-  <string name="attach_image_button">Attach image</string>
-  <string name="categories_title">What is your issue?</string>
-  <string name="report_toolbar_title">Report an issue</string>
-  <string name="send_report_button">Send report</string>
-  <string name="cancel_tips_button">Cancel</string>
-  <string name="contact_us_button">Contact us</string>
-  <string name="hint_tips_screen">Didn\'t work?</string>
-  <string name="report_reason_autofill">Autofill</string>
-  <string name="report_reason_sharing">Sharing</string>
-  <string name="report_reason_sync">Sync</string>
-  <string name="report_reason_passkeys">Passkeys</string>
-  <string name="report_reason_other">Other</string>
+  <string name="description_field_label">Quin és el vostre problema?</string>
+  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
+  <string name="email_field_label">Corrreu electrònic</string>
+  <string name="email_field_hint">corrreu electrònic</string>
+  <string name="attach_image_button">Adjunta una imatge</string>
+  <string name="categories_title">Quin és el vostre problema?</string>
+  <string name="report_toolbar_title">Informeu d\'un problema</string>
+  <string name="send_report_button">Envia l\'informe</string>
+  <string name="cancel_tips_button">Cancel·la</string>
+  <string name="contact_us_button">Contacteu amb nosaltres</string>
+  <string name="hint_tips_screen">No ha funcionat?</string>
+  <string name="report_reason_autofill">Emplenament automàtic</string>
+  <string name="report_reason_sharing">Compartint</string>
+  <string name="report_reason_sync">Sincronitza</string>
+  <string name="report_reason_passkeys">Claus d\'accés</string>
+  <string name="report_reason_other">Altre</string>
   <string name="tips_title">Quick fixes for %1$s</string>
   <string name="tips_subtitle">These tips could help you solve your issue faster.</string>
   <string name="autofill_tip_restart">Try disabling and enabling the autofill service.</string>
@@ -40,18 +40,18 @@
   <string name="sharing_tip_vault_sharing_guide">Having issues with vault sharing? Check our guide.</string>
   <string name="sharing_tip_secure_links_guide">Having issues with secure links? Check our guide.</string>
   <string name="sync_tip_force_refresh">Is your screen empty? Try doing a force sync.</string>
-  <string name="send_logs_label">Send logs</string>
-  <string name="report_sending_success">Report sent successfully.</string>
+  <string name="send_logs_label">Envia els registres</string>
+  <string name="report_sending_success">S\'ha enviat l\'informe.</string>
   <string name="report_sending_error">Could not send the report.</string>
   <string name="tips_passkey_check_guide">If you have any issues check our guide.</string>
-  <string name="tips_passkey_android_not_supported">Your android version is too low. Try upgrading your device.</string>
+  <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
   <string name="tips_passkeys_credential_manager_not_supported">The manufacturer of the device doesn\'t provide a credential manager.</string>
-  <string name="tips_passkey_supported">Passkeys supported</string>
+  <string name="tips_passkey_supported">S\'admeten claus d\'accés.</string>
   <string name="tips_passkey_not_supported">Passkeys not supported</string>
-  <string name="report_steps" comment="Indicator showing report progress">Step %1$d of %2$d</string>
+  <string name="report_steps" comment="Indicator showing report progress">Pas %1$d de %2$d</string>
   <string name="description_cannot_be_blank">Description cannot be blank</string>
-  <string name="description_is_too_short">Description is too short</string>
-  <string name="description_is_too_long">Description is too long</string>
+  <string name="description_is_too_short">La descripció és massa curta.</string>
+  <string name="description_is_too_long">La descripció és massa llarga.</string>
   <string name="email_cannot_be_blank">Email cannot be blank</string>
-  <string name="email_invalid">Invalid email address</string>
+  <string name="email_invalid">L\'adreça de correu electrònic no és vàlida.</string>
 </resources>

@@ -9,7 +9,7 @@
   <string name="home_empty_vault_create_alias">Crea un àlies hide-my-email</string>
   <string name="home_empty_vault_create_note">Crea una nota</string>
   <string name="home_empty_vault_create_credit_card">Crea una targeta de crèdit</string>
-  <string name="home_empty_vault_create_identity">Create an identity</string>
+  <string name="home_empty_vault_create_identity">Creeu una identitat</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Error carregant els elements</string>
   <string name="error_refreshing">S\'ha produït un erro durant el refresc</string>
   <string name="home_snackbar_login_moved_to_trash">L\'inici de sessió s\'ha mogut a la paperera</string>

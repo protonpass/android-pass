@@ -7,7 +7,7 @@
   <string name="top_bar_edit_button_text">Sửa</string>
   <!-- Alias details -->
   <string name="field_alias_title">Địa chỉ bí danh</string>
-  <string name="field_alias_disabled_title">Alias address (disabled)</string>
+  <string name="field_alias_disabled_title">Địa chỉ bí danh (đã tắt)</string>
   <string name="alias_copied_to_clipboard">Đã sao chép bí danh</string>
   <string name="alias_detail_field_mailboxes_title">Chuyển tiếp đến</string>
   <string name="alias_create_login_from_alias">Tạo đăng nhập</string>

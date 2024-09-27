@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_options_alias_trash_dialog_title">Pindahkan ke Sampah</string>
+  <string name="item_options_alias_trash_dialog_message">Alias yang terdapat di Sampah akan masih tetap meneruskan email. Apabila Anda ingin berhenti menerima email pada alamat ini, nonaktifkan alias yang bersangkutan.</string>
+  <string name="item_options_alias_trash_dialog_checkbox_text">Jangan ingatkan saya lagi</string>
+  <string name="item_options_alias_trash_dialog_button_text_disable">Nonaktifkan</string>
+  <string name="item_options_alias_trash_dialog_button_text_trash">Pindahkan ke sampah</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">Terjadi kesalahan menonaktifkan alias</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Alias dinonaktifkan</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">Terjadi kesalahan memindahkan alias ke sampah</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Alias dipindahkan ke sampah</string>
+</resources>

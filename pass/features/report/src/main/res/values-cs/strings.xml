@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Jaký máte problém?</string>
-  <string name="description_field_hint">Popište problém co nejpodrobněji. Pokud se objevila chyba, dejte nám vědět, co to říká.</string>
+  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
   <string name="email_field_label">E-mail</string>
   <string name="email_field_hint">e-mail</string>
   <string name="attach_image_button">Připojit obrázek</string>
@@ -35,23 +35,23 @@
   <string name="report_reason_other">Ostatní</string>
   <string name="tips_title">Rychlé opravy pro %1$s</string>
   <string name="tips_subtitle">Tyto tipy by vám mohly pomoci rychleji vyřešit váš problém.</string>
-  <string name="autofill_tip_restart">Try disabling and enabling the autofill service.</string>
-  <string name="autofill_tip_browser">Try another browser.</string>
+  <string name="autofill_tip_restart">Zkuste deaktivovat a povolit službu automatického vyplňování.</string>
+  <string name="autofill_tip_browser">Zkuste jiný prohlížeč.</string>
   <string name="sharing_tip_vault_sharing_guide">Máte problémy se sdílením trezoru? Podívejte se do našeho průvodce.</string>
   <string name="sharing_tip_secure_links_guide">Máte problémy s bezpečnými odkazy? Podívejte se do našeho průvodce.</string>
   <string name="sync_tip_force_refresh">Je obrazovka prázdná? Zkuste vynutit synchronizaci.</string>
   <string name="send_logs_label">Odeslat logy</string>
   <string name="report_sending_success">Hlášení bylo úspěšně odesláno.</string>
   <string name="report_sending_error">Hlášení se nepodařilo odeslat.</string>
-  <string name="tips_passkey_check_guide">If you have any issues check our guide.</string>
-  <string name="tips_passkey_android_not_supported">Vaše verze systému Android je zastaralá. Zkuste zařízení aktualizovat.</string>
+  <string name="tips_passkey_check_guide">Pokud máte nějaké problémy, podívejte se do našeho průvodce.</string>
+  <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
   <string name="tips_passkeys_credential_manager_not_supported">Výrobce zařízení neposkytuje správce přihlašovacích údajů.</string>
-  <string name="tips_passkey_supported">Passkeys supported</string>
-  <string name="tips_passkey_not_supported">Passkeys not supported</string>
-  <string name="report_steps" comment="Indicator showing report progress">Step %1$d of %2$d</string>
-  <string name="description_cannot_be_blank">Description cannot be blank</string>
-  <string name="description_is_too_short">Description is too short</string>
-  <string name="description_is_too_long">Description is too long</string>
-  <string name="email_cannot_be_blank">Email cannot be blank</string>
-  <string name="email_invalid">Invalid email address</string>
+  <string name="tips_passkey_supported">Přístupové klíče jsou podporovány</string>
+  <string name="tips_passkey_not_supported">Přístupové klíče nejsou podporovány</string>
+  <string name="report_steps" comment="Indicator showing report progress">Krok %1$d z(e) %2$d</string>
+  <string name="description_cannot_be_blank">Popis nemůže být prázdný</string>
+  <string name="description_is_too_short">Popis je příliš krátký</string>
+  <string name="description_is_too_long">Popis je příliš dlouhý</string>
+  <string name="email_cannot_be_blank">E-mail nemůže být prázdný</string>
+  <string name="email_invalid">Neplatná e-mailová adresa</string>
 </resources>

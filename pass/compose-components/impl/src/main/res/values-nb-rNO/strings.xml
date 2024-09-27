@@ -239,8 +239,8 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Aktiver SimpleLogin synkronisering</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">We detected that you have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to import it?</item>
-    <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
+    <item quantity="one">Vi oppdaget at du har %d alias som er til stede i SimpleLogin, men mangler i Proton Pass. Vil du importere det?</item>
+    <item quantity="other">Vi oppdaget at du har %d aliaser som er til stede i SimpleLogin, men mangler i Proton Pass. Vil du importere dem?</item>
   </plurals>
   <string name="simple_login_widget_action">Synkroniser aliaser</string>
   <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>

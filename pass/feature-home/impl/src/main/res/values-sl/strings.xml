@@ -153,7 +153,7 @@
   <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
   <string name="bulk_action_unpin">Unpin</string>
-  <string name="bulk_action_pin">Pin</string>
+  <string name="bulk_action_pin">Pripni</string>
   <string name="bulk_action_enable_alias">Enable alias</string>
   <string name="bulk_action_disable_alias">Disable alias</string>
 </resources>

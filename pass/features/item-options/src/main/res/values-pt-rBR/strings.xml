@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_options_alias_trash_dialog_title">Mover para a Lixeira</string>
+  <string name="item_options_alias_trash_dialog_message">Os alíases na Lixeira continuarão encaminhando e-mails. Se você quiser parar de receber e-mails nesse endereço, desative-o.</string>
+  <string name="item_options_alias_trash_dialog_checkbox_text">Não lembrar novamente</string>
+  <string name="item_options_alias_trash_dialog_button_text_disable">Em vez disso, desative</string>
+  <string name="item_options_alias_trash_dialog_button_text_trash">Mover para a lixeira</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">Houve um erro ao desativar o alias</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Alias desativado</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">Houve um erro ao mover o alias para a lixeira</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Alias movido para a lixeira</string>
+</resources>

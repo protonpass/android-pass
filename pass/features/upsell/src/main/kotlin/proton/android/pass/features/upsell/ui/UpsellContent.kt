@@ -74,7 +74,7 @@ internal fun UpsellContent(
                 )
                 .verticalScroll(state = rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(Spacing.large)
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
             UpsellHeader(
                 modifier = Modifier.padding(horizontal = Spacing.medium),

@@ -20,6 +20,7 @@ package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import me.proton.core.domain.entity.UserId
@@ -31,12 +32,15 @@ import javax.inject.Singleton
 @Singleton
 class TestObserveUsableVaults @Inject constructor() : ObserveUsableVaults {
 
-    private val vaultsFlow: MutableStateFlow<Result<List<Vault>>> =
-        MutableStateFlow(Result.success(emptyList()))
+    private val vaultsFlowMap: MutableMap<UserId?, MutableStateFlow<Result<List<Vault>>>> =
+        mutableMapOf()
 
-    fun emit(result: Result<List<Vault>>) {
-        vaultsFlow.update { result }
+    fun emit(result: Result<List<Vault>>, userId: UserId? = null) {
+        vaultsFlowMap.getOrPut(userId) { MutableStateFlow(result) }.update { result }
     }
 
-    override fun invoke(userId: UserId?): Flow<List<Vault>> = vaultsFlow.map { it.getOrThrow() }
+    override fun invoke(userId: UserId?): Flow<List<Vault>> = (
+        vaultsFlowMap[userId]
+            ?: run { flowOf(Result.success(emptyList())) }
+        ).map { it.getOrThrow() }
 }

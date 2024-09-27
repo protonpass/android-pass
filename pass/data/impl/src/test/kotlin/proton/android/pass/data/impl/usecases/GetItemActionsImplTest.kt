@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.usecases
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.usecases.ItemActions
@@ -36,9 +35,8 @@ import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
-import proton.android.pass.domain.Vault
 import proton.android.pass.test.domain.TestItem
-import java.util.Date
+import proton.android.pass.test.domain.TestVault
 
 internal class GetItemActionsImplTest {
 
@@ -266,14 +264,7 @@ internal class GetItemActionsImplTest {
         shareId: ShareId = ShareId("ShareId123"),
         owned: Boolean,
         role: ShareRole
-    ) = Vault(
-        userId = UserId(""),
-        name = "testVault",
-        shareId = shareId,
-        isOwned = owned,
-        role = role,
-        createTime = Date()
-    )
+    ) = TestVault.create(shareId, isOwned = owned, role = role)
 
     private fun setItem(state: ItemState = ItemState.Active) {
         getItemById.emit(Result.success(TestItem.create().copy(state = state.value)))

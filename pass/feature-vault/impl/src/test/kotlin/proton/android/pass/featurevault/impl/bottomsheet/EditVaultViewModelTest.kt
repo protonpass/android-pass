@@ -22,7 +22,6 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -31,17 +30,14 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.TestGetVaultByShareId
 import proton.android.pass.data.fakes.usecases.TestUpdateVault
-import proton.android.pass.domain.ShareColor
-import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestShare
-import java.util.Date
+import proton.android.pass.test.domain.TestVault
 
 class EditVaultViewModelTest {
 
@@ -80,14 +76,7 @@ class EditVaultViewModelTest {
 
     @Test
     fun `onStart sets share contents`() = runTest {
-        val vault = Vault(
-            userId = UserId(""),
-            shareId = ShareId(SHARE_ID),
-            name = "some name",
-            color = ShareColor.Color4,
-            icon = ShareIcon.Icon7,
-            createTime = Date()
-        )
+        val vault = TestVault.create(shareId = ShareId(SHARE_ID))
 
         getVaultById.emitValue(vault)
         instance.onStart()
@@ -104,14 +93,7 @@ class EditVaultViewModelTest {
     @Test
     fun `onEditClick sends the proper values`() = runTest {
         // Given
-        val vault = Vault(
-            userId = UserId(""),
-            shareId = ShareId(SHARE_ID),
-            name = "some name",
-            color = ShareColor.Color4,
-            icon = ShareIcon.Icon7,
-            createTime = Date()
-        )
+        val vault = TestVault.create(shareId = ShareId(SHARE_ID))
         getVaultById.emitValue(vault)
         updateVault.setResult(Result.success(TestShare.create().copy(id = vault.shareId)))
 
@@ -142,14 +124,7 @@ class EditVaultViewModelTest {
     @Test
     fun `onEditClick sends snackbar message on error`() = runTest {
         // Given
-        val vault = Vault(
-            userId = UserId(""),
-            shareId = ShareId(SHARE_ID),
-            name = "some name",
-            color = ShareColor.Color4,
-            icon = ShareIcon.Icon7,
-            createTime = Date()
-        )
+        val vault = TestVault.create(shareId = ShareId(SHARE_ID))
         getVaultById.emitValue(vault)
         updateVault.setResult(Result.failure(IllegalStateException("test")))
 

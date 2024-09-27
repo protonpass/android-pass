@@ -43,6 +43,7 @@ import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featurevault.impl.R
 import proton.android.pass.featurevault.impl.VaultNavigation
@@ -259,6 +260,7 @@ class SelectVaultBottomSheetTest {
                 vault = Vault(
                     userId = UserId(""),
                     shareId = shareIdForIndex(0),
+                    vaultId = VaultId("vault-id"),
                     name = vaultNameForIndex(0),
                     createTime = Date()
                 ),
@@ -269,6 +271,7 @@ class SelectVaultBottomSheetTest {
                 vault = Vault(
                     userId = UserId(""),
                     shareId = shareIdForIndex(1),
+                    vaultId = VaultId("vault-id-1"),
                     name = vaultNameForIndex(1),
                     role = ShareRole.Read,
                     createTime = Date()
@@ -304,6 +307,7 @@ class SelectVaultBottomSheetTest {
                 vault = Vault(
                     userId = UserId(""),
                     shareId = shareIdForIndex(it),
+                    vaultId = VaultId("vault-id-$it"),
                     name = vaultNameForIndex(it),
                     createTime = Date()
                 ),

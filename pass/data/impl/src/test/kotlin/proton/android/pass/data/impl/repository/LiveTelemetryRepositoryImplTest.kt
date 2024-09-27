@@ -273,7 +273,7 @@ class LiveTelemetryRepositoryImplTest {
             totpLimit = PlanLimit.Unlimited,
             updatedAt = clock.now().epochSeconds
         )
-        getUserPlan.setResult(Result.success(plan))
+        getUserPlan.setResult(userId = USER_ID, value = Result.success(plan))
     }
 
     private fun LiveTelemetryEvent.toEntity(userId: UserId, id: Long = 0) = LiveTelemetryEntity(

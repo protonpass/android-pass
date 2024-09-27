@@ -41,7 +41,6 @@ import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemcreate.impl.ItemCreate
@@ -52,8 +51,8 @@ import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.TestVault
 import proton.android.pass.totp.fakes.TestTotpManager
-import java.util.Date
 
 class CreateCreditCardViewModelTest {
 
@@ -92,19 +91,20 @@ class CreateCreditCardViewModelTest {
 
     @Test
     fun `create item without title should return a BlankTitle validation error`() = runTest {
-        val vault = VaultWithItemCount(
-            vault = Vault(UserId(""), ShareId("shareId"), "Share", createTime = Date()),
+        val vault = TestVault.create(shareId = ShareId("shareId"), name = "Share")
+        val vaultWithItemCount = VaultWithItemCount(
+            vault = vault,
             activeItemCount = 1,
             trashedItemCount = 0
         )
-        observeVaults.sendResult(Result.success(listOf(vault)))
+        observeVaults.sendResult(Result.success(listOf(vaultWithItemCount)))
 
         instance.createItem()
 
         val state = CreateCreditCardUiState.Success(
             shareUiState = ShareUiState.Success(
-                vaultList = listOf(vault),
-                currentVault = vault
+                vaultList = listOf(vaultWithItemCount),
+                currentVault = vaultWithItemCount
             ),
             baseState = BaseCreditCardUiState.Initial
         )
@@ -208,13 +208,14 @@ class CreateCreditCardViewModelTest {
     }
 
     private fun sendInitialVault(shareId: ShareId): VaultWithItemCount {
-        val vault = VaultWithItemCount(
-            vault = Vault(UserId(""), shareId, "Share", createTime = Date()),
+        val vault = TestVault.create(shareId = shareId, name = "Share")
+        val vaultWithItemCount = VaultWithItemCount(
+            vault = vault,
             activeItemCount = 1,
             trashedItemCount = 0
         )
-        observeVaults.sendResult(Result.success(listOf(vault)))
-        return vault
+        observeVaults.sendResult(Result.success(listOf(vaultWithItemCount)))
+        return vaultWithItemCount
     }
 
 }

@@ -55,6 +55,7 @@ import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
@@ -336,6 +337,7 @@ class SelectItemScreenTest {
             Vault(
                 userId = UserId(""),
                 shareId = shareId,
+                vaultId = VaultId("vaultid-test-$it"),
                 name = "testVault-$it",
                 createTime = Date()
             )

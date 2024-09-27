@@ -23,7 +23,6 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -37,7 +36,6 @@ import proton.android.pass.data.fakes.usecases.TestMigrateVault
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveHasAssociatedSecureLinks
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
@@ -47,7 +45,7 @@ import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestItem
-import java.util.Date
+import proton.android.pass.test.domain.TestVault
 
 class MigrateConfirmVaultForMigrateItemsViewModelTest {
 
@@ -149,12 +147,7 @@ class MigrateConfirmVaultForMigrateItemsViewModelTest {
 
 
     private fun sourceVault(): VaultWithItemCount = VaultWithItemCount(
-        vault = Vault(
-            userId = UserId(""),
-            shareId = SHARE_ID,
-            name = "source",
-            createTime = Date()
-        ),
+        vault = TestVault.create(shareId = SHARE_ID),
         activeItemCount = 1,
         trashedItemCount = 0
     )

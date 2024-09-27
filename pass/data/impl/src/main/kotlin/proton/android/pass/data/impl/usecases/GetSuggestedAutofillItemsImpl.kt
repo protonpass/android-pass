@@ -101,7 +101,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
         array: Array<Pair<List<Vault>, List<Item>>>,
         url: Option<String>
     ): SuggestedAutofillItemsResult {
-        val filteredItems = ItemFilterProcessor.processAllowedItems(array)
+        val filteredItems = ItemFilterProcessor.removeDuplicates(array)
         val sortedItems = sortSuggestions(filteredItems, url)
         return SuggestedAutofillItemsResult.Items(sortedItems)
     }
@@ -110,7 +110,8 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
         array: Array<Triple<List<Vault>, List<Item>, Plan>>,
         url: Option<String>
     ): SuggestedAutofillItemsResult {
-        val filteredItems = ItemFilterProcessor.processCreditCard(array)
+        val filteredItems =
+            ItemFilterProcessor.removeDuplicates(array.map { it.first to it.second }.toTypedArray())
         val sortedItems = sortSuggestions(filteredItems, url)
         val plans = array.map { it.third }
         return when {
@@ -118,7 +119,18 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
                 SuggestedAutofillItemsResult.Items(emptyList())
 
             plans.all { it.isFreePlan } -> SuggestedAutofillItemsResult.ShowUpgrade
-            plans.any { it.hasPlanWithAccess } -> SuggestedAutofillItemsResult.Items(sortedItems)
+            plans.any { it.hasPlanWithAccess } -> {
+                if (plans.any { it.isFreePlan }) {
+                    val freePlanIndex = array.indexOfFirst { it.third.isFreePlan }
+                    val vaultsToRemove = array[freePlanIndex].first
+                    val filteredItemsWithAccess =
+                        sortedItems.filter { item -> vaultsToRemove.none { it.shareId == item.shareId } }
+                    SuggestedAutofillItemsResult.Items(filteredItemsWithAccess)
+                } else {
+                    SuggestedAutofillItemsResult.Items(sortedItems)
+                }
+            }
+
             else -> SuggestedAutofillItemsResult.Items(emptyList())
         }
     }

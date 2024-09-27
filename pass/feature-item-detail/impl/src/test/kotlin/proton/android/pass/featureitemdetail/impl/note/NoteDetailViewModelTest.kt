@@ -24,7 +24,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -48,11 +47,8 @@ import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.ShareColor
-import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
-import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.ItemDelete
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -62,7 +58,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
-import java.util.Date
+import proton.android.pass.test.domain.TestVault
 
 class NoteDetailViewModelTest {
 
@@ -337,13 +333,10 @@ class NoteDetailViewModelTest {
         private const val ITEM_ID = "item-id"
         private const val VAULT_NAME = "Test Vault"
 
-        private val TEST_VAULT = Vault(
-            userId = UserId(""),
+        private val TEST_VAULT = TestVault.create(
             shareId = ShareId(SHARE_ID),
             name = VAULT_NAME,
-            color = ShareColor.Color1,
-            icon = ShareIcon.Icon1,
-            createTime = Date()
+            role = ShareRole.Admin
         )
     }
 

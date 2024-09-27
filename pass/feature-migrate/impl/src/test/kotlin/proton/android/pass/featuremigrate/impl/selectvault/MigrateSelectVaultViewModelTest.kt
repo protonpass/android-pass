@@ -22,7 +22,6 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -31,7 +30,6 @@ import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
@@ -40,7 +38,7 @@ import proton.android.pass.featuremigrate.impl.MigrateVaultFilterArg
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import java.util.Date
+import proton.android.pass.test.domain.TestVault
 
 class MigrateSelectVaultViewModelTest {
 
@@ -94,22 +92,12 @@ class MigrateSelectVaultViewModelTest {
 
     private fun initialVaults(): Pair<VaultWithItemCount, VaultWithItemCount> = Pair(
         VaultWithItemCount(
-            vault = Vault(
-                userId = UserId(""),
-                shareId = SHARE_ID,
-                name = "vault1",
-                createTime = Date()
-            ),
+            vault = TestVault.create(shareId = SHARE_ID, name = "vault1"),
             activeItemCount = 1,
             trashedItemCount = 0
         ),
         VaultWithItemCount(
-            vault = Vault(
-                userId = UserId(""),
-                shareId = ShareId("OTHER_SHARE_ID"),
-                name = "vault2",
-                createTime = Date()
-            ),
+            vault = TestVault.create(shareId = ShareId("OTHER_SHARE_ID"), name = "vault2"),
             activeItemCount = 1,
             trashedItemCount = 0
         )

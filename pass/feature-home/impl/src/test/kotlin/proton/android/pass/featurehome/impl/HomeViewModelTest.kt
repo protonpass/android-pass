@@ -63,10 +63,7 @@ import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.data.fakes.usecases.TestUnpinItems
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ShareColor
-import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.featuresearchoptions.fakes.TestHomeSearchOptionsRepository
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -79,7 +76,7 @@ import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestUser
-import java.util.Date
+import proton.android.pass.test.domain.TestVault
 
 internal class HomeViewModelTest {
 
@@ -218,16 +215,7 @@ internal class HomeViewModelTest {
         val vaults = items
             .map { it.shareId }
             .distinct()
-            .map { shareId ->
-                Vault(
-                    userId = UserId(""),
-                    shareId = shareId,
-                    name = "Vault ${shareId.id}",
-                    color = ShareColor.Color1,
-                    icon = ShareIcon.Icon1,
-                    createTime = Date()
-                )
-            }
+            .map(TestVault::create)
 
         val searchEntries = items.map {
             SearchEntry(

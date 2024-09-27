@@ -41,7 +41,6 @@ import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
@@ -54,7 +53,7 @@ import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
-import java.util.Date
+import proton.android.pass.test.domain.TestVault
 
 class CreateAliasViewModelTest {
 
@@ -275,7 +274,7 @@ class CreateAliasViewModelTest {
             Result.success(
                 listOf(
                     VaultWithItemCount(
-                        vault = Vault(UserId(""), ShareId("ShareId"), "name", createTime = Date()),
+                        vault = TestVault.create(shareId = ShareId("ShareId"), name = "name"),
                         activeItemCount = 1,
                         trashedItemCount = 0
                     )

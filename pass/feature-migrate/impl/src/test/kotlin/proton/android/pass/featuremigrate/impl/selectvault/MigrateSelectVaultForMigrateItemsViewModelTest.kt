@@ -23,7 +23,6 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -33,7 +32,6 @@ import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
@@ -43,7 +41,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import java.util.Date
+import proton.android.pass.test.domain.TestVault
 
 class MigrateSelectVaultForMigrateItemsViewModelTest {
 
@@ -76,7 +74,7 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
 
     @Test
     fun `emits success when vault selected`() = runTest {
-        val (currentVault, otherVault) = initialVaults(firstVaultShared = false)
+        val (currentVault, otherVault) = initialVaults()
         observeVaults.sendResult(Result.success(listOf(currentVault, otherVault)))
 
         instance.onVaultSelected(otherVault.vault.shareId)
@@ -99,25 +97,13 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
     @Test
     fun `filters shared vaults when filter mode is set to Shared`() = runTest {
         val sharedVault = VaultWithItemCount(
-            vault = Vault(
-                userId = UserId(""),
-                shareId = ShareId("shared-vault"),
-                name = "vault1",
-                shared = true,
-                createTime = Date()
-            ),
+            vault = TestVault.create(shareId = ShareId("shared-vault"), name = "vault1", shared = true),
             activeItemCount = 1,
             trashedItemCount = 0
         )
 
         val nonSharedVault = VaultWithItemCount(
-            vault = Vault(
-                userId = UserId(""),
-                shareId = ShareId("non-shared-vault"),
-                name = "vault2",
-                shared = false,
-                createTime = Date()
-            ),
+            vault = TestVault.create(shareId = ShareId("non-shared-vault"), name = "vault2"),
             activeItemCount = 1,
             trashedItemCount = 0
         )
@@ -147,25 +133,14 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
         )
     }
 
-    private fun initialVaults(firstVaultShared: Boolean): Pair<VaultWithItemCount, VaultWithItemCount> = Pair(
+    private fun initialVaults(): Pair<VaultWithItemCount, VaultWithItemCount> = Pair(
         VaultWithItemCount(
-            vault = Vault(
-                userId = UserId(""),
-                shareId = SHARE_ID,
-                name = "vault1",
-                shared = firstVaultShared,
-                createTime = Date()
-            ),
+            vault = TestVault.create(shareId = SHARE_ID, name = "vault1"),
             activeItemCount = 1,
             trashedItemCount = 0
         ),
         VaultWithItemCount(
-            vault = Vault(
-                userId = UserId(""),
-                shareId = ShareId("OTHER_SHARE_ID"),
-                name = "vault2",
-                createTime = Date()
-            ),
+            vault = TestVault.create(shareId = ShareId("OTHER_SHARE_ID"), name = "vault2"),
             activeItemCount = 1,
             trashedItemCount = 0
         )

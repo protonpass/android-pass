@@ -33,7 +33,7 @@ import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.Vault
-import java.util.Date
+import proton.android.pass.test.domain.TestVault
 
 class ObserveUsableVaultsImplTest {
 
@@ -115,7 +115,11 @@ class ObserveUsableVaultsImplTest {
         val res = instance().first()
         assertThat(res).hasSize(3)
         assertThat(res.map { it.shareId }).containsExactly(vault1, vault2, vault3)
-        assertThat(res.map { it.role }).containsExactly(ShareRole.Write, ShareRole.Write, ShareRole.Read)
+        assertThat(res.map { it.role }).containsExactly(
+            ShareRole.Write,
+            ShareRole.Write,
+            ShareRole.Read
+        )
     }
 
     @Test
@@ -136,7 +140,11 @@ class ObserveUsableVaultsImplTest {
         val res = instance().first()
         assertThat(res).hasSize(3)
         assertThat(res.map { it.shareId }).containsExactly(vault1, vault2, vault3)
-        assertThat(res.map { it.role }).containsExactly(ShareRole.Write, ShareRole.Write, ShareRole.Read)
+        assertThat(res.map { it.role }).containsExactly(
+            ShareRole.Write,
+            ShareRole.Write,
+            ShareRole.Read
+        )
     }
 
     @Test
@@ -157,17 +165,20 @@ class ObserveUsableVaultsImplTest {
         val res = instance().first()
         assertThat(res).hasSize(3)
         assertThat(res.map { it.shareId }).containsExactly(vault1, vault2, vault3)
-        assertThat(res.map { it.role }).containsExactly(ShareRole.Write, ShareRole.Write, ShareRole.Read)
+        assertThat(res.map { it.role }).containsExactly(
+            ShareRole.Write,
+            ShareRole.Write,
+            ShareRole.Read
+        )
     }
 
     private fun setVaults(vaults: Map<ShareId, ShareRole>) {
         val vaultInstances: List<Vault> = vaults.map { (shareId, role) ->
-            Vault(
-                userId = UserId(""),
+            TestVault.create(
                 shareId = shareId,
+                userId = DEFAULT_USER_ID,
                 role = role,
-                name = "unused",
-                createTime = Date()
+                name = "unused"
             )
         }
 
@@ -183,7 +194,11 @@ class ObserveUsableVaultsImplTest {
             totpLimit = PlanLimit.Limited(1),
             updatedAt = Clock.System.now().epochSeconds
         )
-        getUserPlan.setResult(Result.success(plan))
+        getUserPlan.setResult(userId = DEFAULT_USER_ID, value = Result.success(plan))
+    }
+
+    companion object {
+        val DEFAULT_USER_ID = UserId("default-user-id")
     }
 
 }

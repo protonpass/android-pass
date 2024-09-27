@@ -50,9 +50,7 @@ internal class CanDisplayTotpImplTest {
         instance = CanDisplayTotpImpl(
             getUserPlan = getUserPlan,
             localItemDataSource = dataSource,
-            accountManager = TestAccountManager().apply {
-                sendPrimaryUserId(UserId("123"))
-            }
+            accountManager = TestAccountManager().apply { sendPrimaryUserId(USER_ID) }
         )
     }
 
@@ -110,7 +108,8 @@ internal class CanDisplayTotpImplTest {
 
     private fun setupWithPlan(planType: PlanType, totpLimit: Int) {
         getUserPlan.setResult(
-            Result.success(
+            userId = USER_ID,
+            value = Result.success(
                 Plan(
                     planType = planType,
                     hideUpgrade = false,
@@ -124,6 +123,7 @@ internal class CanDisplayTotpImplTest {
     }
 
     companion object {
+        private val USER_ID = UserId("123")
         private val PAID_PLAN = PlanType.Paid.Plus("", "")
         private val TRIAL_PLAN = PlanType.Trial("", "", 1)
     }

@@ -19,22 +19,13 @@
 package proton.android.pass.data.api
 
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.Plan
 import proton.android.pass.domain.Vault
 
 data object ItemFilterProcessor {
 
-    fun processAllowedItems(array: Array<Pair<List<Vault>, List<Item>>>): List<Item> {
+    fun removeDuplicates(array: Array<Pair<List<Vault>, List<Item>>>): List<Item> {
         val distinctVaults = getDistinctVaults(array.map { it.first }.flatten())
         return filterItemsByVaults(array.map { it.second }.flatten(), distinctVaults)
-    }
-
-    fun processCreditCard(array: Array<Triple<List<Vault>, List<Item>, Plan>>): List<Item> {
-        val distinctVaults = getDistinctVaults(array.map { it.first }.flatten())
-        val filteredItemsByPlan = array.map { (_, items, plan) ->
-            if (plan.hasPlanWithAccess) items else emptyList()
-        }.flatten()
-        return filterItemsByVaults(filteredItemsByPlan, distinctVaults)
     }
 
     private fun getDistinctVaults(vaultsList: List<Vault>): List<Vault> = vaultsList.groupBy { it.vaultId }

@@ -21,7 +21,6 @@ package proton.android.pass.featurevault.impl.bottomsheet.options
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -37,7 +36,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestUtils
-import java.util.Date
+import proton.android.pass.test.domain.TestVault
 
 class VaultOptionsViewModelTest {
 
@@ -316,29 +315,19 @@ class VaultOptionsViewModelTest {
     }
 
     private fun emitDefaultVault(owned: Boolean = true, shared: Boolean = true): Vault {
-        val defaultVault = Vault(
-            userId = UserId(""),
+        val defaultVault = TestVault.create(
             shareId = ShareId(SHARE_ID),
-            name = "Test vault",
             isOwned = owned,
-            members = if (shared) 2 else 1,
             shared = shared,
-            createTime = Date()
+            members = if (shared) 2 else 1
         )
 
         observeVaults.sendResult(Result.success(listOf(defaultVault)))
         return defaultVault
     }
 
-    private fun vaultWith(owned: Boolean): Vault = Vault(
-        userId = UserId(""),
-        shareId = ShareId("ShareId-${TestUtils.randomString()}"),
-        name = "Some vault",
-        isOwned = owned,
-        members = 1,
-        shared = false,
-        createTime = Date()
-    )
+    private fun vaultWith(owned: Boolean): Vault =
+        TestVault.create(shareId = ShareId("ShareId-${TestUtils.randomString()}"), isOwned = owned)
 
     private fun setNavShareId(shareId: ShareId) {
         instance = VaultOptionsViewModel(

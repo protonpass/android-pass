@@ -101,8 +101,9 @@ class TelemetryRepositoryTest {
     @Test
     fun `sendEvents can work with empty results`() = runTest {
         val plan = PlanType.Paid.Plus("plan", "plan")
-        accountManager.sendPrimaryUserId(UserId("123"))
-        getUserPlan.setResult(Result.success(planWithType(plan)))
+        val userId = UserId("123")
+        accountManager.sendPrimaryUserId(userId)
+        getUserPlan.setResult(userId = userId, value = Result.success(planWithType(plan)))
 
         instance.sendEvents()
 
@@ -202,7 +203,10 @@ class TelemetryRepositoryTest {
         event: String
     ) {
         accountManager.sendPrimaryUserId(UserId(userId))
-        getUserPlan.setResult(Result.success(planWithType(PlanType.Paid.Plus(plan, plan))))
+        getUserPlan.setResult(
+            userId = UserId(userId),
+            value = Result.success(planWithType(PlanType.Paid.Plus(plan, plan)))
+        )
 
         repeat(numItems) { idx ->
             localDataSource.store(

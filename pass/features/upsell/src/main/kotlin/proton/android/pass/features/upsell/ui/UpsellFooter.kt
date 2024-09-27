@@ -18,29 +18,20 @@
 
 package proton.android.pass.features.upsell.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.features.upsell.R
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -54,38 +45,25 @@ internal fun UpsellFooter(
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
-        Box(
-            modifier = Modifier
-                .clip(CircleShape)
-                .fillMaxWidth()
-                .background(color = PassTheme.colors.interactionNormMajor2)
-                .clickable { onUpgradeClick() }
-                .padding(vertical = Spacing.medium)
-        ) {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = submitText,
-                color = PassTheme.colors.textInvert,
-                style = ProtonTheme.typography.defaultNorm,
-                textAlign = TextAlign.Center
-            )
-        }
+        PassCircleButton(
+            text = submitText,
+            textColor = PassTheme.colors.textInvert,
+            onClick = onUpgradeClick
+        )
 
-        Text(
-            modifier = Modifier
-                .clickable { onNotNowClick() }
-                .padding(all = Spacing.small),
+        PassCircleButton(
             text = stringResource(id = CompR.string.action_not_now),
-            color = PassTheme.colors.interactionNormMajor2,
-            style = ProtonTheme.typography.defaultNorm
+            textColor = PassTheme.colors.interactionNormMajor2,
+            backgroundColor = Color.Transparent,
+            onClick = onNotNowClick
         )
     }
 }
 
 @[Preview Composable]
-fun UpsellFooterPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun UpsellFooterPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             UpsellFooter(

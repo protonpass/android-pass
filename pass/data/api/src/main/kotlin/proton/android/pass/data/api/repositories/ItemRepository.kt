@@ -36,7 +36,6 @@ import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
-import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo
 
@@ -157,7 +156,7 @@ interface ItemRepository {
 
     fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>>
 
-    suspend fun updateItemLastUsed(vaultId: VaultId, itemId: ItemId)
+    suspend fun updateItemLastUsed(shareId: ShareId, itemId: ItemId)
 
     suspend fun migrateItems(
         userId: UserId,
@@ -188,8 +187,6 @@ interface ItemRepository {
         itemId: ItemId,
         passkey: Passkey
     )
-
-    suspend fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId>
 }
 
 data class VaultProgress(

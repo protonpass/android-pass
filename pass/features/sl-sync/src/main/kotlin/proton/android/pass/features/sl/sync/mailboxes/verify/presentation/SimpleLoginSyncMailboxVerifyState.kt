@@ -27,9 +27,11 @@ internal data class SimpleLoginSyncMailboxVerifyState(
     private val isLoadingState: IsLoadingState
 ) {
 
+    internal val verificationCodeLength: Int = 6
+
     internal val isLoading: Boolean = isLoadingState == IsLoadingState.Loading
 
-    internal val canVerifyMailbox: Boolean = verificationCode.isNotBlank()
+    internal val canVerifyMailbox: Boolean = verificationCode.length == verificationCodeLength
 
     internal companion object {
 

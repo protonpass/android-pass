@@ -190,7 +190,8 @@ internal class PlanRepositoryImplTest {
                     aliasLimit = null,
                     totpLimit = null,
                     hideUpgrade = false,
-                    trialEnd = null
+                    trialEnd = null,
+                    manageAlias = false
                 ),
                 pendingInvites = pendingInvites,
                 waitingNewUserInvites = waitingNewUserInvites,
@@ -217,8 +218,8 @@ internal class PlanRepositoryImplTest {
                 minVersionUpgrade = userAccessResponse.accessResponse.minVersionUpgrade,
                 isSimpleLoginSyncEnabled = userAccessResponse.accessResponse.userData.isAliasSyncEnabled,
                 simpleLoginSyncDefaultShareId = userAccessResponse.accessResponse.userData.defaultShareID.orEmpty(),
-                simpleLoginSyncPendingAliasCount = userAccessResponse.accessResponse.userData.pendingAliasToSync
-
+                simpleLoginSyncPendingAliasCount = userAccessResponse.accessResponse.userData.pendingAliasToSync,
+                canManageSimpleLoginAliases = userAccessResponse.accessResponse.planResponse.manageAlias
             )
         )
 

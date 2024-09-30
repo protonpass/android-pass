@@ -20,6 +20,7 @@ package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Clock
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -30,6 +31,7 @@ class ItemUiModelPreviewProvider : PreviewParameterProvider<ItemUiModel> {
         get() = sequenceOf(
             ItemUiModel(
                 id = ItemId("123"),
+                userId = UserId("user-id"),
                 shareId = ShareId("345"),
                 contents = ItemContents.Note(
                     "Item with long text",
@@ -44,6 +46,7 @@ class ItemUiModelPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             ),
             ItemUiModel(
                 id = ItemId("123"),
+                userId = UserId("user-id"),
                 shareId = ShareId("345"),
                 contents = ItemContents.Note(
                     "Item with multiline text",

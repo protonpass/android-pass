@@ -47,6 +47,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -298,14 +299,17 @@ internal fun HomeContent(
             ItemsList(
                 modifier = Modifier.testTag("itemsList"),
                 items = items,
-                selectedItemIds = selectedItemIds,
-                isInSelectionMode = uiState.homeListUiState.selectionState.isInSelectMode,
                 shares = uiState.homeListUiState.shares,
                 isShareSelected = uiState.homeListUiState.selectedShare.isNotEmpty(),
-                shouldScrollToTop = shouldScrollToTop,
                 scrollableState = scrollableState,
+                shouldScrollToTop = shouldScrollToTop,
                 highlight = uiState.searchUiState.searchQuery,
-                canLoadExternalImages = uiState.homeListUiState.canLoadExternalImages,
+                isRefreshing = uiState.homeListUiState.isRefreshing,
+                isLoading = uiState.homeListUiState.isLoading,
+                isProcessingSearch = uiState.searchUiState.isProcessingSearch,
+                forceShowHeader = forceShowHeader,
+                header = header,
+                onRefresh = { onEvent(HomeUiEvent.Refresh) },
                 onItemClick = { item ->
                     keyboardController?.hide()
                     if (uiState.homeListUiState.selectionState.isInSelectMode) {
@@ -314,18 +318,17 @@ internal fun HomeContent(
                         onEvent(HomeUiEvent.ItemClick(item))
                     }
                 },
+                onItemMenuClick = { onEvent(HomeUiEvent.ItemMenuClick(it)) },
                 onItemLongClick = {
                     val readOnly = uiState.isSelectedVaultReadOnly()
                     if (!readOnly && !isPinningOrSearch) {
                         onEvent(HomeUiEvent.SelectItem(it))
                     }
                 },
-                onItemMenuClick = { onEvent(HomeUiEvent.ItemMenuClick(it)) },
-                isLoading = uiState.homeListUiState.isLoading,
-                isProcessingSearch = uiState.searchUiState.isProcessingSearch,
-                isRefreshing = uiState.homeListUiState.isRefreshing,
-                onRefresh = { onEvent(HomeUiEvent.Refresh) },
                 onScrollToTop = { onEvent(HomeUiEvent.ScrollToTop) },
+                canLoadExternalImages = uiState.homeListUiState.canLoadExternalImages,
+                isInSelectionMode = uiState.homeListUiState.selectionState.isInSelectMode,
+                selectedItemIds = selectedItemIds,
                 emptyContent = {
                     HomeEmptyContent(
                         isTrashMode = isTrashMode,
@@ -336,8 +339,7 @@ internal fun HomeContent(
                         onEvent = onEvent
                     )
                 },
-                forceShowHeader = forceShowHeader,
-                header = header
+                accounts = persistentMapOf()
             )
         }
     }

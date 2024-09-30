@@ -117,6 +117,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
             return TestEncryptionContextProvider().withEncryptionContext {
                 Item(
                     id = itemId,
+                    userId = UserId("user-id"),
                     itemUuid = "",
                     revision = 1,
                     shareId = shareId,

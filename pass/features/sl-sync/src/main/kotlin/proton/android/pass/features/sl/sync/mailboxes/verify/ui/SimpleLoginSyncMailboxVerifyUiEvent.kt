@@ -16,13 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.mailboxes.create.presentation
+package proton.android.pass.features.sl.sync.mailboxes.verify.ui
 
-internal sealed interface SimpleLoginSyncMailboxCreateEvent {
+internal sealed interface SimpleLoginSyncMailboxVerifyUiEvent {
 
-    data object Idle : SimpleLoginSyncMailboxCreateEvent
+    data object OnCloseClicked : SimpleLoginSyncMailboxVerifyUiEvent
 
-    @JvmInline
-    value class OnMailboxCreated(internal val mailboxId: Long) : SimpleLoginSyncMailboxCreateEvent
+    data object OnVerifyClicked : SimpleLoginSyncMailboxVerifyUiEvent
 
 }

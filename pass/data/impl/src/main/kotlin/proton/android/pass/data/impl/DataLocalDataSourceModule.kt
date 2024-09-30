@@ -50,6 +50,8 @@ import proton.android.pass.data.impl.local.LocalTelemetryDataSource
 import proton.android.pass.data.impl.local.LocalTelemetryDataSourceImpl
 import proton.android.pass.data.impl.local.LocalUserAccessDataDataSource
 import proton.android.pass.data.impl.local.LocalUserAccessDataDataSourceImpl
+import proton.android.pass.data.impl.local.assetlink.LocalAssetLinkDataSource
+import proton.android.pass.data.impl.local.assetlink.LocalAssetLinkDataSourceImpl
 import proton.android.pass.data.impl.local.securelinks.SecureLinksLocalDataSource
 import proton.android.pass.data.impl.local.securelinks.SecureLinksLocalDataSourceImpl
 import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSource
@@ -111,5 +113,8 @@ abstract class DataLocalDataSourceModule {
 
     @[Binds Singleton]
     abstract fun bindLocalSimpleLoginDataSource(impl: LocalSimpleLoginDataSourceImpl): LocalSimpleLoginDataSource
+
+    @[Binds Singleton]
+    abstract fun bindLocalAssetLinkDataSource(impl: LocalAssetLinkDataSourceImpl): LocalAssetLinkDataSource
 
 }

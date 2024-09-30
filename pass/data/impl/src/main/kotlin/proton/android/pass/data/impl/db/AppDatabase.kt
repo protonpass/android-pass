@@ -85,6 +85,7 @@ import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import me.proton.core.usersettings.data.entity.OrganizationEntity
 import me.proton.core.usersettings.data.entity.OrganizationKeysEntity
 import me.proton.core.usersettings.data.entity.UserSettingsEntity
+import proton.android.pass.data.impl.db.entities.AssetLinkEntity
 import proton.android.pass.data.impl.db.entities.InviteEntity
 import proton.android.pass.data.impl.db.entities.InviteKeyEntity
 import proton.android.pass.data.impl.db.entities.ItemEntity
@@ -148,7 +149,8 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
         UserAccessDataEntity::class,
         PassOrganizationSettingsEntity::class,
         SecureLinkEntity::class,
-        LiveTelemetryEntity::class
+        LiveTelemetryEntity::class,
+        AssetLinkEntity::class
     ],
     autoMigrations = [
         AutoMigration(from = 2, to = 3, spec = AppDatabaseMigrations.MIGRATION_2_3::class),
@@ -182,7 +184,8 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
         AutoMigration(from = 49, to = 50),
         AutoMigration(from = 50, to = 51),
         AutoMigration(from = 52, to = 53, spec = AppDatabaseMigrations.MIGRATION_52_53::class),
-        AutoMigration(from = 53, to = 54)
+        AutoMigration(from = 53, to = 54),
+        AutoMigration(from = 55, to = 56)
     ],
     version = AppDatabase.VERSION,
     exportSchema = true
@@ -225,7 +228,7 @@ abstract class AppDatabase :
     AuthDatabase {
 
     companion object {
-        const val VERSION = 55
+        const val VERSION = 56
 
         const val DB_NAME = "db-passkey"
 

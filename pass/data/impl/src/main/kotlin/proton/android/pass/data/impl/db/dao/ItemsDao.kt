@@ -361,10 +361,10 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         flags: Int
     )
 
-
     @Query(
         """
-        SELECT * FROM ${ItemEntity.TABLE} AS item
+        SELECT item.*, share.id AS ${ItemEntity.Columns.SHARE_ID}
+        FROM ${ItemEntity.TABLE} AS item
         JOIN ${ShareEntity.TABLE} AS share
         ON item.${ItemEntity.Columns.SHARE_ID} = share.${ShareEntity.Columns.ID}
         WHERE share.${ShareEntity.Columns.VAULT_ID} = :vaultId

@@ -16,13 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.mailboxes.create.presentation
+package proton.android.pass.features.sl.sync.mailboxes.verify.navigation
 
-internal sealed interface SimpleLoginSyncMailboxCreateEvent {
+import proton.android.pass.navigation.api.NavItem
 
-    data object Idle : SimpleLoginSyncMailboxCreateEvent
+object SimpleLoginSyncMailboxVerifyNavItem : NavItem(
+    baseRoute = "sl/sync/mailboxes/verify",
+    navArgIds = listOf(SimpleLoginSyncMailboxVerifyNavArgId)
+) {
 
-    @JvmInline
-    value class OnMailboxCreated(internal val mailboxId: Long) : SimpleLoginSyncMailboxCreateEvent
+    fun buildRoute(mailboxId: Long) = "$baseRoute/$mailboxId"
 
 }

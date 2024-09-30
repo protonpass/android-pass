@@ -35,10 +35,10 @@ fun SimpleLoginSyncMailboxCreateScreen(
     val state by stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
-        when (state.event) {
+        when (val event = state.event) {
             SimpleLoginSyncMailboxCreateEvent.Idle -> {}
-            SimpleLoginSyncMailboxCreateEvent.OnMailboxCreated -> {
-                // Will be implemented in IDTEAM-3917
+            is SimpleLoginSyncMailboxCreateEvent.OnMailboxCreated -> {
+                SimpleLoginSyncNavDestination.VerifyMailbox(mailboxId = event.mailboxId)
             }
         }
 

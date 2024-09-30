@@ -363,13 +363,15 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
-        SELECT item.*, share.id AS ${ItemEntity.Columns.SHARE_ID}
+        SELECT item.*, 
+            share.${ShareEntity.Columns.ID} AS ${ItemEntity.Columns.SHARE_ID},
+            share.${ShareEntity.Columns.USER_ID} AS share_user_id_alias
         FROM ${ItemEntity.TABLE} AS item
         JOIN ${ShareEntity.TABLE} AS share
         ON item.${ItemEntity.Columns.SHARE_ID} = share.${ShareEntity.Columns.ID}
         WHERE share.${ShareEntity.Columns.VAULT_ID} = :vaultId
           AND item.${ItemEntity.Columns.ID} = :itemId
-          AND item.${ItemEntity.Columns.USER_ID} IN (:userIds)
+          AND share_user_id_alias IN (:userIds)
         """
     )
     abstract fun getByVaultIdAndItemId(

@@ -22,8 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -32,7 +30,6 @@ import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -231,20 +228,6 @@ class LocalItemDataSourceImpl @Inject constructor(
         itemId: ItemId,
         flags: Int
     ) = database.itemsDao().updateItemFlags(shareId.id, itemId.id, flags)
-
-    override fun getByVaultIdAndItemId(
-        userIds: List<UserId>,
-        vaultId: VaultId,
-        itemId: ItemId
-    ): List<ItemEntity> = database.itemsDao()
-        .getByVaultIdAndItemId(
-            userIds = userIds.map { it.id },
-            vaultId = vaultId.id,
-            itemId = itemId.id
-        )
-
-    override fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId> =
-        database.itemsDao().findUserId(shareId.id, itemId.id)?.let { UserId(it) }.toOption()
 
     private fun ItemEntity.toItemWithTotp(): ItemWithTotp = ItemWithTotp(
         shareId = ShareId(shareId),

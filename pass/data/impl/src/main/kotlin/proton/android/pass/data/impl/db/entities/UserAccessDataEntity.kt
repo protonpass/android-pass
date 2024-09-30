@@ -53,7 +53,9 @@ data class UserAccessDataEntity(
     @ColumnInfo(name = Columns.SIMPLE_LOGIN_SYNC_DEFAULT_SHARE_ID, defaultValue = "")
     val simpleLoginSyncDefaultShareId: String,
     @ColumnInfo(name = Columns.SIMPLE_LOGIN_SYNC_PENDING_ALIAS_COUNT, defaultValue = "0")
-    val simpleLoginSyncPendingAliasCount: Int
+    val simpleLoginSyncPendingAliasCount: Int,
+    @ColumnInfo(name = Columns.SIMPLE_LOGIN_SYNC_CAN_MANAGE_ALIAS, defaultValue = "0")
+    val canManageSimpleLoginAliases: Boolean
 ) {
     object Columns {
         const val USER_ID = "user_id"
@@ -65,6 +67,7 @@ data class UserAccessDataEntity(
         const val SIMPLE_LOGIN_SYNC_ENABLED = "simple_login_sync_enabled"
         const val SIMPLE_LOGIN_SYNC_DEFAULT_SHARE_ID = "simple_login_sync_default_share_id"
         const val SIMPLE_LOGIN_SYNC_PENDING_ALIAS_COUNT = "simple_login_sync_pending_alias_count"
+        const val SIMPLE_LOGIN_SYNC_CAN_MANAGE_ALIAS = "simple_login_sync_can_manage_alias"
     }
 
     companion object {

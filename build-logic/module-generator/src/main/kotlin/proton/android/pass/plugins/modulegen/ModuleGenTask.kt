@@ -86,9 +86,13 @@ open class ModuleGenTask : DefaultTask() {
         configurationSet
             .filter { it != Configuration.API }
             .forEach { conf ->
-                val lcConfiguration = conf.name.lowercase()
                 val dir = modulePath.joinToString(File.separator)
-                val manifestFilePath = "$dir/$lcConfiguration/src/main/AndroidManifest.xml"
+                val manifestFilePath = if (conf == Configuration.FEATURE) {
+                    "$dir/src/main/AndroidManifest.xml"
+                } else {
+                    val lcConfiguration = conf.name.lowercase()
+                    "$dir/$lcConfiguration/src/main/AndroidManifest.xml"
+                }
                 file(manifestFilePath).writeText(manifestTemplate)
             }
     }
@@ -105,10 +109,21 @@ open class ModuleGenTask : DefaultTask() {
             val lcConfiguration = configuration.name.lowercase()
             val configurationPath =
                 "$rootPackagePath/$subPackagePath/$lcConfiguration".replace("-", "")
-            mkdir("$modulePathString/$lcConfiguration/src/main/kotlin/$configurationPath")
-            if (configuration == Configuration.IMPL) {
-                mkdir("$modulePathString/$lcConfiguration/src/androidTest/kotlin/$configurationPath")
-                mkdir("$modulePathString/$lcConfiguration/src/test/kotlin/$configurationPath")
+            when (configuration) {
+                Configuration.IMPL -> {
+                    mkdir("$modulePathString/$lcConfiguration/src/main/kotlin/$configurationPath")
+                    mkdir("$modulePathString/$lcConfiguration/src/androidTest/kotlin/$configurationPath")
+                    mkdir("$modulePathString/$lcConfiguration/src/test/kotlin/$configurationPath")
+                }
+                Configuration.FEATURE -> {
+                    mkdir("$modulePathString/src/main/kotlin/")
+                    mkdir("$modulePathString/src/androidTest/kotlin/$configurationPath")
+                    mkdir("$modulePathString/src/test/kotlin/$configurationPath")
+                }
+                Configuration.API,
+                Configuration.FAKES -> {
+                    mkdir("$modulePathString/$lcConfiguration/src/main/kotlin/$configurationPath")
+                }
             }
         }
     }
@@ -141,9 +156,17 @@ open class ModuleGenTask : DefaultTask() {
                     appendLibraryDependency(asProjectAccessor)
                     appendLine()
                 }
-            }
 
-            file("$dir/${lcConfiguration}/build.gradle.kts").writeText(configString)
+                Configuration.FEATURE -> buildString {
+                    appendAndroidLibraryPlugin(namespace)
+                }
+            }
+            when(configuration) {
+                Configuration.API,
+                Configuration.IMPL,
+                Configuration.FAKES -> file("$dir/${lcConfiguration}/build.gradle.kts").writeText(configString)
+                Configuration.FEATURE -> file("$dir/build.gradle.kts").writeText(configString)
+            }
         }
     }
 
@@ -164,8 +187,12 @@ open class ModuleGenTask : DefaultTask() {
         val existingIncludes = lines.filter { it.startsWith(includePrefix) }.toSet()
         val includeModulesPath = moduleList.joinToString(":")
         val newIncludes = configurationSet.map { configuration ->
-            val lcConfiguration = configuration.name.lowercase()
-            "$includePrefix\":$includeModulesPath:$lcConfiguration\")"
+            if (configuration == Configuration.FEATURE) {
+                "$includePrefix\":$includeModulesPath\")"
+            } else {
+                val lcConfiguration = configuration.name.lowercase()
+                "$includePrefix\":$includeModulesPath:$lcConfiguration\")"
+            }
         }.toSet()
         val includes = existingIncludes + newIncludes
         val output = lines.take(firstIncludeIndex) +

@@ -281,7 +281,8 @@ internal class OnBoardingViewModelTest {
         minVersionUpgrade: String? = null,
         isSimpleLoginSyncEnabled: Boolean = false,
         simpleLoginSyncPendingAliasCount: Int = 0,
-        simpleLoginSyncDefaultShareId: String = ""
+        simpleLoginSyncDefaultShareId: String = "",
+        canManageSimpleLoginAliases: Boolean = false
     ) = UserAccessData(
         pendingInvites = pendingInvites,
         waitingNewUserInvites = waitingNewUserInvites,
@@ -291,7 +292,8 @@ internal class OnBoardingViewModelTest {
         minVersionUpgrade = minVersionUpgrade,
         isSimpleLoginSyncEnabled = isSimpleLoginSyncEnabled,
         simpleLoginSyncPendingAliasCount = simpleLoginSyncPendingAliasCount,
-        simpleLoginSyncDefaultShareId = simpleLoginSyncDefaultShareId
+        simpleLoginSyncDefaultShareId = simpleLoginSyncDefaultShareId,
+        canManageSimpleLoginAliases = canManageSimpleLoginAliases
     )
 
 }

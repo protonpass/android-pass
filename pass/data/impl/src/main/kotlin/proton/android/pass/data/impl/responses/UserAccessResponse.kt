@@ -70,7 +70,9 @@ data class PlanResponse(
     @SerialName("HideUpgrade")
     val hideUpgrade: Boolean,
     @SerialName("TrialEnd")
-    val trialEnd: Long?
+    val trialEnd: Long?,
+    @SerialName("ManageAlias")
+    val manageAlias: Boolean
 )
 
 @Serializable

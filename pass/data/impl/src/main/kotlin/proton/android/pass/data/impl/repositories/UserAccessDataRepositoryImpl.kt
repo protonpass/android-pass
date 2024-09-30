@@ -71,7 +71,8 @@ class UserAccessDataRepositoryImpl @Inject constructor(
         aliasMonitorEnabled = accessResponse.monitorResponse.aliasMonitorEnabled,
         isSimpleLoginSyncEnabled = accessResponse.userData.isAliasSyncEnabled,
         simpleLoginSyncDefaultShareId = accessResponse.userData.defaultShareID.orEmpty(),
-        simpleLoginSyncPendingAliasCount = accessResponse.userData.pendingAliasToSync
+        simpleLoginSyncPendingAliasCount = accessResponse.userData.pendingAliasToSync,
+        canManageSimpleLoginAliases = accessResponse.planResponse.manageAlias
     )
 
     private fun UserAccessDataEntity.toDomain() = UserAccessData(
@@ -83,7 +84,8 @@ class UserAccessDataRepositoryImpl @Inject constructor(
         minVersionUpgrade = minVersionUpgrade,
         isSimpleLoginSyncEnabled = isSimpleLoginSyncEnabled,
         simpleLoginSyncDefaultShareId = simpleLoginSyncDefaultShareId,
-        simpleLoginSyncPendingAliasCount = simpleLoginSyncPendingAliasCount
+        simpleLoginSyncPendingAliasCount = simpleLoginSyncPendingAliasCount,
+        canManageSimpleLoginAliases = canManageSimpleLoginAliases
     )
 
     private fun UserAccessData.toEntity(userId: UserId) = UserAccessDataEntity(
@@ -95,6 +97,7 @@ class UserAccessDataRepositoryImpl @Inject constructor(
         aliasMonitorEnabled = aliasMonitorEnabled,
         isSimpleLoginSyncEnabled = isSimpleLoginSyncEnabled,
         simpleLoginSyncDefaultShareId = simpleLoginSyncDefaultShareId,
-        simpleLoginSyncPendingAliasCount = simpleLoginSyncPendingAliasCount
+        simpleLoginSyncPendingAliasCount = simpleLoginSyncPendingAliasCount,
+        canManageSimpleLoginAliases = canManageSimpleLoginAliases
     )
 }

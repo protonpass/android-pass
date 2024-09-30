@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -39,7 +40,6 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
 
     private val mailboxId = savedStateHandleProvider.get()
         .require<Long>(SimpleLoginSyncMailboxVerifyNavArgId.key)
-        .also { println("JIBIRI: $it") }
 
     private val verificationCodeFlow = MutableStateFlow(INITIAL_VERIFICATION_CODE)
 
@@ -56,6 +56,10 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = SimpleLoginSyncMailboxVerifyState.Initial
     )
+
+    internal fun onVerificationCodeChanged(newVerificationCode: String) {
+        verificationCodeFlow.update { newVerificationCode }
+    }
 
     private companion object {
 

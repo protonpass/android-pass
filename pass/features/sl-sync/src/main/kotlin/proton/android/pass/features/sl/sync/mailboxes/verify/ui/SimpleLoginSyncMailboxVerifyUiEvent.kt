@@ -24,4 +24,9 @@ internal sealed interface SimpleLoginSyncMailboxVerifyUiEvent {
 
     data object OnVerifyClicked : SimpleLoginSyncMailboxVerifyUiEvent
 
+    @JvmInline
+    value class OnVerificationCodeChanged(
+        internal val newVerificationCode: String
+    ) : SimpleLoginSyncMailboxVerifyUiEvent
+
 }

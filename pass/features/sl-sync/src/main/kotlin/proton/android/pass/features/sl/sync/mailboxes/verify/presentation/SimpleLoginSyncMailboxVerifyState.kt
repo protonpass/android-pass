@@ -16,13 +16,28 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.mailboxes.create.presentation
+package proton.android.pass.features.sl.sync.mailboxes.verify.presentation
 
-internal sealed interface SimpleLoginSyncMailboxCreateEvent {
+import androidx.compose.runtime.Stable
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
-    data object Idle : SimpleLoginSyncMailboxCreateEvent
+@Stable
+internal data class SimpleLoginSyncMailboxVerifyState(
+    internal val verificationCode: String,
+    private val isLoadingState: IsLoadingState
+) {
 
-    @JvmInline
-    value class OnMailboxCreated(internal val mailboxId: Long) : SimpleLoginSyncMailboxCreateEvent
+    internal val isLoading: Boolean = isLoadingState == IsLoadingState.Loading
+
+    internal val canVerifyMailbox: Boolean = verificationCode.isNotBlank()
+
+    internal companion object {
+
+        internal val Initial = SimpleLoginSyncMailboxVerifyState(
+            verificationCode = "",
+            isLoadingState = IsLoadingState.NotLoading
+        )
+
+    }
 
 }

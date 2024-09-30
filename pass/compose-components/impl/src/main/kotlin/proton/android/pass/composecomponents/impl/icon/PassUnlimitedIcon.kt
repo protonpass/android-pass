@@ -42,7 +42,7 @@ fun PassUnlimitedIcon(modifier: Modifier = Modifier, alignment: Alignment = Alig
 
 @Preview
 @Composable
-fun PassUnlimitedIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun PassUnlimitedIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             PassUnlimitedIcon()

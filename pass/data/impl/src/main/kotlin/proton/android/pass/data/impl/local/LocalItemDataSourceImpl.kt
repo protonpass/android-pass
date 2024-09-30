@@ -244,7 +244,7 @@ class LocalItemDataSourceImpl @Inject constructor(
         )
 
     override fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId> =
-        database.itemsDao().findUserId(shareId.id, itemId.id)?.let { UserId(it) }.toOption()
+        database.itemsDao().findUserId(shareId.id, itemId.id)?.let(::UserId).toOption()
 
     private fun ItemEntity.toItemWithTotp(): ItemWithTotp = ItemWithTotp(
         shareId = ShareId(shareId),

@@ -20,6 +20,7 @@ package proton.android.pass.featureselectitem.previewproviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Clock
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
@@ -56,6 +57,7 @@ internal class SuggestionsPreviewProvider : PreviewParameterProvider<Suggestions
     private fun item(name: String, username: String): ItemUiModel = ItemUiModel(
         id = ItemId(name),
         shareId = ShareId(name),
+        userId = UserId("user-id"),
         contents = ItemContents.Login(
             title = name,
             note = "",

@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.collections.immutable.toPersistentMap
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -68,6 +69,9 @@ fun SelectItemList(
     val pinningItemsCount = remember(uiState.pinningUiState.filteredItems) {
         uiState.pinningUiState.itemCount
     }
+    val accounts = remember(uiState.listUiState.accountSwitchState.accountList) {
+        uiState.listUiState.accountSwitchState.accountList.associate { it.userId to it.email }.toPersistentMap()
+    }
 
     ItemsList(
         modifier = modifier,
@@ -75,6 +79,7 @@ fun SelectItemList(
         items = items,
         shares = listUiState.shares,
         shouldScrollToTop = uiState.listUiState.shouldScrollToTop,
+        accounts = accounts,
         highlight = searchUiState.searchQuery,
         isLoading = listUiState.isLoading,
         isProcessingSearch = searchUiState.isProcessingSearch,
@@ -113,6 +118,7 @@ fun SelectItemList(
                     canLoadExternalImages = listUiState.canLoadExternalImages,
                     showUpgradeMessage = listUiState.displayOnlyPrimaryVaultMessage,
                     canUpgrade = listUiState.canUpgrade,
+                    accounts = accounts,
                     onItemOptionsClicked = onItemOptionsClicked,
                     onItemClicked = {
                         onItemClicked(it, true)

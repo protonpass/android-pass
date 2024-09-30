@@ -43,6 +43,9 @@ import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultSmallWeak
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.SpecialCharacters
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -56,7 +59,8 @@ internal fun ItemRow(
     title: AnnotatedString,
     subtitles: ImmutableList<AnnotatedString>,
     vaultIcon: Int?,
-    enabled: Boolean
+    enabled: Boolean,
+    titleSuffix: Option<String>
 ) {
     Row(
         modifier = modifier
@@ -83,11 +87,24 @@ internal fun ItemRow(
                     )
                 }
                 Text(
+                    modifier = Modifier.weight(1f, fill = false),
                     text = title,
                     style = ProtonTheme.typography.defaultNorm(enabled = enabled),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )
+                titleSuffix.value()?.let {
+                    Text(
+                        text = SpecialCharacters.DOT_SEPARATOR,
+                        style = ProtonTheme.typography.defaultSmallWeak(enabled = enabled)
+                    )
+                    Text(
+                        text = it,
+                        style = ProtonTheme.typography.defaultSmallWeak(enabled = enabled),
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1
+                    )
+                }
             }
             subtitles.filter { it.isNotBlank() }
                 .forEach {
@@ -112,7 +129,8 @@ fun ItemRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input:
                 title = "title".asAnnotatedString(),
                 subtitles = persistentListOf("".asAnnotatedString()),
                 vaultIcon = null,
-                enabled = input.second
+                enabled = input.second,
+                titleSuffix = "suffix".some()
             )
         }
     }

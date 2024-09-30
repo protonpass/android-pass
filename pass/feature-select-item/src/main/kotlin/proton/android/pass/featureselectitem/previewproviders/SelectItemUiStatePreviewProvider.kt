@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.datetime.Clock
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
@@ -129,6 +130,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
 
     private fun item(name: String): ItemUiModel = ItemUiModel(
         id = ItemId(name),
+        userId = UserId("user-id"),
         shareId = ShareId("345"),
         contents = ItemContents.Note(
             name,

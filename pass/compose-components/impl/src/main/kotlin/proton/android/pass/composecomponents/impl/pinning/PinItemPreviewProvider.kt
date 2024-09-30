@@ -20,6 +20,7 @@ package proton.android.pass.composecomponents.impl.pinning
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Clock
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.AddressDetailsContent
 import proton.android.pass.domain.ContactDetailsContent
@@ -36,6 +37,7 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
     override val values: Sequence<ItemUiModel> = sequenceOf(
         ItemUiModel(
             id = ItemId("123"),
+            userId = UserId("user-id"),
             shareId = ShareId("345"),
             contents = ItemContents.Note(
                 "Item with long text and a maximum",
@@ -50,6 +52,7 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
         ),
         ItemUiModel(
             id = ItemId("123"),
+            userId = UserId("user-id"),
             shareId = ShareId("345"),
             contents = ItemContents.Login(
                 title = "Login title",
@@ -72,6 +75,7 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
         ),
         ItemUiModel(
             id = ItemId("123"),
+            userId = UserId("user-id"),
             shareId = ShareId("345"),
             contents = ItemContents.Alias(
                 title = "Alias title",
@@ -87,6 +91,7 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
         ),
         ItemUiModel(
             id = ItemId("123"),
+            userId = UserId("user-id"),
             shareId = ShareId("345"),
             contents = ItemContents.CreditCard(
                 title = "Credit card title",
@@ -107,6 +112,7 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
         ),
         ItemUiModel(
             id = ItemId("123"),
+            userId = UserId("user-id"),
             shareId = ShareId("345"),
             contents = ItemContents.Identity(
                 title = "Identity title",

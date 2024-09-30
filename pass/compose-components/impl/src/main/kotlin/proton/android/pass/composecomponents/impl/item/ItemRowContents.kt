@@ -20,6 +20,7 @@ package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemContents
 
@@ -30,12 +31,14 @@ internal fun ItemRowContents(
     highlight: String,
     vaultIcon: Int? = null,
     canLoadExternalImages: Boolean,
-    selection: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode
+    selection: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode,
+    titleSuffix: Option<String>
 ) {
     when (item.contents) {
         is ItemContents.Login -> LoginRow(
             modifier = modifier,
             item = item,
+            titleSuffix = titleSuffix,
             highlight = highlight,
             vaultIcon = vaultIcon,
             canLoadExternalImages = canLoadExternalImages,
@@ -45,6 +48,7 @@ internal fun ItemRowContents(
         is ItemContents.Note -> NoteRow(
             modifier = modifier,
             item = item,
+            titleSuffix = titleSuffix,
             highlight = highlight,
             vaultIcon = vaultIcon,
             selection = selection
@@ -53,6 +57,7 @@ internal fun ItemRowContents(
         is ItemContents.Alias -> AliasRow(
             modifier = modifier,
             item = item,
+            titleSuffix = titleSuffix,
             highlight = highlight,
             vaultIcon = vaultIcon,
             selection = selection
@@ -61,6 +66,7 @@ internal fun ItemRowContents(
         is ItemContents.CreditCard -> CreditCardRow(
             modifier = modifier,
             item = item,
+            titleSuffix = titleSuffix,
             highlight = highlight,
             vaultIcon = vaultIcon,
             selection = selection
@@ -69,6 +75,7 @@ internal fun ItemRowContents(
         is ItemContents.Identity -> IdentityRow(
             modifier = modifier,
             item = item,
+            titleSuffix = titleSuffix,
             highlight = highlight,
             vaultIcon = vaultIcon,
             selection = selection

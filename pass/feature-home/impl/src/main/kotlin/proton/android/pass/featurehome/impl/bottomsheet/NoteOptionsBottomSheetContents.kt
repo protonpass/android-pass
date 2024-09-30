@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Clock
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
@@ -132,6 +133,7 @@ fun NoteOptionsBottomSheetContentsPreview(
             NoteOptionsBottomSheetContents(
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = ""),
+                    userId = UserId(id = "user-id"),
                     shareId = ShareId(id = ""),
                     contents = ItemContents.Note(
                         "My Note",

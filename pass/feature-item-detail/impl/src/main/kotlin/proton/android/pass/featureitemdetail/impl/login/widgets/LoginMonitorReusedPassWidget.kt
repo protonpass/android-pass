@@ -40,6 +40,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Clock
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionStrongNorm
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.ellipsize
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -196,6 +197,7 @@ internal fun LoginMonitorReusedPassWidgetExpandedPreview(
                 reusedPasswordItems = persistentListOf(
                     ItemUiModel(
                         id = ItemId("123"),
+                        userId = UserId("user-id"),
                         shareId = ShareId("345"),
                         contents = ItemContents.Login(
                             title = "Proton",

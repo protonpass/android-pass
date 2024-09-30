@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.extensions
 
 import kotlinx.datetime.Instant
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.data.impl.db.entities.ItemEntity
@@ -52,6 +53,7 @@ fun ItemEntity.toDomain(context: EncryptionContext): Item {
 
     return Item(
         id = ItemId(id),
+        userId = UserId(userId),
         itemUuid = parsed.metadata.itemUuid,
         revision = revision,
         shareId = ShareId(shareId),

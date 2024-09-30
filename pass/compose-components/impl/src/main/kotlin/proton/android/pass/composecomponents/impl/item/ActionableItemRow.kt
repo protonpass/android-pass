@@ -34,6 +34,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -50,6 +52,7 @@ fun ActionableItemRow(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
     vaultIcon: Int? = null,
+    titleSuffix: Option<String> = None,
     highlight: String = "",
     showMenuIcon: Boolean,
     selectionModeState: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode,
@@ -83,6 +86,7 @@ fun ActionableItemRow(
         ItemRowContents(
             modifier = Modifier.weight(1f),
             item = item,
+            titleSuffix = titleSuffix,
             selection = selectionModeState,
             highlight = highlight,
             vaultIcon = vaultIcon,
@@ -109,9 +113,10 @@ fun ActionableItemRowPreviewWithMenuIcon(
         Surface {
             ActionableItemRow(
                 item = input.second,
-                showMenuIcon = true,
                 vaultIcon = null,
-                canLoadExternalImages = false
+                showMenuIcon = true,
+                canLoadExternalImages = false,
+                titleSuffix = None
             )
         }
     }
@@ -126,9 +131,10 @@ fun ActionableItemRowPreviewWithoutMenuIcon(
         Surface {
             ActionableItemRow(
                 item = input.second,
-                showMenuIcon = false,
                 vaultIcon = null,
-                canLoadExternalImages = false
+                showMenuIcon = false,
+                canLoadExternalImages = false,
+                titleSuffix = None
             )
         }
     }
@@ -141,9 +147,10 @@ fun ActionableItemRowPreviewWithVaultIcon(@PreviewParameter(ThemePreviewProvider
         Surface {
             ActionableItemRow(
                 item = ItemUiModelPreviewProvider().values.first(),
-                showMenuIcon = false,
                 vaultIcon = R.drawable.ic_bookmark_small,
-                canLoadExternalImages = false
+                showMenuIcon = false,
+                canLoadExternalImages = false,
+                titleSuffix = None
             )
         }
     }
@@ -163,10 +170,11 @@ fun ActionableItemRowPreviewSelectionMode(
         Surface {
             ActionableItemRow(
                 item = ItemUiModelPreviewProvider().values.first(),
-                showMenuIcon = false,
                 vaultIcon = R.drawable.ic_bookmark_small,
+                showMenuIcon = false,
+                selectionModeState = ItemSelectionModeState.InSelectionMode(state),
                 canLoadExternalImages = false,
-                selectionModeState = ItemSelectionModeState.InSelectionMode(state)
+                titleSuffix = None
             )
         }
     }

@@ -35,4 +35,7 @@ sealed interface SimpleLoginSyncNavDestination {
 
     data object Upsell : SimpleLoginSyncNavDestination
 
+    @JvmInline
+    value class VerifyMailbox(val mailboxId: Long) : SimpleLoginSyncNavDestination
+
 }

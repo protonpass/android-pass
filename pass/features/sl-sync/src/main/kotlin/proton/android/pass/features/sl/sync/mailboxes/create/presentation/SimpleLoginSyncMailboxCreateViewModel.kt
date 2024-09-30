@@ -95,7 +95,9 @@ class SimpleLoginSyncMailboxCreateViewModel @Inject constructor(
                     snackbarDispatcher(SimpleLoginSyncMailboxCreateSnackbarMessage.CreateMailboxError)
                 }
                 .onSuccess {
-                    eventFlow.update { SimpleLoginSyncMailboxCreateEvent.OnMailboxCreated }
+                    eventFlow.update {
+                        SimpleLoginSyncMailboxCreateEvent.OnMailboxCreated(mailboxId = 1L)
+                    }
                 }
 
             isLoadingStateFlow.update { IsLoadingState.NotLoading }

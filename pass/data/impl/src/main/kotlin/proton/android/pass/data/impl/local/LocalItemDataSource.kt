@@ -112,5 +112,6 @@ interface LocalItemDataSource {
         vaultId: VaultId,
         itemId: ItemId
     ): List<ItemEntity>
+
     fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId>
 }

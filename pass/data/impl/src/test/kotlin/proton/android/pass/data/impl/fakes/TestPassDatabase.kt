@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.fakes
 
 import proton.android.pass.data.impl.db.PassDatabase
+import proton.android.pass.data.impl.db.dao.AssetLinkDao
 import proton.android.pass.data.impl.db.dao.InviteDao
 import proton.android.pass.data.impl.db.dao.InviteKeyDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
@@ -85,6 +86,10 @@ internal class TestPassDatabase : PassDatabase {
     }
 
     override fun secureLinksDao(): SecureLinksDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun assetLinkDao(): AssetLinkDao {
         throw IllegalStateException("This method should not be called")
     }
 

@@ -24,6 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.core.repositories.SentinelRepository
 import proton.android.pass.data.api.repositories.AliasRepository
+import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
@@ -41,6 +42,7 @@ import proton.android.pass.data.api.repositories.TelemetryRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.impl.core.repositories.SentinelRepositoryImpl
 import proton.android.pass.data.impl.repositories.AliasRepositoryImpl
+import proton.android.pass.data.impl.repositories.AssetLinkRepositoryImpl
 import proton.android.pass.data.impl.repositories.BreachRepositoryImpl
 import proton.android.pass.data.impl.repositories.BulkInviteRepositoryImpl
 import proton.android.pass.data.impl.repositories.BulkMoveToVaultRepositoryImpl
@@ -151,4 +153,7 @@ abstract class DataRepositoryModule {
 
     @[Binds Singleton]
     abstract fun bindSimpleLoginRepository(impl: SimpleLoginRepositoryImpl): SimpleLoginRepository
+
+    @[Binds Singleton]
+    abstract fun bindAssetLinkRepository(impl: AssetLinkRepositoryImpl): AssetLinkRepository
 }

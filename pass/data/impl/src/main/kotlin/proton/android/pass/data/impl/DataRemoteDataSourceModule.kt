@@ -52,12 +52,14 @@ import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.remote.RemoteShareDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteShareKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteShareKeyDataSourceImpl
-import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
-import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteTelemetryDataSource
 import proton.android.pass.data.impl.remote.RemoteTelemetryDataSourceImpl
 import proton.android.pass.data.impl.remote.accessdata.RemoteUserAccessDataDataSource
 import proton.android.pass.data.impl.remote.accessdata.RemoteUserAccessDataDataSourceImpl
+import proton.android.pass.data.impl.remote.assetlink.RemoteAssetLinkDataSource
+import proton.android.pass.data.impl.remote.assetlink.RemoteAssetLinkDataSourceImpl
+import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
+import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSourceImpl
 import javax.inject.Singleton
 
 @Module
@@ -123,6 +125,9 @@ abstract class DataRemoteDataSourceModule {
     abstract fun bindRemoteUserAccessDataDataSource(
         impl: RemoteUserAccessDataDataSourceImpl
     ): RemoteUserAccessDataDataSource
+
+    @[Binds Singleton]
+    abstract fun bindRemoteAssetLinkDataSource(impl: RemoteAssetLinkDataSourceImpl): RemoteAssetLinkDataSource
 
 }
 

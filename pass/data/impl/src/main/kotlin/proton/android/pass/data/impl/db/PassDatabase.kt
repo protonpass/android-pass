@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.db
 
 import me.proton.core.data.room.db.Database
+import proton.android.pass.data.impl.db.dao.AssetLinkDao
 import proton.android.pass.data.impl.db.dao.InviteDao
 import proton.android.pass.data.impl.db.dao.InviteKeyDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
@@ -60,9 +61,12 @@ interface PassDatabase : Database {
     fun userAccessDataDao(): UserAccessDataDao
 
     fun organizationSettingsDao(): PassOrganizationSettingsDao
+
     fun liveTelemetryDao(): LiveTelemetryDao
 
     fun secureLinksDao(): SecureLinksDao
+
+    fun assetLinkDao(): AssetLinkDao
 
     suspend fun <R> inTransaction(name: String, block: suspend () -> R): R {
         PassLogger.i(TAG, "$name transaction started")

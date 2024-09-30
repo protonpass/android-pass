@@ -213,6 +213,7 @@ import proton.android.pass.features.sharing.sharingGraph
 import proton.android.pass.features.sharing.sharingpermissions.bottomsheet.SharingEditPermissions
 import proton.android.pass.features.sl.sync.details.navigation.SimpleLoginSyncDetailsNavItem
 import proton.android.pass.features.sl.sync.mailboxes.create.navigation.SimpleLoginSyncMailboxCreateNavItem
+import proton.android.pass.features.sl.sync.mailboxes.verify.navigation.SimpleLoginSyncMailboxVerifyNavItem
 import proton.android.pass.features.sl.sync.management.navigation.SimpleLoginSyncManagementNavItem
 import proton.android.pass.features.sl.sync.settings.navigation.SimpleLoginSyncSettingsNavItem
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
@@ -1973,6 +1974,13 @@ fun NavGraphBuilder.appGraph(
                     destination = SimpleLoginSyncMailboxCreateNavItem
                 )
 
+//                SimpleLoginSyncNavDestination.CreateMailbox -> appNavigator.navigate(
+//                    destination = SimpleLoginSyncMailboxVerifyNavItem,
+//                    route = SimpleLoginSyncMailboxVerifyNavItem.buildRoute(
+//                        mailboxId = 1L
+//                    )
+//                )
+
                 is SimpleLoginSyncNavDestination.SelectVault -> appNavigator.navigate(
                     destination = SelectVaultBottomsheet,
                     route = SelectVaultBottomsheet.createNavRoute(
@@ -1989,6 +1997,13 @@ fun NavGraphBuilder.appGraph(
                     destination = UpsellNavItem,
                     route = UpsellNavItem.createNavRoute(
                         paidFeature = PaidFeature.AdvanceAliasManagement
+                    )
+                )
+
+                is SimpleLoginSyncNavDestination.VerifyMailbox -> appNavigator.navigate(
+                    destination = SimpleLoginSyncMailboxVerifyNavItem,
+                    route = SimpleLoginSyncMailboxVerifyNavItem.buildRoute(
+                        mailboxId = destination.mailboxId
                     )
                 )
             }

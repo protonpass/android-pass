@@ -22,6 +22,7 @@ internal sealed interface SimpleLoginSyncMailboxCreateEvent {
 
     data object Idle : SimpleLoginSyncMailboxCreateEvent
 
-    data object OnMailboxCreated : SimpleLoginSyncMailboxCreateEvent
+    @JvmInline
+    value class OnMailboxCreated(internal val mailboxId: Long) : SimpleLoginSyncMailboxCreateEvent
 
 }

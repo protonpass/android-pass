@@ -30,6 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toImmutableList
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -53,7 +55,8 @@ fun IdentityRow(
     item: ItemUiModel,
     highlight: String = "",
     vaultIcon: Int? = null,
-    selection: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode
+    selection: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode,
+    titleSuffix: Option<String> = None
 ) {
     val content = remember(item.contents) { item.contents as ItemContents.Identity }
     val highlightColor = PassTheme.colors.interactionNorm
@@ -114,6 +117,7 @@ fun IdentityRow(
             }
         },
         title = fields.title,
+        titleSuffix = titleSuffix,
         subtitles = fields.subtitles.toImmutableList(),
         vaultIcon = vaultIcon,
         enabled = selection.isSelectable()
@@ -162,9 +166,16 @@ private fun getHighlightedFields(
                 highlightColor
             )
         )
-        val personalCustomField = personalDetailsContent.customFields.filterIsInstance<CustomFieldContent.Text>()
-            .mapNotNull { customField -> customFieldToAnnotatedString(customField, highlight, highlightColor) }
-            .take(MAX_CUSTOM_FIELDS)
+        val personalCustomField =
+            personalDetailsContent.customFields.filterIsInstance<CustomFieldContent.Text>()
+                .mapNotNull { customField ->
+                    customFieldToAnnotatedString(
+                        customField,
+                        highlight,
+                        highlightColor
+                    )
+                }
+                .take(MAX_CUSTOM_FIELDS)
         annotatedFields.addAll(personalCustomField)
 
         // Highlight fields for AddressDetails
@@ -185,9 +196,16 @@ private fun getHighlightedFields(
             )
         )
 
-        val addressCustomField = addressDetailsContent.customFields.filterIsInstance<CustomFieldContent.Text>()
-            .mapNotNull { customField -> customFieldToAnnotatedString(customField, highlight, highlightColor) }
-            .take(MAX_CUSTOM_FIELDS)
+        val addressCustomField =
+            addressDetailsContent.customFields.filterIsInstance<CustomFieldContent.Text>()
+                .mapNotNull { customField ->
+                    customFieldToAnnotatedString(
+                        customField,
+                        highlight,
+                        highlightColor
+                    )
+                }
+                .take(MAX_CUSTOM_FIELDS)
         annotatedFields.addAll(addressCustomField)
 
         // Highlight fields for ContactDetails
@@ -211,9 +229,16 @@ private fun getHighlightedFields(
             )
         )
 
-        val contactCustomField = contactDetailsContent.customFields.filterIsInstance<CustomFieldContent.Text>()
-            .mapNotNull { customField -> customFieldToAnnotatedString(customField, highlight, highlightColor) }
-            .take(MAX_CUSTOM_FIELDS)
+        val contactCustomField =
+            contactDetailsContent.customFields.filterIsInstance<CustomFieldContent.Text>()
+                .mapNotNull { customField ->
+                    customFieldToAnnotatedString(
+                        customField,
+                        highlight,
+                        highlightColor
+                    )
+                }
+                .take(MAX_CUSTOM_FIELDS)
         annotatedFields.addAll(contactCustomField)
 
         // Highlight fields for WorkDetails
@@ -231,9 +256,16 @@ private fun getHighlightedFields(
             )
         )
 
-        val workCustomField = workDetailsContent.customFields.filterIsInstance<CustomFieldContent.Text>()
-            .mapNotNull { customField -> customFieldToAnnotatedString(customField, highlight, highlightColor) }
-            .take(MAX_CUSTOM_FIELDS)
+        val workCustomField =
+            workDetailsContent.customFields.filterIsInstance<CustomFieldContent.Text>()
+                .mapNotNull { customField ->
+                    customFieldToAnnotatedString(
+                        customField,
+                        highlight,
+                        highlightColor
+                    )
+                }
+                .take(MAX_CUSTOM_FIELDS)
         annotatedFields.addAll(workCustomField)
 
         extraSectionContentList.forEach { extraSectionContent ->
@@ -299,7 +331,8 @@ fun IdentityRowPreview(
         Surface {
             IdentityRow(
                 item = input.second.model,
-                highlight = input.second.highlight
+                highlight = input.second.highlight,
+                titleSuffix = None
             )
         }
     }

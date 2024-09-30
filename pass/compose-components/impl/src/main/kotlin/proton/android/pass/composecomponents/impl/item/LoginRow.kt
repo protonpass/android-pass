@@ -31,6 +31,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -49,7 +51,8 @@ fun LoginRow(
     highlight: String = "",
     vaultIcon: Int? = null,
     canLoadExternalImages: Boolean,
-    selection: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode
+    selection: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode,
+    titleSuffix: Option<String> = None
 ) {
     val content = remember(item.contents) { item.contents as ItemContents.Login }
 
@@ -121,6 +124,7 @@ fun LoginRow(
             }
         },
         title = fields.title,
+        titleSuffix = titleSuffix,
         subtitles = fields.subtitles,
         vaultIcon = vaultIcon,
         enabled = selection.isSelectable()
@@ -225,7 +229,8 @@ internal fun LoginRowPreview(
             LoginRow(
                 item = input.second.model,
                 highlight = input.second.highlight,
-                canLoadExternalImages = false
+                canLoadExternalImages = false,
+                titleSuffix = None
             )
         }
     }

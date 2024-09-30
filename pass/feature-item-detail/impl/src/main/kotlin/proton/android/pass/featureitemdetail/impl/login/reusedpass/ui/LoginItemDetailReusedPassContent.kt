@@ -28,6 +28,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.masks.TextMask
@@ -89,8 +90,9 @@ internal fun LoginItemDetailReusedPassContent(
                         ) { itemUiModel ->
                             LoginRow(
                                 item = itemUiModel,
+                                vaultIcon = getShareIcon(itemUiModel.shareId)?.toSmallResource(),
                                 canLoadExternalImages = canLoadExternalImages,
-                                vaultIcon = getShareIcon(itemUiModel.shareId)?.toSmallResource()
+                                titleSuffix = None
                             )
                         }
                     }

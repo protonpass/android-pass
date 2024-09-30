@@ -24,6 +24,7 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encrypt
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.toOption
@@ -50,6 +51,7 @@ object TestItem {
         val now = Clock.System.now()
         return Item(
             id = itemId,
+            userId = UserId("user-id"),
             itemUuid = "uuid",
             revision = 0,
             shareId = shareId,
@@ -95,6 +97,7 @@ object TestItem {
         }
         return Item(
             id = ItemId(randomString()),
+            userId = UserId(randomString()),
             itemUuid = UUID.randomUUID().toString(),
             revision = Random.nextLong(),
             shareId = ShareId(randomString()),

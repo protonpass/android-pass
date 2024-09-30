@@ -20,6 +20,7 @@ package proton.android.pass.commonuimodels.api
 
 import androidx.compose.runtime.Stable
 import kotlinx.datetime.Instant
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -30,6 +31,7 @@ import proton.android.pass.domain.items.ItemCategory
 data class ItemUiModel(
     val id: ItemId,
     val shareId: ShareId,
+    val userId: UserId,
     val contents: ItemContents,
     val state: Int,
     val createTime: Instant,

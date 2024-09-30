@@ -20,6 +20,7 @@ package proton.android.pass.crypto.impl.usecases
 
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
@@ -68,6 +69,7 @@ class OpenItemImpl @Inject constructor(
             ShareType.Vault -> openItemWithVaultShare(
                 response = response,
                 shareId = share.id,
+                userId = share.userId,
                 shareKeys = shareKeys,
                 encryptionContext = encryptionContext
             )
@@ -75,6 +77,7 @@ class OpenItemImpl @Inject constructor(
             ShareType.Item -> openItemWithItemShare(
                 response = response,
                 shareId = share.id,
+                userId = share.userId,
                 shareKeys = shareKeys,
                 encryptionContext = encryptionContext
             )
@@ -85,7 +88,8 @@ class OpenItemImpl @Inject constructor(
         response: EncryptedItemRevision,
         shareId: ShareId,
         shareKeys: List<ShareKey>,
-        encryptionContext: EncryptionContext
+        encryptionContext: EncryptionContext,
+        userId: UserId
     ): OpenItemOutput {
         val shareKey = shareKeys.firstOrNull { it.rotation == response.keyRotation }
             ?: throw KeyNotFound(
@@ -124,7 +128,8 @@ class OpenItemImpl @Inject constructor(
                 shareId = shareId,
                 decoded = decoded,
                 decryptedContents = decryptedContents,
-                encryptionContext = encryptionContext
+                encryptionContext = encryptionContext,
+                userId = userId
             ),
             itemKey = encryptedItemKey
         )
@@ -134,7 +139,8 @@ class OpenItemImpl @Inject constructor(
         response: EncryptedItemRevision,
         shareId: ShareId,
         shareKeys: List<ShareKey>,
-        encryptionContext: EncryptionContext
+        encryptionContext: EncryptionContext,
+        userId: UserId
     ): OpenItemOutput {
 
         val shareKey = shareKeys.firstOrNull { it.rotation == response.keyRotation }
@@ -157,21 +163,25 @@ class OpenItemImpl @Inject constructor(
                 shareId = shareId,
                 decoded = decoded,
                 decryptedContents = decryptedContents,
-                encryptionContext = encryptionContext
+                encryptionContext = encryptionContext,
+                userId = userId
             ),
             itemKey = null
         )
     }
 
+    @Suppress("LongParameterList")
     private fun createDomainObject(
         response: EncryptedItemRevision,
         shareId: ShareId,
+        userId: UserId,
         decoded: ItemV1.Item,
         decryptedContents: ByteArray,
         encryptionContext: EncryptionContext
     ): Item = with(encryptionContext) {
         Item(
             id = ItemId(response.itemId),
+            userId = userId,
             itemUuid = decoded.metadata.itemUuid,
             revision = response.revision,
             shareId = shareId,

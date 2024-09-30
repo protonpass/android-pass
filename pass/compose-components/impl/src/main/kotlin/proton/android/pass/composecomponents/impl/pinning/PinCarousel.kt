@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Clock
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -92,6 +93,7 @@ fun PinCarouselPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                 list = persistentListOf(
                     ItemUiModel(
                         id = ItemId("1"),
+                        userId = UserId("user-id"),
                         shareId = ShareId("345"),
                         contents = ItemContents.Note(
                             "Item with long text and a maximum",
@@ -106,6 +108,7 @@ fun PinCarouselPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                     ),
                     ItemUiModel(
                         id = ItemId("2"),
+                        userId = UserId("user-id"),
                         shareId = ShareId("345"),
                         contents = ItemContents.Login(
                             title = "Login title",

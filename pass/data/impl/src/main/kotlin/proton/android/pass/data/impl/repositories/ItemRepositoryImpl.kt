@@ -25,12 +25,9 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
@@ -96,7 +93,6 @@ import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
-import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.key.ShareKey
@@ -812,17 +808,17 @@ class ItemRepositoryImpl @Inject constructor(
         itemState: ItemState?
     ): Flow<ItemCountSummary> = localItemDataSource.observeItemCountSummary(userId, shareIds, itemState)
 
-    override suspend fun updateItemLastUsed(vaultId: VaultId, itemId: ItemId) {
-        val readyUsers = accountManager.getAccounts(AccountState.Ready).firstOrNull() ?: emptyList()
-        PassLogger.i(TAG, "Updating last used time [vaultId=$vaultId][itemId=$itemId]")
+    override suspend fun updateItemLastUsed(shareId: ShareId, itemId: ItemId) {
+        val userId = accountManager.getPrimaryUserId().first()
+            ?: throw CryptoException("UserId cannot be null")
+
+        PassLogger.i(TAG, "Updating last used time [shareId=$shareId][itemId=$itemId]")
 
         val now = TimeUtil.getNowUtc()
-        val items = localItemDataSource.getByVaultIdAndItemId(readyUsers.map { it.userId }, vaultId, itemId)
-        items.forEach {
-            localItemDataSource.updateLastUsedTime(ShareId(it.shareId), ItemId(it.id), now)
-            remoteItemDataSource.updateLastUsedTime(UserId(it.userId), ShareId(it.shareId), ItemId(it.id), now)
-            PassLogger.i(TAG, "Updated last used time [shareId=$it.shareId][itemId=$itemId]")
-        }
+        localItemDataSource.updateLastUsedTime(shareId, itemId, now)
+        remoteItemDataSource.updateLastUsedTime(userId, shareId, itemId, now)
+
+        PassLogger.i(TAG, "Updated last used time [shareId=$shareId][itemId=$itemId]")
     }
 
     override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> =
@@ -950,9 +946,6 @@ class ItemRepositoryImpl @Inject constructor(
             itemContents = updatedContents
         )
     }
-
-    override suspend fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId> =
-        localItemDataSource.findUserId(shareId, itemId)
 
     private suspend fun calculatePlanForSetShareItems(
         userId: UserId,

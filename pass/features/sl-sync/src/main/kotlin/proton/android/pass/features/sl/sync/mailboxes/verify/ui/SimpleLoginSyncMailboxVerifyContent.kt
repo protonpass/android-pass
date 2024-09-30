@@ -18,6 +18,8 @@
 
 package proton.android.pass.features.sl.sync.mailboxes.verify.ui
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -50,6 +52,7 @@ internal fun SimpleLoginSyncMailboxVerifyContent(
                 modifier = modifier,
                 backButton = PassTopBarBackButtonType.Cross,
                 title = stringResource(id = R.string.simple_login_sync_mailbox_verify_title),
+                subtitle = stringResource(id = R.string.simple_login_sync_mailbox_verify_subtitle),
                 onUpClick = { onUiEvent(SimpleLoginSyncMailboxVerifyUiEvent.OnCloseClicked) },
                 actions = {
                     LoadingCircleButton(
@@ -79,7 +82,25 @@ internal fun SimpleLoginSyncMailboxVerifyContent(
                 }
             )
         }
-    ) { innerPaddingValue ->
-
+    ) { innerPaddingValues ->
+        Column(
+            modifier = Modifier
+                .padding(paddingValues = innerPaddingValues)
+                .padding(
+                    horizontal = Spacing.medium,
+                    vertical = Spacing.large
+                ),
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+        ) {
+            SimpleLoginSyncMailboxVerifyCodeSection(
+                verificationCode = verificationCode,
+                verificationCodeLength = verificationCodeLength,
+                onVerificationCodeChange = { newVerificationCode ->
+                    SimpleLoginSyncMailboxVerifyUiEvent.OnVerificationCodeChanged(
+                        newVerificationCode = newVerificationCode
+                    ).also(onUiEvent)
+                }
+            )
+        }
     }
 }

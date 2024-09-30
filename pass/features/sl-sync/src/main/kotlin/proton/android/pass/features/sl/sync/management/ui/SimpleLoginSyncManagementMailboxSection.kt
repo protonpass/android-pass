@@ -35,13 +35,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.overlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.icon.PassUnlimitedIcon
@@ -180,22 +178,19 @@ private fun SimpleLoginSyncManagementMailboxes(
 }
 
 @[Preview Composable]
-internal fun SimpleLoginSyncMailboxSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun SimpleLoginSyncMailboxSectionPreview(
+    @PreviewParameter(ThemedSimpleLoginSyncMailboxSectionPreviewProvider::class)
+    input: Pair<Boolean, SimpleLoginSyncMailboxSectionPreviewParams>
+) {
+    val (isDark, params) = input
+
     PassTheme(isDark = isDark) {
         Surface {
             SimpleLoginSyncManagementMailboxSection(
-                aliasMailboxes = persistentListOf(
-                    SimpleLoginAliasMailbox(
-                        id = 1L,
-                        email = "user@email.com",
-                        isDefault = true,
-                        isVerified = true,
-                        aliasCount = 5
-                    )
-                ),
+                aliasMailboxes = params.aliasMailboxes,
+                canManageAliases = params.canManageAliases,
                 onAddClick = {},
-                onMenuClick = {},
-                canManageAliases = false
+                onMenuClick = {}
             )
         }
     }

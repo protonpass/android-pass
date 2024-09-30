@@ -31,6 +31,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -48,7 +50,8 @@ fun NoteRow(
     item: ItemUiModel,
     highlight: String = "",
     vaultIcon: Int? = null,
-    selection: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode
+    selection: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode,
+    titleSuffix: Option<String> = None
 ) {
     val content = item.contents as ItemContents.Note
 
@@ -93,6 +96,7 @@ fun NoteRow(
             }
         },
         title = title,
+        titleSuffix = titleSuffix,
         subtitles = subtitles,
         vaultIcon = vaultIcon,
         enabled = selection.isSelectable()
@@ -137,7 +141,8 @@ fun NoteRowPreview(@PreviewParameter(ThemedNoteItemPreviewProvider::class) input
         Surface {
             NoteRow(
                 item = input.second.model,
-                highlight = input.second.highlight
+                highlight = input.second.highlight,
+                titleSuffix = None
             )
         }
     }

@@ -13,6 +13,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.StringUtils.maskCreditCardNumber
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -30,7 +32,8 @@ fun CreditCardRow(
     item: ItemUiModel,
     highlight: String = "",
     vaultIcon: Int? = null,
-    selection: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode
+    selection: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode,
+    titleSuffix: Option<String> = None
 ) {
     val content = item.contents as ItemContents.CreditCard
     val maskedNumber = remember(content.number) {
@@ -90,6 +93,7 @@ fun CreditCardRow(
             }
         },
         title = fields.title,
+        titleSuffix = titleSuffix,
         subtitles = fields.subtitles,
         vaultIcon = vaultIcon,
         enabled = selection.isSelectable()
@@ -153,7 +157,8 @@ fun CreditCardRowPreview(
         Surface {
             CreditCardRow(
                 item = input.second.model,
-                highlight = input.second.highlight
+                highlight = input.second.highlight,
+                titleSuffix = None
             )
         }
     }

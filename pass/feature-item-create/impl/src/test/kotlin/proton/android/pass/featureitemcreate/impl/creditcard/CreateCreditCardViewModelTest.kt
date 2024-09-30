@@ -158,6 +158,7 @@ class CreateCreditCardViewModelTest {
                         itemId = item.id,
                         item = ItemUiModel(
                             id = item.id,
+                            userId = UserId("user-id"),
                             shareId = item.shareId,
                             contents = item.toItemContents(TestEncryptionContext),
                             createTime = item.createTime,

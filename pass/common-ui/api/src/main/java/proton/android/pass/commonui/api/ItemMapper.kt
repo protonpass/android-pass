@@ -36,6 +36,7 @@ import proton.android.pass.domain.WorkDetailsContent
 fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     id = id,
     shareId = shareId,
+    userId = userId,
     contents = toItemContents(context),
     state = state,
     createTime = createTime,
@@ -53,6 +54,7 @@ fun Item.toUiModel(
 ): ItemUiModel = ItemUiModel(
     id = id,
     shareId = shareId,
+    userId = userId,
     contents = toItemContents(
         encryptionContext = encryptionContext,
         isUsernameSplitEnabled = isUsernameSplitEnabled,

@@ -20,6 +20,7 @@ package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Clock
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
@@ -82,6 +83,7 @@ internal class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParame
         ): LoginRowParameter = LoginRowParameter(
             model = ItemUiModel(
                 id = ItemId("123"),
+                userId = UserId("user-id"),
                 shareId = ShareId("345"),
                 contents = ItemContents.Login(
                     title = title,

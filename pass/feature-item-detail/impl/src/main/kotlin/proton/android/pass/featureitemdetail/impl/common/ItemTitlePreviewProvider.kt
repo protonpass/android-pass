@@ -88,6 +88,7 @@ class ItemTitlePreviewProvider : PreviewParameterProvider<ItemTitleInput> {
 data class ItemTitleInput(
     val itemUiModel: ItemUiModel = ItemUiModel(
         id = ItemId("123"),
+        userId = UserId("user-id"),
         shareId = ShareId("123"),
         contents = ItemContents.Note(
             title = "A really long title to check if the element is multiline",

@@ -20,6 +20,7 @@ package proton.android.pass.commonuimodels.fakes
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -39,6 +40,7 @@ object TestItemUiModel {
         revision: Long = 0
     ): ItemUiModel = ItemUiModel(
         id = ItemId(id = id),
+        userId = UserId("user-id"),
         shareId = ShareId(id = "share-id"),
         contents = itemContents,
         createTime = createTime,

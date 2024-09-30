@@ -2,6 +2,7 @@ package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Clock
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.HiddenState
@@ -49,6 +50,7 @@ class CreditCardRowPreviewProvider : PreviewParameterProvider<CreditCardRowParam
         ) = CreditCardRowParameter(
             model = ItemUiModel(
                 id = ItemId("123"),
+                userId = UserId("user-id"),
                 shareId = ShareId("456"),
                 contents = ItemContents.CreditCard(
                     title = title,

@@ -44,7 +44,6 @@ import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
-import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo
 import javax.inject.Inject
@@ -228,7 +227,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateItemLastUsed(vaultId: VaultId, itemId: ItemId) {
+    override suspend fun updateItemLastUsed(shareId: ShareId, itemId: ItemId) {
         TODO("Not yet implemented")
     }
 
@@ -279,10 +278,6 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         itemId: ItemId,
         passkey: Passkey
     ) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId> {
         TODO("Not yet implemented")
     }
 

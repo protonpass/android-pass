@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -310,6 +311,7 @@ class NoteDetailViewModelTest {
         return encryptionContextProvider.withEncryptionContext {
             Item(
                 id = ItemId(ITEM_ID),
+                userId = UserId("user-id"),
                 itemUuid = "uuid",
                 revision = 0,
                 shareId = ShareId(SHARE_ID),

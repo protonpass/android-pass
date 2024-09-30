@@ -23,12 +23,14 @@ import androidx.compose.runtime.saveable.mapSaver
 import kotlinx.datetime.Instant
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
     val itemId = "item_id"
+    val userId = "user_id"
     val shareId = "share_id"
     val itemContent = "item_content"
     val createTime = "create_time"
@@ -42,6 +44,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
             it?.let { itemUiModel ->
                 mapOf(
                     itemId to itemUiModel.id.id,
+                    userId to itemUiModel.userId.id,
                     shareId to itemUiModel.shareId.id,
                     itemContent to Json.encodeToString(itemUiModel.contents),
                     createTime to itemUiModel.createTime.toString(),
@@ -57,6 +60,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
             if (values.isNotEmpty()) {
                 ItemUiModel(
                     id = ItemId(id = values[itemId] as String),
+                    userId = UserId(id = values[userId] as String),
                     shareId = ShareId(id = values[shareId] as String),
                     contents = Json.decodeFromString(values[itemContent] as String),
                     state = 0,

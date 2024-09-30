@@ -37,6 +37,12 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.persistentMapOf
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.SpecialCharacters.AT_SIGN
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -56,6 +62,7 @@ fun LazyListScope.SelectItemListHeader(
     canLoadExternalImages: Boolean,
     showUpgradeMessage: Boolean,
     canUpgrade: Boolean,
+    accounts: ImmutableMap<UserId, String>,
     onItemOptionsClicked: (ItemUiModel) -> Unit,
     onItemClicked: (ItemUiModel) -> Unit,
     onUpgradeClick: () -> Unit
@@ -82,7 +89,9 @@ fun LazyListScope.SelectItemListHeader(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 backgroundColor = PassTheme.colors.interactionNormMinor1,
                 text = text,
-                onClick = if (canUpgrade) { onUpgradeClick } else null
+                onClick = if (canUpgrade) {
+                    onUpgradeClick
+                } else null
             )
         }
 
@@ -107,12 +116,21 @@ fun LazyListScope.SelectItemListHeader(
     // As items can appear in both lists, we need to use a different key here
     // so there are not two items with the same key
     items(items = suggestions, key = { "suggestion-${it.key}" }) { item ->
+        val titleSuffix = if (accounts.size > 1) {
+            accounts[item.userId]
+                ?.split(AT_SIGN)
+                ?.firstOrNull()
+                .toOption()
+        } else {
+            None
+        }
         ActionableItemRow(
             item = item,
             showMenuIcon = true,
+            canLoadExternalImages = canLoadExternalImages,
             onItemClick = onItemClicked,
             onItemMenuClick = onItemOptionsClicked,
-            canLoadExternalImages = canLoadExternalImages
+            titleSuffix = titleSuffix
         )
     }
 }
@@ -134,6 +152,7 @@ internal fun SelectItemListHeaderPreview(
                     canLoadExternalImages = false,
                     showUpgradeMessage = input.second.showUpgradeMessage,
                     canUpgrade = input.second.canUpgrade,
+                    accounts = persistentMapOf(),
                     onItemClicked = {},
                     onItemOptionsClicked = {},
                     onUpgradeClick = {}

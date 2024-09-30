@@ -186,6 +186,7 @@ internal class CreateLoginViewModelTest {
                         item.id,
                         ItemUiModel(
                             id = item.id,
+                            userId = UserId("user-id"),
                             shareId = item.shareId,
                             contents = item.toItemContents(TestEncryptionContext),
                             createTime = item.createTime,

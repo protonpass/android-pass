@@ -50,7 +50,11 @@ import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.SpecialCharacters.AT_SIGN
 import proton.android.pass.common.api.isInstrumentedTest
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.DateFormatUtils.Format.Last30Days
 import proton.android.pass.commonui.api.DateFormatUtils.Format.Last60Days
 import proton.android.pass.commonui.api.DateFormatUtils.Format.Last90Days
@@ -95,6 +99,7 @@ fun ItemsList(
     showMenuIcon: Boolean = true,
     enableSwipeRefresh: Boolean = true,
     forceShowHeader: Boolean = false,
+    accounts: ImmutableMap<UserId, String>,
     header: LazyListScope.() -> Unit = {},
     forceContent: Boolean = false,
     footer: LazyListScope.() -> Unit = {},
@@ -157,8 +162,17 @@ fun ItemsList(
                                 isSelectable = isSelectable
                             )
                         }
+                        val titleSuffix = if (accounts.size > 1) {
+                            accounts[item.userId]
+                                ?.split(AT_SIGN)
+                                ?.firstOrNull()
+                                .toOption()
+                        } else {
+                            None
+                        }
                         ActionableItemRow(
                             item = item,
+                            titleSuffix = titleSuffix,
                             selectionModeState = selection,
                             vaultIcon = icon?.toSmallResource(),
                             highlight = highlight,

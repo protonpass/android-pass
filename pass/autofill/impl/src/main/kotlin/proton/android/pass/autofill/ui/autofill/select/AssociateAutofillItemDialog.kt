@@ -41,6 +41,7 @@ import kotlinx.datetime.Clock
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.headlineNorm
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.autofill.service.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -133,6 +134,7 @@ fun AssociateAutofillItemDialogPreview(@PreviewParameter(ThemePreviewProvider::c
             AssociateAutofillItemDialog(
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = "ferri"),
+                    userId = UserId(id = "user-id"),
                     shareId = ShareId(id = "rutrum"),
                     contents = ItemContents.Note(
                         title = "Willie Lowe",

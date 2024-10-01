@@ -18,9 +18,12 @@
 
 package proton.android.pass.data.impl.extensions
 
+import kotlinx.datetime.Clock
+import kotlinx.datetime.toJavaInstant
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
 import proton.android.pass.data.impl.responses.AssetLinkResponse
 import proton.android.pass.domain.assetlink.AssetLink
+import java.util.Date
 
 
 fun AssetLinkEntity.toDomain(): AssetLink = AssetLink(
@@ -30,7 +33,8 @@ fun AssetLinkEntity.toDomain(): AssetLink = AssetLink(
 
 fun AssetLink.toEntity(): AssetLinkEntity = AssetLinkEntity(
     website = website,
-    packageNames = packageNames
+    packageNames = packageNames,
+    createdAt = Date.from(Clock.System.now().toJavaInstant())
 )
 
 fun List<AssetLinkResponse>.toDomain(url: String): AssetLink = AssetLink(

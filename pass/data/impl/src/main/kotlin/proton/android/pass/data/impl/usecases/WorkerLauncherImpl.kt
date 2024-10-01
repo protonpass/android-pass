@@ -27,7 +27,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import proton.android.pass.data.api.usecases.WorkerLauncher
-import proton.android.pass.data.impl.work.AssetLinkWorker
+import proton.android.pass.data.impl.work.PeriodicAssetLinkWorker
 import proton.android.pass.data.impl.work.UserAccessWorker
 import proton.android.pass.log.api.PassLogger
 import java.util.concurrent.TimeUnit
@@ -45,9 +45,9 @@ class WorkerLauncherImpl @Inject constructor(
 
     private fun launchAssetLinkWorker() {
         workManager.enqueueUniquePeriodicWork(
-            AssetLinkWorker.WORKER_UNIQUE_NAME,
+            PeriodicAssetLinkWorker.WORKER_UNIQUE_NAME,
             ExistingPeriodicWorkPolicy.KEEP,
-            AssetLinkWorker.getRequestFor()
+            PeriodicAssetLinkWorker.getRequestFor()
         )
     }
 
@@ -75,7 +75,7 @@ class WorkerLauncherImpl @Inject constructor(
     override fun cancel() {
         PassLogger.i(TAG, "Cancelling UserAccessWorker")
         workManager.cancelUniqueWork(UserAccessWorker.WORKER_UNIQUE_NAME)
-        workManager.cancelUniqueWork(AssetLinkWorker.WORKER_UNIQUE_NAME)
+        workManager.cancelUniqueWork(PeriodicAssetLinkWorker.WORKER_UNIQUE_NAME)
     }
 
     companion object {

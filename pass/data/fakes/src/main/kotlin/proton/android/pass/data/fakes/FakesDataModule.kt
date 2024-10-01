@@ -177,6 +177,7 @@ import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasM
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
+import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.data.fakes.repositories.FakeSentinelRepository
 import proton.android.pass.data.fakes.repositories.TestAliasRepository
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
@@ -332,6 +333,7 @@ import proton.android.pass.data.fakes.usecases.simplelogin.FakeUpdateSimpleLogin
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
+import proton.android.pass.data.fakes.work.FakeWorkerLauncher
 import javax.inject.Singleton
 
 @Module
@@ -836,5 +838,8 @@ abstract class FakesDataModule {
     abstract fun bindSyncSimpleLoginPendingAliases(
         impl: FakeSyncSimpleLoginPendingAliases
     ): SyncSimpleLoginPendingAliases
+
+    @Binds
+    abstract fun bindWorkerLauncher(impl: FakeWorkerLauncher): WorkerLauncher
 
 }

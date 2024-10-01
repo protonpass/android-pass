@@ -26,18 +26,32 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
-import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
+import proton.android.pass.data.api.usecases.WorkerLauncher
+import proton.android.pass.data.impl.work.AssetLinkWorker
 import proton.android.pass.data.impl.work.UserAccessWorker
 import proton.android.pass.log.api.PassLogger
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class UserPlanWorkerLauncherImpl @Inject constructor(
+class WorkerLauncherImpl @Inject constructor(
     private val workManager: WorkManager,
     private val eventWorkerManager: EventWorkerManager
-) : UserPlanWorkerLauncher {
+) : WorkerLauncher {
 
     override fun start() {
+        launchUserAccessWorker()
+        launchAssetLinkWorker()
+    }
+
+    private fun launchAssetLinkWorker() {
+        workManager.enqueueUniquePeriodicWork(
+            AssetLinkWorker.WORKER_UNIQUE_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            AssetLinkWorker.getRequestFor()
+        )
+    }
+
+    private fun launchUserAccessWorker() {
         val backoffDelaySeconds = eventWorkerManager.getBackoffDelay().inWholeSeconds
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
@@ -61,6 +75,7 @@ class UserPlanWorkerLauncherImpl @Inject constructor(
     override fun cancel() {
         PassLogger.i(TAG, "Cancelling UserAccessWorker")
         workManager.cancelUniqueWork(UserAccessWorker.WORKER_UNIQUE_NAME)
+        workManager.cancelUniqueWork(AssetLinkWorker.WORKER_UNIQUE_NAME)
     }
 
     companion object {

@@ -23,6 +23,7 @@ import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.common.api.PasswordStrength
+import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.crypto.api.context.EncryptionContext
@@ -56,7 +57,8 @@ data class LoginItemFormState(
     internal val hasPasskeys: Boolean = passkeys.isNotEmpty()
 
     @IgnoredOnParcel
-    internal val isExpanded: Boolean = isExpandedByContent || isExpandedByUser || isExpandedByPreference
+    internal val isExpanded: Boolean =
+        isExpandedByContent || isExpandedByUser || isExpandedByPreference
 
     internal fun validate(): Set<LoginItemValidationErrors> = mutableSetOf<LoginItemValidationErrors>().apply {
         if (title.isBlank()) {
@@ -73,22 +75,36 @@ data class LoginItemFormState(
         }
     }
 
-    internal fun toItemContents(): ItemContents.Login = ItemContents.Login(
-        title = title,
-        note = note,
-        itemEmail = email,
-        itemUsername = username,
-        password = password.toHiddenState(),
-        urls = urls,
-        packageInfoSet = packageInfoSet.map(PackageInfoUi::toPackageInfo).toSet(),
-        primaryTotp = primaryTotp.toHiddenState(),
-        customFields = customFields.map(UICustomFieldContent::toCustomFieldContent),
-        passkeys = if (passkeys.isEmpty()) {
-            passkeyToBeGenerated?.toDomain()?.let { listOf(it) } ?: emptyList()
-        } else {
-            passkeys.map(UIPasskeyContent::toDomain)
+    internal fun toItemContents(emailValidator: EmailValidator): ItemContents.Login {
+        val itemEmail = when {
+            email.isNotBlank() && username.isNotBlank() -> email
+            email.isNotBlank() -> if (emailValidator.isValid(email)) email else ""
+            else -> if (emailValidator.isValid(username)) username else ""
         }
-    )
+
+        val itemUsername = when {
+            username.isNotBlank() && email.isNotBlank() -> username
+            username.isNotBlank() -> if (emailValidator.isValid(username)) "" else username
+            else -> if (emailValidator.isValid(email)) "" else email
+        }
+
+        return ItemContents.Login(
+            title = title,
+            note = note,
+            itemEmail = itemEmail,
+            itemUsername = itemUsername,
+            password = password.toHiddenState(),
+            urls = urls,
+            packageInfoSet = packageInfoSet.map(PackageInfoUi::toPackageInfo).toSet(),
+            primaryTotp = primaryTotp.toHiddenState(),
+            customFields = customFields.map(UICustomFieldContent::toCustomFieldContent),
+            passkeys = if (passkeys.isEmpty()) {
+                passkeyToBeGenerated?.toDomain()?.let { listOf(it) } ?: emptyList()
+            } else {
+                passkeys.map(UIPasskeyContent::toDomain)
+            }
+        )
+    }
 
     internal fun compare(other: LoginItemFormState, encryptionContext: EncryptionContext): Boolean =
         title == other.title &&

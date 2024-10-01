@@ -191,7 +191,7 @@ class UpdateLoginViewModel @Inject constructor(
         if (!shouldUpdate) return@launch
 
         isLoadingState.update { IsLoadingState.Loading }
-        val loginItem = loginItemFormState.toItemContents()
+        val loginItem = loginItemFormState.toItemContents(emailValidator = emailValidator)
         val userId = accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
         if (userId != null) {

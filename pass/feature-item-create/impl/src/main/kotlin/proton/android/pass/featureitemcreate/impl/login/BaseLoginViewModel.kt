@@ -97,7 +97,7 @@ abstract class BaseLoginViewModel(
     private val draftRepository: DraftRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
-    private val emailValidator: EmailValidator,
+    protected val emailValidator: EmailValidator,
     private val disableTooltip: DisableTooltip,
     private val userPreferencesRepository: UserPreferencesRepository,
     observeCurrentUser: ObserveCurrentUser,

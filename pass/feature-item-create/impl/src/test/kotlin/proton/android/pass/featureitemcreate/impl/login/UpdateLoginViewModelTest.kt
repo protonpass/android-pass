@@ -43,6 +43,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
+import proton.android.pass.data.fakes.work.FakeWorkerLauncher
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
@@ -101,7 +102,8 @@ class UpdateLoginViewModelTest {
             emailValidator = TestEmailValidator(),
             observeTooltipEnabled = FakeObserveTooltipEnabled(),
             disableTooltip = FakeDisableTooltip(),
-            userPreferencesRepository = TestPreferenceRepository()
+            userPreferencesRepository = TestPreferenceRepository(),
+            workerLauncher = FakeWorkerLauncher()
         )
     }
 

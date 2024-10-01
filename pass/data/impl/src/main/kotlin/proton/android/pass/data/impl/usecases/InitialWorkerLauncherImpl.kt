@@ -26,17 +26,17 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
-import proton.android.pass.data.api.usecases.WorkerLauncher
+import proton.android.pass.data.api.usecases.InitialWorkerLauncher
 import proton.android.pass.data.impl.work.PeriodicAssetLinkWorker
 import proton.android.pass.data.impl.work.UserAccessWorker
 import proton.android.pass.log.api.PassLogger
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class WorkerLauncherImpl @Inject constructor(
+class InitialWorkerLauncherImpl @Inject constructor(
     private val workManager: WorkManager,
     private val eventWorkerManager: EventWorkerManager
-) : WorkerLauncher {
+) : InitialWorkerLauncher {
 
     override fun start() {
         launchUserAccessWorker()

@@ -19,5 +19,5 @@
 package proton.android.pass.commonrust.api
 
 interface DomainManager {
-    fun getRoot(url: String): String
+    fun getRoot(url: String): String?
 }

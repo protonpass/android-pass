@@ -26,5 +26,5 @@ class DomainManagerImpl @Inject constructor() : DomainManager {
 
     private val domainManager by lazy { DomainManagerRust() }
 
-    override fun getRoot(url: String): String = domainManager.getRootDomain(url)
+    override fun getRoot(url: String): String? = runCatching { domainManager.getRootDomain(url) }.getOrNull()
 }

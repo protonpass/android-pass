@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.usecases
 
+import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.usecases.ClearPin
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.log.api.PassLogger
@@ -28,7 +29,8 @@ import javax.inject.Inject
 class ResetAppToDefaultsImpl @Inject constructor(
     private val preferencesRepository: UserPreferencesRepository,
     private val internalSettingsRepository: InternalSettingsRepository,
-    private val clearPin: ClearPin
+    private val clearPin: ClearPin,
+    private val assetLinkRepository: AssetLinkRepository
 ) : ResetAppToDefaults {
     override suspend fun invoke() {
         PassLogger.i(TAG, "Clearing preferences")
@@ -48,6 +50,9 @@ class ResetAppToDefaultsImpl @Inject constructor(
             }
 
         clearPin()
+        runCatching { assetLinkRepository.purge() }
+            .onSuccess { PassLogger.d(TAG, "Asset links purged") }
+            .onFailure { PassLogger.w(TAG, "Error purging asset links") }
     }
 
     companion object {

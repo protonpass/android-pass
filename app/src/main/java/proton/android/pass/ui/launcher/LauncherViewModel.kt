@@ -76,7 +76,7 @@ import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.biometry.ResetAuthPreferences
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.data.api.usecases.RefreshPlan
-import proton.android.pass.data.api.usecases.WorkerLauncher
+import proton.android.pass.data.api.usecases.InitialWorkerLauncher
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -91,7 +91,7 @@ class LauncherViewModel @Inject constructor(
     private val authOrchestrator: AuthOrchestrator,
     private val plansOrchestrator: PlansOrchestrator,
     private val userSettingsOrchestrator: UserSettingsOrchestrator,
-    private val workerLauncher: WorkerLauncher,
+    private val initialWorkerLauncher: InitialWorkerLauncher,
     private val refreshPlan: RefreshPlan,
     private val inAppUpdatesManager: InAppUpdatesManager,
     private val resetUserPreferences: ResetAuthPreferences,
@@ -141,12 +141,12 @@ class LauncherViewModel @Inject constructor(
 
     internal fun onAccountNeeded() = viewModelScope.launch {
         resetUserPreferences()
-        workerLauncher.cancel()
+        initialWorkerLauncher.cancel()
         addAccount()
     }
 
     internal fun onPrimaryExist(updateResultLauncher: ActivityResultLauncher<IntentSenderRequest>) {
-        workerLauncher.start()
+        initialWorkerLauncher.start()
         inAppUpdatesManager.checkForUpdates(updateResultLauncher)
     }
 

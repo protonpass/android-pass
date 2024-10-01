@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,9 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.impl.work
 
-interface WorkerLauncher {
-    fun start()
-    fun cancel()
+import androidx.work.WorkManager
+import proton.android.pass.data.api.work.WorkerItem
+import proton.android.pass.data.api.work.WorkerLauncher
+import javax.inject.Inject
+
+class WorkerLauncherImpl @Inject constructor(
+    private val workManager: WorkManager
+) : WorkerLauncher {
+    override fun launch(workerItem: WorkerItem) {
+        when (workerItem) {
+            is WorkerItem.SingleItemAssetLink -> {
+                val request = SingleItemAssetLinkWorker.getRequestFor(workerItem.websites)
+                workManager.enqueue(request)
+            }
+        }
+    }
 }

@@ -60,6 +60,7 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.GetVaultMembers
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
+import proton.android.pass.data.api.usecases.InitialWorkerLauncher
 import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.data.api.usecases.LeaveVault
 import proton.android.pass.data.api.usecases.MigrateItems
@@ -112,7 +113,6 @@ import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
-import proton.android.pass.data.api.usecases.WorkerLauncher
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
@@ -227,6 +227,7 @@ import proton.android.pass.data.impl.usecases.GetUserPlanImpl
 import proton.android.pass.data.impl.usecases.GetVaultByShareIdImpl
 import proton.android.pass.data.impl.usecases.GetVaultMembersImpl
 import proton.android.pass.data.impl.usecases.GetVaultWithItemCountByIdImpl
+import proton.android.pass.data.impl.usecases.InitialWorkerLauncherImpl
 import proton.android.pass.data.impl.usecases.InviteToVaultImpl
 import proton.android.pass.data.impl.usecases.LeaveVaultImpl
 import proton.android.pass.data.impl.usecases.MigrateItemsImpl
@@ -282,7 +283,6 @@ import proton.android.pass.data.impl.usecases.UpdateAliasImpl
 import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
 import proton.android.pass.data.impl.usecases.UpdateVaultImpl
-import proton.android.pass.data.impl.usecases.WorkerLauncherImpl
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLink
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLinkImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
@@ -469,7 +469,7 @@ abstract class DataUseCaseModule {
     abstract fun bindGetVaultByShareId(impl: GetVaultByShareIdImpl): GetVaultByShareId
 
     @Binds
-    abstract fun bindWorkerLauncher(impl: WorkerLauncherImpl): WorkerLauncher
+    abstract fun bindWorkerLauncher(impl: InitialWorkerLauncherImpl): InitialWorkerLauncher
 
     @Binds
     abstract fun bindSendUserAccessRequest(impl: SendUserAccessRequestImpl): SendUserAccessRequest

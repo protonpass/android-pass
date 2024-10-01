@@ -66,6 +66,8 @@ import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
+import proton.android.pass.data.api.work.WorkerItem
+import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.domain.CustomField
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
@@ -109,6 +111,7 @@ class CreateLoginViewModel @Inject constructor(
     private val draftRepository: DraftRepository,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val generatePasskey: GeneratePasskey,
+    private val workerLauncher: WorkerLauncher,
     passwordStrengthCalculator: PasswordStrengthCalculator,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
@@ -345,6 +348,7 @@ class CreateLoginViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
+    @Suppress("LongMethod")
     private suspend fun performCreateItemAndAlias(
         userId: UserId,
         shareId: ShareId,
@@ -359,11 +363,12 @@ class CreateLoginViewModel @Inject constructor(
             return
         }
 
+        val contents = loginItemFormState.toItemContents(emailValidator = emailValidator)
         runCatching {
             createItemAndAlias(
                 userId = userId,
                 shareId = shareId,
-                itemContents = loginItemFormState.toItemContents(emailValidator = emailValidator),
+                itemContents = contents,
                 newAlias = NewAlias(
                     title = aliasItemFormState.title,
                     note = aliasItemFormState.note,
@@ -376,6 +381,7 @@ class CreateLoginViewModel @Inject constructor(
                 )
             )
         }.onSuccess { item ->
+            launchUpdateAssetLinksWorker(contents.urls.toSet())
             inAppReviewTriggerMetrics.incrementItemCreatedCount()
             when (passkeyResponse) {
                 None -> {
@@ -465,6 +471,10 @@ class CreateLoginViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun launchUpdateAssetLinksWorker(websites: Set<String>) {
+        workerLauncher.launch(WorkerItem.SingleItemAssetLink(websites))
     }
 
     private companion object {

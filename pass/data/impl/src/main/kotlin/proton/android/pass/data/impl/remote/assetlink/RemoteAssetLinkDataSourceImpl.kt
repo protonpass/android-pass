@@ -56,6 +56,11 @@ class RemoteAssetLinkDataSourceImpl @Inject constructor(
                 if (continuation.isActive) {
                     response.use {
                         if (it.isSuccessful) {
+                            val contentType = response.header("Content-Type")
+                            if (contentType.isNullOrEmpty() || !contentType.contains("application/json")) {
+                                continuation.resumeWithException(IOException("Unexpected Content-Type $contentType"))
+                                return@use
+                            }
                             val json = response.body?.string()
                             when {
                                 json.isNullOrEmpty() ->

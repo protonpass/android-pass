@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
+import proton.android.pass.commonrust.api.DomainManager
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
@@ -52,7 +53,8 @@ class AssetLinkWorker @AssistedInject constructor(
     @Assisted private val workerParameters: WorkerParameters,
     private val accountManager: AccountManager,
     private val observeItems: ObserveItems,
-    private val assetLinkRepository: AssetLinkRepository
+    private val assetLinkRepository: AssetLinkRepository,
+    private val domainManager: DomainManager
 ) : CoroutineWorker(appContext, workerParameters) {
 
     override suspend fun doWork(): Result = runCatching {
@@ -70,7 +72,9 @@ class AssetLinkWorker @AssistedInject constructor(
                 combine(flows) { it.toList().flatten() }
             }
             .mapLatest { list ->
-                list.flatMap { (it.itemType as ItemType.Login).websites }.toSet()
+                list.flatMap { (it.itemType as ItemType.Login).websites }
+                    .map(domainManager::getRoot)
+                    .toSet()
             }
             .first()
         val results: List<kotlin.Result<AssetLink>> = runConcurrently(

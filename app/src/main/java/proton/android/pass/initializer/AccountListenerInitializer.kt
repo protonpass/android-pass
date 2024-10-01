@@ -114,10 +114,10 @@ class AccountListenerInitializer : Initializer<Unit> {
             .onSuccess { PassLogger.i(TAG, "Cleared user data") }
             .onFailure { PassLogger.i(TAG, it, "Error clearing user data") }
 
-        val activeAccounts = accountManager.getAccounts(AccountState.Ready).firstOrNull()
-
+        val activeAccounts = accountManager.getAccounts(AccountState.Ready).firstOrNull() ?: emptyList()
+        PassLogger.i(TAG, "Active accounts : ${activeAccounts.size}")
         // If there are no more active accounts, reset the app to defaults
-        if (activeAccounts?.isEmpty() == true) {
+        if (activeAccounts.isEmpty()) {
             resetApp()
         }
     }

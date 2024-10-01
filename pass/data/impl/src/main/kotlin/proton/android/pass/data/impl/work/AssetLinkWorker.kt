@@ -89,7 +89,9 @@ class AssetLinkWorker @AssistedInject constructor(
             )
         }
         val assetLinks = successes.mapNotNull { it.getOrNull() }
-        assetLinkRepository.insert(assetLinks)
+        if (assetLinks.isNotEmpty()) {
+            assetLinkRepository.insert(assetLinks)
+        }
     }
         .onFailure {
             PassLogger.w(TAG, "Failed to get websites")

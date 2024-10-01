@@ -264,19 +264,22 @@ abstract class BaseLoginViewModel(
 
     internal fun onEmailChanged(newEmail: String) {
         onUserEditedContent()
+
+        val trimmedNewEmail = newEmail.trim()
+
         when {
             loginItemFormState.isExpanded -> loginItemFormState.copy(
-                email = newEmail
+                email = trimmedNewEmail
             )
 
-            emailValidator.isValid(newEmail) -> loginItemFormState.copy(
-                email = newEmail,
+            emailValidator.isValid(trimmedNewEmail) -> loginItemFormState.copy(
+                email = trimmedNewEmail,
                 username = ""
             )
 
             else -> loginItemFormState.copy(
                 email = "",
-                username = newEmail
+                username = trimmedNewEmail
             )
         }.also { updatedLoginItemFormState ->
             loginItemFormMutableState = updatedLoginItemFormState
@@ -285,7 +288,10 @@ abstract class BaseLoginViewModel(
 
     internal fun onUsernameChanged(newUsername: String) {
         onUserEditedContent()
-        loginItemFormMutableState = loginItemFormMutableState.copy(username = newUsername)
+
+        loginItemFormMutableState = loginItemFormMutableState.copy(
+            username = newUsername.trim()
+        )
     }
 
     internal fun onPasswordChange(newPasswordValue: String) {

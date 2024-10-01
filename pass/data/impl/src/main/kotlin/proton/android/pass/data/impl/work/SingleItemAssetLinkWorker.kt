@@ -29,7 +29,6 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import proton.android.pass.commonrust.api.DomainManager
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLink
 import proton.android.pass.log.api.PassLogger
 
@@ -37,16 +36,16 @@ import proton.android.pass.log.api.PassLogger
 class SingleItemAssetLinkWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted private val workerParameters: WorkerParameters,
-    private val updateAssetLink: UpdateAssetLink,
-    private val domainManager: DomainManager
+    private val updateAssetLink: UpdateAssetLink
 ) : CoroutineWorker(appContext, workerParameters) {
 
     override suspend fun doWork(): Result = runCatching {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
         val inputWebsites = workerParameters.inputData.getStringArray(WEBSITES_KEY)
             ?: return Result.failure()
-        val processedWebsites = inputWebsites.map(domainManager::getRoot).toSet()
-        updateAssetLink(processedWebsites)
+        if (inputWebsites.isNotEmpty()) {
+            updateAssetLink(inputWebsites.toSet())
+        }
     }
         .onFailure {
             PassLogger.w(TAG, "Failed to refresh asset links")

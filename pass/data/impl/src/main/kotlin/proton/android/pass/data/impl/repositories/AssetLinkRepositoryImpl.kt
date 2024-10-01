@@ -35,7 +35,11 @@ class AssetLinkRepositoryImpl @Inject constructor(
     private val localAssetLinkDataSource: LocalAssetLinkDataSource
 ) : AssetLinkRepository {
 
-    override suspend fun fetch(website: String): AssetLink = remoteAssetLinkDataSource.fetch(website).toDomain(website)
+    override suspend fun fetch(website: String): AssetLink {
+        val response = remoteAssetLinkDataSource.fetch(website)
+        val androidAppLinks = response.filter { it.target.namespace == "android_app" }
+        return androidAppLinks.toDomain(website)
+    }
 
     override suspend fun insert(list: List<AssetLink>) {
         PassLogger.d(TAG, "Inserting asset links: $list")

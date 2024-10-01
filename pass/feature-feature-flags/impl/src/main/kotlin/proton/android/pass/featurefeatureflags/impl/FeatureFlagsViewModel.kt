@@ -42,9 +42,11 @@ class FeatureFlagsViewModel @Inject constructor(
             ffRepository.get<Boolean>(FeatureFlag.ACCESS_KEY_V1),
             ffRepository.get<Boolean>(FeatureFlag.SECURE_LINK_V1),
             ffRepository.get<Boolean>(FeatureFlag.ACCOUNT_SWITCH_V1),
-            ffRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC)
+            ffRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
+            ffRepository.get<Boolean>(FeatureFlag.DIGITAL_ASSET_LINKS)
         ) { isSecurityCenterEnabled, isIdentityEnabled, isUsernameSplitEnabled,
-            isAccessKeyEnabled, isSecureLinkEnabled, isAccountSwitchEnabled, isSimpleLoginAliasesSyncEnabled ->
+            isAccessKeyEnabled, isSecureLinkEnabled, isAccountSwitchEnabled,
+            isSimpleLoginAliasesSyncEnabled, isDigitalAssetLinksEnabled ->
             mapOf(
                 FeatureFlag.SECURITY_CENTER_V1 to isSecurityCenterEnabled,
                 FeatureFlag.IDENTITY_V1 to isIdentityEnabled,
@@ -52,7 +54,8 @@ class FeatureFlagsViewModel @Inject constructor(
                 FeatureFlag.ACCESS_KEY_V1 to isAccessKeyEnabled,
                 FeatureFlag.SECURE_LINK_V1 to isSecureLinkEnabled,
                 FeatureFlag.ACCOUNT_SWITCH_V1 to isAccountSwitchEnabled,
-                FeatureFlag.SL_ALIASES_SYNC to isSimpleLoginAliasesSyncEnabled
+                FeatureFlag.SL_ALIASES_SYNC to isSimpleLoginAliasesSyncEnabled,
+                FeatureFlag.DIGITAL_ASSET_LINKS to isDigitalAssetLinksEnabled
             )
         }.stateIn(
             scope = viewModelScope,

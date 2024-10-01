@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.sl.sync.mailboxes.verify.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -33,6 +34,10 @@ fun SimpleLoginSyncMailboxVerifyScreen(
     viewModel: SimpleLoginSyncMailboxVerifyViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by stateFlow.collectAsStateWithLifecycle()
+
+    BackHandler {
+        onNavigated(SimpleLoginSyncNavDestination.AliasManagement)
+    }
 
     LaunchedEffect(key1 = state.event) {
         when (state.event) {

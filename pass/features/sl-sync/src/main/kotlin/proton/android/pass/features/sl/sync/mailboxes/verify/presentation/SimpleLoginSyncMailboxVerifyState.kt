@@ -23,7 +23,10 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 @Stable
 internal data class SimpleLoginSyncMailboxVerifyState(
+    internal val mailboxEmail: String,
     internal val verificationCode: String,
+    internal val verificationCodeTimerSeconds: Int,
+    internal val event: SimpleLoginSyncMailboxVerifyEvent,
     private val isLoadingState: IsLoadingState
 ) {
 
@@ -33,10 +36,17 @@ internal data class SimpleLoginSyncMailboxVerifyState(
 
     internal val canVerifyMailbox: Boolean = verificationCode.length == verificationCodeLength
 
+    internal val canRequestVerificationCode: Boolean = verificationCodeTimerSeconds == 0
+
+    internal val canEnterVerificationCode: Boolean = !isLoading
+
     internal companion object {
 
         internal val Initial = SimpleLoginSyncMailboxVerifyState(
+            mailboxEmail = "",
             verificationCode = "",
+            verificationCodeTimerSeconds = 0,
+            event = SimpleLoginSyncMailboxVerifyEvent.Idle,
             isLoadingState = IsLoadingState.NotLoading
         )
 

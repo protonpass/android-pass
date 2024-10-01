@@ -1965,6 +1965,10 @@ fun NavGraphBuilder.appGraph(
     simpleLoginSyncNavGraph(
         onNavigated = { destination ->
             when (destination) {
+                SimpleLoginSyncNavDestination.AliasManagement -> appNavigator.popUpTo(
+                    destination = SimpleLoginSyncManagementNavItem
+                )
+
                 is SimpleLoginSyncNavDestination.Back -> appNavigator.navigateBack(
                     comesFromBottomsheet = false,
                     force = destination.force
@@ -1977,7 +1981,8 @@ fun NavGraphBuilder.appGraph(
 //                SimpleLoginSyncNavDestination.CreateMailbox -> appNavigator.navigate(
 //                    destination = SimpleLoginSyncMailboxVerifyNavItem,
 //                    route = SimpleLoginSyncMailboxVerifyNavItem.buildRoute(
-//                        mailboxId = 1L
+//                        mailboxId = 1L,
+//                        mailboxEmail = "user@email.com"
 //                    )
 //                )
 
@@ -2003,7 +2008,8 @@ fun NavGraphBuilder.appGraph(
                 is SimpleLoginSyncNavDestination.VerifyMailbox -> appNavigator.navigate(
                     destination = SimpleLoginSyncMailboxVerifyNavItem,
                     route = SimpleLoginSyncMailboxVerifyNavItem.buildRoute(
-                        mailboxId = destination.mailboxId
+                        mailboxId = destination.mailboxId,
+                        mailboxEmail = destination.mailboxEmail
                     )
                 )
             }

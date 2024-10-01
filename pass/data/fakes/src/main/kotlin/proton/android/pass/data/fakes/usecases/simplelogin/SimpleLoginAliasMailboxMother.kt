@@ -16,15 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.mailboxes.verify.navigation
+package proton.android.pass.data.fakes.usecases.simplelogin
 
-import androidx.navigation.NavType
-import proton.android.pass.navigation.api.NavArgId
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
+import proton.android.pass.test.TestUtils.randomString
+import kotlin.random.Random
 
-object SimpleLoginSyncMailboxVerifyNavArgId : NavArgId {
+internal object SimpleLoginAliasMailboxMother {
 
-    override val key: String = "simple_login_sync_mailbox_verify_id"
-
-    override val navType: NavType<*> = NavType.LongType
+    internal fun create(
+        id: Long = Random.nextLong(),
+        email: String = randomString(),
+        isDefault: Boolean = Random.nextBoolean(),
+        isVerified: Boolean = Random.nextBoolean(),
+        aliasCount: Int = Random.nextInt()
+    ): SimpleLoginAliasMailbox = SimpleLoginAliasMailbox(
+        id = id,
+        email = email,
+        isDefault = isDefault,
+        isVerified = isVerified,
+        aliasCount = aliasCount
+    )
 
 }

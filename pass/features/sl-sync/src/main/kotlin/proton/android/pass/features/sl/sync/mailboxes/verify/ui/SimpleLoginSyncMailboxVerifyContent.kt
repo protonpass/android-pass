@@ -52,7 +52,10 @@ internal fun SimpleLoginSyncMailboxVerifyContent(
                 modifier = modifier,
                 backButton = PassTopBarBackButtonType.Cross,
                 title = stringResource(id = R.string.simple_login_sync_mailbox_verify_title),
-                subtitle = stringResource(id = R.string.simple_login_sync_mailbox_verify_subtitle),
+                subtitle = stringResource(
+                    id = R.string.simple_login_sync_mailbox_verify_subtitle,
+                    mailboxEmail
+                ),
                 onUpClick = { onUiEvent(SimpleLoginSyncMailboxVerifyUiEvent.OnCloseClicked) },
                 actions = {
                     LoadingCircleButton(
@@ -95,6 +98,9 @@ internal fun SimpleLoginSyncMailboxVerifyContent(
             SimpleLoginSyncMailboxVerifyCodeSection(
                 verificationCode = verificationCode,
                 verificationCodeLength = verificationCodeLength,
+                verificationCodeTimerSeconds = verificationCodeTimerSeconds,
+                canRequestVerificationCode = canRequestVerificationCode,
+                canEnterVerificationCode = canEnterVerificationCode,
                 onVerificationCodeChange = { newVerificationCode ->
                     SimpleLoginSyncMailboxVerifyUiEvent.OnVerificationCodeChanged(
                         newVerificationCode = newVerificationCode

@@ -23,19 +23,23 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import java.util.Date
 
 @Entity(tableName = AssetLinkEntity.TABLE)
-@TypeConverters(StringListConverter::class)
+@TypeConverters(StringListConverter::class, DateConverter::class)
 data class AssetLinkEntity(
     @PrimaryKey
     @ColumnInfo(name = Columns.WEBSITE, index = true)
     val website: String,
     @ColumnInfo(name = Columns.PACKAGE_NAME)
-    val packageNames: List<String>
+    val packageNames: List<String>,
+    @ColumnInfo(name = Columns.CREATED_AT)
+    val createdAt: Date
 ) {
     object Columns {
         const val WEBSITE = "website"
         const val PACKAGE_NAME = "package_name"
+        const val CREATED_AT = "created_at"
     }
 
     companion object {
@@ -49,4 +53,12 @@ class StringListConverter {
 
     @TypeConverter
     fun fromList(list: List<String>): String = list.joinToString(",")
+}
+
+class DateConverter {
+    @TypeConverter
+    fun fromTimestamp(value: Long?): Date? = value?.let(::Date)
+
+    @TypeConverter
+    fun dateToTimestamp(date: Date?): Long? = date?.time
 }

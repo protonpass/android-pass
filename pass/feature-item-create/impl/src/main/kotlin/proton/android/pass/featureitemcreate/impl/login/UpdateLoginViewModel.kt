@@ -415,8 +415,11 @@ class UpdateLoginViewModel @Inject constructor(
         return totpManager.sanitiseToEdit(totp).getOrNull() ?: totp
     }
 
-    private fun launchUpdateAssetLinksWorker(websites: Set<String>) {
-        workerLauncher.launch(WorkerItem.SingleItemAssetLink(websites))
+    private suspend fun launchUpdateAssetLinksWorker(websites: Set<String>) {
+        val isDAL = featureFlagsRepository.get<Boolean>(FeatureFlag.DIGITAL_ASSET_LINKS).first()
+        if (isDAL) {
+            workerLauncher.launch(WorkerItem.SingleItemAssetLink(websites))
+        }
     }
 
     private companion object {

@@ -25,22 +25,32 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
 import proton.android.pass.data.impl.work.PeriodicAssetLinkWorker
 import proton.android.pass.data.impl.work.UserAccessWorker
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class InitialWorkerLauncherImpl @Inject constructor(
     private val workManager: WorkManager,
-    private val eventWorkerManager: EventWorkerManager
+    private val eventWorkerManager: EventWorkerManager,
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : InitialWorkerLauncher {
 
     override fun start() {
         launchUserAccessWorker()
-        launchAssetLinkWorker()
+        val isDAL = runBlocking {
+            featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.DIGITAL_ASSET_LINKS).first()
+        }
+        if (isDAL) {
+            launchAssetLinkWorker()
+        }
     }
 
     private fun launchAssetLinkWorker() {

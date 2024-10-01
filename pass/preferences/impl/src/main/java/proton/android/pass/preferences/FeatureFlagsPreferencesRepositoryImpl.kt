@@ -36,6 +36,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.ACCESS_KEY_V1
 import proton.android.pass.preferences.FeatureFlag.ACCOUNT_SWITCH_V1
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
+import proton.android.pass.preferences.FeatureFlag.DIGITAL_ASSET_LINKS
 import proton.android.pass.preferences.FeatureFlag.IDENTITY_V1
 import proton.android.pass.preferences.FeatureFlag.SECURE_LINK_V1
 import proton.android.pass.preferences.FeatureFlag.SECURITY_CENTER_V1
@@ -93,6 +94,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { simpleLoginAliasesSyncEnabled.value }
+
+        DIGITAL_ASSET_LINKS -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { digitalAssetLinkEnabled.value }
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
@@ -126,6 +132,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         SL_ALIASES_SYNC -> setFeatureFlag {
             simpleLoginAliasesSyncEnabled = boolFlagPrefProto(value)
+        }
+
+        DIGITAL_ASSET_LINKS -> setFeatureFlag {
+            digitalAssetLinkEnabled = boolFlagPrefProto(value)
         }
     }
 
@@ -225,6 +235,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             SECURE_LINK_V1 -> publicLinkV1Enabled
             ACCOUNT_SWITCH_V1 -> accountSwitchV1Enabled
             SL_ALIASES_SYNC -> simpleLoginAliasesSyncEnabled
+            DIGITAL_ASSET_LINKS -> digitalAssetLinkEnabled
         }.value
     }
 }

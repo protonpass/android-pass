@@ -363,7 +363,7 @@ class CreateLoginViewModel @Inject constructor(
             createItemAndAlias(
                 userId = userId,
                 shareId = shareId,
-                itemContents = loginItemFormState.toItemContents(),
+                itemContents = loginItemFormState.toItemContents(emailValidator = emailValidator),
                 newAlias = NewAlias(
                     title = aliasItemFormState.title,
                     note = aliasItemFormState.note,
@@ -422,7 +422,7 @@ class CreateLoginViewModel @Inject constructor(
             createItem(
                 userId = userId,
                 shareId = shareId,
-                itemContents = loginItemFormState.toItemContents()
+                itemContents = loginItemFormState.toItemContents(emailValidator = emailValidator)
             )
         }.onSuccess { item ->
             inAppReviewTriggerMetrics.incrementItemCreatedCount()

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 56,
-    "identityHash": "dbf026acc5292396f4b38225ac38640a",
+    "identityHash": "c609bc48ca8253744a9c41b11dc7dd33",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -4146,7 +4146,7 @@
       },
       {
         "tableName": "AssetLinksEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`website` TEXT NOT NULL, `package_name` TEXT NOT NULL, PRIMARY KEY(`website`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`website` TEXT NOT NULL, `package_name` TEXT NOT NULL, `created_at` INTEGER NOT NULL, PRIMARY KEY(`website`))",
         "fields": [
           {
             "fieldPath": "website",
@@ -4158,6 +4158,12 @@
             "fieldPath": "packageNames",
             "columnName": "package_name",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -4184,7 +4190,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dbf026acc5292396f4b38225ac38640a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c609bc48ca8253744a9c41b11dc7dd33')"
     ]
   }
 }

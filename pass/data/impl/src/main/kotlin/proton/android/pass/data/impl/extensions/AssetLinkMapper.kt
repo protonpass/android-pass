@@ -39,5 +39,5 @@ fun AssetLink.toEntity(): AssetLinkEntity = AssetLinkEntity(
 
 fun List<AssetLinkResponse>.toDomain(url: String): AssetLink = AssetLink(
     website = url,
-    packageNames = flatMap { listOf(it.target.packageName) }
+    packageNames = flatMap { listOfNotNull(it.target.packageName) }
 )

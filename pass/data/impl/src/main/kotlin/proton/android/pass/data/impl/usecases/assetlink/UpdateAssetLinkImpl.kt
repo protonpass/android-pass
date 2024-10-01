@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.usecases.assetlink
 
+import proton.android.pass.commonrust.api.DomainManager
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.impl.util.runConcurrently
 import proton.android.pass.domain.assetlink.AssetLink
@@ -25,11 +26,16 @@ import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class UpdateAssetLinkImpl @Inject constructor(
-    private val assetLinkRepository: AssetLinkRepository
+    private val assetLinkRepository: AssetLinkRepository,
+    private val domainManager: DomainManager
 ) : UpdateAssetLink {
     override suspend fun invoke(websites: Set<String>) {
+        val cleanWebsites = websites.filter(String::isNotBlank)
+            .mapNotNull(domainManager::getRoot)
+            .map { "https://$it" }
+            .toSet()
         val results: List<Result<AssetLink>> = runConcurrently(
-            items = websites,
+            items = cleanWebsites,
             block = assetLinkRepository::fetch
         )
         val (successes, failures) = results.partition { it.isSuccess }

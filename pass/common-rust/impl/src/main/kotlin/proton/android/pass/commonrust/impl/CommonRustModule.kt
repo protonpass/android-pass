@@ -24,6 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
+import proton.android.pass.commonrust.api.DomainManager
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
 import proton.android.pass.commonrust.api.PasswordGenerator
@@ -59,4 +60,6 @@ abstract class CommonRustModule {
     @[Binds Singleton]
     abstract fun bindPasswordStrengthCalculator(calculator: RustPasswordStrengthCalculator): PasswordStrengthCalculator
 
+    @[Binds Singleton]
+    abstract fun bindDomainManager(calculator: DomainManagerImpl): DomainManager
 }

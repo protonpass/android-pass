@@ -27,6 +27,7 @@ import proton.android.pass.data.impl.extensions.toEntity
 import proton.android.pass.data.impl.local.assetlink.LocalAssetLinkDataSource
 import proton.android.pass.data.impl.remote.assetlink.RemoteAssetLinkDataSource
 import proton.android.pass.domain.assetlink.AssetLink
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class AssetLinkRepositoryImpl @Inject constructor(
@@ -34,9 +35,10 @@ class AssetLinkRepositoryImpl @Inject constructor(
     private val localAssetLinkDataSource: LocalAssetLinkDataSource
 ) : AssetLinkRepository {
 
-    override suspend fun fetch(website: String): List<AssetLink> = remoteAssetLinkDataSource.fetch(website)
+    override suspend fun fetch(website: String): AssetLink = remoteAssetLinkDataSource.fetch(website).toDomain(website)
 
     override suspend fun insert(list: List<AssetLink>) {
+        PassLogger.d(TAG, "Inserting asset links: $list")
         localAssetLinkDataSource.insertAssetLink(list.map(AssetLink::toEntity))
     }
 
@@ -48,4 +50,8 @@ class AssetLinkRepositoryImpl @Inject constructor(
         localAssetLinkDataSource.observeAssetLinks(website).map { list ->
             list.map(AssetLinkEntity::toDomain)
         }
+
+    companion object {
+        private const val TAG = "AssetLinkRepositoryImpl"
+    }
 }

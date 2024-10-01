@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.extensions
 
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
+import proton.android.pass.data.impl.responses.AssetLinkResponse
 import proton.android.pass.domain.assetlink.AssetLink
 
 
@@ -30,4 +31,9 @@ fun AssetLinkEntity.toDomain(): AssetLink = AssetLink(
 fun AssetLink.toEntity(): AssetLinkEntity = AssetLinkEntity(
     website = website,
     packageNames = packageNames
+)
+
+fun List<AssetLinkResponse>.toDomain(url: String): AssetLink = AssetLink(
+    website = url,
+    packageNames = flatMap { listOf(it.target.packageName) }
 )

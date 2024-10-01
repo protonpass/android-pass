@@ -36,24 +36,22 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import proton.android.pass.commonrust.api.DomainManager
-import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
-import proton.android.pass.data.impl.util.runConcurrently
+import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLink
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareSelection
-import proton.android.pass.domain.assetlink.AssetLink
 import proton.android.pass.log.api.PassLogger
 import java.util.concurrent.TimeUnit
 
 @HiltWorker
-class AssetLinkWorker @AssistedInject constructor(
+class PeriodicAssetLinkWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted private val workerParameters: WorkerParameters,
     private val accountManager: AccountManager,
     private val observeItems: ObserveItems,
-    private val assetLinkRepository: AssetLinkRepository,
+    private val updateAssetLink: UpdateAssetLink,
     private val domainManager: DomainManager
 ) : CoroutineWorker(appContext, workerParameters) {
 
@@ -77,21 +75,7 @@ class AssetLinkWorker @AssistedInject constructor(
                     .toSet()
             }
             .first()
-        val results: List<kotlin.Result<AssetLink>> = runConcurrently(
-            items = websites,
-            block = assetLinkRepository::fetch
-        )
-        val (successes, failures) = results.partition { it.isSuccess }
-        if (failures.isNotEmpty()) {
-            PassLogger.w(
-                TAG,
-                "${failures.size} from ${results.size} websites failed to get asset links"
-            )
-        }
-        val assetLinks = successes.mapNotNull { it.getOrNull() }
-        if (assetLinks.isNotEmpty()) {
-            assetLinkRepository.insert(assetLinks)
-        }
+        updateAssetLink(websites)
     }
         .onFailure {
             PassLogger.w(TAG, "Failed to get websites")
@@ -100,12 +84,12 @@ class AssetLinkWorker @AssistedInject constructor(
         .toWorkerResult()
 
     companion object {
-        const val WORKER_UNIQUE_NAME = "asset_link_worker"
-        private const val TAG = "AssetLinkWorker"
+        const val WORKER_UNIQUE_NAME = "periodic_asset_link_worker"
+        private const val TAG = "PeriodicAssetLinkWorker"
         private const val REPEAT_DAYS = 14L
 
         fun getRequestFor(): PeriodicWorkRequest =
-            PeriodicWorkRequestBuilder<AssetLinkWorker>(REPEAT_DAYS, TimeUnit.DAYS)
+            PeriodicWorkRequestBuilder<PeriodicAssetLinkWorker>(REPEAT_DAYS, TimeUnit.DAYS)
                 .setConstraints(
                     Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
                 )

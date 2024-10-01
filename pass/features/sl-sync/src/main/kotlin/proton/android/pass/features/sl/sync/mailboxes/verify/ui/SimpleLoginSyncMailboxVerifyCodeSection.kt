@@ -18,124 +18,45 @@
 
 package proton.android.pass.features.sl.sync.mailboxes.verify.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.subheadlineNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.commonui.api.applyIf
 
 @Composable
 internal fun SimpleLoginSyncMailboxVerifyCodeSection(
     modifier: Modifier = Modifier,
     verificationCode: String,
     verificationCodeLength: Int,
+    verificationCodeTimerSeconds: Int,
+    canRequestVerificationCode: Boolean,
+    canEnterVerificationCode: Boolean,
     onVerificationCodeChange: (String) -> Unit
 ) {
-    val focusRequester = remember { FocusRequester() }
-
-    var focusedField by remember { mutableIntStateOf(verificationCode.length) }
-
-    val clipboardManager = LocalClipboardManager.current
-
-    Box(
+    Column(
         modifier = modifier.fillMaxWidth(),
-        contentAlignment = Alignment.Center
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
-        BasicTextField(
-            modifier = Modifier.focusRequester(focusRequester),
-            value = verificationCode,
-            onValueChange = { newVerificationCode ->
-                if (newVerificationCode.length <= verificationCodeLength) {
-                    onVerificationCodeChange(newVerificationCode)
-                    focusedField = newVerificationCode.length
-                    return@BasicTextField
-                }
-
-                clipboardManager.getText()?.text.let { clipboardText ->
-                    if (clipboardText == newVerificationCode.takeLast(verificationCodeLength)) {
-                        onVerificationCodeChange(clipboardText)
-                        focusedField = clipboardText.length
-                    }
-                }
-            },
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.None
-            ),
-            decorationBox = {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
-                ) {
-                    repeat(verificationCodeLength) { index ->
-                        val verificationCodeDigit = if (index < verificationCode.length) {
-                            verificationCode[index].toString()
-                        } else ""
-
-                        Text(
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(size = Radius.small))
-                                .border(
-                                    width = 1.dp,
-                                    color = PassTheme.colors.inputBorderStrong,
-                                    shape = RoundedCornerShape(size = Radius.small)
-                                )
-                                .applyIf(
-                                    condition = index == focusedField,
-                                    ifTrue = {
-                                        background(color = PassTheme.colors.inputBackgroundNorm)
-                                    },
-                                    ifFalse = {
-                                        background(color = PassTheme.colors.inputBackgroundStrong)
-                                    }
-                                )
-                                .width(width = Spacing.large)
-                                .padding(all = Spacing.small),
-                            text = verificationCodeDigit,
-                            style = ProtonTheme.typography.subheadlineNorm,
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                }
-            }
+        SimpleLoginSyncMailboxVerifyCodeInput(
+            verificationCode = verificationCode,
+            verificationCodeLength = verificationCodeLength,
+            onVerificationCodeChange = onVerificationCodeChange,
+            canEnterVerificationCode = canEnterVerificationCode
         )
-    }
 
-    LaunchedEffect(focusRequester) {
-        focusRequester.requestFocus()
+        SimpleLoginSyncMailboxVerifyCodeResend(
+            verificationCodeTimerSeconds = verificationCodeTimerSeconds,
+            canRequestVerificationCode = canRequestVerificationCode
+        )
     }
 }
 
@@ -146,6 +67,9 @@ internal fun SimpleLoginSyncMailboxVerifyCodePreview(@PreviewParameter(ThemePrev
             SimpleLoginSyncMailboxVerifyCodeSection(
                 verificationCode = "123",
                 verificationCodeLength = 6,
+                verificationCodeTimerSeconds = 25,
+                canRequestVerificationCode = false,
+                canEnterVerificationCode = true,
                 onVerificationCodeChange = {}
             )
         }

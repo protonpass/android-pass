@@ -21,5 +21,5 @@ package proton.android.pass.features.sl.sync.management.navigation
 import proton.android.pass.navigation.api.NavItem
 
 object SimpleLoginSyncManagementNavItem : NavItem(
-    baseRoute = "sl/sync/details"
+    baseRoute = "sl/sync/management"
 )

@@ -19,9 +19,11 @@
 package proton.android.pass.features.sl.sync.mailboxes.verify.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.features.sl.sync.mailboxes.verify.presentation.SimpleLoginSyncMailboxVerifyEvent
 import proton.android.pass.features.sl.sync.mailboxes.verify.presentation.SimpleLoginSyncMailboxVerifyViewModel
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 
@@ -32,16 +34,27 @@ fun SimpleLoginSyncMailboxVerifyScreen(
 ) = with(viewModel) {
     val state by stateFlow.collectAsStateWithLifecycle()
 
+    LaunchedEffect(key1 = state.event) {
+        when (state.event) {
+            SimpleLoginSyncMailboxVerifyEvent.Idle -> {}
+            SimpleLoginSyncMailboxVerifyEvent.OnVerifyAliasMailboxSuccess -> {
+                onNavigated(SimpleLoginSyncNavDestination.AliasManagement)
+            }
+        }
+
+        onConsumeEvent(event = state.event)
+    }
+
     SimpleLoginSyncMailboxVerifyContent(
         state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SimpleLoginSyncMailboxVerifyUiEvent.OnCloseClicked -> {
-
+                    onNavigated(SimpleLoginSyncNavDestination.AliasManagement)
                 }
 
                 SimpleLoginSyncMailboxVerifyUiEvent.OnVerifyClicked -> {
-
+                    onVerifyAliasMailbox()
                 }
 
                 is SimpleLoginSyncMailboxVerifyUiEvent.OnVerificationCodeChanged -> {

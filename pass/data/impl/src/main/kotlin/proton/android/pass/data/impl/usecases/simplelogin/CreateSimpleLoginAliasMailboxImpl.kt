@@ -26,8 +26,6 @@ class CreateSimpleLoginAliasMailboxImpl @Inject constructor(
     private val repository: SimpleLoginRepository
 ) : CreateSimpleLoginAliasMailbox {
 
-    override suspend fun invoke(mailboxEmail: String) {
-        repository.createAliasMailbox(mailboxEmail)
-    }
+    override suspend fun invoke(mailboxEmail: String) = repository.createAliasMailbox(mailboxEmail)
 
 }

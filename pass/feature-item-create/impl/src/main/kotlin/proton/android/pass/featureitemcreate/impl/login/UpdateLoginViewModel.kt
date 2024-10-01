@@ -59,6 +59,8 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
+import proton.android.pass.data.api.work.WorkerItem
+import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.domain.CustomField
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
@@ -98,6 +100,7 @@ class UpdateLoginViewModel @Inject constructor(
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
     private val telemetryManager: TelemetryManager,
     private val createAlias: CreateAlias,
+    private val workerLauncher: WorkerLauncher,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
     private val totpManager: TotpManager,
@@ -332,6 +335,7 @@ class UpdateLoginViewModel @Inject constructor(
         runCatching {
             updateItem(userId, shareId, currentItem, contents)
         }.onSuccess { item ->
+            launchUpdateAssetLinksWorker(contents.urls.toSet())
             isItemSavedState.update {
                 encryptionContextProvider.withEncryptionContext {
                     ItemSavedState.Success(
@@ -409,6 +413,10 @@ class UpdateLoginViewModel @Inject constructor(
         if (totp.isBlank()) return totp
 
         return totpManager.sanitiseToEdit(totp).getOrNull() ?: totp
+    }
+
+    private fun launchUpdateAssetLinksWorker(websites: Set<String>) {
+        workerLauncher.launch(WorkerItem.SingleItemAssetLink(websites))
     }
 
     private companion object {

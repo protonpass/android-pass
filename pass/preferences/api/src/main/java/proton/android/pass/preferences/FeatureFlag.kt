@@ -71,5 +71,11 @@ enum class FeatureFlag(
         description = "Enable SL aliases sync",
         key = "PassSimpleLoginAliasesSync",
         isEnabledDefault = false
+    ),
+    DIGITAL_ASSET_LINKS(
+        title = "Digital asset links",
+        description = "Enable Digital asset links",
+        key = "PassDigitalAssetLinks",
+        isEnabledDefault = false
     )
 }

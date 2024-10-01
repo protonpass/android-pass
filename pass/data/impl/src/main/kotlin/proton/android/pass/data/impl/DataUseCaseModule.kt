@@ -112,7 +112,7 @@ import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
-import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
+import proton.android.pass.data.api.usecases.WorkerLauncher
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
@@ -282,7 +282,7 @@ import proton.android.pass.data.impl.usecases.UpdateAliasImpl
 import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
 import proton.android.pass.data.impl.usecases.UpdateVaultImpl
-import proton.android.pass.data.impl.usecases.UserPlanWorkerLauncherImpl
+import proton.android.pass.data.impl.usecases.WorkerLauncherImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.MarkEmailBreachAsResolvedImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveAllBreachByUserIdImpl
@@ -467,7 +467,7 @@ abstract class DataUseCaseModule {
     abstract fun bindGetVaultByShareId(impl: GetVaultByShareIdImpl): GetVaultByShareId
 
     @Binds
-    abstract fun bindSendUserAccess(impl: UserPlanWorkerLauncherImpl): UserPlanWorkerLauncher
+    abstract fun bindWorkerLauncher(impl: WorkerLauncherImpl): WorkerLauncher
 
     @Binds
     abstract fun bindSendUserAccessRequest(impl: SendUserAccessRequestImpl): SendUserAccessRequest

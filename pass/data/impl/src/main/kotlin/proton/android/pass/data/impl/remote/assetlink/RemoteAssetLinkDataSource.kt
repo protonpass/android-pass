@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.impl.remote.assetlink
 
-import proton.android.pass.domain.assetlink.AssetLink
+import proton.android.pass.data.impl.responses.AssetLinkResponse
 
 interface RemoteAssetLinkDataSource {
-    suspend fun fetch(website: String): List<AssetLink>
+    suspend fun fetch(website: String): List<AssetLinkResponse>
 }

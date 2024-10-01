@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.remote.assetlink
 
-import androidx.core.net.ParseException
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.serialization.json.Json
 import okhttp3.Call
@@ -29,7 +28,6 @@ import okhttp3.Response
 import okio.IOException
 import proton.android.pass.data.impl.remote.PublicOkhttpClient
 import proton.android.pass.data.impl.responses.AssetLinkResponse
-import java.util.IllegalFormatException
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -62,14 +60,13 @@ class RemoteAssetLinkDataSourceImpl @Inject constructor(
                             when {
                                 json.isNullOrEmpty() ->
                                     continuation.resumeWithException(IllegalStateException("Empty response"))
-                                else -> try {
-                                    val assetLinks = Json.decodeFromString<List<AssetLinkResponse>>(json)
-                                    continuation.resume(assetLinks)
-                                } catch (e: ParseException) {
-                                    continuation.resumeWithException(e)
-                                } catch (e: IllegalFormatException) {
-                                    continuation.resumeWithException(e)
-                                }
+
+                                else ->
+                                    runCatching {
+                                        val assetLinks =
+                                            Json.decodeFromString<List<AssetLinkResponse>>(json)
+                                        continuation.resume(assetLinks)
+                                    }.onFailure(continuation::resumeWithException)
                             }
                         } else {
                             continuation.resumeWithException(IOException("Unexpected code $response"))

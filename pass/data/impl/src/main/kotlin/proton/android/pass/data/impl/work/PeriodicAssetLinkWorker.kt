@@ -35,7 +35,6 @@ import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
-import proton.android.pass.commonrust.api.DomainManager
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLink
@@ -51,8 +50,7 @@ class PeriodicAssetLinkWorker @AssistedInject constructor(
     @Assisted private val workerParameters: WorkerParameters,
     private val accountManager: AccountManager,
     private val observeItems: ObserveItems,
-    private val updateAssetLink: UpdateAssetLink,
-    private val domainManager: DomainManager
+    private val updateAssetLink: UpdateAssetLink
 ) : CoroutineWorker(appContext, workerParameters) {
 
     override suspend fun doWork(): Result = runCatching {
@@ -70,9 +68,7 @@ class PeriodicAssetLinkWorker @AssistedInject constructor(
                 combine(flows) { it.toList().flatten() }
             }
             .mapLatest { list ->
-                list.flatMap { (it.itemType as ItemType.Login).websites }
-                    .map(domainManager::getRoot)
-                    .toSet()
+                list.flatMap { (it.itemType as ItemType.Login).websites }.toSet()
             }
             .first()
         updateAssetLink(websites)
@@ -90,6 +86,7 @@ class PeriodicAssetLinkWorker @AssistedInject constructor(
 
         fun getRequestFor(): PeriodicWorkRequest =
             PeriodicWorkRequestBuilder<PeriodicAssetLinkWorker>(REPEAT_DAYS, TimeUnit.DAYS)
+                .setInitialDelay(1, TimeUnit.MINUTES)
                 .setConstraints(
                     Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
                 )

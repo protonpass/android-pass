@@ -44,6 +44,7 @@ import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesReq
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDomainRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasMailboxRequest
+import proton.android.pass.data.impl.requests.SimpleLoginVerifyAliasMailboxRequest
 import proton.android.pass.data.impl.requests.TelemetryRequest
 import proton.android.pass.data.impl.requests.TransferVaultOwnershipRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
@@ -506,6 +507,12 @@ interface PasswordManagerApi : BaseRetrofitApi {
     @POST("$PREFIX/user/alias/mailbox")
     suspend fun createSimpleLoginAliasMailbox(
         @Body request: SimpleLoginCreateAliasMailboxRequest
+    ): SimpleLoginAliasMailboxResponse
+
+    @POST("$PREFIX/user/alias/mailbox/{mailboxId}/verify")
+    suspend fun verifySimpleLoginAliasMailbox(
+        @Path("mailboxId") mailboxId: Long,
+        @Body request: SimpleLoginVerifyAliasMailboxRequest
     ): SimpleLoginAliasMailboxResponse
 
     @PUT("$PREFIX/user/alias/settings/default_mailbox_id")

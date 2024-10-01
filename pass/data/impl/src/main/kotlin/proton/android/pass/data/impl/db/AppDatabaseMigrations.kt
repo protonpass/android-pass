@@ -45,6 +45,7 @@ import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
+import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
 import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
 import proton.android.pass.domain.items.ItemCategory
 
@@ -291,6 +292,17 @@ object AppDatabaseMigrations {
         override fun migrate(db: SupportSQLiteDatabase) {
             AuthDatabase.MIGRATION_0.migrate(db)
             AuthDatabase.MIGRATION_1.migrate(db)
+        }
+    }
+
+    val MIGRATION_55_56 = object : Migration(55, 56) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                """
+                    ALTER TABLE ${UserAccessDataEntity.TABLE}
+                    ADD COLUMN ${UserAccessDataEntity.Columns.SIMPLE_LOGIN_SYNC_CAN_MANAGE_ALIAS} INTEGER NOT NULL DEFAULT 0
+                """.trimIndent()
+            )
         }
     }
 }

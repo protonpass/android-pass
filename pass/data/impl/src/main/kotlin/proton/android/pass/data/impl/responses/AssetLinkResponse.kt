@@ -34,7 +34,9 @@ data class TargetResponse(
     @SerialName("namespace")
     val namespace: String,
     @SerialName("package_name")
-    val packageName: String,
+    val packageName: String? = null,
     @SerialName("sha256_cert_fingerprints")
-    val sha256CertFingerprints: List<String>
+    val sha256CertFingerprints: List<String>? = null,
+    @SerialName("site")
+    val site: String? = null
 )

@@ -20,7 +20,11 @@ package proton.android.pass.data.impl.work
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
+import androidx.work.Constraints
 import androidx.work.CoroutineWorker
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequest
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -40,6 +44,7 @@ import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.assetlink.AssetLink
 import proton.android.pass.log.api.PassLogger
+import java.util.concurrent.TimeUnit
 
 @HiltWorker
 class AssetLinkWorker @AssistedInject constructor(
@@ -52,7 +57,7 @@ class AssetLinkWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result = runCatching {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
-        val websites = accountManager.getAccounts(AccountState.Ready)
+        val websites: Set<String> = accountManager.getAccounts(AccountState.Ready)
             .flatMapLatest { list ->
                 val flows = list.map { user ->
                     observeItems(
@@ -65,11 +70,10 @@ class AssetLinkWorker @AssistedInject constructor(
                 combine(flows) { it.toList().flatten() }
             }
             .mapLatest { list ->
-                list.map { it.itemType as ItemType.Login }
-                    .flatMap { it.websites }
+                list.flatMap { (it.itemType as ItemType.Login).websites }.toSet()
             }
             .first()
-        val results: List<kotlin.Result<List<AssetLink>>> = runConcurrently(
+        val results: List<kotlin.Result<AssetLink>> = runConcurrently(
             items = websites,
             block = assetLinkRepository::fetch
         )
@@ -80,7 +84,7 @@ class AssetLinkWorker @AssistedInject constructor(
                 "${failures.size} from ${results.size} websites failed to get asset links"
             )
         }
-        val assetLinks = successes.mapNotNull { it.getOrNull() }.flatten()
+        val assetLinks = successes.mapNotNull { it.getOrNull() }
         assetLinkRepository.insert(assetLinks)
     }
         .onFailure {
@@ -92,6 +96,14 @@ class AssetLinkWorker @AssistedInject constructor(
     companion object {
         const val WORKER_UNIQUE_NAME = "asset_link_worker"
         private const val TAG = "AssetLinkWorker"
+        private const val REPEAT_DAYS = 14L
+
+        fun getRequestFor(): PeriodicWorkRequest =
+            PeriodicWorkRequestBuilder<AssetLinkWorker>(REPEAT_DAYS, TimeUnit.DAYS)
+                .setConstraints(
+                    Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+                )
+                .build()
     }
 }
 

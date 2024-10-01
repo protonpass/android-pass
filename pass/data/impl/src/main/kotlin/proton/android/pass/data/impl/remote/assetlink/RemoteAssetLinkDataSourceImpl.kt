@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.remote.assetlink
 
+import androidx.core.net.ParseException
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.serialization.json.Json
 import okhttp3.Call
@@ -26,16 +27,18 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okio.IOException
-import proton.android.pass.domain.assetlink.AssetLink
+import proton.android.pass.data.impl.remote.PublicOkhttpClient
+import proton.android.pass.data.impl.responses.AssetLinkResponse
+import java.util.IllegalFormatException
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 class RemoteAssetLinkDataSourceImpl @Inject constructor(
-    private val okHttpClient: OkHttpClient
+    @PublicOkhttpClient private val okHttpClient: OkHttpClient
 ) : RemoteAssetLinkDataSource {
 
-    override suspend fun fetch(website: String): List<AssetLink> = suspendCancellableCoroutine { continuation ->
+    override suspend fun fetch(website: String): List<AssetLinkResponse> = suspendCancellableCoroutine { continuation ->
         val request = Request.Builder()
             .url("$website/.well-known/assetlinks.json")
             .build()
@@ -55,8 +58,19 @@ class RemoteAssetLinkDataSourceImpl @Inject constructor(
                 if (continuation.isActive) {
                     response.use {
                         if (it.isSuccessful) {
-                            val assetLinks = parseAssetLinks(response.body?.string())
-                            continuation.resume(assetLinks)
+                            val json = response.body?.string()
+                            when {
+                                json.isNullOrEmpty() ->
+                                    continuation.resumeWithException(IllegalStateException("Empty response"))
+                                else -> try {
+                                    val assetLinks = Json.decodeFromString<List<AssetLinkResponse>>(json)
+                                    continuation.resume(assetLinks)
+                                } catch (e: ParseException) {
+                                    continuation.resumeWithException(e)
+                                } catch (e: IllegalFormatException) {
+                                    continuation.resumeWithException(e)
+                                }
+                            }
                         } else {
                             continuation.resumeWithException(IOException("Unexpected code $response"))
                         }
@@ -65,9 +79,4 @@ class RemoteAssetLinkDataSourceImpl @Inject constructor(
             }
         })
     }
-}
-
-private fun parseAssetLinks(json: String?): List<AssetLink> {
-    if (json.isNullOrEmpty()) return emptyList()
-    return Json.decodeFromString(json)
 }

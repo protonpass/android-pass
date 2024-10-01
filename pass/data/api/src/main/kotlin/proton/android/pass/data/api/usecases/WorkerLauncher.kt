@@ -16,10 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.remote.assetlink
+package proton.android.pass.data.api.usecases
 
-import proton.android.pass.data.impl.responses.AssetLinkResponse
-
-interface RemoteAssetLinkDataSource {
-    suspend fun fetch(website: String): List<AssetLinkResponse>
+interface WorkerLauncher {
+    fun start()
+    fun cancel()
 }

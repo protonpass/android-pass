@@ -30,11 +30,13 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.configuration.EnvironmentConfiguration
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
+import okhttp3.OkHttpClient
 import proton.android.pass.PassAppConfig
 import proton.android.pass.R
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.autofill.AppIcon
+import proton.android.pass.data.impl.remote.PublicOkhttpClient
 import proton.android.pass.notifications.api.MainActivityAnnotation
 import proton.android.pass.ui.MainActivity
 import javax.inject.Singleton
@@ -79,4 +81,11 @@ object ApplicationModule {
     @Provides
     @AppIcon
     fun provideAppIcon(): Int = R.mipmap.ic_launcher
+
+    @PublicOkhttpClient
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
+        .retryOnConnectionFailure(false)
+        .build()
 }

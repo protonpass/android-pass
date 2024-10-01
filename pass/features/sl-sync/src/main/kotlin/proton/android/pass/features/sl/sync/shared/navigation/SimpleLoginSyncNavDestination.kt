@@ -22,6 +22,8 @@ import proton.android.pass.domain.ShareId
 
 sealed interface SimpleLoginSyncNavDestination {
 
+    data object AliasManagement : SimpleLoginSyncNavDestination
+
     @JvmInline
     value class Back(val force: Boolean = false) : SimpleLoginSyncNavDestination
 
@@ -35,7 +37,6 @@ sealed interface SimpleLoginSyncNavDestination {
 
     data object Upsell : SimpleLoginSyncNavDestination
 
-    @JvmInline
-    value class VerifyMailbox(val mailboxId: Long) : SimpleLoginSyncNavDestination
+    data class VerifyMailbox(val mailboxId: Long, val mailboxEmail: String) : SimpleLoginSyncNavDestination
 
 }

@@ -178,6 +178,7 @@ import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncS
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasDomain
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasMailbox
+import proton.android.pass.data.api.usecases.simplelogin.VerifySimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
@@ -338,6 +339,7 @@ import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLogi
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeSyncSimpleLoginPendingAliases
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeUpdateSimpleLoginAliasDomain
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeUpdateSimpleLoginAliasMailbox
+import proton.android.pass.data.fakes.usecases.simplelogin.FakeVerifySimpleLoginAliasMailbox
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
@@ -863,5 +865,10 @@ abstract class FakesDataModule {
     abstract fun bindCreateSimpleLoginAliasMailbox(
         impl: FakeCreateSimpleLoginAliasMailbox
     ): CreateSimpleLoginAliasMailbox
+
+    @Binds
+    abstract fun bindVerifySimpleLoginAliasMailbox(
+        impl: FakeVerifySimpleLoginAliasMailbox
+    ): VerifySimpleLoginAliasMailbox
 
 }

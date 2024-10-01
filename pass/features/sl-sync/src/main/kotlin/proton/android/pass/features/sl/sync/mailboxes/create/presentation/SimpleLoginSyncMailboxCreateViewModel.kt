@@ -94,9 +94,12 @@ class SimpleLoginSyncMailboxCreateViewModel @Inject constructor(
                     PassLogger.w(TAG, error)
                     snackbarDispatcher(SimpleLoginSyncMailboxCreateSnackbarMessage.CreateMailboxError)
                 }
-                .onSuccess {
+                .onSuccess { createdAliasMailbox ->
                     eventFlow.update {
-                        SimpleLoginSyncMailboxCreateEvent.OnMailboxCreated(mailboxId = 1L)
+                        SimpleLoginSyncMailboxCreateEvent.OnMailboxCreated(
+                            mailboxId = createdAliasMailbox.id,
+                            mailboxEmail = createdAliasMailbox.email
+                        )
                     }
                 }
 

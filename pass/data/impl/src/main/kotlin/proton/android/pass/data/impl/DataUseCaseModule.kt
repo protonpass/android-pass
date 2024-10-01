@@ -188,6 +188,7 @@ import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncS
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasDomain
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasMailbox
+import proton.android.pass.data.api.usecases.simplelogin.VerifySimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
@@ -366,6 +367,7 @@ import proton.android.pass.data.impl.usecases.simplelogin.ObserveSimpleLoginSync
 import proton.android.pass.data.impl.usecases.simplelogin.SyncSimpleLoginPendingAliasesImpl
 import proton.android.pass.data.impl.usecases.simplelogin.UpdateSimpleLoginAliasDomainImpl
 import proton.android.pass.data.impl.usecases.simplelogin.UpdateSimpleLoginAliasMailboxImpl
+import proton.android.pass.data.impl.usecases.simplelogin.VerifySimpleLoginAliasMailboxImpl
 import proton.android.pass.data.impl.usecases.sync.ForceSyncItemsImpl
 import proton.android.pass.data.impl.usecases.tooltips.DisableTooltipImpl
 import proton.android.pass.data.impl.usecases.tooltips.ObserveTooltipEnabledImpl
@@ -934,5 +936,10 @@ abstract class DataUseCaseModule {
     abstract fun bindCreateSimpleLoginAliasMailbox(
         impl: CreateSimpleLoginAliasMailboxImpl
     ): CreateSimpleLoginAliasMailbox
+
+    @[Binds Singleton]
+    abstract fun bindVerifySimpleLoginAliasMailbox(
+        impl: VerifySimpleLoginAliasMailboxImpl
+    ): VerifySimpleLoginAliasMailbox
 
 }

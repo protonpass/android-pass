@@ -16,16 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases.simplelogin
+package proton.android.pass.composecomponents.impl.utils
 
-import proton.android.pass.data.api.repositories.SimpleLoginRepository
-import proton.android.pass.data.api.usecases.simplelogin.CreateSimpleLoginAliasMailbox
-import javax.inject.Inject
+import androidx.compose.runtime.Composable
+import java.util.Locale
 
-class CreateSimpleLoginAliasMailboxImpl @Inject constructor(
-    private val repository: SimpleLoginRepository
-) : CreateSimpleLoginAliasMailbox {
+private const val ONE_MINUTE_IN_SECONDS = 60
 
-    override suspend fun invoke(mailboxEmail: String) = repository.createAliasMailbox(mailboxEmail)
-
-}
+@Composable
+fun passTimerText(seconds: Int, locale: Locale = Locale.getDefault()): String = String.format(
+    locale = locale,
+    format = "%01d:%02d",
+    seconds / ONE_MINUTE_IN_SECONDS, seconds % ONE_MINUTE_IN_SECONDS
+)

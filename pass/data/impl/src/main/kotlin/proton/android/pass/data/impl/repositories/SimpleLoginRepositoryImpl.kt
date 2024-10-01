@@ -43,6 +43,7 @@ import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesReq
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDomainRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasMailboxRequest
+import proton.android.pass.data.impl.requests.SimpleLoginVerifyAliasMailboxRequest
 import proton.android.pass.data.impl.responses.SimpleLoginAliasDomainData
 import proton.android.pass.data.impl.responses.SimpleLoginAliasMailboxData
 import proton.android.pass.data.impl.responses.SimpleLoginAliasSettingsData
@@ -131,11 +132,21 @@ class SimpleLoginRepositoryImpl @Inject constructor(
                 .map { simpleLoginAliasMailboxData -> simpleLoginAliasMailboxData.toDomain() }
         }
 
-    override suspend fun createAliasMailbox(email: String) {
+    override suspend fun createAliasMailbox(email: String): SimpleLoginAliasMailbox = withUserId { userId ->
+        remoteSimpleLoginDataSource.createSimpleLoginAliasMailbox(
+            userId = userId,
+            request = SimpleLoginCreateAliasMailboxRequest(email = email)
+        )
+            .mailbox
+            .toDomain()
+    }
+
+    override suspend fun verifyAliasMailbox(mailboxId: Long, verificationCode: String) {
         withUserId { userId ->
-            remoteSimpleLoginDataSource.createSimpleLoginAliasMailbox(
+            remoteSimpleLoginDataSource.verifySimpleLoginAliasMailbox(
                 userId = userId,
-                request = SimpleLoginCreateAliasMailboxRequest(email = email)
+                mailboxId = mailboxId,
+                request = SimpleLoginVerifyAliasMailboxRequest(code = verificationCode)
             )
         }
     }

@@ -16,16 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases.simplelogin
+package proton.android.pass.data.fakes.usecases.simplelogin
 
-import proton.android.pass.data.api.repositories.SimpleLoginRepository
-import proton.android.pass.data.api.usecases.simplelogin.CreateSimpleLoginAliasMailbox
-import javax.inject.Inject
+import proton.android.pass.data.api.usecases.simplelogin.VerifySimpleLoginAliasMailbox
+import javax.inject.Singleton
 
-class CreateSimpleLoginAliasMailboxImpl @Inject constructor(
-    private val repository: SimpleLoginRepository
-) : CreateSimpleLoginAliasMailbox {
+@Singleton
+class FakeVerifySimpleLoginAliasMailbox : VerifySimpleLoginAliasMailbox {
 
-    override suspend fun invoke(mailboxEmail: String) = repository.createAliasMailbox(mailboxEmail)
+    override suspend fun invoke(mailboxId: Long, verificationCode: String) = Unit
 
 }

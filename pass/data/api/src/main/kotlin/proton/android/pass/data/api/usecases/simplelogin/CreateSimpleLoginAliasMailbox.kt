@@ -18,8 +18,10 @@
 
 package proton.android.pass.data.api.usecases.simplelogin
 
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
+
 interface CreateSimpleLoginAliasMailbox {
 
-    suspend operator fun invoke(mailboxEmail: String)
+    suspend operator fun invoke(mailboxEmail: String): SimpleLoginAliasMailbox
 
 }

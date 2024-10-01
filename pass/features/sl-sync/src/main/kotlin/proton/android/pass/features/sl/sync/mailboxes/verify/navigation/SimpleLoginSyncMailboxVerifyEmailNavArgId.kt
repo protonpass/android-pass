@@ -16,16 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases.simplelogin
+package proton.android.pass.features.sl.sync.mailboxes.verify.navigation
 
-import proton.android.pass.data.api.repositories.SimpleLoginRepository
-import proton.android.pass.data.api.usecases.simplelogin.CreateSimpleLoginAliasMailbox
-import javax.inject.Inject
+import androidx.navigation.NavType
+import proton.android.pass.navigation.api.NavArgId
 
-class CreateSimpleLoginAliasMailboxImpl @Inject constructor(
-    private val repository: SimpleLoginRepository
-) : CreateSimpleLoginAliasMailbox {
+object SimpleLoginSyncMailboxVerifyEmailNavArgId : NavArgId {
 
-    override suspend fun invoke(mailboxEmail: String) = repository.createAliasMailbox(mailboxEmail)
+    override val key: String = "simple_login_sync_mailbox_verify_email"
+
+    override val navType: NavType<*> = NavType.StringType
 
 }

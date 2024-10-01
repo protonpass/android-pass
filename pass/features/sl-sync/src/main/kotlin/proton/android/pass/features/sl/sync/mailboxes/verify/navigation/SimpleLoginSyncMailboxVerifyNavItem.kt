@@ -22,9 +22,12 @@ import proton.android.pass.navigation.api.NavItem
 
 object SimpleLoginSyncMailboxVerifyNavItem : NavItem(
     baseRoute = "sl/sync/mailboxes/verify",
-    navArgIds = listOf(SimpleLoginSyncMailboxVerifyNavArgId)
+    navArgIds = listOf(
+        SimpleLoginSyncMailboxVerifyIdNavArgId,
+        SimpleLoginSyncMailboxVerifyEmailNavArgId
+    )
 ) {
 
-    fun buildRoute(mailboxId: Long) = "$baseRoute/$mailboxId"
+    fun buildRoute(mailboxId: Long, mailboxEmail: String) = "$baseRoute/$mailboxId/$mailboxEmail"
 
 }

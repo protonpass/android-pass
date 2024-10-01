@@ -18,6 +18,8 @@
 
 package proton.android.pass.data.impl.usecases
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.usecases.ClearPin
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
@@ -50,9 +52,12 @@ class ResetAppToDefaultsImpl @Inject constructor(
             }
 
         clearPin()
-        runCatching { assetLinkRepository.purge() }
+        runCatching { withContext(Dispatchers.IO) { assetLinkRepository.purge() } }
             .onSuccess { PassLogger.d(TAG, "Asset links purged") }
-            .onFailure { PassLogger.w(TAG, "Error purging asset links") }
+            .onFailure {
+                PassLogger.w(TAG, "Error purging asset links")
+                PassLogger.w(TAG, it)
+            }
     }
 
     companion object {

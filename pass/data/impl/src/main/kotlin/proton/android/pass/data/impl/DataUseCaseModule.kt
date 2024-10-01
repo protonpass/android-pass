@@ -283,6 +283,8 @@ import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
 import proton.android.pass.data.impl.usecases.UpdateVaultImpl
 import proton.android.pass.data.impl.usecases.WorkerLauncherImpl
+import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLink
+import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLinkImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.MarkEmailBreachAsResolvedImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveAllBreachByUserIdImpl
@@ -892,5 +894,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindSendReport(impl: SendReportImpl): SendReport
+
+    @[Binds Singleton]
+    abstract fun bindUpdateAssetLink(impl: UpdateAssetLinkImpl): UpdateAssetLink
 
 }

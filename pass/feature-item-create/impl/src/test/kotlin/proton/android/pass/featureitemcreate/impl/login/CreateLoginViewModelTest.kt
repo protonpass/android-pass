@@ -48,6 +48,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
+import proton.android.pass.data.fakes.work.FakeWorkerLauncher
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -123,6 +124,7 @@ internal class CreateLoginViewModelTest {
             emailValidator = TestEmailValidator(),
             observeTooltipEnabled = FakeObserveTooltipEnabled(),
             disableTooltip = FakeDisableTooltip(),
+            workerLauncher = FakeWorkerLauncher(),
             userPreferencesRepository = TestPreferenceRepository()
         )
     }

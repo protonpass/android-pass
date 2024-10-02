@@ -89,9 +89,9 @@ import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
 import proton.android.pass.featuresearchoptions.impl.SortingBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SortingLocation
 import proton.android.pass.featuresearchoptions.impl.searchOptionsGraph
-import proton.android.pass.featureselectitem.navigation.SelectItem
-import proton.android.pass.featureselectitem.navigation.SelectItemNavigation
-import proton.android.pass.featureselectitem.navigation.selectItemGraph
+import proton.android.pass.features.selectitem.navigation.SelectItem
+import proton.android.pass.features.selectitem.navigation.SelectItemNavigation
+import proton.android.pass.features.selectitem.navigation.selectItemGraph
 import proton.android.pass.features.vault.VaultNavigation
 import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.features.vault.vaultGraph

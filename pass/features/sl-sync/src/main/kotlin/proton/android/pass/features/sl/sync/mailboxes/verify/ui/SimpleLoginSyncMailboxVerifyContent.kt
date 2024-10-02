@@ -80,7 +80,9 @@ internal fun SimpleLoginSyncMailboxVerifyContent(
                                 maxLines = 1
                             )
                         },
-                        onClick = { onUiEvent(SimpleLoginSyncMailboxVerifyUiEvent.OnVerifyClicked) }
+                        onClick = {
+                            onUiEvent(SimpleLoginSyncMailboxVerifyUiEvent.OnVerifyClicked)
+                        }
                     )
                 }
             )
@@ -99,12 +101,16 @@ internal fun SimpleLoginSyncMailboxVerifyContent(
                 verificationCode = verificationCode,
                 verificationCodeLength = verificationCodeLength,
                 verificationCodeTimerSeconds = verificationCodeTimerSeconds,
+                showResendVerificationCodeTimer = showResendVerificationCodeTimer,
                 canRequestVerificationCode = canRequestVerificationCode,
                 canEnterVerificationCode = canEnterVerificationCode,
                 onVerificationCodeChange = { newVerificationCode ->
                     SimpleLoginSyncMailboxVerifyUiEvent.OnVerificationCodeChanged(
                         newVerificationCode = newVerificationCode
                     ).also(onUiEvent)
+                },
+                onResendVerificationCodeClick = {
+                    onUiEvent(SimpleLoginSyncMailboxVerifyUiEvent.OnResendVerificationCodeClicked)
                 }
             )
         }

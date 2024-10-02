@@ -515,6 +515,11 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Body request: SimpleLoginVerifyAliasMailboxRequest
     ): SimpleLoginAliasMailboxResponse
 
+    @GET("$PREFIX/user/alias/mailbox/{mailboxId}/verify")
+    suspend fun resendSimpleLoginAliasMailboxVerifyCode(
+        @Path("mailboxId") mailboxId: Long
+    ): SimpleLoginAliasMailboxResponse
+
     @PUT("$PREFIX/user/alias/settings/default_mailbox_id")
     suspend fun updateSimpleLoginAliasMailbox(
         @Body request: SimpleLoginUpdateAliasMailboxRequest

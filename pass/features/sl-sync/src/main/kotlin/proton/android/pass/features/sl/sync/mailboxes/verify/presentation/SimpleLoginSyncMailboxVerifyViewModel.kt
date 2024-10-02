@@ -36,6 +36,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.simplelogin.ResendSimpleLoginAliasMailboxVerificationCode
 import proton.android.pass.data.api.usecases.simplelogin.VerifySimpleLoginAliasMailbox
 import proton.android.pass.features.sl.sync.mailboxes.verify.navigation.SimpleLoginSyncMailboxVerifyEmailNavArgId
 import proton.android.pass.features.sl.sync.mailboxes.verify.navigation.SimpleLoginSyncMailboxVerifyIdNavArgId
@@ -46,7 +47,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
-    private val verifySimpleLoginAliasMailbox: VerifySimpleLoginAliasMailbox,
+    private val verifyAliasMailbox: VerifySimpleLoginAliasMailbox,
+    private val resendAliasMailboxVerificationCode: ResendSimpleLoginAliasMailboxVerificationCode,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -112,12 +114,12 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
             isLoadingStateFlow.update { IsLoadingState.Loading }
 
             runCatching {
-                verifySimpleLoginAliasMailbox(
+                verifyAliasMailbox(
                     mailboxId = mailboxId,
                     verificationCode = stateFlow.value.verificationCode
                 )
             }.onFailure { error ->
-                PassLogger.w(TAG, "There was an error verifying the alias mailbox")
+                PassLogger.w(TAG, "There was an error verifying alias mailbox")
                 PassLogger.e(TAG, error)
                 snackbarDispatcher(SimpleLoginSyncMailboxVerifySnackbarMessage.VerifyMailboxError)
             }.onSuccess {
@@ -129,13 +131,32 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
         }
     }
 
+    internal fun onResendVerificationCode() {
+        viewModelScope.launch {
+            isLoadingStateFlow.update { IsLoadingState.Loading }
+
+            runCatching { resendAliasMailboxVerificationCode(mailboxId = mailboxId) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "There was an error resending alias mailbox verification code")
+                    PassLogger.e(TAG, error)
+                    snackbarDispatcher(SimpleLoginSyncMailboxVerifySnackbarMessage.ResendCodeError)
+                }
+                .onSuccess {
+                    verificationCodeTimerRestarterFlow.update { true }
+                    snackbarDispatcher(SimpleLoginSyncMailboxVerifySnackbarMessage.ResendCodeSuccess)
+                }
+
+            isLoadingStateFlow.update { IsLoadingState.NotLoading }
+        }
+    }
+
     private companion object {
 
         private const val TAG = "SimpleLoginSyncMailboxVerifyViewModel"
 
         private const val INITIAL_VERIFICATION_CODE = ""
 
-        private const val INITIAL_VERIFICATION_CODE_TIMER_SECONDS = 5
+        private const val INITIAL_VERIFICATION_CODE_TIMER_SECONDS = 30
 
     }
 

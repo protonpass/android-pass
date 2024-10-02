@@ -23,43 +23,35 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.text.PassTextWithLink
 import proton.android.pass.composecomponents.impl.utils.passTimerText
 import proton.android.pass.features.sl.sync.R
 
 @Composable
 internal fun SimpleLoginSyncMailboxVerifyCodeResend(
     modifier: Modifier = Modifier,
+    showResendVerificationCodeTimer: Boolean = true,
     canRequestVerificationCode: Boolean,
-    verificationCodeTimerSeconds: Int
+    verificationCodeTimerSeconds: Int,
+    onResendVerificationCodeClick: () -> Unit
 ) {
     Box(
         modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {
         AnimatedVisibility(
-            visible = canRequestVerificationCode,
-            enter = fadeIn(),
-            exit = fadeOut()
-        ) {
-            Text(
-                text = stringResource(
-                    id = R.string.simple_login_sync_mailbox_verify_code_not_received,
-                    passTimerText(seconds = verificationCodeTimerSeconds)
-                ),
-                color = PassTheme.colors.textWeak,
-                style = ProtonTheme.typography.body1Regular
-            )
-        }
-
-        AnimatedVisibility(
-            visible = !canRequestVerificationCode,
+            visible = showResendVerificationCodeTimer,
             enter = fadeIn(),
             exit = fadeOut()
         ) {
@@ -69,7 +61,27 @@ internal fun SimpleLoginSyncMailboxVerifyCodeResend(
                     passTimerText(seconds = verificationCodeTimerSeconds)
                 ),
                 color = PassTheme.colors.textWeak,
-                style = ProtonTheme.typography.body1Regular
+                style = ProtonTheme.typography.captionWeak
+            )
+        }
+
+        AnimatedVisibility(
+            visible = canRequestVerificationCode,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            PassTextWithLink(
+                modifier = Modifier.padding(horizontal = Spacing.large),
+                textAlign = TextAlign.Center,
+                textResId = R.string.simple_login_sync_mailbox_verify_code_not_received,
+                textStyle = ProtonTheme.typography.captionWeak.copy(
+                    color = PassTheme.colors.textWeak
+                ),
+                linkResId = R.string.simple_login_sync_mailbox_verify_code_request_new,
+                linkStyle = ProtonTheme.typography.captionWeak.copy(
+                    color = PassTheme.colors.interactionNormMajor1
+                ),
+                onLinkClick = { onResendVerificationCodeClick() }
             )
         }
     }

@@ -112,9 +112,17 @@ class RemoteSimpleLoginDataSourceImpl @Inject constructor(
         userId: UserId,
         mailboxId: Long,
         request: SimpleLoginVerifyAliasMailboxRequest
-    ) = apiProvider
+    ): SimpleLoginAliasMailboxResponse = apiProvider
         .get<PasswordManagerApi>(userId)
         .invoke { verifySimpleLoginAliasMailbox(mailboxId = mailboxId, request = request) }
+        .valueOrThrow
+
+    override suspend fun resendSimpleLoginAliasMailboxVerifyCode(
+        userId: UserId,
+        mailboxId: Long
+    ): SimpleLoginAliasMailboxResponse = apiProvider
+        .get<PasswordManagerApi>(userId)
+        .invoke { resendSimpleLoginAliasMailboxVerifyCode(mailboxId = mailboxId) }
         .valueOrThrow
 
 }

@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 
 @Composable
 internal fun SimpleLoginSyncMailboxVerifyCodeSection(
@@ -37,14 +37,16 @@ internal fun SimpleLoginSyncMailboxVerifyCodeSection(
     verificationCode: String,
     verificationCodeLength: Int,
     verificationCodeTimerSeconds: Int,
+    showResendVerificationCodeTimer: Boolean,
     canRequestVerificationCode: Boolean,
     canEnterVerificationCode: Boolean,
-    onVerificationCodeChange: (String) -> Unit
+    onVerificationCodeChange: (String) -> Unit,
+    onResendVerificationCodeClick: () -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.large)
     ) {
         SimpleLoginSyncMailboxVerifyCodeInput(
             verificationCode = verificationCode,
@@ -55,22 +57,30 @@ internal fun SimpleLoginSyncMailboxVerifyCodeSection(
 
         SimpleLoginSyncMailboxVerifyCodeResend(
             verificationCodeTimerSeconds = verificationCodeTimerSeconds,
-            canRequestVerificationCode = canRequestVerificationCode
+            showResendVerificationCodeTimer = showResendVerificationCodeTimer,
+            canRequestVerificationCode = canRequestVerificationCode,
+            onResendVerificationCodeClick = onResendVerificationCodeClick
         )
     }
 }
 
 @[Preview Composable]
-internal fun SimpleLoginSyncMailboxVerifyCodePreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun SimpleLoginSyncMailboxVerifyCodePreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, showResendVerificationCodeTimer) = input
+
     PassTheme(isDark = isDark) {
         Surface {
             SimpleLoginSyncMailboxVerifyCodeSection(
                 verificationCode = "123",
                 verificationCodeLength = 6,
-                verificationCodeTimerSeconds = 25,
-                canRequestVerificationCode = false,
+                verificationCodeTimerSeconds = 30,
+                showResendVerificationCodeTimer = showResendVerificationCodeTimer,
+                canRequestVerificationCode = !showResendVerificationCodeTimer,
                 canEnterVerificationCode = true,
-                onVerificationCodeChange = {}
+                onVerificationCodeChange = {},
+                onResendVerificationCodeClick = {}
             )
         }
     }

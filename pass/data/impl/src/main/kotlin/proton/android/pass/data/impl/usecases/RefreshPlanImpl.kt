@@ -44,7 +44,7 @@ class RefreshPlanImpl @Inject constructor(
     override suspend fun invoke(userId: UserId) {
         runCatching {
             val oldPlan: Plan? = planRepository.observePlan(userId).firstOrNull()
-            val newPlan: Plan = planRepository.sendUserAccessAndObservePlan(userId, true)
+            val newPlan: Plan = planRepository.observePlan(userId, true)
                 .first()
             val isOldPlanPaid = oldPlan?.isPaidPlan ?: false
             if (isOldPlanPaid && newPlan.isFreePlan) {

@@ -68,7 +68,7 @@ internal class PlanRepositoryImplTest {
         val future = clock.now().plus(2.days)
         local.emitPlan(planEntity(trialEnd = future))
 
-        val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
+        val plan = instance.observePlan(USER_ID, false).first()
         assertThat(plan.planType).isInstanceOf(PlanType.Trial::class.java)
     }
 
@@ -77,7 +77,7 @@ internal class PlanRepositoryImplTest {
         val future = clock.now().plus(2.days)
         local.emitPlan(planEntity(type = PlanType.PLAN_NAME_PLUS, trialEnd = future))
 
-        val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
+        val plan = instance.observePlan(USER_ID, false).first()
         assertThat(plan.planType).isInstanceOf(PlanType.Trial::class.java)
     }
 
@@ -86,7 +86,7 @@ internal class PlanRepositoryImplTest {
         val past = clock.now().minus(2.days)
         local.emitPlan(planEntity(type = PlanType.PLAN_NAME_FREE, trialEnd = past))
 
-        val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
+        val plan = instance.observePlan(USER_ID, false).first()
         assertThat(plan.planType).isInstanceOf(PlanType.Free::class.java)
     }
 
@@ -95,7 +95,7 @@ internal class PlanRepositoryImplTest {
         val past = clock.now().minus(2.days)
         local.emitPlan(planEntity(type = PlanType.PLAN_NAME_PLUS, trialEnd = past))
 
-        val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
+        val plan = instance.observePlan(USER_ID, false).first()
         assertThat(plan.planType).isInstanceOf(PlanType.Paid::class.java)
     }
 
@@ -104,7 +104,7 @@ internal class PlanRepositoryImplTest {
         val past = clock.now().minus(2.days)
         local.emitPlan(planEntity(type = "unknown", trialEnd = past))
 
-        val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
+        val plan = instance.observePlan(USER_ID, false).first()
         assertThat(plan.planType).isInstanceOf(PlanType.Unknown::class.java)
     }
 
@@ -113,7 +113,7 @@ internal class PlanRepositoryImplTest {
         val future = clock.now().plus(2.days)
         local.emitPlan(planEntity(type = "unknown", trialEnd = future))
 
-        val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
+        val plan = instance.observePlan(USER_ID, false).first()
         assertThat(plan.planType).isInstanceOf(PlanType.Unknown::class.java)
     }
 
@@ -222,7 +222,7 @@ internal class PlanRepositoryImplTest {
             )
         )
 
-        val plan = instance.sendUserAccessAndObservePlan(USER_ID, forceRefresh = true).first()
+        val plan = instance.observePlan(USER_ID, forceRefresh = true).first()
         assertThat(plan.planType).isInstanceOf(PlanType.Paid::class.java)
 
         val userAccessData = userAccessDataRepository.observe(USER_ID).first()

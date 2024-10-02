@@ -16,19 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.mailboxes.verify.ui
+package proton.android.pass.data.impl.usecases.simplelogin
 
-internal sealed interface SimpleLoginSyncMailboxVerifyUiEvent {
+import proton.android.pass.data.api.repositories.SimpleLoginRepository
+import proton.android.pass.data.api.usecases.simplelogin.ResendSimpleLoginAliasMailboxVerificationCode
+import javax.inject.Inject
 
-    data object OnCloseClicked : SimpleLoginSyncMailboxVerifyUiEvent
+class ResendSimpleLoginAliasMailboxVerificationCodeImpl @Inject constructor(
+    private val repository: SimpleLoginRepository
+) : ResendSimpleLoginAliasMailboxVerificationCode {
 
-    data object OnVerifyClicked : SimpleLoginSyncMailboxVerifyUiEvent
-
-    @JvmInline
-    value class OnVerificationCodeChanged(
-        internal val newVerificationCode: String
-    ) : SimpleLoginSyncMailboxVerifyUiEvent
-
-    data object OnResendVerificationCodeClicked : SimpleLoginSyncMailboxVerifyUiEvent
+    override suspend fun invoke(mailboxId: Long) {
+        repository.resendAliasMailboxVerificationCode(mailboxId)
+    }
 
 }

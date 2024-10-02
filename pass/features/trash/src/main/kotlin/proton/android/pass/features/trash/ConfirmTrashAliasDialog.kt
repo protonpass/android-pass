@@ -16,12 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuretrash.impl
+package proton.android.pass.features.trash
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
-import proton.android.pass.featuretrash.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable

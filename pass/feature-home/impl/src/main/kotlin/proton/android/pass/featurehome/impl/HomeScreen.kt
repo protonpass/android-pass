@@ -89,9 +89,9 @@ import proton.android.pass.featurehome.impl.trash.ConfirmTrashItemsDialog
 import proton.android.pass.featurehome.impl.vault.VaultDrawerContent
 import proton.android.pass.featurehome.impl.vault.VaultDrawerViewModel
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
-import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
-import proton.android.pass.featuretrash.impl.ConfirmTrashAliasDialog
-import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
+import proton.android.pass.features.trash.ConfirmDeleteItemDialog
+import proton.android.pass.features.trash.ConfirmTrashAliasDialog
+import proton.android.pass.features.trash.TrashItemBottomSheetContents
 
 @OptIn(
     ExperimentalMaterialApi::class,

@@ -33,11 +33,6 @@ internal enum class SimpleLoginSyncMailboxCreateSnackbarMessage(
     CreateMailboxError(
         id = R.string.simple_login_sync_mailbox_create_message_error,
         type = SnackbarType.ERROR
-    ),
-
-    CreateMailboxSuccess(
-        id = R.string.simple_login_sync_mailbox_create_message_success,
-        type = SnackbarType.SUCCESS
     )
 
 }

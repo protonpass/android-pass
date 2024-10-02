@@ -65,6 +65,10 @@ fun SimpleLoginSyncMailboxVerifyScreen(
                 is SimpleLoginSyncMailboxVerifyUiEvent.OnVerificationCodeChanged -> {
                     onVerificationCodeChanged(newVerificationCode = uiEvent.newVerificationCode)
                 }
+
+                SimpleLoginSyncMailboxVerifyUiEvent.OnResendVerificationCodeClicked -> {
+                    onResendVerificationCode()
+                }
             }
         }
     )

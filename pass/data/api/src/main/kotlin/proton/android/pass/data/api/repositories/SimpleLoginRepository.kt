@@ -47,6 +47,8 @@ interface SimpleLoginRepository {
 
     suspend fun verifyAliasMailbox(mailboxId: Long, verificationCode: String)
 
+    suspend fun resendAliasMailboxVerificationCode(mailboxId: Long)
+
     suspend fun updateAliasMailbox(mailboxId: Long)
 
     fun observeAliasSettings(): Flow<SimpleLoginAliasSettings>

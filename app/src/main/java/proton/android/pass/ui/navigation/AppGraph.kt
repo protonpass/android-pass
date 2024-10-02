@@ -1978,14 +1978,6 @@ fun NavGraphBuilder.appGraph(
                     destination = SimpleLoginSyncMailboxCreateNavItem
                 )
 
-//                SimpleLoginSyncNavDestination.CreateMailbox -> appNavigator.navigate(
-//                    destination = SimpleLoginSyncMailboxVerifyNavItem,
-//                    route = SimpleLoginSyncMailboxVerifyNavItem.buildRoute(
-//                        mailboxId = 1L,
-//                        mailboxEmail = "user@email.com"
-//                    )
-//                )
-
                 is SimpleLoginSyncNavDestination.SelectVault -> appNavigator.navigate(
                     destination = SelectVaultBottomsheet,
                     route = SelectVaultBottomsheet.createNavRoute(

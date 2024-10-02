@@ -43,9 +43,9 @@ import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 import proton.android.pass.featurepassword.impl.dialog.mode.PasswordModeDialog
 import proton.android.pass.featurepassword.impl.dialog.separator.WordSeparatorDialog
 import proton.android.pass.featurepassword.impl.generatePasswordBottomsheetGraph
-import proton.android.pass.featurevault.impl.VaultNavigation
-import proton.android.pass.featurevault.impl.bottomsheet.select.SelectVaultBottomsheet
-import proton.android.pass.featurevault.impl.vaultGraph
+import proton.android.pass.features.vault.VaultNavigation
+import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsheet
+import proton.android.pass.features.vault.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 
 @Suppress("ComplexMethod", "LongMethod")

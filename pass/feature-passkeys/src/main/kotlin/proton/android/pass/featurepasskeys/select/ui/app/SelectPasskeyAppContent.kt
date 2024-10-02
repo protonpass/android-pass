@@ -38,7 +38,7 @@ import proton.android.pass.featurepasskeys.select.navigation.selectPasskeyActivi
 import proton.android.pass.featurepasskeys.select.presentation.SelectPasskeyActionAfterAuth
 import proton.android.pass.featurepasskeys.select.presentation.SelectPasskeyAppEvent
 import proton.android.pass.featurepasskeys.select.ui.bottomsheet.selectpasskey.SelectPasskeyBottomsheet
-import proton.android.pass.featureselectitem.navigation.SelectItem
+import proton.android.pass.features.selectitem.navigation.SelectItem
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 

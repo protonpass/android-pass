@@ -60,7 +60,7 @@ dependencies {
     implementation(projects.pass.featurePassword.impl)
     implementation(projects.pass.featureProfile.impl)
     implementation(projects.pass.featureSearchOptions.impl)
-    implementation(projects.pass.featureSelectItem)
+    implementation(projects.pass.features.selectItem)
     implementation(projects.pass.features.settings)
     implementation(projects.pass.features.sharing)
     implementation(projects.pass.features.sync)

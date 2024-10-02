@@ -33,7 +33,7 @@ abstract class AssetLinkDao : BaseDao<AssetLinkEntity>() {
     @Query(
         """
         SELECT * FROM ${AssetLinkEntity.TABLE}
-        WHERE ${AssetLinkEntity.Columns.WEBSITE} LIKE :website
+        WHERE ${AssetLinkEntity.Columns.WEBSITE} = :website
         """
     )
     abstract fun observeAssetLinks(website: String): Flow<List<AssetLinkEntity>>

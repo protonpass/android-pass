@@ -16,10 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresync.impl.navigation
+package proton.android.pass.features.sync.navigation
 
-sealed interface SyncNavDestination {
+import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 
-    data object Back : SyncNavDestination
-
-}
+object SyncNavItem : NavItem(
+    baseRoute = "sync/dialog",
+    navItemType = NavItemType.Dialog,
+    noHistory = true
+)

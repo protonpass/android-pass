@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "proton.android.pass.featuresync.impl"
+    namespace = "proton.android.pass.features.sync"
     compileSdk = libs.versions.compileSdk.get().toInt()
     
     defaultConfig {

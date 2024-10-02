@@ -71,7 +71,7 @@ import proton.android.pass.test.waitUntilExists
 import java.util.Date
 import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as CompR
-import proton.android.pass.featuretrash.R as TrashR
+import proton.android.pass.features.trash.R as TrashR
 
 @HiltAndroidTest
 class HomeScreenTest {

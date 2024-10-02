@@ -30,12 +30,22 @@ internal enum class SimpleLoginSyncMailboxVerifySnackbarMessage(
 ) : SnackbarMessage {
 
     VerifyMailboxError(
-        id = R.string.simple_login_sync_mailbox_verify_message_error,
+        id = R.string.simple_login_sync_mailbox_verify_message_verification_error,
         type = SnackbarType.ERROR
     ),
 
     VerifyMailboxSuccess(
-        id = R.string.simple_login_sync_mailbox_verify_message_success,
+        id = R.string.simple_login_sync_mailbox_verify_message_verification_success,
+        type = SnackbarType.SUCCESS
+    ),
+
+    ResendCodeError(
+        id = R.string.simple_login_sync_mailbox_verify_message_resend_code_error,
+        type = SnackbarType.ERROR
+    ),
+
+    ResendCodeSuccess(
+        id = R.string.simple_login_sync_mailbox_verify_message_resend_code_success,
         type = SnackbarType.SUCCESS
     )
 

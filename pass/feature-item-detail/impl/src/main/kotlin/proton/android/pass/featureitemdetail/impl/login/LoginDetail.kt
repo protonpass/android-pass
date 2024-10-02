@@ -58,8 +58,8 @@ import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetTy
 import proton.android.pass.featureitemdetail.impl.login.bottomsheet.LoginTopBarOptionsBottomSheetContents
 import proton.android.pass.featureitemdetail.impl.login.bottomsheet.WebsiteOptionsBottomSheetContents
 import proton.android.pass.featureitemdetail.impl.login.customfield.CustomFieldEvent
-import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
-import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
+import proton.android.pass.features.trash.ConfirmDeleteItemDialog
+import proton.android.pass.features.trash.TrashItemBottomSheetContents
 
 @OptIn(
     ExperimentalMaterialApi::class,

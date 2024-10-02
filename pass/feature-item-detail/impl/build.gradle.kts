@@ -84,7 +84,7 @@ dependencies {
     implementation(projects.pass.totp.api)
 
     // Temporarily depend on the impl module until move the bottomsheets to routes
-    implementation(projects.pass.featureTrash.impl)
+    implementation(projects.pass.features.trash)
 
     debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.compose.uiToolingPreview)

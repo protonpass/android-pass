@@ -49,8 +49,8 @@ import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
 import proton.android.pass.featureitemdetail.impl.common.onEditClick
 import proton.android.pass.featureitemdetail.impl.common.onShareClick
-import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
-import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
+import proton.android.pass.features.trash.ConfirmDeleteItemDialog
+import proton.android.pass.features.trash.TrashItemBottomSheetContents
 
 @Suppress("ComplexMethod")
 @OptIn(

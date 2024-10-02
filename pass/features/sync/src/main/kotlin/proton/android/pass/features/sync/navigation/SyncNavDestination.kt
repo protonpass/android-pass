@@ -16,14 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresync.impl.ui
+package proton.android.pass.features.sync.navigation
 
-internal sealed interface SyncDialogUiEvent {
+sealed interface SyncNavDestination {
 
-    data object OnCloseSync : SyncDialogUiEvent
-
-    data object OnCompleteSync : SyncDialogUiEvent
-
-    data object OnRetrySync : SyncDialogUiEvent
+    data object Back : SyncNavDestination
 
 }

@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresync.impl.ui
+package proton.android.pass.features.sync.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -49,7 +49,7 @@ import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
-import proton.android.pass.featuresync.impl.R
+import proton.android.pass.features.sync.R
 import me.proton.core.presentation.compose.R as CoreR
 
 @Composable

@@ -36,7 +36,9 @@ internal data class SimpleLoginSyncMailboxVerifyState(
 
     internal val canVerifyMailbox: Boolean = verificationCode.length == verificationCodeLength
 
-    internal val canRequestVerificationCode: Boolean = verificationCodeTimerSeconds == 0
+    internal val showResendVerificationCodeTimer: Boolean = verificationCodeTimerSeconds > 0
+
+    internal val canRequestVerificationCode: Boolean = !isLoading && !showResendVerificationCodeTimer
 
     internal val canEnterVerificationCode: Boolean = !isLoading
 
@@ -45,7 +47,7 @@ internal data class SimpleLoginSyncMailboxVerifyState(
         internal val Initial = SimpleLoginSyncMailboxVerifyState(
             mailboxEmail = "",
             verificationCode = "",
-            verificationCodeTimerSeconds = 0,
+            verificationCodeTimerSeconds = 30,
             event = SimpleLoginSyncMailboxVerifyEvent.Idle,
             isLoadingState = IsLoadingState.NotLoading
         )

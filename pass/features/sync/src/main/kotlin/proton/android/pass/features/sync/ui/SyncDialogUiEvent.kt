@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,21 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresync.impl.navigation
+package proton.android.pass.features.sync.ui
 
-import androidx.compose.ui.window.DialogProperties
-import androidx.navigation.NavGraphBuilder
-import proton.android.pass.featuresync.impl.ui.SyncDialog
-import proton.android.pass.navigation.api.dialog
+internal sealed interface SyncDialogUiEvent {
 
-fun NavGraphBuilder.syncNavGraph(onNavigate: (SyncNavDestination) -> Unit) {
-    dialog(
-        navItem = SyncNavItem,
-        dialogProperties = DialogProperties(
-            dismissOnBackPress = false,
-            dismissOnClickOutside = false
-        )
-    ) {
-        SyncDialog(onNavigate = onNavigate)
-    }
+    data object OnCloseSync : SyncDialogUiEvent
+
+    data object OnCompleteSync : SyncDialogUiEvent
+
+    data object OnRetrySync : SyncDialogUiEvent
+
 }

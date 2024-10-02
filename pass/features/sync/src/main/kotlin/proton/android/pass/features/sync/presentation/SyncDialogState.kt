@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresync.impl.presentation
+package proton.android.pass.features.sync.presentation
 
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableMap

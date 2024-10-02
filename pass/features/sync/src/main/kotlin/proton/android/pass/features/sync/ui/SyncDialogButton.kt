@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresync.impl.ui
+package proton.android.pass.features.sync.ui
 
 import androidx.annotation.StringRes
 import androidx.compose.material.ButtonDefaults

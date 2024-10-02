@@ -49,7 +49,7 @@ class ObserveUpgradeInfoImpl @Inject constructor(
                 val isSubscriptionAvailable = paymentManager.isSubscriptionAvailable(id)
                 val isUpgradeAvailable = paymentManager.isUpgradeAvailable()
                 combine(
-                    planRepository.sendUserAccessAndObservePlan(
+                    planRepository.observePlan(
                         userId = id,
                         forceRefresh = forceRefresh
                     ),

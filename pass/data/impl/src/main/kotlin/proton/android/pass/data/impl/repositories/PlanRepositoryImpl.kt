@@ -19,8 +19,6 @@
 package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onStart
 import kotlinx.datetime.Clock
@@ -44,7 +42,7 @@ class PlanRepositoryImpl @Inject constructor(
     private val clock: Clock
 ) : PlanRepository {
 
-    override fun sendUserAccessAndObservePlan(userId: UserId, forceRefresh: Boolean): Flow<Plan> =
+    override fun observePlan(userId: UserId, forceRefresh: Boolean): Flow<Plan> =
         localPlanDataSource.observePlan(userId)
             .mapNotNull { planEntity ->
                 if (planEntity == null) {
@@ -64,10 +62,6 @@ class PlanRepositoryImpl @Inject constructor(
                     refreshPlan(userId)
                 }
             }
-
-    override fun observePlan(userId: UserId): Flow<Plan> = localPlanDataSource.observePlan(userId)
-        .filterNotNull()
-        .map { it.toPlan() }
 
     private suspend fun refreshPlan(userId: UserId) {
         runCatching {

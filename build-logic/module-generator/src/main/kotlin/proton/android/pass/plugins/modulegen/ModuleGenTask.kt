@@ -116,9 +116,9 @@ open class ModuleGenTask : DefaultTask() {
                     mkdir("$modulePathString/$lcConfiguration/src/test/kotlin/$configurationPath")
                 }
                 Configuration.FEATURE -> {
-                    mkdir("$modulePathString/src/main/kotlin/")
-                    mkdir("$modulePathString/src/androidTest/kotlin/$configurationPath")
-                    mkdir("$modulePathString/src/test/kotlin/$configurationPath")
+                    mkdir("$modulePathString/src/main/kotlin")
+                    mkdir("$modulePathString/src/androidTest/kotlin")
+                    mkdir("$modulePathString/src/test/kotlin")
                 }
                 Configuration.API,
                 Configuration.FAKES -> {

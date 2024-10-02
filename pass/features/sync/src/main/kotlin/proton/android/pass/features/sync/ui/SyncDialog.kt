@@ -16,15 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresync.impl.ui
+package proton.android.pass.features.sync.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.featuresync.impl.navigation.SyncNavDestination
-import proton.android.pass.featuresync.impl.presentation.SyncDialogViewModel
+import proton.android.pass.features.sync.navigation.SyncNavDestination
+import proton.android.pass.features.sync.presentation.SyncDialogViewModel
 
 @Composable
 fun SyncDialog(

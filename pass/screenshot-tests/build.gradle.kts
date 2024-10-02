@@ -61,7 +61,7 @@ dependencies {
     implementation(projects.pass.featureProfile.impl)
     implementation(projects.pass.featureSearchOptions.impl)
     implementation(projects.pass.featureSelectItem)
-    implementation(projects.pass.featureSettings.impl)
+    implementation(projects.pass.features.settings)
     implementation(projects.pass.features.sharing)
     implementation(projects.pass.features.sync)
     implementation(projects.pass.features.trash)

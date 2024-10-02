@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuretrash.impl
+package proton.android.pass.features.trash
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -47,7 +47,6 @@ import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.featuretrash.R
 import me.proton.core.presentation.R as CoreR
 
 @ExperimentalMaterialApi

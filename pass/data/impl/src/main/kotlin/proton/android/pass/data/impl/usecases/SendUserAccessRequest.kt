@@ -50,7 +50,7 @@ class SendUserAccessRequestImpl @Inject constructor(
         }
 
         return runCatching {
-            planRepository.sendUserAccessAndObservePlan(account.userId, forceRefresh = false).first()
+            planRepository.observePlan(account.userId, forceRefresh = false).first()
         }.fold(
             onSuccess = {
                 PassLogger.i(TAG, "Successfully sent userAccess")

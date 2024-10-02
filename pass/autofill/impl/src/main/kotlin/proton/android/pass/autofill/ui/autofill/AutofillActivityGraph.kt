@@ -92,9 +92,9 @@ import proton.android.pass.featuresearchoptions.impl.searchOptionsGraph
 import proton.android.pass.featureselectitem.navigation.SelectItem
 import proton.android.pass.featureselectitem.navigation.SelectItemNavigation
 import proton.android.pass.featureselectitem.navigation.selectItemGraph
-import proton.android.pass.featurevault.impl.VaultNavigation
-import proton.android.pass.featurevault.impl.bottomsheet.select.SelectVaultBottomsheet
-import proton.android.pass.featurevault.impl.vaultGraph
+import proton.android.pass.features.vault.VaultNavigation
+import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsheet
+import proton.android.pass.features.vault.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 
 sealed interface AutofillEvent {

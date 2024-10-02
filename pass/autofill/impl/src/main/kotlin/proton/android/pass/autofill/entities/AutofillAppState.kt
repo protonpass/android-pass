@@ -28,7 +28,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.domain.entity.PackageInfo
-import proton.android.pass.featureselectitem.navigation.SelectItemState
+import proton.android.pass.features.selectitem.navigation.SelectItemState
 import proton.android.pass.log.api.PassLogger
 import java.net.URI
 

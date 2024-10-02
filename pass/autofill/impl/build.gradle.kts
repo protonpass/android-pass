@@ -112,7 +112,7 @@ dependencies {
     implementation(projects.pass.featurePassword.impl)
     implementation(projects.pass.featureSearchOptions.api)
     implementation(projects.pass.featureSearchOptions.impl)
-    implementation(projects.pass.featureSelectItem)
+    implementation(projects.pass.features.selectItem)
     implementation(projects.pass.features.vault)
     implementation(projects.pass.inAppReview.api)
     implementation(projects.pass.log.api)

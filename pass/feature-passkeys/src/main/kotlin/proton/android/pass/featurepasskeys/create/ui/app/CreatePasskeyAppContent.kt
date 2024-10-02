@@ -34,7 +34,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomShe
 import proton.android.pass.featureauth.impl.AUTH_GRAPH
 import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyNavState
 import proton.android.pass.featurepasskeys.create.ui.navigation.createPasskeyActivityGraph
-import proton.android.pass.featureselectitem.navigation.SelectItem
+import proton.android.pass.features.selectitem.navigation.SelectItem
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 

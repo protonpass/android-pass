@@ -54,28 +54,21 @@ class RemoteAssetLinkDataSourceImpl @Inject constructor(
 
             override fun onResponse(call: Call, response: Response) {
                 if (continuation.isActive) {
-                    response.use {
-                        if (it.isSuccessful) {
-                            val contentType = response.header("Content-Type")
-                            if (contentType.isNullOrEmpty() || !contentType.contains("application/json")) {
-                                continuation.resumeWithException(IOException("Unexpected Content-Type $contentType"))
-                                return@use
-                            }
-                            val json = response.body?.string()
-                            when {
-                                json.isNullOrEmpty() ->
-                                    continuation.resumeWithException(IllegalStateException("Empty response"))
+                    if (response.isSuccessful) {
+                        val json = response.body?.string()
+                        when {
+                            json.isNullOrEmpty() ->
+                                continuation.resumeWithException(IllegalStateException("Empty response"))
 
-                                else ->
-                                    runCatching {
-                                        val assetLinks =
-                                            Json.decodeFromString<List<AssetLinkResponse>>(json)
-                                        continuation.resume(assetLinks)
-                                    }.onFailure(continuation::resumeWithException)
-                            }
-                        } else {
-                            continuation.resumeWithException(IOException("Unexpected code $response"))
+                            else ->
+                                runCatching {
+                                    val assetLinks =
+                                        Json.decodeFromString<List<AssetLinkResponse>>(json)
+                                    continuation.resume(assetLinks)
+                                }.onFailure(continuation::resumeWithException)
                         }
+                    } else {
+                        continuation.resumeWithException(IOException("Unexpected code $response"))
                     }
                 }
             }

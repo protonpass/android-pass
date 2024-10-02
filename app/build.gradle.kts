@@ -450,7 +450,7 @@ dependencies {
     implementation(projects.pass.featurePasskeys)
     implementation(projects.pass.featurePassword.impl)
     implementation(projects.pass.featureProfile.impl)
-    implementation(projects.pass.featureSettings.impl)
+    implementation(projects.pass.features.settings)
     implementation(projects.pass.featureSearchOptions.api)
     implementation(projects.pass.featureSearchOptions.impl)
     implementation(projects.pass.featureSelectItem)

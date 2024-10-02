@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuretrial.impl
+package proton.android.pass.features.trial
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,6 +36,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun TrialFeatures(modifier: Modifier = Modifier) {
@@ -68,7 +69,7 @@ fun TrialFeatures(modifier: Modifier = Modifier) {
             icon = {
                 Icon(
                     modifier = Modifier.padding(start = Spacing.extraSmall), // Needed to match alignment with 1
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_lock),
+                    painter = painterResource(CoreR.drawable.ic_proton_lock),
                     contentDescription = null,
                     tint = PassTheme.colors.loginInteractionNorm
                 )
@@ -81,7 +82,7 @@ fun TrialFeatures(modifier: Modifier = Modifier) {
             icon = {
                 Icon(
                     modifier = Modifier.padding(start = Spacing.extraSmall), // Needed to match alignment with 1
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_list_bullets),
+                    painter = painterResource(CoreR.drawable.ic_proton_list_bullets),
                     contentDescription = null,
                     tint = PassTheme.colors.aliasInteractionNormMajor2
                 )

@@ -114,7 +114,7 @@ dependencies {
     implementation(projects.pass.featureSearchOptions.api)
     implementation(projects.pass.featureSearchOptions.impl)
     implementation(projects.pass.featureSelectItem)
-    implementation(projects.pass.featureVault.impl)
+    implementation(projects.pass.features.vault)
     implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)

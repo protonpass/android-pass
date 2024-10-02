@@ -7,15 +7,14 @@ plugins {
 }
 
 android {
-    namespace = "proton.android.pass.featuretrial.impl"
+    namespace = "proton.android.pass.features.trial"
     compileSdk = libs.versions.compileSdk.get().toInt()
     
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        
         testInstrumentationRunner = "proton.android.pass.test.HiltRunner"
     }
-
+    
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -44,10 +43,6 @@ android {
             }
         }
     }
-}
-
-androidComponents.beforeVariants { variant ->
-    variant.enableAndroidTest = false
 }
 
 dependencies {

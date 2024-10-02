@@ -453,7 +453,7 @@ dependencies {
     implementation(projects.pass.features.settings)
     implementation(projects.pass.featureSearchOptions.api)
     implementation(projects.pass.featureSearchOptions.impl)
-    implementation(projects.pass.featureSelectItem)
+    implementation(projects.pass.features.selectItem)
     implementation(projects.pass.features.sharing)
     implementation(projects.pass.features.sync)
     implementation(projects.pass.features.trial)

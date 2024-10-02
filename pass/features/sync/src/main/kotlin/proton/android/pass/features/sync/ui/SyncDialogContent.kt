@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresync.impl.ui
+package proton.android.pass.features.sync.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
@@ -38,8 +38,8 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.headlineNorm
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.featuresync.impl.R
-import proton.android.pass.featuresync.impl.presentation.SyncDialogState
+import proton.android.pass.features.sync.R
+import proton.android.pass.features.sync.presentation.SyncDialogState
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable

@@ -230,9 +230,9 @@ import proton.android.pass.featuresharing.impl.manage.bottomsheet.InviteTypeValu
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.MemberOptionsBottomSheet
 import proton.android.pass.featuresharing.impl.sharingGraph
 import proton.android.pass.featuresharing.impl.sharingpermissions.bottomsheet.SharingEditPermissions
-import proton.android.pass.featuresync.impl.navigation.SyncNavDestination
-import proton.android.pass.featuresync.impl.navigation.SyncNavItem
-import proton.android.pass.featuresync.impl.navigation.syncNavGraph
+import proton.android.pass.features.sync.navigation.SyncNavDestination
+import proton.android.pass.features.sync.navigation.SyncNavItem
+import proton.android.pass.features.sync.navigation.syncNavGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.CommonNavArgKey
 import proton.android.pass.ui.AppNavigation

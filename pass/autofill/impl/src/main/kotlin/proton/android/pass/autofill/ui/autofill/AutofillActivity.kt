@@ -91,9 +91,7 @@ class AutofillActivity : FragmentActivity() {
                                 AutofillNavigation.Cancel -> onAutofillCancel()
                                 is AutofillNavigation.SendResponse -> onAutofillSuccess(it.mappings)
                                 AutofillNavigation.Upgrade -> viewModel.upgrade()
-                                AutofillNavigation.ForceSignOut -> {
-                                    viewModel.signOut()
-                                }
+                                is AutofillNavigation.ForceSignOut -> viewModel.signOut(it.userId)
                             }
                         }
                     )

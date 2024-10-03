@@ -85,9 +85,8 @@ class CreatePasskeyActivity : FragmentActivity() {
                                 CreatePasskeyNavigation.Cancel -> {
                                     sendResponse(CreatePasskeyResponse.Cancel)
                                 }
-                                CreatePasskeyNavigation.ForceSignOut -> {
-                                    viewModel.signOut()
-                                }
+                                is CreatePasskeyNavigation.ForceSignOut ->
+                                    viewModel.signOut(it.userId)
 
                                 CreatePasskeyNavigation.Upgrade -> {
                                     viewModel.upgrade()

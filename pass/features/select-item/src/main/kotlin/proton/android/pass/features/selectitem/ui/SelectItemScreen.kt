@@ -59,8 +59,13 @@ fun SelectItemScreen(
                     viewModel.onItemClicked(event.item)
                 }
 
-                is SelectItemEvent.ItemOptionsClicked ->
-                    onNavigate(SelectItemNavigation.ItemOptions(event.item.shareId, event.item.id))
+                is SelectItemEvent.ItemOptionsClicked -> onNavigate(
+                    SelectItemNavigation.ItemOptions(
+                        event.item.userId,
+                        event.item.shareId,
+                        event.item.id
+                    )
+                )
 
                 is SelectItemEvent.SearchQueryChange -> viewModel.onSearchQueryChange(event.query)
                 SelectItemEvent.EnterSearch -> viewModel.onEnterSearch()

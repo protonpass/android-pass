@@ -23,36 +23,37 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemContents
 
 @Stable
 internal data class ItemOptionsState(
     internal val event: ItemOptionsEvent,
     internal val canModify: Boolean,
-    private val loginItemTypeOption: Option<ItemType.Login>,
+    private val loginItemContentsOption: Option<ItemContents.Login>,
     private val isLoadingState: IsLoadingState
 ) {
 
-    internal val email: String = when (loginItemTypeOption) {
+    internal val email: String = when (loginItemContentsOption) {
         None -> ""
-        is Some -> loginItemTypeOption.value.itemEmail
+        is Some -> loginItemContentsOption.value.itemEmail
     }
 
     internal val hasEmail: Boolean = email.isNotEmpty()
 
-    internal val username: String = when (loginItemTypeOption) {
+    internal val username: String = when (loginItemContentsOption) {
         None -> ""
-        is Some -> loginItemTypeOption.value.itemUsername
+        is Some -> loginItemContentsOption.value.itemUsername
     }
 
     internal val hasUsername: Boolean = username.isNotEmpty()
 
-    internal val password: String = when (loginItemTypeOption) {
-        None -> ""
-        is Some -> loginItemTypeOption.value.password
+    internal val hiddenStatePassword: HiddenState = when (loginItemContentsOption) {
+        None -> HiddenState.Empty("")
+        is Some -> loginItemContentsOption.value.password
     }
 
-    internal val hasPassword: Boolean = password.isNotEmpty()
+    internal val hasPassword: Boolean = hiddenStatePassword !is HiddenState.Empty
 
     internal val isLoading: Boolean = isLoadingState.value()
 
@@ -62,7 +63,7 @@ internal data class ItemOptionsState(
             isLoadingState = IsLoadingState.NotLoading,
             event = ItemOptionsEvent.Idle,
             canModify = false,
-            loginItemTypeOption = None
+            loginItemContentsOption = None
         )
 
     }

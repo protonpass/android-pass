@@ -28,7 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 sealed interface EnterPinNavigation {
 
-    data object Close : EnterPinNavigation
+    data object CloseBottomsheet : EnterPinNavigation
 
     data object ForceSignOutAllUsers : EnterPinNavigation
 
@@ -49,7 +49,7 @@ fun EnterPinBottomsheet(
     LaunchedEffect(event) {
         when (event) {
             is EnterPinEvent.ForceSignOutAllUsers -> onNavigate(EnterPinNavigation.ForceSignOutAllUsers)
-            is EnterPinEvent.ForcePassword -> onNavigate(EnterPinNavigation.Close)
+            is EnterPinEvent.ForcePassword -> onNavigate(EnterPinNavigation.CloseBottomsheet)
             is EnterPinEvent.Success -> onNavigate(EnterPinNavigation.Success(event.origin))
             EnterPinEvent.Unknown,
             null -> {

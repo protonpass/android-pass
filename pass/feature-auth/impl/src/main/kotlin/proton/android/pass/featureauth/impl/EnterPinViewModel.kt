@@ -44,6 +44,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.usecases.CheckPin
+import proton.android.pass.featureauth.impl.EnterPinSnackbarMessage.PinTooManyAttemptsDismissError
 import proton.android.pass.featureauth.impl.EnterPinSnackbarMessage.PinTooManyAttemptsError
 import proton.android.pass.featureauth.impl.EnterPinUiState.NotInitialised
 import proton.android.pass.featureauth.impl.PinConstants.MAX_PIN_ATTEMPTS
@@ -126,8 +127,10 @@ class EnterPinViewModel @Inject constructor(
                         AuthOrigin.AUTO_LOCK,
                         AuthOrigin.EXTRA_PASSWORD_CONFIGURE,
                         AuthOrigin.EXTRA_PASSWORD_LOGIN,
-                        AuthOrigin.EXTRA_PASSWORD_REMOVE ->
+                        AuthOrigin.EXTRA_PASSWORD_REMOVE -> {
+                            snackbarDispatcher(PinTooManyAttemptsDismissError)
                             eventState.update { EnterPinEvent.ForcePassword(userId) }
+                        }
                     }
                 } else {
                     pinErrorState.update { PinError.PinIncorrect(remainingAttempts).some() }

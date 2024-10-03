@@ -24,14 +24,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavDestination
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsNavDestination
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.presentation.ItemOptionsEvent
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.presentation.ItemOptionsViewModel
 
 @Composable
 fun ItemOptionsBottomSheet(
     modifier: Modifier = Modifier,
-    onNavigate: (ItemOptionsBottomSheetNavDestination) -> Unit,
+    onNavigate: (ItemOptionsNavDestination) -> Unit,
     viewModel: ItemOptionsViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by stateFlow.collectAsStateWithLifecycle()
@@ -39,7 +39,7 @@ fun ItemOptionsBottomSheet(
     LaunchedEffect(state.event) {
         when (state.event) {
             ItemOptionsEvent.Idle -> {}
-            ItemOptionsEvent.Close -> onNavigate(ItemOptionsBottomSheetNavDestination.Dismiss)
+            ItemOptionsEvent.Close -> onNavigate(ItemOptionsNavDestination.Dismiss)
         }
     }
 

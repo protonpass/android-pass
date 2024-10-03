@@ -216,7 +216,7 @@ internal class PlanRepositoryImplTest {
                 aliasMonitorEnabled = userAccessResponse.accessResponse.monitorResponse.aliasMonitorEnabled,
                 minVersionUpgrade = userAccessResponse.accessResponse.minVersionUpgrade,
                 isSimpleLoginSyncEnabled = userAccessResponse.accessResponse.userData.isAliasSyncEnabled,
-                simpleLoginSyncDefaultShareId = userAccessResponse.accessResponse.userData.defaultShareID,
+                simpleLoginSyncDefaultShareId = userAccessResponse.accessResponse.userData.defaultShareID.orEmpty(),
                 simpleLoginSyncPendingAliasCount = userAccessResponse.accessResponse.userData.pendingAliasToSync
 
             )

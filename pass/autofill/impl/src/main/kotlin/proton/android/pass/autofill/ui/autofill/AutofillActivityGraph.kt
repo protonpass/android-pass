@@ -132,7 +132,7 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 AuthNavigation.Dismissed -> onNavigate(AutofillNavigation.Cancel)
                 AuthNavigation.Failed -> onNavigate(AutofillNavigation.Cancel)
-                is AuthNavigation.ForceSignOut -> onNavigate(AutofillNavigation.ForceSignOut)
+                is AuthNavigation.ForceSignOut -> onNavigate(AutofillNavigation.ForceSignOut(it.userId))
                 is AuthNavigation.EnterPin -> appNavigator.navigate(
                     destination = EnterPin,
                     route = EnterPin.buildRoute(it.origin)

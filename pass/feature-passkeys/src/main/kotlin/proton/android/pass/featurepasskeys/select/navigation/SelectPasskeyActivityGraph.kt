@@ -61,7 +61,8 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
                 }
                 AuthNavigation.Dismissed -> onNavigate(SelectPasskeyNavigation.Cancel)
                 AuthNavigation.Failed -> onNavigate(SelectPasskeyNavigation.Cancel)
-                is AuthNavigation.ForceSignOut -> onNavigate(SelectPasskeyNavigation.ForceSignOut)
+                is AuthNavigation.ForceSignOut ->
+                    onNavigate(SelectPasskeyNavigation.ForceSignOut(it.userId))
                 is AuthNavigation.EnterPin -> appNavigator.navigate(
                     destination = EnterPin,
                     route = EnterPin.buildRoute(it.origin)

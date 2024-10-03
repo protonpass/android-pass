@@ -33,7 +33,10 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getAccounts
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
 import proton.android.pass.autofill.entities.AutofillAppState
@@ -47,6 +50,7 @@ import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.require
 import proton.android.pass.notifications.api.ToastManager
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -58,7 +62,8 @@ class AutofillActivityViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val toastManager: ToastManager,
     private val savedStateHandle: SavedStateHandle,
-    preferenceRepository: UserPreferencesRepository,
+    private val internalSettingsRepository: InternalSettingsRepository,
+    userPreferencesRepository: UserPreferencesRepository,
     needsBiometricAuth: NeedsBiometricAuth
 ) : ViewModel() {
 
@@ -66,11 +71,11 @@ class AutofillActivityViewModel @Inject constructor(
 
     private val appInitialState = getAutofillAppState()
 
-    private val copyTotpToClipboardPreferenceState = preferenceRepository
+    private val copyTotpToClipboardPreferenceState = userPreferencesRepository
         .getCopyTotpToClipboardEnabled()
         .distinctUntilChanged()
 
-    private val themePreferenceState: Flow<ThemePreference> = preferenceRepository
+    private val themePreferenceState: Flow<ThemePreference> = userPreferencesRepository
         .getThemePreference()
         .distinctUntilChanged()
 
@@ -107,14 +112,17 @@ class AutofillActivityViewModel @Inject constructor(
         accountOrchestrators.start(Orchestrator.PlansOrchestrator)
     }
 
-    fun signOut() = viewModelScope.launch {
-        val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
-        if (primaryUserId != null) {
-            accountManager.disableAccount(primaryUserId)
-            toastManager.showToast(R.string.autofill_user_logged_out)
-        }
+    fun signOut(userId: UserId) = viewModelScope.launch {
+        val accounts = accountManager.getAccounts(AccountState.Ready).firstOrNull() ?: emptyList()
+        val hasAccountsLeft = accounts.filterNot { it.userId == userId }.isNotEmpty()
+        internalSettingsRepository.setMasterPasswordAttemptsCount(userId, 0)
 
-        closeScreenFlow.update { true }
+        accountManager.disableAccount(userId)
+        toastManager.showToast(R.string.autofill_user_logged_out)
+
+        if (hasAccountsLeft.not()) {
+            closeScreenFlow.update { true }
+        }
     }
 
     private fun getAutofillAppState(): AppState {

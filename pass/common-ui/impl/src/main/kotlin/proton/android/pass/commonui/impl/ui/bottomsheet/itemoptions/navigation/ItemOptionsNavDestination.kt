@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,12 +18,8 @@
 
 package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation
 
-import androidx.navigation.NavGraphBuilder
-import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ui.ItemOptionsBottomSheet
-import proton.android.pass.navigation.api.bottomSheet
+sealed interface ItemOptionsNavDestination {
 
-fun NavGraphBuilder.itemOptionsBottomSheetNavGraph(onNavigate: (ItemOptionsBottomSheetNavDestination) -> Unit) {
-    bottomSheet(ItemOptionsBottomSheetNavItem) {
-        ItemOptionsBottomSheet(onNavigate = onNavigate)
-    }
+    data object Dismiss : ItemOptionsNavDestination
+
 }

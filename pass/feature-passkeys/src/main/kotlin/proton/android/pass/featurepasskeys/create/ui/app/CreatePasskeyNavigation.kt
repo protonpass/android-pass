@@ -18,10 +18,15 @@
 
 package proton.android.pass.featurepasskeys.create.ui.app
 
+import me.proton.core.domain.entity.UserId
+
 sealed interface CreatePasskeyNavigation {
 
     data object Cancel : CreatePasskeyNavigation
-    data object ForceSignOut : CreatePasskeyNavigation
+
+    @JvmInline
+    value class ForceSignOut(val userId: UserId) : CreatePasskeyNavigation
+
     data object Upgrade : CreatePasskeyNavigation
 
     @JvmInline

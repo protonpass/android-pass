@@ -71,9 +71,7 @@ class AutoSaveActivity : FragmentActivity() {
                         AutosaveNavigation.Success -> finishApp()
                         AutosaveNavigation.Cancel -> finishApp()
                         AutosaveNavigation.Upgrade -> { viewModel.upgrade() }
-                        AutosaveNavigation.ForceSignOut -> {
-                            viewModel.signOut()
-                        }
+                        is AutosaveNavigation.ForceSignOut -> viewModel.signOut(it.userId)
                     }
                 }
             )

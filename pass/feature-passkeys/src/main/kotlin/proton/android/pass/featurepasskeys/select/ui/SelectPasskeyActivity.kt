@@ -83,9 +83,8 @@ class SelectPasskeyActivity : FragmentActivity() {
                                     sendResponse(null)
                                 }
 
-                                SelectPasskeyNavigation.ForceSignOut -> {
-                                    viewModel.signOut()
-                                }
+                                is SelectPasskeyNavigation.ForceSignOut ->
+                                    viewModel.signOut(it.userId)
 
                                 SelectPasskeyNavigation.Upgrade -> {
                                     viewModel.upgrade()

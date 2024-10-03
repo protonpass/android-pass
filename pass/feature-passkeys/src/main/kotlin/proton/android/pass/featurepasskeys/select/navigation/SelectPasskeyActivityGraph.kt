@@ -20,9 +20,9 @@ package proton.android.pass.featurepasskeys.select.navigation
 
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.None
-import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsBottomSheet
-import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsNavigation
-import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.itemOptionsGraph
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavDestination
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavItem
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.itemOptionsBottomSheetNavGraph
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
@@ -39,7 +39,13 @@ import proton.android.pass.featuresearchoptions.impl.SortingLocation
 import proton.android.pass.featuresearchoptions.impl.searchOptionsGraph
 import proton.android.pass.navigation.api.AppNavigator
 
-@Suppress("CyclomaticComplexMethod", "ComplexMethod", "LongMethod", "LongParameterList", "ThrowsCount")
+@Suppress(
+    "CyclomaticComplexMethod",
+    "ComplexMethod",
+    "LongMethod",
+    "LongParameterList",
+    "ThrowsCount"
+)
 fun NavGraphBuilder.selectPasskeyActivityGraph(
     appNavigator: AppNavigator,
     domain: String,
@@ -59,6 +65,7 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
                         onEvent(SelectPasskeyEvent.OnAuthPerformed)
                     }
                 }
+
                 AuthNavigation.Dismissed -> onNavigate(SelectPasskeyNavigation.Cancel)
                 AuthNavigation.Failed -> onNavigate(SelectPasskeyNavigation.Cancel)
                 is AuthNavigation.ForceSignOut ->
@@ -111,8 +118,8 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
 
                 is SelectItemNavigation.ItemOptions -> {
                     appNavigator.navigate(
-                        destination = ItemOptionsBottomSheet,
-                        route = ItemOptionsBottomSheet.createRoute(it.userId, it.shareId, it.itemId)
+                        destination = ItemOptionsBottomSheetNavItem,
+                        route = ItemOptionsBottomSheetNavItem.createRoute(it.userId, it.shareId, it.itemId)
                     )
                 }
 
@@ -163,9 +170,9 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
         }
     )
 
-    itemOptionsGraph {
-        when (it) {
-            ItemOptionsNavigation.Close -> dismissBottomSheet {
+    itemOptionsBottomSheetNavGraph { destination ->
+        when (destination) {
+            ItemOptionsBottomSheetNavDestination.Dismiss -> dismissBottomSheet {
                 appNavigator.navigateBack(comesFromBottomsheet = true)
             }
         }

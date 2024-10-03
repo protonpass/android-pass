@@ -20,6 +20,7 @@ package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions
 
 import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -33,10 +34,14 @@ sealed interface ItemOptionsNavigation {
 
 object ItemOptionsBottomSheet : NavItem(
     baseRoute = "itemoptions/bottomsheet",
-    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId),
+    navArgIds = listOf(CommonNavArgId.UserId, CommonNavArgId.ShareId, CommonNavArgId.ItemId),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun createRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+    fun createRoute(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ) = "$baseRoute/${userId.id}/${shareId.id}/${itemId.id}"
 }
 
 fun NavGraphBuilder.itemOptionsGraph(onNavigate: (ItemOptionsNavigation) -> Unit) {

@@ -20,6 +20,7 @@ package proton.android.pass.features.selectitem.navigation
 
 import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -104,7 +105,7 @@ sealed interface SelectItemNavigation {
     @JvmInline
     value class SuggestionSelected(val item: ItemUiModel) : SelectItemNavigation
     data object SortingBottomsheet : SelectItemNavigation
-    data class ItemOptions(val shareId: ShareId, val itemId: ItemId) : SelectItemNavigation
+    data class ItemOptions(val userId: UserId, val shareId: ShareId, val itemId: ItemId) : SelectItemNavigation
     data object Cancel : SelectItemNavigation
     data object Upgrade : SelectItemNavigation
 }

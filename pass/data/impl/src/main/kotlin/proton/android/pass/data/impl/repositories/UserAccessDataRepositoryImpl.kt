@@ -70,7 +70,7 @@ class UserAccessDataRepositoryImpl @Inject constructor(
         protonMonitorEnabled = accessResponse.monitorResponse.protonMonitorEnabled,
         aliasMonitorEnabled = accessResponse.monitorResponse.aliasMonitorEnabled,
         isSimpleLoginSyncEnabled = accessResponse.userData.isAliasSyncEnabled,
-        simpleLoginSyncDefaultShareId = accessResponse.userData.defaultShareID,
+        simpleLoginSyncDefaultShareId = accessResponse.userData.defaultShareID.orEmpty(),
         simpleLoginSyncPendingAliasCount = accessResponse.userData.pendingAliasToSync
     )
 

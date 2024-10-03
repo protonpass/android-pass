@@ -76,7 +76,7 @@ data class PlanResponse(
 @Serializable
 data class UserDataResponse(
     @SerialName("DefaultShareID")
-    val defaultShareID: String,
+    val defaultShareID: String?,
     @SerialName("AliasSyncEnabled")
     val isAliasSyncEnabled: Boolean,
     @SerialName("PendingAliasToSync")

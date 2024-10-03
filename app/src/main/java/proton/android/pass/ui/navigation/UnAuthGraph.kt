@@ -51,11 +51,11 @@ fun NavGraphBuilder.unAuthGraph(
     ) {
         if (userId != null) {
             composable(AuthWithDefault(origin, userId)) {
-                SharedAuthScreen(onNavigate, appNavigator)
+                SharedAuthScreen(onNavigate, appNavigator, dismissBottomSheet)
             }
         } else {
             composable(Auth) {
-                SharedAuthScreen(onNavigate, appNavigator)
+                SharedAuthScreen(onNavigate, appNavigator, dismissBottomSheet)
             }
         }
         bottomSheet(EnterPin) {
@@ -63,7 +63,7 @@ fun NavGraphBuilder.unAuthGraph(
                 onNavigate = {
                     when (it) {
                         is EnterPinNavigation.Success -> dismissBottomSheet { appNavigator.navigateBack() }
-                        is EnterPinNavigation.Close -> dismissBottomSheet { appNavigator.navigateBack() }
+                        is EnterPinNavigation.CloseBottomsheet -> dismissBottomSheet { appNavigator.navigateBack() }
                         EnterPinNavigation.ForceSignOutAllUsers -> onNavigate(AppNavigation.ForceSignOutAllUsers)
                     }
                 }
@@ -73,7 +73,11 @@ fun NavGraphBuilder.unAuthGraph(
 }
 
 @Composable
-private fun SharedAuthScreen(onNavigate: (AppNavigation) -> Unit, appNavigator: AppNavigator) {
+private fun SharedAuthScreen(
+    onNavigate: (AppNavigation) -> Unit,
+    appNavigator: AppNavigator,
+    dismissBottomSheet: (() -> Unit) -> Unit
+) {
     AuthScreen(
         canLogout = true,
         navigation = {
@@ -94,6 +98,9 @@ private fun SharedAuthScreen(onNavigate: (AppNavigation) -> Unit, appNavigator: 
                 )
 
                 AuthNavigation.ForceSignOutAllUsers -> onNavigate(AppNavigation.ForceSignOutAllUsers)
+                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
             }
         }
     )

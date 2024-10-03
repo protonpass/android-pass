@@ -32,8 +32,8 @@ import proton.android.pass.autofill.extensions.toAutofillItem
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavItem
-import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavDestination
-import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.itemOptionsBottomSheetNavGraph
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsNavDestination
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.itemOptionsNavGraph
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
@@ -546,9 +546,9 @@ fun NavGraphBuilder.autofillActivityGraph(
         }
     )
 
-    itemOptionsBottomSheetNavGraph { destination ->
+    itemOptionsNavGraph { destination ->
         when (destination) {
-            ItemOptionsBottomSheetNavDestination.Dismiss -> dismissBottomSheet {
+            ItemOptionsNavDestination.Dismiss -> dismissBottomSheet {
                 appNavigator.navigateBack(comesFromBottomsheet = true)
             }
         }

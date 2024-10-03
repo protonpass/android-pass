@@ -50,6 +50,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 @Composable
 internal fun SimpleLoginSyncMailboxCreateContent(
     modifier: Modifier = Modifier,
+    mailboxEmail: String,
     state: SimpleLoginSyncMailboxCreateState,
     onUiEvent: (SimpleLoginSyncMailboxCreateUiEvent) -> Unit
 ) = with(state) {
@@ -68,8 +69,8 @@ internal fun SimpleLoginSyncMailboxCreateContent(
                             vertical = Spacing.small
                         ),
                         isLoading = isLoading,
-                        buttonEnabled = canCreateMailbox,
-                        color = if (canCreateMailbox) {
+                        buttonEnabled = canCreateMailbox(mailboxEmail),
+                        color = if (canCreateMailbox(mailboxEmail)) {
                             PassTheme.colors.interactionNormMajor1
                         } else {
                             PassTheme.colors.interactionNormMajor1.copy(alpha = 0.6f)

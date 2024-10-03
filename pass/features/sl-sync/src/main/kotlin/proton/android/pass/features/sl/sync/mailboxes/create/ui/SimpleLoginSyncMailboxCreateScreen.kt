@@ -46,6 +46,7 @@ fun SimpleLoginSyncMailboxCreateScreen(
     }
 
     SimpleLoginSyncMailboxCreateContent(
+        mailboxEmail = mailboxEmailState,
         state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {

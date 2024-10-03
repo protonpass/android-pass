@@ -23,7 +23,6 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 @Stable
 internal data class SimpleLoginSyncMailboxCreateState(
-    internal val mailboxEmail: String,
     internal val showInvalidMailboxEmailError: Boolean,
     internal val event: SimpleLoginSyncMailboxCreateEvent,
     private val isLoadingState: IsLoadingState
@@ -33,14 +32,13 @@ internal data class SimpleLoginSyncMailboxCreateState(
 
     internal val canEditMailboxEmail: Boolean = !isLoading
 
-    internal val canCreateMailbox: Boolean = mailboxEmail.isNotBlank()
+    internal fun canCreateMailbox(mailboxEmail: String): Boolean = mailboxEmail.isNotEmpty()
         .and(!isLoading)
         .and(!showInvalidMailboxEmailError)
 
     internal companion object {
 
         internal val Initial = SimpleLoginSyncMailboxCreateState(
-            mailboxEmail = "",
             event = SimpleLoginSyncMailboxCreateEvent.Idle,
             showInvalidMailboxEmailError = false,
             isLoadingState = IsLoadingState.NotLoading

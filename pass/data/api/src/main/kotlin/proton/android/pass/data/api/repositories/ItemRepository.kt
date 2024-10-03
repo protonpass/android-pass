@@ -116,6 +116,7 @@ interface ItemRepository {
     suspend fun clearTrash(userId: UserId)
     suspend fun restoreItems(userId: UserId)
     suspend fun addPackageAndUrlToItem(
+        userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
         packageInfo: Option<PackageInfo>,

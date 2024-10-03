@@ -94,15 +94,23 @@ fun LoginOptionsBottomSheetContents(
             }
         )
 
-        mutableListOf<BottomSheetItem>().apply {
+        buildList {
             if (isUsernameSplitEnabled) {
-                add(copyEmail(contents.itemEmail, onCopyEmail))
-                add(copyUsername(contents.itemUsername, onCopyUsername))
+                if (contents.itemEmail.isNotEmpty()) {
+                    add(copyEmail(contents.itemEmail, onCopyEmail))
+                }
+                if (contents.itemUsername.isNotEmpty()) {
+                    add(copyUsername(contents.itemUsername, onCopyUsername))
+                }
             } else {
-                add(copyUsername(contents.itemEmail, onCopyUsername))
+                if (contents.itemEmail.isNotEmpty()) {
+                    add(copyUsername(contents.itemEmail, onCopyUsername))
+                }
             }
 
-            add(copyPassword(contents.password.encrypted, onCopyPassword))
+            if (contents.password !is HiddenState.Empty) {
+                add(copyPassword(contents.password.encrypted, onCopyPassword))
+            }
 
             if (itemUiModel.isPinned) {
                 add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })

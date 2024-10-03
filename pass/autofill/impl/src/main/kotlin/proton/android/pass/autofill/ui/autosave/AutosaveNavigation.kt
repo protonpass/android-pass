@@ -18,9 +18,13 @@
 
 package proton.android.pass.autofill.ui.autosave
 
+import me.proton.core.domain.entity.UserId
+
 sealed interface AutosaveNavigation {
     data object Success : AutosaveNavigation
     data object Cancel : AutosaveNavigation
     data object Upgrade : AutosaveNavigation
-    data object ForceSignOut : AutosaveNavigation
+
+    @JvmInline
+    value class ForceSignOut(val userId: UserId) : AutosaveNavigation
 }

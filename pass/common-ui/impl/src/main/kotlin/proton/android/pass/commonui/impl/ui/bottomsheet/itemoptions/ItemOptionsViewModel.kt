@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -61,6 +62,7 @@ class ItemOptionsViewModel @Inject constructor(
     getVaultByShareId: GetVaultByShareId
 ) : ViewModel() {
 
+    private val userId = UserId(getNavArg(CommonNavArgId.UserId.key))
     private val shareId = ShareId(getNavArg(CommonNavArgId.ShareId.key))
     private val itemId = ItemId(getNavArg(CommonNavArgId.ItemId.key))
 
@@ -69,7 +71,7 @@ class ItemOptionsViewModel @Inject constructor(
     private val loadingFlow: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
 
-    private val canModifyFlow: Flow<Boolean> = getVaultByShareId(shareId = shareId)
+    private val canModifyFlow: Flow<Boolean> = getVaultByShareId(userId = userId, shareId = shareId)
         .map { vault -> vault.role.toPermissions().canUpdate() }
         .catch {
             PassLogger.w(TAG, "Error getting vault by id")

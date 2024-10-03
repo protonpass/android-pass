@@ -41,7 +41,6 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.transpose
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.crypto.api.error.CryptoException
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.ItemMigrationContent
 import proton.android.pass.crypto.api.usecases.ItemMigrationHistoryContent
@@ -604,6 +603,7 @@ class ItemRepositoryImpl @Inject constructor(
 
     @Suppress("ReturnCount")
     override suspend fun addPackageAndUrlToItem(
+        userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
         packageInfo: Option<PackageInfo>,
@@ -630,8 +630,6 @@ class ItemRepositoryImpl @Inject constructor(
             return item
         }
 
-        val userId = accountManager.getPrimaryUserId().first()
-            ?: throw CryptoException("UserId cannot be null")
         val share = shareRepository.getById(userId, shareId)
         return performUpdate(
             userId,

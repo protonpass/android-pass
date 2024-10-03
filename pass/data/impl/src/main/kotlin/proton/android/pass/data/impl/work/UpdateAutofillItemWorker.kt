@@ -25,6 +25,7 @@ import androidx.work.Data
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
@@ -49,9 +50,12 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
     override suspend fun doWork(): Result {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
         return getData(workerParameters.inputData)
+            .map { inputData: InputData -> executeWork(inputData) }
             .fold(
-                onSuccess = { inputData ->
-                    run(inputData).also { PassLogger.i(TAG, "Completed $TAG work") }
+                onSuccess = { _ ->
+                    Result.success().also {
+                        PassLogger.i(TAG, "Completed $TAG work")
+                    }
                 },
                 onFailure = { throwable ->
                     Result.failure().also { PassLogger.w(TAG, throwable) }
@@ -59,56 +63,59 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
             )
     }
 
-    private suspend fun run(inputData: InputData): Result = if (inputData.shouldAssociate) {
-        updateItemWithPackageNameOrUrl(inputData)
-    } else {
-        updateLastUsed(inputData)
-    }
+    private suspend fun executeWork(inputData: InputData) = getUserID(inputData)
+        .map { userID ->
+            if (inputData.shouldAssociate) {
+                updateItemWithPackageNameOrUrl(userID, inputData)
+            } else {
+                updateLastUsed(userID, inputData)
+            }
+        }
 
-    private suspend fun updateItemWithPackageNameOrUrl(inputData: InputData): Result {
+    private suspend fun updateItemWithPackageNameOrUrl(userId: UserId, inputData: InputData) = runCatching {
         val message = "Adding package and url to item [itemId=${inputData.itemId}]" +
             " [packageInfo=${inputData.packageInfo}] " +
             " [url=${inputData.url}]"
         PassLogger.d(TAG, message)
-
-        return runCatching {
-            itemRepository.addPackageAndUrlToItem(
-                shareId = inputData.shareId,
-                itemId = inputData.itemId,
-                packageInfo = inputData.packageInfo,
-                url = inputData.url
-            )
-        }.mapCatching {
-            updateLastUsed(inputData)
-        }.fold(
+        itemRepository.addPackageAndUrlToItem(
+            userId = userId,
+            shareId = inputData.shareId,
+            itemId = inputData.itemId,
+            packageInfo = inputData.packageInfo,
+            url = inputData.url
+        )
+    }
+        .map { updateLastUsed(userId = userId, inputData = inputData) }
+        .fold(
             onSuccess = {
-                PassLogger.i(TAG, "Successfully added package or url and updated last used item")
-                Result.success()
+                PassLogger.i(
+                    TAG,
+                    "Successfully added package or url and updated last used item"
+                )
             },
             onFailure = {
                 PassLogger.w(TAG, "Failed to add package or url and update last used item")
                 PassLogger.w(TAG, it)
-                Result.failure()
             }
         )
+
+    private suspend fun getUserID(inputData: InputData) = runCatching {
+        val userIdOption = itemRepository.findUserId(inputData.shareId, inputData.itemId)
+        userIdOption.value() ?: throw IllegalStateException("User not found")
     }
 
-    private suspend fun updateLastUsed(inputData: InputData): Result {
+    private suspend fun updateLastUsed(userId: UserId, inputData: InputData) {
         PassLogger.d(TAG, "Start update last used")
         return runCatching {
-            val userIdOption = itemRepository.findUserId(inputData.shareId, inputData.itemId)
-            val userId = userIdOption.value() ?: throw IllegalStateException("User not found")
             val share = shareRepository.getById(userId, inputData.shareId)
             itemRepository.updateItemLastUsed(share.vaultId, inputData.itemId)
         }.fold(
             onSuccess = {
                 PassLogger.d(TAG, "Completed update last used")
-                Result.success()
             },
             onFailure = {
                 PassLogger.w(TAG, "Failed update last used")
                 PassLogger.w(TAG, it)
-                Result.failure()
             }
         )
     }

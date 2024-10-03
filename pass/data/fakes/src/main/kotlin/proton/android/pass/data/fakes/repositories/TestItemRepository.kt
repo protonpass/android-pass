@@ -171,6 +171,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
     }
 
     override suspend fun addPackageAndUrlToItem(
+        userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
         packageInfo: Option<PackageInfo>,

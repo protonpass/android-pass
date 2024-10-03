@@ -71,6 +71,10 @@ fun NavGraphBuilder.autosaveActivityGraph(
 
                 is AuthNavigation.SignOut,
                 AuthNavigation.ForceSignOutAllUsers -> {}
+
+                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
             }
         }
     )

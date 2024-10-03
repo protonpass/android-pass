@@ -18,13 +18,13 @@
   -->
 
 <resources>
-
+    <string name="bottomsheet_copy_email">Copy email</string>
     <string name="bottomsheet_copy_password">Copy password</string>
     <string name="bottomsheet_copy_username">Copy username</string>
 
     <string name="snackbar_item_move_to_trash_success">Item moved to trash</string>
     <string name="snackbar_item_move_to_trash_error">Could not move to trash</string>
+    <string name="snackbar_item_copy_email_success">Email copied to clipboard</string>
     <string name="snackbar_item_copy_username_success">Username copied to clipboard</string>
     <string name="snackbar_item_copy_password_success">Password copied to clipboard</string>
-    <string name="snackbar_item_copy_clipboard_error">Could not copy to clipboard</string>
 </resources>

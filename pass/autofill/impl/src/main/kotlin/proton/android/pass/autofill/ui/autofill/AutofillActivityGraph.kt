@@ -31,9 +31,9 @@ import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.extensions.toAutofillItem
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.common.api.some
-import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsBottomSheet
-import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsNavigation
-import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.itemOptionsGraph
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavItem
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavDestination
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.itemOptionsBottomSheetNavGraph
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
@@ -172,8 +172,8 @@ fun NavGraphBuilder.autofillActivityGraph(
                     )
 
                 is SelectItemNavigation.ItemOptions -> appNavigator.navigate(
-                    destination = ItemOptionsBottomSheet,
-                    route = ItemOptionsBottomSheet.createRoute(it.userId, it.shareId, it.itemId)
+                    destination = ItemOptionsBottomSheetNavItem,
+                    route = ItemOptionsBottomSheetNavItem.createRoute(it.userId, it.shareId, it.itemId)
                 )
 
                 SelectItemNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
@@ -546,9 +546,9 @@ fun NavGraphBuilder.autofillActivityGraph(
         }
     )
 
-    itemOptionsGraph {
-        when (it) {
-            ItemOptionsNavigation.Close -> dismissBottomSheet {
+    itemOptionsBottomSheetNavGraph { destination ->
+        when (destination) {
+            ItemOptionsBottomSheetNavDestination.Dismiss -> dismissBottomSheet {
                 appNavigator.navigateBack(comesFromBottomsheet = true)
             }
         }

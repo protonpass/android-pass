@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,27 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions
+package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.presentation
 
-import androidx.compose.runtime.Stable
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+internal sealed interface ItemOptionsEvent {
 
-sealed interface ItemOptionsEvent {
-    data object Unknown : ItemOptionsEvent
+    data object Idle : ItemOptionsEvent
+
     data object Close : ItemOptionsEvent
-}
 
-@Stable
-data class ItemOptionsUiState(
-    val isLoading: IsLoadingState,
-    val event: ItemOptionsEvent,
-    val canModify: Boolean
-) {
-    companion object {
-        val Initial = ItemOptionsUiState(
-            isLoading = IsLoadingState.NotLoading,
-            event = ItemOptionsEvent.Unknown,
-            canModify = false
-        )
-    }
 }

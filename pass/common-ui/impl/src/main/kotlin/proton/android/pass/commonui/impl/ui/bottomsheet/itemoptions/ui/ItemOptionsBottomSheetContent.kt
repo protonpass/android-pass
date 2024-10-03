@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions
+package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ui
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
@@ -28,6 +28,7 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.commonui.impl.R
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.presentation.ItemOptionsState
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
@@ -37,29 +38,46 @@ import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-fun ItemOptionsBottomSheetContent(
+internal fun ItemOptionsBottomSheetContent(
     modifier: Modifier = Modifier,
-    isLoading: Boolean,
-    canModify: Boolean,
-    onCopyUsername: () -> Unit,
-    onCopyPassword: () -> Unit,
-    onTrash: () -> Unit
-) {
-    val items = mutableListOf(
-        copyToClipboard(stringResource(id = R.string.bottomsheet_copy_username), onCopyUsername),
-        copyToClipboard(stringResource(id = R.string.bottomsheet_copy_password), onCopyPassword)
-    )
+    state: ItemOptionsState,
+    onUiEvent: (ItemOptionsBottomSheetUiEvent) -> Unit
+) = with(state) {
+    buildList {
+        if (hasEmail) {
+            copyToClipboard(
+                text = stringResource(id = R.string.bottomsheet_copy_email),
+                onClick = { onUiEvent(ItemOptionsBottomSheetUiEvent.OnCopyEmailClicked) }
+            ).also(::add)
+        }
 
-    if (canModify) {
-        items += moveToTrash(isLoading, onTrash)
+        if (hasUsername) {
+            copyToClipboard(
+                text = stringResource(id = R.string.bottomsheet_copy_username),
+                onClick = { onUiEvent(ItemOptionsBottomSheetUiEvent.OnCopyUsernameClicked) }
+            ).also(::add)
+        }
+
+        if (hasPassword) {
+            copyToClipboard(
+                text = stringResource(id = R.string.bottomsheet_copy_password),
+                onClick = { onUiEvent(ItemOptionsBottomSheetUiEvent.OnCopyPasswordClicked) }
+            ).also(::add)
+        }
+
+        if (canModify) {
+            moveToTrash(
+                isLoading = isLoading,
+                onMoveToTrash = { onUiEvent(ItemOptionsBottomSheetUiEvent.OnMoveToTrashClicked) }
+            ).also(::add)
+        }
+    }.let { bottomSheetItems ->
+        BottomSheetItemList(
+            modifier = modifier.bottomSheet(),
+            items = bottomSheetItems.withDividers().toPersistentList()
+        )
     }
-
-    BottomSheetItemList(
-        modifier = modifier.bottomSheet(),
-        items = items.withDividers().toPersistentList()
-    )
 }
-
 
 internal fun moveToTrash(isLoading: Boolean, onMoveToTrash: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit

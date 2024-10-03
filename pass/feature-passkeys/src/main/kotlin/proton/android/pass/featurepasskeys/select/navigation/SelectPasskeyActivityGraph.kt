@@ -29,14 +29,14 @@ import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featurepasskeys.select.presentation.SelectPasskeyActionAfterAuth
 import proton.android.pass.featurepasskeys.select.ui.app.SelectPasskeyEvent
 import proton.android.pass.featurepasskeys.select.ui.bottomsheet.selectpasskey.selectPasskeyBottomsheetGraph
-import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
-import proton.android.pass.featuresearchoptions.impl.SortingBottomsheet
-import proton.android.pass.featuresearchoptions.impl.SortingLocation
-import proton.android.pass.featuresearchoptions.impl.searchOptionsGraph
 import proton.android.pass.features.selectitem.navigation.SelectItem
 import proton.android.pass.features.selectitem.navigation.SelectItemNavigation
 import proton.android.pass.features.selectitem.navigation.SelectItemState
 import proton.android.pass.features.selectitem.navigation.selectItemGraph
+import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
+import proton.android.pass.featuresearchoptions.impl.SortingBottomsheet
+import proton.android.pass.featuresearchoptions.impl.SortingLocation
+import proton.android.pass.featuresearchoptions.impl.searchOptionsGraph
 import proton.android.pass.navigation.api.AppNavigator
 
 @Suppress("CyclomaticComplexMethod", "ComplexMethod", "LongMethod", "LongParameterList", "ThrowsCount")
@@ -107,7 +107,7 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
                 is SelectItemNavigation.ItemOptions -> {
                     appNavigator.navigate(
                         destination = ItemOptionsBottomSheet,
-                        route = ItemOptionsBottomSheet.createRoute(it.shareId, it.itemId)
+                        route = ItemOptionsBottomSheet.createRoute(it.userId, it.shareId, it.itemId)
                     )
                 }
 

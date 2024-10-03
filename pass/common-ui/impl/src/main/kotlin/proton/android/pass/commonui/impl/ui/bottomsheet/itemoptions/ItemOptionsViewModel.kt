@@ -94,7 +94,7 @@ class ItemOptionsViewModel @Inject constructor(
 
     fun onTrash() = viewModelScope.launch {
         loadingFlow.update { IsLoadingState.Loading }
-        runCatching { trashItem(items = mapOf(shareId to listOf(itemId))) }
+        runCatching { trashItem(userId = userId, items = mapOf(shareId to listOf(itemId))) }
             .onSuccess {
                 eventFlow.update { ItemOptionsEvent.Close }
                 snackbarDispatcher(ItemOptionsSnackbarMessage.SentToTrashSuccess)

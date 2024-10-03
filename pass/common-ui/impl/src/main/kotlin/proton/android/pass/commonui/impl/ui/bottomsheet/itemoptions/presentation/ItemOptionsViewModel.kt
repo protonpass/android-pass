@@ -39,13 +39,14 @@ import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.TrashItems
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.canUpdate
 import proton.android.pass.domain.toPermissions
@@ -95,17 +96,20 @@ class ItemOptionsViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    private val loginItemTypeOptionFlow = oneShot {
+    private val loginItemContentsOptionFlow = oneShot {
         getItemById(shareId = shareId, itemId = itemId)
     }.mapLatest { item ->
-        item.content
-        (item.itemType as? ItemType.Login).toOption()
+        encryptionContextProvider.withEncryptionContext {
+            item.toItemContents(this@withEncryptionContext)
+        }.let { itemContents ->
+            (itemContents as? ItemContents.Login).toOption()
+        }
     }
 
     internal val stateFlow: StateFlow<ItemOptionsState> = combine(
         eventFlow,
         canModifyFlow,
-        loginItemTypeOptionFlow,
+        loginItemContentsOptionFlow,
         isLoadingStateFlow,
         ::ItemOptionsState
     ).stateIn(
@@ -133,11 +137,12 @@ class ItemOptionsViewModel @Inject constructor(
     }
 
     internal fun onCopyPassword() {
-        encryptionContextProvider.withEncryptionContext { decrypt(stateFlow.value.password) }
-            .also { decryptedPassword ->
-                clipboardManager.copyToClipboard(decryptedPassword, isSecure = true)
-                eventFlow.update { ItemOptionsEvent.Close }
-            }
+        encryptionContextProvider.withEncryptionContext {
+            decrypt(stateFlow.value.hiddenStatePassword.encrypted)
+        }.also { decryptedPassword ->
+            clipboardManager.copyToClipboard(decryptedPassword, isSecure = true)
+            eventFlow.update { ItemOptionsEvent.Close }
+        }
 
         viewModelScope.launch {
             snackbarDispatcher(ItemOptionsSnackbarMessage.PasswordCopiedToClipboard)

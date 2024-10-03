@@ -19,9 +19,9 @@
 package proton.android.pass.featurepasskeys.create.ui.navigation
 
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsBottomSheet
-import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsNavigation
-import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.itemOptionsGraph
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavItem
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavDestination
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.itemOptionsBottomSheetNavGraph
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
@@ -85,6 +85,7 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                     destination = EnterPin,
                     route = EnterPin.buildRoute(it.origin)
                 )
+
                 is AuthNavigation.SignOut,
                 AuthNavigation.ForceSignOutAllUsers -> {}
 
@@ -106,6 +107,7 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                         route = CreateLogin.createNavRoute()
                     )
                 }
+
                 SelectItemNavigation.Cancel -> {
                     onNavigate(CreatePasskeyNavigation.Cancel)
                 }
@@ -126,8 +128,8 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 )
 
                 is SelectItemNavigation.ItemOptions -> appNavigator.navigate(
-                    destination = ItemOptionsBottomSheet,
-                    route = ItemOptionsBottomSheet.createRoute(it.userId, it.shareId, it.itemId)
+                    destination = ItemOptionsBottomSheetNavItem,
+                    route = ItemOptionsBottomSheetNavItem.createRoute(it.userId, it.shareId, it.itemId)
                 )
 
                 SelectItemNavigation.Upgrade -> {
@@ -223,13 +225,19 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
 
                 is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
                     destination = CustomFieldOptionsBottomSheetNavItem.CreateLogin,
-                    route = CustomFieldOptionsBottomSheetNavItem.CreateLogin.buildRoute(it.index, it.currentValue)
+                    route = CustomFieldOptionsBottomSheetNavItem.CreateLogin.buildRoute(
+                        it.index,
+                        it.currentValue
+                    )
                 )
 
                 is BaseLoginNavigation.EditCustomField -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem.CreateLogin,
-                        route = EditCustomFieldNameDialogNavItem.CreateLogin.buildRoute(it.index, it.currentValue),
+                        route = EditCustomFieldNameDialogNavItem.CreateLogin.buildRoute(
+                            it.index,
+                            it.currentValue
+                        ),
                         backDestination = CreateLogin
                     )
                 }
@@ -324,7 +332,6 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
         }
     )
 
-
     searchOptionsGraph(
         onNavigateEvent = {
             when (it) {
@@ -348,12 +355,11 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
         }
     )
 
-    itemOptionsGraph {
-        when (it) {
-            ItemOptionsNavigation.Close -> dismissBottomSheet {
+    itemOptionsBottomSheetNavGraph { destination ->
+        when (destination) {
+            ItemOptionsBottomSheetNavDestination.Dismiss -> dismissBottomSheet {
                 appNavigator.navigateBack(comesFromBottomsheet = true)
             }
         }
     }
-
 }

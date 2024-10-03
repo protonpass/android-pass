@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,21 +16,43 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions
+package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.presentation
 
 import androidx.annotation.StringRes
 import proton.android.pass.commonui.impl.R
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.notifications.api.SnackbarType
 
-enum class ItemOptionsSnackbarMessage(
+internal enum class ItemOptionsSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
-    SentToTrashSuccess(R.string.snackbar_item_move_to_trash_success, SnackbarType.SUCCESS),
-    SentToTrashError(R.string.snackbar_item_move_to_trash_error, SnackbarType.ERROR),
-    UsernameCopiedToClipboard(R.string.snackbar_item_copy_username_success, SnackbarType.SUCCESS, isClipboard = true),
-    PasswordCopiedToClipboard(R.string.snackbar_item_copy_password_success, SnackbarType.SUCCESS, isClipboard = true),
-    CopyToClipboardError(R.string.snackbar_item_copy_clipboard_error, SnackbarType.ERROR)
+    SentToTrashSuccess(
+        id = R.string.snackbar_item_move_to_trash_success,
+        type = SnackbarType.SUCCESS
+    ),
+
+    SentToTrashError(
+        id = R.string.snackbar_item_move_to_trash_error,
+        type = SnackbarType.ERROR
+    ),
+
+    EmailCopiedToClipboard(
+        id = R.string.snackbar_item_copy_email_success,
+        type = SnackbarType.SUCCESS,
+        isClipboard = true
+    ),
+
+    UsernameCopiedToClipboard(
+        id = R.string.snackbar_item_copy_username_success,
+        type = SnackbarType.SUCCESS,
+        isClipboard = true
+    ),
+
+    PasswordCopiedToClipboard(
+        id = R.string.snackbar_item_copy_password_success,
+        type = SnackbarType.SUCCESS,
+        isClipboard = true
+    )
 }

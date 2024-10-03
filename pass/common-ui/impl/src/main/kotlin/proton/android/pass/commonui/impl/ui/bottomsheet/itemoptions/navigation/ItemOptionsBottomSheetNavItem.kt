@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,41 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions
+package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation
 
-import androidx.activity.compose.BackHandler
-import androidx.navigation.NavGraphBuilder
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
-import proton.android.pass.navigation.api.bottomSheet
 
-sealed interface ItemOptionsNavigation {
-    data object Close : ItemOptionsNavigation
-}
-
-object ItemOptionsBottomSheet : NavItem(
+object ItemOptionsBottomSheetNavItem : NavItem(
     baseRoute = "itemoptions/bottomsheet",
     navArgIds = listOf(CommonNavArgId.UserId, CommonNavArgId.ShareId, CommonNavArgId.ItemId),
     navItemType = NavItemType.Bottomsheet
 ) {
+
     fun createRoute(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
     ) = "$baseRoute/${userId.id}/${shareId.id}/${itemId.id}"
-}
 
-fun NavGraphBuilder.itemOptionsGraph(onNavigate: (ItemOptionsNavigation) -> Unit) {
-    bottomSheet(ItemOptionsBottomSheet) {
-        BackHandler {
-            onNavigate(ItemOptionsNavigation.Close)
-        }
-        ItemOptionsBottomSheet(
-            onNavigate = onNavigate
-        )
-    }
 }

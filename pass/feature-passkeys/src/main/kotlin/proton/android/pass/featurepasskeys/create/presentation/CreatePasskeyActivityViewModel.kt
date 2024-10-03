@@ -35,7 +35,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getAccounts
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
 import proton.android.pass.biometry.NeedsBiometricAuth
@@ -50,6 +53,7 @@ import proton.android.pass.featurepasskeys.telemetry.CreateDone
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.passkeys.api.ParseCreatePasskeyRequest
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -67,6 +71,7 @@ class CreatePasskeyActivityViewModel @Inject constructor(
     private val parseCreatePasskeyRequest: ParseCreatePasskeyRequest,
     private val toastManager: ToastManager,
     private val telemetryManager: TelemetryManager,
+    private val internalSettingsRepository: InternalSettingsRepository,
     preferenceRepository: UserPreferencesRepository,
     needsBiometricAuth: NeedsBiometricAuth
 ) : ViewModel() {
@@ -148,14 +153,17 @@ class CreatePasskeyActivityViewModel @Inject constructor(
         accountOrchestrators.start(Orchestrator.PlansOrchestrator)
     }
 
-    fun signOut() = viewModelScope.launch {
-        val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
-        if (primaryUserId != null) {
-            accountManager.disableAccount(primaryUserId)
-            toastManager.showToast(R.string.passkeys_user_logged_out)
-        }
+    fun signOut(userId: UserId) = viewModelScope.launch {
+        val accounts = accountManager.getAccounts(AccountState.Ready).firstOrNull() ?: emptyList()
+        val hasAccountsLeft = accounts.filterNot { it.userId == userId }.isNotEmpty()
+        internalSettingsRepository.setMasterPasswordAttemptsCount(userId, 0)
 
-        closeScreenFlow.update { true }
+        accountManager.disableAccount(userId)
+        toastManager.showToast(R.string.passkeys_user_logged_out)
+
+        if (hasAccountsLeft.not()) {
+            closeScreenFlow.update { true }
+        }
     }
 
     fun onResponseSent() = viewModelScope.launch {

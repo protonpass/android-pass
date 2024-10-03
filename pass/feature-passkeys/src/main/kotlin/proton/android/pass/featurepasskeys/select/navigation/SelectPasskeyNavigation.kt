@@ -18,11 +18,14 @@
 
 package proton.android.pass.featurepasskeys.select.navigation
 
+import me.proton.core.domain.entity.UserId
+
 sealed interface SelectPasskeyNavigation {
 
     data object Cancel : SelectPasskeyNavigation
 
-    data object ForceSignOut : SelectPasskeyNavigation
+    @JvmInline
+    value class ForceSignOut(val userId: UserId) : SelectPasskeyNavigation
 
     data object Upgrade : SelectPasskeyNavigation
 

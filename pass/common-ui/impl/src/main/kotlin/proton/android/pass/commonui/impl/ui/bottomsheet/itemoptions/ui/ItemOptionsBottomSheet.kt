@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions
+package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,27 +24,35 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavDestination
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.presentation.ItemOptionsEvent
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.presentation.ItemOptionsViewModel
 
 @Composable
 fun ItemOptionsBottomSheet(
     modifier: Modifier = Modifier,
-    onNavigate: (ItemOptionsNavigation) -> Unit,
+    onNavigate: (ItemOptionsBottomSheetNavDestination) -> Unit,
     viewModel: ItemOptionsViewModel = hiltViewModel()
-) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+) = with(viewModel) {
+    val state by stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
-        if (state.event == ItemOptionsEvent.Close) {
-            onNavigate(ItemOptionsNavigation.Close)
+        when (state.event) {
+            ItemOptionsEvent.Idle -> {}
+            ItemOptionsEvent.Close -> onNavigate(ItemOptionsBottomSheetNavDestination.Dismiss)
         }
     }
 
     ItemOptionsBottomSheetContent(
         modifier = modifier,
-        isLoading = state.isLoading.value(),
-        canModify = state.canModify,
-        onTrash = viewModel::onTrash,
-        onCopyUsername = viewModel::onCopyUsername,
-        onCopyPassword = viewModel::onCopyPassword
+        state = state,
+        onUiEvent = { uiEvent ->
+            when (uiEvent) {
+                ItemOptionsBottomSheetUiEvent.OnCopyEmailClicked -> onCopyEmail()
+                ItemOptionsBottomSheetUiEvent.OnCopyPasswordClicked -> onCopyPassword()
+                ItemOptionsBottomSheetUiEvent.OnCopyUsernameClicked -> onCopyUsername()
+                ItemOptionsBottomSheetUiEvent.OnMoveToTrashClicked -> onMoveToTrash()
+            }
+        }
     )
 }

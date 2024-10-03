@@ -18,18 +18,21 @@
 
 package proton.android.pass.features.sl.sync.mailboxes.create.presentation
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.commonrust.api.EmailValidator
+import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.simplelogin.CreateSimpleLoginAliasMailbox
 import proton.android.pass.log.api.PassLogger
@@ -38,21 +41,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SimpleLoginSyncMailboxCreateViewModel @Inject constructor(
+    savedStateHandleProvider: SavedStateHandleProvider,
+    private val emailValidator: EmailValidator,
     private val createSimpleLoginAliasMailbox: CreateSimpleLoginAliasMailbox,
-    private val snackbarDispatcher: SnackbarDispatcher,
-    emailValidator: EmailValidator
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
-    private val mailboxEmailFlow = MutableStateFlow(value = "")
+    @OptIn(SavedStateHandleSaveableApi::class)
+    private var mailboxEmailMutableState: String by savedStateHandleProvider.get()
+        .saveable { mutableStateOf("") }
 
-    private val showInvalidMailboxEmailErrorFlow = mailboxEmailFlow
-        .mapLatest { currentMailboxEmail ->
-            if (currentMailboxEmail.isBlank()) {
-                false
-            } else {
-                !emailValidator.isValid(currentMailboxEmail)
-            }
-        }
+    private val showInvalidMailboxEmailErrorFlow = MutableStateFlow(false)
 
     private val eventFlow = MutableStateFlow<SimpleLoginSyncMailboxCreateEvent>(
         value = SimpleLoginSyncMailboxCreateEvent.Idle
@@ -62,8 +61,10 @@ class SimpleLoginSyncMailboxCreateViewModel @Inject constructor(
         value = IsLoadingState.NotLoading
     )
 
+    internal val mailboxEmailState: String
+        get() = mailboxEmailMutableState
+
     internal val stateFlow: StateFlow<SimpleLoginSyncMailboxCreateState> = combine(
-        mailboxEmailFlow,
         showInvalidMailboxEmailErrorFlow,
         eventFlow,
         isLoadingStateFlow,
@@ -79,10 +80,15 @@ class SimpleLoginSyncMailboxCreateViewModel @Inject constructor(
     }
 
     internal fun onCreateMailbox() {
+        if (!emailValidator.isValid(mailboxEmailState)) {
+            showInvalidMailboxEmailErrorFlow.update { true }
+            return
+        }
+
         viewModelScope.launch {
             isLoadingStateFlow.update { IsLoadingState.Loading }
 
-            runCatching { createSimpleLoginAliasMailbox(stateFlow.value.mailboxEmail) }
+            runCatching { createSimpleLoginAliasMailbox(mailboxEmailState) }
                 .onFailure { error ->
                     PassLogger.w(TAG, "There was an error creating the mailbox")
                     PassLogger.w(TAG, error)
@@ -97,7 +103,9 @@ class SimpleLoginSyncMailboxCreateViewModel @Inject constructor(
     }
 
     internal fun onMailboxEmailChanged(newMailboxEmail: String) {
-        mailboxEmailFlow.update { newMailboxEmail }
+        showInvalidMailboxEmailErrorFlow.update { false }
+
+        mailboxEmailMutableState = newMailboxEmail.trim()
     }
 
     private companion object {

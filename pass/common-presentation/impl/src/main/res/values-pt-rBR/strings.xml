@@ -23,7 +23,7 @@
   <string name="item_details_snackbar_message_city_copied">Cidade copiada</string>
   <string name="item_details_snackbar_message_company_copied">Empresa copiada</string>
   <string name="item_details_snackbar_message_country_or_region_copied">País ou região copiada</string>
-  <string name="item_details_snackbar_message_county_copied">País copiado</string>
+  <string name="item_details_snackbar_message_county_copied">Província copiada</string>
   <string name="item_details_snackbar_message_custom_field_copied">Campo personalizado copiado</string>
   <string name="item_details_snackbar_message_cvv_copied">Código de segurança copiado</string>
   <string name="item_details_snackbar_message_email_copied">Endereço de e-mail copiado</string>
@@ -37,14 +37,14 @@
   <string name="item_details_snackbar_message_license_number_copied">Número de licença copiado</string>
   <string name="item_details_snackbar_message_linkedin_copied">LinkedIn copiado</string>
   <string name="item_details_snackbar_message_middle_name_copied">Segundo nome copiado</string>
-  <string name="item_details_snackbar_message_occupation_copied">Ocupação copiado</string>
+  <string name="item_details_snackbar_message_occupation_copied">Ocupação copiada</string>
   <string name="item_details_snackbar_message_organization_copied">Organização copiada</string>
   <string name="item_details_snackbar_message_passport_number_copied">Número do passaporte copiado</string>
   <string name="item_details_snackbar_message_password_copied">Senha copiada</string>
   <string name="item_details_snackbar_message_phone_number_copied">Número de telefone copiado</string>
   <string name="item_details_snackbar_message_pin_copied">Código PIN copiado</string>
   <string name="item_details_snackbar_message_reddit_copied">Reddit copiado</string>
-  <string name="item_details_snackbar_message_social_security_number_copied">Número do seguro social copiado</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">CPF copiado</string>
   <string name="item_details_snackbar_message_state_or_province_copied">Estado ou província copiado</string>
   <string name="item_details_snackbar_message_street_address_copied">Endereço da rua copiado</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP copiado</string>

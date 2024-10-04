@@ -105,12 +105,12 @@
   <string name="identity_field_email_title">E-mail</string>
   <string name="identity_field_phone_number_title">Número do telefone</string>
   <string name="identity_field_organization_title">Organização</string>
-  <string name="identity_field_street_address_title">Endereço ou Caixa Postal</string>
+  <string name="identity_field_street_address_title">Endereço da rua, Caixa Postal</string>
   <string name="identity_field_zip_or_postal_code_title">CEP ou código postal</string>
   <string name="identity_field_city_title">Cidade</string>
   <string name="identity_field_state_or_province_title">Estado ou província</string>
   <string name="identity_field_country_or_region_title">País ou região</string>
-  <string name="identity_field_social_security_number_title">Número do seguro social</string>
+  <string name="identity_field_social_security_number_title">CPF</string>
   <string name="identity_field_passport_number_title">Número do passaporte</string>
   <string name="identity_field_license_number_title">Número da licença</string>
   <string name="identity_field_website_title">Site</string>

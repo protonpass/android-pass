@@ -49,4 +49,5 @@
     <item quantity="other">%d deneme hakkı kaldı</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Çok fazla sayıda başarısız PIN kodu denemesi yapıldığından tüm kullanıcılarınızın oturumu kapatıldı.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Too many failed pin attempts.</string>
 </resources>

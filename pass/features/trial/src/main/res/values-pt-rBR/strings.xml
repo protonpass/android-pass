@@ -8,7 +8,7 @@
   <string name="trial_button_text">Fazer upgrade agora</string>
   <plurals name="trial_days_left">
     <item quantity="one">%d dia restante para experimentar recursos premium</item>
-    <item quantity="other">%d dias restantes para experimentar os recursos premium</item>
+    <item quantity="other">%d dias restantes para experimentar recursos premium</item>
   </plurals>
   <string name="trial_learn_more">Saiba mais</string>
 </resources>

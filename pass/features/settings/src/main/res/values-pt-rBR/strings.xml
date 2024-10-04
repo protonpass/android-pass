@@ -31,6 +31,8 @@
   <string name="settings_share_telemetry">Compartilhar uso anônimo</string>
   <string name="settings_share_crashes">Compartilhar relatórios de erros anônimos</string>
   <string name="settings_preference_updated">Sua preferência foi atualizada</string>
+  <string name="settings_display_section_title">Display</string>
+  <string name="settings_preference_display_username">Username field always visible</string>
   <string name="view_logs_title">Visualizar registros</string>
   <string name="clipboard_bottomsheet_title">Área de transferência</string>
   <string name="clipboard_option_clear_clipboard_label">Limpar área de transferência</string>

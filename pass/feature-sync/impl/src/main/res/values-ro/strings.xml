@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="sync_item_empty">Seif gol</string>
+  <plurals name="sync_item_count">
+    <item quantity="one">S-a descărcat %d articol</item>
+    <item quantity="few">S-au descărcat %d articole</item>
+    <item quantity="other">S-au descărcat %d de articole</item>
+  </plurals>
+  <plurals name="sync_finished_item_count">
+    <item quantity="one">S-a sincronizat %d articol</item>
+    <item quantity="few">S-au sincronizat %d articole</item>
+    <item quantity="other">S-au sincronizat %d de articole</item>
+  </plurals>
+  <string name="sync_progress_item_count">Se descarcă %1$d din %2$d articole</string>
+  <string name="sync_dialog_title">Se sincronizează articolele…</string>
+  <string name="sync_dialog_title_error">Sincronizarea nereușită</string>
+  <string name="sync_dialog_title_success">Sincronizare finalizată</string>
+  <string name="sync_dialog_subtitle">Se descarcă și se decriptează articolele. Acest lucru poate dura câteva minute.</string>
+  <string name="sync_dialog_subtitle_error">A apărut o eroare la descărcarea și decriptarea articolelor. Mai încercați.</string>
+  <string name="sync_dialog_subtitle_success">Articolele au fost descărcate și decriptate cu succes.</string>
+  <string name="sync_item_not_started">Neefectuată</string>
+  <string name="sync_item_failed">Sincronizarea nereușită</string>
+  <string name="sync_dialog_title_inserting">Se inserează articolele…</string>
+  <string name="sync_dialog_subtitle_inserting">Se finalizează ultimul pas, e aproape gata.</string>
+</resources>

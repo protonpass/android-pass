@@ -16,7 +16,7 @@
   <string name="settings_error_performing_operation">İşlem yapılırken sorun çıktı</string>
   <string name="settings_option_clipboard">Pano</string>
   <string name="settings_application_section_title">Uygulama</string>
-  <string name="settings_option_view_logs">Günlükleri görüntüle</string>
+  <string name="settings_option_view_logs">Günlüğü görüntüle</string>
   <string name="settings_option_force_sync">Şimdi eşitle</string>
   <string name="settings_about_section_title">Hakkında</string>
   <string name="settings_option_privacy_policy">Gizlilik ilkesi</string>
@@ -31,7 +31,9 @@
   <string name="settings_share_telemetry">Anonim kullanım verileri paylaşılsın</string>
   <string name="settings_share_crashes">Anonim çökme bildirimleri paylaşılsın</string>
   <string name="settings_preference_updated">Tercihleriniz güncellendi</string>
-  <string name="view_logs_title">Günlükleri görüntüle</string>
+  <string name="settings_display_section_title">Display</string>
+  <string name="settings_preference_display_username">Username field always visible</string>
+  <string name="view_logs_title">Günlüğü görüntüle</string>
   <string name="clipboard_bottomsheet_title">Pano</string>
   <string name="clipboard_option_clear_clipboard_label">Panoyu temizle</string>
   <string name="clipboard_option_copy_totp_code">Kimlik doğrulama kodlarını kopyala</string>

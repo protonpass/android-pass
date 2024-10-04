@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trash_action_restore">Відновити</string>
+  <string name="bottomsheet_delete_permanently">Видалити остаточно</string>
+  <string name="alert_confirm_delete_item_dialog_title">Видалити остаточно?</string>
+  <string name="alert_confirm_delete_item_dialog_message">Це незворотна дія.</string>
+  <string name="alias_dialog_move_to_trash_title">Перемістити до смітника?</string>
+  <string name="alias_dialog_move_to_trash_content">Якщо ви перемістите псевдонім до смітника, він перестане пересилати листи на вашу пошту.</string>
+  <string name="alias_dialog_move_to_trash_confirm">Підтвердити</string>
+</resources>

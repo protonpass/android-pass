@@ -31,6 +31,8 @@
   <string name="settings_share_telemetry">Delite anonimno uporabo</string>
   <string name="settings_share_crashes">Delite anonimna poročila o zrušitvah</string>
   <string name="settings_preference_updated">Vaša nastavitev je bila posodobljena</string>
+  <string name="settings_display_section_title">Display</string>
+  <string name="settings_preference_display_username">Username field always visible</string>
   <string name="view_logs_title">Prikaži dnevnik</string>
   <string name="clipboard_bottomsheet_title">Odložišče</string>
   <string name="clipboard_option_clear_clipboard_label">Počisti odložišče</string>

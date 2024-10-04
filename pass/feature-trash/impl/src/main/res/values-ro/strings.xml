@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trash_action_restore">Restaurare</string>
+  <string name="bottomsheet_delete_permanently">Ștergere permanentă</string>
+  <string name="alert_confirm_delete_item_dialog_title">Ștergere permanentă?</string>
+  <string name="alert_confirm_delete_item_dialog_message">Această acțiune este ireversibilă.</string>
+  <string name="alias_dialog_move_to_trash_title">Mutare în gunoi?</string>
+  <string name="alias_dialog_move_to_trash_content">Dacă mutați un alias în gunoi, nu va mai redirecționa mesajele primite pe numele său.</string>
+  <string name="alias_dialog_move_to_trash_confirm">Confirmare</string>
+</resources>

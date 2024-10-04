@@ -32,9 +32,9 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">Parolalarınızı değiştirin</string>
   <string name="security_center_home_row_reused_passwords_title">Yeniden kullanılmış parolalar</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Benzersiz parolalar oluşturun</string>
-  <string name="security_center_home_row_missing_tfa_title">Etkin olmayan iki adımlı doğrulama</string>
+  <string name="security_center_home_row_missing_tfa_title">İki adımlı doğrulama etkin olmayan</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Güvenliği artırmak için iki adımlı doğrulamayı açın</string>
-  <string name="security_center_home_row_excludes_items_title">İzlemeye katılmamış</string>
+  <string name="security_center_home_row_excludes_items_title">İzlemeye katılmayan</string>
   <string name="security_center_home_row_excludes_items_subtitle">Bu ögeler risk altında</string>
   <string name="security_center_get_breaches_error">Verilerin ele geçirilmesi olayları yüklenemedi</string>
   <string name="security_center_home_section_password_health">Parola sağlığı</string>
@@ -55,7 +55,7 @@
   <string name="security_center_reused_pass_top_bar_subtitle">Güvenliğinizi artırmak için her hesapta ayrı benzersiz parolalar oluşturun.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">%1$d kez yeniden kullanılmış</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">Etkin olmayan iki adımlı doğrulama</string>
+  <string name="security_center_missing_tfa_top_bar_title">İki adımlı doğrulama etkin olmayan</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Daha fazla güvenlik sağlamak için şu hesaplarda iki adımlı doğrulamayı ayarlayın.</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Katılmayan ögeler</string>
@@ -135,13 +135,13 @@
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Bilgiler %s üzerinden açığa çıkmış. Proton hesap bilgileriniz güvende ve şifrelenmiş olarak kalır.</string>
   <string name="security_center_report_detail_learn_more">Ayrıntılı bilgi alın</string>
   <string name="security_center_report_detail_snackbar_error">Verilerin ele geçirilmesi olayı ayrıntıları yüklenemedi</string>
-  <string name="security_center_report_detail_excluded_from_monitoring">İzlemeye katılmamış</string>
+  <string name="security_center_report_detail_excluded_from_monitoring">İzlemeye katılmayan</string>
   <string name="security_center_report_resolve_confirmation_dialog_title">Tüm verilerin ele geçirilmesi olayları çözümlenmiş olarak işaretlensin mi?</string>
   <string name="security_center_report_resolve_confirmation_dialog_message">Tüm verilerin ele geçirilmesi olayları çözümlenmiş olarak işaretlenecek. Gelecekte ortaya çıkabilecek verilerin ele geçirilmesi olayları size bildirilecek.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Proton adresleri</string>
   <string name="security_center_proton_list_no_breaches_detected">Herhangi bir veri ele geçirilmemiş</string>
-  <string name="security_center_proton_list_excluded_from_monitoring">İzlemeye katılmamış</string>
+  <string name="security_center_proton_list_excluded_from_monitoring">İzlemeye katılmayan</string>
   <string name="security_center_proton_list_error">Adresler yüklenemedi</string>
   <string name="security_center_proton_list_included_in_monitoring">Proton adreslerinizin sızdırılması durumunda bildirim almak için izlemeyi açın.</string>
   <string name="security_center_proton_list_options_menu">Proton ekran ayarları menüsü</string>
@@ -158,7 +158,7 @@
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Özel e-posta kaldırıldı</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Hide-my-email takma adları</string>
-  <string name="security_center_alias_list_excluded_from_monitoring">İzlemeye katılmamış</string>
+  <string name="security_center_alias_list_excluded_from_monitoring">İzlemeye katılmayan</string>
   <string name="security_center_alias_list_error">Adresler yüklenemedi</string>
   <string name="security_center_alias_list_included_in_monitoring">Hide-my-email adreslerinizin sızdırılması durumunda bildirim almak için izlemeyi açın.</string>
   <string name="security_center_alias_list_monitored">İzlendi</string>

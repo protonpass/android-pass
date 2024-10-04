@@ -31,6 +31,8 @@
   <string name="settings_share_telemetry">Абагульваць ананімныя звесткі выкарыстання</string>
   <string name="settings_share_crashes">Абагульваць ананімныя справаздачы аб збоях</string>
   <string name="settings_preference_updated">Вашы параметры былі абноўлены</string>
+  <string name="settings_display_section_title">Display</string>
+  <string name="settings_preference_display_username">Username field always visible</string>
   <string name="view_logs_title">Паглядзець журнал</string>
   <string name="clipboard_bottomsheet_title">Буфер абмену</string>
   <string name="clipboard_option_clear_clipboard_label">Ачыстка буфера абмену</string>

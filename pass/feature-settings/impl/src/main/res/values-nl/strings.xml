@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="title_settings">Instellingen</string>
+  <string name="settings_autofill_section_title">Autom. aanvullen</string>
+  <string name="settings_autofill_preference_title">Autom. aanvullen</string>
+  <string name="settings_autofill_preference_description">Laat Proton Pass uw gebruikersnamen en wachtwoorden invullen om snel en gemakkelijk in te loggen.</string>
+  <string name="settings_authentication_section_title">Authenticatie</string>
+  <string name="settings_authentication_preference_title">Vingerafdruk vergrendeling</string>
+  <string name="settings_authentication_preference_description_enabled">Open de app snel en veilig met uw vingerafdruk.</string>
+  <string name="settings_authentication_preference_description_no_fingerprint">U kunt uw vingerafdruk niet nodig hebben voor interactie met de app, aangezien er geen vingerafdrukken zijn geregistreerd op dit apparaat.</string>
+  <string name="settings_appearance_preference_title">Thema</string>
+  <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Match systeem</string>
+  <string name="settings_appearance_preference_subtitle_light">Lichte modus</string>
+  <string name="settings_appearance_preference_subtitle_dark">Donkere modus</string>
+  <string name="settings_fingerprint_lock_enabled">Vingerafdrukontgrendeling ingeschakeld</string>
+  <string name="settings_error_performing_operation">Fout bij het uitvoeren van de bewerking</string>
+  <string name="settings_option_clipboard">Klembord</string>
+  <string name="settings_application_section_title">Applicatie</string>
+  <string name="settings_option_view_logs">Logboeken bekijken</string>
+  <string name="settings_option_force_sync">Forceer synchronisatie</string>
+  <string name="settings_about_section_title">Over</string>
+  <string name="settings_option_privacy_policy">Privacybeleid</string>
+  <string name="settings_option_terms_of_service">Servicevoorwaarden</string>
+  <string name="settings_privacy_section_title">Privacy</string>
+  <string name="settings_use_favicons_preference_title">Gebruik webiconen</string>
+  <string name="settings_use_favicons_preference_subtitle">Bepaal of u de websitepictogrammen op uw items wilt zien.</string>
+  <string name="settings_allow_screenshots_preference_title">Schermafbeeldingen toestaan</string>
+  <string name="settings_allow_screenshots_preference_subtitle">Het is mogelijk om screenshots te nemen van de app wanneer ingeschakeld.</string>
+  <string name="settings_clear_icon_cache_success">Pictogramcache gewist</string>
+  <string name="settings_clear_icon_cache_error">Kan pictogramcache niet wissen</string>
+  <string name="settings_share_telemetry">Deel anoniem gebruik</string>
+  <string name="settings_share_crashes">Anonieme crashrapporten delen</string>
+  <string name="settings_preference_updated">Uw voorkeur is bijgewerkt</string>
+  <string name="view_logs_title">Logboeken bekijken</string>
+  <string name="clipboard_bottomsheet_title">Klembord</string>
+  <string name="clipboard_option_clear_clipboard_label">Klembord wissen</string>
+  <string name="clipboard_option_copy_totp_code">Kopieer authenticatiecodes</string>
+  <string name="clipboard_option_copy_totp_code_hint">Automatisch authenticatiecodes kopiëren bij gebruik van automatisch aanvullen.</string>
+  <string name="clipboard_option_clear_clipboard_never">Nooit</string>
+  <string name="clipboard_option_clear_clipboard_after_60_seconds">Na 1 minuut</string>
+  <string name="clipboard_option_clear_clipboard_after_180_seconds">Na 3 minuten</string>
+</resources>

@@ -20,7 +20,7 @@
   <string name="description_field_label">Qual é o problema?</string>
   <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
   <string name="email_field_label">E-mail</string>
-  <string name="email_field_hint">email</string>
+  <string name="email_field_hint">e-mail</string>
   <string name="attach_image_button">Anexar imagem</string>
   <string name="categories_title">Qual é o problema?</string>
   <string name="report_toolbar_title">Reportar um problema</string>
@@ -30,7 +30,7 @@
   <string name="hint_tips_screen">Não funcionou?</string>
   <string name="report_reason_autofill">Preenchimento automático</string>
   <string name="report_reason_sharing">Compartilhamento</string>
-  <string name="report_reason_sync">Sincronização</string>
+  <string name="report_reason_sync">Sincronizar</string>
   <string name="report_reason_passkeys">Chaves de acesso</string>
   <string name="report_reason_other">Outro</string>
   <string name="tips_title">Correções rápidas para %1$s</string>
@@ -53,5 +53,5 @@
   <string name="description_is_too_short">A descrição é muito curta</string>
   <string name="description_is_too_long">A descrição é muito longa</string>
   <string name="email_cannot_be_blank">O e-mail não pode estar em branco</string>
-  <string name="email_invalid">Endereço de e-mail inválido</string>
+  <string name="email_invalid">O endereço de e-mail não é valido.</string>
 </resources>

@@ -52,4 +52,5 @@
     <item quantity="other">Încercări rămase: %d</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Prea multe încercări eșuate. Toți utilizatorii dvs. sunt deconectați.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Too many failed pin attempts.</string>
 </resources>

@@ -19,20 +19,20 @@
 <resources>
   <string name="description_field_label">What is your issue?</string>
   <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
-  <string name="email_field_label">Email</string>
-  <string name="email_field_hint">email</string>
+  <string name="email_field_label">E-pošta</string>
+  <string name="email_field_hint">e-pošta</string>
   <string name="attach_image_button">Attach image</string>
   <string name="categories_title">What is your issue?</string>
   <string name="report_toolbar_title">Report an issue</string>
   <string name="send_report_button">Send report</string>
   <string name="cancel_tips_button">Prekliči</string>
-  <string name="contact_us_button">Contact us</string>
-  <string name="hint_tips_screen">Didn\'t work?</string>
-  <string name="report_reason_autofill">Autofill</string>
+  <string name="contact_us_button">Stopite v stik z nami</string>
+  <string name="hint_tips_screen">Ni delovalo?</string>
+  <string name="report_reason_autofill">Samodejno izpolnjevanje</string>
   <string name="report_reason_sharing">Sharing</string>
   <string name="report_reason_sync">Sinhronizacija</string>
-  <string name="report_reason_passkeys">Passkeys</string>
-  <string name="report_reason_other">Other</string>
+  <string name="report_reason_passkeys">Identifikacijski ključi</string>
+  <string name="report_reason_other">Ostalo</string>
   <string name="tips_title">Quick fixes for %1$s</string>
   <string name="tips_subtitle">These tips could help you solve your issue faster.</string>
   <string name="autofill_tip_restart">Try disabling and enabling the autofill service.</string>

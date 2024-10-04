@@ -31,6 +31,8 @@
   <string name="settings_share_telemetry">Sdílet anonymní údaje o využití</string>
   <string name="settings_share_crashes">Sdílet anonymní hlášení o pádech</string>
   <string name="settings_preference_updated">Vaše předvolby byly aktualizovány</string>
+  <string name="settings_display_section_title">Display</string>
+  <string name="settings_preference_display_username">Username field always visible</string>
   <string name="view_logs_title">Zobrazit logy</string>
   <string name="clipboard_bottomsheet_title">Schránka</string>
   <string name="clipboard_option_clear_clipboard_label">Vyprázdnit schránku</string>

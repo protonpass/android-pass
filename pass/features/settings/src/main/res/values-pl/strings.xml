@@ -31,6 +31,8 @@
   <string name="settings_share_telemetry">Udostępnij anonimowe statystyki użytkowania</string>
   <string name="settings_share_crashes">Udostępnij anonimowe raporty o awariach</string>
   <string name="settings_preference_updated">Ustawienia zostały zaktualizowane</string>
+  <string name="settings_display_section_title">Display</string>
+  <string name="settings_preference_display_username">Username field always visible</string>
   <string name="view_logs_title">Pokaż logi</string>
   <string name="clipboard_bottomsheet_title">Schowek</string>
   <string name="clipboard_option_clear_clipboard_label">Wyczyść schowek</string>

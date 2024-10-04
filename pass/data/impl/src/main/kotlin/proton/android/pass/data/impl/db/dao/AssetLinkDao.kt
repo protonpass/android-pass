@@ -36,5 +36,13 @@ abstract class AssetLinkDao : BaseDao<AssetLinkEntity>() {
         WHERE ${AssetLinkEntity.Columns.WEBSITE} = :website
         """
     )
-    abstract fun observeAssetLinks(website: String): Flow<List<AssetLinkEntity>>
+    abstract fun observeByWebsite(website: String): Flow<List<AssetLinkEntity>>
+
+    @Query(
+        """
+        SELECT * FROM ${AssetLinkEntity.TABLE}
+        WHERE ${AssetLinkEntity.Columns.PACKAGE_NAME} like :packageName
+        """
+    )
+    abstract fun observeByPackageName(packageName: String): Flow<List<AssetLinkEntity>>
 }

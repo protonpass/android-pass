@@ -24,6 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.core.repositories.SentinelRepository
 import proton.android.pass.data.api.repositories.AliasRepository
+import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.DraftRepository
@@ -178,6 +179,7 @@ import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.data.api.work.WorkerLauncher
+import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
 import proton.android.pass.data.fakes.repositories.FakeSentinelRepository
 import proton.android.pass.data.fakes.repositories.TestAliasRepository
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
@@ -841,5 +843,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindWorkerLauncher(impl: FakeWorkerLauncher): WorkerLauncher
+
+    @Binds
+    abstract fun bindWorkerAssetLinkRepository(impl: FakeAssetLinkRepository): AssetLinkRepository
 
 }

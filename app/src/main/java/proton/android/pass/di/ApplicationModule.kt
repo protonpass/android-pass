@@ -87,7 +87,5 @@ object ApplicationModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
         .retryOnConnectionFailure(false)
-        .followRedirects(false)
-        .followSslRedirects(false)
         .build()
 }

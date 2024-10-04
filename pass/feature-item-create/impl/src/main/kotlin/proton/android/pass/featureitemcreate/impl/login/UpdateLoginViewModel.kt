@@ -84,6 +84,7 @@ import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.Up
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
@@ -108,7 +109,7 @@ class UpdateLoginViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandleProvider: SavedStateHandleProvider,
     draftRepository: DraftRepository,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     emailValidator: EmailValidator,
     observeTooltipEnabled: ObserveTooltipEnabled,
     disableTooltip: DisableTooltip,

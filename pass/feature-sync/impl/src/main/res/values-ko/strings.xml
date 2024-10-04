@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="sync_item_empty">비어 있는 금고</string>
+  <plurals name="sync_item_count">
+    <item quantity="other">%d개 항목 다운로드됨</item>
+  </plurals>
+  <plurals name="sync_finished_item_count">
+    <item quantity="other">%d개 항목 동기화됨</item>
+  </plurals>
+  <string name="sync_progress_item_count">%2$d개 중 %1$d개 항목 다운로드 중</string>
+  <string name="sync_dialog_title">항목 동기화 중…</string>
+  <string name="sync_dialog_title_error">동기화에 실패했습니다</string>
+  <string name="sync_dialog_title_success">동기화를 완료했습니다</string>
+  <string name="sync_dialog_subtitle">항목을 다운로드하고 복호화하는 중입니다. 몇 분 정도 걸릴 수 있습니다.</string>
+  <string name="sync_dialog_subtitle_error">항목을 다운로드하고 복호화하는 중 오류가 발생했습니다. 다시 시도해 주세요.</string>
+  <string name="sync_dialog_subtitle_success">항목을 성공적으로 다운로드하고 복호화했습니다.</string>
+  <string name="sync_item_not_started">시작하지 않음</string>
+  <string name="sync_item_failed">동기화에 실패했습니다</string>
+  <string name="sync_dialog_title_inserting">항목 삽입 중…</string>
+  <string name="sync_dialog_subtitle_inserting">마지막 단계 완료 중, 거의 마무리됨.</string>
+</resources>

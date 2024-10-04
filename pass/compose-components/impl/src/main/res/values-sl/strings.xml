@@ -46,8 +46,8 @@
   <string name="action_continue">Nadaljuj</string>
   <string name="action_retry">Poskusi znova</string>
   <string name="action_edit">Uredi</string>
-  <string name="action_update">Update</string>
-  <string name="action_close">Close</string>
+  <string name="action_update">Posodobi</string>
+  <string name="action_close">Zapri</string>
   <!-- Empty list -->
   <string name="empty_list_title">Dodajte svoj prvi predmet</string>
   <string name="empty_search_results_title">Ne najdem rezultatov</string>

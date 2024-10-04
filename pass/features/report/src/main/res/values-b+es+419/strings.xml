@@ -33,7 +33,7 @@
   <string name="report_reason_sync">Sincronizado</string>
   <string name="report_reason_passkeys">Claves de acceso</string>
   <string name="report_reason_other">Otro</string>
-  <string name="tips_title">Reparaciones rápidas para %1$s</string>
+  <string name="tips_title">Soluciones rápidas para %1$s</string>
   <string name="tips_subtitle">Estos consejos podrían ayudarle a resolver el problema más rápido.</string>
   <string name="autofill_tip_restart">Intente desactivar y activar la función de completado automático.</string>
   <string name="autofill_tip_browser">Pruebe otro navegador.</string>
@@ -41,7 +41,7 @@
   <string name="sharing_tip_secure_links_guide">¿Tiene problemas con los enlaces seguros? Revise nuestra guía.</string>
   <string name="sync_tip_force_refresh">¿La pantalla está vacía? Intente una sincronización forzada.</string>
   <string name="send_logs_label">Enviar los registros</string>
-  <string name="report_sending_success">Reporte enviado con éxito.</string>
+  <string name="report_sending_success">Se envió el reporte.</string>
   <string name="report_sending_error">No se pudo enviar el reporte.</string>
   <string name="tips_passkey_check_guide">Si tiene algún problema, mire nuestra guía.</string>
   <string name="tips_passkey_android_not_supported">Su versión de Android es demasiado antigua. Intente actualizar su dispositivo.</string>

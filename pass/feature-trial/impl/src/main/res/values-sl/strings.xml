@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Vaš bonus za dobrodošlico</string>
+  <string name="trial_subtitle">Uživajte v upravljanju gesel naslednje stopnje</string>
+  <string name="trial_feature_1">20 trezorji</string>
+  <string name="trial_feature_3">Vgrajen modul za preverjanje pristnosti 2FA</string>
+  <string name="trial_feature_4">Polja po meri</string>
+  <string name="trial_button_text">Nadgradi zdaj</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">Za preizkus premijskih funkcij vam je preostal še %d dan</item>
+    <item quantity="two">Za preizkus premijskih funkcij sta vam preostala še %d dneva</item>
+    <item quantity="few">Za preizkus premijskih funkcij so vam preostali še %d dnevi</item>
+    <item quantity="other">Za preizkus premijskih funkcij vam je preostalo še %d dni</item>
+  </plurals>
+  <string name="trial_learn_more">Več informacij</string>
+</resources>

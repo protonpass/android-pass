@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trash_action_restore">Przywróć</string>
+  <string name="bottomsheet_delete_permanently">Usuń trwale</string>
+  <string name="alert_confirm_delete_item_dialog_title">Usunąć trwale?</string>
+  <string name="alert_confirm_delete_item_dialog_message">Ta akcja jest nieodwracalna.</string>
+  <string name="alias_dialog_move_to_trash_title">Przenieść do Kosza?</string>
+  <string name="alias_dialog_move_to_trash_content">Jeśli przeniesiesz alias do Kosza, przekierowanie wiadomości zostanie zatrzymane.</string>
+  <string name="alias_dialog_move_to_trash_confirm">Potwierdź</string>
+</resources>

@@ -7,10 +7,10 @@
   <string name="trial_feature_4">Pola niestandardowe</string>
   <string name="trial_button_text">Ulepsz teraz</string>
   <plurals name="trial_days_left">
-    <item quantity="one">Masz %d dzień, aby wypróbować funkcje premium</item>
-    <item quantity="few">Masz %d dni, aby wypróbować funkcje premium</item>
-    <item quantity="many">Masz %d dni, aby wypróbować funkcje premium</item>
-    <item quantity="other">Masz %d dnia, aby wypróbować funkcje premium</item>
+    <item quantity="one">%d day left to try premium features</item>
+    <item quantity="few">%d days left to try premium features</item>
+    <item quantity="many">%d days left to try premium features</item>
+    <item quantity="other">%d days left to try premium features</item>
   </plurals>
   <string name="trial_learn_more">Dowiedz się więcej</string>
 </resources>

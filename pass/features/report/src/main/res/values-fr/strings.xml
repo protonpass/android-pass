@@ -49,7 +49,7 @@
   <string name="tips_passkey_supported">Les clés d\'accès sont prises en charge.</string>
   <string name="tips_passkey_not_supported">Les clés d\'accès ne sont pas prises en charge.</string>
   <string name="report_steps" comment="Indicator showing report progress">Étape %1$d sur %2$d</string>
-  <string name="description_cannot_be_blank">La description ne peut pas être vide</string>
+  <string name="description_cannot_be_blank">La description ne peut pas être vide.</string>
   <string name="description_is_too_short">La description est trop courte.</string>
   <string name="description_is_too_long">La description est trop longue.</string>
   <string name="email_cannot_be_blank">L\'adresse e-mail ne peut pas être vide.</string>

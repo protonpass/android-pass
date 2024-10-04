@@ -31,6 +31,8 @@
   <string name="settings_share_telemetry">Dela anonym användning</string>
   <string name="settings_share_crashes">Dela anonyma kraschrapporter</string>
   <string name="settings_preference_updated">Dina preferenser har uppdaterats</string>
+  <string name="settings_display_section_title">Display</string>
+  <string name="settings_preference_display_username">Username field always visible</string>
   <string name="view_logs_title">Visa loggar</string>
   <string name="clipboard_bottomsheet_title">Urklipp</string>
   <string name="clipboard_option_clear_clipboard_label">Rensa urklipp</string>

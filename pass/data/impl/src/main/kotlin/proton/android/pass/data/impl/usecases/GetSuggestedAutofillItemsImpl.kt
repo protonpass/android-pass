@@ -11,10 +11,13 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.ItemFilterProcessor
+import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -29,6 +32,8 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.Vault
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
 
@@ -39,7 +44,9 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
     private val suggestionSorter: SuggestionSorter,
     private val observeUsableVaults: ObserveUsableVaults,
     private val getUserPlan: GetUserPlan,
-    private val internalSettingsRepository: InternalSettingsRepository
+    private val internalSettingsRepository: InternalSettingsRepository,
+    private val assetLinkRepository: AssetLinkRepository,
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : GetSuggestedAutofillItems {
 
     override fun invoke(
@@ -139,15 +146,38 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
         suggestion: Option<Suggestion>
     ): Flow<Pair<List<Vault>, List<Item>>> = observeUsableVaults(userId)
         .flatMapLatest { usableVaults ->
-            observeItems(
-                userId = userId,
-                filter = itemTypeFilter,
-                selection = ShareSelection.Shares(usableVaults.map(Vault::shareId)),
-                itemState = ItemState.Active
-            ).map { items ->
-                usableVaults to suggestionItemFilter.filter(items, suggestion)
+            combine(
+                observeItems(
+                    userId = userId,
+                    filter = itemTypeFilter,
+                    selection = ShareSelection.Shares(usableVaults.map(Vault::shareId)),
+                    itemState = ItemState.Active
+                ),
+                getUrlFromPackageNameFlow(suggestion),
+                featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.DIGITAL_ASSET_LINKS)
+            ) { items, digitalAssetLinkSuggestions, isDALEnabled ->
+                val filteredItems = suggestionItemFilter.filter(items, suggestion)
+                val combinedItems = if (isDALEnabled) {
+                    filteredItems + digitalAssetLinkSuggestions.flatMap {
+                        suggestionItemFilter.filter(items, it.some())
+                    }
+                } else {
+                    filteredItems
+                }.toSet().toList()
+                usableVaults to combinedItems
             }
         }
+
+    private fun getUrlFromPackageNameFlow(suggestion: Option<Suggestion>): Flow<List<Suggestion.Url>> =
+        when (suggestion) {
+            None -> flowOf(emptyList())
+            is Some -> {
+                when (val holder = suggestion.value) {
+                    is Suggestion.PackageName -> assetLinkRepository.observeByPackageName(holder.value)
+                    is Suggestion.Url -> flowOf(emptyList())
+                }
+            }
+        }.map { list -> list.map { Suggestion.Url(it.website) } }
 
     private suspend fun sortSuggestions(items: List<Item>, suggestion: Option<Suggestion>): List<Item> {
         val lastAutofillItem =

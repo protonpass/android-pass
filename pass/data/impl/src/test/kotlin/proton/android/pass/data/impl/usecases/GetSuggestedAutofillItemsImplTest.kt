@@ -37,6 +37,7 @@ import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.data.api.usecases.Suggestion
+import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUsableVaults
@@ -51,6 +52,7 @@ import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultId
 import proton.android.pass.preferences.LastItemAutofillPreference
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
@@ -107,7 +109,9 @@ class GetSuggestedAutofillItemsImplTest {
             suggestionItemFilter = filter,
             suggestionSorter = FakeSuggestionSorter(),
             internalSettingsRepository = internalSettingsRepository,
-            getUserPlan = getUserPlan
+            getUserPlan = getUserPlan,
+            assetLinkRepository = FakeAssetLinkRepository(),
+            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
         )
     }
 

@@ -41,7 +41,7 @@ abstract class AssetLinkDao : BaseDao<AssetLinkEntity>() {
     @Query(
         """
         SELECT * FROM ${AssetLinkEntity.TABLE}
-        WHERE ${AssetLinkEntity.Columns.PACKAGE_NAME} like :packageName
+        WHERE ${AssetLinkEntity.Columns.PACKAGE_NAME} LIKE '%' || :packageName || '%'
         """
     )
     abstract fun observeByPackageName(packageName: String): Flow<List<AssetLinkEntity>>

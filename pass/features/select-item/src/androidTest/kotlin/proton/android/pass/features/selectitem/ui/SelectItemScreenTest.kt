@@ -42,6 +42,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
+import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
@@ -430,8 +431,7 @@ class SelectItemScreenTest {
 
     private fun fakeAutofillState() = SelectItemState.Autofill.Login(
         title = "Some title",
-        suggestionsPackageName = PACKAGE_NAME.some(),
-        suggestionsUrl = "".some()
+        suggestion = PACKAGE_NAME.some().map(Suggestion::PackageName)
     )
 
     data class SetupData(

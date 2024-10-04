@@ -845,6 +845,6 @@ abstract class FakesDataModule {
     abstract fun bindWorkerLauncher(impl: FakeWorkerLauncher): WorkerLauncher
 
     @Binds
-    abstract fun bindWorkerAssetLinkRepository(impl: FakeAssetLinkRepository): AssetLinkRepository
+    abstract fun bindAssetLinkRepository(impl: FakeAssetLinkRepository): AssetLinkRepository
 
 }

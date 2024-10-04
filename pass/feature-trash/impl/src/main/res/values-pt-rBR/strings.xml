@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trash_action_restore">Restaurar</string>
+  <string name="bottomsheet_delete_permanently">Excluir permanentemente</string>
+  <string name="alert_confirm_delete_item_dialog_title">Excluir permanentemente?</string>
+  <string name="alert_confirm_delete_item_dialog_message">Esta ação é irreversível.</string>
+  <string name="alias_dialog_move_to_trash_title">Mover para a lixeira?</string>
+  <string name="alias_dialog_move_to_trash_content">Se você mover um alias para a lixeira, deixará de encaminhar os e-mails para a sua caixa de correio.</string>
+  <string name="alias_dialog_move_to_trash_confirm">Confirmar</string>
+</resources>

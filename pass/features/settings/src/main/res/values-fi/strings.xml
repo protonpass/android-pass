@@ -31,6 +31,8 @@
   <string name="settings_share_telemetry">Jaa anonyymejä käyttötietoja</string>
   <string name="settings_share_crashes">Jaa anonyymejä virheraportteja</string>
   <string name="settings_preference_updated">Asetuksesi päivitettiin</string>
+  <string name="settings_display_section_title">Display</string>
+  <string name="settings_preference_display_username">Username field always visible</string>
   <string name="view_logs_title">Näytä lokitiedot</string>
   <string name="clipboard_bottomsheet_title">Leikepöytä</string>
   <string name="clipboard_option_clear_clipboard_label">Tyhjennä leikepöytä</string>

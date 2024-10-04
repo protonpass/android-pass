@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">Ваш прывітальны падарунак</string>
+  <string name="trial_subtitle">Атрымлівайце асалоду ад кіравання паролямі на новым узроўні</string>
+  <string name="trial_feature_1">20 сховішчаў</string>
+  <string name="trial_feature_3">Інтэграваная аўтэнтыфікацыя 2ФА</string>
+  <string name="trial_feature_4">Карыстальніцкія палі</string>
+  <string name="trial_button_text">Палепшыць</string>
+  <plurals name="trial_days_left">
+    <item quantity="one">У вас застаўся %d дзень, каб паспрабаваць прэміяльныя функцыі</item>
+    <item quantity="few">У вас засталося %d дні, каб паспрабаваць прэміяльныя функцыі</item>
+    <item quantity="many">У вас засталося %d дзён, каб паспрабаваць прэміяльныя функцыі</item>
+    <item quantity="other">У вас засталося %d дзён, каб паспрабаваць прэміяльныя функцыі</item>
+  </plurals>
+  <string name="trial_learn_more">Даведацца больш</string>
+</resources>

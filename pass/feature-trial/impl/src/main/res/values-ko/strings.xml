@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trial_title">내 환영 기프트</string>
+  <string name="trial_subtitle">차세대 비밀번호 관리자를 경험하세요.</string>
+  <string name="trial_feature_1">20개 금고</string>
+  <string name="trial_feature_3">통합된 2단계 인증기</string>
+  <string name="trial_feature_4">사용자 지정 필드</string>
+  <string name="trial_button_text">지금 업그레이드</string>
+  <plurals name="trial_days_left">
+    <item quantity="other">프리미엄 기능 체험 기간이 %d일 남음</item>
+  </plurals>
+  <string name="trial_learn_more">더 알아보기</string>
+</resources>

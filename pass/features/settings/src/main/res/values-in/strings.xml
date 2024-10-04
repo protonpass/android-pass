@@ -31,6 +31,8 @@
   <string name="settings_share_telemetry">Bagikan statistik pemakaian anonim</string>
   <string name="settings_share_crashes">Bagikan laporan crash anonim</string>
   <string name="settings_preference_updated">Preferensi Anda telah diperbarui</string>
+  <string name="settings_display_section_title">Display</string>
+  <string name="settings_preference_display_username">Username field always visible</string>
   <string name="view_logs_title">Lihat log</string>
   <string name="clipboard_bottomsheet_title">Papan klip</string>
   <string name="clipboard_option_clear_clipboard_label">Bersihkan papan klip</string>

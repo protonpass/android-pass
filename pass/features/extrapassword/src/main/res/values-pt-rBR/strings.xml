@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="configure_extra_password_continue">Continuar</string>
-  <string name="configure_extra_password_title">Defina senha adicional</string>
+  <string name="configure_extra_password_title">Configure a senha adicional</string>
   <string name="configure_extra_password_enter_extra_password">Senha adicional</string>
   <string name="configure_extra_password_repeat_extra_password">Repetir senha</string>
   <string name="configure_extra_password_description">Essa senha será solicitada a você ao iniciar sessão e quando mudar de outro aplicativo do Proton para o Proton Pass na web.</string>
@@ -27,11 +27,11 @@
   <string name="extra_password_options_remove">Remover</string>
   <string name="info_extra_password_title">Senha adicional</string>
   <string name="info_extra_password_body">Proteja o Proton Pass com uma senha adicional.</string>
-  <string name="info_extra_password_button">Defina senha adicional</string>
+  <string name="info_extra_password_button">Configure a senha adicional</string>
   <string name="configure_extra_password_cannot_be_blank">A senha não pode estar em branco</string>
   <string name="configure_extra_password_password_too_short">Senha adicional deve ter pelo menos 8 caracteres</string>
-  <string name="confirm_extra_password_title">Defina senha adicional</string>
+  <string name="confirm_extra_password_title">Configure a senha adicional</string>
   <string name="confirm_extra_password_body">Você será desconectado e terá que iniciar sessão novamente em todos os seus outros dispositivos.</string>
-  <string name="confirm_extra_password_error">Não foi possível definir uma senha adicional</string>
+  <string name="confirm_extra_password_error">Não foi possível configurar uma senha adicional</string>
   <string name="confirm_extra_password_success">Senha adicional configurada</string>
 </resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trash_action_restore">Ripristina</string>
+  <string name="bottomsheet_delete_permanently">Elimina definitivamente</string>
+  <string name="alert_confirm_delete_item_dialog_title">Elimina definitivamente l\'elemento</string>
+  <string name="alert_confirm_delete_item_dialog_message">Sei sicuro di voler eliminare definitivamente questo elemento?</string>
+  <string name="alias_dialog_move_to_trash_title">Sposta l\'alias nel cestino</string>
+  <string name="alias_dialog_move_to_trash_content">Sei sicuro di voler spostare questo alias nel cestino?
+Questo non inoltrerà più le email alla tua casella di posta.</string>
+  <string name="alias_dialog_move_to_trash_confirm">Conferma</string>
+</resources>

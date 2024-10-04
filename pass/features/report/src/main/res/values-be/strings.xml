@@ -52,6 +52,6 @@
   <string name="description_cannot_be_blank">Поле апісанне не можа быць пустым</string>
   <string name="description_is_too_short">Занадта кароткае апісанне</string>
   <string name="description_is_too_long">Занадта доўгае апісанне</string>
-  <string name="email_cannot_be_blank">Поле з электроннай пошта не можа быць пустым</string>
+  <string name="email_cannot_be_blank">Поле з электроннай поштай не можа быць пустым</string>
   <string name="email_invalid">Памылковы адрас электроннай пошты</string>
 </resources>

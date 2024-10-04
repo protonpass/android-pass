@@ -47,7 +47,7 @@
   <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
   <string name="tips_passkeys_credential_manager_not_supported">The manufacturer of the device doesn\'t provide a credential manager.</string>
   <string name="tips_passkey_supported">S\'admeten claus d\'accés.</string>
-  <string name="tips_passkey_not_supported">Passkeys not supported</string>
+  <string name="tips_passkey_not_supported">Les claus d\'accés no són compatibles.</string>
   <string name="report_steps" comment="Indicator showing report progress">Pas %1$d de %2$d</string>
   <string name="description_cannot_be_blank">Description cannot be blank</string>
   <string name="description_is_too_short">La descripció és massa curta.</string>

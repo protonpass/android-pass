@@ -602,8 +602,7 @@ class SelectItemViewModel @Inject constructor(
             selectedAccountFlow.flatMapLatest { userId ->
                 getSuggestedAutofillItems(
                     itemTypeFilter = ItemTypeFilter.Logins,
-                    packageName = state.suggestionsPackageName,
-                    url = state.suggestionsUrl,
+                    suggestion = state.suggestion,
                     userId = userId
                 )
             }
@@ -622,8 +621,7 @@ class SelectItemViewModel @Inject constructor(
                 selectedAccountFlow.flatMapLatest { userId ->
                     getSuggestedAutofillItems(
                         itemTypeFilter = ItemTypeFilter.Logins,
-                        packageName = None,
-                        url = state.suggestionsUrl,
+                        suggestion = state.suggestion,
                         userId = userId
                     )
                 }

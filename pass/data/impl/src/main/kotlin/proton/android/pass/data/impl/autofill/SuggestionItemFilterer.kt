@@ -37,7 +37,7 @@ class SuggestionItemFiltererImpl @Inject constructor(
 
     override fun filter(items: List<Item>, suggestion: Option<Suggestion>): List<Item> = items.filter { item ->
         when (item.itemType) {
-            is ItemType.Login -> isMatch(suggestion, item, item.itemType as ItemType.Login)
+            is ItemType.Login -> isMatch(suggestion, item)
             is ItemType.CreditCard -> true
             is ItemType.Identity -> true
             is ItemType.Alias,
@@ -47,14 +47,10 @@ class SuggestionItemFiltererImpl @Inject constructor(
         }
     }
 
-    private fun isMatch(
-        suggestion: Option<Suggestion>,
-        item: Item,
-        login: ItemType.Login
-    ): Boolean = if (suggestion is Some) {
+    private fun isMatch(suggestion: Option<Suggestion>, item: Item): Boolean = if (suggestion is Some) {
         when (suggestion.value) {
             is Suggestion.PackageName -> isPackageNameMatch(suggestion.value.value, item)
-            is Suggestion.Url -> isUrlMatch(suggestion.value.value, login)
+            is Suggestion.Url -> isUrlMatch(suggestion.value.value, item.itemType as ItemType.Login)
         }
     } else {
         false

@@ -50,8 +50,13 @@ class AssetLinkRepositoryImpl @Inject constructor(
         localAssetLinkDataSource.purge()
     }
 
-    override fun observe(website: String): Flow<List<AssetLink>> =
-        localAssetLinkDataSource.observeAssetLinks(website).map { list ->
+    override fun observeByWebsite(website: String): Flow<List<AssetLink>> =
+        localAssetLinkDataSource.observeByWebsite(website).map { list ->
+            list.map(AssetLinkEntity::toDomain)
+        }
+
+    override fun observeByPackageName(packageName: String): Flow<List<AssetLink>> =
+        localAssetLinkDataSource.observeByPackageName(packageName).map { list ->
             list.map(AssetLinkEntity::toDomain)
         }
 

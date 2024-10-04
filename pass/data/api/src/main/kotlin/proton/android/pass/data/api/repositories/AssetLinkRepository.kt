@@ -25,5 +25,6 @@ interface AssetLinkRepository {
     suspend fun fetch(website: String): AssetLink
     suspend fun insert(list: List<AssetLink>)
     suspend fun purge()
-    fun observe(website: String): Flow<List<AssetLink>>
+    fun observeByWebsite(website: String): Flow<List<AssetLink>>
+    fun observeByPackageName(packageName: String): Flow<List<AssetLink>>
 }

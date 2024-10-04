@@ -38,6 +38,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.api.usecases.passkeys.StorePasskey
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
 import proton.android.pass.featurepasskeys.create.CreatePasskeySnackbarMessage
@@ -101,7 +102,8 @@ class CreatePasskeyAppViewModel @Inject constructor(
             value.map { stateRequest ->
                 SelectItemState.Passkey.Register(
                     title = stateRequest.appState.data.domain,
-                    suggestionsUrl = stateRequest.request.callingRequest.origin.toOption()
+                    suggestion = stateRequest.request.callingRequest.origin.toOption()
+                        .map(Suggestion::Url)
                 )
             }
         }

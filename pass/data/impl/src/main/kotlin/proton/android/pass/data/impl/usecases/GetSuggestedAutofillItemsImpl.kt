@@ -21,6 +21,7 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveUsableVaults
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
+import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
 import proton.android.pass.domain.Item
@@ -43,18 +44,17 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
 
     override fun invoke(
         itemTypeFilter: ItemTypeFilter,
-        packageName: Option<String>,
-        url: Option<String>,
+        suggestion: Option<Suggestion>,
         userId: Option<UserId>
     ): Flow<SuggestedAutofillItemsResult> = getUserIds(userId)
         .flatMapLatest { userIds ->
             when (itemTypeFilter) {
                 ItemTypeFilter.Logins,
                 ItemTypeFilter.Identity ->
-                    handleAllowedItems(userIds, itemTypeFilter, packageName, url)
+                    handleAllowedItems(userIds, itemTypeFilter, suggestion)
 
                 ItemTypeFilter.CreditCards ->
-                    handleCreditCards(userIds, itemTypeFilter, packageName, url)
+                    handleCreditCards(userIds, itemTypeFilter, suggestion)
 
                 else -> throw IllegalArgumentException("ItemType is not supported: $itemTypeFilter")
             }
@@ -70,49 +70,47 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
     private fun handleAllowedItems(
         userIds: List<UserId>,
         itemTypeFilter: ItemTypeFilter,
-        packageName: Option<String>,
-        url: Option<String>
+        suggestion: Option<Suggestion>
     ): Flow<SuggestedAutofillItemsResult> {
         val accountFlows = userIds.map { userId ->
-            getSuggestedItemsForAccount(userId, itemTypeFilter, packageName, url)
+            getSuggestedItemsForAccount(userId, itemTypeFilter, suggestion)
         }
-        return combine(accountFlows) { array -> processAllowedItemsFlows(array, url) }
+        return combine(accountFlows) { array -> processAllowedItemsFlows(array, suggestion) }
     }
 
     private fun handleCreditCards(
         userIds: List<UserId>,
         itemTypeFilter: ItemTypeFilter,
-        packageName: Option<String>,
-        url: Option<String>
+        suggestion: Option<Suggestion>
     ): Flow<SuggestedAutofillItemsResult> {
         val accountFlows = userIds.map { userId ->
             combine(
-                getSuggestedItemsForAccount(userId, itemTypeFilter, packageName, url),
+                getSuggestedItemsForAccount(userId, itemTypeFilter, suggestion),
                 getUserPlan(userId)
             ) { (vaults, items), plan -> Triple(vaults, items, plan) }
         }
 
         return combine(accountFlows) { array ->
-            processCreditCardFlows(array, url)
+            processCreditCardFlows(array, suggestion)
         }
     }
 
     private suspend fun processAllowedItemsFlows(
         array: Array<Pair<List<Vault>, List<Item>>>,
-        url: Option<String>
+        suggestion: Option<Suggestion>
     ): SuggestedAutofillItemsResult {
         val filteredItems = ItemFilterProcessor.removeDuplicates(array)
-        val sortedItems = sortSuggestions(filteredItems, url)
+        val sortedItems = sortSuggestions(filteredItems, suggestion)
         return SuggestedAutofillItemsResult.Items(sortedItems)
     }
 
     private suspend fun processCreditCardFlows(
         array: Array<Triple<List<Vault>, List<Item>, Plan>>,
-        url: Option<String>
+        suggestion: Option<Suggestion>
     ): SuggestedAutofillItemsResult {
         val filteredItems =
             ItemFilterProcessor.removeDuplicates(array.map { it.first to it.second }.toTypedArray())
-        val sortedItems = sortSuggestions(filteredItems, url)
+        val sortedItems = sortSuggestions(filteredItems, suggestion)
         val plans = array.map { it.third }
         return when {
             plans.all { it.isFreePlan } && sortedItems.isEmpty() ->
@@ -138,8 +136,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
     private fun getSuggestedItemsForAccount(
         userId: UserId,
         itemTypeFilter: ItemTypeFilter,
-        packageName: Option<String>,
-        url: Option<String>
+        suggestion: Option<Suggestion>
     ): Flow<Pair<List<Vault>, List<Item>>> = observeUsableVaults(userId)
         .flatMapLatest { usableVaults ->
             observeItems(
@@ -148,13 +145,13 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
                 selection = ShareSelection.Shares(usableVaults.map(Vault::shareId)),
                 itemState = ItemState.Active
             ).map { items ->
-                usableVaults to suggestionItemFilter.filter(items, packageName, url)
+                usableVaults to suggestionItemFilter.filter(items, suggestion)
             }
         }
 
-    private suspend fun sortSuggestions(items: List<Item>, url: Option<String>): List<Item> {
+    private suspend fun sortSuggestions(items: List<Item>, suggestion: Option<Suggestion>): List<Item> {
         val lastAutofillItem =
             internalSettingsRepository.getLastItemAutofill().firstOrNull().toOption().flatMap { it }
-        return suggestionSorter.sort(items, url, lastAutofillItem)
+        return suggestionSorter.sort(items, suggestion.map(Suggestion::value), lastAutofillItem)
     }
 }

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">Continuar</string>
+  <string name="sharing_can_view">Lector</string>
+  <string name="sharing_can_edit">Editor</string>
+  <string name="sharing_can_manage">Administrador</string>
+  <string name="sharing_can_view_description">Permite ver los elementos en esta caja fuerte.</string>
+  <string name="sharing_can_edit_description">Permite crear, editar, eliminar y exportar los elementos en esta caja fuerte.</string>
+  <string name="sharing_can_manage_description">Permite conceder y revocar acceso a esta caja fuerte.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d elemento</item>
+    <item quantity="other">%d elementos</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d miembro</item>
+    <item quantity="other">%d miembros</item>
+  </plurals>
+  <string name="share_with_title">Compartir con</string>
+  <string name="share_with_email_hint">Dirección de correo electrónico</string>
+  <string name="share_with_email_error">La dirección de correo electrónico no es válida.</string>
+  <string name="share_with_email_cannot_invite_outside_org">No puedes invitar personas fuera de tu organización. Contacta con el administrador para más información.</string>
+  <string name="share_with_email_email_already_added">Ya has añadido a esta dirección de correo electrónico.</string>
+  <string name="share_permissions_title">Configurar el nivel de acceso</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s te invita a acceder a elementos en</string>
+  <string name="sharing_join_shared_vault">Unirse y sincronizar</string>
+  <string name="sharing_reject_invitation">Rechazar la invitación</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Felicitaciones: se ha confirmado tu acceso.</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Ver la caja fuerte compartida</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Cerrar</string>
+  <string name="sharing_snackbar_get_invite_error">No se ha podido obtener la invitación.</string>
+  <string name="sharing_snackbar_invite_accepted">Invitación aceptada</string>
+  <string name="sharing_snackbar_invite_accept_error">Error al aceptar la invitación</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">No se ha podido aceptar la invitación porque has alcanzado el límite de la bóveda.</string>
+  <string name="sharing_snackbar_invite_rejected">Invitación rechazada</string>
+  <string name="sharing_snackbar_invite_reject_error">Error al rechazar la invitación</string>
+  <string name="sharing_snackbar_vault_not_found">No se ha podido encontrar la caja fuerte.</string>
+  <string name="sharing_snackbar_invite_sent_success">Invitación enviada</string>
+  <string name="sharing_snackbar_invite_sent_error">No se ha podido enviar la invitación.</string>
+  <string name="sharing_snackbar_get_vault_members_error">No se han podido obtener los miembros de la caja fuerte.</string>
+  <string name="sharing_snackbar_change_permission_success">Los permisos han cambiado.</string>
+  <string name="sharing_snackbar_change_permission_error">Error al modificar los permisos</string>
+  <string name="sharing_snackbar_remove_member_success">El miembro ha sido eliminado de la caja fuerte.</string>
+  <string name="sharing_snackbar_remove_member_error">Error al eliminar de la caja fuerte</string>
+  <string name="share_summary_title">Revisar y compartir</string>
+  <string name="share_summary_vault">la caja fuerte %s</string>
+  <string name="share_summary_share_vault">Compartir la caja fuerte</string>
+  <string name="share_summary_vault_title">caja fuerte</string>
+  <string name="share_manage_vault_share_with_more_people">Compartir con más personas</string>
+  <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
+    <item quantity="one">Queda %d invitación</item>
+    <item quantity="other">Quedan %d invitaciones</item>
+  </plurals>
+  <plurals name="share_manage_vault_item_count">
+    <item quantity="one">%d elemento</item>
+    <item quantity="other">%d elementos</item>
+  </plurals>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Se ha enviado la invitación.</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Creación de cuenta pendiente</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Confirmar el acceso</string>
+  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitaciones</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Miembros</string>
+  <string name="share_manage_vault_current_user_indicator">Tú</string>
+  <string name="share_role_can_view">Puedes ver</string>
+  <string name="share_role_can_edit">Puedes editar</string>
+  <string name="share_role_admin">Administrador</string>
+  <string name="share_role_owner">Propietario</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Transferir la propiedad</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">No puedes transferir tu última caja fuerte propia.</string>
+  <string name="sharing_bottomsheet_remove_access">Revocar el acceso</string>
+  <string name="sharing_bottomsheet_resend_invite">Reenviar la invitación</string>
+  <string name="sharing_bottomsheet_cancel_invite">Cancelar la invitación</string>
+  <string name="sharing_transfer_ownership_confirm_title">Transferir la propiedad</string>
+  <string name="sharing_transfer_ownership_confirm_message">¿Transferir la propiedad de esta caja fuerte a %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Se ha cancelado la invitación.</string>
+  <string name="sharing_snackbar_cancel_invite_error">Error al cancelar la invitación</string>
+  <string name="sharing_snackbar_resend_invite_success">Se ha reenviado la invitación</string>
+  <string name="sharing_snackbar_resend_invite_error">Error al reenviar la invitación</string>
+  <string name="sharing_snackbar_confirm_invite_success">Se ha confirmado la invitación.</string>
+  <string name="sharing_snackbar_confirm_invite_error">Error al confirmar la invitación</string>
+  <string name="sharing_snackbar_too_many_invites_sent">La dirección ha sido invitada demasiadas veces</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Titularidad transferida</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Error al transferir la titularidad</string>
+  <string name="sharing_invites_info_dialog_title">Límite de miembros</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">Esta caja fuerte puede tener hasta %1$d miembros. Aún tienes %2$d invitación restante.</item>
+    <item quantity="other">Esta caja fuerte puede tener hasta %1$d miembros. Aún tienes %2$d invitaciones restantes.</item>
+  </plurals>
+  <string name="sharing_limit_reached">Esta bóveda ha alcanzado el límite de miembros e invitaciones.</string>
+  <string name="sharing_invites_info_upgrade_text">Mejora ahora para invitar a más personas.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Compartir</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Utiliza las cajas fuertes para compartir elemento con otras personas.</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Compartir esta caja fuerte</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Mover a una caja fuerte compartida</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Crear una caja fuerte para compartir</string>
+  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Este elemento se moverá a la caja fuerte nueva.</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">Mejora para crear más cajas fuertes</string>
+  <string name="sharing_from_item_vault_limit_reached">Has alcanzado el límite de cajas fuertes.</string>
+  <string name="share_with_suggestions_title">Sugerencias</string>
+  <string name="share_with_recents_title">Recientes</string>
+  <string name="share_with_remove_email_content_description">Borrar el correo electrónico</string>
+  <string name="share_with_secure_link_title">Vía enlace seguro</string>
+  <string name="share_with_secure_link_description">Genera un enlace seguro para este elemento.</string>
+  <string name="share_with_manage_shared_vault_title">Gestionar el acceso a la caja fuerte</string>
+  <plurals name="share_with_manage_shared_vault_description">
+    <item quantity="one">La caja fuerte del elemento se comparte con %d usuario.</item>
+    <item quantity="other">La caja fuerte del elemento se comparte con %d usuarios.</item>
+  </plurals>
+  <string name="share_with_view_shared_vault_members_title">Ver los miembros de la caja fuerte</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Establecer el nivel de acceso para todos los usuarios</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Establecer el nivel de acceso para %s</string>
+  <string name="sharing_edit_permissions_remove_user">Borrar el usuario</string>
+  <string name="sharing_error_dialog_title">Error desconocido</string>
+  <string name="sharing_error_dialog_message">No se ha podido enviar la invitación de esta caja fuerte. Si el problema persiste, contacta con el servicio de atención al cliente.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">No se puede invitar ninguna dirección.</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">No se puede invitar algunas direcciones.</string>
+</resources>

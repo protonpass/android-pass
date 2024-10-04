@@ -31,6 +31,8 @@
   <string name="settings_share_telemetry">Partager l\'utilisation de façon anonyme</string>
   <string name="settings_share_crashes">Partager des rapports de plantage anonymes</string>
   <string name="settings_preference_updated">Vos préférences ont été mises à jour.</string>
+  <string name="settings_display_section_title">Affichage</string>
+  <string name="settings_preference_display_username">Champ Nom d’utilisateur toujours visible</string>
   <string name="view_logs_title">Afficher les journaux</string>
   <string name="clipboard_bottomsheet_title">Presse-papiers</string>
   <string name="clipboard_option_clear_clipboard_label">Effacer le presse-papiers</string>

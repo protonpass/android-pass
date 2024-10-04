@@ -31,6 +31,8 @@
   <string name="settings_share_telemetry">Del anonym bruk</string>
   <string name="settings_share_crashes">Del anonyme programkrasjrapporter</string>
   <string name="settings_preference_updated">Din preferanse er oppdatert</string>
+  <string name="settings_display_section_title">Display</string>
+  <string name="settings_preference_display_username">Username field always visible</string>
   <string name="view_logs_title">Se logger</string>
   <string name="clipboard_bottomsheet_title">Utklippstavle</string>
   <string name="clipboard_option_clear_clipboard_label">Tøm utklippstavle</string>

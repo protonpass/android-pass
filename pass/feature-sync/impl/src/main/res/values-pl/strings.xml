@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="sync_item_empty">Sejf jest pusty</string>
+  <plurals name="sync_item_count">
+    <item quantity="one">Pobrano %d element</item>
+    <item quantity="few">Pobrano %d elementy</item>
+    <item quantity="many">Pobrano %d elementów</item>
+    <item quantity="other">Pobrano %d elementów</item>
+  </plurals>
+  <plurals name="sync_finished_item_count">
+    <item quantity="one">Zsynchronizowano %d element</item>
+    <item quantity="few">Zsynchronizowano %d elementy</item>
+    <item quantity="many">Zsynchronizowano %d elementów</item>
+    <item quantity="other">Zsynchronizowano %d elementów</item>
+  </plurals>
+  <string name="sync_progress_item_count">Pobieranie %1$d z %2$d elementów</string>
+  <string name="sync_dialog_title">Synchronizacja elementów…</string>
+  <string name="sync_dialog_title_error">Synchronizacja nie powiodła się</string>
+  <string name="sync_dialog_title_success">Synchronizacja została zakończona</string>
+  <string name="sync_dialog_subtitle">Pobieramy i odszyfrowujemy elementy. Proces może potrwać kilka minut.</string>
+  <string name="sync_dialog_subtitle_error">Wystąpił błąd podczas pobierania i odszyfrowywania elementów. Spróbuj ponownie.</string>
+  <string name="sync_dialog_subtitle_success">Elementy zostały pobrane i odszyfrowane.</string>
+  <string name="sync_item_not_started">Nie rozpoczęto</string>
+  <string name="sync_item_failed">Synchronizacja nie powiodła się</string>
+  <string name="sync_dialog_title_inserting">Ładowanie elementów…</string>
+  <string name="sync_dialog_subtitle_inserting">Trwa kończenie ostatniego kroku.</string>
+</resources>

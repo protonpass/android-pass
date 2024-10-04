@@ -8,8 +8,8 @@
   <string name="trial_button_text">Modificare</string>
   <plurals name="trial_days_left">
     <item quantity="one">Zile rămase cu funcții premium: %d</item>
-    <item quantity="few">Au mai rămas %d zile cu funcții premium.</item>
-    <item quantity="other">Au mai rămas %d de zile cu funcții premium.</item>
+    <item quantity="few">Zile rămase cu funcții premium: %d</item>
+    <item quantity="other">Zile rămase cu funcții premium: %d</item>
   </plurals>
   <string name="trial_learn_more">Detalii</string>
 </resources>

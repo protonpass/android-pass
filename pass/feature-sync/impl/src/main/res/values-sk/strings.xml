@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="sync_item_empty">Prázdny trezor</string>
+  <plurals name="sync_item_count">
+    <item quantity="one">Stiahnutá %d položka</item>
+    <item quantity="few">Stiahnuté %d položky</item>
+    <item quantity="many">Stiahnutých %d položiek</item>
+    <item quantity="other">Stiahnutých %d položiek</item>
+  </plurals>
+  <plurals name="sync_finished_item_count">
+    <item quantity="one">%d položka synchronizovaná</item>
+    <item quantity="few">%d položky synchronizované</item>
+    <item quantity="many">%d položiek synchronizovaných</item>
+    <item quantity="other">%d položiek synchronizovaných</item>
+  </plurals>
+  <string name="sync_progress_item_count">Sťahujem %1$d z %2$d položiek</string>
+  <string name="sync_dialog_title">Synchronizácia položiek…</string>
+  <string name="sync_dialog_title_error">Synchronizácia zlyhala</string>
+  <string name="sync_dialog_title_success">Synchronizácia je dokončená</string>
+  <string name="sync_dialog_subtitle">Sťahujeme a dešifrujeme vaše položky. Môže to trvať niekoľko minút.</string>
+  <string name="sync_dialog_subtitle_error">Pri sťahovaní a dešifrovaní vašich položiek došlo k chybe. Skúste to znova, prosím.</string>
+  <string name="sync_dialog_subtitle_success">Vaše položky boli úspešne stiahnuté a dešifrované.</string>
+  <string name="sync_item_not_started">Nezačala</string>
+  <string name="sync_item_failed">Synchronizácia zlyhala</string>
+  <string name="sync_dialog_title_inserting">Vkladám položky…</string>
+  <string name="sync_dialog_subtitle_inserting">Dokončuje sa posledný krok, už je to takmer hotové.</string>
+</resources>

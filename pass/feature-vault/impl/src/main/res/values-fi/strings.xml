@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="snackbar_create_vault_success">Holvi luotiin</string>
+  <string name="snackbar_create_vault_error">Holvia ei luotu</string>
+  <string name="snackbar_cannot_create_more_vaults_error">Holveja ei voida luoda enempää</string>
+  <string name="snackbar_edit_vault_success">Holvia muokattiin</string>
+  <string name="snackbar_edit_vault_error">Holvia ei muokattu</string>
+  <string name="snackbar_delete_vault_success">Holvi poistettiin</string>
+  <string name="snackbar_delete_vault_error">Holvia ei poistettu</string>
+  <string name="snackbar_leave_vault_success">Holvista on poistuttu</string>
+  <string name="snackbar_leave_vault_error">Holvista ei voitu poistua</string>
+  <string name="snackbar_retrieve_vault_error">Holvia ei löytynyt</string>
+  <string name="snackbar_find_vault_error">Valittua holvia ei löytynyt</string>
+  <string name="snackbar_get_vault_list_error">Holvilistaa ei voitu ladata</string>
+  <string name="vault_delete_dialog_title">Poista holvi</string>
+  <string name="vault_delete_dialog_body">Tämä poistaa holvin __VAULT_NAME__ ja kaiken sen sisällön pysyvästi. Vahvista poisto syöttämällä holvin nimi.</string>
+  <string name="vault_delete_dialog_placeholder">Holvin nimi</string>
+  <string name="vault_delete_dialog_cancel_action">Peruuta</string>
+  <string name="vault_delete_dialog_delete_action">Poista</string>
+  <string name="vault_leave_dialog_title">Poistu holvista</string>
+  <string name="vault_leave_dialog_body">Tämä mitätöi käyttöoikeutesi holviin __VAULT_NAME__ ja sen sisältöön. Haluatko varmasti poistua?</string>
+  <string name="vault_leave_dialog_cancel_action">Peruuta</string>
+  <string name="vault_leave_dialog_leave_action">Poistu</string>
+  <string name="bottomsheet_close_icon_content_description">Sulje holvin luonti</string>
+  <string name="bottomsheet_create_vault_button">Luo holvi</string>
+  <string name="bottomsheet_edit_vault_button">Tallenna</string>
+  <string name="bottomsheet_cannot_create_more_vaults">Luotujen holvien enimmäismäärä on saavutettu. Luo holveja rajattomasti päivittämällä tilauksesi.</string>
+  <string name="bottomsheet_cannot_select_not_primary_vault">Käyttääksesi muita holvejasi, sinun on päivitettävä tilisi.</string>
+  <string name="bottomsheet_upgrade_now">Päivitä tilaus nyt</string>
+  <string name="bottomsheet_edit">Muokkaa</string>
+  <string name="bottomsheet_migrate">Siirrä kaikki kohteet toiseen holviin</string>
+  <string name="bottomsheet_delete_vault">Poista holvi</string>
+  <string name="bottomsheet_share_vault">Jaa</string>
+  <string name="bottomsheet_leave_vault">Poistu holvista</string>
+  <string name="bottomsheet_view_members">Näytä jäsenet</string>
+  <string name="bottomsheet_manage_access">Hallitse käyttöoikeuksia</string>
+  <string name="bottomsheet_select_vault_read_only">You can only view</string>
+  <string name="bottomsheet_select_vault_only_oldest_vaults">Voit luoda kohteita vain vanhimpiin holveihisi</string>
+  <string name="vault_title">Holvi</string>
+</resources>

@@ -29,7 +29,7 @@
   <string name="simple_login_sync_details_dialog_title_mailboxes">Messagerie par défaut pour les alias</string>
   <string name="simple_login_sync_details_snackbar_alias_details_fetch_error">Une erreur est survenue lors de la récupération des informations de l\'alias SL.</string>
   <string name="simple_login_sync_details_snackbar_alias_domain_update_error">Une erreur est survenue lors de la mise à jour du domaine de l\'alias SL.</string>
-  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">Le domaine de l\'alias SL a été mis à jour.</string>
+  <string name="simple_login_sync_details_snackbar_alias_domain_update_success">Le domaine des alias SL a été mis à jour.</string>
   <string name="simple_login_sync_details_snackbar_alias_mailbox_update_error">Une erreur est survenue lors de la mise à jour de la messagerie de l\'alias SL.</string>
   <string name="simple_login_sync_details_snackbar_alias_mailbox_update_success">La messagerie de l\'alias a été mises à jour.</string>
   <!-- Settings screen -->

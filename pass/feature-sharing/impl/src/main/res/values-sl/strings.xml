@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="share_continue">Nadaljuj</string>
+  <string name="sharing_can_view">Preglednik</string>
+  <string name="sharing_can_edit">Urejevalnik</string>
+  <string name="sharing_can_manage">Administrator</string>
+  <string name="sharing_can_view_description">Lahko si ogleda predmete v tem trezorju.</string>
+  <string name="sharing_can_edit_description">Lahko ustvarja, ureja, briše in izvaža predmete v tem trezorju.</string>
+  <string name="sharing_can_manage_description">Lahko odobri in prekliče dostop do tega trezorja.</string>
+  <plurals name="sharing_item_count">
+    <item quantity="one">%d predmet</item>
+    <item quantity="two">%d predmeta</item>
+    <item quantity="few">%d predmeti</item>
+    <item quantity="other">%d predmetov</item>
+  </plurals>
+  <plurals name="sharing_member_count">
+    <item quantity="one">%d član</item>
+    <item quantity="two">%d člana</item>
+    <item quantity="few">%d člani</item>
+    <item quantity="other">%d članov</item>
+  </plurals>
+  <string name="share_with_title">Deli z</string>
+  <string name="share_with_email_hint">E-poštni naslov</string>
+  <string name="share_with_email_error">Neveljaven e-poštni naslov</string>
+  <string name="share_with_email_cannot_invite_outside_org">Ne morete povabiti ljudi izven vaše organizacije, za več informacij se obrnite na skrbnika.</string>
+  <string name="share_with_email_email_already_added">You have already added this email address</string>
+  <string name="share_permissions_title">Nastavite raven dostopa</string>
+  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vas vabi k dostopu do predmetov v</string>
+  <string name="sharing_join_shared_vault">Pridružite se in sinhronizirajte</string>
+  <string name="sharing_reject_invitation">Zavrni povabilo</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Čestitamo, vaš dostop je potrjen</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Oglejte si skupni trezor</string>
+  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Zapri</string>
+  <string name="sharing_snackbar_get_invite_error">Povabila ni bilo mogoče dobiti</string>
+  <string name="sharing_snackbar_invite_accepted">Povabilo sprejeto</string>
+  <string name="sharing_snackbar_invite_accept_error">Napaka pri sprejemanju povabila</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Povabila ni bilo mogoče sprejeti, ker ste dosegli omejitev trezorja</string>
+  <string name="sharing_snackbar_invite_rejected">Povabilo zavrnjeno</string>
+  <string name="sharing_snackbar_invite_reject_error">Napaka pri zavrnitvi povabila</string>
+  <string name="sharing_snackbar_vault_not_found">Trezorja ni bilo mogoče najti</string>
+  <string name="sharing_snackbar_invite_sent_success">Povabilo poslano.</string>
+  <string name="sharing_snackbar_invite_sent_error">Povabila ni bilo mogoče poslati</string>
+  <string name="sharing_snackbar_get_vault_members_error">Ni bilo mogoče pridobiti članov trezorja</string>
+  <string name="sharing_snackbar_change_permission_success">Spremenjena dovoljenja</string>
+  <string name="sharing_snackbar_change_permission_error">Dovoljenj ni bilo mogoče spremeniti</string>
+  <string name="sharing_snackbar_remove_member_success">Član odstranjen iz trezorja</string>
+  <string name="sharing_snackbar_remove_member_error">Ni bilo mogoče odstraniti iz trezorja</string>
+  <string name="share_summary_title">Preglejte in delite</string>
+  <string name="share_summary_vault">%s trezor</string>
+  <string name="share_summary_share_vault">Skupni trezor</string>
+  <string name="share_summary_vault_title">Trezor</string>
+  <string name="share_manage_vault_share_with_more_people">Delite z več ljudmi</string>
+  <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
+    <item quantity="one">%d ostane povabilo</item>
+    <item quantity="two">%d ostaneta povabili</item>
+    <item quantity="few">%d ostanejo povabila</item>
+    <item quantity="other">%d ostanejo povabila</item>
+  </plurals>
+  <plurals name="share_manage_vault_item_count">
+    <item quantity="one">%d predmet</item>
+    <item quantity="two">%d predmeta</item>
+    <item quantity="few">%d predmeti</item>
+    <item quantity="other">%d predmetov</item>
+  </plurals>
+  <string name="share_manage_vault_invite_pending" comment="Text that will be shown in the vault member list, below the user email when the user has been invited but has not accepted the invitation yet">Povabilo poslano.</string>
+  <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">Ustvarjanje računa v teku</string>
+  <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Potrdite dostop</string>
+  <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Vabila</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Člani</string>
+  <string name="share_manage_vault_current_user_indicator">Vi</string>
+  <string name="share_role_can_view">Lahko si ogledate</string>
+  <string name="share_role_can_edit">Lahko ureja</string>
+  <string name="share_role_admin">Administrator</string>
+  <string name="share_role_owner">Lastnik</string>
+  <string name="sharing_bottomsheet_transfer_ownership">Prenos lastništva</string>
+  <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Svojega zadnjega trezorja ne morete prenesti.</string>
+  <string name="sharing_bottomsheet_remove_access">Odvzemi dostop</string>
+  <string name="sharing_bottomsheet_resend_invite">Ponovno pošlji povabilo</string>
+  <string name="sharing_bottomsheet_cancel_invite">Prekliči povabilo</string>
+  <string name="sharing_transfer_ownership_confirm_title">Prenos lastništva</string>
+  <string name="sharing_transfer_ownership_confirm_message">Želite prenesti lastništvo tega trezorja na %s?</string>
+  <string name="sharing_snackbar_cancel_invite_success">Povabilo preklicano</string>
+  <string name="sharing_snackbar_cancel_invite_error">Napaka pri preklicu povabila</string>
+  <string name="sharing_snackbar_resend_invite_success">Ponovno povabilo</string>
+  <string name="sharing_snackbar_resend_invite_error">Napaka pri ponovnem pošiljanju povabila</string>
+  <string name="sharing_snackbar_confirm_invite_success">Povabilo je potrjeno</string>
+  <string name="sharing_snackbar_confirm_invite_error">Napaka pri potrjevanju povabila</string>
+  <string name="sharing_snackbar_too_many_invites_sent">Naslovnik je bil povabljen prevečkrat</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Prenos lastništva</string>
+  <string name="sharing_snackbar_transfer_ownership_error">Napaka pri prenosu lastništva</string>
+  <string name="sharing_invites_info_dialog_title">Omejitev članov</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">Ta trezor ima lahko do %1$d članov. Na voljo imate še %2$d povabilo.</item>
+    <item quantity="two">Ta trezor ima lahko do %1$d članov. Na voljo imate še %2$d povabili.</item>
+    <item quantity="few">Ta trezor ima lahko do %1$d članov. Na voljo imate še %2$d povabila.</item>
+    <item quantity="other">Ta trezor ima lahko do %1$d članov. Na voljo imate še %2$d povabil.</item>
+  </plurals>
+  <string name="sharing_limit_reached">Ta trezor je dosegel omejitev članov in povabil.</string>
+  <string name="sharing_invites_info_upgrade_text">Nadgradite zdaj, da povabite več.</string>
+  <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Deli</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Uporabite trezorje za skupno rabo predmetov z drugimi</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Delite ta trezor</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Premakni v skupni trezor</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Ustvarite nov trezor za skupno rabo</string>
+  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Ta predmet bo premaknjen v nov trezor.</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">Nadgradite, da ustvarite več trezorjev</string>
+  <string name="sharing_from_item_vault_limit_reached">Dosegli ste omejitev trezorja</string>
+  <string name="share_with_suggestions_title">Predlogi</string>
+  <string name="share_with_recents_title">Nedavne</string>
+  <string name="share_with_remove_email_content_description">Odstrani e-pošto</string>
+  <string name="share_with_secure_link_title">Via secure link</string>
+  <string name="share_with_secure_link_description">Generate a secure link to this item.</string>
+  <string name="share_with_manage_shared_vault_title">Upravljajte dostop do trezorja</string>
+  <plurals name="share_with_manage_shared_vault_description">
+    <item quantity="one">Trezor predmeta je trenutno v skupni rabi z uporabnikom %d.</item>
+    <item quantity="two">Trezor predmeta je trenutno v skupni rabi z %d uporabnikoma.</item>
+    <item quantity="few">Trezor predmeta je trenutno v skupni rabi z %d uporabniki.</item>
+    <item quantity="other">Trezor predmeta je trenutno v skupni rabi z %d uporabniki.</item>
+  </plurals>
+  <string name="share_with_view_shared_vault_members_title">Oglejte si člane trezorja</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Nastavite raven dostopa za vse člane</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Nastavi raven dostopa za %s</string>
+  <string name="sharing_edit_permissions_remove_user">Odstranite uporabnika</string>
+  <string name="sharing_error_dialog_title">Neznana napaka</string>
+  <string name="sharing_error_dialog_message">Pri pošiljanju povabila za ta trezor je prišlo do napake. Če težave ne odpravite, se obrnite na službo za podporo strankam.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">Ni mogoče povabiti nobenega naslova</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Nekaterih naslovov ni mogoče povabiti</string>
+</resources>

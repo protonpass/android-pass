@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="sync_item_empty">Cofre vazio</string>
+  <plurals name="sync_item_count">
+    <item quantity="one">%d item baixado</item>
+    <item quantity="other">%d itens baixados</item>
+  </plurals>
+  <plurals name="sync_finished_item_count">
+    <item quantity="one">%d item sincronizado</item>
+    <item quantity="other">%d itens sincronizados</item>
+  </plurals>
+  <string name="sync_progress_item_count">Baixando %1$d de %2$d itens</string>
+  <string name="sync_dialog_title">Sincronizando itens…</string>
+  <string name="sync_dialog_title_error">Falha na sincronização</string>
+  <string name="sync_dialog_title_success">Sincronização completa</string>
+  <string name="sync_dialog_subtitle">Estamos baixando e descriptografando seus itens. Isso pode demorar alguns minutos.</string>
+  <string name="sync_dialog_subtitle_error">Ocorreu um erro ao baixar e descriptografar seus itens. Tente novamente.</string>
+  <string name="sync_dialog_subtitle_success">Seus itens foram baixados e descriptografados com sucesso.</string>
+  <string name="sync_item_not_started">Não iniciado</string>
+  <string name="sync_item_failed">Falha na sincronização</string>
+  <string name="sync_dialog_title_inserting">Inserindo itens…</string>
+  <string name="sync_dialog_subtitle_inserting">Completado a última etapa falta pouco.</string>
+</resources>

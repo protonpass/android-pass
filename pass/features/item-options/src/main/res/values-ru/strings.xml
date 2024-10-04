@@ -17,13 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="item_options_alias_trash_dialog_title">Move to Trash</string>
-  <string name="item_options_alias_trash_dialog_message">Aliases in Trash will continue forwarding emails. If you want to stop receiving emails on this address, disable it instead.</string>
-  <string name="item_options_alias_trash_dialog_checkbox_text">Don\'t remind me again</string>
-  <string name="item_options_alias_trash_dialog_button_text_disable">Disable instead</string>
-  <string name="item_options_alias_trash_dialog_button_text_trash">Move to trash</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">There was an error disabling the alias</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Alias disabled</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">There was an error moving the alias to trash</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Alias moved to trash</string>
+  <string name="item_options_alias_trash_dialog_title">Переместить в Корзину</string>
+  <string name="item_options_alias_trash_dialog_message">Псевдонимы в Корзине будут продолжать пересылать сообщения. Если вы хотите прекратить получение писем на этот адрес, отключите его.</string>
+  <string name="item_options_alias_trash_dialog_checkbox_text">Больше не напоминать</string>
+  <string name="item_options_alias_trash_dialog_button_text_disable">Отключить вместо этого</string>
+  <string name="item_options_alias_trash_dialog_button_text_trash">Переместить в корзину</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">Произошла ошибка при отключении псевдонима</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Псевдоним отключен</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">Произошла ошибка при перемещении псевдонима в корзину</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Псевдоним перемещен в корзину</string>
 </resources>

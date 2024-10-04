@@ -251,10 +251,10 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Включить синхронизацию с SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">We detected that you have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to import it?</item>
-    <item quantity="few">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
-    <item quantity="many">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
-    <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
+    <item quantity="one">Мы обнаружили, что у вас есть %d псевдоним, который присутствуют в SimpleLogin, но отсутствуют в Proton Pass. Не хотите ли вы импортировать его?</item>
+    <item quantity="few">Мы обнаружили, что у вас есть %d псевдонима, которые присутствуют в SimpleLogin, но отсутствуют в Proton Pass. Вы хотите их импортировать?</item>
+    <item quantity="many">Мы обнаружили, что у вас есть %d псевдонимов, которые присутствуют в SimpleLogin, но отсутствуют в Proton Pass. Вы хотите их импортировать?</item>
+    <item quantity="other">Мы обнаружили, что у вас есть %d псевдонимов, которые присутствуют в SimpleLogin, но отсутствуют в Proton Pass. Вы хотите их импортировать?</item>
   </plurals>
   <string name="simple_login_widget_action">Синхронизировать псевдонимы</string>
   <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>

@@ -21,7 +21,7 @@
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Confirmar</string>
   <string name="bottomsheet_cancel_button">Cancelar</string>
-  <string name="bottomsheet_move_to_trash">Mover para lixeira</string>
+  <string name="bottomsheet_move_to_trash">Mover para a lixeira</string>
   <string name="bottomsheet_pin_item">Fixar</string>
   <string name="bottomsheet_unpin_item">Desafixar</string>
   <string name="bottomsheet_view_item_history">Visualizar histórico</string>
@@ -163,7 +163,7 @@
   <string name="item_details_identity_section_address_county_title">Província</string>
   <string name="item_details_identity_section_address_country_or_region_title">País ou região</string>
   <string name="item_details_identity_section_contact_title">Detalhes do contato</string>
-  <string name="item_details_identity_section_contact_social_security_number_title">Número do seguro social</string>
+  <string name="item_details_identity_section_contact_social_security_number_title">CPF</string>
   <string name="item_details_identity_section_contact_passport_number_title">Número do passaporte</string>
   <string name="item_details_identity_section_contact_license_number_title">Número da licença</string>
   <string name="item_details_identity_section_contact_website_title">Site</string>

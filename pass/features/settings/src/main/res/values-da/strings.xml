@@ -31,6 +31,8 @@
   <string name="settings_share_telemetry">Del anonyme brugsdata</string>
   <string name="settings_share_crashes">Del anonyme rapporter om nedbrud</string>
   <string name="settings_preference_updated">Dine præferencer er blevet opdateret</string>
+  <string name="settings_display_section_title">Display</string>
+  <string name="settings_preference_display_username">Username field always visible</string>
   <string name="view_logs_title">Vis logfiler</string>
   <string name="clipboard_bottomsheet_title">Udklipsholder</string>
   <string name="clipboard_option_clear_clipboard_label">Ryd udklipsholder</string>

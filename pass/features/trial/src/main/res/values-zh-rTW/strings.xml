@@ -7,7 +7,7 @@
   <string name="trial_feature_4">自訂欄位</string>
   <string name="trial_button_text">立即升級</string>
   <plurals name="trial_days_left">
-    <item quantity="other">嘗試進階版功能剩餘%d</item>
+    <item quantity="other">%d days left to try premium features</item>
   </plurals>
   <string name="trial_learn_more">取得更多資訊</string>
 </resources>

@@ -27,8 +27,7 @@ import proton.android.pass.domain.Item
 interface GetSuggestedAutofillItems {
     operator fun invoke(
         itemTypeFilter: ItemTypeFilter,
-        packageName: Option<String> = None,
-        url: Option<String> = None,
+        suggestion: Option<Suggestion> = None,
         userId: Option<UserId> = None
     ): Flow<SuggestedAutofillItemsResult>
 }
@@ -37,4 +36,14 @@ sealed interface SuggestedAutofillItemsResult {
     @JvmInline
     value class Items(val items: List<Item>) : SuggestedAutofillItemsResult
     data object ShowUpgrade : SuggestedAutofillItemsResult
+}
+
+sealed interface Suggestion {
+    val value: String
+
+    @JvmInline
+    value class PackageName(override val value: String) : Suggestion
+
+    @JvmInline
+    value class Url(override val value: String) : Suggestion
 }

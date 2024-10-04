@@ -36,6 +36,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
+import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUsableVaults
@@ -66,11 +67,7 @@ internal class FakeSuggestionItemFilterer : SuggestionItemFilterer {
         this.filter = fn
     }
 
-    override fun filter(
-        items: List<Item>,
-        packageName: Option<String>,
-        url: Option<String>
-    ): List<Item> = items.filter { filter.invoke(it) }
+    override fun filter(items: List<Item>, suggestion: Option<Suggestion>): List<Item> = items.filter(filter::invoke)
 }
 
 class FakeSuggestionSorter : SuggestionSorter {

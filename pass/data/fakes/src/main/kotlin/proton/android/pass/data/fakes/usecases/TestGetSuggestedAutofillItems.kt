@@ -26,6 +26,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
+import proton.android.pass.data.api.usecases.Suggestion
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -41,8 +42,7 @@ class TestGetSuggestedAutofillItems @Inject constructor() : GetSuggestedAutofill
 
     override fun invoke(
         itemTypeFilter: ItemTypeFilter,
-        packageName: Option<String>,
-        url: Option<String>,
+        suggestion: Option<Suggestion>,
         userId: Option<UserId>
     ): Flow<SuggestedAutofillItemsResult> = resultFlow.map { it.getValue(itemTypeFilter).getOrThrow() }
 }

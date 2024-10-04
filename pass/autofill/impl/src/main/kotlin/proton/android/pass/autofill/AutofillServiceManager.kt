@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.autofill.entities.AutofillData
+import proton.android.pass.autofill.entities.getSuggestion
 import proton.android.pass.autofill.extensions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.heuristics.NodeCluster
@@ -170,6 +171,7 @@ class AutofillServiceManager @Inject constructor(
             packageName = autofillData.packageInfo.packageName,
             url = autofillData.assistInfo.url
         )
+        val suggestion = getSuggestion(packageName, url)
         val itemTypeFilter = when (suggestionType) {
             SuggestionType.CreditCard -> ItemTypeFilter.CreditCards
             SuggestionType.Identity -> ItemTypeFilter.Identity
@@ -177,8 +179,7 @@ class AutofillServiceManager @Inject constructor(
         }
         val result = getSuggestedAutofillItems(
             itemTypeFilter = itemTypeFilter,
-            packageName = packageName,
-            url = url
+            suggestion = suggestion
         ).firstOrNull()
         return when (result) {
             is SuggestedAutofillItemsResult.Items -> SuggestedItemsResult.Items(result.items)

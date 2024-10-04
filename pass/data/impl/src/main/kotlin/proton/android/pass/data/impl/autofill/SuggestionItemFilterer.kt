@@ -22,29 +22,22 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
+import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
 import javax.inject.Inject
 
 interface SuggestionItemFilterer {
-    fun filter(
-        items: List<Item>,
-        packageName: Option<String>,
-        url: Option<String>
-    ): List<Item>
+    fun filter(items: List<Item>, suggestion: Option<Suggestion>): List<Item>
 }
 
 class SuggestionItemFiltererImpl @Inject constructor(
     private val hostParser: HostParser
 ) : SuggestionItemFilterer {
 
-    override fun filter(
-        items: List<Item>,
-        packageName: Option<String>,
-        url: Option<String>
-    ): List<Item> = items.filter {
-        when (it.itemType) {
-            is ItemType.Login -> isMatch(packageName, url, it, it.itemType as ItemType.Login)
+    override fun filter(items: List<Item>, suggestion: Option<Suggestion>): List<Item> = items.filter { item ->
+        when (item.itemType) {
+            is ItemType.Login -> isMatch(suggestion, item, item.itemType as ItemType.Login)
             is ItemType.CreditCard -> true
             is ItemType.Identity -> true
             is ItemType.Alias,
@@ -55,15 +48,17 @@ class SuggestionItemFiltererImpl @Inject constructor(
     }
 
     private fun isMatch(
-        packageName: Option<String>,
-        url: Option<String>,
+        suggestion: Option<Suggestion>,
         item: Item,
         login: ItemType.Login
-    ): Boolean = if (packageName is Some) {
-        isPackageNameMatch(packageName.value, item)
-    } else if (url is Some) {
-        isUrlMatch(url.value, login)
-    } else false
+    ): Boolean = if (suggestion is Some) {
+        when (suggestion.value) {
+            is Suggestion.PackageName -> isPackageNameMatch(suggestion.value.value, item)
+            is Suggestion.Url -> isUrlMatch(suggestion.value.value, login)
+        }
+    } else {
+        false
+    }
 
     private fun isPackageNameMatch(packageName: String, item: Item): Boolean =
         item.packageInfoSet.map { it.packageName.value }.contains(packageName)

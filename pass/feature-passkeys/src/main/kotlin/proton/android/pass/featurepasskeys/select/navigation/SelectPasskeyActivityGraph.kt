@@ -81,7 +81,7 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
     selectItemGraph(
         state = SelectItemState.Passkey.Select(
             title = domain,
-            suggestionsUrl = None
+            suggestion = None
         ),
         onScreenShown = {
             onEvent(SelectPasskeyEvent.OnSelectScreenShown)

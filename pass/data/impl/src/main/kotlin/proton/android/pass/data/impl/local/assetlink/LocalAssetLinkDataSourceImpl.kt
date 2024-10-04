@@ -35,6 +35,9 @@ class LocalAssetLinkDataSourceImpl @Inject constructor(
         database.assetLinkDao().purge()
     }
 
-    override fun observeAssetLinks(website: String): Flow<List<AssetLinkEntity>> =
-        database.assetLinkDao().observeAssetLinks(website)
+    override fun observeByWebsite(website: String): Flow<List<AssetLinkEntity>> =
+        database.assetLinkDao().observeByWebsite(website)
+
+    override fun observeByPackageName(packageName: String): Flow<List<AssetLinkEntity>> =
+        database.assetLinkDao().observeByPackageName(packageName)
 }

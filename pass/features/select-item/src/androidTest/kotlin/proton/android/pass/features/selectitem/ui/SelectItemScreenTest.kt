@@ -37,11 +37,13 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeUserManager
 import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
+import proton.android.pass.data.api.usecases.SuggestedItem
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
@@ -379,7 +381,7 @@ class SelectItemScreenTest {
         }
         getSuggestedLoginItems.sendValue(
             itemTypeFilter = ItemTypeFilter.Logins,
-            value = Result.success(SuggestedAutofillItemsResult.Items(suggestionsList))
+            value = Result.success(SuggestedAutofillItemsResult.Items(suggestionsList.map { SuggestedItem(it, None) }))
         )
 
         val otherItemsList = (0 until otherItems).map {

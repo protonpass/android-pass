@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.db.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
-import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity.Columns
@@ -29,6 +28,7 @@ import java.util.Date
 
 @Entity(
     tableName = AssetLinkEntity.TABLE,
+    primaryKeys = [Columns.WEBSITE, Columns.PACKAGE_NAME, Columns.SIGNATURE],
     indices = [
         Index(
             value = [Columns.WEBSITE, Columns.PACKAGE_NAME, Columns.SIGNATURE],
@@ -38,9 +38,6 @@ import java.util.Date
 )
 @TypeConverters(DateConverter::class)
 data class AssetLinkEntity(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = Columns.ID)
-    val id: Long = 0,
     @ColumnInfo(name = Columns.WEBSITE)
     val website: String,
     @ColumnInfo(name = Columns.PACKAGE_NAME)
@@ -51,7 +48,6 @@ data class AssetLinkEntity(
     val signature: String
 ) {
     object Columns {
-        const val ID = "id"
         const val WEBSITE = "website"
         const val PACKAGE_NAME = "package_name"
         const val SIGNATURE = "signature"

@@ -29,6 +29,11 @@ internal enum class SimpleLoginSyncMailboxVerifySnackbarMessage(
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
 
+    VerifyCodeError(
+        id = R.string.simple_login_sync_mailbox_verify_message_verification_code_error,
+        type = SnackbarType.ERROR
+    ),
+
     VerifyMailboxError(
         id = R.string.simple_login_sync_mailbox_verify_message_verification_error,
         type = SnackbarType.ERROR

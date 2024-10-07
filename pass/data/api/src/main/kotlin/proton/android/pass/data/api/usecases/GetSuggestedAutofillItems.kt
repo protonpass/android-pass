@@ -22,7 +22,8 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.domain.Item
+import proton.android.pass.common.api.Some
+import proton.android.pass.domain.ItemBase
 
 interface GetSuggestedAutofillItems {
     operator fun invoke(
@@ -34,7 +35,7 @@ interface GetSuggestedAutofillItems {
 
 sealed interface SuggestedAutofillItemsResult {
     @JvmInline
-    value class Items(val items: List<Item>) : SuggestedAutofillItemsResult
+    value class Items(val suggestedItems: List<SuggestedItem>) : SuggestedAutofillItemsResult
     data object ShowUpgrade : SuggestedAutofillItemsResult
 }
 
@@ -44,6 +45,16 @@ sealed interface Suggestion {
     @JvmInline
     value class PackageName(override val value: String) : Suggestion
 
-    @JvmInline
-    value class Url(override val value: String) : Suggestion
+    data class Url(
+        override val value: String,
+        val isDALSuggestion: Boolean = false
+    ) : Suggestion
+}
+
+data class SuggestedItem(
+    private val item: ItemBase,
+    val suggestion: Option<Suggestion>
+) : ItemBase by item {
+    val isDALSuggestion: Boolean
+        get() = suggestion is Some && (suggestion.value as? Suggestion.Url)?.isDALSuggestion ?: false
 }

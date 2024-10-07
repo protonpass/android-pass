@@ -29,31 +29,54 @@ import proton.android.pass.domain.entity.PackageInfo
 @JvmInline
 value class ItemId(val id: String)
 
-data class Item(
-    val id: ItemId,
-    val userId: UserId,
-    val itemUuid: String,
-    val revision: Long,
-    val shareId: ShareId,
-    val itemType: ItemType,
-    val title: EncryptedString,
-    val note: EncryptedString,
-    val content: EncryptedByteArray,
-    val state: Int,
-    val packageInfoSet: Set<PackageInfo>,
-    val createTime: Instant,
-    val modificationTime: Instant,
-    val lastAutofillTime: Option<Instant>,
-    val isPinned: Boolean,
+interface ItemBase {
+    val id: ItemId
+    val userId: UserId
+    val itemUuid: String
+    val revision: Long
+    val shareId: ShareId
+    val itemType: ItemType
+    val title: EncryptedString
+    val note: EncryptedString
+    val content: EncryptedByteArray
+    val state: Int
+    val packageInfoSet: Set<PackageInfo>
+    val createTime: Instant
+    val modificationTime: Instant
+    val lastAutofillTime: Option<Instant>
+    val isPinned: Boolean
     val flags: Int
-) {
-    val hasPasskeys: Boolean = when (val type = itemType) {
+
+    val hasPasskeys: Boolean
+    val hasSkippedHealthCheck: Boolean
+    val isEmailBreached: Boolean
+    val isAliasDisabled: Boolean
+}
+
+data class Item(
+    override val id: ItemId,
+    override val userId: UserId,
+    override val itemUuid: String,
+    override val revision: Long,
+    override val shareId: ShareId,
+    override val itemType: ItemType,
+    override val title: EncryptedString,
+    override val note: EncryptedString,
+    override val content: EncryptedByteArray,
+    override val state: Int,
+    override val packageInfoSet: Set<PackageInfo>,
+    override val createTime: Instant,
+    override val modificationTime: Instant,
+    override val lastAutofillTime: Option<Instant>,
+    override val isPinned: Boolean,
+    override val flags: Int
+) : ItemBase {
+    override val hasPasskeys: Boolean = when (val type = itemType) {
         is ItemType.Login -> type.passkeys.isNotEmpty()
         else -> false
     }
 
-    val hasSkippedHealthCheck: Boolean = flags.hasFlag(ItemFlag.SkipHealthCheck.value)
-    val isEmailBreached: Boolean = flags.hasFlag(ItemFlag.EmailBreached.value)
-    val isAliasDisabled: Boolean = flags.hasFlag(ItemFlag.AliasDisabled.value)
-
+    override val hasSkippedHealthCheck: Boolean = flags.hasFlag(ItemFlag.SkipHealthCheck.value)
+    override val isEmailBreached: Boolean = flags.hasFlag(ItemFlag.EmailBreached.value)
+    override val isAliasDisabled: Boolean = flags.hasFlag(ItemFlag.AliasDisabled.value)
 }

@@ -21,7 +21,6 @@ package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsNavDestination
@@ -30,7 +29,6 @@ import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.presentation
 
 @Composable
 fun ItemOptionsBottomSheet(
-    modifier: Modifier = Modifier,
     onNavigate: (ItemOptionsNavDestination) -> Unit,
     viewModel: ItemOptionsViewModel = hiltViewModel()
 ) = with(viewModel) {
@@ -44,13 +42,21 @@ fun ItemOptionsBottomSheet(
     }
 
     ItemOptionsBottomSheetContent(
-        modifier = modifier,
         state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
-                ItemOptionsBottomSheetUiEvent.OnCopyEmailClicked -> onCopyEmail()
-                ItemOptionsBottomSheetUiEvent.OnCopyPasswordClicked -> onCopyPassword()
-                ItemOptionsBottomSheetUiEvent.OnCopyUsernameClicked -> onCopyUsername()
+                is ItemOptionsBottomSheetUiEvent.OnCopyEmailClicked -> onCopyEmail(
+                    email = uiEvent.email
+                )
+
+                is ItemOptionsBottomSheetUiEvent.OnCopyPasswordClicked -> onCopyPassword(
+                    encryptedPassword = uiEvent.encryptedPassword
+                )
+
+                is ItemOptionsBottomSheetUiEvent.OnCopyUsernameClicked -> onCopyUsername(
+                    username = uiEvent.username
+                )
+
                 ItemOptionsBottomSheetUiEvent.OnMoveToTrashClicked -> onMoveToTrash()
             }
         }

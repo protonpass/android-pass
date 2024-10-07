@@ -28,16 +28,14 @@ class LocalAssetLinkDataSourceImpl @Inject constructor(
 ) : LocalAssetLinkDataSource {
 
     override suspend fun insertAssetLink(list: List<AssetLinkEntity>) {
-        database.assetLinkDao().insertOrUpdate(*list.toTypedArray())
+        database.assetLinkDao().insertAssetLinks(list)
     }
 
     override suspend fun purge() {
         database.assetLinkDao().purge()
     }
 
-    override fun observeByWebsite(website: String): Flow<List<AssetLinkEntity>> =
-        database.assetLinkDao().observeByWebsite(website)
-
     override fun observeByPackageName(packageName: String): Flow<List<AssetLinkEntity>> =
         database.assetLinkDao().observeByPackageName(packageName)
+
 }

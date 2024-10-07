@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.db
 
 import me.proton.core.data.room.db.Database
-import proton.android.pass.data.impl.db.dao.AssetLinkDao
 import proton.android.pass.data.impl.db.dao.InviteDao
 import proton.android.pass.data.impl.db.dao.InviteKeyDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
@@ -33,6 +32,7 @@ import proton.android.pass.data.impl.db.dao.ShareKeysDao
 import proton.android.pass.data.impl.db.dao.SharesDao
 import proton.android.pass.data.impl.db.dao.TelemetryDao
 import proton.android.pass.data.impl.db.dao.UserAccessDataDao
+import proton.android.pass.data.impl.db.dao.assetlink.AssetLinkDao
 import proton.android.pass.data.impl.db.dao.securelinks.SecureLinksDao
 import proton.android.pass.log.api.PassLogger
 

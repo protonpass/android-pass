@@ -151,6 +151,7 @@ class ItemFieldMapperTest {
         shareId = shareId,
         username = username,
         password = password,
-        totp = ""
+        totp = "",
+        shouldLinkPackageName = false
     )
 }

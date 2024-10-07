@@ -18,12 +18,12 @@
 
 package proton.android.pass.data.api
 
-import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemBase
 import proton.android.pass.domain.Vault
 
 data object ItemFilterProcessor {
 
-    fun removeDuplicates(array: Array<Pair<List<Vault>, List<Item>>>): List<Item> {
+    fun <T : ItemBase> removeDuplicates(array: Array<Pair<List<Vault>, List<T>>>): List<T> {
         val distinctVaults = getDistinctVaults(array.map { it.first }.flatten())
         return filterItemsByVaults(array.map { it.second }.flatten(), distinctVaults)
     }
@@ -35,7 +35,7 @@ data object ItemFilterProcessor {
         .values
         .toList()
 
-    private fun filterItemsByVaults(items: List<Item>, vaults: List<Vault>): List<Item> {
+    private fun <T : ItemBase> filterItemsByVaults(items: List<T>, vaults: List<Vault>): List<T> {
         val vaultShareIds = vaults.map { it.shareId }.toSet()
         return items.filter { it.shareId in vaultShareIds }
     }

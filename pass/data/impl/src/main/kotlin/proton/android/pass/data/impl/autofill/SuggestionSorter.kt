@@ -23,17 +23,14 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
-import proton.android.pass.domain.Item
+import proton.android.pass.data.api.usecases.SuggestedItem
+import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.domain.ItemType
 import proton.android.pass.preferences.LastItemAutofillPreference
 import javax.inject.Inject
 
 interface SuggestionSorter {
-    fun sort(
-        items: List<Item>,
-        url: Option<String>,
-        lastItemAutofill: Option<LastItemAutofillPreference>
-    ): List<Item>
+    fun sort(items: List<SuggestedItem>, lastItemAutofill: Option<LastItemAutofillPreference>): List<SuggestedItem>
 }
 
 class SuggestionSorterImpl @Inject constructor(
@@ -41,25 +38,25 @@ class SuggestionSorterImpl @Inject constructor(
 ) : SuggestionSorter {
 
     override fun sort(
-        items: List<Item>,
-        url: Option<String>,
+        items: List<SuggestedItem>,
         lastItemAutofill: Option<LastItemAutofillPreference>
-    ): List<Item> {
+    ): List<SuggestedItem> {
         return when {
-            items.all { it.itemType is ItemType.Login } -> sortLoginsWithUrl(items, url)
+            items.all { it.itemType is ItemType.Login } -> sortLoginsWithUrl(items)
             items.all { it.itemType is ItemType.CreditCard } -> sortCreditCards(items)
             else -> items
         }.putLastItemAutofillOnTop(lastItemAutofill)
     }
 
-    private fun List<Item>.putLastItemAutofillOnTop(
+    private fun List<SuggestedItem>.putLastItemAutofillOnTop(
         lastItemAutofillOption: Option<LastItemAutofillPreference>
-    ): List<Item> = when (lastItemAutofillOption) {
+    ): List<SuggestedItem> = when (lastItemAutofillOption) {
         is Some -> {
             val lastItemAutofill = lastItemAutofillOption.value
-            val lastItem =
-                find { it.id.id == lastItemAutofill.itemId && it.shareId.id == lastItemAutofill.shareId }
-                    ?.takeIf { !lastItemAutofill.isTooOld }
+            val lastItem = find {
+                it.id.id == lastItemAutofill.itemId &&
+                    it.shareId.id == lastItemAutofill.shareId
+            }?.takeIf { !lastItemAutofill.isTooOld }
             lastItem?.let {
                 val mutableItems = toMutableList()
                 mutableItems.remove(it)
@@ -71,12 +68,21 @@ class SuggestionSorterImpl @Inject constructor(
         else -> this
     }
 
-    private fun sortLoginsWithUrl(items: List<Item>, url: Option<String>): List<Item> {
-        val parsed = when (url) {
-            is Some -> hostParser.parse(url.value).fold(
-                onSuccess = { it },
-                onFailure = { return items }
-            )
+    private fun sortLoginsWithUrl(items: List<SuggestedItem>): List<SuggestedItem> {
+        val suggestionOption: Option<Suggestion> = items.firstOrNull()?.suggestion ?: None
+        val urlOption: Option<Suggestion.Url> =
+            if (suggestionOption is Some && suggestionOption.value is Suggestion.Url) {
+                Some(suggestionOption.value as Suggestion.Url)
+            } else {
+                None
+            }
+        val parsed = when (urlOption) {
+            is Some -> hostParser.parse(urlOption.value.value)
+                .fold(
+                    onSuccess = { it },
+                    onFailure = { return items }
+                )
+
             is None -> return items
         }
 
@@ -86,7 +92,7 @@ class SuggestionSorterImpl @Inject constructor(
         }
     }
 
-    private fun sortWithDomainInfo(parsed: HostInfo.Host, items: List<Item>): List<Item> {
+    private fun sortWithDomainInfo(parsed: HostInfo.Host, items: List<SuggestedItem>): List<SuggestedItem> {
         val loginItems = getLoginItems(items)
         return when (parsed.subdomain) {
             None -> sortByDomain(parsed, loginItems)
@@ -101,10 +107,10 @@ class SuggestionSorterImpl @Inject constructor(
      *   then domain.com items,
      *   and lastly other.domain.com items
      */
-    private fun sortBySubdomain(parsed: HostInfo.Host, items: List<LoginItem>): List<Item> {
-        val sameSubdomainItems = mutableListOf<Item>()
-        val domainItems = mutableListOf<Item>()
-        val otherSubdomainItems = mutableListOf<Item>()
+    private fun sortBySubdomain(parsed: HostInfo.Host, items: List<LoginItem>): List<SuggestedItem> {
+        val sameSubdomainItems = mutableListOf<SuggestedItem>()
+        val domainItems = mutableListOf<SuggestedItem>()
+        val otherSubdomainItems = mutableListOf<SuggestedItem>()
 
         items.forEach { loginItem ->
             val parsedWebsites = loginItem.login.websites
@@ -117,20 +123,20 @@ class SuggestionSorterImpl @Inject constructor(
                 it.subdomain == parsed.subdomain && it.domain == parsed.domain
             }
             if (shouldGoToSameSubdomain) {
-                sameSubdomainItems.add(loginItem.item)
+                sameSubdomainItems.add(loginItem.suggestedItem)
             } else {
                 val shouldGoToDomainItems = parsedWebsites.any {
                     it.subdomain is None && it.domain == parsed.domain
                 }
                 if (shouldGoToDomainItems) {
-                    domainItems.add(loginItem.item)
+                    domainItems.add(loginItem.suggestedItem)
                 } else {
-                    otherSubdomainItems.add(loginItem.item)
+                    otherSubdomainItems.add(loginItem.suggestedItem)
                 }
             }
         }
 
-        val finalList = mutableListOf<Item>()
+        val finalList = mutableListOf<SuggestedItem>()
         finalList.addAll(sameSubdomainItems)
         finalList.addAll(domainItems)
         finalList.addAll(otherSubdomainItems)
@@ -143,9 +149,9 @@ class SuggestionSorterImpl @Inject constructor(
      *   show domain.com items on top,
      *   then sub.domain.com items
      */
-    private fun sortByDomain(parsed: HostInfo.Host, items: List<LoginItem>): List<Item> {
-        val domainItems = mutableListOf<Item>()
-        val subdomainItems = mutableListOf<Item>()
+    private fun sortByDomain(parsed: HostInfo.Host, items: List<LoginItem>): List<SuggestedItem> {
+        val domainItems = mutableListOf<SuggestedItem>()
+        val subdomainItems = mutableListOf<SuggestedItem>()
 
         items.forEach { loginItem ->
             val parsedWebsites = loginItem.login.websites
@@ -158,29 +164,34 @@ class SuggestionSorterImpl @Inject constructor(
                 it.domain == parsed.domain && it.subdomain is None
             }
             if (shouldGoToDomain) {
-                domainItems.add(loginItem.item)
+                domainItems.add(loginItem.suggestedItem)
             } else {
-                subdomainItems.add(loginItem.item)
+                subdomainItems.add(loginItem.suggestedItem)
             }
         }
 
-        val finalList = mutableListOf<Item>()
+        val finalList = mutableListOf<SuggestedItem>()
         finalList.addAll(domainItems)
         finalList.addAll(subdomainItems)
         return finalList
     }
 
-    private fun getLoginItems(items: List<Item>): List<LoginItem> {
+    private fun getLoginItems(items: List<SuggestedItem>): List<LoginItem> {
         val res = mutableListOf<LoginItem>()
-        for (item in items) {
-            if (item.itemType is ItemType.Login) {
-                res.add(LoginItem(item = item, login = item.itemType as ItemType.Login))
+        for (suggestedItem in items) {
+            if (suggestedItem.itemType is ItemType.Login) {
+                res.add(
+                    LoginItem(
+                        suggestedItem = suggestedItem,
+                        login = suggestedItem.itemType as ItemType.Login
+                    )
+                )
             }
         }
         return res
     }
 
-    private fun sortCreditCards(items: List<Item>): List<Item> {
+    private fun sortCreditCards(items: List<SuggestedItem>): List<SuggestedItem> {
         val creditCards = items.filter { it.itemType is ItemType.CreditCard }
         return creditCards.sortedByDescending {
             when (val autofillTime = it.lastAutofillTime) {
@@ -191,7 +202,7 @@ class SuggestionSorterImpl @Inject constructor(
     }
 
     internal data class LoginItem(
-        val item: Item,
+        val suggestedItem: SuggestedItem,
         val login: ItemType.Login
     )
 }

@@ -20,14 +20,14 @@ package proton.android.pass.autofill
 
 import proton.android.pass.commonui.api.itemName
 import proton.android.pass.crypto.api.context.EncryptionContext
-import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemBase
 import proton.android.pass.domain.ItemType
 
 internal object ItemDisplayBuilder {
 
     private const val EMPTY_SUBTITLE = "---"
 
-    internal fun createTitle(item: Item, encryptionContext: EncryptionContext): String = when (item.itemType) {
+    internal fun createTitle(item: ItemBase, encryptionContext: EncryptionContext): String = when (item.itemType) {
         is ItemType.CreditCard,
         is ItemType.Login,
         is ItemType.Identity -> item.itemName(encryptionContext)
@@ -37,7 +37,7 @@ internal object ItemDisplayBuilder {
         ItemType.Unknown -> throw IllegalArgumentException("Unsupported item type for title")
     }
 
-    internal fun createSubtitle(item: Item, encryptionContext: EncryptionContext): String =
+    internal fun createSubtitle(item: ItemBase, encryptionContext: EncryptionContext): String =
         when (val itemType = item.itemType) {
             is ItemType.CreditCard -> createCreditCardSubtitle(encryptionContext, itemType)
             is ItemType.Login -> createLoginSubtitle(itemType)

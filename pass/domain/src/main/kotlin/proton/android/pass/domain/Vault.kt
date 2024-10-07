@@ -36,6 +36,10 @@ data class Vault(
     val shared: Boolean = false,
     val maxMembers: Int = 10,
     val createTime: Date
-)
+) {
+
+    val canBeUpdated: Boolean = role.toPermissions().canUpdate()
+
+}
 
 fun List<Vault>.sorted(): List<Vault> = sortedBy { it.name.lowercase() }

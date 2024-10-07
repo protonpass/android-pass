@@ -21,49 +21,24 @@ package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.presentatio
 import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.domain.HiddenState
-import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.items.ItemOption
 
 @Stable
 internal data class ItemOptionsState(
+    internal val itemOptions: Option<List<ItemOption>>,
     internal val event: ItemOptionsEvent,
-    internal val canModify: Boolean,
-    private val loginItemContentsOption: Option<ItemContents.Login>,
     private val isLoadingState: IsLoadingState
 ) {
-
-    internal val email: String = when (loginItemContentsOption) {
-        None -> ""
-        is Some -> loginItemContentsOption.value.itemEmail
-    }
-
-    internal val hasEmail: Boolean = email.isNotEmpty()
-
-    internal val username: String = when (loginItemContentsOption) {
-        None -> ""
-        is Some -> loginItemContentsOption.value.itemUsername
-    }
-
-    internal val hasUsername: Boolean = username.isNotEmpty()
-
-    internal val hiddenStatePassword: HiddenState = when (loginItemContentsOption) {
-        None -> HiddenState.Empty("")
-        is Some -> loginItemContentsOption.value.password
-    }
-
-    internal val hasPassword: Boolean = hiddenStatePassword !is HiddenState.Empty
 
     internal val isLoading: Boolean = isLoadingState.value()
 
     internal companion object {
 
         internal val Initial = ItemOptionsState(
-            isLoadingState = IsLoadingState.NotLoading,
+            itemOptions = None,
             event = ItemOptionsEvent.Idle,
-            canModify = false,
-            loginItemContentsOption = None
+            isLoadingState = IsLoadingState.NotLoading
         )
 
     }

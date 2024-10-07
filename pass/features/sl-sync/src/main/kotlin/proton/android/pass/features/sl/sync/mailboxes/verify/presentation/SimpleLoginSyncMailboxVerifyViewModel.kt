@@ -39,6 +39,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.errors.InvalidVerificationCodeException
 import proton.android.pass.data.api.usecases.simplelogin.ResendSimpleLoginAliasMailboxVerificationCode
 import proton.android.pass.data.api.usecases.simplelogin.VerifySimpleLoginAliasMailbox
 import proton.android.pass.features.sl.sync.mailboxes.verify.navigation.SimpleLoginSyncMailboxVerifyEmailNavArgId
@@ -128,7 +129,11 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
             }.onFailure { error ->
                 PassLogger.w(TAG, "There was an error verifying alias mailbox")
                 PassLogger.e(TAG, error)
-                snackbarDispatcher(SimpleLoginSyncMailboxVerifySnackbarMessage.VerifyMailboxError)
+                if (error is InvalidVerificationCodeException) {
+                    SimpleLoginSyncMailboxVerifySnackbarMessage.VerifyCodeError
+                } else {
+                    SimpleLoginSyncMailboxVerifySnackbarMessage.VerifyMailboxError
+                }.also { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
             }.onSuccess {
                 snackbarDispatcher(SimpleLoginSyncMailboxVerifySnackbarMessage.VerifyMailboxSuccess)
                 eventFlow.update { SimpleLoginSyncMailboxVerifyEvent.OnVerifyAliasMailboxSuccess }

@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.usecases.items
 
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
@@ -34,6 +35,7 @@ import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.items.ItemOption
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class GetItemOptionsImpl @Inject constructor(
@@ -59,6 +61,10 @@ class GetItemOptionsImpl @Inject constructor(
             ItemType.Password,
             ItemType.Unknown -> emptyList()
         }.let { itemOptions -> if (itemOptions.isEmpty()) None else Some(itemOptions) }
+    }.catch { error ->
+        PassLogger.w(TAG, "There was an error getting item options")
+        PassLogger.w(TAG, error)
+        emit(None)
     }.first()
 
     private fun ItemType.Login.toItemOptions(vault: Vault): List<ItemOption> = buildList {
@@ -81,6 +87,12 @@ class GetItemOptionsImpl @Inject constructor(
         if (vault.canBeUpdated) {
             ItemOption.MoveToTrash.also(::add)
         }
+    }
+
+    private companion object {
+
+        private const val TAG = "GetItemOptionsImpl"
+
     }
 
 }

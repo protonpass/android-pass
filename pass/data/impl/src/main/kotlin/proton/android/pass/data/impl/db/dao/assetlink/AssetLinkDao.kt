@@ -33,7 +33,7 @@ abstract class AssetLinkDao : BaseDao<AssetLinkEntity>() {
     @Query("DELETE FROM ${AssetLinkEntity.TABLE}")
     abstract fun purge()
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertOrIgnore(entity: AssetLinkEntity)
 
     @Transaction
@@ -43,6 +43,6 @@ abstract class AssetLinkDao : BaseDao<AssetLinkEntity>() {
         }
     }
 
-    @Query("SELECT * FROM ${AssetLinkEntity.TABLE} WHERE package_name = :packageName")
+    @Query("SELECT * FROM ${AssetLinkEntity.TABLE} WHERE ${AssetLinkEntity.Columns.PACKAGE_NAME} = :packageName")
     abstract fun observeByPackageName(packageName: String): Flow<List<AssetLinkEntity>>
 }

@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.sl.sync.shared.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
@@ -57,6 +58,10 @@ fun NavGraphBuilder.simpleLoginSyncNavGraph(onNavigated: (SimpleLoginSyncNavDest
     }
 
     composable(navItem = SimpleLoginSyncMailboxVerifyNavItem) {
+        BackHandler {
+            onNavigated(SimpleLoginSyncNavDestination.AliasManagement)
+        }
+
         SimpleLoginSyncMailboxVerifyScreen(onNavigated = onNavigated)
     }
 

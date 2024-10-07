@@ -24,6 +24,5 @@ import proton.android.pass.data.impl.db.entities.AssetLinkEntity
 interface LocalAssetLinkDataSource {
     suspend fun insertAssetLink(list: List<AssetLinkEntity>)
     suspend fun purge()
-    fun observeByWebsite(website: String): Flow<List<AssetLinkEntity>>
     fun observeByPackageName(packageName: String): Flow<List<AssetLinkEntity>>
 }

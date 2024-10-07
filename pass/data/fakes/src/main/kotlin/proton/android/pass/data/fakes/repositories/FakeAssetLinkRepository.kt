@@ -28,15 +28,13 @@ import javax.inject.Singleton
 @Singleton
 class FakeAssetLinkRepository @Inject constructor() : AssetLinkRepository {
 
-    override suspend fun fetch(website: String): AssetLink = AssetLink(website, emptyList())
+    override suspend fun fetch(website: String): AssetLink = AssetLink(website, emptySet())
 
     override suspend fun insert(list: List<AssetLink>) {
     }
 
     override suspend fun purge() {
     }
-
-    override fun observeByWebsite(website: String): Flow<List<AssetLink>> = flowOf(emptyList())
 
     override fun observeByPackageName(packageName: String): Flow<List<AssetLink>> = flowOf(emptyList())
 }

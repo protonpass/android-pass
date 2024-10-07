@@ -24,13 +24,14 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
-fun ItemUiModel.toAutoFillItem(): AutofillItem = when (val content = contents) {
+fun ItemUiModel.toAutoFillItem(shouldLinkPackageName: Boolean = false): AutofillItem = when (val content = contents) {
     is ItemContents.Login -> AutofillItem.Login(
         shareId = shareId.id,
         itemId = id.id,
         username = content.displayUsername,
         password = content.password.encrypted,
-        totp = content.primaryTotp.encrypted
+        totp = content.primaryTotp.encrypted,
+        shouldLinkPackageName = shouldLinkPackageName
     )
 
     is ItemContents.CreditCard -> AutofillItem.CreditCard(
@@ -40,14 +41,6 @@ fun ItemUiModel.toAutoFillItem(): AutofillItem = when (val content = contents) {
         cardHolder = content.cardHolder,
         expiration = content.expirationDate,
         cvv = content.cvv.encrypted
-    )
-
-    is ItemContents.Alias -> AutofillItem.Login(
-        shareId = shareId.id,
-        itemId = id.id,
-        username = content.aliasEmail,
-        password = null,
-        totp = null
     )
 
     is ItemContents.Identity -> AutofillItem.Identity(
@@ -65,6 +58,7 @@ fun ItemUiModel.toAutoFillItem(): AutofillItem = when (val content = contents) {
         country = content.addressDetailsContent.countryOrRegion
     )
 
+    is ItemContents.Alias,
     is ItemContents.Note,
     is ItemContents.Unknown -> throw IllegalStateException("Unsupported item type")
 }
@@ -80,5 +74,6 @@ fun CreatedAlias.toAutofillItem(): AutofillItem.Login = AutofillItem.Login(
     itemId = itemId.id,
     username = alias,
     password = null,
-    totp = null
+    totp = null,
+    shouldLinkPackageName = false
 )

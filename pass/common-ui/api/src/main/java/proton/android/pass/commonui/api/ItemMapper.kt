@@ -26,13 +26,13 @@ import proton.android.pass.domain.AddressDetailsContent
 import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.ExtraSectionContent
 import proton.android.pass.domain.HiddenState
-import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemBase
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.WorkDetailsContent
 
-fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
+fun ItemBase.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     id = id,
     shareId = shareId,
     userId = userId,
@@ -46,9 +46,9 @@ fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     revision = revision
 )
 
-fun Item.itemName(context: EncryptionContext): String = context.decrypt(title)
+fun ItemBase.itemName(context: EncryptionContext): String = context.decrypt(title)
 
-fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents = when (val type = itemType) {
+fun ItemBase.toItemContents(encryptionContext: EncryptionContext): ItemContents = when (val type = itemType) {
     is ItemType.Alias -> createAlias(encryptionContext, type)
     is ItemType.Login -> createLogin(encryptionContext, type)
     is ItemType.Note -> createNote(encryptionContext)
@@ -62,14 +62,14 @@ fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents = wh
     )
 }
 
-private fun Item.createAlias(encryptionContext: EncryptionContext, type: ItemType.Alias) = ItemContents.Alias(
+private fun ItemBase.createAlias(encryptionContext: EncryptionContext, type: ItemType.Alias) = ItemContents.Alias(
     title = encryptionContext.decrypt(title),
     note = encryptionContext.decrypt(note),
     aliasEmail = type.aliasEmail,
     isDisabled = isAliasDisabled
 )
 
-private fun Item.createLogin(encryptionContext: EncryptionContext, type: ItemType.Login) = ItemContents.Login(
+private fun ItemBase.createLogin(encryptionContext: EncryptionContext, type: ItemType.Login) = ItemContents.Login(
     title = encryptionContext.decrypt(title),
     note = encryptionContext.decrypt(note),
     itemEmail = type.itemEmail,
@@ -82,12 +82,12 @@ private fun Item.createLogin(encryptionContext: EncryptionContext, type: ItemTyp
     passkeys = type.passkeys
 )
 
-private fun Item.createNote(encryptionContext: EncryptionContext) = ItemContents.Note(
+private fun ItemBase.createNote(encryptionContext: EncryptionContext) = ItemContents.Note(
     title = encryptionContext.decrypt(title),
     note = encryptionContext.decrypt(note)
 )
 
-private fun Item.createCreditCard(encryptionContext: EncryptionContext, type: ItemType.CreditCard) =
+private fun ItemBase.createCreditCard(encryptionContext: EncryptionContext, type: ItemType.CreditCard) =
     ItemContents.CreditCard(
         title = encryptionContext.decrypt(title),
         note = encryptionContext.decrypt(note),
@@ -100,73 +100,74 @@ private fun Item.createCreditCard(encryptionContext: EncryptionContext, type: It
     )
 
 @Suppress("LongMethod")
-private fun Item.createIdentity(encryptionContext: EncryptionContext, type: ItemType.Identity) = ItemContents.Identity(
-    title = encryptionContext.decrypt(title),
-    note = encryptionContext.decrypt(note),
-    personalDetailsContent = PersonalDetailsContent(
-        fullName = type.personalDetails.fullName,
-        firstName = type.personalDetails.firstName,
-        middleName = type.personalDetails.middleName,
-        lastName = type.personalDetails.lastName,
-        birthdate = type.personalDetails.birthdate,
-        gender = type.personalDetails.gender,
-        email = type.personalDetails.email,
-        phoneNumber = type.personalDetails.phoneNumber,
-        customFields = type.personalDetails.customFields.mapNotNull {
-            it.toContent(encryptionContext, true)
-        }
-    ),
-    addressDetailsContent = AddressDetailsContent(
-        organization = type.addressDetails.organization,
-        streetAddress = type.addressDetails.streetAddress,
-        zipOrPostalCode = type.addressDetails.zipOrPostalCode,
-        city = type.addressDetails.city,
-        stateOrProvince = type.addressDetails.stateOrProvince,
-        countryOrRegion = type.addressDetails.countryOrRegion,
-        floor = type.addressDetails.floor,
-        county = type.addressDetails.county,
-        customFields = type.addressDetails.customFields.mapNotNull {
-            it.toContent(encryptionContext, true)
-        }
-    ),
-    contactDetailsContent = ContactDetailsContent(
-        socialSecurityNumber = type.contactDetails.socialSecurityNumber,
-        passportNumber = type.contactDetails.passportNumber,
-        licenseNumber = type.contactDetails.licenseNumber,
-        website = type.contactDetails.website,
-        xHandle = type.contactDetails.xHandle,
-        secondPhoneNumber = type.contactDetails.secondPhoneNumber,
-        linkedin = type.contactDetails.linkedin,
-        reddit = type.contactDetails.reddit,
-        facebook = type.contactDetails.facebook,
-        yahoo = type.contactDetails.yahoo,
-        instagram = type.contactDetails.instagram,
-        customFields = type.contactDetails.customFields.mapNotNull {
-            it.toContent(encryptionContext, true)
-        }
-    ),
-    workDetailsContent = WorkDetailsContent(
-        company = type.workDetails.company,
-        jobTitle = type.workDetails.jobTitle,
-        personalWebsite = type.workDetails.personalWebsite,
-        workPhoneNumber = type.workDetails.workPhoneNumber,
-        workEmail = type.workDetails.workEmail,
-        customFields = type.workDetails.customFields.mapNotNull {
-            it.toContent(encryptionContext, true)
-        }
-    ),
-    extraSectionContentList = type.extraSections.map {
-        ExtraSectionContent(
-            title = it.sectionName,
-            customFields = it.customFields.mapNotNull { customField ->
-                customField.toContent(
-                    encryptionContext,
-                    true
-                )
+private fun ItemBase.createIdentity(encryptionContext: EncryptionContext, type: ItemType.Identity) =
+    ItemContents.Identity(
+        title = encryptionContext.decrypt(title),
+        note = encryptionContext.decrypt(note),
+        personalDetailsContent = PersonalDetailsContent(
+            fullName = type.personalDetails.fullName,
+            firstName = type.personalDetails.firstName,
+            middleName = type.personalDetails.middleName,
+            lastName = type.personalDetails.lastName,
+            birthdate = type.personalDetails.birthdate,
+            gender = type.personalDetails.gender,
+            email = type.personalDetails.email,
+            phoneNumber = type.personalDetails.phoneNumber,
+            customFields = type.personalDetails.customFields.mapNotNull {
+                it.toContent(encryptionContext, true)
             }
-        )
-    }
-)
+        ),
+        addressDetailsContent = AddressDetailsContent(
+            organization = type.addressDetails.organization,
+            streetAddress = type.addressDetails.streetAddress,
+            zipOrPostalCode = type.addressDetails.zipOrPostalCode,
+            city = type.addressDetails.city,
+            stateOrProvince = type.addressDetails.stateOrProvince,
+            countryOrRegion = type.addressDetails.countryOrRegion,
+            floor = type.addressDetails.floor,
+            county = type.addressDetails.county,
+            customFields = type.addressDetails.customFields.mapNotNull {
+                it.toContent(encryptionContext, true)
+            }
+        ),
+        contactDetailsContent = ContactDetailsContent(
+            socialSecurityNumber = type.contactDetails.socialSecurityNumber,
+            passportNumber = type.contactDetails.passportNumber,
+            licenseNumber = type.contactDetails.licenseNumber,
+            website = type.contactDetails.website,
+            xHandle = type.contactDetails.xHandle,
+            secondPhoneNumber = type.contactDetails.secondPhoneNumber,
+            linkedin = type.contactDetails.linkedin,
+            reddit = type.contactDetails.reddit,
+            facebook = type.contactDetails.facebook,
+            yahoo = type.contactDetails.yahoo,
+            instagram = type.contactDetails.instagram,
+            customFields = type.contactDetails.customFields.mapNotNull {
+                it.toContent(encryptionContext, true)
+            }
+        ),
+        workDetailsContent = WorkDetailsContent(
+            company = type.workDetails.company,
+            jobTitle = type.workDetails.jobTitle,
+            personalWebsite = type.workDetails.personalWebsite,
+            workPhoneNumber = type.workDetails.workPhoneNumber,
+            workEmail = type.workDetails.workEmail,
+            customFields = type.workDetails.customFields.mapNotNull {
+                it.toContent(encryptionContext, true)
+            }
+        ),
+        extraSectionContentList = type.extraSections.map {
+            ExtraSectionContent(
+                title = it.sectionName,
+                customFields = it.customFields.mapNotNull { customField ->
+                    customField.toContent(
+                        encryptionContext,
+                        true
+                    )
+                }
+            )
+        }
+    )
 
 private fun concealedOrEmpty(value: String, encryptionContext: EncryptionContext): HiddenState {
     val asByteArray = encryptionContext.decrypt(value.toEncryptedByteArray())

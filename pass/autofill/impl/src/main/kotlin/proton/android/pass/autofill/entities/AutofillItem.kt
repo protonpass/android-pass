@@ -30,6 +30,7 @@ sealed interface AutofillItem : Parcelable {
     fun shareId(): ShareId
     fun itemId(): ItemId
     fun type(): String
+    fun shouldAssociate(): Boolean
 
     @Parcelize
     data class Login(
@@ -37,11 +38,13 @@ sealed interface AutofillItem : Parcelable {
         val shareId: String,
         val username: String,
         val password: EncryptedString?,
-        val totp: EncryptedString?
+        val totp: EncryptedString?,
+        val shouldLinkPackageName: Boolean
     ) : AutofillItem {
         override fun shareId() = ShareId(shareId)
         override fun itemId() = ItemId(itemId)
         override fun type() = "AutofillItem.Login"
+        override fun shouldAssociate(): Boolean = shouldLinkPackageName
     }
 
     @Parcelize
@@ -56,6 +59,7 @@ sealed interface AutofillItem : Parcelable {
         override fun shareId() = ShareId(shareId)
         override fun itemId() = ItemId(itemId)
         override fun type() = "AutofillItem.CreditCard"
+        override fun shouldAssociate(): Boolean = false
     }
 
     @Parcelize
@@ -76,5 +80,6 @@ sealed interface AutofillItem : Parcelable {
         override fun shareId() = ShareId(shareId)
         override fun itemId() = ItemId(itemId)
         override fun type() = "AutofillItem.Identity"
+        override fun shouldAssociate(): Boolean = false
     }
 }

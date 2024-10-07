@@ -607,7 +607,7 @@ class SelectItemViewModel @Inject constructor(
                 )
             }
                 .filterIsInstance<SuggestedAutofillItemsResult.Items>()
-                .map { it.items }
+                .map { list -> list.suggestedItems }
                 .asResultWithoutLoading()
         }
 
@@ -615,24 +615,23 @@ class SelectItemViewModel @Inject constructor(
         is SelectItemState.Autofill.Identity -> flowOf(LoadingResult.Success(emptyList()))
     }
 
-    private fun getSuggestionsForPasskey(state: SelectItemState.Passkey): Flow<LoadingResult<List<Item>>> =
-        when (state) {
-            is SelectItemState.Passkey.Register -> {
-                selectedAccountFlow.flatMapLatest { userId ->
-                    getSuggestedAutofillItems(
-                        itemTypeFilter = ItemTypeFilter.Logins,
-                        suggestion = state.suggestion,
-                        userId = userId
-                    )
-                }
-                    .filterIsInstance<SuggestedAutofillItemsResult.Items>()
-                    .map { it.items }
-                    .asResultWithoutLoading()
+    private fun getSuggestionsForPasskey(state: SelectItemState.Passkey) = when (state) {
+        is SelectItemState.Passkey.Register -> {
+            selectedAccountFlow.flatMapLatest { userId ->
+                getSuggestedAutofillItems(
+                    itemTypeFilter = ItemTypeFilter.Logins,
+                    suggestion = state.suggestion,
+                    userId = userId
+                )
             }
-
-            // TBD: Implement getSuggestionsForPasskey
-            is SelectItemState.Passkey.Select -> flowOf(LoadingResult.Success(emptyList()))
+                .filterIsInstance<SuggestedAutofillItemsResult.Items>()
+                .map { list -> list.suggestedItems }
+                .asResultWithoutLoading()
         }
+
+        // TBD: Implement getSuggestionsForPasskey
+        is SelectItemState.Passkey.Select -> flowOf(LoadingResult.Success(emptyList()))
+    }
 
     fun onAccountSwitch(userId: Option<UserId>) = viewModelScope.launch {
         selectedAccountFlow.update { userId }

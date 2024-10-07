@@ -32,10 +32,12 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.account.fakes.TestKeyStoreCrypto
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
+import proton.android.pass.data.api.usecases.SuggestedItem
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
@@ -74,10 +76,9 @@ internal class FakeSuggestionItemFilterer : SuggestionItemFilterer {
 
 class FakeSuggestionSorter : SuggestionSorter {
     override fun sort(
-        items: List<Item>,
-        url: Option<String>,
+        items: List<SuggestedItem>,
         lastItemAutofill: Option<LastItemAutofillPreference>
-    ): List<Item> = items
+    ): List<SuggestedItem> = items
 }
 
 @RunWith(JUnit4::class)
@@ -128,8 +129,10 @@ class GetSuggestedAutofillItemsImplTest {
         observeItems.emitValue(listOf(item1, item2))
         filter.setFilter { TestKeyStoreCrypto.decrypt(it.title) == fixedTitle }
 
+        val expected: List<SuggestedItem> = listOf(item1).map { SuggestedItem(it, None) }
+
         getSuggestedAutofillItems(itemTypeFilter = ItemTypeFilter.Logins).test {
-            assertEquals(SuggestedAutofillItemsResult.Items(listOf(item1)), awaitItem())
+            assertEquals(SuggestedAutofillItemsResult.Items(expected), awaitItem())
         }
     }
 
@@ -171,12 +174,13 @@ class GetSuggestedAutofillItemsImplTest {
 
         val items = listOf(TestItem.create(shareId = firstShareId))
         observeItems.emitValue(items)
+        val expected: List<SuggestedItem> = items.map { SuggestedItem(it, None) }
 
         // WHEN
         getSuggestedAutofillItems(itemTypeFilter = ItemTypeFilter.Logins).test {
 
             // THEN
-            assertThat(awaitItem()).isEqualTo(SuggestedAutofillItemsResult.Items(items))
+            assertThat(awaitItem()).isEqualTo(SuggestedAutofillItemsResult.Items(expected))
         }
     }
 
@@ -205,7 +209,7 @@ class GetSuggestedAutofillItemsImplTest {
         val result = getSuggestedAutofillItems(itemTypeFilter = ItemTypeFilter.CreditCards).first()
         assertThat(result).isInstanceOf(SuggestedAutofillItemsResult.Items::class.java)
 
-        val items = (result as SuggestedAutofillItemsResult.Items).items
+        val items = (result as SuggestedAutofillItemsResult.Items).suggestedItems
         assertThat(items).isEmpty()
     }
 
@@ -282,7 +286,7 @@ class GetSuggestedAutofillItemsImplTest {
             val result = awaitItem()
             assertThat(result).isInstanceOf(SuggestedAutofillItemsResult.Items::class.java)
 
-            val items = (result as SuggestedAutofillItemsResult.Items).items
+            val items = (result as SuggestedAutofillItemsResult.Items).suggestedItems
             assertThat(items).hasSize(1)
             assertThat(items.first().shareId).isEqualTo(paidShareId)
         }

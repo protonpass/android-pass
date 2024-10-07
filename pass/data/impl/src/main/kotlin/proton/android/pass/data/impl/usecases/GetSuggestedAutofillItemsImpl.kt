@@ -24,10 +24,10 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveUsableVaults
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
+import proton.android.pass.data.api.usecases.SuggestedItem
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
-import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.ShareSelection
@@ -82,7 +82,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
         val accountFlows = userIds.map { userId ->
             getSuggestedItemsForAccount(userId, itemTypeFilter, suggestion)
         }
-        return combine(accountFlows) { array -> processAllowedItemsFlows(array, suggestion) }
+        return combine(accountFlows, ::processAllowedItemsFlows)
     }
 
     private fun handleCreditCards(
@@ -97,27 +97,23 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
             ) { (vaults, items), plan -> Triple(vaults, items, plan) }
         }
 
-        return combine(accountFlows) { array ->
-            processCreditCardFlows(array, suggestion)
-        }
+        return combine(accountFlows, ::processCreditCardFlows)
     }
 
     private suspend fun processAllowedItemsFlows(
-        array: Array<Pair<List<Vault>, List<Item>>>,
-        suggestion: Option<Suggestion>
+        array: Array<Pair<List<Vault>, List<SuggestedItem>>>
     ): SuggestedAutofillItemsResult {
         val filteredItems = ItemFilterProcessor.removeDuplicates(array)
-        val sortedItems = sortSuggestions(filteredItems, suggestion)
+        val sortedItems = sortSuggestions(filteredItems)
         return SuggestedAutofillItemsResult.Items(sortedItems)
     }
 
     private suspend fun processCreditCardFlows(
-        array: Array<Triple<List<Vault>, List<Item>, Plan>>,
-        suggestion: Option<Suggestion>
+        array: Array<Triple<List<Vault>, List<SuggestedItem>, Plan>>
     ): SuggestedAutofillItemsResult {
         val filteredItems =
             ItemFilterProcessor.removeDuplicates(array.map { it.first to it.second }.toTypedArray())
-        val sortedItems = sortSuggestions(filteredItems, suggestion)
+        val sortedItems = sortSuggestions(filteredItems)
         val plans = array.map { it.third }
         return when {
             plans.all { it.isFreePlan } && sortedItems.isEmpty() ->
@@ -128,8 +124,9 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
                 if (plans.any { it.isFreePlan }) {
                     val freePlanIndex = array.indexOfFirst { it.third.isFreePlan }
                     val vaultsToRemove = array[freePlanIndex].first
-                    val filteredItemsWithAccess =
-                        sortedItems.filter { item -> vaultsToRemove.none { it.shareId == item.shareId } }
+                    val filteredItemsWithAccess = sortedItems.filter { suggestedItem ->
+                        vaultsToRemove.none { it.shareId == suggestedItem.shareId }
+                    }
                     SuggestedAutofillItemsResult.Items(filteredItemsWithAccess)
                 } else {
                     SuggestedAutofillItemsResult.Items(sortedItems)
@@ -144,7 +141,7 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
         userId: UserId,
         itemTypeFilter: ItemTypeFilter,
         suggestion: Option<Suggestion>
-    ): Flow<Pair<List<Vault>, List<Item>>> = observeUsableVaults(userId)
+    ): Flow<Pair<List<Vault>, List<SuggestedItem>>> = observeUsableVaults(userId)
         .flatMapLatest { usableVaults ->
             combine(
                 observeItems(
@@ -157,9 +154,11 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
                 featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.DIGITAL_ASSET_LINKS)
             ) { items, digitalAssetLinkSuggestions, isDALEnabled ->
                 val filteredItems = suggestionItemFilter.filter(items, suggestion)
+                    .map { item -> SuggestedItem(item, suggestion) }
                 val combinedItems = if (isDALEnabled) {
                     filteredItems + digitalAssetLinkSuggestions.flatMap {
                         suggestionItemFilter.filter(items, it.some())
+                            .map { item -> SuggestedItem(item, it.some()) }
                     }
                 } else {
                     filteredItems
@@ -177,11 +176,11 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
                     is Suggestion.Url -> flowOf(emptyList())
                 }
             }
-        }.map { list -> list.map { Suggestion.Url(it.website) } }
+        }.map { list -> list.map { Suggestion.Url(it.website, true) } }
 
-    private suspend fun sortSuggestions(items: List<Item>, suggestion: Option<Suggestion>): List<Item> {
+    private suspend fun sortSuggestions(items: List<SuggestedItem>): List<SuggestedItem> {
         val lastAutofillItem =
             internalSettingsRepository.getLastItemAutofill().firstOrNull().toOption().flatMap { it }
-        return suggestionSorter.sort(items, suggestion.map(Suggestion::value), lastAutofillItem)
+        return suggestionSorter.sort(items, lastAutofillItem)
     }
 }

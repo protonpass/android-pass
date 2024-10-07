@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 56,
-    "identityHash": "3cf88ee72320566b1af3729ee66534ac",
+    "identityHash": "252c4816497904e316d058c34575cc7d",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -4146,14 +4146,8 @@
       },
       {
         "tableName": "AssetLinkEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `website` TEXT NOT NULL, `package_name` TEXT NOT NULL, `created_at` INTEGER NOT NULL, `signature` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`website` TEXT NOT NULL, `package_name` TEXT NOT NULL, `created_at` INTEGER NOT NULL, `signature` TEXT NOT NULL, PRIMARY KEY(`website`, `package_name`, `signature`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "website",
             "columnName": "website",
@@ -4180,9 +4174,11 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
-            "id"
+            "website",
+            "package_name",
+            "signature"
           ]
         },
         "indices": [
@@ -4204,7 +4200,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3cf88ee72320566b1af3729ee66534ac')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '252c4816497904e316d058c34575cc7d')"
     ]
   }
 }

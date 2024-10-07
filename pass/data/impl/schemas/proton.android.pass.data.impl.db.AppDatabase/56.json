@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 56,
-    "identityHash": "c609bc48ca8253744a9c41b11dc7dd33",
+    "identityHash": "3cf88ee72320566b1af3729ee66534ac",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -4145,9 +4145,15 @@
         ]
       },
       {
-        "tableName": "AssetLinksEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`website` TEXT NOT NULL, `package_name` TEXT NOT NULL, `created_at` INTEGER NOT NULL, PRIMARY KEY(`website`))",
+        "tableName": "AssetLinkEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `website` TEXT NOT NULL, `package_name` TEXT NOT NULL, `created_at` INTEGER NOT NULL, `signature` TEXT NOT NULL)",
         "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
           {
             "fieldPath": "website",
             "columnName": "website",
@@ -4155,7 +4161,7 @@
             "notNull": true
           },
           {
-            "fieldPath": "packageNames",
+            "fieldPath": "packageName",
             "columnName": "package_name",
             "affinity": "TEXT",
             "notNull": true
@@ -4165,23 +4171,31 @@
             "columnName": "created_at",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "signature",
+            "columnName": "signature",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
-          "autoGenerate": false,
+          "autoGenerate": true,
           "columnNames": [
-            "website"
+            "id"
           ]
         },
         "indices": [
           {
-            "name": "index_AssetLinksEntity_website",
-            "unique": false,
+            "name": "index_AssetLinkEntity_website_package_name_signature",
+            "unique": true,
             "columnNames": [
-              "website"
+              "website",
+              "package_name",
+              "signature"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_AssetLinksEntity_website` ON `${TABLE_NAME}` (`website`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_AssetLinkEntity_website_package_name_signature` ON `${TABLE_NAME}` (`website`, `package_name`, `signature`)"
           }
         ],
         "foreignKeys": []
@@ -4190,7 +4204,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c609bc48ca8253744a9c41b11dc7dd33')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3cf88ee72320566b1af3729ee66534ac')"
     ]
   }
 }

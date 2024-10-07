@@ -20,5 +20,10 @@ package proton.android.pass.domain.assetlink
 
 data class AssetLink(
     val website: String,
-    val packageNames: List<String>
-)
+    val packages: Set<Package>
+) {
+    data class Package(
+        val packageName: String,
+        val signatures: Set<String>
+    )
+}

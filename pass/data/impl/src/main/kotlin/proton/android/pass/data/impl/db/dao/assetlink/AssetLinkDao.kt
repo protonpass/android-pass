@@ -16,10 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.db.dao
+package proton.android.pass.data.impl.db.dao.assetlink
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
@@ -30,19 +33,16 @@ abstract class AssetLinkDao : BaseDao<AssetLinkEntity>() {
     @Query("DELETE FROM ${AssetLinkEntity.TABLE}")
     abstract fun purge()
 
-    @Query(
-        """
-        SELECT * FROM ${AssetLinkEntity.TABLE}
-        WHERE ${AssetLinkEntity.Columns.WEBSITE} = :website
-        """
-    )
-    abstract fun observeByWebsite(website: String): Flow<List<AssetLinkEntity>>
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract suspend fun insertOrIgnore(entity: AssetLinkEntity)
 
-    @Query(
-        """
-        SELECT * FROM ${AssetLinkEntity.TABLE}
-        WHERE ${AssetLinkEntity.Columns.PACKAGE_NAME} LIKE '%' || :packageName || '%'
-        """
-    )
+    @Transaction
+    open suspend fun insertAssetLinks(list: List<AssetLinkEntity>) {
+        list.forEach { entity ->
+            insertOrIgnore(entity)
+        }
+    }
+
+    @Query("SELECT * FROM ${AssetLinkEntity.TABLE} WHERE package_name = :packageName")
     abstract fun observeByPackageName(packageName: String): Flow<List<AssetLinkEntity>>
 }

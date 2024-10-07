@@ -16,21 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ui
+package proton.android.pass.domain.items
 
 import me.proton.core.crypto.common.keystore.EncryptedString
 
-internal sealed interface ItemOptionsBottomSheetUiEvent {
+sealed interface ItemOption {
 
     @JvmInline
-    value class OnCopyEmailClicked(val email: String) : ItemOptionsBottomSheetUiEvent
+    value class CopyEmail(val email: String) : ItemOption
 
     @JvmInline
-    value class OnCopyUsernameClicked(val username: String) : ItemOptionsBottomSheetUiEvent
+    value class CopyPassword(val encryptedPassword: EncryptedString) : ItemOption
 
     @JvmInline
-    value class OnCopyPasswordClicked(val encryptedPassword: EncryptedString) : ItemOptionsBottomSheetUiEvent
+    value class CopyUsername(val username: String) : ItemOption
 
-    data object OnMoveToTrashClicked : ItemOptionsBottomSheetUiEvent
+    data object MoveToTrash : ItemOption
 
 }

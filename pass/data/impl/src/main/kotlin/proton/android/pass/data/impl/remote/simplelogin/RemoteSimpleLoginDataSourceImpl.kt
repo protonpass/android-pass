@@ -20,6 +20,8 @@ package proton.android.pass.data.impl.remote.simplelogin
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.ApiResult
+import proton.android.pass.data.api.errors.InvalidVerificationCodeException
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.SimpleLoginCreateAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesRequest
@@ -115,7 +117,21 @@ class RemoteSimpleLoginDataSourceImpl @Inject constructor(
     ): SimpleLoginAliasMailboxResponse = apiProvider
         .get<PasswordManagerApi>(userId)
         .invoke { verifySimpleLoginAliasMailbox(mailboxId = mailboxId, request = request) }
-        .valueOrThrow
+        .let { apiResult ->
+            when (apiResult) {
+                is ApiResult.Success -> apiResult.value
+                is ApiResult.Error.Connection,
+                is ApiResult.Error.Parse -> apiResult.valueOrThrow
+
+                is ApiResult.Error.Http -> {
+                    if (apiResult.proton?.code == INVALID_VERIFICATION_CODE) {
+                        throw InvalidVerificationCodeException()
+                    } else {
+                        apiResult.valueOrThrow
+                    }
+                }
+            }
+        }
 
     override suspend fun resendSimpleLoginAliasMailboxVerifyCode(
         userId: UserId,
@@ -124,5 +140,11 @@ class RemoteSimpleLoginDataSourceImpl @Inject constructor(
         .get<PasswordManagerApi>(userId)
         .invoke { resendSimpleLoginAliasMailboxVerifyCode(mailboxId = mailboxId) }
         .valueOrThrow
+
+    private companion object {
+
+        private const val INVALID_VERIFICATION_CODE = 2011
+
+    }
 
 }

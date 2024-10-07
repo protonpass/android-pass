@@ -159,15 +159,14 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
         }
 
         val (updatePackageInfo, updateUrl) = autofillAppState.updateAutofillFields()
-        updateAutofillItem(
-            UpdateAutofillItemData(
-                shareId = autofillItem.shareId(),
-                itemId = autofillItem.itemId(),
-                packageInfo = updatePackageInfo,
-                url = updateUrl,
-                shouldAssociate = false
-            )
+        val data = UpdateAutofillItemData(
+            shareId = autofillItem.shareId(),
+            itemId = autofillItem.itemId(),
+            packageInfo = updatePackageInfo,
+            url = updateUrl,
+            shouldAssociate = autofillItem.shouldAssociate()
         )
+        updateAutofillItem(data)
 
         ItemFieldMapper.mapFields(
             encryptionContext = this@withEncryptionContext,

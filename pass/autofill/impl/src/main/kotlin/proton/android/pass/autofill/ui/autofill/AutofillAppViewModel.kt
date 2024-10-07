@@ -149,9 +149,9 @@ class AutofillAppViewModel @Inject constructor(
             }
 
             else -> sendMappings(
-                item = itemUiModel.toAutoFillItem(),
+                item = autofillItem,
                 state = state,
-                associate = false
+                associate = autofillItem.shouldAssociate()
             )
         }
     }
@@ -204,15 +204,14 @@ class AutofillAppViewModel @Inject constructor(
         setLastItemAutofillForMultiStep(item)
         sendItemSelectedTelemetry(state)
         val (updatePackageInfo, updateUrl) = state.updateAutofillFields()
-        updateAutofillItem(
-            UpdateAutofillItemData(
-                shareId = item.shareId(),
-                itemId = item.itemId(),
-                packageInfo = updatePackageInfo,
-                url = updateUrl,
-                shouldAssociate = associate
-            )
+        val data = UpdateAutofillItemData(
+            shareId = item.shareId(),
+            itemId = item.itemId(),
+            packageInfo = updatePackageInfo,
+            url = updateUrl,
+            shouldAssociate = associate
         )
+        updateAutofillItem(data)
 
         val mappings = getMappings(item, state)
         if (mappings.mappings.isNotEmpty()) {

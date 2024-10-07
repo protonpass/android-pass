@@ -18,8 +18,11 @@
 
 package proton.android.pass.features.sl.sync.mailboxes.verify.presentation
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -58,7 +61,9 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
     private val mailboxEmailFlow = savedStateHandleProvider.get()
         .getStateFlow(SimpleLoginSyncMailboxVerifyEmailNavArgId.key, "")
 
-    private val verificationCodeFlow = MutableStateFlow(INITIAL_VERIFICATION_CODE)
+    @OptIn(SavedStateHandleSaveableApi::class)
+    private var verificationCodeMutableState: String by savedStateHandleProvider.get()
+        .saveable { mutableStateOf("") }
 
     private val verificationCodeTimerRestarterFlow = MutableStateFlow(false)
 
@@ -67,6 +72,8 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
         .filter { shouldStartTimer -> shouldStartTimer }
         .flatMapLatest {
             flow {
+                verificationCodeTimerRestarterFlow.update { false }
+
                 var remainingSeconds = INITIAL_VERIFICATION_CODE_TIMER_SECONDS
                 emit(remainingSeconds)
 
@@ -75,8 +82,6 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
                     remainingSeconds--
                     emit(remainingSeconds)
                 }
-
-                verificationCodeTimerRestarterFlow.update { false }
             }
         }
 
@@ -88,9 +93,11 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
         value = IsLoadingState.NotLoading
     )
 
+    internal val verificationCodeState: String
+        get() = verificationCodeMutableState
+
     internal val stateFlow: StateFlow<SimpleLoginSyncMailboxVerifyState> = combine(
         mailboxEmailFlow,
-        verificationCodeFlow,
         verificationCodeTimerSecondsFlow,
         eventFlow,
         isLoadingStateFlow,
@@ -106,7 +113,7 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
     }
 
     internal fun onVerificationCodeChanged(newVerificationCode: String) {
-        verificationCodeFlow.update { newVerificationCode }
+        verificationCodeMutableState = newVerificationCode
     }
 
     internal fun onVerifyAliasMailbox() {
@@ -116,7 +123,7 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
             runCatching {
                 verifyAliasMailbox(
                     mailboxId = mailboxId,
-                    verificationCode = stateFlow.value.verificationCode
+                    verificationCode = verificationCodeState
                 )
             }.onFailure { error ->
                 PassLogger.w(TAG, "There was an error verifying alias mailbox")
@@ -153,8 +160,6 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
     private companion object {
 
         private const val TAG = "SimpleLoginSyncMailboxVerifyViewModel"
-
-        private const val INITIAL_VERIFICATION_CODE = ""
 
         private const val INITIAL_VERIFICATION_CODE_TIMER_SECONDS = 30
 

@@ -42,6 +42,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 @Composable
 internal fun SimpleLoginSyncMailboxVerifyContent(
     modifier: Modifier = Modifier,
+    verificationCode: String,
     state: SimpleLoginSyncMailboxVerifyState,
     onUiEvent: (SimpleLoginSyncMailboxVerifyUiEvent) -> Unit
 ) = with(state) {
@@ -64,8 +65,8 @@ internal fun SimpleLoginSyncMailboxVerifyContent(
                             vertical = Spacing.small
                         ),
                         isLoading = isLoading,
-                        buttonEnabled = canVerifyMailbox,
-                        color = if (canVerifyMailbox) {
+                        buttonEnabled = canVerifyMailbox(verificationCode),
+                        color = if (canVerifyMailbox(verificationCode)) {
                             PassTheme.colors.interactionNormMajor1
                         } else {
                             PassTheme.colors.interactionNormMajor1.copy(alpha = 0.6f)

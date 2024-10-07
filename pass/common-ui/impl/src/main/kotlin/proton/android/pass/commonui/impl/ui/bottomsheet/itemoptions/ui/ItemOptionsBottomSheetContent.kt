@@ -18,109 +18,28 @@
 
 package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ui
 
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentList
-import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.bottomSheet
-import proton.android.pass.commonui.impl.R
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.presentation.ItemOptionsState
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
-import me.proton.core.presentation.R as CoreR
-import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun ItemOptionsBottomSheetContent(
-    modifier: Modifier = Modifier,
     state: ItemOptionsState,
     onUiEvent: (ItemOptionsBottomSheetUiEvent) -> Unit
 ) = with(state) {
-    buildList {
-        if (hasEmail) {
-            copyToClipboard(
-                text = stringResource(id = R.string.bottomsheet_copy_email),
-                onClick = { onUiEvent(ItemOptionsBottomSheetUiEvent.OnCopyEmailClicked) }
-            ).also(::add)
+    when (itemOptions) {
+        None -> {
+            ItemOptionsBottomSheetNoOptions()
         }
 
-        if (hasUsername) {
-            copyToClipboard(
-                text = stringResource(id = R.string.bottomsheet_copy_username),
-                onClick = { onUiEvent(ItemOptionsBottomSheetUiEvent.OnCopyUsernameClicked) }
-            ).also(::add)
-        }
-
-        if (hasPassword) {
-            copyToClipboard(
-                text = stringResource(id = R.string.bottomsheet_copy_password),
-                onClick = { onUiEvent(ItemOptionsBottomSheetUiEvent.OnCopyPasswordClicked) }
-            ).also(::add)
-        }
-
-        if (canModify) {
-            moveToTrash(
+        is Some -> {
+            ItemOptionsBottomSheetOptions(
+                itemOptions = itemOptions.value.toPersistentList(),
                 isLoading = isLoading,
-                onMoveToTrash = { onUiEvent(ItemOptionsBottomSheetUiEvent.OnMoveToTrashClicked) }
-            ).also(::add)
-        }
-    }.let { bottomSheetItems ->
-        BottomSheetItemList(
-            modifier = modifier.bottomSheet(),
-            items = bottomSheetItems.withDividers().toPersistentList()
-        )
-    }
-}
-
-internal fun moveToTrash(isLoading: Boolean, onMoveToTrash: () -> Unit): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = {
-            val color = if (isLoading) {
-                PassTheme.colors.textHint
-            } else {
-                PassTheme.colors.textNorm
-            }
-            BottomSheetItemTitle(
-                text = stringResource(id = CompR.string.bottomsheet_move_to_trash),
-                color = color
+                onUiEvent = onUiEvent
             )
         }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val leftIcon: (@Composable () -> Unit)
-        get() = {
-            BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_trash)
-        }
-    override val endIcon: (@Composable () -> Unit)?
-        get() = if (isLoading) {
-            {
-                CircularProgressIndicator(modifier = Modifier.size(20.dp))
-            }
-        } else null
-    override val onClick: (() -> Unit)?
-        get() = if (!isLoading) {
-            { onMoveToTrash() }
-        } else null
-    override val isDivider = false
-}
-
-private fun copyToClipboard(text: String, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = text) }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val leftIcon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_squares) }
-    override val endIcon: (@Composable () -> Unit)?
-        get() = null
-    override val onClick: (() -> Unit)
-        get() = onClick
-    override val isDivider = false
+    }
 }

@@ -22,8 +22,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
+import proton.android.pass.data.impl.extensions.groupByWebsite
 import proton.android.pass.data.impl.extensions.toDomain
-import proton.android.pass.data.impl.extensions.toEntity
+import proton.android.pass.data.impl.extensions.toEntityList
 import proton.android.pass.data.impl.local.assetlink.LocalAssetLinkDataSource
 import proton.android.pass.data.impl.remote.assetlink.RemoteAssetLinkDataSource
 import proton.android.pass.domain.assetlink.AssetLink
@@ -36,6 +37,7 @@ class AssetLinkRepositoryImpl @Inject constructor(
 ) : AssetLinkRepository {
 
     override suspend fun fetch(website: String): AssetLink {
+        PassLogger.d(TAG, "Fetching asset links for website: $website")
         val response = remoteAssetLinkDataSource.fetch(website)
         val androidAppLinks = response.filter { it.target.namespace == "android_app" }
         return androidAppLinks.toDomain(website)
@@ -43,22 +45,17 @@ class AssetLinkRepositoryImpl @Inject constructor(
 
     override suspend fun insert(list: List<AssetLink>) {
         PassLogger.d(TAG, "Inserting asset links: $list")
-        localAssetLinkDataSource.insertAssetLink(list.map(AssetLink::toEntity))
+        localAssetLinkDataSource.insertAssetLink(list.toEntityList())
     }
 
     override suspend fun purge() {
+        PassLogger.d(TAG, "Purging asset links")
         localAssetLinkDataSource.purge()
     }
 
-    override fun observeByWebsite(website: String): Flow<List<AssetLink>> =
-        localAssetLinkDataSource.observeByWebsite(website).map { list ->
-            list.map(AssetLinkEntity::toDomain)
-        }
-
     override fun observeByPackageName(packageName: String): Flow<List<AssetLink>> =
-        localAssetLinkDataSource.observeByPackageName(packageName).map { list ->
-            list.map(AssetLinkEntity::toDomain)
-        }
+        localAssetLinkDataSource.observeByPackageName(packageName)
+            .map(List<AssetLinkEntity>::groupByWebsite)
 
     companion object {
         private const val TAG = "AssetLinkRepositoryImpl"

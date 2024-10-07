@@ -20,39 +20,47 @@ package proton.android.pass.data.impl.db.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import proton.android.pass.data.impl.db.entities.AssetLinkEntity.Columns
 import java.util.Date
 
-@Entity(tableName = AssetLinkEntity.TABLE)
-@TypeConverters(StringListConverter::class, DateConverter::class)
+@Entity(
+    tableName = AssetLinkEntity.TABLE,
+    indices = [
+        Index(
+            value = [Columns.WEBSITE, Columns.PACKAGE_NAME, Columns.SIGNATURE],
+            unique = true
+        )
+    ]
+)
+@TypeConverters(DateConverter::class)
 data class AssetLinkEntity(
-    @PrimaryKey
-    @ColumnInfo(name = Columns.WEBSITE, index = true)
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = Columns.ID)
+    val id: Long = 0,
+    @ColumnInfo(name = Columns.WEBSITE)
     val website: String,
     @ColumnInfo(name = Columns.PACKAGE_NAME)
-    val packageNames: List<String>,
+    val packageName: String,
     @ColumnInfo(name = Columns.CREATED_AT)
-    val createdAt: Date
+    val createdAt: Date,
+    @ColumnInfo(name = Columns.SIGNATURE)
+    val signature: String
 ) {
     object Columns {
+        const val ID = "id"
         const val WEBSITE = "website"
         const val PACKAGE_NAME = "package_name"
+        const val SIGNATURE = "signature"
         const val CREATED_AT = "created_at"
     }
 
     companion object {
-        const val TABLE = "AssetLinksEntity"
+        const val TABLE = "AssetLinkEntity"
     }
-}
-
-class StringListConverter {
-    @TypeConverter
-    fun fromString(value: String): List<String> = value.split(",").map { it.trim() }
-
-    @TypeConverter
-    fun fromList(list: List<String>): String = list.joinToString(",")
 }
 
 class DateConverter {

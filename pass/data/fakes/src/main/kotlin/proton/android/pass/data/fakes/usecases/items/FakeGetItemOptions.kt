@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,31 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.presentation
+package proton.android.pass.data.fakes.usecases.items
 
-import androidx.compose.runtime.Stable
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.items.GetItemOptions
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemOption
+import javax.inject.Inject
+import javax.inject.Singleton
 
-@Stable
-internal data class ItemOptionsState(
-    internal val itemOptions: Option<List<ItemOption>>,
-    internal val event: ItemOptionsEvent,
-    private val isLoadingState: IsLoadingState
-) {
+@Singleton
+class FakeGetItemOptions @Inject constructor() : GetItemOptions {
 
-    internal val isLoading: Boolean = isLoadingState.value()
-
-    internal companion object {
-
-        internal val Initial = ItemOptionsState(
-            itemOptions = None,
-            event = ItemOptionsEvent.Idle,
-            isLoadingState = IsLoadingState.NotLoading
-        )
-
-    }
+    override suspend fun invoke(
+        shareId: ShareId,
+        itemId: ItemId,
+        userId: UserId?
+    ): Option<List<ItemOption>> = None
 
 }

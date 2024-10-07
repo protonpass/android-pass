@@ -18,13 +18,18 @@
 
 package proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ui
 
+import me.proton.core.crypto.common.keystore.EncryptedString
+
 internal sealed interface ItemOptionsBottomSheetUiEvent {
 
-    data object OnCopyEmailClicked : ItemOptionsBottomSheetUiEvent
+    @JvmInline
+    value class OnCopyEmailClicked(val email: String) : ItemOptionsBottomSheetUiEvent
 
-    data object OnCopyUsernameClicked : ItemOptionsBottomSheetUiEvent
+    @JvmInline
+    value class OnCopyUsernameClicked(val username: String) : ItemOptionsBottomSheetUiEvent
 
-    data object OnCopyPasswordClicked : ItemOptionsBottomSheetUiEvent
+    @JvmInline
+    value class OnCopyPasswordClicked(val encryptedPassword: EncryptedString) : ItemOptionsBottomSheetUiEvent
 
     data object OnMoveToTrashClicked : ItemOptionsBottomSheetUiEvent
 

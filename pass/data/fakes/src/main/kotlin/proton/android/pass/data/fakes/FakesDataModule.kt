@@ -145,6 +145,7 @@ import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
 import proton.android.pass.data.api.usecases.items.GetItemCategory
+import proton.android.pass.data.api.usecases.items.GetItemOptions
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
@@ -310,6 +311,7 @@ import proton.android.pass.data.fakes.usecases.breach.FakeUpdateGlobalProtonAddr
 import proton.android.pass.data.fakes.usecases.breach.FakeUpdateProtonAddressMonitorState
 import proton.android.pass.data.fakes.usecases.breach.FakeVerifyBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.items.FakeGetItemCategory
+import proton.android.pass.data.fakes.usecases.items.FakeGetItemOptions
 import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
 import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
 import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
@@ -846,5 +848,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindAssetLinkRepository(impl: FakeAssetLinkRepository): AssetLinkRepository
+
+    @Binds
+    abstract fun bindGetItemOptions(impl: FakeGetItemOptions): GetItemOptions
 
 }

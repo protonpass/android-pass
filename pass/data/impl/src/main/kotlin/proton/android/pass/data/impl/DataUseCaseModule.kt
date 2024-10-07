@@ -146,6 +146,7 @@ import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
 import proton.android.pass.data.api.usecases.items.GetItemCategory
+import proton.android.pass.data.api.usecases.items.GetItemOptions
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
@@ -317,6 +318,7 @@ import proton.android.pass.data.impl.usecases.extrapassword.HasExtraPasswordImpl
 import proton.android.pass.data.impl.usecases.extrapassword.RemoveExtraPasswordImpl
 import proton.android.pass.data.impl.usecases.extrapassword.SetupExtraPasswordImpl
 import proton.android.pass.data.impl.usecases.items.GetItemCategoryImpl
+import proton.android.pass.data.impl.usecases.items.GetItemOptionsImpl
 import proton.android.pass.data.impl.usecases.items.ObserveItemRevisionsImpl
 import proton.android.pass.data.impl.usecases.items.ObserveMonitoredItemsImpl
 import proton.android.pass.data.impl.usecases.items.OpenItemRevisionImpl
@@ -897,5 +899,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindUpdateAssetLink(impl: UpdateAssetLinkImpl): UpdateAssetLink
+
+    @[Binds Singleton]
+    abstract fun bindGetItemOptions(impl: GetItemOptionsImpl): GetItemOptions
 
 }

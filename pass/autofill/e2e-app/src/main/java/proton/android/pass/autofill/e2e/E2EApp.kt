@@ -24,8 +24,10 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.util.android.sentry.TimberLogger
 import me.proton.core.util.kotlin.CoreLogger
 import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.common.api.None
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
+import proton.android.pass.data.api.usecases.SuggestedItem
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.domain.ItemId
@@ -68,7 +70,7 @@ class E2EApp : Application() {
                 username = "user2",
                 password = "pass2"
             )
-        )
+        ).map { SuggestedItem(it, None) }
         autofillItems.sendValue(
             itemTypeFilter = ItemTypeFilter.Logins,
             value = Result.success(SuggestedAutofillItemsResult.Items(logins))
@@ -91,7 +93,7 @@ class E2EApp : Application() {
                 expirationDate = "2028-03",
                 title = "Second card"
             )
-        )
+        ).map { SuggestedItem(it, None) }
         autofillItems.sendValue(
             itemTypeFilter = ItemTypeFilter.CreditCards,
             value = Result.success(SuggestedAutofillItemsResult.Items(creditCards))
@@ -106,7 +108,7 @@ class E2EApp : Application() {
                 itemId = ItemId("identity2"),
                 fullName = "Tony Stark"
             )
-        )
+        ).map { SuggestedItem(it, None) }
 
         autofillItems.sendValue(
             itemTypeFilter = ItemTypeFilter.Identity,

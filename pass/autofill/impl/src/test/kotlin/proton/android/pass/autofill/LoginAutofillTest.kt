@@ -177,7 +177,8 @@ class LoginAutofillTest : BaseAutofillTest() {
                 shareId = "123",
                 username = ExpectedAutofill.USERNAME.value,
                 password = TestEncryptionContext.encrypt(ExpectedAutofill.PASSWORD.value),
-                totp = null
+                totp = null,
+                shouldLinkPackageName = false
             ),
             requestFlags = flags,
             allowEmptyFields = allowEmptyFields

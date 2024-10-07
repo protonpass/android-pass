@@ -48,7 +48,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
-import proton.android.pass.domain.Item
+import proton.android.pass.data.api.usecases.SuggestedItem
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -128,7 +128,7 @@ class AutofillServiceManager @Inject constructor(
     private fun itemsSuggestions(
         request: InlineSuggestionsRequest,
         autofillData: AutofillData,
-        suggestedItems: List<Item>
+        suggestedItems: List<SuggestedItem>
     ): List<Dataset> {
         val specs = request.inlinePresentationSpecs
         val pinnedIcon = { spec: InlinePresentationSpec ->
@@ -182,7 +182,7 @@ class AutofillServiceManager @Inject constructor(
             suggestion = suggestion
         ).firstOrNull()
         return when (result) {
-            is SuggestedAutofillItemsResult.Items -> SuggestedItemsResult.Items(result.items)
+            is SuggestedAutofillItemsResult.Items -> SuggestedItemsResult.Items(result.suggestedItems)
             SuggestedAutofillItemsResult.ShowUpgrade -> SuggestedItemsResult.ShowUpgrade
             null -> SuggestedItemsResult.Items(emptyList())
         }
@@ -238,7 +238,7 @@ class AutofillServiceManager @Inject constructor(
 
     private fun createMenuPresentationDatasetWithItems(
         autofillData: AutofillData,
-        suggestedItems: List<Item>
+        suggestedItems: List<SuggestedItem>
     ): List<Dataset> {
         val openAppPendingIntent = PendingIntentUtils.getOpenAppPendingIntent(
             context = context,
@@ -261,19 +261,22 @@ class AutofillServiceManager @Inject constructor(
         val shouldAuthenticate = runBlocking { needsBiometricAuth().first() }
 
         return suggestedItems.take(2)
-            .mapIndexed { index, item ->
+            .mapIndexed { index, suggestedItem ->
                 val (view, autofillItem) = encryptionContextProvider.withEncryptionContext {
-                    RemoteViews(context.packageName, R.layout.autofill_item)
+                    val view = RemoteViews(context.packageName, R.layout.autofill_item)
                         .apply {
                             setTextViewText(
                                 R.id.title,
-                                ItemDisplayBuilder.createTitle(item, this@withEncryptionContext)
+                                ItemDisplayBuilder.createTitle(suggestedItem, this@withEncryptionContext)
                             )
                             setTextViewText(
                                 R.id.subtitle,
-                                ItemDisplayBuilder.createSubtitle(item, this@withEncryptionContext)
+                                ItemDisplayBuilder.createSubtitle(suggestedItem, this@withEncryptionContext)
                             )
-                        } to item.toUiModel(this).toAutoFillItem()
+                        }
+                    val autofillItem = suggestedItem.toUiModel(this)
+                        .toAutoFillItem(suggestedItem.isDALSuggestion)
+                    view to autofillItem
                 }
                 val pendingIntent = PendingIntentUtils.getSuggestionPendingIntent(
                     context = context,
@@ -296,7 +299,7 @@ class AutofillServiceManager @Inject constructor(
 
     @RequiresApi(Build.VERSION_CODES.R)
     private fun createItemsDatasetList(
-        suggestedItems: List<Item>,
+        suggestedItems: List<SuggestedItem>,
         inlineSuggestionsRequest: InlineSuggestionsRequest,
         autofillData: AutofillData
     ): List<Dataset> = encryptionContextProvider.withEncryptionContext {
@@ -317,7 +320,7 @@ class AutofillServiceManager @Inject constructor(
                     createItemDataset(
                         autofillData = autofillData,
                         spec = pair.first,
-                        item = pair.second,
+                        suggestedItem = pair.second,
                         index = index,
                         shouldAuthenticate = shouldAuthenticate
                     )
@@ -332,20 +335,22 @@ class AutofillServiceManager @Inject constructor(
     private fun EncryptionContext.createItemDataset(
         autofillData: AutofillData,
         spec: InlinePresentationSpec,
-        item: Item,
+        suggestedItem: SuggestedItem,
         index: Int,
         shouldAuthenticate: Boolean
     ): Dataset {
+        val autofillItem = suggestedItem.toUiModel(this)
+            .toAutoFillItem(suggestedItem.isDALSuggestion)
         val pendingIntent = PendingIntentUtils.getSuggestionPendingIntent(
             context = context,
             autofillData = autofillData,
-            autofillItem = item.toUiModel(this).toAutoFillItem(),
+            autofillItem = autofillItem,
             intentRequestCode = index,
             shouldAuthenticate = shouldAuthenticate
         )
         val inlinePresentation = InlinePresentationUtils.create(
-            title = ItemDisplayBuilder.createTitle(item, this),
-            subtitle = ItemDisplayBuilder.createSubtitle(item, this).some(),
+            title = ItemDisplayBuilder.createTitle(suggestedItem, this),
+            subtitle = ItemDisplayBuilder.createSubtitle(suggestedItem, this).some(),
             inlinePresentationSpec = spec,
             pendingIntent = PendingIntentUtils
                 .getLongPressInlinePendingIntent(context)
@@ -479,5 +484,5 @@ sealed interface SuggestedItemsResult {
     data object ShowUpgrade : SuggestedItemsResult
 
     @JvmInline
-    value class Items(val items: List<Item>) : SuggestedItemsResult
+    value class Items(val items: List<SuggestedItem>) : SuggestedItemsResult
 }

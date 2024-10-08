@@ -2007,8 +2007,11 @@ fun NavGraphBuilder.appGraph(
                     backDestination = SimpleLoginSyncManagementNavItem
                 )
 
-                SimpleLoginSyncNavDestination.SelectDomain -> appNavigator.navigate(
-                    destination = SimpleLoginSyncDomainSelectNavItem
+                is SimpleLoginSyncNavDestination.SelectDomain -> appNavigator.navigate(
+                    destination = SimpleLoginSyncDomainSelectNavItem,
+                    route = SimpleLoginSyncDomainSelectNavItem.buildRoute(
+                        canSelectPremiumDomains = destination.canSelectPremiumDomains
+                    )
                 )
             }
         }

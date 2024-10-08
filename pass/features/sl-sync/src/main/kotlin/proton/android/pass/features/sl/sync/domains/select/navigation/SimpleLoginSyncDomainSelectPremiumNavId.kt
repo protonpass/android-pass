@@ -18,13 +18,13 @@
 
 package proton.android.pass.features.sl.sync.domains.select.navigation
 
-import proton.android.pass.navigation.api.NavItem
+import androidx.navigation.NavType
+import proton.android.pass.navigation.api.NavArgId
 
-object SimpleLoginSyncDomainSelectNavItem : NavItem(
-    baseRoute = "sl/sync/domains/select",
-    navArgIds = listOf(SimpleLoginSyncDomainSelectPremiumNavId)
-) {
+object SimpleLoginSyncDomainSelectPremiumNavId : NavArgId {
 
-    fun buildRoute(canSelectPremiumDomains: Boolean) = "$baseRoute/$canSelectPremiumDomains"
+    override val key: String = "simple_login_sync_domain_select_premium"
+
+    override val navType: NavType<*> = NavType.BoolType
 
 }

@@ -33,7 +33,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.autofill.entities.AutofillData
-import proton.android.pass.autofill.entities.getSuggestion
+import proton.android.pass.autofill.entities.toSuggestion
 import proton.android.pass.autofill.extensions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.heuristics.NodeCluster
@@ -46,9 +46,9 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
+import proton.android.pass.data.api.usecases.ItemData
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
-import proton.android.pass.data.api.usecases.SuggestedItem
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -128,7 +128,7 @@ class AutofillServiceManager @Inject constructor(
     private fun itemsSuggestions(
         request: InlineSuggestionsRequest,
         autofillData: AutofillData,
-        suggestedItems: List<SuggestedItem>
+        suggestedItems: List<ItemData.SuggestedItem>
     ): List<Dataset> {
         val specs = request.inlinePresentationSpecs
         val pinnedIcon = { spec: InlinePresentationSpec ->
@@ -167,11 +167,10 @@ class AutofillServiceManager @Inject constructor(
         suggestionType: SuggestionType,
         autofillData: AutofillData
     ): SuggestedItemsResult {
-        val (packageName, url) = PackageNameUrlSuggestionAdapter.adapt(
+        val suggestionSource = PackageNameUrlSuggestionAdapter.adapt(
             packageName = autofillData.packageInfo.packageName,
-            url = autofillData.assistInfo.url
+            url = autofillData.assistInfo.url.value().orEmpty()
         )
-        val suggestion = getSuggestion(packageName, url)
         val itemTypeFilter = when (suggestionType) {
             SuggestionType.CreditCard -> ItemTypeFilter.CreditCards
             SuggestionType.Identity -> ItemTypeFilter.Identity
@@ -179,7 +178,7 @@ class AutofillServiceManager @Inject constructor(
         }
         val result = getSuggestedAutofillItems(
             itemTypeFilter = itemTypeFilter,
-            suggestion = suggestion
+            suggestion = suggestionSource.toSuggestion()
         ).firstOrNull()
         return when (result) {
             is SuggestedAutofillItemsResult.Items -> SuggestedItemsResult.Items(result.suggestedItems)
@@ -238,7 +237,7 @@ class AutofillServiceManager @Inject constructor(
 
     private fun createMenuPresentationDatasetWithItems(
         autofillData: AutofillData,
-        suggestedItems: List<SuggestedItem>
+        suggestedItems: List<ItemData.SuggestedItem>
     ): List<Dataset> {
         val openAppPendingIntent = PendingIntentUtils.getOpenAppPendingIntent(
             context = context,
@@ -267,14 +266,14 @@ class AutofillServiceManager @Inject constructor(
                         .apply {
                             setTextViewText(
                                 R.id.title,
-                                ItemDisplayBuilder.createTitle(suggestedItem, this@withEncryptionContext)
+                                ItemDisplayBuilder.createTitle(suggestedItem.item, this@withEncryptionContext)
                             )
                             setTextViewText(
                                 R.id.subtitle,
-                                ItemDisplayBuilder.createSubtitle(suggestedItem, this@withEncryptionContext)
+                                ItemDisplayBuilder.createSubtitle(suggestedItem.item, this@withEncryptionContext)
                             )
                         }
-                    val autofillItem = suggestedItem.toUiModel(this)
+                    val autofillItem = suggestedItem.item.toUiModel(this)
                         .toAutoFillItem(suggestedItem.isDALSuggestion)
                     view to autofillItem
                 }
@@ -299,7 +298,7 @@ class AutofillServiceManager @Inject constructor(
 
     @RequiresApi(Build.VERSION_CODES.R)
     private fun createItemsDatasetList(
-        suggestedItems: List<SuggestedItem>,
+        suggestedItems: List<ItemData.SuggestedItem>,
         inlineSuggestionsRequest: InlineSuggestionsRequest,
         autofillData: AutofillData
     ): List<Dataset> = encryptionContextProvider.withEncryptionContext {
@@ -335,11 +334,11 @@ class AutofillServiceManager @Inject constructor(
     private fun EncryptionContext.createItemDataset(
         autofillData: AutofillData,
         spec: InlinePresentationSpec,
-        suggestedItem: SuggestedItem,
+        suggestedItem: ItemData.SuggestedItem,
         index: Int,
         shouldAuthenticate: Boolean
     ): Dataset {
-        val autofillItem = suggestedItem.toUiModel(this)
+        val autofillItem = suggestedItem.item.toUiModel(this)
             .toAutoFillItem(suggestedItem.isDALSuggestion)
         val pendingIntent = PendingIntentUtils.getSuggestionPendingIntent(
             context = context,
@@ -349,8 +348,8 @@ class AutofillServiceManager @Inject constructor(
             shouldAuthenticate = shouldAuthenticate
         )
         val inlinePresentation = InlinePresentationUtils.create(
-            title = ItemDisplayBuilder.createTitle(suggestedItem, this),
-            subtitle = ItemDisplayBuilder.createSubtitle(suggestedItem, this).some(),
+            title = ItemDisplayBuilder.createTitle(suggestedItem.item, this),
+            subtitle = ItemDisplayBuilder.createSubtitle(suggestedItem.item, this).some(),
             inlinePresentationSpec = spec,
             pendingIntent = PendingIntentUtils
                 .getLongPressInlinePendingIntent(context)
@@ -446,7 +445,6 @@ class AutofillServiceManager @Inject constructor(
         )
     }
 
-
     private fun getAvailableSuggestionSpots(maxSuggestion: Int, itemsSize: Int): Int {
         val min = min(maxSuggestion, itemsSize)
         return if (maxSuggestion > itemsSize) {
@@ -484,5 +482,5 @@ sealed interface SuggestedItemsResult {
     data object ShowUpgrade : SuggestedItemsResult
 
     @JvmInline
-    value class Items(val items: List<SuggestedItem>) : SuggestedItemsResult
+    value class Items(val items: List<ItemData.SuggestedItem>) : SuggestedItemsResult
 }

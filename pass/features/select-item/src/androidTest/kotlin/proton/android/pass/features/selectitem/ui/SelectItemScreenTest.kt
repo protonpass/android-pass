@@ -37,13 +37,11 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.FakeUserManager
 import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.data.api.usecases.ItemData
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
-import proton.android.pass.data.api.usecases.SuggestedItem
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
@@ -360,7 +358,7 @@ class SelectItemScreenTest {
 
         val shareId = vaultList.first().shareId
         val suggestionsList = (0 until suggestions).map {
-            TestObserveItems.createItem(
+            val item = TestObserveItems.createItem(
                 shareId = shareId,
                 itemId = ItemId("itemid-suggestion-$it"),
                 itemContents = ItemContents.Login(
@@ -378,10 +376,11 @@ class SelectItemScreenTest {
                     passkeys = emptyList()
                 )
             )
+            ItemData.SuggestedItem(item, Suggestion.Url("$it"))
         }
         getSuggestedLoginItems.sendValue(
             itemTypeFilter = ItemTypeFilter.Logins,
-            value = Result.success(SuggestedAutofillItemsResult.Items(suggestionsList.map { SuggestedItem(it, None) }))
+            value = Result.success(SuggestedAutofillItemsResult.Items(suggestionsList))
         )
 
         val otherItemsList = (0 until otherItems).map {
@@ -404,7 +403,7 @@ class SelectItemScreenTest {
                 )
             )
         }
-        val otherItemsPlusSuggestionsList = otherItemsList + suggestionsList
+        val otherItemsPlusSuggestionsList = otherItemsList + suggestionsList.map { it.item }
         observeItems.emitValue(otherItemsPlusSuggestionsList)
 
         val plan = Plan(
@@ -433,12 +432,12 @@ class SelectItemScreenTest {
 
     private fun fakeAutofillState() = SelectItemState.Autofill.Login(
         title = "Some title",
-        suggestion = PACKAGE_NAME.some().map(Suggestion::PackageName)
+        suggestion = Suggestion.PackageName(PACKAGE_NAME)
     )
 
     data class SetupData(
         val vaults: List<Vault>,
-        val suggestions: List<Item>,
+        val suggestions: List<ItemData.SuggestedItem>,
         val otherItems: List<Item>
     )
 

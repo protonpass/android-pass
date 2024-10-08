@@ -37,10 +37,9 @@ class LocalSimpleLoginDataSourceImpl @Inject constructor(
 
     private val aliasSettingsFlow = MutableStateFlow<SimpleLoginAliasSettings?>(null)
 
-    private val aliasDomainsFlow =
-        MutableStateFlow<MutableMap<UserId, List<SimpleLoginAliasDomain>>>(
-            value = mutableMapOf()
-        )
+    private val aliasDomainsFlow = MutableStateFlow<MutableMap<UserId, List<SimpleLoginAliasDomain>>>(
+        value = mutableMapOf()
+    )
 
     override fun disableSyncPreference() {
         userPreferencesRepository.setSimpleLoginSyncStatusPreference(
@@ -69,6 +68,22 @@ class LocalSimpleLoginDataSourceImpl @Inject constructor(
             aliasDomainsMap.apply {
                 put(userId, aliasDomains)
             }
+        }
+    }
+
+    override fun updateDefaultAliasDomain(userId: UserId, newDefaultAliasDomain: String?) {
+        aliasDomainsFlow.update { aliasDomainsMap ->
+            aliasDomainsMap[userId]?.let { aliasDomains ->
+                aliasDomains
+                    .map { aliasDomain ->
+                        aliasDomain.copy(isDefault = aliasDomain.domain == newDefaultAliasDomain)
+                    }
+                    .let { newAliasDomains ->
+                        aliasDomainsMap.apply {
+                            put(userId, newAliasDomains)
+                        }
+                    }
+            } ?: aliasDomainsMap
         }
     }
 

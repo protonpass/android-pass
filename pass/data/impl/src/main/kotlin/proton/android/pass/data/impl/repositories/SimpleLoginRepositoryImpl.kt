@@ -137,7 +137,13 @@ class SimpleLoginRepositoryImpl @Inject constructor(
             )
                 .settings
                 .toDomain()
-                .also(localSimpleLoginDataSource::updateAliasSettings)
+                .also { newAliasSettings ->
+                    localSimpleLoginDataSource.updateAliasSettings(newAliasSettings)
+                    localSimpleLoginDataSource.updateDefaultAliasDomain(
+                        userId = userId,
+                        newDefaultAliasDomain = newAliasSettings.defaultDomain
+                    )
+                }
         }
     }
 

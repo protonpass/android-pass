@@ -37,4 +37,6 @@ interface LocalSimpleLoginDataSource {
 
     fun refreshAliasDomains(userId: UserId, aliasDomains: List<SimpleLoginAliasDomain>)
 
+    fun updateDefaultAliasDomain(userId: UserId, newDefaultAliasDomain: String?)
+
 }

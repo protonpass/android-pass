@@ -18,33 +18,21 @@
 
 package proton.android.pass.features.sl.sync.domains.select.ui
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import kotlinx.collections.immutable.toPersistentList
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Bold
 import proton.android.pass.commonui.api.bottomSheet
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
-import proton.android.pass.composecomponents.impl.icon.PassUnlimitedIcon
-import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.domains.select.presentation.SimpleLoginSyncDomainSelectState
-import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun SimpleLoginSyncDomainSelectContent(
@@ -64,70 +52,21 @@ internal fun SimpleLoginSyncDomainSelectContent(
         )
 
         aliasDomains.map { aliasDomain ->
-            domainItem(aliasDomain, canSelectPremiumDomains) {}
+            simpleLoginAliasDomainSelectItem(
+                aliasDomain = aliasDomain,
+                canSelectPremiumDomains = canSelectPremiumDomains,
+                onClick = {
+                    if (aliasDomain.isPremium && !canSelectPremiumDomains) {
+                        SimpleLoginSyncDomainSelectUiEvent.OnUpsellClicked
+                    } else {
+                        SimpleLoginSyncDomainSelectUiEvent.OnDomainSelected(aliasDomain.domain)
+                    }.also(onUiEvent)
+                }
+            )
         }.also { items ->
             BottomSheetItemList(
                 items = items.withDividers().toPersistentList()
             )
         }
     }
-}
-
-private fun domainItem(
-    aliasDomain: SimpleLoginAliasDomain,
-    canSelectPremiumDomains: Boolean,
-    onClick: () -> Unit
-) = object : BottomSheetItem {
-
-    override val title: @Composable () -> Unit = {
-        Text(
-            text = aliasDomain.domain.ifEmpty {
-                stringResource(id = R.string.simple_login_sync_domain_select_title_none)
-            },
-            style = ProtonTheme.typography.body2Regular,
-            color = PassTheme.colors.textNorm
-        )
-    }
-
-    override val subtitle: (@Composable () -> Unit) = {
-        when {
-            aliasDomain.domain.isEmpty() -> R.string.simple_login_sync_domain_select_description_none
-            aliasDomain.isCustom -> R.string.simple_login_sync_domain_select_description_custom
-            aliasDomain.isPremium -> R.string.simple_login_sync_domain_select_description_premium
-            else -> R.string.simple_login_sync_domain_select_description_free
-        }.also { subtitleId ->
-            Text(
-                modifier = Modifier.padding(top = Spacing.extraSmall),
-                text = stringResource(id = subtitleId),
-                style = ProtonTheme.typography.body2Regular,
-                color = PassTheme.colors.textWeak
-            )
-        }
-    }
-
-    override val leftIcon: (@Composable () -> Unit)? = null
-
-    override val endIcon: (@Composable () -> Unit) = {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
-        ) {
-            if (aliasDomain.isDefault) {
-                Icon(
-                    painter = painterResource(CoreR.drawable.ic_proton_checkmark),
-                    contentDescription = null,
-                    tint = PassTheme.colors.interactionNormMajor1
-                )
-            }
-
-            if (aliasDomain.isPremium && !canSelectPremiumDomains) {
-                PassUnlimitedIcon()
-            }
-        }
-    }
-
-    override val onClick: (() -> Unit) = onClick
-
-    override val isDivider = false
-
 }

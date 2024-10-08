@@ -16,12 +16,24 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain.simplelogin
+package proton.android.pass.features.sl.sync.domains.select.presentation
 
-data class SimpleLoginAliasDomain(
-    val domain: String,
-    val isDefault: Boolean,
-    val isCustom: Boolean,
-    val isPremium: Boolean,
-    val isVerified: Boolean
-)
+import androidx.compose.runtime.Stable
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
+
+@Stable
+internal data class SimpleLoginSyncDomainSelectState(
+    internal val aliasDomains: ImmutableList<SimpleLoginAliasDomain>
+) {
+
+    internal companion object {
+
+        internal val Initial = SimpleLoginSyncDomainSelectState(
+            aliasDomains = persistentListOf()
+        )
+
+    }
+
+}

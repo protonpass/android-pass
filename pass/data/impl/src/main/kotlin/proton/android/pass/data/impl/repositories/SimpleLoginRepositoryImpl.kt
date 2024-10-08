@@ -21,10 +21,12 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.accountmanager.domain.AccountManager
@@ -105,10 +107,24 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     }
 
     override fun observeAliasDomains(): Flow<List<SimpleLoginAliasDomain>> = userIdFlow
-        .mapLatest { userId ->
-            remoteSimpleLoginDataSource.getSimpleLoginAliasDomains(userId)
-                .domains
-                .map { simpleLoginAliasDomainData -> simpleLoginAliasDomainData.toDomain() }
+        .flatMapLatest { userId ->
+            flow {
+                localSimpleLoginDataSource.observeAliasDomains(userId).first()
+                    .also { localAliasDomains ->
+                        if (localAliasDomains.isNotEmpty()) {
+                            emit(localAliasDomains)
+                        }
+                    }
+
+                remoteSimpleLoginDataSource.getSimpleLoginAliasDomains(userId)
+                    .domains
+                    .map { simpleLoginAliasDomainData -> simpleLoginAliasDomainData.toDomain() }
+                    .also { remoteAliasDomains ->
+                        localSimpleLoginDataSource.refreshAliasDomains(userId, remoteAliasDomains)
+                    }
+
+                emitAll(localSimpleLoginDataSource.observeAliasDomains(userId))
+            }
         }
 
     override suspend fun updateAliasDomain(domain: String?) {
@@ -261,7 +277,10 @@ class SimpleLoginRepositoryImpl @Inject constructor(
 
     private fun SimpleLoginAliasDomainData.toDomain() = SimpleLoginAliasDomain(
         domain = domain,
-        isDefault = isDefault
+        isDefault = isDefault,
+        isCustom = isCustom,
+        isPremium = isPremium,
+        isVerified = isVerified
     )
 
     private fun SimpleLoginAliasMailboxData.toDomain() = SimpleLoginAliasMailbox(

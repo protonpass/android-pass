@@ -70,7 +70,7 @@ fun SimpleLoginSyncDetailsScreen(
                 }
 
                 SimpleLoginSyncManagementUiEvent.OnDomainClicked -> {
-                    shouldShowAliasDomainDialog = true
+                    onNavigated(SimpleLoginSyncNavDestination.SelectDomain)
                 }
 
                 is SimpleLoginSyncManagementUiEvent.OnSyncSettingsClicked -> {

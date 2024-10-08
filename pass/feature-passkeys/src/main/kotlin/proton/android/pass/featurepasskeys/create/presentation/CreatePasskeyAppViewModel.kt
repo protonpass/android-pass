@@ -35,7 +35,6 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.Suggestion
@@ -102,8 +101,7 @@ class CreatePasskeyAppViewModel @Inject constructor(
             value.map { stateRequest ->
                 SelectItemState.Passkey.Register(
                     title = stateRequest.appState.data.domain,
-                    suggestion = stateRequest.request.callingRequest.origin.toOption()
-                        .map(Suggestion::Url)
+                    suggestion = Suggestion.Url(stateRequest.request.callingRequest.origin.orEmpty())
                 )
             }
         }

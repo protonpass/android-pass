@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.autofill
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.common.api.some
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.fakes.usecases.TestGetPublicSuffixList
 import proton.android.pass.data.impl.url.HostParserImpl
@@ -65,7 +64,7 @@ class SuggestionItemFiltererImplTest {
             )
         )
 
-        val res = instance.filter(items, firstPackageInfo.packageName.value.some().map(Suggestion::PackageName))
+        val res = instance.filter(items, Suggestion.PackageName(firstPackageInfo.packageName.value))
         assertThat(res).isEqualTo(listOf(firstItem))
     }
 
@@ -85,7 +84,7 @@ class SuggestionItemFiltererImplTest {
         )
         val items = listOf(item)
 
-        val res = instance.filter(items, secondPackageInfo.packageName.value.some().map(Suggestion::PackageName))
+        val res = instance.filter(items, Suggestion.PackageName(secondPackageInfo.packageName.value))
         assertThat(res).isEqualTo(emptyList<Item>())
     }
 
@@ -98,7 +97,7 @@ class SuggestionItemFiltererImplTest {
             TestItem.create(TestItemType.login(websites = listOf("${website}2")))
         )
 
-        val res = instance.filter(items, website.some().map(Suggestion::Url))
+        val res = instance.filter(items, Suggestion.Url(website))
         assertThat(res).isEqualTo(listOf(firstItem))
     }
 
@@ -109,7 +108,7 @@ class SuggestionItemFiltererImplTest {
             TestItem.create(TestItemType.login(websites = listOf(domain)))
         )
 
-        val res = instance.filter(items, "${domain}2".some().map(Suggestion::Url))
+        val res = instance.filter(items, Suggestion.Url("${domain}2"))
         assertThat(res).isEqualTo(emptyList<Item>())
     }
 
@@ -120,7 +119,7 @@ class SuggestionItemFiltererImplTest {
         val item = TestItem.create(itemType)
         val items = listOf(item)
 
-        val res = instance.filter(items, baseDomain.some().map(Suggestion::Url))
+        val res = instance.filter(items, Suggestion.Url(baseDomain))
         assertThat(res).isEqualTo(listOf(item))
     }
 
@@ -152,7 +151,7 @@ class SuggestionItemFiltererImplTest {
         val item4 = TestItem.create(TestItemType.login(websites = listOf("otherdomain.$tld")))
 
         val items = listOf(item1, item2, item3, item4)
-        val res = instance.filter(items, "$domain.$tld".some().map(Suggestion::Url))
+        val res = instance.filter(items, Suggestion.Url("$domain.$tld"))
         assertThat(res).isEqualTo(listOf(item1, item2, item3))
     }
 
@@ -165,7 +164,7 @@ class SuggestionItemFiltererImplTest {
         val item3 = TestItem.create(TestItemType.login(websites = listOf("5.6.7.8")))
 
         val items = listOf(item1, item2, item3)
-        val res = instance.filter(items, ip.some().map(Suggestion::Url))
+        val res = instance.filter(items, Suggestion.Url(ip))
         assertThat(res).isEqualTo(listOf(item1, item2))
     }
 
@@ -177,7 +176,7 @@ class SuggestionItemFiltererImplTest {
         val item2 = TestItem.create(TestItemType.login(websites = listOf("5.6.7.4")))
 
         val items = listOf(item1, item2)
-        val res = instance.filter(items, ip.some().map(Suggestion::Url))
+        val res = instance.filter(items, Suggestion.Url(ip))
         assertThat(res).isEqualTo(listOf(item1))
     }
 
@@ -190,7 +189,7 @@ class SuggestionItemFiltererImplTest {
         val item2 = TestItem.create(TestItemType.login(websites = listOf(httpsDomain)))
 
         val items = listOf(item1, item2)
-        val res = instance.filter(items, httpsDomain.some().map(Suggestion::Url))
+        val res = instance.filter(items, Suggestion.Url(httpsDomain))
         assertThat(res).isEqualTo(listOf(item2))
     }
 }

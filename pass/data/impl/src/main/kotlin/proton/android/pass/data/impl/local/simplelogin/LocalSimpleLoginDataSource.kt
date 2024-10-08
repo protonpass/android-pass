@@ -19,6 +19,8 @@
 package proton.android.pass.data.impl.local.simplelogin
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
 
 interface LocalSimpleLoginDataSource {
@@ -30,5 +32,9 @@ interface LocalSimpleLoginDataSource {
     fun observeAliasSettings(): Flow<SimpleLoginAliasSettings>
 
     fun updateAliasSettings(newAliasSettings: SimpleLoginAliasSettings)
+
+    fun observeAliasDomains(userId: UserId): Flow<List<SimpleLoginAliasDomain>>
+
+    fun refreshAliasDomains(userId: UserId, aliasDomains: List<SimpleLoginAliasDomain>)
 
 }

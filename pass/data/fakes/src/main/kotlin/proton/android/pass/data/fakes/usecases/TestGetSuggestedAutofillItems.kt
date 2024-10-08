@@ -42,7 +42,7 @@ class TestGetSuggestedAutofillItems @Inject constructor() : GetSuggestedAutofill
 
     override fun invoke(
         itemTypeFilter: ItemTypeFilter,
-        suggestion: Option<Suggestion>,
+        suggestion: Suggestion,
         userId: Option<UserId>
     ): Flow<SuggestedAutofillItemsResult> = resultFlow.map { it.getValue(itemTypeFilter).getOrThrow() }
 }

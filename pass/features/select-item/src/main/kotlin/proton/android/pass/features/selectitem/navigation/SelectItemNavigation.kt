@@ -21,7 +21,6 @@ package proton.android.pass.features.selectitem.navigation
 import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.Suggestion
@@ -45,7 +44,7 @@ sealed class SelectItemState(
     ) : SelectItemState(filter, title, showPinnedItems = true, showCreateButton = true) {
         data class Login(
             val title: String,
-            val suggestion: Option<Suggestion>
+            val suggestion: Suggestion
         ) : Autofill(ItemTypeFilter.Logins, title)
 
         data class CreditCard(
@@ -70,12 +69,11 @@ sealed class SelectItemState(
 
         data class Register(
             val title: String,
-            val suggestion: Option<Suggestion.Url>
+            val suggestion: Suggestion.Url
         ) : Passkey(title, showPinnedItems = true, showCreateButton = true)
 
         data class Select(
-            val title: String,
-            val suggestion: Option<Suggestion.Url>
+            val title: String
         ) : Passkey(title, showPinnedItems = false, showCreateButton = false)
     }
 }

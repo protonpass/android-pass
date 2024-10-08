@@ -19,9 +19,8 @@
 package proton.android.pass.featurepasskeys.select.navigation
 
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.common.api.None
-import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsNavDestination
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavItem
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsNavDestination
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.itemOptionsNavGraph
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
@@ -86,10 +85,7 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
     )
 
     selectItemGraph(
-        state = SelectItemState.Passkey.Select(
-            title = domain,
-            suggestion = None
-        ),
+        state = SelectItemState.Passkey.Select(domain),
         onScreenShown = {
             onEvent(SelectPasskeyEvent.OnSelectScreenShown)
         },

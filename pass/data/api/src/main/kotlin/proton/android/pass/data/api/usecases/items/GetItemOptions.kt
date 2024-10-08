@@ -29,7 +29,7 @@ interface GetItemOptions {
     suspend operator fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-        userId: UserId? = null
+        userId: UserId
     ): Option<List<ItemOption>>
 
 }

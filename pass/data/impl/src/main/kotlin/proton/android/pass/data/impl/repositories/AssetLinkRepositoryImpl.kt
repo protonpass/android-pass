@@ -18,9 +18,12 @@
 
 package proton.android.pass.data.impl.repositories
 
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import proton.android.pass.data.api.repositories.AssetLinkRepository
+import proton.android.pass.data.impl.AppCertificate
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
 import proton.android.pass.data.impl.extensions.groupByWebsite
 import proton.android.pass.data.impl.extensions.toDomain
@@ -33,7 +36,8 @@ import javax.inject.Inject
 
 class AssetLinkRepositoryImpl @Inject constructor(
     private val remoteAssetLinkDataSource: RemoteAssetLinkDataSource,
-    private val localAssetLinkDataSource: LocalAssetLinkDataSource
+    private val localAssetLinkDataSource: LocalAssetLinkDataSource,
+    @ApplicationContext private val context: Context
 ) : AssetLinkRepository {
 
     override suspend fun fetch(website: String): AssetLink {
@@ -56,6 +60,13 @@ class AssetLinkRepositoryImpl @Inject constructor(
     override fun observeByPackageName(packageName: String): Flow<List<AssetLink>> =
         localAssetLinkDataSource.observeByPackageName(packageName)
             .map(List<AssetLinkEntity>::groupByWebsite)
+            .map { list -> filterByCertificate(packageName, list) }
+
+    private fun filterByCertificate(packageName: String, list: List<AssetLink>): List<AssetLink> {
+        val fingerprints = AppCertificate.getAppSigningCertificates(context, packageName)
+        return list.filter { it.packages.any { pkg -> pkg.packageName == packageName } }
+            .filter { it.packages.all { pkg -> pkg.signatures.containsAll(fingerprints) } }
+    }
 
     companion object {
         private const val TAG = "AssetLinkRepositoryImpl"

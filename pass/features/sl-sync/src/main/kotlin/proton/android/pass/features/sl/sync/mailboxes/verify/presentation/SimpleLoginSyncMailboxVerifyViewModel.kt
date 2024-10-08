@@ -24,6 +24,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -35,6 +36,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -78,8 +80,8 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
                 var remainingSeconds = INITIAL_VERIFICATION_CODE_TIMER_SECONDS
                 emit(remainingSeconds)
 
-                while (remainingSeconds > 0) {
-                    delay(timeMillis = 1_000L)
+                while (currentCoroutineContext().isActive && remainingSeconds > 0) {
+                    delay(timeMillis = VERIFICATION_CODE_TIMER_INTERVAL_MILLIS)
                     remainingSeconds--
                     emit(remainingSeconds)
                 }
@@ -149,7 +151,10 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
 
             runCatching { resendAliasMailboxVerificationCode(mailboxId = mailboxId) }
                 .onFailure { error ->
-                    PassLogger.w(TAG, "There was an error resending alias mailbox verification code")
+                    PassLogger.w(
+                        TAG,
+                        "There was an error resending alias mailbox verification code"
+                    )
                     PassLogger.e(TAG, error)
                     snackbarDispatcher(SimpleLoginSyncMailboxVerifySnackbarMessage.ResendCodeError)
                 }
@@ -167,6 +172,8 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
         private const val TAG = "SimpleLoginSyncMailboxVerifyViewModel"
 
         private const val INITIAL_VERIFICATION_CODE_TIMER_SECONDS = 30
+
+        private const val VERIFICATION_CODE_TIMER_INTERVAL_MILLIS = 1_000L
 
     }
 

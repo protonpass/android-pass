@@ -75,7 +75,7 @@ class ItemOptionsViewModel @Inject constructor(
         value = IsLoadingState.NotLoading
     )
 
-    private val itemOptionsFlow = oneShot { getItemOptions(shareId = shareId, itemId = itemId) }
+    private val itemOptionsFlow = oneShot { getItemOptions(shareId, itemId, userId) }
 
     internal val stateFlow: StateFlow<ItemOptionsState> = combine(
         itemOptionsFlow,

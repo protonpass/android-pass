@@ -47,7 +47,7 @@ class GetItemOptionsImpl @Inject constructor(
     override suspend fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-        userId: UserId?
+        userId: UserId
     ): Option<List<ItemOption>> = combine(
         oneShot { getItemById(shareId, itemId) },
         oneShot { getVaultByShareId(userId, shareId).first() }

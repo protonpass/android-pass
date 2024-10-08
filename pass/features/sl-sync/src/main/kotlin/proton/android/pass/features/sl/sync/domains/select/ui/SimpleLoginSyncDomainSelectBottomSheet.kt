@@ -19,9 +19,11 @@
 package proton.android.pass.features.sl.sync.domains.select.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.features.sl.sync.domains.select.presentation.SimpleLoginSyncDomainSelectEvent
 import proton.android.pass.features.sl.sync.domains.select.presentation.SimpleLoginSyncDomainSelectViewModel
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 
@@ -31,6 +33,16 @@ fun SimpleLoginSyncDomainSelectBottomSheet(
     viewModel: SimpleLoginSyncDomainSelectViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by stateFlow.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state.event) {
+        when (state.event) {
+            SimpleLoginSyncDomainSelectEvent.Idle -> Unit
+            SimpleLoginSyncDomainSelectEvent.OnUpdateAliasDomainError,
+            SimpleLoginSyncDomainSelectEvent.OnUpdateAliasDomainSuccess -> {
+                onNavigated(SimpleLoginSyncNavDestination.Back(comesFromBottomSheet = true))
+            }
+        }
+    }
 
     SimpleLoginSyncDomainSelectContent(
         state = state,

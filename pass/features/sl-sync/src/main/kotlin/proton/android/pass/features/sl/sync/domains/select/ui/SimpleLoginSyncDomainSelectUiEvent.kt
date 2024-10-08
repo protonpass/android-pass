@@ -18,4 +18,11 @@
 
 package proton.android.pass.features.sl.sync.domains.select.ui
 
-internal sealed interface SimpleLoginSyncDomainSelectUiEvent
+internal sealed interface SimpleLoginSyncDomainSelectUiEvent {
+
+    @JvmInline
+    value class OnDomainSelected(val selectedDomain: String) : SimpleLoginSyncDomainSelectUiEvent
+
+    data object OnUpsellClicked : SimpleLoginSyncDomainSelectUiEvent
+
+}

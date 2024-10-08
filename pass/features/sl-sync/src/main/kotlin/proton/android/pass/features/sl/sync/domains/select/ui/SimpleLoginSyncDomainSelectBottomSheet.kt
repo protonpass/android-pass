@@ -47,9 +47,15 @@ fun SimpleLoginSyncDomainSelectBottomSheet(
     SimpleLoginSyncDomainSelectContent(
         state = state,
         onUiEvent = { uiEvent ->
-//            when (uiEvent) {
-//
-//            }
+            when (uiEvent) {
+                is SimpleLoginSyncDomainSelectUiEvent.OnDomainSelected -> {
+                    onUpdateAliasDomain(selectedAliasDomain = uiEvent.selectedDomain)
+                }
+
+                SimpleLoginSyncDomainSelectUiEvent.OnUpsellClicked -> {
+                    onNavigated(SimpleLoginSyncNavDestination.Upsell)
+                }
+            }
         }
     )
 }

@@ -130,7 +130,7 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
                 )
             }.onFailure { error ->
                 PassLogger.w(TAG, "There was an error verifying alias mailbox")
-                PassLogger.e(TAG, error)
+                PassLogger.w(TAG, error)
                 if (error is InvalidVerificationCodeException) {
                     SimpleLoginSyncMailboxVerifySnackbarMessage.VerifyCodeError
                 } else {
@@ -151,11 +151,8 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
 
             runCatching { resendAliasMailboxVerificationCode(mailboxId = mailboxId) }
                 .onFailure { error ->
-                    PassLogger.w(
-                        TAG,
-                        "There was an error resending alias mailbox verification code"
-                    )
-                    PassLogger.e(TAG, error)
+                    PassLogger.w(TAG, "There was an error resending alias mailbox verification code")
+                    PassLogger.w(TAG, error)
                     snackbarDispatcher(SimpleLoginSyncMailboxVerifySnackbarMessage.ResendCodeError)
                 }
                 .onSuccess {

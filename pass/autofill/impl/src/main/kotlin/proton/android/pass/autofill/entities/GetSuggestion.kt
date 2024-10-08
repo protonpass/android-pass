@@ -18,14 +18,10 @@
 
 package proton.android.pass.autofill.entities
 
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.some
+import proton.android.pass.autofill.extensions.SuggestionSource
 import proton.android.pass.data.api.usecases.Suggestion
 
-internal fun getSuggestion(packageName: Option<String>, url: Option<String>) = when {
-    packageName is Some -> Suggestion.PackageName(packageName.value).some()
-    url is Some -> Suggestion.Url(url.value).some()
-    else -> None
+internal fun SuggestionSource.toSuggestion(): Suggestion = when (this) {
+    is SuggestionSource.WithPackageName -> Suggestion.PackageName(packageName)
+    is SuggestionSource.WithUrl -> Suggestion.Url(url)
 }

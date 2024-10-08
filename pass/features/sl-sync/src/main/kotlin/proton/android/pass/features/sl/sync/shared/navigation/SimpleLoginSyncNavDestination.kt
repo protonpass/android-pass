@@ -24,8 +24,10 @@ sealed interface SimpleLoginSyncNavDestination {
 
     data object AliasManagement : SimpleLoginSyncNavDestination
 
-    @JvmInline
-    value class Back(val force: Boolean = false) : SimpleLoginSyncNavDestination
+    data class Back(
+        val comesFromBottomSheet: Boolean = false,
+        val force: Boolean = false
+    ) : SimpleLoginSyncNavDestination
 
     data object CreateMailbox : SimpleLoginSyncNavDestination
 

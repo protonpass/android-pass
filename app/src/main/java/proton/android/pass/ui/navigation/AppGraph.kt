@@ -1971,7 +1971,7 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 is SimpleLoginSyncNavDestination.Back -> appNavigator.navigateBack(
-                    comesFromBottomsheet = false,
+                    comesFromBottomsheet = destination.comesFromBottomSheet,
                     force = destination.force
                 )
 

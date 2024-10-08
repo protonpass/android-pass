@@ -20,18 +20,36 @@ package proton.android.pass.features.sl.sync.domains.select.presentation
 
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 
 @Stable
 internal data class SimpleLoginSyncDomainSelectState(
-    internal val aliasDomains: ImmutableList<SimpleLoginAliasDomain>
+    internal val canSelectPremiumDomains: Boolean,
+    internal val event: SimpleLoginSyncDomainSelectEvent,
+    private val simpleLoginAliasDomains: List<SimpleLoginAliasDomain>
 ) {
+
+    internal val aliasDomains: ImmutableList<SimpleLoginAliasDomain> = buildList {
+        SimpleLoginAliasDomain(
+            domain = "",
+            isCustom = false,
+            isPremium = true,
+            isVerified = true,
+            isDefault = simpleLoginAliasDomains
+                .any { simpleLoginAliasDomain -> simpleLoginAliasDomain.isDefault }
+                .not()
+        ).also(::add)
+
+        addAll(simpleLoginAliasDomains)
+    }.toPersistentList()
 
     internal companion object {
 
         internal val Initial = SimpleLoginSyncDomainSelectState(
-            aliasDomains = persistentListOf()
+            canSelectPremiumDomains = false,
+            event = SimpleLoginSyncDomainSelectEvent.Idle,
+            simpleLoginAliasDomains = emptyList()
         )
 
     }

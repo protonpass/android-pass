@@ -21,29 +21,74 @@ package proton.android.pass.features.sl.sync.domains.select.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.onSuccess
+import proton.android.pass.common.api.runCatching
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
+import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
+import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasDomain
+import proton.android.pass.features.sl.sync.management.presentation.SimpleLoginSyncManagementSnackBarMessage
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
 class SimpleLoginSyncDomainSelectViewModel @Inject constructor(
-    observeSimpleLoginAliasDomains: ObserveSimpleLoginAliasDomains
+    observeSimpleLoginSyncStatus: ObserveSimpleLoginSyncStatus,
+    observeSimpleLoginAliasDomains: ObserveSimpleLoginAliasDomains,
+    private val updateSimpleLoginAliasDomain: UpdateSimpleLoginAliasDomain,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
-    internal val stateFlow: StateFlow<SimpleLoginSyncDomainSelectState> =
-        observeSimpleLoginAliasDomains()
-            .mapLatest { aliasDomains ->
-                SimpleLoginSyncDomainSelectState(aliasDomains = aliasDomains.toPersistentList())
-            }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000L),
-                initialValue = SimpleLoginSyncDomainSelectState.Initial
-            )
+    private val eventFlow = MutableStateFlow<SimpleLoginSyncDomainSelectEvent>(
+        value = SimpleLoginSyncDomainSelectEvent.Idle
+    )
 
+    internal val stateFlow: StateFlow<SimpleLoginSyncDomainSelectState> = combine(
+        observeSimpleLoginSyncStatus(),
+        observeSimpleLoginAliasDomains(),
+        eventFlow
+    ) { syncStatus, aliasDomains, event ->
+        SimpleLoginSyncDomainSelectState(
+            canSelectPremiumDomains = syncStatus.canManageAliases,
+            simpleLoginAliasDomains = aliasDomains,
+            event = event
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000L),
+        initialValue = SimpleLoginSyncDomainSelectState.Initial
+    )
+
+    internal fun onUpdateAliasDomain(selectedAliasDomain: String) {
+        viewModelScope.launch {
+
+            runCatching {
+                updateSimpleLoginAliasDomain(domain = selectedAliasDomain.takeIf { it.isNotEmpty() })
+            }.onError { error ->
+                PassLogger.w(TAG, "There was an error updating SL alias domain")
+                PassLogger.w(TAG, error)
+                eventFlow.update { SimpleLoginSyncDomainSelectEvent.OnUpdateAliasDomainError }
+                snackbarDispatcher(SimpleLoginSyncManagementSnackBarMessage.UpdateAliasDomainError)
+            }.onSuccess {
+                eventFlow.update { SimpleLoginSyncDomainSelectEvent.OnUpdateAliasDomainSuccess }
+                snackbarDispatcher(SimpleLoginSyncManagementSnackBarMessage.UpdateAliasDomainSuccess)
+            }
+
+        }
+    }
+
+    private companion object {
+
+        private const val TAG = "SimpleLoginSyncDetailsViewModel"
+
+    }
 
 }

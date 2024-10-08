@@ -57,6 +57,11 @@
 
     <!-- Domain select screen -->
     <string name="simple_login_sync_domain_select_title">Default domain</string>
+    <string name="simple_login_sync_domain_select_title_none">none</string>
+    <string name="simple_login_sync_domain_select_description_none">No domain</string>
+    <string name="simple_login_sync_domain_select_description_custom">Your domain</string>
+    <string name="simple_login_sync_domain_select_description_free">Public domain</string>
+    <string name="simple_login_sync_domain_select_description_premium">Premium domain</string>
 
     <!-- Shared -->
     <string name="simple_login_sync_shared_default_vault_title">Default SL vault</string>

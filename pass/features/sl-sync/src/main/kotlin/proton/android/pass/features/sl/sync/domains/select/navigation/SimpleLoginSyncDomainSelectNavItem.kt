@@ -16,12 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain.simplelogin
+package proton.android.pass.features.sl.sync.domains.select.navigation
 
-data class SimpleLoginAliasDomain(
-    val domain: String,
-    val isDefault: Boolean,
-    val isCustom: Boolean,
-    val isPremium: Boolean,
-    val isVerified: Boolean
+import proton.android.pass.navigation.api.NavItem
+
+object SimpleLoginSyncDomainSelectNavItem : NavItem(
+    baseRoute = "sl/sync/domains/select"
 )

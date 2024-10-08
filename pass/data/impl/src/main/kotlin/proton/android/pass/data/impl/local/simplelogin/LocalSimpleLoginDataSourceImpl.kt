@@ -22,7 +22,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.update
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.simplelogin.SimpleLoginSyncStatusPreference
@@ -33,6 +36,11 @@ class LocalSimpleLoginDataSourceImpl @Inject constructor(
 ) : LocalSimpleLoginDataSource {
 
     private val aliasSettingsFlow = MutableStateFlow<SimpleLoginAliasSettings?>(null)
+
+    private val aliasDomainsFlow =
+        MutableStateFlow<MutableMap<UserId, List<SimpleLoginAliasDomain>>>(
+            value = mutableMapOf()
+        )
 
     override fun disableSyncPreference() {
         userPreferencesRepository.setSimpleLoginSyncStatusPreference(
@@ -49,6 +57,19 @@ class LocalSimpleLoginDataSourceImpl @Inject constructor(
 
     override fun updateAliasSettings(newAliasSettings: SimpleLoginAliasSettings) {
         aliasSettingsFlow.update { newAliasSettings }
+    }
+
+    override fun observeAliasDomains(userId: UserId): Flow<List<SimpleLoginAliasDomain>> =
+        aliasDomainsFlow.mapLatest { aliasDomainsMap ->
+            aliasDomainsMap[userId] ?: emptyList()
+        }
+
+    override fun refreshAliasDomains(userId: UserId, aliasDomains: List<SimpleLoginAliasDomain>) {
+        aliasDomainsFlow.update { aliasDomainsMap ->
+            aliasDomainsMap.apply {
+                put(userId, aliasDomains)
+            }
+        }
     }
 
 }

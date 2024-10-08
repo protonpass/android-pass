@@ -70,7 +70,9 @@ fun SimpleLoginSyncDetailsScreen(
                 }
 
                 SimpleLoginSyncManagementUiEvent.OnDomainClicked -> {
-                    onNavigated(SimpleLoginSyncNavDestination.SelectDomain)
+                    SimpleLoginSyncNavDestination.SelectDomain(
+                        canSelectPremiumDomains = state.canManageAliases
+                    ).also(onNavigated)
                 }
 
                 is SimpleLoginSyncManagementUiEvent.OnSyncSettingsClicked -> {

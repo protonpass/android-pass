@@ -31,9 +31,11 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
-import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasDomain
+import proton.android.pass.features.sl.sync.domains.select.navigation.SimpleLoginSyncDomainSelectPremiumNavId
 import proton.android.pass.features.sl.sync.management.presentation.SimpleLoginSyncManagementSnackBarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -41,23 +43,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SimpleLoginSyncDomainSelectViewModel @Inject constructor(
-    observeSimpleLoginSyncStatus: ObserveSimpleLoginSyncStatus,
+    savedStateHandleProvider: SavedStateHandleProvider,
     observeSimpleLoginAliasDomains: ObserveSimpleLoginAliasDomains,
     private val updateSimpleLoginAliasDomain: UpdateSimpleLoginAliasDomain,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
+
+    private val canSelectPremiumDomains = savedStateHandleProvider.get()
+        .require<Boolean>(SimpleLoginSyncDomainSelectPremiumNavId.key)
 
     private val eventFlow = MutableStateFlow<SimpleLoginSyncDomainSelectEvent>(
         value = SimpleLoginSyncDomainSelectEvent.Idle
     )
 
     internal val stateFlow: StateFlow<SimpleLoginSyncDomainSelectState> = combine(
-        observeSimpleLoginSyncStatus(),
         observeSimpleLoginAliasDomains(),
         eventFlow
-    ) { syncStatus, aliasDomains, event ->
+    ) { aliasDomains, event ->
         SimpleLoginSyncDomainSelectState(
-            canSelectPremiumDomains = syncStatus.canManageAliases,
+            canSelectPremiumDomains = canSelectPremiumDomains,
             simpleLoginAliasDomains = aliasDomains,
             event = event
         )

@@ -66,14 +66,13 @@ fun AutofillAppState.toSelectItemState(): SelectItemState.Autofill {
 
         is NodeCluster.Login,
         is NodeCluster.SignUp -> {
-            val (packageName, url) = PackageNameUrlSuggestionAdapter.adapt(
+            val suggestionSource = PackageNameUrlSuggestionAdapter.adapt(
                 packageName = autofillData.packageInfo.packageName,
-                url = autofillData.assistInfo.url
+                url = autofillData.assistInfo.url.value().orEmpty()
             )
-            val suggestion = getSuggestion(packageName, url)
             SelectItemState.Autofill.Login(
                 title = suggestionsTitle,
-                suggestion = suggestion
+                suggestion = suggestionSource.toSuggestion()
             )
         }
         is NodeCluster.Identity -> SelectItemState.Autofill.Identity(title = suggestionsTitle)

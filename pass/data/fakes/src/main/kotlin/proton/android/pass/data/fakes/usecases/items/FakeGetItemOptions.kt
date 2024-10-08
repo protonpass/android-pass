@@ -34,7 +34,7 @@ class FakeGetItemOptions @Inject constructor() : GetItemOptions {
     override suspend fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-        userId: UserId?
+        userId: UserId
     ): Option<List<ItemOption>> = None
 
 }

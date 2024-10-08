@@ -18,42 +18,32 @@
 
 package proton.android.pass.autofill.extensions
 
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.entity.PackageName
 
-data class PackageNameUrlForSuggestions(
-    val packageName: Option<String>,
-    val url: Option<String>
-)
+sealed interface SuggestionSource {
+    data class WithPackageName(val packageName: String) : SuggestionSource
+    data class WithUrl(val url: String) : SuggestionSource
+}
 
 object PackageNameUrlSuggestionAdapter {
 
-    fun adapt(packageName: PackageName, url: Option<String>): PackageNameUrlForSuggestions {
+    fun adapt(packageName: PackageName, url: String): SuggestionSource {
         val autofillDataPackageName = packageName
             .takeIf { !it.isBrowser() }
-            .toOption()
-            .map { it.value }
+            ?.value
 
-        val (suggestionsPackage, suggestionsUrl) = when {
+        return when {
             // App with a webview
-            autofillDataPackageName.isNotEmpty() && url.isNotEmpty() -> {
-                None to url
-            }
+            !autofillDataPackageName.isNullOrEmpty() && url.isNotEmpty() ->
+                SuggestionSource.WithUrl(url)
 
-            autofillDataPackageName.isNotEmpty() && url.isEmpty() -> {
-                autofillDataPackageName to None
-            }
+            !autofillDataPackageName.isNullOrEmpty() && url.isEmpty() ->
+                SuggestionSource.WithPackageName(autofillDataPackageName)
 
-            autofillDataPackageName.isEmpty() -> None to url
+            autofillDataPackageName.isNullOrEmpty() -> SuggestionSource.WithUrl(url)
 
             // Should not happen
-            else -> None to None
+            else -> throw IllegalStateException("Unexpected state")
         }
-
-        return PackageNameUrlForSuggestions(suggestionsPackage, suggestionsUrl)
     }
-
-
 }

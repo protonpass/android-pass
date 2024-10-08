@@ -31,14 +31,13 @@ internal data class SimpleLoginSyncDomainSelectState(
 ) {
 
     internal val aliasDomains: ImmutableList<SimpleLoginAliasDomain> = buildList {
+        // This is the No Domain option
         SimpleLoginAliasDomain(
             domain = "",
             isCustom = false,
-            isPremium = true,
+            isPremium = false,
             isVerified = true,
-            isDefault = simpleLoginAliasDomains
-                .any { simpleLoginAliasDomain -> simpleLoginAliasDomain.isDefault }
-                .not()
+            isDefault = simpleLoginAliasDomains.any { it.isDefault }.not()
         ).also(::add)
 
         addAll(simpleLoginAliasDomains)

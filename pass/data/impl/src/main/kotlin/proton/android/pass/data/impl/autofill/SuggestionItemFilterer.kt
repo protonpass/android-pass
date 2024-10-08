@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,8 +18,6 @@
 
 package proton.android.pass.data.impl.autofill
 
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.usecases.Suggestion
@@ -28,14 +26,14 @@ import proton.android.pass.domain.ItemType
 import javax.inject.Inject
 
 interface SuggestionItemFilterer {
-    fun filter(items: List<Item>, suggestion: Option<Suggestion>): List<Item>
+    fun filter(items: List<Item>, suggestion: Suggestion): List<Item>
 }
 
 class SuggestionItemFiltererImpl @Inject constructor(
     private val hostParser: HostParser
 ) : SuggestionItemFilterer {
 
-    override fun filter(items: List<Item>, suggestion: Option<Suggestion>): List<Item> = items.filter { item ->
+    override fun filter(items: List<Item>, suggestion: Suggestion): List<Item> = items.filter { item ->
         when (item.itemType) {
             is ItemType.Login -> isMatch(suggestion, item)
             is ItemType.CreditCard -> true
@@ -47,13 +45,9 @@ class SuggestionItemFiltererImpl @Inject constructor(
         }
     }
 
-    private fun isMatch(suggestion: Option<Suggestion>, item: Item): Boolean = if (suggestion is Some) {
-        when (suggestion.value) {
-            is Suggestion.PackageName -> isPackageNameMatch(suggestion.value.value, item)
-            is Suggestion.Url -> isUrlMatch(suggestion.value.value, item.itemType as ItemType.Login)
-        }
-    } else {
-        false
+    private fun isMatch(suggestion: Suggestion, item: Item): Boolean = when (suggestion) {
+        is Suggestion.PackageName -> isPackageNameMatch(suggestion.value, item)
+        is Suggestion.Url -> isUrlMatch(suggestion.value, item.itemType as ItemType.Login)
     }
 
     private fun isPackageNameMatch(packageName: String, item: Item): Boolean =

@@ -89,6 +89,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.ItemFilterProcessor
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.android.pass.data.api.usecases.ItemData
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
@@ -235,7 +236,7 @@ class SelectItemViewModel @Inject constructor(
                             filter = state.itemTypeFilter,
                             selection = ShareSelection.Shares(usableVaults.map(Vault::shareId)),
                             itemState = ItemState.Active
-                        ).map { usableVaults to it }
+                        ).map { usableVaults to it.map(ItemData::DefaultItem) }
                     }
                 combine(flows, ItemFilterProcessor::removeDuplicates)
             }
@@ -247,7 +248,7 @@ class SelectItemViewModel @Inject constructor(
                         shareSelection = ShareSelection.Shares(usableVaults.map(Vault::shareId))
                     )
                 }
-                combine(flows) { it.toList().flatten() }
+                combine(flows) { it.toList().flatten().map(ItemData::DefaultItem) }
             }
 
             else -> flowOf(emptyList())
@@ -256,7 +257,7 @@ class SelectItemViewModel @Inject constructor(
         .flatMapLatest { itemResult ->
             itemResult.map { list ->
                 encryptionContextProvider.withEncryptionContext {
-                    list.map { it.toUiModel(this@withEncryptionContext) }
+                    list.map { it.item.toUiModel(this@withEncryptionContext) }
                 }
             }
         }
@@ -352,7 +353,7 @@ class SelectItemViewModel @Inject constructor(
             .map { itemResult ->
                 itemResult.map { list ->
                     encryptionContextProvider.withEncryptionContext {
-                        list.map { item -> item.toUiModel(this@withEncryptionContext) }
+                        list.map { item -> item.item.toUiModel(this@withEncryptionContext) }
                     }
                 }
             }

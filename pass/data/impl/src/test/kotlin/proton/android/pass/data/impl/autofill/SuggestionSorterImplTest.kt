@@ -25,7 +25,7 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
-import proton.android.pass.data.api.usecases.SuggestedItem
+import proton.android.pass.data.api.usecases.ItemData
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.fakes.usecases.TestGetPublicSuffixList
 import proton.android.pass.data.impl.url.HostParserImpl
@@ -53,7 +53,7 @@ class SuggestionSorterImplTest {
         val list = listOf(
             TestItem.random(TestItemType.login()),
             TestItem.random(TestItemType.login())
-        ).map { SuggestedItem(it, None) }
+        ).map { ItemData.SuggestedItem(it, DEFAULT_SUGGESTION) }
 
         val res = instance.sort(items = list, lastItemAutofill = None)
         assertEquals(res, list)
@@ -64,7 +64,7 @@ class SuggestionSorterImplTest {
         val list = listOf(
             TestItem.random(TestItemType.login()),
             TestItem.random(TestItemType.login())
-        ).map { SuggestedItem(it, Suggestion.Url("some invalid url").some()) }
+        ).map { ItemData.SuggestedItem(it, Suggestion.Url("some invalid url")) }
 
         val res = instance.sort(items = list, lastItemAutofill = None)
         assertEquals(res, list)
@@ -76,7 +76,7 @@ class SuggestionSorterImplTest {
         val list = listOf(
             TestItem.random(TestItemType.login(websites = listOf(ip))),
             TestItem.random(TestItemType.login(websites = listOf(ip)))
-        ).map { SuggestedItem(it, Suggestion.Url(ip).some()) }
+        ).map { ItemData.SuggestedItem(it, Suggestion.Url(ip)) }
 
         val res = instance.sort(items = list, lastItemAutofill = None)
         assertEquals(res, list)
@@ -92,7 +92,7 @@ class SuggestionSorterImplTest {
         publicSuffixList.setTlds(setOf(tld))
 
         val items = listOf(item1, item2, item3)
-            .map { SuggestedItem(it, Suggestion.Url(domain).some()) }
+            .map { ItemData.SuggestedItem(it, Suggestion.Url(domain)) }
 
         // The result should be [item3, item1, item2] as we want the domain match before the
         // subdomain when we filtered by domain
@@ -102,7 +102,7 @@ class SuggestionSorterImplTest {
         )
 
         val expected = listOf(item3, item1, item2)
-            .map { SuggestedItem(it, Suggestion.Url(domain).some()) }
+            .map { ItemData.SuggestedItem(it, Suggestion.Url(domain)) }
         assertEquals(res, expected)
     }
 
@@ -123,13 +123,13 @@ class SuggestionSorterImplTest {
         // - only base domain
         // - rest of subdomains
         val items = listOf(item1, item2, item3, item4)
-            .map { SuggestedItem(it, Suggestion.Url(subdomain).some()) }
+            .map { ItemData.SuggestedItem(it, Suggestion.Url(subdomain)) }
         val res = instance.sort(
             items = items,
             lastItemAutofill = None
         )
         val expected = listOf(item3, item4, item1, item2)
-            .map { SuggestedItem(it, Suggestion.Url(subdomain).some()) }
+            .map { ItemData.SuggestedItem(it, Suggestion.Url(subdomain)) }
         assertEquals(res, expected)
     }
 
@@ -148,14 +148,14 @@ class SuggestionSorterImplTest {
         val item2 = TestItem.random(TestItemType.login())
 
         val items = listOf(item2, item1)
-            .map { SuggestedItem(it, None) }
+            .map { ItemData.SuggestedItem(it, DEFAULT_SUGGESTION) }
         val res = instance.sort(
             items = items,
             lastItemAutofill = lastItemAutofillPreference.some()
         )
 
         val expected = listOf(item1, item2)
-            .map { SuggestedItem(it, None) }
+            .map { ItemData.SuggestedItem(it, DEFAULT_SUGGESTION) }
         assertEquals(res, expected)
     }
 
@@ -174,14 +174,14 @@ class SuggestionSorterImplTest {
         val item2 = TestItem.create(itemType = TestItemType.login())
 
         val items = listOf(item2, item1)
-            .map { SuggestedItem(it, None) }
+            .map { ItemData.SuggestedItem(it, DEFAULT_SUGGESTION) }
         val res = instance.sort(
             items = items,
             lastItemAutofill = lastItemAutofillPreference.some()
         )
 
         val expected = listOf(item2, item1)
-            .map { SuggestedItem(it, None) }
+            .map { ItemData.SuggestedItem(it, DEFAULT_SUGGESTION) }
         assertEquals(res, expected)
     }
 
@@ -206,14 +206,18 @@ class SuggestionSorterImplTest {
         )
 
         val items = listOf(card4, card3, card2, card1)
-            .map { SuggestedItem(it, None) }
+            .map { ItemData.SuggestedItem(it, DEFAULT_SUGGESTION) }
 
         val res = instance.sort(items, None)
 
-        val expected: List<SuggestedItem> = listOf(card1, card2, card3, card4)
-            .map { SuggestedItem(it, None) }
+        val expected: List<ItemData.SuggestedItem> = listOf(card1, card2, card3, card4)
+            .map { ItemData.SuggestedItem(it, DEFAULT_SUGGESTION) }
 
         // The result should be sorted by last autofill time descending, then by modification time descending
         assertEquals(res, expected)
+    }
+
+    companion object {
+        private val DEFAULT_SUGGESTION = Suggestion.PackageName("com.example")
     }
 }

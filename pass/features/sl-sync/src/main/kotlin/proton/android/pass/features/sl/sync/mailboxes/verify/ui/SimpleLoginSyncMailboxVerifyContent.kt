@@ -50,7 +50,6 @@ internal fun SimpleLoginSyncMailboxVerifyContent(
         modifier = modifier,
         topBar = {
             PassExtendedTopBar(
-                modifier = modifier,
                 backButton = PassTopBarBackButtonType.Cross,
                 title = stringResource(id = R.string.simple_login_sync_mailbox_verify_title),
                 subtitle = stringResource(

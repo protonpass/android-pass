@@ -32,5 +32,11 @@ data class SimpleLoginAliasDomainData(
     @SerialName("Domain")
     val domain: String,
     @SerialName("IsDefault")
-    val isDefault: Boolean
+    val isDefault: Boolean,
+    @SerialName("IsCustom")
+    val isCustom: Boolean,
+    @SerialName("IsPremium")
+    val isPremium: Boolean,
+    @SerialName("MXVerified")
+    val isVerified: Boolean
 )

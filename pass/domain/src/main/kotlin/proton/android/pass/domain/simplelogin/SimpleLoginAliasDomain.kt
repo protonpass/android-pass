@@ -20,5 +20,8 @@ package proton.android.pass.domain.simplelogin
 
 data class SimpleLoginAliasDomain(
     val domain: String,
-    val isDefault: Boolean
+    val isDefault: Boolean,
+    val isCustom: Boolean,
+    val isPremium: Boolean,
+    val isVerified: Boolean
 )

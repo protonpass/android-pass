@@ -217,6 +217,27 @@ class SuggestionSorterImplTest {
         assertEquals(res, expected)
     }
 
+    @Test
+    fun `sort logins by package names, regular urls, and dal suggestions`() {
+        val tld = "sometld"
+        val domain = "somedomain.$tld"
+        val packageNameSuggestion = Suggestion.PackageName("com.example")
+        val regularUrlSuggestion = Suggestion.Url("https://$domain")
+        val dalSuggestion = Suggestion.Url("https://dal.$domain", isDALSuggestion = true)
+
+        val item1 = ItemData.SuggestedItem(TestItem.random(TestItemType.login()), packageNameSuggestion)
+        val item2 = ItemData.SuggestedItem(TestItem.random(TestItemType.login()), regularUrlSuggestion)
+        val item3 = ItemData.SuggestedItem(TestItem.random(TestItemType.login()), dalSuggestion)
+
+        val items = listOf(item3, item1, item2)
+
+        val res = instance.sort(items, None)
+
+        val expected = listOf(item1, item2, item3)
+
+        assertEquals(res.map { it.item.id }, expected.map { it.item.id })
+    }
+
     companion object {
         private val DEFAULT_SUGGESTION = Suggestion.PackageName("com.example")
     }

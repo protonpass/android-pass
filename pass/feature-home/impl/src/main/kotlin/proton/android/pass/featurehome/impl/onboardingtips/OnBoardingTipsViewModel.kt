@@ -38,7 +38,7 @@ import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
-import proton.android.pass.common.api.asResultWithoutLoading
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -113,7 +113,7 @@ class OnBoardingTipsViewModel @Inject constructor(
 
     private val simpleLoginSyncStatusOptionFlow = observeSimpleLoginSyncStatus()
         .mapLatest(SimpleLoginSyncStatus::toOption)
-        .asResultWithoutLoading()
+        .asLoadingResult()
 
     private val shouldShowSLSyncFlow = combine(
         preferencesRepository.getHasDismissedSLSyncBanner(),

@@ -28,8 +28,8 @@
   <string name="simple_login_sync_management_dialog_title_domains">Domain bawaan untuk alias</string>
   <string name="simple_login_sync_management_dialog_title_mailboxes">Kotak surat bawaan untuk alias</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Terdapat masalah dalam memperoleh rincian alias SL</string>
-  <string name="simple_login_sync_management_snackbar_alias_domain_update_error">Terdapat masalah dalam memperbarui domain alias SL</string>
-  <string name="simple_login_sync_management_snackbar_alias_domain_update_success">Domain alias SL berhasil diperbarui</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Terdapat masalah dalam memperbarui domain alias SL</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Domain alias SL berhasil diperbarui</string>
   <string name="simple_login_sync_management_snackbar_alias_mailbox_update_error">Terdapat masalah dalam memperbarui kotak surat alias SL</string>
   <string name="simple_login_sync_management_snackbar_alias_mailbox_update_success">Alias kotak surat SL berhasil diperbarui</string>
   <!-- Settings screen -->

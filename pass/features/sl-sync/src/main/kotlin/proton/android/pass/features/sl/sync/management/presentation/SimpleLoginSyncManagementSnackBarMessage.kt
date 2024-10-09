@@ -32,26 +32,6 @@ internal enum class SimpleLoginSyncManagementSnackBarMessage(
     FetchAliasDetailsError(
         id = R.string.simple_login_sync_management_snackbar_alias_details_fetch_error,
         type = SnackbarType.ERROR
-    ),
-
-    UpdateAliasDomainError(
-        id = R.string.simple_login_sync_management_snackbar_alias_domain_update_error,
-        type = SnackbarType.ERROR
-    ),
-
-    UpdateAliasDomainSuccess(
-        id = R.string.simple_login_sync_management_snackbar_alias_domain_update_success,
-        type = SnackbarType.SUCCESS
-    ),
-
-    UpdateAliasMailboxError(
-        id = R.string.simple_login_sync_management_snackbar_alias_mailbox_update_error,
-        type = SnackbarType.ERROR
-    ),
-
-    UpdateAliasMailboxSuccess(
-        id = R.string.simple_login_sync_management_snackbar_alias_mailbox_update_success,
-        type = SnackbarType.SUCCESS
     )
 
 }

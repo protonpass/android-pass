@@ -19,7 +19,6 @@
 package proton.android.pass.features.sl.sync.management.ui
 
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 
 internal sealed interface SimpleLoginSyncManagementUiEvent {
@@ -29,19 +28,12 @@ internal sealed interface SimpleLoginSyncManagementUiEvent {
     data object OnDomainClicked : SimpleLoginSyncManagementUiEvent
 
     @JvmInline
-    value class OnSyncSettingsClicked(internal val shareId: ShareId?) : SimpleLoginSyncManagementUiEvent
+    value class OnSyncSettingsClicked(internal val shareId: ShareId?) :
+        SimpleLoginSyncManagementUiEvent
 
     @JvmInline
-    value class OnDefaultVaultClicked(internal val shareId: ShareId) : SimpleLoginSyncManagementUiEvent
-
-    data object OnOptionsDialogDismissed : SimpleLoginSyncManagementUiEvent
-
-    @JvmInline
-    value class OnDomainSelected(
-        internal val aliasDomain: SimpleLoginAliasDomain?
-    ) : SimpleLoginSyncManagementUiEvent
-
-    data object OnUpdateDomainClicked : SimpleLoginSyncManagementUiEvent
+    value class OnDefaultVaultClicked(internal val shareId: ShareId) :
+        SimpleLoginSyncManagementUiEvent
 
     data object OnAddMailboxClicked : SimpleLoginSyncManagementUiEvent
 

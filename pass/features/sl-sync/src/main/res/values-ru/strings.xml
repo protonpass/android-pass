@@ -28,8 +28,8 @@
   <string name="simple_login_sync_management_dialog_title_domains">Домен по умолчанию для псевдонимов</string>
   <string name="simple_login_sync_management_dialog_title_mailboxes">Почтовый ящик по умолчанию для псевдонимов</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Произошла ошибка при получении информации о псевдониме SL</string>
-  <string name="simple_login_sync_management_snackbar_alias_domain_update_error">Произошла ошибка при обновлении информации о псевдониме SL</string>
-  <string name="simple_login_sync_management_snackbar_alias_domain_update_success">Домен псевдонима SL успешно обновлен</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Произошла ошибка при обновлении информации о псевдониме SL</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Домен псевдонима SL успешно обновлен</string>
   <string name="simple_login_sync_management_snackbar_alias_mailbox_update_error">Произошла ошибка при обновлении почтового ящика псевдонима SL</string>
   <string name="simple_login_sync_management_snackbar_alias_mailbox_update_success">Почтовый ящик псевдонима SL успешно обновлен</string>
   <!-- Settings screen -->

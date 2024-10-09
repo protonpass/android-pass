@@ -45,6 +45,9 @@
     <string name="action_retry">Retry</string>
     <string name="action_edit">Edit</string>
     <string name="action_add">Add</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_make_default">Make default</string>
+    <string name="action_verify">Verify</string>
     <!-- Empty list -->
     <string name="empty_list_title">Add your first item</string>
     <string name="empty_search_results_title">No result found</string>

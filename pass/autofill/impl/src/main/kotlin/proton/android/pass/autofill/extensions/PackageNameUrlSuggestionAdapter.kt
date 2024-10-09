@@ -18,11 +18,17 @@
 
 package proton.android.pass.autofill.extensions
 
+import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.domain.entity.PackageName
 
 sealed interface SuggestionSource {
     data class WithPackageName(val packageName: String) : SuggestionSource
     data class WithUrl(val url: String) : SuggestionSource
+
+    fun toSuggestion(): Suggestion = when (this) {
+        is WithPackageName -> Suggestion.PackageName(packageName)
+        is WithUrl -> Suggestion.Url(url)
+    }
 }
 
 object PackageNameUrlSuggestionAdapter {

@@ -19,7 +19,6 @@
 package proton.android.pass.features.sl.sync.management.presentation
 
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.mutableStateListOf
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
@@ -34,8 +33,7 @@ import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 internal data class SimpleLoginSyncManagementState(
     internal val isUpdating: Boolean,
     internal val event: SimpleLoginSyncManagementEvent,
-    private val modelOption: Option<SimpleLoginSyncManagementModel>,
-    private val selectedDomainOption: Option<String?>
+    private val modelOption: Option<SimpleLoginSyncManagementModel>
 ) {
 
     internal val defaultDomain: String? = when (modelOption) {
@@ -53,21 +51,11 @@ internal data class SimpleLoginSyncManagementState(
         is Some -> modelOption.value.aliasDomains
     }
 
-    internal val aliasDomainOptions: ImmutableList<String?> = mutableStateListOf<String?>().apply {
-        add(null) // This is to support the "Not selected" option
-        addAll(aliasDomains.map { it.domain })
-    }.toPersistentList()
-
     internal val canSelectDomain: Boolean = aliasDomains.size > 1
 
     internal val aliasMailboxes: ImmutableList<SimpleLoginAliasMailbox> = when (modelOption) {
         None -> persistentListOf()
         is Some -> modelOption.value.aliasMailboxes.toPersistentList()
-    }
-
-    internal val selectedAliasDomain: String? = when (selectedDomainOption) {
-        None -> defaultDomain
-        is Some -> selectedDomainOption.value
     }
 
     internal val isSyncEnabled: Boolean = when (modelOption) {
@@ -87,24 +75,17 @@ internal data class SimpleLoginSyncManagementState(
         is Some -> false
     }
 
-    internal val canUpdateDomain: Boolean = defaultDomain != selectedAliasDomain
-
     internal val canManageAliases: Boolean = when (modelOption) {
         None -> false
         is Some -> modelOption.value.canManageAliases
     }
-
-    // The -1 is required since we added a null item to the beginning of the list to support the "Not selected" option
-    internal fun getAliasDomain(position: Int): SimpleLoginAliasDomain? = aliasDomains
-        .getOrNull(position.minus(1))
 
     internal companion object {
 
         internal val Initial: SimpleLoginSyncManagementState = SimpleLoginSyncManagementState(
             isUpdating = false,
             event = SimpleLoginSyncManagementEvent.Idle,
-            modelOption = None,
-            selectedDomainOption = None
+            modelOption = None
         )
 
     }

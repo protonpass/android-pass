@@ -100,7 +100,12 @@ private val ALLOWED_MIDDLE_NAME_KEYWORDS = mapOf(
 private val ALLOWED_LAST_NAME_KEYWORDS = mapOf(
     English to setOf("lastname", "familyname")
 )
-private val DEFAULT_DENIED_KEYWORDS = setOf("composer", "message", MOZILLA_BROWSER_PREFIX)
+private val DEFAULT_DENIED_KEYWORDS = setOf(
+    "composer",
+    "message",
+    "chatinputedittext", // Discord app message box
+    MOZILLA_BROWSER_PREFIX
+)
 
 internal val fieldKeywordsList = setOf(
     kw(

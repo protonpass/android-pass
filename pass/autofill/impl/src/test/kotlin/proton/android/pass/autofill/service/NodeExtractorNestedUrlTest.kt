@@ -33,6 +33,7 @@ class NodeExtractorNestedUrlTest {
         val parsed = parseResourceFile("other/app_autofillsample_autospill_web_focus.json")
         val asAutofillNode = parsed.rootContent.toAutofillNode()
 
+        val url = "https://www.autofilth.lol"
         val res = NodeExtractor().extract(asAutofillNode)
         assertThat(res.fields.size).isEqualTo(4)
 
@@ -41,10 +42,10 @@ class NodeExtractorNestedUrlTest {
         assertThat(res.fields[2].id).isEqualTo(TestAutofillId(432415429))
         assertThat(res.fields[3].id).isEqualTo(TestAutofillId(432416390))
 
-        assertThat(res.fields[0].url).isNull()
-        assertThat(res.fields[1].url).isNull()
-        assertThat(res.fields[2].url).isEqualTo("https://www.autofilth.lol")
-        assertThat(res.fields[3].url).isEqualTo("https://www.autofilth.lol")
+        assertThat(res.fields[0].url).isEqualTo(url)
+        assertThat(res.fields[1].url).isEqualTo(url)
+        assertThat(res.fields[2].url).isEqualTo(url)
+        assertThat(res.fields[3].url).isEqualTo(url)
     }
 
     @Test

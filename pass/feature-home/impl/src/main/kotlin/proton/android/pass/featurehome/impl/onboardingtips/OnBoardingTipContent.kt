@@ -121,7 +121,7 @@ fun OnBoardingTipContent(
                 )
                 SwipeToDismiss(state = dismissState, background = {}) {
                     SLSyncCard(
-                        aliasCount = 1,
+                        aliasCount = (tipPage as? SLSync)?.aliasCount ?: 0,
                         onClick = { onClick(tipPage) },
                         onDismiss = {
                             scope.launch {

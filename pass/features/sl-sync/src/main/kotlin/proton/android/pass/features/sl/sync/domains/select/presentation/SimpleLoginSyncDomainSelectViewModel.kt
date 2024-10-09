@@ -29,9 +29,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
@@ -56,6 +59,8 @@ class SimpleLoginSyncDomainSelectViewModel @Inject constructor(
         value = SimpleLoginSyncDomainSelectEvent.Idle
     )
 
+    private val updatingAliasDomainOptionFlow = MutableStateFlow<Option<String>>(None)
+
     private val aliasDomainsFlow = observeSimpleLoginAliasDomains()
         .catch { error ->
             PassLogger.w(TAG, "There was an error while observing SL alias domains")
@@ -67,12 +72,14 @@ class SimpleLoginSyncDomainSelectViewModel @Inject constructor(
 
     internal val stateFlow: StateFlow<SimpleLoginSyncDomainSelectState> = combine(
         aliasDomainsFlow,
-        eventFlow
-    ) { aliasDomains, event ->
+        eventFlow,
+        updatingAliasDomainOptionFlow
+    ) { aliasDomains, event, updatingAliasDomainOption ->
         SimpleLoginSyncDomainSelectState(
             canSelectPremiumDomains = canSelectPremiumDomains,
             simpleLoginAliasDomains = aliasDomains,
-            event = event
+            event = event,
+            updatingAliasDomainOption = updatingAliasDomainOption
         )
     }.stateIn(
         scope = viewModelScope,
@@ -82,6 +89,7 @@ class SimpleLoginSyncDomainSelectViewModel @Inject constructor(
 
     internal fun onUpdateAliasDomain(selectedAliasDomain: String) {
         viewModelScope.launch {
+            updatingAliasDomainOptionFlow.update { selectedAliasDomain.some() }
 
             runCatching { updateSimpleLoginAliasDomain(domain = selectedAliasDomain) }
                 .onError { error ->
@@ -95,6 +103,7 @@ class SimpleLoginSyncDomainSelectViewModel @Inject constructor(
                     snackbarDispatcher(SimpleLoginSyncDomainSelectSnackBarMessage.UpdateAliasDomainSuccess)
                 }
 
+            updatingAliasDomainOptionFlow.update { None }
         }
     }
 

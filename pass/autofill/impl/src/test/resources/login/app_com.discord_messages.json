@@ -1,0 +1,157 @@
+{
+  "rootContent": {
+    "id": 152990456,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": -920691786,
+        "className": "android.widget.LinearLayout",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": -920661995,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "action_mode_bar_stub"
+            ]
+          },
+          {
+            "id": -920632204,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": -920602413,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": -920572622,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": -920542831,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": -920513040,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": -920483249,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": -920453458,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": -920423667,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": -920393876,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": -920364085,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": -920334294,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": -920304503,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": -920751368,
+            "className": "android.widget.EditText",
+            "text": "",
+            "isFocused": true,
+            "inputType": 147457,
+            "hintKeywordList": [
+              "",
+              "chat_input_edit_text",
+              "Message #general"
+            ]
+          },
+          {
+            "id": -920274712,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          }
+        ],
+        "hintKeywordList": [
+          "action_bar_root"
+        ]
+      }
+    ]
+  },
+  "packageName": "com.discord"
+}

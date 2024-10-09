@@ -21,12 +21,15 @@ package proton.android.pass.features.sl.sync.domains.select.presentation
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 
 @Stable
 internal data class SimpleLoginSyncDomainSelectState(
     internal val canSelectPremiumDomains: Boolean,
     internal val event: SimpleLoginSyncDomainSelectEvent,
+    internal val updatingAliasDomainOption: Option<String>,
     private val simpleLoginAliasDomains: List<SimpleLoginAliasDomain>
 ) {
 
@@ -48,6 +51,7 @@ internal data class SimpleLoginSyncDomainSelectState(
         internal val Initial = SimpleLoginSyncDomainSelectState(
             canSelectPremiumDomains = false,
             event = SimpleLoginSyncDomainSelectEvent.Idle,
+            updatingAliasDomainOption = None,
             simpleLoginAliasDomains = emptyList()
         )
 

@@ -394,6 +394,10 @@ fun NavGraphBuilder.appGraph(
                         itemId = it.itemId
                     )
                 )
+
+                HomeNavigation.SLSync -> appNavigator.navigate(
+                    destination = SimpleLoginSyncDetailsNavItem
+                )
             }
         }
     )

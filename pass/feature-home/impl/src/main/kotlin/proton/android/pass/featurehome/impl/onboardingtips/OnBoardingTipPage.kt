@@ -19,8 +19,5 @@
 package proton.android.pass.featurehome.impl.onboardingtips
 
 enum class OnBoardingTipPage {
-    AUTOFILL,
-    TRIAL,
-    INVITE,
-    NOTIFICATION_PERMISSION
+    AUTOFILL, TRIAL, INVITE, NOTIFICATION_PERMISSION, SL_SYNC
 }

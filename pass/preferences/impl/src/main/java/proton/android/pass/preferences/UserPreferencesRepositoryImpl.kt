@@ -101,6 +101,13 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         HasDismissedNotificationBanner.from(fromBooleanPrefProto(it.hasDismissedNotificationBanner))
     }
 
+    override fun setHasDismissedSLSyncBanner(state: HasDismissedSLSyncBanner): Result<Unit> =
+        setPreference { it.setHasDismissedSlSyncBanner(state.value().toBooleanPrefProto()) }
+
+    override fun getHasDismissedSLSyncBanner(): Flow<HasDismissedSLSyncBanner> = getPreference {
+        HasDismissedSLSyncBanner.from(fromBooleanPrefProto(it.hasDismissedSlSyncBanner))
+    }
+
     override fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit> = setPreference {
         it.setCopyTotpToClipboardEnabled(state.value().toBooleanPrefProto())
     }

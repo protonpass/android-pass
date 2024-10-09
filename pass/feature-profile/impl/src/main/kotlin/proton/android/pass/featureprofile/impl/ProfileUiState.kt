@@ -23,13 +23,8 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.data.api.usecases.DefaultBrowser
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import proton.android.pass.featureprofile.impl.accountswitcher.AccountListItem
 import proton.android.pass.passkeys.api.PasskeySupport
 import proton.android.pass.preferences.AppLockTimePreference
@@ -69,32 +64,8 @@ internal data class ProfileUiState(
     val isAccountSwitchEnabled: Boolean,
     val secureLinksCount: Int,
     val accounts: ImmutableList<AccountListItem>,
-    val isSimpleLoginAliasesSyncEnabled: Boolean,
-    private val simpleLoginSyncStatusOption: Option<SimpleLoginSyncStatus>
+    val isSimpleLoginAliasesSyncEnabled: Boolean
 ) {
-
-    internal val shouldDisplaySimpleLoginWidget: Boolean = run {
-        if (!isSimpleLoginAliasesSyncEnabled) return@run false
-
-        when (simpleLoginSyncStatusOption) {
-            None -> false
-            is Some -> simpleLoginSyncStatusOption.value.let { simpleLoginSyncStatus ->
-                simpleLoginSyncStatus.isPreferenceEnabled &&
-                    simpleLoginSyncStatus.hasPendingAliases &&
-                    !simpleLoginSyncStatus.isSyncEnabled
-            }
-        }
-    }
-
-    internal val simpleLoginPendingAliasesCount: Int = when (simpleLoginSyncStatusOption) {
-        None -> 0
-        is Some -> simpleLoginSyncStatusOption.value.pendingAliasCount
-    }
-
-    internal val simpleLoginSyncDefaultShareId: ShareId? = when (simpleLoginSyncStatusOption) {
-        None -> null
-        is Some -> simpleLoginSyncStatusOption.value.defaultVault.shareId
-    }
 
     internal companion object {
 
@@ -113,8 +84,7 @@ internal data class ProfileUiState(
             isAccountSwitchEnabled = false,
             secureLinksCount = 0,
             accounts = persistentListOf(),
-            isSimpleLoginAliasesSyncEnabled = false,
-            simpleLoginSyncStatusOption = None
+            isSimpleLoginAliasesSyncEnabled = false
         )
 
     }

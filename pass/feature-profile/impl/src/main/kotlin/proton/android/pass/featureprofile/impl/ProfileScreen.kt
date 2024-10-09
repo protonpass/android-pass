@@ -107,11 +107,6 @@ fun ProfileScreen(
                     }.also(onNavigateEvent)
                 }
 
-                ProfileUiEvent.OnCloseAliasesWidgetClicked -> viewModel.onDisableSimpleLoginWidget()
-                ProfileUiEvent.OnSyncAliasesClicked -> ProfileNavigation.AliasesSyncSettings(
-                    shareId = state.simpleLoginSyncDefaultShareId
-                ).also(onNavigateEvent)
-
                 ProfileUiEvent.OnAliasesClicked -> onNavigateEvent(ProfileNavigation.AliasesSyncDetails)
 
                 AccountSwitchEvent.OnAddAccount -> onNavigateEvent(ProfileNavigation.OnAddAccount)

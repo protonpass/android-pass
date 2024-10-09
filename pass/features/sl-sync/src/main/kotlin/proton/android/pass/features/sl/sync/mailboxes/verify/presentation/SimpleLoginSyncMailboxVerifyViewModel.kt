@@ -45,7 +45,7 @@ import proton.android.pass.data.api.errors.InvalidVerificationCodeException
 import proton.android.pass.data.api.usecases.simplelogin.ResendSimpleLoginAliasMailboxVerificationCode
 import proton.android.pass.data.api.usecases.simplelogin.VerifySimpleLoginAliasMailbox
 import proton.android.pass.features.sl.sync.mailboxes.verify.navigation.SimpleLoginSyncMailboxVerifyEmailNavArgId
-import proton.android.pass.features.sl.sync.mailboxes.verify.navigation.SimpleLoginSyncMailboxVerifyIdNavArgId
+import proton.android.pass.features.sl.sync.shared.navigation.mailboxes.SimpleLoginSyncMailboxIdNavArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
@@ -59,7 +59,7 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val mailboxId = savedStateHandleProvider.get()
-        .require<Long>(SimpleLoginSyncMailboxVerifyIdNavArgId.key)
+        .require<Long>(SimpleLoginSyncMailboxIdNavArgId.key)
 
     private val mailboxEmailFlow = savedStateHandleProvider.get()
         .getStateFlow(SimpleLoginSyncMailboxVerifyEmailNavArgId.key, "")

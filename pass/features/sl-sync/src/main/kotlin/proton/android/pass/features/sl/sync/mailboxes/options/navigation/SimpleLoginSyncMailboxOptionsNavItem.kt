@@ -16,15 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.mailboxes.verify.navigation
+package proton.android.pass.features.sl.sync.mailboxes.options.navigation
 
-import androidx.navigation.NavType
-import proton.android.pass.navigation.api.NavArgId
+import proton.android.pass.features.sl.sync.shared.navigation.mailboxes.SimpleLoginSyncMailboxIdNavArgId
+import proton.android.pass.navigation.api.NavItem
 
-object SimpleLoginSyncMailboxVerifyIdNavArgId : NavArgId {
+object SimpleLoginSyncMailboxOptionsNavItem : NavItem(
+    baseRoute = "sl/sync/mailboxes/options",
+    navArgIds = listOf(SimpleLoginSyncMailboxIdNavArgId)
+) {
 
-    override val key: String = "simple_login_sync_mailbox_verify_id"
-
-    override val navType: NavType<*> = NavType.LongType
+    fun createNavRoute(mailboxId: Long) = "$baseRoute/$mailboxId"
 
 }

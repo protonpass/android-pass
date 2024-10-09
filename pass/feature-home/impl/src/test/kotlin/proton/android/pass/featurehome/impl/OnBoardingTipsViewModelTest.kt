@@ -36,6 +36,7 @@ import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLogi
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.Autofill
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.Invite
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.NotificationPermission
@@ -51,6 +52,7 @@ import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestPendingInvite
+import proton.android.pass.test.domain.TestVault
 
 class OnBoardingTipsViewModelTest {
 
@@ -92,6 +94,7 @@ class OnBoardingTipsViewModelTest {
     @Test
     fun `Should not show banner if autofill is unsupported`() = runTest {
         setupPlan()
+        setupSyncStatus()
         autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         viewModel.state.test {
@@ -102,6 +105,7 @@ class OnBoardingTipsViewModelTest {
     @Test
     fun `Should not show banner if autofill is enabled by our service`() = runTest {
         setupPlan()
+        setupSyncStatus()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         viewModel.state.test {
@@ -112,6 +116,7 @@ class OnBoardingTipsViewModelTest {
     @Test
     fun `Should show banner if autofill is enabled by other service`() = runTest {
         setupPlan()
+        setupSyncStatus()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOtherService))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         viewModel.state.test {
@@ -122,6 +127,7 @@ class OnBoardingTipsViewModelTest {
     @Test
     fun `Should show banner if autofill is disabled `() = runTest {
         setupPlan()
+        setupSyncStatus()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         viewModel.state.test {
@@ -132,6 +138,7 @@ class OnBoardingTipsViewModelTest {
     @Test
     fun `Should not show banner if autofill banner has been dismised`() = runTest {
         setupPlan()
+        setupSyncStatus()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.Dismissed)
         viewModel.state.test {
@@ -142,6 +149,7 @@ class OnBoardingTipsViewModelTest {
     @Test
     fun `Should display trial banner if plan is trial`() = runTest {
         setupPlan(PlanType.Trial("", "", 1))
+        setupSyncStatus()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         preferenceRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.NotDismissed)
@@ -153,6 +161,7 @@ class OnBoardingTipsViewModelTest {
     @Test
     fun `Should display autofill banner when trial is dismissed`() = runTest {
         setupPlan(PlanType.Trial("", "", 1))
+        setupSyncStatus()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         preferenceRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.NotDismissed)
@@ -169,6 +178,7 @@ class OnBoardingTipsViewModelTest {
     @Test
     fun `Should display invite banner regardless of the state of the other conditions`() = runTest {
         setupPlan(PlanType.Trial("", "", 1))
+        setupSyncStatus()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         preferenceRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.NotDismissed)
@@ -183,6 +193,7 @@ class OnBoardingTipsViewModelTest {
     fun `Should display notification permission banner if not notification permission and banner not dismissed`() =
         runTest {
             setupPlan(PlanType.Trial("", "", 1))
+            setupSyncStatus()
             notificationManager.setHasNotificationPermission(false)
             viewModel.onNotificationPermissionChanged(false)
             preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.NotDismissed)
@@ -196,6 +207,7 @@ class OnBoardingTipsViewModelTest {
     @Test
     fun `Should not display notification permission if has permission and banner not dismissed`() = runTest {
         setupPlan(PlanType.Trial("", "", 1))
+        setupSyncStatus()
         notificationManager.setHasNotificationPermission(true)
         viewModel.onNotificationPermissionChanged(true)
         preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.NotDismissed)
@@ -209,6 +221,7 @@ class OnBoardingTipsViewModelTest {
     @Test
     fun `Should not display notification permission if not permission and banner dismissed`() = runTest {
         setupPlan(PlanType.Trial("", "", 1))
+        setupSyncStatus()
         notificationManager.setHasNotificationPermission(false)
         viewModel.onNotificationPermissionChanged(false)
         preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.Dismissed)
@@ -223,6 +236,7 @@ class OnBoardingTipsViewModelTest {
     fun `Should not display notification permission if not permission and banner not dismissed but version LT 13`() =
         runTest {
             setupPlan(PlanType.Trial("", "", 1))
+            setupSyncStatus()
             notificationManager.setHasNotificationPermission(false)
             viewModel.onNotificationPermissionChanged(false)
             preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.Dismissed)
@@ -236,6 +250,7 @@ class OnBoardingTipsViewModelTest {
     @Test
     fun `Should not display SL sync if banner dismissed`() = runTest {
         setupPlan(PlanType.Trial("", "", 1))
+        setupSyncStatus()
         preferenceRepository.setHasDismissedSLSyncBanner(HasDismissedSLSyncBanner.Dismissed)
 
         viewModel.state.test {
@@ -253,5 +268,15 @@ class OnBoardingTipsViewModelTest {
             updatedAt = 123
         )
         getUserPlan.setResult(Result.success(plan))
+    }
+
+    private fun setupSyncStatus() {
+        val syncStatus = SimpleLoginSyncStatus(
+            isSyncEnabled = false,
+            isPreferenceEnabled = false,
+            pendingAliasCount = 0,
+            defaultVault = TestVault.create()
+        )
+        observeSimpleLoginSyncStatus.updateSyncStatus(syncStatus)
     }
 }

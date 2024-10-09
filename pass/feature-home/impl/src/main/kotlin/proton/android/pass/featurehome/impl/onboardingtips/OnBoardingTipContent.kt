@@ -37,6 +37,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.AUTOFILL
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.INVITE
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.NOTIFICATION_PERMISSION
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.SL_SYNC
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.TRIAL
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -98,6 +99,35 @@ fun OnBoardingTipContent(
                             scope.launch {
                                 dismissState.dismiss(DismissDirection.EndToStart)
                                 onDismiss(TRIAL)
+                            }
+                        }
+                    )
+                }
+            }
+        }
+
+        AnimatedVisibility(
+            visible = tipsSetToShow.contains(SL_SYNC),
+            enter = expandVertically(),
+            exit = shrinkVertically()
+        ) {
+            Box(modifier = Modifier.padding(Spacing.medium)) {
+                val dismissState = rememberDismissState(
+                    confirmStateChange = {
+                        if (it != DismissValue.Default) {
+                            onDismiss(SL_SYNC)
+                        }
+                        true
+                    }
+                )
+                SwipeToDismiss(state = dismissState, background = {}) {
+                    SLSyncCard(
+                        aliasCount = 1,
+                        onClick = { onClick(SL_SYNC) },
+                        onDismiss = {
+                            scope.launch {
+                                dismissState.dismiss(DismissDirection.EndToStart)
+                                onDismiss(SL_SYNC)
                             }
                         }
                     )

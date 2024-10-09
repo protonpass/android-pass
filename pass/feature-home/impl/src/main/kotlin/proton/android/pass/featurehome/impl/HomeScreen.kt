@@ -88,10 +88,10 @@ import proton.android.pass.featurehome.impl.trash.ConfirmRestoreItemsDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmTrashItemsDialog
 import proton.android.pass.featurehome.impl.vault.VaultDrawerContent
 import proton.android.pass.featurehome.impl.vault.VaultDrawerViewModel
-import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.features.trash.ConfirmDeleteItemDialog
 import proton.android.pass.features.trash.ConfirmTrashAliasDialog
 import proton.android.pass.features.trash.TrashItemBottomSheetContents
+import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 
 @OptIn(
     ExperimentalMaterialApi::class,
@@ -196,6 +196,7 @@ fun HomeScreen(
         val homeNavigationEvent = when (onBoardingTipsUiState.event) {
             OnBoardingTipsEvent.OpenTrialScreen -> HomeNavigation.TrialInfo
             OnBoardingTipsEvent.OpenInviteScreen -> HomeNavigation.OpenInvite
+            OnBoardingTipsEvent.OpenSLSyncScreen -> HomeNavigation.SLSync
             OnBoardingTipsEvent.RequestNotificationPermission,
             OnBoardingTipsEvent.Unknown -> return@LaunchedEffect
         }

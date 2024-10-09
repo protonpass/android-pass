@@ -50,6 +50,8 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         MutableStateFlow<HasDismissedTrialBanner>(HasDismissedTrialBanner.Dismissed)
     private val hasDismissedNotificationBanner =
         MutableStateFlow<HasDismissedNotificationBanner>(HasDismissedNotificationBanner.Dismissed)
+    private val hasDismissedSLSyncBanner =
+        MutableStateFlow<HasDismissedSLSyncBanner>(HasDismissedSLSyncBanner.Dismissed)
     private val copyTotpToClipboard =
         MutableStateFlow<CopyTotpToClipboard>(CopyTotpToClipboard.NotEnabled)
     private val clearClipboardPreference = MutableStateFlow(ClearClipboardPreference.Never)
@@ -135,6 +137,13 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
 
     override fun getHasDismissedNotificationBanner(): Flow<HasDismissedNotificationBanner> =
         hasDismissedNotificationBanner
+
+    override fun setHasDismissedSLSyncBanner(state: HasDismissedSLSyncBanner): Result<Unit> {
+        hasDismissedSLSyncBanner.tryEmit(state)
+        return Result.success(Unit)
+    }
+
+    override fun getHasDismissedSLSyncBanner(): Flow<HasDismissedSLSyncBanner> = hasDismissedSLSyncBanner
 
     override fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit> {
         copyTotpToClipboard.tryEmit(state)

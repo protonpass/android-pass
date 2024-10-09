@@ -18,12 +18,13 @@
 
 package proton.android.pass.features.sl.sync.mailboxes.verify.navigation
 
+import proton.android.pass.features.sl.sync.shared.navigation.mailboxes.SimpleLoginSyncMailboxIdNavArgId
 import proton.android.pass.navigation.api.NavItem
 
 object SimpleLoginSyncMailboxVerifyNavItem : NavItem(
     baseRoute = "sl/sync/mailboxes/verify",
     navArgIds = listOf(
-        SimpleLoginSyncMailboxVerifyIdNavArgId,
+        SimpleLoginSyncMailboxIdNavArgId,
         SimpleLoginSyncMailboxVerifyEmailNavArgId
     )
 ) {

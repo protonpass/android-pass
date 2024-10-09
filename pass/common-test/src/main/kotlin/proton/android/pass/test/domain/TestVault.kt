@@ -35,7 +35,8 @@ object TestVault {
         isOwned: Boolean = true,
         role: ShareRole = ShareRole.Admin,
         shared: Boolean = false,
-        members: Int = 1
+        members: Int = 1,
+        createTime: Date = Date()
     ): Vault {
         return Vault(
             userId = userId,
@@ -44,7 +45,7 @@ object TestVault {
             name = name,
             isOwned = isOwned,
             role = role,
-            createTime = Date(),
+            createTime = createTime,
             shared = shared,
             members = members
         )

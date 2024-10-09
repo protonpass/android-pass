@@ -26,12 +26,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onStart
@@ -57,12 +54,10 @@ import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
-import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.data.api.usecases.DefaultBrowser
 import proton.android.pass.data.api.usecases.GetDefaultBrowser
@@ -253,28 +248,6 @@ class ProfileViewModel @Inject constructor(
         .map { (_, readyUserIds) -> readyUserIds }
         .distinctUntilChanged()
 
-    private val simpleLoginSyncStatusOptionFlow = accountManager.getPrimaryUserId()
-        .distinctUntilChanged()
-        .flatMapLatest {
-            flow {
-                // We emit None in first place by 2 reasons:
-                // 1. To not delay the profile screen load.
-                // 2. To clean the previous user's account sync status (if any).
-                emit(None)
-
-                observeSimpleLoginSyncStatus()
-                    .mapLatest { simpleLoginSyncStatus -> simpleLoginSyncStatus.toOption() }
-                    .catch { error ->
-                        PassLogger.w(TAG, "There was an error observing SL sync status")
-                        PassLogger.w(TAG, error)
-                        emit(None)
-                    }
-                    .also { syncStatusOptionFlow ->
-                        emitAll(syncStatusOptionFlow.distinctUntilChanged())
-                    }
-            }
-        }
-
     internal val state: StateFlow<ProfileUiState> = combineN(
         appLockSectionStateFlow,
         autofillStatusFlow,
@@ -285,10 +258,9 @@ class ProfileViewModel @Inject constructor(
         passkeySupportFlow,
         ffFlow,
         observeSecureLinksCount(),
-        accountsFlow,
-        simpleLoginSyncStatusOptionFlow
+        accountsFlow
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event, browser,
-        passkey, flags, secureLinksCount, accounts, simpleLoginSyncStatusOption ->
+        passkey, flags, secureLinksCount, accounts ->
 
         val (accountType, showUpgradeButton) = processUpgradeInfo(upgradeInfo)
         val defaultBrowser = browser.getOrNull() ?: DefaultBrowser.Other
@@ -307,8 +279,7 @@ class ProfileViewModel @Inject constructor(
             isAccountSwitchEnabled = flags.isAccountSwitchEnabled,
             secureLinksCount = secureLinksCount,
             accounts = accounts,
-            isSimpleLoginAliasesSyncEnabled = flags.isSimpleLoginAliasesSyncEnabled,
-            simpleLoginSyncStatusOption = simpleLoginSyncStatusOption
+            isSimpleLoginAliasesSyncEnabled = flags.isSimpleLoginAliasesSyncEnabled
         )
     }.stateIn(
         scope = viewModelScope,

@@ -31,27 +31,26 @@ import androidx.compose.material.rememberDismissState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.AUTOFILL
-import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.INVITE
-import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.NOTIFICATION_PERMISSION
-import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.SL_SYNC
-import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.TRIAL
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.Autofill
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.Invite
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.NotificationPermission
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.SLSync
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.Trial
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun OnBoardingTipContent(
     modifier: Modifier = Modifier,
-    tipsSetToShow: ImmutableSet<OnBoardingTipPage>,
+    tipPage: OnBoardingTipPage,
     onClick: (OnBoardingTipPage) -> Unit,
     onDismiss: (OnBoardingTipPage) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     Box(modifier = modifier) {
         AnimatedVisibility(
-            visible = tipsSetToShow.contains(AUTOFILL),
+            visible = tipPage == Autofill,
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
@@ -59,18 +58,18 @@ fun OnBoardingTipContent(
                 val dismissState = rememberDismissState(
                     confirmStateChange = {
                         if (it != DismissValue.Default) {
-                            onDismiss(AUTOFILL)
+                            onDismiss(tipPage)
                         }
                         true
                     }
                 )
                 SwipeToDismiss(state = dismissState, background = {}) {
                     AutofillCard(
-                        onClick = { onClick(AUTOFILL) },
+                        onClick = { onClick(tipPage) },
                         onDismiss = {
                             scope.launch {
                                 dismissState.dismiss(DismissDirection.EndToStart)
-                                onDismiss(AUTOFILL)
+                                onDismiss(tipPage)
                             }
                         }
                     )
@@ -79,7 +78,7 @@ fun OnBoardingTipContent(
         }
 
         AnimatedVisibility(
-            visible = tipsSetToShow.contains(TRIAL),
+            visible = tipPage == Trial,
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
@@ -87,18 +86,18 @@ fun OnBoardingTipContent(
                 val dismissState = rememberDismissState(
                     confirmStateChange = {
                         if (it != DismissValue.Default) {
-                            onDismiss(TRIAL)
+                            onDismiss(tipPage)
                         }
                         true
                     }
                 )
                 SwipeToDismiss(state = dismissState, background = {}) {
                     TrialCard(
-                        onClick = { onClick(TRIAL) },
+                        onClick = { onClick(tipPage) },
                         onDismiss = {
                             scope.launch {
                                 dismissState.dismiss(DismissDirection.EndToStart)
-                                onDismiss(TRIAL)
+                                onDismiss(tipPage)
                             }
                         }
                     )
@@ -107,7 +106,7 @@ fun OnBoardingTipContent(
         }
 
         AnimatedVisibility(
-            visible = tipsSetToShow.contains(SL_SYNC),
+            visible = tipPage is SLSync,
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
@@ -115,7 +114,7 @@ fun OnBoardingTipContent(
                 val dismissState = rememberDismissState(
                     confirmStateChange = {
                         if (it != DismissValue.Default) {
-                            onDismiss(SL_SYNC)
+                            onDismiss(tipPage)
                         }
                         true
                     }
@@ -123,11 +122,11 @@ fun OnBoardingTipContent(
                 SwipeToDismiss(state = dismissState, background = {}) {
                     SLSyncCard(
                         aliasCount = 1,
-                        onClick = { onClick(SL_SYNC) },
+                        onClick = { onClick(tipPage) },
                         onDismiss = {
                             scope.launch {
                                 dismissState.dismiss(DismissDirection.EndToStart)
-                                onDismiss(SL_SYNC)
+                                onDismiss(tipPage)
                             }
                         }
                     )
@@ -136,19 +135,19 @@ fun OnBoardingTipContent(
         }
 
         AnimatedVisibility(
-            visible = tipsSetToShow.contains(INVITE),
+            visible = tipPage == Invite,
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
             Box(modifier = Modifier.padding(Spacing.medium)) {
                 InviteCard(
-                    onClick = { onClick(INVITE) }
+                    onClick = { onClick(tipPage) }
                 )
             }
         }
 
         AnimatedVisibility(
-            visible = tipsSetToShow.contains(NOTIFICATION_PERMISSION),
+            visible = tipPage == NotificationPermission,
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
@@ -156,18 +155,18 @@ fun OnBoardingTipContent(
                 val dismissState = rememberDismissState(
                     confirmStateChange = {
                         if (it != DismissValue.Default) {
-                            onDismiss(NOTIFICATION_PERMISSION)
+                            onDismiss(tipPage)
                         }
                         true
                     }
                 )
                 SwipeToDismiss(state = dismissState, background = {}) {
                     NotificationPermissionCard(
-                        onClick = { onClick(NOTIFICATION_PERMISSION) },
+                        onClick = { onClick(tipPage) },
                         onDismiss = {
                             scope.launch {
                                 dismissState.dismiss(DismissDirection.EndToStart)
-                                onDismiss(NOTIFICATION_PERMISSION)
+                                onDismiss(tipPage)
                             }
                         }
                     )

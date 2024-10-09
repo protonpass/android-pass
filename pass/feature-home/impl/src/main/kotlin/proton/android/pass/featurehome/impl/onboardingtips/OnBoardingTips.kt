@@ -20,6 +20,8 @@ package proton.android.pass.featurehome.impl.onboardingtips
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 
 @Composable
 fun OnBoardingTips(
@@ -28,10 +30,15 @@ fun OnBoardingTips(
     onDismiss: (OnBoardingTipPage) -> Unit,
     state: OnBoardingTipsUiState
 ) {
-    OnBoardingTipContent(
-        modifier = modifier,
-        tipsSetToShow = state.tipsToShow,
-        onClick = onClick,
-        onDismiss = onDismiss
-    )
+    when (state.tipToShow) {
+        None -> {}
+        is Some -> {
+            OnBoardingTipContent(
+                modifier = modifier,
+                tipPage = state.tipToShow.value,
+                onClick = onClick,
+                onDismiss = onDismiss
+            )
+        }
+    }
 }

@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.toClassHolder
@@ -186,8 +187,8 @@ fun HomeScreen(
         onDispose { routerViewModel.clearEvent() }
     }
 
-    LaunchedEffect(onBoardingTipsUiState.tipToShow.hashCode()) {
-        if (onBoardingTipsUiState.tipToShow.isNotEmpty() && scrollableState.firstVisibleItemIndex == 0) {
+    LaunchedEffect(onBoardingTipsUiState.tipToShow) {
+        if (onBoardingTipsUiState.tipToShow is Some && scrollableState.firstVisibleItemIndex <= 1) {
             homeViewModel.scrollToTop()
         }
     }

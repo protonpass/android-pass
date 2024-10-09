@@ -22,18 +22,16 @@ import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
 
-@Stable
 sealed interface OnBoardingTipsEvent {
-    @Stable
+
     data object Unknown : OnBoardingTipsEvent
 
-    @Stable
     data object OpenTrialScreen : OnBoardingTipsEvent
 
-    @Stable
     data object OpenInviteScreen : OnBoardingTipsEvent
 
-    @Stable
+    data object OpenSLSyncScreen : OnBoardingTipsEvent
+
     data object RequestNotificationPermission : OnBoardingTipsEvent
 }
 

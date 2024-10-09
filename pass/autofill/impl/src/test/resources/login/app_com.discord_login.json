@@ -1,0 +1,119 @@
+{
+  "rootContent": {
+    "id": 1708704247,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": 635081587,
+        "className": "android.widget.LinearLayout",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": 635111378,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "action_mode_bar_stub"
+            ]
+          },
+          {
+            "id": 635141169,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": 635170960,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": 635200751,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": 635022005,
+            "className": "android.widget.EditText",
+            "isImportantForAutofill": true,
+            "expectedAutofill": "username",
+            "text": "",
+            "isFocused": true,
+            "inputType": 33,
+            "hintKeywordList": [
+              "",
+              "Email or Phone Number"
+            ]
+          },
+          {
+            "id": 635051796,
+            "className": "android.widget.EditText",
+            "isImportantForAutofill": true,
+            "expectedAutofill": "password",
+            "text": "",
+            "inputType": 129,
+            "autofillHints": [
+              "passwordAuto"
+            ],
+            "hintKeywordList": [
+              "",
+              "Password"
+            ]
+          },
+          {
+            "id": 635230542,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": 635260333,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": 635290124,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          },
+          {
+            "id": 635319915,
+            "className": "android.widget.TextView",
+            "isImportantForAutofill": true,
+            "text": "",
+            "hintKeywordList": [
+              ""
+            ]
+          }
+        ],
+        "hintKeywordList": [
+          "action_bar_root"
+        ]
+      }
+    ]
+  },
+  "packageName": "com.discord"
+}

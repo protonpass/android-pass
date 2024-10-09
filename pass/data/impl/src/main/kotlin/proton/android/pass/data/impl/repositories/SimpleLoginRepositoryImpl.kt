@@ -58,6 +58,7 @@ import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
 import proton.android.pass.domain.simplelogin.SimpleLoginPendingAliases
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class SimpleLoginRepositoryImpl @Inject constructor(
@@ -109,18 +110,29 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     override fun observeAliasDomains(): Flow<List<SimpleLoginAliasDomain>> = userIdFlow
         .flatMapLatest { userId ->
             flow {
-                localSimpleLoginDataSource.observeAliasDomains(userId).first()
-                    .also { localAliasDomains ->
-                        if (localAliasDomains.isNotEmpty()) {
-                            emit(localAliasDomains)
-                        }
-                    }
+                val localAliasDomains = localSimpleLoginDataSource.observeAliasDomains(userId).first()
 
-                remoteSimpleLoginDataSource.getSimpleLoginAliasDomains(userId)
-                    .domains
-                    .map { simpleLoginAliasDomainData -> simpleLoginAliasDomainData.toDomain() }
-                    .also { remoteAliasDomains ->
-                        localSimpleLoginDataSource.refreshAliasDomains(userId, remoteAliasDomains)
+                if (localAliasDomains.isNotEmpty()) {
+                    emit(localAliasDomains)
+                }
+
+                runCatching { remoteSimpleLoginDataSource.getSimpleLoginAliasDomains(userId) }
+                    .onFailure { error ->
+                        PassLogger.w(TAG, "There was an error fetching alias domains")
+                        PassLogger.w(TAG, error)
+                        if (localAliasDomains.isEmpty()) throw error
+                    }
+                    .onSuccess { response ->
+                        response.domains
+                            .map { simpleLoginAliasDomainData ->
+                                simpleLoginAliasDomainData.toDomain()
+                            }
+                            .also { remoteAliasDomains ->
+                                localSimpleLoginDataSource.refreshAliasDomains(
+                                    userId = userId,
+                                    aliasDomains = remoteAliasDomains
+                                )
+                            }
                     }
 
                 emitAll(localSimpleLoginDataSource.observeAliasDomains(userId))
@@ -312,5 +324,11 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         total = total,
         lastToken = lastToken
     )
+
+    private companion object {
+
+        private const val TAG = "SimpleLoginRepositoryImpl"
+
+    }
 
 }

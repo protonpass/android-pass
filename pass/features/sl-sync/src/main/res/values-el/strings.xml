@@ -28,8 +28,8 @@
   <string name="simple_login_sync_management_dialog_title_domains">Προεπιλεγμένος τομέας για ψευδώνυμα</string>
   <string name="simple_login_sync_management_dialog_title_mailboxes">Προεπιλεγμένο γραμματοκιβώτιο για ψευδώνυμα</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Παρουσιάστηκε σφάλμα κατά τη λήψη λεπτομερειών ψευδωνύμου SL</string>
-  <string name="simple_login_sync_management_snackbar_alias_domain_update_error">Παρουσιάστηκε σφάλμα κατά την ενημέρωση του τομέα ψευδωνύμου SL</string>
-  <string name="simple_login_sync_management_snackbar_alias_domain_update_success">Ο τομέας ψευδωνύμου SL ενημερώθηκε με επιτυχία</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Παρουσιάστηκε σφάλμα κατά την ενημέρωση του τομέα ψευδωνύμου SL</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Ο τομέας ψευδωνύμου SL ενημερώθηκε με επιτυχία</string>
   <string name="simple_login_sync_management_snackbar_alias_mailbox_update_error">Παρουσιάστηκε σφάλμα κατά την ενημέρωση του γραμματοκιβωτίου ψευδωνύμου SL</string>
   <string name="simple_login_sync_management_snackbar_alias_mailbox_update_success">Το γραμματοκιβώτιο ψευδωνύμου SL ενημερώθηκε με επιτυχία</string>
   <!-- Settings screen -->

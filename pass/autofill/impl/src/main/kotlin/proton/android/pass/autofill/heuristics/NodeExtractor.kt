@@ -96,10 +96,14 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             )
         )
 
-        val nodesWithUrl = autoFillNodes.count { it.url != null }
-        if (nodesWithUrl == 0 && detectedUrl.isNotEmpty()) {
-            PassLogger.d(TAG, "No nodes with url found, using detectedUrl")
-            autoFillNodes = autoFillNodes.map { it.copy(url = detectedUrl.value()) }.toMutableList()
+        if (detectedUrl.isNotEmpty()) {
+            autoFillNodes = autoFillNodes.map {
+                if (it.url == null) {
+                    it.copy(url = detectedUrl.value())
+                } else {
+                    it
+                }
+            }.toMutableList()
         }
 
         return ExtractionResult(

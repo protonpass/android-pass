@@ -28,8 +28,8 @@
   <string name="simple_login_sync_management_dialog_title_domains">Standarddomain für Aliasse</string>
   <string name="simple_login_sync_management_dialog_title_mailboxes">Standardpostfach für Aliasse</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Fehler beim Abrufen der SimpleLogin-Aliasdetails.</string>
-  <string name="simple_login_sync_management_snackbar_alias_domain_update_error">Fehler beim Aktualisieren der SimpleLogin-Aliasdomain.</string>
-  <string name="simple_login_sync_management_snackbar_alias_domain_update_success">SimpleLogin-Aliasdomain erfolgreich aktualisiert.</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Fehler beim Aktualisieren der SimpleLogin-Aliasdomain.</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SimpleLogin-Aliasdomain erfolgreich aktualisiert.</string>
   <string name="simple_login_sync_management_snackbar_alias_mailbox_update_error">Fehler beim Aktualisieren des SimpleLogin-Aliaspostfachs.</string>
   <string name="simple_login_sync_management_snackbar_alias_mailbox_update_success">SimpleLogin-Aliaspostfach erfolgreich aktualisiert.</string>
   <!-- Settings screen -->

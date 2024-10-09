@@ -28,8 +28,8 @@
   <string name="simple_login_sync_management_dialog_title_domains">Domyślna domena dla aliasów</string>
   <string name="simple_login_sync_management_dialog_title_mailboxes">Domyślna skrzynka pocztowa dla aliasów</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Wystąpił błąd podczas pobierania szczegółów aliasu SimpleLogin</string>
-  <string name="simple_login_sync_management_snackbar_alias_domain_update_error">Wystąpił błąd podczas aktualizowania domeny aliasu SimpleLogin</string>
-  <string name="simple_login_sync_management_snackbar_alias_domain_update_success">Domena aliasu SimpleLogin została zaktualizowana</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Wystąpił błąd podczas aktualizowania domeny aliasu SimpleLogin</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Domena aliasu SimpleLogin została zaktualizowana</string>
   <string name="simple_login_sync_management_snackbar_alias_mailbox_update_error">Wystąpił błąd podczas aktualizowania skrzynki pocztowej aliasu SimpleLogin</string>
   <string name="simple_login_sync_management_snackbar_alias_mailbox_update_success">Skrzynka pocztowa aliasu SimpleLogin została zaktualizowana</string>
   <!-- Settings screen -->

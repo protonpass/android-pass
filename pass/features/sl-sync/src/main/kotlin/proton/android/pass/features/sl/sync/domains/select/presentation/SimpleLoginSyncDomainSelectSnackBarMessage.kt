@@ -16,22 +16,27 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.management.presentation
+package proton.android.pass.features.sl.sync.domains.select.presentation
 
 import androidx.annotation.StringRes
 import proton.android.pass.features.sl.sync.R
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.notifications.api.SnackbarType
 
-internal enum class SimpleLoginSyncManagementSnackBarMessage(
+internal enum class SimpleLoginSyncDomainSelectSnackBarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
 
-    FetchAliasDetailsError(
-        id = R.string.simple_login_sync_management_snackbar_alias_details_fetch_error,
+    UpdateAliasDomainError(
+        id = R.string.simple_login_sync_domain_select_snackbar_alias_domain_update_error,
         type = SnackbarType.ERROR
+    ),
+
+    UpdateAliasDomainSuccess(
+        id = R.string.simple_login_sync_domain_select_snackbar_alias_domain_update_success,
+        type = SnackbarType.SUCCESS
     )
 
 }

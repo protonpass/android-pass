@@ -37,6 +37,7 @@ fun SimpleLoginSyncDomainSelectBottomSheet(
     LaunchedEffect(state.event) {
         when (state.event) {
             SimpleLoginSyncDomainSelectEvent.Idle -> Unit
+            SimpleLoginSyncDomainSelectEvent.OnFetchAliasDomainsError,
             SimpleLoginSyncDomainSelectEvent.OnUpdateAliasDomainError,
             SimpleLoginSyncDomainSelectEvent.OnUpdateAliasDomainSuccess -> {
                 onNavigated(SimpleLoginSyncNavDestination.Back(comesFromBottomSheet = true))

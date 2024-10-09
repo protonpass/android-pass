@@ -57,6 +57,7 @@
     <string name="simple_login_sync_domain_select_description_custom">Your domain</string>
     <string name="simple_login_sync_domain_select_description_free">Public domain</string>
     <string name="simple_login_sync_domain_select_description_premium">Premium domain</string>
+    <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">There was an error fetching SL alias domains</string>
     <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
     <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
 

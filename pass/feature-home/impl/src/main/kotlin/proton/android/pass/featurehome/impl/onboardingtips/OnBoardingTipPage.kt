@@ -18,6 +18,12 @@
 
 package proton.android.pass.featurehome.impl.onboardingtips
 
-enum class OnBoardingTipPage {
-    AUTOFILL, TRIAL, INVITE, NOTIFICATION_PERMISSION, SL_SYNC
+sealed interface OnBoardingTipPage {
+    data object Autofill : OnBoardingTipPage
+    data object Trial : OnBoardingTipPage
+    data object Invite : OnBoardingTipPage
+    data object NotificationPermission : OnBoardingTipPage
+
+    @JvmInline
+    value class SLSync(val aliasCount: Int) : OnBoardingTipPage
 }

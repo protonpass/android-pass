@@ -18,27 +18,31 @@
 
 package proton.android.pass.features.sl.sync.domains.select.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.icon.PassUnlimitedIcon
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.features.sl.sync.R
+import me.proton.core.presentation.R as CoreR
 
 internal fun simpleLoginAliasDomainSelectItem(
     aliasDomain: SimpleLoginAliasDomain,
     canSelectPremiumDomains: Boolean,
+    updatingAliasDomainOption: Option<String>,
     onClick: () -> Unit
 ) = object : BottomSheetItem {
 
@@ -71,25 +75,30 @@ internal fun simpleLoginAliasDomainSelectItem(
     override val leftIcon: (@Composable () -> Unit)? = null
 
     override val endIcon: (@Composable () -> Unit) = {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
-        ) {
-            if (aliasDomain.isDefault) {
+        when {
+            updatingAliasDomainOption.value() == aliasDomain.domain -> {
+                CircularProgressIndicator(modifier = Modifier.size(20.dp))
+            }
+
+            aliasDomain.isDefault -> {
                 Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_checkmark),
+                    painter = painterResource(CoreR.drawable.ic_proton_checkmark),
                     contentDescription = null,
                     tint = PassTheme.colors.interactionNormMajor1
                 )
             }
 
-            if (aliasDomain.isPremium && !canSelectPremiumDomains) {
+            aliasDomain.isPremium && !canSelectPremiumDomains -> {
                 PassUnlimitedIcon()
             }
         }
     }
 
-    override val onClick: (() -> Unit)? = onClick.takeIf { !aliasDomain.isDefault }
+    override val onClick: (() -> Unit) = {
+        if (!aliasDomain.isDefault && updatingAliasDomainOption is None) {
+            onClick()
+        }
+    }
 
     override val isDivider = false
 

@@ -1970,18 +1970,10 @@ fun NavGraphBuilder.appGraph(
                     destination = SimpleLoginSyncManagementNavItem
                 )
 
-                is SimpleLoginSyncNavDestination.Back -> if (destination.comesFromBottomSheet) {
-                    dismissBottomSheet {
-                        appNavigator.navigateBack(
-                            comesFromBottomsheet = true,
-                            force = destination.force
-                        )
-                    }
-                } else {
-                    appNavigator.navigateBack(
-                        force = destination.force
-                    )
-                }
+                is SimpleLoginSyncNavDestination.Back -> appNavigator.navigateBack(
+                    comesFromBottomsheet = destination.comesFromBottomSheet,
+                    force = destination.force
+                )
 
                 SimpleLoginSyncNavDestination.CreateMailbox -> appNavigator.navigate(
                     destination = SimpleLoginSyncMailboxCreateNavItem

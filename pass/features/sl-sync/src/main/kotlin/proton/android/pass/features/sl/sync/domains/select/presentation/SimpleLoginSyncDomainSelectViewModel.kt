@@ -73,17 +73,17 @@ class SimpleLoginSyncDomainSelectViewModel @Inject constructor(
     internal fun onUpdateAliasDomain(selectedAliasDomain: String) {
         viewModelScope.launch {
 
-            runCatching {
-                updateSimpleLoginAliasDomain(domain = selectedAliasDomain.takeIf { it.isNotEmpty() })
-            }.onError { error ->
-                PassLogger.w(TAG, "There was an error updating SL alias domain")
-                PassLogger.w(TAG, error)
-                eventFlow.update { SimpleLoginSyncDomainSelectEvent.OnUpdateAliasDomainError }
-                snackbarDispatcher(SimpleLoginSyncDomainSelectSnackBarMessage.UpdateAliasDomainError)
-            }.onSuccess {
-                eventFlow.update { SimpleLoginSyncDomainSelectEvent.OnUpdateAliasDomainSuccess }
-                snackbarDispatcher(SimpleLoginSyncDomainSelectSnackBarMessage.UpdateAliasDomainSuccess)
-            }
+            runCatching { updateSimpleLoginAliasDomain(domain = selectedAliasDomain) }
+                .onError { error ->
+                    PassLogger.w(TAG, "There was an error updating SL alias domain")
+                    PassLogger.w(TAG, error)
+                    eventFlow.update { SimpleLoginSyncDomainSelectEvent.OnUpdateAliasDomainError }
+                    snackbarDispatcher(SimpleLoginSyncDomainSelectSnackBarMessage.UpdateAliasDomainError)
+                }
+                .onSuccess {
+                    eventFlow.update { SimpleLoginSyncDomainSelectEvent.OnUpdateAliasDomainSuccess }
+                    snackbarDispatcher(SimpleLoginSyncDomainSelectSnackBarMessage.UpdateAliasDomainSuccess)
+                }
 
         }
     }

@@ -28,12 +28,14 @@ internal sealed interface SimpleLoginSyncManagementUiEvent {
     data object OnDomainClicked : SimpleLoginSyncManagementUiEvent
 
     @JvmInline
-    value class OnSyncSettingsClicked(internal val shareId: ShareId?) :
-        SimpleLoginSyncManagementUiEvent
+    value class OnSyncSettingsClicked(
+        internal val shareId: ShareId?
+    ) : SimpleLoginSyncManagementUiEvent
 
     @JvmInline
-    value class OnDefaultVaultClicked(internal val shareId: ShareId) :
-        SimpleLoginSyncManagementUiEvent
+    value class OnDefaultVaultClicked(
+        internal val shareId: ShareId
+    ) : SimpleLoginSyncManagementUiEvent
 
     data object OnAddMailboxClicked : SimpleLoginSyncManagementUiEvent
 

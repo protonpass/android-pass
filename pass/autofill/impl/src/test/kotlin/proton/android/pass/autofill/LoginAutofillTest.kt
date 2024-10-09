@@ -155,7 +155,21 @@ class LoginAutofillTest : BaseAutofillTest() {
         runLoginAutofillTest("login/app_com.ebay.mobile.json")
     }
 
-    private fun runLoginAutofillTest(file: String, flags: List<RequestFlags> = emptyList()) {
+    @Test
+    fun `can autofill login discord app`() {
+        runLoginAutofillTest("login/app_com.discord_login.json")
+    }
+
+    @Test
+    fun `does not autofill messages in discord app`() {
+        runLoginAutofillTest("login/app_com.discord_messages.json", allowEmptyFields = true)
+    }
+
+    private fun runLoginAutofillTest(
+        file: String,
+        flags: List<RequestFlags> = emptyList(),
+        allowEmptyFields: Boolean = false
+    ) {
         runAutofillTest(
             file = file,
             item = AutofillItem.Login(
@@ -165,7 +179,8 @@ class LoginAutofillTest : BaseAutofillTest() {
                 password = TestEncryptionContext.encrypt(ExpectedAutofill.PASSWORD.value),
                 totp = null
             ),
-            requestFlags = flags
+            requestFlags = flags,
+            allowEmptyFields = allowEmptyFields
         )
     }
 }

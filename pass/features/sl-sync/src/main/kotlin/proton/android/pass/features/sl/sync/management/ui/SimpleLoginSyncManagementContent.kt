@@ -31,14 +31,12 @@ import proton.android.pass.composecomponents.impl.loading.PassFullScreenLoading
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.management.presentation.SimpleLoginSyncManagementState
-import proton.android.pass.features.sl.sync.management.ui.dialogs.SimpleLoginSyncDetailsOptionsDialog
 
 @Composable
 internal fun SimpleLoginSyncDetailsContent(
     modifier: Modifier = Modifier,
     onUiEvent: (SimpleLoginSyncManagementUiEvent) -> Unit,
-    state: SimpleLoginSyncManagementState,
-    shouldShowAliasDomainDialog: Boolean
+    state: SimpleLoginSyncManagementState
 ) = with(state) {
     Scaffold(
         modifier = modifier,
@@ -77,22 +75,5 @@ internal fun SimpleLoginSyncDetailsContent(
                 onUiEvent = onUiEvent
             )
         }
-    }
-
-    if (shouldShowAliasDomainDialog) {
-        SimpleLoginSyncDetailsOptionsDialog(
-            titleResId = R.string.simple_login_sync_management_dialog_title_domains,
-            selectedOption = selectedAliasDomain,
-            options = aliasDomainOptions,
-            isLoading = isUpdating,
-            onSelectOption = { selectedOptionIndex ->
-                SimpleLoginSyncManagementUiEvent.OnDomainSelected(
-                    aliasDomain = getAliasDomain(selectedOptionIndex)
-                ).also(onUiEvent)
-            },
-            onDismiss = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnOptionsDialogDismissed) },
-            onUpdate = { onUiEvent(SimpleLoginSyncManagementUiEvent.OnUpdateDomainClicked) },
-            canUpdate = canUpdateDomain
-        )
     }
 }

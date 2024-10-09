@@ -36,7 +36,6 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasDomain
 import proton.android.pass.features.sl.sync.domains.select.navigation.SimpleLoginSyncDomainSelectPremiumNavId
-import proton.android.pass.features.sl.sync.management.presentation.SimpleLoginSyncManagementSnackBarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
@@ -80,10 +79,10 @@ class SimpleLoginSyncDomainSelectViewModel @Inject constructor(
                 PassLogger.w(TAG, "There was an error updating SL alias domain")
                 PassLogger.w(TAG, error)
                 eventFlow.update { SimpleLoginSyncDomainSelectEvent.OnUpdateAliasDomainError }
-                snackbarDispatcher(SimpleLoginSyncManagementSnackBarMessage.UpdateAliasDomainError)
+                snackbarDispatcher(SimpleLoginSyncDomainSelectSnackBarMessage.UpdateAliasDomainError)
             }.onSuccess {
                 eventFlow.update { SimpleLoginSyncDomainSelectEvent.OnUpdateAliasDomainSuccess }
-                snackbarDispatcher(SimpleLoginSyncManagementSnackBarMessage.UpdateAliasDomainSuccess)
+                snackbarDispatcher(SimpleLoginSyncDomainSelectSnackBarMessage.UpdateAliasDomainSuccess)
             }
 
         }

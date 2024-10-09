@@ -40,13 +40,13 @@ object PackageNameUrlSuggestionAdapter {
 
         return when {
             // App with a webview
-            !autofillDataPackageName.isNullOrEmpty() && url.isNotEmpty() ->
+            !autofillDataPackageName.isNullOrBlank() && url.isNotBlank() ->
                 SuggestionSource.WithUrl(url)
 
-            !autofillDataPackageName.isNullOrEmpty() && url.isEmpty() ->
+            !autofillDataPackageName.isNullOrBlank() && url.isBlank() ->
                 SuggestionSource.WithPackageName(autofillDataPackageName)
 
-            autofillDataPackageName.isNullOrEmpty() -> SuggestionSource.WithUrl(url)
+            autofillDataPackageName.isNullOrBlank() -> SuggestionSource.WithUrl(url)
 
             // Should not happen
             else -> throw IllegalStateException("Unexpected state")

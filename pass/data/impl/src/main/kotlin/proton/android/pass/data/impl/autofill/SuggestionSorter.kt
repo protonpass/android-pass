@@ -21,10 +21,10 @@ package proton.android.pass.data.impl.autofill
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.usecases.ItemData
+import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.domain.ItemType
 import proton.android.pass.preferences.LastItemAutofillPreference
 import javax.inject.Inject
@@ -45,7 +45,7 @@ class SuggestionSorterImpl @Inject constructor(
         lastItemAutofill: Option<LastItemAutofillPreference>
     ): List<ItemData.SuggestedItem> {
         return when {
-            items.all { it.item.itemType is ItemType.Login } -> sortLoginsWithUrl(items)
+            items.all { it.item.itemType is ItemType.Login } -> sortLogins(items)
             items.all { it.item.itemType is ItemType.CreditCard } -> sortCreditCards(items)
             else -> items
         }.putLastItemAutofillOnTop(lastItemAutofill)
@@ -71,20 +71,28 @@ class SuggestionSorterImpl @Inject constructor(
         else -> this
     }
 
-    private fun sortLoginsWithUrl(items: List<ItemData.SuggestedItem>): List<ItemData.SuggestedItem> {
-        val parsed = when (val urlOption = items.firstOrNull()?.suggestion.toOption()) {
-            is Some -> hostParser.parse(urlOption.value.value)
-                .fold(
-                    onSuccess = { it },
-                    onFailure = { return items }
-                )
+    private fun sortLogins(items: List<ItemData.SuggestedItem>): List<ItemData.SuggestedItem> {
+        val (urlItems, packageNameItems) = items.partition { it.suggestion is Suggestion.Url }
+        val (dalItems, regularUrlItems) = urlItems.partition { it.isDALSuggestion }
 
-            is None -> return items
-        }
+        val regularUrl = regularUrlItems.firstOrNull { it.suggestion.value.isNotBlank() }
+            ?.suggestion
+            ?.value
+            .orEmpty()
+
+        val defaultSorting = packageNameItems + regularUrlItems + dalItems
+        val parsed = hostParser.parse(regularUrl)
+            .fold(
+                onSuccess = { it },
+                onFailure = { return defaultSorting }
+            )
 
         return when (parsed) {
-            is HostInfo.Ip -> items // If it's an IP, there's no sorting that we can perform
-            is HostInfo.Host -> sortWithDomainInfo(parsed, items)
+            is HostInfo.Ip -> defaultSorting // If it's an IP, there's no sorting that we can perform
+            is HostInfo.Host ->
+                packageNameItems +
+                    sortWithDomainInfo(parsed, regularUrlItems) +
+                    dalItems
         }
     }
 

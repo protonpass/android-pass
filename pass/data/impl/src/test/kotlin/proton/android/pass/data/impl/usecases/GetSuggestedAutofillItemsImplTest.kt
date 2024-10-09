@@ -93,6 +93,8 @@ class GetSuggestedAutofillItemsImplTest {
     private lateinit var getSuggestedAutofillItems: GetSuggestedAutofillItems
     private lateinit var observeVaults: TestObserveUsableVaults
     private lateinit var internalSettingsRepository: TestInternalSettingsRepository
+    private lateinit var assetLinkRepository: FakeAssetLinkRepository
+    private lateinit var featureFlagsPreferencesRepository: TestFeatureFlagsPreferenceRepository
 
     @Before
     fun setUp() {
@@ -102,6 +104,8 @@ class GetSuggestedAutofillItemsImplTest {
         filter = FakeSuggestionItemFilterer()
         observeVaults = TestObserveUsableVaults()
         internalSettingsRepository = TestInternalSettingsRepository()
+        assetLinkRepository = FakeAssetLinkRepository()
+        featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
         getSuggestedAutofillItems = GetSuggestedAutofillItemsImpl(
             accountManager = accountManager,
             observeUsableVaults = observeVaults,
@@ -110,8 +114,8 @@ class GetSuggestedAutofillItemsImplTest {
             suggestionSorter = FakeSuggestionSorter(),
             internalSettingsRepository = internalSettingsRepository,
             getUserPlan = getUserPlan,
-            assetLinkRepository = FakeAssetLinkRepository(),
-            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
+            assetLinkRepository = assetLinkRepository,
+            featureFlagsPreferencesRepository = featureFlagsPreferencesRepository
         )
     }
 
@@ -148,6 +152,16 @@ class GetSuggestedAutofillItemsImplTest {
             val e = awaitError()
             assertTrue(e is Exception)
             assertEquals(e.message, message)
+        }
+    }
+
+    @Test
+    fun `not supported item type throws exception`() = runTest {
+        filter.setFilter { true }
+
+        getSuggestedAutofillItems(itemTypeFilter = ItemTypeFilter.Notes, DEFAULT_SUGGESTION).test {
+            val e = awaitError()
+            assertTrue(e is Exception)
         }
     }
 

@@ -78,7 +78,9 @@ fun SimpleLoginSyncDetailsScreen(
                 }
 
                 is SimpleLoginSyncManagementUiEvent.OnMailboxMenuClicked -> {
-                    // Will be implemented in IDTEAM-3911
+                    SimpleLoginSyncNavDestination.MailboxOptions(
+                        mailboxId = uiEvent.aliasMailbox.id
+                    ).also(onNavigated)
                 }
 
                 SimpleLoginSyncManagementUiEvent.OnUpsell -> {

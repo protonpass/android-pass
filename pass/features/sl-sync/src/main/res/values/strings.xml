@@ -27,7 +27,6 @@
     <string name="simple_login_sync_management_mailbox_default">Default</string>
     <string name="simple_login_sync_management_mailbox_unverified">Unverified mailbox</string>
     <string name="simple_login_sync_management_vault_title">SimpleLogin sync</string>
-    <string name="simple_login_sync_management_dialog_title_domains">Default domain for aliases</string>
     <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
 
     <!-- Settings screen -->

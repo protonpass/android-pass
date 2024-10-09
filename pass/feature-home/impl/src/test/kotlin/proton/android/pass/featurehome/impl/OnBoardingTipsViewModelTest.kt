@@ -21,7 +21,6 @@ package proton.android.pass.featurehome.impl
 import android.os.Build
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -30,15 +29,17 @@ import proton.android.pass.appconfig.fakes.TestAppConfig
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.fakes.TestAutofillManager
+import proton.android.pass.common.api.some
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveInvites
+import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLoginSyncStatus
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
-import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.AUTOFILL
-import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.INVITE
-import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.NOTIFICATION_PERMISSION
-import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.TRIAL
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.Autofill
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.Invite
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.NotificationPermission
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.Trial
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsUiState
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsViewModel
 import proton.android.pass.notifications.fakes.TestNotificationManager
@@ -63,6 +64,7 @@ class OnBoardingTipsViewModelTest {
     private lateinit var notificationManager: TestNotificationManager
     private lateinit var appConfig: TestAppConfig
     private lateinit var featureFlagsPreferencesRepository: TestFeatureFlagsPreferenceRepository
+    private lateinit var observeSimpleLoginSyncStatus: FakeObserveSimpleLoginSyncStatus
 
     @Before
     fun setUp() {
@@ -73,6 +75,7 @@ class OnBoardingTipsViewModelTest {
         notificationManager = TestNotificationManager()
         appConfig = TestAppConfig()
         featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
+        observeSimpleLoginSyncStatus = FakeObserveSimpleLoginSyncStatus()
         viewModel = OnBoardingTipsViewModel(
             autofillManager = autofillManager,
             preferencesRepository = preferenceRepository,
@@ -80,7 +83,8 @@ class OnBoardingTipsViewModelTest {
             getUserPlan = getUserPlan,
             notificationManager = notificationManager,
             appConfig = appConfig,
-            featureFlagsPreferencesRepository = featureFlagsPreferencesRepository
+            featureFlagsPreferencesRepository = featureFlagsPreferencesRepository,
+            observeSimpleLoginSyncStatus = observeSimpleLoginSyncStatus
         )
     }
 
@@ -110,7 +114,7 @@ class OnBoardingTipsViewModelTest {
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOtherService))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         viewModel.state.test {
-            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(persistentSetOf(AUTOFILL)))
+            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(Autofill.some()))
         }
     }
 
@@ -120,7 +124,7 @@ class OnBoardingTipsViewModelTest {
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         viewModel.state.test {
-            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(persistentSetOf(AUTOFILL)))
+            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(Autofill.some()))
         }
     }
 
@@ -141,7 +145,7 @@ class OnBoardingTipsViewModelTest {
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         preferenceRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.NotDismissed)
         viewModel.state.test {
-            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(persistentSetOf(TRIAL)))
+            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(Trial.some()))
         }
     }
 
@@ -153,11 +157,11 @@ class OnBoardingTipsViewModelTest {
         preferenceRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.NotDismissed)
 
         viewModel.state.test {
-            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(persistentSetOf(TRIAL)))
+            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(Trial.some()))
 
-            viewModel.onDismiss(TRIAL)
+            viewModel.onDismiss(Trial)
 
-            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(persistentSetOf(AUTOFILL)))
+            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(Autofill.some()))
         }
     }
 
@@ -170,7 +174,7 @@ class OnBoardingTipsViewModelTest {
         observeInvites.emitInvites(listOf(TestPendingInvite.create()))
 
         viewModel.state.test {
-            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(persistentSetOf(INVITE)))
+            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(Invite.some()))
         }
     }
 
@@ -184,8 +188,7 @@ class OnBoardingTipsViewModelTest {
             appConfig.setAndroidVersion(Build.VERSION_CODES.TIRAMISU)
 
             viewModel.state.test {
-                val expected = OnBoardingTipsUiState(persistentSetOf(NOTIFICATION_PERMISSION))
-                assertThat(awaitItem()).isEqualTo(expected)
+                assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(NotificationPermission.some()))
             }
         }
 
@@ -198,7 +201,7 @@ class OnBoardingTipsViewModelTest {
         appConfig.setAndroidVersion(Build.VERSION_CODES.TIRAMISU)
 
         viewModel.state.test {
-            assertThat(awaitItem().tipsToShow).doesNotContain(NOTIFICATION_PERMISSION)
+            assertThat(awaitItem().tipToShow).isNotEqualTo(NotificationPermission)
         }
     }
 
@@ -211,7 +214,7 @@ class OnBoardingTipsViewModelTest {
         appConfig.setAndroidVersion(Build.VERSION_CODES.TIRAMISU)
 
         viewModel.state.test {
-            assertThat(awaitItem().tipsToShow).doesNotContain(NOTIFICATION_PERMISSION)
+            assertThat(awaitItem().tipToShow).isNotEqualTo(NotificationPermission)
         }
     }
 
@@ -225,7 +228,7 @@ class OnBoardingTipsViewModelTest {
             appConfig.setAndroidVersion(Build.VERSION_CODES.BASE)
 
             viewModel.state.test {
-                assertThat(awaitItem().tipsToShow).doesNotContain(NOTIFICATION_PERMISSION)
+                assertThat(awaitItem().tipToShow).isNotEqualTo(NotificationPermission)
             }
         }
 

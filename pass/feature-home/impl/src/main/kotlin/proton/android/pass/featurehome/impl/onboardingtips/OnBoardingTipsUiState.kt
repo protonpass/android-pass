@@ -19,8 +19,8 @@
 package proton.android.pass.featurehome.impl.onboardingtips
 
 import androidx.compose.runtime.Stable
-import kotlinx.collections.immutable.ImmutableSet
-import kotlinx.collections.immutable.persistentSetOf
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 
 sealed interface OnBoardingTipsEvent {
 
@@ -37,6 +37,6 @@ sealed interface OnBoardingTipsEvent {
 
 @Stable
 data class OnBoardingTipsUiState(
-    val tipsToShow: ImmutableSet<OnBoardingTipPage> = persistentSetOf(),
+    val tipToShow: Option<OnBoardingTipPage> = None,
     val event: OnBoardingTipsEvent = OnBoardingTipsEvent.Unknown
 )

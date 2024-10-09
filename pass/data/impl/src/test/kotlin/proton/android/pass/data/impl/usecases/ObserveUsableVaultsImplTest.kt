@@ -34,6 +34,8 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.Vault
 import proton.android.pass.test.domain.TestVault
+import java.util.Calendar
+import java.util.Date
 
 class ObserveUsableVaultsImplTest {
 
@@ -72,7 +74,53 @@ class ObserveUsableVaultsImplTest {
         assertThat(res).hasSize(2)
         assertThat(res.map { it.shareId }).containsExactly(vault1, vault2)
         assertThat(res.map { it.role }).containsExactly(ShareRole.Write, ShareRole.Write)
+    }
 
+    @Test
+    fun `owned vaults and first N shared vaults if plan is free`() = runTest {
+        // Setup plan with 2 owned vault limit
+        val plan = Plan(
+            planType = PlanType.Free("", ""),
+            hideUpgrade = false,
+            vaultLimit = PlanLimit.Limited(2),
+            aliasLimit = PlanLimit.Limited(1),
+            totpLimit = PlanLimit.Limited(1),
+            updatedAt = Clock.System.now().epochSeconds
+        )
+        getUserPlan.setResult(userId = DEFAULT_USER_ID, value = Result.success(plan))
+
+        // 3 vault setup, one owned, two not owned
+        // shared1 is Read to show that the order does not care about the role
+        val now = Date()
+        val otherUserId = UserId("OtherUserID")
+        val ownedVault1 = TestVault.create(
+            shareId = ShareId("owned1"),
+            userId = DEFAULT_USER_ID,
+            role = ShareRole.Write,
+            name = "unused",
+            createTime = now
+        )
+        val sharedVault1 = TestVault.create(
+            shareId = ShareId("shared1"),
+            userId = otherUserId,
+            isOwned = false,
+            role = ShareRole.Read,
+            name = "unused",
+            createTime = now.plusHours(1)
+        )
+        val sharedVault2 = TestVault.create(
+            shareId = ShareId("shared2"),
+            userId = otherUserId,
+            isOwned = false,
+            role = ShareRole.Write,
+            name = "unused",
+            createTime = now.plusHours(2)
+        )
+        observeVaults.sendResult(Result.success(listOf(ownedVault1, sharedVault1, sharedVault2)))
+
+        val res = instance().first()
+        assertThat(res).hasSize(2)
+        assertThat(res).isEqualTo(listOf(ownedVault1, sharedVault1))
     }
 
     @Test
@@ -195,6 +243,13 @@ class ObserveUsableVaultsImplTest {
             updatedAt = Clock.System.now().epochSeconds
         )
         getUserPlan.setResult(userId = DEFAULT_USER_ID, value = Result.success(plan))
+    }
+
+    private fun Date.plusHours(hours: Int): Date {
+        val calendar = Calendar.getInstance()
+        calendar.time = this
+        calendar.add(Calendar.HOUR, hours)
+        return calendar.time
     }
 
     companion object {

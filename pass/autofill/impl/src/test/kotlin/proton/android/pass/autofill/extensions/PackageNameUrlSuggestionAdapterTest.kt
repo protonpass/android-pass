@@ -26,7 +26,7 @@ import proton.android.pass.domain.entity.PackageName
 class PackageNameUrlSuggestionAdapterTest {
 
     @Test
-    fun `adapt returns WithUrl when packageName is not a browser and url is not empty`() {
+    fun `adapt returns WithUrl when packageName is not a browser and url is not blank`() {
         val packageName = PackageName("com.example.app")
         val url = "https://example.com"
 
@@ -37,7 +37,7 @@ class PackageNameUrlSuggestionAdapterTest {
     }
 
     @Test
-    fun `adapt returns WithPackageName when packageName is not a browser and url is empty`() {
+    fun `adapt returns WithPackageName when packageName is not a browser and url is blank`() {
         val packageName = PackageName("com.example.app")
         val url = ""
 
@@ -48,7 +48,7 @@ class PackageNameUrlSuggestionAdapterTest {
     }
 
     @Test
-    fun `adapt returns WithUrl when packageName is a browser and url is not empty`() {
+    fun `adapt returns WithUrl when packageName is a browser and url is not blank`() {
         val packageName = PackageName(BROWSERS.first())
         val url = "https://example.com"
 
@@ -59,7 +59,7 @@ class PackageNameUrlSuggestionAdapterTest {
     }
 
     @Test
-    fun `adapt returns WithUrl when packageName is a browser and url is empty`() {
+    fun `adapt returns WithUrl when packageName is a browser and url is blank`() {
         val packageName = PackageName(BROWSERS.first())
         val url = ""
 

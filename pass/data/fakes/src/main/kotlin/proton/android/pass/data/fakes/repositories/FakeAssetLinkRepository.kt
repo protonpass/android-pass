@@ -28,13 +28,21 @@ import javax.inject.Singleton
 @Singleton
 class FakeAssetLinkRepository @Inject constructor() : AssetLinkRepository {
 
-    override suspend fun fetch(website: String): AssetLink = AssetLink(website, emptySet())
+    private val fakeData = mutableListOf(
+        AssetLink("example.com", setOf(AssetLink.Package("com.example.app", setOf("signature1")))),
+        AssetLink("anotherexample.com", setOf(AssetLink.Package("com.another.app", setOf("signature2"))))
+    )
+
+    override suspend fun fetch(website: String): AssetLink =
+        fakeData.find { it.website == website } ?: AssetLink(website, emptySet())
 
     override suspend fun insert(list: List<AssetLink>) {
+        fakeData += list
     }
 
     override suspend fun purge() {
+        fakeData.clear()
     }
 
-    override fun observeByPackageName(packageName: String): Flow<List<AssetLink>> = flowOf(emptyList())
+    override fun observeByPackageName(packageName: String): Flow<List<AssetLink>> = flowOf(fakeData)
 }

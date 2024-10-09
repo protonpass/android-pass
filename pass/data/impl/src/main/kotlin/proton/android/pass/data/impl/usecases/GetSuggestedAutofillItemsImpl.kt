@@ -44,8 +44,10 @@ import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Plan
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.Vault
 import proton.android.pass.preferences.FeatureFlag
@@ -79,7 +81,9 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
                 ItemTypeFilter.CreditCards ->
                     handleCreditCards(userIds, itemTypeFilter, suggestion)
 
-                else -> throw IllegalArgumentException("ItemType is not supported: $itemTypeFilter")
+                ItemTypeFilter.All,
+                ItemTypeFilter.Aliases,
+                ItemTypeFilter.Notes -> throw IllegalArgumentException("ItemType is not supported: $itemTypeFilter")
             }
         }
 
@@ -171,15 +175,21 @@ class GetSuggestedAutofillItemsImpl @Inject constructor(
             ) { items, digitalAssetLinkSuggestions, isDALEnabled ->
                 val filteredItems = suggestionItemFilter.filter(items, suggestion)
                     .map { item -> ItemData.SuggestedItem(item, suggestion) }
-                val combinedItems = if (isDALEnabled) {
+                val combinedItems: List<ItemData.SuggestedItem> = if (isDALEnabled) {
                     filteredItems + digitalAssetLinkSuggestions.flatMap {
                         suggestionItemFilter.filter(items, it)
                             .map { item -> ItemData.SuggestedItem(item, it) }
                     }
                 } else {
                     filteredItems
-                }.toSet().toList()
-                usableVaults to combinedItems
+                }
+
+                val uniqueItems = mutableSetOf<Pair<ShareId, ItemId>>()
+                val deduplicatedItems = combinedItems.filter { item ->
+                    val pair = item.item.shareId to item.item.id
+                    uniqueItems.add(pair)
+                }
+                usableVaults to deduplicatedItems
             }
         }
 

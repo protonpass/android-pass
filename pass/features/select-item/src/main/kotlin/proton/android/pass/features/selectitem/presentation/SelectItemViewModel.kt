@@ -257,7 +257,9 @@ class SelectItemViewModel @Inject constructor(
         .flatMapLatest { itemResult ->
             itemResult.map { list ->
                 encryptionContextProvider.withEncryptionContext {
-                    list.map { it.item.toUiModel(this@withEncryptionContext) }
+                    list.map { suggestedItem ->
+                        suggestedItem.item.toUiModel(this@withEncryptionContext)
+                    }
                 }
             }
         }
@@ -353,7 +355,9 @@ class SelectItemViewModel @Inject constructor(
             .map { itemResult ->
                 itemResult.map { list ->
                     encryptionContextProvider.withEncryptionContext {
-                        list.map { item -> item.item.toUiModel(this@withEncryptionContext) }
+                        list.map { suggestedItem ->
+                            suggestedItem.item.toUiModel(this@withEncryptionContext)
+                        }
                     }
                 }
             }

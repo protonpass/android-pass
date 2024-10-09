@@ -16,27 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featurehome.impl.onboardingtips
+package proton.android.pass.preferences
 
-import androidx.compose.runtime.Stable
-import kotlinx.collections.immutable.ImmutableSet
-import kotlinx.collections.immutable.persistentSetOf
+sealed interface HasDismissedSLSyncBanner {
+    data object Dismissed : HasDismissedSLSyncBanner
+    data object NotDismissed : HasDismissedSLSyncBanner
 
-sealed interface OnBoardingTipsEvent {
-
-    data object Unknown : OnBoardingTipsEvent
-
-    data object OpenTrialScreen : OnBoardingTipsEvent
-
-    data object OpenInviteScreen : OnBoardingTipsEvent
-
-    data object OpenSLSyncScreen : OnBoardingTipsEvent
-
-    data object RequestNotificationPermission : OnBoardingTipsEvent
+    companion object {
+        fun from(value: Boolean): HasDismissedSLSyncBanner = if (value) { Dismissed } else { NotDismissed }
+    }
 }
 
-@Stable
-data class OnBoardingTipsUiState(
-    val tipsToShow: ImmutableSet<OnBoardingTipPage> = persistentSetOf(),
-    val event: OnBoardingTipsEvent = OnBoardingTipsEvent.Unknown
-)
+fun HasDismissedSLSyncBanner.value(): Boolean = when (this) {
+    HasDismissedSLSyncBanner.Dismissed -> true
+    HasDismissedSLSyncBanner.NotDismissed -> false
+}
+

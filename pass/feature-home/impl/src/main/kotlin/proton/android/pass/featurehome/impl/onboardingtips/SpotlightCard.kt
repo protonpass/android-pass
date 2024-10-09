@@ -58,6 +58,8 @@ fun SpotlightCard(
     body: String,
     titleColor: Color = PassTheme.colors.textInvert,
     subtitleColor: Color = titleColor,
+    buttonColor: Color = titleColor,
+    crossColor: Color = titleColor,
     buttonText: String?,
     image: (@Composable () -> Unit)? = null,
     onClick: () -> Unit,
@@ -97,7 +99,7 @@ fun SpotlightCard(
                         Text(
                             text = buttonText,
                             style = ProtonTheme.typography.defaultHighlightNorm,
-                            color = PassTheme.colors.textInvert
+                            color = buttonColor
                         )
                     }
                 }
@@ -107,7 +109,7 @@ fun SpotlightCard(
             if (onDismiss != null) {
                 SmallCrossIconButton(
                     modifier = Modifier.align(Alignment.TopEnd),
-                    tint = PassTheme.colors.textInvert,
+                    tint = crossColor,
                     onClick = onDismiss
                 )
             }

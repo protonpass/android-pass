@@ -21,6 +21,7 @@ package proton.android.pass.data.fakes.usecases.simplelogin
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.update
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import javax.inject.Inject
@@ -33,4 +34,7 @@ class FakeObserveSimpleLoginSyncStatus @Inject constructor() : ObserveSimpleLogi
 
     override fun invoke(): Flow<SimpleLoginSyncStatus> = simpleLoginSyncStatusFlow.filterNotNull()
 
+    fun updateSyncStatus(newStatus: SimpleLoginSyncStatus) {
+        simpleLoginSyncStatusFlow.update { newStatus }
+    }
 }

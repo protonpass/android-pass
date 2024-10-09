@@ -28,8 +28,8 @@
   <string name="simple_login_sync_management_dialog_title_domains">Domeniu implicit pentru aliasuri</string>
   <string name="simple_login_sync_management_dialog_title_mailboxes">Cont de e-mail implicit pentru aliasuri</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">A apărut o eroare la preluarea detaliilor aliasului SimpleLogin.</string>
-  <string name="simple_login_sync_management_snackbar_alias_domain_update_error">A apărut o eroare la actualizarea domeniului aliasului SimpleLogin.</string>
-  <string name="simple_login_sync_management_snackbar_alias_domain_update_success">Domeniul aliasului SimpleLogin a fost actualizat.</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">A apărut o eroare la actualizarea domeniului aliasului SimpleLogin.</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Domeniul aliasului SimpleLogin a fost actualizat.</string>
   <string name="simple_login_sync_management_snackbar_alias_mailbox_update_error">A apărut o eroare la actualizarea contului aliasului SimpleLogin.</string>
   <string name="simple_login_sync_management_snackbar_alias_mailbox_update_success">Contul aliasului SimpleLogin a fost actualizat.</string>
   <!-- Settings screen -->

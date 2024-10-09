@@ -28,8 +28,8 @@
   <string name="simple_login_sync_management_dialog_title_domains">Прадвызначаны дамен для псеўданімаў</string>
   <string name="simple_login_sync_management_dialog_title_mailboxes">Прадвызначаная паштовая скрыня для псеўданімаў</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Адбылася памылка падчас атрымання падрабязнасцяў псеўданіма SL</string>
-  <string name="simple_login_sync_management_snackbar_alias_domain_update_error">Адбылася памылка падчас абнаўлення дамена псеўданіма SL</string>
-  <string name="simple_login_sync_management_snackbar_alias_domain_update_success">Дамен псеўданіма SL паспяхова абноўлены</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Адбылася памылка падчас абнаўлення дамена псеўданіма SL</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Дамен псеўданіма SL паспяхова абноўлены</string>
   <string name="simple_login_sync_management_snackbar_alias_mailbox_update_error">Адбылася памылка падчас абнаўлення паштовай скрыні псеўданіма SL</string>
   <string name="simple_login_sync_management_snackbar_alias_mailbox_update_success">Паштовая скрыня псеўданіма SL паспяхова абноўлена</string>
   <!-- Settings screen -->

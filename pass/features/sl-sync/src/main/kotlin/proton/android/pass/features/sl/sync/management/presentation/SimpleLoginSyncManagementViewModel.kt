@@ -28,19 +28,12 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.onSuccess
-import proton.android.pass.common.api.runCatching
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailboxes
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasSettings
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
-import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasDomain
-import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
@@ -51,8 +44,7 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
     observeSimpleLoginAliasMailboxes: ObserveSimpleLoginAliasMailboxes,
     observeSimpleLoginAliasSettings: ObserveSimpleLoginAliasSettings,
     observeSimpleLoginSyncStatus: ObserveSimpleLoginSyncStatus,
-    private val snackbarDispatcher: SnackbarDispatcher,
-    private val updateSimpleLoginAliasDomain: UpdateSimpleLoginAliasDomain
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val modelOptionFlow = combine(
@@ -79,15 +71,12 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
         value = SimpleLoginSyncManagementEvent.Idle
     )
 
-    private val selectedDomainOptionFlow = MutableStateFlow<Option<String?>>(None)
-
     private val isUpdatingFlow = MutableStateFlow(false)
 
     internal val state: StateFlow<SimpleLoginSyncManagementState> = combine(
         isUpdatingFlow,
         eventFlow,
         modelOptionFlow,
-        selectedDomainOptionFlow,
         ::SimpleLoginSyncManagementState
     ).stateIn(
         scope = viewModelScope,
@@ -97,30 +86,6 @@ class SimpleLoginSyncManagementViewModel @Inject constructor(
 
     internal fun onConsumeEvent(event: SimpleLoginSyncManagementEvent) {
         eventFlow.compareAndSet(event, SimpleLoginSyncManagementEvent.Idle)
-    }
-
-    internal fun onSelectAliasDomain(selectedAliasDomain: SimpleLoginAliasDomain?) {
-        selectedDomainOptionFlow.update { selectedAliasDomain?.domain?.some() ?: null.some() }
-    }
-
-    internal fun onUpdateAliasDomain() {
-        viewModelScope.launch {
-            isUpdatingFlow.update { true }
-
-            runCatching { updateSimpleLoginAliasDomain(domain = state.value.selectedAliasDomain) }
-                .onError { error ->
-                    PassLogger.w(TAG, "There was an error updating SL alias domain")
-                    PassLogger.w(TAG, error)
-                    eventFlow.update { SimpleLoginSyncManagementEvent.OnUpdateAliasDomainError }
-                    snackbarDispatcher(SimpleLoginSyncManagementSnackBarMessage.UpdateAliasDomainError)
-                }
-                .onSuccess {
-                    eventFlow.update { SimpleLoginSyncManagementEvent.OnAliasDomainUpdated }
-                    snackbarDispatcher(SimpleLoginSyncManagementSnackBarMessage.UpdateAliasDomainSuccess)
-                }
-
-            isUpdatingFlow.update { false }
-        }
     }
 
     private companion object {

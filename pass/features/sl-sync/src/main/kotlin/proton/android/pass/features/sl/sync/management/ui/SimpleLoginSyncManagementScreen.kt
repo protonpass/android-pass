@@ -21,9 +21,6 @@ package proton.android.pass.features.sl.sync.management.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.sl.sync.management.presentation.SimpleLoginSyncManagementEvent
@@ -37,24 +34,14 @@ fun SimpleLoginSyncDetailsScreen(
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
 
-    var shouldShowAliasDomainDialog by remember { mutableStateOf(false) }
-
     LaunchedEffect(state.event) {
         when (state.event) {
+            SimpleLoginSyncManagementEvent.Idle -> Unit
             SimpleLoginSyncManagementEvent.OnFetchAliasManagementError -> {
                 SimpleLoginSyncNavDestination.Back(
                     force = true // Needed, otherwise navigation sometimes discards it as duplicated
                 ).also(onNavigated)
             }
-
-            SimpleLoginSyncManagementEvent.OnAliasDomainUpdated,
-            SimpleLoginSyncManagementEvent.OnAliasMailboxUpdated,
-            SimpleLoginSyncManagementEvent.OnUpdateAliasDomainError,
-            SimpleLoginSyncManagementEvent.OnUpdateAliasMailboxError -> {
-                shouldShowAliasDomainDialog = false
-            }
-
-            SimpleLoginSyncManagementEvent.Idle -> {}
         }
 
         onConsumeEvent(event = state.event)
@@ -62,7 +49,6 @@ fun SimpleLoginSyncDetailsScreen(
 
     SimpleLoginSyncDetailsContent(
         state = state,
-        shouldShowAliasDomainDialog = shouldShowAliasDomainDialog,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SimpleLoginSyncManagementUiEvent.OnBackClicked -> {
@@ -85,18 +71,6 @@ fun SimpleLoginSyncDetailsScreen(
                     SimpleLoginSyncNavDestination.Settings(
                         shareId = uiEvent.shareId
                     ).also(onNavigated)
-                }
-
-                SimpleLoginSyncManagementUiEvent.OnOptionsDialogDismissed -> {
-                    shouldShowAliasDomainDialog = false
-                }
-
-                is SimpleLoginSyncManagementUiEvent.OnDomainSelected -> {
-                    onSelectAliasDomain(selectedAliasDomain = uiEvent.aliasDomain)
-                }
-
-                SimpleLoginSyncManagementUiEvent.OnUpdateDomainClicked -> {
-                    onUpdateAliasDomain()
                 }
 
                 SimpleLoginSyncManagementUiEvent.OnAddMailboxClicked -> {

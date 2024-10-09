@@ -28,8 +28,8 @@
   <string name="simple_login_sync_management_dialog_title_domains">Aliasten oletusverkkotunnus</string>
   <string name="simple_login_sync_management_dialog_title_mailboxes">Aliasten oletuspostilaatikko</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Virhe noutaessa SL-aliaksen tietoja</string>
-  <string name="simple_login_sync_management_snackbar_alias_domain_update_error">Virhe muuttaessa SL-aliaksen verkkotunnusta</string>
-  <string name="simple_login_sync_management_snackbar_alias_domain_update_success">SL-aliaksen verkkotunnus muutettiin</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Virhe muuttaessa SL-aliaksen verkkotunnusta</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL-aliaksen verkkotunnus muutettiin</string>
   <string name="simple_login_sync_management_snackbar_alias_mailbox_update_error">Virhe muuttaessa SL-aliaksen postilaatikkoa</string>
   <string name="simple_login_sync_management_snackbar_alias_mailbox_update_success">SL-aliaksen postilaatikko muutetiin</string>
   <!-- Settings screen -->

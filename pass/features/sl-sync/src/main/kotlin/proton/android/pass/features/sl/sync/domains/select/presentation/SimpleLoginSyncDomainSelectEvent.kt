@@ -22,6 +22,8 @@ internal sealed interface SimpleLoginSyncDomainSelectEvent {
 
     data object Idle : SimpleLoginSyncDomainSelectEvent
 
+    data object OnFetchAliasDomainsError : SimpleLoginSyncDomainSelectEvent
+
     data object OnUpdateAliasDomainError : SimpleLoginSyncDomainSelectEvent
 
     data object OnUpdateAliasDomainSuccess : SimpleLoginSyncDomainSelectEvent

@@ -65,7 +65,7 @@ class AssetLinkRepositoryImpl @Inject constructor(
     private fun filterByCertificate(packageName: String, list: List<AssetLink>): List<AssetLink> {
         val fingerprints = AppCertificate.getAppSigningCertificates(context, packageName)
         return list.filter { it.packages.any { pkg -> pkg.packageName == packageName } }
-            .filter { it.packages.all { pkg -> pkg.signatures.containsAll(fingerprints) } }
+            .filter { it.packages.any { pkg -> pkg.signatures.any { signature -> signature in fingerprints } } }
     }
 
     companion object {

@@ -135,14 +135,6 @@ internal fun ProfileContent(
                     itemSummaryUiState = state.itemSummaryUiState
                 )
 
-                if (state.shouldDisplaySimpleLoginWidget) {
-                    ProfileAliasesWidget(
-                        pendingAliasesCount = state.simpleLoginPendingAliasesCount,
-                        onActionClick = { onEvent(ProfileUiEvent.OnSyncAliasesClicked) },
-                        onCloseClick = { onEvent(ProfileUiEvent.OnCloseAliasesWidgetClicked) }
-                    )
-                }
-
                 Column(
                     modifier = Modifier.padding(all = Spacing.medium),
                     verticalArrangement = Arrangement.spacedBy(Spacing.medium)

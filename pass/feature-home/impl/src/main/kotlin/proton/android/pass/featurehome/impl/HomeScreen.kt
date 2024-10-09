@@ -186,8 +186,8 @@ fun HomeScreen(
         onDispose { routerViewModel.clearEvent() }
     }
 
-    LaunchedEffect(onBoardingTipsUiState.tipsToShow.hashCode()) {
-        if (onBoardingTipsUiState.tipsToShow.isNotEmpty() && scrollableState.firstVisibleItemIndex == 0) {
+    LaunchedEffect(onBoardingTipsUiState.tipToShow.hashCode()) {
+        if (onBoardingTipsUiState.tipToShow.isNotEmpty() && scrollableState.firstVisibleItemIndex == 0) {
             homeViewModel.scrollToTop()
         }
     }

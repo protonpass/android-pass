@@ -33,7 +33,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.autofill.entities.AutofillData
-import proton.android.pass.autofill.entities.toSuggestion
 import proton.android.pass.autofill.extensions.PackageNameUrlSuggestionAdapter
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.heuristics.NodeCluster

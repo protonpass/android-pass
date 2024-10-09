@@ -24,6 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -55,8 +56,17 @@ class SimpleLoginSyncDomainSelectViewModel @Inject constructor(
         value = SimpleLoginSyncDomainSelectEvent.Idle
     )
 
+    private val aliasDomainsFlow = observeSimpleLoginAliasDomains()
+        .catch { error ->
+            PassLogger.w(TAG, "There was an error while observing SL alias domains")
+            PassLogger.w(TAG, error)
+            eventFlow.update { SimpleLoginSyncDomainSelectEvent.OnFetchAliasDomainsError }
+            snackbarDispatcher(SimpleLoginSyncDomainSelectSnackBarMessage.FetchAliasDomainError)
+            emit(emptyList())
+        }
+
     internal val stateFlow: StateFlow<SimpleLoginSyncDomainSelectState> = combine(
-        observeSimpleLoginAliasDomains(),
+        aliasDomainsFlow,
         eventFlow
     ) { aliasDomains, event ->
         SimpleLoginSyncDomainSelectState(

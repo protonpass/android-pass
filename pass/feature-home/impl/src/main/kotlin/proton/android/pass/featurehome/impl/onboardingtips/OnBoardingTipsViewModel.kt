@@ -120,7 +120,7 @@ class OnBoardingTipsViewModel @Inject constructor(
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
         simpleLoginSyncStatusOptionFlow
     ) { hasDismissedSLSyncBanner, slSyncFFEnabled, result ->
-        if (slSyncFFEnabled) return@combine false to 0
+        if (!slSyncFFEnabled) return@combine false to 0
         if (hasDismissedSLSyncBanner == HasDismissedSLSyncBanner.Dismissed) return@combine false to 0
         val sync = result.getOrNull()?.value() ?: return@combine false to 0
         val show = sync.isPreferenceEnabled && sync.hasPendingAliases && !sync.isSyncEnabled

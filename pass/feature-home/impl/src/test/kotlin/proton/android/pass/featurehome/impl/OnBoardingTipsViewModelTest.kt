@@ -45,6 +45,7 @@ import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsViewMod
 import proton.android.pass.notifications.fakes.TestNotificationManager
 import proton.android.pass.preferences.HasDismissedAutofillBanner
 import proton.android.pass.preferences.HasDismissedNotificationBanner
+import proton.android.pass.preferences.HasDismissedSLSyncBanner
 import proton.android.pass.preferences.HasDismissedTrialBanner
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
@@ -231,6 +232,16 @@ class OnBoardingTipsViewModelTest {
                 assertThat(awaitItem().tipToShow).isNotEqualTo(NotificationPermission)
             }
         }
+
+    @Test
+    fun `Should not display SL sync if banner dismissed`() = runTest {
+        setupPlan(PlanType.Trial("", "", 1))
+        preferenceRepository.setHasDismissedSLSyncBanner(HasDismissedSLSyncBanner.Dismissed)
+
+        viewModel.state.test {
+            assertThat(awaitItem().tipToShow).isNotEqualTo(NotificationPermission)
+        }
+    }
 
     private fun setupPlan(planType: PlanType = PlanType.Paid.Plus("", "")) {
         val plan = Plan(

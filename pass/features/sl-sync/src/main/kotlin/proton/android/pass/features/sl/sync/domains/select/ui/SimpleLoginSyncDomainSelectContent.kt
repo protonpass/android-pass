@@ -55,6 +55,7 @@ internal fun SimpleLoginSyncDomainSelectContent(
             simpleLoginAliasDomainSelectItem(
                 aliasDomain = aliasDomain,
                 canSelectPremiumDomains = canSelectPremiumDomains,
+                updatingAliasDomainOption = updatingAliasDomainOption,
                 onClick = {
                     if (aliasDomain.isPremium && !canSelectPremiumDomains) {
                         SimpleLoginSyncDomainSelectUiEvent.OnUpsellClicked

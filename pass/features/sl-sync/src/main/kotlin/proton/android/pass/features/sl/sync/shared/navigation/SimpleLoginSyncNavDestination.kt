@@ -47,4 +47,7 @@ sealed interface SimpleLoginSyncNavDestination {
     @JvmInline
     value class MailboxOptions(val mailboxId: Long) : SimpleLoginSyncNavDestination
 
+    @JvmInline
+    value class DeleteMailbox(val mailboxId: Long) : SimpleLoginSyncNavDestination
+
 }

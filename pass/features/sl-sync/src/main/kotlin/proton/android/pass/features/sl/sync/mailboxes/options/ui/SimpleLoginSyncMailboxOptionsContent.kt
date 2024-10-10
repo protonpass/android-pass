@@ -34,6 +34,7 @@ internal fun SimpleLoginSyncMailboxOptionsContent(
     buildList {
         if (!isDefault) {
             setAsDefault(
+                action = action,
                 onClick = {
                     onUiEvent(SimpleLoginSyncMailboxOptionsUiEvent.OnSetAsDefaultClicked)
                 }
@@ -42,13 +43,15 @@ internal fun SimpleLoginSyncMailboxOptionsContent(
 
         if (!isVerified) {
             verify(
+                action = action,
                 onClick = {
-                    onUiEvent(SimpleLoginSyncMailboxOptionsUiEvent.OnSetAsDefaultClicked)
+                    onUiEvent(SimpleLoginSyncMailboxOptionsUiEvent.OnVerifyClicked)
                 }
             ).also(::add)
         }
 
         delete(
+            action = action,
             onClick = {
                 onUiEvent(SimpleLoginSyncMailboxOptionsUiEvent.OnDeleteClicked)
             }

@@ -129,6 +129,9 @@ object AutoSaveHandler {
 
         val usernameValue: String = usernameField?.autofillValue?.textValue.orEmpty()
         val passwordValue: String = passwordField?.autofillValue?.textValue.orEmpty().let {
+            // Sometimes masked values can be the dot character (•) and the last one might not be masked.
+            // This can happen if the input field uses a masking character for all but the last character,
+            // which might be left unmasked to indicate the end of the input or for other UI/UX reasons.
             if (it.dropLast(1).all { char -> char == DOT_SEPARATOR }) "" else it
         }
 

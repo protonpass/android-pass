@@ -32,6 +32,7 @@ import proton.android.pass.data.impl.local.assetlink.LocalAssetLinkDataSource
 import proton.android.pass.data.impl.remote.assetlink.RemoteAssetLinkDataSource
 import proton.android.pass.domain.assetlink.AssetLink
 import proton.android.pass.log.api.PassLogger
+import java.util.Date
 import javax.inject.Inject
 
 class AssetLinkRepositoryImpl @Inject constructor(
@@ -52,9 +53,14 @@ class AssetLinkRepositoryImpl @Inject constructor(
         localAssetLinkDataSource.insertAssetLink(list.toEntityList())
     }
 
-    override suspend fun purge() {
+    override suspend fun purgeAll() {
         PassLogger.d(TAG, "Purging asset links")
-        localAssetLinkDataSource.purge()
+        localAssetLinkDataSource.purgeAll()
+    }
+
+    override suspend fun purgeOlderThan(date: Date) {
+        PassLogger.d(TAG, "Purging asset links older than: $date")
+        localAssetLinkDataSource.purgeOlderThan(date)
     }
 
     override fun observeByPackageName(packageName: String): Flow<List<AssetLink>> =

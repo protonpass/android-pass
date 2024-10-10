@@ -95,7 +95,7 @@ internal fun ItemRow(
                 )
                 titleSuffix.value()?.let {
                     Text(
-                        text = SpecialCharacters.DOT_SEPARATOR,
+                        text = SpecialCharacters.DOT_SEPARATOR.toString(),
                         style = ProtonTheme.typography.defaultSmallWeak(enabled = enabled)
                     )
                     Text(

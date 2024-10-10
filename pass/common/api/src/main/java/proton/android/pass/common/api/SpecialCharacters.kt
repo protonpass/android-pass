@@ -20,6 +20,6 @@ package proton.android.pass.common.api
 
 object SpecialCharacters {
 
-    const val DOT_SEPARATOR = "•"
-    const val AT_SIGN = "@"
+    const val DOT_SEPARATOR = '•'
+    const val AT_SIGN = '@'
 }

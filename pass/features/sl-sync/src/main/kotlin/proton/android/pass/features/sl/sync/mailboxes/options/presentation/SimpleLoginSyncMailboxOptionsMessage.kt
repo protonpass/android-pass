@@ -30,6 +30,16 @@ internal enum class SimpleLoginSyncMailboxOptionsMessage(
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
 
+    DefaultMailboxError(
+        id = R.string.simple_login_sync_mailbox_options_snackbar_default_error,
+        type = SnackbarType.ERROR
+    ),
+
+    DefaultMailboxSuccess(
+        id = R.string.simple_login_sync_mailbox_options_snackbar_default_success,
+        type = SnackbarType.SUCCESS
+    ),
+
     VerifyMailboxError(
         id = R.string.simple_login_sync_mailbox_verify_message_verification_error,
         type = SnackbarType.ERROR

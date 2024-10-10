@@ -18,16 +18,21 @@
 
 package proton.android.pass.features.sl.sync.mailboxes.options.ui
 
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.R as CompR
+import proton.android.pass.features.sl.sync.mailboxes.options.presentation.SimpleLoginSyncMailboxOptionsAction
 import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.R as CompR
 
-internal fun delete(onClick: () -> Unit) = object : BottomSheetItem {
+internal fun delete(action: SimpleLoginSyncMailboxOptionsAction, onClick: () -> Unit) = object : BottomSheetItem {
 
     override val title: @Composable () -> Unit = {
         BottomSheetItemTitle(
@@ -42,17 +47,17 @@ internal fun delete(onClick: () -> Unit) = object : BottomSheetItem {
         BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_trash)
     }
 
-    override val endIcon: @Composable (() -> Unit)? = {
+    override val endIcon: @Composable (() -> Unit)? = null
 
+    override val onClick: (() -> Unit)? = onClick.takeIf {
+        action == SimpleLoginSyncMailboxOptionsAction.None
     }
-
-    override val onClick: (() -> Unit) = onClick
 
     override val isDivider: Boolean = false
 
 }
 
-internal fun setAsDefault(onClick: () -> Unit) = object : BottomSheetItem {
+internal fun setAsDefault(action: SimpleLoginSyncMailboxOptionsAction, onClick: () -> Unit) = object : BottomSheetItem {
 
     override val title: @Composable () -> Unit = {
         BottomSheetItemTitle(
@@ -67,17 +72,21 @@ internal fun setAsDefault(onClick: () -> Unit) = object : BottomSheetItem {
         BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_star)
     }
 
-    override val endIcon: @Composable (() -> Unit)? = {
-
+    override val endIcon: @Composable (() -> Unit) = {
+        if (action == SimpleLoginSyncMailboxOptionsAction.SetAsDefault) {
+            CircularProgressIndicator(modifier = Modifier.size(20.dp))
+        }
     }
 
-    override val onClick: (() -> Unit) = onClick
+    override val onClick: (() -> Unit)? = onClick.takeIf {
+        action == SimpleLoginSyncMailboxOptionsAction.None
+    }
 
     override val isDivider: Boolean = false
 
 }
 
-internal fun verify(onClick: () -> Unit) = object : BottomSheetItem {
+internal fun verify(action: SimpleLoginSyncMailboxOptionsAction, onClick: () -> Unit) = object : BottomSheetItem {
 
     override val title: @Composable () -> Unit = {
         BottomSheetItemTitle(
@@ -92,11 +101,15 @@ internal fun verify(onClick: () -> Unit) = object : BottomSheetItem {
         BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_checkmark_circle)
     }
 
-    override val endIcon: @Composable (() -> Unit)? = {
-
+    override val endIcon: @Composable (() -> Unit) = {
+        if (action == SimpleLoginSyncMailboxOptionsAction.Verify) {
+            CircularProgressIndicator(modifier = Modifier.size(20.dp))
+        }
     }
 
-    override val onClick: (() -> Unit) = onClick
+    override val onClick: (() -> Unit)? = onClick.takeIf {
+        action == SimpleLoginSyncMailboxOptionsAction.None
+    }
 
     override val isDivider: Boolean = false
 

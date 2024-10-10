@@ -22,6 +22,7 @@ import android.app.assist.AssistStructure
 import android.content.Context
 import android.service.autofill.SaveCallback
 import android.service.autofill.SaveRequest
+import me.proton.core.util.kotlin.orEmpty
 import proton.android.pass.autofill.Utils.getApplicationPackageName
 import proton.android.pass.autofill.Utils.getWindowNodes
 import proton.android.pass.autofill.entities.SaveInformation
@@ -38,6 +39,7 @@ import proton.android.pass.autofill.ui.autosave.LinkedAppInfo
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.SpecialCharacters.DOT_SEPARATOR
 import proton.android.pass.commonui.api.AndroidUtils.getApplicationName
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.domain.entity.PackageName
@@ -125,23 +127,25 @@ object AutoSaveHandler {
         val packageName = getApplicationPackageName(windowNode)
         val itemTitle = getItemTitle(context, packageName, infoUrl)
 
-        val usernameValue = usernameField?.autofillValue?.textValue
-        val passwordValue = passwordField?.autofillValue?.textValue
+        val usernameValue: String = usernameField?.autofillValue?.textValue.orEmpty()
+        val passwordValue: String = passwordField?.autofillValue?.textValue.orEmpty().let {
+            if (it.dropLast(1).all { char -> char == DOT_SEPARATOR }) "" else it
+        }
 
         val saveInfo = when {
-            usernameValue != null && passwordValue != null -> {
+            usernameValue.isNotBlank() && passwordValue.isNotBlank() -> {
                 SaveInformation(
                     itemType = SaveItemType.Login(
-                        identity = usernameValue.toString(),
-                        password = passwordValue.toString()
+                        identity = usernameValue,
+                        password = passwordValue
                     )
                 )
             }
-            usernameValue != null && passwordValue == null -> {
-                SaveInformation(SaveItemType.SingleValue(usernameValue.toString()))
+            usernameValue.isNotBlank() && passwordValue.isBlank() -> {
+                SaveInformation(SaveItemType.Username(usernameValue))
             }
-            usernameValue == null && passwordValue != null -> {
-                SaveInformation(SaveItemType.SingleValue(passwordValue.toString()))
+            usernameValue.isBlank() && passwordValue.isNotBlank() -> {
+                SaveInformation(SaveItemType.Password(passwordValue))
             }
             else -> return
         }

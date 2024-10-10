@@ -29,11 +29,11 @@ import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.account.Account
 import proton.android.pass.features.account.AccountNavigation
 import proton.android.pass.features.account.accountGraph
-import proton.android.pass.featureauth.impl.Auth
-import proton.android.pass.featureauth.impl.AuthNavigation
-import proton.android.pass.featureauth.impl.AuthOrigin
-import proton.android.pass.featureauth.impl.EnterPin
-import proton.android.pass.featureauth.impl.authGraph
+import proton.android.pass.features.auth.Auth
+import proton.android.pass.features.auth.AuthNavigation
+import proton.android.pass.features.auth.AuthOrigin
+import proton.android.pass.features.auth.EnterPin
+import proton.android.pass.features.auth.authGraph
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.featurefeatureflags.impl.featureFlagsGraph
 import proton.android.pass.featurehome.impl.HOME_ENABLE_BULK_ACTIONS_KEY

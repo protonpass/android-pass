@@ -108,7 +108,7 @@ dependencies {
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
-    implementation(projects.pass.featureAuth.impl)
+    implementation(projects.pass.features.auth)
     implementation(projects.pass.featureItemCreate.impl)
     implementation(projects.pass.featureSearchOptions.api)
     implementation(projects.pass.featureSearchOptions.impl)

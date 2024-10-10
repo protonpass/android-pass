@@ -32,7 +32,7 @@ import androidx.navigation.compose.NavHost
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
-import proton.android.pass.featureauth.impl.AUTH_GRAPH
+import proton.android.pass.features.auth.AUTH_GRAPH
 import proton.android.pass.featurepasskeys.select.navigation.SelectPasskeyNavigation
 import proton.android.pass.featurepasskeys.select.navigation.selectPasskeyActivityGraph
 import proton.android.pass.featurepasskeys.select.presentation.SelectPasskeyActionAfterAuth

@@ -50,7 +50,7 @@ dependencies {
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.features.account)
-    implementation(projects.pass.featureAuth.impl)
+    implementation(projects.pass.features.auth)
     implementation(projects.pass.featureHome.impl)
     implementation(projects.pass.featureItemCreate.impl)
     implementation(projects.pass.featureItemDetail.impl)

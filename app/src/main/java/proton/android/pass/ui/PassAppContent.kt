@@ -46,7 +46,7 @@ import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
-import proton.android.pass.featureauth.impl.AuthOrigin
+import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.log.api.PassLogger

@@ -16,28 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.mailboxes.options.presentation
+package proton.android.pass.data.api.usecases.simplelogin
 
-internal data class SimpleLoginSyncMailboxOptionsState(
-    internal val event: SimpleLoginSyncMailboxOptionsEvent,
-    internal val action: SimpleLoginSyncMailboxOptionsAction,
-    private val isDefault: Boolean,
-    private val isVerified: Boolean
-) {
+import kotlinx.coroutines.flow.Flow
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 
-    internal val canSetAsDefault = !isDefault && isVerified
+interface ObserveSimpleLoginAliasMailbox {
 
-    internal val canVerify = !isVerified
-
-    internal companion object {
-
-        internal val Initial = SimpleLoginSyncMailboxOptionsState(
-            isDefault = false,
-            isVerified = false,
-            event = SimpleLoginSyncMailboxOptionsEvent.Idle,
-            action = SimpleLoginSyncMailboxOptionsAction.None
-        )
-
-    }
+    operator fun invoke(mailboxId: Long): Flow<SimpleLoginAliasMailbox?>
 
 }

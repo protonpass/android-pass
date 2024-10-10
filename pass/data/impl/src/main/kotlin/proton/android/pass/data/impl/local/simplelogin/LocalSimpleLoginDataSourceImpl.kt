@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.update
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasSettings
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.simplelogin.SimpleLoginSyncStatusPreference
@@ -37,9 +38,15 @@ class LocalSimpleLoginDataSourceImpl @Inject constructor(
 
     private val aliasSettingsFlow = MutableStateFlow<SimpleLoginAliasSettings?>(null)
 
-    private val aliasDomainsFlow = MutableStateFlow<MutableMap<UserId, List<SimpleLoginAliasDomain>>>(
-        value = mutableMapOf()
-    )
+    private val aliasDomainsFlow =
+        MutableStateFlow<MutableMap<UserId, List<SimpleLoginAliasDomain>>>(
+            value = mutableMapOf()
+        )
+
+    private val aliasMailboxesFlow =
+        MutableStateFlow<MutableMap<UserId, Map<Long, SimpleLoginAliasMailbox>>>(
+            value = mutableMapOf()
+        )
 
     override fun disableSyncPreference() {
         userPreferencesRepository.setSimpleLoginSyncStatusPreference(
@@ -88,6 +95,24 @@ class LocalSimpleLoginDataSourceImpl @Inject constructor(
                         }
                     }
             } ?: aliasDomainsMap
+        }
+    }
+
+    override fun observeAliasMailbox(userId: UserId, mailboxId: Long): Flow<SimpleLoginAliasMailbox?> =
+        aliasMailboxesFlow.mapLatest { aliasMailboxesMap ->
+            aliasMailboxesMap[userId]?.get(mailboxId)
+        }
+
+    override fun observeAliasMailboxes(userId: UserId): Flow<List<SimpleLoginAliasMailbox>> =
+        aliasMailboxesFlow.mapLatest { aliasMailboxesMap ->
+            aliasMailboxesMap[userId]?.values?.toList() ?: emptyList()
+        }
+
+    override fun refreshAliasMailboxes(userId: UserId, aliasMailboxes: List<SimpleLoginAliasMailbox>) {
+        aliasMailboxesFlow.update { aliasMailboxesMap ->
+            aliasMailboxesMap.toMutableMap().apply {
+                put(userId, aliasMailboxes.associateBy { aliasMailbox -> aliasMailbox.id })
+            }
         }
     }
 

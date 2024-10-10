@@ -21,7 +21,8 @@ package proton.android.pass.features.sl.sync.mailboxes.options.presentation
 internal data class SimpleLoginSyncMailboxOptionsState(
     internal val isDefault: Boolean,
     internal val isVerified: Boolean,
-    internal val event: SimpleLoginSyncMailboxOptionsEvent
+    internal val event: SimpleLoginSyncMailboxOptionsEvent,
+    internal val action: SimpleLoginSyncMailboxOptionsAction
 ) {
 
     internal companion object {
@@ -29,7 +30,8 @@ internal data class SimpleLoginSyncMailboxOptionsState(
         internal val Initial = SimpleLoginSyncMailboxOptionsState(
             isDefault = false,
             isVerified = false,
-            event = SimpleLoginSyncMailboxOptionsEvent.Idle
+            event = SimpleLoginSyncMailboxOptionsEvent.Idle,
+            action = SimpleLoginSyncMailboxOptionsAction.None
         )
 
     }

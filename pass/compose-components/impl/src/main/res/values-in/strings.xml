@@ -236,5 +236,4 @@
     <item quantity="other">Kami mendeteksi bahwa Anda memiliki %d alias yang saat ini ada di SimpleLogin namun belum terdaftar pada Proton Pass. Apakah Anda ingin mengimpor alias ini?</item>
   </plurals>
   <string name="simple_login_widget_action">Sinkronisasikan alias</string>
-  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

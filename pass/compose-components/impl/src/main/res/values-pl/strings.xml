@@ -257,5 +257,4 @@
     <item quantity="other">Masz %d aliasów SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</item>
   </plurals>
   <string name="simple_login_widget_action">Synchronizuj aliasy</string>
-  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

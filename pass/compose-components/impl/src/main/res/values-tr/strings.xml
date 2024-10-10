@@ -243,5 +243,4 @@
     <item quantity="other">SimpleLogin üzerinde bulunan ancak Proton Pass üzerinde bulunmayan %d takma adınızın olduğunu gördük. Bunları içe aktarmak ister misiniz?</item>
   </plurals>
   <string name="simple_login_widget_action">Takma adları eşitle</string>
-  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

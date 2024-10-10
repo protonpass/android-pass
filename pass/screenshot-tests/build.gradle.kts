@@ -49,7 +49,7 @@ dependencies {
     implementation(projects.pass.autofill.impl)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.composeComponents.impl)
-    implementation(projects.pass.featureAccount.impl)
+    implementation(projects.pass.features.account)
     implementation(projects.pass.featureAuth.impl)
     implementation(projects.pass.featureHome.impl)
     implementation(projects.pass.featureItemCreate.impl)

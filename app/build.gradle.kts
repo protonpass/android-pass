@@ -439,7 +439,7 @@ dependencies {
         fdroid = projects.pass.inAppReview.fdroid
     )
 
-    implementation(projects.pass.featureAccount.impl)
+    implementation(projects.pass.features.account)
     implementation(projects.pass.featureAuth.impl)
     implementation(projects.pass.featureFeatureFlags.impl)
     implementation(projects.pass.featureHome.impl)

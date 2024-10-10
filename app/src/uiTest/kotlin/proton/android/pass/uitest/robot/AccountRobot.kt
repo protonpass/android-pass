@@ -21,9 +21,9 @@ package proton.android.pass.uitest.robot
 import me.proton.core.accountmanager.test.robot.AccountSettingsRobot
 import me.proton.core.accountmanager.test.robot.SignOutDialogRobot
 import me.proton.test.fusion.Fusion.node
-import proton.android.pass.featureaccount.impl.AccountContentTestTag
-import proton.android.pass.featureaccount.impl.AccountScreenTestTag
-import proton.android.pass.featureaccount.impl.R as FeatureAccountR
+import proton.android.pass.features.account.AccountContentTestTag
+import proton.android.pass.features.account.AccountScreenTestTag
+import proton.android.pass.features.account.R as FeatureAccountR
 
 object AccountRobot : Robot {
 

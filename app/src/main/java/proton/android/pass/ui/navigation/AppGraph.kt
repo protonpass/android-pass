@@ -26,9 +26,9 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
-import proton.android.pass.featureaccount.impl.Account
-import proton.android.pass.featureaccount.impl.AccountNavigation
-import proton.android.pass.featureaccount.impl.accountGraph
+import proton.android.pass.features.account.Account
+import proton.android.pass.features.account.AccountNavigation
+import proton.android.pass.features.account.accountGraph
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.AuthOrigin

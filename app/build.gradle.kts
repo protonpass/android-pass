@@ -440,7 +440,7 @@ dependencies {
     )
 
     implementation(projects.pass.features.account)
-    implementation(projects.pass.featureAuth.impl)
+    implementation(projects.pass.features.auth)
     implementation(projects.pass.featureFeatureFlags.impl)
     implementation(projects.pass.featureHome.impl)
     implementation(projects.pass.featureItemCreate.impl)

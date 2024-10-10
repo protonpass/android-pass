@@ -49,8 +49,10 @@ internal fun delete(action: SimpleLoginSyncMailboxOptionsAction, onClick: () -> 
 
     override val endIcon: @Composable (() -> Unit)? = null
 
-    override val onClick: (() -> Unit)? = onClick.takeIf {
-        action == SimpleLoginSyncMailboxOptionsAction.None
+    override val onClick: (() -> Unit) = {
+        if (action == SimpleLoginSyncMailboxOptionsAction.None) {
+            onClick()
+        }
     }
 
     override val isDivider: Boolean = false
@@ -78,8 +80,10 @@ internal fun setAsDefault(action: SimpleLoginSyncMailboxOptionsAction, onClick: 
         }
     }
 
-    override val onClick: (() -> Unit)? = onClick.takeIf {
-        action == SimpleLoginSyncMailboxOptionsAction.None
+    override val onClick: (() -> Unit) = {
+        if (action == SimpleLoginSyncMailboxOptionsAction.None) {
+            onClick()
+        }
     }
 
     override val isDivider: Boolean = false
@@ -107,8 +111,10 @@ internal fun verify(action: SimpleLoginSyncMailboxOptionsAction, onClick: () -> 
         }
     }
 
-    override val onClick: (() -> Unit)? = onClick.takeIf {
-        action == SimpleLoginSyncMailboxOptionsAction.None
+    override val onClick: (() -> Unit) = {
+        if (action == SimpleLoginSyncMailboxOptionsAction.None) {
+            onClick()
+        }
     }
 
     override val isDivider: Boolean = false

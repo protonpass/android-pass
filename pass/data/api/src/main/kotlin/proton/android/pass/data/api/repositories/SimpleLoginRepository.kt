@@ -60,4 +60,6 @@ interface SimpleLoginRepository {
         pendingAliasesItems: List<Pair<String, EncryptedCreateItem>>
     )
 
+    fun observeAliasMailbox(mailboxId: Long): Flow<SimpleLoginAliasMailbox?>
+
 }

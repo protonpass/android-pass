@@ -32,7 +32,7 @@ internal fun SimpleLoginSyncMailboxOptionsContent(
     onUiEvent: (SimpleLoginSyncMailboxOptionsUiEvent) -> Unit
 ) = with(state) {
     buildList {
-        if (!isDefault) {
+        if (canSetAsDefault) {
             setAsDefault(
                 action = action,
                 onClick = {
@@ -41,7 +41,7 @@ internal fun SimpleLoginSyncMailboxOptionsContent(
             ).also(::add)
         }
 
-        if (!isVerified) {
+        if (canVerify) {
             verify(
                 action = action,
                 onClick = {

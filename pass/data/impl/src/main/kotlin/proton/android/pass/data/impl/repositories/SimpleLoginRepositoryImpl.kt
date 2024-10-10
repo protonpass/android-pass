@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
@@ -110,7 +109,8 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     override fun observeAliasDomains(): Flow<List<SimpleLoginAliasDomain>> = userIdFlow
         .flatMapLatest { userId ->
             flow {
-                val localAliasDomains = localSimpleLoginDataSource.observeAliasDomains(userId).first()
+                val localAliasDomains =
+                    localSimpleLoginDataSource.observeAliasDomains(userId).first()
 
                 if (localAliasDomains.isNotEmpty()) {
                     emit(localAliasDomains)
@@ -159,11 +159,42 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun observeAliasMailbox(mailboxId: Long): Flow<SimpleLoginAliasMailbox?> = userIdFlow
+        .flatMapLatest { userId ->
+            localSimpleLoginDataSource.observeAliasMailbox(userId, mailboxId)
+        }
+
     override fun observeAliasMailboxes(): Flow<List<SimpleLoginAliasMailbox>> = userIdFlow
-        .mapLatest { userId ->
-            remoteSimpleLoginDataSource.getSimpleLoginAliasMailboxes(userId)
-                .mailboxes
-                .map { simpleLoginAliasMailboxData -> simpleLoginAliasMailboxData.toDomain() }
+        .flatMapLatest { userId ->
+            flow {
+                val localAliasMailboxes =
+                    localSimpleLoginDataSource.observeAliasMailboxes(userId).first()
+
+                if (localAliasMailboxes.isNotEmpty()) {
+                    emit(localAliasMailboxes)
+                }
+
+                runCatching { remoteSimpleLoginDataSource.getSimpleLoginAliasMailboxes(userId) }
+                    .onFailure { error ->
+                        PassLogger.w(TAG, "There was an error fetching alias mailboxes")
+                        PassLogger.w(TAG, error)
+                        if (localAliasMailboxes.isEmpty()) throw error
+                    }
+                    .onSuccess { response ->
+                        response.mailboxes
+                            .map { simpleLoginAliasMailboxData ->
+                                simpleLoginAliasMailboxData.toDomain()
+                            }
+                            .also { remoteAliasMailboxes ->
+                                localSimpleLoginDataSource.refreshAliasMailboxes(
+                                    userId = userId,
+                                    aliasMailboxes = remoteAliasMailboxes
+                                )
+                            }
+                    }
+
+                emitAll(localSimpleLoginDataSource.observeAliasMailboxes(userId))
+            }
         }
 
     override suspend fun createAliasMailbox(email: String): SimpleLoginAliasMailbox = withUserId { userId ->
@@ -332,3 +363,4 @@ class SimpleLoginRepositoryImpl @Inject constructor(
     }
 
 }
+

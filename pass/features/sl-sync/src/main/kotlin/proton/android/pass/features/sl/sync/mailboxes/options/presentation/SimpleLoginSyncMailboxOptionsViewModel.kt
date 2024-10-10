@@ -21,6 +21,11 @@ package proton.android.pass.features.sl.sync.mailboxes.options.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -35,13 +40,25 @@ class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
     private val mailboxId = savedStateHandleProvider.get()
         .require<Long>(SimpleLoginSyncMailboxIdNavArgId.key)
 
-    internal fun onSetMailboxAsDefault() {
-        viewModelScope.launch {
+    private val eventFlow = MutableStateFlow<SimpleLoginSyncMailboxOptionsEvent>(
+        value = SimpleLoginSyncMailboxOptionsEvent.Idle
+    )
 
+    internal val stateFlow: StateFlow<SimpleLoginSyncMailboxOptionsState> = eventFlow
+        .mapLatest { event ->
+            SimpleLoginSyncMailboxOptionsState(
+                isDefault = false,
+                isVerified = false,
+                event = event
+            )
         }
-    }
+        .stateIn(
+            scope = viewModelScope,
+            started = kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(5_000L),
+            initialValue = SimpleLoginSyncMailboxOptionsState.Initial
+        )
 
-    internal fun onDeleteMailbox() {
+    internal fun onSetMailboxAsDefault() {
         viewModelScope.launch {
 
         }
@@ -51,6 +68,10 @@ class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
         viewModelScope.launch {
 
         }
+    }
+
+    internal fun onDeleteMailbox() {
+        eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnDeleteMailbox(mailboxId) }
     }
 
 }

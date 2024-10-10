@@ -19,7 +19,11 @@
 package proton.android.pass.features.sl.sync.mailboxes.options.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.features.sl.sync.mailboxes.options.presentation.SimpleLoginSyncMailboxOptionsEvent
 import proton.android.pass.features.sl.sync.mailboxes.options.presentation.SimpleLoginSyncMailboxOptionsViewModel
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 
@@ -28,8 +32,36 @@ fun SimpleLoginSyncMailboxOptionsBottomSheet(
     onNavigated: (SimpleLoginSyncNavDestination) -> Unit,
     viewModel: SimpleLoginSyncMailboxOptionsViewModel = hiltViewModel()
 ) = with(viewModel) {
+    val state by stateFlow.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state.event) {
+        when (val event = state.event) {
+            SimpleLoginSyncMailboxOptionsEvent.Idle -> Unit
+            is SimpleLoginSyncMailboxOptionsEvent.OnDeleteMailbox -> {
+                SimpleLoginSyncNavDestination.DeleteMailbox(
+                    mailboxId = event.mailboxId
+                ).also(onNavigated)
+            }
+
+            is SimpleLoginSyncMailboxOptionsEvent.OnMailboxVerifySuccess -> {
+                SimpleLoginSyncNavDestination.VerifyMailbox(
+                    mailboxId = event.mailboxId,
+                    mailboxEmail = "user@email.com"
+                ).also(onNavigated)
+            }
+
+            SimpleLoginSyncMailboxOptionsEvent.OnMailboxSetAsDefaultError,
+            SimpleLoginSyncMailboxOptionsEvent.OnMailboxSetAsDefaultSuccess,
+            SimpleLoginSyncMailboxOptionsEvent.OnMailboxVerifyError -> {
+                SimpleLoginSyncNavDestination.Back(
+                    comesFromBottomSheet = true
+                ).also(onNavigated)
+            }
+        }
+    }
 
     SimpleLoginSyncMailboxOptionsContent(
+        state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SimpleLoginSyncMailboxOptionsUiEvent.OnDeleteClicked -> {

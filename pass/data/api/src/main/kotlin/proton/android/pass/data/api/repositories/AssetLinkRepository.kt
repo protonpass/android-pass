@@ -20,10 +20,12 @@ package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.assetlink.AssetLink
+import java.util.Date
 
 interface AssetLinkRepository {
     suspend fun fetch(website: String): AssetLink
     suspend fun insert(list: List<AssetLink>)
-    suspend fun purge()
+    suspend fun purgeAll()
+    suspend fun purgeOlderThan(date: Date)
     fun observeByPackageName(packageName: String): Flow<List<AssetLink>>
 }

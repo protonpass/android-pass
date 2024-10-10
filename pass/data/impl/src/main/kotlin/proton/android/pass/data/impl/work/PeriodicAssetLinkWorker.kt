@@ -32,9 +32,15 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.datetime.Clock
+import kotlinx.datetime.DateTimeUnit.Companion.DAY
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.minus
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
+import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLink
@@ -42,6 +48,7 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.log.api.PassLogger
+import java.util.Date
 import java.util.concurrent.TimeUnit
 
 @HiltWorker
@@ -50,34 +57,53 @@ class PeriodicAssetLinkWorker @AssistedInject constructor(
     @Assisted private val workerParameters: WorkerParameters,
     private val accountManager: AccountManager,
     private val observeItems: ObserveItems,
-    private val updateAssetLink: UpdateAssetLink
+    private val assetLinkRepository: AssetLinkRepository,
+    private val updateAssetLink: UpdateAssetLink,
+    private val clock: Clock
 ) : CoroutineWorker(appContext, workerParameters) {
 
     override suspend fun doWork(): Result = runCatching {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
-        val websites: Set<String> = accountManager.getAccounts(AccountState.Ready)
-            .flatMapLatest { list ->
-                val flows = list.map { user ->
-                    observeItems(
-                        selection = ShareSelection.AllShares,
-                        itemState = ItemState.Active,
-                        filter = ItemTypeFilter.Logins,
-                        userId = user.userId
-                    )
-                }
-                combine(flows) { it.toList().flatten() }
-            }
-            .mapLatest { list ->
-                list.flatMap { (it.itemType as ItemType.Login).websites }.toSet()
-            }
-            .first()
+        purgeOldData()
+        val websites: Set<String> = getAllWebsites()
         updateAssetLink(websites)
-    }
-        .onFailure {
-            PassLogger.w(TAG, "Failed to get websites")
+    }.onSuccess {
+        PassLogger.i(TAG, "Finished $TAG")
+    }.onFailure {
+        PassLogger.w(TAG, "Failed update asset links")
+        PassLogger.w(TAG, it)
+    }.toWorkerResult()
+
+    private suspend fun getAllWebsites() = accountManager.getAccounts(AccountState.Ready)
+        .flatMapLatest { list ->
+            val flows = list.map { user ->
+                observeItems(
+                    selection = ShareSelection.AllShares,
+                    itemState = ItemState.Active,
+                    filter = ItemTypeFilter.Logins,
+                    userId = user.userId
+                )
+            }
+            combine(flows) { it.toList().flatten() }
+        }
+        .mapLatest { list ->
+            list.flatMap { (it.itemType as ItemType.Login).websites }.toSet()
+        }
+        .first()
+
+    private suspend fun purgeOldData() {
+        runCatching {
+            val date14DaysAgo: Instant = clock.now().minus(
+                REPEAT_DAYS, DAY, TimeZone.currentSystemDefault()
+            )
+            assetLinkRepository.purgeOlderThan(Date(date14DaysAgo.toEpochMilliseconds()))
+        }.onSuccess {
+            PassLogger.i(TAG, "Purged old asset links")
+        }.onFailure {
+            PassLogger.w(TAG, "Failed to purge old asset links")
             PassLogger.w(TAG, it)
         }
-        .toWorkerResult()
+    }
 
     companion object {
         const val WORKER_UNIQUE_NAME = "periodic_asset_link_worker"

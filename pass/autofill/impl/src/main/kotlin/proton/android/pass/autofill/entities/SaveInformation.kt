@@ -28,10 +28,11 @@ data class SaveInformation(
 
 fun SaveInformation.usernamePassword(): UsernamePassword = when (itemType) {
     is SaveItemType.Login -> UsernamePassword(itemType.identity, itemType.password)
-    is SaveItemType.SingleValue -> UsernamePassword(itemType.contents, itemType.contents)
+    is SaveItemType.Username -> UsernamePassword(itemType.contents, null)
+    is SaveItemType.Password -> UsernamePassword(null, itemType.contents)
 }
 
 data class UsernamePassword(
-    val username: String,
-    val password: String
+    val username: String?,
+    val password: String?
 )

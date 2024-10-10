@@ -18,22 +18,21 @@
 
 package proton.android.pass.features.sl.sync.mailboxes.options.presentation
 
-internal data class SimpleLoginSyncMailboxOptionsState(
-    internal val isDefault: Boolean,
-    internal val isVerified: Boolean,
-    internal val event: SimpleLoginSyncMailboxOptionsEvent,
-    internal val action: SimpleLoginSyncMailboxOptionsAction
-) {
+import androidx.annotation.StringRes
+import proton.android.pass.features.sl.sync.R
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 
-    internal companion object {
+internal enum class SimpleLoginSyncMailboxOptionsMessage(
+    @StringRes
+    override val id: Int,
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
+) : SnackbarMessage {
 
-        internal val Initial = SimpleLoginSyncMailboxOptionsState(
-            isDefault = false,
-            isVerified = false,
-            event = SimpleLoginSyncMailboxOptionsEvent.Idle,
-            action = SimpleLoginSyncMailboxOptionsAction.None
-        )
-
-    }
+    VerifyMailboxError(
+        id = R.string.simple_login_sync_mailbox_verify_message_verification_error,
+        type = SnackbarType.ERROR
+    )
 
 }

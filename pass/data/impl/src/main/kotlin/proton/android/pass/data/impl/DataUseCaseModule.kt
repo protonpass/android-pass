@@ -182,6 +182,7 @@ import proton.android.pass.data.api.usecases.simplelogin.CreateSimpleLoginAliasM
 import proton.android.pass.data.api.usecases.simplelogin.DisableSimpleLoginSyncPreference
 import proton.android.pass.data.api.usecases.simplelogin.EnableSimpleLoginSync
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
+import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailboxes
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasSettings
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
@@ -362,6 +363,7 @@ import proton.android.pass.data.impl.usecases.simplelogin.CreateSimpleLoginAlias
 import proton.android.pass.data.impl.usecases.simplelogin.DisableSimpleLoginSyncPreferenceImpl
 import proton.android.pass.data.impl.usecases.simplelogin.EnableSimpleLoginSyncImpl
 import proton.android.pass.data.impl.usecases.simplelogin.ObserveSimpleLoginAliasDomainsImpl
+import proton.android.pass.data.impl.usecases.simplelogin.ObserveSimpleLoginAliasMailboxImpl
 import proton.android.pass.data.impl.usecases.simplelogin.ObserveSimpleLoginAliasMailboxesImpl
 import proton.android.pass.data.impl.usecases.simplelogin.ObserveSimpleLoginAliasSettingsImpl
 import proton.android.pass.data.impl.usecases.simplelogin.ObserveSimpleLoginSyncStatusImpl
@@ -948,5 +950,10 @@ abstract class DataUseCaseModule {
     abstract fun bindResendSimpleLoginMailboxVerifyCode(
         impl: ResendSimpleLoginAliasMailboxVerificationCodeImpl
     ): ResendSimpleLoginAliasMailboxVerificationCode
+
+    @[Binds Singleton]
+    abstract fun bindObserveSimpleLoginAliasMailbox(
+        impl: ObserveSimpleLoginAliasMailboxImpl
+    ): ObserveSimpleLoginAliasMailbox
 
 }

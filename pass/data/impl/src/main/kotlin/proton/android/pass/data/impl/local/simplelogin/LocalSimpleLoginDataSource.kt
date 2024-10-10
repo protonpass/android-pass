@@ -46,4 +46,6 @@ interface LocalSimpleLoginDataSource {
 
     fun refreshAliasMailboxes(userId: UserId, aliasMailboxes: List<SimpleLoginAliasMailbox>)
 
+    fun updateDefaultAliasMailbox(userId: UserId, mailboxId: Long)
+
 }

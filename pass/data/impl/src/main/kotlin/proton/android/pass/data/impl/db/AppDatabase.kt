@@ -86,6 +86,7 @@ import me.proton.core.usersettings.data.entity.OrganizationEntity
 import me.proton.core.usersettings.data.entity.OrganizationKeysEntity
 import me.proton.core.usersettings.data.entity.UserSettingsEntity
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
+import proton.android.pass.data.impl.db.entities.DateConverter
 import proton.android.pass.data.impl.db.entities.InviteEntity
 import proton.android.pass.data.impl.db.entities.InviteKeyEntity
 import proton.android.pass.data.impl.db.entities.ItemEntity
@@ -202,7 +203,8 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
     ChallengeConverters::class,
     NotificationConverters::class,
     PushConverters::class,
-    AuthConverters::class
+    AuthConverters::class,
+    DateConverter::class
 )
 abstract class AppDatabase :
     BaseDatabase(),

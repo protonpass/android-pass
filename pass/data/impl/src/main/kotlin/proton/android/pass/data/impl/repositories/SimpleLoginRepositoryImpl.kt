@@ -235,7 +235,13 @@ class SimpleLoginRepositoryImpl @Inject constructor(
             )
                 .settings
                 .toDomain()
-                .also(localSimpleLoginDataSource::updateAliasSettings)
+                .also { aliasSettings ->
+                    localSimpleLoginDataSource.updateAliasSettings(aliasSettings)
+                    localSimpleLoginDataSource.updateDefaultAliasMailbox(
+                        userId = userId,
+                        mailboxId = aliasSettings.defaultMailboxId
+                    )
+                }
         }
     }
 

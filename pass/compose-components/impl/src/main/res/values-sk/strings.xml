@@ -257,5 +257,4 @@
     <item quantity="other">Zistili sme, že máte %d aliasov, ktoré sú prítomné v SimpleLogin, ale chýbajú v Proton Pass. Chcete ich naimportovať?</item>
   </plurals>
   <string name="simple_login_widget_action">Synchronizovať aliasy</string>
-  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

@@ -257,5 +257,4 @@
     <item quantity="other">Мы обнаружили, что у вас есть %d псевдонимов, которые присутствуют в SimpleLogin, но отсутствуют в Proton Pass. Вы хотите их импортировать?</item>
   </plurals>
   <string name="simple_login_widget_action">Синхронизировать псевдонимы</string>
-  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

@@ -243,5 +243,4 @@
     <item quantity="other">Εντοπίσαμε ότι έχετε %d ψευδώνυμα που υπάρχουν στο SimpleLogin αλλά λείπουν στο Proton Pass. Θέλετε να τα εισαγάγετε;</item>
   </plurals>
   <string name="simple_login_widget_action">Συγχρονισμός ψευδωνύμων</string>
-  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

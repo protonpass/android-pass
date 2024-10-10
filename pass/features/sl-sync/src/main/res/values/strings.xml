@@ -61,6 +61,10 @@
     <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
     <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
 
+    <!-- Mailbox options screen -->
+    <string name="simple_login_sync_mailbox_options_snackbar_default_error">There was an error updating default mailbox</string>
+    <string name="simple_login_sync_mailbox_options_snackbar_default_success">Default mailbox successfully updated</string>
+
     <!-- Shared -->
     <string name="simple_login_sync_shared_default_vault_title">Default SL vault</string>
     <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliases will be imported into this vault.</string>

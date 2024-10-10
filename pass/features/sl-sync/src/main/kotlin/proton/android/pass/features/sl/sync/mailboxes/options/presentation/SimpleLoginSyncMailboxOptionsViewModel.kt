@@ -30,6 +30,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.simplelogin.ResendSimpleLoginAliasMailboxVerificationCode
+import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasMailbox
 import proton.android.pass.features.sl.sync.shared.navigation.mailboxes.SimpleLoginSyncMailboxIdNavArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -38,6 +39,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
+    private val updateSimpleLoginAliasMailbox: UpdateSimpleLoginAliasMailbox,
     private val resendAliasMailboxVerificationCode: ResendSimpleLoginAliasMailboxVerificationCode,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
@@ -69,7 +71,23 @@ class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
 
     internal fun onSetMailboxAsDefault() {
         viewModelScope.launch {
+            actionFlow.update { SimpleLoginSyncMailboxOptionsAction.SetAsDefault }
 
+            runCatching { updateSimpleLoginAliasMailbox(mailboxId) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "There was an error updating default mailbox")
+                    PassLogger.w(TAG, error)
+                    eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnMailboxVerifyError }
+                    snackbarDispatcher(SimpleLoginSyncMailboxOptionsMessage.DefaultMailboxError)
+                }
+                .onSuccess {
+                    eventFlow.update {
+                        SimpleLoginSyncMailboxOptionsEvent.OnMailboxVerifySuccess(mailboxId)
+                    }
+                    snackbarDispatcher(SimpleLoginSyncMailboxOptionsMessage.DefaultMailboxSuccess)
+                }
+
+            actionFlow.update { SimpleLoginSyncMailboxOptionsAction.None }
         }
     }
 

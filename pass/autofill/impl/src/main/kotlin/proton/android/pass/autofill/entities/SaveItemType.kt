@@ -23,7 +23,10 @@ import kotlinx.parcelize.Parcelize
 
 sealed class SaveItemType : Parcelable {
     @Parcelize
-    data class SingleValue(val contents: String) : SaveItemType()
+    data class Username(val contents: String) : SaveItemType()
+
+    @Parcelize
+    data class Password(val contents: String) : SaveItemType()
 
     @Parcelize
     data class Login(

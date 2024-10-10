@@ -46,8 +46,8 @@ import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarH
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
 import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
-import proton.android.pass.featureauth.impl.AuthOrigin
-import proton.android.pass.featureauth.impl.AuthWithDefault
+import proton.android.pass.features.auth.AuthOrigin
+import proton.android.pass.features.auth.AuthWithDefault
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 import proton.android.pass.network.api.NetworkStatus

@@ -52,7 +52,7 @@ class ResetAppToDefaultsImpl @Inject constructor(
             }
 
         clearPin()
-        runCatching { withContext(Dispatchers.IO) { assetLinkRepository.purge() } }
+        runCatching { withContext(Dispatchers.IO) { assetLinkRepository.purgeAll() } }
             .onSuccess { PassLogger.d(TAG, "Asset links purged") }
             .onFailure {
                 PassLogger.w(TAG, "Error purging asset links")

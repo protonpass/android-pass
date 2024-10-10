@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.domain.assetlink.AssetLink
+import java.util.Date
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -30,7 +31,10 @@ class FakeAssetLinkRepository @Inject constructor() : AssetLinkRepository {
 
     private val fakeData = mutableListOf(
         AssetLink("example.com", setOf(AssetLink.Package("com.example.app", setOf("signature1")))),
-        AssetLink("anotherexample.com", setOf(AssetLink.Package("com.another.app", setOf("signature2"))))
+        AssetLink(
+            "anotherexample.com",
+            setOf(AssetLink.Package("com.another.app", setOf("signature2")))
+        )
     )
 
     override suspend fun fetch(website: String): AssetLink =
@@ -40,7 +44,11 @@ class FakeAssetLinkRepository @Inject constructor() : AssetLinkRepository {
         fakeData += list
     }
 
-    override suspend fun purge() {
+    override suspend fun purgeAll() {
+        fakeData.clear()
+    }
+
+    override suspend fun purgeOlderThan(date: Date) {
         fakeData.clear()
     }
 

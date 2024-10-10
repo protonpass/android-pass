@@ -22,7 +22,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.TypeConverter
-import androidx.room.TypeConverters
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity.Columns
 import java.util.Date
 
@@ -36,7 +35,6 @@ import java.util.Date
         )
     ]
 )
-@TypeConverters(DateConverter::class)
 data class AssetLinkEntity(
     @ColumnInfo(name = Columns.WEBSITE)
     val website: String,

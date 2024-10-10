@@ -23,18 +23,23 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.simplelogin.ResendSimpleLoginAliasMailboxVerificationCode
 import proton.android.pass.features.sl.sync.shared.navigation.mailboxes.SimpleLoginSyncMailboxIdNavArgId
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
 class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    private val resendAliasMailboxVerificationCode: ResendSimpleLoginAliasMailboxVerificationCode,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val mailboxId = savedStateHandleProvider.get()
@@ -44,19 +49,23 @@ class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
         value = SimpleLoginSyncMailboxOptionsEvent.Idle
     )
 
-    internal val stateFlow: StateFlow<SimpleLoginSyncMailboxOptionsState> = eventFlow
-        .mapLatest { event ->
-            SimpleLoginSyncMailboxOptionsState(
-                isDefault = false,
-                isVerified = false,
-                event = event
-            )
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(5_000L),
-            initialValue = SimpleLoginSyncMailboxOptionsState.Initial
+    private val actionFlow = MutableStateFlow(SimpleLoginSyncMailboxOptionsAction.None)
+
+    internal val stateFlow: StateFlow<SimpleLoginSyncMailboxOptionsState> = combine(
+        eventFlow,
+        actionFlow
+    ) { event, action ->
+        SimpleLoginSyncMailboxOptionsState(
+            isDefault = false,
+            isVerified = false,
+            event = event,
+            action = action
         )
+    }.stateIn(
+        scope = viewModelScope,
+        started = kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(5_000L),
+        initialValue = SimpleLoginSyncMailboxOptionsState.Initial
+    )
 
     internal fun onSetMailboxAsDefault() {
         viewModelScope.launch {
@@ -66,12 +75,33 @@ class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
 
     internal fun onVerifyMailbox() {
         viewModelScope.launch {
+            actionFlow.update { SimpleLoginSyncMailboxOptionsAction.Verify }
 
+            runCatching { resendAliasMailboxVerificationCode(mailboxId) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "There was an error resending mailbox verification code")
+                    PassLogger.w(TAG, error)
+                    eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnMailboxVerifyError }
+                    snackbarDispatcher(SimpleLoginSyncMailboxOptionsMessage.VerifyMailboxError)
+                }
+                .onSuccess {
+                    eventFlow.update {
+                        SimpleLoginSyncMailboxOptionsEvent.OnMailboxVerifySuccess(mailboxId)
+                    }
+                }
+
+            actionFlow.update { SimpleLoginSyncMailboxOptionsAction.None }
         }
     }
 
     internal fun onDeleteMailbox() {
         eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnDeleteMailbox(mailboxId) }
+    }
+
+    private companion object {
+
+        private const val TAG = "SimpleLoginSyncMailboxOptionsViewModel"
+
     }
 
 }

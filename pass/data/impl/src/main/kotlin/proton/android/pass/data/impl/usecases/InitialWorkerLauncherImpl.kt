@@ -50,6 +50,8 @@ class InitialWorkerLauncherImpl @Inject constructor(
         }
         if (isDAL) {
             launchAssetLinkWorker()
+        } else {
+            workManager.cancelUniqueWork(PeriodicAssetLinkWorker.WORKER_UNIQUE_NAME)
         }
     }
 

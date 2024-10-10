@@ -243,5 +243,4 @@
     <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
   </plurals>
   <string name="simple_login_widget_action">Synchroniseer aliassen</string>
-  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

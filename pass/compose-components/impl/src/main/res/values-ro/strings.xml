@@ -250,5 +250,4 @@
     <item quantity="other">Am detectat că aveți %d de aliasuri care există în SimpleLogin, dar lipsesc în Proton Pass. Doriți să le importați?</item>
   </plurals>
   <string name="simple_login_widget_action">Sincronizare aliasuri</string>
-  <string name="simple_login_widget_close_content_description">Button to close SimpleLogin aliases sync widget</string>
 </resources>

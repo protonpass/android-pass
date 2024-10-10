@@ -26,12 +26,16 @@ import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
+import java.util.Date
 
 @Dao
 abstract class AssetLinkDao : BaseDao<AssetLinkEntity>() {
 
     @Query("DELETE FROM ${AssetLinkEntity.TABLE}")
     abstract fun purge()
+
+    @Query("DELETE FROM ${AssetLinkEntity.TABLE} WHERE ${AssetLinkEntity.Columns.CREATED_AT} < :date")
+    abstract fun purgeOlderThan(date: Date)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertOrIgnore(entity: AssetLinkEntity)

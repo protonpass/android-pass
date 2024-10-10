@@ -101,7 +101,7 @@ internal fun passkeyItem(item: Passkey, onClick: () -> Unit): BottomSheetItem = 
 @Preview
 @Composable
 @Suppress("MagicNumber")
-fun SelectPasskeyBottomsheetContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+fun SelectPasskeyBSContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     val createPasskey = { id: String, domain: String, username: String ->
         Passkey(
             id = PasskeyId(id),

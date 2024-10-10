@@ -21,9 +21,9 @@ package proton.android.pass.autofill.ui.autosave
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.autofill.entities.usernamePassword
 import proton.android.pass.commonuimodels.api.PackageInfoUi
-import proton.android.pass.featureauth.impl.AuthNavigation
-import proton.android.pass.featureauth.impl.EnterPin
-import proton.android.pass.featureauth.impl.authGraph
+import proton.android.pass.features.auth.AuthNavigation
+import proton.android.pass.features.auth.EnterPin
+import proton.android.pass.features.auth.authGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem

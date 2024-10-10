@@ -23,31 +23,37 @@ import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
+import proton.android.pass.features.sl.sync.mailboxes.options.presentation.SimpleLoginSyncMailboxOptionsState
 
 @Composable
 internal fun SimpleLoginSyncMailboxOptionsContent(
     modifier: Modifier = Modifier,
+    state: SimpleLoginSyncMailboxOptionsState,
     onUiEvent: (SimpleLoginSyncMailboxOptionsUiEvent) -> Unit
-) {
+) = with(state) {
     buildList {
-        setAsDefault(
-            onClick = {
-                onUiEvent(SimpleLoginSyncMailboxOptionsUiEvent.OnSetAsDefaultClicked)
-            }
-        ).also(::add)
+        if (!isDefault) {
+            setAsDefault(
+                onClick = {
+                    onUiEvent(SimpleLoginSyncMailboxOptionsUiEvent.OnSetAsDefaultClicked)
+                }
+            ).also(::add)
+        }
 
-        verify(
-            onClick = {
-                onUiEvent(SimpleLoginSyncMailboxOptionsUiEvent.OnSetAsDefaultClicked)
-            }
-        ).also(::add)
+        if (!isVerified) {
+            verify(
+                onClick = {
+                    onUiEvent(SimpleLoginSyncMailboxOptionsUiEvent.OnSetAsDefaultClicked)
+                }
+            ).also(::add)
+        }
 
         delete(
             onClick = {
                 onUiEvent(SimpleLoginSyncMailboxOptionsUiEvent.OnDeleteClicked)
             }
         ).also(::add)
-    }.also { items ->
+    }.let { items ->
         BottomSheetItemList(
             modifier = modifier.bottomSheet(),
             items = items.toPersistentList()

@@ -2021,6 +2021,10 @@ fun NavGraphBuilder.appGraph(
                         mailboxId = destination.mailboxId
                     )
                 )
+
+                is SimpleLoginSyncNavDestination.DeleteMailbox -> {
+                    // Will be implemented in IDTEAM-3958
+                }
             }
         }
     )

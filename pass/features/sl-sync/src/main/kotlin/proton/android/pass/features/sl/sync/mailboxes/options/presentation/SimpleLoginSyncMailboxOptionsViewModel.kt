@@ -22,12 +22,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailbox
@@ -50,8 +54,20 @@ class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
     private val mailboxId = savedStateHandleProvider.get()
         .require<Long>(SimpleLoginSyncMailboxIdNavArgId.key)
 
-    private val aliasMailboxFlow = observeSimpleLoginAliasMailbox(mailboxId)
-        .filterNotNull()
+    private val aliasMailboxOptionFlow = observeSimpleLoginAliasMailbox(mailboxId)
+        .mapLatest { aliasMailbox ->
+            if (aliasMailbox == null) {
+                throw IllegalStateException("Alias mailbox is null")
+            }
+            aliasMailbox.toOption()
+        }
+        .catch { error ->
+            PassLogger.w(TAG, "There was an error observing alias mailbox")
+            PassLogger.w(TAG, error)
+            eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnMailboxOptionsError }
+            snackbarDispatcher(SimpleLoginSyncMailboxOptionsMessage.MailboxOptionsError)
+            emit(None)
+        }
 
     private val eventFlow = MutableStateFlow<SimpleLoginSyncMailboxOptionsEvent>(
         value = SimpleLoginSyncMailboxOptionsEvent.Idle
@@ -60,19 +76,18 @@ class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
     private val actionFlow = MutableStateFlow(SimpleLoginSyncMailboxOptionsAction.None)
 
     internal val stateFlow: StateFlow<SimpleLoginSyncMailboxOptionsState> = combine(
-        aliasMailboxFlow,
+        aliasMailboxOptionFlow,
         eventFlow,
         actionFlow
-    ) { aliasMailbox, event, action ->
+    ) { aliasMailboxOption, event, action ->
         SimpleLoginSyncMailboxOptionsState(
-            isDefault = aliasMailbox.isDefault,
-            isVerified = aliasMailbox.isVerified,
+            aliasMailboxOption = aliasMailboxOption,
             event = event,
             action = action
         )
     }.stateIn(
         scope = viewModelScope,
-        started = kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(5_000L),
+        started = WhileSubscribed(5_000L),
         initialValue = SimpleLoginSyncMailboxOptionsState.Initial
     )
 

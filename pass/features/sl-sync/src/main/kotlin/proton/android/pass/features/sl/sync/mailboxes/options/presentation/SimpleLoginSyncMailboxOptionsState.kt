@@ -18,12 +18,26 @@
 
 package proton.android.pass.features.sl.sync.mailboxes.options.presentation
 
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
+
 internal data class SimpleLoginSyncMailboxOptionsState(
     internal val event: SimpleLoginSyncMailboxOptionsEvent,
     internal val action: SimpleLoginSyncMailboxOptionsAction,
-    private val isDefault: Boolean,
-    private val isVerified: Boolean
+    private val aliasMailboxOption: Option<SimpleLoginAliasMailbox>
 ) {
+
+    private val isDefault = when (aliasMailboxOption) {
+        None -> false
+        is Some -> aliasMailboxOption.value.isDefault
+    }
+
+    private val isVerified = when (aliasMailboxOption) {
+        None -> false
+        is Some -> aliasMailboxOption.value.isVerified
+    }
 
     internal val canSetAsDefault = !isDefault && isVerified
 
@@ -32,8 +46,7 @@ internal data class SimpleLoginSyncMailboxOptionsState(
     internal companion object {
 
         internal val Initial = SimpleLoginSyncMailboxOptionsState(
-            isDefault = false,
-            isVerified = false,
+            aliasMailboxOption = None,
             event = SimpleLoginSyncMailboxOptionsEvent.Idle,
             action = SimpleLoginSyncMailboxOptionsAction.None
         )

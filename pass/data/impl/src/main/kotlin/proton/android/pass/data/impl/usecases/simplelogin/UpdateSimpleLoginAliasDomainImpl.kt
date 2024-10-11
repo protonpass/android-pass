@@ -27,7 +27,7 @@ class UpdateSimpleLoginAliasDomainImpl @Inject constructor(
 ) : UpdateSimpleLoginAliasDomain {
 
     override suspend fun invoke(domain: String?) {
-        repository.updateAliasDomain(domain?.takeIf { it.isNotEmpty() })
+        repository.updateAliasDomain(domain?.takeIf { it.isNotBlank() })
     }
 
 }

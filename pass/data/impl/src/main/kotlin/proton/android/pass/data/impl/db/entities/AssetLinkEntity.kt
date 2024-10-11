@@ -22,8 +22,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.TypeConverter
+import kotlinx.datetime.Instant
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity.Columns
-import java.util.Date
 
 @Entity(
     tableName = AssetLinkEntity.TABLE,
@@ -41,7 +41,7 @@ data class AssetLinkEntity(
     @ColumnInfo(name = Columns.PACKAGE_NAME)
     val packageName: String,
     @ColumnInfo(name = Columns.CREATED_AT)
-    val createdAt: Date,
+    val createdAt: Instant,
     @ColumnInfo(name = Columns.SIGNATURE)
     val signature: String
 ) {
@@ -57,10 +57,10 @@ data class AssetLinkEntity(
     }
 }
 
-class DateConverter {
+class InstantConverter {
     @TypeConverter
-    fun fromTimestamp(value: Long?): Date? = value?.let(::Date)
+    fun fromTimestamp(value: Long?): Instant? = value?.let { Instant.fromEpochMilliseconds(it) }
 
     @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? = date?.time
+    fun instantToTimestamp(instant: Instant?): Long? = instant?.toEpochMilliseconds()
 }

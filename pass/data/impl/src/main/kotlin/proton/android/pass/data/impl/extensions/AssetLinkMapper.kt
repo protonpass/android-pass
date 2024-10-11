@@ -18,12 +18,10 @@
 
 package proton.android.pass.data.impl.extensions
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.toJavaInstant
+import kotlinx.datetime.Instant
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
 import proton.android.pass.data.impl.responses.AssetLinkResponse
 import proton.android.pass.domain.assetlink.AssetLink
-import java.util.Date
 
 fun List<AssetLinkResponse>.toDomain(url: String): AssetLink {
     val packages = this.mapNotNull { response ->
@@ -40,14 +38,14 @@ fun List<AssetLinkResponse>.toDomain(url: String): AssetLink {
     )
 }
 
-fun List<AssetLink>.toEntityList(): List<AssetLinkEntity> = this.flatMap { assetLink ->
+fun List<AssetLink>.toEntityList(now: Instant): List<AssetLinkEntity> = this.flatMap { assetLink ->
     assetLink.packages.flatMap { pkg ->
         pkg.signatures.map { signature ->
             AssetLinkEntity(
                 website = assetLink.website,
                 packageName = pkg.packageName,
                 signature = signature,
-                createdAt = Date.from(Clock.System.now().toJavaInstant())
+                createdAt = now
             )
         }
     }

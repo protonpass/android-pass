@@ -65,7 +65,7 @@ class LocalSimpleLoginDataSourceImpl @Inject constructor(
 
     override fun refreshAliasDomains(userId: UserId, aliasDomains: List<SimpleLoginAliasDomain>) {
         aliasDomainsFlow.update { aliasDomainsMap ->
-            aliasDomainsMap.apply {
+            aliasDomainsMap.toMutableMap().apply {
                 put(userId, aliasDomains)
             }
         }
@@ -76,10 +76,14 @@ class LocalSimpleLoginDataSourceImpl @Inject constructor(
             aliasDomainsMap[userId]?.let { aliasDomains ->
                 aliasDomains
                     .map { aliasDomain ->
-                        aliasDomain.copy(isDefault = aliasDomain.domain == newDefaultAliasDomain)
+                        if (aliasDomain.isDefault || aliasDomain.domain == newDefaultAliasDomain) {
+                            aliasDomain.copy(isDefault = aliasDomain.domain == newDefaultAliasDomain)
+                        } else {
+                            aliasDomain
+                        }
                     }
                     .let { newAliasDomains ->
-                        aliasDomainsMap.apply {
+                        aliasDomainsMap.toMutableMap().apply {
                             put(userId, newAliasDomains)
                         }
                     }

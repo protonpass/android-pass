@@ -342,11 +342,15 @@ abstract class BaseLoginViewModel(
 
     internal fun onRemoveWebsite(index: Int) {
         onUserEditedContent()
-        loginItemFormMutableState = loginItemFormState.copy(
-            urls = loginItemFormState.urls.toMutableList()
-                .apply { removeAt(index) }
-        )
-        removeValidationErrors(LoginItemValidationErrors.InvalidUrl(index))
+
+        if (index < loginItemFormState.urls.size) {
+            loginItemFormMutableState = loginItemFormState.copy(
+                urls = loginItemFormState.urls.toMutableList()
+                    .apply { removeAt(index) }
+            )
+            removeValidationErrors(LoginItemValidationErrors.InvalidUrl(index))
+        }
+
         focusLastWebsiteState.update { false }
     }
 

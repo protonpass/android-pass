@@ -20,9 +20,9 @@ package proton.android.pass.data.fakes.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.datetime.Instant
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.domain.assetlink.AssetLink
-import java.util.Date
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -48,7 +48,7 @@ class FakeAssetLinkRepository @Inject constructor() : AssetLinkRepository {
         fakeData.clear()
     }
 
-    override suspend fun purgeOlderThan(date: Date) {
+    override suspend fun purgeOlderThan(date: Instant) {
         fakeData.clear()
     }
 

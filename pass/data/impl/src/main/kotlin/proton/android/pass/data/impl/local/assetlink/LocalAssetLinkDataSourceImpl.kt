@@ -19,9 +19,9 @@
 package proton.android.pass.data.impl.local.assetlink
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Instant
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
-import java.util.Date
 import javax.inject.Inject
 
 class LocalAssetLinkDataSourceImpl @Inject constructor(
@@ -36,7 +36,7 @@ class LocalAssetLinkDataSourceImpl @Inject constructor(
         database.assetLinkDao().purge()
     }
 
-    override suspend fun purgeOlderThan(date: Date) {
+    override suspend fun purgeOlderThan(date: Instant) {
         database.assetLinkDao().purgeOlderThan(date)
     }
 

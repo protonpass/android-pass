@@ -22,6 +22,8 @@ internal sealed interface SimpleLoginSyncMailboxOptionsEvent {
 
     data object Idle : SimpleLoginSyncMailboxOptionsEvent
 
+    data object OnMailboxOptionsError : SimpleLoginSyncMailboxOptionsEvent
+
     data object OnMailboxSetAsDefaultError : SimpleLoginSyncMailboxOptionsEvent
 
     data object OnMailboxSetAsDefaultSuccess : SimpleLoginSyncMailboxOptionsEvent

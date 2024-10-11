@@ -50,6 +50,7 @@ fun SimpleLoginSyncMailboxOptionsBottomSheet(
                 ).also(onNavigated)
             }
 
+            SimpleLoginSyncMailboxOptionsEvent.OnMailboxOptionsError,
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxSetAsDefaultError,
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxSetAsDefaultSuccess,
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxVerifyError -> {

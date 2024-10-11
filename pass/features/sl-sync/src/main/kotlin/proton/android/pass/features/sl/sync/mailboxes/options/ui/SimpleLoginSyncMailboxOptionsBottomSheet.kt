@@ -45,8 +45,7 @@ fun SimpleLoginSyncMailboxOptionsBottomSheet(
 
             is SimpleLoginSyncMailboxOptionsEvent.OnMailboxVerifySuccess -> {
                 SimpleLoginSyncNavDestination.VerifyMailbox(
-                    mailboxId = event.mailboxId,
-                    mailboxEmail = "user@email.com"
+                    mailboxId = event.mailboxId
                 ).also(onNavigated)
             }
 

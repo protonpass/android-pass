@@ -2002,8 +2002,7 @@ fun NavGraphBuilder.appGraph(
                 is SimpleLoginSyncNavDestination.VerifyMailbox -> appNavigator.navigate(
                     destination = SimpleLoginSyncMailboxVerifyNavItem,
                     route = SimpleLoginSyncMailboxVerifyNavItem.buildRoute(
-                        mailboxId = destination.mailboxId,
-                        mailboxEmail = destination.mailboxEmail
+                        mailboxId = destination.mailboxId
                     ),
                     backDestination = SimpleLoginSyncManagementNavItem
                 )

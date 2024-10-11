@@ -48,7 +48,6 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.log.api.PassLogger
-import java.util.Date
 import java.util.concurrent.TimeUnit
 
 @HiltWorker
@@ -96,7 +95,7 @@ class PeriodicAssetLinkWorker @AssistedInject constructor(
             val date14DaysAgo: Instant = clock.now().minus(
                 REPEAT_DAYS, DAY, TimeZone.currentSystemDefault()
             )
-            assetLinkRepository.purgeOlderThan(Date(date14DaysAgo.toEpochMilliseconds()))
+            assetLinkRepository.purgeOlderThan(date14DaysAgo)
         }.onSuccess {
             PassLogger.i(TAG, "Purged old asset links")
         }.onFailure {

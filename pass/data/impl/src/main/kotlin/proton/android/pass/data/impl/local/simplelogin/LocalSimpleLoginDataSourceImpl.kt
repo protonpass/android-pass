@@ -121,13 +121,31 @@ class LocalSimpleLoginDataSourceImpl @Inject constructor(
             aliasMailboxesMap[userId]?.values?.let { currentAliasMailboxes ->
                 currentAliasMailboxes
                     .map { aliasMailbox ->
-                        aliasMailbox.copy(isDefault = aliasMailbox.id == mailboxId)
+                        if (aliasMailbox.id == mailboxId || aliasMailbox.isDefault) {
+                            aliasMailbox.copy(isDefault = aliasMailbox.id == mailboxId)
+                        } else {
+                            aliasMailbox
+                        }
                     }
                     .let { updatedAliasMailboxes ->
                         aliasMailboxesMap.toMutableMap().apply {
                             put(userId, updatedAliasMailboxes.associateBy { it.id })
                         }
                     }
+            } ?: aliasMailboxesMap
+        }
+    }
+
+    override fun updateAliasMailbox(userId: UserId, newAliasMailbox: SimpleLoginAliasMailbox) {
+        aliasMailboxesFlow.update { aliasMailboxesMap ->
+            aliasMailboxesMap[userId]?.let { currentAliasMailboxesMap ->
+                currentAliasMailboxesMap.toMutableMap().apply {
+                    put(newAliasMailbox.id, newAliasMailbox)
+                }.let { updatedAliasMailboxesMap ->
+                    aliasMailboxesMap.toMutableMap().apply {
+                        put(userId, updatedAliasMailboxesMap)
+                    }
+                }
             } ?: aliasMailboxesMap
         }
     }

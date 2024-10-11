@@ -22,6 +22,8 @@ import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.impl.AppCertificate
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
@@ -32,13 +34,13 @@ import proton.android.pass.data.impl.local.assetlink.LocalAssetLinkDataSource
 import proton.android.pass.data.impl.remote.assetlink.RemoteAssetLinkDataSource
 import proton.android.pass.domain.assetlink.AssetLink
 import proton.android.pass.log.api.PassLogger
-import java.util.Date
 import javax.inject.Inject
 
 class AssetLinkRepositoryImpl @Inject constructor(
     private val remoteAssetLinkDataSource: RemoteAssetLinkDataSource,
     private val localAssetLinkDataSource: LocalAssetLinkDataSource,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val clock: Clock
 ) : AssetLinkRepository {
 
     override suspend fun fetch(website: String): AssetLink {
@@ -50,7 +52,7 @@ class AssetLinkRepositoryImpl @Inject constructor(
 
     override suspend fun insert(list: List<AssetLink>) {
         PassLogger.d(TAG, "Inserting asset links: $list")
-        localAssetLinkDataSource.insertAssetLink(list.toEntityList())
+        localAssetLinkDataSource.insertAssetLink(list.toEntityList(clock.now()))
     }
 
     override suspend fun purgeAll() {
@@ -58,7 +60,7 @@ class AssetLinkRepositoryImpl @Inject constructor(
         localAssetLinkDataSource.purgeAll()
     }
 
-    override suspend fun purgeOlderThan(date: Date) {
+    override suspend fun purgeOlderThan(date: Instant) {
         PassLogger.d(TAG, "Purging asset links older than: $date")
         localAssetLinkDataSource.purgeOlderThan(date)
     }

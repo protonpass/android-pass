@@ -6,6 +6,24 @@
 
 ### Other
 
+## 1.26.0 (2024-10-11)
+
+### Features :tada:
+
+- Support multi-account autofill.
+- Username field always display setting.
+
+### Fixes :bug:
+
+- Fixes on autofill.
+- Fixed login items options.
+- Fixed crash on secure links fetching.
+
+### Other
+
+- Improved username/email fields input behavior.
+- Updated translations.
+
 ## 1.25.1 (2024-09-26)
 
 ### Fixes :bug:

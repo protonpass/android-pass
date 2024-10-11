@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -42,9 +43,9 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.errors.InvalidVerificationCodeException
+import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.ResendSimpleLoginAliasMailboxVerificationCode
 import proton.android.pass.data.api.usecases.simplelogin.VerifySimpleLoginAliasMailbox
-import proton.android.pass.features.sl.sync.mailboxes.verify.navigation.SimpleLoginSyncMailboxVerifyEmailNavArgId
 import proton.android.pass.features.sl.sync.shared.navigation.mailboxes.SimpleLoginSyncMailboxIdNavArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -53,6 +54,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
+    observeSimpleLoginAliasMailbox: ObserveSimpleLoginAliasMailbox,
     private val verifyAliasMailbox: VerifySimpleLoginAliasMailbox,
     private val resendAliasMailboxVerificationCode: ResendSimpleLoginAliasMailboxVerificationCode,
     private val snackbarDispatcher: SnackbarDispatcher
@@ -61,8 +63,8 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
     private val mailboxId = savedStateHandleProvider.get()
         .require<Long>(SimpleLoginSyncMailboxIdNavArgId.key)
 
-    private val mailboxEmailFlow = savedStateHandleProvider.get()
-        .getStateFlow(SimpleLoginSyncMailboxVerifyEmailNavArgId.key, "")
+    private val mailboxEmailFlow = observeSimpleLoginAliasMailbox(mailboxId = mailboxId)
+        .mapLatest { aliaMailbox -> aliaMailbox?.email.orEmpty() }
 
     @OptIn(SavedStateHandleSaveableApi::class)
     private var verificationCodeMutableState: String by savedStateHandleProvider.get()

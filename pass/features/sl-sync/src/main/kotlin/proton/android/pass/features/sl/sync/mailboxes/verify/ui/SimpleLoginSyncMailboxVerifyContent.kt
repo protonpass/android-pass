@@ -54,7 +54,9 @@ internal fun SimpleLoginSyncMailboxVerifyContent(
                 title = stringResource(id = R.string.simple_login_sync_mailbox_verify_title),
                 subtitle = stringResource(
                     id = R.string.simple_login_sync_mailbox_verify_subtitle,
-                    mailboxEmail
+                    mailboxEmail.ifEmpty {
+                        stringResource(id = R.string.simple_login_sync_mailbox_verify_email_fallback)
+                    }
                 ),
                 onUpClick = { onUiEvent(SimpleLoginSyncMailboxVerifyUiEvent.OnCloseClicked) },
                 actions = {

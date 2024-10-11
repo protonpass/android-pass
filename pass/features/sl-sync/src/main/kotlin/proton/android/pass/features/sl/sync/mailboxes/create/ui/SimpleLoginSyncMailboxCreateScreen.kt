@@ -39,8 +39,7 @@ fun SimpleLoginSyncMailboxCreateScreen(
             SimpleLoginSyncMailboxCreateEvent.Idle -> {}
             is SimpleLoginSyncMailboxCreateEvent.OnMailboxCreated -> {
                 SimpleLoginSyncNavDestination.VerifyMailbox(
-                    mailboxId = event.mailboxId,
-                    mailboxEmail = event.mailboxEmail
+                    mailboxId = event.mailboxId
                 ).also(onNavigated)
             }
         }

@@ -58,7 +58,8 @@ sealed interface AliasDetailUiState {
         val isHistoryFeatureEnabled: Boolean,
         val isSLAliasSyncEnabled: Boolean,
         val isAliasStateToggling: Boolean,
-        val isAliasTrashDialogChecked: Boolean
+        val isAliasTrashDialogChecked: Boolean,
+        val isAliasManagementEnabled: Boolean
     ) : AliasDetailUiState {
 
         internal val requiresBackNavigation: Boolean = isItemSentToTrash ||

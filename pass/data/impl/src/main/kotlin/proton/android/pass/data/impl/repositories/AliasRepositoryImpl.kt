@@ -37,6 +37,7 @@ import proton.android.pass.data.impl.responses.AliasMailboxResponse
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasOptions
+import proton.android.pass.domain.AliasStats
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
@@ -59,7 +60,12 @@ class AliasRepositoryImpl @Inject constructor(
             AliasDetails(
                 email = details.email,
                 mailboxes = mapMailboxes(details.mailboxes),
-                availableMailboxes = mapMailboxes(details.availableMailboxes)
+                availableMailboxes = mapMailboxes(details.availableMailboxes),
+                stats = AliasStats(
+                    forwardedEmails = details.stats.forwardedEmails,
+                    repliedEmails = details.stats.repliedEmails,
+                    blockedEmails = details.stats.blockedEmails
+                )
             )
         }
         .flowOn(Dispatchers.IO)

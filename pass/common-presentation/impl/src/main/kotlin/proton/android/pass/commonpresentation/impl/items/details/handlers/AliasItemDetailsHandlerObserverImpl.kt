@@ -74,7 +74,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     }
 
     private fun observeAliasDetails(item: Item): Flow<AliasDetails> = getAliasDetails(item.shareId, item.id)
-        .onStart { emit(AliasDetails("", emptyList(), emptyList())) }
+        .onStart { emit(AliasDetails.EMPTY) }
 
     override fun updateItemContents(
         itemContents: ItemContents.Alias,

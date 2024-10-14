@@ -58,7 +58,6 @@ internal fun PassLoginItemDetailSections(
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.Login,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
-    isUsernameSplitEnabled: Boolean,
     lastAutofillOption: Option<Instant>,
     revision: Long,
     createdAt: Instant,
@@ -89,8 +88,7 @@ internal fun PassLoginItemDetailSections(
             primaryTotp = primaryTotp,
             itemColors = itemColors,
             itemDiffs = itemDiffs,
-            onEvent = onEvent,
-            isUsernameSplitEnabled = isUsernameSplitEnabled
+            onEvent = onEvent
         )
 
         if (urls.isNotEmpty()) {

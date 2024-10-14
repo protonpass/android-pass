@@ -55,7 +55,6 @@ import proton.android.pass.featureitemdetail.impl.ItemDetailScopeNavArgId
 import proton.android.pass.featureitemdetail.impl.ItemDetailScreen
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
@@ -157,8 +156,6 @@ class LoginDetailScreenTest {
 
     @Test
     fun clickEmailCopiesEmail() {
-        ffRepo.set(FeatureFlag.USERNAME_SPLIT, true)
-
         val email = "user@email.com"
         performSetup(email = email)
         composeTestRule.apply {
@@ -179,8 +176,6 @@ class LoginDetailScreenTest {
 
     @Test
     fun clickUsernameCopiesUsername() {
-        ffRepo.set(FeatureFlag.USERNAME_SPLIT, true)
-
         val username = "myusername"
         performSetup(username = username)
         composeTestRule.apply {
@@ -196,40 +191,6 @@ class LoginDetailScreenTest {
 
             onNode(hasText(username)).performClick()
             assertEquals(username, clipboardManager.getContents())
-        }
-    }
-
-    /**
-     * This test is only temporary. It should not happen, as the FF for split should be enabled and
-     * never disabled again.
-     * If it is not enabled, username should be an empty string
-     *
-     * 2024-06-17: cquintana
-     */
-    @Test
-    fun usernameSplitEmptyUsernameDisabledClickEmailCopiesEmail() {
-        ffRepo.set(FeatureFlag.USERNAME_SPLIT, false)
-
-        val email = "some@test.email"
-        val username = "test_username"
-        performSetup(username = username, email = email)
-        composeTestRule.apply {
-            setContent {
-                PassTheme(isDark = true) {
-                    ItemDetailScreen(
-                        onNavigate = {}
-                    )
-                }
-            }
-
-            // Username is not shown
-            onNode(hasText(username)).assertDoesNotExist()
-
-            // Email is shown
-            waitUntilExists(hasText(email))
-
-            onNode(hasText(email)).performClick()
-            assertEquals(email, clipboardManager.getContents())
         }
     }
 

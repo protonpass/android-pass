@@ -79,7 +79,7 @@ fun runAutofillTest(
     val nodesWithExpectedContents = TestUtils.getExpectedContents(parsed, allowEmptyFields)
     val asAutofillNodes = parsed.rootContent.toAutofillNode()
     val detectedNodes = NodeExtractor(requestFlags).extract(asAutofillNodes)
-    val clusters = NodeClusterer.cluster(detectedNodes.fields, true)
+    val clusters = NodeClusterer.cluster(detectedNodes.fields)
     val focusedCluster = clusters.focused()
 
     val res = ItemFieldMapper.mapFields(

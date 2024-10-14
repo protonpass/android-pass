@@ -230,7 +230,6 @@ internal fun HomeContent(
                 ItemTypeFilterList(
                     selected = uiState.homeListUiState.searchFilterType,
                     itemTypeCount = itemTypeCount,
-                    isIdentityEnabled = uiState.homeListUiState.isIdentityEnabled,
                     onItemTypeClick = { onEvent(HomeUiEvent.ItemTypeSelected(it)) }
                 )
             }
@@ -333,7 +332,6 @@ internal fun HomeContent(
                     HomeEmptyContent(
                         isTrashMode = isTrashMode,
                         inSearchMode = isPinningOrSearch,
-                        isIdentityEnabled = uiState.homeListUiState.isIdentityEnabled,
                         readOnly = uiState.isSelectedVaultReadOnly(),
                         shareId = uiState.homeListUiState.selectedShare.map { it.id },
                         onEvent = onEvent

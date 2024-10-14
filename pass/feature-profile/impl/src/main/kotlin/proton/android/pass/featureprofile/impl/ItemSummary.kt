@@ -50,11 +50,7 @@ import proton.android.pass.composecomponents.impl.item.icon.MFAIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 
 @Composable
-internal fun ItemSummary(
-    modifier: Modifier = Modifier,
-    itemSummaryUiState: ItemSummaryUiState,
-    isIdentityEnabled: Boolean
-) {
+internal fun ItemSummary(modifier: Modifier = Modifier, itemSummaryUiState: ItemSummaryUiState) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -73,9 +69,7 @@ internal fun ItemSummary(
             count = itemSummaryUiState.creditCardsCount
         )
         ItemTypeBox(type = SummaryItemType.Notes, count = itemSummaryUiState.notesCount)
-        if (isIdentityEnabled) {
-            ItemTypeBox(type = SummaryItemType.Identity, count = itemSummaryUiState.identityCount)
-        }
+        ItemTypeBox(type = SummaryItemType.Identity, count = itemSummaryUiState.identityCount)
         ItemTypeBox(
             type = SummaryItemType.MFA,
             count = itemSummaryUiState.mfaCount,
@@ -137,8 +131,7 @@ internal fun ItemSummaryPreview(@PreviewParameter(ThemePreviewProvider::class) i
     PassTheme(isDark = isDark) {
         Surface {
             ItemSummary(
-                itemSummaryUiState = ItemSummaryUiState(aliasLimit = 1),
-                isIdentityEnabled = true
+                itemSummaryUiState = ItemSummaryUiState(aliasLimit = 1)
             )
         }
     }

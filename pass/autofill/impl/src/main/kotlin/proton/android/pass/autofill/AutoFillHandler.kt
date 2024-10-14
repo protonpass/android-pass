@@ -113,8 +113,7 @@ object AutoFillHandler {
             context = context,
             accountManager = accountManager,
             request = request,
-            windowNode = windowNode,
-            isIdentityEnabled = autofillServiceManager.isIdentityEnabled()
+            windowNode = windowNode
         )
         val assistInfo = when (shouldAutofill) {
             is ShouldAutofillResult.No -> {
@@ -203,8 +202,7 @@ object AutoFillHandler {
         context: Context,
         accountManager: AccountManager,
         request: FillRequest,
-        windowNode: WindowNode,
-        isIdentityEnabled: Boolean
+        windowNode: WindowNode
     ): ShouldAutofillResult {
         if (isSelfAutofill(context, windowNode)) {
             PassLogger.d(TAG, "Do not self autofill")
@@ -224,7 +222,7 @@ object AutoFillHandler {
         }
         PassLogger.d(TAG, "Fields found: ${extractionResult.fields.map { it.type }.joinToString()}")
 
-        val clusteredNodes = NodeClusterer.cluster(extractionResult.fields, isIdentityEnabled)
+        val clusteredNodes = NodeClusterer.cluster(extractionResult.fields)
         PassLogger.d(TAG, "Clusters found: ${clusteredNodes.joinToString()}")
 
         val focusedCluster = clusteredNodes.focused()

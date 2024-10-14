@@ -79,13 +79,12 @@ internal fun LoginItemForm(
     selectedShareId: ShareId?,
     hasReachedAliasLimit: Boolean,
     onEvent: (LoginContentEvent) -> Unit,
-    isUsernameSplitEnabled: Boolean,
     isUsernameSplitTooltipEnabled: Boolean
 ) {
     Box(modifier = modifier) {
         val currentStickyFormOption = when (focusedField) {
             LoginField.Email -> AliasOptions
-            LoginField.Username -> if (isUsernameSplitEnabled) None else AliasOptions
+            LoginField.Username -> None
             LoginField.Password -> GeneratePassword
             LoginField.PrimaryTotp,
             is LoginCustomField.CustomFieldTOTP -> AddTotp
@@ -152,7 +151,6 @@ internal fun LoginItemForm(
                 onFocusChange = { field, isFocused ->
                     onEvent(LoginContentEvent.OnFocusChange(field, isFocused))
                 },
-                isUsernameSplitEnabled = isUsernameSplitEnabled,
                 isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled
             )
 

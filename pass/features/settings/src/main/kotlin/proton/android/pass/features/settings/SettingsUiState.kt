@@ -55,7 +55,6 @@ internal data class SettingsUiState(
     val telemetryStatus: TelemetryStatus,
     val event: SettingsEvent,
     val displayUsernameFieldPreference: SettingsDisplayUsernameFieldPreference,
-    val isUsernameSplitEnabled: Boolean,
     private val syncStateLoadingResult: LoadingResult<SyncState>
 ) {
 
@@ -78,8 +77,7 @@ internal data class SettingsUiState(
             allowScreenshots = AllowScreenshotsPreference.Disabled,
             telemetryStatus = TelemetryStatus.Hide,
             event = SettingsEvent.Unknown,
-            displayUsernameFieldPreference = SettingsDisplayUsernameFieldPreference.Disabled,
-            isUsernameSplitEnabled = false
+            displayUsernameFieldPreference = SettingsDisplayUsernameFieldPreference.Disabled
         )
 
     }

@@ -35,8 +35,6 @@ import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarViewModel
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
@@ -45,14 +43,10 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeBottomBarViewModelImpl @Inject constructor(
     getUserPlan: GetUserPlan,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     observeAllBreachByUserId: ObserveAllBreachByUserId,
     observeSecurityAnalysis: ObserveSecurityAnalysis,
     userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel(), HomeBottomBarViewModel {
-
-    private val isSecurityCenterEnabledFlow: Flow<Boolean> =
-        featureFlagsRepository[FeatureFlag.SECURITY_CENTER_V1]
 
     private val monitorStatusFlow: Flow<MonitorStatusPreference> = combine(
         observeAllBreachByUserId().asLoadingResult(),
@@ -74,12 +68,10 @@ class HomeBottomBarViewModelImpl @Inject constructor(
 
     override val state: StateFlow<HomeBottomBarState> = combine(
         getUserPlan(),
-        isSecurityCenterEnabledFlow,
         monitorStatusFlow
-    ) { plan, isSecurityCenterEnabled, monitorStatus ->
+    ) { plan, monitorStatus ->
         HomeBottomBarState(
             planType = plan.planType,
-            isSecurityCenterEnabled = isSecurityCenterEnabled,
             monitorStatus = monitorStatus
         )
     }.stateIn(

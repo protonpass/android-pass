@@ -30,9 +30,7 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.domain.HiddenState
-import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.login.totp.TotpRow
-import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun MainLoginSection(
@@ -43,44 +41,27 @@ internal fun MainLoginSection(
     passwordScore: PasswordScore?,
     totpUiState: TotpUiState?,
     showViewAlias: Boolean,
-    onEvent: (LoginDetailEvent) -> Unit,
-    isUsernameSplitEnabled: Boolean
+    onEvent: (LoginDetailEvent) -> Unit
 ) {
     val sections = mutableListOf<@Composable () -> Unit>()
 
-    if (isUsernameSplitEnabled) {
-        if (email.isNotBlank()) {
-            sections.add {
-                LoginEmailRow(
-                    email = email,
-                    showViewAlias = showViewAlias,
-                    onEmailClick = { onEvent(LoginDetailEvent.OnEmailClick(email)) },
-                    onGoToAliasClick = { onEvent(LoginDetailEvent.OnGoToAliasClick) }
-                )
-            }
+    if (email.isNotBlank()) {
+        sections.add {
+            LoginEmailRow(
+                email = email,
+                showViewAlias = showViewAlias,
+                onEmailClick = { onEvent(LoginDetailEvent.OnEmailClick(email)) },
+                onGoToAliasClick = { onEvent(LoginDetailEvent.OnGoToAliasClick) }
+            )
         }
+    }
 
-        if (username.isNotBlank()) {
-            sections.add {
-                LoginUsernameRow(
-                    username = username,
-                    onUsernameClick = { onEvent(LoginDetailEvent.OnUsernameClick) }
-                )
-            }
-        }
-    } else {
-        // Here we're using user email row as username to support proto backwards compatibility
-        if (email.isNotBlank()) {
-            sections.add {
-                LoginEmailRow(
-                    titleResId = R.string.field_username_or_email,
-                    iconResId = CoreR.drawable.ic_proton_user,
-                    email = email,
-                    showViewAlias = showViewAlias,
-                    onEmailClick = { onEvent(LoginDetailEvent.OnEmailClick(email)) },
-                    onGoToAliasClick = { onEvent(LoginDetailEvent.OnGoToAliasClick) }
-                )
-            }
+    if (username.isNotBlank()) {
+        sections.add {
+            LoginUsernameRow(
+                username = username,
+                onUsernameClick = { onEvent(LoginDetailEvent.OnUsernameClick) }
+            )
         }
     }
 
@@ -142,8 +123,7 @@ internal fun MainLoginSectionPreview(
                 passwordScore = PasswordScore.STRONG,
                 totpUiState = params.totpUiState,
                 showViewAlias = params.showViewAlias,
-                onEvent = {},
-                isUsernameSplitEnabled = params.isUsernameSplitEnabled
+                onEvent = {}
             )
         }
     }

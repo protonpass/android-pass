@@ -23,16 +23,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
-import proton.android.pass.preferences.FeatureFlag.ACCESS_KEY_V1
 import proton.android.pass.preferences.FeatureFlag.ACCOUNT_SWITCH_V1
 import proton.android.pass.preferences.FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.DIGITAL_ASSET_LINKS
-import proton.android.pass.preferences.FeatureFlag.IDENTITY_V1
-import proton.android.pass.preferences.FeatureFlag.SECURE_LINK_V1
-import proton.android.pass.preferences.FeatureFlag.SECURITY_CENTER_V1
 import proton.android.pass.preferences.FeatureFlag.SL_ALIASES_SYNC
-import proton.android.pass.preferences.FeatureFlag.USERNAME_SPLIT
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -47,11 +42,6 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> = state.map {
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> it.getOrDefault(AUTOFILL_DEBUG_MODE, false) as T
-            SECURITY_CENTER_V1 -> it.getOrDefault(SECURITY_CENTER_V1, false) as T
-            IDENTITY_V1 -> it.getOrDefault(IDENTITY_V1, false) as T
-            USERNAME_SPLIT -> it.getOrDefault(USERNAME_SPLIT, false) as T
-            ACCESS_KEY_V1 -> it.getOrDefault(ACCESS_KEY_V1, false) as T
-            SECURE_LINK_V1 -> it.getOrDefault(SECURE_LINK_V1, false) as T
             ACCOUNT_SWITCH_V1 -> it.getOrDefault(ACCOUNT_SWITCH_V1, false) as T
             SL_ALIASES_SYNC -> it.getOrDefault(SL_ALIASES_SYNC, false) as T
             DIGITAL_ASSET_LINKS -> it.getOrDefault(DIGITAL_ASSET_LINKS, false) as T

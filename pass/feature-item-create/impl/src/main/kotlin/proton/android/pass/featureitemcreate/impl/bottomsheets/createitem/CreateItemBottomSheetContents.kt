@@ -87,11 +87,7 @@ fun CreateItemBottomSheetContents(
             },
             createNote(state.shareId) { onNavigate(CreateNote(it)) },
             createPassword { onNavigate(CreatePassword) },
-            if (state.isIdentityV1Enabled) {
-                createIdentity(state.shareId) { onNavigate(CreateIdentity(it)) }
-            } else {
-                null
-            }
+            createIdentity(state.shareId) { onNavigate(CreateIdentity(it)) }
         )
 
         CreateItemBottomSheetMode.AutofillLogin -> listOf(

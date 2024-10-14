@@ -188,8 +188,7 @@ sealed interface ItemDetailState {
         val passwordStrength: PasswordStrength,
         val primaryTotp: Totp?,
         val secondaryTotps: Map<String, Totp?>,
-        val passkeys: List<UIPasskeyContent>,
-        val isUsernameSplitEnabled: Boolean
+        val passkeys: List<UIPasskeyContent>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Login

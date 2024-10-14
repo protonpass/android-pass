@@ -25,7 +25,6 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.domain.ShareId
-import proton.android.pass.featureitemcreate.impl.R
 
 @Composable
 internal fun MainLoginSection(
@@ -39,47 +38,25 @@ internal fun MainLoginSection(
     hasReachedAliasLimit: Boolean,
     onEvent: (LoginContentEvent) -> Unit,
     onFocusChange: (LoginField, Boolean) -> Unit,
-    isUsernameSplitEnabled: Boolean,
     isUsernameSplitTooltipEnabled: Boolean
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
     ) {
-        if (isUsernameSplitEnabled) {
-            ExpandableEmailUsernameInput(
-                email = loginItemFormState.email,
-                username = loginItemFormState.username,
-                canUpdateUsername = canUpdateUsername,
-                isEditAllowed = isEditAllowed,
-                onEvent = onEvent,
-                onFocusChange = onFocusChange,
-                onAliasOptionsClick = {
-                    selectedShareId ?: return@ExpandableEmailUsernameInput
-                    onEvent(LoginContentEvent.OnAliasOptions(selectedShareId, hasReachedAliasLimit))
-                },
-                isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled,
-                isExpanded = loginItemFormState.isExpanded
-            )
-        } else {
-            // Here we're using email field and email callback to support proto backwards compatibility
-            UsernameInput(
-                labelResId = R.string.field_username_or_email_title,
-                placeholderResId = R.string.field_username_or_email_hint,
-                value = loginItemFormState.email,
-                canUpdateUsername = canUpdateUsername,
-                isEditAllowed = isEditAllowed,
-                onChange = { newEmail ->
-                    onEvent(LoginContentEvent.OnEmailChanged(newEmail))
-                },
-                onAliasOptionsClick = {
-                    selectedShareId ?: return@UsernameInput
-                    onEvent(LoginContentEvent.OnAliasOptions(selectedShareId, hasReachedAliasLimit))
-                },
-                onFocus = { isFocused ->
-                    onFocusChange(LoginField.Email, isFocused)
-                }
-            )
-        }
+        ExpandableEmailUsernameInput(
+            email = loginItemFormState.email,
+            username = loginItemFormState.username,
+            canUpdateUsername = canUpdateUsername,
+            isEditAllowed = isEditAllowed,
+            onEvent = onEvent,
+            onFocusChange = onFocusChange,
+            onAliasOptionsClick = {
+                selectedShareId ?: return@ExpandableEmailUsernameInput
+                onEvent(LoginContentEvent.OnAliasOptions(selectedShareId, hasReachedAliasLimit))
+            },
+            isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled,
+            isExpanded = loginItemFormState.isExpanded
+        )
 
         Divider(color = PassTheme.colors.inputBorderNorm)
 

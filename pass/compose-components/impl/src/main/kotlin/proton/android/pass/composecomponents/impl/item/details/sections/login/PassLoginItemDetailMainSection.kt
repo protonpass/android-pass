@@ -26,7 +26,6 @@ import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.common.api.PasswordStrength
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.R
@@ -39,6 +38,7 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.Totp
 import me.proton.core.presentation.R as CoreR
@@ -55,71 +55,47 @@ internal fun PassLoginItemDetailMainSection(
     primaryTotp: Totp?,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.Login,
-    onEvent: (PassItemDetailsUiEvent) -> Unit,
-    isUsernameSplitEnabled: Boolean
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     val sections = mutableListOf<@Composable () -> Unit>()
 
-    if (isUsernameSplitEnabled) {
-        if (email.isNotBlank()) {
-            sections.add {
-                PassItemDetailFieldRow(
-                    icon = CoreR.drawable.ic_proton_envelope,
-                    title = stringResource(R.string.item_details_login_section_email_title),
-                    subtitle = email,
-                    itemColors = itemColors,
-                    itemDiffType = itemDiffs.email,
-                    onClick = {
-                        onEvent(
-                            PassItemDetailsUiEvent.OnSectionClick(
-                                section = email,
-                                field = ItemDetailsFieldType.Plain.Email
-                            )
+    if (email.isNotBlank()) {
+        sections.add {
+            PassItemDetailFieldRow(
+                icon = CoreR.drawable.ic_proton_envelope,
+                title = stringResource(R.string.item_details_login_section_email_title),
+                subtitle = email,
+                itemColors = itemColors,
+                itemDiffType = itemDiffs.email,
+                onClick = {
+                    onEvent(
+                        PassItemDetailsUiEvent.OnSectionClick(
+                            section = email,
+                            field = ItemDetailsFieldType.Plain.Email
                         )
-                    }
-                )
-            }
+                    )
+                }
+            )
         }
+    }
 
-        if (username.isNotBlank()) {
-            sections.add {
-                PassItemDetailFieldRow(
-                    icon = CoreR.drawable.ic_proton_user,
-                    title = stringResource(R.string.item_details_login_section_username_title),
-                    subtitle = username,
-                    itemColors = itemColors,
-                    itemDiffType = itemDiffs.username,
-                    onClick = {
-                        onEvent(
-                            PassItemDetailsUiEvent.OnSectionClick(
-                                section = username,
-                                field = ItemDetailsFieldType.Plain.Username
-                            )
+    if (username.isNotBlank()) {
+        sections.add {
+            PassItemDetailFieldRow(
+                icon = CoreR.drawable.ic_proton_user,
+                title = stringResource(R.string.item_details_login_section_username_title),
+                subtitle = username,
+                itemColors = itemColors,
+                itemDiffType = itemDiffs.username,
+                onClick = {
+                    onEvent(
+                        PassItemDetailsUiEvent.OnSectionClick(
+                            section = username,
+                            field = ItemDetailsFieldType.Plain.Username
                         )
-                    }
-                )
-            }
-        }
-    } else {
-        // Here we're using email property as username to support proto backwards compatibility
-        if (email.isNotBlank()) {
-            sections.add {
-                PassItemDetailFieldRow(
-                    icon = CoreR.drawable.ic_proton_user,
-                    title = stringResource(R.string.item_details_login_section_username_or_username_title),
-                    subtitle = email,
-                    itemColors = itemColors,
-                    itemDiffType = itemDiffs.email,
-                    onClick = {
-                        onEvent(
-                            PassItemDetailsUiEvent.OnSectionClick(
-                                section = email,
-                                field = ItemDetailsFieldType.Plain.Username
-                            )
-                        )
-                    }
-                )
-            }
+                    )
+                }
+            )
         }
     }
 

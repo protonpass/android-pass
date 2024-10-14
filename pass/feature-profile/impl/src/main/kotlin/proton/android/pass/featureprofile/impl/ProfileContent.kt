@@ -131,7 +131,6 @@ internal fun ProfileContent(
                         horizontal = Spacing.none,
                         vertical = Spacing.medium
                     ),
-                    isIdentityEnabled = state.isIdentityEnabled,
                     itemSummaryUiState = state.itemSummaryUiState
                 )
 
@@ -163,13 +162,11 @@ internal fun ProfileContent(
                         )
                     }
 
-                    if (state.isSecureLinksEnabled) {
-                        ProfileSecureLinksSection(
-                            shouldShowPlusIcon = state.showUpgradeButton,
-                            secureLinksCount = state.secureLinksCount,
-                            onClick = { onEvent(ProfileUiEvent.OnSecureLinksClicked) }
-                        )
-                    }
+                    ProfileSecureLinksSection(
+                        shouldShowPlusIcon = state.showUpgradeButton,
+                        secureLinksCount = state.secureLinksCount,
+                        onClick = { onEvent(ProfileUiEvent.OnSecureLinksClicked) }
+                    )
 
                     AccountProfileSection(
                         planInfo = state.accountType,

@@ -158,7 +158,6 @@ fun LoginDetail(
                                     scope.launch { bottomSheetState.hide() }
                                     viewModel.onIncludeItemInMonitoring()
                                 },
-                                isSecurityCenterEnabled = state.isSecurityCenterEnabled,
                                 isExcludedFromMonitor = state.monitorState.isExcludedFromMonitor
                             )
 
@@ -327,8 +326,7 @@ fun LoginDetail(
                                 }
                             }
                         },
-                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
-                        isUsernameSplitEnabled = state.isUsernameSplitEnabled
+                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled
                     )
                 }
                 ConfirmDeleteItemDialog(

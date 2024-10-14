@@ -495,8 +495,7 @@ class HomeViewModel @Inject constructor(
         shareListWrapperFlow,
         preferencesRepository.getUseFaviconsPreference(),
         selectionState,
-        appNeedsUpdateFlow,
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.IDENTITY_V1)
+        appNeedsUpdateFlow
     ) { itemsResult,
         refreshingLoading,
         shouldScrollToTop,
@@ -504,8 +503,7 @@ class HomeViewModel @Inject constructor(
         shareListWrapper,
         useFavicons,
         selection,
-        appNeedsUpdate,
-        isIdentityEnabled ->
+        appNeedsUpdate ->
         val isLoadingState = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
         val (items, isLoading) = when (itemsResult) {
@@ -535,8 +533,7 @@ class HomeViewModel @Inject constructor(
             selectionState = selection.toState(
                 isTrash = searchOptions.vaultSelectionOption == VaultSelectionOption.Trash
             ),
-            showNeedsUpdate = appNeedsUpdate.getOrNull() ?: false,
-            isIdentityEnabled = isIdentityEnabled
+            showNeedsUpdate = appNeedsUpdate.getOrNull() ?: false
         )
     }
 
@@ -550,7 +547,6 @@ class HomeViewModel @Inject constructor(
         navEventState,
         pinningUiStateFlow,
         bottomSheetItemActionFlow,
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT),
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
         preferencesRepository.observeAliasTrashDialogStatusPreference()
     ) { homeListUiState,
@@ -559,7 +555,6 @@ class HomeViewModel @Inject constructor(
         navEvent,
         pinningUiState,
         bottomSheetItemAction,
-        isUsernameSplitEnabled,
         isSLAliasSyncEnabled,
         aliasTrashDialogStatusPreference ->
         HomeUiState(
@@ -570,7 +565,6 @@ class HomeViewModel @Inject constructor(
             navEvent = navEvent,
             action = bottomSheetItemAction,
             isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() ?: true,
-            isUsernameSplitEnabled = isUsernameSplitEnabled,
             isSLAliasSyncEnabled = isSLAliasSyncEnabled,
             aliasTrashDialogStatusPreference = aliasTrashDialogStatusPreference
         )

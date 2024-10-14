@@ -167,11 +167,13 @@ private fun SimpleLoginSyncManagementMailboxes(
                     }
                 }
 
-                ThreeDotsMenuButton(
-                    onClick = {
-                        onMenuClick(aliasMailbox)
-                    }
-                )
+                if(!aliasMailbox.isDefault) {
+                    ThreeDotsMenuButton(
+                        onClick = {
+                            onMenuClick(aliasMailbox)
+                        }
+                    )
+                }
             }
         }
     }

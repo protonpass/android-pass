@@ -18,18 +18,26 @@
 
 package proton.android.pass.featureitemcreate.impl.alias
 
-import proton.android.pass.domain.AliasDetails
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import proton.android.pass.domain.AliasStats
 
-data class AliasDetailsUiModel(
-    val email: String,
-    val mailboxes: List<AliasMailboxUiModel>,
-    val availableMailboxes: List<AliasMailboxUiModel>,
-    val stats: AliasStatsUiModel
-) {
-    constructor(aliasDetails: AliasDetails) : this(
-        email = aliasDetails.email,
-        mailboxes = aliasDetails.mailboxes.map(::AliasMailboxUiModel),
-        availableMailboxes = aliasDetails.availableMailboxes.map(::AliasMailboxUiModel),
-        stats = aliasDetails.stats.let(::AliasStatsUiModel)
+@Parcelize
+data class AliasStatsUiModel(
+    val forwardedEmails: Int,
+    val repliedEmails: Int,
+    val blockedEmails: Int
+) : Parcelable {
+
+    constructor(aliasStats: AliasStats) : this(
+        forwardedEmails = aliasStats.forwardedEmails,
+        repliedEmails = aliasStats.repliedEmails,
+        blockedEmails = aliasStats.blockedEmails
+    )
+
+    fun toDomain(): AliasStats = AliasStats(
+        forwardedEmails = forwardedEmails,
+        repliedEmails = repliedEmails,
+        blockedEmails = blockedEmails
     )
 }

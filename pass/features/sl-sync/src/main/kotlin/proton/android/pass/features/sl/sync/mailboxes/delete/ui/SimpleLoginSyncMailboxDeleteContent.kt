@@ -18,11 +18,26 @@
 
 package proton.android.pass.features.sl.sync.mailboxes.delete.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.body3Bold
 import proton.android.pass.commonui.api.bottomSheet
+import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
+import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.mailboxes.delete.presentation.SimpleLoginSyncMailboxDeleteState
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun SimpleLoginSyncMailboxDeleteContent(
@@ -30,9 +45,64 @@ internal fun SimpleLoginSyncMailboxDeleteContent(
     state: SimpleLoginSyncMailboxDeleteState,
     onUiEvent: (SimpleLoginSyncMailboxDeleteUiEvent) -> Unit
 ) = with(state) {
-    Column(
-        modifier = modifier.bottomSheet()
-    ) {
+    val deleteTextResId = remember(isTransferAliasesEnabled) {
+        if (isTransferAliasesEnabled) {
+            R.string.simple_login_sync_mailbox_delete_action_delete_and_transfer
+        } else {
+            R.string.simple_login_sync_mailbox_delete_action_delete
+        }
+    }
 
+    Column(
+        modifier = modifier
+            .bottomSheet()
+            .padding(horizontal = Spacing.medium),
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+    ) {
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(id = R.string.simple_login_sync_mailbox_delete_title),
+            textAlign = TextAlign.Center,
+            style = PassTheme.typography.body3Bold(),
+            color = PassTheme.colors.textNorm
+        )
+
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(
+                id = R.string.simple_login_sync_mailbox_delete_subtitle,
+                aliasMailboxEmail
+            ),
+            textAlign = TextAlign.Center,
+            style = PassTheme.typography.body3Bold(),
+            color = PassTheme.colors.textNorm
+        )
+
+        SimpleLoginSyncMailboxTransferSection(
+            isTransferAliasesEnabled = isTransferAliasesEnabled,
+            transferAliasMailbox = transferAliasMailbox,
+            hasAliasTransferMailboxes = hasAliasTransferMailboxes,
+            onUiEvent = onUiEvent
+        )
+
+        Spacer(modifier = Modifier.height(height = Spacing.large))
+
+        PassCircleButton(
+            text = stringResource(id = deleteTextResId),
+            textColor = PassTheme.colors.interactionNormMinor1,
+            backgroundColor = PassTheme.colors.signalDanger,
+            onClick = {
+                onUiEvent(SimpleLoginSyncMailboxDeleteUiEvent.OnCancelClicked)
+            }
+        )
+
+        PassCircleButton(
+            text = stringResource(id = CompR.string.action_cancel),
+            textColor = PassTheme.colors.interactionNormMajor2,
+            backgroundColor = PassTheme.colors.interactionNormMinor1,
+            onClick = {
+                onUiEvent(SimpleLoginSyncMailboxDeleteUiEvent.OnCancelClicked)
+            }
+        )
     }
 }

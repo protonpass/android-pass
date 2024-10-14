@@ -69,6 +69,10 @@ fun SettingsScreen(
                 is SettingsContentEvent.OnDisplayUsernameToggled -> {
                     viewModel.onToggleDisplayUsernameField(isEnabled = it.isEnabled)
                 }
+
+                is SettingsContentEvent.OnDisplayAutofillPinningToggled -> {
+                    viewModel.onToggleDisplayAutofillPinning(isEnabled = it.isEnabled)
+                }
             }
         }
     )

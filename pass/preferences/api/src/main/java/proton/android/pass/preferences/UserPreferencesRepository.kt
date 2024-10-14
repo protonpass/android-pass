@@ -24,6 +24,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ShareId
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
+import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
 import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
 import proton.android.pass.preferences.simplelogin.SimpleLoginSyncStatusPreference
 
@@ -102,5 +103,9 @@ interface UserPreferencesRepository {
     fun setDisplayUsernameFieldPreference(preference: SettingsDisplayUsernameFieldPreference): Result<Unit>
 
     fun observeDisplayUsernameFieldPreference(): Flow<SettingsDisplayUsernameFieldPreference>
+
+    fun setDisplayAutofillPinningPreference(preference: SettingsDisplayAutofillPinningPreference): Result<Unit>
+
+    fun observeDisplayAutofillPinningPreference(): Flow<SettingsDisplayAutofillPinningPreference>
 
 }

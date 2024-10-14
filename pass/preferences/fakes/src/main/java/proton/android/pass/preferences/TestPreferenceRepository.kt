@@ -27,6 +27,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.ShareId
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
+import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
 import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
 import proton.android.pass.preferences.simplelogin.SimpleLoginSyncStatusPreference
 import javax.inject.Inject
@@ -87,6 +88,8 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
     private val aliasTrashDialogStatusPreference = MutableStateFlow(AliasTrashDialogStatusPreference.Disabled)
 
     private val displayUsernameFieldPreference = MutableStateFlow(SettingsDisplayUsernameFieldPreference.Disabled)
+
+    private val displayAutofillPinningPreference = MutableStateFlow(SettingsDisplayAutofillPinningPreference.Disabled)
 
     override fun setAppLockState(state: AppLockState): Result<Unit> {
         appLockState.tryEmit(state)
@@ -248,5 +251,15 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
 
     override fun observeDisplayUsernameFieldPreference(): Flow<SettingsDisplayUsernameFieldPreference> =
         displayUsernameFieldPreference
+
+    override fun setDisplayAutofillPinningPreference(
+        preference: SettingsDisplayAutofillPinningPreference
+    ): Result<Unit> {
+        displayAutofillPinningPreference.tryEmit(preference)
+        return Result.success(Unit)
+    }
+
+    override fun observeDisplayAutofillPinningPreference(): Flow<SettingsDisplayAutofillPinningPreference> =
+        displayAutofillPinningPreference
 
 }

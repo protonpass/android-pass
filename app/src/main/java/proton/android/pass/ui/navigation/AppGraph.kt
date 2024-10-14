@@ -214,6 +214,7 @@ import proton.android.pass.features.sharing.sharingpermissions.bottomsheet.Shari
 import proton.android.pass.features.sl.sync.details.navigation.SimpleLoginSyncDetailsNavItem
 import proton.android.pass.features.sl.sync.domains.select.navigation.SimpleLoginSyncDomainSelectNavItem
 import proton.android.pass.features.sl.sync.mailboxes.create.navigation.SimpleLoginSyncMailboxCreateNavItem
+import proton.android.pass.features.sl.sync.mailboxes.delete.navigation.SimpleLoginSyncMailboxDeleteNavItem
 import proton.android.pass.features.sl.sync.mailboxes.options.navigation.SimpleLoginSyncMailboxOptionsNavItem
 import proton.android.pass.features.sl.sync.mailboxes.verify.navigation.SimpleLoginSyncMailboxVerifyNavItem
 import proton.android.pass.features.sl.sync.management.navigation.SimpleLoginSyncManagementNavItem
@@ -2021,9 +2022,13 @@ fun NavGraphBuilder.appGraph(
                     )
                 )
 
-                is SimpleLoginSyncNavDestination.DeleteMailbox -> {
-                    // Will be implemented in IDTEAM-3958
-                }
+                is SimpleLoginSyncNavDestination.DeleteMailbox -> appNavigator.navigate(
+                    destination = SimpleLoginSyncMailboxDeleteNavItem,
+                    route = SimpleLoginSyncMailboxDeleteNavItem.createNavRoute(
+                        mailboxId = destination.mailboxId
+                    ),
+                    backDestination = SimpleLoginSyncManagementNavItem
+                )
             }
         }
     )

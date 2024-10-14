@@ -18,11 +18,13 @@
 
 package proton.android.pass.features.sl.sync.mailboxes.options.presentation
 
+import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 
+@Stable
 internal data class SimpleLoginSyncMailboxOptionsState(
     internal val event: SimpleLoginSyncMailboxOptionsEvent,
     internal val action: SimpleLoginSyncMailboxOptionsAction,

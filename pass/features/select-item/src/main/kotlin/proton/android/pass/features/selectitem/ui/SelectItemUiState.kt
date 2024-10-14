@@ -150,7 +150,8 @@ data class SearchUiState(
 data class PinningUiState(
     val inPinningMode: Boolean,
     val filteredItems: ImmutableList<GroupedItemList>,
-    val unFilteredItems: PersistentList<ItemUiModel>
+    val unFilteredItems: PersistentList<ItemUiModel>,
+    val showPinning: Boolean
 ) {
 
     val itemCount = filteredItems.map { it.items }.flatten().count()
@@ -159,7 +160,8 @@ data class PinningUiState(
         val Initial = PinningUiState(
             inPinningMode = false,
             filteredItems = persistentListOf(),
-            unFilteredItems = persistentListOf()
+            unFilteredItems = persistentListOf(),
+            showPinning = false
         )
     }
 }

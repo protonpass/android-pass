@@ -35,4 +35,5 @@ message UserPreferences {
   BooleanPrefProto alias_trash_dialog_status = 21;
   BooleanPrefProto display_username_field = 22;
   BooleanPrefProto has_dismissed_sl_sync_banner = 23;
+  BooleanPrefProto display_autofill_pinning = 24;
 }

@@ -19,22 +19,28 @@
 package proton.android.pass.features.settings
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.setting.SettingToggle
 
 @Composable
 internal fun DisplaySection(
     modifier: Modifier = Modifier,
     isDisplayUsernameFieldEnabled: Boolean,
+    displayAutofillPinningPreference: Boolean,
     onEvent: (SettingsContentEvent) -> Unit
 ) {
     Column(
@@ -46,13 +52,35 @@ internal fun DisplaySection(
             style = ProtonTheme.typography.defaultSmallWeak
         )
 
-        Box(modifier = Modifier.roundedContainerNorm()) {
+        Column(modifier = Modifier.roundedContainerNorm()) {
             SettingToggle(
                 text = stringResource(R.string.settings_preference_display_username),
                 isChecked = isDisplayUsernameFieldEnabled,
                 onClick = { newIsEnabled ->
                     onEvent(SettingsContentEvent.OnDisplayUsernameToggled(newIsEnabled))
                 }
+            )
+            PassDivider()
+            SettingToggle(
+                text = stringResource(R.string.settings_preference_display_autofill_pinning),
+                isChecked = displayAutofillPinningPreference,
+                onClick = { newIsEnabled ->
+                    onEvent(SettingsContentEvent.OnDisplayAutofillPinningToggled(newIsEnabled))
+                }
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun DisplaySectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            DisplaySection(
+                isDisplayUsernameFieldEnabled = true,
+                displayAutofillPinningPreference = true,
+                onEvent = {}
             )
         }
     }

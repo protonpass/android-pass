@@ -43,6 +43,7 @@
     <string name="settings_preference_updated">Your preference has been updated</string>
     <string name="settings_display_section_title">Display</string>
     <string name="settings_preference_display_username">Username field always visible</string>
+    <string name="settings_preference_display_autofill_pinning">Autofill pinning always visible</string>
 
     <string name="view_logs_title">View logs</string>
     <string name="clipboard_bottomsheet_title">Clipboard</string>

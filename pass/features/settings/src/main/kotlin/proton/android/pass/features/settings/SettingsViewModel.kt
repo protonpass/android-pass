@@ -42,6 +42,7 @@ import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
 import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
 import proton.android.pass.telemetry.api.CanConfigureTelemetry
 import javax.inject.Inject
@@ -88,7 +89,8 @@ class SettingsViewModel @Inject constructor(
         val theme: ThemePreference,
         val copyTotpToClipboard: CopyTotpToClipboard,
         val useFavicons: UseFaviconsPreference,
-        val displayUsernameFieldPreference: SettingsDisplayUsernameFieldPreference
+        val displayUsernameFieldPreference: SettingsDisplayUsernameFieldPreference,
+        val displayAutofillPinningPreference: SettingsDisplayAutofillPinningPreference
     )
 
     private val preferencesState: Flow<PreferencesState> = combine(
@@ -96,6 +98,7 @@ class SettingsViewModel @Inject constructor(
         copyTotpToClipboardState,
         useFaviconsState,
         displayUsernameFieldPreferenceFlow,
+        preferencesRepository.observeDisplayAutofillPinningPreference(),
         ::PreferencesState
     )
 
@@ -123,7 +126,8 @@ class SettingsViewModel @Inject constructor(
             allowScreenshots = allowScreenshots,
             telemetryStatus = telemetryStatus,
             event = event,
-            displayUsernameFieldPreference = preferences.displayUsernameFieldPreference
+            displayUsernameFieldPreference = preferences.displayUsernameFieldPreference,
+            displayAutofillPinningPreference = preferences.displayAutofillPinningPreference
         )
     }.stateIn(
         scope = viewModelScope,
@@ -176,6 +180,11 @@ class SettingsViewModel @Inject constructor(
     internal fun onToggleDisplayUsernameField(isEnabled: Boolean) {
         SettingsDisplayUsernameFieldPreference.from(isEnabled)
             .also(preferencesRepository::setDisplayUsernameFieldPreference)
+    }
+
+    fun onToggleDisplayAutofillPinning(isEnabled: Boolean) {
+        SettingsDisplayAutofillPinningPreference.from(isEnabled)
+            .also(preferencesRepository::setDisplayAutofillPinningPreference)
     }
 
     private companion object {

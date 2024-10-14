@@ -40,14 +40,20 @@ fun SimpleLoginSyncMailboxDeleteBottomSheet(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SimpleLoginSyncMailboxDeleteUiEvent.OnCancelClicked -> {
-
+                    SimpleLoginSyncNavDestination.Back(
+                        comesFromBottomSheet = true
+                    ).let(onNavigated)
                 }
 
                 SimpleLoginSyncMailboxDeleteUiEvent.OnDeleteClicked -> {
 
                 }
 
-                SimpleLoginSyncMailboxDeleteUiEvent.OnTransferAndDeleteClicked -> {
+                is SimpleLoginSyncMailboxDeleteUiEvent.OnTransferAliasesToggled -> {
+                    onToggleTransferAliases(uiEvent.isTransferAliasesEnabled)
+                }
+
+                is SimpleLoginSyncMailboxDeleteUiEvent.OnTransferAliasMailboxSelected -> {
 
                 }
             }

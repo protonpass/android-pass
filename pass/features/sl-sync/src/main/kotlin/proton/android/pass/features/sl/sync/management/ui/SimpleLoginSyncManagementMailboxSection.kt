@@ -167,7 +167,7 @@ private fun SimpleLoginSyncManagementMailboxes(
                     }
                 }
 
-                if(!aliasMailbox.isDefault) {
+                if (!aliasMailbox.isDefault) {
                     ThreeDotsMenuButton(
                         onClick = {
                             onMenuClick(aliasMailbox)

@@ -23,6 +23,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -37,7 +38,6 @@ import me.proton.core.usersettings.domain.usecase.ObserveRegisteredSecurityKeys
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -45,8 +45,6 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -54,7 +52,6 @@ class AccountViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeCurrentUserSettings: ObserveCurrentUserSettings,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     hasExtraPassword: HasExtraPassword,
     accountManager: AccountManager,
     isFido2Enabled: IsFido2Enabled,
@@ -80,18 +77,16 @@ class AccountViewModel @Inject constructor(
         .flatMapLatest { user -> observeUpgradeInfo(userId = user.userId, forceRefresh = true) }
         .distinctUntilChanged()
 
-    val state: StateFlow<AccountUiState> = combineN(
+    val state: StateFlow<AccountUiState> = combine(
         currentUserFlow.asLoadingResult(),
         upgradeInfoFlow.asLoadingResult(),
         observeCurrentUserSettings().asLoadingResult(),
         oneShot { hasExtraPassword() }.asLoadingResult(),
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ACCESS_KEY_V1),
         currentUserFlow.flatMapLatest { oneShot { observeRegisteredSecurityKeys(it.userId) } }
     ) { userResult,
         upgradeInfoResult,
         currentUserSettingsResult,
         hasExtraPassword,
-        isAccessKeyV1Enabled,
         securityKeys ->
 
         val plan = when (upgradeInfoResult) {
@@ -122,7 +117,6 @@ class AccountViewModel @Inject constructor(
                 isLoadingState = IsLoadingState.NotLoading,
                 showUpgradeButton = isUpgradeAvailable,
                 showSubscriptionButton = isSubscriptionAvailable,
-                showExtraPassword = isAccessKeyV1Enabled,
                 isExtraPasswordEnabled = hasExtraPassword.getOrNull() ?: false,
                 userId = null,
                 isFido2Enabled = false,
@@ -138,7 +132,6 @@ class AccountViewModel @Inject constructor(
                     isLoadingState = IsLoadingState.NotLoading,
                     showUpgradeButton = isUpgradeAvailable,
                     showSubscriptionButton = isSubscriptionAvailable,
-                    showExtraPassword = isAccessKeyV1Enabled,
                     isExtraPasswordEnabled = hasExtraPassword.getOrNull() ?: false,
                     userId = userResult.data.userId,
                     isFido2Enabled = isFido2Enabled(userResult.data.userId),

@@ -30,8 +30,7 @@ class CreateItemBottomSheetUIStatePreviewProvider :
                     canUpgrade = true,
                     aliasCount = 5,
                     aliasLimit = 10
-                ),
-                isIdentityV1Enabled = true
+                )
             ),
             CreateItemBottomSheetUIState(
                 shareId = null,
@@ -39,8 +38,7 @@ class CreateItemBottomSheetUIStatePreviewProvider :
                     canUpgrade = true,
                     aliasCount = 10,
                     aliasLimit = 10
-                ),
-                isIdentityV1Enabled = true
+                )
             )
         )
 }

@@ -74,7 +74,6 @@ internal data class HomeUiState(
     val navEvent: HomeNavEvent,
     val action: BottomSheetItemAction,
     val isFreePlan: Boolean,
-    val isUsernameSplitEnabled: Boolean,
     val isSLAliasSyncEnabled: Boolean,
     private val aliasTrashDialogStatusPreference: AliasTrashDialogStatusPreference
 ) {
@@ -111,7 +110,6 @@ internal data class HomeUiState(
             navEvent = HomeNavEvent.Unknown,
             action = BottomSheetItemAction.None,
             isFreePlan = true,
-            isUsernameSplitEnabled = false,
             isSLAliasSyncEnabled = false,
             aliasTrashDialogStatusPreference = AliasTrashDialogStatusPreference.Disabled
         )
@@ -200,8 +198,7 @@ internal data class HomeListUiState(
     val searchFilterType: SearchFilterType = SearchFilterType.All,
     val sortingType: SearchSortingType = SearchSortingType.MostRecent,
     val selectionState: HomeSelectionState,
-    val showNeedsUpdate: Boolean,
-    val isIdentityEnabled: Boolean
+    val showNeedsUpdate: Boolean
 ) {
 
     internal companion object {
@@ -214,8 +211,7 @@ internal data class HomeListUiState(
             items = persistentListOf(),
             shares = persistentMapOf(),
             selectionState = HomeSelectionState.Initial,
-            showNeedsUpdate = false,
-            isIdentityEnabled = false
+            showNeedsUpdate = false
         )
 
     }

@@ -34,40 +34,35 @@ internal class MainLoginSectionParamsPreviewProvider :
             username = username,
             passwordState = HiddenState.Concealed("encrypted"),
             totpUiState = null,
-            showViewAlias = false,
-            isUsernameSplitEnabled = false
+            showViewAlias = false
         ),
         MainLoginSectionParams(
             email = email,
             username = username,
             passwordState = HiddenState.Concealed("encrypted"),
             totpUiState = null,
-            showViewAlias = true,
-            isUsernameSplitEnabled = false
+            showViewAlias = true
         ),
         MainLoginSectionParams(
             email = email,
             username = username,
             passwordState = HiddenState.Revealed("encrypted", "clearText"),
             totpUiState = null,
-            showViewAlias = false,
-            isUsernameSplitEnabled = false
+            showViewAlias = false
         ),
         MainLoginSectionParams(
             email = email,
             username = username,
             passwordState = HiddenState.Revealed("encrypted", "clearText"),
             totpUiState = TotpUiState.Visible("123456", 12, 20),
-            showViewAlias = false,
-            isUsernameSplitEnabled = false
+            showViewAlias = false
         ),
         MainLoginSectionParams(
             email = email,
             username = username,
             passwordState = HiddenState.Revealed("encrypted", "clearText"),
             totpUiState = TotpUiState.Limited,
-            showViewAlias = false,
-            isUsernameSplitEnabled = false
+            showViewAlias = false
         ),
 
         // Hidden sections
@@ -76,48 +71,42 @@ internal class MainLoginSectionParamsPreviewProvider :
             username = "",
             passwordState = HiddenState.Concealed("encrypted"),
             totpUiState = TotpUiState.Visible("123456", 12, 20),
-            showViewAlias = false,
-            isUsernameSplitEnabled = false
+            showViewAlias = false
         ),
         MainLoginSectionParams(
             email = email,
             username = username,
             passwordState = HiddenState.Empty(""),
             totpUiState = TotpUiState.Visible("123456", 12, 20),
-            showViewAlias = false,
-            isUsernameSplitEnabled = false
+            showViewAlias = false
         ),
         MainLoginSectionParams(
             email = email,
             username = username,
             passwordState = HiddenState.Concealed("encrypted"),
             totpUiState = TotpUiState.Hidden,
-            showViewAlias = false,
-            isUsernameSplitEnabled = false
+            showViewAlias = false
         ),
         MainLoginSectionParams(
             email = "",
             username = "",
             passwordState = HiddenState.Empty(""),
             totpUiState = TotpUiState.Visible("123456", 12, 20),
-            showViewAlias = false,
-            isUsernameSplitEnabled = false
+            showViewAlias = false
         ),
         MainLoginSectionParams(
             email = "",
             username = "",
             passwordState = HiddenState.Concealed("encrypted"),
             totpUiState = TotpUiState.Hidden,
-            showViewAlias = false,
-            isUsernameSplitEnabled = false
+            showViewAlias = false
         ),
         MainLoginSectionParams(
             email = email,
             username = username,
             passwordState = HiddenState.Empty(""),
             totpUiState = TotpUiState.Hidden,
-            showViewAlias = false,
-            isUsernameSplitEnabled = false
+            showViewAlias = false
         )
     )
 }
@@ -127,6 +116,5 @@ internal data class MainLoginSectionParams(
     val username: String,
     val passwordState: HiddenState,
     val totpUiState: TotpUiState?,
-    val showViewAlias: Boolean,
-    val isUsernameSplitEnabled: Boolean
+    val showViewAlias: Boolean
 )

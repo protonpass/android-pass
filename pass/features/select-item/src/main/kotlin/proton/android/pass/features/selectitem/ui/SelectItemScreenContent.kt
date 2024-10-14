@@ -65,10 +65,6 @@ internal fun SelectItemScreenContent(
 ) {
     val verticalScroll = rememberLazyListState()
     var showFab by remember { mutableStateOf(true) }
-    val isPinningOrSearch =
-        remember(uiState.pinningUiState.inPinningMode, uiState.searchUiState.inSearchMode) {
-            uiState.pinningUiState.inPinningMode || uiState.searchUiState.inSearchMode
-        }
 
     LaunchedEffect(verticalScroll) {
         var prev = 0
@@ -96,15 +92,16 @@ internal fun SelectItemScreenContent(
             }
         },
         topBar = {
-            val placeholder = if (!uiState.pinningUiState.inPinningMode) {
-                when (uiState.searchUiState.searchInMode) {
-                    SearchInMode.AllVaults -> stringResource(id = R.string.topbar_search_query)
-                    SearchInMode.OldestVaults -> stringResource(id = R.string.topbar_search_query_oldest_vaults)
-                    SearchInMode.Uninitialized -> stringResource(id = R.string.topbar_search_query_uninitialized)
+            val placeholder =
+                if (uiState.pinningUiState.inPinningMode && uiState.pinningUiState.showPinning) {
+                    stringResource(id = R.string.topbar_search_pinned_items)
+                } else {
+                    when (uiState.searchUiState.searchInMode) {
+                        SearchInMode.AllVaults -> stringResource(id = R.string.topbar_search_query)
+                        SearchInMode.OldestVaults -> stringResource(id = R.string.topbar_search_query_oldest_vaults)
+                        SearchInMode.Uninitialized -> stringResource(id = R.string.topbar_search_query_uninitialized)
+                    }
                 }
-            } else {
-                stringResource(id = R.string.topbar_search_pinned_items)
-            }
 
             SearchTopBar(
                 placeholderText = placeholder,
@@ -194,7 +191,10 @@ internal fun SelectItemScreenContent(
                 }
             }
 
-            if (!isPinningOrSearch) {
+            val shouldShowCarousel = !uiState.pinningUiState.inPinningMode &&
+                !uiState.searchUiState.inSearchMode &&
+                uiState.pinningUiState.showPinning
+            if (shouldShowCarousel) {
                 PinCarousel(
                     modifier = Modifier.height(48.dp),
                     list = uiState.pinningUiState.unFilteredItems,

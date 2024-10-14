@@ -45,6 +45,8 @@ internal data class SimpleLoginSyncMailboxOptionsState(
 
     internal val canVerify = !isVerified
 
+    internal val canDelete = !isDefault
+
     internal companion object {
 
         internal val Initial = SimpleLoginSyncMailboxOptionsState(

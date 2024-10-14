@@ -42,6 +42,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -158,6 +159,7 @@ class AliasDetailViewModel @Inject constructor(
         getUserPlan().map { it.isPaidPlan },
         featureFlagsRepository[FeatureFlag.SL_ALIASES_SYNC],
         userPreferencesRepository.observeAliasTrashDialogStatusPreference().map { it.value },
+        featureFlagsRepository[FeatureFlag.SL_ALIASES_SYNC],
         ::AliasItemFeatures
     )
 
@@ -204,15 +206,17 @@ class AliasDetailViewModel @Inject constructor(
                 val permissions = details.vault.role.toPermissions()
                 val canPerformItemActions = permissions.canUpdate()
                 val actions = itemActions.getOrNull() ?: ItemActions.Disabled
+                val aliasDetails = aliasDetailsResult.getOrNull()
+                val isAliasDetailsLoading = aliasDetailsResult is LoadingResult.Loading
                 AliasDetailUiState.Success(
                     itemUiModel = encryptionContextProvider.withEncryptionContext {
                         details.item.toUiModel(this)
                     },
                     vault = vault,
-                    mailboxes = aliasDetailsResult.getOrNull()?.mailboxes?.toPersistentList()
-                        ?: persistentListOf(),
-                    isLoading = aliasDetailsResult is LoadingResult.Loading || isLoading.value(),
-                    isLoadingMailboxes = aliasDetailsResult is LoadingResult.Loading,
+                    mailboxes = aliasDetails?.mailboxes?.toPersistentList() ?: persistentListOf(),
+                    stats = aliasDetails?.stats.toOption(),
+                    isLoading = isAliasDetailsLoading || isLoading.value(),
+                    isLoadingMailboxes = isAliasDetailsLoading,
                     isItemSentToTrash = isItemSentToTrash.value(),
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),

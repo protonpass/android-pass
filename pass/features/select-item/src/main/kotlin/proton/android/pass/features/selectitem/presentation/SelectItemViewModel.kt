@@ -325,8 +325,9 @@ class SelectItemViewModel @Inject constructor(
         pinnedItemsFlow,
         sortingOptionFlow,
         debouncedSearchQueryState,
-        isInSeeAllPinsModeState
-    ) { pinnedItemsResult, sortingOption, searchQuery, isInSeeAllPinsMode ->
+        isInSeeAllPinsModeState,
+        preferenceRepository.observeDisplayAutofillPinningPreference()
+    ) { pinnedItemsResult, sortingOption, searchQuery, isInSeeAllPinsMode, isPinningEnabled ->
         val pinnedItems = pinnedItemsResult.getOrNull()?.let { list ->
             encryptionContextProvider.withEncryptionContext {
                 list.map { it.toUiModel(this@withEncryptionContext) }
@@ -342,7 +343,8 @@ class SelectItemViewModel @Inject constructor(
         PinningUiState(
             inPinningMode = isInSeeAllPinsMode,
             filteredItems = filteredItems,
-            unFilteredItems = unfilteredItems
+            unFilteredItems = unfilteredItems,
+            showPinning = isPinningEnabled.value
         )
     }
 

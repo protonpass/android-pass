@@ -35,6 +35,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
+import proton.android.pass.preferences.settings.SettingsDisplayAutofillPinningPreference
 import proton.android.pass.preferences.settings.SettingsDisplayUsernameFieldPreference
 import proton.android.pass.preferences.simplelogin.SimpleLoginSyncStatusPreference
 import java.io.IOException
@@ -281,6 +282,22 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 pref = userPreferences.displayUsernameField,
                 default = false
             ).let(SettingsDisplayUsernameFieldPreference::from)
+        }
+
+    override fun setDisplayAutofillPinningPreference(
+        preference: SettingsDisplayAutofillPinningPreference
+    ): Result<Unit> = setPreference { userPreferencesBuilder ->
+        preference.value
+            .toBooleanPrefProto()
+            .let(userPreferencesBuilder::setDisplayAutofillPinning)
+    }
+
+    override fun observeDisplayAutofillPinningPreference(): Flow<SettingsDisplayAutofillPinningPreference> =
+        getPreference { userPreferences ->
+            fromBooleanPrefProto(
+                pref = userPreferences.displayAutofillPinning,
+                default = false
+            ).let(SettingsDisplayAutofillPinningPreference::from)
         }
 
     private fun setPreference(mapper: suspend (UserPreferences.Builder) -> UserPreferences.Builder): Result<Unit> =

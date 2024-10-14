@@ -45,4 +45,7 @@ internal sealed interface SettingsContentEvent {
     @JvmInline
     value class OnDisplayUsernameToggled(val isEnabled: Boolean) : SettingsContentEvent
 
+    @JvmInline
+    value class OnDisplayAutofillPinningToggled(val isEnabled: Boolean) : SettingsContentEvent
+
 }

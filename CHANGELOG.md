@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.26.1 (2024-10-14)
+
+### Fixes :bug:
+
+- Autofill crash with an alias.
+
 ## 1.26.0 (2024-10-11)
 
 ### Features :tada:

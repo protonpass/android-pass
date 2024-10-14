@@ -1,0 +1,5 @@
+## 1.26.1 (2024-10-14)
+
+### Fixes :bug:
+
+- Autofill crash with an alias.

@@ -50,12 +50,14 @@ internal fun SimpleLoginSyncMailboxOptionsContent(
             ).also(::add)
         }
 
-        delete(
-            action = action,
-            onClick = {
-                onUiEvent(SimpleLoginSyncMailboxOptionsUiEvent.OnDeleteClicked)
-            }
-        ).also(::add)
+        if (canDelete) {
+            delete(
+                action = action,
+                onClick = {
+                    onUiEvent(SimpleLoginSyncMailboxOptionsUiEvent.OnDeleteClicked)
+                }
+            ).also(::add)
+        }
     }.let { items ->
         BottomSheetItemList(
             modifier = modifier.bottomSheet(),

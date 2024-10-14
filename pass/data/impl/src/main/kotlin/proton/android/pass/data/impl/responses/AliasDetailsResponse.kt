@@ -24,15 +24,27 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AliasDetailsResponse(
     @SerialName("Alias")
-    val alias: AliasDetails
+    val alias: AliasResponse
 )
 
 @Serializable
-data class AliasDetails(
+data class AliasResponse(
     @SerialName("Email")
     val email: String,
     @SerialName("Mailboxes")
     val mailboxes: List<AliasMailboxResponse>,
     @SerialName("AvailableMailboxes")
-    val availableMailboxes: List<AliasMailboxResponse>
+    val availableMailboxes: List<AliasMailboxResponse>,
+    @SerialName("Stats")
+    val stats: AliasStatsResponse
+)
+
+@Serializable
+data class AliasStatsResponse(
+    @SerialName("ForwardedEmails")
+    val forwardedEmails: Int,
+    @SerialName("RepliedEmails")
+    val repliedEmails: Int,
+    @SerialName("BlockedEmails")
+    val blockedEmails: Int
 )

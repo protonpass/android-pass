@@ -25,8 +25,8 @@ import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
-import proton.android.pass.data.impl.responses.AliasDetails
 import proton.android.pass.data.impl.responses.AliasOptionsResponse
+import proton.android.pass.data.impl.responses.AliasResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
@@ -46,7 +46,7 @@ class RemoteAliasDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<AliasDetails> = flow {
+    ): Flow<AliasResponse> = flow {
         val res = api.get<PasswordManagerApi>(userId)
             .invoke { getAliasDetails(shareId.id, itemId.id) }
             .valueOrThrow
@@ -59,7 +59,7 @@ class RemoteAliasDataSourceImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         mailboxes: UpdateAliasMailboxesRequest
-    ): Flow<AliasDetails> = flow {
+    ): Flow<AliasResponse> = flow {
         val res = api.get<PasswordManagerApi>(userId)
             .invoke { updateAliasMailboxes(shareId.id, itemId.id, mailboxes) }
             .valueOrThrow

@@ -37,7 +37,5 @@ internal data class NoteItemFeatures(
 ) : ItemFeatures
 
 internal data class LoginItemFeatures(
-    override val isHistoryEnabled: Boolean,
-    internal val isSecurityCenterEnabled: Boolean,
-    internal val isUsernameSplitEnabled: Boolean
+    override val isHistoryEnabled: Boolean
 ) : ItemFeatures

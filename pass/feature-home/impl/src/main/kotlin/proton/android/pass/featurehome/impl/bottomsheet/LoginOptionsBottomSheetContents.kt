@@ -69,8 +69,7 @@ fun LoginOptionsBottomSheetContents(
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
-    isFreePlan: Boolean,
-    isUsernameSplitEnabled: Boolean
+    isFreePlan: Boolean
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
 
@@ -95,19 +94,12 @@ fun LoginOptionsBottomSheetContents(
         )
 
         buildList {
-            if (isUsernameSplitEnabled) {
-                if (contents.itemEmail.isNotEmpty()) {
-                    add(copyEmail(contents.itemEmail, onCopyEmail))
-                }
-                if (contents.itemUsername.isNotEmpty()) {
-                    add(copyUsername(contents.itemUsername, onCopyUsername))
-                }
-            } else {
-                if (contents.itemEmail.isNotEmpty()) {
-                    add(copyUsername(contents.itemEmail, onCopyUsername))
-                }
+            if (contents.itemEmail.isNotEmpty()) {
+                add(copyEmail(contents.itemEmail, onCopyEmail))
             }
-
+            if (contents.itemUsername.isNotEmpty()) {
+                add(copyUsername(contents.itemUsername, onCopyUsername))
+            }
             if (contents.password !is HiddenState.Empty) {
                 add(copyPassword(contents.password.encrypted, onCopyPassword))
             }
@@ -224,8 +216,7 @@ internal fun LoginOptionsBottomSheetContentsPreview(
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
                 canLoadExternalImages = false,
-                isFreePlan = input.second,
-                isUsernameSplitEnabled = true
+                isFreePlan = input.second
             )
         }
     }

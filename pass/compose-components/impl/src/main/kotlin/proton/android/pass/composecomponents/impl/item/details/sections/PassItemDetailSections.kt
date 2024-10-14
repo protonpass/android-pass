@@ -103,7 +103,6 @@ internal fun PassItemDetailSections(
             itemColors = itemColors,
             itemDiffs = itemDiffs,
             onEvent = onEvent,
-            isUsernameSplitEnabled = isUsernameSplitEnabled,
             lastAutofillOption = itemLastAutofillAtOption,
             revision = itemRevision,
             createdAt = itemCreatedAt,

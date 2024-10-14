@@ -33,16 +33,11 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.FeatureFlag.ACCESS_KEY_V1
 import proton.android.pass.preferences.FeatureFlag.ACCOUNT_SWITCH_V1
 import proton.android.pass.preferences.FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.DIGITAL_ASSET_LINKS
-import proton.android.pass.preferences.FeatureFlag.IDENTITY_V1
-import proton.android.pass.preferences.FeatureFlag.SECURE_LINK_V1
-import proton.android.pass.preferences.FeatureFlag.SECURITY_CENTER_V1
 import proton.android.pass.preferences.FeatureFlag.SL_ALIASES_SYNC
-import proton.android.pass.preferences.FeatureFlag.USERNAME_SPLIT
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -60,31 +55,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { autofillDebugModeEnabled.value }
-
-        SECURITY_CENTER_V1 -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { securityCenterV1Enabled.value }
-
-        IDENTITY_V1 -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { identityItemTypeEnabled.value }
-
-        USERNAME_SPLIT -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { usernameSplitEnabled.value }
-
-        ACCESS_KEY_V1 -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { accessKeyV1Enabled.value }
-
-        SECURE_LINK_V1 -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { publicLinkV1Enabled.value }
 
         ACCOUNT_SWITCH_V1 -> getFeatureFlag(
             key = featureFlag.key,
@@ -110,26 +80,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
         AUTOFILL_DEBUG_MODE -> setFeatureFlag {
             autofillDebugModeEnabled = boolFlagPrefProto(value)
-        }
-
-        SECURITY_CENTER_V1 -> setFeatureFlag {
-            securityCenterV1Enabled = boolFlagPrefProto(value)
-        }
-
-        IDENTITY_V1 -> setFeatureFlag {
-            identityItemTypeEnabled = boolFlagPrefProto(value)
-        }
-
-        USERNAME_SPLIT -> setFeatureFlag {
-            usernameSplitEnabled = boolFlagPrefProto(value)
-        }
-
-        ACCESS_KEY_V1 -> setFeatureFlag {
-            accessKeyV1Enabled = boolFlagPrefProto(value)
-        }
-
-        SECURE_LINK_V1 -> setFeatureFlag {
-            publicLinkV1Enabled = boolFlagPrefProto(value)
         }
 
         ACCOUNT_SWITCH_V1 -> setFeatureFlag {
@@ -238,11 +188,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
     private fun getPrefProto(featureFlag: FeatureFlag, preferences: FeatureFlagsPreferences) = with(preferences) {
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> autofillDebugModeEnabled
-            SECURITY_CENTER_V1 -> securityCenterV1Enabled
-            IDENTITY_V1 -> identityItemTypeEnabled
-            USERNAME_SPLIT -> usernameSplitEnabled
-            ACCESS_KEY_V1 -> accessKeyV1Enabled
-            SECURE_LINK_V1 -> publicLinkV1Enabled
             ACCOUNT_SWITCH_V1 -> accountSwitchV1Enabled
             SL_ALIASES_SYNC -> simpleLoginAliasesSyncEnabled
             DIGITAL_ASSET_LINKS -> digitalAssetLinkEnabled

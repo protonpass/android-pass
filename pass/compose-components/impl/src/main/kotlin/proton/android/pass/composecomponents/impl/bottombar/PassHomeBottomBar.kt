@@ -98,20 +98,18 @@ fun HomeBottomBarContent(
             }
         )
 
-        if (isSecurityCenterEnabled) {
-            BottomNavigationItem(
-                selected = selection == HomeBottomBarSelection.SecurityCenter,
-                selectedContentColor = PassTheme.colors.interactionNormMajor2,
-                unselectedContentColor = PassTheme.colors.textNorm,
-                onClick = { onEvent(HomeBottomBarEvent.OnSecurityCenterSelected) },
-                icon = {
-                    PassHomeBottomBarMonitorIcon(
-                        planType = planType,
-                        monitorStatus = monitorStatus
-                    )
-                }
-            )
-        }
+        BottomNavigationItem(
+            selected = selection == HomeBottomBarSelection.SecurityCenter,
+            selectedContentColor = PassTheme.colors.interactionNormMajor2,
+            unselectedContentColor = PassTheme.colors.textNorm,
+            onClick = { onEvent(HomeBottomBarEvent.OnSecurityCenterSelected) },
+            icon = {
+                PassHomeBottomBarMonitorIcon(
+                    planType = planType,
+                    monitorStatus = monitorStatus
+                )
+            }
+        )
 
         BottomNavigationItem(
             selected = selection == HomeBottomBarSelection.Profile,
@@ -139,7 +137,6 @@ fun HomeBottomBarContentPreview(@PreviewParameter(ThemePreviewProvider::class) i
                 onEvent = {},
                 state = HomeBottomBarState(
                     planType = PlanType.Unknown(),
-                    isSecurityCenterEnabled = true,
                     monitorStatus = MonitorStatusPreference.NoIssues
                 )
             )

@@ -45,7 +45,6 @@ fun LoginTopBarOptionsBottomSheetContents(
     onUnpinned: () -> Unit,
     onExcludeFromMonitoring: () -> Unit,
     onIncludeInMonitoring: () -> Unit,
-    isSecurityCenterEnabled: Boolean,
     isExcludedFromMonitor: Boolean
 ) {
     val items = mutableListOf<BottomSheetItem>().apply {
@@ -59,12 +58,10 @@ fun LoginTopBarOptionsBottomSheetContents(
             add(pin(BottomSheetItemAction.None) { onPinned() })
         }
 
-        if (isSecurityCenterEnabled) {
-            if (isExcludedFromMonitor) {
-                add(monitorInclude(BottomSheetItemAction.None) { onIncludeInMonitoring() })
-            } else {
-                add(monitorExclude(BottomSheetItemAction.None) { onExcludeFromMonitoring() })
-            }
+        if (isExcludedFromMonitor) {
+            add(monitorInclude(BottomSheetItemAction.None) { onIncludeInMonitoring() })
+        } else {
+            add(monitorExclude(BottomSheetItemAction.None) { onExcludeFromMonitoring() })
         }
 
         if (canMoveToTrash) {

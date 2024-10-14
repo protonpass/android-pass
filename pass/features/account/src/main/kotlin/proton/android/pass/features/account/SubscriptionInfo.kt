@@ -60,7 +60,6 @@ fun SubscriptionInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDar
                     isLoadingState = IsLoadingState.NotLoading,
                     showUpgradeButton = true,
                     showSubscriptionButton = true,
-                    showExtraPassword = true,
                     isExtraPasswordEnabled = false,
                     userId = null,
                     isFido2Enabled = false,

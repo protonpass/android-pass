@@ -31,8 +31,6 @@ import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.domain.ItemId
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -45,15 +43,11 @@ class E2EApp : Application() {
     @Inject
     lateinit var autofillItems: TestGetSuggestedAutofillItems
 
-    @Inject
-    lateinit var featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
-
     override fun onCreate() {
         super.onCreate()
         setupItems()
         setupAccount()
         setupLogger()
-        featureFlagsPreferencesRepository.set(FeatureFlag.IDENTITY_V1, true)
     }
 
     private fun setupItems() {

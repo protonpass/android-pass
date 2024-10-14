@@ -58,7 +58,6 @@ fun ItemTypeFilterList(
     modifier: Modifier = Modifier,
     selected: SearchFilterType,
     itemTypeCount: ItemTypeCount,
-    isIdentityEnabled: Boolean,
     onItemTypeClick: (SearchFilterType) -> Unit
 ) {
     Row(
@@ -75,15 +74,19 @@ fun ItemTypeFilterList(
         ItemTypeButton(Login, selected == Login, itemTypeCount.loginCount, onItemTypeClick)
         ItemTypeButton(Alias, selected == Alias, itemTypeCount.aliasCount, onItemTypeClick)
         ItemTypeButton(Note, selected == Note, itemTypeCount.noteCount, onItemTypeClick)
-        ItemTypeButton(CreditCard, selected == CreditCard, itemTypeCount.creditCardCount, onItemTypeClick)
-        if (isIdentityEnabled) {
-            ItemTypeButton(
-                Identity,
-                selected == Identity,
-                itemTypeCount.identityCount,
-                onItemTypeClick
-            )
-        }
+        ItemTypeButton(
+            CreditCard,
+            selected == CreditCard,
+            itemTypeCount.creditCardCount,
+            onItemTypeClick
+        )
+        ItemTypeButton(
+            Identity,
+            selected == Identity,
+            itemTypeCount.identityCount,
+            onItemTypeClick
+        )
+
     }
 }
 
@@ -159,7 +162,6 @@ fun ItemTypeFilterListPreview(@PreviewParameter(ThemePreviewProvider::class) isD
                     creditCardCount = 3,
                     identityCount = 2
                 ),
-                isIdentityEnabled = true,
                 onItemTypeClick = {}
             )
         }

@@ -194,10 +194,12 @@ fun AliasDetail(
                         itemUiModel = state.itemUiModel,
                         vault = state.vault,
                         mailboxes = state.mailboxes,
+                        stats = state.stats,
                         isLoading = state.isLoadingMailboxes,
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
                         isAliasSyncEnabled = state.isSLAliasSyncEnabled,
                         isAliasStateToggling = state.isAliasStateToggling,
+                        isAliasManagementEnabled = state.isAliasManagementEnabled,
                         onCopyAlias = { viewModel.onCopyAlias(it) },
                         onCreateLoginFromAlias = { alias ->
                             val event = ItemDetailNavigation.OnCreateLoginFromAlias(

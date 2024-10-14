@@ -71,6 +71,7 @@ internal fun SettingsContent(
 
             DisplaySection(
                 isDisplayUsernameFieldEnabled = state.displayUsernameFieldPreference.value,
+                displayAutofillPinningPreference = state.displayAutofillPinningPreference.value,
                 onEvent = onEvent
             )
 

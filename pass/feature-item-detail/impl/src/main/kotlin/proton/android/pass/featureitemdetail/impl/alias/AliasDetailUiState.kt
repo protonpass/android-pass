@@ -20,9 +20,11 @@ package proton.android.pass.featureitemdetail.impl.alias
 
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.PersistentList
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.domain.AliasStats
 import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
@@ -43,6 +45,7 @@ sealed interface AliasDetailUiState {
         val itemUiModel: ItemUiModel,
         val vault: Vault?,
         val mailboxes: PersistentList<AliasMailbox>,
+        val stats: Option<AliasStats>,
         val isLoading: Boolean,
         val isLoadingMailboxes: Boolean,
         val isItemSentToTrash: Boolean,

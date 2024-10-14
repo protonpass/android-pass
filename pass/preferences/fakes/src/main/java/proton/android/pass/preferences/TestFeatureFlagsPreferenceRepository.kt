@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import proton.android.pass.preferences.FeatureFlag.ACCESS_KEY_V1
 import proton.android.pass.preferences.FeatureFlag.ACCOUNT_SWITCH_V1
+import proton.android.pass.preferences.FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.DIGITAL_ASSET_LINKS
 import proton.android.pass.preferences.FeatureFlag.IDENTITY_V1
@@ -54,6 +55,7 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
             ACCOUNT_SWITCH_V1 -> it.getOrDefault(ACCOUNT_SWITCH_V1, false) as T
             SL_ALIASES_SYNC -> it.getOrDefault(SL_ALIASES_SYNC, false) as T
             DIGITAL_ASSET_LINKS -> it.getOrDefault(DIGITAL_ASSET_LINKS, false) as T
+            ADVANCED_ALIAS_MANAGEMENT_V1 -> it.getOrDefault(ADVANCED_ALIAS_MANAGEMENT_V1, false) as T
         }
     }
 

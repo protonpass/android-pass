@@ -24,6 +24,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.PersistentList
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -32,6 +34,7 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.domain.AliasStats
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.items.ItemCategory
@@ -43,15 +46,17 @@ fun AliasDetailContent(
     itemUiModel: ItemUiModel,
     vault: Vault?,
     mailboxes: PersistentList<AliasMailbox>,
+    stats: Option<AliasStats>,
     isLoading: Boolean,
     isAliasSyncEnabled: Boolean,
     isAliasStateToggling: Boolean,
+    isHistoryFeatureEnabled: Boolean,
+    isAliasManagementEnabled: Boolean,
     onCopyAlias: (String) -> Unit,
     onCreateLoginFromAlias: (String) -> Unit,
     onToggleAliasState: (Boolean) -> Unit,
     onVaultClick: () -> Unit,
-    onViewItemHistoryClicked: () -> Unit,
-    isHistoryFeatureEnabled: Boolean
+    onViewItemHistoryClicked: () -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.Alias
     Column(
@@ -84,6 +89,10 @@ fun AliasDetailContent(
                 text = contents.note,
                 accentColor = PassTheme.colors.aliasInteractionNorm
             )
+        }
+
+        if (isAliasManagementEnabled && stats is Some) {
+            AliasStats(stats = stats.value)
         }
 
         PassItemDetailsHistorySection(

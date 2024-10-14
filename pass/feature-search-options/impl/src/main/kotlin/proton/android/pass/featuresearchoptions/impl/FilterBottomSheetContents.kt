@@ -60,7 +60,7 @@ fun FilterBottomSheetContents(
         Note,
         CreditCard
     )
-    if (state is SuccessFilterOptionsUIState && state.isIdentityEnabled) {
+    if (state is SuccessFilterOptionsUIState) {
         list.add(Identity)
     }
     BottomSheetItemList(
@@ -152,7 +152,6 @@ fun FilterBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvider::cla
             FilterBottomSheetContents(
                 state = SuccessFilterOptionsUIState(
                     filterType = All,
-                    isIdentityEnabled = true,
                     summary = ItemCountSummary(
                         total = 0,
                         login = 0,

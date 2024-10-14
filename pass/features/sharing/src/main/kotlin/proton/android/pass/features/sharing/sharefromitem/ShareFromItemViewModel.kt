@@ -52,8 +52,6 @@ import proton.android.pass.domain.canCreate
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -64,7 +62,6 @@ class ShareFromItemViewModel @Inject constructor(
     getVaultWithItemCount: GetVaultWithItemCountById,
     canCreateVault: CanCreateVault,
     getUserPlan: GetUserPlan,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     getItemById: GetItemById,
     canManageVaultAccess: CanManageVaultAccess
 ) : ViewModel() {
@@ -103,10 +100,7 @@ class ShareFromItemViewModel @Inject constructor(
         }
     }.asLoadingResult()
 
-    private val isSecureLinkAvailableFlow = combine(
-        oneShot { getItemById(shareId, itemId) },
-        featureFlagsRepository.get<Boolean>(FeatureFlag.SECURE_LINK_V1)
-    ) { item, isSecureLinkEnabled ->
+    private val isSecureLinkAvailableFlow = oneShot { getItemById(shareId, itemId) }.map { item ->
         when (item.itemType.category) {
             ItemCategory.Login,
             ItemCategory.Note,
@@ -116,7 +110,7 @@ class ShareFromItemViewModel @Inject constructor(
 
             ItemCategory.Alias,
             ItemCategory.Unknown -> false
-        } && isSecureLinkEnabled
+        }
     }
 
     private val canUsePaidFeaturesFlow = getUserPlan()

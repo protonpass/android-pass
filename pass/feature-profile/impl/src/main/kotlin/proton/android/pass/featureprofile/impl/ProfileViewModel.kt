@@ -69,7 +69,6 @@ import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.data.api.usecases.simplelogin.DisableSimpleLoginSyncPreference
-import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.domain.PlanType
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.AppVersionCopied
 import proton.android.pass.featureprofile.impl.accountswitcher.AccountItem
@@ -103,8 +102,7 @@ class ProfileViewModel @Inject constructor(
     getDefaultBrowser: GetDefaultBrowser,
     observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock,
     observeSecureLinksCount: ObserveSecureLinksCount,
-    accountManager: AccountManager,
-    observeSimpleLoginSyncStatus: ObserveSimpleLoginSyncStatus
+    accountManager: AccountManager
 ) : ViewModel() {
 
     private val userAppLockSectionStateFlow: Flow<AppLockSectionState> = combine(
@@ -192,16 +190,12 @@ class ProfileViewModel @Inject constructor(
         }.distinctUntilChanged()
 
     private val ffFlow = combine(
-        featureFlagsPreferencesRepository[FeatureFlag.IDENTITY_V1],
-        featureFlagsPreferencesRepository[FeatureFlag.SECURE_LINK_V1],
         featureFlagsPreferencesRepository.observeForAllUsers(FeatureFlag.ACCOUNT_SWITCH_V1),
         featureFlagsPreferencesRepository[FeatureFlag.SL_ALIASES_SYNC],
         ::FeatureFlags
     )
 
     private data class FeatureFlags(
-        val isIdentityEnabled: Boolean,
-        val isSecureLinksEnabled: Boolean,
         val isAccountSwitchEnabled: Boolean,
         val isSimpleLoginAliasesSyncEnabled: Boolean
     )
@@ -274,8 +268,6 @@ class ProfileViewModel @Inject constructor(
             showUpgradeButton = showUpgradeButton,
             userBrowser = defaultBrowser,
             passkeySupport = passkey,
-            isIdentityEnabled = flags.isIdentityEnabled,
-            isSecureLinksEnabled = flags.isSecureLinksEnabled,
             isAccountSwitchEnabled = flags.isAccountSwitchEnabled,
             secureLinksCount = secureLinksCount,
             accounts = accounts,

@@ -40,7 +40,6 @@ import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestUser
 
@@ -74,7 +73,6 @@ internal class AccountViewModelTest {
             observeUpgradeInfo = getUpgradeInfo,
             observeCurrentUserSettings = observeCurrentUserSettings,
             hasExtraPassword = FakeHasExtraPassword(),
-            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository(),
             accountManager = TestAccountManager(),
             isFido2Enabled = FakeIsFido2Enabled(),
             observeRegisteredSecurityKeys = observeRegisteredSecurityKeys

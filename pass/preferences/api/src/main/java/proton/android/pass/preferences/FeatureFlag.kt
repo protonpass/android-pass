@@ -30,36 +30,6 @@ enum class FeatureFlag(
         key = null, // Cannot be activated server-side,
         isEnabledDefault = false
     ),
-    SECURITY_CENTER_V1(
-        title = "Security center (v1)",
-        description = "Enable security center",
-        key = "PassSentinelV1",
-        isEnabledDefault = false
-    ),
-    IDENTITY_V1(
-        title = "Identity (v1)",
-        description = "Enable identity type",
-        key = "PassIdentityV1",
-        isEnabledDefault = false
-    ),
-    USERNAME_SPLIT(
-        title = "Username split",
-        description = "Enable split email/username",
-        key = "PassUsernameSplit",
-        isEnabledDefault = false
-    ),
-    ACCESS_KEY_V1(
-        title = "Access key (v1)",
-        description = "Enable access key",
-        key = "PassAccessKeyV1",
-        isEnabledDefault = false
-    ),
-    SECURE_LINK_V1(
-        title = "Secure link (v1)",
-        description = "Enable secure links",
-        key = "PassPublicLinkV1",
-        isEnabledDefault = false
-    ),
     ACCOUNT_SWITCH_V1(
         title = "Account switch (v1)",
         description = "Enable account switch",

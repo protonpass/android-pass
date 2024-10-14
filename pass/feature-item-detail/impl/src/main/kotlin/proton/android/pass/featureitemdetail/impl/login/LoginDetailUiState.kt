@@ -61,8 +61,6 @@ internal sealed interface LoginDetailUiState {
         val itemActions: ItemActions,
         val event: ItemDetailEvent,
         val isHistoryFeatureEnabled: Boolean,
-        val isSecurityCenterEnabled: Boolean,
-        val isUsernameSplitEnabled: Boolean,
         val monitorState: LoginMonitorState
     ) : LoginDetailUiState
 }

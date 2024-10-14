@@ -23,8 +23,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import proton.android.pass.common.api.combineN
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
@@ -35,25 +35,14 @@ class FeatureFlagsViewModel @Inject constructor(
 ) : ViewModel() {
 
     internal val state: StateFlow<Map<FeatureFlag, Boolean>> =
-        combineN(
-            ffRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1),
-            ffRepository.get<Boolean>(FeatureFlag.IDENTITY_V1),
-            ffRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT),
-            ffRepository.get<Boolean>(FeatureFlag.ACCESS_KEY_V1),
-            ffRepository.get<Boolean>(FeatureFlag.SECURE_LINK_V1),
+        combine(
             ffRepository.get<Boolean>(FeatureFlag.ACCOUNT_SWITCH_V1),
             ffRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
             ffRepository.get<Boolean>(FeatureFlag.DIGITAL_ASSET_LINKS),
             ffRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1)
-        ) { isSecurityCenterEnabled, isIdentityEnabled, isUsernameSplitEnabled,
-            isAccessKeyEnabled, isSecureLinkEnabled, isAccountSwitchEnabled,
-            isSimpleLoginAliasesSyncEnabled, isDigitalAssetLinksEnabled, isAdvanceAliasManagementEnabled ->
+        ) { isAccountSwitchEnabled, isSimpleLoginAliasesSyncEnabled, isDigitalAssetLinksEnabled,
+            isAdvanceAliasManagementEnabled ->
             mapOf(
-                FeatureFlag.SECURITY_CENTER_V1 to isSecurityCenterEnabled,
-                FeatureFlag.IDENTITY_V1 to isIdentityEnabled,
-                FeatureFlag.USERNAME_SPLIT to isUsernameSplitEnabled,
-                FeatureFlag.ACCESS_KEY_V1 to isAccessKeyEnabled,
-                FeatureFlag.SECURE_LINK_V1 to isSecureLinkEnabled,
                 FeatureFlag.ACCOUNT_SWITCH_V1 to isAccountSwitchEnabled,
                 FeatureFlag.SL_ALIASES_SYNC to isSimpleLoginAliasesSyncEnabled,
                 FeatureFlag.DIGITAL_ASSET_LINKS to isDigitalAssetLinksEnabled,

@@ -24,21 +24,18 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class CreateItemBottomSheetViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val navShareId: Option<ShareId> =
@@ -46,38 +43,32 @@ class CreateItemBottomSheetViewModel @Inject constructor(
             .toOption()
             .map { ShareId(it) }
 
-    val state: StateFlow<CreateItemBottomSheetUIState> = combine(
-        observeUpgradeInfo(),
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.IDENTITY_V1)
-    ) { upgradeInfo, isIdentityV1Enabled ->
-        CreateItemBottomSheetUIState(
-            shareId = navShareId.value(),
-            createItemAliasUIState = CreateItemAliasUIState(
-                canUpgrade = upgradeInfo.isUpgradeAvailable,
-                aliasCount = upgradeInfo.totalAlias,
-                aliasLimit = upgradeInfo.plan.aliasLimit.limitOrNull() ?: 0
-            ),
-            isIdentityV1Enabled = isIdentityV1Enabled
-        )
-    }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = CreateItemBottomSheetUIState.DEFAULT
-        )
-
+    val state: StateFlow<CreateItemBottomSheetUIState> =
+        observeUpgradeInfo().map { upgradeInfo ->
+            CreateItemBottomSheetUIState(
+                shareId = navShareId.value(),
+                createItemAliasUIState = CreateItemAliasUIState(
+                    canUpgrade = upgradeInfo.isUpgradeAvailable,
+                    aliasCount = upgradeInfo.totalAlias,
+                    aliasLimit = upgradeInfo.plan.aliasLimit.limitOrNull() ?: 0
+                )
+            )
+        }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = CreateItemBottomSheetUIState.DEFAULT
+            )
 }
 
 data class CreateItemBottomSheetUIState(
     val shareId: ShareId?,
-    val createItemAliasUIState: CreateItemAliasUIState,
-    val isIdentityV1Enabled: Boolean
+    val createItemAliasUIState: CreateItemAliasUIState
 ) {
     companion object {
         val DEFAULT = CreateItemBottomSheetUIState(
             shareId = null,
-            createItemAliasUIState = CreateItemAliasUIState.DEFAULT,
-            isIdentityV1Enabled = false
+            createItemAliasUIState = CreateItemAliasUIState.DEFAULT
         )
     }
 }

@@ -53,7 +53,6 @@ data class AccountUiState(
     val isLoadingState: IsLoadingState,
     val showUpgradeButton: Boolean,
     val showSubscriptionButton: Boolean,
-    val showExtraPassword: Boolean,
     val isExtraPasswordEnabled: Boolean,
     val isFido2Enabled: Boolean,
     val registeredSecurityKeys: List<Fido2RegisteredKey>?
@@ -68,7 +67,6 @@ data class AccountUiState(
             isLoadingState = IsLoadingState.Loading,
             showUpgradeButton = false,
             showSubscriptionButton = false,
-            showExtraPassword = false,
             isExtraPasswordEnabled = false,
             isFido2Enabled = false,
             registeredSecurityKeys = emptyList()

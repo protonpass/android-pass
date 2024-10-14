@@ -58,8 +58,7 @@ internal fun LoginContent(
     isHistoryFeatureEnabled: Boolean,
     passkeys: ImmutableList<UIPasskeyContent>,
     monitorState: LoginMonitorState,
-    onEvent: (LoginDetailEvent) -> Unit,
-    isUsernameSplitEnabled: Boolean
+    onEvent: (LoginDetailEvent) -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
 
@@ -104,8 +103,7 @@ internal fun LoginContent(
             passwordScore = passwordScore,
             totpUiState = totpUiState,
             showViewAlias = showViewAlias,
-            onEvent = onEvent,
-            isUsernameSplitEnabled = isUsernameSplitEnabled
+            onEvent = onEvent
         )
 
         if (contents.urls.isNotEmpty()) {

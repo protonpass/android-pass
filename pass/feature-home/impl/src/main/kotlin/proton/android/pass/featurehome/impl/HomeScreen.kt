@@ -318,8 +318,7 @@ fun HomeScreen(
                                 }
                             }
                         },
-                        isFreePlan = homeUiState.isFreePlan,
-                        isUsernameSplitEnabled = homeUiState.isUsernameSplitEnabled
+                        isFreePlan = homeUiState.isFreePlan
                     )
                 }
 

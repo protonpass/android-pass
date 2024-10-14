@@ -25,7 +25,6 @@ import proton.android.pass.preferences.monitor.MonitorStatusPreference
 @Stable
 data class HomeBottomBarState(
     val planType: PlanType,
-    val isSecurityCenterEnabled: Boolean,
     val monitorStatus: MonitorStatusPreference
 ) {
 
@@ -33,7 +32,6 @@ data class HomeBottomBarState(
 
         val Initial = HomeBottomBarState(
             planType = PlanType.Unknown(),
-            isSecurityCenterEnabled = false,
             monitorStatus = MonitorStatusPreference.NoIssues
         )
 

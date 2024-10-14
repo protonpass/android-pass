@@ -58,7 +58,14 @@ fun ItemUiModel.toAutoFillItem(shouldLinkPackageName: Boolean = false): Autofill
         country = content.addressDetailsContent.countryOrRegion
     )
 
-    is ItemContents.Alias,
+    is ItemContents.Alias -> AutofillItem.Login(
+        shareId = shareId.id,
+        itemId = id.id,
+        username = content.aliasEmail,
+        password = null,
+        totp = null,
+        shouldLinkPackageName = false
+    )
     is ItemContents.Note,
     is ItemContents.Unknown -> throw IllegalStateException("Unsupported item type")
 }

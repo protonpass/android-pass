@@ -77,5 +77,11 @@ enum class FeatureFlag(
         description = "Enable Digital asset links",
         key = "PassDigitalAssetLinks",
         isEnabledDefault = false
+    ),
+    ADVANCED_ALIAS_MANAGEMENT_V1(
+        title = "Alias management (v1)",
+        description = "Enable advanced alias management",
+        key = "PassAdvancedAliasManagementV1",
+        isEnabledDefault = false
     )
 }

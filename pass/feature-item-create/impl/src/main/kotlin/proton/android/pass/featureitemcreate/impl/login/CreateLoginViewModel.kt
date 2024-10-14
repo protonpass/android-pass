@@ -139,7 +139,6 @@ class CreateLoginViewModel @Inject constructor(
     encryptionContextProvider = encryptionContextProvider,
     passwordStrengthCalculator = passwordStrengthCalculator,
     savedStateHandleProvider = savedStateHandleProvider,
-    featureFlagsRepository = featureFlagsRepository,
     emailValidator = emailValidator,
     observeTooltipEnabled = observeTooltipEnabled,
     disableTooltip = disableTooltip,

@@ -83,8 +83,6 @@ import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors.CustomFieldValidationError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.totp.api.TotpManager
 
@@ -103,7 +101,6 @@ abstract class BaseLoginViewModel(
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandleProvider: SavedStateHandleProvider,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     observeTooltipEnabled: ObserveTooltipEnabled
 ) : ViewModel() {
 
@@ -215,7 +212,6 @@ abstract class BaseLoginViewModel(
         totpUiStateFlow,
         upgradeInfoFlow.asLoadingResult(),
         userInteractionFlow,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT),
         observeTooltipEnabled(Tooltip.UsernameSplit)
     ) { loginItemValidationErrors,
         primaryEmail,
@@ -224,7 +220,6 @@ abstract class BaseLoginViewModel(
         totpUiState,
         upgradeInfoResult,
         userInteraction,
-        isUsernameSplitEnabled,
         isUsernameSplitTooltipEnabled ->
         val userPlan = upgradeInfoResult.getOrNull()?.plan
         BaseLoginUiState(
@@ -241,7 +236,6 @@ abstract class BaseLoginViewModel(
             hasReachedAliasLimit = upgradeInfoResult.getOrNull()?.hasReachedAliasLimit() ?: false,
             totpUiState = totpUiState,
             focusedField = userInteraction.focusedField.value(),
-            isUsernameSplitEnabled = isUsernameSplitEnabled,
             isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled
         )
     }

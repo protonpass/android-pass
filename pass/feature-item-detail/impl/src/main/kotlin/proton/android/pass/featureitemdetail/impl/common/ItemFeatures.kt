@@ -25,7 +25,8 @@ internal interface ItemFeatures {
 internal data class AliasItemFeatures(
     override val isHistoryEnabled: Boolean,
     internal val slAliasSyncEnabled: Boolean,
-    internal val isAliasTrashDialogChecked: Boolean
+    internal val isAliasTrashDialogChecked: Boolean,
+    internal val isAliasManagementEnabled: Boolean
 ) : ItemFeatures
 
 internal data class CreditCardItemFeatures(

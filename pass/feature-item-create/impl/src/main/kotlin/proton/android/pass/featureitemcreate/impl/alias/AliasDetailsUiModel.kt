@@ -23,11 +23,13 @@ import proton.android.pass.domain.AliasDetails
 data class AliasDetailsUiModel(
     val email: String,
     val mailboxes: List<AliasMailboxUiModel>,
-    val availableMailboxes: List<AliasMailboxUiModel>
+    val availableMailboxes: List<AliasMailboxUiModel>,
+    val stats: AliasStatsUiModel
 ) {
     constructor(aliasDetails: AliasDetails) : this(
         email = aliasDetails.email,
         mailboxes = aliasDetails.mailboxes.map(::AliasMailboxUiModel),
-        availableMailboxes = aliasDetails.availableMailboxes.map(::AliasMailboxUiModel)
+        availableMailboxes = aliasDetails.availableMailboxes.map(::AliasMailboxUiModel),
+        stats = aliasDetails.stats.let(::AliasStatsUiModel)
     )
 }

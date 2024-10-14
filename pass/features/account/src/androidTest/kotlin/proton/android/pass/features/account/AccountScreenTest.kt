@@ -82,7 +82,9 @@ class AccountScreenTest {
             val contentDescription = activity.getString(
                 R.string.account_sign_out_icon_content_description
             )
-            onNodeWithContentDescription(contentDescription).performClick()
+            onNodeWithContentDescription(contentDescription)
+                .performScrollTo()
+                .performClick()
             waitUntil { checker.isCalled }
         }
 

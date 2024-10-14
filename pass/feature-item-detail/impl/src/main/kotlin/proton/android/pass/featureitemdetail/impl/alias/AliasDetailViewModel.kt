@@ -159,7 +159,7 @@ class AliasDetailViewModel @Inject constructor(
         getUserPlan().map { it.isPaidPlan },
         featureFlagsRepository[FeatureFlag.SL_ALIASES_SYNC],
         userPreferencesRepository.observeAliasTrashDialogStatusPreference().map { it.value },
-        featureFlagsRepository[FeatureFlag.SL_ALIASES_SYNC],
+        featureFlagsRepository[FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1],
         ::AliasItemFeatures
     )
 
@@ -226,6 +226,7 @@ class AliasDetailViewModel @Inject constructor(
                     event = event,
                     isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
                     isSLAliasSyncEnabled = itemFeatures.slAliasSyncEnabled,
+                    isAliasManagementEnabled = itemFeatures.isAliasManagementEnabled,
                     isAliasStateToggling = isAliasStateToggling,
                     isAliasTrashDialogChecked = itemFeatures.isAliasTrashDialogChecked
                 )

@@ -19,18 +19,38 @@
 package proton.android.pass.features.sl.sync.mailboxes.delete.presentation
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 
 @Stable
 internal data class SimpleLoginSyncMailboxDeleteState(
-    private val aliasMailboxes: List<SimpleLoginAliasMailbox>
+    internal val transferAliasMailboxes: List<SimpleLoginAliasMailbox>,
+    internal val isTransferAliasesEnabled: Boolean,
+    private val aliasMailboxOption: Option<SimpleLoginAliasMailbox>,
+    private val selectedAliasMailboxOption: Option<SimpleLoginAliasMailbox>
 ) {
 
+    internal val aliasMailboxEmail: String = when (aliasMailboxOption) {
+        None -> ""
+        is Some -> aliasMailboxOption.value.email
+    }
+
+    internal val transferAliasMailbox: String = when (selectedAliasMailboxOption) {
+        None -> transferAliasMailboxes.firstOrNull { it.isDefault }?.email.orEmpty()
+        is Some -> selectedAliasMailboxOption.value.email
+    }
+
+    internal val hasAliasTransferMailboxes: Boolean = transferAliasMailboxes.size > 1
 
     internal companion object {
 
         internal val Initial = SimpleLoginSyncMailboxDeleteState(
-            aliasMailboxes = emptyList()
+            isTransferAliasesEnabled = true,
+            transferAliasMailboxes = emptyList(),
+            aliasMailboxOption = None,
+            selectedAliasMailboxOption = None
         )
 
     }

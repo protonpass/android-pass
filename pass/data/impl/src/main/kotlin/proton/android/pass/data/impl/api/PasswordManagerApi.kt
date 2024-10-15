@@ -54,6 +54,7 @@ import proton.android.pass.data.impl.requests.UpdateMemberShareRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.requests.aliascontacts.CreateAliasContactRequest
 import proton.android.pass.data.impl.requests.aliascontacts.GetAliasContactsRequest
+import proton.android.pass.data.impl.requests.aliascontacts.UpdateBlockedAliasContactRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
@@ -97,6 +98,7 @@ import proton.android.pass.data.impl.responses.UpdateMonitorAddressStateRequest
 import proton.android.pass.data.impl.responses.UserAccessResponse
 import proton.android.pass.data.impl.responses.aliascontacts.CreateAliasContactResponse
 import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactsResponse
+import proton.android.pass.data.impl.responses.aliascontacts.UpdateBlockedAliasContactResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -259,6 +261,14 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("itemId") itemId: String,
         @Path("contactId") contactId: String
     ): CodeOnlyResponse
+
+    @PUT("$PREFIX/share/{shareId}/alias/{itemId}/contact/{contactId}/blocked")
+    suspend fun updateBlockedAliasContact(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Path("contactId") contactId: String,
+        @Body request: UpdateBlockedAliasContactRequest
+    ): UpdateBlockedAliasContactResponse
 
     // Events
     @GET("$PREFIX/share/{shareId}/event")

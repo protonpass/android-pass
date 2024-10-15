@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,17 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.aliascontact
+package proton.android.pass.features.alias.contacts
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.aliascontacts.Contact
+import androidx.annotation.StringRes
+import proton.android.pass.features.aliascontacts.R
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 
-interface CreateAliasContact {
-    suspend operator fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-        email: String,
-        name: String? = null
-    ): Contact
+enum class AliasContactsSnackbarMessage(
+    @StringRes override val id: Int,
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
+) : SnackbarMessage {
+    ContactCreateSuccess(R.string.snackbar_contact_create_success, SnackbarType.SUCCESS),
+    ContactCreateError(R.string.snackbar_contact_create_error, SnackbarType.ERROR)
 }

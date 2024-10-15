@@ -59,7 +59,9 @@ dependencies {
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
 
+    implementation(projects.pass.commonUi.impl)
     implementation(projects.pass.composeComponents.impl)
+    implementation(projects.pass.domain)
     implementation(projects.pass.navigation.api)
 
     debugImplementation(libs.androidx.compose.uiTooling)

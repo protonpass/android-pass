@@ -109,8 +109,11 @@ import proton.android.pass.featureprofile.impl.profileGraph
 import proton.android.pass.features.account.Account
 import proton.android.pass.features.account.AccountNavigation
 import proton.android.pass.features.account.accountGraph
+import proton.android.pass.features.alias.contacts.AliasContactsNavigation
 import proton.android.pass.features.alias.contacts.aliasContactGraph
+import proton.android.pass.features.alias.contacts.create.navigation.CreateAliasContactNavItem
 import proton.android.pass.features.alias.contacts.detail.navigation.DetailAliasContactNavItem
+import proton.android.pass.features.alias.contacts.onboarding.navigation.OnBoardingAliasContactNavItem
 import proton.android.pass.features.auth.Auth
 import proton.android.pass.features.auth.AuthNavigation
 import proton.android.pass.features.auth.AuthOrigin
@@ -630,6 +633,7 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.Report -> dismissBottomSheet {
                     appNavigator.navigate(ReportNavItem)
                 }
+
                 ProfileNavigation.FeatureFlags -> appNavigator.navigate(FeatureFlagRoute)
                 ProfileNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 ProfileNavigation.Finish -> onNavigate(AppNavigation.Finish)
@@ -1191,8 +1195,10 @@ fun NavGraphBuilder.appGraph(
                     )
                 )
 
-                is ItemDetailNavigation.OnContactsClicked ->
-                    appNavigator.navigate(DetailAliasContactNavItem)
+                is ItemDetailNavigation.OnContactsClicked -> appNavigator.navigate(
+                    destination = DetailAliasContactNavItem,
+                    route = DetailAliasContactNavItem.createNavRoute(it.shareId, it.itemId)
+                )
             }
         }
     )
@@ -2000,7 +2006,20 @@ fun NavGraphBuilder.appGraph(
         }
     )
 
-    aliasContactGraph()
+    aliasContactGraph {
+        when (it) {
+            AliasContactsNavigation.Back -> appNavigator.navigateBack()
+            is AliasContactsNavigation.CreateContact -> appNavigator.navigate(
+                destination = CreateAliasContactNavItem,
+                route = CreateAliasContactNavItem.createNavRoute(it.shareId, it.itemId)
+            )
+
+            is AliasContactsNavigation.OnBoardingContacts -> appNavigator.navigate(
+                destination = OnBoardingAliasContactNavItem,
+                route = OnBoardingAliasContactNavItem.createNavRoute(it.shareId, it.itemId)
+            )
+        }
+    }
 }
 
 // This fun should be removed once all categories are migrated to new item-details feature

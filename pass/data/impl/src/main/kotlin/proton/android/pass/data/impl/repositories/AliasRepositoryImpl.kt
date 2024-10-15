@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.firstError
 import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.repositories.AliasRepository
@@ -34,20 +33,13 @@ import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.remote.RemoteAliasDataSource
 import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
-import proton.android.pass.data.impl.requests.aliascontacts.CreateAliasContactRequest
-import proton.android.pass.data.impl.requests.aliascontacts.GetAliasContactsRequest
-import proton.android.pass.data.impl.requests.aliascontacts.UpdateBlockedAliasContactRequest
 import proton.android.pass.data.impl.responses.AliasMailboxResponse
-import proton.android.pass.data.impl.responses.aliascontacts.ContactResponse
-import proton.android.pass.data.impl.responses.aliascontacts.toDomain
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.AliasStats
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.aliascontacts.Contact
-import proton.android.pass.domain.aliascontacts.ContactId
 import javax.inject.Inject
 
 class AliasRepositoryImpl @Inject constructor(
@@ -128,61 +120,6 @@ class AliasRepositoryImpl @Inject constructor(
             )
         }
     }
-
-    override suspend fun observeAliasContacts(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId
-    ): Flow<List<Contact>> = oneShot {
-        remoteDataSource.getAliasContacts(userId, shareId, itemId, GetAliasContactsRequest())
-            .contacts
-            .map(ContactResponse::toDomain)
-    }.flowOn(Dispatchers.IO)
-
-    override suspend fun observeAliasContact(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        contactId: ContactId
-    ): Flow<Contact> = oneShot {
-        remoteDataSource.getAliasContact(userId, shareId, itemId, contactId)
-            .contact
-            .toDomain()
-    }.flowOn(Dispatchers.IO)
-
-    override suspend fun createAliasContact(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        email: String,
-        name: String?
-    ): Contact = remoteDataSource.createAliasContact(
-        userId,
-        shareId,
-        itemId,
-        CreateAliasContactRequest(email, name)
-    ).contact.toDomain()
-
-    override suspend fun deleteAliasContact(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        contactId: ContactId
-    ) = remoteDataSource.deleteAliasContact(userId, shareId, itemId, contactId)
-
-    override suspend fun updateBlockedAliasContact(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        contactId: ContactId,
-        blocked: Boolean
-    ): Contact = remoteDataSource.updateBlockedAliasContact(
-        userId,
-        shareId,
-        itemId,
-        contactId,
-        UpdateBlockedAliasContactRequest(blocked)
-    ).contact.toDomain()
 
     private fun mapMailboxes(input: List<AliasMailboxResponse>): List<AliasMailbox> =
         input.map { AliasMailbox(id = it.id, email = it.email) }

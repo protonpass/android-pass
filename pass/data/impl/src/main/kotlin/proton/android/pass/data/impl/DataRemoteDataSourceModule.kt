@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.core.datasources.RemoteSentinelDataSource
+import proton.android.pass.data.api.repositories.AliasContactsRepository
 import proton.android.pass.data.impl.core.datasources.RemoteSentinelDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteAliasDataSource
 import proton.android.pass.data.impl.remote.RemoteAliasDataSourceImpl
@@ -60,6 +61,7 @@ import proton.android.pass.data.impl.remote.assetlink.RemoteAssetLinkDataSource
 import proton.android.pass.data.impl.remote.assetlink.RemoteAssetLinkDataSourceImpl
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSourceImpl
+import proton.android.pass.data.impl.repositories.AliasContactsRepositoryImpl
 import javax.inject.Singleton
 
 @Module
@@ -128,6 +130,9 @@ abstract class DataRemoteDataSourceModule {
 
     @[Binds Singleton]
     abstract fun bindRemoteAssetLinkDataSource(impl: RemoteAssetLinkDataSourceImpl): RemoteAssetLinkDataSource
+
+    @[Binds Singleton]
+    abstract fun bindAliasContactsRepository(impl: AliasContactsRepositoryImpl): AliasContactsRepository
 
 }
 

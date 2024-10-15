@@ -25,6 +25,8 @@ import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.aliascontacts.Contact
+import proton.android.pass.domain.aliascontacts.ContactId
 
 interface AliasRepository {
     fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptions>
@@ -53,6 +55,42 @@ interface AliasRepository {
         items: List<Pair<ShareId, ItemId>>,
         enabled: Boolean
     ): AliasItemsChangeStatusResult
+
+    suspend fun observeAliasContacts(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<List<Contact>>
+
+    suspend fun observeAliasContact(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        contactId: ContactId
+    ): Flow<Contact>
+
+    suspend fun createAliasContact(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        email: String,
+        name: String?
+    ): Contact
+
+    suspend fun deleteAliasContact(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        contactId: ContactId
+    )
+
+    suspend fun updateBlockedAliasContact(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        contactId: ContactId,
+        blocked: Boolean
+    ): Contact
 }
 
 

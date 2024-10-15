@@ -253,6 +253,13 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Body request: CreateAliasContactRequest
     ): CreateAliasContactResponse
 
+    @DELETE("$PREFIX/share/{shareId}/alias/{itemId}/contact/{contactId}")
+    suspend fun deleteAliasContact(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Path("contactId") contactId: String
+    ): CodeOnlyResponse
+
     // Events
     @GET("$PREFIX/share/{shareId}/event")
     suspend fun getLastEventId(@Path("shareId") shareId: String): LastEventIdResponse

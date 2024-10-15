@@ -16,17 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.aliascontact
+package proton.android.pass.features.alias.contacts.create.presentation
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.aliascontacts.Contact
-
-interface CreateAliasContact {
-    suspend operator fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-        email: String,
-        name: String? = null
-    ): Contact
+sealed interface CreateAliasContactUIEvent {
+    data object Back : CreateAliasContactUIEvent
+    data object Create : CreateAliasContactUIEvent
 }

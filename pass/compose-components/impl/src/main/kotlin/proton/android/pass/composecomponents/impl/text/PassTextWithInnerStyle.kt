@@ -18,6 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.text
 
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -27,6 +28,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.body3Bold
+import proton.android.pass.commonui.api.body3Unspecified
 
 @Composable
 fun PassTextWithInnerStyle(
@@ -56,5 +63,21 @@ fun PassTextWithInnerStyle(
             modifier = modifier,
             text = annotatedText
         )
+    }
+}
+
+@[Preview Composable]
+internal fun PassTextWithInnerStylePreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            PassTextWithInnerStyle(
+                text = "This is a text that contains a inner text with a different style",
+                textStyle = PassTheme.typography.body3Unspecified,
+                innerText = "inner text",
+                innerStyle = PassTheme.typography.body3Bold().copy(
+                    color = PassTheme.colors.interactionNorm
+                )
+            )
+        }
     }
 }

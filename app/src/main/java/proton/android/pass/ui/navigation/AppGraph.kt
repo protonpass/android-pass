@@ -211,7 +211,6 @@ import proton.android.pass.features.sharing.manage.bottomsheet.InviteTypeValue
 import proton.android.pass.features.sharing.manage.bottomsheet.MemberOptionsBottomSheet
 import proton.android.pass.features.sharing.sharingGraph
 import proton.android.pass.features.sharing.sharingpermissions.bottomsheet.SharingEditPermissions
-import proton.android.pass.features.sl.sync.details.navigation.SimpleLoginSyncDetailsNavItem
 import proton.android.pass.features.sl.sync.domains.select.navigation.SimpleLoginSyncDomainSelectNavItem
 import proton.android.pass.features.sl.sync.mailboxes.create.navigation.SimpleLoginSyncMailboxCreateNavItem
 import proton.android.pass.features.sl.sync.mailboxes.delete.navigation.SimpleLoginSyncMailboxDeleteNavItem
@@ -408,7 +407,7 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 HomeNavigation.SLSync -> appNavigator.navigate(
-                    destination = SimpleLoginSyncDetailsNavItem
+                    destination = SimpleLoginSyncManagementNavItem
                 )
             }
         }

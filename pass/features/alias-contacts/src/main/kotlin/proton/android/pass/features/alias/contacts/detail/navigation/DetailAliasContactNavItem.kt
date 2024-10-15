@@ -18,8 +18,18 @@
 
 package proton.android.pass.features.alias.contacts.detail.navigation
 
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 
 object DetailAliasContactNavItem : NavItem(
-    baseRoute = "alias/contact/detail"
-)
+    baseRoute = "alias/contact/detail",
+    navArgIds = listOf(
+        CommonNavArgId.ShareId,
+        CommonNavArgId.ItemId
+    )
+) {
+    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+}
+

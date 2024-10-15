@@ -249,7 +249,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Body request: GetAliasContactsRequest
     ): GetAliasContactsResponse
 
-    @GET("$PREFIX/share/{shareId}/alias/{itemId}/contact/{contactID}")
+    @GET("$PREFIX/share/{shareId}/alias/{itemId}/contact/{contactId}")
     suspend fun getAliasContact(
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String,

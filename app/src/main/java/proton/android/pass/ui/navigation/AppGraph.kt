@@ -26,14 +26,6 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
-import proton.android.pass.features.account.Account
-import proton.android.pass.features.account.AccountNavigation
-import proton.android.pass.features.account.accountGraph
-import proton.android.pass.features.auth.Auth
-import proton.android.pass.features.auth.AuthNavigation
-import proton.android.pass.features.auth.AuthOrigin
-import proton.android.pass.features.auth.EnterPin
-import proton.android.pass.features.auth.authGraph
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.featurefeatureflags.impl.featureFlagsGraph
 import proton.android.pass.featurehome.impl.HOME_ENABLE_BULK_ACTIONS_KEY
@@ -106,12 +98,6 @@ import proton.android.pass.featuremigrate.impl.MigrateVaultFilter
 import proton.android.pass.featuremigrate.impl.migrateGraph
 import proton.android.pass.featureonboarding.impl.OnBoarding
 import proton.android.pass.featureonboarding.impl.onBoardingGraph
-import proton.android.pass.features.password.GeneratePasswordBottomsheet
-import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
-import proton.android.pass.features.password.GeneratePasswordNavigation
-import proton.android.pass.features.password.dialog.mode.PasswordModeDialog
-import proton.android.pass.features.password.dialog.separator.WordSeparatorDialog
-import proton.android.pass.features.password.generatePasswordBottomsheetGraph
 import proton.android.pass.featureprofile.impl.AppLockTimeBottomsheet
 import proton.android.pass.featureprofile.impl.AppLockTypeBottomsheet
 import proton.android.pass.featureprofile.impl.ENTER_PIN_PARAMETER_KEY
@@ -120,6 +106,15 @@ import proton.android.pass.featureprofile.impl.PinConfig
 import proton.android.pass.featureprofile.impl.Profile
 import proton.android.pass.featureprofile.impl.ProfileNavigation
 import proton.android.pass.featureprofile.impl.profileGraph
+import proton.android.pass.features.account.Account
+import proton.android.pass.features.account.AccountNavigation
+import proton.android.pass.features.account.accountGraph
+import proton.android.pass.features.alias.contacts.aliasContactGraph
+import proton.android.pass.features.auth.Auth
+import proton.android.pass.features.auth.AuthNavigation
+import proton.android.pass.features.auth.AuthOrigin
+import proton.android.pass.features.auth.EnterPin
+import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.extrapassword.ExtraPasswordNavigation
 import proton.android.pass.features.extrapassword.configure.navigation.SetExtraPasswordNavItem
 import proton.android.pass.features.extrapassword.confirm.navigation.ConfirmExtraPasswordNavItem
@@ -142,6 +137,12 @@ import proton.android.pass.features.item.trash.shared.navigation.ItemTrashNavDes
 import proton.android.pass.features.item.trash.shared.navigation.itemTrashNavGraph
 import proton.android.pass.features.item.trash.trashdelete.navigation.ItemTrashDeleteNavItem
 import proton.android.pass.features.item.trash.trashmenu.navigation.ItemTrashMenuNavItem
+import proton.android.pass.features.password.GeneratePasswordBottomsheet
+import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
+import proton.android.pass.features.password.GeneratePasswordNavigation
+import proton.android.pass.features.password.dialog.mode.PasswordModeDialog
+import proton.android.pass.features.password.dialog.separator.WordSeparatorDialog
+import proton.android.pass.features.password.generatePasswordBottomsheetGraph
 import proton.android.pass.features.report.navigation.ReportNavDestination
 import proton.android.pass.features.report.navigation.ReportNavItem
 import proton.android.pass.features.report.navigation.reportNavGraph
@@ -1994,6 +1995,8 @@ fun NavGraphBuilder.appGraph(
             }
         }
     )
+
+    aliasContactGraph()
 }
 
 // This fun should be removed once all categories are migrated to new item-details feature

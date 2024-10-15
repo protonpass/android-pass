@@ -113,6 +113,11 @@ import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
+import proton.android.pass.data.api.usecases.aliascontact.CreateAliasContact
+import proton.android.pass.data.api.usecases.aliascontact.DeleteAliasContact
+import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContact
+import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
+import proton.android.pass.data.api.usecases.aliascontact.UpdateBlockedAliasContact
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
@@ -284,6 +289,11 @@ import proton.android.pass.data.impl.usecases.UpdateAliasImpl
 import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
 import proton.android.pass.data.impl.usecases.UpdateVaultImpl
+import proton.android.pass.data.impl.usecases.aliascontact.CreateAliasContactImpl
+import proton.android.pass.data.impl.usecases.aliascontact.DeleteAliasContactImpl
+import proton.android.pass.data.impl.usecases.aliascontact.ObserveAliasContactImpl
+import proton.android.pass.data.impl.usecases.aliascontact.ObserveAliasContactsImpl
+import proton.android.pass.data.impl.usecases.aliascontact.UpdateBlockedAliasContactImpl
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLink
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLinkImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
@@ -903,4 +913,18 @@ abstract class DataUseCaseModule {
     @[Binds Singleton]
     abstract fun bindGetItemOptions(impl: GetItemOptionsImpl): GetItemOptions
 
+    @[Binds Singleton]
+    abstract fun bindObserveAliasContacts(impl: ObserveAliasContactsImpl): ObserveAliasContacts
+
+    @[Binds Singleton]
+    abstract fun bindObserveAliasContact(impl: ObserveAliasContactImpl): ObserveAliasContact
+
+    @[Binds Singleton]
+    abstract fun bindCreateAliasContact(impl: CreateAliasContactImpl): CreateAliasContact
+
+    @[Binds Singleton]
+    abstract fun bindDeleteAliasContact(impl: DeleteAliasContactImpl): DeleteAliasContact
+
+    @[Binds Singleton]
+    abstract fun bindUpdateBlockedAliasContact(impl: UpdateBlockedAliasContactImpl): UpdateBlockedAliasContact
 }

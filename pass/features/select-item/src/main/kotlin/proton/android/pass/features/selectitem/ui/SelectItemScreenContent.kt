@@ -191,10 +191,7 @@ internal fun SelectItemScreenContent(
                 }
             }
 
-            val shouldShowCarousel = !uiState.pinningUiState.inPinningMode &&
-                !uiState.searchUiState.inSearchMode &&
-                uiState.pinningUiState.showPinning
-            if (shouldShowCarousel) {
+            if (uiState.shouldShowCarousel()) {
                 PinCarousel(
                     modifier = Modifier.height(48.dp),
                     list = uiState.pinningUiState.unFilteredItems,

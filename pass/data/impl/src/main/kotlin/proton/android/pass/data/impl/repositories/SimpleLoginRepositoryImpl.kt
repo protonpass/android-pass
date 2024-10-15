@@ -41,6 +41,7 @@ import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSou
 import proton.android.pass.data.impl.requests.SimpleLoginCreateAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesData
 import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesRequest
+import proton.android.pass.data.impl.requests.SimpleLoginDeleteAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDomainRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasMailboxRequest
@@ -242,6 +243,20 @@ class SimpleLoginRepositoryImpl @Inject constructor(
                         mailboxId = aliasSettings.defaultMailboxId
                     )
                 }
+        }
+    }
+
+    override suspend fun deleteAliasMailbox(mailboxId: Long, transferMailboxId: Long?) {
+        withUserId { userId: UserId ->
+            remoteSimpleLoginDataSource.deleteSimpleLoginAliasMailbox(
+                userId = userId,
+                mailboxId = mailboxId,
+                request = SimpleLoginDeleteAliasMailboxRequest(
+                    transferMailboxId = transferMailboxId?.toString()
+                )
+            ).also {
+                localSimpleLoginDataSource.deleteAliasMailbox(userId, mailboxId)
+            }
         }
     }
 

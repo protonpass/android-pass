@@ -169,6 +169,7 @@ import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.data.api.usecases.simplelogin.CreateSimpleLoginAliasMailbox
+import proton.android.pass.data.api.usecases.simplelogin.DeleteSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.DisableSimpleLoginSyncPreference
 import proton.android.pass.data.api.usecases.simplelogin.EnableSimpleLoginSync
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasDomains
@@ -332,6 +333,7 @@ import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinksCount
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeCreateSimpleLoginAliasMailbox
+import proton.android.pass.data.fakes.usecases.simplelogin.FakeDeleteSimpleLoginAliasMailbox
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeDisableSimpleLoginSyncPreference
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeEnableSimpleLoginSyncImpl
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeObserveSimpleLoginAliasDomains
@@ -884,5 +886,10 @@ abstract class FakesDataModule {
     abstract fun bindObserveSimpleLoginAliasMailbox(
         impl: FakeObserveSimpleLoginAliasMailbox
     ): ObserveSimpleLoginAliasMailbox
+
+    @Binds
+    abstract fun bindDeleteSimpleLoginAliasMailbox(
+        impl: FakeDeleteSimpleLoginAliasMailbox
+    ): DeleteSimpleLoginAliasMailbox
 
 }

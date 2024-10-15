@@ -25,27 +25,35 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.simplelogin.DeleteSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailboxes
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 import proton.android.pass.features.sl.sync.shared.navigation.mailboxes.SimpleLoginSyncMailboxIdNavArgId
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
 class SimpleLoginSyncMailboxDeleteViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeSimpleLoginAliasMailbox: ObserveSimpleLoginAliasMailbox,
-    observeSimpleLoginAliasMailboxes: ObserveSimpleLoginAliasMailboxes
+    observeSimpleLoginAliasMailboxes: ObserveSimpleLoginAliasMailboxes,
+    private val deleteSimpleLoginAliasMailbox: DeleteSimpleLoginAliasMailbox,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val mailboxId = savedStateHandleProvider.get()
@@ -58,23 +66,36 @@ class SimpleLoginSyncMailboxDeleteViewModel @Inject constructor(
 
     private val isTransferAliasesEnabledFlow = MutableStateFlow(true)
 
-    private val aliasMailboxOptionFlow = observeSimpleLoginAliasMailbox(mailboxId)
-        .mapLatest { aliasMailbox ->
-            requireNotNull(aliasMailbox).some()
-        }
-        .catch { error ->
-            PassLogger.w(TAG, "Error observing alias mailbox")
-            PassLogger.w(TAG, error)
-            emit(None)
-        }
+    private val aliasMailboxOptionFlow =
+        oneShot { observeSimpleLoginAliasMailbox(mailboxId).first() }
+            .mapLatest { aliasMailbox ->
+                requireNotNull(aliasMailbox).some()
+            }
+            .catch { error ->
+                PassLogger.w(TAG, "There was an error observing alias mailbox")
+                PassLogger.w(TAG, error)
+                eventFlow.update { SimpleLoginSyncMailboxDeleteEvent.OnDeleteAliasMailboxError }
+                snackbarDispatcher(SimpleLoginSyncMailboxDeleteMessage.DeleteAliasMailboxError)
+                emit(None)
+            }
 
-    private val selectedAliasMailboxOptionFlow = MutableStateFlow<Option<SimpleLoginAliasMailbox>>(None)
+    private val eventFlow = MutableStateFlow<SimpleLoginSyncMailboxDeleteEvent>(
+        value = SimpleLoginSyncMailboxDeleteEvent.Idle
+    )
 
-    internal val stateFlow: StateFlow<SimpleLoginSyncMailboxDeleteState> = combine(
+    private val isLoadingStateFlow = MutableStateFlow<IsLoadingState>(IsLoadingState.NotLoading)
+
+    private val selectedAliasMailboxOptionFlow = MutableStateFlow<Option<SimpleLoginAliasMailbox>>(
+        value = None
+    )
+
+    internal val stateFlow: StateFlow<SimpleLoginSyncMailboxDeleteState> = combineN(
         transferAliasMailboxesFlow,
         isTransferAliasesEnabledFlow,
+        eventFlow,
         aliasMailboxOptionFlow,
         selectedAliasMailboxOptionFlow,
+        isLoadingStateFlow,
         ::SimpleLoginSyncMailboxDeleteState
     ).stateIn(
         scope = viewModelScope,
@@ -84,6 +105,31 @@ class SimpleLoginSyncMailboxDeleteViewModel @Inject constructor(
 
     internal fun onToggleTransferAliases(isTransferAliasesEnabled: Boolean) {
         isTransferAliasesEnabledFlow.update { isTransferAliasesEnabled }
+    }
+
+    internal fun onDeleteMailbox() {
+        viewModelScope.launch {
+            isLoadingStateFlow.update { IsLoadingState.Loading }
+
+            runCatching {
+                deleteSimpleLoginAliasMailbox(
+                    mailboxId = mailboxId,
+                    transferMailboxId = stateFlow.value.transferAliasMailboxId.takeIf {
+                        stateFlow.value.isTransferAliasesEnabled
+                    }
+                )
+            }.onFailure { error ->
+                PassLogger.w(TAG, "There was an error deleting alias mailbox")
+                PassLogger.w(TAG, error)
+                eventFlow.update { SimpleLoginSyncMailboxDeleteEvent.OnDeleteAliasMailboxError }
+                snackbarDispatcher(SimpleLoginSyncMailboxDeleteMessage.DeleteAliasMailboxError)
+            }.onSuccess {
+                eventFlow.update { SimpleLoginSyncMailboxDeleteEvent.OnDeleteAliasMailboxSuccess }
+                snackbarDispatcher(SimpleLoginSyncMailboxDeleteMessage.DeleteAliasMailboxSuccess)
+            }
+
+            isLoadingStateFlow.update { IsLoadingState.NotLoading }
+        }
     }
 
     private companion object {

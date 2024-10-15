@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.remote.simplelogin
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.requests.SimpleLoginCreateAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesRequest
+import proton.android.pass.data.impl.requests.SimpleLoginDeleteAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDomainRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasMailboxRequest
@@ -80,5 +81,11 @@ interface RemoteSimpleLoginDataSource {
         userId: UserId,
         mailboxId: Long
     ): SimpleLoginAliasMailboxResponse
+
+    suspend fun deleteSimpleLoginAliasMailbox(
+        userId: UserId,
+        mailboxId: Long,
+        request: SimpleLoginDeleteAliasMailboxRequest
+    ): CodeOnlyResponse
 
 }

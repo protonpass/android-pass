@@ -62,4 +62,6 @@ interface SimpleLoginRepository {
 
     fun observeAliasMailbox(mailboxId: Long): Flow<SimpleLoginAliasMailbox?>
 
+    suspend fun deleteAliasMailbox(mailboxId: Long, transferMailboxId: Long?)
+
 }

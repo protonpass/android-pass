@@ -80,7 +80,7 @@ internal fun SimpleLoginSyncMailboxDeleteContent(
 
         SimpleLoginSyncMailboxTransferSection(
             isTransferAliasesEnabled = isTransferAliasesEnabled,
-            transferAliasMailbox = transferAliasMailbox,
+            transferAliasMailbox = transferAliasMailboxEmail,
             hasAliasTransferMailboxes = hasAliasTransferMailboxes,
             onUiEvent = onUiEvent
         )
@@ -91,8 +91,9 @@ internal fun SimpleLoginSyncMailboxDeleteContent(
             text = stringResource(id = deleteTextResId),
             textColor = PassTheme.colors.interactionNormMinor1,
             backgroundColor = PassTheme.colors.signalDanger,
+            isLoading = isLoading,
             onClick = {
-                onUiEvent(SimpleLoginSyncMailboxDeleteUiEvent.OnCancelClicked)
+                onUiEvent(SimpleLoginSyncMailboxDeleteUiEvent.OnDeleteClicked)
             }
         )
 

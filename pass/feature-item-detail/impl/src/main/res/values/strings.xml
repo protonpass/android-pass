@@ -106,6 +106,8 @@
     <string name="passkey_detail_bottomsheet_created">Created</string>
     <string name="activity_in_last_two_weeks">Activity in last two weeks</string>
 
+    <string name="contacts">Contacts</string>
+
     <plurals name="alias_forwards_count">
         <item quantity="one">%1$s forward</item>
         <item quantity="other">%1$s forwards</item>

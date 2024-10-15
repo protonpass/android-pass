@@ -16,18 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.aliascontact
+package proton.android.pass.features.alias.contacts
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.aliascontacts.Contact
-import proton.android.pass.domain.aliascontacts.ContactId
-
-interface ObserveAliasContact {
-    operator fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-        contactId: ContactId
-    ): Flow<Contact>
+sealed interface AliasContactsNavigation {
+    data object Back : AliasContactsNavigation
+    data object CreateContact : AliasContactsNavigation
+    data object OnBoardingContacts : AliasContactsNavigation
 }

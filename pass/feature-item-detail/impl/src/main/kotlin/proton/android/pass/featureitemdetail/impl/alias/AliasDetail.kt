@@ -195,6 +195,7 @@ fun AliasDetail(
                         vault = state.vault,
                         mailboxes = state.mailboxes,
                         stats = state.stats,
+                        contactsCount = state.contactsCount,
                         isLoading = state.isLoadingMailboxes,
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
                         isAliasSyncEnabled = state.isSLAliasSyncEnabled,
@@ -226,6 +227,14 @@ fun AliasDetail(
                                 shareId = state.itemUiModel.shareId,
                                 itemId = state.itemUiModel.id,
                                 state = it
+                            )
+                        },
+                        onContactsClicked = {
+                            onNavigate(
+                                ItemDetailNavigation.OnContactsClicked(
+                                    shareId = state.itemUiModel.shareId,
+                                    itemId = state.itemUiModel.id
+                                )
                             )
                         }
                     )

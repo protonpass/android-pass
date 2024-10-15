@@ -97,6 +97,7 @@ import proton.android.pass.data.impl.responses.UpdateLastUsedTimeResponse
 import proton.android.pass.data.impl.responses.UpdateMonitorAddressStateRequest
 import proton.android.pass.data.impl.responses.UserAccessResponse
 import proton.android.pass.data.impl.responses.aliascontacts.CreateAliasContactResponse
+import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactResponse
 import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactsResponse
 import proton.android.pass.data.impl.responses.aliascontacts.UpdateBlockedAliasContactResponse
 import retrofit2.http.Body
@@ -247,6 +248,13 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("itemId") itemId: String,
         @Body request: GetAliasContactsRequest
     ): GetAliasContactsResponse
+
+    @GET("$PREFIX/share/{shareId}/alias/{itemId}/contact/{contactID}")
+    suspend fun getAliasContact(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Path("contactId") contactId: String
+    ): GetAliasContactResponse
 
     @POST("$PREFIX/share/{shareId}/alias/{itemId}/contact")
     suspend fun createAliasContact(

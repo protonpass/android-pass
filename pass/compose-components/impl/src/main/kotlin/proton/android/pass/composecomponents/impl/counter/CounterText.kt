@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.shared.ui.counters
+package proton.android.pass.composecomponents.impl.counter
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -28,9 +28,9 @@ import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.composecomponents.impl.container.Circle
 
 @Composable
-internal fun SecurityCenterCounterText(
+fun CounterText(
     modifier: Modifier = Modifier,
-    counterText: String,
+    text: String,
     backgroundColor: Color,
     textColor: Color,
     textStyle: TextStyle = ProtonTheme.typography.defaultNorm
@@ -40,7 +40,7 @@ internal fun SecurityCenterCounterText(
         backgroundColor = backgroundColor
     ) {
         Text(
-            text = counterText,
+            text = text,
             color = textColor,
             style = textStyle
         )

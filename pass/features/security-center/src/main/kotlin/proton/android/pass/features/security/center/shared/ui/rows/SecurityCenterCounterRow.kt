@@ -30,9 +30,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.composecomponents.impl.counter.CounterText
 import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
+import proton.android.pass.composecomponents.impl.row.CounterRow
 import proton.android.pass.features.security.center.shared.ui.counters.SecurityCenterCounterIcon
-import proton.android.pass.features.security.center.shared.ui.counters.SecurityCenterCounterText
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
@@ -42,7 +43,7 @@ internal fun SecurityCenterCounterRow(
     onClick: (() -> Unit)? = null
 ) = when (model) {
     is SecurityCenterCounterRowModel.Alert -> {
-        SecurityCenterRow(
+        CounterRow(
             modifier = modifier,
             title = model.title,
             subtitle = model.subtitle,
@@ -60,8 +61,8 @@ internal fun SecurityCenterCounterRow(
                 )
             },
             trailingContent = {
-                SecurityCenterCounterText(
-                    counterText = model.counterText,
+                CounterText(
+                    text = model.counterText,
                     backgroundColor = model.getCounterTextBackgroundColor(),
                     textColor = model.getCounterTextColor()
                 )
@@ -72,7 +73,7 @@ internal fun SecurityCenterCounterRow(
     }
 
     is SecurityCenterCounterRowModel.Indicator -> {
-        SecurityCenterRow(
+        CounterRow(
             modifier = modifier,
             title = model.title,
             subtitle = model.subtitle,
@@ -87,8 +88,8 @@ internal fun SecurityCenterCounterRow(
                 )
             },
             trailingContent = {
-                SecurityCenterCounterText(
-                    counterText = model.counterText,
+                CounterText(
+                    text = model.counterText,
                     backgroundColor = model.getCounterTextBackgroundColor(),
                     textColor = model.getCounterTextColor()
                 )
@@ -98,7 +99,7 @@ internal fun SecurityCenterCounterRow(
     }
 
     is SecurityCenterCounterRowModel.Standard -> {
-        SecurityCenterRow(
+        CounterRow(
             modifier = modifier,
             title = model.title,
             subtitle = model.subtitle,
@@ -106,8 +107,8 @@ internal fun SecurityCenterCounterRow(
             accentBackgroundColor = PassTheme.colors.interactionNormMinor2.takeIf { model.showPassPlusIcon },
             onClick = onClick,
             trailingContent = {
-                SecurityCenterCounterText(
-                    counterText = model.counterText,
+                CounterText(
+                    text = model.counterText,
                     backgroundColor = model.getCounterTextBackgroundColor(),
                     textColor = model.getCounterTextColor()
                 )
@@ -120,7 +121,7 @@ internal fun SecurityCenterCounterRow(
     }
 
     is SecurityCenterCounterRowModel.Success -> {
-        SecurityCenterRow(
+        CounterRow(
             modifier = modifier,
             title = model.title,
             subtitle = model.subtitle,
@@ -138,7 +139,7 @@ internal fun SecurityCenterCounterRow(
     }
 
     is SecurityCenterCounterRowModel.Loading ->
-        SecurityCenterRow(
+        CounterRow(
             modifier = modifier,
             title = model.title,
             subtitle = "",

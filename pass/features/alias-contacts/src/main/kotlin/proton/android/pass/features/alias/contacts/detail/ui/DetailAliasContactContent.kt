@@ -26,18 +26,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallInverted
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.topbar.IconTopAppBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
@@ -88,16 +84,6 @@ fun DetailAliasContactContent(modifier: Modifier = Modifier, onEvent: (DetailAli
             verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
         ) {
 
-        }
-    }
-}
-
-@Preview
-@Composable
-fun DetailAliasContactContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
-        Surface {
-            DetailAliasContactContent(onEvent = {})
         }
     }
 }

@@ -42,6 +42,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
+import proton.android.pass.commonui.api.body3Medium
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.features.sl.sync.R
 import me.proton.core.presentation.R as CoreR
@@ -118,7 +119,7 @@ internal fun SimpleLoginSyncMailboxTransferSection(
                             modifier = Modifier.padding(all = Spacing.small),
                             text = transferAliasMailbox,
                             color = PassTheme.colors.textNorm,
-                            style = ProtonTheme.typography.body2Regular
+                            style = PassTheme.typography.body3Medium()
                         )
 
                         if (hasAliasTransferMailboxes) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,11 +18,6 @@
 
 package proton.android.pass.features.alias.contacts.create.presentation
 
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-
-@Composable
-fun CreateAliasContactScreen(modifier: Modifier = Modifier) {
-    Text("Empty create screen")
-}
+data class CreateAliasContactUIState(
+    val event: CreateAliasContactEvent
+)

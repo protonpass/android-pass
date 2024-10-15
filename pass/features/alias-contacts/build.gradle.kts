@@ -61,8 +61,11 @@ dependencies {
 
     implementation(projects.pass.commonUi.impl)
     implementation(projects.pass.composeComponents.impl)
+    implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.navigation.api)
+    implementation(projects.pass.log.api)
+    implementation(projects.pass.notifications.api)
 
     debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.compose.uiToolingPreview)

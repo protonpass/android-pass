@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.alias.contacts.detail.ui
+package proton.android.pass.features.alias.contacts.create.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -36,12 +36,12 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.topbar.IconTopAppBar
-import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
-import proton.android.pass.features.alias.contacts.detail.presentation.DetailAliasContactUIEvent
+import proton.android.pass.composecomponents.impl.topbar.iconbutton.CrossBackCircleIconButton
+import proton.android.pass.features.alias.contacts.create.presentation.CreateAliasContactUIEvent
 import proton.android.pass.features.aliascontacts.R
 
 @Composable
-fun DetailAliasContactContent(modifier: Modifier = Modifier, onEvent: (DetailAliasContactUIEvent) -> Unit) {
+fun CreateAliasContactContent(modifier: Modifier, onEvent: (CreateAliasContactUIEvent) -> Unit) {
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -52,23 +52,23 @@ fun DetailAliasContactContent(modifier: Modifier = Modifier, onEvent: (DetailAli
                         isLoading = false,
                         text = {
                             Text(
-                                text = stringResource(R.string.create_contact),
+                                text = stringResource(R.string.save_contact_alias),
                                 style = ProtonTheme.typography.defaultSmallInverted,
                                 color = PassTheme.colors.textInvert
                             )
                         },
-                        onClick = { onEvent(DetailAliasContactUIEvent.CreateContact) }
+                        onClick = { onEvent(CreateAliasContactUIEvent.Create) }
                     )
                 },
                 navigationIcon = {
-                    BackArrowCircleIconButton(
+                    CrossBackCircleIconButton(
                         modifier = Modifier.padding(
                             horizontal = Spacing.medium - Spacing.extraSmall,
                             vertical = Spacing.extraSmall
                         ),
                         color = PassTheme.colors.aliasInteractionNormMajor2,
                         backgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
-                        onUpClick = { onEvent(DetailAliasContactUIEvent.Back) }
+                        onUpClick = { onEvent(CreateAliasContactUIEvent.Back) }
                     )
                 }
             )

@@ -35,7 +35,7 @@ class ObserveAliasContactImpl @Inject constructor(
     private val aliasContactsRepository: AliasContactsRepository
 ) : ObserveAliasContact {
 
-    override suspend fun invoke(
+    override fun invoke(
         shareId: ShareId,
         itemId: ItemId,
         contactId: ContactId

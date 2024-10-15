@@ -24,5 +24,5 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.aliascontacts.Contact
 
 interface ObserveAliasContacts {
-    suspend operator fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<Contact>>
+    operator fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<Contact>>
 }

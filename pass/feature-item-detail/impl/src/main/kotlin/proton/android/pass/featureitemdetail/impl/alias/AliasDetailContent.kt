@@ -47,6 +47,7 @@ fun AliasDetailContent(
     vault: Vault?,
     mailboxes: PersistentList<AliasMailbox>,
     stats: Option<AliasStats>,
+    contactsCount: Int,
     isLoading: Boolean,
     isAliasSyncEnabled: Boolean,
     isAliasStateToggling: Boolean,
@@ -56,7 +57,8 @@ fun AliasDetailContent(
     onCreateLoginFromAlias: (String) -> Unit,
     onToggleAliasState: (Boolean) -> Unit,
     onVaultClick: () -> Unit,
-    onViewItemHistoryClicked: () -> Unit
+    onViewItemHistoryClicked: () -> Unit,
+    onContactsClicked: () -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.Alias
     Column(
@@ -83,6 +85,10 @@ fun AliasDetailContent(
             onCreateLoginFromAlias = onCreateLoginFromAlias,
             onToggleAliasState = onToggleAliasState
         )
+
+        if (isAliasManagementEnabled) {
+            ContactsSection(counter = contactsCount, onClick = onContactsClicked)
+        }
 
         if (contents.note.isNotBlank()) {
             NoteSection(

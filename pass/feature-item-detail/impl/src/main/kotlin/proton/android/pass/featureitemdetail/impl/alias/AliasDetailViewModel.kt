@@ -65,6 +65,7 @@ import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
+import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -106,6 +107,7 @@ class AliasDetailViewModel @Inject constructor(
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
     private val changeAliasStatus: ChangeAliasStatus,
+    observeAliasContacts: ObserveAliasContacts,
     userPreferencesRepository: UserPreferencesRepository,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
@@ -165,9 +167,15 @@ class AliasDetailViewModel @Inject constructor(
 
     private val isAliasStateTogglingFlow = MutableStateFlow(false)
 
+    private val aliasDetailsAndContactsFlow = combine(
+        getAliasDetails(shareId, itemId).asLoadingResult(),
+        observeAliasContacts(shareId, itemId).asLoadingResult(),
+        ::Pair
+    )
+
     internal val uiState: StateFlow<AliasDetailUiState> = combineN(
         aliasItemDetailsResultFlow,
-        getAliasDetails(shareId, itemId).asLoadingResult(),
+        aliasDetailsAndContactsFlow,
         isLoadingState,
         isItemSentToTrashState,
         isPermanentlyDeletedState,
@@ -178,7 +186,7 @@ class AliasDetailViewModel @Inject constructor(
         itemFeaturesFlow,
         isAliasStateTogglingFlow
     ) { itemLoadingResult,
-        aliasDetailsResult,
+        (aliasDetailsResult, aliasContactsResult),
         isLoading,
         isItemSentToTrash,
         isPermanentlyDeleted,
@@ -215,6 +223,7 @@ class AliasDetailViewModel @Inject constructor(
                     vault = vault,
                     mailboxes = aliasDetails?.mailboxes?.toPersistentList() ?: persistentListOf(),
                     stats = aliasDetails?.stats.toOption(),
+                    contactsCount = aliasContactsResult.getOrNull()?.size ?: 0,
                     isLoading = isAliasDetailsLoading || isLoading.value(),
                     isLoadingMailboxes = isAliasDetailsLoading,
                     isItemSentToTrash = isItemSentToTrash.value(),

@@ -22,13 +22,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GetAliasContactsResponse(
-    @SerialName("Contacts")
-    val contacts: List<ContactResponse>,
-    @SerialName("Total")
-    val total: Int,
-    @SerialName("LastID")
-    val lastId: Int,
+data class CreateAliasContactResponse(
     @SerialName("Code")
-    val code: Int
+    val code: Int,
+    @SerialName("Contact")
+    val contact: ContactResponse
 )

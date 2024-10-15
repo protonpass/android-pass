@@ -440,6 +440,7 @@ dependencies {
     )
 
     implementation(projects.pass.features.account)
+    implementation(projects.pass.features.aliasContacts)
     implementation(projects.pass.features.auth)
     implementation(projects.pass.featureFeatureFlags.impl)
     implementation(projects.pass.featureHome.impl)

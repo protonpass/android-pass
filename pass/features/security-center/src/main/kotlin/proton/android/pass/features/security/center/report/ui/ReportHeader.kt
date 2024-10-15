@@ -34,11 +34,11 @@ import me.proton.core.util.kotlin.toInt
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.composecomponents.impl.counter.CounterText
 import proton.android.pass.features.security.center.report.ui.SecurityCenterReportHeaderModelUI.getCircleBackgroundColor
 import proton.android.pass.features.security.center.report.ui.SecurityCenterReportHeaderModelUI.getCircleTextColor
 import proton.android.pass.features.security.center.report.ui.SecurityCenterReportHeaderModelUI.getTitleText
 import proton.android.pass.features.security.center.report.ui.SecurityCenterReportHeaderModelUI.getTitleTextColor
-import proton.android.pass.features.security.center.shared.ui.counters.SecurityCenterCounterText
 
 @Composable
 fun ReportHeader(
@@ -52,9 +52,9 @@ fun ReportHeader(
         verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         val model = SecurityCenterReportHeaderModel.fromBreachCount(breachCount)
-        SecurityCenterCounterText(
+        CounterText(
             modifier = Modifier.size(54.dp),
-            counterText = breachCount.toString(),
+            text = breachCount.toString(),
             backgroundColor = model.getCircleBackgroundColor(),
             textColor = model.getCircleTextColor(),
             textStyle = ProtonTheme.typography.headline

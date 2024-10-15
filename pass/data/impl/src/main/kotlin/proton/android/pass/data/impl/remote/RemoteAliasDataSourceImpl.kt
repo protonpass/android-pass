@@ -25,10 +25,18 @@ import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
+import proton.android.pass.data.impl.requests.aliascontacts.CreateAliasContactRequest
+import proton.android.pass.data.impl.requests.aliascontacts.GetAliasContactsRequest
+import proton.android.pass.data.impl.requests.aliascontacts.UpdateBlockedAliasContactRequest
 import proton.android.pass.data.impl.responses.AliasOptionsResponse
 import proton.android.pass.data.impl.responses.AliasResponse
+import proton.android.pass.data.impl.responses.aliascontacts.CreateAliasContactResponse
+import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactResponse
+import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactsResponse
+import proton.android.pass.data.impl.responses.aliascontacts.UpdateBlockedAliasContactResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.aliascontacts.ContactId
 import javax.inject.Inject
 
 class RemoteAliasDataSourceImpl @Inject constructor(
@@ -77,4 +85,52 @@ class RemoteAliasDataSourceImpl @Inject constructor(
             .invoke { changeAliasStatus(shareId.id, itemId.id, request) }
             .valueOrThrow
     }
+
+    override suspend fun getAliasContacts(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        request: GetAliasContactsRequest
+    ): GetAliasContactsResponse = api.get<PasswordManagerApi>(userId)
+        .invoke { getAliasContacts(shareId.id, itemId.id, request) }
+        .valueOrThrow
+
+    override suspend fun getAliasContact(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        contactId: ContactId
+    ): GetAliasContactResponse = api.get<PasswordManagerApi>(userId)
+        .invoke { getAliasContact(shareId.id, itemId.id, contactId.id.toString()) }
+        .valueOrThrow
+
+    override suspend fun createAliasContact(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        request: CreateAliasContactRequest
+    ): CreateAliasContactResponse = api.get<PasswordManagerApi>(userId)
+        .invoke { createAliasContact(shareId.id, itemId.id, request) }
+        .valueOrThrow
+
+    override suspend fun deleteAliasContact(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        contactId: ContactId
+    ) {
+        api.get<PasswordManagerApi>(userId)
+            .invoke { deleteAliasContact(shareId.id, itemId.id, contactId.id.toString()) }
+            .valueOrThrow
+    }
+
+    override suspend fun updateBlockedAliasContact(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        contactId: ContactId,
+        request: UpdateBlockedAliasContactRequest
+    ): UpdateBlockedAliasContactResponse = api.get<PasswordManagerApi>(userId)
+        .invoke { updateBlockedAliasContact(shareId.id, itemId.id, contactId.id.toString(), request) }
+        .valueOrThrow
 }

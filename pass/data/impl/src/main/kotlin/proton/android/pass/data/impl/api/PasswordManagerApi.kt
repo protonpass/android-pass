@@ -253,7 +253,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun getAliasContact(
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String,
-        @Path("contactId") contactId: String
+        @Path("contactId") contactId: Int
     ): GetAliasContactResponse
 
     @POST("$PREFIX/share/{shareId}/alias/{itemId}/contact")
@@ -267,14 +267,14 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun deleteAliasContact(
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String,
-        @Path("contactId") contactId: String
+        @Path("contactId") contactId: Int
     ): CodeOnlyResponse
 
     @PUT("$PREFIX/share/{shareId}/alias/{itemId}/contact/{contactId}/blocked")
     suspend fun updateBlockedAliasContact(
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String,
-        @Path("contactId") contactId: String,
+        @Path("contactId") contactId: Int,
         @Body request: UpdateBlockedAliasContactRequest
     ): UpdateBlockedAliasContactResponse
 

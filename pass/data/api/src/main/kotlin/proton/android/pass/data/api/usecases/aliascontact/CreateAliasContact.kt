@@ -27,6 +27,6 @@ interface CreateAliasContact {
         shareId: ShareId,
         itemId: ItemId,
         email: String,
-        name: String?
+        name: String? = null
     ): Contact
 }

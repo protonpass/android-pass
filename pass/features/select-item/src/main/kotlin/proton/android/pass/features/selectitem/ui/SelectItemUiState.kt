@@ -53,6 +53,10 @@ data class SelectItemUiState(
         listUiState.isLoading == IsLoadingState.NotLoading &&
         !searchUiState.isProcessingSearch.value()
 
+    fun shouldShowCarousel() = !pinningUiState.inPinningMode &&
+        !searchUiState.inSearchMode &&
+        pinningUiState.showPinning
+
     companion object {
         val Loading = SelectItemUiState(
             listUiState = SelectItemListUiState.Loading,

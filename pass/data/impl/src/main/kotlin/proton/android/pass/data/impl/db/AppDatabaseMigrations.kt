@@ -295,7 +295,7 @@ object AppDatabaseMigrations {
         }
     }
 
-    val MIGRATION_55_56 = object : Migration(55, 56) {
+    val MIGRATION_56_57 = object : Migration(56, 57) {
         override fun migrate(db: SupportSQLiteDatabase) {
             db.execSQL(
                 """

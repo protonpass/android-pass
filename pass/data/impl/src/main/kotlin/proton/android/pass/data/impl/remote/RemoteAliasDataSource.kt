@@ -22,18 +22,10 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
-import proton.android.pass.data.impl.requests.aliascontacts.CreateAliasContactRequest
-import proton.android.pass.data.impl.requests.aliascontacts.GetAliasContactsRequest
-import proton.android.pass.data.impl.requests.aliascontacts.UpdateBlockedAliasContactRequest
 import proton.android.pass.data.impl.responses.AliasOptionsResponse
 import proton.android.pass.data.impl.responses.AliasResponse
-import proton.android.pass.data.impl.responses.aliascontacts.CreateAliasContactResponse
-import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactResponse
-import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactsResponse
-import proton.android.pass.data.impl.responses.aliascontacts.UpdateBlockedAliasContactResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.aliascontacts.ContactId
 
 interface RemoteAliasDataSource {
     fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptionsResponse>
@@ -55,40 +47,4 @@ interface RemoteAliasDataSource {
         itemId: ItemId,
         request: ChangeAliasStatusRequest
     )
-
-    suspend fun getAliasContacts(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        request: GetAliasContactsRequest
-    ): GetAliasContactsResponse
-
-    suspend fun getAliasContact(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        contactId: ContactId
-    ): GetAliasContactResponse
-
-    suspend fun createAliasContact(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        request: CreateAliasContactRequest
-    ): CreateAliasContactResponse
-
-    suspend fun deleteAliasContact(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        contactId: ContactId
-    )
-
-    suspend fun updateBlockedAliasContact(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        contactId: ContactId,
-        request: UpdateBlockedAliasContactRequest
-    ): UpdateBlockedAliasContactResponse
 }

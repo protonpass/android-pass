@@ -61,7 +61,9 @@ class SimpleLoginSyncMailboxDeleteViewModel @Inject constructor(
 
     private val transferAliasMailboxesFlow = observeSimpleLoginAliasMailboxes()
         .mapLatest { aliasMailboxes ->
-            aliasMailboxes.filter { aliasMailbox -> aliasMailbox.id != mailboxId }
+            aliasMailboxes.filter { aliasMailbox ->
+                aliasMailbox.id != mailboxId && aliasMailbox.isVerified
+            }
         }
 
     private val isTransferAliasesEnabledFlow = MutableStateFlow(true)
@@ -105,6 +107,10 @@ class SimpleLoginSyncMailboxDeleteViewModel @Inject constructor(
 
     internal fun onToggleTransferAliases(isTransferAliasesEnabled: Boolean) {
         isTransferAliasesEnabledFlow.update { isTransferAliasesEnabled }
+    }
+
+    internal fun onSelectTransferAliasMailbox(selectedAliasMailbox: SimpleLoginAliasMailbox) {
+        selectedAliasMailboxOptionFlow.update { selectedAliasMailbox.some() }
     }
 
     internal fun onDeleteMailbox() {

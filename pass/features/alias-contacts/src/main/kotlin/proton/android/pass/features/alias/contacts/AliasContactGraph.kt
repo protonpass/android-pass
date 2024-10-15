@@ -22,7 +22,7 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.features.alias.contacts.create.navigation.CreateAliasContactNavItem
 import proton.android.pass.features.alias.contacts.create.presentation.CreateAliasContactScreen
 import proton.android.pass.features.alias.contacts.detail.navigation.DetailAliasContactNavItem
-import proton.android.pass.features.alias.contacts.detail.presentation.DetailAliasContactScreen
+import proton.android.pass.features.alias.contacts.detail.ui.DetailAliasContactScreen
 import proton.android.pass.features.alias.contacts.onboarding.navigation.OnBoardingAliasContactNavItem
 import proton.android.pass.features.alias.contacts.onboarding.presentation.OnBoardingAliasContactBottomsheet
 import proton.android.pass.features.alias.contacts.options.navigation.OptionsAliasContactNavItem
@@ -30,12 +30,12 @@ import proton.android.pass.features.alias.contacts.options.presentation.OptionsA
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
-fun NavGraphBuilder.aliasContactGraph() {
+fun NavGraphBuilder.aliasContactGraph(onNavigate: (AliasContactsNavigation) -> Unit) {
     composable(CreateAliasContactNavItem) {
         CreateAliasContactScreen()
     }
     composable(DetailAliasContactNavItem) {
-        DetailAliasContactScreen()
+        DetailAliasContactScreen(onNavigate = onNavigate)
     }
     bottomSheet(OnBoardingAliasContactNavItem) {
         OnBoardingAliasContactBottomsheet()

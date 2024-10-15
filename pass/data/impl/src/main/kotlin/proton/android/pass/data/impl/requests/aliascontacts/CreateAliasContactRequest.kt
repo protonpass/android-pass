@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,19 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.responses.aliascontacts
+package proton.android.pass.data.impl.requests.aliascontacts
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GetAliasContactsResponse(
-    @SerialName("Contacts")
-    val contacts: List<ContactResponse>,
-    @SerialName("Total")
-    val total: Int,
-    @SerialName("LastID")
-    val lastId: Int,
-    @SerialName("Code")
-    val code: Int
+data class CreateAliasContactRequest(
+    @SerialName("Email")
+    val email: String,
+    @SerialName("Name")
+    val name: String?
 )

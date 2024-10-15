@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.core.repositories.SentinelRepository
+import proton.android.pass.data.api.repositories.AliasContactsRepository
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.BreachRepository
@@ -41,6 +42,7 @@ import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.repositories.TelemetryRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.impl.core.repositories.SentinelRepositoryImpl
+import proton.android.pass.data.impl.repositories.AliasContactsRepositoryImpl
 import proton.android.pass.data.impl.repositories.AliasRepositoryImpl
 import proton.android.pass.data.impl.repositories.AssetLinkRepositoryImpl
 import proton.android.pass.data.impl.repositories.BreachRepositoryImpl
@@ -74,6 +76,7 @@ import proton.android.pass.data.impl.repositories.TelemetryRepositoryImpl
 import proton.android.pass.data.impl.repositories.UserAccessDataRepositoryImpl
 import javax.inject.Singleton
 
+@Suppress("TooManyFunctions")
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataRepositoryModule {
@@ -156,4 +159,7 @@ abstract class DataRepositoryModule {
 
     @[Binds Singleton]
     abstract fun bindAssetLinkRepository(impl: AssetLinkRepositoryImpl): AssetLinkRepository
+
+    @[Binds Singleton]
+    abstract fun bindAliasContactsRepository(impl: AliasContactsRepositoryImpl): AliasContactsRepository
 }

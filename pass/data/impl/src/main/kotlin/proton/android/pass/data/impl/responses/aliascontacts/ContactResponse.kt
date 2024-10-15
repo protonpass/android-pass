@@ -36,9 +36,9 @@ data class ContactResponse(
     @SerialName("CreateTime")
     val createTime: Long,
     @SerialName("RepliedEmails")
-    val repliedEmails: Int = 0,
+    val repliedEmails: Int? = null,
     @SerialName("ForwardedEmails")
-    val forwardedEmails: Int = 0,
+    val forwardedEmails: Int? = null,
     @SerialName("BlockedEmails")
-    val blockedEmails: Int = 0
+    val blockedEmails: Int? = null
 )

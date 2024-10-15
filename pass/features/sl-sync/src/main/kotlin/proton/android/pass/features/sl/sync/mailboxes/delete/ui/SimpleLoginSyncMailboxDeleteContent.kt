@@ -33,8 +33,10 @@ import androidx.compose.ui.text.style.TextAlign
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Bold
+import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
+import proton.android.pass.composecomponents.impl.text.PassTextWithInnerStyle
 import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.mailboxes.delete.presentation.SimpleLoginSyncMailboxDeleteState
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -67,15 +69,16 @@ internal fun SimpleLoginSyncMailboxDeleteContent(
             color = PassTheme.colors.textNorm
         )
 
-        Text(
+        PassTextWithInnerStyle(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(
                 id = R.string.simple_login_sync_mailbox_delete_subtitle,
                 aliasMailboxEmail
             ),
-            textAlign = TextAlign.Center,
-            style = PassTheme.typography.body3Bold(),
-            color = PassTheme.colors.textNorm
+            textStyle = PassTheme.typography.body3Norm().copy(color = PassTheme.colors.textNorm),
+            innerText = aliasMailboxEmail,
+            innerStyle = PassTheme.typography.body3Bold(),
+            textAlign = TextAlign.Center
         )
 
         SimpleLoginSyncMailboxTransferSection(

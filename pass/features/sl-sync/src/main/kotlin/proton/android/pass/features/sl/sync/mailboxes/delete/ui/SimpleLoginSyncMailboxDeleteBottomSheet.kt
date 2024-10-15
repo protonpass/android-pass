@@ -21,11 +21,16 @@ package proton.android.pass.features.sl.sync.mailboxes.delete.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.features.sl.sync.mailboxes.delete.presentation.SimpleLoginSyncMailboxDeleteEvent
 import proton.android.pass.features.sl.sync.mailboxes.delete.presentation.SimpleLoginSyncMailboxDeleteViewModel
+import proton.android.pass.features.sl.sync.mailboxes.delete.ui.dialogs.SimpleLoginSyncMailboxTransferDialog
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 
 @Composable
@@ -35,6 +40,7 @@ fun SimpleLoginSyncMailboxDeleteBottomSheet(
     viewModel: SimpleLoginSyncMailboxDeleteViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by stateFlow.collectAsStateWithLifecycle()
+    var showTransferAliasesDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(state.event) {
         when (state.event) {
@@ -62,14 +68,26 @@ fun SimpleLoginSyncMailboxDeleteBottomSheet(
                     onDeleteMailbox()
                 }
 
-                is SimpleLoginSyncMailboxDeleteUiEvent.OnTransferAliasesToggled -> {
-                    onToggleTransferAliases(uiEvent.isTransferAliasesEnabled)
+                SimpleLoginSyncMailboxDeleteUiEvent.OnSelectAliasMailboxClicked -> {
+                    showTransferAliasesDialog = true
                 }
 
-                is SimpleLoginSyncMailboxDeleteUiEvent.OnTransferAliasMailboxSelected -> {
-
+                is SimpleLoginSyncMailboxDeleteUiEvent.OnTransferAliasesToggled -> {
+                    onToggleTransferAliases(uiEvent.isTransferAliasesEnabled)
                 }
             }
         }
     )
+
+    if (showTransferAliasesDialog) {
+        SimpleLoginSyncMailboxTransferDialog(
+            selectedTransferAliasMailboxId = state.transferAliasMailboxId,
+            transferAliasMailboxes = state.transferAliasMailboxes.toPersistentList(),
+            onTransferAliasMailboxSelected = { selectedAliasMailbox ->
+                showTransferAliasesDialog = false
+                onSelectTransferAliasMailbox(selectedAliasMailbox)
+            },
+            onDismiss = { showTransferAliasesDialog = false }
+        )
+    }
 }

@@ -46,6 +46,7 @@ sealed interface AliasDetailUiState {
         val vault: Vault?,
         val mailboxes: PersistentList<AliasMailbox>,
         val stats: Option<AliasStats>,
+        val contactsCount: Int,
         val isLoading: Boolean,
         val isLoadingMailboxes: Boolean,
         val isItemSentToTrash: Boolean,

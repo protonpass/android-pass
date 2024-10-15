@@ -23,6 +23,7 @@ import androidx.compose.material.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.row.CounterRow
 
 @Composable
 internal fun SecurityCenterToggleRow(
@@ -32,7 +33,7 @@ internal fun SecurityCenterToggleRow(
     isChecked: Boolean,
     onClick: () -> Unit
 ) {
-    SecurityCenterRow(
+    CounterRow(
         modifier = modifier,
         title = title,
         subtitle = subtitle,

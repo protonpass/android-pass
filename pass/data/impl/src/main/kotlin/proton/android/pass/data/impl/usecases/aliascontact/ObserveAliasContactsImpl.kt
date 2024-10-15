@@ -34,10 +34,9 @@ class ObserveAliasContactsImpl @Inject constructor(
     private val aliasContactsRepository: AliasContactsRepository
 ) : ObserveAliasContacts {
 
-    override suspend fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<Contact>> =
-        accountManager.getPrimaryUserId()
-            .filterNotNull()
-            .flatMapLatest { aliasContactsRepository.observeAliasContacts(it, shareId, itemId) }
+    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<Contact>> = accountManager.getPrimaryUserId()
+        .filterNotNull()
+        .flatMapLatest { aliasContactsRepository.observeAliasContacts(it, shareId, itemId) }
 
 }
 

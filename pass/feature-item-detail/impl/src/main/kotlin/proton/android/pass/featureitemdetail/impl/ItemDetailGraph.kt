@@ -86,6 +86,8 @@ sealed interface ItemDetailNavigation {
 
     data class OnTrashAlias(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
 
+    data class OnContactsClicked(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
+
 }
 
 enum class ItemDetailCannotPerformActionType {

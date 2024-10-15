@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.shared.ui.rows
+package proton.android.pass.composecomponents.impl.row
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -53,10 +53,10 @@ import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.modifiers.placeholder
 
 @Composable
-internal fun SecurityCenterRow(
+fun CounterRow(
     modifier: Modifier = Modifier,
     title: String,
-    subtitle: String,
+    subtitle: String? = null,
     isClickable: Boolean,
     isLoading: Boolean = false,
     leadingContent: @Composable (RowScope.() -> Unit)? = null,
@@ -103,14 +103,16 @@ internal fun SecurityCenterRow(
                     )
                 )
 
-                SectionTitle(
-                    modifier = Modifier.applyIf(
-                        condition = isLoading,
-                        ifTrue = { fillMaxWidth().placeholder() }
-                    ),
-                    text = subtitle,
-                    textColor = subtitleColor
-                )
+                subtitle?.let {
+                    SectionTitle(
+                        modifier = Modifier.applyIf(
+                            condition = isLoading,
+                            ifTrue = { fillMaxWidth().placeholder() }
+                        ),
+                        text = subtitle,
+                        textColor = subtitleColor
+                    )
+                }
             }
 
             trailingContent?.let { it() }
@@ -135,7 +137,7 @@ internal fun SecurityCenterRow(
 fun SecurityCenterRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            SecurityCenterRow(
+            CounterRow(
                 title = "Security center row counter title",
                 subtitle = "Security center row counter subtitle",
                 isClickable = false

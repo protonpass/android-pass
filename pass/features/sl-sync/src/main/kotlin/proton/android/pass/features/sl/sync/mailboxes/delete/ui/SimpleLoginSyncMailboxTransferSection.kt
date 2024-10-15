@@ -106,7 +106,11 @@ internal fun SimpleLoginSyncMailboxTransferSection(
                             .background(color = PassTheme.colors.interactionNormMinor1)
                             .applyIf(
                                 condition = hasAliasTransferMailboxes,
-                                ifTrue = { clickable {} }
+                                ifTrue = {
+                                    clickable {
+                                        onUiEvent(SimpleLoginSyncMailboxDeleteUiEvent.OnSelectAliasMailboxClicked)
+                                    }
+                                }
                             ),
                         verticalAlignment = Alignment.CenterVertically
                     ) {

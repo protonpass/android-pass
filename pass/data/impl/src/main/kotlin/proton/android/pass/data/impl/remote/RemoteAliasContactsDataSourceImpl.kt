@@ -52,7 +52,7 @@ class RemoteAliasContactsDataSourceImpl @Inject constructor(
         itemId: ItemId,
         contactId: ContactId
     ): GetAliasContactResponse = api.get<PasswordManagerApi>(userId)
-        .invoke { getAliasContact(shareId.id, itemId.id, contactId.id.toString()) }
+        .invoke { getAliasContact(shareId.id, itemId.id, contactId.id) }
         .valueOrThrow
 
     override suspend fun createAliasContact(
@@ -71,7 +71,7 @@ class RemoteAliasContactsDataSourceImpl @Inject constructor(
         contactId: ContactId
     ) {
         api.get<PasswordManagerApi>(userId)
-            .invoke { deleteAliasContact(shareId.id, itemId.id, contactId.id.toString()) }
+            .invoke { deleteAliasContact(shareId.id, itemId.id, contactId.id) }
             .valueOrThrow
     }
 
@@ -82,6 +82,6 @@ class RemoteAliasContactsDataSourceImpl @Inject constructor(
         contactId: ContactId,
         request: UpdateBlockedAliasContactRequest
     ): UpdateBlockedAliasContactResponse = api.get<PasswordManagerApi>(userId)
-        .invoke { updateBlockedAliasContact(shareId.id, itemId.id, contactId.id.toString(), request) }
+        .invoke { updateBlockedAliasContact(shareId.id, itemId.id, contactId.id, request) }
         .valueOrThrow
 }

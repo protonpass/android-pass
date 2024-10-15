@@ -150,4 +150,18 @@ class LocalSimpleLoginDataSourceImpl @Inject constructor(
         }
     }
 
+    override fun deleteAliasMailbox(userId: UserId, mailboxId: Long) {
+        aliasMailboxesFlow.update { aliasMailboxesMap ->
+            aliasMailboxesMap[userId]?.let { currentAliasMailboxesMap ->
+                currentAliasMailboxesMap.toMutableMap().apply {
+                    remove(mailboxId)
+                }.let { updatedAliasMailboxesMap ->
+                    aliasMailboxesMap.toMutableMap().apply {
+                        put(userId, updatedAliasMailboxesMap)
+                    }
+                }
+            } ?: aliasMailboxesMap
+        }
+    }
+
 }

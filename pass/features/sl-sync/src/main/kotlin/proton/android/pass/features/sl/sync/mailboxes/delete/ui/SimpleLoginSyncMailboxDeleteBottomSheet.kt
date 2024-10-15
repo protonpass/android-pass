@@ -19,10 +19,12 @@
 package proton.android.pass.features.sl.sync.mailboxes.delete.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.features.sl.sync.mailboxes.delete.presentation.SimpleLoginSyncMailboxDeleteEvent
 import proton.android.pass.features.sl.sync.mailboxes.delete.presentation.SimpleLoginSyncMailboxDeleteViewModel
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 
@@ -34,19 +36,30 @@ fun SimpleLoginSyncMailboxDeleteBottomSheet(
 ) = with(viewModel) {
     val state by stateFlow.collectAsStateWithLifecycle()
 
+    LaunchedEffect(state.event) {
+        when (state.event) {
+            SimpleLoginSyncMailboxDeleteEvent.Idle -> Unit
+
+            SimpleLoginSyncMailboxDeleteEvent.OnDeleteAliasMailboxError,
+            SimpleLoginSyncMailboxDeleteEvent.OnDeleteAliasMailboxSuccess -> {
+                SimpleLoginSyncNavDestination.Back(comesFromBottomSheet = true)
+                    .let(onNavigated)
+            }
+        }
+    }
+
     SimpleLoginSyncMailboxDeleteContent(
         modifier = modifier,
         state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SimpleLoginSyncMailboxDeleteUiEvent.OnCancelClicked -> {
-                    SimpleLoginSyncNavDestination.Back(
-                        comesFromBottomSheet = true
-                    ).let(onNavigated)
+                    SimpleLoginSyncNavDestination.Back(comesFromBottomSheet = true)
+                        .let(onNavigated)
                 }
 
                 SimpleLoginSyncMailboxDeleteUiEvent.OnDeleteClicked -> {
-
+                    onDeleteMailbox()
                 }
 
                 is SimpleLoginSyncMailboxDeleteUiEvent.OnTransferAliasesToggled -> {

@@ -22,14 +22,17 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
 
 @Stable
 internal data class SimpleLoginSyncMailboxDeleteState(
     internal val transferAliasMailboxes: List<SimpleLoginAliasMailbox>,
     internal val isTransferAliasesEnabled: Boolean,
+    internal val event: SimpleLoginSyncMailboxDeleteEvent,
     private val aliasMailboxOption: Option<SimpleLoginAliasMailbox>,
-    private val selectedAliasMailboxOption: Option<SimpleLoginAliasMailbox>
+    private val selectedAliasMailboxOption: Option<SimpleLoginAliasMailbox>,
+    private val isLoadingState: IsLoadingState
 ) {
 
     internal val aliasMailboxEmail: String = when (aliasMailboxOption) {
@@ -37,20 +40,29 @@ internal data class SimpleLoginSyncMailboxDeleteState(
         is Some -> aliasMailboxOption.value.email
     }
 
-    internal val transferAliasMailbox: String = when (selectedAliasMailboxOption) {
+    internal val transferAliasMailboxId: Long? = when (selectedAliasMailboxOption) {
+        None -> transferAliasMailboxes.firstOrNull { it.isDefault }?.id
+        is Some -> selectedAliasMailboxOption.value.id
+    }
+
+    internal val transferAliasMailboxEmail: String = when (selectedAliasMailboxOption) {
         None -> transferAliasMailboxes.firstOrNull { it.isDefault }?.email.orEmpty()
         is Some -> selectedAliasMailboxOption.value.email
     }
 
     internal val hasAliasTransferMailboxes: Boolean = transferAliasMailboxes.size > 1
 
+    internal val isLoading: Boolean = isLoadingState.value()
+
     internal companion object {
 
         internal val Initial = SimpleLoginSyncMailboxDeleteState(
             isTransferAliasesEnabled = true,
             transferAliasMailboxes = emptyList(),
+            event = SimpleLoginSyncMailboxDeleteEvent.Idle,
             aliasMailboxOption = None,
-            selectedAliasMailboxOption = None
+            selectedAliasMailboxOption = None,
+            isLoadingState = IsLoadingState.NotLoading
         )
 
     }

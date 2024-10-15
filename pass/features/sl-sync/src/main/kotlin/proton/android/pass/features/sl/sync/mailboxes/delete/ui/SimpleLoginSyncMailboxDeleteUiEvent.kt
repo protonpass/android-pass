@@ -18,22 +18,17 @@
 
 package proton.android.pass.features.sl.sync.mailboxes.delete.ui
 
-import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
-
 internal interface SimpleLoginSyncMailboxDeleteUiEvent {
 
     data object OnCancelClicked : SimpleLoginSyncMailboxDeleteUiEvent
 
     data object OnDeleteClicked : SimpleLoginSyncMailboxDeleteUiEvent
 
+    data object OnSelectAliasMailboxClicked : SimpleLoginSyncMailboxDeleteUiEvent
+
     @JvmInline
     value class OnTransferAliasesToggled(
         val isTransferAliasesEnabled: Boolean
-    ) : SimpleLoginSyncMailboxDeleteUiEvent
-
-    @JvmInline
-    value class OnTransferAliasMailboxSelected(
-        val selectedAliasMailbox: SimpleLoginAliasMailbox
     ) : SimpleLoginSyncMailboxDeleteUiEvent
 
 }

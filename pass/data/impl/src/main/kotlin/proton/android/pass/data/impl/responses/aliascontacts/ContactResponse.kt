@@ -20,6 +20,8 @@ package proton.android.pass.data.impl.responses.aliascontacts
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import proton.android.pass.domain.aliascontacts.Contact
+import proton.android.pass.domain.aliascontacts.ContactId
 
 @Serializable
 data class ContactResponse(
@@ -41,4 +43,16 @@ data class ContactResponse(
     val forwardedEmails: Int? = null,
     @SerialName("BlockedEmails")
     val blockedEmails: Int? = null
+)
+
+fun ContactResponse.toDomain(): Contact = Contact(
+    id = ContactId(this.id),
+    name = this.name,
+    blocked = this.blocked,
+    reverseAlias = this.reverseAlias,
+    email = this.email,
+    createTime = this.createTime,
+    repliedEmails = this.repliedEmails,
+    forwardedEmails = this.forwardedEmails,
+    blockedEmails = this.blockedEmails
 )

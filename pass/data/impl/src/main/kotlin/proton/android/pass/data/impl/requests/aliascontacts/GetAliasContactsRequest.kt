@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -24,5 +24,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GetAliasContactsRequest(
     @SerialName("Since")
-    val since: Int
+    val since: Int? = null
 )

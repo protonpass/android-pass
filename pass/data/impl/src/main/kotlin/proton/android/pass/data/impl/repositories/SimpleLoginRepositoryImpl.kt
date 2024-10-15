@@ -252,7 +252,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
                 userId = userId,
                 mailboxId = mailboxId,
                 request = SimpleLoginDeleteAliasMailboxRequest(
-                    transferMailboxId = transferMailboxId?.toString()
+                    transferMailboxId = transferMailboxId
                 )
             ).also {
                 localSimpleLoginDataSource.deleteAliasMailbox(userId, mailboxId)

@@ -24,5 +24,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SimpleLoginDeleteAliasMailboxRequest(
     @SerialName("TransferMailboxID")
-    val transferMailboxId: String?
+    val transferMailboxId: Long?
 )

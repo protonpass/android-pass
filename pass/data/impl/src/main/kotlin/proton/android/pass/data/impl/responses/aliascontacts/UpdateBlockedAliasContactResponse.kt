@@ -22,23 +22,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ContactResponse(
-    @SerialName("ID")
-    val id: Int,
-    @SerialName("Name")
-    val name: String?,
-    @SerialName("Blocked")
-    val blocked: Boolean,
-    @SerialName("ReverseAlias")
-    val reverseAlias: String,
-    @SerialName("Email")
-    val email: String,
-    @SerialName("CreateTime")
-    val createTime: Long,
-    @SerialName("RepliedEmails")
-    val repliedEmails: Int? = null,
-    @SerialName("ForwardedEmails")
-    val forwardedEmails: Int? = null,
-    @SerialName("BlockedEmails")
-    val blockedEmails: Int? = null
+data class UpdateBlockedAliasContactResponse(
+    @SerialName("Code")
+    val code: Int,
+    @SerialName("Contact")
+    val contact: ContactResponse
 )

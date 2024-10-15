@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,29 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.responses.aliascontacts
+package proton.android.pass.data.impl.requests.aliascontacts
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ContactResponse(
-    @SerialName("ID")
-    val id: Int,
-    @SerialName("Name")
-    val name: String?,
+data class UpdateBlockedAliasContactRequest(
     @SerialName("Blocked")
-    val blocked: Boolean,
-    @SerialName("ReverseAlias")
-    val reverseAlias: String,
-    @SerialName("Email")
-    val email: String,
-    @SerialName("CreateTime")
-    val createTime: Long,
-    @SerialName("RepliedEmails")
-    val repliedEmails: Int? = null,
-    @SerialName("ForwardedEmails")
-    val forwardedEmails: Int? = null,
-    @SerialName("BlockedEmails")
-    val blockedEmails: Int? = null
+    val blocked: Boolean
 )

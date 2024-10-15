@@ -36,13 +36,13 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
 import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.composecomponents.impl.row.CounterRow
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.features.security.center.home.presentation.SecurityCenterHomeState
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterCounterRow
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterCounterRowModel
-import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterRow
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterToggleRow
 
 @Composable
@@ -90,7 +90,7 @@ internal fun SecurityCenterHomeContent(
             )
 
             if (isSentinelPaidFeature) {
-                SecurityCenterRow(
+                CounterRow(
                     title = stringResource(id = R.string.security_center_home_row_sentinel_title),
                     subtitle = stringResource(id = R.string.security_center_home_row_sentinel_subtitle),
                     accentBackgroundColor = PassTheme.colors.interactionNormMinor2,

@@ -110,6 +110,7 @@ import proton.android.pass.features.account.Account
 import proton.android.pass.features.account.AccountNavigation
 import proton.android.pass.features.account.accountGraph
 import proton.android.pass.features.alias.contacts.aliasContactGraph
+import proton.android.pass.features.alias.contacts.detail.navigation.DetailAliasContactNavItem
 import proton.android.pass.features.auth.Auth
 import proton.android.pass.features.auth.AuthNavigation
 import proton.android.pass.features.auth.AuthOrigin
@@ -1189,6 +1190,9 @@ fun NavGraphBuilder.appGraph(
                         itemId = it.itemId
                     )
                 )
+
+                is ItemDetailNavigation.OnContactsClicked ->
+                    appNavigator.navigate(DetailAliasContactNavItem)
             }
         }
     )

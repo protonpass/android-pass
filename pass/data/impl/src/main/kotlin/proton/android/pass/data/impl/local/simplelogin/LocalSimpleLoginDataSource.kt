@@ -50,4 +50,6 @@ interface LocalSimpleLoginDataSource {
 
     fun updateAliasMailbox(userId: UserId, newAliasMailbox: SimpleLoginAliasMailbox)
 
+    fun deleteAliasMailbox(userId: UserId, mailboxId: Long)
+
 }

@@ -25,6 +25,7 @@ import proton.android.pass.data.api.errors.InvalidVerificationCodeException
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.SimpleLoginCreateAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreatePendingAliasesRequest
+import proton.android.pass.data.impl.requests.SimpleLoginDeleteAliasMailboxRequest
 import proton.android.pass.data.impl.requests.SimpleLoginEnableSyncRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasDomainRequest
 import proton.android.pass.data.impl.requests.SimpleLoginUpdateAliasMailboxRequest
@@ -139,6 +140,15 @@ class RemoteSimpleLoginDataSourceImpl @Inject constructor(
     ): SimpleLoginAliasMailboxResponse = apiProvider
         .get<PasswordManagerApi>(userId)
         .invoke { resendSimpleLoginAliasMailboxVerifyCode(mailboxId = mailboxId) }
+        .valueOrThrow
+
+    override suspend fun deleteSimpleLoginAliasMailbox(
+        userId: UserId,
+        mailboxId: Long,
+        request: SimpleLoginDeleteAliasMailboxRequest
+    ): CodeOnlyResponse = apiProvider
+        .get<PasswordManagerApi>(userId)
+        .invoke { deleteSimpleLoginAliasMailbox(mailboxId = mailboxId, request = request) }
         .valueOrThrow
 
     private companion object {

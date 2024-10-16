@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.aliascontacts.AliasContacts
 import proton.android.pass.domain.aliascontacts.Contact
 import proton.android.pass.domain.aliascontacts.ContactId
 
@@ -30,8 +31,9 @@ interface AliasContactsRepository {
     suspend fun observeAliasContacts(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId
-    ): Flow<List<Contact>>
+        itemId: ItemId,
+        lastContactId: ContactId?
+    ): Flow<AliasContacts>
 
     suspend fun observeAliasContact(
         userId: UserId,

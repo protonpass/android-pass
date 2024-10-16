@@ -22,7 +22,6 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.aliascontacts.CreateAliasContactRequest
-import proton.android.pass.data.impl.requests.aliascontacts.GetAliasContactsRequest
 import proton.android.pass.data.impl.requests.aliascontacts.UpdateBlockedAliasContactRequest
 import proton.android.pass.data.impl.responses.aliascontacts.CreateAliasContactResponse
 import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactResponse
@@ -41,9 +40,9 @@ class RemoteAliasContactsDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
-        request: GetAliasContactsRequest
+        since: ContactId?
     ): GetAliasContactsResponse = api.get<PasswordManagerApi>(userId)
-        .invoke { getAliasContacts(shareId.id, itemId.id, request) }
+        .invoke { getAliasContacts(shareId.id, itemId.id, since?.id) }
         .valueOrThrow
 
     override suspend fun getAliasContact(

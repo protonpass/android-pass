@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.core.presentation.compose)
 
     implementation(projects.pass.commonUi.impl)
+    implementation(projects.pass.commonRust.api)
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)

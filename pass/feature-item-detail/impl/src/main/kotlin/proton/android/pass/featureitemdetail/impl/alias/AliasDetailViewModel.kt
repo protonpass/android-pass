@@ -168,7 +168,7 @@ class AliasDetailViewModel @Inject constructor(
     private val isAliasStateTogglingFlow = MutableStateFlow(false)
 
     private val aliasDetailsAndContactsFlow = combine(
-        getAliasDetails(shareId, itemId).asLoadingResult(),
+        oneShot { getAliasDetails(shareId, itemId) }.asLoadingResult(),
         observeAliasContacts(shareId, itemId).asLoadingResult(),
         ::Pair
     )

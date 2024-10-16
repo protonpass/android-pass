@@ -27,12 +27,14 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 interface AliasRepository {
+
     fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptions>
-    fun getAliasDetails(
+
+    suspend fun getAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<AliasDetails>
+    ): AliasDetails
 
     fun updateAliasMailboxes(
         userId: UserId,
@@ -54,7 +56,6 @@ interface AliasRepository {
         enabled: Boolean
     ): AliasItemsChangeStatusResult
 }
-
 
 sealed interface AliasItemsChangeStatusResult {
     @JvmInline

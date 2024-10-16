@@ -28,12 +28,15 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 interface RemoteAliasDataSource {
+
     fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptionsResponse>
-    fun getAliasDetails(
+
+    suspend fun getAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<AliasResponse>
+    ): AliasResponse
+
     fun updateAliasMailboxes(
         userId: UserId,
         shareId: ShareId,
@@ -47,4 +50,5 @@ interface RemoteAliasDataSource {
         itemId: ItemId,
         request: ChangeAliasStatusRequest
     )
+
 }

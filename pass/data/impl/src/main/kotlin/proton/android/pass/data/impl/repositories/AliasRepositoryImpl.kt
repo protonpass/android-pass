@@ -51,24 +51,24 @@ class AliasRepositoryImpl @Inject constructor(
             .map { it.toDomain() }
             .flowOn(Dispatchers.IO)
 
-    override fun getAliasDetails(
+    override suspend fun getAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<AliasDetails> = remoteDataSource.getAliasDetails(userId, shareId, itemId)
-        .map { details ->
+    ): AliasDetails = remoteDataSource.getAliasDetails(userId, shareId, itemId)
+        .let { aliasDetailsResponse ->
             AliasDetails(
-                email = details.email,
-                mailboxes = mapMailboxes(details.mailboxes),
-                availableMailboxes = mapMailboxes(details.availableMailboxes),
+                email = aliasDetailsResponse.email,
+                mailboxes = mapMailboxes(aliasDetailsResponse.mailboxes),
+                availableMailboxes = mapMailboxes(aliasDetailsResponse.availableMailboxes),
                 stats = AliasStats(
-                    forwardedEmails = details.stats.forwardedEmails,
-                    repliedEmails = details.stats.repliedEmails,
-                    blockedEmails = details.stats.blockedEmails
-                )
+                    forwardedEmails = aliasDetailsResponse.stats.forwardedEmails,
+                    repliedEmails = aliasDetailsResponse.stats.repliedEmails,
+                    blockedEmails = aliasDetailsResponse.stats.blockedEmails
+                ),
+                slNote = aliasDetailsResponse.note
             )
         }
-        .flowOn(Dispatchers.IO)
 
     override fun updateAliasMailboxes(
         userId: UserId,
@@ -112,9 +112,11 @@ class AliasRepositoryImpl @Inject constructor(
             failures.isEmpty() && successes.isNotEmpty() -> AliasItemsChangeStatusResult.AllChanged(
                 items = successes.map { it.getOrThrow() }
             )
+
             successes.isEmpty() -> AliasItemsChangeStatusResult.NoneChanged(
                 exception = failures.firstError() ?: IllegalStateException("No results")
             )
+
             else -> AliasItemsChangeStatusResult.SomeChanged(
                 items = successes.map { it.getOrThrow() }
             )

@@ -33,6 +33,7 @@ import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.remote.RemoteAliasDataSource
 import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
+import proton.android.pass.data.impl.requests.alias.UpdateAliasNameRequest
 import proton.android.pass.data.impl.responses.AliasMailboxResponse
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.AliasMailbox
@@ -121,6 +122,16 @@ class AliasRepositoryImpl @Inject constructor(
                 items = successes.map { it.getOrThrow() }
             )
         }
+    }
+
+    override suspend fun updateAliasName(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        name: String
+    ) {
+        val request = UpdateAliasNameRequest(name)
+        remoteDataSource.updateAliasName(userId, shareId, itemId, request)
     }
 
     private fun mapMailboxes(input: List<AliasMailboxResponse>): List<AliasMailbox> =

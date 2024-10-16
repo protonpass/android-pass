@@ -50,6 +50,7 @@ internal fun PassItemDetailSections(
             itemColors = itemColors,
             itemDiffs = itemDiffs,
             mailboxes = mailboxes.toImmutableList(),
+            slNote = slNote,
             onEvent = onEvent,
             lastAutofillOption = itemLastAutofillAtOption,
             revision = itemRevision,

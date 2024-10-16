@@ -25,20 +25,14 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.asResultWithoutLoading
-import proton.android.pass.common.api.map
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.some
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -48,8 +42,8 @@ import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
-import proton.android.pass.data.api.repositories.AliasRepository
-import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.usecases.GetAliasDetails
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateAliasItemContent
@@ -74,13 +68,13 @@ import javax.inject.Inject
 @HiltViewModel
 class UpdateAliasViewModel @Inject constructor(
     private val accountManager: AccountManager,
-    private val itemRepository: ItemRepository,
-    private val aliasRepository: AliasRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val updateAliasUseCase: UpdateAlias,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
     private val aliasPrefixValidator: AliasPrefixValidator,
+    private val getItemById: GetItemById,
+    private val getAliasDetails: GetAliasDetails,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseAliasViewModel(snackbarDispatcher, savedStateHandleProvider) {
 
@@ -88,11 +82,13 @@ class UpdateAliasViewModel @Inject constructor(
         PassLogger.w(TAG, throwable)
     }
 
-    private val navShareId: ShareId =
-        ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
-    private val navItemId: ItemId = ItemId(
-        savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key)
-    )
+    private val shareId: ShareId = savedStateHandleProvider.get()
+        .require<String>(CommonNavArgId.ShareId.key)
+        .let(::ShareId)
+
+    private val itemId: ItemId = savedStateHandleProvider.get()
+        .require<String>(CommonNavArgId.ItemId.key)
+        .let(::ItemId)
 
     private var itemOption: Option<Item> = None
 
@@ -106,8 +102,8 @@ class UpdateAliasViewModel @Inject constructor(
         }
     }
 
-    val updateAliasUiState: StateFlow<UpdateAliasUiState> = combine(
-        flowOf(navShareId),
+    internal val updateAliasUiState: StateFlow<UpdateAliasUiState> = combine(
+        oneShot { shareId },
         baseAliasUiState,
         selectedMailboxListState
     ) { shareId, aliasUiState, mailboxList ->
@@ -152,81 +148,70 @@ class UpdateAliasViewModel @Inject constructor(
 
     private suspend fun setupInitialState() {
         if (itemOption != None) return
+
         isLoadingState.update { IsLoadingState.Loading }
 
-        val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
-        if (userId != null) {
-            fetchInitialData(userId, navShareId, navItemId)
-        } else {
-            showError("Empty user/share/item Id", InitError)
+        runCatching {
+            combine(
+                oneShot { getItemById(shareId, itemId) },
+                oneShot { getAliasDetails(shareId, itemId) },
+                ::Pair
+            ).first()
+        }.onSuccess { (item, aliasDetails) ->
+            itemOption = item.some()
+            onAliasDetails(aliasDetails, item)
+        }.onFailure { error ->
+            showError("Error setting the initial state", InitError, error)
         }
+
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
-    private suspend fun fetchInitialData(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId
-    ) {
-        runCatching {
-            itemRepository.getById(shareId, itemId)
-        }.onSuccess { item ->
-            itemOption = item.some()
-            aliasRepository.getAliasDetails(userId, shareId, itemId)
-                .asResultWithoutLoading()
-                .collect { onAliasDetails(it, item) }
-        }.onFailure { showError("Error getting item by id", InitError, it) }
-    }
+    private fun onAliasDetails(aliasDetails: AliasDetails, item: Item) {
+        AliasDetailsUiModel(aliasDetails).also { details ->
+            val alias = item.itemType as ItemType.Alias
+            val email = alias.aliasEmail
+            val (prefix, suffix) = AliasUtils.extractPrefixSuffix(email)
 
-    private suspend fun onAliasDetails(result: LoadingResult<AliasDetails>, item: Item) {
-        result.map(::AliasDetailsUiModel)
-            .onSuccess { details ->
-                val alias = item.itemType as ItemType.Alias
-                val email = alias.aliasEmail
-                val (prefix, suffix) = AliasUtils.extractPrefixSuffix(email)
-
-                val mailboxes = details.availableMailboxes
-                    .map { mailbox ->
-                        SelectedAliasMailboxUiModel(
-                            model = mailbox,
-                            selected = details.mailboxes.any { it.id == mailbox.id }
-                        )
-                    }
-                    .toMutableList()
-                if (mailboxes.none { it.selected } && mailboxes.isNotEmpty()) {
-                    val mailbox = mailboxes.removeAt(0)
-                    mailboxes.add(0, mailbox.copy(selected = true))
-                        .also { selectedMailboxListState.update { listOf(mailbox.model.id) } }
-                } else {
-                    selectedMailboxListState.update {
-                        mailboxes.filter { it.selected }.map { it.model.id }
-                    }
+            val mailboxes = details.availableMailboxes
+                .map { mailbox ->
+                    SelectedAliasMailboxUiModel(
+                        model = mailbox,
+                        selected = details.mailboxes.any { it.id == mailbox.id }
+                    )
                 }
-                if (aliasItemFormState.title.isNotBlank() || aliasItemFormState.note.isNotBlank()) {
-                    aliasItemFormMutableState = aliasItemFormState.copy(
+                .toMutableList()
+            if (mailboxes.none { it.selected } && mailboxes.isNotEmpty()) {
+                val mailbox = mailboxes.removeAt(0)
+                mailboxes.add(0, mailbox.copy(selected = true))
+                    .also { selectedMailboxListState.update { listOf(mailbox.model.id) } }
+            } else {
+                selectedMailboxListState.update {
+                    mailboxes.filter { it.selected }.map { it.model.id }
+                }
+            }
+            if (aliasItemFormState.title.isNotBlank() || aliasItemFormState.note.isNotBlank()) {
+                aliasItemFormMutableState = aliasItemFormState.copy(
+                    prefix = prefix,
+                    aliasOptions = AliasOptionsUiModel(emptyList(), details.mailboxes),
+                    selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
+                    mailboxes = mailboxes,
+                    aliasToBeCreated = email
+                )
+            } else {
+                aliasItemFormMutableState = encryptionContextProvider.withEncryptionContext {
+                    aliasItemFormState.copy(
+                        title = decrypt(item.title),
+                        note = decrypt(item.note),
                         prefix = prefix,
                         aliasOptions = AliasOptionsUiModel(emptyList(), details.mailboxes),
                         selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
                         mailboxes = mailboxes,
                         aliasToBeCreated = email
                     )
-                } else {
-                    aliasItemFormMutableState = encryptionContextProvider.withEncryptionContext {
-                        aliasItemFormState.copy(
-                            title = decrypt(item.title),
-                            note = decrypt(item.note),
-                            prefix = prefix,
-                            aliasOptions = AliasOptionsUiModel(emptyList(), details.mailboxes),
-                            selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
-                            mailboxes = mailboxes,
-                            aliasToBeCreated = email
-                        )
-                    }
                 }
             }
-            .onError {
-                showError("Error getting alias mailboxes", InitError, it)
-            }
+        }
     }
 
     private suspend fun showError(
@@ -240,54 +225,56 @@ class UpdateAliasViewModel @Inject constructor(
         mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
     }
 
-    fun updateAlias() = viewModelScope.launch(coroutineExceptionHandler) {
-        val canUpdate = canUpdateAlias()
-        if (!canUpdate) {
-            PassLogger.i(TAG, "Cannot update alias")
-            return@launch
-        }
+    internal fun updateAlias() {
+        viewModelScope.launch(coroutineExceptionHandler) {
+            val canUpdate = canUpdateAlias()
+            if (!canUpdate) {
+                PassLogger.i(TAG, "Cannot update alias")
+                return@launch
+            }
 
-        val body = createUpdateAliasBody()
-        isLoadingState.update { IsLoadingState.Loading }
+            val body = createUpdateAliasBody()
+            isLoadingState.update { IsLoadingState.Loading }
 
-        val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
-        val item = itemOption
-        if (userId != null && item is Some) {
-            runCatching {
-                updateAliasUseCase(
-                    userId = userId,
-                    item = item.value,
-                    content = body
-                )
-            }.onSuccess { newItem ->
-                PassLogger.i(TAG, "Alias successfully updated")
-                isItemSavedState.update {
-                    val itemUiModel = encryptionContextProvider.withEncryptionContext {
-                        newItem.toUiModel(this)
-                    }
-                    ItemSavedState.Success(
-                        itemId = newItem.id,
-                        item = itemUiModel
+            val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
+            val item = itemOption
+            if (userId != null && item is Some) {
+                runCatching {
+                    updateAliasUseCase(
+                        userId = userId,
+                        item = item.value,
+                        content = body
                     )
+                }.onSuccess { newItem ->
+                    PassLogger.i(TAG, "Alias successfully updated")
+                    isItemSavedState.update {
+                        val itemUiModel = encryptionContextProvider.withEncryptionContext {
+                            newItem.toUiModel(this)
+                        }
+                        ItemSavedState.Success(
+                            itemId = newItem.id,
+                            item = itemUiModel
+                        )
+                    }
+                    isLoadingState.update { IsLoadingState.NotLoading }
+                    snackbarDispatcher(AliasUpdated)
+                    telemetryManager.sendEvent(ItemUpdate(EventItemType.Alias))
+                }.onFailure {
+                    PassLogger.w(TAG, "Update alias error")
+                    PassLogger.w(TAG, it)
+                    val message = if (it is InvalidContentFormatVersionError) {
+                        UpdateAppToUpdateItemError
+                    } else {
+                        ItemUpdateError
+                    }
+                    snackbarDispatcher(message)
+                    isLoadingState.update { IsLoadingState.NotLoading }
                 }
-                isLoadingState.update { IsLoadingState.NotLoading }
-                snackbarDispatcher(AliasUpdated)
-                telemetryManager.sendEvent(ItemUpdate(EventItemType.Alias))
-            }.onFailure {
-                PassLogger.w(TAG, "Update alias error")
-                PassLogger.w(TAG, it)
-                val message = if (it is InvalidContentFormatVersionError) {
-                    UpdateAppToUpdateItemError
-                } else {
-                    ItemUpdateError
-                }
-                snackbarDispatcher(message)
+            } else {
+                PassLogger.i(TAG, "Empty User Id")
+                snackbarDispatcher(ItemUpdateError)
                 isLoadingState.update { IsLoadingState.NotLoading }
             }
-        } else {
-            PassLogger.i(TAG, "Empty User Id")
-            snackbarDispatcher(ItemUpdateError)
-            isLoadingState.update { IsLoadingState.NotLoading }
         }
     }
 
@@ -334,7 +321,10 @@ class UpdateAliasViewModel @Inject constructor(
         )
     }
 
-    companion object {
-        const val TAG = "UpdateAliasViewModel"
+    private companion object {
+
+        private const val TAG = "UpdateAliasViewModel"
+
     }
+
 }

@@ -55,6 +55,13 @@ interface AliasRepository {
         items: List<Pair<ShareId, ItemId>>,
         enabled: Boolean
     ): AliasItemsChangeStatusResult
+
+    suspend fun updateAliasName(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        name: String
+    )
 }
 
 sealed interface AliasItemsChangeStatusResult {

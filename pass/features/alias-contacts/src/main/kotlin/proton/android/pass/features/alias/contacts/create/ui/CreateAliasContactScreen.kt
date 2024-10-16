@@ -40,16 +40,20 @@ fun CreateAliasContactScreen(
     LaunchedEffect(state.event) {
         when (state.event) {
             CreateAliasContactEvent.Idle -> {}
+            CreateAliasContactEvent.OnContactCreated -> onNavigate(AliasContactsNavigation.Back)
         }
         viewmodel.onEventConsumed(state.event)
     }
 
     CreateAliasContactContent(
         modifier = modifier,
+        email = viewmodel.email,
+        state = state,
         onEvent = {
             when (it) {
                 CreateAliasContactUIEvent.Back -> onNavigate(AliasContactsNavigation.Back)
                 CreateAliasContactUIEvent.Create -> viewmodel.onCreate()
+                is CreateAliasContactUIEvent.EmailChanged -> viewmodel.onEmailChanged(it.email)
             }
         }
     )

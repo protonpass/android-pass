@@ -16,27 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases
+package proton.android.pass.data.fakes.usecases
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.data.api.errors.UserIdNotAvailableError
-import proton.android.pass.data.api.repositories.AliasRepository
-import proton.android.pass.data.api.usecases.GetAliasDetails
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import proton.android.pass.common.api.FlowUtils.testFlow
+import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class GetAliasDetailsImpl @Inject constructor(
-    private val accountManager: AccountManager,
-    private val aliasRepository: AliasRepository
-) : GetAliasDetails {
+@Singleton
+class TestObserveAliasDetails @Inject constructor() : ObserveAliasDetails {
 
-    override suspend fun invoke(shareId: ShareId, itemId: ItemId): AliasDetails = accountManager
-        .getPrimaryUserId()
-        .firstOrNull()
-        ?.let { userId -> aliasRepository.getAliasDetails(userId, shareId, itemId) }
-        ?: throw UserIdNotAvailableError()
+    private val flow = testFlow<Result<AliasDetails>>()
 
+    fun sendValue(value: Result<AliasDetails>) {
+        flow.tryEmit(value)
+    }
+
+    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<AliasDetails> = flow.map { it.getOrThrow() }
 }

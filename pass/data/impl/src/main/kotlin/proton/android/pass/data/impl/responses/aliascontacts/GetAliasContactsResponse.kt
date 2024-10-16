@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.responses.aliascontacts
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import proton.android.pass.domain.aliascontacts.AliasContacts
-import proton.android.pass.domain.aliascontacts.ContactId
 
 @Serializable
 data class GetAliasContactsResponse(
@@ -37,6 +36,5 @@ data class GetAliasContactsResponse(
 
 fun GetAliasContactsResponse.toDomain(): AliasContacts = AliasContacts(
     contacts = this.contacts.map(ContactResponse::toDomain),
-    total = this.total,
-    lastContactId = ContactId(this.lastId)
+    total = this.total
 )

@@ -56,6 +56,11 @@ fun DetailAliasContactScreen(
                 DetailAliasContactUIEvent.Back -> onNavigate(AliasContactsNavigation.Back)
                 DetailAliasContactUIEvent.CreateContact -> viewModel.onCreateItem()
                 DetailAliasContactUIEvent.LearnMore -> {}
+                DetailAliasContactUIEvent.BlockContact -> {}
+                is DetailAliasContactUIEvent.ContactOptions -> {}
+                is DetailAliasContactUIEvent.SendEmail -> {}
+                DetailAliasContactUIEvent.UnblockContact -> {}
+                DetailAliasContactUIEvent.UpdateName -> {}
             }
         }
     )

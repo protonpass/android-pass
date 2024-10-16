@@ -245,6 +245,7 @@
     <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
     <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
     <!-- Simple Login -->
+    <string name="simple_login_brand_name" translatable="false">SimpleLogin</string>
     <string name="simple_login_widget_title">Enable SimpleLogin sync</string>
     <plurals name="simple_login_widget_pending_aliases_message">
         <item quantity="one">We detected that you have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to import it?</item>

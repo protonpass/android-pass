@@ -23,13 +23,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.PersistentList
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
@@ -46,6 +49,7 @@ fun AliasDetailContent(
     itemUiModel: ItemUiModel,
     vault: Vault?,
     mailboxes: PersistentList<AliasMailbox>,
+    slNote: String,
     stats: Option<AliasStats>,
     contactsCount: Int,
     isLoading: Boolean,
@@ -93,6 +97,17 @@ fun AliasDetailContent(
         if (contents.note.isNotBlank()) {
             NoteSection(
                 text = contents.note,
+                accentColor = PassTheme.colors.aliasInteractionNorm
+            )
+        }
+
+        if (slNote.isNotBlank()) {
+            NoteSection(
+                text = buildString {
+                    append(stringResource(id = R.string.item_details_shared_section_note_title))
+                    append(" ${SpecialCharacters.DOT_SEPARATOR} ")
+                    append(stringResource(id = R.string.simple_login_brand_name))
+                },
                 accentColor = PassTheme.colors.aliasInteractionNorm
             )
         }

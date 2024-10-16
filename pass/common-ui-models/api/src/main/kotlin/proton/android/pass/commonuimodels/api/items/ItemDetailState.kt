@@ -75,7 +75,8 @@ sealed interface ItemDetailState {
         override val itemRevision: Long,
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.Alias,
-        val mailboxes: List<AliasMailbox>
+        val mailboxes: List<AliasMailbox>,
+        val slNote: String
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Alias

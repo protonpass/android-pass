@@ -156,4 +156,6 @@ sealed interface HomeNavigation {
     data class TrashAlias(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
     data object SLSync : HomeNavigation
+
+    data object SLAliasManagement : HomeNavigation
 }

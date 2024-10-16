@@ -44,6 +44,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -70,7 +71,7 @@ fun VaultNameSubtitle(
         if (vault.shared) {
             buildAnnotatedString {
                 append(vault.name)
-                append(" • ")
+                append(" ${SpecialCharacters.DOT_SEPARATOR} ")
                 withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
                     append(vault.members.toString())
                 }

@@ -52,24 +52,26 @@ class AliasRepositoryImpl @Inject constructor(
             .map { it.toDomain() }
             .flowOn(Dispatchers.IO)
 
-    override suspend fun getAliasDetails(
+    override fun getAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): AliasDetails = remoteDataSource.getAliasDetails(userId, shareId, itemId)
-        .let { aliasDetailsResponse ->
+    ): Flow<AliasDetails> = remoteDataSource.getAliasDetails(userId, shareId, itemId)
+        .map { details ->
             AliasDetails(
-                email = aliasDetailsResponse.email,
-                mailboxes = mapMailboxes(aliasDetailsResponse.mailboxes),
-                availableMailboxes = mapMailboxes(aliasDetailsResponse.availableMailboxes),
+                email = details.email,
+                mailboxes = mapMailboxes(details.mailboxes),
+                availableMailboxes = mapMailboxes(details.availableMailboxes),
+                displayName = details.displayName,
                 stats = AliasStats(
-                    forwardedEmails = aliasDetailsResponse.stats.forwardedEmails,
-                    repliedEmails = aliasDetailsResponse.stats.repliedEmails,
-                    blockedEmails = aliasDetailsResponse.stats.blockedEmails
+                    forwardedEmails = details.stats.forwardedEmails,
+                    repliedEmails = details.stats.repliedEmails,
+                    blockedEmails = details.stats.blockedEmails
                 ),
-                slNote = aliasDetailsResponse.note.orEmpty()
+                slNote = details.note.orEmpty()
             )
         }
+        .flowOn(Dispatchers.IO)
 
     override fun updateAliasMailboxes(
         userId: UserId,

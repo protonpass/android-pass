@@ -45,7 +45,7 @@ import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetAddressById
 import proton.android.pass.data.api.usecases.GetAddressesForUserId
-import proton.android.pass.data.api.usecases.GetAliasDetails
+import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.api.usecases.GetDefaultBrowser
 import proton.android.pass.data.api.usecases.GetInviteUserMode
@@ -223,7 +223,7 @@ import proton.android.pass.data.impl.usecases.DeleteItemsImpl
 import proton.android.pass.data.impl.usecases.DeleteVaultImpl
 import proton.android.pass.data.impl.usecases.GetAddressByIdImpl
 import proton.android.pass.data.impl.usecases.GetAddressesForUserIdImpl
-import proton.android.pass.data.impl.usecases.GetAliasDetailsImpl
+import proton.android.pass.data.impl.usecases.ObserveAliasDetailsImpl
 import proton.android.pass.data.impl.usecases.GetAllKeysByAddressImpl
 import proton.android.pass.data.impl.usecases.GetDefaultBrowserImpl
 import proton.android.pass.data.impl.usecases.GetInviteUserModeImpl
@@ -422,7 +422,7 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveItemById(impl: ObserveItemByIdImpl): ObserveItemById
 
     @Binds
-    abstract fun bindGetAliasDetails(impl: GetAliasDetailsImpl): GetAliasDetails
+    abstract fun bindGetAliasDetails(impl: ObserveAliasDetailsImpl): ObserveAliasDetails
 
     @Binds
     abstract fun bindGetSuggestedAutofillItems(impl: GetSuggestedAutofillItemsImpl): GetSuggestedAutofillItems

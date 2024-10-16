@@ -56,7 +56,7 @@ import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.DeleteItems
-import proton.android.pass.data.api.usecases.GetAliasDetails
+import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -111,7 +111,7 @@ class AliasDetailViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
-    getAliasDetails: GetAliasDetails,
+    observeAliasDetails: ObserveAliasDetails,
     savedStateHandle: SavedStateHandle,
     getItemActions: GetItemActions,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
@@ -168,7 +168,7 @@ class AliasDetailViewModel @Inject constructor(
     private val isAliasStateTogglingFlow = MutableStateFlow(false)
 
     private val aliasDetailsAndContactsFlow = combine(
-        oneShot { getAliasDetails(shareId, itemId) }.asLoadingResult(),
+        observeAliasDetails(shareId, itemId).asLoadingResult(),
         observeAliasContacts(shareId, itemId).asLoadingResult(),
         ::Pair
     )

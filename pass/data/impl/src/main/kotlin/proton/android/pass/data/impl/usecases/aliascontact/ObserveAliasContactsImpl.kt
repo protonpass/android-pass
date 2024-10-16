@@ -27,7 +27,6 @@ import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.aliascontacts.AliasContacts
-import proton.android.pass.domain.aliascontacts.ContactId
 import javax.inject.Inject
 
 class ObserveAliasContactsImpl @Inject constructor(
@@ -38,7 +37,7 @@ class ObserveAliasContactsImpl @Inject constructor(
     override fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-        lastContactId: ContactId?
+        fullList: Boolean
     ): Flow<AliasContacts> = accountManager.getPrimaryUserId()
         .filterNotNull()
         .flatMapLatest {
@@ -46,7 +45,7 @@ class ObserveAliasContactsImpl @Inject constructor(
                 userId = it,
                 shareId = shareId,
                 itemId = itemId,
-                lastContactId = lastContactId
+                fullList = fullList
             )
         }
 

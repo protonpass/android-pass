@@ -52,7 +52,7 @@ fun DetailAliasContactContent(modifier: Modifier = Modifier, onEvent: (DetailAli
                         isLoading = false,
                         text = {
                             Text(
-                                text = stringResource(R.string.create_contact),
+                                text = stringResource(R.string.create_contact_button),
                                 style = ProtonTheme.typography.defaultSmallInverted,
                                 color = PassTheme.colors.textInvert
                             )

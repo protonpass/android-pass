@@ -26,16 +26,20 @@ import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.aliascontact.CreateAliasContact
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.alias.contacts.AliasContactsSnackbarMessage.ContactCreateError
 import proton.android.pass.features.alias.contacts.AliasContactsSnackbarMessage.ContactCreateSuccess
+import proton.android.pass.features.alias.contacts.create.presentation.CreateAliasContactFormValidationErrors.EmailInvalid
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -45,6 +49,7 @@ import javax.inject.Inject
 class CreateAliasContactViewModel @Inject constructor(
     private val createAliasContact: CreateAliasContact,
     private val snackbarDispatcher: SnackbarDispatcher,
+    private val emailValidator: EmailValidator,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -57,18 +62,26 @@ class CreateAliasContactViewModel @Inject constructor(
         .let(::ItemId)
 
     @OptIn(SavedStateHandleSaveableApi::class)
-    var emailAddress: String by savedStateHandleProvider.get()
+    var email: String by savedStateHandleProvider.get()
         .saveable { mutableStateOf("") }
 
     private val detailAliasContactEventFlow: MutableStateFlow<CreateAliasContactEvent> =
         MutableStateFlow(CreateAliasContactEvent.Idle)
+    private val formValidationErrorsFlow: MutableStateFlow<List<CreateAliasContactFormValidationErrors>> =
+        MutableStateFlow(emptyList())
+    private val isLoadingStateFlow: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.NotLoading)
 
-    val state = detailAliasContactEventFlow
-        .map { CreateAliasContactUIState(it) }
+    val state = combine(
+        formValidationErrorsFlow,
+        detailAliasContactEventFlow,
+        isLoadingStateFlow,
+        ::CreateAliasContactUIState
+    )
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
-            initialValue = CreateAliasContactUIState(CreateAliasContactEvent.Idle)
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = CreateAliasContactUIState.INITIAL
         )
 
     fun onEventConsumed(event: CreateAliasContactEvent) {
@@ -76,18 +89,31 @@ class CreateAliasContactViewModel @Inject constructor(
     }
 
     fun onCreate() {
+        val isEmailValid = emailValidator.isValid(email)
+        if (!isEmailValid) {
+            formValidationErrorsFlow.update { listOf(EmailInvalid) }
+            return
+        }
         viewModelScope.launch {
+            isLoadingStateFlow.update { IsLoadingState.Loading }
             runCatching {
-                createAliasContact(shareId, itemId, emailAddress)
+                createAliasContact(shareId, itemId, email)
             }.onSuccess {
                 PassLogger.i(TAG, "Alias contact created")
                 snackbarDispatcher(ContactCreateSuccess)
+                detailAliasContactEventFlow.update { CreateAliasContactEvent.OnContactCreated }
             }.onFailure {
                 PassLogger.w(TAG, "Alias contact creation failed")
                 PassLogger.w(TAG, it)
                 snackbarDispatcher(ContactCreateError)
             }
+            isLoadingStateFlow.update { IsLoadingState.NotLoading }
         }
+    }
+
+    fun onEmailChanged(email: String) {
+        formValidationErrorsFlow.update { it - EmailInvalid }
+        this.email = email
     }
 
     companion object {
@@ -95,6 +121,11 @@ class CreateAliasContactViewModel @Inject constructor(
     }
 }
 
+enum class CreateAliasContactFormValidationErrors {
+    EmailInvalid
+}
+
 sealed interface CreateAliasContactEvent {
     data object Idle : CreateAliasContactEvent
+    data object OnContactCreated : CreateAliasContactEvent
 }

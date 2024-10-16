@@ -23,6 +23,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.sl.sync.details.navigation.SimpleLoginSyncDetailsNavItem
+import proton.android.pass.features.sl.sync.details.ui.SimpleLoginSyncDetailsScreen
 import proton.android.pass.features.sl.sync.domains.select.navigation.SimpleLoginSyncDomainSelectNavItem
 import proton.android.pass.features.sl.sync.domains.select.ui.SimpleLoginSyncDomainSelectBottomSheet
 import proton.android.pass.features.sl.sync.mailboxes.create.navigation.SimpleLoginSyncMailboxCreateNavItem
@@ -34,7 +36,7 @@ import proton.android.pass.features.sl.sync.mailboxes.options.ui.SimpleLoginSync
 import proton.android.pass.features.sl.sync.mailboxes.verify.navigation.SimpleLoginSyncMailboxVerifyNavItem
 import proton.android.pass.features.sl.sync.mailboxes.verify.ui.SimpleLoginSyncMailboxVerifyScreen
 import proton.android.pass.features.sl.sync.management.navigation.SimpleLoginSyncManagementNavItem
-import proton.android.pass.features.sl.sync.management.ui.SimpleLoginSyncDetailsScreen
+import proton.android.pass.features.sl.sync.management.ui.SimpleLoginSyncManagementScreen
 import proton.android.pass.features.sl.sync.settings.navigation.SimpleLoginSyncSettingsNavItem
 import proton.android.pass.features.sl.sync.settings.ui.SimpleLoginSyncSettingsScreen
 import proton.android.pass.navigation.api.bottomSheet
@@ -44,8 +46,12 @@ private const val SELECTED_SHARE_ID_KEY = "vaultSelected"
 
 fun NavGraphBuilder.simpleLoginSyncNavGraph(onNavigated: (SimpleLoginSyncNavDestination) -> Unit) {
 
-    composable(navItem = SimpleLoginSyncManagementNavItem) {
+    composable(navItem = SimpleLoginSyncDetailsNavItem) {
         SimpleLoginSyncDetailsScreen(onNavigated = onNavigated)
+    }
+
+    composable(navItem = SimpleLoginSyncManagementNavItem) {
+        SimpleLoginSyncManagementScreen(onNavigated = onNavigated)
     }
 
     composable(navItem = SimpleLoginSyncSettingsNavItem) { navBackStack ->

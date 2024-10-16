@@ -107,7 +107,13 @@ fun ProfileScreen(
                     }.also(onNavigateEvent)
                 }
 
-                ProfileUiEvent.OnAliasesClicked -> onNavigateEvent(ProfileNavigation.AliasesSyncDetails)
+                ProfileUiEvent.OnAliasesClicked -> {
+                    if (state.isAdvancedAliasManagementEnabled) {
+                        ProfileNavigation.AliasesSyncManagement
+                    } else {
+                        ProfileNavigation.AliasesSyncDetails
+                    }.also(onNavigateEvent)
+                }
 
                 AccountSwitchEvent.OnAddAccount -> onNavigateEvent(ProfileNavigation.OnAddAccount)
                 is AccountSwitchEvent.OnRemoveAccount -> onNavigateEvent(ProfileNavigation.OnRemoveAccount(it.userId))

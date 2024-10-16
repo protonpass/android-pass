@@ -24,12 +24,11 @@ import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.data.api.repositories.AliasContactsRepository
 import proton.android.pass.data.impl.remote.RemoteAliasContactsDataSource
 import proton.android.pass.data.impl.requests.aliascontacts.CreateAliasContactRequest
-import proton.android.pass.data.impl.requests.aliascontacts.GetAliasContactsRequest
 import proton.android.pass.data.impl.requests.aliascontacts.UpdateBlockedAliasContactRequest
-import proton.android.pass.data.impl.responses.aliascontacts.ContactResponse
 import proton.android.pass.data.impl.responses.aliascontacts.toDomain
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.aliascontacts.AliasContacts
 import proton.android.pass.domain.aliascontacts.Contact
 import proton.android.pass.domain.aliascontacts.ContactId
 import javax.inject.Inject
@@ -41,11 +40,10 @@ class AliasContactsRepositoryImpl @Inject constructor(
     override suspend fun observeAliasContacts(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId
-    ): Flow<List<Contact>> = oneShot {
-        remoteDataSource.getAliasContacts(userId, shareId, itemId, GetAliasContactsRequest())
-            .contacts
-            .map(ContactResponse::toDomain)
+        itemId: ItemId,
+        lastContactId: ContactId?
+    ): Flow<AliasContacts> = oneShot {
+        remoteDataSource.getAliasContacts(userId, shareId, itemId, lastContactId).toDomain()
     }
 
     override suspend fun observeAliasContact(

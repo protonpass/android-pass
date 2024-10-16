@@ -22,6 +22,7 @@ data class AliasDetails(
     val email: String,
     val mailboxes: List<AliasMailbox>,
     val availableMailboxes: List<AliasMailbox>,
+    val name: String?,
     val displayName: String,
     val stats: AliasStats,
     val slNote: String
@@ -31,6 +32,7 @@ data class AliasDetails(
             email = "",
             mailboxes = emptyList(),
             availableMailboxes = emptyList(),
+            name = null,
             displayName = "",
             stats = AliasStats(0, 0, 0),
             slNote = ""

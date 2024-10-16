@@ -63,6 +63,7 @@ class AliasRepositoryImpl @Inject constructor(
                 mailboxes = mapMailboxes(details.mailboxes),
                 availableMailboxes = mapMailboxes(details.availableMailboxes),
                 displayName = details.displayName,
+                name = details.name,
                 stats = AliasStats(
                     forwardedEmails = details.stats.forwardedEmails,
                     repliedEmails = details.stats.repliedEmails,

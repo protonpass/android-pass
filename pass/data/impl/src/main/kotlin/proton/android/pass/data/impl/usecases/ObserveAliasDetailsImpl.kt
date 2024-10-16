@@ -16,14 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.impl.usecases
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import proton.android.pass.data.api.repositories.AliasRepository
+import proton.android.pass.data.api.usecases.ObserveAliasDetails
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import javax.inject.Inject
 
-interface GetAliasDetails {
-
-    suspend operator fun invoke(shareId: ShareId, itemId: ItemId): AliasDetails
-
+class ObserveAliasDetailsImpl @Inject constructor(
+    private val observeCurrentUser: ObserveCurrentUser,
+    private val aliasRepository: AliasRepository
+) : ObserveAliasDetails {
+    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<AliasDetails> = observeCurrentUser()
+        .flatMapLatest { aliasRepository.getAliasDetails(it.userId, shareId, itemId) }
 }

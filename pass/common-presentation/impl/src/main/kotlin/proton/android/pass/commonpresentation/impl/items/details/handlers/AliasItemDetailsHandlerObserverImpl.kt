@@ -28,7 +28,7 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDet
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.GetAliasDetails
+import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.HiddenState
@@ -41,7 +41,7 @@ import javax.inject.Inject
 
 class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     private val getVaultByShareId: GetVaultByShareId,
-    private val getAliasDetails: GetAliasDetails,
+    private val getAliasDetails: ObserveAliasDetails,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemDetailsHandlerObserver<ItemContents.Alias>() {
 

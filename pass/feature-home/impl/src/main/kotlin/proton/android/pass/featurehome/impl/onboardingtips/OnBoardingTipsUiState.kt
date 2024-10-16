@@ -32,6 +32,8 @@ sealed interface OnBoardingTipsEvent {
 
     data object OpenSLSyncScreen : OnBoardingTipsEvent
 
+    data object OpenSLManagementScreen : OnBoardingTipsEvent
+
     data object RequestNotificationPermission : OnBoardingTipsEvent
 }
 

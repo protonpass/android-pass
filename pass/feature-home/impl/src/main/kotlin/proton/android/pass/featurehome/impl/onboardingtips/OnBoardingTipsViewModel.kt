@@ -118,9 +118,10 @@ class OnBoardingTipsViewModel @Inject constructor(
     private val shouldShowSLSyncFlow = combine(
         preferencesRepository.getHasDismissedSLSyncBanner(),
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1),
         simpleLoginSyncStatusOptionFlow
-    ) { hasDismissedSLSyncBanner, slSyncFFEnabled, result ->
-        if (!slSyncFFEnabled) return@combine false to 0
+    ) { hasDismissedSLSyncBanner, slSyncFFEnabled, isAdvancedAliasManagementEnabled, result ->
+        if (!slSyncFFEnabled && !isAdvancedAliasManagementEnabled) return@combine false to 0
         if (hasDismissedSLSyncBanner == HasDismissedSLSyncBanner.Dismissed) return@combine false to 0
         val sync = result.getOrNull()?.value() ?: return@combine false to 0
         val show = sync.isPreferenceEnabled && sync.hasPendingAliases && !sync.isSyncEnabled
@@ -146,15 +147,18 @@ class OnBoardingTipsViewModel @Inject constructor(
 
     val state: StateFlow<OnBoardingTipsUiState> = combine(
         tipVisibilityFlow,
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1),
         eventFlow
-    ) { tipVisibility, event ->
+    ) { tipVisibility, isAdvancedManagementEnabled, event ->
         val tip = when {
             tipVisibility.shouldShowInvites -> Invite
             tipVisibility.shouldShowNotificationPermission -> NotificationPermission
             tipVisibility.shouldShowTrial -> Trial
             tipVisibility.shouldShowAutofill -> Autofill
-            tipVisibility.shouldShowSLSyncAndCount.first ->
-                SLSync(tipVisibility.shouldShowSLSyncAndCount.second)
+            tipVisibility.shouldShowSLSyncAndCount.first -> SLSync(
+                aliasCount = tipVisibility.shouldShowSLSyncAndCount.second,
+                isAdvancedManagementEnabled = isAdvancedManagementEnabled
+            )
             else -> null
         }.toOption()
 
@@ -183,7 +187,15 @@ class OnBoardingTipsViewModel @Inject constructor(
             Trial -> eventFlow.update { OnBoardingTipsEvent.OpenTrialScreen }
             Invite -> eventFlow.update { OnBoardingTipsEvent.OpenInviteScreen }
             NotificationPermission -> eventFlow.update { OnBoardingTipsEvent.RequestNotificationPermission }
-            is SLSync -> eventFlow.update { OnBoardingTipsEvent.OpenSLSyncScreen }
+            is SLSync -> {
+                if (onBoardingTipPage.isAdvancedManagementEnabled) {
+                    OnBoardingTipsEvent.OpenSLManagementScreen
+                } else {
+                    OnBoardingTipsEvent.OpenSLSyncScreen
+                }.also { event ->
+                    eventFlow.update { event }
+                }
+            }
         }
     }
 

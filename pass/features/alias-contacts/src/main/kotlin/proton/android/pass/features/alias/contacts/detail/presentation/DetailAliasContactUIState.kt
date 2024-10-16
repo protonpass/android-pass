@@ -18,6 +18,24 @@
 
 package proton.android.pass.features.alias.contacts.detail.presentation
 
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import proton.android.pass.domain.aliascontacts.Contact
+
 data class DetailAliasContactUIState(
-    val event: DetailAliasContactEvent
-)
+    val event: DetailAliasContactEvent,
+    val senderName: String,
+    val displayName: String,
+    val forwardingContacts: ImmutableList<Contact>,
+    val blockedContacts: ImmutableList<Contact>
+) {
+    companion object {
+        val Empty = DetailAliasContactUIState(
+            event = DetailAliasContactEvent.Idle,
+            senderName = "",
+            displayName = "",
+            forwardingContacts = persistentListOf(),
+            blockedContacts = persistentListOf()
+        )
+    }
+}

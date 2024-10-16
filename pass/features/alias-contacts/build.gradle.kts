@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
+    implementation(libs.kotlinx.collections)
 
     implementation(projects.pass.commonUi.impl)
     implementation(projects.pass.commonRust.api)

@@ -18,22 +18,25 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.firstOrNull
+import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.usecases.GetAliasDetails
-import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class GetAliasDetailsImpl @Inject constructor(
-    private val observeCurrentUser: ObserveCurrentUser,
+    private val accountManager: AccountManager,
     private val aliasRepository: AliasRepository
 ) : GetAliasDetails {
 
-    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<AliasDetails> = observeCurrentUser()
-        .flatMapLatest { aliasRepository.getAliasDetails(it.userId, shareId, itemId) }
-}
+    override suspend fun invoke(shareId: ShareId, itemId: ItemId): AliasDetails = accountManager
+        .getPrimaryUserId()
+        .firstOrNull()
+        ?.let { userId -> aliasRepository.getAliasDetails(userId, shareId, itemId) }
+        ?: throw UserIdNotAvailableError()
 
+}

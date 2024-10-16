@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
@@ -68,13 +69,14 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     private fun observeAliasItemContents(item: Item): Flow<ItemContents.Alias> = flow {
         encryptionContextProvider.withEncryptionContext {
             item.toItemContents(this@withEncryptionContext) as ItemContents.Alias
-        }.let { aliasItemContents ->
+        }.also { aliasItemContents ->
             emit(aliasItemContents)
         }
     }
 
-    private fun observeAliasDetails(item: Item): Flow<AliasDetails> = getAliasDetails(item.shareId, item.id)
-        .onStart { emit(AliasDetails.EMPTY) }
+    private fun observeAliasDetails(item: Item): Flow<AliasDetails> = oneShot {
+        getAliasDetails(item.shareId, item.id)
+    }.onStart { emit(AliasDetails.EMPTY) }
 
     override fun updateItemContents(
         itemContents: ItemContents.Alias,

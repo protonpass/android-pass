@@ -275,7 +275,8 @@ class OnBoardingTipsViewModelTest {
             isSyncEnabled = false,
             isPreferenceEnabled = false,
             pendingAliasCount = 0,
-            defaultVault = TestVault.create()
+            defaultVault = TestVault.create(),
+            canManageAliases = false
         )
         observeSimpleLoginSyncStatus.updateSyncStatus(syncStatus)
     }

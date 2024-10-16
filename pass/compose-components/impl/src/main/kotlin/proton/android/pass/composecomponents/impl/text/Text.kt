@@ -23,17 +23,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.captionNorm
 import me.proton.core.compose.theme.defaultNorm
+import me.proton.core.compose.theme.defaultSmallNorm
 import me.proton.core.compose.theme.headlineNorm
+import me.proton.core.compose.theme.overlineNorm
+import me.proton.core.compose.theme.subheadlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.body3Norm
 
 object Text {
+
+    @Composable
+    fun Hero(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textNorm
+    ) {
+        Text(
+            text = text,
+            style = ProtonTheme.typography.hero.copy(color = color),
+            modifier = modifier
+        )
+    }
+
     @Composable
     fun Headline(
         text: String,
         modifier: Modifier = Modifier,
-        color: Color = ProtonTheme.typography.headlineNorm.color
+        color: Color = ProtonTheme.colors.textNorm
     ) {
         Text(
             text = text,
@@ -43,10 +61,23 @@ object Text {
     }
 
     @Composable
+    fun Subheadline(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textNorm
+    ) {
+        Text(
+            text = text,
+            style = ProtonTheme.typography.subheadlineNorm.copy(color = color),
+            modifier = modifier
+        )
+    }
+
+    @Composable
     fun Body1Regular(
         text: String,
         modifier: Modifier = Modifier,
-        color: Color = ProtonTheme.typography.defaultNorm.color
+        color: Color = ProtonTheme.colors.textNorm
     ) {
         Text(
             text = text,
@@ -56,14 +87,53 @@ object Text {
     }
 
     @Composable
+    fun Body2Regular(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textNorm
+    ) {
+        Text(
+            text = text,
+            style = ProtonTheme.typography.defaultSmallNorm.copy(color = color),
+            modifier = modifier
+        )
+    }
+
+    @Composable
     fun Body3Regular(
         text: String,
         modifier: Modifier = Modifier,
-        color: Color = PassTheme.typography.body3Norm().color
+        color: Color = ProtonTheme.colors.textNorm
     ) {
         Text(
             text = text,
             style = PassTheme.typography.body3Norm().copy(color = color),
+            modifier = modifier
+        )
+    }
+
+    @Composable
+    fun CaptionRegular(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textNorm
+    ) {
+        Text(
+            text = text,
+            style = ProtonTheme.typography.captionNorm.copy(color = color),
+            modifier = modifier
+        )
+    }
+
+    @Composable
+    fun OverlineRegular(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textNorm
+    ) {
+        Text(
+            text = text,
+            style = ProtonTheme.typography.overlineNorm.copy(color = color),
             modifier = modifier
         )
     }

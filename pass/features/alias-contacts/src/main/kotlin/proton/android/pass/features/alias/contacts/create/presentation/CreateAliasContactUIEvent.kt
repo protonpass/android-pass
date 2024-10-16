@@ -21,4 +21,7 @@ package proton.android.pass.features.alias.contacts.create.presentation
 sealed interface CreateAliasContactUIEvent {
     data object Back : CreateAliasContactUIEvent
     data object Create : CreateAliasContactUIEvent
+
+    @JvmInline
+    value class EmailChanged(val email: String) : CreateAliasContactUIEvent
 }

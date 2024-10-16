@@ -52,7 +52,7 @@ import proton.android.pass.data.api.usecases.CreatePin
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.DeleteVault
-import proton.android.pass.data.api.usecases.GetAliasDetails
+import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.api.usecases.GetDefaultBrowser
 import proton.android.pass.data.api.usecases.GetInviteUserMode
@@ -228,7 +228,7 @@ import proton.android.pass.data.fakes.usecases.TestDeleteAllSearchEntry
 import proton.android.pass.data.fakes.usecases.TestDeleteItems
 import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.TestDeleteVault
-import proton.android.pass.data.fakes.usecases.TestGetAliasDetails
+import proton.android.pass.data.fakes.usecases.TestObserveAliasDetails
 import proton.android.pass.data.fakes.usecases.TestGetAllKeysByAddress
 import proton.android.pass.data.fakes.usecases.TestGetDefaultBrowser
 import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
@@ -503,7 +503,7 @@ abstract class FakesDataModule {
     abstract fun bindRefreshPlan(impl: TestRefreshPlan): RefreshPlan
 
     @Binds
-    abstract fun bindGetAliasDetails(impl: TestGetAliasDetails): GetAliasDetails
+    abstract fun bindGetAliasDetails(impl: TestObserveAliasDetails): ObserveAliasDetails
 
     @Binds
     abstract fun bindGetItemByAliasEmail(impl: TestGetItemByAliasEmail): GetItemByAliasEmail

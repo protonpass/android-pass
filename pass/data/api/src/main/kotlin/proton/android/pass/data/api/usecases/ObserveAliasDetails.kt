@@ -16,18 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases
+package proton.android.pass.data.api.usecases
 
-import proton.android.pass.data.api.usecases.GetAliasDetails
+import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class TestGetAliasDetails @Inject constructor() : GetAliasDetails {
-
-    override suspend fun invoke(shareId: ShareId, itemId: ItemId): AliasDetails = AliasDetails.EMPTY
-
+interface ObserveAliasDetails {
+    operator fun invoke(shareId: ShareId, itemId: ItemId): Flow<AliasDetails>
 }

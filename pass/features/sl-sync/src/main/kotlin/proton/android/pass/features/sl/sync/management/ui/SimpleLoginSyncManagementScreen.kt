@@ -28,7 +28,7 @@ import proton.android.pass.features.sl.sync.management.presentation.SimpleLoginS
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 
 @Composable
-fun SimpleLoginSyncDetailsScreen(
+fun SimpleLoginSyncManagementScreen(
     onNavigated: (SimpleLoginSyncNavDestination) -> Unit,
     viewModel: SimpleLoginSyncManagementViewModel = hiltViewModel()
 ) = with(viewModel) {

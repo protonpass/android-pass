@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.common.api.PasswordStrength
+import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.R
@@ -52,8 +53,9 @@ fun PassPasswordStrengthLabel(
         )
     }
 
-    val text = labelPrefix?.let { prefix -> "$prefix • ${stringResource(id = labelResId)}" }
-        ?: stringResource(id = labelResId)
+    val text = labelPrefix?.let { prefix ->
+        "$prefix ${SpecialCharacters.DOT_SEPARATOR} ${stringResource(id = labelResId)}"
+    } ?: stringResource(id = labelResId)
 
     Text(
         modifier = modifier,

@@ -23,7 +23,7 @@ data class AliasDetails(
     val mailboxes: List<AliasMailbox>,
     val availableMailboxes: List<AliasMailbox>,
     val stats: AliasStats,
-    val slNote: String?
+    val slNote: String
 ) {
     companion object {
         val EMPTY = AliasDetails(
@@ -31,7 +31,7 @@ data class AliasDetails(
             mailboxes = emptyList(),
             availableMailboxes = emptyList(),
             stats = AliasStats(0, 0, 0),
-            slNote = null
+            slNote = ""
         )
     }
 }

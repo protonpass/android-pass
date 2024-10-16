@@ -47,7 +47,8 @@ import proton.android.pass.featureitemdetail.impl.R
 internal fun NoteSection(
     modifier: Modifier = Modifier,
     text: String,
-    accentColor: Color
+    accentColor: Color,
+    title: String = stringResource(R.string.field_detail_note_title)
 ) {
     RoundedCornersColumn(
         modifier = modifier
@@ -66,7 +67,7 @@ internal fun NoteSection(
             )
 
             Column(verticalArrangement = Arrangement.spacedBy(space = Spacing.small)) {
-                SectionTitle(text = stringResource(R.string.field_detail_note_title))
+                SectionTitle(text = title)
 
                 SelectionContainer {
                     SectionSubtitle(text = text.asAnnotatedString())

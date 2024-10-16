@@ -66,7 +66,7 @@ class AliasRepositoryImpl @Inject constructor(
                     repliedEmails = aliasDetailsResponse.stats.repliedEmails,
                     blockedEmails = aliasDetailsResponse.stats.blockedEmails
                 ),
-                slNote = aliasDetailsResponse.note
+                slNote = aliasDetailsResponse.note.orEmpty()
             )
         }
 

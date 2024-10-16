@@ -194,6 +194,7 @@ fun AliasDetail(
                         itemUiModel = state.itemUiModel,
                         vault = state.vault,
                         mailboxes = state.mailboxes,
+                        slNote = state.slNote,
                         stats = state.stats,
                         contactsCount = state.contactsCount,
                         isLoading = state.isLoadingMailboxes,

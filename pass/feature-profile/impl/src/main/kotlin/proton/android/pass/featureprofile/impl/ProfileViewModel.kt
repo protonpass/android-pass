@@ -192,12 +192,14 @@ class ProfileViewModel @Inject constructor(
     private val ffFlow = combine(
         featureFlagsPreferencesRepository.observeForAllUsers(FeatureFlag.ACCOUNT_SWITCH_V1),
         featureFlagsPreferencesRepository[FeatureFlag.SL_ALIASES_SYNC],
+        featureFlagsPreferencesRepository[FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1],
         ::FeatureFlags
     )
 
     private data class FeatureFlags(
         val isAccountSwitchEnabled: Boolean,
-        val isSimpleLoginAliasesSyncEnabled: Boolean
+        val isSimpleLoginAliasesSyncEnabled: Boolean,
+        val isAdvancedAliasManagementEnabled: Boolean
     )
 
     private val accountItemsFlow = accountManager.getAccounts()
@@ -271,7 +273,8 @@ class ProfileViewModel @Inject constructor(
             isAccountSwitchEnabled = flags.isAccountSwitchEnabled,
             secureLinksCount = secureLinksCount,
             accounts = accounts,
-            isSimpleLoginAliasesSyncEnabled = flags.isSimpleLoginAliasesSyncEnabled
+            isSimpleLoginAliasesSyncEnabled = flags.isSimpleLoginAliasesSyncEnabled,
+            isAdvancedAliasManagementEnabled = flags.isAdvancedAliasManagementEnabled
         )
     }.stateIn(
         scope = viewModelScope,

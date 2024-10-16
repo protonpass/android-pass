@@ -114,6 +114,8 @@ sealed interface ProfileNavigation {
 
     data object AliasesSyncDetails : ProfileNavigation
 
+    data object AliasesSyncManagement : ProfileNavigation
+
     @JvmInline
     value class AliasesSyncSettings(val shareId: ShareId?) : ProfileNavigation
 

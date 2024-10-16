@@ -223,7 +223,7 @@ class AliasDetailViewModel @Inject constructor(
                     vault = vault,
                     mailboxes = aliasDetails?.mailboxes?.toPersistentList() ?: persistentListOf(),
                     stats = aliasDetails?.stats.toOption(),
-                    contactsCount = aliasContactsResult.getOrNull()?.size ?: 0,
+                    contactsCount = aliasContactsResult.getOrNull()?.total ?: 0,
                     isLoading = isAliasDetailsLoading || isLoading.value(),
                     isLoadingMailboxes = isAliasDetailsLoading,
                     isItemSentToTrash = isItemSentToTrash.value(),

@@ -21,4 +21,5 @@ package proton.android.pass.features.alias.contacts.detail.presentation
 sealed interface DetailAliasContactUIEvent {
     data object Back : DetailAliasContactUIEvent
     data object CreateContact : DetailAliasContactUIEvent
+    data object LearnMore : DetailAliasContactUIEvent
 }

@@ -40,6 +40,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
@@ -58,7 +59,7 @@ internal fun PassItemDetailSubtitle(
         if (vault.shared) {
             buildAnnotatedString {
                 append(vault.name)
-                append(" • ")
+                append(" ${SpecialCharacters.DOT_SEPARATOR} ")
                 withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
                     append(vault.members.toString())
                 }

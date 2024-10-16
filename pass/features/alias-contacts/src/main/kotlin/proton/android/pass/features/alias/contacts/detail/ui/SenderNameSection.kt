@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,11 +39,16 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.features.alias.contacts.detail.presentation.DetailAliasContactUIEvent
 import proton.android.pass.features.aliascontacts.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun SenderNameSection(modifier: Modifier = Modifier, name: String) {
+fun SenderNameSection(
+    modifier: Modifier = Modifier,
+    name: String,
+    onEvent: (DetailAliasContactUIEvent) -> Unit
+) {
     Row(
         modifier = modifier
             .roundedContainer(
@@ -58,7 +64,9 @@ fun SenderNameSection(modifier: Modifier = Modifier, name: String) {
             Text.Body3Regular(stringResource(R.string.detail_contact_sender_name), color = PassTheme.colors.textWeak)
             Text.Body1Regular(name)
         }
-        Icon.Default(CoreR.drawable.ic_proton_pencil, tint = PassTheme.colors.textWeak)
+        IconButton(onClick = { onEvent(DetailAliasContactUIEvent.UpdateName) }) {
+            Icon.Default(CoreR.drawable.ic_proton_pencil, tint = PassTheme.colors.textWeak)
+        }
     }
 }
 
@@ -67,7 +75,7 @@ fun SenderNameSection(modifier: Modifier = Modifier, name: String) {
 fun SenderNameSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            SenderNameSection(name = "John Doe")
+            SenderNameSection(name = "John Doe", onEvent = {})
         }
     }
 }

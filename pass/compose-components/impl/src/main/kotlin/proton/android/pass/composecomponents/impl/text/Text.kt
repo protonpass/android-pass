@@ -22,6 +22,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionNorm
 import me.proton.core.compose.theme.defaultNorm
@@ -90,12 +91,14 @@ object Text {
     fun Body2Regular(
         text: String,
         modifier: Modifier = Modifier,
-        color: Color = ProtonTheme.colors.textNorm
+        color: Color = ProtonTheme.colors.textNorm,
+        textAlign: TextAlign = TextAlign.Start
     ) {
         Text(
             text = text,
             style = ProtonTheme.typography.defaultSmallNorm.copy(color = color),
-            modifier = modifier
+            modifier = modifier,
+            textAlign = textAlign
         )
     }
 

@@ -22,4 +22,5 @@ object SpecialCharacters {
 
     const val DOT_SEPARATOR = '•'
     const val AT_SIGN = '@'
+    const val QUESTION_MARK = '?'
 }

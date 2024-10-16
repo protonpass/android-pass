@@ -36,11 +36,11 @@ class FakeAliasRepository @Inject constructor() : AliasRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getAliasDetails(
+    override fun getAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): AliasDetails {
+    ): Flow<AliasDetails> {
         TODO("Not yet implemented")
     }
 
@@ -70,4 +70,12 @@ class FakeAliasRepository @Inject constructor() : AliasRepository {
         TODO("Not yet implemented")
     }
 
+    override suspend fun updateAliasName(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        name: String
+    ) {
+        TODO("Not yet implemented")
+    }
 }

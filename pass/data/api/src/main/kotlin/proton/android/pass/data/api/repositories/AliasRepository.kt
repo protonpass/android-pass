@@ -30,11 +30,11 @@ interface AliasRepository {
 
     fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptions>
 
-    suspend fun getAliasDetails(
+    fun getAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): AliasDetails
+    ): Flow<AliasDetails>
 
     fun updateAliasMailboxes(
         userId: UserId,

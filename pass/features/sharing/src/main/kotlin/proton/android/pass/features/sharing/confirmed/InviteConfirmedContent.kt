@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.headlineNorm
+import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.extension.toColor
@@ -87,7 +88,7 @@ fun InviteConfirmedContent(
             invite.memberCount
         )
         val subtitle = remember(invite.itemCount, invite.memberCount) {
-            "$itemCount • $memberCount"
+            "$itemCount ${SpecialCharacters.DOT_SEPARATOR} $memberCount"
         }
         Text(
             text = subtitle,

@@ -36,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -55,7 +56,7 @@ internal fun PasskeyEditRow(
 ) {
     val labelTitle = stringResource(id = CompR.string.passkey_field_label)
     val label = remember {
-        "$labelTitle • $domain"
+        "$labelTitle ${SpecialCharacters.DOT_SEPARATOR} $domain"
     }
 
     Row(

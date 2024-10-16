@@ -18,8 +18,20 @@
 
 package proton.android.pass.features.alias.contacts.detail.presentation
 
+import proton.android.pass.domain.aliascontacts.ContactId
+
 sealed interface DetailAliasContactUIEvent {
     data object Back : DetailAliasContactUIEvent
     data object CreateContact : DetailAliasContactUIEvent
     data object LearnMore : DetailAliasContactUIEvent
+    data object UpdateName : DetailAliasContactUIEvent
+
+    @JvmInline
+    value class SendEmail(val email: String) : DetailAliasContactUIEvent
+
+    @JvmInline
+    value class ContactOptions(val contactId: ContactId) : DetailAliasContactUIEvent
+    data object BlockContact : DetailAliasContactUIEvent
+    data object UnblockContact : DetailAliasContactUIEvent
+
 }

@@ -29,6 +29,9 @@ data class DetailAliasContactUIState(
     val forwardingContacts: ImmutableList<Contact>,
     val blockedContacts: ImmutableList<Contact>
 ) {
+
+    val hasContacts = forwardingContacts.isNotEmpty() || blockedContacts.isNotEmpty()
+
     companion object {
         val Empty = DetailAliasContactUIState(
             event = DetailAliasContactEvent.Idle,

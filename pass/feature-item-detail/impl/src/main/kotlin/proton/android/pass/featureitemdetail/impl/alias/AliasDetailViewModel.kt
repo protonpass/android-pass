@@ -222,6 +222,7 @@ class AliasDetailViewModel @Inject constructor(
                     },
                     vault = vault,
                     mailboxes = aliasDetails?.mailboxes?.toPersistentList() ?: persistentListOf(),
+                    slNote = aliasDetails?.slNote.orEmpty(),
                     stats = aliasDetails?.stats.toOption(),
                     contactsCount = aliasContactsResult.getOrNull()?.total ?: 0,
                     isLoading = isAliasDetailsLoading || isLoading.value(),

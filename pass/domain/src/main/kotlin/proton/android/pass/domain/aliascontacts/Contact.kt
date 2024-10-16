@@ -32,3 +32,9 @@ data class Contact(
     val forwardedEmails: Int?,
     val blockedEmails: Int?
 )
+
+data class AliasContacts(
+    val contacts: List<Contact>,
+    val total: Int,
+    val lastContactId: ContactId?
+)

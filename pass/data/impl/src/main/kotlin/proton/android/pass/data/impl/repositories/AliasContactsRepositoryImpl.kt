@@ -19,12 +19,14 @@
 package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.data.api.repositories.AliasContactsRepository
 import proton.android.pass.data.impl.remote.RemoteAliasContactsDataSource
 import proton.android.pass.data.impl.requests.aliascontacts.CreateAliasContactRequest
 import proton.android.pass.data.impl.requests.aliascontacts.UpdateBlockedAliasContactRequest
+import proton.android.pass.data.impl.responses.aliascontacts.ContactResponse
 import proton.android.pass.data.impl.responses.aliascontacts.toDomain
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -41,9 +43,20 @@ class AliasContactsRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
-        lastContactId: ContactId?
-    ): Flow<AliasContacts> = oneShot {
-        remoteDataSource.getAliasContacts(userId, shareId, itemId, lastContactId).toDomain()
+        fullList: Boolean
+    ): Flow<AliasContacts> = flow {
+        val allContacts = mutableListOf<Contact>()
+        var lastId: ContactId? = null
+        var total: Int
+
+        do {
+            val response = remoteDataSource.getAliasContacts(userId, shareId, itemId, lastId)
+            total = response.total
+            allContacts.addAll(response.contacts.map(ContactResponse::toDomain))
+            lastId = if (response.contacts.isNotEmpty()) ContactId(response.lastId) else null
+        } while (fullList && lastId != null)
+
+        emit(AliasContacts(allContacts, total))
     }
 
     override suspend fun observeAliasContact(

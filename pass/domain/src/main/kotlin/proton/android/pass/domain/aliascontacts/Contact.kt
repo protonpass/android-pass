@@ -35,6 +35,5 @@ data class Contact(
 
 data class AliasContacts(
     val contacts: List<Contact>,
-    val total: Int,
-    val lastContactId: ContactId?
+    val total: Int
 )

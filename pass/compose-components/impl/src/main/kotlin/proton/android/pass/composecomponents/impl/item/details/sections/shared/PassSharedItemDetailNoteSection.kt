@@ -33,14 +33,15 @@ internal fun PassSharedItemDetailNoteSection(
     modifier: Modifier = Modifier,
     note: String,
     itemColors: PassItemColors,
-    itemDiffs: ItemDiffs
+    itemDiffs: ItemDiffs,
+    title: String = stringResource(R.string.item_details_shared_section_note_title)
 ) {
     RoundedCornersColumn(
         modifier = modifier
     ) {
         PassItemDetailFieldRow(
             icon = CoreR.drawable.ic_proton_note,
-            title = stringResource(R.string.item_details_shared_section_note_title),
+            title = title,
             subtitle = note,
             itemColors = itemColors,
             itemDiffType = itemDiffs.note,

@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
@@ -49,7 +50,7 @@ internal fun PasskeyRow(
 ) {
     val titleLabel = stringResource(id = R.string.passkey_field_label)
     val title = remember {
-        "$titleLabel • $domain"
+        "$titleLabel ${SpecialCharacters.DOT_SEPARATOR} $domain"
     }
     RoundedCornersColumn(
         modifier = modifier,

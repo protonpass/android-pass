@@ -18,6 +18,7 @@
 
 package proton.android.pass.autofill
 
+import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.itemName
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.Item
@@ -72,6 +73,6 @@ internal object ItemDisplayBuilder {
         } else {
             null
         }
-        return listOfNotNull(formattedNumber, formattedDate).joinToString(" • ")
+        return listOfNotNull(formattedNumber, formattedDate).joinToString(" ${SpecialCharacters.DOT_SEPARATOR} ")
     }
 }

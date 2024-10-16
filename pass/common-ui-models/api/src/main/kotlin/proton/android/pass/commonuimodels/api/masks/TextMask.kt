@@ -19,6 +19,7 @@
 package proton.android.pass.commonuimodels.api.masks
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.common.api.SpecialCharacters
 
 private const val CREDIT_CARD_CHUNK_SIZE = 4
 
@@ -77,7 +78,7 @@ sealed interface TextMask {
 
         override val masked: String = input.length
             .div(2)
-            .let { half -> "${input.take(half)} • ${input.takeLast(half)}" }
+            .let { half -> "${input.take(half)} ${SpecialCharacters.DOT_SEPARATOR} ${input.takeLast(half)}" }
 
         override val unmasked: String = input
 

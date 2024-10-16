@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Instant
+import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
@@ -81,7 +82,7 @@ internal fun passkeyItem(item: Passkey, onClick: () -> Unit): BottomSheetItem = 
         }
     override val subtitle: (@Composable () -> Unit)
         get() = {
-            val text = "${item.domain} • ${item.id.value}"
+            val text = "${item.domain} ${SpecialCharacters.DOT_SEPARATOR} ${item.id.value}"
             BottomSheetItemSubtitle(
                 text = text,
                 color = PassTheme.colors.textWeak

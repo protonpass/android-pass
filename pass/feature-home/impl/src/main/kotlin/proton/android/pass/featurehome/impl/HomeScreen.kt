@@ -198,6 +198,7 @@ fun HomeScreen(
             OnBoardingTipsEvent.OpenTrialScreen -> HomeNavigation.TrialInfo
             OnBoardingTipsEvent.OpenInviteScreen -> HomeNavigation.OpenInvite
             OnBoardingTipsEvent.OpenSLSyncScreen -> HomeNavigation.SLSync
+            OnBoardingTipsEvent.OpenSLManagementScreen -> HomeNavigation.SLAliasManagement
             OnBoardingTipsEvent.RequestNotificationPermission,
             OnBoardingTipsEvent.Unknown -> return@LaunchedEffect
         }

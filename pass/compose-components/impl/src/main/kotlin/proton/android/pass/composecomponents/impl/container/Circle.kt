@@ -32,13 +32,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.applyIf
 
 @Composable
 fun Circle(
     modifier: Modifier = Modifier,
-    size: Int = 40,
+    size: Dp = 40.dp,
     backgroundColor: Color,
     showClickEffect: Boolean = true,
     onClick: (() -> Unit)? = null,
@@ -46,7 +47,7 @@ fun Circle(
 ) {
     Box(
         modifier = modifier
-            .size(size.dp)
+            .size(size)
             .clip(CircleShape)
             .applyIf(
                 condition = onClick != null,

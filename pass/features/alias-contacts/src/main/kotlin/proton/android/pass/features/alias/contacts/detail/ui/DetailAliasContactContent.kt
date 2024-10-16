@@ -94,14 +94,22 @@ fun DetailAliasContactContent(
                 Text.Hero(stringResource(R.string.detail_contact_title))
                 QuestionMarkRoundedIcon()
             }
-            SenderNameSection(name = state.senderName)
+            SenderNameSection(name = state.senderName, onEvent = onEvent)
             if (state.displayName.isNotBlank()) {
                 Text.Body3Regular(
                     text = stringResource(R.string.detail_contact_display_name, state.displayName),
                     color = PassTheme.colors.textWeak
                 )
             }
-            EmptyAliasContacts(onEvent = onEvent)
+            if (state.hasContacts) {
+                ContactList(
+                    blockedContacts = state.blockedContacts,
+                    forwardingContacts = state.forwardingContacts,
+                    onEvent = onEvent
+                )
+            } else {
+                EmptyContacts(onEvent = onEvent)
+            }
         }
     }
 }

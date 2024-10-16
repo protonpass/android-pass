@@ -39,7 +39,7 @@ import proton.android.pass.features.alias.contacts.detail.presentation.DetailAli
 import proton.android.pass.features.aliascontacts.R
 
 @Composable
-fun EmptyAliasContacts(modifier: Modifier = Modifier, onEvent: (DetailAliasContactUIEvent) -> Unit) {
+fun EmptyContacts(modifier: Modifier = Modifier, onEvent: (DetailAliasContactUIEvent) -> Unit) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -69,7 +69,7 @@ fun EmptyAliasContacts(modifier: Modifier = Modifier, onEvent: (DetailAliasConta
 fun EmptyAliasContactsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            EmptyAliasContacts(onEvent = {})
+            EmptyContacts(onEvent = {})
         }
     }
 }

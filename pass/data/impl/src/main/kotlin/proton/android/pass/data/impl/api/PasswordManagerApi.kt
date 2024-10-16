@@ -53,7 +53,6 @@ import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
 import proton.android.pass.data.impl.requests.UpdateMemberShareRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.requests.aliascontacts.CreateAliasContactRequest
-import proton.android.pass.data.impl.requests.aliascontacts.GetAliasContactsRequest
 import proton.android.pass.data.impl.requests.aliascontacts.UpdateBlockedAliasContactRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
@@ -246,7 +245,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun getAliasContacts(
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String,
-        @Body request: GetAliasContactsRequest
+        @Query("Since") since: Int?
     ): GetAliasContactsResponse
 
     @GET("$PREFIX/share/{shareId}/alias/{itemId}/contact/{contactId}")

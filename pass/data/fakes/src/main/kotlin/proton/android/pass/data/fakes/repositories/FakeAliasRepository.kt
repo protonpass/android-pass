@@ -30,16 +30,17 @@ import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 @Suppress("NotImplementedDeclaration")
-class TestAliasRepository @Inject constructor() : AliasRepository {
+class FakeAliasRepository @Inject constructor() : AliasRepository {
+
     override fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptions> {
         TODO("Not yet implemented")
     }
 
-    override fun getAliasDetails(
+    override suspend fun getAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<AliasDetails> {
+    ): AliasDetails {
         TODO("Not yet implemented")
     }
 
@@ -68,4 +69,5 @@ class TestAliasRepository @Inject constructor() : AliasRepository {
     ): AliasItemsChangeStatusResult {
         TODO("Not yet implemented")
     }
+
 }

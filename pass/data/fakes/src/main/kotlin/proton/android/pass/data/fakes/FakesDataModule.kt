@@ -188,7 +188,7 @@ import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareI
 import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
 import proton.android.pass.data.fakes.repositories.FakeSentinelRepository
-import proton.android.pass.data.fakes.repositories.TestAliasRepository
+import proton.android.pass.data.fakes.repositories.FakeAliasRepository
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
@@ -364,7 +364,7 @@ abstract class FakesDataModule {
     abstract fun bindItemRepository(impl: TestItemRepository): ItemRepository
 
     @Binds
-    abstract fun bindAliasRepository(impl: TestAliasRepository): AliasRepository
+    abstract fun bindAliasRepository(impl: FakeAliasRepository): AliasRepository
 
     @Binds
     abstract fun bindDraftRepository(impl: TestDraftRepository): DraftRepository

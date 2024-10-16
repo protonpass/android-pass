@@ -32,7 +32,7 @@ interface AliasContactsRepository {
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
-        lastContactId: ContactId?
+        fullList: Boolean
     ): Flow<AliasContacts>
 
     suspend fun observeAliasContact(

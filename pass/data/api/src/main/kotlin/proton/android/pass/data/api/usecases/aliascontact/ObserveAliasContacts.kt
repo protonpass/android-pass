@@ -22,12 +22,11 @@ import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.aliascontacts.AliasContacts
-import proton.android.pass.domain.aliascontacts.ContactId
 
 interface ObserveAliasContacts {
     operator fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-        lastContactId: ContactId? = null
+        fullList: Boolean = false
     ): Flow<AliasContacts>
 }

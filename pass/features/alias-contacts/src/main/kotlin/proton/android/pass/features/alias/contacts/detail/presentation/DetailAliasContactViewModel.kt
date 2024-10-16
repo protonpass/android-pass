@@ -23,11 +23,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.ObserveAliasDetails
+import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -35,6 +38,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailAliasContactViewModel @Inject constructor(
+    observeAliasDetails: ObserveAliasDetails,
+    observeAliasContacts: ObserveAliasContacts,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -49,8 +54,13 @@ class DetailAliasContactViewModel @Inject constructor(
     private val detailAliasContactEventFlow: MutableStateFlow<DetailAliasContactEvent> =
         MutableStateFlow(DetailAliasContactEvent.Idle)
 
-    val state = detailAliasContactEventFlow
-        .map { DetailAliasContactUIState(it) }
+    val state = combine(
+        detailAliasContactEventFlow,
+        observeAliasDetails(shareId, itemId).asLoadingResult(),
+        observeAliasContacts(shareId, itemId, fullList = true).asLoadingResult()
+    ) { event, aliasDetailsResult, aliasContactsResult ->
+        DetailAliasContactUIState(event)
+    }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),

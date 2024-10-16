@@ -37,6 +37,8 @@ data class AliasResponse(
     val availableMailboxes: List<AliasMailboxResponse>,
     @SerialName("Stats")
     val stats: AliasStatsResponse,
+    @SerialName("Name")
+    val name: String?,
     @SerialName("DisplayName")
     val displayName: String,
     @SerialName("Note")

@@ -19,11 +19,15 @@
 package proton.android.pass.featurehome.impl.onboardingtips
 
 sealed interface OnBoardingTipPage {
+
     data object Autofill : OnBoardingTipPage
+
     data object Trial : OnBoardingTipPage
+
     data object Invite : OnBoardingTipPage
+
     data object NotificationPermission : OnBoardingTipPage
 
-    @JvmInline
-    value class SLSync(val aliasCount: Int) : OnBoardingTipPage
+    data class SLSync(val aliasCount: Int, val isAdvancedManagementEnabled: Boolean) : OnBoardingTipPage
+
 }

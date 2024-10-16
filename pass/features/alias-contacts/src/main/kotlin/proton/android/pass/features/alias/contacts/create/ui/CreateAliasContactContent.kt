@@ -26,22 +26,26 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultSmallInverted
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.topbar.IconTopAppBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.CrossBackCircleIconButton
 import proton.android.pass.features.alias.contacts.create.presentation.CreateAliasContactUIEvent
+import proton.android.pass.features.alias.contacts.create.presentation.CreateAliasContactUIState
 import proton.android.pass.features.aliascontacts.R
 
 @Composable
-fun CreateAliasContactContent(modifier: Modifier, onEvent: (CreateAliasContactUIEvent) -> Unit) {
+fun CreateAliasContactContent(
+    modifier: Modifier,
+    email: String,
+    state: CreateAliasContactUIState,
+    onEvent: (CreateAliasContactUIEvent) -> Unit
+) {
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -49,11 +53,10 @@ fun CreateAliasContactContent(modifier: Modifier, onEvent: (CreateAliasContactUI
                 actions = {
                     LoadingCircleButton(
                         color = PassTheme.colors.aliasInteractionNormMajor1,
-                        isLoading = false,
+                        isLoading = state.isLoading,
                         text = {
-                            Text(
+                            Text.Body2Regular(
                                 text = stringResource(R.string.save_contact_alias),
-                                style = ProtonTheme.typography.defaultSmallInverted,
                                 color = PassTheme.colors.textInvert
                             )
                         },
@@ -83,7 +86,13 @@ fun CreateAliasContactContent(modifier: Modifier, onEvent: (CreateAliasContactUI
                 .padding(Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
         ) {
-
+            Text.Hero(stringResource(R.string.create_contact_title))
+            EmailInput(
+                value = email,
+                enabled = !state.isLoading,
+                isError = state.isEmailInvalid,
+                onChange = { onEvent(CreateAliasContactUIEvent.EmailChanged(it)) }
+            )
         }
     }
 }

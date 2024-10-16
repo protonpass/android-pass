@@ -18,6 +18,24 @@
 
 package proton.android.pass.features.alias.contacts.create.presentation
 
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.features.alias.contacts.create.presentation.CreateAliasContactFormValidationErrors.EmailInvalid
+
 data class CreateAliasContactUIState(
-    val event: CreateAliasContactEvent
-)
+    private val validationErrors: List<CreateAliasContactFormValidationErrors>,
+    val event: CreateAliasContactEvent,
+    private val isLoadingState: IsLoadingState
+) {
+    val isLoading: Boolean
+        get() = isLoadingState == IsLoadingState.Loading
+    val isEmailInvalid: Boolean
+        get() = validationErrors.contains(EmailInvalid)
+
+    companion object {
+        val INITIAL = CreateAliasContactUIState(
+            validationErrors = emptyList(),
+            event = CreateAliasContactEvent.Idle,
+            isLoadingState = IsLoadingState.NotLoading
+        )
+    }
+}

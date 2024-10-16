@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
+import proton.android.pass.data.impl.requests.alias.UpdateAliasNameRequest
 import proton.android.pass.data.impl.responses.AliasOptionsResponse
 import proton.android.pass.data.impl.responses.AliasResponse
 import proton.android.pass.domain.ItemId
@@ -31,11 +32,11 @@ interface RemoteAliasDataSource {
 
     fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptionsResponse>
 
-    suspend fun getAliasDetails(
+    fun getAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): AliasResponse
+    ): Flow<AliasResponse>
 
     fun updateAliasMailboxes(
         userId: UserId,
@@ -51,4 +52,10 @@ interface RemoteAliasDataSource {
         request: ChangeAliasStatusRequest
     )
 
+    suspend fun updateAliasName(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        request: UpdateAliasNameRequest
+    )
 }

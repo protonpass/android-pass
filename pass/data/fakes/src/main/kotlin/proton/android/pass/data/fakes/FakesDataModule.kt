@@ -114,6 +114,7 @@ import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
+import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
@@ -291,6 +292,7 @@ import proton.android.pass.data.fakes.usecases.accesskey.FakeCheckLocalExtraPass
 import proton.android.pass.data.fakes.usecases.accesskey.FakeHasExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeRemoveExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeSetupExtraPassword
+import proton.android.pass.data.fakes.usecases.aliascontact.FakeObserveAliasContacts
 import proton.android.pass.data.fakes.usecases.breach.FakeAddBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeMarkEmailBreachAsResolved
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveAllBreachByUserId
@@ -851,5 +853,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindGetItemOptions(impl: FakeGetItemOptions): GetItemOptions
+
+    @Binds
+    abstract fun bindObserveAliasContacts(impl: FakeObserveAliasContacts): ObserveAliasContacts
 
 }

@@ -33,5 +33,7 @@ enum class AliasContactsSnackbarMessage(
     ContactBlockSuccess(R.string.snackbar_contact_block_success, SnackbarType.SUCCESS),
     ContactBlockError(R.string.snackbar_contact_block_error, SnackbarType.ERROR),
     ContactUnblockSuccess(R.string.snackbar_contact_unblock_success, SnackbarType.SUCCESS),
-    ContactUnblockError(R.string.snackbar_contact_unblock_error, SnackbarType.ERROR)
+    ContactUnblockError(R.string.snackbar_contact_unblock_error, SnackbarType.ERROR),
+    SenderNameUpdateSuccess(R.string.snackbar_sender_name_success, SnackbarType.SUCCESS),
+    SenderNameUpdateError(R.string.snackbar_sender_name_error, SnackbarType.ERROR)
 }

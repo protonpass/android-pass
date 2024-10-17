@@ -19,8 +19,10 @@
 package proton.android.pass.composecomponents.impl.buttons
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -46,14 +48,15 @@ import proton.android.pass.commonui.api.applyIf
 @Composable
 fun LoadingCircleButton(
     modifier: Modifier = Modifier,
-    text: @Composable RowScope.() -> Unit,
-    leadingIcon: (@Composable () -> Unit)? = null,
+    text: @Composable (RowScope.() -> Unit),
+    leadingIcon: @Composable (() -> Unit)? = null,
     color: Color,
     isLoading: Boolean,
     buttonEnabled: Boolean = true,
     showClickEffect: Boolean = true,
     buttonHeight: Dp = 20.dp,
     loadingColor: Color = ProtonTheme.colors.iconInverted,
+    border: BorderStroke? = null,
     onClick: () -> Unit
 ) {
     Row(
@@ -75,7 +78,8 @@ fun LoadingCircleButton(
                     )
                 }
             )
-            .background(color),
+            .background(color)
+            .border(border = border ?: BorderStroke(0.dp, Color.Transparent), CircleShape),
         horizontalArrangement = Arrangement.Center
     ) {
         AnimatedContent(

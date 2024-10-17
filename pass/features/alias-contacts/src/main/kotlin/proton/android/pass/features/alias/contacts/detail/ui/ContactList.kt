@@ -25,10 +25,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.PersistentSet
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.aliascontacts.Contact
+import proton.android.pass.domain.aliascontacts.ContactId
 import proton.android.pass.features.alias.contacts.detail.presentation.DetailAliasContactUIEvent
 import proton.android.pass.features.aliascontacts.R
 
@@ -37,6 +39,7 @@ fun ContactList(
     modifier: Modifier = Modifier,
     blockedContacts: ImmutableList<Contact>,
     forwardingContacts: ImmutableList<Contact>,
+    contactBlockIsLoading: PersistentSet<ContactId>,
     onEvent: (DetailAliasContactUIEvent) -> Unit
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)) {
@@ -45,6 +48,7 @@ fun ContactList(
             forwardingContacts.forEach { contact ->
                 ContactRow(
                     contact = contact,
+                    isBlockLoading = contactBlockIsLoading.contains(contact.id),
                     onEvent = onEvent
                 )
             }
@@ -59,6 +63,7 @@ fun ContactList(
             blockedContacts.forEach { contact ->
                 ContactRow(
                     contact = contact,
+                    isBlockLoading = contactBlockIsLoading.contains(contact.id),
                     onEvent = onEvent
                 )
             }

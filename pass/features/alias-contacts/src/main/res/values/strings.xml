@@ -31,7 +31,7 @@
     <string name="empty_alias_contacts_learn_more">Learn more</string>
     <string name="unblock_button">Unblock contact</string>
     <string name="block_button">Block contact</string>
-    <string name="contact_created_date" comment="date of creation">Created %1$s</string>
+    <string name="contact_created_date" comment="date of creation">Created %1$s ago</string>
     <string name="no_activity_contact">No Activity in the last 14 days.</string>
     <string name="activity_summary" comment="amount of items of each category">%1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.</string>
     <string name="blocked_addresses_subtitle">Blocked addresses</string>
@@ -40,29 +40,4 @@
     <string name="snackbar_contact_block_error">Could not block contact</string>
     <string name="snackbar_contact_unblock_success">Contact unblocked</string>
     <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
-
-    <plurals name="minutes_ago">
-        <item quantity="one">%1$s minute ago</item>
-        <item quantity="other">%1$s minutes ago</item>
-    </plurals>
-    <plurals name="hours_ago">
-        <item quantity="one">%1$s hour ago</item>
-        <item quantity="other">%1$s hours ago</item>
-    </plurals>
-    <plurals name="days_ago">
-        <item quantity="one">%1$s day ago</item>
-        <item quantity="other">%1$s days ago</item>
-    </plurals>
-    <plurals name="weeks_ago">
-        <item quantity="one">%1$s week ago</item>
-        <item quantity="other">%1$s weeks ago</item>
-    </plurals>
-    <plurals name="months_ago">
-        <item quantity="one">%1$s month ago</item>
-        <item quantity="other">%1$s months ago</item>
-    </plurals>
-    <plurals name="years_ago">
-        <item quantity="one">%1$s year ago</item>
-        <item quantity="other">%1$s years ago</item>
-    </plurals>
 </resources>

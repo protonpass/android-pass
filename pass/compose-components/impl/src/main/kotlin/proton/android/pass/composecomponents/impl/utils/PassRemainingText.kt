@@ -25,6 +25,30 @@ import proton.android.pass.domain.time.RemainingTime
 
 @Composable
 fun passRemainingTimeText(remainingTime: RemainingTime): String? = when {
+    remainingTime.years > 0 -> {
+        pluralStringResource(
+            id = R.plurals.time_unit_years,
+            count = remainingTime.years,
+            remainingTime.years
+        )
+    }
+
+    remainingTime.months > 0 -> {
+        pluralStringResource(
+            id = R.plurals.time_unit_months,
+            count = remainingTime.months,
+            remainingTime.months
+        )
+    }
+
+    remainingTime.weeks > 0 -> {
+        pluralStringResource(
+            id = R.plurals.time_unit_weeks,
+            count = remainingTime.weeks,
+            remainingTime.weeks
+        )
+    }
+
     remainingTime.days > 0 -> {
         pluralStringResource(
             id = R.plurals.time_unit_days,

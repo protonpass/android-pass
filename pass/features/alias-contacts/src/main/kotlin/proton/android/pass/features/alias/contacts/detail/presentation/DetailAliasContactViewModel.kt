@@ -46,13 +46,19 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.aliascontacts.Contact
 import proton.android.pass.domain.aliascontacts.ContactId
+import proton.android.pass.features.alias.contacts.AliasContactsSnackbarMessage.ContactBlockError
+import proton.android.pass.features.alias.contacts.AliasContactsSnackbarMessage.ContactBlockSuccess
+import proton.android.pass.features.alias.contacts.AliasContactsSnackbarMessage.ContactUnblockError
+import proton.android.pass.features.alias.contacts.AliasContactsSnackbarMessage.ContactUnblockSuccess
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailAliasContactViewModel @Inject constructor(
     private val updateBlockedAliasContact: UpdateBlockedAliasContact,
+    private val snackbarDispatcher: SnackbarDispatcher,
     observeAliasDetails: ObserveAliasDetails,
     observeAliasContacts: ObserveAliasContacts,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -115,9 +121,11 @@ class DetailAliasContactViewModel @Inject constructor(
                 updateBlockedAliasContact(shareId, itemId, contactId, blocked = true)
             }.onSuccess {
                 PassLogger.i(TAG, "Contact blocked")
+                snackbarDispatcher(ContactBlockSuccess)
             }.onError {
                 PassLogger.w(TAG, "Error blocking contact")
                 PassLogger.w(TAG, it)
+                snackbarDispatcher(ContactBlockError)
             }
         }
     }
@@ -128,9 +136,11 @@ class DetailAliasContactViewModel @Inject constructor(
                 updateBlockedAliasContact(shareId, itemId, contactId, blocked = false)
             }.onSuccess {
                 PassLogger.i(TAG, "Contact unblocked")
+                snackbarDispatcher(ContactUnblockSuccess)
             }.onError {
                 PassLogger.w(TAG, "Error unblocking contact")
                 PassLogger.w(TAG, it)
+                snackbarDispatcher(ContactUnblockError)
             }
         }
     }

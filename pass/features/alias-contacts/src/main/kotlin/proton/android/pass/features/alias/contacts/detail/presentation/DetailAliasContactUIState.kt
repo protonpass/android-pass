@@ -26,19 +26,31 @@ data class DetailAliasContactUIState(
     val event: DetailAliasContactEvent,
     val senderName: String,
     val displayName: String,
-    val forwardingContacts: ImmutableList<Contact>,
-    val blockedContacts: ImmutableList<Contact>
+    val aliasContactsListUIState: AliasContactsListUIState
 ) {
-
-    val hasContacts = forwardingContacts.isNotEmpty() || blockedContacts.isNotEmpty()
 
     companion object {
         val Empty = DetailAliasContactUIState(
             event = DetailAliasContactEvent.Idle,
             senderName = "",
             displayName = "",
+            aliasContactsListUIState = AliasContactsListUIState.Empty
+        )
+    }
+}
+
+data class AliasContactsListUIState(
+    val forwardingContacts: ImmutableList<Contact>,
+    val blockedContacts: ImmutableList<Contact>,
+    val isLoading: Boolean
+) {
+    val hasContacts = forwardingContacts.isNotEmpty() || blockedContacts.isNotEmpty()
+
+    companion object {
+        val Empty = AliasContactsListUIState(
             forwardingContacts = persistentListOf(),
-            blockedContacts = persistentListOf()
+            blockedContacts = persistentListOf(),
+            isLoading = false
         )
     }
 }

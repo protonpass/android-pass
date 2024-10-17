@@ -75,7 +75,8 @@ fun CounterRow(
             .applyIf(
                 condition = accentBackgroundColor != null,
                 ifTrue = { background(color = accentBackgroundColor!!) }
-            )
+            ),
+        verticalArrangement = Arrangement.Center
     ) {
         Row(
             modifier = Modifier

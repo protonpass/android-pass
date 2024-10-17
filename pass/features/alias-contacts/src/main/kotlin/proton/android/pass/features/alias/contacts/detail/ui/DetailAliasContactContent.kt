@@ -45,6 +45,7 @@ import proton.android.pass.features.aliascontacts.R
 @Composable
 fun DetailAliasContactContent(
     modifier: Modifier = Modifier,
+    senderName: String,
     state: DetailAliasContactUIState,
     onEvent: (DetailAliasContactUIEvent) -> Unit
 ) {
@@ -95,7 +96,7 @@ fun DetailAliasContactContent(
                 Text.Hero(stringResource(R.string.detail_contact_title))
                 QuestionMarkRoundedIcon(onEvent = onEvent)
             }
-            SenderNameSection(name = state.senderName, onEvent = onEvent)
+            SenderNameSection(name = senderName, state = state.senderNameUIState, onEvent = onEvent)
             if (state.displayName.isNotBlank()) {
                 Text.Body3Regular(
                     text = stringResource(R.string.detail_contact_display_name, state.displayName),

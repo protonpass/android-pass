@@ -50,6 +50,7 @@ fun DetailAliasContactScreen(
     DetailAliasContactContent(
         modifier = modifier,
         state = state,
+        senderName = viewModel.senderName,
         onEvent = {
             when (it) {
                 DetailAliasContactUIEvent.Back -> onNavigate(AliasContactsNavigation.Back)
@@ -60,7 +61,9 @@ fun DetailAliasContactScreen(
                 is DetailAliasContactUIEvent.UnblockContact -> viewModel.onUnblockContact(it.contactId)
                 is DetailAliasContactUIEvent.ContactOptions -> {}
                 is DetailAliasContactUIEvent.SendEmail -> {}
-                DetailAliasContactUIEvent.UpdateName -> {}
+                DetailAliasContactUIEvent.EditSenderName -> viewModel.onEnterSenderNameEditMode()
+                is DetailAliasContactUIEvent.OnSenderNameChanged -> viewModel.onSenderNameChanged(it.name)
+                DetailAliasContactUIEvent.UpdateSenderName -> viewModel.onSenderNameUpdate()
             }
         }
     )

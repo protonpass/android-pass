@@ -24,5 +24,5 @@ import proton.android.pass.domain.ShareId
 sealed interface AliasContactsNavigation {
     data object Back : AliasContactsNavigation
     data class CreateContact(val shareId: ShareId, val itemId: ItemId) : AliasContactsNavigation
-    data class OnBoardingContacts(val shareId: ShareId, val itemId: ItemId) : AliasContactsNavigation
+    data object OnBoardingContacts : AliasContactsNavigation
 }

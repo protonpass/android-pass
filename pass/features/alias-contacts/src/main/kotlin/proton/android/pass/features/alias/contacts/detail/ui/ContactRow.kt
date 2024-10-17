@@ -67,8 +67,13 @@ fun ContactRow(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text.Body1Regular(modifier = Modifier.weight(1f), text = contact.email)
-            IconButton(onClick = { onEvent(DetailAliasContactUIEvent.SendEmail(contact.reverseAlias)) }) {
-                Icon.Default(CoreR.drawable.ic_proton_paper_plane, tint = PassTheme.colors.textWeak)
+            if (!contact.blocked) {
+                IconButton(onClick = { onEvent(DetailAliasContactUIEvent.SendEmail(contact.reverseAlias)) }) {
+                    Icon.Default(
+                        id = CoreR.drawable.ic_proton_paper_plane,
+                        tint = PassTheme.colors.textWeak
+                    )
+                }
             }
             IconButton(onClick = { onEvent(DetailAliasContactUIEvent.ContactOptions(contact.id)) }) {
                 Icon.Default(

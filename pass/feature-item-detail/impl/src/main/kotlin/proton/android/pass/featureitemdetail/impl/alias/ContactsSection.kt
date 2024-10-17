@@ -57,7 +57,7 @@ fun ContactsSection(
                 CounterText(
                     text = counter.toString(),
                     backgroundColor = PassTheme.colors.backgroundMedium,
-                    textColor = PassTheme.colors.textNorm
+                    textColor = PassTheme.colors.textWeak
                 )
             }
         } else null

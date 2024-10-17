@@ -45,7 +45,6 @@ import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetAddressById
 import proton.android.pass.data.api.usecases.GetAddressesForUserId
-import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.data.api.usecases.GetDefaultBrowser
 import proton.android.pass.data.api.usecases.GetInviteUserMode
@@ -68,6 +67,7 @@ import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveAccounts
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAddressesByUserId
+import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
@@ -110,6 +110,7 @@ import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.UnpinItems
 import proton.android.pass.data.api.usecases.UpdateAlias
+import proton.android.pass.data.api.usecases.UpdateAliasName
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
@@ -223,7 +224,6 @@ import proton.android.pass.data.impl.usecases.DeleteItemsImpl
 import proton.android.pass.data.impl.usecases.DeleteVaultImpl
 import proton.android.pass.data.impl.usecases.GetAddressByIdImpl
 import proton.android.pass.data.impl.usecases.GetAddressesForUserIdImpl
-import proton.android.pass.data.impl.usecases.ObserveAliasDetailsImpl
 import proton.android.pass.data.impl.usecases.GetAllKeysByAddressImpl
 import proton.android.pass.data.impl.usecases.GetDefaultBrowserImpl
 import proton.android.pass.data.impl.usecases.GetInviteUserModeImpl
@@ -246,6 +246,7 @@ import proton.android.pass.data.impl.usecases.MigrateVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveAccountsImpl
 import proton.android.pass.data.impl.usecases.ObserveActiveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveAddressesByUserIdImpl
+import proton.android.pass.data.impl.usecases.ObserveAliasDetailsImpl
 import proton.android.pass.data.impl.usecases.ObserveAliasOptionsImpl
 import proton.android.pass.data.impl.usecases.ObserveAllSharesImpl
 import proton.android.pass.data.impl.usecases.ObserveAppNeedsUpdateImpl
@@ -291,6 +292,7 @@ import proton.android.pass.data.impl.usecases.TrashItemImpl
 import proton.android.pass.data.impl.usecases.UnpinItemImpl
 import proton.android.pass.data.impl.usecases.UnpinItemsImpl
 import proton.android.pass.data.impl.usecases.UpdateAliasImpl
+import proton.android.pass.data.impl.usecases.UpdateAliasNameImpl
 import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
 import proton.android.pass.data.impl.usecases.UpdateVaultImpl
@@ -962,5 +964,7 @@ abstract class DataUseCaseModule {
     abstract fun bindDeleteSimpleLoginAliasMailbox(
         impl: DeleteSimpleLoginAliasMailboxImpl
     ): DeleteSimpleLoginAliasMailbox
+    @[Binds Singleton]
+    abstract fun bindUpdateAliasName(impl: UpdateAliasNameImpl): UpdateAliasName
 
 }

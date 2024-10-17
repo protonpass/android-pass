@@ -25,7 +25,12 @@ sealed interface DetailAliasContactUIEvent {
     data object CreateContact : DetailAliasContactUIEvent
     data object Help : DetailAliasContactUIEvent
     data object LearnMore : DetailAliasContactUIEvent
-    data object UpdateName : DetailAliasContactUIEvent
+
+    data object UpdateSenderName : DetailAliasContactUIEvent
+    data object EditSenderName : DetailAliasContactUIEvent
+
+    @JvmInline
+    value class OnSenderNameChanged(val name: String) : DetailAliasContactUIEvent
 
     @JvmInline
     value class SendEmail(val email: String) : DetailAliasContactUIEvent

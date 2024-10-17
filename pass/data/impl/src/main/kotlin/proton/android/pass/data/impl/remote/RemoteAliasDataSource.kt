@@ -32,11 +32,11 @@ interface RemoteAliasDataSource {
 
     fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptionsResponse>
 
-    fun getAliasDetails(
+    suspend fun fetchAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<AliasResponse>
+    ): AliasResponse
 
     fun updateAliasMailboxes(
         userId: UserId,

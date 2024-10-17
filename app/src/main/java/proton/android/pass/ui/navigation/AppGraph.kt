@@ -2075,8 +2075,7 @@ fun NavGraphBuilder.appGraph(
             )
 
             is AliasContactsNavigation.OnBoardingContacts -> appNavigator.navigate(
-                destination = OnBoardingAliasContactNavItem,
-                route = OnBoardingAliasContactNavItem.createNavRoute(it.shareId, it.itemId)
+                destination = OnBoardingAliasContactNavItem
             )
         }
     }

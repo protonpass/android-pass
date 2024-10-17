@@ -29,5 +29,9 @@ enum class AliasContactsSnackbarMessage(
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
     ContactCreateSuccess(R.string.snackbar_contact_create_success, SnackbarType.SUCCESS),
-    ContactCreateError(R.string.snackbar_contact_create_error, SnackbarType.ERROR)
+    ContactCreateError(R.string.snackbar_contact_create_error, SnackbarType.ERROR),
+    ContactBlockSuccess(R.string.snackbar_contact_block_success, SnackbarType.SUCCESS),
+    ContactBlockError(R.string.snackbar_contact_block_error, SnackbarType.ERROR),
+    ContactUnblockSuccess(R.string.snackbar_contact_unblock_success, SnackbarType.SUCCESS),
+    ContactUnblockError(R.string.snackbar_contact_unblock_error, SnackbarType.ERROR)
 }

@@ -33,5 +33,5 @@ class ObserveAliasDetailsImpl @Inject constructor(
     private val aliasRepository: AliasRepository
 ) : ObserveAliasDetails {
     override fun invoke(shareId: ShareId, itemId: ItemId): Flow<AliasDetails> = observeCurrentUser()
-        .flatMapLatest { aliasRepository.getAliasDetails(it.userId, shareId, itemId) }
+        .flatMapLatest { aliasRepository.observeAliasDetails(it.userId, shareId, itemId) }
 }

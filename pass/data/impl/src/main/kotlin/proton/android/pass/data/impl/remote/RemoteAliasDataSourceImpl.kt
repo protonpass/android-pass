@@ -44,7 +44,7 @@ class RemoteAliasDataSourceImpl @Inject constructor(
         emit(res)
     }
 
-    override suspend fun getAliasDetails(
+    override suspend fun fetchAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId

@@ -30,7 +30,7 @@ interface AliasRepository {
 
     fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptions>
 
-    fun getAliasDetails(
+    fun observeAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId

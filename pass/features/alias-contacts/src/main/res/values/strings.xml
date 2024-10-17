@@ -36,6 +36,10 @@
     <string name="activity_summary" comment="amount of items of each category">%1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.</string>
     <string name="blocked_addresses_subtitle">Blocked addresses</string>
     <string name="forwarding_addresses_subtitle">Forwarding addresses</string>
+    <string name="snackbar_contact_block_success">Contact blocked</string>
+    <string name="snackbar_contact_block_error">Could not block contact</string>
+    <string name="snackbar_contact_unblock_success">Contact unblocked</string>
+    <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
 
     <plurals name="minutes_ago">
         <item quantity="one">%1$s minute ago</item>

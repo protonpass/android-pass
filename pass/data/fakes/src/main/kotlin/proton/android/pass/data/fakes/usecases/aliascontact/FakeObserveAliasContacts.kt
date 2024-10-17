@@ -30,6 +30,9 @@ import javax.inject.Singleton
 @Singleton
 class FakeObserveAliasContacts @Inject constructor() : ObserveAliasContacts {
 
-    override fun invoke(shareId: ShareId, itemId: ItemId, fullList: Boolean): Flow<AliasContacts> =
-        flowOf(AliasContacts(emptyList(), 0))
+    override fun invoke(
+        shareId: ShareId,
+        itemId: ItemId,
+        fullList: Boolean
+    ): Flow<AliasContacts> = flowOf(AliasContacts(emptyList(), 0))
 }

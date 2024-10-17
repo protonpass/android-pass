@@ -113,7 +113,7 @@ class CreateAliasContactViewModel @Inject constructor(
 
     fun onEmailChanged(email: String) {
         formValidationErrorsFlow.update { it - EmailInvalid }
-        this.email = email
+        this.email = email.replace(" ", "").replace("\n", "")
     }
 
     companion object {

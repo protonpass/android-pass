@@ -18,26 +18,30 @@
 
 package proton.android.pass.features.alias.contacts.detail.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Clock.System
 import kotlinx.datetime.Instant
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.Button
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.icon.Icon
@@ -81,30 +85,15 @@ fun ContactRow(
                 stringResource(R.string.contact_created_date, formattedDate),
                 color = PassTheme.colors.textWeak
             )
-            val text = if (
-                contact.blockedEmails ?: 0 > 0 ||
-                contact.repliedEmails ?: 0 > 0 ||
-                contact.forwardedEmails ?: 0 > 0
-            ) {
-                stringResource(
-                    R.string.activity_summary,
-                    contact.forwardedEmails ?: 0,
-                    contact.repliedEmails ?: 0,
-                    contact.blockedEmails ?: 0
-                )
-            } else {
-                stringResource(R.string.no_activity_contact)
-            }
+            val text = getActivitySummary(contact)
             Text.Body3Regular(text, color = PassTheme.colors.textWeak)
         }
 
-        val (text, bgColor) = if (contact.blocked) {
-            stringResource(R.string.unblock_button) to Color.Transparent
-        } else {
-            stringResource(R.string.block_button) to PassTheme.colors.aliasInteractionNormMinor1
-        }
+        val (text, bgColor, border) = getButtonAttributes(contact.blocked)
         Button.Circular(
             color = bgColor,
+            borderStroke = border,
+            elevation = ButtonDefaults.elevation(0.dp),
             onClick = {
                 if (contact.blocked) {
                     onEvent(DetailAliasContactUIEvent.UnblockContact)
@@ -119,6 +108,42 @@ fun ContactRow(
             )
         }
     }
+}
+
+@Composable
+private fun getActivitySummary(contact: Contact): String = if (
+    contact.blockedEmails ?: 0 > 0 ||
+    contact.repliedEmails ?: 0 > 0 ||
+    contact.forwardedEmails ?: 0 > 0
+) {
+    stringResource(
+        R.string.activity_summary,
+        contact.forwardedEmails ?: 0,
+        contact.repliedEmails ?: 0,
+        contact.blockedEmails ?: 0
+    )
+} else {
+    stringResource(R.string.no_activity_contact)
+}
+
+@Composable
+private fun getButtonAttributes(isBlocked: Boolean): Triple<String, Color, BorderStroke?> {
+    val text = if (isBlocked) {
+        stringResource(R.string.unblock_button)
+    } else {
+        stringResource(R.string.block_button)
+    }
+    val bgColor = if (isBlocked) {
+        Color.Transparent
+    } else {
+        PassTheme.colors.aliasInteractionNormMinor1
+    }
+    val border = if (isBlocked) {
+        BorderStroke(1.dp, SolidColor(PassTheme.colors.aliasInteractionNormMinor1))
+    } else {
+        null
+    }
+    return Triple(text, bgColor, border)
 }
 
 private const val MINUTES_IN_HOUR = 60
@@ -159,14 +184,14 @@ fun getTimeAgo(timestamp: Instant): String {
 
 @Preview
 @Composable
-fun ContactRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
+fun ContactRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+    PassTheme(isDark = input.first) {
         Surface {
             ContactRow(
                 contact = Contact(
                     id = ContactId(id = 0),
                     name = null,
-                    blocked = false,
+                    blocked = input.second,
                     reverseAlias = "",
                     email = "contact@email",
                     createTime = 0,

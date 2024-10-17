@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -79,8 +80,11 @@ class DetailAliasContactViewModel @Inject constructor(
             event = event,
             senderName = aliasDetails?.name.orEmpty(),
             displayName = aliasDetails?.displayName.orEmpty(),
-            forwardingContacts = forwardingContacts.toPersistentList(),
-            blockedContacts = blockedContacts.toPersistentList()
+            aliasContactsListUIState = AliasContactsListUIState(
+                forwardingContacts = forwardingContacts.toPersistentList(),
+                blockedContacts = blockedContacts.toPersistentList(),
+                isLoading = aliasContactsResult is LoadingResult.Loading
+            )
         )
     }
         .stateIn(

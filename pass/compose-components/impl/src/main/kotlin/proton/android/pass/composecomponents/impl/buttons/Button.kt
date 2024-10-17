@@ -18,6 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.buttons
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.shape.CircleShape
@@ -33,6 +34,7 @@ object Button {
     fun Circular(
         modifier: Modifier = Modifier,
         color: Color,
+        borderStroke: BorderStroke? = null,
         contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
         elevation: ButtonElevation = ButtonDefaults.elevation(),
         enabled: Boolean = true,
@@ -45,6 +47,7 @@ object Button {
             enabled = enabled,
             colors = ButtonDefaults.buttonColors(backgroundColor = color),
             shape = CircleShape,
+            border = borderStroke,
             elevation = elevation,
             onClick = onClick
         ) {

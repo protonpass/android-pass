@@ -20,6 +20,7 @@ package proton.android.pass.features.alias.contacts.detail.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -38,7 +39,7 @@ fun ContactList(
     forwardingContacts: ImmutableList<Contact>,
     onEvent: (DetailAliasContactUIEvent) -> Unit
 ) {
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)) {
         if (forwardingContacts.isNotEmpty()) {
             Text.Body2Regular(stringResource(R.string.forwarding_addresses_subtitle))
             forwardingContacts.forEach { contact ->
@@ -51,7 +52,8 @@ fun ContactList(
 
         if (blockedContacts.isNotEmpty()) {
             Text.Body3Regular(
-                stringResource(R.string.blocked_addresses_subtitle),
+                modifier = Modifier.padding(horizontal = Spacing.small),
+                text = stringResource(R.string.blocked_addresses_subtitle),
                 color = PassTheme.colors.textWeak
             )
             blockedContacts.forEach { contact ->

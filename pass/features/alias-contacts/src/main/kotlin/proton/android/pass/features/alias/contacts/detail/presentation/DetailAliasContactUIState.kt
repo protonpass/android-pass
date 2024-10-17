@@ -19,14 +19,18 @@
 package proton.android.pass.features.alias.contacts.detail.presentation
 
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.domain.aliascontacts.Contact
+import proton.android.pass.domain.aliascontacts.ContactId
 
 data class DetailAliasContactUIState(
     val event: DetailAliasContactEvent,
     val senderName: String,
     val displayName: String,
-    val aliasContactsListUIState: AliasContactsListUIState
+    val aliasContactsListUIState: AliasContactsListUIState,
+    val contactBlockIsLoading: PersistentSet<ContactId>
 ) {
 
     companion object {
@@ -34,7 +38,8 @@ data class DetailAliasContactUIState(
             event = DetailAliasContactEvent.Idle,
             senderName = "",
             displayName = "",
-            aliasContactsListUIState = AliasContactsListUIState.Empty
+            aliasContactsListUIState = AliasContactsListUIState.Empty,
+            contactBlockIsLoading = persistentSetOf()
         )
     }
 }

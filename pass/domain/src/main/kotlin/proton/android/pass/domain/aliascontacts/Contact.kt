@@ -31,7 +31,10 @@ data class Contact(
     val repliedEmails: Int?,
     val forwardedEmails: Int?,
     val blockedEmails: Int?
-)
+) {
+    val hasActivity: Boolean
+        get() = blockedEmails ?: 0 > 0 || repliedEmails ?: 0 > 0 || forwardedEmails ?: 0 > 0
+}
 
 data class AliasContacts(
     val contacts: List<Contact>,

@@ -27,16 +27,16 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import kotlinx.datetime.Clock.System
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -45,11 +45,12 @@ import proton.android.pass.composecomponents.impl.buttons.Button
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.composecomponents.impl.utils.passRemainingTimeText
 import proton.android.pass.domain.aliascontacts.Contact
 import proton.android.pass.domain.aliascontacts.ContactId
+import proton.android.pass.domain.time.RemainingTime
 import proton.android.pass.features.alias.contacts.detail.presentation.DetailAliasContactUIEvent
 import proton.android.pass.features.aliascontacts.R
-import kotlin.time.DurationUnit
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -78,11 +79,18 @@ fun ContactRow(
         }
 
         Column {
-            val formattedDate = getTimeAgo(Instant.fromEpochSeconds(contact.createTime))
-            Text.Body3Regular(
-                stringResource(R.string.contact_created_date, formattedDate),
-                color = PassTheme.colors.textWeak
-            )
+            val remainingTime = remember(contact.createTime) {
+                RemainingTime(
+                    startInstant = Instant.fromEpochSeconds(contact.createTime),
+                    endInstant = Clock.System.now()
+                )
+            }
+            passRemainingTimeText(remainingTime)?.let {
+                Text.Body3Regular(
+                    stringResource(R.string.contact_created_date, it),
+                    color = PassTheme.colors.textWeak
+                )
+            }
             val text = getActivitySummary(contact)
             Text.Body3Regular(text, color = PassTheme.colors.textWeak)
         }
@@ -109,11 +117,7 @@ fun ContactRow(
 }
 
 @Composable
-private fun getActivitySummary(contact: Contact): String = if (
-    contact.blockedEmails ?: 0 > 0 ||
-    contact.repliedEmails ?: 0 > 0 ||
-    contact.forwardedEmails ?: 0 > 0
-) {
+private fun getActivitySummary(contact: Contact): String = if (contact.hasActivity) {
     stringResource(
         R.string.activity_summary,
         contact.forwardedEmails ?: 0,
@@ -143,42 +147,6 @@ private fun getButtonAttributes(isBlocked: Boolean): Triple<String, Color, Borde
     }
     return Triple(text, bgColor, border)
 }
-
-private const val MINUTES_IN_HOUR = 60
-private const val HOURS_IN_DAY = 24
-private const val DAYS_IN_WEEK = 7
-private const val DAYS_IN_MONTH = 30
-private const val DAYS_IN_YEAR = 365
-
-@Composable
-fun getTimeAgo(timestamp: Instant): String {
-    val now = System.now()
-    val duration = now - timestamp
-
-    val minutes = duration.toDouble(DurationUnit.MINUTES).toInt()
-    val hours = duration.toDouble(DurationUnit.HOURS).toInt()
-    val days = duration.toDouble(DurationUnit.DAYS).toInt()
-
-    return when {
-        minutes < MINUTES_IN_HOUR -> pluralStringResource(R.plurals.minutes_ago, minutes, minutes)
-        hours < HOURS_IN_DAY -> pluralStringResource(R.plurals.hours_ago, hours, hours)
-        days < DAYS_IN_WEEK -> pluralStringResource(R.plurals.days_ago, days, days)
-        days < DAYS_IN_MONTH -> pluralStringResource(
-            R.plurals.weeks_ago,
-            days / DAYS_IN_WEEK,
-            days / DAYS_IN_WEEK
-        )
-
-        days < DAYS_IN_YEAR -> pluralStringResource(
-            R.plurals.months_ago,
-            days / DAYS_IN_MONTH,
-            days / DAYS_IN_MONTH
-        )
-
-        else -> pluralStringResource(R.plurals.years_ago, days / DAYS_IN_YEAR, days / DAYS_IN_YEAR)
-    }
-}
-
 
 @Preview
 @Composable

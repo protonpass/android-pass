@@ -34,6 +34,18 @@ data class RemainingTime(
         endInstant - startInstant
     }
 
+    val years: Int by lazy {
+        (remainingDuration.inWholeDays / 365).toInt()
+    }
+
+    val months: Int by lazy {
+        (remainingDuration.inWholeDays / 30).toInt()
+    }
+
+    val weeks: Int by lazy {
+        (remainingDuration.inWholeDays / 7).toInt()
+    }
+
     val days: Int by lazy {
         remainingDuration.inWholeDays.toInt()
     }

@@ -24,16 +24,12 @@ import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.aliascontacts.AliasContacts
-import proton.android.pass.domain.aliascontacts.ContactId
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class FakeObserveAliasContacts @Inject constructor() : ObserveAliasContacts {
 
-    override fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-        lastContactId: ContactId?
-    ): Flow<AliasContacts> = flowOf(AliasContacts(emptyList(), 0, null))
+    override fun invoke(shareId: ShareId, itemId: ItemId, fullList: Boolean): Flow<AliasContacts> =
+        flowOf(AliasContacts(emptyList(), 0))
 }

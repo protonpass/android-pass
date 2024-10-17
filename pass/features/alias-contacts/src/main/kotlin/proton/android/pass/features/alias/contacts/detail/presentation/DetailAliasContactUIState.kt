@@ -27,8 +27,8 @@ import proton.android.pass.domain.aliascontacts.ContactId
 
 data class DetailAliasContactUIState(
     val event: DetailAliasContactEvent,
-    val senderName: String,
     val displayName: String,
+    val senderNameUIState: SenderNameUIState,
     val aliasContactsListUIState: AliasContactsListUIState,
     val contactBlockIsLoading: PersistentSet<ContactId>
 ) {
@@ -36,10 +36,26 @@ data class DetailAliasContactUIState(
     companion object {
         val Empty = DetailAliasContactUIState(
             event = DetailAliasContactEvent.Idle,
-            senderName = "",
+            senderNameUIState = SenderNameUIState.Empty,
             displayName = "",
             aliasContactsListUIState = AliasContactsListUIState.Empty,
             contactBlockIsLoading = persistentSetOf()
+        )
+    }
+}
+
+enum class SenderNameMode {
+    Idle,
+    Edit,
+    Loading
+}
+
+data class SenderNameUIState(
+    val nameMode: SenderNameMode
+) {
+    companion object {
+        val Empty = SenderNameUIState(
+            nameMode = SenderNameMode.Idle
         )
     }
 }

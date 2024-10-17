@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.firstError
 import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.repositories.AliasRepository
@@ -52,27 +53,26 @@ class AliasRepositoryImpl @Inject constructor(
             .map { it.toDomain() }
             .flowOn(Dispatchers.IO)
 
-    override fun getAliasDetails(
+    override fun observeAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<AliasDetails> = remoteDataSource.getAliasDetails(userId, shareId, itemId)
-        .map { details ->
-            AliasDetails(
-                email = details.email,
-                mailboxes = mapMailboxes(details.mailboxes),
-                availableMailboxes = mapMailboxes(details.availableMailboxes),
-                displayName = details.displayName,
-                name = details.name,
-                stats = AliasStats(
-                    forwardedEmails = details.stats.forwardedEmails,
-                    repliedEmails = details.stats.repliedEmails,
-                    blockedEmails = details.stats.blockedEmails
-                ),
-                slNote = details.note.orEmpty()
-            )
-        }
-        .flowOn(Dispatchers.IO)
+    ): Flow<AliasDetails> = oneShot {
+        val response = remoteDataSource.fetchAliasDetails(userId, shareId, itemId)
+        AliasDetails(
+            email = response.email,
+            mailboxes = mapMailboxes(response.mailboxes),
+            availableMailboxes = mapMailboxes(response.availableMailboxes),
+            displayName = response.displayName,
+            name = response.name,
+            stats = AliasStats(
+                forwardedEmails = response.stats.forwardedEmails,
+                repliedEmails = response.stats.repliedEmails,
+                blockedEmails = response.stats.blockedEmails
+            ),
+            slNote = response.note.orEmpty()
+        )
+    }
 
     override fun updateAliasMailboxes(
         userId: UserId,

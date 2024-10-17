@@ -36,7 +36,7 @@ class FakeAliasRepository @Inject constructor() : AliasRepository {
         TODO("Not yet implemented")
     }
 
-    override fun getAliasDetails(
+    override fun observeAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId

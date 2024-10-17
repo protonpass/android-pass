@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -75,6 +76,9 @@ class DetailAliasContactViewModel @Inject constructor(
     private val detailAliasContactEventFlow: MutableStateFlow<DetailAliasContactEvent> =
         MutableStateFlow(DetailAliasContactEvent.Idle)
 
+    private val contactBlockIsLoadingFlow: MutableStateFlow<Set<ContactId>> =
+        MutableStateFlow(emptySet())
+
     @OptIn(ExperimentalCoroutinesApi::class)
     private val contactsFlow = observeAliasContacts(shareId, itemId, fullList = true)
         .mapLatest { it.contacts.partition { contact -> contact.blocked } }
@@ -84,8 +88,9 @@ class DetailAliasContactViewModel @Inject constructor(
     val state = combine(
         detailAliasContactEventFlow,
         observeAliasDetails(shareId, itemId).asLoadingResult(),
-        contactsFlow
-    ) { event, aliasDetailsResult, aliasContactsResult ->
+        contactsFlow,
+        contactBlockIsLoadingFlow
+    ) { event, aliasDetailsResult, aliasContactsResult, contactBlockIsLoading ->
         val aliasDetails = aliasDetailsResult.getOrNull()
         val emptyPair = emptyList<Contact>() to emptyList<Contact>()
         val (blockedContacts, forwardingContacts) = aliasContactsResult.getOrNull() ?: emptyPair
@@ -94,6 +99,7 @@ class DetailAliasContactViewModel @Inject constructor(
             event = event,
             senderName = aliasDetails?.name.orEmpty(),
             displayName = aliasDetails?.displayName.orEmpty(),
+            contactBlockIsLoading = contactBlockIsLoading.toPersistentSet(),
             aliasContactsListUIState = AliasContactsListUIState(
                 forwardingContacts = forwardingContacts.toPersistentList(),
                 blockedContacts = blockedContacts.toPersistentList(),
@@ -117,6 +123,7 @@ class DetailAliasContactViewModel @Inject constructor(
 
     fun onBlockContact(contactId: ContactId) {
         viewModelScope.launch {
+            contactBlockIsLoadingFlow.update { it + contactId }
             runCatching {
                 updateBlockedAliasContact(shareId, itemId, contactId, blocked = true)
             }.onSuccess {
@@ -127,11 +134,13 @@ class DetailAliasContactViewModel @Inject constructor(
                 PassLogger.w(TAG, it)
                 snackbarDispatcher(ContactBlockError)
             }
+            contactBlockIsLoadingFlow.update { it - contactId }
         }
     }
 
     fun onUnblockContact(contactId: ContactId) {
         viewModelScope.launch {
+            contactBlockIsLoadingFlow.update { it + contactId }
             runCatching {
                 updateBlockedAliasContact(shareId, itemId, contactId, blocked = false)
             }.onSuccess {
@@ -142,6 +151,7 @@ class DetailAliasContactViewModel @Inject constructor(
                 PassLogger.w(TAG, it)
                 snackbarDispatcher(ContactUnblockError)
             }
+            contactBlockIsLoadingFlow.update { it - contactId }
         }
     }
 

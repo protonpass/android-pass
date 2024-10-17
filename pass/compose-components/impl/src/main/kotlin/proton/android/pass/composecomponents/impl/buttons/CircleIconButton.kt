@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.PassTheme
@@ -42,12 +43,14 @@ import proton.android.pass.commonui.api.applyIf
 fun CircleIconButton(
     modifier: Modifier = Modifier,
     backgroundColor: Color,
+    size: Dp = Dp.Unspecified,
     onClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
     IconButton(
         modifier = modifier
             .clip(CircleShape)
+            .size(size)
             .background(backgroundColor),
         onClick = onClick
     ) { content() }

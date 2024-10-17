@@ -35,7 +35,6 @@ fun DetailAliasContactScreen(
     viewModel: DetailAliasContactViewModel = hiltViewModel(),
     onNavigate: (AliasContactsNavigation) -> Unit
 ) {
-
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
         when (val event = state.event) {
@@ -55,11 +54,12 @@ fun DetailAliasContactScreen(
             when (it) {
                 DetailAliasContactUIEvent.Back -> onNavigate(AliasContactsNavigation.Back)
                 DetailAliasContactUIEvent.CreateContact -> viewModel.onCreateItem()
-                DetailAliasContactUIEvent.LearnMore -> {}
-                DetailAliasContactUIEvent.BlockContact -> {}
+                DetailAliasContactUIEvent.Help -> onNavigate(AliasContactsNavigation.OnBoardingContacts)
+                DetailAliasContactUIEvent.LearnMore -> onNavigate(AliasContactsNavigation.OnBoardingContacts)
+                is DetailAliasContactUIEvent.BlockContact -> viewModel.onBlockContact(it.contactId)
+                is DetailAliasContactUIEvent.UnblockContact -> viewModel.onUnblockContact(it.contactId)
                 is DetailAliasContactUIEvent.ContactOptions -> {}
                 is DetailAliasContactUIEvent.SendEmail -> {}
-                DetailAliasContactUIEvent.UnblockContact -> {}
                 DetailAliasContactUIEvent.UpdateName -> {}
             }
         }

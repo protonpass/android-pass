@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -41,7 +40,7 @@ import kotlinx.datetime.Instant
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.composecomponents.impl.buttons.Button
+import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
@@ -57,6 +56,7 @@ import me.proton.core.presentation.R as CoreR
 fun ContactRow(
     modifier: Modifier = Modifier,
     contact: Contact,
+    isBlockLoading: Boolean,
     onEvent: (DetailAliasContactUIEvent) -> Unit
 ) {
     Column(
@@ -96,10 +96,17 @@ fun ContactRow(
         }
 
         val (text, bgColor, border) = getButtonAttributes(contact.blocked)
-        Button.Circular(
+
+        LoadingCircleButton(
+            isLoading = isBlockLoading,
             color = bgColor,
-            borderStroke = border,
-            elevation = ButtonDefaults.elevation(0.dp),
+            border = border,
+            text = {
+                Text.Body3Regular(
+                    text = text,
+                    color = PassTheme.colors.aliasInteractionNormMajor2
+                )
+            },
             onClick = {
                 if (contact.blocked) {
                     onEvent(DetailAliasContactUIEvent.UnblockContact(contact.id))
@@ -107,12 +114,7 @@ fun ContactRow(
                     onEvent(DetailAliasContactUIEvent.BlockContact(contact.id))
                 }
             }
-        ) {
-            Text.Body3Regular(
-                text = text,
-                color = PassTheme.colors.aliasInteractionNormMajor2
-            )
-        }
+        )
     }
 }
 
@@ -165,6 +167,7 @@ fun ContactRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) inp
                     forwardedEmails = null,
                     blockedEmails = null
                 ),
+                isBlockLoading = false,
                 onEvent = {}
             )
         }

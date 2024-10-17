@@ -27,15 +27,17 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.container.Circle
+import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.features.alias.contacts.detail.presentation.DetailAliasContactUIEvent
 
 @Composable
-fun QuestionMarkRoundedIcon(modifier: Modifier = Modifier) {
-    Circle(
+fun QuestionMarkRoundedIcon(modifier: Modifier = Modifier, onEvent: (DetailAliasContactUIEvent) -> Unit) {
+    CircleIconButton(
         modifier = modifier,
         size = 30.dp,
-        backgroundColor = PassTheme.colors.aliasInteractionNormMinor1
+        backgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
+        onClick = { onEvent(DetailAliasContactUIEvent.Help) }
     ) {
         Text.Body1Regular(
             text = "${SpecialCharacters.QUESTION_MARK}",
@@ -49,7 +51,7 @@ fun QuestionMarkRoundedIcon(modifier: Modifier = Modifier) {
 fun QuestionMarkRoundedIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            QuestionMarkRoundedIcon()
+            QuestionMarkRoundedIcon(onEvent = { })
         }
     }
 }

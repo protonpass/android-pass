@@ -78,7 +78,7 @@ fun ContactRow(
         }
 
         Column {
-            val formattedDate = getTimeAgo(Instant.fromEpochMilliseconds(contact.createTime))
+            val formattedDate = getTimeAgo(Instant.fromEpochSeconds(contact.createTime))
             Text.Body3Regular(
                 stringResource(R.string.contact_created_date, formattedDate),
                 color = PassTheme.colors.textWeak
@@ -94,9 +94,9 @@ fun ContactRow(
             elevation = ButtonDefaults.elevation(0.dp),
             onClick = {
                 if (contact.blocked) {
-                    onEvent(DetailAliasContactUIEvent.UnblockContact)
+                    onEvent(DetailAliasContactUIEvent.UnblockContact(contact.id))
                 } else {
-                    onEvent(DetailAliasContactUIEvent.BlockContact)
+                    onEvent(DetailAliasContactUIEvent.BlockContact(contact.id))
                 }
             }
         ) {

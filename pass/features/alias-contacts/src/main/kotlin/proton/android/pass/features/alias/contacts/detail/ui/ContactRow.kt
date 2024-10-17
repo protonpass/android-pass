@@ -22,7 +22,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.IconButton
@@ -66,8 +65,7 @@ fun ContactRow(
         verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text.Body1Regular(text = contact.email)
-            Spacer(Modifier.weight(1f))
+            Text.Body1Regular(modifier = Modifier.weight(1f), text = contact.email)
             IconButton(onClick = { onEvent(DetailAliasContactUIEvent.SendEmail(contact.reverseAlias)) }) {
                 Icon.Default(CoreR.drawable.ic_proton_paper_plane, tint = PassTheme.colors.textWeak)
             }

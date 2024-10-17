@@ -34,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
+import proton.android.pass.composecomponents.impl.loading.PassFullScreenLoading
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.topbar.IconTopAppBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
@@ -101,14 +102,18 @@ fun DetailAliasContactContent(
                     color = PassTheme.colors.textWeak
                 )
             }
-            if (state.hasContacts) {
-                ContactList(
-                    blockedContacts = state.blockedContacts,
-                    forwardingContacts = state.forwardingContacts,
-                    onEvent = onEvent
-                )
+            if (!state.aliasContactsListUIState.isLoading) {
+                if (state.aliasContactsListUIState.hasContacts) {
+                    ContactList(
+                        blockedContacts = state.aliasContactsListUIState.blockedContacts,
+                        forwardingContacts = state.aliasContactsListUIState.forwardingContacts,
+                        onEvent = onEvent
+                    )
+                } else {
+                    EmptyContacts(onEvent = onEvent)
+                }
             } else {
-                EmptyContacts(onEvent = onEvent)
+                PassFullScreenLoading()
             }
         }
     }

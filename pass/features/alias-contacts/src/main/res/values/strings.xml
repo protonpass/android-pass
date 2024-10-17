@@ -40,4 +40,6 @@
     <string name="snackbar_contact_block_error">Could not block contact</string>
     <string name="snackbar_contact_unblock_success">Contact unblocked</string>
     <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
+    <string name="snackbar_sender_name_success">Sender name updated</string>
+    <string name="snackbar_sender_name_error">Could not update sender name</string>
 </resources>

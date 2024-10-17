@@ -18,12 +18,14 @@
 
 package proton.android.pass.featureitemdetail.impl.alias
 
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.counter.CounterText
@@ -39,7 +41,7 @@ fun ContactsSection(
     onClick: () -> Unit
 ) {
     CounterRow(
-        modifier = modifier,
+        modifier = modifier.defaultMinSize(minHeight = 72.dp),
         title = stringResource(R.string.contacts),
         isClickable = true,
         onClick = onClick,

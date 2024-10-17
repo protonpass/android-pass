@@ -93,7 +93,7 @@ fun DetailAliasContactContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text.Hero(stringResource(R.string.detail_contact_title))
-                QuestionMarkRoundedIcon()
+                QuestionMarkRoundedIcon(onEvent = onEvent)
             }
             SenderNameSection(name = state.senderName, onEvent = onEvent)
             if (state.displayName.isNotBlank()) {

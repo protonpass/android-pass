@@ -23,6 +23,7 @@ import proton.android.pass.domain.aliascontacts.ContactId
 sealed interface DetailAliasContactUIEvent {
     data object Back : DetailAliasContactUIEvent
     data object CreateContact : DetailAliasContactUIEvent
+    data object Help : DetailAliasContactUIEvent
     data object LearnMore : DetailAliasContactUIEvent
     data object UpdateName : DetailAliasContactUIEvent
 
@@ -31,7 +32,11 @@ sealed interface DetailAliasContactUIEvent {
 
     @JvmInline
     value class ContactOptions(val contactId: ContactId) : DetailAliasContactUIEvent
-    data object BlockContact : DetailAliasContactUIEvent
-    data object UnblockContact : DetailAliasContactUIEvent
+
+    @JvmInline
+    value class BlockContact(val contactId: ContactId) : DetailAliasContactUIEvent
+
+    @JvmInline
+    value class UnblockContact(val contactId: ContactId) : DetailAliasContactUIEvent
 
 }

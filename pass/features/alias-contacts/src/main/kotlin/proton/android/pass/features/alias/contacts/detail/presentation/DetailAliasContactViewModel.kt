@@ -30,21 +30,29 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.onSuccess
+import proton.android.pass.common.api.runCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
+import proton.android.pass.data.api.usecases.aliascontact.UpdateBlockedAliasContact
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.aliascontacts.Contact
+import proton.android.pass.domain.aliascontacts.ContactId
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailAliasContactViewModel @Inject constructor(
+    private val updateBlockedAliasContact: UpdateBlockedAliasContact,
     observeAliasDetails: ObserveAliasDetails,
     observeAliasContacts: ObserveAliasContacts,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -99,6 +107,36 @@ class DetailAliasContactViewModel @Inject constructor(
 
     fun onEventConsumed(event: DetailAliasContactEvent) {
         detailAliasContactEventFlow.compareAndSet(event, DetailAliasContactEvent.Idle)
+    }
+
+    fun onBlockContact(contactId: ContactId) {
+        viewModelScope.launch {
+            runCatching {
+                updateBlockedAliasContact(shareId, itemId, contactId, blocked = true)
+            }.onSuccess {
+                PassLogger.i(TAG, "Contact blocked")
+            }.onError {
+                PassLogger.w(TAG, "Error blocking contact")
+                PassLogger.w(TAG, it)
+            }
+        }
+    }
+
+    fun onUnblockContact(contactId: ContactId) {
+        viewModelScope.launch {
+            runCatching {
+                updateBlockedAliasContact(shareId, itemId, contactId, blocked = false)
+            }.onSuccess {
+                PassLogger.i(TAG, "Contact unblocked")
+            }.onError {
+                PassLogger.w(TAG, "Error unblocking contact")
+                PassLogger.w(TAG, it)
+            }
+        }
+    }
+
+    companion object {
+        private const val TAG = "DetailAliasContactViewModel"
     }
 }
 

@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.alias.contacts.AliasContactsNavigation
@@ -29,12 +30,14 @@ import proton.android.pass.features.alias.contacts.detail.presentation.DetailAli
 import proton.android.pass.features.alias.contacts.detail.presentation.DetailAliasContactUIEvent
 import proton.android.pass.features.alias.contacts.detail.presentation.DetailAliasContactViewModel
 
+
 @Composable
 fun DetailAliasContactScreen(
     modifier: Modifier = Modifier,
     viewModel: DetailAliasContactViewModel = hiltViewModel(),
     onNavigate: (AliasContactsNavigation) -> Unit
 ) {
+    val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
         when (val event = state.event) {
@@ -60,7 +63,7 @@ fun DetailAliasContactScreen(
                 is DetailAliasContactUIEvent.BlockContact -> viewModel.onBlockContact(it.contactId)
                 is DetailAliasContactUIEvent.UnblockContact -> viewModel.onUnblockContact(it.contactId)
                 is DetailAliasContactUIEvent.ContactOptions -> {}
-                is DetailAliasContactUIEvent.SendEmail -> {}
+                is DetailAliasContactUIEvent.SendEmail -> sendEmail(context, it.email)
                 DetailAliasContactUIEvent.EditSenderName -> viewModel.onEnterSenderNameEditMode()
                 is DetailAliasContactUIEvent.OnSenderNameChanged -> viewModel.onSenderNameChanged(it.name)
                 DetailAliasContactUIEvent.UpdateSenderName -> viewModel.onSenderNameUpdate()
@@ -68,3 +71,4 @@ fun DetailAliasContactScreen(
         }
     )
 }
+

@@ -25,7 +25,7 @@
   <string name="settings_use_favicons_preference_title">Utilitza icones web</string>
   <string name="settings_use_favicons_preference_subtitle">Decidiu si voleu veure les icones dels llocs web als vostres elements.</string>
   <string name="settings_allow_screenshots_preference_title">Permet captures de pantalla</string>
-  <string name="settings_allow_screenshots_preference_subtitle">Quan està habilitat, podreu fer captures de pantalla de l\'aplicació.</string>
+  <string name="settings_allow_screenshots_preference_subtitle">Quan està activat, podreu fer captures de pantalla de l\'aplicació.</string>
   <string name="settings_clear_icon_cache_success">S\'ha netejat la memòria cau de les icones</string>
   <string name="settings_clear_icon_cache_error">No s\'ha pogut netejar la memòria cau de les icones</string>
   <string name="settings_share_telemetry">Comparteix l\'ús de manera anònima</string>
@@ -33,6 +33,7 @@
   <string name="settings_preference_updated">S\'ha actualitzat la vostra preferència</string>
   <string name="settings_display_section_title">Mostra</string>
   <string name="settings_preference_display_username">Username field always visible</string>
+  <string name="settings_preference_display_autofill_pinning">Autofill pinning always visible</string>
   <string name="view_logs_title">Mostra els registres</string>
   <string name="clipboard_bottomsheet_title">Porta-retalls</string>
   <string name="clipboard_option_clear_clipboard_label">Neteja el porta-retalls</string>

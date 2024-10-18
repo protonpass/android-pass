@@ -106,4 +106,24 @@
   <string name="passkey_detail_bottomsheet_domain">Domena</string>
   <string name="passkey_detail_bottomsheet_key">Ključ</string>
   <string name="passkey_detail_bottomsheet_created">Ustvarjeno</string>
+  <string name="activity_in_last_two_weeks">Activity in last two weeks</string>
+  <string name="contacts">Contacts</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s forward</item>
+    <item quantity="two">%1$s forwards</item>
+    <item quantity="few">%1$s forwards</item>
+    <item quantity="other">%1$s forwards</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s reply</item>
+    <item quantity="two">%1$s replies</item>
+    <item quantity="few">%1$s replies</item>
+    <item quantity="other">%1$s replies</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s block</item>
+    <item quantity="two">%1$s blocks</item>
+    <item quantity="few">%1$s blocks</item>
+    <item quantity="other">%1$s blocks</item>
+  </plurals>
 </resources>

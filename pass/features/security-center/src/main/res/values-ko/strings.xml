@@ -67,7 +67,7 @@
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">새로운 사용자 지정 이메일 주소 추가</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">추가</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
-    <item quantity="other">%d 로그인에 쓰임</item>
+    <item quantity="other">%d개 로그인에 사용됨</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
     <item quantity="other">%d개 침해 사례 감지됨</item>

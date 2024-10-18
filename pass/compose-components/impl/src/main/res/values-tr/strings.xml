@@ -44,8 +44,12 @@
   <string name="action_continue">İlerle</string>
   <string name="action_retry">Yeniden dene</string>
   <string name="action_edit">Düzenle</string>
-  <string name="action_update">Güncelle</string>
+  <string name="action_add">Ekle</string>
+  <string name="action_delete">Sil</string>
+  <string name="action_make_default">Make default</string>
+  <string name="action_verify">Verify</string>
   <string name="action_close">Kapat</string>
+  <string name="action_update">Güncelle</string>
   <!-- Empty list -->
   <string name="empty_list_title">İlk ögenizi ekleyin</string>
   <string name="empty_search_results_title">Herhangi bir sonuç bulunamadı</string>
@@ -140,7 +144,6 @@
   <string name="item_details_credit_card_section_pin_title">PIN kodu</string>
   <string name="item_details_login_section_email_title">E-posta adresi</string>
   <string name="item_details_login_section_username_title">Kullanıcı adı</string>
-  <string name="item_details_login_section_username_or_username_title">Kullanıcı adı ya da e-posta adresi</string>
   <string name="item_details_login_section_password_title">Parola</string>
   <string name="item_details_login_section_primary_totp_title">İki adımlı doğrulama kodu (tek kullanımlık)</string>
   <string name="item_details_login_section_websites_title">Siteler</string>
@@ -199,10 +202,23 @@
   <string name="dialog_upgrade_plan_action_cancel">Şimdi değil</string>
   <!-- Words -->
   <string name="email_address">E-posta adresi</string>
+  <string name="email_address_invalid">Invalid email address</string>
   <string name="password">Parola</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Bu ipucunu yok sayıp bir daha görüntülenmemesini sağlayan düğme</string>
   <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="one">%d year</item>
+    <item quantity="other">%d years</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="one">%d month</item>
+    <item quantity="other">%d months</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="one">%d week</item>
+    <item quantity="other">%d weeks</item>
+  </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d gün</item>
     <item quantity="other">%d gün</item>
@@ -218,6 +234,10 @@
   <plurals name="time_unit_seconds">
     <item quantity="one">%d saniye</item>
     <item quantity="other">%d saniye</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="one">%d alias</item>
+    <item quantity="other">%d aliases</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Not kopyalandı</string>

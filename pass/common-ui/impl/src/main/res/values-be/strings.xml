@@ -17,11 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="bottomsheet_copy_email">Скапіяваць электронную пошту</string>
   <string name="bottomsheet_copy_password">Скапіяваць пароль</string>
   <string name="bottomsheet_copy_username">Скапіяваць імя карыстальніка</string>
+  <string name="bottomsheet_no_actions">Няма даступных дзеянняў</string>
   <string name="snackbar_item_move_to_trash_success">Элемент перамешчаны ў сметніцу</string>
   <string name="snackbar_item_move_to_trash_error">Немагчыма перамясціць у сметніцу</string>
+  <string name="snackbar_item_copy_email_success">Электронная пошта скапіявана ў буфер абмену</string>
   <string name="snackbar_item_copy_username_success">Імя карыстальніка скапіявана ў буфер абмену</string>
   <string name="snackbar_item_copy_password_success">Пароль скапіяваны ў буфер абмену</string>
-  <string name="snackbar_item_copy_clipboard_error">Немагчыма скапіяваць у буфер абмену</string>
 </resources>

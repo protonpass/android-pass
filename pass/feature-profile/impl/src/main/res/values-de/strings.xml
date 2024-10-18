@@ -12,7 +12,7 @@
   <string name="profile_option_autofill">AutoFill</string>
   <string name="profile_option_autofill_subtitle">Benutzernamen und Passwörter automatisch ausfüllen.</string>
   <string name="profile_option_secure_links">Sichere Links</string>
-  <string name="profile_option_aliases">Aliasse</string>
+  <string name="profile_option_alias_management">Alias management</string>
   <string name="profile_error_biometry_failed_to_start">Biometrische Authentifizierung konnte nicht gestartet werden.</string>
   <string name="profile_error_biometry_failed_to_authenticate">Authentifizierung fehlgeschlagen.</string>
   <string name="profile_fingerprint_lock_enabled">Fingerabdrucksperre aktiviert</string>
@@ -52,7 +52,7 @@
   <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Internet is set as the default browser. It does not support autofill by external password managers.</string>
   <string name="profile_passkey_support_section_title">Passkeys</string>
   <string name="profile_passkey_support_subtitle_supported">Passkeys werden unterstützt</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Deine Android-Version unterstützt keine Passkeys.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Dein Gerät unterstützt keine Passkeys.</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Fehler beim Überprüfen der Passkey-Kompatibilität.</string>
   <plurals name="profile_after_days">

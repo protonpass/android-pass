@@ -43,8 +43,12 @@
   <string name="action_continue">繼續</string>
   <string name="action_retry">重試</string>
   <string name="action_edit">編輯</string>
-  <string name="action_update">Update</string>
+  <string name="action_add">新增</string>
+  <string name="action_delete">刪除</string>
+  <string name="action_make_default">Make default</string>
+  <string name="action_verify">Verify</string>
   <string name="action_close">Close</string>
+  <string name="action_update">Update</string>
   <!-- Empty list -->
   <string name="empty_list_title">加入您的第一個項目</string>
   <string name="empty_search_results_title">查無結果</string>
@@ -138,7 +142,6 @@
   <string name="item_details_credit_card_section_pin_title">PIN 碼</string>
   <string name="item_details_login_section_email_title">電子郵件位址</string>
   <string name="item_details_login_section_username_title">使用者名稱</string>
-  <string name="item_details_login_section_username_or_username_title">使用者名稱或電子郵件位址</string>
   <string name="item_details_login_section_password_title">密碼</string>
   <string name="item_details_login_section_primary_totp_title">雙重驗證憑證(TOTP)</string>
   <string name="item_details_login_section_websites_title">網站</string>
@@ -197,10 +200,20 @@
   <string name="dialog_upgrade_plan_action_cancel">現在不要</string>
   <!-- Words -->
   <string name="email_address">電子郵件地址</string>
+  <string name="email_address_invalid">Invalid email address</string>
   <string name="password">密碼</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
   <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="other">%d years</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="other">%d months</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="other">%d weeks</item>
+  </plurals>
   <plurals name="time_unit_days">
     <item quantity="other">%d 天</item>
   </plurals>
@@ -212,6 +225,9 @@
   </plurals>
   <plurals name="time_unit_seconds">
     <item quantity="other">%d 秒</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="other">%d aliases</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">已複製備註</string>

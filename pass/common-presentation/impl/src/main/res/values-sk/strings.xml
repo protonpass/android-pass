@@ -46,7 +46,7 @@
   <string name="item_details_snackbar_message_reddit_copied">Reddit skopírovaný</string>
   <string name="item_details_snackbar_message_social_security_number_copied">Číslo poistenca sociálnej poisťovne skopírované</string>
   <string name="item_details_snackbar_message_state_or_province_copied">Kraj alebo región skopírovaný</string>
-  <string name="item_details_snackbar_message_street_address_copied">Adresa skopírovaná</string>
+  <string name="item_details_snackbar_message_street_address_copied">Adresa ulice skopírovaná</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP skopírované</string>
   <string name="item_details_snackbar_message_username_copied">Požívateľské meno skopírované</string>
   <string name="item_details_snackbar_message_website_copied">URL webovej stránky skopírovaná</string>

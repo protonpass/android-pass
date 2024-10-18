@@ -104,4 +104,18 @@
   <string name="passkey_detail_bottomsheet_domain">Etki alanı</string>
   <string name="passkey_detail_bottomsheet_key">Anahtar</string>
   <string name="passkey_detail_bottomsheet_created">Oluşturulma</string>
+  <string name="activity_in_last_two_weeks">Son iki haftadaki etkinlikler</string>
+  <string name="contacts">Kişiler</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s iletme</item>
+    <item quantity="other">%1$s iletme</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s yanıt</item>
+    <item quantity="other">%1$s yanıt</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s engelleme</item>
+    <item quantity="other">%1$s engelleme</item>
+  </plurals>
 </resources>

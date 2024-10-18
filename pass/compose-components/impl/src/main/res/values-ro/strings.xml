@@ -45,8 +45,12 @@
   <string name="action_continue">Continuare</string>
   <string name="action_retry">Reîncercare</string>
   <string name="action_edit">Editare</string>
-  <string name="action_update">Actualizare</string>
+  <string name="action_add">Adăugare</string>
+  <string name="action_delete">Ștergere</string>
+  <string name="action_make_default">Make default</string>
+  <string name="action_verify">Verify</string>
   <string name="action_close">Închidere</string>
+  <string name="action_update">Actualizare</string>
   <!-- Empty list -->
   <string name="empty_list_title">Adăugați primul articol</string>
   <string name="empty_search_results_title">Nu s-au găsit rezultate</string>
@@ -142,7 +146,6 @@
   <string name="item_details_credit_card_section_pin_title">Cod PIN</string>
   <string name="item_details_login_section_email_title">Adresa de e-mail</string>
   <string name="item_details_login_section_username_title">Nume utilizator</string>
-  <string name="item_details_login_section_username_or_username_title">Nume utilizator sau adresă de e-mail</string>
   <string name="item_details_login_section_password_title">Parola</string>
   <string name="item_details_login_section_primary_totp_title">Cod A2F (TOTP)</string>
   <string name="item_details_login_section_websites_title">Pagini web</string>
@@ -201,10 +204,26 @@
   <string name="dialog_upgrade_plan_action_cancel">Nu acum</string>
   <!-- Words -->
   <string name="email_address">Adresa de e-mail</string>
+  <string name="email_address_invalid">Invalid email address</string>
   <string name="password">Parola</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Buton pentru a respinge acest sfat și pentru a nu-l mai afișa.</string>
   <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="one">%d year</item>
+    <item quantity="few">%d years</item>
+    <item quantity="other">%d years</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="one">%d month</item>
+    <item quantity="few">%d months</item>
+    <item quantity="other">%d months</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="one">%d week</item>
+    <item quantity="few">%d weeks</item>
+    <item quantity="other">%d weeks</item>
+  </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d zi</item>
     <item quantity="few">%d de zile</item>
@@ -224,6 +243,11 @@
     <item quantity="one">%d secundă</item>
     <item quantity="few">%d secunde</item>
     <item quantity="other">%d de secunde</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="one">%d alias</item>
+    <item quantity="few">%d aliases</item>
+    <item quantity="other">%d aliases</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Notița a fost copiată.</string>

@@ -24,4 +24,5 @@ message InternalSettings {
   LastItemAutofill last_item_autofill = 15;
   map<string, string> selected_vault_per_user = 16;
   map<string, int32> master_password_attempts_per_user = 17;
+  bool has_shown_alias_contacts_onboarding = 18;
 }

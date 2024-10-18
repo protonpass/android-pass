@@ -38,7 +38,7 @@ fun NavGraphBuilder.aliasContactGraph(onNavigate: (AliasContactsNavigation) -> U
         DetailAliasContactScreen(onNavigate = onNavigate)
     }
     bottomSheet(OnBoardingAliasContactNavItem) {
-        OnBoardingAliasContactBottomsheet()
+        OnBoardingAliasContactBottomsheet(onNavigate = onNavigate)
     }
     bottomSheet(OptionsAliasContactNavItem) {
         OptionsAliasContactBottomSheet(onNavigate = onNavigate)

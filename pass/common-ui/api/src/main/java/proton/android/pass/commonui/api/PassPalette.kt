@@ -170,4 +170,7 @@ object PassPalette {
     val SilverFog = Color(0xBBEEEEEE)
     val CharcoalSmoke = Color(0xBB333333)
 
+    val VividViolet = Color(0xFF9251EB)
+    val IndigoViolet = Color(0xFF5B53ED)
+
 }

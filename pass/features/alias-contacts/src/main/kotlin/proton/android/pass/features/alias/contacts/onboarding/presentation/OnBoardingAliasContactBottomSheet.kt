@@ -18,11 +18,14 @@
 
 package proton.android.pass.features.alias.contacts.onboarding.presentation
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import proton.android.pass.features.alias.contacts.AliasContactsNavigation
 
 @Composable
-fun OnBoardingAliasContactBottomsheet(modifier: Modifier = Modifier) {
-    Text("Empty bottom sheet")
+fun OnBoardingAliasContactBottomsheet(modifier: Modifier = Modifier, onNavigate: (AliasContactsNavigation) -> Unit) {
+    OnBoardingAliasContactContent(
+        modifier = modifier,
+        onClose = { onNavigate(AliasContactsNavigation.CloseBottomSheet) }
+    )
 }

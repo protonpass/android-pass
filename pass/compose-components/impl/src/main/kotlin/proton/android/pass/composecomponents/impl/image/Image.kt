@@ -23,6 +23,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 
@@ -31,12 +32,14 @@ object Image {
     fun Default(
         @DrawableRes id: Int,
         modifier: Modifier = Modifier,
-        @StringRes contentDescription: Int? = null
+        @StringRes contentDescription: Int? = null,
+        contentScale: ContentScale = ContentScale.Fit
     ) {
         Image(
             painter = painterResource(id = id),
             contentDescription = contentDescription?.let { stringResource(id = it) },
-            modifier = modifier
+            modifier = modifier,
+            contentScale = contentScale
         )
     }
 }

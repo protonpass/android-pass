@@ -106,12 +106,14 @@ object Text {
     fun Body3Regular(
         text: String,
         modifier: Modifier = Modifier,
-        color: Color = ProtonTheme.colors.textNorm
+        color: Color = ProtonTheme.colors.textNorm,
+        textAlign: TextAlign = TextAlign.Start
     ) {
         Text(
             text = text,
             style = PassTheme.typography.body3Norm().copy(color = color),
-            modifier = modifier
+            modifier = modifier,
+            textAlign = textAlign
         )
     }
 

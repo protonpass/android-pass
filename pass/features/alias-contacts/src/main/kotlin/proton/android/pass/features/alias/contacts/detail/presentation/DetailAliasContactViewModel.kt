@@ -30,7 +30,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
@@ -40,6 +39,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
@@ -68,6 +68,7 @@ import proton.android.pass.features.alias.contacts.detail.presentation.SenderNam
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -75,6 +76,7 @@ class DetailAliasContactViewModel @Inject constructor(
     private val updateBlockedAliasContact: UpdateBlockedAliasContact,
     private val updateAliasName: UpdateAliasName,
     private val snackbarDispatcher: SnackbarDispatcher,
+    private val internalSettingsRepository: InternalSettingsRepository,
     observeAliasDetails: ObserveAliasDetails,
     observeAliasContacts: ObserveAliasContacts,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -114,13 +116,15 @@ class DetailAliasContactViewModel @Inject constructor(
         .onEach { senderName = it.name.orEmpty() }
         .asLoadingResult()
 
-    val state = combine(
+    val state = combineN(
         detailAliasContactEventFlow,
         aliasDetailFlow,
         contactsFlow,
         contactBlockIsLoadingFlow,
-        senderNameUIStateFlow
-    ) { event, aliasDetailsResult, aliasContactsResult, contactBlockIsLoading, senderNameUIState ->
+        senderNameUIStateFlow,
+        internalSettingsRepository.hasShownAliasContactsOnboarding()
+    ) { event, aliasDetailsResult, aliasContactsResult, contactBlockIsLoading, senderNameUIState,
+        hasShownAliasContactsOnboarding ->
         val aliasDetails = aliasDetailsResult.getOrNull()
         val emptyPair = emptyList<Contact>() to emptyList<Contact>()
         val (blockedContacts, forwardingContacts) = aliasContactsResult.getOrNull() ?: emptyPair
@@ -130,6 +134,7 @@ class DetailAliasContactViewModel @Inject constructor(
             itemId = itemId.some(),
             event = event,
             senderNameUIState = senderNameUIState,
+            hasShownAliasContactsOnboarding = hasShownAliasContactsOnboarding,
             displayName = aliasDetails?.displayName.orEmpty(),
             contactBlockIsLoading = contactBlockIsLoading.toPersistentSet(),
             aliasContactsListUIState = AliasContactsListUIState(
@@ -212,6 +217,12 @@ class DetailAliasContactViewModel @Inject constructor(
 
     fun onEnterSenderNameEditMode() {
         senderNameUIStateFlow.update { it.copy(nameMode = Edit) }
+    }
+
+    fun onShowOnboarding() {
+        viewModelScope.launch {
+            internalSettingsRepository.setHasShownAliasContactsOnboarding(true)
+        }
     }
 
     companion object {

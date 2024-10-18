@@ -74,5 +74,8 @@ interface InternalSettingsRepository {
     fun setLastItemAutofill(lastItemAutofillPreference: LastItemAutofillPreference): Result<Unit>
     fun getLastItemAutofill(): Flow<Option<LastItemAutofillPreference>>
 
+    fun setHasShownAliasContactsOnboarding(value: Boolean): Result<Unit>
+    fun hasShownAliasContactsOnboarding(): Flow<Boolean>
+
     fun clearSettings(): Result<Unit>
 }

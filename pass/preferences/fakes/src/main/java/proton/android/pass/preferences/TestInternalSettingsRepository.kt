@@ -54,6 +54,7 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
         MutableStateFlow(IsDarkWebAliasMessageDismissedPreference.Show)
     private val lastItemAutofillPreferenceFlow: MutableStateFlow<Option<LastItemAutofillPreference>> =
         MutableStateFlow(None)
+    private val hasShownAliasContactsOnboardingFlow = MutableStateFlow(false)
 
     override fun setLastUnlockedTime(time: Long): Result<Unit> {
         lastUnlockedTimeFlow.update { Some(time) }
@@ -169,6 +170,13 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     }
 
     override fun getLastItemAutofill(): Flow<Option<LastItemAutofillPreference>> = lastItemAutofillPreferenceFlow
+
+    override fun setHasShownAliasContactsOnboarding(value: Boolean): Result<Unit> {
+        hasShownAliasContactsOnboardingFlow.update { value }
+        return Result.success(Unit)
+    }
+
+    override fun hasShownAliasContactsOnboarding(): Flow<Boolean> = hasShownAliasContactsOnboardingFlow
 
     override fun clearSettings(): Result<Unit> = Result.success(Unit)
 }

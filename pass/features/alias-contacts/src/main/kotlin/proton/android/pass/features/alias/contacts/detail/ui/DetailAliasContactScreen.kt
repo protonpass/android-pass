@@ -50,6 +50,13 @@ fun DetailAliasContactScreen(
         viewModel.onEventConsumed(state.event)
     }
 
+    LaunchedEffect(state.hasShownAliasContactsOnboarding) {
+        if (!state.hasShownAliasContactsOnboarding) {
+            viewModel.onShowOnboarding()
+            onNavigate(AliasContactsNavigation.OnBoardingContacts)
+        }
+    }
+
     DetailAliasContactContent(
         modifier = modifier,
         state = state,

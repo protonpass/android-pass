@@ -46,7 +46,7 @@ internal fun OptionsAliasContactContent(
     state: OptionsAliasUIState,
     onUiEvent: (OptionsAliasBottomSheetUiEvent) -> Unit
 ) {
-    val bottomSheetItems = mutableListOf<BottomSheetItem>().apply {
+    val bottomSheetItems = buildList {
         add(
             sendEmail(
                 isEnabled = !state.isAnyLoading,

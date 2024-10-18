@@ -31,9 +31,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
+import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 import proton.android.pass.composecomponents.impl.loading.PassFullScreenLoading
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.topbar.IconTopAppBar
@@ -54,17 +56,26 @@ fun DetailAliasContactContent(
         topBar = {
             IconTopAppBar(
                 actions = {
-                    LoadingCircleButton(
-                        color = PassTheme.colors.aliasInteractionNormMajor1,
-                        isLoading = false,
-                        text = {
-                            Text.Body2Regular(
-                                text = stringResource(R.string.create_contact_button),
-                                color = PassTheme.colors.textInvert
-                            )
-                        },
-                        onClick = { onEvent(DetailAliasContactUIEvent.CreateContact) }
-                    )
+                    if (!state.canManageContacts) {
+                        UpgradeButton(
+                            modifier = Modifier.padding(Spacing.mediumSmall, 0.dp),
+                            backgroundColor = PassTheme.colors.aliasInteractionNormMajor1,
+                            contentColor = PassTheme.colors.textInvert,
+                            onUpgradeClick = { onEvent(DetailAliasContactUIEvent.Upgrade) }
+                        )
+                    } else {
+                        LoadingCircleButton(
+                            color = PassTheme.colors.aliasInteractionNormMajor1,
+                            isLoading = false,
+                            text = {
+                                Text.Body2Regular(
+                                    text = stringResource(R.string.create_contact_button),
+                                    color = PassTheme.colors.textInvert
+                                )
+                            },
+                            onClick = { onEvent(DetailAliasContactUIEvent.CreateContact) }
+                        )
+                    }
                 },
                 navigationIcon = {
                     BackArrowCircleIconButton(

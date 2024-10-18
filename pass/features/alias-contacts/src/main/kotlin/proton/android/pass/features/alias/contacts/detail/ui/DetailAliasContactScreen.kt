@@ -78,6 +78,7 @@ fun DetailAliasContactScreen(
                 DetailAliasContactUIEvent.EditSenderName -> viewModel.onEnterSenderNameEditMode()
                 is DetailAliasContactUIEvent.OnSenderNameChanged -> viewModel.onSenderNameChanged(it.name)
                 DetailAliasContactUIEvent.UpdateSenderName -> viewModel.onSenderNameUpdate()
+                DetailAliasContactUIEvent.Upgrade -> onNavigate(AliasContactsNavigation.Upgrade)
             }
         }
     )

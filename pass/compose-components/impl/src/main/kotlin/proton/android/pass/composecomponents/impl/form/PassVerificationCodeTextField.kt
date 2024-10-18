@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -41,6 +42,8 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.subheadlineNorm
@@ -48,6 +51,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.applyIf
 
 @Composable
@@ -127,4 +131,18 @@ fun PassVerificationCodeTextField(
     )
 
     RequestFocusLaunchedEffect(focusRequester)
+}
+
+@[Preview Composable]
+internal fun PassVerificationCodeTextFieldPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            PassVerificationCodeTextField(
+                verificationCode = "1234",
+                verificationCodeLength = 6,
+                canEnterVerificationCode = true,
+                onVerificationCodeChange = {}
+            )
+        }
+    }
 }

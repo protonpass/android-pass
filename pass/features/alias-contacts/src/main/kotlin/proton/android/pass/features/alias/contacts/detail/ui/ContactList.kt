@@ -20,6 +20,8 @@ package proton.android.pass.features.alias.contacts.detail.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -44,6 +46,7 @@ fun ContactList(
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)) {
         if (forwardingContacts.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(Spacing.extraSmall))
             Text.Body2Regular(stringResource(R.string.forwarding_addresses_subtitle))
             forwardingContacts.forEach { contact ->
                 ContactRow(
@@ -55,6 +58,7 @@ fun ContactList(
         }
 
         if (blockedContacts.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(Spacing.extraSmall))
             Text.Body3Regular(
                 modifier = Modifier.padding(horizontal = Spacing.small),
                 text = stringResource(R.string.blocked_addresses_subtitle),

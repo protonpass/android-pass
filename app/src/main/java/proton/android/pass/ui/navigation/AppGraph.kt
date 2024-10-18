@@ -692,12 +692,8 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 ProfileNavigation.AliasesSyncManagement -> appNavigator.navigate(
-                    destination = SimpleLoginSyncMailboxVerifyNavItem,
-                    route = SimpleLoginSyncMailboxVerifyNavItem.buildRoute(1L)
-
+                    destination = SimpleLoginSyncManagementNavItem
                 )
-
-
 
                 is ProfileNavigation.AliasesSyncSettings -> appNavigator.navigate(
                     destination = SimpleLoginSyncSettingsNavItem,

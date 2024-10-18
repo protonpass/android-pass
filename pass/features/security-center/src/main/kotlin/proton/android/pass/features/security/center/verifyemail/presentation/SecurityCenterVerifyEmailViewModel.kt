@@ -31,7 +31,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.CommonRegex
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -66,30 +65,26 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
         .let(NavParamEncoder::decode)
 
     @OptIn(SavedStateHandleSaveableApi::class)
-    var code: String by savedStateHandleProvider.get()
+    internal var code: String by savedStateHandleProvider.get()
         .saveable { mutableStateOf("") }
 
-    private val eventFlow =
-        MutableStateFlow<SecurityCenterVerifyEmailEvent>(SecurityCenterVerifyEmailEvent.Idle)
+    private val eventFlow = MutableStateFlow<SecurityCenterVerifyEmailEvent>(
+        value = SecurityCenterVerifyEmailEvent.Idle
+    )
 
-    private val isLoadingFlow: MutableStateFlow<IsLoadingState> =
-        MutableStateFlow(IsLoadingState.NotLoading)
-    private val isResendingCodeFlow: MutableStateFlow<IsLoadingState> =
-        MutableStateFlow(IsLoadingState.NotLoading)
-    private val codeNotValidStateFlow = MutableStateFlow(false)
+    private val isLoadingFlow: MutableStateFlow<IsLoadingState> = MutableStateFlow(
+        value = IsLoadingState.NotLoading
+    )
 
-    internal val state: StateFlow<SecurityCenterVerifyEmailState> = combine(
+    internal val stateFlow: StateFlow<SecurityCenterVerifyEmailState> = combine(
         eventFlow,
-        codeNotValidStateFlow,
-        isLoadingFlow,
-        isResendingCodeFlow
-    ) { event, codeNotValid, isLoading, isResendingCode ->
+        isLoadingFlow
+    ) { event, isLoadingState ->
         SecurityCenterVerifyEmailState(
             email = email,
-            isError = codeNotValid,
+            verificationCode = code,
             event = event,
-            isLoadingState = isLoading,
-            isResendingCodeState = isResendingCode
+            isLoadingState = isLoadingState
         )
     }.stateIn(
         scope = viewModelScope,
@@ -101,63 +96,64 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
         eventFlow.compareAndSet(event, SecurityCenterVerifyEmailEvent.Idle)
     }
 
-    internal fun onCodeChange(text: String) {
-        code = text.replace(CommonRegex.NON_DIGIT_REGEX, "")
-        codeNotValidStateFlow.update { false }
+    internal fun onCodeChange(newCode: String) {
+        code = newCode
     }
 
     internal fun verifyCode() {
         viewModelScope.launch {
-            if (code.isBlank()) {
-                codeNotValidStateFlow.update { true }
-            } else {
-                isLoadingFlow.update { IsLoadingState.Loading }
-                runCatching {
-                    verifyBreachCustomEmail(id = id, code = code)
-                }.onSuccess {
-                    eventFlow.update { SecurityCenterVerifyEmailEvent.EmailVerified }
-                }.onFailure {
-                    PassLogger.i(TAG, "Failed to verify email")
-                    PassLogger.w(TAG, it)
+            isLoadingFlow.update { IsLoadingState.Loading }
 
-                    when (it) {
+            runCatching { verifyBreachCustomEmail(id = id, code = code) }
+                .onSuccess {
+                    eventFlow.update { SecurityCenterVerifyEmailEvent.EmailVerified }
+                }
+                .onFailure { error ->
+                    PassLogger.i(TAG, "Failed to verify email")
+                    PassLogger.w(TAG, error)
+
+                    when (error) {
                         is CustomEmailDoesNotExistException -> {
                             snackbarDispatcher(SecurityCenterVerifyEmailSnackbarMessage.TooManyVerificationsError)
                             eventFlow.update { SecurityCenterVerifyEmailEvent.GoBackToHome }
                         }
 
                         is InvalidVerificationCodeException -> {
-                            codeNotValidStateFlow.update { true }
+                            snackbarDispatcher(SecurityCenterVerifyEmailSnackbarMessage.InvalidVerificationError)
                         }
 
                         else -> {
-                            codeNotValidStateFlow.update { true }
+                            snackbarDispatcher(SecurityCenterVerifyEmailSnackbarMessage.VerificationError)
                         }
                     }
-
                 }
-                isLoadingFlow.update { IsLoadingState.NotLoading }
 
-            }
+            isLoadingFlow.update { IsLoadingState.NotLoading }
         }
     }
 
     internal fun resendCode() {
         viewModelScope.launch {
-            isResendingCodeFlow.update { IsLoadingState.Loading }
-            runCatching {
-                resendVerificationCode(id = id)
-                snackbarDispatcher(ResendCodeSuccess)
-            }.onFailure {
-                PassLogger.w(TAG, it)
-                PassLogger.i(TAG, "Failed to resend code")
-                snackbarDispatcher(ResendCodeError)
-            }
-            isResendingCodeFlow.update { IsLoadingState.NotLoading }
+            isLoadingFlow.update { IsLoadingState.Loading }
+
+            runCatching { resendVerificationCode(id = id) }
+                .onSuccess {
+                    snackbarDispatcher(ResendCodeSuccess)
+                }
+                .onFailure {
+                    PassLogger.w(TAG, it)
+                    PassLogger.i(TAG, "Failed to resend code")
+                    snackbarDispatcher(ResendCodeError)
+                }
+
+            isLoadingFlow.update { IsLoadingState.NotLoading }
         }
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "SecurityCenterVerifyEmailViewModel"
+
     }
+
 }

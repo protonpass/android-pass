@@ -17,11 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="bottomsheet_copy_email">Kopiér e-mail</string>
   <string name="bottomsheet_copy_password">Kopiér adgangskode</string>
   <string name="bottomsheet_copy_username">Kopiér brugernavn</string>
+  <string name="bottomsheet_no_actions">Ingen tilgængelige handlinger</string>
   <string name="snackbar_item_move_to_trash_success">Element flyttet til papirkurv</string>
   <string name="snackbar_item_move_to_trash_error">Kunne ikke flytte til papirkurv</string>
+  <string name="snackbar_item_copy_email_success">E-mail kopieret til udklipsholder</string>
   <string name="snackbar_item_copy_username_success">Brugernavn kopieret til udklipsholder</string>
   <string name="snackbar_item_copy_password_success">Adgangskode kopieret til udklipsholder</string>
-  <string name="snackbar_item_copy_clipboard_error">Kunne ikke kopiere til udklipsholder</string>
 </resources>

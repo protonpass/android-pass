@@ -44,8 +44,12 @@
   <string name="action_continue">Jatka</string>
   <string name="action_retry">Yritä uudelleen</string>
   <string name="action_edit">Muokkaa</string>
-  <string name="action_update">Vaihda</string>
+  <string name="action_add">Lisää</string>
+  <string name="action_delete">Poista</string>
+  <string name="action_make_default">Make default</string>
+  <string name="action_verify">Verify</string>
   <string name="action_close">Sulje</string>
+  <string name="action_update">Vaihda</string>
   <!-- Empty list -->
   <string name="empty_list_title">Lisää ensimmäinen kohteesi</string>
   <string name="empty_search_results_title">Tuloksia ei löytynyt</string>
@@ -140,7 +144,6 @@
   <string name="item_details_credit_card_section_pin_title">PIN-koodi</string>
   <string name="item_details_login_section_email_title">Sähköpostiosoite</string>
   <string name="item_details_login_section_username_title">Käyttäjätunnus</string>
-  <string name="item_details_login_section_username_or_username_title">Käyttäjätunnus tai sähköpostiosoite</string>
   <string name="item_details_login_section_password_title">Salasana</string>
   <string name="item_details_login_section_primary_totp_title">Vahvistuskoodi (TOTP)</string>
   <string name="item_details_login_section_websites_title">Verkkosivustot</string>
@@ -199,10 +202,23 @@
   <string name="dialog_upgrade_plan_action_cancel">Ei nyt</string>
   <!-- Words -->
   <string name="email_address">Sähköpostiosoite</string>
+  <string name="email_address_invalid">Invalid email address</string>
   <string name="password">Salasana</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Painike, joka sulkee työkaluvihjeen ja estää sitä näkymästä uudelleen.</string>
   <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="one">%d year</item>
+    <item quantity="other">%d years</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="one">%d month</item>
+    <item quantity="other">%d months</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="one">%d week</item>
+    <item quantity="other">%d weeks</item>
+  </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d vuorokausi</item>
     <item quantity="other">%d vuorokautta</item>
@@ -218,6 +234,10 @@
   <plurals name="time_unit_seconds">
     <item quantity="one">%d sekunti</item>
     <item quantity="other">%d sekuntia</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="one">%d alias</item>
+    <item quantity="other">%d aliases</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Muistiinpano kopioitiin</string>

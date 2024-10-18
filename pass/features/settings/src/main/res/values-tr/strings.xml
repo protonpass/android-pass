@@ -31,8 +31,9 @@
   <string name="settings_share_telemetry">Anonim kullanım verileri paylaşılsın</string>
   <string name="settings_share_crashes">Anonim çökme bildirimleri paylaşılsın</string>
   <string name="settings_preference_updated">Tercihleriniz güncellendi</string>
-  <string name="settings_display_section_title">Display</string>
-  <string name="settings_preference_display_username">Username field always visible</string>
+  <string name="settings_display_section_title">Görünüm</string>
+  <string name="settings_preference_display_username">Kullanıcı adı alanı her zaman görüntülensin</string>
+  <string name="settings_preference_display_autofill_pinning">Otomatik doldurma sabitlemesi her zaman görünür</string>
   <string name="view_logs_title">Günlüğü görüntüle</string>
   <string name="clipboard_bottomsheet_title">Pano</string>
   <string name="clipboard_option_clear_clipboard_label">Panoyu temizle</string>

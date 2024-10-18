@@ -31,8 +31,9 @@
   <string name="settings_share_telemetry">Telemetria anonima</string>
   <string name="settings_share_crashes">Segnalazioni anonime</string>
   <string name="settings_preference_updated">Preferenza aggiornata</string>
-  <string name="settings_display_section_title">Display</string>
-  <string name="settings_preference_display_username">Username field always visible</string>
+  <string name="settings_display_section_title">Mostra</string>
+  <string name="settings_preference_display_username">Campo nome utente sempre visibile</string>
+  <string name="settings_preference_display_autofill_pinning">Compilazione automatica sempre visibile</string>
   <string name="view_logs_title">Visualizza i log</string>
   <string name="clipboard_bottomsheet_title">Appunti</string>
   <string name="clipboard_option_clear_clipboard_label">Cancellazione degli appunti</string>

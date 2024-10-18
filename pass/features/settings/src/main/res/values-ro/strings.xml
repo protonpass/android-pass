@@ -31,8 +31,9 @@
   <string name="settings_share_telemetry">Partajare anonimă utilizare</string>
   <string name="settings_share_crashes">Partajare anonimă rapoarte de erori</string>
   <string name="settings_preference_updated">Preferințele au fost actualizate.</string>
-  <string name="settings_display_section_title">Display</string>
-  <string name="settings_preference_display_username">Username field always visible</string>
+  <string name="settings_display_section_title">Afișare</string>
+  <string name="settings_preference_display_username">Câmp nume de utilizator permanent vizibil</string>
+  <string name="settings_preference_display_autofill_pinning">Fixare autocompletare permanent vizibilă</string>
   <string name="view_logs_title">Afișare jurnale</string>
   <string name="clipboard_bottomsheet_title">Memorie</string>
   <string name="clipboard_option_clear_clipboard_label">Golire memorie</string>

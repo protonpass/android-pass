@@ -104,4 +104,18 @@
   <string name="passkey_detail_bottomsheet_domain">Domaine</string>
   <string name="passkey_detail_bottomsheet_key">Clé</string>
   <string name="passkey_detail_bottomsheet_created">Créé le</string>
+  <string name="activity_in_last_two_weeks">Activité des 2 dernières semaines</string>
+  <string name="contacts">Contacts</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s transfert</item>
+    <item quantity="other">%1$s transferts</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s réponse</item>
+    <item quantity="other">%1$s réponses</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s bloqué</item>
+    <item quantity="other">%1$s bloqués</item>
+  </plurals>
 </resources>

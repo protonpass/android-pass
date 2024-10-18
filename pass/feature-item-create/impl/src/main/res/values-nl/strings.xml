@@ -128,7 +128,7 @@
   <string name="identity_field_reddit_title">Reddit gebruikersnaam</string>
   <string name="identity_field_facebook_title">Facebook-URL</string>
   <string name="identity_field_yahoo_title">Yahoo-gebruikersnaam</string>
-  <string name="identity_field_instagram_title">Instagram username</string>
+  <string name="identity_field_instagram_title">Instagram gebruikersnaam</string>
   <string name="identity_field_personal_website_title">URL naar persoonlijke website</string>
   <string name="identity_field_work_phone_number_title">Telefoonnummer werk</string>
   <string name="identity_field_work_email_title">E-mailadres werk</string>
@@ -143,7 +143,7 @@
   <string name="identity_add_field_reddit">Reddit gebruikersnaam</string>
   <string name="identity_add_field_facebook">Facebook-URL</string>
   <string name="identity_add_field_yahoo">Yahoo-gebruikersnaam</string>
-  <string name="identity_add_field_instagram">Instagram username</string>
+  <string name="identity_add_field_instagram">Instagram gebruikersnaam</string>
   <string name="identity_add_field_personal_website">URL naar persoonlijke website</string>
   <string name="identity_add_field_work_phone_number">Telefoonnummer werk</string>
   <string name="identity_add_field_work_email_address">E-mailadres werk</string>

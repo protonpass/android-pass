@@ -21,9 +21,9 @@
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
   <string name="security_center_home_dark_web_monitoring_title">Monitorovanie Dark Webu</string>
   <string name="security_center_home_widget_breaches_title">Zistený únik</string>
-  <string name="security_center_home_widget_breaches_subtitle">Vaša emailová adresa unikla najmenej v 1 prípade porušenia ochrany osobných údajov.</string>
+  <string name="security_center_home_widget_breaches_subtitle">Vaša emailová adresa unikla najmenej v jednom prípade porušenia ochrany osobných údajov.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">Dostávajte upozornenia, ak došlo k úniku vášho emailu, hesla alebo iných osobných údajov.</string>
-  <string name="security_center_home_row_no_data_breaches_subtitle">Nebol zistený únik</string>
+  <string name="security_center_home_row_no_data_breaches_subtitle">Nebol zistený žiadny únik</string>
   <string name="security_center_home_row_data_breaches_title">Výstraha z Dark Webu</string>
   <string name="security_center_home_row_data_breaches_subtitle">Zistené úniky</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
@@ -40,7 +40,7 @@
   <string name="security_center_home_section_password_health">Stav hesla</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_sentinel_subtitle">Proton Sentinel je pokročilý program na ochranu účtov založený na sofistikovaných systémoch AI a špecialistoch pracujúcich nepretržite, aby vás chránili pred útočníkmi a bezpečnostnými hrozbami.</string>
+  <string name="security_center_sentinel_subtitle">Proton Sentinel je pokročilý program na ochranu účtov založený na sofistikovaných systémoch AI a nepretržite pracujúcich špecialistoch, aby vás chránili pred útočníkmi a bezpečnostnými hrozbami.</string>
   <string name="security_center_sentinel_button_enable">Povoliť Proton Sentinel</string>
   <string name="security_center_sentinel_button_disable">Zakázať Proton Sentinel</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">Aktivácia ochrany Proton Sentinel bola zrušená</string>
@@ -52,11 +52,11 @@
   <string name="security_center_weak_pass_top_bar_subtitle">Slabé heslá sa dajú ľahšie uhádnuť. Vygenerujte si silné heslá, aby boli vaše účty v bezpečí.</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Opakovane použité heslá</string>
-  <string name="security_center_reused_pass_top_bar_subtitle">Vygenerujte jedinečné heslá pre každé konto, aby ste zvýšili svoju bezpečnosť.</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">Vygenerujte si jedinečné heslá pre každé konto, aby ste zvýšili svoju bezpečnosť.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Použité %1$d-krát</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Neaktívne 2FA</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">Na zvýšenie bezpečnosti nastavte dvojfaktorové overovanie na týchto účtoch.</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">Na zvýšenie bezpečnosti nastavte dvojfázové overovanie na týchto účtoch.</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Vylúčené položky</string>
   <!-- Dark web monitor -->

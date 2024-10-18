@@ -43,8 +43,12 @@
   <string name="action_continue">Tiếp tục</string>
   <string name="action_retry">Thử lại</string>
   <string name="action_edit">Chỉnh sửa</string>
-  <string name="action_update">Cập nhật</string>
+  <string name="action_add">Thêm</string>
+  <string name="action_delete">Xóa</string>
+  <string name="action_make_default">Make default</string>
+  <string name="action_verify">Verify</string>
   <string name="action_close">Đóng</string>
+  <string name="action_update">Cập nhật</string>
   <!-- Empty list -->
   <string name="empty_list_title">Thêm nội dung đầu tiên của bạn</string>
   <string name="empty_search_results_title">Không có kết quả được tìm thấy</string>
@@ -138,7 +142,6 @@
   <string name="item_details_credit_card_section_pin_title">Mã PIN</string>
   <string name="item_details_login_section_email_title">Địa chỉ email</string>
   <string name="item_details_login_section_username_title">Tên người dùng</string>
-  <string name="item_details_login_section_username_or_username_title">Tên đăng nhập hoặc Email</string>
   <string name="item_details_login_section_password_title">Mật khẩu</string>
   <string name="item_details_login_section_primary_totp_title">Mã bảo mật 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Các trang web</string>
@@ -197,10 +200,20 @@
   <string name="dialog_upgrade_plan_action_cancel">Để sau</string>
   <!-- Words -->
   <string name="email_address">Địa chỉ email</string>
+  <string name="email_address_invalid">Invalid email address</string>
   <string name="password">Mật khẩu</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Nút để tắt đi hướng dẫn và không bao giờ hiện lại nó</string>
   <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="other">%d years</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="other">%d months</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="other">%d weeks</item>
+  </plurals>
   <plurals name="time_unit_days">
     <item quantity="other">%d ngày</item>
   </plurals>
@@ -212,6 +225,9 @@
   </plurals>
   <plurals name="time_unit_seconds">
     <item quantity="other">%d giây</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="other">%d aliases</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Đã copy</string>

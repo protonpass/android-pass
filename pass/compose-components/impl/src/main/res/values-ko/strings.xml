@@ -43,8 +43,12 @@
   <string name="action_continue">계속하기</string>
   <string name="action_retry">다시 시도하기</string>
   <string name="action_edit">편집</string>
-  <string name="action_update">업데이트</string>
+  <string name="action_add">추가</string>
+  <string name="action_delete">삭제</string>
+  <string name="action_make_default">Make default</string>
+  <string name="action_verify">Verify</string>
   <string name="action_close">닫기</string>
+  <string name="action_update">업데이트</string>
   <!-- Empty list -->
   <string name="empty_list_title">첫 번째 항목 추가</string>
   <string name="empty_search_results_title">결과가 없습니다</string>
@@ -138,7 +142,6 @@
   <string name="item_details_credit_card_section_pin_title">PIN 코드</string>
   <string name="item_details_login_section_email_title">이메일 주소</string>
   <string name="item_details_login_section_username_title">사용자 이름</string>
-  <string name="item_details_login_section_username_or_username_title">사용자 이름 또는 이메일 주소</string>
   <string name="item_details_login_section_password_title">비밀번호</string>
   <string name="item_details_login_section_primary_totp_title">2단계 인증 토큰 (TOTP)</string>
   <string name="item_details_login_section_websites_title">웹사이트</string>
@@ -197,10 +200,20 @@
   <string name="dialog_upgrade_plan_action_cancel">다음에</string>
   <!-- Words -->
   <string name="email_address">이메일 주소</string>
+  <string name="email_address_invalid">Invalid email address</string>
   <string name="password">비밀번호</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">이 말풍선을 무시하고 더 이상 보지 않기 위한 버튼</string>
   <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="other">%d years</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="other">%d months</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="other">%d weeks</item>
+  </plurals>
   <plurals name="time_unit_days">
     <item quantity="other">%d일</item>
   </plurals>
@@ -212,6 +225,9 @@
   </plurals>
   <plurals name="time_unit_seconds">
     <item quantity="other">%d초</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="other">%d aliases</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">메모 복사됨</string>

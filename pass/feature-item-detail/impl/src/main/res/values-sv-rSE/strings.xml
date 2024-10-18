@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">E-postadress kopierad</string>
   <string name="username_copied_to_clipboard">Användarnamn kopierad</string>
   <string name="password_copied_to_clipboard">Lösenord kopierat</string>
-  <string name="website_copied_to_clipboard">Web address copied</string>
+  <string name="website_copied_to_clipboard">Webbplats kopierad</string>
   <string name="totp_copied_to_clipboard">TOTP kopierat</string>
   <string name="field_copied_to_clipboard">Fält kopierat</string>
   <string name="move_item_to_trash_message">Objekt flyttat till papperskorg</string>
@@ -104,4 +104,18 @@
   <string name="passkey_detail_bottomsheet_domain">Domän</string>
   <string name="passkey_detail_bottomsheet_key">Nyckel</string>
   <string name="passkey_detail_bottomsheet_created">Skapad</string>
+  <string name="activity_in_last_two_weeks">Aktivitet under de senaste två veckorna</string>
+  <string name="contacts">Kontakter</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s forward</item>
+    <item quantity="other">%1$s forwards</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s svar</item>
+    <item quantity="other">%1$s svar</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s blockering</item>
+    <item quantity="other">%1$s blockeringar</item>
+  </plurals>
 </resources>

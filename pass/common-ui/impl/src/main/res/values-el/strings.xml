@@ -17,11 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="bottomsheet_copy_email">Αντιγραφη του email</string>
   <string name="bottomsheet_copy_password">Αντιγραφή συνθηματικού</string>
   <string name="bottomsheet_copy_username">Αντιγραφή ονόματος χρήστη</string>
+  <string name="bottomsheet_no_actions">Δεν υπάρχει διαθέσιμες λειτουργίες</string>
   <string name="snackbar_item_move_to_trash_success">Το στοιχείο μετακινήθηκε στον κάδο απορριμμάτων</string>
   <string name="snackbar_item_move_to_trash_error">Δεν ήταν δυνατή η μετακίνηση στον κάδο απορριμμάτων</string>
+  <string name="snackbar_item_copy_email_success">Το email αντιγράφτηκε στο πρόχειρο</string>
   <string name="snackbar_item_copy_username_success">Το όνομα χρήστη αντιγράφηκε στο πρόχειρο</string>
   <string name="snackbar_item_copy_password_success">Ο κωδικός πρόσβασης αντιγράφηκε στο πρόχειρο</string>
-  <string name="snackbar_item_copy_clipboard_error">Αδυναμία αντιγραφής στο πρόχειρο</string>
 </resources>

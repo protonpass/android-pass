@@ -17,11 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="bottomsheet_copy_email">Copiere e-mail</string>
   <string name="bottomsheet_copy_password">Copiere parolă</string>
   <string name="bottomsheet_copy_username">Copiere nume utilizator</string>
+  <string name="bottomsheet_no_actions">Nu există acțiuni disponibile</string>
   <string name="snackbar_item_move_to_trash_success">Articolul s-a mutat în gunoi.</string>
   <string name="snackbar_item_move_to_trash_error">Articolul nu s-a putut muta în gunoi.</string>
+  <string name="snackbar_item_copy_email_success">Adresa de e-mail s-a copiat în memorie.</string>
   <string name="snackbar_item_copy_username_success">Numele de utilizator s-a copiat în memorie.</string>
   <string name="snackbar_item_copy_password_success">Parola a fost copiată în memorie.</string>
-  <string name="snackbar_item_copy_clipboard_error">Nu s-a putut copia în memorie.</string>
 </resources>

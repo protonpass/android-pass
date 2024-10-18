@@ -43,8 +43,12 @@
   <string name="action_continue">続行</string>
   <string name="action_retry">再試行</string>
   <string name="action_edit">編集</string>
-  <string name="action_update">Update</string>
+  <string name="action_add">追加</string>
+  <string name="action_delete">削除</string>
+  <string name="action_make_default">Make default</string>
+  <string name="action_verify">Verify</string>
   <string name="action_close">Close</string>
+  <string name="action_update">Update</string>
   <!-- Empty list -->
   <string name="empty_list_title">最初の項目を追加</string>
   <string name="empty_search_results_title">結果が見つかりません</string>
@@ -138,7 +142,6 @@
   <string name="item_details_credit_card_section_pin_title">PIN コード</string>
   <string name="item_details_login_section_email_title">メールアドレス</string>
   <string name="item_details_login_section_username_title">ユーザー名</string>
-  <string name="item_details_login_section_username_or_username_title">ユーザー名またはメールアドレス</string>
   <string name="item_details_login_section_password_title">パスワード</string>
   <string name="item_details_login_section_primary_totp_title">2 要素認証トークン (TOTP)</string>
   <string name="item_details_login_section_websites_title">ウェブサイト</string>
@@ -197,10 +200,20 @@
   <string name="dialog_upgrade_plan_action_cancel">後で</string>
   <!-- Words -->
   <string name="email_address">メールアドレス</string>
+  <string name="email_address_invalid">Invalid email address</string>
   <string name="password">パスワード</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">このツールヒントを閉じて再度表示しないようにするボタン</string>
   <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="other">%d years</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="other">%d months</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="other">%d weeks</item>
+  </plurals>
   <plurals name="time_unit_days">
     <item quantity="other">%d 日</item>
   </plurals>
@@ -212,6 +225,9 @@
   </plurals>
   <plurals name="time_unit_seconds">
     <item quantity="other">%d 秒</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="other">%d aliases</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">メモをコピーしました</string>

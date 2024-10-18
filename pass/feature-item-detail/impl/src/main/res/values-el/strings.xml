@@ -104,4 +104,18 @@
   <string name="passkey_detail_bottomsheet_domain">Τομέας</string>
   <string name="passkey_detail_bottomsheet_key">Κλειδί</string>
   <string name="passkey_detail_bottomsheet_created">Δημιουργήθηκε</string>
+  <string name="activity_in_last_two_weeks">Δραστηριότητα τις τελευταίες δύο εβδομάδες</string>
+  <string name="contacts">Επαφές</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s προώθηση</item>
+    <item quantity="other">%1$s προωθήσεις</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s απάντηση</item>
+    <item quantity="other">%1$s απαντήσεις</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s μπλοκ</item>
+    <item quantity="other">%1$s μπλοκ</item>
+  </plurals>
 </resources>

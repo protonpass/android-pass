@@ -95,7 +95,7 @@
   <string name="sharing_snackbar_confirm_invite_success">Se ha confirmado la invitación.</string>
   <string name="sharing_snackbar_confirm_invite_error">Error al confirmar la invitación</string>
   <string name="sharing_snackbar_too_many_invites_sent">La dirección ha sido invitada demasiadas veces</string>
-  <string name="sharing_snackbar_transfer_ownership_success">Titularidad transferida</string>
+  <string name="sharing_snackbar_transfer_ownership_success">Propiedad transferida</string>
   <string name="sharing_snackbar_transfer_ownership_error">Error al transferir la titularidad</string>
   <string name="sharing_invites_info_dialog_title">Límite de miembros</string>
   <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">

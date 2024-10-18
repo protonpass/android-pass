@@ -28,7 +28,7 @@
   <string name="cancel_tips_button">Avbryt</string>
   <string name="contact_us_button">Kontakta oss</string>
   <string name="hint_tips_screen">Fungerade det inte?</string>
-  <string name="report_reason_autofill">Autofill</string>
+  <string name="report_reason_autofill">Fyll automatiskt</string>
   <string name="report_reason_sharing">Delning</string>
   <string name="report_reason_sync">Synkronisera</string>
   <string name="report_reason_passkeys">Passkeys</string>

@@ -47,7 +47,6 @@ internal fun SimpleLoginSyncMailboxVerifyContent(
             onUiEvent(SimpleLoginSyncMailboxVerifyUiEvent.OnVerifyClicked)
         },
         verificationCode = verificationCode,
-        verificationCodeLength = verificationCodeLength,
         canEnterVerificationCode = canEnterVerificationCode,
         onVerificationCodeChange = { newVerificationCode ->
             SimpleLoginSyncMailboxVerifyUiEvent.OnVerificationCodeChanged(

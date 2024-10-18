@@ -25,6 +25,7 @@ sealed interface DetailAliasContactUIEvent {
     data object CreateContact : DetailAliasContactUIEvent
     data object Help : DetailAliasContactUIEvent
     data object LearnMore : DetailAliasContactUIEvent
+    data object Upgrade : DetailAliasContactUIEvent
 
     data object UpdateSenderName : DetailAliasContactUIEvent
     data object EditSenderName : DetailAliasContactUIEvent

@@ -48,6 +48,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
+import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.data.api.usecases.UpdateAliasName
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.data.api.usecases.aliascontact.UpdateBlockedAliasContact
@@ -79,6 +80,7 @@ class DetailAliasContactViewModel @Inject constructor(
     private val internalSettingsRepository: InternalSettingsRepository,
     observeAliasDetails: ObserveAliasDetails,
     observeAliasContacts: ObserveAliasContacts,
+    observeUserAccessData: ObserveUserAccessData,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -122,9 +124,10 @@ class DetailAliasContactViewModel @Inject constructor(
         contactsFlow,
         contactBlockIsLoadingFlow,
         senderNameUIStateFlow,
-        internalSettingsRepository.hasShownAliasContactsOnboarding()
+        internalSettingsRepository.hasShownAliasContactsOnboarding(),
+        observeUserAccessData().asLoadingResult()
     ) { event, aliasDetailsResult, aliasContactsResult, contactBlockIsLoading, senderNameUIState,
-        hasShownAliasContactsOnboarding ->
+        hasShownAliasContactsOnboarding, userAccessDataResult ->
         val aliasDetails = aliasDetailsResult.getOrNull()
         val emptyPair = emptyList<Contact>() to emptyList<Contact>()
         val (blockedContacts, forwardingContacts) = aliasContactsResult.getOrNull() ?: emptyPair
@@ -141,7 +144,8 @@ class DetailAliasContactViewModel @Inject constructor(
                 forwardingContacts = forwardingContacts.toPersistentList(),
                 blockedContacts = blockedContacts.toPersistentList(),
                 isLoading = aliasContactsResult is LoadingResult.Loading
-            )
+            ),
+            canManageContacts = userAccessDataResult.getOrNull()?.canManageSimpleLoginAliases ?: false
         )
     }
         .stateIn(

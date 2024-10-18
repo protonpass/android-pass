@@ -2091,6 +2091,8 @@ fun NavGraphBuilder.appGraph(
             AliasContactsNavigation.CloseBottomSheet -> dismissBottomSheet {
                 appNavigator.navigateBack(comesFromBottomsheet = true)
             }
+
+            AliasContactsNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
         }
     }
 }

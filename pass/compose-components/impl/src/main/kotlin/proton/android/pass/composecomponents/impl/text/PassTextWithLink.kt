@@ -18,12 +18,10 @@
 
 package proton.android.pass.composecomponents.impl.text
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -36,17 +34,15 @@ private const val LINK_ANNOTATION_TAG = "link_tag"
 @Composable
 fun PassTextWithLink(
     modifier: Modifier = Modifier,
-    @StringRes textResId: Int,
+    text: String,
     textStyle: TextStyle,
-    @StringRes linkResId: Int,
+    linkText: String,
     linkStyle: TextStyle,
     onLinkClick: (String) -> Unit,
     textAlign: TextAlign = TextAlign.Start,
     tag: String = LINK_ANNOTATION_TAG,
     annotation: String = LINK_ANNOTATION
 ) {
-    val linkText = stringResource(id = linkResId)
-    val text = stringResource(id = textResId, linkText)
     val linkStartIndex = remember { text.indexOf(linkText) }
     val linkEndIndex = remember { linkStartIndex + linkText.length }
 
@@ -79,7 +75,7 @@ fun PassTextWithLink(
                     end = offset
                 )
                     .firstOrNull()
-                    ?.let { annotation ->
+                    ?.also { annotation ->
                         onLinkClick(annotation.item)
                     }
             }

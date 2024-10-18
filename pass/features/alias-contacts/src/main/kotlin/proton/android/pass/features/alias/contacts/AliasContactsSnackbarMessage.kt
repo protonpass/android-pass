@@ -35,5 +35,8 @@ enum class AliasContactsSnackbarMessage(
     ContactUnblockSuccess(R.string.snackbar_contact_unblock_success, SnackbarType.SUCCESS),
     ContactUnblockError(R.string.snackbar_contact_unblock_error, SnackbarType.ERROR),
     SenderNameUpdateSuccess(R.string.snackbar_sender_name_success, SnackbarType.SUCCESS),
-    SenderNameUpdateError(R.string.snackbar_sender_name_error, SnackbarType.ERROR)
+    SenderNameUpdateError(R.string.snackbar_sender_name_error, SnackbarType.ERROR),
+    EmailCopiedToClipboard(R.string.snackbar_email_copied_success, SnackbarType.NORM),
+    DeleteContactSuccess(R.string.snackbar_delete_contact_success, SnackbarType.SUCCESS),
+    DeleteContactError(R.string.snackbar_delete_contact_error, SnackbarType.ERROR)
 }

@@ -16,16 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.alias.contacts.detail.ui
+package proton.android.pass.features.alias.contacts.options.presentation
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
+internal sealed interface OptionsAliasEvent {
 
-fun sendEmail(context: Context, email: String) {
-    val emailIntent = Intent(Intent.ACTION_SENDTO)
-    emailIntent.setData(Uri.parse("mailto:$email"))
-    if (emailIntent.resolveActivity(context.packageManager) != null) {
-        context.startActivity(emailIntent)
-    }
+    data object Idle : OptionsAliasEvent
+
+    data object Close : OptionsAliasEvent
+
+    @JvmInline
+    value class SendEmail(val email: String) : OptionsAliasEvent
+
 }

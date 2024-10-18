@@ -74,10 +74,12 @@ internal fun SimpleLoginSyncMailboxVerifyCodeInput(
                 return@BasicTextField
             }
 
-            clipboardManager.getText()?.text.let { clipboardText ->
-                if (clipboardText == newVerificationCode.takeLast(verificationCodeLength)) {
-                    onVerificationCodeChange(clipboardText)
-                    focusedField = clipboardText.length
+            if (newVerificationCode.length - verificationCodeLength > 1) {
+                clipboardManager.getText()?.text.let { clipboardText ->
+                    if (clipboardText == newVerificationCode.takeLast(verificationCodeLength)) {
+                        onVerificationCodeChange(clipboardText)
+                        focusedField = clipboardText.length
+                    }
                 }
             }
         },
@@ -89,7 +91,7 @@ internal fun SimpleLoginSyncMailboxVerifyCodeInput(
         ),
         decorationBox = {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
+                horizontalArrangement = Arrangement.spacedBy(space = Spacing.mediumSmall)
             ) {
                 repeat(verificationCodeLength) { index ->
                     val verificationCodeDigit = if (index < verificationCode.length) {
@@ -113,8 +115,8 @@ internal fun SimpleLoginSyncMailboxVerifyCodeInput(
                                     background(color = PassTheme.colors.inputBackgroundStrong)
                                 }
                             )
-                            .width(width = Spacing.large)
-                            .padding(all = Spacing.small),
+                            .width(width = Spacing.large.plus(Spacing.small))
+                            .padding(all = Spacing.medium),
                         text = verificationCodeDigit,
                         style = ProtonTheme.typography.subheadlineNorm,
                         textAlign = TextAlign.Center

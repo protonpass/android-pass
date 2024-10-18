@@ -63,10 +63,7 @@ internal fun SimpleLoginSyncMailboxCreateContent(
                 onUpClick = { onUiEvent(SimpleLoginSyncMailboxCreateUiEvent.OnBackClicked) },
                 actions = {
                     LoadingCircleButton(
-                        modifier = Modifier.padding(
-                            horizontal = Spacing.mediumSmall,
-                            vertical = Spacing.small
-                        ),
+                        modifier = Modifier.padding(vertical = Spacing.small),
                         isLoading = isLoading,
                         buttonEnabled = canCreateMailbox(mailboxEmail),
                         color = if (canCreateMailbox(mailboxEmail)) {

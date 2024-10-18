@@ -37,7 +37,8 @@ data class DetailAliasContactUIState(
     val senderNameUIState: SenderNameUIState,
     val aliasContactsListUIState: AliasContactsListUIState,
     val contactBlockIsLoading: PersistentSet<ContactId>,
-    val hasShownAliasContactsOnboarding: Boolean
+    val hasShownAliasContactsOnboarding: Boolean,
+    val canManageContacts: Boolean
 ) {
 
     companion object {
@@ -49,7 +50,8 @@ data class DetailAliasContactUIState(
             senderNameUIState = SenderNameUIState.Empty,
             aliasContactsListUIState = AliasContactsListUIState.Empty,
             contactBlockIsLoading = persistentSetOf(),
-            hasShownAliasContactsOnboarding = true
+            hasShownAliasContactsOnboarding = true,
+            canManageContacts = false
         )
     }
 }

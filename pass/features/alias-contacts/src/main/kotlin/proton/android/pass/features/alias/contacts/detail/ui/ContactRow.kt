@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -130,12 +131,23 @@ fun ContactRow(
 
 @Composable
 private fun getActivitySummary(contact: Contact): String = if (contact.hasActivity) {
-    stringResource(
-        R.string.activity_summary,
+    val forwardedString = pluralStringResource(
+        R.plurals.forwarded_count,
         contact.forwardedEmails ?: 0,
+        contact.forwardedEmails ?: 0
+    )
+    val sentString = pluralStringResource(
+        R.plurals.sent_count,
         contact.repliedEmails ?: 0,
+        contact.repliedEmails ?: 0
+    )
+    val blockedString = pluralStringResource(
+        R.plurals.blocked_count,
+        contact.blockedEmails ?: 0,
         contact.blockedEmails ?: 0
     )
+    val ending = stringResource(R.string.activity_summary)
+    "$forwardedString, $sentString, $blockedString $ending"
 } else {
     stringResource(R.string.no_activity_contact)
 }

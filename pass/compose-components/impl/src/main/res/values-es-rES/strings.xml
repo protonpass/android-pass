@@ -44,8 +44,12 @@
   <string name="action_continue">Continuar</string>
   <string name="action_retry">Reintentar</string>
   <string name="action_edit">Editar</string>
-  <string name="action_update">Actualizar</string>
+  <string name="action_add">Añadir</string>
+  <string name="action_delete">Eliminar</string>
+  <string name="action_make_default">Establecer por defecto</string>
+  <string name="action_verify">Verificar</string>
   <string name="action_close">Cerrar</string>
+  <string name="action_update">Actualizar</string>
   <!-- Empty list -->
   <string name="empty_list_title">Añade tu primer elemento</string>
   <string name="empty_search_results_title">No se han encontrado resultados.</string>
@@ -140,7 +144,6 @@
   <string name="item_details_credit_card_section_pin_title">Código PIN</string>
   <string name="item_details_login_section_email_title">Dirección de correo electrónico</string>
   <string name="item_details_login_section_username_title">Nombre de usuario</string>
-  <string name="item_details_login_section_username_or_username_title">Nombre de usuario o dirección de correo electrónico</string>
   <string name="item_details_login_section_password_title">Contraseña</string>
   <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Sitios web</string>
@@ -199,10 +202,23 @@
   <string name="dialog_upgrade_plan_action_cancel">Ahora no</string>
   <!-- Words -->
   <string name="email_address">Dirección de correo electrónico</string>
+  <string name="email_address_invalid">La dirección de correo electrónico no es válida.</string>
   <string name="password">Contraseña</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Botón para descartar este mensaje y no volverlo a mostrar</string>
   <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="one">%d year</item>
+    <item quantity="other">%d years</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="one">%d month</item>
+    <item quantity="other">%d months</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="one">%d week</item>
+    <item quantity="other">%d weeks</item>
+  </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d día</item>
     <item quantity="other">%d días</item>
@@ -218,6 +234,10 @@
   <plurals name="time_unit_seconds">
     <item quantity="one">%d segundo</item>
     <item quantity="other">%d segundos</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="one">%d alias</item>
+    <item quantity="other">%d alias</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Se ha copiado la nota.</string>

@@ -26,7 +26,7 @@
   <string name="configure_extra_password_mismatch">Wachtwoorden komen niet overeen</string>
   <string name="extra_password_options_remove">Verwijderen</string>
   <string name="info_extra_password_title">Extra wachtwoord</string>
-  <string name="info_extra_password_body">Protect Proton Pass with an extra password.</string>
+  <string name="info_extra_password_body">Bescherm Proton Pass met een extra wachtwoord.</string>
   <string name="info_extra_password_button">Stel uw extra wachtwoord in</string>
   <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>
   <string name="configure_extra_password_password_too_short">Extra password must have at least 8 characters</string>

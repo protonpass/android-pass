@@ -104,4 +104,18 @@
   <string name="passkey_detail_bottomsheet_domain">Domini</string>
   <string name="passkey_detail_bottomsheet_key">Clau</string>
   <string name="passkey_detail_bottomsheet_created">Creada</string>
+  <string name="activity_in_last_two_weeks">Activity in last two weeks</string>
+  <string name="contacts">Contactes</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s reenviament</item>
+    <item quantity="other">%1$s reenviaments</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s resposta</item>
+    <item quantity="other">%1$s respostes</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s block</item>
+    <item quantity="other">%1$s blocks</item>
+  </plurals>
 </resources>

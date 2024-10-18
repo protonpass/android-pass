@@ -103,4 +103,15 @@
   <string name="passkey_detail_bottomsheet_domain">Domain</string>
   <string name="passkey_detail_bottomsheet_key">Kunci</string>
   <string name="passkey_detail_bottomsheet_created">Dibuat</string>
+  <string name="activity_in_last_two_weeks">Aktivitas dalam dua minggu terakhir</string>
+  <string name="contacts">Kontak</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="other">%1$s penerusan</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="other">%1$s balasan</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="other">%1$s pemblokiran</item>
+  </plurals>
 </resources>

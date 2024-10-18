@@ -46,8 +46,12 @@
   <string name="action_continue">Продолжить</string>
   <string name="action_retry">Повторите попытку</string>
   <string name="action_edit">Редактировать</string>
-  <string name="action_update">Обновить</string>
+  <string name="action_add">Добавить</string>
+  <string name="action_delete">Удалить</string>
+  <string name="action_make_default">Make default</string>
+  <string name="action_verify">Verify</string>
   <string name="action_close">Закрыть</string>
+  <string name="action_update">Обновить</string>
   <!-- Empty list -->
   <string name="empty_list_title">Добавьте свой первый элемент</string>
   <string name="empty_search_results_title">Ничего не найдено</string>
@@ -144,7 +148,6 @@
   <string name="item_details_credit_card_section_pin_title">PIN-код</string>
   <string name="item_details_login_section_email_title">Адрес электронной почты</string>
   <string name="item_details_login_section_username_title">Имя пользователя</string>
-  <string name="item_details_login_section_username_or_username_title">Имя пользователя или адрес электронной почты</string>
   <string name="item_details_login_section_password_title">Пароль</string>
   <string name="item_details_login_section_primary_totp_title">Токен 2ФА (TOTP)</string>
   <string name="item_details_login_section_websites_title">Веб-сайты</string>
@@ -203,10 +206,29 @@
   <string name="dialog_upgrade_plan_action_cancel">Не сейчас</string>
   <!-- Words -->
   <string name="email_address">Адрес эл. почты</string>
+  <string name="email_address_invalid">Invalid email address</string>
   <string name="password">Пароль</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Кнопка, чтобы закрыть подсказку и не показывать ее снова</string>
   <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="one">%d year</item>
+    <item quantity="few">%d years</item>
+    <item quantity="many">%d years</item>
+    <item quantity="other">%d years</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="one">%d month</item>
+    <item quantity="few">%d months</item>
+    <item quantity="many">%d months</item>
+    <item quantity="other">%d months</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="one">%d week</item>
+    <item quantity="few">%d weeks</item>
+    <item quantity="many">%d weeks</item>
+    <item quantity="other">%d weeks</item>
+  </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d день</item>
     <item quantity="few">%d дней</item>
@@ -230,6 +252,12 @@
     <item quantity="few">%d секунд</item>
     <item quantity="many">%d секунды</item>
     <item quantity="other">%d секунды</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="one">%d alias</item>
+    <item quantity="few">%d aliases</item>
+    <item quantity="many">%d aliases</item>
+    <item quantity="other">%d aliases</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Заметка скопирована</string>

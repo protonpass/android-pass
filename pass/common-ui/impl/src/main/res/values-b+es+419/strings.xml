@@ -17,11 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="bottomsheet_copy_email">Copiar el correo electrónico</string>
   <string name="bottomsheet_copy_password">Copiar contraseña</string>
   <string name="bottomsheet_copy_username">Copiar nombre de usuario</string>
+  <string name="bottomsheet_no_actions">No hay acciones disponibles</string>
   <string name="snackbar_item_move_to_trash_success">Elemento movido a la papelera</string>
   <string name="snackbar_item_move_to_trash_error">No se pudo mover a la papelera</string>
+  <string name="snackbar_item_copy_email_success">Correo electrónico copiado al portapapeles</string>
   <string name="snackbar_item_copy_username_success">Nombre de usuario copiado al portapapeles.</string>
   <string name="snackbar_item_copy_password_success">Contraseña copiada al portapapeles.</string>
-  <string name="snackbar_item_copy_clipboard_error">No se pudo copiar al portapapeles.</string>
 </resources>

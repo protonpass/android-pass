@@ -44,8 +44,12 @@
   <string name="action_continue">Fortfahren</string>
   <string name="action_retry">Erneut versuchen</string>
   <string name="action_edit">Bearbeiten</string>
-  <string name="action_update">Aktualisieren</string>
+  <string name="action_add">Hinzufügen</string>
+  <string name="action_delete">Löschen</string>
+  <string name="action_make_default">Make default</string>
+  <string name="action_verify">Verify</string>
   <string name="action_close">Schließen</string>
+  <string name="action_update">Aktualisieren</string>
   <!-- Empty list -->
   <string name="empty_list_title">Füge deinen ersten Eintrag hinzu</string>
   <string name="empty_search_results_title">Kein Ergebnis gefunden</string>
@@ -140,7 +144,6 @@
   <string name="item_details_credit_card_section_pin_title">PIN-Code</string>
   <string name="item_details_login_section_email_title">E‐Mail‐Adresse</string>
   <string name="item_details_login_section_username_title">Benutzername</string>
-  <string name="item_details_login_section_username_or_username_title">Benutzername oder E-Mail-Adresse</string>
   <string name="item_details_login_section_password_title">Passwort</string>
   <string name="item_details_login_section_primary_totp_title">2FA-Token (TOTP)</string>
   <string name="item_details_login_section_websites_title">Websites</string>
@@ -199,10 +202,23 @@
   <string name="dialog_upgrade_plan_action_cancel">Nicht jetzt</string>
   <!-- Words -->
   <string name="email_address">E‐Mail‐Adresse</string>
+  <string name="email_address_invalid">Invalid email address</string>
   <string name="password">Passwort</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Schaltfläche, um diesen Tooltip auszublenden und nicht mehr anzuzeigen</string>
   <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="one">%d year</item>
+    <item quantity="other">%d years</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="one">%d month</item>
+    <item quantity="other">%d months</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="one">%d week</item>
+    <item quantity="other">%d weeks</item>
+  </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d Tag</item>
     <item quantity="other">%d Tage</item>
@@ -218,6 +234,10 @@
   <plurals name="time_unit_seconds">
     <item quantity="one">%d Sekunde</item>
     <item quantity="other">%d Sekunden</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="one">%d alias</item>
+    <item quantity="other">%d aliases</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Notiz kopiert</string>
@@ -239,8 +259,8 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">SimpleLogin-Synchronisierung aktivieren</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">We detected that you have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to import it?</item>
-    <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
+    <item quantity="one">Wir haben festgestellt, dass du %d Alias hast, der in SimpleLogin vorhanden ist, aber in Proton Pass fehlt. Möchtest du ihn importieren?</item>
+    <item quantity="other">Wir haben festgestellt, dass du %d Aliasse hast, die in SimpleLogin vorhanden sind, aber in Proton Pass fehlen. Möchtest du sie importieren?</item>
   </plurals>
   <string name="simple_login_widget_action">Aliasse synchronisieren</string>
 </resources>

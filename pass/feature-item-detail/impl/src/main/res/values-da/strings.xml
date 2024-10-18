@@ -104,4 +104,18 @@
   <string name="passkey_detail_bottomsheet_domain">Domæne</string>
   <string name="passkey_detail_bottomsheet_key">Nøgle</string>
   <string name="passkey_detail_bottomsheet_created">Oprettet</string>
+  <string name="activity_in_last_two_weeks">Aktivitet i de seneste to uger</string>
+  <string name="contacts">Kontakter</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s videresendelse</item>
+    <item quantity="other">%1$s videresendelser</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s svar</item>
+    <item quantity="other">%1$s svar</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s blokering</item>
+    <item quantity="other">%1$s blokeringer</item>
+  </plurals>
 </resources>

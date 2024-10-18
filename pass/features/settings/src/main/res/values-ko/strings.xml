@@ -31,8 +31,9 @@
   <string name="settings_share_telemetry">익명 사용 데이터 공유</string>
   <string name="settings_share_crashes">익명 충돌 보고서 공유</string>
   <string name="settings_preference_updated">설정이 변경되었습니다</string>
-  <string name="settings_display_section_title">Display</string>
-  <string name="settings_preference_display_username">Username field always visible</string>
+  <string name="settings_display_section_title">표시</string>
+  <string name="settings_preference_display_username">사용자 이름 입력란 항상 보이기</string>
+  <string name="settings_preference_display_autofill_pinning">자동완성 고정 항상 표시</string>
   <string name="view_logs_title">로그 보기</string>
   <string name="clipboard_bottomsheet_title">클립보드</string>
   <string name="clipboard_option_clear_clipboard_label">클립보드 비우기</string>

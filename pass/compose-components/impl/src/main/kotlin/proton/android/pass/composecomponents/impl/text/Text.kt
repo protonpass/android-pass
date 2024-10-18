@@ -25,8 +25,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionNorm
+import me.proton.core.compose.theme.captionWeak
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultSmallNorm
+import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.core.compose.theme.headlineNorm
 import me.proton.core.compose.theme.overlineNorm
 import me.proton.core.compose.theme.subheadlineNorm
@@ -127,6 +129,36 @@ object Text {
             text = text,
             style = ProtonTheme.typography.captionNorm.copy(color = color),
             modifier = modifier
+        )
+    }
+
+    @Composable
+    fun CaptionWeak(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textNorm,
+        textAlign: TextAlign? = null
+    ) {
+        Text(
+            text = text,
+            style = ProtonTheme.typography.captionWeak.copy(color = color),
+            modifier = modifier,
+            textAlign = textAlign
+        )
+    }
+
+    @Composable
+    fun DefaultSmallWeak(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textNorm,
+        textAlign: TextAlign? = null
+    ) {
+        Text(
+            text = text,
+            style = ProtonTheme.typography.defaultSmallWeak().copy(color = color),
+            modifier = modifier,
+            textAlign = textAlign
         )
     }
 

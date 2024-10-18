@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.mailboxes.verify.ui
+package proton.android.pass.composecomponents.impl.form
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -29,7 +29,6 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -47,11 +46,12 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.subheadlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
+import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
 
 @Composable
-internal fun SimpleLoginSyncMailboxVerifyCodeInput(
+fun PassVerificationCodeTextField(
     modifier: Modifier = Modifier,
     verificationCode: String,
     verificationCodeLength: Int,
@@ -126,7 +126,5 @@ internal fun SimpleLoginSyncMailboxVerifyCodeInput(
         }
     )
 
-    LaunchedEffect(focusRequester) {
-        focusRequester.requestFocus()
-    }
+    RequestFocusLaunchedEffect(focusRequester)
 }

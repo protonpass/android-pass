@@ -46,8 +46,12 @@
   <string name="action_continue">Pokračovat</string>
   <string name="action_retry">Zkusit znovu</string>
   <string name="action_edit">Upravit</string>
-  <string name="action_update">Aktualizovat</string>
+  <string name="action_add">Přidat</string>
+  <string name="action_delete">Smazat</string>
+  <string name="action_make_default">Make default</string>
+  <string name="action_verify">Verify</string>
   <string name="action_close">Zavřít</string>
+  <string name="action_update">Aktualizovat</string>
   <!-- Empty list -->
   <string name="empty_list_title">Přidejte svou první položku</string>
   <string name="empty_search_results_title">Nebyl nalezen žádný výsledek</string>
@@ -144,7 +148,6 @@
   <string name="item_details_credit_card_section_pin_title">PIN kód</string>
   <string name="item_details_login_section_email_title">E-mailová adresa</string>
   <string name="item_details_login_section_username_title">Uživatelské jméno</string>
-  <string name="item_details_login_section_username_or_username_title">Uživatelské jméno nebo e-mailová adresa</string>
   <string name="item_details_login_section_password_title">Heslo</string>
   <string name="item_details_login_section_primary_totp_title">2FA token (TOTP)</string>
   <string name="item_details_login_section_websites_title">Webové stránky</string>
@@ -203,10 +206,29 @@
   <string name="dialog_upgrade_plan_action_cancel">Nyní ne</string>
   <!-- Words -->
   <string name="email_address">E-mailová adresa</string>
+  <string name="email_address_invalid">Invalid email address</string>
   <string name="password">Heslo</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Tlačítko pro odmítnutí této nápovědy a zamezení jejímu opětovnému zobrazení</string>
   <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="one">%d year</item>
+    <item quantity="few">%d years</item>
+    <item quantity="many">%d years</item>
+    <item quantity="other">%d years</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="one">%d month</item>
+    <item quantity="few">%d months</item>
+    <item quantity="many">%d months</item>
+    <item quantity="other">%d months</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="one">%d week</item>
+    <item quantity="few">%d weeks</item>
+    <item quantity="many">%d weeks</item>
+    <item quantity="other">%d weeks</item>
+  </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d den</item>
     <item quantity="few">%d dny</item>
@@ -230,6 +252,12 @@
     <item quantity="few">%d sekundy</item>
     <item quantity="many">%d sekund</item>
     <item quantity="other">%d sekund</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="one">%d alias</item>
+    <item quantity="few">%d aliases</item>
+    <item quantity="many">%d aliases</item>
+    <item quantity="other">%d aliases</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Poznámka zkopírována</string>

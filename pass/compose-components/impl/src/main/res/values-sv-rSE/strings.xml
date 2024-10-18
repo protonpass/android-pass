@@ -44,8 +44,12 @@
   <string name="action_continue">Fortsätt</string>
   <string name="action_retry">Försök igen</string>
   <string name="action_edit">Redigera</string>
-  <string name="action_update">Uppdatera</string>
+  <string name="action_add">Lägg till</string>
+  <string name="action_delete">Ta bort</string>
+  <string name="action_make_default">Make default</string>
+  <string name="action_verify">Verify</string>
   <string name="action_close">Stäng</string>
+  <string name="action_update">Uppdatera</string>
   <!-- Empty list -->
   <string name="empty_list_title">Lägg till ditt första objekt</string>
   <string name="empty_search_results_title">Inga resultat hittades</string>
@@ -140,7 +144,6 @@
   <string name="item_details_credit_card_section_pin_title">PIN-kod</string>
   <string name="item_details_login_section_email_title">E-postadress</string>
   <string name="item_details_login_section_username_title">Användarnamn</string>
-  <string name="item_details_login_section_username_or_username_title">Användarnamn eller e-postadress</string>
   <string name="item_details_login_section_password_title">Lösenord</string>
   <string name="item_details_login_section_primary_totp_title">2FA-token (TOTP)</string>
   <string name="item_details_login_section_websites_title">Webbplatser</string>
@@ -199,10 +202,23 @@
   <string name="dialog_upgrade_plan_action_cancel">Inte nu</string>
   <!-- Words -->
   <string name="email_address">E-postadress</string>
+  <string name="email_address_invalid">Invalid email address</string>
   <string name="password">Lösenord</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Knapp för att avfärda detta verktygstips och inte visa det igen</string>
   <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="one">%d year</item>
+    <item quantity="other">%d years</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="one">%d month</item>
+    <item quantity="other">%d months</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="one">%d week</item>
+    <item quantity="other">%d weeks</item>
+  </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d dag</item>
     <item quantity="other">%d dagar</item>
@@ -218,6 +234,10 @@
   <plurals name="time_unit_seconds">
     <item quantity="one">%d sekund</item>
     <item quantity="other">%d sekunder</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="one">%d alias</item>
+    <item quantity="other">%d aliases</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Anteckning kopierad</string>

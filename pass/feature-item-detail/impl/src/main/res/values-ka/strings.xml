@@ -104,4 +104,18 @@
   <string name="passkey_detail_bottomsheet_domain">დომენი</string>
   <string name="passkey_detail_bottomsheet_key">გასაღები</string>
   <string name="passkey_detail_bottomsheet_created">შექმნილია</string>
+  <string name="activity_in_last_two_weeks">აქტივობა ბოლო ორ კვირაში</string>
+  <string name="contacts">კონტაქტები</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s გადაგზავნილი</item>
+    <item quantity="other">%1$s გადაგზავნილი</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s პასუხი</item>
+    <item quantity="other">%1$s პასუხი</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s დაბლოკილი</item>
+    <item quantity="other">%1$s დაბლოკილი</item>
+  </plurals>
 </resources>

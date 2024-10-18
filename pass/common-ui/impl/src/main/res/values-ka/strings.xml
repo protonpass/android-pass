@@ -17,11 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="bottomsheet_copy_email">ელფოსტის დაკოპირება</string>
   <string name="bottomsheet_copy_password">პაროლის კოპირება</string>
   <string name="bottomsheet_copy_username">მომხმარებლის სახელის კოპირება</string>
+  <string name="bottomsheet_no_actions">ქმედებები ხელმისაწვდომი არაა</string>
   <string name="snackbar_item_move_to_trash_success">ელემენტი გადატანილია ნაგვის ყუთში</string>
   <string name="snackbar_item_move_to_trash_error">სანაგვე ყუთში გადატანის შეცდომა</string>
+  <string name="snackbar_item_copy_email_success">ელფოსტა დაკოპირდა გაცვლის ბუფერში</string>
   <string name="snackbar_item_copy_username_success">მომხმარებელი დაკოპირებულია მიმოცვლის ბუფერში</string>
   <string name="snackbar_item_copy_password_success">პაროლი დაკოპირდა გაცვლის ბუფერში</string>
-  <string name="snackbar_item_copy_clipboard_error">ბუფერში დაკოპირება შეუძლებელია</string>
 </resources>

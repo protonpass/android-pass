@@ -105,4 +105,21 @@
   <string name="passkey_detail_bottomsheet_domain">Domeniu</string>
   <string name="passkey_detail_bottomsheet_key">Cheia</string>
   <string name="passkey_detail_bottomsheet_created">Creată la</string>
+  <string name="activity_in_last_two_weeks">Activitate în ultimele două săptămâni</string>
+  <string name="contacts">Contacte</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">Redirecționări: %1$s</item>
+    <item quantity="few">Redirecționări: %1$s</item>
+    <item quantity="other">Redirecționări: %1$s</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">Răspunsuri: %1$s</item>
+    <item quantity="few">Răspunsuri: %1$s</item>
+    <item quantity="other">Răspunsuri: %1$s</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">Blocări: %1$s</item>
+    <item quantity="few">Blocări: %1$s</item>
+    <item quantity="other">Blocări: %1$s</item>
+  </plurals>
 </resources>

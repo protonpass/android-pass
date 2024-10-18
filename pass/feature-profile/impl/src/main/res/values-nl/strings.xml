@@ -12,7 +12,7 @@
   <string name="profile_option_autofill">Autom. aanvullen</string>
   <string name="profile_option_autofill_subtitle">Vul automatisch uw gebruikersnamen en wachtwoorden in.</string>
   <string name="profile_option_secure_links">Beveiligde links</string>
-  <string name="profile_option_aliases">Aliassen</string>
+  <string name="profile_option_alias_management">Alias management</string>
   <string name="profile_error_biometry_failed_to_start">Kan de biometrische authenticatie niet starten</string>
   <string name="profile_error_biometry_failed_to_authenticate">Authenticatie mislukt</string>
   <string name="profile_fingerprint_lock_enabled">Vingerafdrukontgrendeling ingeschakeld</string>
@@ -49,10 +49,10 @@
   <string name="profile_option_lock_with">Vergrendelen met</string>
   <string name="profile_option_unlock_with">Ontgrendel met</string>
   <string name="profile_option_change_pin_code">Wijzig PIN-code</string>
-  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Internet is set as the default browser. It does not support autofill by external password managers.</string>
+  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Internet is ingesteld als de standaard browser. Het ondersteunt geen automatisch invullen door externe wachtwoordbeheerders.</string>
   <string name="profile_passkey_support_section_title">Passkeys</string>
   <string name="profile_passkey_support_subtitle_supported">Passkeys worden ondersteund</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Uw Android versie ondersteunt geen toegangssleutels.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Uw apparaat ondersteunt geen passkeys</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Kon de ondersteuning voor passkeys niet controleren</string>
   <plurals name="profile_after_days">

@@ -17,11 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="bottomsheet_copy_email">E-Mail-Adresse kopieren</string>
   <string name="bottomsheet_copy_password">Passwort kopieren</string>
   <string name="bottomsheet_copy_username">Benutzername kopieren</string>
+  <string name="bottomsheet_no_actions">Keine Aktionen verfügbar</string>
   <string name="snackbar_item_move_to_trash_success">Eintrag in den Papierkorb verschoben.</string>
   <string name="snackbar_item_move_to_trash_error">Fehler beim Verschieben in den Papierkorb.</string>
+  <string name="snackbar_item_copy_email_success">E-Mail-Adresse in Zwischenablage kopiert</string>
   <string name="snackbar_item_copy_username_success">Benutzername in die Zwischenablage kopiert</string>
   <string name="snackbar_item_copy_password_success">Passwort in die Zwischenablage kopiert</string>
-  <string name="snackbar_item_copy_clipboard_error">Fehler beim Kopieren in die Zwischenablage.</string>
 </resources>

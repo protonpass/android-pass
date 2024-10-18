@@ -17,11 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="bottomsheet_copy_email">Kopírovať email</string>
   <string name="bottomsheet_copy_password">Kopírovať heslo</string>
   <string name="bottomsheet_copy_username">Kopírovať meno používateľa</string>
+  <string name="bottomsheet_no_actions">Žiadne akcie k dispozícii</string>
   <string name="snackbar_item_move_to_trash_success">Položka bola presunutá do koša</string>
   <string name="snackbar_item_move_to_trash_error">Nepodarilo sa presunúť do koša</string>
+  <string name="snackbar_item_copy_email_success">Email skopírovaný do schránky</string>
   <string name="snackbar_item_copy_username_success">Používateľské meno bolo skopírované do schránky</string>
   <string name="snackbar_item_copy_password_success">Heslo bolo skopírované do schránky</string>
-  <string name="snackbar_item_copy_clipboard_error">Nebolo možné skopírovať do schránky</string>
 </resources>

@@ -43,11 +43,15 @@
   <string name="action_continue">Lanjutkan</string>
   <string name="action_retry">Coba lagi</string>
   <string name="action_edit">Sunting</string>
-  <string name="action_update">Perbarui</string>
+  <string name="action_add">Tambah</string>
+  <string name="action_delete">Hapus</string>
+  <string name="action_make_default">Make default</string>
+  <string name="action_verify">Verify</string>
   <string name="action_close">Tutup</string>
+  <string name="action_update">Perbarui</string>
   <!-- Empty list -->
   <string name="empty_list_title">Tambahkan item pertama Anda</string>
-  <string name="empty_search_results_title">Hasil tidak ditemukan</string>
+  <string name="empty_search_results_title">Tidak ada hasil yang ditemukan</string>
   <string name="empty_list_open_extension">Kunjungi ekstensi web</string>
   <string name="empty_list_create_item_button">Buat item baru</string>
   <!-- Field -->
@@ -138,7 +142,6 @@
   <string name="item_details_credit_card_section_pin_title">Kode PIN</string>
   <string name="item_details_login_section_email_title">Alamat email</string>
   <string name="item_details_login_section_username_title">Nama pengguna</string>
-  <string name="item_details_login_section_username_or_username_title">Nama pengguna atau alamat email</string>
   <string name="item_details_login_section_password_title">Kata sandi</string>
   <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Situs web</string>
@@ -197,10 +200,20 @@
   <string name="dialog_upgrade_plan_action_cancel">Tidak sekarang</string>
   <!-- Words -->
   <string name="email_address">Alamat email</string>
+  <string name="email_address_invalid">Invalid email address</string>
   <string name="password">Kata sandi</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Tombol untuk menutup tooltip dan tidak menampilkannya kembali</string>
   <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="other">%d years</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="other">%d months</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="other">%d weeks</item>
+  </plurals>
   <plurals name="time_unit_days">
     <item quantity="other">%d hari</item>
   </plurals>
@@ -212,6 +225,9 @@
   </plurals>
   <plurals name="time_unit_seconds">
     <item quantity="other">%d detik</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="other">%d aliases</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Catatan disalin</string>

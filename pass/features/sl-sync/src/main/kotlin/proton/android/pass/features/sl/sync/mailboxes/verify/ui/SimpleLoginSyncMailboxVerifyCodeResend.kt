@@ -23,18 +23,14 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.text.PassTextWithLink
 import proton.android.pass.composecomponents.impl.utils.passTimerText
 import proton.android.pass.features.sl.sync.R
 
@@ -70,19 +66,19 @@ internal fun SimpleLoginSyncMailboxVerifyCodeResend(
             enter = fadeIn(),
             exit = fadeOut()
         ) {
-            PassTextWithLink(
-                modifier = Modifier.padding(horizontal = Spacing.large),
-                textAlign = TextAlign.Center,
-                textResId = R.string.simple_login_sync_mailbox_verify_code_not_received,
-                textStyle = ProtonTheme.typography.captionWeak.copy(
-                    color = PassTheme.colors.textWeak
-                ),
-                linkResId = R.string.simple_login_sync_mailbox_verify_code_request_new,
-                linkStyle = ProtonTheme.typography.captionWeak.copy(
-                    color = PassTheme.colors.interactionNormMajor1
-                ),
-                onLinkClick = { onResendVerificationCodeClick() }
-            )
+//            PassTextWithLink(
+//                modifier = Modifier.padding(horizontal = Spacing.large),
+//                textAlign = TextAlign.Center,
+//                textResId = R.string.simple_login_sync_mailbox_verify_code_not_received,
+//                textStyle = ProtonTheme.typography.captionWeak.copy(
+//                    color = PassTheme.colors.textWeak
+//                ),
+//                linkResId = R.string.simple_login_sync_mailbox_verify_code_request_new,
+//                linkStyle = ProtonTheme.typography.captionWeak.copy(
+//                    color = PassTheme.colors.interactionNormMajor1
+//                ),
+//                onLinkClick = { onResendVerificationCodeClick() }
+//            )
         }
     }
 }

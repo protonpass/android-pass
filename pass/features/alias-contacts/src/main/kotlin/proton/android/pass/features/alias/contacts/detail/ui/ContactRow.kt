@@ -19,7 +19,6 @@
 package proton.android.pass.features.alias.contacts.detail.ui
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -60,13 +59,15 @@ fun ContactRow(
     onEvent: (DetailAliasContactUIEvent) -> Unit
 ) {
     Column(
-        modifier = modifier
-            .roundedContainerNorm()
-            .padding(vertical = Spacing.small, horizontal = Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(Spacing.small)
+        modifier = modifier.roundedContainerNorm()
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text.Body1Regular(modifier = Modifier.weight(1f), text = contact.email)
+            Text.Body1Regular(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(Spacing.medium),
+                text = contact.email
+            )
             if (!contact.blocked) {
                 IconButton(onClick = { onEvent(DetailAliasContactUIEvent.SendEmail(contact.reverseAlias)) }) {
                     Icon.Default(
@@ -75,7 +76,10 @@ fun ContactRow(
                     )
                 }
             }
-            IconButton(onClick = { onEvent(DetailAliasContactUIEvent.ContactOptions(contact.id)) }) {
+            IconButton(
+                modifier = Modifier.padding(end = Spacing.small),
+                onClick = { onEvent(DetailAliasContactUIEvent.ContactOptions(contact.id)) }
+            ) {
                 Icon.Default(
                     CoreR.drawable.ic_proton_three_dots_vertical,
                     tint = PassTheme.colors.textWeak
@@ -83,7 +87,7 @@ fun ContactRow(
             }
         }
 
-        Column {
+        Column(modifier = Modifier.padding(horizontal = Spacing.medium)) {
             val remainingTime = remember(contact.createTime) {
                 RemainingTime(
                     startInstant = Instant.fromEpochSeconds(contact.createTime),
@@ -103,6 +107,7 @@ fun ContactRow(
         val (text, bgColor, border) = getButtonAttributes(contact.blocked)
 
         LoadingCircleButton(
+            modifier = Modifier.padding(Spacing.medium),
             isLoading = isBlockLoading,
             color = bgColor,
             border = border,

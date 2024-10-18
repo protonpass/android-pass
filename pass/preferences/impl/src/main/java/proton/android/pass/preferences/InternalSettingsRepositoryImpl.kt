@@ -217,6 +217,11 @@ class InternalSettingsRepositoryImpl @Inject constructor(
             }
     }
 
+    override fun setHasShownAliasContactsOnboarding(value: Boolean): Result<Unit> =
+        setPreference { it.setHasShownAliasContactsOnboarding(value) }
+
+    override fun hasShownAliasContactsOnboarding(): Flow<Boolean> = getPreference { it.hasShownAliasContactsOnboarding }
+
     override fun clearSettings(): Result<Unit> = setPreference { it.clear() }
 
     private fun setPreference(mapper: (InternalSettings.Builder) -> InternalSettings.Builder): Result<Unit> =

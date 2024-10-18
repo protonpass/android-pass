@@ -62,5 +62,11 @@
     <string name="contact_option_block_contact">Block contact</string>
     <string name="contact_option_unblock_contact">Unblock contact</string>
     <string name="contact_option_delete">Delete</string>
-
+    <string name="alias_contacts_bottomsheet_title">Alias Contacts</string>
+    <string name="alias_contacts_bottomsheet_subtitle">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+    <string name="alias_contacts_explanation">Here’s how it works:</string>
+    <string name="alias_contacts_bottomsheet_section_1">Enter the address you want to email.</string>
+    <string name="alias_contacts_bottomsheet_section_2">Proton Pass will generate a forwarding address (also referred to as reverse alias).</string>
+    <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Email this address and it will appear to be sent from</string>
+    <string name="alias_contacts_bottomsheet_section_3_email" translatable="false">test.43jp2@simplelogin.com.</string>
 </resources>

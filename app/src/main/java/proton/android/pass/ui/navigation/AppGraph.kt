@@ -115,6 +115,7 @@ import proton.android.pass.features.alias.contacts.aliasContactGraph
 import proton.android.pass.features.alias.contacts.create.navigation.CreateAliasContactNavItem
 import proton.android.pass.features.alias.contacts.detail.navigation.DetailAliasContactNavItem
 import proton.android.pass.features.alias.contacts.onboarding.navigation.OnBoardingAliasContactNavItem
+import proton.android.pass.features.alias.contacts.options.navigation.OptionsAliasContactNavItem
 import proton.android.pass.features.auth.Auth
 import proton.android.pass.features.auth.AuthNavigation
 import proton.android.pass.features.auth.AuthOrigin
@@ -2077,6 +2078,19 @@ fun NavGraphBuilder.appGraph(
             is AliasContactsNavigation.OnBoardingContacts -> appNavigator.navigate(
                 destination = OnBoardingAliasContactNavItem
             )
+
+            is AliasContactsNavigation.ContactOptions -> appNavigator.navigate(
+                destination = OptionsAliasContactNavItem,
+                route = OptionsAliasContactNavItem.createNavRoute(
+                    shareId = it.shareId,
+                    itemId = it.itemId,
+                    contactId = it.contactId
+                )
+            )
+
+            AliasContactsNavigation.CloseBottomSheet -> dismissBottomSheet {
+                appNavigator.navigateBack(comesFromBottomsheet = true)
+            }
         }
     }
 }

@@ -16,20 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.alias.contacts
+package proton.android.pass.features.alias.contacts.options.ui
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.aliascontacts.ContactId
-
-sealed interface AliasContactsNavigation {
-    data object Back : AliasContactsNavigation
-    data object CloseBottomSheet : AliasContactsNavigation
-    data class CreateContact(val shareId: ShareId, val itemId: ItemId) : AliasContactsNavigation
-    data class ContactOptions(
-        val shareId: ShareId,
-        val itemId: ItemId,
-        val contactId: ContactId
-    ) : AliasContactsNavigation
-    data object OnBoardingContacts : AliasContactsNavigation
+internal sealed interface OptionsAliasBottomSheetUiEvent {
+    data object OnSendEmailClicked : OptionsAliasBottomSheetUiEvent
+    data object OnCopyAddressClicked : OptionsAliasBottomSheetUiEvent
+    data object OnBlockContactClicked : OptionsAliasBottomSheetUiEvent
+    data object OnDeleteContactClicked : OptionsAliasBottomSheetUiEvent
+    data object OnUnblockContactClicked : OptionsAliasBottomSheetUiEvent
 }

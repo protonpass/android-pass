@@ -30,7 +30,12 @@ import proton.android.pass.commonui.api.PassTheme
 fun BottomSheetItemTitle(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = PassTheme.colors.textNorm
+    isEnabled: Boolean = true,
+    color: Color = if (isEnabled) {
+        PassTheme.colors.textNorm
+    } else {
+        PassTheme.colors.textDisabled
+    }
 ) {
     Text(
         modifier = modifier,

@@ -18,18 +18,14 @@
 
 package proton.android.pass.features.alias.contacts
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.aliascontacts.ContactId
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 
-sealed interface AliasContactsNavigation {
-    data object Back : AliasContactsNavigation
-    data object CloseBottomSheet : AliasContactsNavigation
-    data class CreateContact(val shareId: ShareId, val itemId: ItemId) : AliasContactsNavigation
-    data class ContactOptions(
-        val shareId: ShareId,
-        val itemId: ItemId,
-        val contactId: ContactId
-    ) : AliasContactsNavigation
-    data object OnBoardingContacts : AliasContactsNavigation
+fun sendEmailIntent(context: Context, email: String) {
+    val emailIntent = Intent(Intent.ACTION_SENDTO)
+    emailIntent.setData(Uri.parse("mailto:$email"))
+    if (emailIntent.resolveActivity(context.packageManager) != null) {
+        context.startActivity(emailIntent)
+    }
 }

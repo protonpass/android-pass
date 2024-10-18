@@ -33,6 +33,8 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.customemails.UnverifiedCustomEmailOptionsLoadingState
+import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun UnverifiedCustomEmailOptionsContent(
@@ -57,13 +59,13 @@ private fun verify(loading: Boolean, onClick: () -> Unit): BottomSheetItem = obj
     override val title: @Composable () -> Unit
         get() = {
             BottomSheetItemTitle(
-                text = stringResource(id = R.string.security_center_dark_web_monitor_custom_email_option_verify)
+                text = stringResource(id = CompR.string.action_verify)
             )
         }
     override val subtitle: (@Composable () -> Unit)?
         get() = null
     override val leftIcon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_check_circle_full) }
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_checkmark_circle) }
     override val endIcon: (@Composable () -> Unit)?
         get() = if (loading) {
             { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }
@@ -83,7 +85,7 @@ private fun remove(loading: Boolean, onClick: () -> Unit): BottomSheetItem = obj
     override val subtitle: (@Composable () -> Unit)?
         get() = null
     override val leftIcon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_cross_circle) }
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_cross_circle) }
     override val endIcon: (@Composable () -> Unit)?
         get() = if (loading) {
             { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }

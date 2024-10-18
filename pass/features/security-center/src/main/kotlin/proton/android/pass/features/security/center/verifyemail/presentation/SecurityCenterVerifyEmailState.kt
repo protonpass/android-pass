@@ -24,18 +24,22 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 @Stable
 internal data class SecurityCenterVerifyEmailState(
     internal val email: String,
-    internal val isError: Boolean,
+    internal val verificationCode: String,
     internal val event: SecurityCenterVerifyEmailEvent,
-    internal val isLoadingState: IsLoadingState,
-    internal val isResendingCodeState: IsLoadingState
+    private val isLoadingState: IsLoadingState
 ) {
+
+    internal val isLoading: Boolean = isLoadingState.value()
+
     internal companion object {
+
         internal fun default(email: String): SecurityCenterVerifyEmailState = SecurityCenterVerifyEmailState(
             email = email,
-            isError = false,
+            verificationCode = "",
             event = SecurityCenterVerifyEmailEvent.Idle,
-            isLoadingState = IsLoadingState.NotLoading,
-            isResendingCodeState = IsLoadingState.NotLoading
+            isLoadingState = IsLoadingState.NotLoading
         )
+
     }
+
 }

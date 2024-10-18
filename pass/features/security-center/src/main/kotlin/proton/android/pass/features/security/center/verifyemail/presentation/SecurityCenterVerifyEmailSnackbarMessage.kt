@@ -40,5 +40,13 @@ internal enum class SecurityCenterVerifyEmailSnackbarMessage(
     TooManyVerificationsError(
         id = R.string.security_center_verify_email_snackbar_message_too_many_verifications_error,
         type = SnackbarType.ERROR
+    ),
+    InvalidVerificationError(
+        id = R.string.security_center_verify_email_snackbar_message_invalid_verification_error,
+        type = SnackbarType.ERROR
+    ),
+    VerificationError(
+        id = R.string.security_center_verify_email_snackbar_message_verification_error,
+        type = SnackbarType.ERROR
     )
 }

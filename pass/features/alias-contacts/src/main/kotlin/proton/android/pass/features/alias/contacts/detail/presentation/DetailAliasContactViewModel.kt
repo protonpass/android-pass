@@ -44,6 +44,7 @@ import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
@@ -125,6 +126,8 @@ class DetailAliasContactViewModel @Inject constructor(
         val (blockedContacts, forwardingContacts) = aliasContactsResult.getOrNull() ?: emptyPair
 
         DetailAliasContactUIState(
+            shareId = shareId.some(),
+            itemId = itemId.some(),
             event = event,
             senderNameUIState = senderNameUIState,
             displayName = aliasDetails?.displayName.orEmpty(),

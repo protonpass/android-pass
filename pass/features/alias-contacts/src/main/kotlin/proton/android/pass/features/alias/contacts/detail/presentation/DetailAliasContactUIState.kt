@@ -22,10 +22,16 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentSetOf
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.aliascontacts.Contact
 import proton.android.pass.domain.aliascontacts.ContactId
 
 data class DetailAliasContactUIState(
+    val shareId: Option<ShareId>,
+    val itemId: Option<ItemId>,
     val event: DetailAliasContactEvent,
     val displayName: String,
     val senderNameUIState: SenderNameUIState,
@@ -35,6 +41,8 @@ data class DetailAliasContactUIState(
 
     companion object {
         val Empty = DetailAliasContactUIState(
+            shareId = None,
+            itemId = None,
             event = DetailAliasContactEvent.Idle,
             senderNameUIState = SenderNameUIState.Empty,
             displayName = "",

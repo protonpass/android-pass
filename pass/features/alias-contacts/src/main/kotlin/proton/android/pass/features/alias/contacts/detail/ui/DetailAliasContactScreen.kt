@@ -29,7 +29,7 @@ import proton.android.pass.features.alias.contacts.AliasContactsNavigation
 import proton.android.pass.features.alias.contacts.detail.presentation.DetailAliasContactEvent
 import proton.android.pass.features.alias.contacts.detail.presentation.DetailAliasContactUIEvent
 import proton.android.pass.features.alias.contacts.detail.presentation.DetailAliasContactViewModel
-
+import proton.android.pass.features.alias.contacts.sendEmailIntent
 
 @Composable
 fun DetailAliasContactScreen(
@@ -62,8 +62,12 @@ fun DetailAliasContactScreen(
                 DetailAliasContactUIEvent.LearnMore -> onNavigate(AliasContactsNavigation.OnBoardingContacts)
                 is DetailAliasContactUIEvent.BlockContact -> viewModel.onBlockContact(it.contactId)
                 is DetailAliasContactUIEvent.UnblockContact -> viewModel.onUnblockContact(it.contactId)
-                is DetailAliasContactUIEvent.ContactOptions -> {}
-                is DetailAliasContactUIEvent.SendEmail -> sendEmail(context, it.email)
+                is DetailAliasContactUIEvent.ContactOptions -> {
+                    val shareId = state.shareId.value() ?: return@DetailAliasContactContent
+                    val itemId = state.itemId.value() ?: return@DetailAliasContactContent
+                    onNavigate(AliasContactsNavigation.ContactOptions(shareId, itemId, it.contactId))
+                }
+                is DetailAliasContactUIEvent.SendEmail -> sendEmailIntent(context, it.email)
                 DetailAliasContactUIEvent.EditSenderName -> viewModel.onEnterSenderNameEditMode()
                 is DetailAliasContactUIEvent.OnSenderNameChanged -> viewModel.onSenderNameChanged(it.name)
                 DetailAliasContactUIEvent.UpdateSenderName -> viewModel.onSenderNameUpdate()

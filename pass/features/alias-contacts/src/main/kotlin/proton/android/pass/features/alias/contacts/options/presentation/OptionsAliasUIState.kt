@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,20 +16,27 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.alias.contacts
+package proton.android.pass.features.alias.contacts.options.presentation
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.aliascontacts.ContactId
+import androidx.compose.runtime.Stable
+import proton.android.pass.domain.aliascontacts.Contact
 
-sealed interface AliasContactsNavigation {
-    data object Back : AliasContactsNavigation
-    data object CloseBottomSheet : AliasContactsNavigation
-    data class CreateContact(val shareId: ShareId, val itemId: ItemId) : AliasContactsNavigation
-    data class ContactOptions(
-        val shareId: ShareId,
-        val itemId: ItemId,
-        val contactId: ContactId
-    ) : AliasContactsNavigation
-    data object OnBoardingContacts : AliasContactsNavigation
+@Stable
+internal data class OptionsAliasUIState(
+    val event: OptionsAliasEvent,
+    val isBlockLoading: Boolean,
+    val isDeleteLoading: Boolean,
+    val contact: Contact?
+) {
+    val isAnyLoading: Boolean
+        get() = isBlockLoading || isDeleteLoading
+
+    internal companion object {
+        internal val Initial = OptionsAliasUIState(
+            event = OptionsAliasEvent.Idle,
+            isBlockLoading = false,
+            isDeleteLoading = false,
+            contact = null
+        )
+    }
 }

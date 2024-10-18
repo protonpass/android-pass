@@ -18,18 +18,10 @@
 
 package proton.android.pass.features.alias.contacts
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.aliascontacts.ContactId
+import androidx.navigation.NavType
+import proton.android.pass.navigation.api.NavArgId
 
-sealed interface AliasContactsNavigation {
-    data object Back : AliasContactsNavigation
-    data object CloseBottomSheet : AliasContactsNavigation
-    data class CreateContact(val shareId: ShareId, val itemId: ItemId) : AliasContactsNavigation
-    data class ContactOptions(
-        val shareId: ShareId,
-        val itemId: ItemId,
-        val contactId: ContactId
-    ) : AliasContactsNavigation
-    data object OnBoardingContacts : AliasContactsNavigation
+data object ContactIdNavArgId : NavArgId {
+    override val key = "contactId"
+    override val navType = NavType.IntType
 }

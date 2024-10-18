@@ -7,10 +7,10 @@
   <string name="trial_feature_4">Vlastné polia</string>
   <string name="trial_button_text">Upgradovať teraz</string>
   <plurals name="trial_days_left">
-    <item quantity="one">%d day left to try premium features</item>
-    <item quantity="few">%d days left to try premium features</item>
-    <item quantity="many">%d days left to try premium features</item>
-    <item quantity="other">%d days left to try premium features</item>
+    <item quantity="one">Zostáva %d deň na vyskúšanie prémiových funkcií</item>
+    <item quantity="few">Zostávajú %d dni na vyskúšanie prémiových funkcií</item>
+    <item quantity="many">Zostáva %d dní na vyskúšanie prémiových funkcií</item>
+    <item quantity="other">Zostáva %d dní na vyskúšanie prémiových funkcií</item>
   </plurals>
   <string name="trial_learn_more">Zistiť viac</string>
 </resources>

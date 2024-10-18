@@ -46,8 +46,12 @@
   <string name="action_continue">Nadaljuj</string>
   <string name="action_retry">Poskusi znova</string>
   <string name="action_edit">Uredi</string>
-  <string name="action_update">Posodobi</string>
+  <string name="action_add">Dodaj</string>
+  <string name="action_delete">Izbriši</string>
+  <string name="action_make_default">Make default</string>
+  <string name="action_verify">Verify</string>
   <string name="action_close">Zapri</string>
+  <string name="action_update">Posodobi</string>
   <!-- Empty list -->
   <string name="empty_list_title">Dodajte svoj prvi predmet</string>
   <string name="empty_search_results_title">Ne najdem rezultatov</string>
@@ -144,7 +148,6 @@
   <string name="item_details_credit_card_section_pin_title">PIN koda</string>
   <string name="item_details_login_section_email_title">E-poštni naslov</string>
   <string name="item_details_login_section_username_title">Uporabniško ime</string>
-  <string name="item_details_login_section_username_or_username_title">Uporabniško ime ali elektronski naslov</string>
   <string name="item_details_login_section_password_title">Geslo</string>
   <string name="item_details_login_section_primary_totp_title">Žeton 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Spletne strani</string>
@@ -203,10 +206,29 @@
   <string name="dialog_upgrade_plan_action_cancel">Ne zdaj</string>
   <!-- Words -->
   <string name="email_address">E-poštni naslov</string>
+  <string name="email_address_invalid">Invalid email address</string>
   <string name="password">Geslo</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Gumb za zavrnitev namiga in preprečitev njegovega ponovnega prikaza</string>
   <!-- Time units -->
+  <plurals name="time_unit_years">
+    <item quantity="one">%d year</item>
+    <item quantity="two">%d years</item>
+    <item quantity="few">%d years</item>
+    <item quantity="other">%d years</item>
+  </plurals>
+  <plurals name="time_unit_months">
+    <item quantity="one">%d month</item>
+    <item quantity="two">%d months</item>
+    <item quantity="few">%d months</item>
+    <item quantity="other">%d months</item>
+  </plurals>
+  <plurals name="time_unit_weeks">
+    <item quantity="one">%d week</item>
+    <item quantity="two">%d weeks</item>
+    <item quantity="few">%d weeks</item>
+    <item quantity="other">%d weeks</item>
+  </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d dan</item>
     <item quantity="two">%d dneva</item>
@@ -230,6 +252,12 @@
     <item quantity="two">%d sekundi</item>
     <item quantity="few">%d sekunde</item>
     <item quantity="other">%d sekund</item>
+  </plurals>
+  <plurals name="aliases_count">
+    <item quantity="one">%d alias</item>
+    <item quantity="two">%d aliases</item>
+    <item quantity="few">%d aliases</item>
+    <item quantity="other">%d aliases</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Opomba je kopirana</string>

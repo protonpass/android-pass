@@ -18,7 +18,7 @@
   -->
 <resources>
   <!--Create screen-->
-  <string name="secure_links_create_title">Share secure link</string>
+  <string name="secure_links_create_title">Deljenje varne povezave</string>
   <string name="secure_links_create_row_expiration_title">Povezava poteče čez</string>
   <string name="secure_links_create_row_expiration_options_one_hour">1 ura</string>
   <string name="secure_links_create_row_expiration_options_one_day">1 dan</string>

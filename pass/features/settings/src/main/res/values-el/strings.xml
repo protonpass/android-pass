@@ -31,8 +31,9 @@
   <string name="settings_share_telemetry">Διαμοιρασμός ανώνυμης χρήσης</string>
   <string name="settings_share_crashes">Κοινοποιήστε ανώνυμες αναφορές σφαλμάτων</string>
   <string name="settings_preference_updated">Η προτίμησή σας έχει ενημερωθεί</string>
-  <string name="settings_display_section_title">Display</string>
-  <string name="settings_preference_display_username">Username field always visible</string>
+  <string name="settings_display_section_title">Προβολή</string>
+  <string name="settings_preference_display_username">Το πεδίο ονόματος χρήστη είναι πάντα ορατό</string>
+  <string name="settings_preference_display_autofill_pinning">Το καρφίτσωμα αυτόματης συμπλήρωσης είναι πάντα ορατό</string>
   <string name="view_logs_title">Προβολή αρχείων καταγραφής</string>
   <string name="clipboard_bottomsheet_title">Πρόχειρο</string>
   <string name="clipboard_option_clear_clipboard_label">Εκκαθάριση Πρόχειρου</string>

@@ -17,11 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="bottomsheet_copy_email">이메일 복사</string>
   <string name="bottomsheet_copy_password">암호 복사</string>
   <string name="bottomsheet_copy_username">사용자 이름 복사</string>
+  <string name="bottomsheet_no_actions">실행 가능한 작업 없음</string>
   <string name="snackbar_item_move_to_trash_success">항목을 휴지통으로 이동했습니다</string>
   <string name="snackbar_item_move_to_trash_error">휴지통으로 이동할 수 없습니다</string>
+  <string name="snackbar_item_copy_email_success">내용이 클립보드에 복사되었습니다</string>
   <string name="snackbar_item_copy_username_success">사용자 이름을 클립보드에 복사했습니다</string>
   <string name="snackbar_item_copy_password_success">비밀번호를 클립보드에 복사했습니다</string>
-  <string name="snackbar_item_copy_clipboard_error">클립보드에 복사할 수 없습니다</string>
 </resources>

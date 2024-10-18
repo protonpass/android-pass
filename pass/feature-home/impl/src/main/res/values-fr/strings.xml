@@ -27,6 +27,12 @@
   <string name="home_trial_banner_title">Notre cadeau de bienvenue</string>
   <string name="home_trial_banner_text">7 jours pour essayer gratuitement les fonctionnalités premium, lors de votre première semaine d\'utilisation de Proton Pass.</string>
   <string name="home_trial_banner_settings">En savoir plus ›</string>
+  <string name="sl_sync_banner_title">Importez vos alias depuis SimpleLogin</string>
+  <plurals name="sl_sync_banner_text">
+    <item quantity="one">Vous avez %d alias qui est présent dans SimpleLogin mais manquant dansProton Pass. Souhaitez-vous l\'importer ?</item>
+    <item quantity="other">Vous avez %d alias qui sont présents dans SimpleLogin mais manquants dans Proton Pass. Souhaitez-vous les importer ?</item>
+  </plurals>
+  <string name="sl_sync_banner_settings">Importer les alias ›</string>
   <string name="home_notification_permission_banner_title">Recevez les informations importantes.</string>
   <string name="home_notification_permission_banner_text">Activez les notifications push pour savoir quand d\'autres personnes partagent un coffre-fort avec vous.</string>
   <string name="home_notification_permission_banner_settings">Activer l\'autorisation ›</string>

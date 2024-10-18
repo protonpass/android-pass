@@ -7,7 +7,7 @@
   <string name="trial_feature_4">カスタムフィールド</string>
   <string name="trial_button_text">今すぐアップグレード</string>
   <plurals name="trial_days_left">
-    <item quantity="other">%d days left to try premium features</item>
+    <item quantity="other">プレミアム機能を試せるまで残り %d 日</item>
   </plurals>
   <string name="trial_learn_more">より詳しく</string>
 </resources>

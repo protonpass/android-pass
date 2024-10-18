@@ -17,25 +17,63 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <!-- Details screen -->
-  <string name="simple_login_sync_management_title">Alias</string>
+  <!-- Management screen -->
+  <string name="simple_login_sync_management_title">Administración de los alias</string>
   <string name="simple_login_sync_management_domain_label">Dominio</string>
-  <string name="simple_login_sync_management_domain_title">Dominio por defecto para alias</string>
+  <string name="simple_login_sync_management_domain_title">Dominio por defecto para los alias</string>
   <string name="simple_login_sync_management_domain_option_blank">Sin seleccionar</string>
-  <string name="simple_login_sync_management_mailboxes_label">Buzones</string>
-  <string name="simple_login_sync_management_mailboxes_title">Buzón por defecto para alias</string>
-  <string name="simple_login_sync_management_vault_title">Sincronización de SimpleLogin</string>
+  <string name="simple_login_sync_management_mailboxes_label">Buzones de correo</string>
+  <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
+  <string name="simple_login_sync_management_mailbox_default">Por defecto</string>
+  <string name="simple_login_sync_management_mailbox_unverified">El buzón no está verificado.</string>
+  <string name="simple_login_sync_management_vault_title">Sincronización con SimpleLogin</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Ocurrió un error al recuperar los detalles del alias de SL.</string>
+  <string name="simple_login_sync_management_mailboxes_title">Buzón por defecto para los alias</string>
   <string name="simple_login_sync_management_dialog_title_domains">Dominio por defecto para los alias</string>
   <string name="simple_login_sync_management_dialog_title_mailboxes">Buzón por defecto para los alias</string>
-  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Ocurrió un error al recuperar los detalles del alias SL.</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Ocurrió un error al actualizar el dominio del alias SL.</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Se actualizó el dominio del alias SL.</string>
-  <string name="simple_login_sync_management_snackbar_alias_mailbox_update_error">Ocurrió un error al actualizar el buzón del alias SL.</string>
-  <string name="simple_login_sync_management_snackbar_alias_mailbox_update_success">Se actualizó el buzón del alias SL.</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sincronizar alias</string>
   <string name="simple_login_sync_enable_snackbar_error">Hubo un error al activar la sincronización de alias de SimpleLogin</string>
   <string name="simple_login_sync_enable_snackbar_success">Se activó la sincronización de alias de SimpleLogin.</string>
+  <!-- Mailbox create screen -->
+  <string name="simple_login_sync_mailbox_create_title">Añadir un buzón</string>
+  <string name="simple_login_sync_mailbox_create_message_error">Ocurrió un error al añadir el buzón.</string>
+  <!-- Mailbox verify screen -->
+  <string name="simple_login_sync_mailbox_verify_title">Confirmar el buzón</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Enviamos un código de verificación a %s. Ingrese el código abajo:</string>
+  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">su dirección de correo electrónico</string>
+  <string name="simple_login_sync_mailbox_verify_code_resend">Reenviar el código en %s</string>
+  <string name="simple_login_sync_mailbox_verify_code_request_new">solicitar un código nuevo</string>
+  <string name="simple_login_sync_mailbox_verify_code_not_received" comment="the placeholder will be replaced by 'request a new code' link text">Code not received? Check your spam folder and if not there %s instead.</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">El código de verificación del buzón no es válido.</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_error">Ocurrió un error al verificar el buzón.</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_success">Se verificó el buzón.</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Ocurrió un error al enviar el código de verificación.</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Se envió el código de verificación.</string>
+  <!-- Mailbox delete screen -->
+  <string name="simple_login_sync_mailbox_delete_title">Eliminar el buzón</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">All aliases using the mailbox %s will be also deleted. To keep receiving emails transfer these aliases to a different mailbox:</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transferir los alias</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Al buzón</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete">Eliminar el buzón</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transferir y eliminar buzón de correo</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">Ocurrió un error al eliminar el buzón.</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_success">Se eliminó el buzón.</string>
+  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transferir los alias a</string>
+  <!-- Domain select screen -->
+  <string name="simple_login_sync_domain_select_title">Dominio por defecto</string>
+  <string name="simple_login_sync_domain_select_title_none">ninguno</string>
+  <string name="simple_login_sync_domain_select_description_none">Ningún dominio</string>
+  <string name="simple_login_sync_domain_select_description_custom">Tu dominio</string>
+  <string name="simple_login_sync_domain_select_description_free">Dominio público</string>
+  <string name="simple_login_sync_domain_select_description_premium">Dominio premium</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">Ocurrió un error al recuperar el dominio del alias de SL.</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Ocurrió un error al actualizar el dominio del alias de SL.</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Se actualizó el dominio del alias de SL.</string>
+  <!-- Mailbox options screen -->
+  <string name="simple_login_sync_mailbox_options_snackbar_options_error">No se pueden mostrar las opciones del buzón.</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_error">Ocurrió un error al actualizar el buzón por defecto.</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Se actualizó el buzón por defecto.</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Bóveda SL por defecto</string>
   <string name="simple_login_sync_shared_default_vault_description">Los alias de SimpleLogin se importarán a esta bóveda.</string>

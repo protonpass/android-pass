@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
 
+    implementation(projects.pass.clipboard.api)
     implementation(projects.pass.commonUi.impl)
     implementation(projects.pass.commonRust.api)
     implementation(projects.pass.composeComponents.impl)

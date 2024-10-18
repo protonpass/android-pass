@@ -26,7 +26,7 @@ import proton.android.pass.features.alias.contacts.detail.ui.DetailAliasContactS
 import proton.android.pass.features.alias.contacts.onboarding.navigation.OnBoardingAliasContactNavItem
 import proton.android.pass.features.alias.contacts.onboarding.presentation.OnBoardingAliasContactBottomsheet
 import proton.android.pass.features.alias.contacts.options.navigation.OptionsAliasContactNavItem
-import proton.android.pass.features.alias.contacts.options.presentation.OptionsAliasContactBottomsheet
+import proton.android.pass.features.alias.contacts.options.presentation.OptionsAliasContactBottomSheet
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
@@ -41,6 +41,6 @@ fun NavGraphBuilder.aliasContactGraph(onNavigate: (AliasContactsNavigation) -> U
         OnBoardingAliasContactBottomsheet()
     }
     bottomSheet(OptionsAliasContactNavItem) {
-        OptionsAliasContactBottomsheet()
+        OptionsAliasContactBottomSheet(onNavigate = onNavigate)
     }
 }

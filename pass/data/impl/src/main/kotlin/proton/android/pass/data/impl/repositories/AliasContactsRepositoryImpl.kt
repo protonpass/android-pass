@@ -52,6 +52,9 @@ class AliasContactsRepositoryImpl @Inject constructor(
         val userContacts = cachedContacts[userId]?.values.orEmpty().toList()
         AliasContacts(userContacts, userContacts.size)
     }.onStart {
+        val cachedContacts = contactsCache.value[userId]?.values.orEmpty()
+        emit(AliasContacts(cachedContacts.toList(), cachedContacts.size))
+
         val allContacts = mutableListOf<Contact>()
         var lastId: ContactId? = null
         var total: Int
@@ -85,6 +88,11 @@ class AliasContactsRepositoryImpl @Inject constructor(
     ): Flow<Contact> = contactsCache.mapNotNull { cachedContacts ->
         cachedContacts[userId]?.get(contactId)
     }.onStart {
+        val cachedContact = contactsCache.value[userId]?.get(contactId)
+        if (cachedContact != null) {
+            emit(cachedContact)
+        }
+
         val refreshedContact = remoteDataSource.getAliasContact(userId, shareId, itemId, contactId)
             .contact
             .toDomain()

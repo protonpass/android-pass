@@ -18,11 +18,53 @@
 
 package proton.android.pass.features.alias.contacts.options.presentation
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.features.alias.contacts.AliasContactsNavigation
+import proton.android.pass.features.alias.contacts.options.ui.OptionsAliasBottomSheetUiEvent.OnBlockContactClicked
+import proton.android.pass.features.alias.contacts.options.ui.OptionsAliasBottomSheetUiEvent.OnCopyAddressClicked
+import proton.android.pass.features.alias.contacts.options.ui.OptionsAliasBottomSheetUiEvent.OnDeleteContactClicked
+import proton.android.pass.features.alias.contacts.options.ui.OptionsAliasBottomSheetUiEvent.OnSendEmailClicked
+import proton.android.pass.features.alias.contacts.options.ui.OptionsAliasBottomSheetUiEvent.OnUnblockContactClicked
+import proton.android.pass.features.alias.contacts.sendEmailIntent
 
 @Composable
-fun OptionsAliasContactBottomsheet(modifier: Modifier = Modifier) {
-    Text("Empty bottom sheet")
+fun OptionsAliasContactBottomSheet(
+    modifier: Modifier = Modifier,
+    viewModel: OptionsAliasViewModel = hiltViewModel(),
+    onNavigate: (AliasContactsNavigation) -> Unit
+) {
+    val context = LocalContext.current
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state.event) {
+        when (val event = state.event) {
+            OptionsAliasEvent.Close -> onNavigate(AliasContactsNavigation.CloseBottomSheet)
+            OptionsAliasEvent.Idle -> {}
+            is OptionsAliasEvent.SendEmail -> {
+                sendEmailIntent(context, event.email)
+                onNavigate(AliasContactsNavigation.CloseBottomSheet)
+            }
+        }
+        viewModel.onConsumeEvent(state.event)
+    }
+
+    OptionsAliasContactContent(
+        modifier = modifier,
+        state = state,
+        onUiEvent = { uiEvent ->
+            when (uiEvent) {
+                OnBlockContactClicked -> viewModel.onBlockContact()
+                OnCopyAddressClicked -> viewModel.onCopyEmail()
+                OnDeleteContactClicked -> viewModel.onDeleteContact()
+                OnSendEmailClicked -> viewModel.onSendEmail()
+                OnUnblockContactClicked -> viewModel.onUnblockContact()
+            }
+        }
+    )
 }

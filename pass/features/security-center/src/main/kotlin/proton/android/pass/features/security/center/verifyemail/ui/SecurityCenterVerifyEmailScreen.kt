@@ -31,9 +31,8 @@ import proton.android.pass.features.security.center.verifyemail.presentation.Sec
 fun SecurityCenterVerifyEmailScreen(
     onNavigated: (SecurityCenterVerifyEmailDestination) -> Unit,
     viewModel: SecurityCenterVerifyEmailViewModel = hiltViewModel()
-) {
-
-    val state by viewModel.state.collectAsStateWithLifecycle()
+) = with(viewModel) {
+    val state by stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
         when (state.event) {
@@ -45,24 +44,24 @@ fun SecurityCenterVerifyEmailScreen(
                 onNavigated(SecurityCenterVerifyEmailDestination.Back)
             }
 
-            SecurityCenterVerifyEmailEvent.Idle -> {}
+            SecurityCenterVerifyEmailEvent.Idle -> Unit
         }
-        viewModel.onEventConsumed(state.event)
+
+        onEventConsumed(state.event)
     }
+
     SecurityCenterVerifyEmailContent(
         state = state,
-        code = viewModel.code,
+        code = code,
         onUiEvent = { event ->
             when (event) {
                 SecurityCenterVerifyEmailUiEvent.Back -> onNavigated(
                     SecurityCenterVerifyEmailDestination.Back
                 )
 
-                is SecurityCenterVerifyEmailUiEvent.OnCodeChange ->
-                    viewModel.onCodeChange(event.code)
-
-                SecurityCenterVerifyEmailUiEvent.Verify -> viewModel.verifyCode()
-                SecurityCenterVerifyEmailUiEvent.ResendCode -> viewModel.resendCode()
+                is SecurityCenterVerifyEmailUiEvent.OnCodeChange -> onCodeChange(event.code)
+                SecurityCenterVerifyEmailUiEvent.Verify -> verifyCode()
+                SecurityCenterVerifyEmailUiEvent.ResendCode -> resendCode()
             }
         }
     )

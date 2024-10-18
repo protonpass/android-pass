@@ -58,6 +58,8 @@ import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import me.proton.core.presentation.R as CoreR
 
+private const val VERIFICATION_CODE_LENGTH = 6
+
 @Composable
 fun PassCodeVerificationScreen(
     modifier: Modifier = Modifier,
@@ -67,10 +69,10 @@ fun PassCodeVerificationScreen(
     isActionLoading: Boolean,
     onActionClick: () -> Unit,
     verificationCode: String,
-    verificationCodeLength: Int,
     canEnterVerificationCode: Boolean,
     onVerificationCodeChange: (String) -> Unit,
-    onResendVerificationCodeClick: () -> Unit
+    onResendVerificationCodeClick: () -> Unit,
+    verificationCodeLength: Int = VERIFICATION_CODE_LENGTH
 ) {
     val isActionEnabled = remember(verificationCode) {
         verificationCode.length == verificationCodeLength

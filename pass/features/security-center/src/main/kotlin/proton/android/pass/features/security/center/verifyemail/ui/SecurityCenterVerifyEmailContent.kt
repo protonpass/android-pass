@@ -18,29 +18,10 @@
 
 package proton.android.pass.features.security.center.verifyemail.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTopBarBackButtonType
-import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.heroNorm
-import proton.android.pass.commonui.api.heroWeak
-import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
-import proton.android.pass.composecomponents.impl.form.ProtonTextField
-import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
-import proton.android.pass.composecomponents.impl.loading.LoadingDialog
-import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.composecomponents.impl.screens.PassCodeVerificationScreen
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.verifyemail.presentation.SecurityCenterVerifyEmailState
 
@@ -50,60 +31,20 @@ internal fun SecurityCenterVerifyEmailContent(
     state: SecurityCenterVerifyEmailState,
     code: String,
     onUiEvent: (SecurityCenterVerifyEmailUiEvent) -> Unit
-) {
-    Scaffold(
+) = with(state) {
+    PassCodeVerificationScreen(
         modifier = modifier,
-        topBar = {
-            PassExtendedTopBar(
-                title = stringResource(R.string.security_center_verify_email_title),
-                subtitle = stringResource(
-                    R.string.security_center_verify_email_subtitle,
-                    state.email
-                ),
-                backButton = PassTopBarBackButtonType.Cross,
-                onUpClick = { onUiEvent(SecurityCenterVerifyEmailUiEvent.Back) }
-            )
-        }
-    ) { innerPaddingValues ->
-        Column(
-            modifier = Modifier
-                .background(PassTheme.colors.backgroundNorm)
-                .padding(paddingValues = innerPaddingValues)
-                .padding(all = Spacing.medium)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(space = Spacing.large)
-        ) {
-            ProtonTextField(
-                value = code,
-                onChange = { onUiEvent(SecurityCenterVerifyEmailUiEvent.OnCodeChange(it)) },
-                placeholder = {
-                    ProtonTextFieldPlaceHolder(
-                        text = stringResource(R.string.security_center_verify_email_code_placeholder),
-                        textStyle = PassTheme.typography.heroWeak()
-                    )
-                },
-                isError = state.isError,
-                errorMessage = stringResource(R.string.security_center_verify_email_code_error),
-                textStyle = PassTheme.typography.heroNorm(),
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Number
-                ),
-                onDoneClick = { onUiEvent(SecurityCenterVerifyEmailUiEvent.Verify) }
-            )
-            PassCircleButton(
-                isLoading = state.isLoadingState.value(),
-                backgroundColor = PassTheme.colors.interactionNormMinor1,
-                text = stringResource(R.string.security_center_custom_email_continue),
-                textColor = PassTheme.colors.interactionNormMajor2,
-                onClick = { onUiEvent(SecurityCenterVerifyEmailUiEvent.Verify) }
-            )
-            CodeNotReceived(
-                isResendingCodeState = state.isResendingCodeState,
-                onUiEvent = onUiEvent
-            )
-        }
-    }
-    if (state.isResendingCodeState == IsLoadingState.Loading) {
-        LoadingDialog()
-    }
+        topBarTitle = stringResource(R.string.security_center_verify_email_title),
+        topBarSubtitle = stringResource(
+            R.string.security_center_verify_email_subtitle,
+            email
+        ),
+        onUpClick = { onUiEvent(SecurityCenterVerifyEmailUiEvent.Back) },
+        isActionLoading = isLoading,
+        onActionClick = { onUiEvent(SecurityCenterVerifyEmailUiEvent.Verify) },
+        verificationCode = code,
+        onVerificationCodeChange = { onUiEvent(SecurityCenterVerifyEmailUiEvent.OnCodeChange(it)) },
+        onResendVerificationCodeClick = { onUiEvent(SecurityCenterVerifyEmailUiEvent.ResendCode) },
+        canEnterVerificationCode = !isLoading
+    )
 }

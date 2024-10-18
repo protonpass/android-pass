@@ -32,4 +32,5 @@ sealed interface AliasContactsNavigation {
         val contactId: ContactId
     ) : AliasContactsNavigation
     data object OnBoardingContacts : AliasContactsNavigation
+    data object Upgrade : AliasContactsNavigation
 }

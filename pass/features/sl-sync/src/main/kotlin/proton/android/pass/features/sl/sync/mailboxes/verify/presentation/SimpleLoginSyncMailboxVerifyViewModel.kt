@@ -24,20 +24,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -70,26 +63,6 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
     private var verificationCodeMutableState: String by savedStateHandleProvider.get()
         .saveable { mutableStateOf("") }
 
-    private val verificationCodeTimerRestarterFlow = MutableStateFlow(false)
-
-    private val verificationCodeTimerSecondsFlow = verificationCodeTimerRestarterFlow
-        .onStart { emit(true) }
-        .filter { shouldStartTimer -> shouldStartTimer }
-        .flatMapLatest {
-            flow {
-                verificationCodeTimerRestarterFlow.update { false }
-
-                var remainingSeconds = INITIAL_VERIFICATION_CODE_TIMER_SECONDS
-                emit(remainingSeconds)
-
-                while (currentCoroutineContext().isActive && remainingSeconds > 0) {
-                    delay(timeMillis = VERIFICATION_CODE_TIMER_INTERVAL_MILLIS)
-                    remainingSeconds--
-                    emit(remainingSeconds)
-                }
-            }
-        }
-
     private val eventFlow = MutableStateFlow<SimpleLoginSyncMailboxVerifyEvent>(
         value = SimpleLoginSyncMailboxVerifyEvent.Idle
     )
@@ -103,7 +76,6 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
 
     internal val stateFlow: StateFlow<SimpleLoginSyncMailboxVerifyState> = combine(
         mailboxEmailFlow,
-        verificationCodeTimerSecondsFlow,
         eventFlow,
         isLoadingStateFlow,
         ::SimpleLoginSyncMailboxVerifyState
@@ -158,7 +130,6 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
                     snackbarDispatcher(SimpleLoginSyncMailboxVerifySnackbarMessage.ResendCodeError)
                 }
                 .onSuccess {
-                    verificationCodeTimerRestarterFlow.update { true }
                     snackbarDispatcher(SimpleLoginSyncMailboxVerifySnackbarMessage.ResendCodeSuccess)
                 }
 
@@ -169,10 +140,6 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
     private companion object {
 
         private const val TAG = "SimpleLoginSyncMailboxVerifyViewModel"
-
-        private const val INITIAL_VERIFICATION_CODE_TIMER_SECONDS = 30
-
-        private const val VERIFICATION_CODE_TIMER_INTERVAL_MILLIS = 1_000L
 
     }
 

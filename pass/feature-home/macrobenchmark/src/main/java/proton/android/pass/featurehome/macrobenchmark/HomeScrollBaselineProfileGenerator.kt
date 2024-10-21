@@ -18,7 +18,8 @@
 
 package proton.android.pass.featurehome.macrobenchmark
 
-import androidx.benchmark.macro.ExperimentalBaselineProfilesApi
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Direction
@@ -26,7 +27,7 @@ import androidx.test.uiautomator.Until
 import org.junit.Rule
 import org.junit.Test
 
-@ExperimentalBaselineProfilesApi
+@RequiresApi(Build.VERSION_CODES.P)
 class HomeScrollBaselineProfileGenerator {
 
     @get:Rule
@@ -34,7 +35,7 @@ class HomeScrollBaselineProfileGenerator {
 
     @Test
     fun appStartupOnly() {
-        baselineProfileRule.collectBaselineProfile(PACKAGE_NAME) {
+        baselineProfileRule.collect(PACKAGE_NAME) {
             startActivityAndWait()
 
             val contentList = device.findObject(By.res(ITEMS_LIST_ID))

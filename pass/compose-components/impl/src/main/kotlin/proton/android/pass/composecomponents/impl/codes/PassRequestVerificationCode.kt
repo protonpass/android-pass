@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.screens
+package proton.android.pass.composecomponents.impl.codes
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -30,7 +30,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -47,99 +46,18 @@ import androidx.compose.ui.text.style.TextAlign
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTopBarBackButtonType
 import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
-import proton.android.pass.composecomponents.impl.form.PassVerificationCodeTextField
 import proton.android.pass.composecomponents.impl.text.PassTextWithLink
 import proton.android.pass.composecomponents.impl.text.Text
-import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
-import me.proton.core.presentation.R as CoreR
-
-private const val VERIFICATION_CODE_LENGTH = 6
-
-@Composable
-fun PassCodeVerificationScreen(
-    modifier: Modifier = Modifier,
-    topBarTitle: String,
-    topBarSubtitle: String,
-    onUpClick: () -> Unit,
-    isActionLoading: Boolean,
-    onActionClick: () -> Unit,
-    verificationCode: String,
-    canEnterVerificationCode: Boolean,
-    onVerificationCodeChange: (String) -> Unit,
-    onResendVerificationCodeClick: () -> Unit,
-    verificationCodeLength: Int = VERIFICATION_CODE_LENGTH
-) {
-    val isActionEnabled = remember(verificationCode) {
-        verificationCode.length == verificationCodeLength
-    }
-
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            PassExtendedTopBar(
-                backButton = PassTopBarBackButtonType.Cross,
-                title = topBarTitle,
-                subtitle = topBarSubtitle,
-                onUpClick = onUpClick,
-                actions = {
-                    LoadingCircleButton(
-                        modifier = Modifier.padding(vertical = Spacing.small),
-                        isLoading = isActionLoading,
-                        buttonEnabled = isActionEnabled,
-                        color = if (isActionEnabled) {
-                            PassTheme.colors.interactionNormMajor1
-                        } else {
-                            PassTheme.colors.interactionNormMajor1.copy(alpha = 0.6f)
-                        },
-                        text = {
-                            Text.Body2Regular(
-                                text = stringResource(id = R.string.action_continue),
-                                color = PassTheme.colors.textInvert
-                            )
-                        },
-                        onClick = onActionClick
-                    )
-                }
-            )
-        }
-    ) { innerPaddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(paddingValues = innerPaddingValues)
-                .padding(
-                    horizontal = Spacing.medium,
-                    vertical = Spacing.large
-                ),
-            verticalArrangement = Arrangement.spacedBy(space = Spacing.medium),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            PassVerificationCodeTextField(
-                verificationCode = verificationCode,
-                verificationCodeLength = verificationCodeLength,
-                canEnterVerificationCode = canEnterVerificationCode,
-                onVerificationCodeChange = onVerificationCodeChange
-            )
-
-            PassRequestVerificationCode(
-                showRequestVerificationCodeOptions = canEnterVerificationCode,
-                onResendVerificationCodeClick = onResendVerificationCodeClick
-            )
-        }
-    }
-}
 
 private const val CHEVRON_ROTATION_INITIAL = 0F
 private const val CHEVRON_ROTATION_TOGGLED = -180F
 private const val CHEVRON_ROTATION_LABEL = "chevron_rotation_label"
 
 @Composable
-private fun PassRequestVerificationCode(
+fun PassRequestVerificationCode(
     modifier: Modifier = Modifier,
     showRequestVerificationCodeOptions: Boolean,
     onResendVerificationCodeClick: () -> Unit
@@ -189,7 +107,7 @@ private fun PassRequestVerificationCode(
 
                 Icon(
                     modifier = Modifier.rotate(degrees = chevronRotationDegrees),
-                    painter = painterResource(id = CoreR.drawable.ic_proton_chevron_tiny_down),
+                    painter = painterResource(id = me.proton.core.presentation.R.drawable.ic_proton_chevron_tiny_down),
                     contentDescription = null,
                     tint = PassTheme.colors.textWeak
                 )

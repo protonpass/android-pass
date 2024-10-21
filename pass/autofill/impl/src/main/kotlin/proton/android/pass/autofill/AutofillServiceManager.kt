@@ -191,14 +191,10 @@ class AutofillServiceManager @Inject constructor(
 
         return when (suggestedItemsResult) {
             SuggestedItemsResult.ShowUpgrade -> createUpgradePresentationDataset(autofillData)
-            is SuggestedItemsResult.Items -> if (suggestedItemsResult.items.isNotEmpty()) {
-                createMenuPresentationDatasetWithItems(
-                    autofillData = autofillData,
-                    suggestedItems = suggestedItemsResult.items
-                )
-            } else {
-                emptyList()
-            }
+            is SuggestedItemsResult.Items -> createMenuPresentationDatasetWithItems(
+                autofillData = autofillData,
+                suggestedItems = suggestedItemsResult.items
+            )
         }
     }
 

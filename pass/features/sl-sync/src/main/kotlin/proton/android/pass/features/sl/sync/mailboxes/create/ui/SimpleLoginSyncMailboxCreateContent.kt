@@ -69,7 +69,7 @@ internal fun SimpleLoginSyncMailboxCreateContent(
                         color = if (canCreateMailbox(mailboxEmail)) {
                             PassTheme.colors.interactionNormMajor1
                         } else {
-                            PassTheme.colors.interactionNormMajor1.copy(alpha = 0.6f)
+                            PassTheme.colors.interactionNormMinor1
                         },
                         text = {
                             Text(

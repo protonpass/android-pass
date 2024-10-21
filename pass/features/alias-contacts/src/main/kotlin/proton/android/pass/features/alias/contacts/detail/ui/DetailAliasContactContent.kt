@@ -31,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
@@ -58,7 +57,6 @@ fun DetailAliasContactContent(
                 actions = {
                     if (!state.canManageContacts) {
                         UpgradeButton(
-                            modifier = Modifier.padding(Spacing.mediumSmall, 0.dp),
                             backgroundColor = PassTheme.colors.aliasInteractionNormMajor1,
                             contentColor = PassTheme.colors.textInvert,
                             onUpgradeClick = { onEvent(DetailAliasContactUIEvent.Upgrade) }

@@ -119,7 +119,7 @@ androidx.navigation:navigation-compose:2.7.7
 androidx.navigation:navigation-runtime-ktx:2.7.7
 androidx.navigation:navigation-runtime:2.7.7
 androidx.print:print:1.0.0
-androidx.profileinstaller:profileinstaller:1.3.1
+androidx.profileinstaller:profileinstaller:1.4.1
 androidx.recyclerview:recyclerview:1.2.1
 androidx.resourceinspection:resourceinspection-annotation:1.0.1
 androidx.room:room-common:2.6.1

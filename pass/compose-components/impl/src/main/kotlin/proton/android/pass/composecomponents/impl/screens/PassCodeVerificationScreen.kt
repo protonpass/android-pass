@@ -183,7 +183,7 @@ private fun PassRequestVerificationCode(
                 horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
             ) {
                 Text.DefaultSmallWeak(
-                    text = "Haven't receive the code?",
+                    text = stringResource(id = R.string.verification_code_not_received),
                     color = PassTheme.colors.textWeak
                 )
 
@@ -202,9 +202,7 @@ private fun PassRequestVerificationCode(
                 ) {
                     Text.CaptionWeak(
                         modifier = Modifier.fillMaxWidth(),
-                        text =
-                        "Please check in your Spam for an email called “Please " +
-                            "confirm your email address for Proton Pass“",
+                        text = stringResource(id = R.string.verification_code_suggestion_spam),
                         color = PassTheme.colors.textWeak,
                         textAlign = TextAlign.Center
                     )
@@ -212,11 +210,14 @@ private fun PassRequestVerificationCode(
                     PassTextWithLink(
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        text = "If you can’t find such email, you can request a new code",
+                        text = stringResource(
+                            id = R.string.verification_code_suggestion_resend,
+                            stringResource(id = R.string.verification_code_suggestion_resend_link)
+                        ),
                         textStyle = ProtonTheme.typography.captionWeak.copy(
                             color = PassTheme.colors.textWeak
                         ),
-                        linkText = "request a new code",
+                        linkText = stringResource(id = R.string.verification_code_suggestion_resend_link),
                         linkStyle = ProtonTheme.typography.captionWeak.copy(
                             color = PassTheme.colors.interactionNormMajor1
                         ),

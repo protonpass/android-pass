@@ -34,15 +34,15 @@
     <string name="contact_created_date" comment="date of creation">Created %1$s ago</string>
     <string name="no_activity_contact">No Activity in the last 14 days.</string>
     <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">in the last 14 days.</string>
-    <plurals name="forwarded_count">
+    <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
         <item quantity="one">%1$d forwarded</item>
         <item quantity="other">%1$d forwarded</item>
     </plurals>
-    <plurals name="sent_count">
+    <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
         <item quantity="one">%1$d sent</item>
         <item quantity="other">%1$d sent</item>
     </plurals>
-    <plurals name="blocked_count">
+    <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
         <item quantity="one">%1$d blocked</item>
         <item quantity="other">%1$d blocked</item>
     </plurals>

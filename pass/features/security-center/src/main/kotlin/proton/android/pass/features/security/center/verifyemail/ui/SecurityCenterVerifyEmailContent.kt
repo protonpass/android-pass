@@ -21,7 +21,7 @@ package proton.android.pass.features.security.center.verifyemail.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import proton.android.pass.composecomponents.impl.screens.PassCodeVerificationScreen
+import proton.android.pass.composecomponents.impl.codes.PassCodeVerificationContent
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.verifyemail.presentation.SecurityCenterVerifyEmailState
 
@@ -32,7 +32,7 @@ internal fun SecurityCenterVerifyEmailContent(
     code: String,
     onUiEvent: (SecurityCenterVerifyEmailUiEvent) -> Unit
 ) = with(state) {
-    PassCodeVerificationScreen(
+    PassCodeVerificationContent(
         modifier = modifier,
         topBarTitle = stringResource(R.string.security_center_verify_email_title),
         topBarSubtitle = stringResource(

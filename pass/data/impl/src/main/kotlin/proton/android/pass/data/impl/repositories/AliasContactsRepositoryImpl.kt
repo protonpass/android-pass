@@ -37,11 +37,17 @@ import proton.android.pass.domain.aliascontacts.Contact
 import proton.android.pass.domain.aliascontacts.ContactId
 import javax.inject.Inject
 
+data class ContactCacheKey(
+    val shareId: ShareId,
+    val itemId: ItemId,
+    val contactId: ContactId? = null
+)
+
 class AliasContactsRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteAliasContactsDataSource
 ) : AliasContactsRepository {
 
-    private val contactsCache = MutableStateFlow<Map<UserId, Map<ContactId, Contact>>>(emptyMap())
+    private val contactsCache = MutableStateFlow<Map<ContactCacheKey, Contact>>(emptyMap())
 
     override suspend fun observeAliasContacts(
         userId: UserId,
@@ -49,11 +55,17 @@ class AliasContactsRepositoryImpl @Inject constructor(
         itemId: ItemId,
         fullList: Boolean
     ): Flow<AliasContacts> = contactsCache.map { cachedContacts ->
-        val userContacts = cachedContacts[userId]?.values.orEmpty().toList()
-        AliasContacts(userContacts, userContacts.size)
+        val relevantContacts = cachedContacts.filterKeys {
+            it.shareId == shareId && it.itemId == itemId && it.contactId != null
+        }.values.toList()
+
+        AliasContacts(relevantContacts, relevantContacts.size)
     }.onStart {
-        val cachedContacts = contactsCache.value[userId]?.values.orEmpty()
-        emit(AliasContacts(cachedContacts.toList(), cachedContacts.size))
+        val cachedContacts = contactsCache.value.filterKeys {
+            it.shareId == shareId && it.itemId == itemId && it.contactId != null
+        }.values.toList()
+
+        emit(AliasContacts(cachedContacts, cachedContacts.size))
 
         val allContacts = mutableListOf<Contact>()
         var lastId: ContactId? = null
@@ -64,14 +76,13 @@ class AliasContactsRepositoryImpl @Inject constructor(
             total = response.total
             val newContacts = response.contacts.map(ContactResponse::toDomain)
 
-            val updatedUserContacts = contactsCache.value[userId].orEmpty().toMutableMap()
+            val updatedContacts = contactsCache.value.toMutableMap()
             newContacts.forEach { contact ->
-                updatedUserContacts[contact.id] = contact
+                val cacheKey = ContactCacheKey(shareId, itemId, contact.id)
+                updatedContacts[cacheKey] = contact
             }
 
-            contactsCache.value = contactsCache.value.toMutableMap().apply {
-                this[userId] = updatedUserContacts
-            }
+            contactsCache.value = updatedContacts
 
             allContacts.addAll(newContacts)
             lastId = if (response.contacts.isNotEmpty()) ContactId(response.lastId) else null
@@ -86,9 +97,10 @@ class AliasContactsRepositoryImpl @Inject constructor(
         itemId: ItemId,
         contactId: ContactId
     ): Flow<Contact> = contactsCache.mapNotNull { cachedContacts ->
-        cachedContacts[userId]?.get(contactId)
+        cachedContacts[ContactCacheKey(shareId, itemId, contactId)]
     }.onStart {
-        val cachedContact = contactsCache.value[userId]?.get(contactId)
+        val cacheKey = ContactCacheKey(shareId, itemId, contactId)
+        val cachedContact = contactsCache.value[cacheKey]
         if (cachedContact != null) {
             emit(cachedContact)
         }
@@ -97,11 +109,8 @@ class AliasContactsRepositoryImpl @Inject constructor(
             .contact
             .toDomain()
 
-        val updatedUserContacts = contactsCache.value[userId].orEmpty().toMutableMap()
-        updatedUserContacts[contactId] = refreshedContact
-
         contactsCache.value = contactsCache.value.toMutableMap().apply {
-            this[userId] = updatedUserContacts
+            this[cacheKey] = refreshedContact
         }
 
         emit(refreshedContact)
@@ -118,11 +127,10 @@ class AliasContactsRepositoryImpl @Inject constructor(
             userId, shareId, itemId, CreateAliasContactRequest(email, name)
         ).contact.toDomain()
 
-        val updatedUserContacts = contactsCache.value[userId].orEmpty().toMutableMap()
-        updatedUserContacts[contact.id] = contact
+        val cacheKey = ContactCacheKey(shareId, itemId, contact.id)
 
         contactsCache.value = contactsCache.value.toMutableMap().apply {
-            this[userId] = updatedUserContacts
+            this[cacheKey] = contact
         }
 
         return contact
@@ -136,14 +144,11 @@ class AliasContactsRepositoryImpl @Inject constructor(
     ) {
         remoteDataSource.deleteAliasContact(userId, shareId, itemId, contactId)
 
-        val updatedUserContacts = contactsCache.value[userId]?.toMutableMap()
-        updatedUserContacts?.remove(contactId)
+        val cacheKey = ContactCacheKey(shareId, itemId, contactId)
+        val updatedContacts = contactsCache.value.toMutableMap()
+        updatedContacts.remove(cacheKey)
 
-        if (updatedUserContacts != null) {
-            contactsCache.value = contactsCache.value.toMutableMap().apply {
-                this[userId] = updatedUserContacts
-            }
-        }
+        contactsCache.value = updatedContacts
     }
 
     override suspend fun updateBlockedAliasContact(
@@ -157,11 +162,10 @@ class AliasContactsRepositoryImpl @Inject constructor(
             userId, shareId, itemId, contactId, UpdateBlockedAliasContactRequest(blocked)
         ).contact.toDomain()
 
-        val updatedUserContacts = contactsCache.value[userId].orEmpty().toMutableMap()
-        updatedUserContacts[contactId] = updatedContact
+        val cacheKey = ContactCacheKey(shareId, itemId, contactId)
 
         contactsCache.value = contactsCache.value.toMutableMap().apply {
-            this[userId] = updatedUserContacts
+            this[cacheKey] = updatedContact
         }
 
         return updatedContact

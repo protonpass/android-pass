@@ -21,7 +21,7 @@ package proton.android.pass.features.sl.sync.mailboxes.verify.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import proton.android.pass.composecomponents.impl.screens.PassCodeVerificationScreen
+import proton.android.pass.composecomponents.impl.codes.PassCodeVerificationContent
 import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.mailboxes.verify.presentation.SimpleLoginSyncMailboxVerifyState
 
@@ -32,7 +32,7 @@ internal fun SimpleLoginSyncMailboxVerifyContent(
     state: SimpleLoginSyncMailboxVerifyState,
     onUiEvent: (SimpleLoginSyncMailboxVerifyUiEvent) -> Unit
 ) = with(state) {
-    PassCodeVerificationScreen(
+    PassCodeVerificationContent(
         modifier = modifier,
         topBarTitle = stringResource(id = R.string.simple_login_sync_mailbox_verify_title),
         topBarSubtitle = stringResource(

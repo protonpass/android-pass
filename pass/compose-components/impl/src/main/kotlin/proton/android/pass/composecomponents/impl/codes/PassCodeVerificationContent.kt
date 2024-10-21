@@ -77,7 +77,7 @@ fun PassCodeVerificationContent(
                         color = if (isActionEnabled) {
                             PassTheme.colors.interactionNormMajor1
                         } else {
-                            PassTheme.colors.interactionNormMajor1.copy(alpha = 0.6f)
+                            PassTheme.colors.interactionNormMinor1
                         },
                         text = {
                             Text.Body2Regular(

@@ -18,7 +18,8 @@
 
 package proton.android.pass.benchmark.baseline
 
-import androidx.benchmark.macro.ExperimentalBaselineProfilesApi
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
@@ -27,7 +28,7 @@ import org.junit.Test
 import proton.android.pass.benchmark.TARGET_PACKAGE
 import proton.android.pass.benchmark.TIMEOUT
 
-@ExperimentalBaselineProfilesApi
+@RequiresApi(Build.VERSION_CODES.P)
 class StartupOnlyBaselineProfileGenerator {
 
     @get:Rule
@@ -35,7 +36,7 @@ class StartupOnlyBaselineProfileGenerator {
 
     @Test
     fun appStartupOnly() {
-        baselineProfileRule.collectBaselineProfile(TARGET_PACKAGE) {
+        baselineProfileRule.collect(TARGET_PACKAGE) {
             startActivityAndWait()
             device.wait(Until.hasObject(By.text("Sign in")), TIMEOUT)
         }

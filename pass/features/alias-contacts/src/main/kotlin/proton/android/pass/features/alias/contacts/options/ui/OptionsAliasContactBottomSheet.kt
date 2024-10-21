@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.alias.contacts.options.presentation
+package proton.android.pass.features.alias.contacts.options.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,6 +26,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.alias.contacts.AliasContactsNavigation
+import proton.android.pass.features.alias.contacts.options.presentation.OptionsAliasEvent
+import proton.android.pass.features.alias.contacts.options.presentation.OptionsAliasViewModel
 import proton.android.pass.features.alias.contacts.options.ui.OptionsAliasBottomSheetUiEvent.OnBlockContactClicked
 import proton.android.pass.features.alias.contacts.options.ui.OptionsAliasBottomSheetUiEvent.OnCopyAddressClicked
 import proton.android.pass.features.alias.contacts.options.ui.OptionsAliasBottomSheetUiEvent.OnDeleteContactClicked

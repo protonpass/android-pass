@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.alias.contacts.options.presentation
+package proton.android.pass.features.alias.contacts.options.ui
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
@@ -31,7 +31,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIco
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
-import proton.android.pass.features.alias.contacts.options.ui.OptionsAliasBottomSheetUiEvent
+import proton.android.pass.features.alias.contacts.options.presentation.OptionsAliasUIState
 import proton.android.pass.features.alias.contacts.options.ui.OptionsAliasBottomSheetUiEvent.OnBlockContactClicked
 import proton.android.pass.features.alias.contacts.options.ui.OptionsAliasBottomSheetUiEvent.OnCopyAddressClicked
 import proton.android.pass.features.alias.contacts.options.ui.OptionsAliasBottomSheetUiEvent.OnDeleteContactClicked

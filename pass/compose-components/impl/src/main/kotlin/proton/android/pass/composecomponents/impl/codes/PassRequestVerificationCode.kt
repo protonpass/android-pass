@@ -100,7 +100,7 @@ fun PassRequestVerificationCode(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
             ) {
-                Text.DefaultSmallWeak(
+                Text.Body2Regular(
                     text = stringResource(id = R.string.verification_code_not_received),
                     color = PassTheme.colors.textWeak
                 )
@@ -121,7 +121,6 @@ fun PassRequestVerificationCode(
                     Text.CaptionWeak(
                         modifier = Modifier.fillMaxWidth(),
                         text = stringResource(id = R.string.verification_code_suggestion_spam),
-                        color = PassTheme.colors.textWeak,
                         textAlign = TextAlign.Center
                     )
 

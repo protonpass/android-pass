@@ -119,7 +119,7 @@ class OptionsAliasViewModel @Inject constructor(
 
     fun onDeleteContact() {
         viewModelScope.launch {
-            isBlockLoadingStateFlow.update { IsLoadingState.Loading }
+            isDeleteLoadingStateFlow.update { IsLoadingState.Loading }
             runCatching {
                 deleteAliasContact(shareId, itemId, contactId)
             }.onSuccess {
@@ -130,7 +130,7 @@ class OptionsAliasViewModel @Inject constructor(
                 PassLogger.w(TAG, it)
                 snackbarDispatcher(DeleteContactError)
             }
-            isBlockLoadingStateFlow.update { IsLoadingState.NotLoading }
+            isDeleteLoadingStateFlow.update { IsLoadingState.NotLoading }
             eventFlow.update { OptionsAliasEvent.Close }
         }
     }

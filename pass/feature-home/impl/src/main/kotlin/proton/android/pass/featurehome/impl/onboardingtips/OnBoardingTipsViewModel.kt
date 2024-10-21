@@ -45,6 +45,7 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.Autofill
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.Invite
@@ -118,23 +119,32 @@ class OnBoardingTipsViewModel @Inject constructor(
     private val shouldShowSLSyncFlow = combine(
         preferencesRepository.getHasDismissedSLSyncBanner(),
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1),
         simpleLoginSyncStatusOptionFlow
-    ) { hasDismissedSLSyncBanner, slSyncFFEnabled, isAdvancedAliasManagementEnabled, result ->
-        if (!slSyncFFEnabled && !isAdvancedAliasManagementEnabled) return@combine false to 0
-        if (hasDismissedSLSyncBanner == HasDismissedSLSyncBanner.Dismissed) return@combine false to 0
-        val sync = result.getOrNull()?.value() ?: return@combine false to 0
-        val show = sync.isPreferenceEnabled && sync.hasPendingAliases && !sync.isSyncEnabled
-        show to sync.pendingAliasCount
+    ) { hasDismissedSLSyncBanner, slSyncFFEnabled, result ->
+        when {
+            !slSyncFFEnabled -> null
+            hasDismissedSLSyncBanner is HasDismissedSLSyncBanner.Dismissed -> null
+            else -> result.getOrNull()?.value()
+        }
     }.distinctUntilChanged()
 
-    data class TipVisibility(
+    private data class TipVisibility(
         val shouldShowAutofill: Boolean,
         val shouldShowTrial: Boolean,
         val shouldShowInvites: Boolean,
         val shouldShowNotificationPermission: Boolean,
-        val shouldShowSLSyncAndCount: Pair<Boolean, Int>
-    )
+        private val syncStatus: SimpleLoginSyncStatus?
+    ) {
+
+        val shouldShowSLSync: Boolean = syncStatus
+            ?.let { sync -> sync.isPreferenceEnabled && sync.hasPendingAliases && !sync.isSyncEnabled }
+            ?: false
+
+        val aliasCount: Int by lazy { syncStatus?.pendingAliasCount ?: 0 }
+
+        val shareId: ShareId? by lazy { syncStatus?.defaultVault?.shareId }
+
+    }
 
     private val tipVisibilityFlow = combine(
         shouldShowAutofillFlow,
@@ -147,18 +157,18 @@ class OnBoardingTipsViewModel @Inject constructor(
 
     val state: StateFlow<OnBoardingTipsUiState> = combine(
         tipVisibilityFlow,
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1),
         eventFlow
-    ) { tipVisibility, isAdvancedManagementEnabled, event ->
+    ) { tipVisibility, event ->
         val tip = when {
             tipVisibility.shouldShowInvites -> Invite
             tipVisibility.shouldShowNotificationPermission -> NotificationPermission
             tipVisibility.shouldShowTrial -> Trial
             tipVisibility.shouldShowAutofill -> Autofill
-            tipVisibility.shouldShowSLSyncAndCount.first -> SLSync(
-                aliasCount = tipVisibility.shouldShowSLSyncAndCount.second,
-                isAdvancedManagementEnabled = isAdvancedManagementEnabled
+            tipVisibility.shouldShowSLSync -> SLSync(
+                aliasCount = tipVisibility.aliasCount,
+                shareId = tipVisibility.shareId
             )
+
             else -> null
         }.toOption()
 
@@ -187,15 +197,7 @@ class OnBoardingTipsViewModel @Inject constructor(
             Trial -> eventFlow.update { OnBoardingTipsEvent.OpenTrialScreen }
             Invite -> eventFlow.update { OnBoardingTipsEvent.OpenInviteScreen }
             NotificationPermission -> eventFlow.update { OnBoardingTipsEvent.RequestNotificationPermission }
-            is SLSync -> {
-                if (onBoardingTipPage.isAdvancedManagementEnabled) {
-                    OnBoardingTipsEvent.OpenSLManagementScreen
-                } else {
-                    OnBoardingTipsEvent.OpenSLSyncScreen
-                }.also { event ->
-                    eventFlow.update { event }
-                }
-            }
+            is SLSync -> eventFlow.update { OnBoardingTipsEvent.OpenSLSyncSettingsScreen(onBoardingTipPage.shareId) }
         }
     }
 

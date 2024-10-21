@@ -408,8 +408,9 @@ fun NavGraphBuilder.appGraph(
                     )
                 )
 
-                HomeNavigation.SLSync -> appNavigator.navigate(
-                    destination = SimpleLoginSyncDetailsNavItem
+                is HomeNavigation.SLSyncSettings -> appNavigator.navigate(
+                    destination = SimpleLoginSyncSettingsNavItem,
+                    route = SimpleLoginSyncSettingsNavItem.createNavRoute(it.shareId)
                 )
 
                 HomeNavigation.SLAliasManagement -> appNavigator.navigate(

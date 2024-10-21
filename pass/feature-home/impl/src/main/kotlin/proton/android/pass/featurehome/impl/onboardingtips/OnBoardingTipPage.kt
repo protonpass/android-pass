@@ -18,6 +18,8 @@
 
 package proton.android.pass.featurehome.impl.onboardingtips
 
+import proton.android.pass.domain.ShareId
+
 sealed interface OnBoardingTipPage {
 
     data object Autofill : OnBoardingTipPage
@@ -28,6 +30,6 @@ sealed interface OnBoardingTipPage {
 
     data object NotificationPermission : OnBoardingTipPage
 
-    data class SLSync(val aliasCount: Int, val isAdvancedManagementEnabled: Boolean) : OnBoardingTipPage
+    data class SLSync(val aliasCount: Int, val shareId: ShareId?) : OnBoardingTipPage
 
 }

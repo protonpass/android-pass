@@ -23,6 +23,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
 import proton.android.pass.data.impl.requests.alias.UpdateAliasNameRequest
+import proton.android.pass.data.impl.requests.alias.UpdateAliasNoteRequest
 import proton.android.pass.data.impl.responses.AliasOptionsResponse
 import proton.android.pass.data.impl.responses.AliasResponse
 import proton.android.pass.domain.ItemId
@@ -58,4 +59,12 @@ interface RemoteAliasDataSource {
         itemId: ItemId,
         request: UpdateAliasNameRequest
     )
+
+    suspend fun updateAliasNote(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        request: UpdateAliasNoteRequest
+    )
+
 }

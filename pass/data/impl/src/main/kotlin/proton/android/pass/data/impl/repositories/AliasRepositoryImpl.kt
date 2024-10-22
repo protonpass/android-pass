@@ -35,6 +35,7 @@ import proton.android.pass.data.impl.remote.RemoteAliasDataSource
 import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
 import proton.android.pass.data.impl.requests.alias.UpdateAliasNameRequest
+import proton.android.pass.data.impl.requests.alias.UpdateAliasNoteRequest
 import proton.android.pass.data.impl.responses.AliasMailboxResponse
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.AliasMailbox
@@ -135,6 +136,20 @@ class AliasRepositoryImpl @Inject constructor(
     ) {
         val request = UpdateAliasNameRequest(name)
         remoteDataSource.updateAliasName(userId, shareId, itemId, request)
+    }
+
+    override suspend fun updateAliasNote(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        note: String
+    ) {
+        remoteDataSource.updateAliasNote(
+            userId = userId,
+            shareId = shareId,
+            itemId = itemId,
+            request = UpdateAliasNoteRequest(note)
+        )
     }
 
     private fun mapMailboxes(input: List<AliasMailboxResponse>): List<AliasMailbox> =

@@ -210,7 +210,7 @@ class SelectItemViewModel @Inject constructor(
             combine(flows) { it.toMap() }
         }
 
-    private val itemUiModelFlow = combine(
+    private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
         selectItemStateFlow,
         usableVaultsByUserIdFlow,
         selectedAccountFlow,

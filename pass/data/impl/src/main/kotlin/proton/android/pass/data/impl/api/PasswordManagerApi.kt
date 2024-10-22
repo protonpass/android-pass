@@ -56,6 +56,7 @@ import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
 import proton.android.pass.data.impl.requests.UpdateMemberShareRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.requests.alias.UpdateAliasNameRequest
+import proton.android.pass.data.impl.requests.alias.UpdateAliasNoteRequest
 import proton.android.pass.data.impl.requests.aliascontacts.CreateAliasContactRequest
 import proton.android.pass.data.impl.requests.aliascontacts.UpdateBlockedAliasContactRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
@@ -251,6 +252,13 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String,
         @Body request: UpdateAliasNameRequest
+    ): CodeOnlyResponse
+
+    @PUT("$PREFIX/share/{shareId}/alias/{itemId}/note")
+    suspend fun updateAliasNote(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Body request: UpdateAliasNoteRequest
     ): CodeOnlyResponse
 
     @GET("$PREFIX/share/{shareId}/alias/{itemId}/contact")

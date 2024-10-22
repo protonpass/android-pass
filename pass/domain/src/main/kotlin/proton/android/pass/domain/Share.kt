@@ -50,7 +50,8 @@ data class Share(
     val shared: Boolean = false,
     val maxMembers: Int = 10,
     val pendingInvites: Int = 0,
-    val newUserInvitesReady: Int = 0
+    val newUserInvitesReady: Int = 0,
+    val canAutofill: Boolean = true
 ) {
 
     private val totalMembers: Int = memberCount

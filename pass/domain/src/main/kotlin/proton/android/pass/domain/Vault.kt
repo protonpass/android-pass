@@ -35,6 +35,7 @@ data class Vault(
     val members: Int = 1,
     val shared: Boolean = false,
     val maxMembers: Int = 10,
+    val canAutofill: Boolean = true,
     val createTime: Date
 ) {
 

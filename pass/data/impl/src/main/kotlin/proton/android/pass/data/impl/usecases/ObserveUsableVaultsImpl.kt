@@ -19,62 +19,19 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveUsableVaults
 import proton.android.pass.data.api.usecases.ObserveVaults
-import proton.android.pass.domain.Plan
-import proton.android.pass.domain.PlanLimit
-import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.Vault
-import proton.android.pass.domain.canCreate
-import proton.android.pass.domain.toPermissions
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ObserveUsableVaultsImpl @Inject constructor(
-    private val getUserPlan: GetUserPlan,
     private val observeVaults: ObserveVaults
 ) : ObserveUsableVaults {
 
-    override fun invoke(userId: UserId?): Flow<List<Vault>> = getUserPlan(userId)
-        .flatMapLatest { userPlan ->
-            when (userPlan.planType) {
-                is PlanType.Paid,
-                is PlanType.Trial -> observeVaults(userId)
-
-                is PlanType.Free,
-                is PlanType.Unknown -> observeVaults(userId)
-                    .mapLatest { vaults -> filterVaultsForFreeUser(userPlan, vaults) }
-            }
-        }
-
-    private fun filterVaultsForFreeUser(userPlan: Plan, vaults: List<Vault>): List<Vault> {
-        val vaultLimit = when (val limit = userPlan.vaultLimit) {
-            // If the vault limit is unlimited, return them all
-            PlanLimit.Unlimited -> return vaults
-            is PlanLimit.Limited -> limit.limit
-        }
-
-        // We have a user with vault limit. Check the owned vaults
-        val (ownedVaults, notOwnedVaults) = vaults.partition { it.isOwned }
-
-        if (ownedVaults.size >= vaultLimit) {
-            // User is over the limit. Only vaults with Create permission can be used.
-            // When the user is downgraded, the BE will mark the oldest vaults with this permission
-            return ownedVaults.filter { it.role.toPermissions().canCreate() }
-        }
-
-        // User is not over the limit. Take the owned vaults + as many remaining non-owned vaults
-        // until the plan limit is reached
-        val sharedVaultsThatCanBeUsed = notOwnedVaults
-            .sortedBy { it.createTime.time }
-            .take(vaultLimit - ownedVaults.size)
-        val usableVaults = ownedVaults + sharedVaultsThatCanBeUsed
-
-        return usableVaults
-    }
+    override fun invoke(userId: UserId?): Flow<List<Vault>> = observeVaults(userId)
+        .mapLatest { vaults -> vaults.filter { it.canAutofill } }
 }

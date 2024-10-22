@@ -36,6 +36,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -96,6 +97,7 @@ class UpdateAliasViewModel @Inject constructor(
 
     private var itemDataChanged = false
     private var mailboxesChanged = false
+    private var isSLNoteChanged = false
 
     init {
         viewModelScope.launch(coroutineExceptionHandler) {
@@ -135,6 +137,12 @@ class UpdateAliasViewModel @Inject constructor(
         super.onNoteChange(value)
         isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
         itemDataChanged = true
+    }
+
+    override fun onSLNoteChange(newSLNote: String) {
+        super.onSLNoteChange(newSLNote)
+        isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
+        isSLNoteChanged = true
     }
 
     override fun onTitleChange(value: String) {
@@ -283,7 +291,7 @@ class UpdateAliasViewModel @Inject constructor(
     }
 
     private fun canUpdateAlias(): Boolean {
-        if (!itemDataChanged && !mailboxesChanged) {
+        if (!itemDataChanged && !mailboxesChanged && !isSLNoteChanged) {
             PassLogger.i(TAG, "Nor item nor mailboxes have changed")
             return false
         }
@@ -305,8 +313,7 @@ class UpdateAliasViewModel @Inject constructor(
             val selectedMailboxes = aliasItemFormState
                 .mailboxes
                 .filter { it.selected }
-                .map { it.model }
-                .map(AliasMailboxUiModel::toDomain)
+                .map { it.model.toDomain() }
             Some(selectedMailboxes)
         } else None
 
@@ -321,7 +328,10 @@ class UpdateAliasViewModel @Inject constructor(
 
         return UpdateAliasContent(
             mailboxes = mailboxes,
-            itemData = itemData
+            itemData = itemData,
+            slNoteOption = aliasItemFormState.slNote
+                .takeIf { isSLNoteChanged }
+                .toOption()
         )
     }
 

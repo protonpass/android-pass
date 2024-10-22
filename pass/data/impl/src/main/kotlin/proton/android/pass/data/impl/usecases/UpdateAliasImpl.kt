@@ -67,6 +67,10 @@ class UpdateAliasImpl @Inject constructor(
             )
         }
 
+        if (content.hasSLNote) {
+            aliasRepository.updateAliasNote(userId, item.shareId, item.id, content.slNote)
+        }
+
         if (content.itemData is Some) {
             val itemData = (content.itemData as Some<UpdateAliasItemContent>).value
             return updateItemContent(userId, item, itemData)
@@ -86,11 +90,14 @@ class UpdateAliasImpl @Inject constructor(
             note = content.note,
             aliasEmail = "" // Not used when creating the payload
         )
+
         return itemRepository.updateItem(userId, share, item, itemContents)
     }
 
-    companion object {
-        private const val TAG = "UpdateAliasImpl"
-    }
-}
+    private companion object {
 
+        private const val TAG = "UpdateAliasImpl"
+
+    }
+
+}

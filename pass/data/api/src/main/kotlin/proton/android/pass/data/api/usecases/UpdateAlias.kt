@@ -19,7 +19,9 @@
 package proton.android.pass.data.api.usecases
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.Item
 
@@ -30,8 +32,21 @@ data class UpdateAliasItemContent(
 
 data class UpdateAliasContent(
     val mailboxes: Option<List<AliasMailbox>>,
-    val itemData: Option<UpdateAliasItemContent>
-)
+    val itemData: Option<UpdateAliasItemContent>,
+    private val slNoteOption: Option<String>
+) {
+
+    val hasSLNote: Boolean = when (slNoteOption) {
+        None -> false
+        is Some -> true
+    }
+
+    val slNote: String = when (slNoteOption) {
+        None -> ""
+        is Some -> slNoteOption.value
+    }
+
+}
 
 interface UpdateAlias {
     suspend operator fun invoke(

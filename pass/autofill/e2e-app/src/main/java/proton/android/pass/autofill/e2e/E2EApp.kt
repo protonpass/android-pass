@@ -23,14 +23,22 @@ import dagger.hilt.android.HiltAndroidApp
 import me.proton.core.domain.entity.UserId
 import me.proton.core.util.android.sentry.TimberLogger
 import me.proton.core.util.kotlin.CoreLogger
+import proton.android.pass.account.fakes.FakeUserManager
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.data.api.usecases.ItemData
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.data.api.usecases.Suggestion
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
 import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.TestObserveUsableVaults
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareSelection
+import proton.android.pass.test.domain.TestUser
+import proton.android.pass.test.domain.TestVault
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -41,24 +49,53 @@ class E2EApp : Application() {
     lateinit var accountManager: TestAccountManager
 
     @Inject
+    lateinit var userManager: FakeUserManager
+
+    @Inject
     lateinit var autofillItems: TestGetSuggestedAutofillItems
+
+    @Inject
+    lateinit var observeItems: TestObserveItems
+
+    @Inject
+    lateinit var usableVaults: TestObserveUsableVaults
+
+    @Inject
+    lateinit var getItemById: FakeGetItemById
 
     override fun onCreate() {
         super.onCreate()
-        setupItems()
         setupAccount()
+        setupVault()
+        setupItems()
         setupLogger()
     }
 
+    private fun setupVault() {
+        val vault = TestVault.create(
+            shareId = VAULT_SHARE_ID,
+            userId = PRIMARY_USER_ID
+        )
+        usableVaults.emit(Result.success(listOf(vault)), userId = PRIMARY_USER_ID)
+    }
+
     private fun setupItems() {
+        setupCreditCards()
+        setupIdentities()
+        setupLogins()
+    }
+
+    private fun setupLogins() {
         val logins = listOf(
             TestObserveItems.createLogin(
+                shareId = VAULT_SHARE_ID,
                 itemId = ItemId("item1"),
                 title = "Item1",
                 username = "user1",
                 password = "pass1"
             ),
             TestObserveItems.createLogin(
+                shareId = VAULT_SHARE_ID,
                 itemId = ItemId("item2"),
                 title = "Item2",
                 username = "user2",
@@ -69,9 +106,13 @@ class E2EApp : Application() {
             itemTypeFilter = ItemTypeFilter.Logins,
             value = Result.success(SuggestedAutofillItemsResult.Items(logins))
         )
+        emitItems(logins, ItemTypeFilter.Logins)
+    }
 
+    private fun setupCreditCards() {
         val creditCards = listOf(
             TestObserveItems.createCreditCard(
+                shareId = VAULT_SHARE_ID,
                 itemId = ItemId("ccItem1"),
                 holder = "FirstName LastName",
                 number = "4766000011112222",
@@ -80,6 +121,7 @@ class E2EApp : Application() {
                 title = "First CreditCard"
             ),
             TestObserveItems.createCreditCard(
+                shareId = VAULT_SHARE_ID,
                 itemId = ItemId("ccItem2"),
                 holder = "SecondName SecondLast",
                 number = "1234123412341234",
@@ -92,13 +134,18 @@ class E2EApp : Application() {
             itemTypeFilter = ItemTypeFilter.CreditCards,
             value = Result.success(SuggestedAutofillItemsResult.Items(creditCards))
         )
+        emitItems(creditCards, ItemTypeFilter.CreditCards)
+    }
 
+    private fun setupIdentities() {
         val identities = listOf(
             TestObserveItems.createIdentity(
+                shareId = VAULT_SHARE_ID,
                 itemId = ItemId("identity1"),
                 fullName = "Peter Parker"
             ),
             TestObserveItems.createIdentity(
+                shareId = VAULT_SHARE_ID,
                 itemId = ItemId("identity2"),
                 fullName = "Tony Stark"
             )
@@ -108,6 +155,26 @@ class E2EApp : Application() {
             itemTypeFilter = ItemTypeFilter.Identity,
             value = Result.success(SuggestedAutofillItemsResult.Items(identities))
         )
+        emitItems(identities, ItemTypeFilter.Identity)
+    }
+
+    private fun emitItems(items: List<ItemData.SuggestedItem>, filter: ItemTypeFilter) {
+        observeItems.emit(
+            params = TestObserveItems.Params(
+                userId = PRIMARY_USER_ID,
+                filter = filter,
+                selection = ShareSelection.Shares(listOf(VAULT_SHARE_ID)),
+                itemState = ItemState.Active
+            ),
+            value = items.map { it.item }
+        )
+        items.forEach { item ->
+            getItemById.emit(
+                shareId = item.item.shareId,
+                itemId = item.item.id,
+                value = Result.success(item.item)
+            )
+        }
     }
 
     private fun setupLogger() {
@@ -116,6 +183,14 @@ class E2EApp : Application() {
     }
 
     private fun setupAccount() {
-        accountManager.sendPrimaryUserId(UserId("user1"))
+        accountManager.sendPrimaryUserId(PRIMARY_USER_ID)
+        accountManager.setAccounts(listOf(TestAccountManager.createAccount(PRIMARY_USER_ID)))
+        userManager.setUser(TestUser.create(userId = PRIMARY_USER_ID))
+
+    }
+
+    private companion object {
+        private val PRIMARY_USER_ID = UserId("E2EApp-UserID")
+        private val VAULT_SHARE_ID = ShareId("E2EApp-ShareID")
     }
 }

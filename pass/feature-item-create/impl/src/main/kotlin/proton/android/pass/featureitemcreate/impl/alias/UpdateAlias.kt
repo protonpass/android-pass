@@ -92,6 +92,7 @@ fun UpdateAlias(
                     AliasContentUiEvent.Back -> onExit()
                     is AliasContentUiEvent.OnMailBoxChanged -> viewModel.onMailboxesChanged(event.list)
                     is AliasContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
+                    is AliasContentUiEvent.OnSLNoteChange -> viewModel.onSLNoteChange(event.newSLNote)
                     is AliasContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
                     AliasContentUiEvent.OnUpgrade ->
                         actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Upgrade) }

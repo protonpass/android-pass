@@ -119,6 +119,11 @@ abstract class BaseAliasViewModel(
         aliasItemFormMutableState = aliasItemFormMutableState.copy(note = value)
     }
 
+    open fun onSLNoteChange(newSLNote: String) {
+        onUserEditedContent()
+        aliasItemFormMutableState = aliasItemFormMutableState.copy(slNote = newSLNote)
+    }
+
     open fun onMailboxesChanged(mailboxes: List<SelectedAliasMailboxUiModel>) {
         onUserEditedContent()
         val atLeastOneSelected = mailboxes.any { it.selected }

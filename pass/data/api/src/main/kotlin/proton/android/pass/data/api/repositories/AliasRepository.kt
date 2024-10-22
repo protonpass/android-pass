@@ -62,6 +62,14 @@ interface AliasRepository {
         itemId: ItemId,
         name: String
     )
+
+    suspend fun updateAliasNote(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        note: String
+    )
+
 }
 
 sealed interface AliasItemsChangeStatusResult {

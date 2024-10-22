@@ -333,7 +333,7 @@ class HomeViewModel @Inject constructor(
                         ).asResultWithoutLoading()
                             .map { itemResult ->
                                 itemResult.map { list ->
-                                    withContext(Dispatchers.IO) {
+                                    withContext(Dispatchers.Default) {
                                         encryptionContextProvider.withEncryptionContextSuspendable {
                                             list.map { item -> item.toUiModel(this@withEncryptionContextSuspendable) }
                                         }

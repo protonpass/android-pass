@@ -2,19 +2,22 @@ package proton.android.pass.featurehome.macrobenchmark
 
 import androidx.benchmark.macro.CompilationMode
 import androidx.benchmark.macro.FrameTimingMetric
-import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Direction
 import androidx.test.uiautomator.Until
+import junit.framework.TestCase
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import proton.android.pass.commonui.api.TestTags.HOME_EMPTY_TAG
+import proton.android.pass.commonui.api.TestTags.HOME_LOADING_TAG
 
 @Suppress("MagicNumber")
 @RunWith(AndroidJUnit4::class)
 class HomeScrollBenchmark {
+
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
 
@@ -27,29 +30,42 @@ class HomeScrollBenchmark {
     @Test
     fun scrollFullCompilation() = testScroll(CompilationMode.Full())
 
-    private fun testScroll(compilationMode: CompilationMode) = benchmarkRule.measureRepeated(
-        compilationMode = compilationMode,
-        packageName = PACKAGE_NAME,
-        metrics = listOf(FrameTimingMetric()),
-        iterations = 5,
-        startupMode = StartupMode.COLD,
-        setupBlock = {
-            pressHome()
-            startActivityAndWait()
+    private fun testScroll(compilationMode: CompilationMode) {
+        var firstStart = true
+        benchmarkRule.measureRepeated(
+            compilationMode = compilationMode,
+            packageName = PACKAGE_NAME,
+            metrics = listOf(FrameTimingMetric()),
+            iterations = 10,
+            startupMode = null,
+            setupBlock = {
+                if (firstStart) {
+                    pressHome()
+                    startActivityAndWait()
+                    firstStart = false
+                    device.wait(Until.gone(By.res(HOME_EMPTY_TAG)), TIMEOUT)
+                    device.wait(Until.gone(By.res(HOME_LOADING_TAG)), TIMEOUT)
+                    device.wait(Until.hasObject(By.scrollable(true)), TIMEOUT)
+                }
+            }
+        ) {
+            val contentList = device.findObject(By.scrollable(true))
+            if (contentList == null) {
+                TestCase.fail("No scrollable view found in hierarchy")
+            }
+            // Set gesture margin to avoid triggering system gesture navigation
+            contentList.setSafeGestureMargin(device)
+
+            repeat(2) {
+                contentList.fling(Direction.DOWN)
+            }
+
+            // Wait for the scroll to finish
+            device.waitForIdle()
         }
-    ) {
-        val contentList = device.findObject(By.res(ITEMS_LIST_ID))
-        val searchCondition = Until.hasObject(By.text(VISIBLE_ITEM))
-        // Wait until the item list is loaded
-        contentList.wait(searchCondition, TIMEOUT)
+    }
 
-        // Set gesture margin to avoid triggering system gesture navigation
-        contentList.setSafeGestureMargin(device)
-
-        // Scroll down the list
-        contentList.fling(Direction.DOWN)
-
-        // Wait for the scroll to finish
-        device.waitForIdle()
+    companion object {
+        private const val TIMEOUT = 5_000L
     }
 }

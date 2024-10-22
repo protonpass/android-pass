@@ -56,6 +56,8 @@ import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarSelection
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.TestTags.HOME_EMPTY_TAG
+import proton.android.pass.commonui.api.TestTags.HOME_ITEM_LIST_TAG
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
@@ -296,7 +298,7 @@ internal fun HomeContent(
             }
 
             ItemsList(
-                modifier = Modifier.testTag("itemsList"),
+                modifier = Modifier.testTag(HOME_ITEM_LIST_TAG),
                 items = items,
                 shares = uiState.homeListUiState.shares,
                 isShareSelected = uiState.homeListUiState.selectedShare.isNotEmpty(),
@@ -330,6 +332,7 @@ internal fun HomeContent(
                 selectedItemIds = selectedItemIds,
                 emptyContent = {
                     HomeEmptyContent(
+                        modifier = Modifier.testTag(HOME_EMPTY_TAG),
                         isTrashMode = isTrashMode,
                         inSearchMode = isPinningOrSearch,
                         readOnly = uiState.isSelectedVaultReadOnly(),

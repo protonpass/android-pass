@@ -269,7 +269,8 @@ class ItemRepositoryImplTest {
                 shared = false,
                 targetMaxMembers = 10,
                 pendingInvites = 0,
-                newUserInvitesReady = 0
+                newUserInvitesReady = 0,
+                canAutofill = true
             )
         )
         val id = ShareId(shareId)

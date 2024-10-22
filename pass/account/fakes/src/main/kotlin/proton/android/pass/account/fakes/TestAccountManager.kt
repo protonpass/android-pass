@@ -82,9 +82,11 @@ class TestAccountManager @Inject constructor() : AccountManager(Product.Pass) {
     }
 
     companion object {
-        const val USER_ID = "DefaultUserId"
-        val DEFAULT_ACCOUNT = Account(
-            userId = UserId(USER_ID),
+        const val USER_ID = "TestAccountManager-DefaultUserId"
+        val DEFAULT_ACCOUNT = createAccount(UserId(USER_ID))
+
+        fun createAccount(userId: UserId) = Account(
+            userId = userId,
             state = AccountState.Ready,
             details = AccountDetails(null, null),
             username = null,

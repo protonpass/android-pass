@@ -48,7 +48,6 @@ import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.ItemData
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
-import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import kotlin.math.min
 
@@ -115,7 +114,6 @@ class AutofillServiceManager @Inject constructor(
             )
         }
 
-
     @RequiresApi(Build.VERSION_CODES.R)
     private fun itemsSuggestions(
         request: InlineSuggestionsRequest,
@@ -123,6 +121,8 @@ class AutofillServiceManager @Inject constructor(
         suggestedItems: List<ItemData.SuggestedItem>
     ): List<Dataset> {
         val specs = request.inlinePresentationSpecs
+        if (specs.isEmpty()) return emptyList()
+
         val pinnedIcon = { spec: InlinePresentationSpec ->
             createPinnedIcon(
                 autofillData = autofillData,
@@ -136,21 +136,55 @@ class AutofillServiceManager @Inject constructor(
             )
         }
 
-        return when (specs.size) {
+        val getPresentationSpec: (Int) -> InlinePresentationSpec = { idx: Int ->
+            specs.getOrElse(idx) { specs.last() }
+        }
+
+        return when (request.maxSuggestionCount) {
             0 -> emptyList()
             1 -> listOf(pinnedIcon(specs.first()))
             2 -> listOf(openApp(specs.first()), pinnedIcon(specs.last()))
             else -> {
-                val openAppDataSet = openApp(specs[specs.size - INLINE_SUGGESTIONS_OFFSET])
-                if (suggestedItems.isNotEmpty()) {
-                    createItemsDatasetList(
-                        suggestedItems = suggestedItems,
-                        inlineSuggestionsRequest = request,
-                        autofillData = autofillData
-                    ).plus(listOf(openAppDataSet, pinnedIcon(specs.last())))
-                } else {
-                    listOf(openAppDataSet, pinnedIcon(specs.last()))
-                }
+                val itemSuggestions = createItemSuggestions(
+                    autofillData = autofillData,
+                    maxSuggestionCount = request.maxSuggestionCount,
+                    suggestedItems = suggestedItems,
+                    getPresentationSpec = getPresentationSpec
+                )
+
+                val openAppDataset = openApp(getPresentationSpec(itemSuggestions.size))
+                val pinnedIconDataset = pinnedIcon(getPresentationSpec(itemSuggestions.size + 1))
+
+                return itemSuggestions.plus(listOf(openAppDataset, pinnedIconDataset))
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun createItemSuggestions(
+        autofillData: AutofillData,
+        maxSuggestionCount: Int,
+        suggestedItems: List<ItemData.SuggestedItem>,
+        getPresentationSpec: (Int) -> InlinePresentationSpec
+    ): List<Dataset> {
+        val availableInlineSpots: Int = getAvailableSuggestionSpots(
+            maxSuggestion = maxSuggestionCount,
+            itemsSize = suggestedItems.size
+        )
+        if (availableInlineSpots == 0) return emptyList()
+        val itemsToSuggest = suggestedItems
+            .take(availableInlineSpots - INLINE_SUGGESTIONS_OFFSET)
+
+        val shouldAuthenticate = runBlocking { needsBiometricAuth().first() }
+        return encryptionContextProvider.withEncryptionContext {
+            itemsToSuggest.mapIndexed { idx, item ->
+                createItemDataset(
+                    autofillData = autofillData,
+                    spec = getPresentationSpec(idx),
+                    suggestedItem = item,
+                    index = idx,
+                    shouldAuthenticate = shouldAuthenticate
+                )
             }
         }
     }
@@ -223,6 +257,7 @@ class AutofillServiceManager @Inject constructor(
         return listOf(upgradeDataset)
     }
 
+    @Suppress("LongMethod")
     private fun createMenuPresentationDatasetWithItems(
         autofillData: AutofillData,
         suggestedItems: List<ItemData.SuggestedItem>
@@ -254,11 +289,17 @@ class AutofillServiceManager @Inject constructor(
                         .apply {
                             setTextViewText(
                                 R.id.title,
-                                ItemDisplayBuilder.createTitle(suggestedItem.item, this@withEncryptionContext)
+                                ItemDisplayBuilder.createTitle(
+                                    suggestedItem.item,
+                                    this@withEncryptionContext
+                                )
                             )
                             setTextViewText(
                                 R.id.subtitle,
-                                ItemDisplayBuilder.createSubtitle(suggestedItem.item, this@withEncryptionContext)
+                                ItemDisplayBuilder.createSubtitle(
+                                    suggestedItem.item,
+                                    this@withEncryptionContext
+                                )
                             )
                         }
                     val autofillItem = suggestedItem.item.toUiModel(this)
@@ -282,40 +323,6 @@ class AutofillServiceManager @Inject constructor(
                 )
             }
             .plus(openAppDataSet)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.R)
-    private fun createItemsDatasetList(
-        suggestedItems: List<ItemData.SuggestedItem>,
-        inlineSuggestionsRequest: InlineSuggestionsRequest,
-        autofillData: AutofillData
-    ): List<Dataset> = encryptionContextProvider.withEncryptionContext {
-        PassLogger.i(TAG, "Suggested item count: ${suggestedItems.size}")
-
-        val availableInlineSpots: Int = getAvailableSuggestionSpots(
-            maxSuggestion = inlineSuggestionsRequest.maxSuggestionCount,
-            itemsSize = suggestedItems.size
-        )
-        if (availableInlineSpots > 0) {
-            val shouldAuthenticate = runBlocking {
-                needsBiometricAuth().first()
-            }
-            inlineSuggestionsRequest.inlinePresentationSpecs
-                .take(availableInlineSpots - INLINE_SUGGESTIONS_OFFSET)
-                .zip(suggestedItems)
-                .mapIndexed { index, pair ->
-                    createItemDataset(
-                        autofillData = autofillData,
-                        spec = pair.first,
-                        suggestedItem = pair.second,
-                        index = index,
-                        shouldAuthenticate = shouldAuthenticate
-                    )
-                }
-                .toList()
-        } else {
-            emptyList()
-        }
     }
 
     @RequiresApi(Build.VERSION_CODES.R)

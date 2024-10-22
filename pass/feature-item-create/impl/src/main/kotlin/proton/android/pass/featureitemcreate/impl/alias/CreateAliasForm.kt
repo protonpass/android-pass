@@ -29,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.InfoBanner
@@ -36,6 +37,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun CreateAliasForm(
@@ -65,6 +67,7 @@ internal fun CreateAliasForm(
                 text = stringResource(R.string.create_alias_content_limit_banner)
             )
         }
+
         TitleSection(
             modifier = Modifier
                 .roundedContainerNorm()
@@ -81,6 +84,7 @@ internal fun CreateAliasForm(
             isRounded = true,
             onChange = { onEvent(AliasContentUiEvent.OnTitleChange(it)) }
         )
+
         if (isCreateMode) {
             CreateAliasSection(
                 state = aliasItemFormState,
@@ -97,6 +101,7 @@ internal fun CreateAliasForm(
                 isLoading = isLoading
             )
         }
+
         MailboxSection(
             isBottomSheet = false,
             mailboxes = aliasItemFormState.mailboxes.toPersistentList(),
@@ -105,12 +110,24 @@ internal fun CreateAliasForm(
             isLoading = isLoading,
             onMailboxClick = onMailboxClick
         )
+
         SimpleNoteSection(
             value = aliasItemFormState.note,
             enabled = isEditAllowed,
             onChange = { onEvent(AliasContentUiEvent.OnNoteChange(it)) }
         )
+
+        aliasItemFormState.slNote?.let { slNote ->
+            SimpleNoteSection(
+                label = buildString {
+                    append(stringResource(id = CompR.string.field_note_title))
+                    append(" ${SpecialCharacters.DOT_SEPARATOR} ")
+                    append(stringResource(id = CompR.string.simple_login_brand_name))
+                },
+                value = slNote,
+                enabled = isEditAllowed,
+                onChange = { onEvent(AliasContentUiEvent.OnSLNoteChange(it)) }
+            )
+        }
     }
 }
-
-

@@ -111,7 +111,6 @@ import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.UnpinItems
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasName
-import proton.android.pass.data.api.usecases.UpdateAliasNote
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
@@ -294,7 +293,6 @@ import proton.android.pass.data.impl.usecases.UnpinItemImpl
 import proton.android.pass.data.impl.usecases.UnpinItemsImpl
 import proton.android.pass.data.impl.usecases.UpdateAliasImpl
 import proton.android.pass.data.impl.usecases.UpdateAliasNameImpl
-import proton.android.pass.data.impl.usecases.UpdateAliasNoteImpl
 import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
 import proton.android.pass.data.impl.usecases.UpdateVaultImpl
@@ -969,8 +967,5 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindUpdateAliasName(impl: UpdateAliasNameImpl): UpdateAliasName
-
-    @[Binds Singleton]
-    abstract fun bindUpdateAliasNote(impl: UpdateAliasNoteImpl): UpdateAliasNote
 
 }

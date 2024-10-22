@@ -18,6 +18,8 @@
 
 package proton.android.pass.featureitemdetail.impl.alias
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -28,6 +30,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.counter.CounterText
 import proton.android.pass.composecomponents.impl.icon.Icon
@@ -37,44 +40,46 @@ import proton.android.pass.featureitemdetail.impl.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun ContactsSection(
+internal fun ContactsSection(
     modifier: Modifier = Modifier,
     counter: Int,
     onClick: () -> Unit
 ) {
-    CounterRow(
-        modifier = modifier.defaultMinSize(minHeight = 72.dp),
-        title = stringResource(R.string.contacts),
-        titleColor = ProtonTheme.colors.textNorm,
-        isClickable = true,
-        onClick = onClick,
-        accentBackgroundColor = PassTheme.colors.backgroundStrong,
-        chevronTintColor = PassTheme.colors.textWeak,
-        leadingContent = {
-            Icon.Default(
-                id = CoreR.drawable.ic_proton_filing_cabinet,
-                tint = PassTheme.colors.aliasInteractionNorm
-            )
-        },
-        trailingContent = if (counter > 0) {
-            {
-                CounterText(
-                    text = counter.toString(),
-                    backgroundColor = PassTheme.colors.backgroundMedium,
-                    textColor = PassTheme.colors.textNorm
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+    ) {
+        CounterRow(
+            modifier = Modifier.defaultMinSize(minHeight = 72.dp),
+            title = stringResource(R.string.contacts),
+            titleColor = ProtonTheme.colors.textNorm,
+            isClickable = true,
+            onClick = onClick,
+            accentBackgroundColor = PassTheme.colors.backgroundStrong,
+            chevronTintColor = PassTheme.colors.textWeak,
+            leadingContent = {
+                Icon.Default(
+                    id = CoreR.drawable.ic_proton_filing_cabinet,
+                    tint = PassTheme.colors.aliasInteractionNorm
                 )
-            }
-        } else null
-    )
-    Text.Body3Regular(
-        text = stringResource(R.string.contacts_section_description),
-        color = PassTheme.colors.textWeak
-    )
+            },
+            trailingContent = if (counter > 0) {
+                {
+                    CounterText(
+                        text = counter.toString(),
+                        backgroundColor = PassTheme.colors.backgroundMedium,
+                        textColor = PassTheme.colors.textNorm
+                    )
+                }
+            } else null
+        )
+
+        Text.CaptionWeak(text = stringResource(R.string.contacts_section_description))
+    }
 }
 
-@Preview
-@Composable
-fun ContactsSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+@[Preview Composable]
+internal fun ContactsSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ContactsSection(counter = 3, onClick = {})

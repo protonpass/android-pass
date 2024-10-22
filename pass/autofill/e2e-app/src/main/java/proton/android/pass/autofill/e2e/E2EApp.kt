@@ -20,6 +20,7 @@ package proton.android.pass.autofill.e2e
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import me.proton.core.util.android.sentry.TimberLogger
 import me.proton.core.util.kotlin.CoreLogger
@@ -31,10 +32,14 @@ import proton.android.pass.data.api.usecases.SuggestedAutofillItemsResult
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
+import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUsableVaults
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
+import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.test.domain.TestUser
@@ -62,6 +67,9 @@ class E2EApp : Application() {
 
     @Inject
     lateinit var getItemById: FakeGetItemById
+
+    @Inject
+    lateinit var getUserPlan: TestGetUserPlan
 
     override fun onCreate() {
         super.onCreate()
@@ -186,6 +194,16 @@ class E2EApp : Application() {
         accountManager.sendPrimaryUserId(PRIMARY_USER_ID)
         accountManager.setAccounts(listOf(TestAccountManager.createAccount(PRIMARY_USER_ID)))
         userManager.setUser(TestUser.create(userId = PRIMARY_USER_ID))
+
+        val plan = Plan(
+            planType = PlanType.Paid.Plus(name = "plus", displayName = "plus"),
+            hideUpgrade = true,
+            vaultLimit = PlanLimit.Unlimited,
+            aliasLimit = PlanLimit.Unlimited,
+            totpLimit = PlanLimit.Unlimited,
+            updatedAt = Clock.System.now().epochSeconds
+        )
+        getUserPlan.setResult(value = Result.success(plan), userId = PRIMARY_USER_ID)
 
     }
 

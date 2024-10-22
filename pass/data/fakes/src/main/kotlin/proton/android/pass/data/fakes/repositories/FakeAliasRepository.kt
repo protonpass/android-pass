@@ -78,4 +78,12 @@ class FakeAliasRepository @Inject constructor() : AliasRepository {
     ) {
         TODO("Not yet implemented")
     }
+
+    override suspend fun updateAliasNote(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        note: String
+    ) = Unit
+
 }

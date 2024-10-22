@@ -110,7 +110,11 @@ fun AliasDetailContent(
         }
 
         if (isAliasManagementEnabled) {
-            ContactsSection(counter = contactsCount, onClick = onContactsClicked)
+            ContactsSection(
+                modifier = Modifier.padding(bottom = Spacing.small),
+                counter = contactsCount,
+                onClick = onContactsClicked
+            )
         }
 
         if (isAliasManagementEnabled && stats is Some) {

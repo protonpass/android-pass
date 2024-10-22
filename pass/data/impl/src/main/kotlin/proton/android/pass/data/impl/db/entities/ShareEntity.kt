@@ -89,7 +89,9 @@ data class ShareEntity(
     @ColumnInfo(name = Columns.PENDING_INVITES, defaultValue = "0")
     val pendingInvites: Int,
     @ColumnInfo(name = Columns.NEW_USER_INVITES_READY, defaultValue = "0")
-    val newUserInvitesReady: Int
+    val newUserInvitesReady: Int,
+    @ColumnInfo(name = Columns.CAN_AUTOFILL, defaultValue = "1")
+    val canAutofill: Boolean
 
 ) {
     object Columns {
@@ -115,6 +117,7 @@ data class ShareEntity(
         const val TARGET_MAX_MEMBERS = "target_max_members"
         const val PENDING_INVITES = "pending_invites"
         const val NEW_USER_INVITES_READY = "new_user_invites_ready"
+        const val CAN_AUTOFILL = "can_autofill"
     }
 
     companion object {

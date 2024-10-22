@@ -75,16 +75,16 @@ fun CounterRow(
             .applyIf(
                 condition = accentBackgroundColor != null,
                 ifTrue = { background(color = accentBackgroundColor!!) }
+            )
+            .applyIf(
+                condition = isClickable && onClick != null,
+                ifTrue = { clickable(onClick = onClick!!) }
             ),
         verticalArrangement = Arrangement.Center
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .applyIf(
-                    condition = isClickable && onClick != null,
-                    ifTrue = { clickable(onClick = onClick!!) }
-                )
                 .padding(all = Spacing.medium),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Spacing.small)

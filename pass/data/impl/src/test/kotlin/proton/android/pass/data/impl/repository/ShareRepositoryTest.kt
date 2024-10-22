@@ -35,9 +35,9 @@ import proton.android.pass.data.impl.fakes.TestRemoteShareDataSource
 import proton.android.pass.data.impl.fakes.TestShareKeyRepository
 import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
 import proton.android.pass.data.impl.responses.ShareResponse
-import proton.android.pass.test.domain.TestShare
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
+import proton.android.pass.test.domain.TestShare
 
 class ShareRepositoryTest {
 
@@ -144,7 +144,8 @@ class ShareRepositoryTest {
         shared = shared,
         targetMaxMembers = maxMembers,
         newUserInvitesReady = newUserInvitesReady,
-        pendingInvites = pendingInvites
+        pendingInvites = pendingInvites,
+        canAutofill = canAutofill
     )
 
     private fun Share.toEntity(): ShareEntity = ShareEntity(
@@ -168,7 +169,8 @@ class ShareRepositoryTest {
         shared = shared,
         targetMaxMembers = maxMembers,
         newUserInvitesReady = newUserInvitesReady,
-        pendingInvites = pendingInvites
+        pendingInvites = pendingInvites,
+        canAutofill = canAutofill
     )
 
     companion object {

@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -197,7 +198,8 @@ class UpdateAliasViewModel @Inject constructor(
                     aliasOptions = AliasOptionsUiModel(emptyList(), details.mailboxes),
                     selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
                     mailboxes = mailboxes,
-                    aliasToBeCreated = email
+                    aliasToBeCreated = email,
+                    slNote = aliasDetails.slNote.takeIfNotBlank()
                 )
             } else {
                 aliasItemFormMutableState = encryptionContextProvider.withEncryptionContext {
@@ -208,7 +210,8 @@ class UpdateAliasViewModel @Inject constructor(
                         aliasOptions = AliasOptionsUiModel(emptyList(), details.mailboxes),
                         selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
                         mailboxes = mailboxes,
-                        aliasToBeCreated = email
+                        aliasToBeCreated = email,
+                        slNote = aliasDetails.slNote.takeIfNotBlank()
                     )
                 }
             }

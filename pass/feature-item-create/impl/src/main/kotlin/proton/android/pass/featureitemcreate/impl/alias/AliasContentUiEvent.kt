@@ -21,11 +21,11 @@ package proton.android.pass.featureitemcreate.impl.alias
 import proton.android.pass.domain.ShareId
 
 sealed interface AliasContentUiEvent {
+
     data object Back : AliasContentUiEvent
 
     @JvmInline
     value class Submit(val shareId: ShareId) : AliasContentUiEvent
-
 
     @JvmInline
     value class OnNoteChange(val note: String) : AliasContentUiEvent
@@ -46,4 +46,8 @@ sealed interface AliasContentUiEvent {
     value class OnSuffixChanged(val suffix: AliasSuffixUiModel) : AliasContentUiEvent
 
     data object OnUpgrade : AliasContentUiEvent
+
+    @JvmInline
+    value class OnSLNoteChange(val newSLNote: String) : AliasContentUiEvent
+
 }

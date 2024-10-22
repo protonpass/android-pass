@@ -126,6 +126,7 @@ fun CreateAliasScreen(
                     is AliasContentUiEvent.OnSuffixChanged -> viewModel.onSuffixChange(event.suffix)
                     is AliasContentUiEvent.OnUpgrade ->
                         actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.Upgrade) }
+                    is AliasContentUiEvent.OnSLNoteChange -> viewModel.onSLNoteChange(event.newSLNote)
                 }
             }
         )

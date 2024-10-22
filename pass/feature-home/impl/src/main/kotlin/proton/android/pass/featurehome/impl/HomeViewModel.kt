@@ -32,7 +32,6 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -52,7 +51,6 @@ import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
@@ -333,10 +331,8 @@ class HomeViewModel @Inject constructor(
                         ).asResultWithoutLoading()
                             .map { itemResult ->
                                 itemResult.map { list ->
-                                    withContext(Dispatchers.Default) {
-                                        encryptionContextProvider.withEncryptionContextSuspendable {
-                                            list.map { item -> item.toUiModel(this@withEncryptionContextSuspendable) }
-                                        }
+                                    encryptionContextProvider.withEncryptionContextSuspendable {
+                                        list.map { item -> item.toUiModel(this@withEncryptionContextSuspendable) }
                                     }
                                 }
                             }

@@ -75,8 +75,8 @@ class TestObserveItems @Inject constructor() : ObserveItems {
         userId: UserId?,
         securityCheckFilter: ItemSecurityCheckFilter,
         isBreachedFilter: ItemIsBreachedFilter
-    ): Flow<List<Item>> = flowsMap[
-        Params(
+    ): Flow<List<Item>> {
+        val params = Params(
             selection = selection,
             itemState = itemState,
             filter = filter,
@@ -84,7 +84,9 @@ class TestObserveItems @Inject constructor() : ObserveItems {
             securityCheckFilter = securityCheckFilter,
             isBreachedFilter = isBreachedFilter
         )
-    ] ?: fallback.map { it.getOrThrow() }
+        val flow = flowsMap[params]
+        return flow ?: fallback.map { it.getOrThrow() }
+    }
 
     data class DefaultValues(
         val login: Item,

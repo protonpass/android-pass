@@ -90,10 +90,6 @@ fun AliasDetailContent(
             onToggleAliasState = onToggleAliasState
         )
 
-        if (isAliasManagementEnabled) {
-            ContactsSection(counter = contactsCount, onClick = onContactsClicked)
-        }
-
         if (contents.note.isNotBlank()) {
             NoteSection(
                 text = contents.note,
@@ -111,6 +107,10 @@ fun AliasDetailContent(
                 text = slNote,
                 accentColor = PassTheme.colors.aliasInteractionNorm
             )
+        }
+
+        if (isAliasManagementEnabled) {
+            ContactsSection(counter = contactsCount, onClick = onContactsClicked)
         }
 
         if (isAliasManagementEnabled && stats is Some) {

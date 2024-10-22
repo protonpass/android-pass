@@ -31,6 +31,7 @@ import proton.android.pass.featurehome.impl.trash.EmptyTrashContent
 
 @Composable
 fun HomeEmptyContent(
+    modifier: Modifier = Modifier,
     isTrashMode: Boolean,
     inSearchMode: Boolean,
     shareId: Option<ShareId>,
@@ -38,11 +39,11 @@ fun HomeEmptyContent(
     readOnly: Boolean
 ) {
     when {
-        inSearchMode -> EmptySearchResults()
-        isTrashMode -> EmptyTrashContent()
-        readOnly -> EmptyReadOnly()
+        inSearchMode -> EmptySearchResults(modifier)
+        isTrashMode -> EmptyTrashContent(modifier)
+        readOnly -> EmptyReadOnly(modifier)
         else -> HomeEmptyList(
-            modifier = Modifier.fillMaxHeight(),
+            modifier = modifier.fillMaxHeight(),
             onCreateLoginClick = {
                 onEvent(
                     HomeUiEvent.AddItemClick(

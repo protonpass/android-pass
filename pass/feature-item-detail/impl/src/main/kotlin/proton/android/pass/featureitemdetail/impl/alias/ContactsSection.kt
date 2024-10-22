@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.counter.CounterText
@@ -44,6 +45,7 @@ fun ContactsSection(
     CounterRow(
         modifier = modifier.defaultMinSize(minHeight = 72.dp),
         title = stringResource(R.string.contacts),
+        titleColor = ProtonTheme.colors.textNorm,
         isClickable = true,
         onClick = onClick,
         accentBackgroundColor = PassTheme.colors.backgroundStrong,
@@ -58,7 +60,7 @@ fun ContactsSection(
                 CounterText(
                     text = counter.toString(),
                     backgroundColor = PassTheme.colors.backgroundMedium,
-                    textColor = PassTheme.colors.textWeak
+                    textColor = PassTheme.colors.textNorm
                 )
             }
         } else null

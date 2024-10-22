@@ -21,9 +21,9 @@ package proton.android.pass.data.impl.fakes
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
+import proton.android.pass.data.impl.requests.CreateInvitesRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
 import proton.android.pass.data.impl.responses.InviteRecommendationResponse
-import proton.android.pass.data.impl.requests.CreateInvitesRequest
 import proton.android.pass.data.impl.responses.PendingInviteResponse
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.InviteToken
@@ -122,7 +122,8 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
             createTime = 12_345_678,
             targetMaxMembers = 2,
             newUserInvitesReady = 0,
-            pendingInvites = 0
+            pendingInvites = 0,
+            canAutofill = true
         )
     }
 }

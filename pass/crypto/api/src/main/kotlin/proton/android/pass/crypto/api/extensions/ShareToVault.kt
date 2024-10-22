@@ -46,6 +46,7 @@ fun Share.toVault(encryptionContext: EncryptionContext): Option<Vault> = content
             role = shareRole,
             shared = shared,
             maxMembers = maxMembers,
+            canAutofill = canAutofill,
             createTime = createTime
         )
     }

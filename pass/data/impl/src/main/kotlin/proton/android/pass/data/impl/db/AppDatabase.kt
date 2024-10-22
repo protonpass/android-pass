@@ -230,7 +230,7 @@ abstract class AppDatabase :
     AuthDatabase {
 
     companion object {
-        const val VERSION = 57
+        const val VERSION = 58
 
         const val DB_NAME = "db-passkey"
 

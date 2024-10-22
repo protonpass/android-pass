@@ -30,7 +30,7 @@ internal enum class SimpleLoginSyncDetailsSnackBarMessage(
 ) : SnackbarMessage {
 
     FetchAliasDetailsError(
-        id = R.string.simple_login_sync_domain_select_snackbar_alias_domain_fetch_error,
+        id = R.string.simple_login_sync_management_snackbar_alias_details_fetch_error,
         type = SnackbarType.ERROR
     ),
 

@@ -49,6 +49,7 @@ fun ContactsSection(
         isClickable = true,
         onClick = onClick,
         accentBackgroundColor = PassTheme.colors.backgroundStrong,
+        chevronTintColor = PassTheme.colors.textWeak,
         leadingContent = {
             Icon.Default(
                 id = CoreR.drawable.ic_proton_filing_cabinet,

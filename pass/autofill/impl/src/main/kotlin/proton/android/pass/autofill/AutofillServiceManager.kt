@@ -142,8 +142,8 @@ class AutofillServiceManager @Inject constructor(
 
         return when (request.maxSuggestionCount) {
             0 -> emptyList()
-            1 -> listOf(pinnedIcon(specs.first()))
-            2 -> listOf(openApp(specs.first()), pinnedIcon(specs.last()))
+            1 -> listOf(pinnedIcon(getPresentationSpec(0)))
+            2 -> listOf(openApp(getPresentationSpec(0)), pinnedIcon(getPresentationSpec(1)))
             else -> {
                 val itemSuggestions = createItemSuggestions(
                     autofillData = autofillData,
@@ -152,8 +152,10 @@ class AutofillServiceManager @Inject constructor(
                     getPresentationSpec = getPresentationSpec
                 )
 
-                val openAppDataset = openApp(getPresentationSpec(itemSuggestions.size))
-                val pinnedIconDataset = pinnedIcon(getPresentationSpec(itemSuggestions.size + 1))
+                val openAppDataset = openApp(getPresentationSpec(itemSuggestions.lastIndex + 1))
+                val pinnedIconDataset = pinnedIcon(
+                    getPresentationSpec(itemSuggestions.lastIndex + 2)
+                )
 
                 return itemSuggestions.plus(listOf(openAppDataset, pinnedIconDataset))
             }

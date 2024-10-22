@@ -19,6 +19,8 @@
 package proton.android.pass.benchmark.startup
 
 import androidx.benchmark.macro.CompilationMode
+import androidx.benchmark.macro.ExperimentalMetricApi
+import androidx.benchmark.macro.MemoryUsageMetric
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
@@ -47,9 +49,10 @@ class StartupBenchmark {
     @Test
     fun startupFullCompilation() = startup(CompilationMode.Full())
 
+    @OptIn(ExperimentalMetricApi::class)
     private fun startup(compilationMode: CompilationMode) = benchmarkRule.measureRepeated(
         packageName = TARGET_PACKAGE,
-        metrics = listOf(StartupTimingMetric()),
+        metrics = listOf(StartupTimingMetric(), MemoryUsageMetric(MemoryUsageMetric.Mode.Last)),
         compilationMode = compilationMode,
         iterations = 10,
         startupMode = StartupMode.COLD,

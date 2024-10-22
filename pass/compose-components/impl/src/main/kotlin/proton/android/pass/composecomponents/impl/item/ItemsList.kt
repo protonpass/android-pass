@@ -41,6 +41,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -67,6 +68,7 @@ import proton.android.pass.commonui.api.DateFormatUtils.Format.Yesterday
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.TestTags.HOME_LOADING_TAG
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.ShareUiModel
@@ -136,7 +138,7 @@ fun ItemsList(
         if (isProcessingSearch == IsProcessingSearchState.Loading) {
             Loading(Modifier.fillMaxSize())
         } else if (isLoading == IsLoadingState.Loading) {
-            Column(modifier = Modifier.fillMaxSize()) {
+            Column(modifier = Modifier.fillMaxSize().testTag(HOME_LOADING_TAG)) {
                 repeat(PLACEHOLDER_ELEMENTS) {
                     PlaceholderItemRow()
                 }

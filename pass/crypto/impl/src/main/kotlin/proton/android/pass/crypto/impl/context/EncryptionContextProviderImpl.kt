@@ -20,12 +20,12 @@ package proton.android.pass.crypto.impl.context
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -39,7 +39,8 @@ import kotlin.experimental.xor
 @Singleton
 class EncryptionContextProviderImpl @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val keyStoreCrypto: KeyStoreCrypto
+    private val keyStoreCrypto: KeyStoreCrypto,
+    private val appDispatchers: AppDispatchers
 ) : EncryptionContextProvider {
 
     private val lock = ReentrantReadWriteLock()
@@ -72,11 +73,11 @@ class EncryptionContextProviderImpl @Inject constructor(
     override suspend fun <R> withEncryptionContextSuspendable(
         key: EncryptionKey,
         block: suspend EncryptionContext.() -> R
-    ): R {
+    ): R = withContext(appDispatchers.default) {
         val context = EncryptionContextImpl(key)
         try {
             val res = block(context)
-            return res
+            return@withContext res
         } catch (e: Throwable) {
             throw e
         } finally {
@@ -84,7 +85,7 @@ class EncryptionContextProviderImpl @Inject constructor(
         }
     }
 
-    private suspend fun getKey(): EncryptionKey = withContext(Dispatchers.IO) {
+    private suspend fun getKey(): EncryptionKey = withContext(appDispatchers.io) {
         // Try to get it from the stored value
         val readLock = lock.readLock()
         readLock.withLock {

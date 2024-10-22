@@ -103,11 +103,12 @@ fun AliasDetailContent(
 
         if (slNote.isNotBlank()) {
             NoteSection(
-                text = buildString {
+                title = buildString {
                     append(stringResource(id = R.string.item_details_shared_section_note_title))
                     append(" ${SpecialCharacters.DOT_SEPARATOR} ")
                     append(stringResource(id = R.string.simple_login_brand_name))
                 },
+                text = slNote,
                 accentColor = PassTheme.colors.aliasInteractionNorm
             )
         }

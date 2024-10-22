@@ -28,11 +28,21 @@ import javax.inject.Singleton
 @Singleton
 class FakeGetItemById @Inject constructor() : GetItemById {
 
-    private var result: Result<Item> = Result.failure(IllegalStateException("Result not set"))
+    private var fallbackResult: Result<Item> = Result.failure(IllegalStateException("Result not set"))
+    private var storedResults: MutableMap<Pair<ShareId, ItemId>, Result<Item>> = mutableMapOf()
 
     fun emit(result: Result<Item>) {
-        this.result = result
+        this.fallbackResult = result
     }
 
-    override suspend fun invoke(shareId: ShareId, itemId: ItemId): Item = result.getOrThrow()
+    fun emit(
+        shareId: ShareId,
+        itemId: ItemId,
+        value: Result<Item>
+    ) {
+        storedResults[shareId to itemId] = value
+    }
+
+    override suspend fun invoke(shareId: ShareId, itemId: ItemId): Item =
+        storedResults[shareId to itemId]?.getOrThrow() ?: fallbackResult.getOrThrow()
 }

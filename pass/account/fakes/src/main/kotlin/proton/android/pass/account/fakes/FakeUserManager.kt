@@ -115,7 +115,7 @@ class FakeUserManager @Inject constructor() : UserManager {
     }
 
     companion object {
-        const val USER_ID = "DefaultUserId"
+        const val USER_ID = "FakeUserManager-DefaultUserId"
         const val EMAIL = "DefaultEmail"
         val DEFAULT_USER = User(
             userId = UserId(USER_ID),

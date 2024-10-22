@@ -80,7 +80,8 @@ data class UpdateShareEvent(
     val createTime: Long,
     val targetMaxMembers: Int,
     val newUserInvitesReady: Int,
-    val pendingInvites: Int
+    val pendingInvites: Int,
+    val canAutofill: Boolean
 )
 
 data class RefreshSharesResult(

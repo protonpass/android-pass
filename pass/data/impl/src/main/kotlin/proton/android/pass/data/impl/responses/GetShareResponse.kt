@@ -63,6 +63,8 @@ data class ShareResponse(
     val owner: Boolean,
     @SerialName("Shared")
     val shared: Boolean,
+    @SerialName("CanAutoFill")
+    val canAutofill: Boolean,
     @SerialName("ExpireTime")
     val expirationTime: Long?,
     @SerialName("CreateTime")

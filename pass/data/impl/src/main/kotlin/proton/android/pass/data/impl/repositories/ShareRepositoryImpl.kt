@@ -482,7 +482,8 @@ class ShareRepositoryImpl @Inject constructor(
             shared = shareResponse.shared,
             targetMaxMembers = shareResponse.targetMaxMembers,
             newUserInvitesReady = shareResponse.newUserInvitesReady,
-            pendingInvites = shareResponse.pendingInvites
+            pendingInvites = shareResponse.pendingInvites,
+            canAutofill = shareResponse.canAutofill
         )
     }
 
@@ -521,7 +522,8 @@ class ShareRepositoryImpl @Inject constructor(
             shared = entity.shared,
             pendingInvites = entity.pendingInvites,
             newUserInvitesReady = entity.newUserInvitesReady,
-            maxMembers = entity.targetMaxMembers
+            maxMembers = entity.targetMaxMembers,
+            canAutofill = entity.canAutofill
         )
     }
 
@@ -561,6 +563,7 @@ class ShareRepositoryImpl @Inject constructor(
         localShare.expirationTime != remoteShare.expirationTime -> true
         localShare.pendingInvites != remoteShare.pendingInvites -> true
         localShare.newUserInvitesReady != remoteShare.newUserInvitesReady -> true
+        localShare.canAutofill != remoteShare.canAutofill -> true
 
         else -> false
     }

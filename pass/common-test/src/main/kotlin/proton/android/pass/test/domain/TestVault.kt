@@ -36,6 +36,7 @@ object TestVault {
         role: ShareRole = ShareRole.Admin,
         shared: Boolean = false,
         members: Int = 1,
+        canAutofill: Boolean = true,
         createTime: Date = Date()
     ): Vault {
         return Vault(
@@ -47,7 +48,8 @@ object TestVault {
             role = role,
             createTime = createTime,
             shared = shared,
-            members = members
+            members = members,
+            canAutofill = canAutofill
         )
     }
 }

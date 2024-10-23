@@ -18,12 +18,14 @@
 
 package proton.android.pass.features.alias.contacts.create.ui
 
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.subheadlineUnspecified
 import me.proton.core.compose.theme.textNorm
@@ -51,6 +53,9 @@ internal fun EmailInput(
             color = ProtonTheme.colors.textNorm(enabled)
         ),
         editable = enabled,
+        keyboardOptions = KeyboardOptions.Default.copy(
+            keyboardType = KeyboardType.Email
+        ),
         errorMessage = stringResource(id = R.string.email_input_error),
         trailingIcon = {
             if (value.isNotEmpty()) {

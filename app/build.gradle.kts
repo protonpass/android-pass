@@ -508,7 +508,7 @@ dependencies {
     }
     androidTestUtil(libs.androidx.test.orchestrator)
 
-    "baselineProfile"(projects.appmacrobenchmark)
+    baselineProfile(projects.appmacrobenchmark)
 }
 
 fun String?.toBuildConfigValue() = if (this != null) "\"$this\"" else "null"

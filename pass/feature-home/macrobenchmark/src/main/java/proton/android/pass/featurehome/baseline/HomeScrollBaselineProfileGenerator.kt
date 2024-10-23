@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featurehome.macrobenchmark
+package proton.android.pass.featurehome.baseline
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -26,6 +26,11 @@ import androidx.test.uiautomator.Direction
 import androidx.test.uiautomator.Until
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.featurehome.ITEMS_LIST_ID
+import proton.android.pass.featurehome.PACKAGE_NAME
+import proton.android.pass.featurehome.TIMEOUT
+import proton.android.pass.featurehome.VISIBLE_ITEM
+import proton.android.pass.featurehome.setSafeGestureMargin
 
 @RequiresApi(Build.VERSION_CODES.P)
 class HomeScrollBaselineProfileGenerator {
@@ -34,7 +39,7 @@ class HomeScrollBaselineProfileGenerator {
     val baselineProfileRule = BaselineProfileRule()
 
     @Test
-    fun appStartupOnly() {
+    fun homeScrollBaseline() {
         baselineProfileRule.collect(PACKAGE_NAME) {
             startActivityAndWait()
 

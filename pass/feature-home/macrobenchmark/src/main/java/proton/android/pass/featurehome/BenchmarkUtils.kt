@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,13 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featurehome.macrobenchmark
+package proton.android.pass.featurehome
 
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject2
 
 const val PACKAGE_NAME = "proton.android.pass.featurehome.demoapp"
 const val TIMEOUT = 5_000L
+const val ITERATIONS = 10
 const val ITEMS_LIST_ID = "itemsList"
 const val VISIBLE_ITEM = "Login 50"
 

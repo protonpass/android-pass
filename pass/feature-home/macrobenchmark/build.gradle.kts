@@ -3,6 +3,7 @@
 plugins {
     id("com.android.test")
     id("org.jetbrains.kotlin.android")
+    id("androidx.baselineprofile")
 }
 
 android {
@@ -16,20 +17,10 @@ android {
         missingDimensionStrategy("env", "prod")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        proguardFiles.add(file("benchmark.pro"))
-    }
-
-    buildTypes {
-        create("benchmark") {
-            isDebuggable = true
-            signingConfig = signingConfigs.getByName("debug")
-            matchingFallbacks += listOf("release")
-        }
+        testInstrumentationRunnerArguments["androidx.benchmark.suppressErrors"] = "EMULATOR"
     }
 
     targetProjectPath = ":pass:feature-home:demo-app"
-    experimentalProperties["android.experimental.self-instrumenting"] = true
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -62,8 +53,7 @@ dependencies {
     implementation(projects.pass.commonUi.api)
 }
 
-androidComponents {
-    beforeVariants(selector().all()) {
-        it.enable = it.buildType == "benchmark"
-    }
+baselineProfile {
+    managedDevices += "pixel2api31"
+    useConnectedDevices = false
 }

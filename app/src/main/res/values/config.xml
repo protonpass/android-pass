@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="core_feature_account_recovery_enabled">true</bool>
+    <bool name="core_feature_auth_signin_show_long_login_toast">false</bool>
+    <bool name="core_feature_auth_sso_enabled">true</bool>
+    <bool name="core_feature_auth_sso_custom_tab_enabled">true</bool>
+    <string name="core_feature_auth_sso_redirect_scheme" translatable="false">protonpass</string>
     <bool name="core_feature_device_recovery_enabled">true</bool>
     <bool name="core_feature_key_transparency_enabled">false</bool>
     <bool name="core_feature_notifications_enabled">true</bool>
-    <bool name="core_feature_auth_signin_show_long_login_toast">false</bool>
     <!-- Show system Notification permission request dialog after login. -->
     <bool name="core_feature_notifications_permission_request_enabled">false</bool>
 

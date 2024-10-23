@@ -58,7 +58,7 @@ internal fun EmailInput(
         ),
         errorMessage = stringResource(id = R.string.email_input_error),
         trailingIcon = {
-            if (value.isNotEmpty()) {
+            if (enabled && value.isNotEmpty()) {
                 SmallCrossIconButton(enabled = true) { onChange("") }
             }
         }

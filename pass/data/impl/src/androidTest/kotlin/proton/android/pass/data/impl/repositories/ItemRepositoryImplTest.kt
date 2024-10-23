@@ -219,6 +219,7 @@ class ItemRepositoryImplTest {
                 maxDriveSpace = null,
                 usedBaseSpace = null,
                 usedDriveSpace = null,
+                flags = null
             )
         )
 

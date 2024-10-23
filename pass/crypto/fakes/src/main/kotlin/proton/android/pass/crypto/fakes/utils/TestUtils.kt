@@ -90,7 +90,8 @@ object TestUtils {
                         passphrase = encryptedPassphrase
                     )
                 )
-            )
+            ),
+            flags = emptyMap()
         )
     }
 

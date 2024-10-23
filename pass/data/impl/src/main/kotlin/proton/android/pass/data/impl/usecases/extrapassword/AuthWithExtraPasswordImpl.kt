@@ -25,6 +25,7 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordResult
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
@@ -60,21 +61,28 @@ class AuthWithExtraPasswordImpl @Inject constructor(
             serverEphemeral = srpData.serverEphemeral
         )
 
-        remoteExtraPasswordDataSource.sendExtraPasswordAuthData(
-            userId = actualUserId,
-            request = ExtraPasswordSendSrpDataRequest(
-                clientEphemeral = proofs.clientEphemeral,
-                clientProof = proofs.clientProof,
-                srpSessionId = srpData.srpSessionId
+        runCatching {
+            remoteExtraPasswordDataSource.sendExtraPasswordAuthData(
+                userId = actualUserId,
+                request = ExtraPasswordSendSrpDataRequest(
+                    clientEphemeral = proofs.clientEphemeral,
+                    clientProof = proofs.clientProof,
+                    srpSessionId = srpData.srpSessionId
+                )
             )
-        )
-        extraPasswordRepository.storeAccessKeyForUser(actualUserId, password)
+            extraPasswordRepository.storeAccessKeyForUser(actualUserId, password)
 
-        PassLogger.i(TAG, "Auth with extra password successful. Refreshing session scopes")
-        sessionManager.getSessionId(actualUserId)?.let { session ->
-            sessionManager.refreshScopes(session)
-        }
-        authWithExtraPasswordListener.setState(actualUserId, AuthWithExtraPasswordResult.Success)
+            PassLogger.i(TAG, "Auth with extra password successful. Refreshing session scopes")
+            sessionManager.getSessionId(actualUserId)?.let { session ->
+                sessionManager.refreshScopes(session)
+            }
+        }.onSuccess {
+            authWithExtraPasswordListener.setState(actualUserId, AuthWithExtraPasswordResult.Success)
+        }.onFailure {
+            if (it is TooManyExtraPasswordAttemptsException) {
+                authWithExtraPasswordListener.setState(actualUserId, AuthWithExtraPasswordResult.Failure)
+            }
+        }.getOrThrow()
     }
 
     companion object {

@@ -63,6 +63,7 @@ import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
+import me.proton.core.accountmanager.presentation.onAccountDeviceSecretNeeded
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
@@ -125,8 +126,7 @@ class LauncherViewModel @Inject constructor(
         authOrchestrator.onAddAccountResult { result ->
             viewModelScope.launch {
                 if (result == null && getPrimaryUserIdOrNull() == null) {
-                    addAccount()
-                    return@launch
+                    context.finish()
                 }
             }
         }
@@ -137,6 +137,7 @@ class LauncherViewModel @Inject constructor(
             .onSessionSecondFactorNeeded { authOrchestrator.startSecondFactorWorkflow(it) }
             .onAccountTwoPassModeNeeded { authOrchestrator.startTwoPassModeWorkflow(it) }
             .onAccountCreateAddressNeeded { authOrchestrator.startChooseAddressWorkflow(it) }
+            .onAccountDeviceSecretNeeded { authOrchestrator.startDeviceSecretWorkflow(it) }
     }
 
     internal fun onAccountNeeded() = viewModelScope.launch {

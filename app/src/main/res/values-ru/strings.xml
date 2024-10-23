@@ -9,5 +9,4 @@
   <string name="no_account_found">Не найдено ни одного аккаунта</string>
   <string name="no_session_found">Не найдено ни одного сеанса</string>
   <string name="auth_with_extra_password_failed">Не удалось выполнить аутентификацию с дополнительным паролем</string>
-  <string name="error_login_in_user">Error logging in user</string>
 </resources>

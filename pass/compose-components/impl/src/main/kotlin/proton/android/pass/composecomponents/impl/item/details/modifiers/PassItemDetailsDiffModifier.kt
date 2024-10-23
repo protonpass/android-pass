@@ -34,7 +34,7 @@ internal fun Modifier.contentDiff(itemDiffType: ItemDiffType): Modifier = compos
     applyIf(
         condition = itemDiffType == ItemDiffType.Field,
         ifTrue = {
-            RoundedCornerShape(size = Radius.mediumSmall).let { shape ->
+            RoundedCornerShape(size = Radius.mediumSmall.plus(2.dp)).let { shape ->
                 padding(all = 1.dp)
                     .clip(shape = shape)
                     .border(

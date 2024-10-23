@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("org.jetbrains.kotlin.kapt")
+    id("androidx.baselineprofile")
 }
 
 android {
@@ -132,8 +133,16 @@ dependencies {
     androidTestImplementation(projects.pass.telemetry.fakes)
     androidTestImplementation(projects.pass.featureSearchOptions.fakes)
     androidTestImplementation(projects.pass.securityCenter.fakes)
+
+    baselineProfile(projects.pass.featureHome.macrobenchmark)
 }
 
 kapt {
     correctErrorTypes = true
+}
+
+baselineProfile {
+    filter {
+        include("proton.android.pass.featurehome.impl.**")
+    }
 }

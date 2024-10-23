@@ -21,6 +21,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("dagger.hilt.android.plugin")
     id("org.jetbrains.kotlin.kapt")
+    id("androidx.baselineprofile")
 }
 
 val appVersionName: String = "1.26.1"
@@ -60,13 +61,6 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
-    flavorDimensions += "version"
-    productFlavors {
-        maybeCreate("dev")
-        maybeCreate("alpha")
-        maybeCreate("play")
-    }
-
     buildFeatures {
         compose = true
     }
@@ -76,11 +70,11 @@ android {
     }
 
     buildTypes {
-        create("benchmark") {
-            initWith(getByName("release"))
+        create("benchmarkRelease") {
             signingConfig = signingConfigs.getByName("debug")
-            matchingFallbacks.add("release")
-            postprocessing.isObfuscate = false
+        }
+        create("nonMinifiedRelease") {
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 }

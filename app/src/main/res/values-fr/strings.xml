@@ -9,5 +9,4 @@
   <string name="no_account_found">Aucun compte n\'a été trouvé.</string>
   <string name="no_session_found">Aucune session n\'a été trouvée.</string>
   <string name="auth_with_extra_password_failed">L\'authentification avec un mot de passe supplémentaire n\'a pas abouti.</string>
-  <string name="error_login_in_user">Une erreur s\'est produite lors de la connexion de l\'utilisateur.</string>
 </resources>

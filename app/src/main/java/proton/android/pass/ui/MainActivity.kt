@@ -27,12 +27,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.flow.firstOrNull
@@ -44,6 +44,7 @@ import me.proton.core.notification.presentation.deeplink.onActivityCreate
 import me.proton.core.usersettings.presentation.compose.view.SecurityKeysActivity
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.commonui.api.setSecureMode
+import proton.android.pass.PassActivityOrchestrator
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.ui.launcher.AccountState.AccountNeeded
@@ -58,6 +59,9 @@ class MainActivity : FragmentActivity() {
 
     @Inject
     lateinit var deeplinkManager: DeeplinkManager
+
+    @Inject
+    lateinit var passActivityOrchestrator: PassActivityOrchestrator
 
     private val launcherViewModel: LauncherViewModel by viewModels()
 
@@ -82,9 +86,10 @@ class MainActivity : FragmentActivity() {
 
         // Register activities for result.
         launcherViewModel.register(this)
+        passActivityOrchestrator.register(this)
 
         setContent {
-            val loginState by launcherViewModel.accountState.collectAsStateWithLifecycle()
+            val loginState by launcherViewModel.accountState.collectAsState()
             runCatching {
                 splashScreen.setKeepOnScreenCondition(loginState::isLoading)
             }.onFailure {

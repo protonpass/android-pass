@@ -9,5 +9,4 @@
   <string name="no_account_found">Herhangi bir hesap bulunamadı</string>
   <string name="no_session_found">Herhangi bir oturum bulunamadı</string>
   <string name="auth_with_extra_password_failed">Ek parola ile kimlik doğrulanamadı</string>
-  <string name="error_login_in_user">Error logging in user</string>
 </resources>

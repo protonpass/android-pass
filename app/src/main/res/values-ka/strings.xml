@@ -9,5 +9,4 @@
   <string name="no_account_found">არც ერთი ანგარიში არ მოიძებნა</string>
   <string name="no_session_found">სესია ვერ ვიპოვე</string>
   <string name="auth_with_extra_password_failed">ავთენტიკაცია დამატებითი პაროლით ჩავარდა</string>
-  <string name="error_login_in_user">Error logging in user</string>
 </resources>

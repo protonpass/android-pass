@@ -33,6 +33,7 @@ import me.proton.core.auth.data.db.AuthConverters
 import me.proton.core.auth.data.db.AuthDatabase
 import me.proton.core.auth.data.entity.AuthDeviceEntity
 import me.proton.core.auth.data.entity.DeviceSecretEntity
+import me.proton.core.auth.data.entity.MemberDeviceEntity
 import me.proton.core.challenge.data.db.ChallengeConverters
 import me.proton.core.challenge.data.db.ChallengeDatabase
 import me.proton.core.challenge.data.entity.ChallengeFrameEntity
@@ -136,6 +137,7 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
         RecoveryFileEntity::class,
         DeviceSecretEntity::class,
         AuthDeviceEntity::class,
+        MemberDeviceEntity::class,
         // Pass
         ItemEntity::class,
         ShareEntity::class,
@@ -231,7 +233,7 @@ abstract class AppDatabase :
     AuthDatabase {
 
     companion object {
-        const val VERSION = 58
+        const val VERSION = 59
 
         const val DB_NAME = "db-passkey"
 
@@ -258,7 +260,8 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_48_49,
             AppDatabaseMigrations.MIGRATION_51_52,
             AppDatabaseMigrations.MIGRATION_54_55,
-            AppDatabaseMigrations.MIGRATION_56_57
+            AppDatabaseMigrations.MIGRATION_56_57,
+            AppDatabaseMigrations.MIGRATION_58_59
         )
 
         fun buildDatabase(context: Context): AppDatabase = databaseBuilder<AppDatabase>(context, DB_NAME)

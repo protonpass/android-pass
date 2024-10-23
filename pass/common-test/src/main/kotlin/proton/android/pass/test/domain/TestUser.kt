@@ -46,6 +46,7 @@ object TestUser {
         subscribed = 0,
         delinquent = null,
         keys = listOf(),
+        flags = emptyMap(),
         recovery = null
     )
 }

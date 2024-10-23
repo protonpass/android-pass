@@ -25,6 +25,8 @@ import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
@@ -46,17 +48,6 @@ class FakeUserManager @Inject constructor() : UserManager {
         state.emit(user)
     }
 
-    override suspend fun changePassword(
-        userId: UserId,
-        newPassword: EncryptedString,
-        secondFactorProof: SecondFactorProof?,
-        proofs: SrpProofs,
-        srpSession: String,
-        auth: Auth?
-    ): Boolean {
-        throw IllegalStateException("Not implemented")
-    }
-
     override suspend fun getAddresses(sessionUserId: SessionUserId, refresh: Boolean): List<UserAddress> {
         throw IllegalStateException("Not implemented")
     }
@@ -64,6 +55,18 @@ class FakeUserManager @Inject constructor() : UserManager {
     override suspend fun getUser(sessionUserId: SessionUserId, refresh: Boolean): User = state.value
 
     override suspend fun lock(userId: UserId) {
+        throw IllegalStateException("Not implemented")
+    }
+
+    override suspend fun changePassword(
+        userId: UserId,
+        newPassword: EncryptedString,
+        secondFactorProof: SecondFactorProof?,
+        proofs: SrpProofs?,
+        srpSession: String?,
+        auth: Auth?,
+        encryptedSecret: Based64Encoded?
+    ): Boolean {
         throw IllegalStateException("Not implemented")
     }
 
@@ -94,7 +97,9 @@ class FakeUserManager @Inject constructor() : UserManager {
         username: String,
         domain: String,
         auth: Auth,
-        password: ByteArray
+        password: ByteArray,
+        organizationPublicKey: Armored?,
+        deviceSecret: EncryptedString?
     ): User {
         throw IllegalStateException("Not implemented")
     }
@@ -135,6 +140,7 @@ class FakeUserManager @Inject constructor() : UserManager {
             subscribed = 0,
             delinquent = null,
             keys = listOf(),
+            flags = emptyMap(),
             recovery = null
         )
     }

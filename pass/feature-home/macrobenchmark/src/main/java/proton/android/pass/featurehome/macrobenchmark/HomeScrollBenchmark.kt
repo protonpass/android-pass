@@ -13,6 +13,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import proton.android.pass.commonui.api.TestTags.HOME_EMPTY_TAG
 import proton.android.pass.commonui.api.TestTags.HOME_LOADING_TAG
+import proton.android.pass.featurehome.ITERATIONS
+import proton.android.pass.featurehome.PACKAGE_NAME
+import proton.android.pass.featurehome.TIMEOUT
+import proton.android.pass.featurehome.setSafeGestureMargin
 
 @Suppress("MagicNumber")
 @RunWith(AndroidJUnit4::class)
@@ -36,8 +40,7 @@ class HomeScrollBenchmark {
             compilationMode = compilationMode,
             packageName = PACKAGE_NAME,
             metrics = listOf(FrameTimingMetric()),
-            iterations = 10,
-            startupMode = null,
+            iterations = ITERATIONS,
             setupBlock = {
                 if (firstStart) {
                     pressHome()
@@ -56,16 +59,11 @@ class HomeScrollBenchmark {
             // Set gesture margin to avoid triggering system gesture navigation
             contentList.setSafeGestureMargin(device)
 
-            repeat(2) {
-                contentList.fling(Direction.DOWN)
-            }
+            contentList.fling(Direction.DOWN)
+            contentList.fling(Direction.UP)
 
             // Wait for the scroll to finish
             device.waitForIdle()
         }
-    }
-
-    companion object {
-        private const val TIMEOUT = 5_000L
     }
 }

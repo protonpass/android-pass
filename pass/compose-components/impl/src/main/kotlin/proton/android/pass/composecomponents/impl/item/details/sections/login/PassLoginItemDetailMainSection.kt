@@ -18,15 +18,20 @@
 
 package proton.android.pass.composecomponents.impl.item.details.sections.login
 
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.PassPasswordStrengthItem
@@ -37,10 +42,13 @@ import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDeta
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailMainSectionContainer
 import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.Totp
+import proton.android.pass.domain.items.ItemCategory
 import me.proton.core.presentation.R as CoreR
 
 private const val HIDDEN_PASSWORD_TEXT_LENGTH = 12
@@ -164,4 +172,31 @@ internal fun PassLoginItemDetailMainSection(
         modifier = modifier,
         sections = sections.toPersistentList()
     )
+}
+
+@[Preview Composable]
+internal fun PassLoginItemDetailMainDiffPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            PassLoginItemDetailMainSection(
+                email = "user@email.com",
+                username = "username",
+                password = HiddenState.Concealed(""),
+                passwordStrength = PasswordStrength.Vulnerable,
+                primaryTotp = Totp(
+                    code = "123456",
+                    remainingSeconds = 25,
+                    totalSeconds = 30
+                ),
+                itemColors = passItemColors(ItemCategory.Login),
+                itemDiffs = ItemDiffs.Login(
+                    email = ItemDiffType.Field,
+                    username = ItemDiffType.Field,
+                    password = ItemDiffType.Content,
+                    totp = ItemDiffType.Field
+                ),
+                onEvent = {}
+            )
+        }
+    }
 }

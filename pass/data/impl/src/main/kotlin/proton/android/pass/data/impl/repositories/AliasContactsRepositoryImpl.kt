@@ -35,6 +35,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.aliascontacts.AliasContacts
 import proton.android.pass.domain.aliascontacts.Contact
 import proton.android.pass.domain.aliascontacts.ContactId
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 data class ContactCacheKey(
@@ -71,24 +72,29 @@ class AliasContactsRepositoryImpl @Inject constructor(
         var lastId: ContactId? = null
         var total: Int
 
-        do {
-            val response = remoteDataSource.getAliasContacts(userId, shareId, itemId, lastId)
-            total = response.total
-            val newContacts = response.contacts.map(ContactResponse::toDomain)
+        runCatching {
+            do {
+                val response = remoteDataSource.getAliasContacts(userId, shareId, itemId, lastId)
+                total = response.total
+                val newContacts = response.contacts.map(ContactResponse::toDomain)
 
-            val updatedContacts = contactsCache.value.toMutableMap()
-            newContacts.forEach { contact ->
-                val cacheKey = ContactCacheKey(shareId, itemId, contact.id)
-                updatedContacts[cacheKey] = contact
-            }
+                val updatedContacts = contactsCache.value.toMutableMap()
+                newContacts.forEach { contact ->
+                    val cacheKey = ContactCacheKey(shareId, itemId, contact.id)
+                    updatedContacts[cacheKey] = contact
+                }
 
-            contactsCache.value = updatedContacts
+                contactsCache.value = updatedContacts
 
-            allContacts.addAll(newContacts)
-            lastId = if (response.contacts.isNotEmpty()) ContactId(response.lastId) else null
-        } while (fullList && lastId != null)
+                allContacts.addAll(newContacts)
+                lastId = if (response.contacts.isNotEmpty()) ContactId(response.lastId) else null
+            } while (fullList && lastId != null)
 
-        emit(AliasContacts(allContacts, total))
+            emit(AliasContacts(allContacts, total))
+        }.onFailure {
+            PassLogger.w(TAG, "Failed to fetch alias contacts")
+            PassLogger.w(TAG, it)
+        }
     }
 
     override suspend fun observeAliasContact(
@@ -105,15 +111,20 @@ class AliasContactsRepositoryImpl @Inject constructor(
             emit(cachedContact)
         }
 
-        val refreshedContact = remoteDataSource.getAliasContact(userId, shareId, itemId, contactId)
-            .contact
-            .toDomain()
+        runCatching {
+            val refreshedContact = remoteDataSource.getAliasContact(userId, shareId, itemId, contactId)
+                .contact
+                .toDomain()
 
-        contactsCache.value = contactsCache.value.toMutableMap().apply {
-            this[cacheKey] = refreshedContact
+            contactsCache.value = contactsCache.value.toMutableMap().apply {
+                this[cacheKey] = refreshedContact
+            }
+
+            emit(refreshedContact)
+        }.onFailure {
+            PassLogger.w(TAG, "Failed to fetch alias contact")
+            PassLogger.w(TAG, it)
         }
-
-        emit(refreshedContact)
     }
 
     override suspend fun createAliasContact(
@@ -169,5 +180,9 @@ class AliasContactsRepositoryImpl @Inject constructor(
         }
 
         return updatedContact
+    }
+
+    companion object {
+        private const val TAG = "AliasContactsRepositoryImpl"
     }
 }

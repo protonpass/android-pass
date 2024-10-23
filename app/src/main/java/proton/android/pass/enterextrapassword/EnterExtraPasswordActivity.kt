@@ -18,9 +18,6 @@
 
 package proton.android.pass.enterextrapassword
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
@@ -30,7 +27,6 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.ui.AppNavigation
-import proton.android.pass.ui.MainActivity
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -45,6 +41,7 @@ class EnterExtraPasswordActivity : FragmentActivity() {
 
         val userId = intent.getStringExtra(EXTRA_USER_ID)?.let { UserId(it) } ?: run {
             PassLogger.w(TAG, "Missing user id")
+            setResult(RESULT_CANCELED)
             finish()
             return
         }
@@ -54,9 +51,8 @@ class EnterExtraPasswordActivity : FragmentActivity() {
                 userId = userId,
                 onNavigate = {
                     when (it) {
-                        AppNavigation.Finish,
-                        is AppNavigation.ForceSignOut -> finishAndGoBackTo(MainActivity::class.java)
-
+                        is AppNavigation.Finish -> setResultAndFinish(success = true)
+                        is AppNavigation.ForceSignOut -> setResultAndFinish(success = false)
                         else -> {}
                     }
                 }
@@ -64,24 +60,14 @@ class EnterExtraPasswordActivity : FragmentActivity() {
         }
     }
 
-    private fun finishAndGoBackTo(activity: Class<out Activity>) {
+    private fun setResultAndFinish(success: Boolean) {
         snackbarDispatcher.reset()
-        val intent = Intent(this, activity)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
+        setResult(if (success) RESULT_OK else RESULT_CANCELED)
         finish()
     }
 
     companion object {
         private const val TAG = "EnterExtraPasswordActivity"
-        private const val EXTRA_USER_ID = "extra_user_id"
-
-        fun createIntent(context: Context, userId: UserId) = Intent(
-            context,
-            EnterExtraPasswordActivity::class.java
-        ).apply {
-            putExtra(EXTRA_USER_ID, userId.id)
-        }
+        const val EXTRA_USER_ID = "extra_user_id"
     }
-
 }

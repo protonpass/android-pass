@@ -9,5 +9,4 @@
   <string name="no_account_found">Nu s-a găsit niciun cont.</string>
   <string name="no_session_found">Nu am găsit nicio sesiune.</string>
   <string name="auth_with_extra_password_failed">Autorizarea cu parola suplimentară a eșuat.</string>
-  <string name="error_login_in_user">Error logging in user</string>
 </resources>

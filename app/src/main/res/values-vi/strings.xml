@@ -9,5 +9,4 @@
   <string name="no_account_found">Không tìm thấy tài khoản</string>
   <string name="no_session_found">Không tìm thấy phiên làm việc</string>
   <string name="auth_with_extra_password_failed">Xác thực bằng mật khẩu thứ 2 thất bại</string>
-  <string name="error_login_in_user">Error logging in user</string>
 </resources>

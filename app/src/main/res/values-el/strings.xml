@@ -9,5 +9,4 @@
   <string name="no_account_found">Δε βρέθηκε λογαριασμός</string>
   <string name="no_session_found">Δε βρέθηκε συνεδρία</string>
   <string name="auth_with_extra_password_failed">Ο έλεγχος ταυτότητας με επιπλέον κωδικό πρόσβασης απέτυχε</string>
-  <string name="error_login_in_user">Error logging in user</string>
 </resources>

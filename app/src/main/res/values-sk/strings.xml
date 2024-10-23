@@ -9,5 +9,4 @@
   <string name="no_account_found">Nenašiel sa žiadny účet</string>
   <string name="no_session_found">Nenašla sa žiadna relácia</string>
   <string name="auth_with_extra_password_failed">Autorizácia pomocou dodatočného hesla zlyhala</string>
-  <string name="error_login_in_user">Error logging in user</string>
 </resources>

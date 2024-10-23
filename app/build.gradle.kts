@@ -29,6 +29,7 @@ plugins {
     id("kotlin-parcelize")
     id("io.sentry.android.gradle")
     id("org.jetbrains.kotlin.kapt")
+    id("androidx.baselineprofile")
     alias(libs.plugins.gradlePlugin.proton.environmentConfig)
     alias(libs.plugins.gradlePlugin.dependency.guard)
 }
@@ -162,11 +163,11 @@ android {
                 signingConfigs["uploadKeystore"]
             }
         }
-        create("benchmark") {
-            initWith(getByName("release"))
+        create("benchmarkRelease") {
             signingConfig = signingConfigs.getByName("debug")
-            matchingFallbacks.add("release")
-            postprocessing.isObfuscate = false
+        }
+        create("nonMinifiedRelease") {
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
@@ -506,6 +507,8 @@ dependencies {
         exclude(module = "protobuf-lite")
     }
     androidTestUtil(libs.androidx.test.orchestrator)
+
+    "baselineProfile"(projects.appmacrobenchmark)
 }
 
 fun String?.toBuildConfigValue() = if (this != null) "\"$this\"" else "null"
@@ -560,4 +563,9 @@ dependencyGuard {
             !it.contains("io.sentry")
         }
     }
+}
+
+baselineProfile {
+    saveInSrc = true
+    dexLayoutOptimization = true
 }

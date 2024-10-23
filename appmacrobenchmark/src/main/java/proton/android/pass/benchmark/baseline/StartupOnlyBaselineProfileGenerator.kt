@@ -36,7 +36,10 @@ class StartupOnlyBaselineProfileGenerator {
 
     @Test
     fun appStartupOnly() {
-        baselineProfileRule.collect(TARGET_PACKAGE) {
+        baselineProfileRule.collect(
+            packageName = TARGET_PACKAGE,
+            includeInStartupProfile = true
+        ) {
             startActivityAndWait()
             device.wait(Until.hasObject(By.text("Sign in")), TIMEOUT)
         }

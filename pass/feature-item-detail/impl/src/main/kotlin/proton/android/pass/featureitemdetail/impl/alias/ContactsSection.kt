@@ -18,6 +18,8 @@
 
 package proton.android.pass.featureitemdetail.impl.alias
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -27,10 +29,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.counter.CounterText
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.row.CounterRow
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.featureitemdetail.impl.R
 import me.proton.core.presentation.R as CoreR
 
@@ -40,28 +44,37 @@ fun ContactsSection(
     counter: Int,
     onClick: () -> Unit
 ) {
-    CounterRow(
-        modifier = modifier.defaultMinSize(minHeight = 72.dp),
-        title = stringResource(R.string.contacts),
-        isClickable = true,
-        onClick = onClick,
-        accentBackgroundColor = PassTheme.colors.backgroundStrong,
-        leadingContent = {
-            Icon.Default(
-                id = CoreR.drawable.ic_proton_note,
-                tint = PassTheme.colors.aliasInteractionNorm
-            )
-        },
-        trailingContent = if (counter > 0) {
-            {
-                CounterText(
-                    text = counter.toString(),
-                    backgroundColor = PassTheme.colors.backgroundMedium,
-                    textColor = PassTheme.colors.textWeak
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(Spacing.small)
+    ) {
+        CounterRow(
+            modifier = Modifier.defaultMinSize(minHeight = 72.dp),
+            title = stringResource(R.string.contacts),
+            isClickable = true,
+            onClick = onClick,
+            accentBackgroundColor = PassTheme.colors.backgroundStrong,
+            leadingContent = {
+                Icon.Default(
+                    id = CoreR.drawable.ic_proton_filing_cabinet,
+                    tint = PassTheme.colors.aliasInteractionNorm
                 )
-            }
-        } else null
-    )
+            },
+            trailingContent = if (counter > 0) {
+                {
+                    CounterText(
+                        text = counter.toString(),
+                        backgroundColor = PassTheme.colors.backgroundMedium,
+                        textColor = PassTheme.colors.textWeak
+                    )
+                }
+            } else null
+        )
+        Text.Body3Regular(
+            text = stringResource(R.string.contacts_section_description),
+            color = PassTheme.colors.textWeak
+        )
+    }
 }
 
 @Preview

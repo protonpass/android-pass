@@ -69,6 +69,8 @@ internal fun GeneratePasswordWordsContent(
 
         GeneratePasswordWordsCountRow(
             count = wordsCount,
+            minCount = minWordsCount,
+            maxCount = maxWordsCount,
             onCountChange = {
                 onEvent(GeneratePasswordEvent.OnWordsCountChange(it))
             }

@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.subheadlineNorm
 import proton.android.pass.common.api.PasswordStrength
+import proton.android.pass.commonrust.api.passwords.PasswordConfig
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -43,11 +44,11 @@ import proton.android.pass.features.password.bottomsheet.random.GeneratePassword
 import proton.android.pass.features.password.bottomsheet.words.GeneratePasswordWordsContent
 
 @Composable
-fun GeneratePasswordViewContent(
+internal fun GeneratePasswordViewContent(
     modifier: Modifier = Modifier,
     state: GeneratePasswordUiState,
     onEvent: (GeneratePasswordEvent) -> Unit
-) {
+) = with(state) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -59,40 +60,42 @@ fun GeneratePasswordViewContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
-            val annotatedString = state.password.toPasswordAnnotatedString(
-                digitColor = PassTheme.colors.loginInteractionNormMajor2,
-                symbolColor = PassTheme.colors.aliasInteractionNormMajor2,
-                letterColor = PassTheme.colors.textNorm
-            )
             Text(
-                text = annotatedString,
+                text = password.toPasswordAnnotatedString(
+                    digitColor = PassTheme.colors.loginInteractionNormMajor2,
+                    symbolColor = PassTheme.colors.aliasInteractionNormMajor2,
+                    letterColor = PassTheme.colors.textNorm
+                ),
                 style = ProtonTheme.typography.subheadlineNorm.copy(fontFamily = FontFamily.Monospace)
             )
 
-            PassPasswordStrengthItem(passwordStrength = state.passwordStrength)
+            PassPasswordStrengthItem(passwordStrength = passwordStrength)
         }
 
-        when (state.content) {
-            is GeneratePasswordContent.RandomPassword -> {
-                GeneratePasswordRandomContent(
-                    content = state.content,
-                    onEvent = onEvent
-                )
-            }
+        passwordConfig?.let { config ->
+            when (config) {
+                is PasswordConfig.Memorable -> {
+                    GeneratePasswordWordsContent(
+                        config = config,
+                        onEvent = onEvent
+                    )
+                }
 
-            is GeneratePasswordContent.WordsPassword -> {
-                GeneratePasswordWordsContent(
-                    content = state.content,
-                    onEvent = onEvent
-                )
+                is PasswordConfig.Random -> {
+                    GeneratePasswordRandomContent(
+                        config = config,
+                        onEvent = onEvent
+                    )
+                }
             }
         }
     }
 }
 
-@Preview
-@Composable
-fun GeneratePasswordViewContentThemePreview(@PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean) {
+@[Preview Composable]
+internal fun GeneratePasswordViewContentThemePreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean
+) {
     PassTheme(isDark = isDarkMode) {
         Surface {
             GeneratePasswordViewContent(
@@ -100,11 +103,11 @@ fun GeneratePasswordViewContentThemePreview(@PreviewParameter(ThemePreviewProvid
                     password = "a1b!c_d3e#fg",
                     passwordStrength = PasswordStrength.Strong,
                     mode = GeneratePasswordMode.CopyAndClose,
-                    content = GeneratePasswordContent.RandomPassword(
-                        length = 12,
-                        hasSpecialCharacters = true,
-                        hasCapitalLetters = false,
-                        includeNumbers = true
+                    passwordConfig = PasswordConfig.Random(
+                        passwordLength = 12,
+                        passwordIncludeNumbers = true,
+                        passwordIncludeUppercase = false,
+                        passwordIncludeSymbols = true
                     )
                 ),
                 onEvent = {}

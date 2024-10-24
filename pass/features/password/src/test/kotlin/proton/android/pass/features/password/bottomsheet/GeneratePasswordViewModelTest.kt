@@ -71,7 +71,7 @@ internal class GeneratePasswordViewModelTest {
     internal fun `WHEN view model is initialized THEN password strength is None`() = runTest {
         val expectedPasswordStrength = PasswordStrength.None
 
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             assertThat(awaitItem().passwordStrength).isEqualTo(expectedPasswordStrength)
         }
     }
@@ -83,7 +83,7 @@ internal class GeneratePasswordViewModelTest {
 
         viewModel.regenerate()
 
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             assertThat(awaitItem().passwordStrength).isEqualTo(expectedPasswordStrength)
         }
     }

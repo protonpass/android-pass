@@ -23,5 +23,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.domain.OrganizationSettings
 
 interface ObserveOrganizationSettings {
+
     operator fun invoke(): Flow<Option<OrganizationSettings>>
+
 }

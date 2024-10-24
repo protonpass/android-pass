@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.scan
+import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
@@ -68,14 +69,20 @@ class AccountListenerInitializer : Initializer<Unit> {
             minActiveState = Lifecycle.State.CREATED
         ).onAccountDisabled {
             PassLogger.i(TAG, "Account disabled : ${it.userId}")
-            performCleanup(it, entryPoint)
+            lifecycleProvider.lifecycle.coroutineScope.launch {
+                performCleanup(it, entryPoint)
+            }
         }.onAccountRemoved {
             PassLogger.i(TAG, "Account removed : ${it.userId}")
-            performCleanup(it, entryPoint)
+            lifecycleProvider.lifecycle.coroutineScope.launch {
+                performCleanup(it, entryPoint)
+            }
         }.onAccountReady(false) { // this flag is set to false to listen for new accounts only
             PassLogger.i(TAG, "New Account ready : ${it.userId}")
         }.onAccountReady { account ->
-            onAccountReady(account, refreshOrganizationSettings, refreshPlan)
+            lifecycleProvider.lifecycle.coroutineScope.launch {
+                onAccountReady(account, refreshOrganizationSettings, refreshPlan)
+            }
         }
 
         // onAccountReady doesn't notify sometimes when using extra password during login
@@ -114,7 +121,8 @@ class AccountListenerInitializer : Initializer<Unit> {
             .onSuccess { PassLogger.i(TAG, "Cleared user data") }
             .onFailure { PassLogger.i(TAG, it, "Error clearing user data") }
 
-        val activeAccounts = accountManager.getAccounts(AccountState.Ready).firstOrNull() ?: emptyList()
+        val activeAccounts =
+            accountManager.getAccounts(AccountState.Ready).firstOrNull() ?: emptyList()
         PassLogger.i(TAG, "Active accounts : ${activeAccounts.size}")
         // If there are no more active accounts, reset the app to defaults
         if (activeAccounts.isEmpty()) {

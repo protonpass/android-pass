@@ -35,22 +35,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.features.password.R
 
 @Composable
-fun GeneratePasswordRandomCountRow(
+internal fun GeneratePasswordRandomCountRow(
     modifier: Modifier = Modifier,
     length: Int,
+    minLength: Int,
+    maxLength: Int,
     onLengthChange: (Int) -> Unit
 ) {
+    var sliderPosition by remember { mutableFloatStateOf(length.toFloat()) }
+    val valueRange = remember { minLength.toFloat()..maxLength.toFloat() }
+
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(space = Spacing.small),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
@@ -60,8 +65,6 @@ fun GeneratePasswordRandomCountRow(
             style = ProtonTheme.typography.defaultSmallNorm
         )
 
-        var sliderPosition by remember { mutableFloatStateOf(length.toFloat()) }
-        val valueRange = remember { 4.toFloat()..64.toFloat() }
         Slider(
             modifier = Modifier.weight(SLIDER_CONTENT_WEIGHT),
             value = sliderPosition,
@@ -81,13 +84,14 @@ fun GeneratePasswordRandomCountRow(
     }
 }
 
-@Preview
-@Composable
-fun GeneratePasswordRandomCountRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+@[Preview Composable]
+internal fun GeneratePasswordRandomCountRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             GeneratePasswordRandomCountRow(
                 length = 4,
+                minLength = 4,
+                maxLength = 64,
                 onLengthChange = {}
             )
         }

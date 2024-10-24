@@ -22,9 +22,6 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavItem
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsNavDestination
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.itemOptionsNavGraph
-import proton.android.pass.features.auth.AuthNavigation
-import proton.android.pass.features.auth.EnterPin
-import proton.android.pass.features.auth.authGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
 import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
@@ -41,6 +38,9 @@ import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions
 import proton.android.pass.featureitemcreate.impl.login.createUpdateLoginGraph
 import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
+import proton.android.pass.features.auth.AuthNavigation
+import proton.android.pass.features.auth.EnterPin
+import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.passkeys.create.presentation.CreatePasskeyNavState
 import proton.android.pass.features.passkeys.create.ui.app.CreatePasskeyEvent
 import proton.android.pass.features.passkeys.create.ui.app.CreatePasskeyNavigation
@@ -50,6 +50,9 @@ import proton.android.pass.features.password.GeneratePasswordNavigation
 import proton.android.pass.features.password.dialog.mode.PasswordModeDialog
 import proton.android.pass.features.password.dialog.separator.WordSeparatorDialog
 import proton.android.pass.features.password.generatePasswordBottomsheetGraph
+import proton.android.pass.features.report.navigation.AccountSwitchNavItem
+import proton.android.pass.features.report.navigation.AccountSwitchNavigation
+import proton.android.pass.features.report.navigation.accountSwitchNavGraph
 import proton.android.pass.features.selectitem.navigation.SelectItem
 import proton.android.pass.features.selectitem.navigation.SelectItemNavigation
 import proton.android.pass.features.selectitem.navigation.selectItemGraph
@@ -136,8 +139,7 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                     onNavigate(CreatePasskeyNavigation.Upgrade)
                 }
 
-                SelectItemNavigation.SelectAccount ->
-                    throw IllegalStateException("Cannot select account on CreatePasskey")
+                SelectItemNavigation.SelectAccount -> appNavigator.navigate(AccountSwitchNavItem)
             }
         }
     )
@@ -359,6 +361,17 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
         when (destination) {
             ItemOptionsNavDestination.Dismiss -> dismissBottomSheet {
                 appNavigator.navigateBack(comesFromBottomsheet = true)
+            }
+        }
+    }
+
+    accountSwitchNavGraph {
+        when (it) {
+            AccountSwitchNavigation.CreateItem -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = CreateLogin,
+                    route = CreateLogin.createNavRoute()
+                )
             }
         }
     }

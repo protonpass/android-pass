@@ -147,8 +147,8 @@ class ItemRepositoryImpl @Inject constructor(
         )
         localItemDataSource.upsertItem(entity)
 
-        encryptionContextProvider.withEncryptionContext {
-            entity.toDomain(this@withEncryptionContext)
+        encryptionContextProvider.withEncryptionContextSuspendable {
+            entity.toDomain(this)
         }
     }
 
@@ -181,8 +181,8 @@ class ItemRepositoryImpl @Inject constructor(
             listOf(shareKey)
         )
         localItemDataSource.upsertItem(entity)
-        encryptionContextProvider.withEncryptionContext {
-            entity.toDomain(this@withEncryptionContext)
+        encryptionContextProvider.withEncryptionContextSuspendable {
+            entity.toDomain(this)
         }
     }
 
@@ -241,8 +241,8 @@ class ItemRepositoryImpl @Inject constructor(
             localItemDataSource.upsertItem(aliasEntity)
         }
 
-        encryptionContextProvider.withEncryptionContext {
-            itemEntity.toDomain(this@withEncryptionContext)
+        encryptionContextProvider.withEncryptionContextSuspendable {
+            itemEntity.toDomain(this)
         }
     }
 
@@ -255,12 +255,12 @@ class ItemRepositoryImpl @Inject constructor(
         val localEntity = localItemDataSource.getById(share.id, item.id)
             ?: throw IllegalStateException("Item not found in local database")
 
-        val decryptedProto = encryptionContextProvider.withEncryptionContext {
+        val decryptedProto = encryptionContextProvider.withEncryptionContextSuspendable {
             decrypt(localEntity.encryptedContent)
         }
 
         val decodedProto = ItemV1.Item.parseFrom(decryptedProto)
-        val itemContents = encryptionContextProvider.withEncryptionContext {
+        val itemContents = encryptionContextProvider.withEncryptionContextSuspendable {
             contents.serializeToProto(
                 itemUuid = item.itemUuid,
                 builder = decodedProto.toBuilder(),
@@ -305,8 +305,8 @@ class ItemRepositoryImpl @Inject constructor(
     }.let { itemEntity ->
         localItemDataSource.upsertItem(itemEntity)
 
-        encryptionContextProvider.withEncryptionContext {
-            itemEntity.toDomain(this@withEncryptionContext)
+        encryptionContextProvider.withEncryptionContextSuspendable {
+            itemEntity.toDomain(this)
         }
     }
 
@@ -376,8 +376,8 @@ class ItemRepositoryImpl @Inject constructor(
             filter = itemTypeFilter
         )
     }.map { items ->
-        encryptionContextProvider.withEncryptionContext {
-            items.map { item -> item.toDomain(this@withEncryptionContext) }
+        encryptionContextProvider.withEncryptionContextSuspendable {
+            items.map { item -> item.toDomain(this) }
         }
     }
 
@@ -403,15 +403,15 @@ class ItemRepositoryImpl @Inject constructor(
             filter = itemTypeFilter
         )
     }.map { items ->
-        encryptionContextProvider.withEncryptionContext {
-            items.map { item -> item.toDomain(this@withEncryptionContext) }
+        encryptionContextProvider.withEncryptionContextSuspendable {
+            items.map { item -> item.toDomain(this) }
         }
     }
 
     override fun observeById(shareId: ShareId, itemId: ItemId): Flow<Item> =
         localItemDataSource.observeItem(shareId, itemId).map { itemEntity ->
-            encryptionContextProvider.withEncryptionContext {
-                itemEntity.toDomain(this@withEncryptionContext)
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                itemEntity.toDomain(this)
             }
         }
 
@@ -419,8 +419,8 @@ class ItemRepositoryImpl @Inject constructor(
         val localItem = localItemDataSource.getById(shareId, itemId)
             ?: throw IllegalStateException("Item not found [shareId=${shareId.id}] [itemId=${itemId.id}]")
 
-        return encryptionContextProvider.withEncryptionContext {
-            localItem.toDomain(this@withEncryptionContext)
+        return encryptionContextProvider.withEncryptionContextSuspendable {
+            localItem.toDomain(this)
         }
     }
 
@@ -612,8 +612,8 @@ class ItemRepositoryImpl @Inject constructor(
         val itemEntity = localItemDataSource.getById(shareId, itemId)
             ?: throw ItemNotFoundError(itemId, shareId)
 
-        val (item, itemProto) = encryptionContextProvider.withEncryptionContext {
-            val item = itemEntity.toDomain(this@withEncryptionContext)
+        val (item, itemProto) = encryptionContextProvider.withEncryptionContextSuspendable {
+            val item = itemEntity.toDomain(this)
             val itemContents = decrypt(item.content)
             item to ItemV1.Item.parseFrom(itemContents)
         }
@@ -685,14 +685,14 @@ class ItemRepositoryImpl @Inject constructor(
         val share = shareRepository.getById(userId, shareId)
         val shareKeys = shareKeyRepository.getShareKeys(userId, addressId, shareId).first()
 
-        val updateAsEntities = encryptionContextProvider.withEncryptionContext {
+        val updateAsEntities = encryptionContextProvider.withEncryptionContextSuspendable {
             events.updatedItems.map {
                 itemResponseToEntity(
                     userAddress = userAddress,
                     itemRevision = it.toItemRevision().toDomain(),
                     share = share,
                     shareKeys = shareKeys,
-                    encryptionContext = this@withEncryptionContext
+                    encryptionContext = this
                 )
             }
         }
@@ -783,14 +783,14 @@ class ItemRepositoryImpl @Inject constructor(
         val share = shareRepository.getById(userId, shareId)
         val shareKeys = shareKeyRepository.getShareKeys(userId, addressId, shareId).first()
 
-        val items = encryptionContextProvider.withEncryptionContext {
+        val items = encryptionContextProvider.withEncryptionContextSuspendable {
             pendingItemRevisions.map { pendingItemRevision ->
                 itemResponseToEntity(
                     userAddress = userAddress,
                     itemRevision = pendingItemRevision.toItemRevision().toDomain(),
                     share = share,
                     shareKeys = shareKeys,
-                    encryptionContext = this@withEncryptionContext
+                    encryptionContext = this
                 )
             }
         }
@@ -852,8 +852,8 @@ class ItemRepositoryImpl @Inject constructor(
             // Happy path
             successes.isNotEmpty() && failures.isEmpty() -> {
                 val migrated = successes.mapNotNull { it.getOrNull() }.flatten()
-                val migratedItemsMapped = encryptionContextProvider.withEncryptionContext {
-                    migrated.map { it.toDomain(this@withEncryptionContext) }
+                val migratedItemsMapped = encryptionContextProvider.withEncryptionContextSuspendable {
+                    migrated.map { it.toDomain(this) }
                 }
 
                 MigrateItemsResult.AllMigrated(migratedItemsMapped)
@@ -867,8 +867,8 @@ class ItemRepositoryImpl @Inject constructor(
                 PassLogger.w(TAG, firstFailure)
 
                 val migrated = successes.mapNotNull { it.getOrNull() }.flatten()
-                val migratedItemsMapped = encryptionContextProvider.withEncryptionContext {
-                    migrated.map { it.toDomain(this@withEncryptionContext) }
+                val migratedItemsMapped = encryptionContextProvider.withEncryptionContextSuspendable {
+                    migrated.map { it.toDomain(this) }
                 }
                 MigrateItemsResult.SomeMigrated(migratedItemsMapped)
             }
@@ -913,8 +913,8 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): Item? {
         val item = localItemDataSource.getItemByAliasEmail(userId, aliasEmail) ?: return null
 
-        return encryptionContextProvider.withEncryptionContext {
-            item.toDomain(this@withEncryptionContext)
+        return encryptionContextProvider.withEncryptionContextSuspendable {
+            item.toDomain(this)
         }
     }
 
@@ -934,7 +934,7 @@ class ItemRepositoryImpl @Inject constructor(
         val itemEntity = localItemDataSource.getById(shareId, itemId)
             ?: throw ItemNotFoundError(itemId, shareId)
 
-        val (itemContents, item) = encryptionContextProvider.withEncryptionContext {
+        val (itemContents, item) = encryptionContextProvider.withEncryptionContextSuspendable {
             decrypt(itemEntity.encryptedContent) to itemEntity.toDomain(this)
         }
 
@@ -978,14 +978,14 @@ class ItemRepositoryImpl @Inject constructor(
             shareId = shareId
         ).first()
 
-        val itemsToUpsert = encryptionContextProvider.withEncryptionContext {
+        val itemsToUpsert = encryptionContextProvider.withEncryptionContextSuspendable {
             revisions.map {
                 itemResponseToEntity(
                     userAddress = address,
                     itemRevision = it,
                     share = share,
                     shareKeys = shareKeys,
-                    encryptionContext = this@withEncryptionContext
+                    encryptionContext = this
                 )
             }
         }
@@ -1046,8 +1046,8 @@ class ItemRepositoryImpl @Inject constructor(
                 }
                 localItemDataSource.upsertItems(pinned)
 
-                val pinnedItemsMapped = encryptionContextProvider.withEncryptionContext {
-                    pinned.map { it.toDomain(this@withEncryptionContext) }
+                val pinnedItemsMapped = encryptionContextProvider.withEncryptionContextSuspendable {
+                    pinned.map { it.toDomain(this) }
                 }
 
                 PinItemsResult.AllPinned(pinnedItemsMapped)
@@ -1071,8 +1071,8 @@ class ItemRepositoryImpl @Inject constructor(
                 }
                 localItemDataSource.upsertItems(pinned)
 
-                val pinnedItemsMapped = encryptionContextProvider.withEncryptionContext {
-                    pinned.map { it.toDomain(this@withEncryptionContext) }
+                val pinnedItemsMapped = encryptionContextProvider.withEncryptionContextSuspendable {
+                    pinned.map { it.toDomain(this) }
                 }
 
                 PinItemsResult.SomePinned(pinnedItemsMapped)
@@ -1164,14 +1164,14 @@ class ItemRepositoryImpl @Inject constructor(
 
         val res = remoteItemDataSource.migrateItems(userId, source, body)
 
-        val resAsEntities = encryptionContextProvider.withEncryptionContext {
+        val resAsEntities = encryptionContextProvider.withEncryptionContextSuspendable {
             res.map {
                 itemResponseToEntity(
                     userAddress = userAddress,
                     itemRevision = it,
                     share = destinationShare,
                     shareKeys = listOf(destinationKey),
-                    encryptionContext = this@withEncryptionContext
+                    encryptionContext = this
                 )
             }
         }
@@ -1199,7 +1199,7 @@ class ItemRepositoryImpl @Inject constructor(
                 val item = openItemRevision(
                     shareId = shareId,
                     itemRevision = itemRevision,
-                    encryptionContext = this@withEncryptionContextSuspendable
+                    encryptionContext = this
                 )
                 ItemMigrationHistoryContent(
                     revision = item.revision,
@@ -1346,11 +1346,10 @@ class ItemRepositoryImpl @Inject constructor(
             listOf(shareKey)
         )
         localItemDataSource.upsertItem(entity)
-        encryptionContextProvider.withEncryptionContext {
-            entity.toDomain(this@withEncryptionContext)
+        encryptionContextProvider.withEncryptionContextSuspendable {
+            entity.toDomain(this)
         }
     }
-
 
     private suspend fun decryptItems(
         userAddress: UserAddress,
@@ -1361,7 +1360,7 @@ class ItemRepositoryImpl @Inject constructor(
             .getShareKeys(userAddress.userId, userAddress.addressId, share.id)
             .first()
         val itemsEntities = encryptionContextProvider.withEncryptionContextSuspendable {
-            val encryptionContext = this@withEncryptionContextSuspendable
+            val encryptionContext = this
             withContext(Dispatchers.Default) {
                 items.map { item ->
                     async {
@@ -1383,7 +1382,7 @@ class ItemRepositoryImpl @Inject constructor(
         return itemsEntities.map { it.first }
     }
 
-    private fun decryptItem(
+    private suspend fun decryptItem(
         encryptionContext: EncryptionContext,
         userAddress: UserAddress,
         share: Share,
@@ -1399,18 +1398,18 @@ class ItemRepositoryImpl @Inject constructor(
         return entity.toDomain(encryptionContext) to entity
     }
 
-    private fun itemResponseToEntity(
+    private suspend fun itemResponseToEntity(
         userAddress: UserAddress,
         itemRevision: ItemRevision,
         share: Share,
         shareKeys: List<ShareKey>
-    ): ItemEntity = encryptionContextProvider.withEncryptionContext {
+    ): ItemEntity = encryptionContextProvider.withEncryptionContextSuspendable {
         itemResponseToEntity(
             userAddress = userAddress,
             itemRevision = itemRevision,
             share = share,
             shareKeys = shareKeys,
-            encryptionContext = this@withEncryptionContext
+            encryptionContext = this
         )
     }
 

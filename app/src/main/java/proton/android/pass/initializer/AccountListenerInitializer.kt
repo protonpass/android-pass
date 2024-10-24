@@ -69,18 +69,18 @@ class AccountListenerInitializer : Initializer<Unit> {
             minActiveState = Lifecycle.State.CREATED
         ).onAccountDisabled {
             PassLogger.i(TAG, "Account disabled : ${it.userId}")
-            lifecycleProvider.lifecycle.coroutineScope.launch {
+            launchInAppLifecycleScope(lifecycleProvider) {
                 performCleanup(it, entryPoint)
             }
         }.onAccountRemoved {
             PassLogger.i(TAG, "Account removed : ${it.userId}")
-            lifecycleProvider.lifecycle.coroutineScope.launch {
+            launchInAppLifecycleScope(lifecycleProvider) {
                 performCleanup(it, entryPoint)
             }
         }.onAccountReady(false) { // this flag is set to false to listen for new accounts only
             PassLogger.i(TAG, "New Account ready : ${it.userId}")
         }.onAccountReady { account ->
-            lifecycleProvider.lifecycle.coroutineScope.launch {
+            launchInAppLifecycleScope(lifecycleProvider) {
                 onAccountReady(account, refreshOrganizationSettings, refreshPlan)
             }
         }
@@ -97,6 +97,12 @@ class AccountListenerInitializer : Initializer<Unit> {
             }
             .flowWithLifecycle(lifecycleProvider.lifecycle)
             .launchIn(lifecycleProvider.lifecycle.coroutineScope)
+    }
+
+    private fun launchInAppLifecycleScope(lifecycleProvider: PassAppLifecycleProvider, block: suspend () -> Unit) {
+        lifecycleProvider.lifecycle.coroutineScope.launch {
+            block()
+        }
     }
 
     private suspend fun onAccountReady(
@@ -121,8 +127,7 @@ class AccountListenerInitializer : Initializer<Unit> {
             .onSuccess { PassLogger.i(TAG, "Cleared user data") }
             .onFailure { PassLogger.i(TAG, it, "Error clearing user data") }
 
-        val activeAccounts =
-            accountManager.getAccounts(AccountState.Ready).firstOrNull() ?: emptyList()
+        val activeAccounts = accountManager.getAccounts(AccountState.Ready).firstOrNull().orEmpty()
         PassLogger.i(TAG, "Active accounts : ${activeAccounts.size}")
         // If there are no more active accounts, reset the app to defaults
         if (activeAccounts.isEmpty()) {

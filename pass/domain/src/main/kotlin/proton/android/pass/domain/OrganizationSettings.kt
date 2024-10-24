@@ -18,6 +18,8 @@
 
 package proton.android.pass.domain
 
+import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
+
 enum class OrganizationShareMode(val value: Int) {
     Unrestricted(0),
     OrganizationOnly(1);
@@ -39,11 +41,14 @@ sealed interface ForceLockSeconds {
 }
 
 sealed interface OrganizationSettings {
+
     data object NotAnOrganization : OrganizationSettings
+
     data class Organization(
         val canUpdate: Boolean,
         val shareMode: OrganizationShareMode,
-        val forceLockSeconds: ForceLockSeconds
+        val forceLockSeconds: ForceLockSeconds,
+        val passwordPolicy: OrganizationPasswordPolicy
     ) : OrganizationSettings
 
     fun isEnforced(): Boolean = when (this) {
@@ -55,4 +60,5 @@ sealed interface OrganizationSettings {
         is Organization -> (forceLockSeconds as? ForceLockSeconds.Enforced)?.seconds ?: 0
         else -> 0
     }
+
 }

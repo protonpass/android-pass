@@ -42,5 +42,35 @@ data class OrganizationGetOrganizationSettings(
     @SerialName("ShareMode")
     val shareMode: Int,
     @SerialName("ForceLockSeconds")
-    val forceLockSeconds: Int
+    val forceLockSeconds: Int,
+    @SerialName("PasswordPolicy")
+    val passwordPolicy: OrganizationGetOrganizationSettingsPasswordPolicy?
+)
+
+@Serializable
+data class OrganizationGetOrganizationSettingsPasswordPolicy(
+    @SerialName("RandomPasswordAllowed")
+    val randomPasswordAllowed: Boolean,
+    @SerialName("RandomPasswordMinLength")
+    val randomPasswordMinLength: Int?,
+    @SerialName("RandomPasswordMaxLength")
+    val randomPasswordMaxLength: Int?,
+    @SerialName("RandomPasswordMustIncludeNumbers")
+    val randomPasswordMustIncludeNumbers: Boolean?,
+    @SerialName("RandomPasswordMustIncludeSymbols")
+    val randomPasswordMustIncludeSymbols: Boolean?,
+    @SerialName("RandomPasswordMustIncludeUppercase")
+    val randomPasswordMustIncludeUppercase: Boolean?,
+    @SerialName("MemorablePasswordAllowed")
+    val memorablePasswordAllowed: Boolean,
+    @SerialName("MemorablePasswordMinWords")
+    val memorablePasswordMinWords: Int?,
+    @SerialName("MemorablePasswordMaxWords")
+    val memorablePasswordMaxWords: Int?,
+    @SerialName("MemorablePasswordMustCapitalize")
+    val memorablePasswordMustCapitalize: Boolean?,
+    @SerialName("MemorablePasswordMustIncludeNumbers")
+    val memorablePasswordMustIncludeNumbers: Boolean?,
+    @SerialName("MemorablePasswordMustIncludeSeparator")
+    val memorablePasswordMustIncludeSeparator: Boolean?
 )

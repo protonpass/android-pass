@@ -18,31 +18,27 @@
 
 package proton.android.pass.features.password.bottomsheet
 
-import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.common.api.PasswordStrength
+import proton.android.pass.commonrust.api.passwords.PasswordCreator
+import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
 import proton.android.pass.features.password.GeneratePasswordBottomsheetMode
 import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.features.password.GeneratePasswordSnackbarMessage
-import proton.android.pass.features.password.extensions.toContent
 import proton.android.pass.features.password.extensions.toRandomSpec
 import proton.android.pass.features.password.extensions.toWordSpec
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -54,56 +50,49 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GeneratePasswordViewModel @Inject constructor(
+    observePasswordConfig: ObservePasswordConfig,
+    passwordCreator: PasswordCreator,
+    passwordStrengthCalculator: PasswordStrengthCalculator,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clipboardManager: ClipboardManager,
     private val draftRepository: DraftRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val savedStateHandle: SavedStateHandle,
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val passwordGenerator: proton.android.pass.commonrust.api.PasswordGenerator,
-    private val passwordStrengthCalculator: PasswordStrengthCalculator
+    private val passwordGenerator: proton.android.pass.commonrust.api.PasswordGenerator
 ) : ViewModel() {
 
     private val mode = getMode()
 
-    private val passwordFlow: MutableStateFlow<String> = MutableStateFlow(getInitialPassword())
+    private val passwordConfigFlow = observePasswordConfig()
 
+    private val passwordFlow = passwordConfigFlow.mapLatest(passwordCreator::createPassword)
 
-    private val passwordGenerationPreference = userPreferencesRepository
-        .getPasswordGenerationPreference()
-        .distinctUntilChanged()
-        .onEach { pref ->
-            passwordFlow.update { generatePassword(pref) }
-        }
+    private val passwordStrengthFlow =
+        passwordFlow.mapLatest(passwordStrengthCalculator::calculateStrength)
 
-    val state: StateFlow<GeneratePasswordUiState> = combine(
-        passwordGenerationPreference,
-        passwordFlow
-    ) { pref, password ->
+    internal val stateFlow: StateFlow<GeneratePasswordUiState> = combine(
+        passwordFlow,
+        passwordStrengthFlow,
+        passwordConfigFlow
+    ) { password, passwordStrength, passwordConfig ->
         GeneratePasswordUiState(
             password = password,
-            passwordStrength = passwordStrengthCalculator.calculateStrength(password),
-            mode = mode,
-            content = pref.toContent()
+            passwordStrength = passwordStrength,
+            passwordConfig = passwordConfig,
+            mode = mode
         )
-    }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = run {
-                val pref = runBlocking { getCurrentPreference() }
-                GeneratePasswordUiState(
-                    password = "",
-                    passwordStrength = PasswordStrength.None,
-                    mode = mode,
-                    content = pref.toContent()
-                )
-            }
-        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = GeneratePasswordUiState.initial(mode)
+    )
 
-    fun onLengthChange(value: Int) = viewModelScope.launch {
-        val updated = getCurrentPreference().copy(randomPasswordLength = value)
-        updateAndRegenerate(updated)
+    internal fun onLengthChange(value: Int) {
+        viewModelScope.launch {
+            val updated = getCurrentPreference().copy(randomPasswordLength = value)
+            updateAndRegenerate(updated)
+        }
     }
 
     fun onHasSpecialCharactersChange(value: Boolean) = viewModelScope.launch {
@@ -148,7 +137,7 @@ class GeneratePasswordViewModel @Inject constructor(
 
     fun regenerate() = viewModelScope.launch {
         val current = getCurrentPreference()
-        passwordFlow.update { generatePassword(current) }
+//        passwordFlow.update { generatePassword(current) }
     }
 
     fun onConfirm() = viewModelScope.launch {
@@ -164,17 +153,12 @@ class GeneratePasswordViewModel @Inject constructor(
 
     private fun storeDraft() {
         encryptionContextProvider.withEncryptionContext {
-            draftRepository.save(DRAFT_PASSWORD_KEY, encrypt(state.value.password))
+            draftRepository.save(DRAFT_PASSWORD_KEY, encrypt(stateFlow.value.password))
         }
     }
 
-    private fun getInitialPassword(): String {
-        val pref = runBlocking { getCurrentPreference() }
-        return generatePassword(pref)
-    }
-
     private suspend fun copyToClipboard() {
-        clipboardManager.copyToClipboard(state.value.password, isSecure = true)
+        clipboardManager.copyToClipboard(stateFlow.value.password, isSecure = true)
         snackbarDispatcher(GeneratePasswordSnackbarMessage.CopiedToClipboard)
     }
 

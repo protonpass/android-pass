@@ -20,6 +20,7 @@ package proton.android.pass.features.password.bottomsheet
 
 import androidx.compose.runtime.Immutable
 import proton.android.pass.common.api.PasswordStrength
+import proton.android.pass.commonrust.api.passwords.PasswordConfig
 
 @Immutable
 enum class GeneratePasswordMode {
@@ -28,12 +29,24 @@ enum class GeneratePasswordMode {
 }
 
 @Immutable
-data class GeneratePasswordUiState(
-    val password: String,
-    val passwordStrength: PasswordStrength,
-    val mode: GeneratePasswordMode,
-    val content: GeneratePasswordContent
-)
+internal data class GeneratePasswordUiState(
+    internal val password: String,
+    internal val passwordStrength: PasswordStrength,
+    internal val mode: GeneratePasswordMode,
+    internal val passwordConfig: PasswordConfig?
+) {
+
+    internal companion object {
+
+        internal fun initial(mode: GeneratePasswordMode) = GeneratePasswordUiState(
+            password = "",
+            passwordStrength = PasswordStrength.None,
+            mode = mode,
+            passwordConfig = null
+        )
+
+    }
+}
 
 sealed interface GeneratePasswordContent {
     @Immutable

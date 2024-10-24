@@ -34,32 +34,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
+import proton.android.pass.commonrust.api.passwords.PasswordConfig
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.ShowAdvancedOptionsButton
 import proton.android.pass.composecomponents.impl.container.AnimatedVisibilityWithOnComplete
 import proton.android.pass.composecomponents.impl.container.rememberAnimatedVisibilityState
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.features.password.R
-import proton.android.pass.features.password.bottomsheet.GeneratePasswordContent
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordEvent
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordToggleRow
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordTypeRow
 import proton.android.pass.preferences.PasswordGenerationMode
 
 @Composable
-fun GeneratePasswordRandomContent(
+internal fun GeneratePasswordRandomContent(
     modifier: Modifier = Modifier,
-    content: GeneratePasswordContent.RandomPassword,
+    config: PasswordConfig.Random,
     onEvent: (GeneratePasswordEvent) -> Unit
-) {
+) = with(config) {
     var showAdvancedOptions by rememberSaveable { mutableStateOf(false) }
     val state = rememberAnimatedVisibilityState(initialState = true)
 
     Column(
         modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
         GeneratePasswordTypeRow(
             current = PasswordGenerationMode.Random,
@@ -67,21 +67,27 @@ fun GeneratePasswordRandomContent(
                 onEvent(GeneratePasswordEvent.OnPasswordModeChangeClick)
             }
         )
+
         PassDivider()
+
         GeneratePasswordRandomCountRow(
-            length = content.length,
+            length = length,
             onLengthChange = {
                 onEvent(GeneratePasswordEvent.OnRandomLengthChange(it))
             }
         )
+
         PassDivider()
+
         GeneratePasswordToggleRow(
             text = stringResource(R.string.special_characters),
-            value = content.hasSpecialCharacters,
+            value = includeSymbols,
+            isEnabled = canToggleSymbols,
             onChange = {
                 onEvent(GeneratePasswordEvent.OnRandomUseSpecialCharactersChange(it))
             }
         )
+
         PassDivider()
 
         AnimatedVisibilityWithOnComplete(
@@ -102,19 +108,23 @@ fun GeneratePasswordRandomContent(
         AnimatedVisibility(visible = showAdvancedOptions) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
             ) {
                 GeneratePasswordToggleRow(
                     text = stringResource(R.string.bottomsheet_option_capital_letters),
-                    value = content.hasCapitalLetters,
+                    value = includeUppercase,
+                    isEnabled = canToggleUppercase,
                     onChange = {
                         onEvent(GeneratePasswordEvent.OnRandomUseCapitalLettersChange(it))
                     }
                 )
+
                 PassDivider()
+
                 GeneratePasswordToggleRow(
                     text = stringResource(R.string.bottomsheet_option_include_numbers),
-                    value = content.includeNumbers,
+                    value = includeNumbers,
+                    isEnabled = canToggleNumbers,
                     onChange = {
                         onEvent(GeneratePasswordEvent.OnRandomIncludeNumbersChange(it))
                     }
@@ -124,17 +134,16 @@ fun GeneratePasswordRandomContent(
     }
 }
 
-@Preview
-@Composable
-fun GeneratePasswordRandomContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+@[Preview Composable]
+internal fun GeneratePasswordRandomContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             GeneratePasswordRandomContent(
-                content = GeneratePasswordContent.RandomPassword(
-                    length = 12,
-                    hasSpecialCharacters = true,
-                    hasCapitalLetters = false,
-                    includeNumbers = true
+                config = PasswordConfig.Random(
+                    passwordLength = 12,
+                    passwordIncludeSymbols = true,
+                    passwordIncludeUppercase = false,
+                    passwordIncludeNumbers = true
                 ),
                 onEvent = {}
             )

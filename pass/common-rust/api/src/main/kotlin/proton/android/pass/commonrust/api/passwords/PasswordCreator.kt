@@ -16,14 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.organization
+package proton.android.pass.commonrust.api.passwords
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
-import proton.android.pass.domain.OrganizationSettings
+interface PasswordCreator {
 
-interface ObserveOrganizationSettings {
-
-    operator fun invoke(): Flow<Option<OrganizationSettings>>
+    suspend fun createPassword(config: PasswordConfig): String
 
 }

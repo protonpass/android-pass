@@ -104,7 +104,7 @@ class ShareRepositoryImpl @Inject constructor(
         )
 
         val createVaultResponse = remoteShareDataSource.createVault(userAddress.userId, request)
-        val symmetricallyEncryptedKey = encryptionContextProvider.withEncryptionContext {
+        val symmetricallyEncryptedKey = encryptionContextProvider.withEncryptionContextSuspendable {
             encrypt(shareKey.value())
         }
         val responseAsEntity = shareResponseToEntity(
@@ -129,7 +129,7 @@ class ShareRepositoryImpl @Inject constructor(
             shareKeyRepository.saveShareKeys(listOf(shareKeyEntity))
         }
 
-        return encryptionContextProvider.withEncryptionContext {
+        return encryptionContextProvider.withEncryptionContextSuspendable {
             shareEntityToShare(responseAsEntity, this)
         }
     }
@@ -142,7 +142,7 @@ class ShareRepositoryImpl @Inject constructor(
     override fun observeAllShares(userId: SessionUserId): Flow<List<Share>> =
         localShareDataSource.observeAllActiveSharesForUser(userId)
             .map { shares ->
-                encryptionContextProvider.withEncryptionContext {
+                encryptionContextProvider.withEncryptionContextSuspendable {
                     shares.map { share -> shareEntityToShare(share, this) }
                 }
             }
@@ -196,7 +196,11 @@ class ShareRepositoryImpl @Inject constructor(
 
         val inactiveLocalShares = localShares.filter { !it.isActive }.map { ShareId(it.id) }
         val remoteSharesToSave = remoteShares.filter {
-            sharesNotInLocal.contains(ShareId(it.shareId)) || inactiveLocalShares.contains(ShareId(it.shareId))
+            sharesNotInLocal.contains(ShareId(it.shareId)) || inactiveLocalShares.contains(
+                ShareId(
+                    it.shareId
+                )
+            )
         }
 
         val storedShares = storeShares(userId, remoteSharesToSave)
@@ -257,21 +261,20 @@ class ShareRepositoryImpl @Inject constructor(
             share = storedShares.first()
         }
 
-        return encryptionContextProvider.withEncryptionContext {
+        return encryptionContextProvider.withEncryptionContextSuspendable {
             shareEntityToShare(share, this)
         }
     }
 
-    override fun observeById(userId: UserId, shareId: ShareId): Flow<Option<Share>> {
-        return localShareDataSource.observeById(userId, shareId)
+    override fun observeById(userId: UserId, shareId: ShareId): Flow<Option<Share>> =
+        localShareDataSource.observeById(userId, shareId)
             .map { entity ->
-                entity.toOption().map {
-                    encryptionContextProvider.withEncryptionContext {
+                encryptionContextProvider.withEncryptionContextSuspendable {
+                    entity.toOption().map {
                         shareEntityToShare(it, this)
                     }
                 }
             }
-    }
 
     override suspend fun updateVault(
         userId: UserId,
@@ -294,7 +297,7 @@ class ShareRepositoryImpl @Inject constructor(
             }
         )
 
-        val shareKeyAsEncryptionkey = encryptionContextProvider.withEncryptionContext {
+        val shareKeyAsEncryptionkey = encryptionContextProvider.withEncryptionContextSuspendable {
             EncryptionKey(decrypt(shareKey.key))
         }
         val responseAsEntity = shareResponseToEntity(
@@ -304,7 +307,7 @@ class ShareRepositoryImpl @Inject constructor(
         )
         localShareDataSource.upsertShares(listOf(responseAsEntity))
 
-        return encryptionContextProvider.withEncryptionContext {
+        return encryptionContextProvider.withEncryptionContextSuspendable {
             shareEntityToShare(responseAsEntity, this)
         }
     }
@@ -431,7 +434,7 @@ class ShareRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun getEncryptionKey(keyRotation: Long?, keys: List<ShareKey>): EncryptionKeyStatus {
+    private suspend fun getEncryptionKey(keyRotation: Long?, keys: List<ShareKey>): EncryptionKeyStatus {
         if (keyRotation == null) return EncryptionKeyStatus.NotFound
 
         val encryptionKey =
@@ -443,7 +446,7 @@ class ShareRepositoryImpl @Inject constructor(
         }
 
         val decrypted =
-            encryptionContextProvider.withEncryptionContext { decrypt(encryptionKey.key) }
+            encryptionContextProvider.withEncryptionContextSuspendable { decrypt(encryptionKey.key) }
         return EncryptionKeyStatus.Found(EncryptionKey(decrypted))
     }
 
@@ -527,7 +530,7 @@ class ShareRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun createVaultRequest(
+    private suspend fun createVaultRequest(
         user: User,
         vault: NewVault,
         userAddress: UserAddress
@@ -537,8 +540,8 @@ class ShareRepositoryImpl @Inject constructor(
         return request.toRequest() to shareKey
     }
 
-    private fun newVaultToBody(vault: NewVault): VaultV1.Vault {
-        val (name, description) = encryptionContextProvider.withEncryptionContext {
+    private suspend fun newVaultToBody(vault: NewVault): VaultV1.Vault {
+        val (name, description) = encryptionContextProvider.withEncryptionContextSuspendable {
             decrypt(vault.name) to decrypt(vault.description)
         }
 

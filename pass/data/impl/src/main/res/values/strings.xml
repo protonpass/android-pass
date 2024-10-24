@@ -22,4 +22,7 @@
     <string name="syncing_vaults">Syncing vaults and items</string>
 
     <string name="logging_out_free_users">Logging out extra free users</string>
+
+    <string name="vault_name" translatable="false">Personal</string>
+    <string name="vault_description" translatable="false">Personal vault</string>
 </resources>

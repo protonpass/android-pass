@@ -23,13 +23,19 @@ import androidx.work.WorkManager
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.impl.work.FetchItemsWorker
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -37,7 +43,9 @@ class RefreshContentImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val shareRepository: ShareRepository,
     private val workManager: WorkManager,
-    private val syncStatusRepository: ItemSyncStatusRepository
+    private val syncStatusRepository: ItemSyncStatusRepository,
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val createVault: CreateVault
 ) : RefreshContent {
 
     override suspend fun invoke(userId: UserId?) {
@@ -56,17 +64,53 @@ class RefreshContentImpl @Inject constructor(
                 throw error
             }
             .onSuccess { refreshSharesResult ->
-                val request = FetchItemsWorker.getRequestFor(
-                    source = FetchItemsWorker.FetchSource.ForceSync,
-                    userId = actualUserId,
-                    shareIds = refreshSharesResult.allShareIds.toList()
-                )
-                workManager.enqueueUniqueWork(
-                    FetchItemsWorker.getOneTimeUniqueWorkName(userId),
-                    ExistingWorkPolicy.REPLACE,
-                    request
+                PassLogger.i(TAG, "Shares for user: $actualUserId refreshed")
+                if (refreshSharesResult.allShareIds.isEmpty()) {
+                    handleSharesWhenEmpty(actualUserId)
+                } else {
+                    handleExistingShares(actualUserId, refreshSharesResult)
+                }
+            }
+    }
+
+    private suspend fun handleSharesWhenEmpty(userId: UserId) {
+        PassLogger.i(TAG, "Received an empty list of shares, creating default vault")
+
+        runCatching {
+            val vault = encryptionContextProvider.withEncryptionContextSuspendable {
+                NewVault(
+                    name = encrypt("Personal"),
+                    description = encrypt("Personal vault"),
+                    icon = ShareIcon.Icon1,
+                    color = ShareColor.Color1
                 )
             }
+            createVault(userId, vault)
+        }
+            .onFailure { error ->
+                PassLogger.w(TAG, "Error creating default vault")
+                PassLogger.w(TAG, error)
+                throw error
+            }
+            .onSuccess {
+                PassLogger.i(TAG, "Default vault created")
+                syncStatusRepository.setMode(SyncMode.Background)
+                syncStatusRepository.emit(ItemSyncStatus.SyncSuccess)
+            }
+    }
+
+    private fun handleExistingShares(userId: UserId, refreshSharesResult: RefreshSharesResult) {
+        PassLogger.i(TAG, "Received a list of shares, starting fetch items worker")
+        val request = FetchItemsWorker.getRequestFor(
+            source = FetchItemsWorker.FetchSource.ForceSync,
+            userId = userId,
+            shareIds = refreshSharesResult.allShareIds.toList()
+        )
+        workManager.enqueueUniqueWork(
+            FetchItemsWorker.getOneTimeUniqueWorkName(userId),
+            ExistingWorkPolicy.REPLACE,
+            request
+        )
     }
 
     private companion object {

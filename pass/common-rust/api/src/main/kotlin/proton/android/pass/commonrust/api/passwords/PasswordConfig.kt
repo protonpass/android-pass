@@ -66,11 +66,11 @@ sealed interface PasswordConfig {
 
         val wordsCount: Int = passwordWordsCount.coerceIn(range = PASSWORD_MIN_WORDS..PASSWORD_MAX_WORDS)
 
-        val minWords: Int = passwordMinWords
+        val minWordsCount: Int = passwordMinWords
             ?.coerceIn(range = PASSWORD_MIN_WORDS..PASSWORD_MAX_WORDS)
             ?: PASSWORD_MIN_WORDS
 
-        val maxWords: Int = passwordMaxWords
+        val maxWordsCount: Int = passwordMaxWords
             ?.coerceIn(range = PASSWORD_MIN_WORDS..PASSWORD_MAX_WORDS)
             ?: PASSWORD_MAX_WORDS
 
@@ -89,7 +89,7 @@ sealed interface PasswordConfig {
 
         private const val PASSWORD_MIN_WORDS = 1
 
-        private const val PASSWORD_MAX_WORDS = 9
+        private const val PASSWORD_MAX_WORDS = 10
 
     }
 

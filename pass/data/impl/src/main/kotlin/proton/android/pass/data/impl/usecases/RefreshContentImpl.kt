@@ -18,8 +18,10 @@
 
 package proton.android.pass.data.impl.usecases
 
+import android.content.Context
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
@@ -32,6 +34,7 @@ import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.RefreshContent
+import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
@@ -40,6 +43,7 @@ import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class RefreshContentImpl @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val accountManager: AccountManager,
     private val shareRepository: ShareRepository,
     private val workManager: WorkManager,
@@ -79,8 +83,8 @@ class RefreshContentImpl @Inject constructor(
         runCatching {
             val vault = encryptionContextProvider.withEncryptionContextSuspendable {
                 NewVault(
-                    name = encrypt("Personal"),
-                    description = encrypt("Personal vault"),
+                    name = encrypt(context.getString(R.string.vault_name)),
+                    description = encrypt(context.getString(R.string.vault_description)),
                     icon = ShareIcon.Icon1,
                     color = ShareColor.Color1
                 )

@@ -36,10 +36,11 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 
 @Composable
-fun GeneratePasswordToggleRow(
+internal fun GeneratePasswordToggleRow(
     modifier: Modifier = Modifier,
     text: String,
     value: Boolean,
+    isEnabled: Boolean,
     onChange: (Boolean) -> Unit
 ) {
     Row(
@@ -52,8 +53,10 @@ fun GeneratePasswordToggleRow(
             color = PassTheme.colors.textNorm,
             style = ProtonTheme.typography.defaultSmallNorm
         )
+
         Switch(
             checked = value,
+            enabled = isEnabled,
             colors = SwitchDefaults.colors(
                 checkedThumbColor = PassTheme.colors.loginInteractionNormMajor1
             ),
@@ -62,16 +65,18 @@ fun GeneratePasswordToggleRow(
     }
 }
 
-@Preview
-@Composable
-fun GeneratePasswordToggleRowPreview(
+@[Preview Composable]
+internal fun GeneratePasswordToggleRowPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    PassTheme(isDark = input.first) {
+    val (isDark, isChecked) = input
+
+    PassTheme(isDark = isDark) {
         Surface {
             GeneratePasswordToggleRow(
                 text = "Some preference",
-                value = input.second,
+                value = isChecked,
+                isEnabled = true,
                 onChange = {}
             )
         }

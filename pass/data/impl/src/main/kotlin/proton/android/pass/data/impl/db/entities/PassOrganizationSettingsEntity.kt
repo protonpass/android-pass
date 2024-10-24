@@ -40,14 +40,54 @@ import me.proton.core.user.data.entity.UserEntity
 data class PassOrganizationSettingsEntity(
     @ColumnInfo(name = Columns.USER_ID)
     val userId: String,
+
     @ColumnInfo(name = Columns.CAN_UPDATE)
     val canUpdate: Boolean,
+
     @ColumnInfo(name = Columns.SHARE_MODE)
     val shareMode: Int,
+
     @ColumnInfo(name = Columns.HAS_ORGANIZATION)
     val hasOrganization: Boolean,
+
     @ColumnInfo(name = Columns.FORCE_LOCK_SECONDS, defaultValue = "0")
-    val forceLockSeconds: Int
+    val forceLockSeconds: Int,
+
+    @ColumnInfo(name = Columns.RANDOM_PASSWORD_ALLOWED)
+    val randomPasswordAllowed: Boolean?,
+
+    @ColumnInfo(name = Columns.RANDOM_PASSWORD_MIN_LENGTH)
+    val randomPasswordMinLength: Int?,
+
+    @ColumnInfo(name = Columns.RANDOM_PASSWORD_MAX_LENGTH)
+    val randomPasswordMaxLength: Int?,
+
+    @ColumnInfo(name = Columns.RANDOM_PASSWORD_INCLUDE_NUMBERS)
+    val randomPasswordIncludeNumbers: Boolean?,
+
+    @ColumnInfo(name = Columns.RANDOM_PASSWORD_INCLUDE_SYMBOLS)
+    val randomPasswordIncludeSymbols: Boolean?,
+
+    @ColumnInfo(name = Columns.RANDOM_PASSWORD_INCLUDE_UPPERCASE)
+    val randomPasswordIncludeUppercase: Boolean?,
+
+    @ColumnInfo(name = Columns.MEMORABLE_PASSWORD_ALLOWED)
+    val memorablePasswordAllowed: Boolean?,
+
+    @ColumnInfo(name = Columns.MEMORABLE_PASSWORD_MIN_WORDS)
+    val memorablePasswordMinWords: Int?,
+
+    @ColumnInfo(name = Columns.MEMORABLE_PASSWORD_MAX_WORDS)
+    val memorablePasswordMaxWords: Int?,
+
+    @ColumnInfo(name = Columns.MEMORABLE_PASSWORD_INCLUDE_NUMBERS)
+    val memorablePasswordCapitalize: Boolean?,
+
+    @ColumnInfo(name = Columns.MEMORABLE_PASSWORD_INCLUDE_SEPARATORS)
+    val memorablePasswordIncludeNumbers: Boolean?,
+
+    @ColumnInfo(name = Columns.MEMORABLE_PASSWORD_CAPITALIZED)
+    val memorablePasswordIncludeSeparator: Boolean?
 ) {
     object Columns {
         const val USER_ID = "user_id"
@@ -55,6 +95,18 @@ data class PassOrganizationSettingsEntity(
         const val SHARE_MODE = "share_mode"
         const val FORCE_LOCK_SECONDS = "force_lock_seconds"
         const val HAS_ORGANIZATION = "has_organization"
+        const val RANDOM_PASSWORD_ALLOWED = "random_password_allowed"
+        const val RANDOM_PASSWORD_MIN_LENGTH = "random_password_min_length"
+        const val RANDOM_PASSWORD_MAX_LENGTH = "random_password_max_length"
+        const val RANDOM_PASSWORD_INCLUDE_NUMBERS = "random_password_include_numbers"
+        const val RANDOM_PASSWORD_INCLUDE_SYMBOLS = "random_password_include_symbols"
+        const val RANDOM_PASSWORD_INCLUDE_UPPERCASE = "random_password_include_uppercase"
+        const val MEMORABLE_PASSWORD_ALLOWED = "memorable_password_allowed"
+        const val MEMORABLE_PASSWORD_MIN_WORDS = "memorable_password_min_words"
+        const val MEMORABLE_PASSWORD_MAX_WORDS = "memorable_password_max_words"
+        const val MEMORABLE_PASSWORD_INCLUDE_NUMBERS = "memorable_password_include_numbers"
+        const val MEMORABLE_PASSWORD_INCLUDE_SEPARATORS = "memorable_password_include_separators"
+        const val MEMORABLE_PASSWORD_CAPITALIZED = "memorable_password_capitalized"
     }
 
     companion object {
@@ -65,7 +117,19 @@ data class PassOrganizationSettingsEntity(
             canUpdate = false,
             shareMode = 0,
             hasOrganization = false,
-            forceLockSeconds = 0
+            forceLockSeconds = 0,
+            randomPasswordAllowed = null,
+            randomPasswordMinLength = null,
+            randomPasswordMaxLength = null,
+            randomPasswordIncludeNumbers = null,
+            randomPasswordIncludeSymbols = null,
+            randomPasswordIncludeUppercase = null,
+            memorablePasswordAllowed = null,
+            memorablePasswordMinWords = null,
+            memorablePasswordMaxWords = null,
+            memorablePasswordCapitalize = null,
+            memorablePasswordIncludeNumbers = null,
+            memorablePasswordIncludeSeparator = null
         )
     }
 }

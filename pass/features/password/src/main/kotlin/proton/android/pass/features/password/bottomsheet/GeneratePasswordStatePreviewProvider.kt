@@ -20,42 +20,44 @@ package proton.android.pass.features.password.bottomsheet
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.common.api.PasswordStrength
+import proton.android.pass.commonrust.api.passwords.PasswordConfig
 
-class GeneratePasswordStatePreviewProvider : PreviewParameterProvider<GeneratePasswordUiState> {
-    override val values: Sequence<GeneratePasswordUiState>
-        get() = sequenceOf(
-            GeneratePasswordUiState(
-                password = "a1b!c_d3e#fg",
-                passwordStrength = PasswordStrength.Strong,
-                content = GeneratePasswordContent.RandomPassword(
-                    length = 12,
-                    hasSpecialCharacters = true,
-                    hasCapitalLetters = false,
-                    includeNumbers = true
-                ),
-                mode = GeneratePasswordMode.CopyAndClose
+internal class GeneratePasswordStatePreviewProvider :
+    PreviewParameterProvider<GeneratePasswordUiState> {
+
+    override val values: Sequence<GeneratePasswordUiState> = sequenceOf(
+        GeneratePasswordUiState(
+            password = "a1b!c_d3e#fg",
+            passwordStrength = PasswordStrength.Strong,
+            passwordConfig = PasswordConfig.Random(
+                passwordLength = 12,
+                passwordIncludeSymbols = true,
+                passwordIncludeUppercase = false,
+                passwordIncludeNumbers = true
             ),
-            GeneratePasswordUiState(
-                password = "a1!2",
-                passwordStrength = PasswordStrength.Strong,
-                content = GeneratePasswordContent.RandomPassword(
-                    length = 4,
-                    hasSpecialCharacters = false,
-                    hasCapitalLetters = false,
-                    includeNumbers = true
-                ),
-                mode = GeneratePasswordMode.CopyAndClose
+            mode = GeneratePasswordMode.CopyAndClose
+        ),
+        GeneratePasswordUiState(
+            password = "a1!2",
+            passwordStrength = PasswordStrength.Strong,
+            passwordConfig = PasswordConfig.Random(
+                passwordLength = 4,
+                passwordIncludeSymbols = false,
+                passwordIncludeUppercase = false,
+                passwordIncludeNumbers = true
             ),
-            GeneratePasswordUiState(
-                password = buildString { repeat(64) { append("a") } },
-                passwordStrength = PasswordStrength.Strong,
-                content = GeneratePasswordContent.RandomPassword(
-                    length = 64,
-                    hasSpecialCharacters = false,
-                    hasCapitalLetters = true,
-                    includeNumbers = false
-                ),
-                mode = GeneratePasswordMode.CancelConfirm
-            )
+            mode = GeneratePasswordMode.CopyAndClose
+        ),
+        GeneratePasswordUiState(
+            password = buildString { repeat(64) { append("a") } },
+            passwordStrength = PasswordStrength.Strong,
+            passwordConfig = PasswordConfig.Random(
+                passwordLength = 64,
+                passwordIncludeSymbols = false,
+                passwordIncludeUppercase = true,
+                passwordIncludeNumbers = false
+            ),
+            mode = GeneratePasswordMode.CancelConfirm
         )
+    )
 }

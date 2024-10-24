@@ -16,14 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.organization
+package proton.android.pass.data.api.usecases.passwords
 
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
-import proton.android.pass.domain.OrganizationSettings
+import proton.android.pass.commonrust.api.passwords.PasswordConfig
 
-interface ObserveOrganizationSettings {
+interface ObservePasswordConfig {
 
-    operator fun invoke(): Flow<Option<OrganizationSettings>>
+    operator fun invoke(): Flow<PasswordConfig>
 
 }

@@ -18,8 +18,10 @@
 
 package proton.android.pass.data.impl.usecases
 
+import android.content.Context
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -41,6 +43,7 @@ import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.repositories.UpdateShareEvent
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CreateVault
+import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toPendingEvent
@@ -57,6 +60,7 @@ import javax.inject.Inject
 private const val TRANSACTION_NAME_APPLY_PENDING_EVENTS = "ApplyPendingEvents"
 
 class ApplyPendingEventsImpl @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val database: PassDatabase,
     private val eventRepository: EventRepository,
     private val addressRepository: UserAddressRepository,
@@ -163,8 +167,8 @@ class ApplyPendingEventsImpl @Inject constructor(
     private suspend fun createDefaultVault(userId: UserId) {
         val vault = encryptionContextProvider.withEncryptionContextSuspendable {
             NewVault(
-                name = encrypt("Personal"),
-                description = encrypt("Personal vault"),
+                name = encrypt(context.getString(R.string.vault_name)),
+                description = encrypt(context.getString(R.string.vault_description)),
                 icon = ShareIcon.Icon1,
                 color = ShareColor.Color1
             )

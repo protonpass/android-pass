@@ -47,22 +47,3 @@ internal data class GeneratePasswordUiState(
 
     }
 }
-
-sealed interface GeneratePasswordContent {
-    @Immutable
-    data class RandomPassword(
-        val length: Int,
-        val hasSpecialCharacters: Boolean,
-        val hasCapitalLetters: Boolean,
-        val includeNumbers: Boolean
-    ) : GeneratePasswordContent
-
-    @Immutable
-    data class WordsPassword(
-        val count: Int,
-        val wordSeparator: proton.android.pass.commonrust.api.WordSeparator,
-        val capitalise: Boolean,
-        val includeNumbers: Boolean
-    ) : GeneratePasswordContent
-
-}

@@ -20,32 +20,10 @@ package proton.android.pass.features.password.extensions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import proton.android.pass.commonrust.api.PassphraseConfig
-import proton.android.pass.commonrust.api.PasswordGeneratorConfig
 import proton.android.pass.features.password.R
-import proton.android.pass.features.password.bottomsheet.GeneratePasswordContent
 import proton.android.pass.preferences.PasswordGenerationMode
-import proton.android.pass.preferences.PasswordGenerationPreference
 import proton.android.pass.preferences.WordSeparator
 import proton.android.pass.commonrust.api.WordSeparator as ApiWordSeparator
-
-fun PasswordGenerationPreference.toWordSpec(): PassphraseConfig {
-    return PassphraseConfig(
-        count = wordsCount.toUInt(),
-        separator = wordsSeparator.toDomain(),
-        capitalise = wordsCapitalise,
-        numbers = wordsIncludeNumbers
-    )
-}
-
-fun PasswordGenerationPreference.toRandomSpec(): PasswordGeneratorConfig {
-    return PasswordGeneratorConfig(
-        length = randomPasswordLength.toUInt(),
-        uppercaseLetters = randomHasCapitalLetters,
-        numbers = randomIncludeNumbers,
-        symbols = randomHasSpecialCharacters
-    )
-}
 
 fun WordSeparator.toDomain(): ApiWordSeparator = when (this) {
     WordSeparator.Hyphen -> ApiWordSeparator.Hyphen
@@ -65,22 +43,6 @@ fun ApiWordSeparator.toPassword(): WordSeparator = when (this) {
     ApiWordSeparator.Underscore -> WordSeparator.Underscore
     ApiWordSeparator.Numbers -> WordSeparator.Numbers
     ApiWordSeparator.NumbersAndSymbols -> WordSeparator.NumbersAndSymbols
-}
-
-fun PasswordGenerationPreference.toContent(): GeneratePasswordContent = when (mode) {
-    PasswordGenerationMode.Words -> GeneratePasswordContent.WordsPassword(
-        count = wordsCount,
-        wordSeparator = wordsSeparator.toDomain(),
-        capitalise = wordsCapitalise,
-        includeNumbers = wordsIncludeNumbers
-    )
-
-    PasswordGenerationMode.Random -> GeneratePasswordContent.RandomPassword(
-        length = randomPasswordLength,
-        hasSpecialCharacters = randomHasSpecialCharacters,
-        hasCapitalLetters = randomHasCapitalLetters,
-        includeNumbers = randomIncludeNumbers
-    )
 }
 
 @Composable

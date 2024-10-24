@@ -110,18 +110,19 @@ internal fun SyncDialogVaultRow(
             contentAlignment = Alignment.Center
         ) {
             when {
-                itemCurrent != null && itemCurrent == itemTotal -> {
-                    Icon(
-                        painter = painterResource(id = CoreR.drawable.ic_proton_checkmark),
-                        tint = PassTheme.colors.interactionNormMajor1,
-                        contentDescription = null
-                    )
-                }
 
                 hasSyncFailed -> {
                     Icon(
                         painter = painterResource(id = CoreR.drawable.ic_proton_cross_big),
                         tint = PassTheme.colors.signalDanger,
+                        contentDescription = null
+                    )
+                }
+
+                hasSyncFinished || itemCurrent != null && itemCurrent == itemTotal -> {
+                    Icon(
+                        painter = painterResource(id = CoreR.drawable.ic_proton_checkmark),
+                        tint = PassTheme.colors.interactionNormMajor1,
                         contentDescription = null
                     )
                 }

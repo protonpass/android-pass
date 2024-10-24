@@ -42,7 +42,7 @@ import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.features.password.R
 
 @Composable
-fun GeneratePasswordBottomSheetContent(
+internal fun GeneratePasswordBottomSheetContent(
     modifier: Modifier = Modifier,
     state: GeneratePasswordUiState,
     onEvent: (GeneratePasswordEvent) -> Unit,
@@ -65,12 +65,11 @@ fun GeneratePasswordBottomSheetContent(
     }
 }
 
-class ThemeAndCreatePasswordUiStateProvider :
+internal class ThemeAndCreatePasswordUiStateProvider :
     ThemePairPreviewProvider<GeneratePasswordUiState>(GeneratePasswordStatePreviewProvider())
 
-@Preview
-@Composable
-fun GenPasswordBottomSheetContentPreview(
+@[Preview Composable]
+internal fun GenPasswordBottomSheetContentPreview(
     @PreviewParameter(ThemeAndCreatePasswordUiStateProvider::class)
     input: Pair<Boolean, GeneratePasswordUiState>
 ) {
@@ -98,4 +97,3 @@ fun GenPasswordBottomSheetContentPreview(
         }
     }
 }
-

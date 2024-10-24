@@ -16,14 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.organization
+package proton.android.pass.domain.organizations
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
-import proton.android.pass.domain.OrganizationSettings
-
-interface ObserveOrganizationSettings {
-
-    operator fun invoke(): Flow<Option<OrganizationSettings>>
-
-}
+data class OrganizationPasswordPolicy(
+    val randomPasswordAllowed: Boolean?,
+    val randomPasswordMinLength: Int?,
+    val randomPasswordMaxLength: Int?,
+    val randomPasswordIncludeNumbers: Boolean?,
+    val randomPasswordIncludeSymbols: Boolean?,
+    val randomPasswordIncludeUppercase: Boolean?,
+    val memorablePasswordAllowed: Boolean?,
+    val memorablePasswordMinWords: Int?,
+    val memorablePasswordMaxWords: Int?,
+    val memorablePasswordCapitalize: Boolean?,
+    val memorablePasswordIncludeNumbers: Boolean?,
+    val memorablePasswordIncludeSeparator: Boolean?
+)

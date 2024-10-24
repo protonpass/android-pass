@@ -29,12 +29,14 @@ import proton.android.pass.data.impl.responses.OrganizationGetOrganization
 import proton.android.pass.domain.ForceLockSeconds
 import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.OrganizationShareMode
+import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
 import javax.inject.Inject
 
 class OrganizationSettingsRepositoryImpl @Inject constructor(
     private val local: LocalOrganizationSettingsDataSource,
     private val remote: RemoteOrganizationSettingsDataSource
 ) : OrganizationSettingsRepository {
+
     override fun observe(userId: UserId): Flow<OrganizationSettings?> = local.observe(userId).map { it?.toDomain() }
 
     override suspend fun refresh(userId: UserId) {
@@ -50,7 +52,19 @@ class OrganizationSettingsRepositoryImpl @Inject constructor(
             hasOrganization = true,
             canUpdate = canUpdate,
             shareMode = settings?.shareMode ?: OrganizationShareMode.Unrestricted.value,
-            forceLockSeconds = settings?.forceLockSeconds ?: 0
+            forceLockSeconds = settings?.forceLockSeconds ?: 0,
+            randomPasswordAllowed = settings?.passwordPolicy?.randomPasswordAllowed,
+            randomPasswordMinLength = settings?.passwordPolicy?.randomPasswordMinLength,
+            randomPasswordMaxLength = settings?.passwordPolicy?.randomPasswordMaxLength,
+            randomPasswordIncludeNumbers = settings?.passwordPolicy?.randomPasswordMustIncludeNumbers,
+            randomPasswordIncludeSymbols = settings?.passwordPolicy?.randomPasswordMustIncludeSymbols,
+            randomPasswordIncludeUppercase = settings?.passwordPolicy?.randomPasswordMustIncludeUppercase,
+            memorablePasswordAllowed = settings?.passwordPolicy?.memorablePasswordAllowed,
+            memorablePasswordMinWords = settings?.passwordPolicy?.memorablePasswordMinWords,
+            memorablePasswordMaxWords = settings?.passwordPolicy?.memorablePasswordMaxWords,
+            memorablePasswordCapitalize = settings?.passwordPolicy?.memorablePasswordMustCapitalize,
+            memorablePasswordIncludeNumbers = settings?.passwordPolicy?.memorablePasswordMustIncludeNumbers,
+            memorablePasswordIncludeSeparator = settings?.passwordPolicy?.memorablePasswordMustIncludeSeparator
         )
     }
 
@@ -58,7 +72,21 @@ class OrganizationSettingsRepositoryImpl @Inject constructor(
         OrganizationSettings.Organization(
             canUpdate = canUpdate,
             shareMode = OrganizationShareMode.fromValue(shareMode),
-            forceLockSeconds = ForceLockSeconds.fromValue(forceLockSeconds)
+            forceLockSeconds = ForceLockSeconds.fromValue(forceLockSeconds),
+            passwordPolicy = OrganizationPasswordPolicy(
+                randomPasswordAllowed = randomPasswordAllowed,
+                randomPasswordMinLength = randomPasswordMinLength,
+                randomPasswordMaxLength = randomPasswordMaxLength,
+                randomPasswordIncludeNumbers = randomPasswordIncludeNumbers,
+                randomPasswordIncludeSymbols = randomPasswordIncludeSymbols,
+                randomPasswordIncludeUppercase = randomPasswordIncludeUppercase,
+                memorablePasswordAllowed = memorablePasswordAllowed,
+                memorablePasswordMinWords = memorablePasswordMinWords,
+                memorablePasswordMaxWords = memorablePasswordMaxWords,
+                memorablePasswordCapitalize = memorablePasswordCapitalize,
+                memorablePasswordIncludeNumbers = memorablePasswordIncludeNumbers,
+                memorablePasswordIncludeSeparator = memorablePasswordIncludeSeparator
+            )
         )
     } else {
         OrganizationSettings.NotAnOrganization

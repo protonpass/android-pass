@@ -63,8 +63,8 @@ class InviteRepositoryImpl @Inject constructor(
     override fun observeInvites(userId: UserId): Flow<List<PendingInvite>> = localDatasource
         .observeAllInvites(userId)
         .map { entities ->
-            encryptionContextProvider.withEncryptionContext {
-                entities.map { it.toDomain(this@withEncryptionContext) }
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                entities.map { it.toDomain(this) }
             }
         }
 

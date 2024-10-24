@@ -75,14 +75,20 @@ class ApplyPendingEventsImpl @Inject constructor(
             return
         }
 
-        shareRepository.refreshShares(userId).let { refreshSharesResult ->
-            PassLogger.i(TAG, "Shares for user: $userId refreshed")
-            if (refreshSharesResult.allShareIds.isEmpty()) {
-                handleSharesWhenEmpty(userId)
-            } else {
-                handleExistingShares(userId, refreshSharesResult)
+        runCatching { shareRepository.refreshShares(userId) }
+            .onFailure { error ->
+                PassLogger.w(TAG, "Error refreshing shares")
+                PassLogger.w(TAG, error)
+                throw error
             }
-        }
+            .onSuccess { refreshSharesResult ->
+                PassLogger.i(TAG, "Shares for user: $userId refreshed")
+                if (refreshSharesResult.allShareIds.isEmpty()) {
+                    handleSharesWhenEmpty(userId)
+                } else {
+                    handleExistingShares(userId, refreshSharesResult)
+                }
+            }
     }
 
     private suspend fun handleSharesWhenEmpty(userId: UserId) {
@@ -155,14 +161,15 @@ class ApplyPendingEventsImpl @Inject constructor(
     }
 
     private suspend fun createDefaultVault(userId: UserId) {
-        encryptionContextProvider.withEncryptionContext {
+        val vault = encryptionContextProvider.withEncryptionContextSuspendable {
             NewVault(
                 name = encrypt("Personal"),
                 description = encrypt("Personal vault"),
                 icon = ShareIcon.Icon1,
                 color = ShareColor.Color1
             )
-        }.also { vault -> createVault(userId, vault) }
+        }
+        createVault(userId, vault)
     }
 
     private suspend fun fetchItemPendingEvent(

@@ -40,7 +40,7 @@ import proton.android.pass.features.password.GeneratePasswordNavigation
 @Composable
 fun GeneratePasswordBottomSheet(modifier: Modifier = Modifier, onNavigate: (GeneratePasswordNavigation) -> Unit) {
     val viewModel = hiltViewModel<GeneratePasswordViewModel>()
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
     GeneratePasswordBottomSheetContent(
         modifier = modifier,

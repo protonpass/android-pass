@@ -1,0 +1,106 @@
+/*
+ * Copyright (c) 2024 Proton AG
+ * This file is part of Proton AG and Proton Pass.
+ *
+ * Proton Pass is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Proton Pass is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package proton.android.pass.data.impl.usecases.passwords
+
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
+import proton.android.pass.commonrust.api.passwords.PasswordConfig
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationPasswordPolicy
+import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
+import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
+import proton.android.pass.preferences.PasswordGenerationMode
+import proton.android.pass.preferences.PasswordGenerationPreference
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.WordSeparator
+import javax.inject.Inject
+
+class ObservePasswordConfigImpl @Inject constructor(
+    private val observeOrganizationPasswordPolicy: ObserveOrganizationPasswordPolicy,
+    private val userPreferencesRepository: UserPreferencesRepository
+) : ObservePasswordConfig {
+
+    override fun invoke(): Flow<PasswordConfig> = combine(
+        observeOrganizationPasswordPolicy(),
+        userPreferencesRepository.getPasswordGenerationPreference()
+    ) { organizationPasswordPolicyOption, passwordGenerationPreference ->
+        when (organizationPasswordPolicyOption) {
+            None -> passwordGenerationPreference.asPasswordConfig()
+            is Some ->
+                organizationPasswordPolicyOption
+                    .value
+                    .asPasswordConfig(passwordGenerationPreference)
+        }
+    }
+
+    private fun PasswordGenerationPreference.asPasswordConfig() = when (mode) {
+        PasswordGenerationMode.Random -> PasswordConfig.Random(
+            passwordLength = randomPasswordLength,
+            passwordIncludeUppercase = randomHasCapitalLetters,
+            passwordIncludeNumbers = randomIncludeNumbers,
+            passwordIncludeSymbols = randomHasSpecialCharacters
+        )
+
+        PasswordGenerationMode.Words -> PasswordConfig.Memorable(
+            passwordWordsCount = wordsCount,
+            passwordWordsSeparator = wordsSeparator.toDomain(),
+            passwordCapitalizeWords = wordsCapitalise,
+            passwordIncludeNumbers = wordsIncludeNumbers
+        )
+    }
+
+    private fun WordSeparator.toDomain(): proton.android.pass.commonrust.api.WordSeparator = when (this) {
+        WordSeparator.Hyphen -> proton.android.pass.commonrust.api.WordSeparator.Hyphen
+        WordSeparator.Space -> proton.android.pass.commonrust.api.WordSeparator.Space
+        WordSeparator.Period -> proton.android.pass.commonrust.api.WordSeparator.Period
+        WordSeparator.Comma -> proton.android.pass.commonrust.api.WordSeparator.Comma
+        WordSeparator.Underscore -> proton.android.pass.commonrust.api.WordSeparator.Underscore
+        WordSeparator.Numbers -> proton.android.pass.commonrust.api.WordSeparator.Numbers
+        WordSeparator.NumbersAndSymbols -> proton.android.pass.commonrust.api.WordSeparator.NumbersAndSymbols
+    }
+
+    private fun OrganizationPasswordPolicy.asPasswordConfig(preference: PasswordGenerationPreference) =
+        when (preference.mode) {
+            PasswordGenerationMode.Random -> PasswordConfig.Random(
+                passwordLength = preference.randomPasswordLength,
+                passwordMinLength = randomPasswordMinLength,
+                passwordMaxLength = randomPasswordMaxLength,
+                passwordIncludeNumbers = randomPasswordIncludeNumbers,
+                passwordIncludeSymbols = randomPasswordIncludeSymbols,
+                passwordIncludeUppercase = randomPasswordIncludeUppercase,
+                canToggleNumbers = randomPasswordIncludeNumbers == null,
+                canToggleSymbols = randomPasswordIncludeSymbols == null,
+                canToggleUppercase = randomPasswordIncludeUppercase == null
+            )
+
+            PasswordGenerationMode.Words -> PasswordConfig.Memorable(
+                passwordWordsCount = preference.wordsCount,
+                passwordWordsSeparator = preference.wordsSeparator.toDomain(),
+                passwordMinWords = memorablePasswordMinWords,
+                passwordMaxWords = memorablePasswordMaxWords,
+                passwordCapitalizeWords = memorablePasswordCapitalize,
+                passwordIncludeNumbers = memorablePasswordIncludeNumbers,
+                passwordIncludeSeparator = memorablePasswordIncludeSeparator,
+                canToggleCapitalise = memorablePasswordCapitalize == null,
+                canToggleNumbers = memorablePasswordIncludeNumbers == null
+            )
+        }
+
+}

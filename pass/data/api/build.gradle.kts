@@ -14,6 +14,7 @@ dependencies {
     implementation(libs.core.userSettings.domain)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.commonRust.api)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.telemetry.api)

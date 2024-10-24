@@ -159,12 +159,14 @@ import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationPasswordPolicy
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.api.usecases.passkeys.StorePasskey
+import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
 import proton.android.pass.data.api.usecases.report.SendReport
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
@@ -342,12 +344,14 @@ import proton.android.pass.data.impl.usecases.items.OpenItemRevisionImpl
 import proton.android.pass.data.impl.usecases.items.RestoreItemRevisionImpl
 import proton.android.pass.data.impl.usecases.items.UpdateItemFlagImpl
 import proton.android.pass.data.impl.usecases.organization.ObserveAnyAccountHasEnforcedLockImpl
+import proton.android.pass.data.impl.usecases.organization.ObserveOrganizationPasswordPolicyImpl
 import proton.android.pass.data.impl.usecases.organization.ObserveOrganizationSettingsImpl
 import proton.android.pass.data.impl.usecases.organization.RefreshOrganizationSettingsImpl
 import proton.android.pass.data.impl.usecases.passkeys.GetPasskeyByIdImpl
 import proton.android.pass.data.impl.usecases.passkeys.GetPasskeysForDomainImpl
 import proton.android.pass.data.impl.usecases.passkeys.ObserveItemsWithPasskeysImpl
 import proton.android.pass.data.impl.usecases.passkeys.StorePasskeyImpl
+import proton.android.pass.data.impl.usecases.passwords.ObservePasswordConfigImpl
 import proton.android.pass.data.impl.usecases.report.SendReportImpl
 import proton.android.pass.data.impl.usecases.searchentry.AddSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteAllSearchEntryImpl
@@ -967,5 +971,13 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindUpdateAliasName(impl: UpdateAliasNameImpl): UpdateAliasName
+
+    @[Binds Singleton]
+    abstract fun bindObserveOrganizationPasswordPolicy(
+        impl: ObserveOrganizationPasswordPolicyImpl
+    ): ObserveOrganizationPasswordPolicy
+
+    @[Binds Singleton]
+    abstract fun bindObservePasswordConfig(impl: ObservePasswordConfigImpl): ObservePasswordConfig
 
 }

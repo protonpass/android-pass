@@ -20,10 +20,10 @@ package proton.android.pass.data.api.usecases.organization
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.Option
-import proton.android.pass.domain.OrganizationSettings
+import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
 
-interface ObserveOrganizationSettings {
+interface ObserveOrganizationPasswordPolicy {
 
-    operator fun invoke(): Flow<Option<OrganizationSettings>>
+    operator fun invoke(): Flow<Option<OrganizationPasswordPolicy>>
 
 }

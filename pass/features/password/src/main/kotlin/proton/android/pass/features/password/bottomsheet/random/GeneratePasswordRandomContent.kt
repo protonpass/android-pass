@@ -72,6 +72,8 @@ internal fun GeneratePasswordRandomContent(
 
         GeneratePasswordRandomCountRow(
             length = length,
+            minLength = minLength,
+            maxLength = maxLength,
             onLengthChange = {
                 onEvent(GeneratePasswordEvent.OnRandomLengthChange(it))
             }

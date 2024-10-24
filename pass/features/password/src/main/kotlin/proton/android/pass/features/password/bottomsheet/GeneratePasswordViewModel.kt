@@ -39,8 +39,6 @@ import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
 import proton.android.pass.features.password.GeneratePasswordBottomsheetMode
 import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.features.password.GeneratePasswordSnackbarMessage
-import proton.android.pass.features.password.extensions.toRandomSpec
-import proton.android.pass.features.password.extensions.toWordSpec
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.PasswordGenerationMode
 import proton.android.pass.preferences.PasswordGenerationPreference
@@ -58,8 +56,7 @@ class GeneratePasswordViewModel @Inject constructor(
     private val draftRepository: DraftRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val savedStateHandle: SavedStateHandle,
-    private val userPreferencesRepository: UserPreferencesRepository,
-    private val passwordGenerator: proton.android.pass.commonrust.api.PasswordGenerator
+    private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
     private val mode = getMode()
@@ -176,9 +173,4 @@ class GeneratePasswordViewModel @Inject constructor(
         }
     }
 
-    private fun generatePassword(preference: PasswordGenerationPreference) = when (preference.mode) {
-        PasswordGenerationMode.Random -> passwordGenerator.generatePassword(preference.toRandomSpec())
-
-        PasswordGenerationMode.Words -> passwordGenerator.generatePassphrase(preference.toWordSpec())
-    }
 }

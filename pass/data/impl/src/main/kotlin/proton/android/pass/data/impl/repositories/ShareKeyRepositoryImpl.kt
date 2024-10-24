@@ -35,9 +35,9 @@ import proton.android.pass.data.impl.db.entities.ShareKeyEntity
 import proton.android.pass.data.impl.exception.UserKeyNotActive
 import proton.android.pass.data.impl.local.LocalShareKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteShareKeyDataSource
-import proton.android.pass.log.api.PassLogger
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class ShareKeyRepositoryImpl @Inject constructor(
@@ -115,10 +115,10 @@ class ShareKeyRepositoryImpl @Inject constructor(
         val remoteKeys = remoteDataSource.getShareKeys(userId, shareId).first()
         val user = userRepository.getUser(userId)
 
-        return encryptionContextProvider.withEncryptionContext {
+        return encryptionContextProvider.withEncryptionContextSuspendable {
             remoteKeys.map { response ->
                 val keyData = reencryptKey(
-                    context = this@withEncryptionContext,
+                    context = this,
                     user = user,
                     input = ReencryptShareKeyInput(
                         key = response.key,
@@ -153,10 +153,10 @@ class ShareKeyRepositoryImpl @Inject constructor(
         // There are inactive keys, try to open and reencrypt them
         PassLogger.d(TAG, "Trying to reencrypt ${inactiveKeys.size} keys")
         val user = userRepository.getUser(userId)
-        val reencryptedKeyResults = encryptionContextProvider.withEncryptionContext {
+        val reencryptedKeyResults = encryptionContextProvider.withEncryptionContextSuspendable {
             inactiveKeys.map {
                 val output = reencryptKey(
-                    context = this@withEncryptionContext,
+                    context = this,
                     user = user,
                     input = ReencryptShareKeyInput(
                         key = it.key,

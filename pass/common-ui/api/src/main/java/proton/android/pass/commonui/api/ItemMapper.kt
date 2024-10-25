@@ -169,6 +169,7 @@ private fun Item.createIdentity(encryptionContext: EncryptionContext, type: Item
 )
 
 private fun concealedOrEmpty(value: String, encryptionContext: EncryptionContext): HiddenState {
+    if (value.isEmpty()) return HiddenState.Empty(value)
     val asByteArray = encryptionContext.decrypt(value.toEncryptedByteArray())
     return if (asByteArray.isEmpty()) {
         HiddenState.Empty(value)

@@ -30,13 +30,15 @@ import proton.android.pass.domain.HiddenState
 sealed interface UIHiddenState : Parcelable {
     val encrypted: EncryptedString
 
+    @JvmInline
     @Immutable
     @Parcelize
-    data class Empty(override val encrypted: EncryptedString) : UIHiddenState, Parcelable
+    value class Empty(override val encrypted: EncryptedString) : UIHiddenState, Parcelable
 
+    @JvmInline
     @Immutable
     @Parcelize
-    data class Concealed(override val encrypted: EncryptedString) : UIHiddenState, Parcelable
+    value class Concealed(override val encrypted: EncryptedString) : UIHiddenState, Parcelable
 
     @Immutable
     @Parcelize

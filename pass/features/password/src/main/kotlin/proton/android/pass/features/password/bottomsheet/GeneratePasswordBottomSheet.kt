@@ -29,7 +29,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.body3Inverted
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetCancelConfirm
@@ -64,7 +63,7 @@ fun GeneratePasswordBottomSheet(modifier: Modifier = Modifier, onNavigate: (Gene
                     viewModel.onHasSpecialCharactersChange(it.value)
                 }
                 GeneratePasswordEvent.OnRegeneratePasswordClick -> {
-                    viewModel.regenerate()
+                    viewModel.onRegeneratePassword()
                 }
                 is GeneratePasswordEvent.OnWordsCapitalizeChange -> {
                     viewModel.onWordsCapitalizeChange(it.value)

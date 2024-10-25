@@ -12,7 +12,7 @@
   <string name="profile_option_autofill">Preenchimento automático</string>
   <string name="profile_option_autofill_subtitle">Preencha automaticamente seus nomes de usuário e senhas.</string>
   <string name="profile_option_secure_links">Links seguros</string>
-  <string name="profile_option_alias_management">Alias management</string>
+  <string name="profile_option_alias_management">Gerenciamento de alias</string>
   <string name="profile_error_biometry_failed_to_start">Não foi possível iniciar a autenticação biométrica</string>
   <string name="profile_error_biometry_failed_to_authenticate">Erro na autenticação</string>
   <string name="profile_fingerprint_lock_enabled">Bloqueio por impressão digital ativado</string>

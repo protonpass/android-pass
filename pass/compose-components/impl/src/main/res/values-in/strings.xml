@@ -45,8 +45,8 @@
   <string name="action_edit">Sunting</string>
   <string name="action_add">Tambah</string>
   <string name="action_delete">Hapus</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
+  <string name="action_make_default">Jadikan bawaan</string>
+  <string name="action_verify">Verifikasi</string>
   <string name="action_close">Tutup</string>
   <string name="action_update">Perbarui</string>
   <!-- Empty list -->
@@ -200,19 +200,19 @@
   <string name="dialog_upgrade_plan_action_cancel">Tidak sekarang</string>
   <!-- Words -->
   <string name="email_address">Alamat email</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">Alamat email tidak valid</string>
   <string name="password">Kata sandi</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Tombol untuk menutup tooltip dan tidak menampilkannya kembali</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="other">%d years</item>
+    <item quantity="other">%d tahun</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="other">%d months</item>
+    <item quantity="other">%d bulan</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="other">%d weeks</item>
+    <item quantity="other">%d minggu</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="other">%d hari</item>
@@ -227,7 +227,7 @@
     <item quantity="other">%d detik</item>
   </plurals>
   <plurals name="aliases_count">
-    <item quantity="other">%d aliases</item>
+    <item quantity="other">%d alias</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Catatan disalin</string>
@@ -252,4 +252,9 @@
     <item quantity="other">Kami mendeteksi bahwa Anda memiliki %d alias yang saat ini ada di SimpleLogin namun belum terdaftar pada Proton Pass. Apakah Anda ingin mengimpor alias ini?</item>
   </plurals>
   <string name="simple_login_widget_action">Sinkronisasikan alias</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">Belum menerima kodenya?</string>
+  <string name="verification_code_suggestion_spam">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Apabila Anda tidak dapat menemukan email tersebut, Anda dapat %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">minta kode baru</string>
 </resources>

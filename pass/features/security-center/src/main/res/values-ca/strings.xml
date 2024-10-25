@@ -76,7 +76,6 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">S\'ha produït un error en carregar les adreces de correu electrònic personalitzades</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">No s\'han pogut obtenir les adreces de correu electrònic</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">Verifica</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Esborrar</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Última infracció el %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -86,7 +85,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">No s\'han detectat infraccions</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Adreces de Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Àlies hide-my-email</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">S\'ha produït un error en recuperar les adreces de Proton.</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">S\'ha produït un error en recuperar els àlies de Hide-my-email</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">No supervisat</string>
   <string name="security_center_dark_web_monitor_see_all">Veure-ho tot</string>
@@ -102,17 +101,13 @@
   <string name="security_center_custom_email_already_verified">Correu electrònic ja verificat</string>
   <string name="security_center_custom_email_error_adding">S\'ha produït un error en afegir l\'adreça de correu electrònic</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">Codi</string>
-  <string name="security_center_verify_email_code_error">Codi invàlid</string>
   <string name="security_center_verify_email_title">Confirmi el seu correu electrònic</string>
   <string name="security_center_verify_email_subtitle">Hem enviat un codi de verificació a %s. Introduïu-lo a continuació:</string>
-  <string name="security_center_verify_email_code_resend_header">No ha rebut el codi?</string>
-  <string name="security_center_verify_email_code_resend_body">Comproveu el correu brossa per obtenir un correu electrònic anomenat \"Confirmeu la vostra adreça de correu electrònic per a Proton Pass\".</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Si no trobeu aquest correu electrònic, pot </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">sol·licitar un codi nou.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">S\'ha enviat una nova verificació. Comproveu la vostra safata d\'entrada.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">S\'ha produït un error en enviar el codi de verificació. Torneu-ho a intentar més tard.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Massa verificacions no vàlides. Eliminació del correu electrònic personalitzat.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">El codi de verificació no és vàlid.</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">There was an error verifying the email. Please try again later.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Infraccions detectades per a</string>
   <string name="security_center_verify_report_title_none">No s\'han detectat infraccions per a</string>
@@ -154,7 +149,7 @@
   <string name="security_center_address_bottomsheet_snackbar_message_disable_error">S\'ha produït un error en reprendre la supervisió</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">No s\'ha pogut esborrar el correu electrònic personalitzat</string>
   <string name="security_center_address_bottomsheet_snackbar_message_enable_success">El seguiment s\'ha reprès amb èxit</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">La supervisió s\'ha posat en pausa correctament</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">La supervisió s\'ha pausat en pausa correctament</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">S\'ha esborrat el correu electrònic personalitzat</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Àlies hide-my-email</string>

@@ -202,22 +202,22 @@
   <string name="dialog_upgrade_plan_action_cancel">Ara no</string>
   <!-- Words -->
   <string name="email_address">Adreça de correu electrònic</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">L\'adreça de correu electrònic no és vàlida.</string>
   <string name="password">Contrasenya</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Botó per descartar aquesta informació i no tornar-la a mostrar</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="one">%d year</item>
-    <item quantity="other">%d years</item>
+    <item quantity="one">%d any</item>
+    <item quantity="other">%d anys</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d month</item>
-    <item quantity="other">%d months</item>
+    <item quantity="one">%d mes</item>
+    <item quantity="other">%d mesos</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="one">%d week</item>
-    <item quantity="other">%d weeks</item>
+    <item quantity="one">%d setmana</item>
+    <item quantity="other">%d setmanes</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d dia</item>
@@ -263,4 +263,9 @@
     <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
   </plurals>
   <string name="simple_login_widget_action">Sincronitza els àlies</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">No heu rebut el codi?</string>
+  <string name="verification_code_suggestion_spam">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Si no trobeu aquest correu electrònic, podeu %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">sol·licitar un codi nou</string>
 </resources>

@@ -55,5 +55,5 @@
     <item quantity="other">%d preostalih poskusov</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Too many failed pin attempts. All your users are being logged out.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Too many failed pin attempts.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
 </resources>

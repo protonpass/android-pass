@@ -55,5 +55,5 @@
     <item quantity="other">Pozostało %d prób</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Zbyt wiele nieudanych prób weryfikacji. Użytkownicy zostaną wylogowani.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Zbyt wiele nieudanych prób.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
 </resources>

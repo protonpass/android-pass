@@ -263,4 +263,9 @@
     <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
   </plurals>
   <string name="simple_login_widget_action">Synchroniseer aliassen</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">Haven\'t receive the code?</string>
+  <string name="verification_code_suggestion_spam">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">If you can\'t find such email, you can %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code</string>
 </resources>

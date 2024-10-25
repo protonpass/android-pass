@@ -49,5 +49,5 @@
     <item quantity="other">%d forsøg tilbage</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">For mange mislykkede pin-forsøg. Alle dine brugere bliver logget ud.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">For mange mislykkede pin-forsøg.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
 </resources>

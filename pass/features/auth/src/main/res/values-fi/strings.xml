@@ -49,5 +49,5 @@
     <item quantity="other">%d yritystä jäljellä</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Liian monta virheellistä PIN-syöttöä. Kaikki käyttäjäsi on kirjattu ulos.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Liian monta epäonnistunutta PIN-koodiyritystä.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
 </resources>

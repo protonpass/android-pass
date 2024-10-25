@@ -22,24 +22,47 @@
   <string name="snackbar_contact_create_success">연락처가 성공적으로 생성 되었습니다</string>
   <string name="snackbar_contact_create_error">연락처 생성 오류가 발생했습니다.</string>
   <string name="create_contact_title">연락처 추가</string>
-  <string name="detail_contact_title">Contacts</string>
+  <string name="detail_contact_title">연락처</string>
   <string name="email_input_error">유효하지 않은 이메일 주소입니다.</string>
-  <string name="detail_contact_sender_name">Sender name</string>
-  <string name="detail_contact_display_name" comment="sender email address">When sending an email from this alias, the email will have %s as sender.</string>
-  <string name="empty_alias_contacts_title">Alias contacts</string>
-  <string name="empty_alias_contacts_body">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
-  <string name="empty_alias_contacts_learn_more">Learn more</string>
-  <string name="unblock_button">Unblock contact</string>
-  <string name="block_button">Block contact</string>
-  <string name="contact_created_date" comment="date of creation">Created %1$s ago</string>
-  <string name="no_activity_contact">No Activity in the last 14 days.</string>
-  <string name="activity_summary" comment="amount of items of each category">%1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.</string>
-  <string name="blocked_addresses_subtitle">Blocked addresses</string>
-  <string name="forwarding_addresses_subtitle">Forwarding addresses</string>
-  <string name="snackbar_contact_block_success">Contact blocked</string>
-  <string name="snackbar_contact_block_error">Could not block contact</string>
-  <string name="snackbar_contact_unblock_success">Contact unblocked</string>
-  <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
-  <string name="snackbar_sender_name_success">Sender name updated</string>
-  <string name="snackbar_sender_name_error">Could not update sender name</string>
+  <string name="detail_contact_sender_name">발신자 이름</string>
+  <string name="detail_contact_display_name" comment="sender email address">이 별칭을 사용해 이메일을 보내게 되면, 이메일은 %s에서 발송됩니다.</string>
+  <string name="empty_alias_contacts_title">별칭 연락처</string>
+  <string name="empty_alias_contacts_body">나의 개인 이메일 주소를 숨길 수 있도록 별칭 연락처를 생성할 수 있습니다.</string>
+  <string name="empty_alias_contacts_learn_more">자세히 알아보기</string>
+  <string name="unblock_button">연락처 차단 해제</string>
+  <string name="block_button">연락처 차단</string>
+  <string name="contact_created_date" comment="date of creation">%1$s 전에 생성됨</string>
+  <string name="no_activity_contact">지난 14일간의 활동이 없습니다.</string>
+  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">지난 14일 간</string>
+  <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="other">%1$d 전달됨</item>
+  </plurals>
+  <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="other">%1$d 전송됨</item>
+  </plurals>
+  <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="other">%1$d 차단됨</item>
+  </plurals>
+  <string name="blocked_addresses_subtitle">차단된 연락처</string>
+  <string name="forwarding_addresses_subtitle">가져오기 주소</string>
+  <string name="snackbar_contact_block_success">연락처 차단됨</string>
+  <string name="snackbar_contact_block_error">연락처 차단 불가</string>
+  <string name="snackbar_contact_unblock_success">연락처 차단 해제됨</string>
+  <string name="snackbar_contact_unblock_error">연락처 차단 해제 불가</string>
+  <string name="snackbar_sender_name_success">보낸이 이름 업데이트됨</string>
+  <string name="snackbar_sender_name_error">보낸 사람 이름 업데이트 오류</string>
+  <string name="snackbar_delete_contact_success">연락처 삭제됨</string>
+  <string name="snackbar_delete_contact_error">연락처를 삭제하지 못했습니다</string>
+  <string name="snackbar_email_copied_success">이메일이 클립보드에 복사되었습니다</string>
+  <string name="contact_option_send_email">이메일 전송</string>
+  <string name="contact_option_copy_address">주소 복사</string>
+  <string name="contact_option_block_contact">연락처 차단</string>
+  <string name="contact_option_unblock_contact">연락처 차단 해제</string>
+  <string name="contact_option_delete">삭제</string>
+  <string name="alias_contacts_bottomsheet_title">별칭 연락처</string>
+  <string name="alias_contacts_bottomsheet_subtitle">개인 이메일을 비공개로 유지하려면 별칭 연락처를 만드세요.</string>
+  <string name="alias_contacts_explanation">이것이 작동하는 원리입니다:</string>
+  <string name="alias_contacts_bottomsheet_section_1">받을 사람의 이메일 주소를 입력하세요.</string>
+  <string name="alias_contacts_bottomsheet_section_2">Proton Pass가 (역 별칭으로도 불리는) 포워딩 주소를 만들어줍니다.</string>
+  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">이 주소에 이메일을 보내면 다음에서 온 것으로 표기됩니다:</string>
 </resources>

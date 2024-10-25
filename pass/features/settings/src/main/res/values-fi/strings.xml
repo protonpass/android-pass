@@ -33,7 +33,7 @@
   <string name="settings_preference_updated">Asetuksesi päivitettiin</string>
   <string name="settings_display_section_title">Ulkoasu</string>
   <string name="settings_preference_display_username">Käyttäjätunnus-kenttä aina näkyvissä</string>
-  <string name="settings_preference_display_autofill_pinning">Autofill pinning always visible</string>
+  <string name="settings_preference_display_autofill_pinning">Kiinnitetyt kohteet näkyvät aina automaattitäytön aikana</string>
   <string name="view_logs_title">Näytä lokitiedot</string>
   <string name="clipboard_bottomsheet_title">Leikepöytä</string>
   <string name="clipboard_option_clear_clipboard_label">Tyhjennä leikepöytä</string>

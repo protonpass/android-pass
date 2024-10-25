@@ -104,18 +104,19 @@
   <string name="passkey_detail_bottomsheet_domain">Domain</string>
   <string name="passkey_detail_bottomsheet_key">Key</string>
   <string name="passkey_detail_bottomsheet_created">Erstellt</string>
-  <string name="activity_in_last_two_weeks">Aktivität in den letzten zwei Wochen</string>
+  <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
   <string name="contacts">Kontakte</string>
+  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="one">%1$s forward</item>
-    <item quantity="other">%1$s forwards</item>
+    <item quantity="one">%1$s Weitergeleiteter</item>
+    <item quantity="other">%1$s Weitergeleitete</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="one">%1$s reply</item>
-    <item quantity="other">%1$s replies</item>
+    <item quantity="one">%1$s Antwort</item>
+    <item quantity="other">%1$s Antworten</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="one">%1$s block</item>
-    <item quantity="other">%1$s blocks</item>
+    <item quantity="one">%1$s Blockierter</item>
+    <item quantity="other">%1$s Blockierte</item>
   </plurals>
 </resources>

@@ -76,7 +76,6 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Errore nel caricamento degli indirizzi email personalizzati</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Caricamento degli indirizzi email non riuscito</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">Verifica</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Rimuovi</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Ultima violazione di dati il %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -102,17 +101,13 @@
   <string name="security_center_custom_email_already_verified">Indirizzo email già verificato</string>
   <string name="security_center_custom_email_error_adding">Errore nell\'aggiunta dell\'indirizzo email</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">Codice</string>
-  <string name="security_center_verify_email_code_error">Codice non valido</string>
   <string name="security_center_verify_email_title">Conferma l\'email</string>
   <string name="security_center_verify_email_subtitle">Abbiamo inviato un codice di verifica a %s. Inseriscilo qui sotto:</string>
-  <string name="security_center_verify_email_code_resend_header">Non hai ricevuto il codice?</string>
-  <string name="security_center_verify_email_code_resend_body">Controlla se nella cartella spam è presente un\'email denominata \"Conferma l\'indirizzo email per Proton Pass\"</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Se non riesci a trovarla, puoi </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">richiedere un nuovo codice.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">È stata inviata una nuova email di verifica, controlla la tua casella di posta.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Si è verificato un errore nell\'invio del codice di verifica. Riprova più tardi.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Troppe verifiche non valide. Rimozione dell\'email personalizzata in corso.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Codice di verifica non valido</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">Si è verificato un errore durante la verifica dell\'email. Per favore riprova più tardi.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Violazioni di dati rilevate per</string>
   <string name="security_center_verify_report_title_none">Nessuna violazione di dati rilevata per</string>

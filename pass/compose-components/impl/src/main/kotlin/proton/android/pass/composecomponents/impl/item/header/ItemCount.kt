@@ -88,6 +88,7 @@ fun getTitleCountRes(itemType: SearchFilterType, isPinnedMode: Boolean): Int = w
     }
 
     SearchFilterType.Login -> R.string.item_list_header_logins_type
+    SearchFilterType.LoginMFA -> R.string.item_list_header_logins_totp_type
     SearchFilterType.Alias -> R.string.item_list_header_aliases_type
     SearchFilterType.Note -> R.string.item_list_header_notes_type
     SearchFilterType.CreditCard -> R.string.item_list_header_credit_cards_type

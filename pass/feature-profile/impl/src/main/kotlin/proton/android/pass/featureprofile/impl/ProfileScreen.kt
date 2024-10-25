@@ -70,6 +70,12 @@ fun ProfileScreen(
             }
 
             ProfileEvent.Unknown -> {}
+            ProfileEvent.AllMFA,
+            ProfileEvent.HomeAliases,
+            ProfileEvent.HomeCreditCards,
+            ProfileEvent.HomeIdentities,
+            ProfileEvent.HomeLogins,
+            ProfileEvent.HomeNotes -> onNavigateEvent(ProfileNavigation.Home)
         }
 
         viewModel.onEventConsumed(state.event)
@@ -87,7 +93,7 @@ fun ProfileScreen(
                 ProfileUiEvent.OnCreateItemClick -> onNavigateEvent(ProfileNavigation.CreateItem)
                 ProfileUiEvent.OnFeedbackClick -> onNavigateEvent(ProfileNavigation.Feedback)
                 ProfileUiEvent.OnImportExportClick -> openWebsite(context, PASS_IMPORT)
-                ProfileUiEvent.OnListClick -> onNavigateEvent(ProfileNavigation.List)
+                ProfileUiEvent.OnHomeClick -> onNavigateEvent(ProfileNavigation.Home)
                 ProfileUiEvent.OnRateAppClick -> openWebsite(context, PASS_STORE)
                 ProfileUiEvent.OnSettingsClick -> onNavigateEvent(ProfileNavigation.Settings)
                 ProfileUiEvent.OnUpgradeClick -> onNavigateEvent(ProfileNavigation.Upgrade)
@@ -121,6 +127,12 @@ fun ProfileScreen(
                 is AccountSwitchEvent.OnSignOut -> onNavigateEvent(ProfileNavigation.OnSignOut(it.userId))
                 is AccountSwitchEvent.OnAccountSelected -> onNavigateEvent(ProfileNavigation.OnSwitchAccount(it.userId))
                 is AccountSwitchEvent.OnManageAccount -> onNavigateEvent(ProfileNavigation.Account)
+                ProfileUiEvent.OnAliasCountClick -> viewModel.onAliasCountClick()
+                ProfileUiEvent.OnCreditCardCountClick -> viewModel.onCreditCardCountClick()
+                ProfileUiEvent.OnIdentityCountClick -> viewModel.onIdentityCountClick()
+                ProfileUiEvent.OnLoginCountClick -> viewModel.onLoginCountClick()
+                ProfileUiEvent.OnMFACountClick -> viewModel.onMFACountClick()
+                ProfileUiEvent.OnNoteCountClick -> viewModel.onNoteCountClick()
             }
         }
     )

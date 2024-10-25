@@ -21,6 +21,7 @@ package proton.android.pass.featuresearchoptions.api
 enum class SearchFilterType {
     All,
     Login,
+    LoginMFA,
     Alias,
     Note,
     CreditCard,

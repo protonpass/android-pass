@@ -10,6 +10,7 @@
     <string name="item_list_header_all_search_results">All</string>
     <string name="item_list_header_pinned_search_results">Pinned</string>
     <string name="item_list_header_logins_type">Logins</string>
+    <string name="item_list_header_logins_totp_type">Logins with TOTP</string>
     <string name="item_list_header_aliases_type">Aliases</string>
     <string name="item_list_header_notes_type">Notes</string>
     <string name="item_list_header_credit_cards_type">Credit cards</string>

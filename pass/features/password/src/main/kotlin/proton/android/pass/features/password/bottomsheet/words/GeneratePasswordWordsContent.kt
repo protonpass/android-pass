@@ -82,8 +82,10 @@ internal fun GeneratePasswordWordsContent(
             text = stringResource(R.string.bottomsheet_option_capitalise),
             value = capitalizeWords,
             isEnabled = canToggleCapitalise,
-            onChange = {
-                onEvent(GeneratePasswordEvent.OnWordsCapitalizeChange(it))
+            onChange = { newCapitalizeWords ->
+                GeneratePasswordEvent.OnPasswordConfigChanged(
+                    config = config.copy(capitalizeWords = newCapitalizeWords)
+                ).also(onEvent)
             }
         )
 

@@ -103,6 +103,7 @@ internal fun GeneratePasswordViewContentThemePreview(
                     password = "a1b!c_d3e#fg",
                     passwordStrength = PasswordStrength.Strong,
                     mode = GeneratePasswordMode.CopyAndClose,
+                    event = GeneratePasswordEvent.Idle,
                     passwordConfig = PasswordConfig.Random(
                         passwordLength = 12,
                         includeNumbers = true,

@@ -28,15 +28,17 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.empty.EmptyReadOnly
 import proton.android.pass.featurehome.impl.empty.HomeEmptyList
 import proton.android.pass.featurehome.impl.trash.EmptyTrashContent
+import proton.android.pass.featuresearchoptions.api.SearchFilterType
 
 @Composable
 fun HomeEmptyContent(
     modifier: Modifier = Modifier,
     isTrashMode: Boolean,
     inSearchMode: Boolean,
+    readOnly: Boolean,
+    filterType: SearchFilterType,
     shareId: Option<ShareId>,
-    onEvent: (HomeUiEvent) -> Unit,
-    readOnly: Boolean
+    onEvent: (HomeUiEvent) -> Unit
 ) {
     when {
         inSearchMode -> EmptySearchResults(modifier)
@@ -44,6 +46,7 @@ fun HomeEmptyContent(
         readOnly -> EmptyReadOnly(modifier)
         else -> HomeEmptyList(
             modifier = modifier.fillMaxHeight(),
+            filterType = filterType,
             onCreateLoginClick = {
                 onEvent(
                     HomeUiEvent.AddItemClick(

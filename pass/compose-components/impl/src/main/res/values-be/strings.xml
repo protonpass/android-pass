@@ -48,8 +48,8 @@
   <string name="action_edit">Рэдагаваць</string>
   <string name="action_add">Дадаць</string>
   <string name="action_delete">Выдаліць</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
+  <string name="action_make_default">Зрабіць прадвызначаным</string>
+  <string name="action_verify">Праверка</string>
   <string name="action_close">Закрыць</string>
   <string name="action_update">Абнавіць</string>
   <!-- Empty list -->
@@ -206,28 +206,28 @@
   <string name="dialog_upgrade_plan_action_cancel">Не зараз</string>
   <!-- Words -->
   <string name="email_address">Адрас электроннай пошты</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">Памылковы адрас электроннай пошты</string>
   <string name="password">Пароль</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Кнопка ігнараваць гэту параду і не паказваць яе зноў</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="one">%d year</item>
-    <item quantity="few">%d years</item>
-    <item quantity="many">%d years</item>
-    <item quantity="other">%d years</item>
+    <item quantity="one">%d год</item>
+    <item quantity="few">%d гады</item>
+    <item quantity="many">%d гадоў</item>
+    <item quantity="other">%d гадоў</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d month</item>
-    <item quantity="few">%d months</item>
-    <item quantity="many">%d months</item>
-    <item quantity="other">%d months</item>
+    <item quantity="one">%d месяц</item>
+    <item quantity="few">%d месяцы</item>
+    <item quantity="many">%d месяцаў</item>
+    <item quantity="other">%d месяцаў</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="one">%d week</item>
-    <item quantity="few">%d weeks</item>
-    <item quantity="many">%d weeks</item>
-    <item quantity="other">%d weeks</item>
+    <item quantity="one">%d тыдзень</item>
+    <item quantity="few">%d тыдні</item>
+    <item quantity="many">%d тыдняў</item>
+    <item quantity="other">%d тыдняў</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d дзень</item>
@@ -254,10 +254,10 @@
     <item quantity="other">%d секунд</item>
   </plurals>
   <plurals name="aliases_count">
-    <item quantity="one">%d alias</item>
-    <item quantity="few">%d aliases</item>
-    <item quantity="many">%d aliases</item>
-    <item quantity="other">%d aliases</item>
+    <item quantity="one">%d псеўданім</item>
+    <item quantity="few">%d псеўданімы</item>
+    <item quantity="many">%d псеўданімаў</item>
+    <item quantity="other">%d псеўданімаў</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Нататка скапіявана</string>
@@ -285,4 +285,9 @@
     <item quantity="other">Мы выявілі, што ў вас ёсць %d псеўданімаў, якія прысутнічаюць у SimpleLogin, але адсутнічаюць у Proton Pass. Магчыма, што вы хочаце імпартаваць іх?</item>
   </plurals>
   <string name="simple_login_widget_action">Сінхранізаваць псеўданімы</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">Не атрымалі код?</string>
+  <string name="verification_code_suggestion_spam">Праверце ў сваёй папцы са спамам наяўнасць ліста з назвай \"Пацвярджэнне вашага адраса электроннай пошты для Proton Pass\"</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Калі вы не можаце знайсці ліст з такой назвай, вы можаце %s</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">запытайце новы код</string>
 </resources>

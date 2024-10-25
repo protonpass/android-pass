@@ -12,7 +12,7 @@
   <string name="profile_option_autofill">Automatické vyplňování</string>
   <string name="profile_option_autofill_subtitle">Automatické vyplňování uživatelských jmen a hesel.</string>
   <string name="profile_option_secure_links">Bezpečné odkazy</string>
-  <string name="profile_option_alias_management">Alias management</string>
+  <string name="profile_option_alias_management">Správa aliasů</string>
   <string name="profile_error_biometry_failed_to_start">Nelze spustit biometrické ověřování</string>
   <string name="profile_error_biometry_failed_to_authenticate">Ověření selhalo</string>
   <string name="profile_fingerprint_lock_enabled">Zamykání otiskem prstu povoleno</string>

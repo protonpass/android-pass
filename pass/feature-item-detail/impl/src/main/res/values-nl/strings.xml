@@ -104,8 +104,9 @@
   <string name="passkey_detail_bottomsheet_domain">Domein</string>
   <string name="passkey_detail_bottomsheet_key">Sleutel</string>
   <string name="passkey_detail_bottomsheet_created">Aangemaakt</string>
-  <string name="activity_in_last_two_weeks">Activity in last two weeks</string>
+  <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
   <string name="contacts">Contacten</string>
+  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s forward</item>
     <item quantity="other">%1$s forwards</item>

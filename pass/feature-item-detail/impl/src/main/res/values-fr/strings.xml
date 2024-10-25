@@ -104,8 +104,9 @@
   <string name="passkey_detail_bottomsheet_domain">Domaine</string>
   <string name="passkey_detail_bottomsheet_key">Clé</string>
   <string name="passkey_detail_bottomsheet_created">Créé le</string>
-  <string name="activity_in_last_two_weeks">Activité des 2 dernières semaines</string>
+  <string name="activity_in_last_two_weeks">Activité au cours des 14 derniers jours</string>
   <string name="contacts">Contacts</string>
+  <string name="contacts_section_description">Pour masquer votre adresse e-mail personnelle, vous pouvez créer un alias qui la dissimule.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s transfert</item>
     <item quantity="other">%1$s transferts</item>

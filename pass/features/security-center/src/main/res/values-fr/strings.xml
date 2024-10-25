@@ -76,7 +76,6 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Une erreur s\'est produite lors du chargement des adresses e-mail personnalisées.</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Les adresses e-mail n\'ont pas pu être obtenues.</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">Vérifier</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Retirer</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Dernière fuite de données le %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -102,17 +101,13 @@
   <string name="security_center_custom_email_already_verified">L\'adresse e-mail a été vérifiée.</string>
   <string name="security_center_custom_email_error_adding">Une erreur s\'est produite pendant l\'ajout de l\'adresse e-mail.</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">Code</string>
-  <string name="security_center_verify_email_code_error">Le code n’est pas valide.</string>
   <string name="security_center_verify_email_title">Confirmez votre email</string>
   <string name="security_center_verify_email_subtitle">Nous avons envoyé un code de vérification à %s. Veuillez le saisir ci-dessous :</string>
-  <string name="security_center_verify_email_code_resend_header">Vous n\'avez pas reçu le code ?</string>
-  <string name="security_center_verify_email_code_resend_body">Vérifiez le dossier Indésirables/spam la présence d\'un message intitulé « Confirmez votre adresse e-mail pour Proton Pass ».</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Si vous ne trouvez pas ce message, vous pouvez </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">demander un nouveau code.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">Une nouvelle vérification a été envoyée. Vérifiez votre boite de réception.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Une erreur est survenue lors de l\'envoi du code de vérification. Veuillez réessayer plus tard.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">En raison de trop nombreuses vérifications non valides, l\'e-mail personnalisé est retiré.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Le code de vérification n\'est pas valide.</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">Une erreur est survenue lors de la vérification de l\'e-mail. Veuillez réessayer plus tard.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Des fuites de données ont été détectées pour</string>
   <string name="security_center_verify_report_title_none">Aucune fuite de données n\'a été détectée pour</string>

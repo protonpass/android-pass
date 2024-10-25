@@ -202,22 +202,22 @@
   <string name="dialog_upgrade_plan_action_cancel">Ahora no</string>
   <!-- Words -->
   <string name="email_address">Dirección de correo</string>
-  <string name="email_address_invalid">La dirección de correo electrónico no es válida.</string>
+  <string name="email_address_invalid">Dirección de correo electrónico inválida</string>
   <string name="password">Contraseña</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Botón para descartar este mensaje y no volverlo a mostrar</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="one">%d year</item>
-    <item quantity="other">%d years</item>
+    <item quantity="one">%d año</item>
+    <item quantity="other">%d años</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d month</item>
-    <item quantity="other">%d months</item>
+    <item quantity="one">%d mes</item>
+    <item quantity="other">%d meses</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="one">%d week</item>
-    <item quantity="other">%d weeks</item>
+    <item quantity="one">%d semana</item>
+    <item quantity="other">%d semanas</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d día</item>
@@ -263,4 +263,9 @@
     <item quantity="other">Hemos detectado que tiene %d alias en SimpleLogin pero no aparecen en Proton Pass. ¿Desea importarlos?</item>
   </plurals>
   <string name="simple_login_widget_action">Sincronizar alias</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">¿No ha recibido el código?</string>
+  <string name="verification_code_suggestion_spam">Busque en la carpeta de spam un correo electrónico que diga «Confirme su dirección de correo electrónico para Proton Pass».</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Si no encuentra dicho correo electrónico, puede %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">solicitar un código nuevo</string>
 </resources>

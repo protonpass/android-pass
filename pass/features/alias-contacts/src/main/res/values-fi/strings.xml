@@ -22,24 +22,50 @@
   <string name="snackbar_contact_create_success">Yhteystieto luotiin</string>
   <string name="snackbar_contact_create_error">Yhteystiedon luonti epäonnistui</string>
   <string name="create_contact_title">Luo yhteystieto</string>
-  <string name="detail_contact_title">Contacts</string>
+  <string name="detail_contact_title">Yhteystiedot</string>
   <string name="email_input_error">Virheellinen sähköpostiosoite</string>
-  <string name="detail_contact_sender_name">Sender name</string>
-  <string name="detail_contact_display_name" comment="sender email address">When sending an email from this alias, the email will have %s as sender.</string>
-  <string name="empty_alias_contacts_title">Alias contacts</string>
-  <string name="empty_alias_contacts_body">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
-  <string name="empty_alias_contacts_learn_more">Learn more</string>
-  <string name="unblock_button">Unblock contact</string>
-  <string name="block_button">Block contact</string>
-  <string name="contact_created_date" comment="date of creation">Created %1$s ago</string>
-  <string name="no_activity_contact">No Activity in the last 14 days.</string>
-  <string name="activity_summary" comment="amount of items of each category">%1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.</string>
-  <string name="blocked_addresses_subtitle">Blocked addresses</string>
-  <string name="forwarding_addresses_subtitle">Forwarding addresses</string>
-  <string name="snackbar_contact_block_success">Contact blocked</string>
-  <string name="snackbar_contact_block_error">Could not block contact</string>
-  <string name="snackbar_contact_unblock_success">Contact unblocked</string>
-  <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
-  <string name="snackbar_sender_name_success">Sender name updated</string>
-  <string name="snackbar_sender_name_error">Could not update sender name</string>
+  <string name="detail_contact_sender_name">Lähettäjän nimi</string>
+  <string name="detail_contact_display_name" comment="sender email address">Kun lähetät sähköpostin tästä aliaksesta, sen lähettäjänä näkyy %s.</string>
+  <string name="empty_alias_contacts_title">Aliasyhteystiedot</string>
+  <string name="empty_alias_contacts_body">Pitääksesi henkilökohtaisen sähköpostiosoitteesi piilossa voit luoda aliasyhteystiedon, joka naamioi osoitteesi.</string>
+  <string name="empty_alias_contacts_learn_more">Lue lisää</string>
+  <string name="unblock_button">Estä yhteystieto</string>
+  <string name="block_button">Salli yhteystieto</string>
+  <string name="contact_created_date" comment="date of creation">Luotiin %1$s sitten</string>
+  <string name="no_activity_contact">Ei toimintaa viimeisten 14 päivän aikana.</string>
+  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">viimeisen 14 päivän aikana.</string>
+  <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d välitetty</item>
+    <item quantity="other">%1$d välitetty</item>
+  </plurals>
+  <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d lähetetty</item>
+    <item quantity="other">%1$d lähetetty</item>
+  </plurals>
+  <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d estetty</item>
+    <item quantity="other">%1$d estetty</item>
+  </plurals>
+  <string name="blocked_addresses_subtitle">Estetyt osoitteet</string>
+  <string name="forwarding_addresses_subtitle">Välitysosoitteet</string>
+  <string name="snackbar_contact_block_success">Yhteystieto estettiin</string>
+  <string name="snackbar_contact_block_error">Yhteystietoa ei voitu estää</string>
+  <string name="snackbar_contact_unblock_success">Yhteystieto sallittiin</string>
+  <string name="snackbar_contact_unblock_error">Yhteystietoa ei voitu sallia</string>
+  <string name="snackbar_sender_name_success">Lähettäjän nimi päivitettiin</string>
+  <string name="snackbar_sender_name_error">Lähettäjän nimeä ei voitu vaihtaa</string>
+  <string name="snackbar_delete_contact_success">Yhteystieto poistettiin</string>
+  <string name="snackbar_delete_contact_error">Yhteystietoa ei voitu poistaa</string>
+  <string name="snackbar_email_copied_success">Sähköpostiosoite kopioitiin leikepöydälle</string>
+  <string name="contact_option_send_email">Lähetä sähköposti</string>
+  <string name="contact_option_copy_address">Kopioi osoite</string>
+  <string name="contact_option_block_contact">Estä yhteystieto</string>
+  <string name="contact_option_unblock_contact">Salli yhteystieto</string>
+  <string name="contact_option_delete">Poista</string>
+  <string name="alias_contacts_bottomsheet_title">Aliasyhteystiedot</string>
+  <string name="alias_contacts_bottomsheet_subtitle">Pitääksesi henkilökohtaisen sähköpostiosoitteesi piilossa voit luoda aliasyhteystiedon, joka naamioi osoitteesi.</string>
+  <string name="alias_contacts_explanation">Näin se toimii:</string>
+  <string name="alias_contacts_bottomsheet_section_1">Syötä osoite, johon haluat lähettää sähköpostia.</string>
+  <string name="alias_contacts_bottomsheet_section_2">Proton Pass luo välitysosoitteen (jota kutsutaan myös käänteiseksi aliakseksi).</string>
+  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Lähetä sähköpostia tähän osoitteeseen, ja se näyttää tulevan osoitteesta</string>
 </resources>

@@ -22,24 +22,56 @@
   <string name="snackbar_contact_create_success">Kontakt úspěšně vytvořen</string>
   <string name="snackbar_contact_create_error">Kontakt se nepodařilo vytvořit</string>
   <string name="create_contact_title">Vytvořit kontakt</string>
-  <string name="detail_contact_title">Contacts</string>
+  <string name="detail_contact_title">Kontakty</string>
   <string name="email_input_error">Neplatná e-mailová adresa</string>
-  <string name="detail_contact_sender_name">Sender name</string>
-  <string name="detail_contact_display_name" comment="sender email address">When sending an email from this alias, the email will have %s as sender.</string>
-  <string name="empty_alias_contacts_title">Alias contacts</string>
-  <string name="empty_alias_contacts_body">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
-  <string name="empty_alias_contacts_learn_more">Learn more</string>
-  <string name="unblock_button">Unblock contact</string>
-  <string name="block_button">Block contact</string>
-  <string name="contact_created_date" comment="date of creation">Created %1$s ago</string>
-  <string name="no_activity_contact">No Activity in the last 14 days.</string>
-  <string name="activity_summary" comment="amount of items of each category">%1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.</string>
-  <string name="blocked_addresses_subtitle">Blocked addresses</string>
-  <string name="forwarding_addresses_subtitle">Forwarding addresses</string>
-  <string name="snackbar_contact_block_success">Contact blocked</string>
-  <string name="snackbar_contact_block_error">Could not block contact</string>
-  <string name="snackbar_contact_unblock_success">Contact unblocked</string>
-  <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
-  <string name="snackbar_sender_name_success">Sender name updated</string>
-  <string name="snackbar_sender_name_error">Could not update sender name</string>
+  <string name="detail_contact_sender_name">Jméno odesílatele</string>
+  <string name="detail_contact_display_name" comment="sender email address">Při odesílání e-mailu z tohoto aliasu bude jako odesílatel uveden e-mail %s.</string>
+  <string name="empty_alias_contacts_title">Kontakty aliasu</string>
+  <string name="empty_alias_contacts_body">Chcete-li, aby vaše osobní e-mailová adresa zůstala skrytá, můžete si vytvořit alias kontaktu, který vaši adresu zamaskuje.</string>
+  <string name="empty_alias_contacts_learn_more">Více informací</string>
+  <string name="unblock_button">Odblokovat kontakt</string>
+  <string name="block_button">Blokovat kontakt</string>
+  <string name="contact_created_date" comment="date of creation">Vytvořen před %1$s</string>
+  <string name="no_activity_contact">Žádná aktivita za posledních 14 dní</string>
+  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">za posledních 14 dní.</string>
+  <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d přeposláno</item>
+    <item quantity="few">%1$d přeposláno</item>
+    <item quantity="many">%1$d přeposláno</item>
+    <item quantity="other">%1$d přeposláno</item>
+  </plurals>
+  <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d odesláno</item>
+    <item quantity="few">%1$d odesláno</item>
+    <item quantity="many">%1$d odesláno</item>
+    <item quantity="other">%1$d odesláno</item>
+  </plurals>
+  <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d blokováno</item>
+    <item quantity="few">%1$d blokováno</item>
+    <item quantity="many">%1$d blokováno</item>
+    <item quantity="other">%1$d blokováno</item>
+  </plurals>
+  <string name="blocked_addresses_subtitle">Blokované adresy</string>
+  <string name="forwarding_addresses_subtitle">Adresy přeposílání</string>
+  <string name="snackbar_contact_block_success">Kontakt zablokován</string>
+  <string name="snackbar_contact_block_error">Nelze blokovat kontakt</string>
+  <string name="snackbar_contact_unblock_success">Kontakt odblokován</string>
+  <string name="snackbar_contact_unblock_error">Nelze odblokovat kontakt</string>
+  <string name="snackbar_sender_name_success">Jméno odesílatele aktualizováno</string>
+  <string name="snackbar_sender_name_error">Nelze aktualizovat jméno odesílatele</string>
+  <string name="snackbar_delete_contact_success">Kontakt smazán</string>
+  <string name="snackbar_delete_contact_error">Kontakt se nepodařilo smazat</string>
+  <string name="snackbar_email_copied_success">E-mail zkopírován do schránky</string>
+  <string name="contact_option_send_email">Poslat e-mail</string>
+  <string name="contact_option_copy_address">Kopírovat adresu</string>
+  <string name="contact_option_block_contact">Blokovat kontakt</string>
+  <string name="contact_option_unblock_contact">Odblokovat kontakt</string>
+  <string name="contact_option_delete">Smazat</string>
+  <string name="alias_contacts_bottomsheet_title">Kontakty aliasu</string>
+  <string name="alias_contacts_bottomsheet_subtitle">Chcete-li, aby vaše osobní e-mailová adresa zůstala skrytá, můžete si vytvořit alias kontaktu, který vaši adresu zamaskuje.</string>
+  <string name="alias_contacts_explanation">Funguje to takto:</string>
+  <string name="alias_contacts_bottomsheet_section_1">Zadejte adresu, na kterou chcete poslat e-mail.</string>
+  <string name="alias_contacts_bottomsheet_section_2">Proton Pass vygeneruje adresu pro přeposílání (označovanou také jako reverzní alias).</string>
+  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Pošlete e-mail na tuto adresu a zobrazí se, že byl odeslán z</string>
 </resources>

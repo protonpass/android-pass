@@ -33,7 +33,16 @@
   <string name="block_button">Block contact</string>
   <string name="contact_created_date" comment="date of creation">Created %1$s ago</string>
   <string name="no_activity_contact">No Activity in the last 14 days.</string>
-  <string name="activity_summary" comment="amount of items of each category">%1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.</string>
+  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">in the last 14 days.</string>
+  <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="other">%1$d forwarded</item>
+  </plurals>
+  <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="other">%1$d sent</item>
+  </plurals>
+  <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="other">%1$d blocked</item>
+  </plurals>
   <string name="blocked_addresses_subtitle">Blocked addresses</string>
   <string name="forwarding_addresses_subtitle">Forwarding addresses</string>
   <string name="snackbar_contact_block_success">Contact blocked</string>
@@ -42,4 +51,18 @@
   <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
   <string name="snackbar_sender_name_success">Sender name updated</string>
   <string name="snackbar_sender_name_error">Could not update sender name</string>
+  <string name="snackbar_delete_contact_success">Contact deleted</string>
+  <string name="snackbar_delete_contact_error">Could not delete contact</string>
+  <string name="snackbar_email_copied_success">Email copied to clipboard</string>
+  <string name="contact_option_send_email">Send email</string>
+  <string name="contact_option_copy_address">Copy address</string>
+  <string name="contact_option_block_contact">Block contact</string>
+  <string name="contact_option_unblock_contact">Unblock contact</string>
+  <string name="contact_option_delete">Delete</string>
+  <string name="alias_contacts_bottomsheet_title">Alias Contacts</string>
+  <string name="alias_contacts_bottomsheet_subtitle">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="alias_contacts_explanation">Here’s how it works:</string>
+  <string name="alias_contacts_bottomsheet_section_1">Enter the address you want to email.</string>
+  <string name="alias_contacts_bottomsheet_section_2">Proton Pass will generate a forwarding address (also referred to as reverse alias).</string>
+  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Email this address and it will appear to be sent from</string>
 </resources>

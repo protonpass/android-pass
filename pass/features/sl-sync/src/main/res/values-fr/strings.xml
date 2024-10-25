@@ -42,9 +42,6 @@
   <string name="simple_login_sync_mailbox_verify_title">Confirmez votre messagerie</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Nous avons envoyé un code de vérification à %s. Veuillez le saisir ci-dessous :</string>
   <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">votre adresse e-mail</string>
-  <string name="simple_login_sync_mailbox_verify_code_resend">Renvoyer le code dans %s</string>
-  <string name="simple_login_sync_mailbox_verify_code_request_new">demander un nouveau code</string>
-  <string name="simple_login_sync_mailbox_verify_code_not_received" comment="the placeholder will be replaced by 'request a new code' link text">Vous n\'avez pas reçu le code ? Vérifiez votre dossier Indésirables/spam et s\'il n\'y est pas, %s à la place.</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Le code de vérification de la messagerie n\'est pas valide.</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_error">Une erreur s\'est produite lors de la vérification de la messagerie.</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_success">La messagerie a été vérifiée.</string>

@@ -32,8 +32,8 @@
   <string name="settings_share_crashes">Абагульваць ананімныя справаздачы аб збоях</string>
   <string name="settings_preference_updated">Вашы параметры былі абноўлены</string>
   <string name="settings_display_section_title">Адлюстраванне</string>
-  <string name="settings_preference_display_username">Поле імя карыстальніка заўсёды бачанае</string>
-  <string name="settings_preference_display_autofill_pinning">Замацаванае аўтазапаўнення заўсёды бачнае</string>
+  <string name="settings_preference_display_username">Поле імя карыстальніка заўсёды бачнае</string>
+  <string name="settings_preference_display_autofill_pinning">Замацаванае аўтазапаўненне заўсёды бачнае</string>
   <string name="view_logs_title">Паглядзець журнал</string>
   <string name="clipboard_bottomsheet_title">Буфер абмену</string>
   <string name="clipboard_option_clear_clipboard_label">Ачыстка буфера абмену</string>

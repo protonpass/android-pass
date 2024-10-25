@@ -3,7 +3,7 @@
   <string name="trial_title">Ваш вітальний подарунок</string>
   <string name="trial_subtitle">Насолоджуйтесь керуванням паролями нового рівня</string>
   <string name="trial_feature_1">20 сховищ</string>
-  <string name="trial_feature_3">Інтегрований двоетапний (2FA) автентифікатор</string>
+  <string name="trial_feature_3">Інтегрований автентифікатор 2FA</string>
   <string name="trial_feature_4">Власні поля</string>
   <string name="trial_button_text">Покращити зараз</string>
   <plurals name="trial_days_left">

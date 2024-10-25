@@ -76,7 +76,6 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Fout bij het laden van gepersonaliseerde e-mailadressen</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">E-mailadressen kunnen niet worden opgehaald</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">Verifieer</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Verwijder</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Laatste inbreuk op %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -102,17 +101,13 @@
   <string name="security_center_custom_email_already_verified">E-mailadres reeds geverifieerd</string>
   <string name="security_center_custom_email_error_adding">Fout bij het toevoegen van het e-mailadres</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">Code</string>
-  <string name="security_center_verify_email_code_error">Ongeldige code</string>
   <string name="security_center_verify_email_title">Bevestig je e-mailadres</string>
   <string name="security_center_verify_email_subtitle">We hebben een verificatiecode gestuurd naar %s. Voer deze hieronder in:</string>
-  <string name="security_center_verify_email_code_resend_header">Heeft u de code niet ontvangen?</string>
-  <string name="security_center_verify_email_code_resend_body">Controleer uw spam op een e-mail genaamd \"Bevestig uw e-mailadres voor Proton Pass\"</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Wanneer u deze mail niet kunt vinden kunt u </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">nieuwe code aanvragen.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">Een nieuwe verificatie is verstuurd, controleer uw inbox.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Er is een fout opgetreden bij het verzenden van de verificatiecode. Probeer het later nog eens.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Te veel ongeldige verificaties. Aangepaste e-mail wordt verwijderd.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Invalid verification code</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">There was an error verifying the email. Please try again later.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Inbreuken gedetecteerd voor</string>
   <string name="security_center_verify_report_title_none">Geen inbreuken gedetecteerd voor</string>

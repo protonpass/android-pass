@@ -103,8 +103,9 @@
   <string name="passkey_detail_bottomsheet_domain">도메인</string>
   <string name="passkey_detail_bottomsheet_key">키</string>
   <string name="passkey_detail_bottomsheet_created">생성함</string>
-  <string name="activity_in_last_two_weeks">지난 2주간 활동</string>
+  <string name="activity_in_last_two_weeks">지난 14일간 활동</string>
   <string name="contacts">연락처</string>
+  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
   <plurals name="alias_forwards_count">
     <item quantity="other">%1$s개 가져오기</item>
   </plurals>

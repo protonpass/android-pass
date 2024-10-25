@@ -106,8 +106,9 @@
   <string name="passkey_detail_bottomsheet_domain">Домен</string>
   <string name="passkey_detail_bottomsheet_key">Ключ</string>
   <string name="passkey_detail_bottomsheet_created">Создано</string>
-  <string name="activity_in_last_two_weeks">Activity in last two weeks</string>
-  <string name="contacts">Contacts</string>
+  <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
+  <string name="contacts">Контакты</string>
+  <string name="contacts_section_description">Чтобы скрыть свой личный адрес электронной почты, вы можете создать контакт псевдонима, который будет маскировать ваш адрес.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s forward</item>
     <item quantity="few">%1$s forwards</item>

@@ -106,8 +106,9 @@
   <string name="passkey_detail_bottomsheet_domain">Doména</string>
   <string name="passkey_detail_bottomsheet_key">Klíč</string>
   <string name="passkey_detail_bottomsheet_created">Vytvořeno</string>
-  <string name="activity_in_last_two_weeks">Aktivita v posledních dvou týdnech</string>
+  <string name="activity_in_last_two_weeks">Aktivita za posledních 14 dní</string>
   <string name="contacts">Kontakty</string>
+  <string name="contacts_section_description">Chcete-li uchovat vaši osobní e-mailovou adresu v soukromí, můžete pro ni vytvořit alias kontakt, který vaši adresu zamaskuje.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s přeposlání</item>
     <item quantity="few">%1$s přeposlání</item>

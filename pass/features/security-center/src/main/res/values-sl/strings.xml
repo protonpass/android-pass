@@ -80,7 +80,6 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Pri nalaganju e-poštnih naslovov po meri je prišlo do napake</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Naslovov ni bilo mogoče naložiti</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">Preveri</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Odstrani</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Zadnja kršitev dne %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -108,17 +107,13 @@
   <string name="security_center_custom_email_already_verified">E-pošta je že preverjena</string>
   <string name="security_center_custom_email_error_adding">Pri dodajanju e-poštnega naslova je prišlo do napake</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">Koda</string>
-  <string name="security_center_verify_email_code_error">Neveljavna koda</string>
   <string name="security_center_verify_email_title">Potrdite svoj elektronski naslov.</string>
   <string name="security_center_verify_email_subtitle">Na naslov %s smo poslali kodo za preverjanje. Vnesite jo spodaj:</string>
-  <string name="security_center_verify_email_code_resend_header">Niste prejeli kode?</string>
-  <string name="security_center_verify_email_code_resend_body">V svoji vsiljeni pošti preverite e-poštno sporočilo z naslovom »Prosimo, potrdite svoj e-poštni naslov za Proton Pass«</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Če takšnega e-poštnega sporočila ne najdete, ga lahko </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">zahtevajte novo kodo.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">Novo preverjanje je bilo poslano, preverite svoj nabiralnik.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Pri pošiljanju kode za preverjanje je prišlo do napake. Prosimo, poskusite znova pozneje.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Preveč neveljavnih preverjanj. Odstranjevanje e-pošte po meri.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Invalid verification code</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">There was an error verifying the email. Please try again later.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Zaznane kršitve za</string>
   <string name="security_center_verify_report_title_none">Zaznane niso bile nobene kršitve</string>

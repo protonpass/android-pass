@@ -27,7 +27,6 @@ internal sealed interface GeneratePasswordEvent {
     data class OnPasswordModeChange(val mode: PasswordGenerationMode) : GeneratePasswordEvent
 
     data class OnWordsCountChange(val count: Int) : GeneratePasswordEvent
-    data class OnWordsCapitalizeChange(val value: Boolean) : GeneratePasswordEvent
     data object OnWordsSeparatorClick : GeneratePasswordEvent
     data class OnWordsSeparatorChange(val separator: WordSeparator) : GeneratePasswordEvent
     data class OnWordsIncludeNumbersChange(val value: Boolean) : GeneratePasswordEvent

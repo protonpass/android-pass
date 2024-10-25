@@ -45,25 +45,25 @@ fun GeneratePasswordBottomSheet(modifier: Modifier = Modifier, onNavigate: (Gene
     GeneratePasswordBottomSheetContent(
         modifier = modifier,
         state = state,
-        onEvent = {
-            when (it) {
-                is GeneratePasswordEvent.OnPasswordModeChange -> {
-                    viewModel.onPasswordModeChange(it.mode)
+        onEvent = { uiEvent ->
+            when (uiEvent) {
+                is GeneratePasswordUiEvent.OnPasswordModeChange -> {
+                    viewModel.onPasswordModeChange(uiEvent.mode)
                 }
 
-                GeneratePasswordEvent.OnPasswordModeChangeClick -> {
+                GeneratePasswordUiEvent.OnPasswordModeChangeClick -> {
                     onNavigate(GeneratePasswordNavigation.OnSelectPasswordMode)
                 }
 
-                GeneratePasswordEvent.OnWordsSeparatorClick -> {
+                GeneratePasswordUiEvent.OnWordsSeparatorClick -> {
                     onNavigate(GeneratePasswordNavigation.OnSelectWordSeparator)
                 }
 
-                is GeneratePasswordEvent.OnPasswordConfigChanged -> {
-                    viewModel.onChangePasswordConfig(it.config)
+                is GeneratePasswordUiEvent.OnPasswordConfigChanged -> {
+                    viewModel.onChangePasswordConfig(uiEvent.config)
                 }
 
-                GeneratePasswordEvent.OnRegeneratePasswordClick -> {
+                GeneratePasswordUiEvent.OnRegeneratePasswordClick -> {
                     viewModel.onRegeneratePassword()
                 }
             }

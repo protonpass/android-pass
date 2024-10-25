@@ -18,7 +18,6 @@
 
 package proton.android.pass.features.password.bottomsheet
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,6 +37,8 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
 import proton.android.pass.commonrust.api.passwords.PasswordCreator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
@@ -54,6 +55,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GeneratePasswordViewModel @Inject constructor(
+    stateHandleProvider: SavedStateHandleProvider,
     observePasswordConfig: ObservePasswordConfig,
     passwordCreator: PasswordCreator,
     passwordStrengthCalculator: PasswordStrengthCalculator,
@@ -62,11 +64,17 @@ class GeneratePasswordViewModel @Inject constructor(
     private val clipboardManager: ClipboardManager,
     private val draftRepository: DraftRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val savedStateHandle: SavedStateHandle,
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-    private val mode = getMode()
+    private val mode = stateHandleProvider.get()
+        .require<String>(GeneratePasswordBottomsheetMode.key)
+        .let { modeValue ->
+            when (GeneratePasswordBottomsheetModeValue.valueOf(modeValue)) {
+                GeneratePasswordBottomsheetModeValue.CancelConfirm -> GeneratePasswordMode.CancelConfirm
+                GeneratePasswordBottomsheetModeValue.CopyAndClose -> GeneratePasswordMode.CopyAndClose
+            }
+        }
 
     private val passwordConfigFlow = observePasswordConfig()
 
@@ -151,16 +159,5 @@ class GeneratePasswordViewModel @Inject constructor(
 
     private suspend fun getCurrentPreference(): PasswordGenerationPreference =
         userPreferencesRepository.getPasswordGenerationPreference().first()
-
-
-    private fun getMode(): GeneratePasswordMode {
-        val mode = savedStateHandle.get<String>(GeneratePasswordBottomsheetMode.key)
-            ?: throw IllegalStateException("Missing ${GeneratePasswordBottomsheetMode.key} nav argument")
-
-        return when (GeneratePasswordBottomsheetModeValue.valueOf(mode)) {
-            GeneratePasswordBottomsheetModeValue.CancelConfirm -> GeneratePasswordMode.CancelConfirm
-            GeneratePasswordBottomsheetModeValue.CopyAndClose -> GeneratePasswordMode.CopyAndClose
-        }
-    }
 
 }

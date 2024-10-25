@@ -71,8 +71,10 @@ internal fun GeneratePasswordWordsContent(
             count = wordsCount,
             minCount = minWordsCount,
             maxCount = maxWordsCount,
-            onCountChange = {
-                onEvent(GeneratePasswordEvent.OnWordsCountChange(it))
+            onCountChange = { newWordsCount ->
+                GeneratePasswordEvent.OnPasswordConfigChanged(
+                    config = config.copy(passwordWordsCount = newWordsCount)
+                ).also(onEvent)
             }
         )
 

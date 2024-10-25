@@ -74,8 +74,10 @@ internal fun GeneratePasswordRandomContent(
             length = length,
             minLength = minLength,
             maxLength = maxLength,
-            onLengthChange = {
-                onEvent(GeneratePasswordEvent.OnRandomLengthChange(it))
+            onLengthChange = { newPasswordLength ->
+                GeneratePasswordEvent.OnPasswordConfigChanged(
+                    config = config.copy(passwordLength = newPasswordLength)
+                ).also(onEvent)
             }
         )
 

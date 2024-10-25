@@ -23,15 +23,15 @@ import proton.android.pass.commonrust.api.WordSeparator
 sealed interface PasswordConfig {
 
     data class Random(
-        private val passwordLength: Int,
+        val includeUppercase: Boolean,
+        val includeNumbers: Boolean,
+        val includeSymbols: Boolean,
         val canToggleUppercase: Boolean = true,
         val canToggleNumbers: Boolean = true,
         val canToggleSymbols: Boolean = true,
+        private val passwordLength: Int,
         private val passwordMinLength: Int? = null,
-        private val passwordMaxLength: Int? = null,
-        private val passwordIncludeUppercase: Boolean? = null,
-        private val passwordIncludeNumbers: Boolean? = null,
-        private val passwordIncludeSymbols: Boolean? = null
+        private val passwordMaxLength: Int? = null
     ) : PasswordConfig {
 
         val length: Int = passwordLength.coerceIn(range = PASSWORD_MIN_LENGTH..PASSWORD_MAX_LENGTH)
@@ -44,27 +44,22 @@ sealed interface PasswordConfig {
             ?.coerceIn(range = PASSWORD_MIN_LENGTH..PASSWORD_MAX_LENGTH)
             ?: PASSWORD_MAX_LENGTH
 
-        val includeUppercase: Boolean = passwordIncludeUppercase ?: true
-
-        val includeNumbers: Boolean = passwordIncludeNumbers ?: true
-
-        val includeSymbols: Boolean = passwordIncludeSymbols ?: true
-
     }
 
     data class Memorable(
-        private val passwordWordsCount: Int,
-        private val passwordWordsSeparator: WordSeparator,
+        val capitalizeWords: Boolean,
+        val includeNumbers: Boolean,
+        val includeSeparator: Boolean,
         val canToggleCapitalise: Boolean = true,
         val canToggleNumbers: Boolean = true,
+        private val passwordWordsCount: Int,
+        private val passwordWordsSeparator: WordSeparator,
         private val passwordMinWords: Int? = null,
-        private val passwordMaxWords: Int? = null,
-        private val passwordCapitalizeWords: Boolean? = null,
-        private val passwordIncludeNumbers: Boolean? = null,
-        private val passwordIncludeSeparator: Boolean? = null
+        private val passwordMaxWords: Int? = null
     ) : PasswordConfig {
 
-        val wordsCount: Int = passwordWordsCount.coerceIn(range = PASSWORD_MIN_WORDS..PASSWORD_MAX_WORDS)
+        val wordsCount: Int = passwordWordsCount
+            .coerceIn(range = PASSWORD_MIN_WORDS..PASSWORD_MAX_WORDS)
 
         val minWordsCount: Int = passwordMinWords
             ?.coerceIn(range = PASSWORD_MIN_WORDS..PASSWORD_MAX_WORDS)
@@ -74,11 +69,8 @@ sealed interface PasswordConfig {
             ?.coerceIn(range = PASSWORD_MIN_WORDS..PASSWORD_MAX_WORDS)
             ?: PASSWORD_MAX_WORDS
 
-        val wordSeparator: WordSeparator? = passwordWordsSeparator.takeIf { passwordIncludeSeparator ?: true }
+        val wordSeparator: WordSeparator? = passwordWordsSeparator.takeIf { includeSeparator }
 
-        val capitalizeWords: Boolean = passwordCapitalizeWords ?: true
-
-        val includeNumbers: Boolean = passwordIncludeNumbers ?: true
     }
 
     private companion object {

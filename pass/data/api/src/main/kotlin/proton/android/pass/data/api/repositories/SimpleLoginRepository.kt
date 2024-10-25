@@ -19,6 +19,7 @@
 package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
@@ -29,7 +30,7 @@ import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 
 interface SimpleLoginRepository {
 
-    fun observeSyncStatus(): Flow<SimpleLoginSyncStatus>
+    fun observeSyncStatus(userId: UserId): Flow<SimpleLoginSyncStatus>
 
     fun disableSyncPreference()
 
@@ -53,9 +54,10 @@ interface SimpleLoginRepository {
 
     fun observeAliasSettings(): Flow<SimpleLoginAliasSettings>
 
-    suspend fun getPendingAliases(): SimpleLoginPendingAliases
+    suspend fun getPendingAliases(userId: UserId): SimpleLoginPendingAliases
 
     suspend fun createPendingAliases(
+        userId: UserId,
         defaultShareId: ShareId,
         pendingAliasesItems: List<Pair<String, EncryptedCreateItem>>
     )

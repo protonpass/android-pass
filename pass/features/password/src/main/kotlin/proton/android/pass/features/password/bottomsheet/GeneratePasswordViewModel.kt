@@ -118,11 +118,6 @@ class GeneratePasswordViewModel @Inject constructor(
         updateAndRegenerate(updated)
     }
 
-    fun onWordsIncludeNumbersChange(value: Boolean) = viewModelScope.launch {
-        val updated = getCurrentPreference().copy(wordsIncludeNumbers = value)
-        updateAndRegenerate(updated)
-    }
-
     fun onWordsCountChange(value: Int) = viewModelScope.launch {
         val updated = getCurrentPreference().copy(wordsCount = value)
         updateAndRegenerate(updated)

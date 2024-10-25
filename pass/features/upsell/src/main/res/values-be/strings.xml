@@ -27,12 +27,12 @@
   <string name="upsell_paid_feature_unlimited_aliases">Неабмежаваная колькасць псеўданімаў Hide-my-email</string>
   <string name="upsell_paid_feature_vault_sharing">Абагульванне сховішча (да 10 карыстальнікаў)</string>
   <string name="upsell_paid_feature_secure_links">Бяспечныя спасылкі</string>
-  <string name="upsell_paid_feature_advance_alias_management">Advanced alias management</string>
+  <string name="upsell_paid_feature_advance_alias_management">Пашыранае кіраванне псеўданімамі</string>
   <string name="upsell_paid_feature_authenticator_essential">Патрабаванне 2ФА для арганізацыі</string>
   <string name="upsell_paid_feature_sso_essential">Інтэграцыя SSO (неўзабаве з\'явіцца)</string>
-  <string name="upsell_paid_feature_advance_alias_management_title">Manage your aliases</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">Advanced alias management is available with Proton Unlimited. Upgrade for immediate access.</string>
+  <string name="upsell_paid_feature_advance_alias_management_title">Кіраванне вашымі псеўданімамі</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">Пашыранае кіраванне псеўданімамі даступна з Proton Unlimited. Палепшыце, каб атрымаць доступ да гэтай функцыі.</string>
   <string name="upsell_button_upgrade">Атрымаць Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Атрымаць Pass Business</string>
-  <string name="upsell_button_upgrade_unlimited">Get Proton Unlimited</string>
+  <string name="upsell_button_upgrade_unlimited">Атрымаць Proton Unlimited</string>
 </resources>

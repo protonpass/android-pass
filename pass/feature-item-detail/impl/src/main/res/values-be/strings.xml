@@ -106,8 +106,9 @@
   <string name="passkey_detail_bottomsheet_domain">Дамен</string>
   <string name="passkey_detail_bottomsheet_key">Ключ</string>
   <string name="passkey_detail_bottomsheet_created">Створана</string>
-  <string name="activity_in_last_two_weeks">Актыўнасць за апошнія два тыдні</string>
+  <string name="activity_in_last_two_weeks">Актыўнасць за апошнія 14 дзён</string>
   <string name="contacts">Кантакты</string>
+  <string name="contacts_section_description">Вы можаце стварыць кантакт псеўданіма, які замаскіруе ваш адрас. Гэта дазволіць захаваць ваш персанальны адрас электроннай пошты схаваным.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s перасылка</item>
     <item quantity="few">%1$s перасылкі</item>

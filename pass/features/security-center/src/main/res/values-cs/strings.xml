@@ -80,7 +80,6 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Chyba při načítání vlastních e-mailových adres</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Nelze získat e-mailové adresy</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">Ověřit</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Odebrat</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Poslední únik informací v(e) %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -108,17 +107,13 @@
   <string name="security_center_custom_email_already_verified">E-mail je již ověřen</string>
   <string name="security_center_custom_email_error_adding">Chyba při přidávání e-mailové adresy</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">Kód</string>
-  <string name="security_center_verify_email_code_error">Neplatný kód</string>
   <string name="security_center_verify_email_title">Potvrďte svůj e-mail</string>
   <string name="security_center_verify_email_subtitle">Ověřovací kód jsme poslali na %s. Zadejte jej prosím níže:</string>
-  <string name="security_center_verify_email_code_resend_header">Neobdrželi jste kód?</string>
-  <string name="security_center_verify_email_code_resend_body">Prosím, podívejte se do spamu, jestli v něm není e-mail nazvaný \"Prosím potvrďte svoji e-mailovou adresu pro Proton Pass\"</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Pokud takový e-mail nelze najít, tak můžete </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">požádat o nový kód.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">Nový ověřovací kód byl odeslaný. Prosím, zkontrolujte doručenou poštu.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Při odesílání ověřovacího kódu došlo k chybě. Zkuste to prosím později.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Příliš mnoho neplatných ověření. Odebírání vlastního e-mailu.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Neplatný ověřovací kód</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">Při ověřování e-mailu došlo k chybě. Zkuste to prosím později.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Zjištěny úniky informací pro</string>
   <string name="security_center_verify_report_title_none">Nebyly zjištěny úniky informací pro</string>

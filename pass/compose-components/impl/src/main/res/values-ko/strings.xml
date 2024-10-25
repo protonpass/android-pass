@@ -45,8 +45,8 @@
   <string name="action_edit">편집</string>
   <string name="action_add">추가</string>
   <string name="action_delete">삭제</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
+  <string name="action_make_default">기본으로 설정</string>
+  <string name="action_verify">인증</string>
   <string name="action_close">닫기</string>
   <string name="action_update">업데이트</string>
   <!-- Empty list -->
@@ -149,7 +149,7 @@
   <string name="item_details_identity_section_personal_first_name_title">이름</string>
   <string name="item_details_identity_section_personal_middle_name_title">중간 이름</string>
   <string name="item_details_identity_section_personal_last_name_title">성</string>
-  <string name="item_details_identity_section_personal_full_name_title">이름</string>
+  <string name="item_details_identity_section_personal_full_name_title">전체 이름</string>
   <string name="item_details_identity_section_personal_email_title">이메일 주소</string>
   <string name="item_details_identity_section_personal_gender_title">성별</string>
   <string name="item_details_identity_section_personal_phone_title">전화번호</string>
@@ -175,7 +175,7 @@
   <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
   <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
   <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
-  <string name="item_details_identity_section_work_title">작업 세부 정보</string>
+  <string name="item_details_identity_section_work_title">직장 세부 정보</string>
   <string name="item_details_identity_section_work_company_title">회사</string>
   <string name="item_details_identity_section_work_occupation_title">직업</string>
   <string name="item_details_identity_section_work_email_title">업무용 이메일 주소</string>
@@ -200,19 +200,19 @@
   <string name="dialog_upgrade_plan_action_cancel">다음에</string>
   <!-- Words -->
   <string name="email_address">이메일 주소</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">잘못된 이메일 주소</string>
   <string name="password">비밀번호</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">이 말풍선을 무시하고 더 이상 보지 않기 위한 버튼</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="other">%d years</item>
+    <item quantity="other">%d년</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="other">%d months</item>
+    <item quantity="other">%d개월</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="other">%d weeks</item>
+    <item quantity="other">%d주</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="other">%d일</item>
@@ -227,7 +227,7 @@
     <item quantity="other">%d초</item>
   </plurals>
   <plurals name="aliases_count">
-    <item quantity="other">%d aliases</item>
+    <item quantity="other">%d개의 별칭</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">메모 복사됨</string>
@@ -252,4 +252,9 @@
     <item quantity="other">SimpleLogin에 %d개의 별칭이 존재하지만 Proton Pass에는 누락된 별칭이 있음이 발견되었어요. 해당 별명을 불러오시겠어요?</item>
   </plurals>
   <string name="simple_login_widget_action">별칭 동기화</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">코드를 받지 못하셨나요?</string>
+  <string name="verification_code_suggestion_spam">스팸 메일함에서 “Proton Pass를 위해 이메일 주소를 확인해 주십시오“ 라는 이메일이 있는지 확인해 주십시오.</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">이메일을 찾지 못하셨다면, %s 가능합니다.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">새 코드 요청</string>
 </resources>

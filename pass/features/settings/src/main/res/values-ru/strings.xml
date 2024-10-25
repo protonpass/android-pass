@@ -31,9 +31,9 @@
   <string name="settings_share_telemetry">Анонимно делиться данными об использовании</string>
   <string name="settings_share_crashes">Делиться анонимными отчётами об ошибках</string>
   <string name="settings_preference_updated">Настройки были обновлены</string>
-  <string name="settings_display_section_title">Display</string>
-  <string name="settings_preference_display_username">Username field always visible</string>
-  <string name="settings_preference_display_autofill_pinning">Autofill pinning always visible</string>
+  <string name="settings_display_section_title">Отображение</string>
+  <string name="settings_preference_display_username">Поле имени пользователя всегда видно</string>
+  <string name="settings_preference_display_autofill_pinning">Прикрепление автоматического заполнения всегда видно</string>
   <string name="view_logs_title">Просмотр журналов</string>
   <string name="clipboard_bottomsheet_title">Буфер обмена</string>
   <string name="clipboard_option_clear_clipboard_label">Очистить буфер обмена</string>

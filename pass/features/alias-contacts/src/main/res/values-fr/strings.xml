@@ -24,22 +24,48 @@
   <string name="create_contact_title">Créer un contact</string>
   <string name="detail_contact_title">Contacts</string>
   <string name="email_input_error">L\'adresse e-mail n\'est pas valide.</string>
-  <string name="detail_contact_sender_name">Sender name</string>
-  <string name="detail_contact_display_name" comment="sender email address">When sending an email from this alias, the email will have %s as sender.</string>
-  <string name="empty_alias_contacts_title">Alias contacts</string>
-  <string name="empty_alias_contacts_body">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
-  <string name="empty_alias_contacts_learn_more">Learn more</string>
-  <string name="unblock_button">Unblock contact</string>
-  <string name="block_button">Block contact</string>
-  <string name="contact_created_date" comment="date of creation">Created %1$s ago</string>
-  <string name="no_activity_contact">No Activity in the last 14 days.</string>
-  <string name="activity_summary" comment="amount of items of each category">%1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.</string>
-  <string name="blocked_addresses_subtitle">Blocked addresses</string>
-  <string name="forwarding_addresses_subtitle">Forwarding addresses</string>
-  <string name="snackbar_contact_block_success">Contact blocked</string>
-  <string name="snackbar_contact_block_error">Could not block contact</string>
-  <string name="snackbar_contact_unblock_success">Contact unblocked</string>
-  <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
-  <string name="snackbar_sender_name_success">Sender name updated</string>
-  <string name="snackbar_sender_name_error">Could not update sender name</string>
+  <string name="detail_contact_sender_name">Nom de l\'expéditeur</string>
+  <string name="detail_contact_display_name" comment="sender email address">Lors de l\'envoi d\'un email depuis cet alias, l\'expéditeur sera %s.</string>
+  <string name="empty_alias_contacts_title">Contacts de l\'alias</string>
+  <string name="empty_alias_contacts_body">Pour masquer votre adresse e-mail personnelle, vous pouvez créer un alias qui la dissimule.</string>
+  <string name="empty_alias_contacts_learn_more">En savoir plus</string>
+  <string name="unblock_button">Débloquer le contact</string>
+  <string name="block_button">Bloquer le contact</string>
+  <string name="contact_created_date" comment="date of creation">Créé il y a %1$s</string>
+  <string name="no_activity_contact">Aucune activité au cours des 14 derniers jours</string>
+  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">au cours des 14 derniers jours</string>
+  <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d transféré</item>
+    <item quantity="other">%1$d transférés</item>
+  </plurals>
+  <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d envoyé</item>
+    <item quantity="other">%1$d envoyés</item>
+  </plurals>
+  <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d bloqué</item>
+    <item quantity="other">%1$d bloqués</item>
+  </plurals>
+  <string name="blocked_addresses_subtitle">Adresses bloquées</string>
+  <string name="forwarding_addresses_subtitle">Adresses de transfert</string>
+  <string name="snackbar_contact_block_success">Le contact a été bloqué.</string>
+  <string name="snackbar_contact_block_error">Le contact n\'a pas été bloqué.</string>
+  <string name="snackbar_contact_unblock_success">Le contact a été débloqué.</string>
+  <string name="snackbar_contact_unblock_error">Le contact n\'a pas été débloqué.</string>
+  <string name="snackbar_sender_name_success">Le nom de l\'expéditeur a été mis à jour.</string>
+  <string name="snackbar_sender_name_error">Le nom de l\'expéditeur n\'a pas été mis à jour.</string>
+  <string name="snackbar_delete_contact_success">Le contact a été supprimé.</string>
+  <string name="snackbar_delete_contact_error">Le contact n\'a pas été supprimé.</string>
+  <string name="snackbar_email_copied_success">L\'e-mail a été copié dans le presse-papiers.</string>
+  <string name="contact_option_send_email">Envoyer un message</string>
+  <string name="contact_option_copy_address">Copier l\'adresse</string>
+  <string name="contact_option_block_contact">Bloquer le contact</string>
+  <string name="contact_option_unblock_contact">Débloquer le contact</string>
+  <string name="contact_option_delete">Supprimer</string>
+  <string name="alias_contacts_bottomsheet_title">Contacts de l\'alias</string>
+  <string name="alias_contacts_bottomsheet_subtitle">Pour masquer votre adresse e-mail personnelle, vous pouvez créer un alias qui la dissimule.</string>
+  <string name="alias_contacts_explanation">Voici comment ça fonctionne :</string>
+  <string name="alias_contacts_bottomsheet_section_1">Saisissez l\'adresse à laquelle vous souhaitez envoyer un e-mail.</string>
+  <string name="alias_contacts_bottomsheet_section_2">Proton Pass crée une adresse de transfert (aussi appelée alias inversé).</string>
+  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Envoyez un message à cette adresse et il semblera être envoyé depuis</string>
 </resources>

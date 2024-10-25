@@ -22,7 +22,7 @@
   <string name="item_options_alias_trash_dialog_checkbox_text">No m\'ho tornis a recordar</string>
   <string name="item_options_alias_trash_dialog_button_text_disable">Desactiva en lloc</string>
   <string name="item_options_alias_trash_dialog_button_text_trash">Mou a la paperera</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">There was an error disabling the alias</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">S\'ha produït un error en desactivar l\'àlies.</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">S\'ha desactivat l\'àlies.</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">There was an error moving the alias to trash</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">L\'àlies s\'ha mogut a la paperera.</string>

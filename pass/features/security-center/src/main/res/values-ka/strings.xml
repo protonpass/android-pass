@@ -76,7 +76,6 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">მომხმარებლის ელფოსტის მისამართების ჩატვირთვის შეცდომა</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">ელფოსტის მისამართები ვერ მივიღე</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">გადამოწმება</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">წაშლა</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">უახლესი გაჟონვის თარიღი %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -102,17 +101,13 @@
   <string name="security_center_custom_email_already_verified">ელფოსტა უკვე გადამოწმებულია</string>
   <string name="security_center_custom_email_error_adding">ელფოსტის მისამართის დამატების შეცდომა</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">კოდი</string>
-  <string name="security_center_verify_email_code_error">არასწორი კოდი</string>
   <string name="security_center_verify_email_title">დაადასტურეთ თქვენი ელფოსტა</string>
   <string name="security_center_verify_email_subtitle">გადამოწმების კოდი გაგზავნილია მისამართზე %s. შეიყვანეთ ის ქვემოთ:</string>
-  <string name="security_center_verify_email_code_resend_header">კოდი არ მიგიღიათ?</string>
-  <string name="security_center_verify_email_code_resend_body">შეამოწმეთ სპამის საქაღალდე იმეილზე, რომელსაც ჰქვია \"დაადასტურეთ თქვენი ელფოსტის მისამართი Proton Pass-სთვის\"</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">თუ ასეთ ელფოსტას ვერ პოულობთ, შეგიძლიათ </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">ახალი კოდის გამოთხოვა.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">გამოგზავნილია ახალი მოსაწვევი. შეამოწმეთ თქვენი საფოსტო ყუთი.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">შეცდომა გადამოწმების კოდის გაგზავნისას. მოგვიანებით სცადეთ.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">მეტისმეტად ბევრი არასწორი გადამოწმება. მორგებული ელფოსტა წაიშლება.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">არასწორი გადამოწმების კოდი</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">შეცდომა ელფოსტის გადამოწმებისას. მოგვიანებით სცადეთ.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">აღმოჩენილია გაჟონვები ვისთვის</string>
   <string name="security_center_verify_report_title_none">გაჟონვები აღმოჩენილი არაა ელფოსტისთვის</string>

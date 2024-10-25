@@ -49,5 +49,5 @@
     <item quantity="other">%d pogingen resterend</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Te veel mislukte PIN-pogingen. Al uw gebruikers worden uitgelogd.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Too many failed pin attempts.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
 </resources>

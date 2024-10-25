@@ -22,24 +22,53 @@
   <string name="snackbar_contact_create_success">Contactul a fost creat.</string>
   <string name="snackbar_contact_create_error">Contactul nu s-a putut crea.</string>
   <string name="create_contact_title">Creare contact</string>
-  <string name="detail_contact_title">Contacts</string>
+  <string name="detail_contact_title">Contacte</string>
   <string name="email_input_error">Adresă de e-mail nevalidă.</string>
-  <string name="detail_contact_sender_name">Sender name</string>
-  <string name="detail_contact_display_name" comment="sender email address">When sending an email from this alias, the email will have %s as sender.</string>
-  <string name="empty_alias_contacts_title">Alias contacts</string>
-  <string name="empty_alias_contacts_body">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
-  <string name="empty_alias_contacts_learn_more">Learn more</string>
-  <string name="unblock_button">Unblock contact</string>
-  <string name="block_button">Block contact</string>
-  <string name="contact_created_date" comment="date of creation">Created %1$s ago</string>
-  <string name="no_activity_contact">No Activity in the last 14 days.</string>
-  <string name="activity_summary" comment="amount of items of each category">%1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.</string>
-  <string name="blocked_addresses_subtitle">Blocked addresses</string>
-  <string name="forwarding_addresses_subtitle">Forwarding addresses</string>
-  <string name="snackbar_contact_block_success">Contact blocked</string>
-  <string name="snackbar_contact_block_error">Could not block contact</string>
-  <string name="snackbar_contact_unblock_success">Contact unblocked</string>
-  <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
-  <string name="snackbar_sender_name_success">Sender name updated</string>
-  <string name="snackbar_sender_name_error">Could not update sender name</string>
+  <string name="detail_contact_sender_name">Nume expeditor</string>
+  <string name="detail_contact_display_name" comment="sender email address">Când trimiteți un mesaj de pe acest alias, acesta va avea %s setat ca expeditor.</string>
+  <string name="empty_alias_contacts_title">Contactele aliasului</string>
+  <string name="empty_alias_contacts_body">Pentru a vă păstra adresa de e-mail personală ascunsă, puteți crea un alias de contact care vă maschează adresa.</string>
+  <string name="empty_alias_contacts_learn_more">Detalii</string>
+  <string name="unblock_button">Deblocare contact</string>
+  <string name="block_button">Blocare contact</string>
+  <string name="contact_created_date" comment="date of creation">Creat acum %1$s</string>
+  <string name="no_activity_contact">Nicio activitate în ultimele 14 zile.</string>
+  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">în ultimele 14 zile</string>
+  <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">Redirecționate: %1$d</item>
+    <item quantity="few">Redirecționate: %1$d</item>
+    <item quantity="other">Redirecționate: %1$d</item>
+  </plurals>
+  <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">Trimise: %1$d</item>
+    <item quantity="few">Trimise: %1$d</item>
+    <item quantity="other">Trimise: %1$d</item>
+  </plurals>
+  <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">Blocate: %1$d</item>
+    <item quantity="few">Blocate: %1$d</item>
+    <item quantity="other">Blocate: %1$d</item>
+  </plurals>
+  <string name="blocked_addresses_subtitle">Adrese blocate</string>
+  <string name="forwarding_addresses_subtitle">Adrese redirecționate</string>
+  <string name="snackbar_contact_block_success">Contact blocat</string>
+  <string name="snackbar_contact_block_error">Contactul nu s-a putut bloca.</string>
+  <string name="snackbar_contact_unblock_success">Contactul a fost deblocat.</string>
+  <string name="snackbar_contact_unblock_error">Contactul nu s-a putut debloca.</string>
+  <string name="snackbar_sender_name_success">Numele expeditorului a fost actualizat.</string>
+  <string name="snackbar_sender_name_error">Nu s-a putut actualiza numele expeditorului.</string>
+  <string name="snackbar_delete_contact_success">Contactul a fost șters.</string>
+  <string name="snackbar_delete_contact_error">Nu s-a putut șterge contactul.</string>
+  <string name="snackbar_email_copied_success">Adresa de e-mail s-a copiat în memorie.</string>
+  <string name="contact_option_send_email">Trimitere mesaj</string>
+  <string name="contact_option_copy_address">Copiere adresă</string>
+  <string name="contact_option_block_contact">Blocare contact</string>
+  <string name="contact_option_unblock_contact">Deblocare contact</string>
+  <string name="contact_option_delete">Ștergere</string>
+  <string name="alias_contacts_bottomsheet_title">Contactele aliasului</string>
+  <string name="alias_contacts_bottomsheet_subtitle">Pentru a vă păstra adresa de e-mail personală ascunsă, puteți crea un alias de contact care vă maschează adresa.</string>
+  <string name="alias_contacts_explanation">Iată cum funcționează:</string>
+  <string name="alias_contacts_bottomsheet_section_1">Introduceți adresa la care trimiteți mesajul.</string>
+  <string name="alias_contacts_bottomsheet_section_2">Proton Pass va genera o adresă de redirecționare (numită și alias invers).</string>
+  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Mesajele trimise de la această vor apărea ca fiind trimise de la</string>
 </resources>

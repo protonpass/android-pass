@@ -18,62 +18,59 @@
   -->
 <resources>
   <!-- Management screen -->
-  <string name="simple_login_sync_management_title">Alias management</string>
+  <string name="simple_login_sync_management_title">Pengelolaan alias</string>
   <string name="simple_login_sync_management_domain_label">Domain</string>
-  <string name="simple_login_sync_management_domain_title">Default domain for aliases</string>
-  <string name="simple_login_sync_management_domain_option_blank">Not selected</string>
-  <string name="simple_login_sync_management_mailboxes_label">Mailboxes</string>
-  <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
-  <string name="simple_login_sync_management_mailbox_default">Default</string>
-  <string name="simple_login_sync_management_mailbox_unverified">Unverified mailbox</string>
-  <string name="simple_login_sync_management_vault_title">SimpleLogin sync</string>
-  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
-  <string name="simple_login_sync_management_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_domains">Default domain for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_mailboxes">Default mailbox for aliases</string>
+  <string name="simple_login_sync_management_domain_title">Domain bawaan untuk alias</string>
+  <string name="simple_login_sync_management_domain_option_blank">Tidak dipilih</string>
+  <string name="simple_login_sync_management_mailboxes_label">Kotak surat</string>
+  <string name="simple_login_sync_management_mailboxes_description">Kotak surat adalah tempat di mana email yang dikirim ke alias akan diteruskan. Kotak surat ini adalah kotak surat yang biasa Anda gunakan, mis. Gmail, Outlook, Proton Mail, dll.</string>
+  <string name="simple_login_sync_management_mailbox_default">Bawaan</string>
+  <string name="simple_login_sync_management_mailbox_unverified">Kotak masuk tidak terverifikasi</string>
+  <string name="simple_login_sync_management_vault_title">Sinkronisasi SimpleLogin</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Terdapat kesalahan dalam memperoleh rincian alias SL</string>
+  <string name="simple_login_sync_management_mailboxes_title">Kotak surat bawaan untuk alias</string>
+  <string name="simple_login_sync_management_dialog_title_domains">Domain bawaan untuk alias</string>
+  <string name="simple_login_sync_management_dialog_title_mailboxes">Kotak surat bawaan untuk alias</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sinkronkan alias</string>
   <string name="simple_login_sync_enable_snackbar_error">Ada kesalahan mengaktifkan sinkroniasi alias SimpleLogin</string>
   <string name="simple_login_sync_enable_snackbar_success">Sinkronisasi alias SimpleLogin berhasil diaktifkan</string>
   <!-- Mailbox create screen -->
-  <string name="simple_login_sync_mailbox_create_title">Add mailbox</string>
-  <string name="simple_login_sync_mailbox_create_message_error">There was an error adding the mailbox</string>
+  <string name="simple_login_sync_mailbox_create_title">Tambahkan kotak surat</string>
+  <string name="simple_login_sync_mailbox_create_message_error">Terdapat kesalahan dalam menambahkan kotak surat</string>
   <!-- Mailbox verify screen -->
-  <string name="simple_login_sync_mailbox_verify_title">Confirm your mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">We sent a verification code to %s. Enter it below:</string>
-  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">your email address</string>
-  <string name="simple_login_sync_mailbox_verify_code_resend">Resend code in %s</string>
-  <string name="simple_login_sync_mailbox_verify_code_request_new">request a new code</string>
-  <string name="simple_login_sync_mailbox_verify_code_not_received" comment="the placeholder will be replaced by 'request a new code' link text">Code not received? Check your spam folder and if not there %s instead.</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Invalid mailbox verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_error">There was an error verifying the mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_success">Mailbox successfully verified</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">There was an error sending verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verification code successfully sent</string>
+  <string name="simple_login_sync_mailbox_verify_title">Konfirmasi kotak surat Anda</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Kami telah mengirimkan kode verifikasi ke %s. Masukkan kode tersebut pada kolom di bawah ini:</string>
+  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">alamat email Anda</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Kode verifikasi kotak surat tidak valid</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_error">Terdapat kesalahan dalam memverifikasi kotak surat</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_success">Kotak surat berhasil diverifikasi</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Terdapat kesalahan dalam mengirim kode verifikasi</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Kode verifikasi berhasil dikirim</string>
   <!-- Mailbox delete screen -->
-  <string name="simple_login_sync_mailbox_delete_title">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">All aliases using the mailbox %s will be also deleted. To keep receiving emails transfer these aliases to a different mailbox:</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfer aliases</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">To mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transfer and delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_error">There was an error deleting mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_success">Mailbox successfully deleted</string>
-  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transfer aliases to</string>
+  <string name="simple_login_sync_mailbox_delete_title">Hapus kotak surat</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">Seluruh alias yang menggunakan kotak surat %s juga akan ikut dihapus. Untuk dapat tetap menerima email, transfer alias berikut ke kotak surat yang berbeda:</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfer alias</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Ke kotak surat</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete">Hapus kotak surat</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transfer dan hapus kotak surat</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">Terdapat kesalahan dalam menghapus kotak surat</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_success">Kotak surat berhasil dihapus</string>
+  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transfer alias ke</string>
   <!-- Domain select screen -->
-  <string name="simple_login_sync_domain_select_title">Default domain</string>
-  <string name="simple_login_sync_domain_select_title_none">none</string>
-  <string name="simple_login_sync_domain_select_description_none">No domain</string>
-  <string name="simple_login_sync_domain_select_description_custom">Your domain</string>
-  <string name="simple_login_sync_domain_select_description_free">Public domain</string>
-  <string name="simple_login_sync_domain_select_description_premium">Premium domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">There was an error fetching SL alias domains</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
+  <string name="simple_login_sync_domain_select_title">Domain bawaan</string>
+  <string name="simple_login_sync_domain_select_title_none">tidak ada</string>
+  <string name="simple_login_sync_domain_select_description_none">Tidak ada domain</string>
+  <string name="simple_login_sync_domain_select_description_custom">Domain Anda</string>
+  <string name="simple_login_sync_domain_select_description_free">Domain publik</string>
+  <string name="simple_login_sync_domain_select_description_premium">Domain premium</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">Terdapat kesalahan dalam memperoleh domain alias SL</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Terdapat kesalahan dalam memperbarui domain alias SL</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Domain alias SL berhasil diperbarui</string>
   <!-- Mailbox options screen -->
-  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Cannot display mailbox options</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_error">There was an error updating default mailbox</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Default mailbox successfully updated</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Pilihan kotak surat tidak dapat ditampilkan</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_error">Terdapat kesalahan dalam memperbarui kotak surat bawaan</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Kotak surat bawaan berhasil diperbarui</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Brankas SL bawaan</string>
   <string name="simple_login_sync_shared_default_vault_description">Alias SimpleLogin akan diimpor ke brankas ini.</string>

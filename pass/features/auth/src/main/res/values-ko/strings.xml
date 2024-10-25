@@ -37,7 +37,7 @@
   <string name="auth_error_pin_cannot_be_empty">PIN은 비울 수 없습니다</string>
   <string name="auth_extra_password_label">추가 비밀번호 입력</string>
   <string name="auth_extra_password_error">추가 비밀번호 인증 중 오류가 발생했습니다</string>
-  <string name="auth_extra_password_too_many_attempts">너무 많은 로그인 시도 실패입니다. 로그아웃 되었습니다.</string>
+  <string name="auth_extra_password_too_many_attempts">너무 많이 로그인 시도를 실패했습니다. 로그아웃 되었습니다.</string>
   <string name="auth_error_wrong_password_no_attempts">잘못된 비밀번호입니다</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="other">잘못된 비밀번호입니다. %d회 남았습니다</item>
@@ -46,5 +46,5 @@
     <item quantity="other">%d회 시도 남음</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">너무 많은 PIN 코드 시도. 사용자가 로그아웃됩니다.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">너무 많이 PIN 인증 시도에 실패함.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
 </resources>

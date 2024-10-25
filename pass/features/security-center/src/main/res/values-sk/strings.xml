@@ -80,7 +80,6 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Chyba pri načítaní vlastných emailových adries</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Nepodarilo sa získať emailové adresy</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">Overiť</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Odstrániť</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Posledný únik údajov dňa %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -108,20 +107,16 @@
   <string name="security_center_custom_email_already_verified">Email už je overený</string>
   <string name="security_center_custom_email_error_adding">Chyba pri pridávaní emailovej adresy</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">Kód</string>
-  <string name="security_center_verify_email_code_error">Neplatný kód</string>
   <string name="security_center_verify_email_title">Potvrďte svoj email</string>
   <string name="security_center_verify_email_subtitle">Odoslali sme overovací kód na adresu %s. Zadajte ho nižšie, prosím:</string>
-  <string name="security_center_verify_email_code_resend_header">Nedostali ste kód?</string>
-  <string name="security_center_verify_email_code_resend_body">Skontrolujte, prosím, či sa vo vašom spame nenachádza email s názvom \"Potvrďte, prosím, svoju emailovú adresu pre Proton Pass\".</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Ak takýto email nemôžete nájsť, môžete </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">požiadať o nový kód.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">Nový overovací kód bol odoslaný, skontrolujte svoju doručenú poštu, prosím.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Pri odosielaní overovacieho kódu došlo k chybe. Skúste to neskôr, prosím.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Príliš veľa neplatných overení. Odstraňujeme vlastný email.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Invalid verification code</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">There was an error verifying the email. Please try again later.</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_report_title_detected">Bol zistený únik</string>
-  <string name="security_center_verify_report_title_none">Nebol zistený únik</string>
+  <string name="security_center_verify_report_title_detected">Zistený únik údajov pre</string>
+  <string name="security_center_verify_report_title_none">Nebol zistený žiadny únik údajov pre</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Použité v</string>
   <string name="security_center_email_report_breaches_header">Úniky údajov</string>
@@ -130,7 +125,7 @@
   <string name="security_center_email_report_snackbar_marked_as_resolved_success">Únik bol označený ako vyriešený</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_error">Nemožno označiť ako vyriešené</string>
   <string name="security_center_email_report_snackbar_get_breaches_error">Nepodarilo sa načítať úniky</string>
-  <string name="security_center_email_report_options_menu">Menu nastavení pre hlásenia o únikoch</string>
+  <string name="security_center_email_report_options_menu">Ponuka možností hlásení úniku údajov</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">Vaše odhalené informácie</string>
   <string name="security_center_report_detail_subtitle">Vaše informácie boli súčasťou úniku údajov a boli nájdené dňa __DATE__</string>
@@ -146,11 +141,11 @@
   <string name="security_center_report_resolve_confirmation_dialog_message">Všetky aktuálne úniky budú označené ako vyriešené. V prípade budúcich únikov údajov dostanete informáciu.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Proton adresy</string>
-  <string name="security_center_proton_list_no_breaches_detected">Neboli zistené žiadne prípady únikov</string>
+  <string name="security_center_proton_list_no_breaches_detected">Neboli zistené žiadne úniky údajov</string>
   <string name="security_center_proton_list_excluded_from_monitoring">Vylúčené z monitorovania</string>
   <string name="security_center_proton_list_error">Nepodarilo sa načítať adresy</string>
   <string name="security_center_proton_list_included_in_monitoring">Zapnite monitorovanie, ktoré vás upozorní, keď dôjde k úniku vašich Proton adries.</string>
-  <string name="security_center_proton_list_options_menu">Menu nastavení na obrazovke Proton</string>
+  <string name="security_center_proton_list_options_menu">Ponuka možností obrazovky Proton</string>
   <string name="security_center_proton_list_not_monitored">Nemonitorované</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Pozastaviť monitorovanie</string>
@@ -166,10 +161,10 @@
   <string name="security_center_alias_list_top_bar_title">Hide-my-email aliasy</string>
   <string name="security_center_alias_list_excluded_from_monitoring">Vylúčené z monitorovania</string>
   <string name="security_center_alias_list_error">Nepodarilo sa načítať adresy</string>
-  <string name="security_center_alias_list_included_in_monitoring">Zapnite monitorovanie, ak chcete dostávať upozornenia, keď dôjde k úniku vašich aliasov služby Hide-my-email.</string>
+  <string name="security_center_alias_list_included_in_monitoring">Zapnite monitorovanie, ak chcete dostávať upozornenia, ak dôjde k úniku vašich Hide-my-email aliasov.</string>
   <string name="security_center_alias_list_monitored">Monitorované</string>
-  <string name="security_center_alias_list_custom_email_message">Aliasy s vlastnými doménami nie sú monitorované, pridajte ich na monitorovanie ako vlastný email.</string>
-  <string name="security_center_alias_list_options_menu">Menu nastavení na obrazovke aliasov</string>
+  <string name="security_center_alias_list_custom_email_message">Aliasy s vlastnými doménami nie sú monitorované, pridajte ich k monitorovaniu ako vlastný email.</string>
+  <string name="security_center_alias_list_options_menu">Ponuka možností obrazovky aliasov</string>
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Zabezpečenie údajov</string>
   <string name="dark_web_help_dialog_subtitle">Spoločnosť Proton nikdy nezdieľa vaše informácie s tretími stranami. Všetky údaje pochádzajú z vyhľadávania výskytu Proton domén na dark webe.</string>

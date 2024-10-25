@@ -12,7 +12,7 @@
   <string name="profile_option_autofill">Αυτόματη συμπλήρωση</string>
   <string name="profile_option_autofill_subtitle">Συμπληρώστε αυτόματα τα ονόματα χρήστη και τους κωδικούς πρόσβασής σας.</string>
   <string name="profile_option_secure_links">Ασφαλής σύνδεσμοι</string>
-  <string name="profile_option_alias_management">Alias management</string>
+  <string name="profile_option_alias_management">Διαχείρισης ψευδωνύμων</string>
   <string name="profile_error_biometry_failed_to_start">Αδυναμία εκκίνησης της βιομετρικής ταυτοποίησης</string>
   <string name="profile_error_biometry_failed_to_authenticate">Αποτυχία επαλήθευσης</string>
   <string name="profile_fingerprint_lock_enabled">Ενεργοποιημένο κλείδωμα δακτυλικών αποτυπωμάτων</string>

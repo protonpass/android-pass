@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
@@ -70,11 +71,18 @@ import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEn
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.domain.PlanType
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.AppVersionCopied
+import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.FilteredByAliases
+import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.FilteredByCreditCards
+import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.FilteredByIdentities
+import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.FilteredByLogins
+import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.FilteredByLoginsWithMFA
+import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.FilteredByNote
 import proton.android.pass.featureprofile.impl.accountswitcher.AccountItem
 import proton.android.pass.featureprofile.impl.accountswitcher.AccountListItem
 import proton.android.pass.featuresearchoptions.api.FilterOption
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
+import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.CheckPasskeySupport
@@ -97,14 +105,14 @@ class ProfileViewModel @Inject constructor(
     private val userManager: UserManager,
     private val refreshContent: RefreshContent,
     private val searchOptionsRepository: HomeSearchOptionsRepository,
+    private val accountManager: AccountManager,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
     observeUpgradeInfo: ObserveUpgradeInfo,
     getDefaultBrowser: GetDefaultBrowser,
     observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock,
-    observeSecureLinksCount: ObserveSecureLinksCount,
-    accountManager: AccountManager
+    observeSecureLinksCount: ObserveSecureLinksCount
 ) : ViewModel() {
 
     private val userAppLockSectionStateFlow: Flow<AppLockSectionState> = combine(
@@ -372,34 +380,47 @@ class ProfileViewModel @Inject constructor(
         state = state
     )
 
-    fun onAliasCountClick() {
-        searchOptionsRepository.setFilterOption(FilterOption(SearchFilterType.Alias))
+    private suspend fun selectFilters(filterType: SearchFilterType) {
+        accountManager.getPrimaryUserId().firstOrNull()?.let {
+            searchOptionsRepository.setVaultSelectionOption(it, VaultSelectionOption.AllVaults)
+        }
+        searchOptionsRepository.setFilterOption(FilterOption(filterType))
+    }
+
+    fun onAliasCountClick() = viewModelScope.launch {
+        selectFilters(SearchFilterType.Alias)
         eventFlow.update { ProfileEvent.HomeAliases }
+        snackbarDispatcher(FilteredByAliases)
     }
 
-    fun onCreditCardCountClick() {
-        searchOptionsRepository.setFilterOption(FilterOption(SearchFilterType.CreditCard))
+    fun onCreditCardCountClick() = viewModelScope.launch {
+        selectFilters(SearchFilterType.CreditCard)
         eventFlow.update { ProfileEvent.HomeCreditCards }
+        snackbarDispatcher(FilteredByCreditCards)
     }
 
-    fun onIdentityCountClick() {
-        searchOptionsRepository.setFilterOption(FilterOption(SearchFilterType.Identity))
+    fun onIdentityCountClick() = viewModelScope.launch {
+        selectFilters(SearchFilterType.Identity)
         eventFlow.update { ProfileEvent.HomeIdentities }
+        snackbarDispatcher(FilteredByIdentities)
     }
 
-    fun onLoginCountClick() {
-        searchOptionsRepository.setFilterOption(FilterOption(SearchFilterType.Login))
+    fun onLoginCountClick() = viewModelScope.launch {
+        selectFilters(SearchFilterType.Login)
         eventFlow.update { ProfileEvent.HomeLogins }
+        snackbarDispatcher(FilteredByLogins)
     }
 
-    fun onMFACountClick() {
-        searchOptionsRepository.setFilterOption(FilterOption(SearchFilterType.LoginMFA))
+    fun onMFACountClick() = viewModelScope.launch {
+        selectFilters(SearchFilterType.LoginMFA)
         eventFlow.update { ProfileEvent.AllMFA }
+        snackbarDispatcher(FilteredByLoginsWithMFA)
     }
 
-    fun onNoteCountClick() {
-        searchOptionsRepository.setFilterOption(FilterOption(SearchFilterType.Note))
+    fun onNoteCountClick() = viewModelScope.launch {
+        selectFilters(SearchFilterType.Note)
         eventFlow.update { ProfileEvent.HomeNotes }
+        snackbarDispatcher(FilteredByNote)
     }
 
     private companion object {

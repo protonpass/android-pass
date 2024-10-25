@@ -97,7 +97,7 @@ private fun List<SearchFilterType>.mapToBottomSheetItem(
                         successState?.summary?.identities?.let { " ($it)" }
 
                     LoginMFA -> stringResource(id = R.string.item_type_filter_login_mfa) +
-                        successState?.summary?.login?.let { " ($it)" }
+                        successState?.summary?.loginWithMFA?.let { " ($it)" }
                 }
                 BottomSheetItemTitle(text = title, color = color)
             }
@@ -151,6 +151,7 @@ fun FilterBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvider::cla
                     summary = ItemCountSummary(
                         total = 0,
                         login = 0,
+                        loginWithMFA = 0,
                         note = 0,
                         alias = 0,
                         creditCard = 0,

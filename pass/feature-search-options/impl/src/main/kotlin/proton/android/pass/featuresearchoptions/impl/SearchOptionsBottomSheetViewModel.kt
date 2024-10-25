@@ -87,7 +87,7 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
                 SearchFilterType.Note -> summary.note
                 SearchFilterType.CreditCard -> summary.creditCard
                 SearchFilterType.Identity -> summary.identities
-                SearchFilterType.LoginMFA -> summary.login
+                SearchFilterType.LoginMFA -> summary.loginWithMFA
             }.toInt(),
             showBulkActionsOption = bulkActionsEnabled,
             event = event

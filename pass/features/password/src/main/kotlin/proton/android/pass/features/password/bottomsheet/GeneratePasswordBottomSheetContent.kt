@@ -45,7 +45,7 @@ import proton.android.pass.features.password.R
 internal fun GeneratePasswordBottomSheetContent(
     modifier: Modifier = Modifier,
     state: GeneratePasswordUiState,
-    onEvent: (GeneratePasswordEvent) -> Unit,
+    onEvent: (GeneratePasswordUiEvent) -> Unit,
     buttonSection: @Composable () -> Unit
 ) {
     Column(
@@ -55,7 +55,7 @@ internal fun GeneratePasswordBottomSheetContent(
         verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         GeneratePasswordBottomSheetTitle(onRegenerate = {
-            onEvent(GeneratePasswordEvent.OnRegeneratePasswordClick)
+            onEvent(GeneratePasswordUiEvent.OnRegeneratePasswordClick)
         })
         GeneratePasswordViewContent(
             state = state,

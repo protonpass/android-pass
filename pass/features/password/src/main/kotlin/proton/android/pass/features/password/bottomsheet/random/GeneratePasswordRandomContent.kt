@@ -87,8 +87,10 @@ internal fun GeneratePasswordRandomContent(
             text = stringResource(R.string.special_characters),
             value = includeSymbols,
             isEnabled = canToggleSymbols,
-            onChange = {
-                onEvent(GeneratePasswordEvent.OnRandomUseSpecialCharactersChange(it))
+            onChange = { newIncludeSymbols ->
+                GeneratePasswordEvent.OnPasswordConfigChanged(
+                    config = config.copy(includeSymbols = newIncludeSymbols)
+                ).also(onEvent)
             }
         )
 
@@ -145,9 +147,9 @@ internal fun GeneratePasswordRandomContentPreview(@PreviewParameter(ThemePreview
             GeneratePasswordRandomContent(
                 config = PasswordConfig.Random(
                     passwordLength = 12,
-                    passwordIncludeSymbols = true,
-                    passwordIncludeUppercase = false,
-                    passwordIncludeNumbers = true
+                    includeSymbols = true,
+                    includeUppercase = false,
+                    includeNumbers = true
                 ),
                 onEvent = {}
             )

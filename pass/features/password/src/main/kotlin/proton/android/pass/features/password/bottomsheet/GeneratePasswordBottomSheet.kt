@@ -59,9 +59,6 @@ fun GeneratePasswordBottomSheet(modifier: Modifier = Modifier, onNavigate: (Gene
                 is GeneratePasswordEvent.OnRandomUseCapitalLettersChange -> {
                     viewModel.onCapitalLettersChange(it.value)
                 }
-                is GeneratePasswordEvent.OnRandomUseSpecialCharactersChange -> {
-                    viewModel.onHasSpecialCharactersChange(it.value)
-                }
                 GeneratePasswordEvent.OnRegeneratePasswordClick -> {
                     viewModel.onRegeneratePassword()
                 }

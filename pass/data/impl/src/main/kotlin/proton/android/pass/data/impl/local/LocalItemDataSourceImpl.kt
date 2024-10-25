@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.local
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
@@ -28,6 +29,7 @@ import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
+import proton.android.pass.data.impl.db.dao.SummaryRow
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -150,30 +152,32 @@ class LocalItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?
-    ): Flow<ItemCountSummary> = database.itemsDao()
-        .itemSummary(userId.id, shareIds.map { it.id }, itemState?.value)
-        .map { values ->
-            val logins =
-                values.firstOrNull { it.itemKind == ItemCategory.Login.value }?.itemCount ?: 0
-            val aliases =
-                values.firstOrNull { it.itemKind == ItemCategory.Alias.value }?.itemCount ?: 0
-            val notes =
-                values.firstOrNull { it.itemKind == ItemCategory.Note.value }?.itemCount ?: 0
-            val creditCards =
-                values.firstOrNull { it.itemKind == ItemCategory.CreditCard.value }?.itemCount
-                    ?: 0
-            val identities =
-                values.firstOrNull { it.itemKind == ItemCategory.Identity.value }?.itemCount
-                    ?: 0
-            ItemCountSummary(
-                total = logins + aliases + notes + creditCards,
-                login = logins,
-                alias = aliases,
-                note = notes,
-                creditCard = creditCards,
-                identities = identities
-            )
-        }
+    ): Flow<ItemCountSummary> = combine(
+        database.itemsDao().itemSummary(userId.id, shareIds.map { it.id }, itemState?.value),
+        database.itemsDao().countAllItemsWithTotp(userId.id)
+    ) { values: List<SummaryRow>, totpCount: Int ->
+        val logins =
+            values.firstOrNull { it.itemKind == ItemCategory.Login.value }?.itemCount ?: 0
+        val aliases =
+            values.firstOrNull { it.itemKind == ItemCategory.Alias.value }?.itemCount ?: 0
+        val notes =
+            values.firstOrNull { it.itemKind == ItemCategory.Note.value }?.itemCount ?: 0
+        val creditCards =
+            values.firstOrNull { it.itemKind == ItemCategory.CreditCard.value }?.itemCount
+                ?: 0
+        val identities =
+            values.firstOrNull { it.itemKind == ItemCategory.Identity.value }?.itemCount
+                ?: 0
+        ItemCountSummary(
+            total = logins + aliases + notes + creditCards,
+            login = logins,
+            loginWithMFA = totpCount.toLong(),
+            alias = aliases,
+            note = notes,
+            creditCard = creditCards,
+            identities = identities
+        )
+    }
 
     override suspend fun updateLastUsedTime(
         shareId: ShareId,
@@ -211,6 +215,9 @@ class LocalItemDataSourceImpl @Inject constructor(
     override fun observeAllItemsWithTotp(userId: UserId): Flow<List<ItemWithTotp>> = database.itemsDao()
         .observeAllItemsWithTotp(userId.id)
         .map { items -> items.map { it.toItemWithTotp() } }
+
+    override fun countAllItemsWithTotp(userId: UserId): Flow<Int> = database.itemsDao()
+        .countAllItemsWithTotp(userId.id)
 
     override fun observeItemsWithTotpForShare(userId: UserId, shareId: ShareId): Flow<List<ItemWithTotp>> =
         database.itemsDao()

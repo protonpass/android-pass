@@ -19,11 +19,14 @@
 package proton.android.pass.data.impl.usecases.simplelogin
 
 import kotlinx.coroutines.flow.first
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.usecases.CreateItem
+import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
 
 class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
@@ -32,7 +35,7 @@ class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
     private val shareKeyRepository: ShareKeyRepository
 ) : SyncSimpleLoginPendingAliases {
 
-    override suspend fun invoke() {
+    override suspend fun invoke(userId: UserId) {
         val syncStatus = repository.observeSyncStatus().first()
 
         if (!syncStatus.isSyncEnabled) {
@@ -44,28 +47,25 @@ class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
         val shareKey = shareKeyRepository.getLatestKeyForShare(pendingAliasedDefaultShareId).first()
 
         do {
-            repository.getPendingAliases()
-                .let { pendingAliases ->
-                    hasMorePendingAliases = pendingAliases.lastToken != null
-                    pendingAliases.aliases
-                }
-                .map { alias ->
-                    alias.id to createItem.create(
-                        shareKey = shareKey,
-                        itemContents = ItemContents.Alias(
-                            title = alias.email,
-                            aliasEmail = alias.email,
-                            note = ""
-                        )
-                    ).request
-                }
-                .also { pendingAliasesItems ->
-                    repository.createPendingAliases(
-                        defaultShareId = pendingAliasedDefaultShareId,
-                        pendingAliasesItems = pendingAliasesItems
-                    )
-                }
+            val pendingAliases = repository.getPendingAliases()
+            hasMorePendingAliases = pendingAliases.lastToken != null
+            val requests = pendingAliases.aliases.map { alias ->
+                alias.id to requestForItem(shareKey, alias.email)
+            }
+
+            repository.createPendingAliases(
+                defaultShareId = pendingAliasedDefaultShareId,
+                pendingAliasesItems = requests
+            )
         } while (hasMorePendingAliases)
     }
 
+    private fun requestForItem(shareKey: ShareKey, email: String): EncryptedCreateItem = createItem.create(
+        shareKey = shareKey,
+        itemContents = ItemContents.Alias(
+            title = email,
+            aliasEmail = email,
+            note = ""
+        )
+    ).request
 }

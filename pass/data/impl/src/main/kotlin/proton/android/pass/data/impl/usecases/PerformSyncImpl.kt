@@ -60,7 +60,7 @@ class PerformSyncImpl @Inject constructor(
             }
         }
 
-        val pendingSlAliases = async { syncPendingSlAliases() }
+        val pendingSlAliases = async { syncPendingSlAliases(userId) }
         pendingSlAliases.invokeOnCompletion { error ->
             if (error == null) {
                 PassLogger.i(TAG, "Pending SL aliases sync finished for $userId")
@@ -91,8 +91,8 @@ class PerformSyncImpl @Inject constructor(
                 onFailure = { Result.failure(it) }
             )
 
-    private suspend fun syncPendingSlAliases(): Result<Unit> =
-        runCatching { withTimeout(2.minutes) { syncPendingAliases() } }
+    private suspend fun syncPendingSlAliases(userId: UserId): Result<Unit> =
+        runCatching { withTimeout(2.minutes) { syncPendingAliases(userId) } }
             .fold(
                 onSuccess = { Result.success(Unit) },
                 onFailure = { Result.failure(it) }

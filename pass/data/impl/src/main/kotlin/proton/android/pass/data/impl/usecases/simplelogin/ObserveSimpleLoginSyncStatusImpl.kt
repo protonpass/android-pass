@@ -26,6 +26,7 @@ import javax.inject.Inject
 
 class ObserveSimpleLoginSyncStatusImpl @Inject constructor(
     private val repository: SimpleLoginRepository
+
 ) : ObserveSimpleLoginSyncStatus {
 
     override fun invoke(): Flow<SimpleLoginSyncStatus> = repository.observeSyncStatus()

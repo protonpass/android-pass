@@ -27,9 +27,13 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.some
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
@@ -52,6 +56,7 @@ import proton.android.pass.data.impl.responses.SimpleLoginAliasSettingsData
 import proton.android.pass.data.impl.responses.SimpleLoginPendingAliasesData
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.UserAccessData
+import proton.android.pass.domain.Vault
 import proton.android.pass.domain.simplelogin.SimpleLoginAlias
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasMailbox
@@ -78,15 +83,7 @@ class SimpleLoginRepositoryImpl @Inject constructor(
             refreshSyncStatus(userId)
         }
         .flatMapLatest { userId ->
-            combine(
-                userAccessDataRepository.observe(userId),
-                localSimpleLoginDataSource.observeSyncPreference()
-            ) { nullableUserAccessData, isSimpleLoginSyncPreferenceEnabled ->
-                nullableUserAccessData?.toSimpleLoginSyncStatus(
-                    userId = userId,
-                    isSimpleLoginSyncPreferenceEnabled = isSimpleLoginSyncPreferenceEnabled
-                )
-            }
+            syncStatusForUser(userId)
         }
         .filterNotNull()
 
@@ -309,40 +306,61 @@ class SimpleLoginRepositoryImpl @Inject constructor(
 
     private suspend fun refreshSyncStatus(userId: UserId) {
         userAccessDataRepository.refresh(userId)
-
-        userAccessDataRepository.observe(userId)
+        val userAccessData = userAccessDataRepository.observe(userId)
             .filterNotNull()
             .first()
-            .also { userAccessData ->
-                // when SL sync is disabled userAccessData.pendingAliasCount always returns 0
-                // in order to get the real pendingAliasCount we need to fetch it from other endpoint
-                // https://confluence.protontech.ch/pages/viewpage.action?pageId=157843213#SLPasssync-Clientscenarios
-                if (!userAccessData.isSimpleLoginSyncEnabled) {
-                    userAccessDataRepository.update(
-                        userId = userId,
-                        userAccessData = userAccessData.copy(
-                            simpleLoginSyncPendingAliasCount = remoteSimpleLoginDataSource
-                                .getSimpleLoginSyncStatus(userId)
-                                .syncStatus
-                                .pendingAliasCount
-                        )
-                    )
-                }
-            }
+
+        // when SL sync is disabled userAccessData.pendingAliasCount always returns 0
+        // in order to get the real pendingAliasCount we need to fetch it from other endpoint
+        // https://confluence.protontech.ch/pages/viewpage.action?pageId=157843213#SLPasssync-Clientscenarios
+        if (!userAccessData.isSimpleLoginSyncEnabled) {
+            userAccessDataRepository.update(
+                userId = userId,
+                userAccessData = userAccessData.copy(
+                    simpleLoginSyncPendingAliasCount = remoteSimpleLoginDataSource
+                        .getSimpleLoginSyncStatus(userId)
+                        .syncStatus
+                        .pendingAliasCount
+                )
+            )
+        }
     }
 
-    private suspend fun UserAccessData.toSimpleLoginSyncStatus(
-        userId: UserId,
-        isSimpleLoginSyncPreferenceEnabled: Boolean
+    private fun userAccessDataWithVaultFlow(userId: UserId): Flow<Option<Pair<UserAccessData, Vault>>> =
+        userAccessDataRepository.observe(userId)
+            .mapLatest { userAccessData: UserAccessData? ->
+                if (userAccessData == null) return@mapLatest None
+                val shareId = ShareId(userAccessData.simpleLoginSyncDefaultShareId)
+                val defaultVault = observeVaultById(
+                    userId = userId,
+                    shareId = shareId
+                ).firstOrNull()
+
+                if (defaultVault == null) {
+                    userAccessDataRepository.refresh(userId)
+                    None
+                } else {
+                    (userAccessData to defaultVault).some()
+                }
+            }
+
+    private fun syncStatusForUser(userId: UserId): Flow<SimpleLoginSyncStatus?> = combine(
+        userAccessDataWithVaultFlow(userId),
+        localSimpleLoginDataSource.observeSyncPreference()
+    ) { optionalUserAccessAndVault, isSimpleLoginSyncPreferenceEnabled ->
+        val (userAccess, vault) = optionalUserAccessAndVault.value() ?: return@combine null
+        userAccess.toSimpleLoginSyncStatus(isSimpleLoginSyncPreferenceEnabled, vault)
+    }
+
+    private fun UserAccessData.toSimpleLoginSyncStatus(
+        isSimpleLoginSyncPreferenceEnabled: Boolean,
+        defaultVault: Vault
     ) = SimpleLoginSyncStatus(
         isSyncEnabled = isSimpleLoginSyncEnabled,
         isPreferenceEnabled = isSimpleLoginSyncPreferenceEnabled,
         pendingAliasCount = simpleLoginSyncPendingAliasCount,
         canManageAliases = canManageSimpleLoginAliases,
-        defaultVault = observeVaultById(
-            userId = userId,
-            shareId = simpleLoginSyncDefaultShareId.let(::ShareId)
-        ).first()
+        defaultVault = defaultVault
     )
 
     private fun SimpleLoginAliasDomainData.toDomain() = SimpleLoginAliasDomain(

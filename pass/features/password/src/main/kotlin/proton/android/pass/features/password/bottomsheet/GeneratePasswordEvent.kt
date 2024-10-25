@@ -22,7 +22,7 @@ import proton.android.pass.commonrust.api.passwords.PasswordConfig
 import proton.android.pass.preferences.PasswordGenerationMode
 import proton.android.pass.preferences.WordSeparator
 
-sealed interface GeneratePasswordEvent {
+internal sealed interface GeneratePasswordEvent {
     data object OnRegeneratePasswordClick : GeneratePasswordEvent
     data object OnPasswordModeChangeClick : GeneratePasswordEvent
     data class OnPasswordModeChange(val mode: PasswordGenerationMode) : GeneratePasswordEvent

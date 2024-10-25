@@ -315,6 +315,15 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
+        SELECT COUNT(*) FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.HAS_TOTP} = 1
+        """
+    )
+    abstract fun countAllItemsWithTotp(userId: String): Flow<Int>
+
+    @Query(
+        """
         SELECT * FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.HAS_PASSKEYS} = 1

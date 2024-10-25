@@ -99,6 +99,7 @@ interface LocalItemDataSource {
     suspend fun getItemsPendingForPasskeyMigration(): List<ItemEntity>
     fun observeAllItemsWithTotp(userId: UserId): Flow<List<ItemWithTotp>>
     fun observeItemsWithTotpForShare(userId: UserId, shareId: ShareId): Flow<List<ItemWithTotp>>
+    fun countAllItemsWithTotp(userId: UserId): Flow<Int>
     fun observeAllItemsWithPasskeys(userId: UserId): Flow<List<ItemEntity>>
     fun observeItemsWithPasskeys(userId: UserId, shareIds: List<ShareId>): Flow<List<ItemEntity>>
     suspend fun updateItemFlags(

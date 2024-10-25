@@ -33,12 +33,15 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.body3Inverted
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetCancelConfirm
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
-import proton.android.pass.features.password.R
 import proton.android.pass.features.password.GeneratePasswordNavigation
+import proton.android.pass.features.password.R
 
 @Suppress("CyclomaticComplexMethod", "ComplexMethod")
 @Composable
-fun GeneratePasswordBottomSheet(modifier: Modifier = Modifier, onNavigate: (GeneratePasswordNavigation) -> Unit) {
+fun GeneratePasswordBottomSheet(
+    modifier: Modifier = Modifier,
+    onNavigate: (GeneratePasswordNavigation) -> Unit
+) {
     val viewModel = hiltViewModel<GeneratePasswordViewModel>()
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
@@ -50,15 +53,15 @@ fun GeneratePasswordBottomSheet(modifier: Modifier = Modifier, onNavigate: (Gene
                 is GeneratePasswordEvent.OnPasswordModeChange -> {
                     viewModel.onPasswordModeChange(it.mode)
                 }
+
                 GeneratePasswordEvent.OnPasswordModeChangeClick -> {
                     onNavigate(GeneratePasswordNavigation.OnSelectPasswordMode)
                 }
-                is GeneratePasswordEvent.OnWordsCountChange -> {
-                    viewModel.onWordsCountChange(it.count)
-                }
+
                 GeneratePasswordEvent.OnWordsSeparatorClick -> {
                     onNavigate(GeneratePasswordNavigation.OnSelectWordSeparator)
                 }
+
                 is GeneratePasswordEvent.OnWordsSeparatorChange -> {
                     viewModel.onWordsSeparatorChange(it.separator)
                 }

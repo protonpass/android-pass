@@ -19,6 +19,7 @@
 package proton.android.pass.featureprofile.impl
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -50,7 +51,11 @@ import proton.android.pass.composecomponents.impl.item.icon.MFAIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 
 @Composable
-internal fun ItemSummary(modifier: Modifier = Modifier, itemSummaryUiState: ItemSummaryUiState) {
+internal fun ItemSummary(
+    modifier: Modifier = Modifier,
+    itemSummaryUiState: ItemSummaryUiState,
+    onEvent: (ProfileUiEvent) -> Unit
+) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -58,22 +63,37 @@ internal fun ItemSummary(modifier: Modifier = Modifier, itemSummaryUiState: Item
         horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
     ) {
         Spacer(modifier = Modifier.width(8.dp))
-        ItemTypeBox(type = SummaryItemType.Logins, count = itemSummaryUiState.loginCount)
+        ItemTypeBox(
+            type = SummaryItemType.Logins,
+            count = itemSummaryUiState.loginCount,
+            onClick = { onEvent(ProfileUiEvent.OnLoginCountClick) }
+        )
         ItemTypeBox(
             type = SummaryItemType.Alias,
             count = itemSummaryUiState.aliasCount,
-            limit = itemSummaryUiState.aliasLimit
+            limit = itemSummaryUiState.aliasLimit,
+            onClick = { onEvent(ProfileUiEvent.OnAliasCountClick) }
         )
         ItemTypeBox(
             type = SummaryItemType.CreditCards,
-            count = itemSummaryUiState.creditCardsCount
+            count = itemSummaryUiState.creditCardsCount,
+            onClick = { onEvent(ProfileUiEvent.OnCreditCardCountClick) }
         )
-        ItemTypeBox(type = SummaryItemType.Notes, count = itemSummaryUiState.notesCount)
-        ItemTypeBox(type = SummaryItemType.Identity, count = itemSummaryUiState.identityCount)
+        ItemTypeBox(
+            type = SummaryItemType.Notes,
+            count = itemSummaryUiState.notesCount,
+            onClick = { onEvent(ProfileUiEvent.OnNoteCountClick) }
+        )
+        ItemTypeBox(
+            type = SummaryItemType.Identity,
+            count = itemSummaryUiState.identityCount,
+            onClick = { onEvent(ProfileUiEvent.OnIdentityCountClick) }
+        )
         ItemTypeBox(
             type = SummaryItemType.MFA,
             count = itemSummaryUiState.mfaCount,
-            limit = itemSummaryUiState.mfaLimit
+            limit = itemSummaryUiState.mfaLimit,
+            onClick = { onEvent(ProfileUiEvent.OnMFACountClick) }
         )
         Spacer(modifier = Modifier.width(8.dp))
     }
@@ -84,11 +104,13 @@ private fun ItemTypeBox(
     modifier: Modifier = Modifier,
     type: SummaryItemType,
     count: Int,
-    limit: Int? = null
+    limit: Int? = null,
+    onClick: () -> Unit = {}
 ) {
     Row(
         modifier = modifier
             .clip(CircleShape)
+            .clickable { onClick() }
             .border(1.dp, PassTheme.colors.inputBorderNorm, CircleShape)
             .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -131,7 +153,8 @@ internal fun ItemSummaryPreview(@PreviewParameter(ThemePreviewProvider::class) i
     PassTheme(isDark = isDark) {
         Surface {
             ItemSummary(
-                itemSummaryUiState = ItemSummaryUiState(aliasLimit = 1)
+                itemSummaryUiState = ItemSummaryUiState(aliasLimit = 1),
+                onEvent = {}
             )
         }
     }

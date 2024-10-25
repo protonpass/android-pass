@@ -43,6 +43,7 @@ import proton.android.pass.featuresearchoptions.api.SearchFilterType.All
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.CreditCard
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.Identity
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.Login
+import proton.android.pass.featuresearchoptions.api.SearchFilterType.LoginMFA
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.Note
 import me.proton.core.presentation.R as CoreR
 
@@ -53,19 +54,10 @@ fun FilterBottomSheetContents(
     state: FilterOptionsUIState,
     onSortingTypeSelected: (SearchFilterType) -> Unit
 ) {
-    val list: MutableList<SearchFilterType> = mutableListOf(
-        All,
-        Login,
-        Alias,
-        Note,
-        CreditCard
-    )
-    if (state is SuccessFilterOptionsUIState) {
-        list.add(Identity)
-    }
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
-        items = list.mapToBottomSheetItem(state, onSortingTypeSelected)
+        items = SearchFilterType.entries.toList()
+            .mapToBottomSheetItem(state, onSortingTypeSelected)
             .withDividers()
             .toPersistentList()
     )
@@ -103,6 +95,9 @@ private fun List<SearchFilterType>.mapToBottomSheetItem(
 
                     Identity -> stringResource(id = R.string.item_type_filter_identity) +
                         successState?.summary?.identities?.let { " ($it)" }
+
+                    LoginMFA -> stringResource(id = R.string.item_type_filter_login_mfa) +
+                        successState?.summary?.login?.let { " ($it)" }
                 }
                 BottomSheetItemTitle(text = title, color = color)
             }
@@ -119,6 +114,7 @@ private fun List<SearchFilterType>.mapToBottomSheetItem(
                         Note -> CoreR.drawable.ic_proton_file_lines
                         CreditCard -> CoreR.drawable.ic_proton_credit_card
                         Identity -> CoreR.drawable.ic_proton_card_identity
+                        LoginMFA -> CoreR.drawable.ic_proton_lock
                     },
                     tint = if (item == successState?.filterType) {
                         PassTheme.colors.interactionNorm

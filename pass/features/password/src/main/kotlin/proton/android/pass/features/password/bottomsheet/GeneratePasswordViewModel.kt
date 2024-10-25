@@ -22,12 +22,17 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
@@ -66,7 +71,17 @@ class GeneratePasswordViewModel @Inject constructor(
 
     private val passwordConfigFlow = observePasswordConfig()
 
-    private val passwordFlow = passwordConfigFlow.mapLatest(passwordCreator::createPassword)
+    private val regeneratePasswordFlow = MutableStateFlow(false)
+
+    private val passwordFlow = combine(
+        passwordConfigFlow,
+        regeneratePasswordFlow
+            .onStart { emit(true) }
+            .onEach { regeneratePasswordFlow.update { false } }
+            .filter { it }
+    ) { passwordConfig, _ ->
+        passwordCreator.createPassword(passwordConfig)
+    }
 
     private val passwordStrengthFlow = passwordFlow
         .mapLatest(passwordStrengthCalculator::calculateStrength)
@@ -92,6 +107,10 @@ class GeneratePasswordViewModel @Inject constructor(
         viewModelScope.launch {
             updatePasswordConfig(newPasswordConfig)
         }
+    }
+
+    internal fun onRegeneratePassword() {
+        regeneratePasswordFlow.update { true }
     }
 
     fun onHasSpecialCharactersChange(value: Boolean) = viewModelScope.launch {
@@ -132,11 +151,6 @@ class GeneratePasswordViewModel @Inject constructor(
     fun onWordsSeparatorChange(value: WordSeparator) = viewModelScope.launch {
         val updated = getCurrentPreference().copy(wordsSeparator = value)
         updateAndRegenerate(updated)
-    }
-
-    fun regenerate() = viewModelScope.launch {
-        val current = getCurrentPreference()
-//        passwordFlow.update { generatePassword(current) }
     }
 
     fun onConfirm() = viewModelScope.launch {

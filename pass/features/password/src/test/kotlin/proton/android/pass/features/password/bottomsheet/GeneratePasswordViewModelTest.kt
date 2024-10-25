@@ -81,7 +81,7 @@ internal class GeneratePasswordViewModelTest {
         val expectedPasswordStrength = PasswordStrength.Strong
         passwordStrengthCalculator.setPasswordStrength(expectedPasswordStrength)
 
-        viewModel.regenerate()
+        viewModel.onRegeneratePassword()
 
         viewModel.stateFlow.test {
             assertThat(awaitItem().passwordStrength).isEqualTo(expectedPasswordStrength)

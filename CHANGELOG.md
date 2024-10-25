@@ -6,6 +6,21 @@
 
 ### Other
 
+## 1.26.2 (2024-10-25)
+
+### Fixes :bug:
+
+- Passkey creation with multiaccount.
+- Autofill on old Android versions.
+- Improved autofill compatibility with third-party keyboards
+
+### Other
+
+- Add option to see pinned items during autofill.
+- SL note sync.
+- Some performance improvements.
+- Updated translations.
+
 ## 1.26.1 (2024-10-14)
 
 ### Fixes :bug:

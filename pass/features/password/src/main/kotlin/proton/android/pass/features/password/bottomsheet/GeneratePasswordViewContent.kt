@@ -47,7 +47,7 @@ import proton.android.pass.features.password.bottomsheet.words.GeneratePasswordW
 internal fun GeneratePasswordViewContent(
     modifier: Modifier = Modifier,
     state: GeneratePasswordUiState,
-    onEvent: (GeneratePasswordEvent) -> Unit
+    onEvent: (GeneratePasswordUiEvent) -> Unit
 ) = with(state) {
     Column(
         modifier = modifier,

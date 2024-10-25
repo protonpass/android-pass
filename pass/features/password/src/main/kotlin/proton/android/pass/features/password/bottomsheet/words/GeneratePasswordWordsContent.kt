@@ -38,7 +38,7 @@ import proton.android.pass.composecomponents.impl.container.AnimatedVisibilityWi
 import proton.android.pass.composecomponents.impl.container.rememberAnimatedVisibilityState
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.features.password.R
-import proton.android.pass.features.password.bottomsheet.GeneratePasswordEvent
+import proton.android.pass.features.password.bottomsheet.GeneratePasswordUiEvent
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordSelectorRow
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordToggleRow
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordTypeRow
@@ -49,7 +49,7 @@ import proton.android.pass.preferences.PasswordGenerationMode
 internal fun GeneratePasswordWordsContent(
     modifier: Modifier = Modifier,
     config: PasswordConfig.Memorable,
-    onEvent: (GeneratePasswordEvent) -> Unit
+    onEvent: (GeneratePasswordUiEvent) -> Unit
 ) = with(config) {
     var showAdvancedOptions by rememberSaveable { mutableStateOf(false) }
     val state = rememberAnimatedVisibilityState(initialState = true)
@@ -61,7 +61,7 @@ internal fun GeneratePasswordWordsContent(
         GeneratePasswordTypeRow(
             current = PasswordGenerationMode.Words,
             onClick = {
-                onEvent(GeneratePasswordEvent.OnPasswordModeChangeClick)
+                onEvent(GeneratePasswordUiEvent.OnPasswordModeChangeClick)
             }
         )
 
@@ -72,7 +72,7 @@ internal fun GeneratePasswordWordsContent(
             minCount = minWordsCount,
             maxCount = maxWordsCount,
             onCountChange = { newWordsCount ->
-                GeneratePasswordEvent.OnPasswordConfigChanged(
+                GeneratePasswordUiEvent.OnPasswordConfigChanged(
                     config = config.copy(passwordWordsCount = newWordsCount)
                 ).also(onEvent)
             }
@@ -85,7 +85,7 @@ internal fun GeneratePasswordWordsContent(
             value = capitalizeWords,
             isEnabled = canToggleCapitalise,
             onChange = { newCapitalizeWords ->
-                GeneratePasswordEvent.OnPasswordConfigChanged(
+                GeneratePasswordUiEvent.OnPasswordConfigChanged(
                     config = config.copy(capitalizeWords = newCapitalizeWords)
                 ).also(onEvent)
             }
@@ -119,7 +119,7 @@ internal fun GeneratePasswordWordsContent(
                         value = separator.toResourceString(),
                         iconContentDescription = stringResource(R.string.password_words_separator_icon),
                         onClick = {
-                            onEvent(GeneratePasswordEvent.OnWordsSeparatorClick)
+                            onEvent(GeneratePasswordUiEvent.OnWordsSeparatorClick)
                         }
                     )
 
@@ -131,7 +131,7 @@ internal fun GeneratePasswordWordsContent(
                     value = includeNumbers,
                     isEnabled = canToggleNumbers,
                     onChange = { newIncludeNumbers ->
-                        GeneratePasswordEvent.OnPasswordConfigChanged(
+                        GeneratePasswordUiEvent.OnPasswordConfigChanged(
                             config = config.copy(includeNumbers = newIncludeNumbers)
                         ).also(onEvent)
                     }

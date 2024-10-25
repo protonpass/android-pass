@@ -36,7 +36,7 @@ class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
 ) : SyncSimpleLoginPendingAliases {
 
     override suspend fun invoke(userId: UserId) {
-        val syncStatus = repository.observeSyncStatus().first()
+        val syncStatus = repository.observeSyncStatus(userId).first()
 
         if (!syncStatus.isSyncEnabled) {
             return
@@ -47,13 +47,14 @@ class SyncSimpleLoginPendingAliasesImpl @Inject constructor(
         val shareKey = shareKeyRepository.getLatestKeyForShare(pendingAliasedDefaultShareId).first()
 
         do {
-            val pendingAliases = repository.getPendingAliases()
+            val pendingAliases = repository.getPendingAliases(userId)
             hasMorePendingAliases = pendingAliases.lastToken != null
             val requests = pendingAliases.aliases.map { alias ->
                 alias.id to requestForItem(shareKey, alias.email)
             }
 
             repository.createPendingAliases(
+                userId = userId,
                 defaultShareId = pendingAliasedDefaultShareId,
                 pendingAliasesItems = requests
             )

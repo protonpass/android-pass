@@ -30,12 +30,14 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.commonrust.api.passwords.PasswordConfig
 import proton.android.pass.commonrust.api.passwords.PasswordCreator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
+import proton.android.pass.data.api.usecases.passwords.UpdatePasswordConfig
 import proton.android.pass.features.password.GeneratePasswordBottomsheetMode
 import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.features.password.GeneratePasswordSnackbarMessage
@@ -51,6 +53,7 @@ class GeneratePasswordViewModel @Inject constructor(
     observePasswordConfig: ObservePasswordConfig,
     passwordCreator: PasswordCreator,
     passwordStrengthCalculator: PasswordStrengthCalculator,
+    private val updatePasswordConfig: UpdatePasswordConfig,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clipboardManager: ClipboardManager,
     private val draftRepository: DraftRepository,
@@ -65,8 +68,8 @@ class GeneratePasswordViewModel @Inject constructor(
 
     private val passwordFlow = passwordConfigFlow.mapLatest(passwordCreator::createPassword)
 
-    private val passwordStrengthFlow =
-        passwordFlow.mapLatest(passwordStrengthCalculator::calculateStrength)
+    private val passwordStrengthFlow = passwordFlow
+        .mapLatest(passwordStrengthCalculator::calculateStrength)
 
     internal val stateFlow: StateFlow<GeneratePasswordUiState> = combine(
         passwordFlow,
@@ -85,10 +88,9 @@ class GeneratePasswordViewModel @Inject constructor(
         initialValue = GeneratePasswordUiState.initial(mode)
     )
 
-    internal fun onLengthChange(value: Int) {
+    internal fun onChangePasswordConfig(newPasswordConfig: PasswordConfig) {
         viewModelScope.launch {
-            val updated = getCurrentPreference().copy(randomPasswordLength = value)
-            updateAndRegenerate(updated)
+            updatePasswordConfig(newPasswordConfig)
         }
     }
 

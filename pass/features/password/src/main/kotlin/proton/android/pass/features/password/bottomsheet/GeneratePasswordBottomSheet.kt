@@ -63,10 +63,6 @@ fun GeneratePasswordBottomSheet(
         state = state,
         onEvent = { uiEvent ->
             when (uiEvent) {
-                is GeneratePasswordUiEvent.OnPasswordModeChange -> {
-                    onPasswordModeChange(uiEvent.mode)
-                }
-
                 GeneratePasswordUiEvent.OnPasswordModeChangeClick -> {
                     onNavigate(GeneratePasswordNavigation.OnSelectPasswordMode)
                 }

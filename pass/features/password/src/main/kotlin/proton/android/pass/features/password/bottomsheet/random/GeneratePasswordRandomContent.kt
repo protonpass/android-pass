@@ -120,8 +120,10 @@ internal fun GeneratePasswordRandomContent(
                     text = stringResource(R.string.bottomsheet_option_capital_letters),
                     value = includeUppercase,
                     isEnabled = canToggleUppercase,
-                    onChange = {
-                        onEvent(GeneratePasswordEvent.OnRandomUseCapitalLettersChange(it))
+                    onChange = { newIncludeUppercase ->
+                        GeneratePasswordEvent.OnPasswordConfigChanged(
+                            config = config.copy(includeUppercase = newIncludeUppercase)
+                        ).also(onEvent)
                     }
                 )
 

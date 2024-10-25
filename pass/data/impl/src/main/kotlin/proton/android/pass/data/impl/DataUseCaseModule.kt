@@ -167,6 +167,7 @@ import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.api.usecases.passkeys.StorePasskey
 import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
+import proton.android.pass.data.api.usecases.passwords.UpdatePasswordConfig
 import proton.android.pass.data.api.usecases.report.SendReport
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
@@ -352,6 +353,7 @@ import proton.android.pass.data.impl.usecases.passkeys.GetPasskeysForDomainImpl
 import proton.android.pass.data.impl.usecases.passkeys.ObserveItemsWithPasskeysImpl
 import proton.android.pass.data.impl.usecases.passkeys.StorePasskeyImpl
 import proton.android.pass.data.impl.usecases.passwords.ObservePasswordConfigImpl
+import proton.android.pass.data.impl.usecases.passwords.UpdatePasswordConfigImpl
 import proton.android.pass.data.impl.usecases.report.SendReportImpl
 import proton.android.pass.data.impl.usecases.searchentry.AddSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteAllSearchEntryImpl
@@ -979,5 +981,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindObservePasswordConfig(impl: ObservePasswordConfigImpl): ObservePasswordConfig
+
+    @[Binds Singleton]
+    abstract fun bindUpdatePasswordConfig(impl: UpdatePasswordConfigImpl): UpdatePasswordConfig
 
 }

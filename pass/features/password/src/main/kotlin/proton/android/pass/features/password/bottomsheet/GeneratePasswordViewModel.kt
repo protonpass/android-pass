@@ -118,11 +118,6 @@ class GeneratePasswordViewModel @Inject constructor(
         updateAndRegenerate(updated)
     }
 
-    fun onWordsCountChange(value: Int) = viewModelScope.launch {
-        val updated = getCurrentPreference().copy(wordsCount = value)
-        updateAndRegenerate(updated)
-    }
-
     fun onWordsSeparatorChange(value: WordSeparator) = viewModelScope.launch {
         val updated = getCurrentPreference().copy(wordsSeparator = value)
         updateAndRegenerate(updated)

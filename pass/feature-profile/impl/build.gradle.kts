@@ -77,6 +77,7 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.passkeys.api)
     implementation(projects.pass.preferences.api)
+    implementation(projects.pass.featureSearchOptions.api)
 
     androidTestImplementation(libs.androidx.test.espresso.intents)
 

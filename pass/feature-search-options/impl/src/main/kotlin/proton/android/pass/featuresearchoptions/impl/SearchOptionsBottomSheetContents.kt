@@ -91,6 +91,7 @@ private fun filtering(
                 SearchFilterType.Note -> stringResource(id = R.string.item_type_filter_note)
                 SearchFilterType.CreditCard -> stringResource(id = R.string.item_type_filter_credit_card)
                 SearchFilterType.Identity -> stringResource(id = R.string.item_type_filter_identity)
+                SearchFilterType.LoginMFA -> stringResource(id = R.string.item_type_filter_login_mfa)
             }
             BottomSheetItemSubtitle(text = "$title (${state.count})")
         }

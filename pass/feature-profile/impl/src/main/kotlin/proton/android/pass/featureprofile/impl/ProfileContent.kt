@@ -94,7 +94,7 @@ internal fun ProfileContent(
                     selection = HomeBottomBarSelection.Profile,
                     onEvent = { homeBottomBarEvent ->
                         when (homeBottomBarEvent) {
-                            HomeBottomBarEvent.OnHomeSelected -> ProfileUiEvent.OnListClick
+                            HomeBottomBarEvent.OnHomeSelected -> ProfileUiEvent.OnHomeClick
                             HomeBottomBarEvent.OnNewItemSelected -> ProfileUiEvent.OnCreateItemClick
                             HomeBottomBarEvent.OnProfileSelected -> null
                             HomeBottomBarEvent.OnSecurityCenterSelected -> ProfileUiEvent.OnSecurityCenterClick
@@ -131,7 +131,8 @@ internal fun ProfileContent(
                         horizontal = Spacing.none,
                         vertical = Spacing.medium
                     ),
-                    itemSummaryUiState = state.itemSummaryUiState
+                    itemSummaryUiState = state.itemSummaryUiState,
+                    onEvent = onEvent
                 )
 
                 Column(

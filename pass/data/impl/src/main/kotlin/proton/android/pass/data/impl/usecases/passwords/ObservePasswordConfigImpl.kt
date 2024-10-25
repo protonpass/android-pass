@@ -53,18 +53,46 @@ class ObservePasswordConfigImpl @Inject constructor(
     private fun PasswordGenerationPreference.asPasswordConfig() = when (mode) {
         PasswordGenerationMode.Random -> PasswordConfig.Random(
             passwordLength = randomPasswordLength,
-            passwordIncludeUppercase = randomHasCapitalLetters,
-            passwordIncludeNumbers = randomIncludeNumbers,
-            passwordIncludeSymbols = randomHasSpecialCharacters
+            includeUppercase = randomHasCapitalLetters,
+            includeNumbers = randomIncludeNumbers,
+            includeSymbols = randomHasSpecialCharacters
         )
 
         PasswordGenerationMode.Words -> PasswordConfig.Memorable(
             passwordWordsCount = wordsCount,
             passwordWordsSeparator = wordsSeparator.toDomain(),
-            passwordCapitalizeWords = wordsCapitalise,
-            passwordIncludeNumbers = wordsIncludeNumbers
+            capitalizeWords = wordsCapitalise,
+            includeNumbers = wordsIncludeNumbers,
+            includeSeparator = true
         )
     }
+
+    private fun OrganizationPasswordPolicy.asPasswordConfig(preference: PasswordGenerationPreference) =
+        when (preference.mode) {
+            PasswordGenerationMode.Random -> PasswordConfig.Random(
+                passwordLength = preference.randomPasswordLength,
+                passwordMinLength = randomPasswordMinLength,
+                passwordMaxLength = randomPasswordMaxLength,
+                includeNumbers = randomPasswordIncludeNumbers ?: preference.randomIncludeNumbers,
+                includeSymbols = randomPasswordIncludeSymbols ?: preference.randomHasSpecialCharacters,
+                includeUppercase = randomPasswordIncludeUppercase ?: preference.randomHasCapitalLetters,
+                canToggleNumbers = canToggleRandomPasswordNumbers,
+                canToggleSymbols = canToggleRandomPasswordSymbols,
+                canToggleUppercase = canToggleRandomPasswordUppercase
+            )
+
+            PasswordGenerationMode.Words -> PasswordConfig.Memorable(
+                passwordWordsCount = preference.wordsCount,
+                passwordWordsSeparator = preference.wordsSeparator.toDomain(),
+                passwordMinWords = memorablePasswordMinWords,
+                passwordMaxWords = memorablePasswordMaxWords,
+                capitalizeWords = memorablePasswordCapitalize ?: preference.wordsCapitalise,
+                includeNumbers = memorablePasswordIncludeNumbers ?: preference.wordsIncludeNumbers,
+                includeSeparator = memorablePasswordIncludeSeparator ?: true,
+                canToggleCapitalise = canToggleMemorablePasswordCapitalize,
+                canToggleNumbers = canToggleMemorablePasswordNumbers
+            )
+        }
 
     private fun WordSeparator.toDomain(): proton.android.pass.commonrust.api.WordSeparator = when (this) {
         WordSeparator.Hyphen -> proton.android.pass.commonrust.api.WordSeparator.Hyphen
@@ -75,32 +103,5 @@ class ObservePasswordConfigImpl @Inject constructor(
         WordSeparator.Numbers -> proton.android.pass.commonrust.api.WordSeparator.Numbers
         WordSeparator.NumbersAndSymbols -> proton.android.pass.commonrust.api.WordSeparator.NumbersAndSymbols
     }
-
-    private fun OrganizationPasswordPolicy.asPasswordConfig(preference: PasswordGenerationPreference) =
-        when (preference.mode) {
-            PasswordGenerationMode.Random -> PasswordConfig.Random(
-                passwordLength = preference.randomPasswordLength,
-                passwordMinLength = randomPasswordMinLength,
-                passwordMaxLength = randomPasswordMaxLength,
-                passwordIncludeNumbers = randomPasswordIncludeNumbers,
-                passwordIncludeSymbols = randomPasswordIncludeSymbols,
-                passwordIncludeUppercase = randomPasswordIncludeUppercase,
-                canToggleNumbers = randomPasswordIncludeNumbers == null,
-                canToggleSymbols = randomPasswordIncludeSymbols == null,
-                canToggleUppercase = randomPasswordIncludeUppercase == null
-            )
-
-            PasswordGenerationMode.Words -> PasswordConfig.Memorable(
-                passwordWordsCount = preference.wordsCount,
-                passwordWordsSeparator = preference.wordsSeparator.toDomain(),
-                passwordMinWords = memorablePasswordMinWords,
-                passwordMaxWords = memorablePasswordMaxWords,
-                passwordCapitalizeWords = memorablePasswordCapitalize,
-                passwordIncludeNumbers = memorablePasswordIncludeNumbers,
-                passwordIncludeSeparator = memorablePasswordIncludeSeparator,
-                canToggleCapitalise = memorablePasswordCapitalize == null,
-                canToggleNumbers = memorablePasswordIncludeNumbers == null
-            )
-        }
 
 }

@@ -105,9 +105,9 @@ internal fun GeneratePasswordViewContentThemePreview(
                     mode = GeneratePasswordMode.CopyAndClose,
                     passwordConfig = PasswordConfig.Random(
                         passwordLength = 12,
-                        passwordIncludeNumbers = true,
-                        passwordIncludeUppercase = false,
-                        passwordIncludeSymbols = true
+                        includeNumbers = true,
+                        includeUppercase = false,
+                        includeSymbols = true
                     )
                 ),
                 onEvent = {}

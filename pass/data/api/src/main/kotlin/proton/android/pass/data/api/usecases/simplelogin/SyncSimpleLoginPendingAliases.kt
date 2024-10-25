@@ -18,8 +18,10 @@
 
 package proton.android.pass.data.api.usecases.simplelogin
 
+import me.proton.core.domain.entity.UserId
+
 interface SyncSimpleLoginPendingAliases {
 
-    suspend operator fun invoke()
+    suspend operator fun invoke(userId: UserId)
 
 }

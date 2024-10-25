@@ -49,5 +49,5 @@
     <item quantity="other">%d forsøk gjenstår</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">For mange mislykkede PIN-forsøk. Alle brukerne dine blir logget av.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">For mange mislykkede pin-forsøk.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
 </resources>

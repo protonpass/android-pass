@@ -22,24 +22,50 @@
   <string name="snackbar_contact_create_success">Kontakt ble opprettet</string>
   <string name="snackbar_contact_create_error">Kunne ikke opprette kontakt</string>
   <string name="create_contact_title">Opprett kontakt</string>
-  <string name="detail_contact_title">Contacts</string>
+  <string name="detail_contact_title">Kontakter</string>
   <string name="email_input_error">Ugyldig e-postadresse</string>
-  <string name="detail_contact_sender_name">Sender name</string>
-  <string name="detail_contact_display_name" comment="sender email address">When sending an email from this alias, the email will have %s as sender.</string>
-  <string name="empty_alias_contacts_title">Alias contacts</string>
-  <string name="empty_alias_contacts_body">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
-  <string name="empty_alias_contacts_learn_more">Learn more</string>
-  <string name="unblock_button">Unblock contact</string>
-  <string name="block_button">Block contact</string>
-  <string name="contact_created_date" comment="date of creation">Created %1$s ago</string>
-  <string name="no_activity_contact">No Activity in the last 14 days.</string>
-  <string name="activity_summary" comment="amount of items of each category">%1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.</string>
-  <string name="blocked_addresses_subtitle">Blocked addresses</string>
-  <string name="forwarding_addresses_subtitle">Forwarding addresses</string>
-  <string name="snackbar_contact_block_success">Contact blocked</string>
-  <string name="snackbar_contact_block_error">Could not block contact</string>
-  <string name="snackbar_contact_unblock_success">Contact unblocked</string>
-  <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
-  <string name="snackbar_sender_name_success">Sender name updated</string>
-  <string name="snackbar_sender_name_error">Could not update sender name</string>
+  <string name="detail_contact_sender_name">Avsendernavn</string>
+  <string name="detail_contact_display_name" comment="sender email address">Når du sender en e-post fra dette aliaset, vil e-posten ha %s som avsender.</string>
+  <string name="empty_alias_contacts_title">Alias-kontakter</string>
+  <string name="empty_alias_contacts_body">Hvis du vil holde den personlige e-postadressen din skjult, kan du opprette en aliaskontakt som maskerer adressen din.</string>
+  <string name="empty_alias_contacts_learn_more">Lær mer</string>
+  <string name="unblock_button">Fjern blokkering av kontakt</string>
+  <string name="block_button">Blokkèr kontakt</string>
+  <string name="contact_created_date" comment="date of creation">Opprettet for %1$s siden</string>
+  <string name="no_activity_contact">Ingen aktivitet de siste 14 dagene.</string>
+  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">i løpet av de siste 14 dagene.</string>
+  <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d videresendt</item>
+    <item quantity="other">%1$d videresendt</item>
+  </plurals>
+  <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d sendt</item>
+    <item quantity="other">%1$d sendt</item>
+  </plurals>
+  <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d blokkert</item>
+    <item quantity="other">%1$d blokkert</item>
+  </plurals>
+  <string name="blocked_addresses_subtitle">Blokkerte adresser</string>
+  <string name="forwarding_addresses_subtitle">Videresendelsesadresser</string>
+  <string name="snackbar_contact_block_success">Kontakt blokkert</string>
+  <string name="snackbar_contact_block_error">Kunne ikke blokkère kontakt</string>
+  <string name="snackbar_contact_unblock_success">Kontakt opphevet blokkering</string>
+  <string name="snackbar_contact_unblock_error">Kunne ikke oppheve blokkeringen av kontakt</string>
+  <string name="snackbar_sender_name_success">Avsendernavn oppdatert</string>
+  <string name="snackbar_sender_name_error">Kan ikke oppdatere avsendernavn</string>
+  <string name="snackbar_delete_contact_success">Kontakt slettet</string>
+  <string name="snackbar_delete_contact_error">Kunne ikke slette kontakt</string>
+  <string name="snackbar_email_copied_success">E-post kopiert til utklippstavlen</string>
+  <string name="contact_option_send_email">Send e-post</string>
+  <string name="contact_option_copy_address">Kopier adresse</string>
+  <string name="contact_option_block_contact">Blokkèr kontakt</string>
+  <string name="contact_option_unblock_contact">Fjern blokkering av kontakt</string>
+  <string name="contact_option_delete">Slett</string>
+  <string name="alias_contacts_bottomsheet_title">Alias-kontakter</string>
+  <string name="alias_contacts_bottomsheet_subtitle">Hvis du vil holde den personlige e-postadressen din skjult, kan du opprette en aliaskontakt som maskerer adressen din.</string>
+  <string name="alias_contacts_explanation">Slik fungerer det:</string>
+  <string name="alias_contacts_bottomsheet_section_1">Skriv inn adressen du vil sende e-post til.</string>
+  <string name="alias_contacts_bottomsheet_section_2">Proton Pass vil generere en videresendingsadresse (også referert til som omvendt alias).</string>
+  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Send denne e-postadressen på e-post, og den vil se ut til å være sendt fra</string>
 </resources>

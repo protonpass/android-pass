@@ -12,7 +12,7 @@
   <string name="profile_option_autofill">ავტომატური შევსება</string>
   <string name="profile_option_autofill_subtitle">მომხმარებლის სახელებისა და პაროლების ავტომატური შევსება.</string>
   <string name="profile_option_secure_links">დაცული ბმულები</string>
-  <string name="profile_option_alias_management">Alias management</string>
+  <string name="profile_option_alias_management">ფსევდონიმების მართვა</string>
   <string name="profile_error_biometry_failed_to_start">ბიომეტრიული ავთენტიკაციის გაშვება შეუძლებელია</string>
   <string name="profile_error_biometry_failed_to_authenticate">ავთენტიკაციის შეცდომა</string>
   <string name="profile_fingerprint_lock_enabled">ანაბეჭდით დაბლოკვა ჩართულია</string>

@@ -46,5 +46,5 @@
     <item quantity="other">Còn lại %d lần thử</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Quá nhiều lần đăng nhập không thành công. Bạn đã được đăng xuất.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Too many failed pin attempts.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
 </resources>

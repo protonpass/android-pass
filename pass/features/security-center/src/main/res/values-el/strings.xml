@@ -76,7 +76,6 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Σφάλμα κατά τη φόρτωση προσαρμοσμένων διευθύνσεων ηλεκτρονικού ταχυδρομείου</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Δεν ήταν δυνατή η λήψη διευθύνσεων ηλεκτρονικού ταχυδρομείου</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">Επαλήθευση</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Αφαίρεση</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Τελευταία παραβίαση στις %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -102,17 +101,13 @@
   <string name="security_center_custom_email_already_verified">Το email έχει ήδη επαληθευτεί</string>
   <string name="security_center_custom_email_error_adding">Σφάλμα κατά την προσθήκη της διεύθυνσης ηλεκτρονικού ταχυδρομείου</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">Κωδικός</string>
-  <string name="security_center_verify_email_code_error">Μη έγκυρος κωδικός</string>
   <string name="security_center_verify_email_title">Επιβεβαιώστε τη διεύθυνση email σας</string>
   <string name="security_center_verify_email_subtitle">Στείλαμε έναν κωδικό επαλήθευσης στη διεύθυνση %s. Παρακαλούμε εισάγετε τον παρακάτω:</string>
-  <string name="security_center_verify_email_code_resend_header">Δεν έχετε λάβει τον κωδικό;</string>
-  <string name="security_center_verify_email_code_resend_body">Ελέγξτε τα ανεπιθύμητα μηνύματα για ένα μήνυμα που ονομάζεται \"Επιβεβαιώστε τη διεύθυνση email σας για το Proton Pass\"</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Εάν δεν μπορείτε να βρείτε τέτοια μηνύματα ηλεκτρονικού ταχυδρομείου, μπορείτε να </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">ζητήστε ένα νέο κωδικό.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">Σας έχει σταλεί ένα νέο μήνυμα επαλήθευσης. Παρακαλούμε ελέγξτε το μηνύματά σας.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Παρουσιάστηκε σφάλμα κατά την αποστολή του κωδικού επαλήθευσης. Παρακαλούμε προσπαθήστε ξανά αργότερα.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Πάρα πολλές μη έγκυρες επαληθεύσεις. Κατάργηση προσαρμοσμένου ηλεκτρονικού ταχυδρομείου.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Μη έγκυρος κωδικός επαλήθευσης</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">There was an error verifying the email. Please try again later.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Εντοπίστηκαν παραβιάσεις για</string>
   <string name="security_center_verify_report_title_none">Δεν εντοπίστηκαν παραβιάσεις για</string>

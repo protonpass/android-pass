@@ -27,12 +27,12 @@
   <string name="upsell_paid_feature_unlimited_aliases">Unbegrenzte hide-my-email-Aliasse</string>
   <string name="upsell_paid_feature_vault_sharing">Tresor teilen (bis zu 10 Personen)</string>
   <string name="upsell_paid_feature_secure_links">Sichere Links</string>
-  <string name="upsell_paid_feature_advance_alias_management">Advanced alias management</string>
+  <string name="upsell_paid_feature_advance_alias_management">Erweiterte Alias-Verwaltung</string>
   <string name="upsell_paid_feature_authenticator_essential">2FA für die Organisation erforderlich</string>
   <string name="upsell_paid_feature_sso_essential">SSO-Integration (demnächst verfügbar)</string>
-  <string name="upsell_paid_feature_advance_alias_management_title">Manage your aliases</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">Advanced alias management is available with Proton Unlimited. Upgrade for immediate access.</string>
+  <string name="upsell_paid_feature_advance_alias_management_title">Verwalte deine Aliasse</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">Die erweiterte Alias-Verwaltung ist mit Proton Unlimited verfügbar. Upgrade für sofortigen Zugriff.</string>
   <string name="upsell_button_upgrade">Pass Plus holen</string>
   <string name="upsell_button_upgrade_essentials">Pass Business holen</string>
-  <string name="upsell_button_upgrade_unlimited">Get Proton Unlimited</string>
+  <string name="upsell_button_upgrade_unlimited">Proton Unlimited holen</string>
 </resources>

@@ -41,13 +41,13 @@
   <!--List screen-->
   <string name="secure_links_list_title">안전한 링크</string>
   <string name="secure_links_list_empty_title">보안 링크 없음</string>
-  <string name="secure_links_list_empty_subtitle">항목 상세 정보 공유 옵션을 안전한 링크에서 생성 가능합니다.</string>
+  <string name="secure_links_list_empty_subtitle">항목 상세 정보 공유 옵션에서 안전한 링크를 생성할 수 있습니다.</string>
   <string name="secure_links_list_expiration_description">%s 후 만료</string>
   <string name="secure_links_list_expired_description">만료됨</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="other">%d명 조회</item>
   </plurals>
-  <string name="secure_links_list_snackbar_message_links_fetch_error">안전한 링크를 패칭하는데 오류가 생겼습니다.</string>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">안전한 링크를 가져오는데 오류가 생겼습니다.</string>
   <string name="secure_links_list_header_title_inactive">비활성 상태의 링크</string>
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">링크 복사하기</string>

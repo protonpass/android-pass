@@ -74,7 +74,6 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">사용자 지정 이메일 주소 로딩 실패</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">이메일 주소를 받을 수 없습니다.</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">인증</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">제거</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">%s에 마지막으로 유출됨</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -99,17 +98,13 @@
   <string name="security_center_custom_email_already_verified">이메일이 이미 인증되었습니다.</string>
   <string name="security_center_custom_email_error_adding">이메일 주소 추가 중 오류 발생</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">코드</string>
-  <string name="security_center_verify_email_code_error">잘못된 코드입니다</string>
   <string name="security_center_verify_email_title">이메일을 확인하세요</string>
   <string name="security_center_verify_email_subtitle">%s(으)로 인증 코드를 발송해 드렸습니다. 아래에 코드를 입력해 주세요:</string>
-  <string name="security_center_verify_email_code_resend_header">코드를 받지 못하셨나요?</string>
-  <string name="security_center_verify_email_code_resend_body">스팸 메일함에서 \"Proton Pass용 이메일 주소를 확인해 주세요\" 라는 이메일이 있는지 확인해 주세요.</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">이러한 이메일을 찾지 못하셨다면, </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">새 코드 요청이 가능합니다.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">새 인증 코드를 보내드렸습니다. 받은 편지함을 확인하세요.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">인증 코드 전송에 오류가 발생했습니다. 다시 시도해주세요.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">유효하지 않은 인증이 너무 많습니다. 커스텀 이메일을 삭제합니다.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">잘못된 인증 코드</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">이메일 인증에 실패했습니다. 나중에 다시 시도하세요.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">침해 사례가 다음에서 감지됨:</string>
   <string name="security_center_verify_report_title_none">다음에서 침해 사례가 감지되지 않음:</string>

@@ -104,8 +104,9 @@
   <string name="passkey_detail_bottomsheet_domain">Domän</string>
   <string name="passkey_detail_bottomsheet_key">Nyckel</string>
   <string name="passkey_detail_bottomsheet_created">Skapad</string>
-  <string name="activity_in_last_two_weeks">Aktivitet under de senaste två veckorna</string>
+  <string name="activity_in_last_two_weeks">Aktivitet under de senaste 14 dagarna</string>
   <string name="contacts">Kontakter</string>
+  <string name="contacts_section_description">För att hålla din personliga e-postadress dold kan du skapa en aliaskontakt som maskerar din adress.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s forward</item>
     <item quantity="other">%1$s forwards</item>

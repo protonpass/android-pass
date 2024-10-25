@@ -33,7 +33,7 @@
   <string name="settings_preference_updated">Vaša predvoľba bola aktualizovaná</string>
   <string name="settings_display_section_title">Display</string>
   <string name="settings_preference_display_username">Username field always visible</string>
-  <string name="settings_preference_display_autofill_pinning">Autofill pinning always visible</string>
+  <string name="settings_preference_display_autofill_pinning">Vždy viditeľné pripnutie automatického vyplňovania</string>
   <string name="view_logs_title">Zobraziť záznamy</string>
   <string name="clipboard_bottomsheet_title">Schránka</string>
   <string name="clipboard_option_clear_clipboard_label">Vyčistiť schránku</string>

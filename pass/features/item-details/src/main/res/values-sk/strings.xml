@@ -20,12 +20,12 @@
   <string name="item_details_toolbar_content_description_menu_button">Tlačidlo na zobrazenie možností ponuky</string>
   <string name="item_details_toolbar_content_description_share_button">Tlačidlo na zdieľanie položky</string>
   <!-- Item details forbidden actions -->
-  <string name="item_details_forbidden_actions_edit_title">Nemožno upravovať</string>
+  <string name="item_details_forbidden_actions_edit_title">Nemožno upraviť</string>
   <string name="item_details_forbidden_actions_edit_permission">Túto položku nemôžete upraviť, pretože na to nemáte dostatočné oprávnenia.</string>
-  <string name="item_details_forbidden_actions_edit_trash">Túto položku nemôžete upravovať, pretože je v koši. Pred úpravou ju premiestnite z koša, prosím.</string>
+  <string name="item_details_forbidden_actions_edit_trash">Túto položku nemôžete upraviť, pretože je v koši. Pred úpravou ju presuňte z koša, prosím.</string>
   <string name="item_details_forbidden_actions_edit_upgrade">Upravovať môžete len položky vo svojich najstarších trezoroch. Na úpravu tejto položky upgradujte svoj aktuálny plán, prosím.</string>
   <string name="item_details_forbidden_actions_share_title">Nemožno zdieľať</string>
   <string name="item_details_forbidden_actions_share_limit">Dosiahli ste limit zdieľania trezoru. Ak chcete zdieľať viac trezorov, upgradujte svoj aktuálny plán.</string>
   <string name="item_details_forbidden_actions_share_permission">Na zdieľanie tohto trezora nemáte dostatočné oprávnenia.</string>
-  <string name="item_details_forbidden_actions_share_trash">Túto položku nemôžete zdieľať, pretože je v koši. Pred upravovaním ju premiestnite z koša, prosím.</string>
+  <string name="item_details_forbidden_actions_share_trash">Túto položku nemôžete zdieľať, pretože je v koši. Pred úpravou ju presuňte z koša, prosím.</string>
 </resources>

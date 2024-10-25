@@ -35,8 +35,8 @@
   <string name="secure_links_overview_widget_open_times_title">Otvorené:</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="one">%d-krát</item>
-    <item quantity="few">%d -krát</item>
-    <item quantity="many">%d -krát</item>
+    <item quantity="few">%d-krát</item>
+    <item quantity="many">%d-krát</item>
     <item quantity="other">%d-krát</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">Bez obmedzenia</string>
@@ -44,7 +44,7 @@
   <!--List screen-->
   <string name="secure_links_list_title">Bezpečné odkazy</string>
   <string name="secure_links_list_empty_title">Žiadne bezpečné odkazy</string>
-  <string name="secure_links_list_empty_subtitle">Bezpečné odkazy môžete začať vytvárať v nastaveniach zdieľania v podrobnostiach o položke.</string>
+  <string name="secure_links_list_empty_subtitle">Bezpečné odkazy môžete začať vytvárať z možností zdieľania detailov položky</string>
   <string name="secure_links_list_expiration_description">Vyprší o %s</string>
   <string name="secure_links_list_expired_description">Exspirované</string>
   <plurals name="secure_links_list_viewed_times_description">

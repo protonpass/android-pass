@@ -46,8 +46,8 @@
   <string name="action_edit">Redigera</string>
   <string name="action_add">Lägg till</string>
   <string name="action_delete">Ta bort</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
+  <string name="action_make_default">Gör standard</string>
+  <string name="action_verify">Verifiera</string>
   <string name="action_close">Stäng</string>
   <string name="action_update">Uppdatera</string>
   <!-- Empty list -->
@@ -202,22 +202,22 @@
   <string name="dialog_upgrade_plan_action_cancel">Inte nu</string>
   <!-- Words -->
   <string name="email_address">E-postadress</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">Ogiltig e-postadress</string>
   <string name="password">Lösenord</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Knapp för att avfärda detta verktygstips och inte visa det igen</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="one">%d year</item>
-    <item quantity="other">%d years</item>
+    <item quantity="one">%d år</item>
+    <item quantity="other">%d år</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d month</item>
-    <item quantity="other">%d months</item>
+    <item quantity="one">%d månad</item>
+    <item quantity="other">%d månader</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="one">%d week</item>
-    <item quantity="other">%d weeks</item>
+    <item quantity="one">%d vecka</item>
+    <item quantity="other">%d veckor</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d dag</item>
@@ -237,7 +237,7 @@
   </plurals>
   <plurals name="aliases_count">
     <item quantity="one">%d alias</item>
-    <item quantity="other">%d aliases</item>
+    <item quantity="other">%d alias</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Anteckning kopierad</string>
@@ -263,4 +263,9 @@
     <item quantity="other">Vi upptäckte att du har %d alias som finns i SimpleLogin men saknas i Proton Pass. Vill du importera dem?</item>
   </plurals>
   <string name="simple_login_widget_action">Synkronisera alias</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">Har du inte fått koden?</string>
+  <string name="verification_code_suggestion_spam">Kolla i din skräppost för ett e-postmeddelande som heter ”Bekräfta din e-postadress för Proton Pass”</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Om du inte kan hitta sådan e-post kan du %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">begär en ny kod</string>
 </resources>

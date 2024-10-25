@@ -44,7 +44,7 @@
   <string name="item_details_snackbar_message_phone_number_copied">휴대폰 번호 복사됨</string>
   <string name="item_details_snackbar_message_pin_copied">PIN 코드를 복사했습니다</string>
   <string name="item_details_snackbar_message_reddit_copied">Reddit 복사됨</string>
-  <string name="item_details_snackbar_message_social_security_number_copied">사회 보장 번호 복사됨</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">주민등록번호 복사됨</string>
   <string name="item_details_snackbar_message_state_or_province_copied">시/도 복사됨</string>
   <string name="item_details_snackbar_message_street_address_copied">도로명주소 복사됨</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP를 복사했습니다</string>

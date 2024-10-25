@@ -46,8 +46,8 @@
   <string name="action_edit">Düzenle</string>
   <string name="action_add">Ekle</string>
   <string name="action_delete">Sil</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
+  <string name="action_make_default">Varsayılan yap</string>
+  <string name="action_verify">Doğrula</string>
   <string name="action_close">Kapat</string>
   <string name="action_update">Güncelle</string>
   <!-- Empty list -->
@@ -202,22 +202,22 @@
   <string name="dialog_upgrade_plan_action_cancel">Şimdi değil</string>
   <!-- Words -->
   <string name="email_address">E-posta adresi</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">E-posta adresi geçersiz</string>
   <string name="password">Parola</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Bu ipucunu yok sayıp bir daha görüntülenmemesini sağlayan düğme</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="one">%d year</item>
-    <item quantity="other">%d years</item>
+    <item quantity="one">%d yıl</item>
+    <item quantity="other">%d yıl</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d month</item>
-    <item quantity="other">%d months</item>
+    <item quantity="one">%d ay</item>
+    <item quantity="other">%d ay</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="one">%d week</item>
-    <item quantity="other">%d weeks</item>
+    <item quantity="one">%d hafta</item>
+    <item quantity="other">%d hafta</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d gün</item>
@@ -236,8 +236,8 @@
     <item quantity="other">%d saniye</item>
   </plurals>
   <plurals name="aliases_count">
-    <item quantity="one">%d alias</item>
-    <item quantity="other">%d aliases</item>
+    <item quantity="one">%d takma ad</item>
+    <item quantity="other">%d takma ad</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Not kopyalandı</string>
@@ -263,4 +263,9 @@
     <item quantity="other">SimpleLogin üzerinde bulunan ancak Proton Pass üzerinde bulunmayan %d takma adınızın olduğunu gördük. Bunları içe aktarmak ister misiniz?</item>
   </plurals>
   <string name="simple_login_widget_action">Takma adları eşitle</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">Kodu almadınız mı?</string>
+  <string name="verification_code_suggestion_spam">İstenmeyen kutusunda \"Lütfen Proton Pass için e-posta adresinizi doğrulayın\" konulu bir e-posta olup olmadığına bakın.</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Böyle bir e-posta bulamıyorsanız, %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">yeni bir kod isteyin</string>
 </resources>

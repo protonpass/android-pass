@@ -23,7 +23,7 @@ import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
 
 @Immutable
-enum class GeneratePasswordMode {
+internal enum class GeneratePasswordMode {
     CopyAndClose,
     CancelConfirm
 }
@@ -33,7 +33,8 @@ internal data class GeneratePasswordUiState(
     internal val password: String,
     internal val passwordStrength: PasswordStrength,
     internal val mode: GeneratePasswordMode,
-    internal val passwordConfig: PasswordConfig?
+    internal val passwordConfig: PasswordConfig?,
+    internal val event: GeneratePasswordEvent
 ) {
 
     internal companion object {
@@ -42,8 +43,10 @@ internal data class GeneratePasswordUiState(
             password = "",
             passwordStrength = PasswordStrength.None,
             mode = mode,
-            passwordConfig = null
+            passwordConfig = null,
+            event = GeneratePasswordEvent.Idle
         )
 
     }
+
 }

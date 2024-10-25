@@ -85,22 +85,30 @@ class GeneratePasswordViewModel @Inject constructor(
     private val passwordStrengthFlow = passwordFlow
         .mapLatest(passwordStrengthCalculator::calculateStrength)
 
+    private val eventFlow = MutableStateFlow<GeneratePasswordEvent>(GeneratePasswordEvent.Idle)
+
     internal val stateFlow: StateFlow<GeneratePasswordUiState> = combine(
         passwordFlow,
         passwordStrengthFlow,
-        passwordConfigFlow
-    ) { password, passwordStrength, passwordConfig ->
+        passwordConfigFlow,
+        eventFlow
+    ) { password, passwordStrength, passwordConfig, event ->
         GeneratePasswordUiState(
             password = password,
             passwordStrength = passwordStrength,
             passwordConfig = passwordConfig,
-            mode = mode
+            mode = mode,
+            event = event
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = GeneratePasswordUiState.initial(mode)
     )
+
+    internal fun onConsumeEvent(event: GeneratePasswordEvent) {
+        eventFlow.compareAndSet(event, GeneratePasswordEvent.Idle)
+    }
 
     internal fun onChangePasswordConfig(newPasswordConfig: PasswordConfig) {
         viewModelScope.launch {
@@ -117,26 +125,28 @@ class GeneratePasswordViewModel @Inject constructor(
         updateAndRegenerate(updated)
     }
 
-    fun onConfirm() = viewModelScope.launch {
-        when (mode) {
-            GeneratePasswordMode.CancelConfirm -> storeDraft()
-            GeneratePasswordMode.CopyAndClose -> copyToClipboard()
+    internal fun onConfirmPassword() {
+        viewModelScope.launch {
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                encrypt(stateFlow.value.password)
+            }.also { encryptedPassword ->
+                draftRepository.save(DRAFT_PASSWORD_KEY, encryptedPassword)
+                eventFlow.update { GeneratePasswordEvent.OnPasswordConfirmed }
+            }
+        }
+    }
+
+    internal fun onCopyPassword() {
+        clipboardManager.copyToClipboard(stateFlow.value.password, isSecure = true)
+
+        viewModelScope.launch {
+            snackbarDispatcher(GeneratePasswordSnackbarMessage.CopiedToClipboard)
+            eventFlow.update { GeneratePasswordEvent.OnPasswordCopied }
         }
     }
 
     private fun updateAndRegenerate(pref: PasswordGenerationPreference) {
         userPreferencesRepository.setPasswordGenerationPreference(pref)
-    }
-
-    private fun storeDraft() {
-        encryptionContextProvider.withEncryptionContext {
-            draftRepository.save(DRAFT_PASSWORD_KEY, encrypt(stateFlow.value.password))
-        }
-    }
-
-    private suspend fun copyToClipboard() {
-        clipboardManager.copyToClipboard(stateFlow.value.password, isSecure = true)
-        snackbarDispatcher(GeneratePasswordSnackbarMessage.CopiedToClipboard)
     }
 
     private suspend fun getCurrentPreference(): PasswordGenerationPreference =

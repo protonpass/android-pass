@@ -113,11 +113,6 @@ class GeneratePasswordViewModel @Inject constructor(
         regeneratePasswordFlow.update { true }
     }
 
-    fun onCapitalLettersChange(value: Boolean) = viewModelScope.launch {
-        val updated = getCurrentPreference().copy(randomHasCapitalLetters = value)
-        updateAndRegenerate(updated)
-    }
-
     fun onIncludeNumbersChange(value: Boolean) = viewModelScope.launch {
         val updated = getCurrentPreference().copy(randomIncludeNumbers = value)
         updateAndRegenerate(updated)

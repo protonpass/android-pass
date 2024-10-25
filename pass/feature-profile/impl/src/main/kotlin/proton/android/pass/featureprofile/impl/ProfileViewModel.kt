@@ -68,11 +68,13 @@ import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
-import proton.android.pass.data.api.usecases.simplelogin.DisableSimpleLoginSyncPreference
 import proton.android.pass.domain.PlanType
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.AppVersionCopied
 import proton.android.pass.featureprofile.impl.accountswitcher.AccountItem
 import proton.android.pass.featureprofile.impl.accountswitcher.AccountListItem
+import proton.android.pass.featuresearchoptions.api.FilterOption
+import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
+import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.CheckPasskeySupport
@@ -94,7 +96,7 @@ class ProfileViewModel @Inject constructor(
     private val checkPasskeySupport: CheckPasskeySupport,
     private val userManager: UserManager,
     private val refreshContent: RefreshContent,
-    private val disableSimpleLoginSyncPreference: DisableSimpleLoginSyncPreference,
+    private val searchOptionsRepository: HomeSearchOptionsRepository,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
@@ -350,10 +352,6 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    internal fun onDisableSimpleLoginWidget() {
-        disableSimpleLoginSyncPreference()
-    }
-
     private suspend fun ProfileViewModel.refreshAccount(userId: UserId) {
         runCatching { refreshContent(userId) }
             .onSuccess {
@@ -373,6 +371,36 @@ class ProfileViewModel @Inject constructor(
         planInfo = planInfo,
         state = state
     )
+
+    fun onAliasCountClick() {
+        searchOptionsRepository.setFilterOption(FilterOption(SearchFilterType.Alias))
+        eventFlow.update { ProfileEvent.HomeAliases }
+    }
+
+    fun onCreditCardCountClick() {
+        searchOptionsRepository.setFilterOption(FilterOption(SearchFilterType.CreditCard))
+        eventFlow.update { ProfileEvent.HomeCreditCards }
+    }
+
+    fun onIdentityCountClick() {
+        searchOptionsRepository.setFilterOption(FilterOption(SearchFilterType.Identity))
+        eventFlow.update { ProfileEvent.HomeIdentities }
+    }
+
+    fun onLoginCountClick() {
+        searchOptionsRepository.setFilterOption(FilterOption(SearchFilterType.Login))
+        eventFlow.update { ProfileEvent.HomeLogins }
+    }
+
+    fun onMFACountClick() {
+        searchOptionsRepository.setFilterOption(FilterOption(SearchFilterType.LoginMFA))
+        eventFlow.update { ProfileEvent.AllMFA }
+    }
+
+    fun onNoteCountClick() {
+        searchOptionsRepository.setFilterOption(FilterOption(SearchFilterType.Note))
+        eventFlow.update { ProfileEvent.HomeNotes }
+    }
 
     private companion object {
 

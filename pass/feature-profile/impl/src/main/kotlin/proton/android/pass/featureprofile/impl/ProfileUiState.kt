@@ -46,6 +46,18 @@ internal sealed interface ProfileEvent {
 
     data object ConfigurePin : ProfileEvent
 
+    data object HomeLogins : ProfileEvent
+
+    data object HomeAliases : ProfileEvent
+
+    data object HomeCreditCards : ProfileEvent
+
+    data object HomeNotes : ProfileEvent
+
+    data object HomeIdentities : ProfileEvent
+
+    data object AllMFA : ProfileEvent
+
 }
 
 @Stable

@@ -50,6 +50,7 @@ import proton.android.pass.featuresearchoptions.api.SearchFilterType.All
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.CreditCard
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.Identity
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.Login
+import proton.android.pass.featuresearchoptions.api.SearchFilterType.LoginMFA
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.Note
 import me.proton.core.presentation.R as CoreR
 
@@ -119,6 +120,7 @@ private fun ItemTypeButton(
                     Note -> painterResource(CoreR.drawable.ic_proton_file_lines)
                     CreditCard -> painterResource(CoreR.drawable.ic_proton_credit_card)
                     Identity -> painterResource(CoreR.drawable.ic_proton_card_identity)
+                    LoginMFA -> painterResource(CoreR.drawable.ic_proton_lock)
                 },
                 contentDescription = stringResource(R.string.item_type_filter_list_icon_content_description),
                 tint = if (isSelected) {
@@ -135,6 +137,7 @@ private fun ItemTypeButton(
                     Note -> stringResource(R.string.item_type_filter_note)
                     CreditCard -> stringResource(R.string.item_type_filter_credit_card)
                     Identity -> stringResource(R.string.item_type_filter_identity)
+                    LoginMFA -> stringResource(R.string.item_type_filter_login_totp)
                 },
                 style = ProtonTheme.typography.defaultSmallNorm,
                 color = PassTheme.colors.textNorm

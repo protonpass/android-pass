@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -36,11 +37,26 @@ import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.features.password.GeneratePasswordNavigation
 import proton.android.pass.features.password.R
 
-@Suppress("CyclomaticComplexMethod", "ComplexMethod")
 @Composable
-fun GeneratePasswordBottomSheet(modifier: Modifier = Modifier, onNavigate: (GeneratePasswordNavigation) -> Unit) {
-    val viewModel = hiltViewModel<GeneratePasswordViewModel>()
-    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+fun GeneratePasswordBottomSheet(
+    modifier: Modifier = Modifier,
+    onNavigate: (GeneratePasswordNavigation) -> Unit,
+    viewModel: GeneratePasswordViewModel = hiltViewModel()
+) = with(viewModel) {
+    val state by stateFlow.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state.event) {
+        when (state.event) {
+            GeneratePasswordEvent.Idle -> Unit
+
+            GeneratePasswordEvent.OnPasswordConfirmed,
+            GeneratePasswordEvent.OnPasswordCopied -> {
+                onNavigate(GeneratePasswordNavigation.DismissBottomsheet)
+            }
+        }
+
+        onConsumeEvent(state.event)
+    }
 
     GeneratePasswordBottomSheetContent(
         modifier = modifier,
@@ -48,7 +64,7 @@ fun GeneratePasswordBottomSheet(modifier: Modifier = Modifier, onNavigate: (Gene
         onEvent = { uiEvent ->
             when (uiEvent) {
                 is GeneratePasswordUiEvent.OnPasswordModeChange -> {
-                    viewModel.onPasswordModeChange(uiEvent.mode)
+                    onPasswordModeChange(uiEvent.mode)
                 }
 
                 GeneratePasswordUiEvent.OnPasswordModeChangeClick -> {
@@ -60,45 +76,37 @@ fun GeneratePasswordBottomSheet(modifier: Modifier = Modifier, onNavigate: (Gene
                 }
 
                 is GeneratePasswordUiEvent.OnPasswordConfigChanged -> {
-                    viewModel.onChangePasswordConfig(uiEvent.config)
+                    onChangePasswordConfig(uiEvent.config)
                 }
 
                 GeneratePasswordUiEvent.OnRegeneratePasswordClick -> {
-                    viewModel.onRegeneratePassword()
+                    onRegeneratePassword()
                 }
             }
         },
         buttonSection = {
             when (state.mode) {
-                GeneratePasswordMode.CopyAndClose ->
-                    @Composable
-                    {
-                        CircleButton(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentPadding = PaddingValues(14.dp),
-                            color = PassTheme.colors.loginInteractionNormMajor1,
-                            elevation = ButtonDefaults.elevation(0.dp),
-                            onClick = {
-                                viewModel.onConfirm()
-                                onNavigate(GeneratePasswordNavigation.DismissBottomsheet)
-                            }
-                        ) {
-                            Text(
-                                text = stringResource(R.string.generate_password_copy),
-                                style = PassTheme.typography.body3Inverted(),
-                                color = PassTheme.colors.textInvert
-                            )
-                        }
+                GeneratePasswordMode.CopyAndClose -> {
+                    CircleButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentPadding = PaddingValues(14.dp),
+                        color = PassTheme.colors.loginInteractionNormMajor1,
+                        elevation = ButtonDefaults.elevation(0.dp),
+                        onClick = ::onCopyPassword
+                    ) {
+                        Text(
+                            text = stringResource(R.string.generate_password_copy),
+                            style = PassTheme.typography.body3Inverted(),
+                            color = PassTheme.colors.textInvert
+                        )
                     }
+                }
 
-                GeneratePasswordMode.CancelConfirm -> @Composable {
+                GeneratePasswordMode.CancelConfirm -> {
                     BottomSheetCancelConfirm(
                         modifier = Modifier.fillMaxWidth(),
                         onCancel = { onNavigate(GeneratePasswordNavigation.DismissBottomsheet) },
-                        onConfirm = {
-                            viewModel.onConfirm()
-                            onNavigate(GeneratePasswordNavigation.DismissBottomsheet)
-                        }
+                        onConfirm = ::onConfirmPassword
                     )
                 }
             }

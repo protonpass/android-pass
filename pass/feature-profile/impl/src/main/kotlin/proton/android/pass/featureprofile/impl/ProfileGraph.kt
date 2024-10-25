@@ -81,7 +81,7 @@ sealed interface ProfileNavigation {
 
     data object Finish : ProfileNavigation
 
-    data object List : ProfileNavigation
+    data object Home : ProfileNavigation
 
     data object Report : ProfileNavigation
 

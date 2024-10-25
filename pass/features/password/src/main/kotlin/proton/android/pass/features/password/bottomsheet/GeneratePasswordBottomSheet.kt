@@ -53,9 +53,6 @@ fun GeneratePasswordBottomSheet(modifier: Modifier = Modifier, onNavigate: (Gene
                 GeneratePasswordEvent.OnPasswordModeChangeClick -> {
                     onNavigate(GeneratePasswordNavigation.OnSelectPasswordMode)
                 }
-                is GeneratePasswordEvent.OnWordsIncludeNumbersChange -> {
-                    viewModel.onWordsIncludeNumbersChange(it.value)
-                }
                 is GeneratePasswordEvent.OnWordsCountChange -> {
                     viewModel.onWordsCountChange(it.count)
                 }

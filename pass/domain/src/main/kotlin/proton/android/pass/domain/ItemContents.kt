@@ -129,9 +129,7 @@ sealed class ItemContents {
             ?.value
         val hasPasskeys: Boolean = passkeys.isNotEmpty()
         val hasSinglePasskey: Boolean = passkeys.size == 1
-        private val hasPrimaryTotp: Boolean = primaryTotp !is HiddenState.Empty
-        private val hasCustomFieldTotp: Boolean = customFields.any { it is CustomFieldContent.Totp }
-        val hasAnyTotp: Boolean = hasPrimaryTotp || hasCustomFieldTotp
+        val hasPrimaryTotp: Boolean = primaryTotp !is HiddenState.Empty
 
         companion object {
 

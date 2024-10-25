@@ -90,6 +90,7 @@ dependencies {
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.crypto.fakes)
     androidTestImplementation(projects.pass.data.fakes)
+    androidTestImplementation(projects.pass.featureSearchOptions.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)
     androidTestImplementation(projects.pass.passkeys.fakes)
     androidTestImplementation(projects.pass.preferences.fakes)

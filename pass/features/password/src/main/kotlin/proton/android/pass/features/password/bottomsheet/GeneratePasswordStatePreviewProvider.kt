@@ -35,7 +35,8 @@ internal class GeneratePasswordStatePreviewProvider :
                 includeUppercase = false,
                 includeNumbers = true
             ),
-            mode = GeneratePasswordMode.CopyAndClose
+            mode = GeneratePasswordMode.CopyAndClose,
+            event = GeneratePasswordEvent.Idle
         ),
         GeneratePasswordUiState(
             password = "a1!2",
@@ -46,7 +47,8 @@ internal class GeneratePasswordStatePreviewProvider :
                 includeUppercase = false,
                 includeNumbers = true
             ),
-            mode = GeneratePasswordMode.CopyAndClose
+            mode = GeneratePasswordMode.CopyAndClose,
+            event = GeneratePasswordEvent.Idle
         ),
         GeneratePasswordUiState(
             password = buildString { repeat(64) { append("a") } },
@@ -57,7 +59,8 @@ internal class GeneratePasswordStatePreviewProvider :
                 includeUppercase = true,
                 includeNumbers = false
             ),
-            mode = GeneratePasswordMode.CancelConfirm
+            mode = GeneratePasswordMode.CancelConfirm,
+            event = GeneratePasswordEvent.Idle
         )
     )
 }

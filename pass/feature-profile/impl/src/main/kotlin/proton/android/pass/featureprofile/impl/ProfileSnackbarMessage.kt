@@ -31,8 +31,13 @@ enum class ProfileSnackbarMessage(
     BiometryFailedToAuthenticateError(R.string.profile_error_biometry_failed_to_authenticate, SnackbarType.ERROR),
     FingerprintLockEnabled(R.string.profile_fingerprint_lock_enabled, SnackbarType.SUCCESS),
     FingerprintLockDisabled(R.string.profile_fingerprint_lock_disabled, SnackbarType.SUCCESS),
-    ErrorPerformingOperation(R.string.profile_error_performing_operation, SnackbarType.ERROR),
     AppVersionCopied(R.string.profile_app_version_copied_to_clipboard, SnackbarType.SUCCESS, true),
     PinLockEnabled(R.string.configure_pin_pin_lock_enabled, SnackbarType.SUCCESS),
-    PinLockDisabled(R.string.configure_pin_pin_lock_disabled, SnackbarType.SUCCESS)
+    PinLockDisabled(R.string.configure_pin_pin_lock_disabled, SnackbarType.SUCCESS),
+    FilteredByLogins(R.string.filtered_by_logins, SnackbarType.NORM),
+    FilteredByLoginsWithMFA(R.string.filtered_by_logins_with_mfa, SnackbarType.NORM),
+    FilteredByAliases(R.string.filtered_by_aliases, SnackbarType.NORM),
+    FilteredByNote(R.string.filtered_by_notes, SnackbarType.NORM),
+    FilteredByCreditCards(R.string.filtered_by_credit_cards, SnackbarType.NORM),
+    FilteredByIdentities(R.string.filtered_by_identities, SnackbarType.NORM)
 }

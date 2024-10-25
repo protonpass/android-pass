@@ -76,7 +76,6 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Fel vid laddning av anpassade e-postadresser</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Kunde inte hämta e-postadresser</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">Verifiera</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Ta bort</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Senaste intrång på %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -102,17 +101,13 @@
   <string name="security_center_custom_email_already_verified">E-post redan verifierad</string>
   <string name="security_center_custom_email_error_adding">Gick inte lägga till e-postadressen</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">Kod</string>
-  <string name="security_center_verify_email_code_error">Ogiltig kod</string>
   <string name="security_center_verify_email_title">Bekräfta din e-post</string>
   <string name="security_center_verify_email_subtitle">Vi har skickat en verifieringskod till %s. Ange den nedan:</string>
-  <string name="security_center_verify_email_code_resend_header">Har du inte fått koden?</string>
-  <string name="security_center_verify_email_code_resend_body">Kolla i din skräppost för ett e-postmeddelande som heter ”Bekräfta din e-postadress för Proton Pass”</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Om du inte kan hitta ett sådant e-postmeddelande kan du </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">begär en ny kod.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">En ny verifiering har skickats, kontrollera din inkorg.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Det var ett fel när verifieringskoden skickades. Försök igen senare.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">För många ogiltiga verifieringar. Tar bort anpassad e-post.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Ogiltig verifieringskod</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">Det var ett fel vid verifiering av e-post. Försök igen senare.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Intrång upptäckta för</string>
   <string name="security_center_verify_report_title_none">Inga intrång upptäckta för</string>

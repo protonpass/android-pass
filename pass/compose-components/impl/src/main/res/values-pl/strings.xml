@@ -48,8 +48,8 @@
   <string name="action_edit">Edytuj</string>
   <string name="action_add">Dodaj</string>
   <string name="action_delete">Usuń</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
+  <string name="action_make_default">Ustaw jako domyślny</string>
+  <string name="action_verify">Zweryfikuj</string>
   <string name="action_close">Zamknij</string>
   <string name="action_update">Zaktualizuj</string>
   <!-- Empty list -->
@@ -206,28 +206,28 @@
   <string name="dialog_upgrade_plan_action_cancel">Nie teraz</string>
   <!-- Words -->
   <string name="email_address">Adres e-mail</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">Adres e-mail jest nieprawidłowy</string>
   <string name="password">Hasło</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Przycisk odrzucający podpowiedź i niepokazujący jej ponownie</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="one">%d year</item>
-    <item quantity="few">%d years</item>
-    <item quantity="many">%d years</item>
-    <item quantity="other">%d years</item>
+    <item quantity="one">%d rok</item>
+    <item quantity="few">%d lata</item>
+    <item quantity="many">%d lat</item>
+    <item quantity="other">%d roku</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d month</item>
-    <item quantity="few">%d months</item>
-    <item quantity="many">%d months</item>
-    <item quantity="other">%d months</item>
+    <item quantity="one">%d miesiąc</item>
+    <item quantity="few">%d miesiące</item>
+    <item quantity="many">%d miesiący</item>
+    <item quantity="other">%d miesięca</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="one">%d week</item>
-    <item quantity="few">%d weeks</item>
-    <item quantity="many">%d weeks</item>
-    <item quantity="other">%d weeks</item>
+    <item quantity="one">%d tydzień</item>
+    <item quantity="few">%d tygodnie</item>
+    <item quantity="many">%d tygodni</item>
+    <item quantity="other">%d tygodnia</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d dzień</item>
@@ -255,9 +255,9 @@
   </plurals>
   <plurals name="aliases_count">
     <item quantity="one">%d alias</item>
-    <item quantity="few">%d aliases</item>
-    <item quantity="many">%d aliases</item>
-    <item quantity="other">%d aliases</item>
+    <item quantity="few">%d aliasy</item>
+    <item quantity="many">%d aliasów</item>
+    <item quantity="other">%d aliasów</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Notatka została skopiowana</string>
@@ -285,4 +285,9 @@
     <item quantity="other">Masz %d aliasów SimpleLogin, które nie są widoczne w Proton Pass. Czy chcesz je zaimportować?</item>
   </plurals>
   <string name="simple_login_widget_action">Synchronizuj aliasy</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">Nie otrzymano kodu?</string>
+  <string name="verification_code_suggestion_spam">Sprawdź folder Spam w poszukiwaniu wiadomości “Potwierdź adres e-mail w Proton Pass“</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Jeśli nie możesz znaleźć wiadomości, %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">poproś o nowy kod</string>
 </resources>

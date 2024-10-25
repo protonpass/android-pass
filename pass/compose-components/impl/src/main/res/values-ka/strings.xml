@@ -46,8 +46,8 @@
   <string name="action_edit">ჩასწორება</string>
   <string name="action_add">დამატება</string>
   <string name="action_delete">წაშლა</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
+  <string name="action_make_default">ნაგულისხმევად დაყენება</string>
+  <string name="action_verify">გადამოწმება</string>
   <string name="action_close">დახურვა</string>
   <string name="action_update">განახლება</string>
   <!-- Empty list -->
@@ -202,22 +202,22 @@
   <string name="dialog_upgrade_plan_action_cancel">არა ახლა</string>
   <!-- Words -->
   <string name="email_address">ელფოსტის მისამართი</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">არასწორი ელფოსტის მისამართი</string>
   <string name="password">პაროლი</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">ღილაკი, რომ ეს მინიშნება მოაცილოთ და აღარასდროს გაჩვენოთ</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="one">%d year</item>
-    <item quantity="other">%d years</item>
+    <item quantity="one">%d წელი</item>
+    <item quantity="other">%d წელი</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d month</item>
-    <item quantity="other">%d months</item>
+    <item quantity="one">%d თვე</item>
+    <item quantity="other">%d თვე</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="one">%d week</item>
-    <item quantity="other">%d weeks</item>
+    <item quantity="one">%d კვირა</item>
+    <item quantity="other">%d კვირა</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d დღე</item>
@@ -236,8 +236,8 @@
     <item quantity="other">%d წამი</item>
   </plurals>
   <plurals name="aliases_count">
-    <item quantity="one">%d alias</item>
-    <item quantity="other">%d aliases</item>
+    <item quantity="one">%d ფსევდონიმი</item>
+    <item quantity="other">%d ფსევდონიმი</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">შენიშვნა დაკოპირდა</string>
@@ -263,4 +263,9 @@
     <item quantity="other">აღმოვაჩინეთ, რომ გაქვთ %d ფსევდონიმი, რომელიც არსებობს SimpleLogin-ში, მაგრამ არა Proton Pass-ში. გნებავთ მათი შემოტანა?</item>
   </plurals>
   <string name="simple_login_widget_action">ფსევდონიმების სინქი</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">კოდი არ მიგიღიათ?</string>
+  <string name="verification_code_suggestion_spam">შეამოწმეთ სპამის საქაღალდე იმეილზე, რომელსაც ჰქვია \"დაადასტურეთ თქვენი ელფოსტის მისამართი Proton Pass-სთვის\"</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">თუ ასეთ ელფოსტას ვერ პოულობთ, შეგიძლიათ %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">ახალი კოდის გამოთხოვა</string>
 </resources>

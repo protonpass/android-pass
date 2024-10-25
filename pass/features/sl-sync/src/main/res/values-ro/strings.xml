@@ -18,62 +18,59 @@
   -->
 <resources>
   <!-- Management screen -->
-  <string name="simple_login_sync_management_title">Alias management</string>
-  <string name="simple_login_sync_management_domain_label">Domain</string>
-  <string name="simple_login_sync_management_domain_title">Default domain for aliases</string>
-  <string name="simple_login_sync_management_domain_option_blank">Not selected</string>
-  <string name="simple_login_sync_management_mailboxes_label">Mailboxes</string>
-  <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
-  <string name="simple_login_sync_management_mailbox_default">Default</string>
-  <string name="simple_login_sync_management_mailbox_unverified">Unverified mailbox</string>
-  <string name="simple_login_sync_management_vault_title">SimpleLogin sync</string>
-  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
-  <string name="simple_login_sync_management_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_domains">Default domain for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_mailboxes">Default mailbox for aliases</string>
+  <string name="simple_login_sync_management_title">Gestionare aliasuri</string>
+  <string name="simple_login_sync_management_domain_label">Domeniu</string>
+  <string name="simple_login_sync_management_domain_title">Domeniu implicit pentru aliasuri</string>
+  <string name="simple_login_sync_management_domain_option_blank">Neselectat</string>
+  <string name="simple_login_sync_management_mailboxes_label">Conturi de e-mail</string>
+  <string name="simple_login_sync_management_mailboxes_description">Contul de e-mail este locul unde sunt redirecționate mesajele trimise către un alias. Este contul de e-mail obișnuit, de ex. Gmail, Outlook, Proton Mail etc.</string>
+  <string name="simple_login_sync_management_mailbox_default">Implicit</string>
+  <string name="simple_login_sync_management_mailbox_unverified">Cont de e-mail neverificat</string>
+  <string name="simple_login_sync_management_vault_title">Sincronizare SimpleLogin</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">A apărut o eroare la preluarea detaliilor aliasului SimpleLogin.</string>
+  <string name="simple_login_sync_management_mailboxes_title">Cont de e-mail implicit pentru aliasuri</string>
+  <string name="simple_login_sync_management_dialog_title_domains">Domeniu implicit pentru aliasuri</string>
+  <string name="simple_login_sync_management_dialog_title_mailboxes">Cont de e-mail implicit pentru aliasuri</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sincronizare aliasuri</string>
   <string name="simple_login_sync_enable_snackbar_error">A apărut o eroare la activarea sincronizării aliasurilor SimpleLogin.</string>
   <string name="simple_login_sync_enable_snackbar_success">S-a reușit activarea sincronizării aliasurilor SimpleLogin.</string>
   <!-- Mailbox create screen -->
-  <string name="simple_login_sync_mailbox_create_title">Add mailbox</string>
-  <string name="simple_login_sync_mailbox_create_message_error">There was an error adding the mailbox</string>
+  <string name="simple_login_sync_mailbox_create_title">Adăugare cont de e-mail</string>
+  <string name="simple_login_sync_mailbox_create_message_error">A apărut o eroare la adăugarea contului de e-mail.</string>
   <!-- Mailbox verify screen -->
-  <string name="simple_login_sync_mailbox_verify_title">Confirm your mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">We sent a verification code to %s. Enter it below:</string>
-  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">your email address</string>
-  <string name="simple_login_sync_mailbox_verify_code_resend">Resend code in %s</string>
-  <string name="simple_login_sync_mailbox_verify_code_request_new">request a new code</string>
-  <string name="simple_login_sync_mailbox_verify_code_not_received" comment="the placeholder will be replaced by 'request a new code' link text">Code not received? Check your spam folder and if not there %s instead.</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Invalid mailbox verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_error">There was an error verifying the mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_success">Mailbox successfully verified</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">There was an error sending verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verification code successfully sent</string>
+  <string name="simple_login_sync_mailbox_verify_title">Confirmare cont de e-mail</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Vi s-a trimis un cod de verificare la %s. Introduceți-l mai jos:</string>
+  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">adresa de e-mail deținută</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Cod de verificare cont de e-mail nevalid</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_error">A apărut o eroare la verificarea contului de e-mail.</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_success">Contul de e-mail a fost verificat.</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">A apărut o eroare la trimiterea codului de verificare.</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Codul de verificare a fost trimis.</string>
   <!-- Mailbox delete screen -->
-  <string name="simple_login_sync_mailbox_delete_title">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">All aliases using the mailbox %s will be also deleted. To keep receiving emails transfer these aliases to a different mailbox:</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfer aliases</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">To mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transfer and delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_error">There was an error deleting mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_success">Mailbox successfully deleted</string>
-  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transfer aliases to</string>
+  <string name="simple_login_sync_mailbox_delete_title">Ștergere cont de e-mail</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">Toate aliasurile care utilizează adresa de e-mail %s vor fi șterse. Pentru a continua să primiți mesaje, transferați aceste aliasuri către alt cont de e-mail:</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transferare aliasuri</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Către contul de e-mail</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete">Ștergere cont de e-mail</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transferare și ștergere cont de e-mail</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">A apărut o eroare la ștergerea contului de e-mail.</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_success">Contul de e-mail a fost șters.</string>
+  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transferare aliasuri în</string>
   <!-- Domain select screen -->
-  <string name="simple_login_sync_domain_select_title">Default domain</string>
-  <string name="simple_login_sync_domain_select_title_none">none</string>
-  <string name="simple_login_sync_domain_select_description_none">No domain</string>
-  <string name="simple_login_sync_domain_select_description_custom">Your domain</string>
-  <string name="simple_login_sync_domain_select_description_free">Public domain</string>
-  <string name="simple_login_sync_domain_select_description_premium">Premium domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">There was an error fetching SL alias domains</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
+  <string name="simple_login_sync_domain_select_title">Domeniu implicit</string>
+  <string name="simple_login_sync_domain_select_title_none">niciunul</string>
+  <string name="simple_login_sync_domain_select_description_none">Niciun domeniu</string>
+  <string name="simple_login_sync_domain_select_description_custom">Domeniul personal</string>
+  <string name="simple_login_sync_domain_select_description_free">Domeniu public</string>
+  <string name="simple_login_sync_domain_select_description_premium">Domeniu premium</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">A apărut o eroare la preluarea domeniilor aliasului SimpleLogin.</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">A apărut o eroare la actualizarea domeniului aliasului SimpleLogin.</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Domeniul aliasului SimpleLogin a fost actualizat.</string>
   <!-- Mailbox options screen -->
-  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Cannot display mailbox options</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_error">There was an error updating default mailbox</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Default mailbox successfully updated</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Nu se pot afișa opțiunile contului de e-mail</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_error">A apărut o eroare la actualizarea contului de e-mail implicit.</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Contul de e-mail implicit a fost actualizat.</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Seif SL implicit</string>
   <string name="simple_login_sync_shared_default_vault_description">Aliasurile SimpleLogin vor fi importate în acest seif.</string>

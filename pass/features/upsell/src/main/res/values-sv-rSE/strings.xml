@@ -27,12 +27,12 @@
   <string name="upsell_paid_feature_unlimited_aliases">Obegränsat antal hide-my-email-alias</string>
   <string name="upsell_paid_feature_vault_sharing">Valvdelning (upp till 10 personer)</string>
   <string name="upsell_paid_feature_secure_links">Säkra länkar</string>
-  <string name="upsell_paid_feature_advance_alias_management">Advanced alias management</string>
+  <string name="upsell_paid_feature_advance_alias_management">Avancerad hantering av alias</string>
   <string name="upsell_paid_feature_authenticator_essential">Kräver 2FA för organisation</string>
   <string name="upsell_paid_feature_sso_essential">SSO-integration (kommer snart)</string>
-  <string name="upsell_paid_feature_advance_alias_management_title">Manage your aliases</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">Advanced alias management is available with Proton Unlimited. Upgrade for immediate access.</string>
+  <string name="upsell_paid_feature_advance_alias_management_title">Hantera dina alias</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">Avancerad hantering av alias är tillgängligt med Proton Unlimited. Uppgradera för omedelbar åtkomst.</string>
   <string name="upsell_button_upgrade">Skaffa Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Skaffa Pass Business</string>
-  <string name="upsell_button_upgrade_unlimited">Get Proton Unlimited</string>
+  <string name="upsell_button_upgrade_unlimited">Skaffa Proton Unlimited</string>
 </resources>

@@ -106,8 +106,9 @@
   <string name="passkey_detail_bottomsheet_domain">Domena</string>
   <string name="passkey_detail_bottomsheet_key">Klucz</string>
   <string name="passkey_detail_bottomsheet_created">Utworzono</string>
-  <string name="activity_in_last_two_weeks">Aktywność z ostatnich 2 tygodni</string>
+  <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
   <string name="contacts">Kontakty</string>
+  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s przekierowanie</item>
     <item quantity="few">%1$s przekierowania</item>

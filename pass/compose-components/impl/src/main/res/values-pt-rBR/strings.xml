@@ -10,7 +10,7 @@
   <string name="item_list_header_all_search_results">Todos</string>
   <string name="item_list_header_pinned_search_results">Fixado</string>
   <string name="item_list_header_logins_type">Entrar</string>
-  <string name="item_list_header_aliases_type">Apelidos</string>
+  <string name="item_list_header_aliases_type">Aliases</string>
   <string name="item_list_header_notes_type">Notas</string>
   <string name="item_list_header_credit_cards_type">Cartões de créditos</string>
   <plurals name="item_list_header_results">
@@ -46,8 +46,8 @@
   <string name="action_edit">Editar</string>
   <string name="action_add">Adicionar</string>
   <string name="action_delete">Excluir</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
+  <string name="action_make_default">Tornar padrão</string>
+  <string name="action_verify">Verificar</string>
   <string name="action_close">Fechar</string>
   <string name="action_update">Atualizar</string>
   <!-- Empty list -->
@@ -202,22 +202,22 @@
   <string name="dialog_upgrade_plan_action_cancel">Agora não</string>
   <!-- Words -->
   <string name="email_address">Endereço de e-mail</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">O endereço de e-mail não é válido</string>
   <string name="password">Senha</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Botão para dispensar essa dica e não exibir novamente</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="one">%d year</item>
-    <item quantity="other">%d years</item>
+    <item quantity="one">%d ano</item>
+    <item quantity="other">%d anos</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d month</item>
-    <item quantity="other">%d months</item>
+    <item quantity="one">%d mês</item>
+    <item quantity="other">%d meses</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="one">%d week</item>
-    <item quantity="other">%d weeks</item>
+    <item quantity="one">%d semana</item>
+    <item quantity="other">%d semanas</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d dia</item>
@@ -263,4 +263,9 @@
     <item quantity="other">Detectamos que você tem %d aliases presentes no SimpleLogin, mas ausentes no Proton Pass. Você gostaria de importá-los?</item>
   </plurals>
   <string name="simple_login_widget_action">Sincronizar alias</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">Você não recebeu o código?</string>
+  <string name="verification_code_suggestion_spam">Verifique se há um e-mail na sua pasta de Spam chamado “Confirme seu endereço de e-mail para o Proton Pass”</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Se você não encontrar o e-mail, você pode %s</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">solicitar um novo código</string>
 </resources>

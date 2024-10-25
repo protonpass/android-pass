@@ -104,8 +104,9 @@
   <string name="passkey_detail_bottomsheet_domain">Dominio</string>
   <string name="passkey_detail_bottomsheet_key">Chiave</string>
   <string name="passkey_detail_bottomsheet_created">Creata</string>
-  <string name="activity_in_last_two_weeks">Attività nelle ultime due settimane</string>
+  <string name="activity_in_last_two_weeks">Attività negli ultimi 14 giorni</string>
   <string name="contacts">Contatti</string>
+  <string name="contacts_section_description">Per mantenere il tuo indirizzo email nascosto, puoi creare un contatto alias che maschererà il tuo indirizzo</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s inoltro</item>
     <item quantity="other">%1$s inoltri</item>

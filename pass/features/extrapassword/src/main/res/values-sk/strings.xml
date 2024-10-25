@@ -26,7 +26,7 @@
   <string name="configure_extra_password_mismatch">Heslá sa nezhodujú</string>
   <string name="extra_password_options_remove">Odstrániť</string>
   <string name="info_extra_password_title">Dodatočné heslo</string>
-  <string name="info_extra_password_body">Ochránte Proton Pass s dodatočným heslom.</string>
+  <string name="info_extra_password_body">Ochráňte Proton Pass s dodatočným heslom.</string>
   <string name="info_extra_password_button">Nastaviť dodatočné heslo</string>
   <string name="configure_extra_password_cannot_be_blank">Heslo nemôže byť prázdne</string>
   <string name="configure_extra_password_password_too_short">Dodatočné heslo musí mať aspoň 8 znakov</string>

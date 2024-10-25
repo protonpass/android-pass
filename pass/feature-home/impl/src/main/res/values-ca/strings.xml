@@ -141,7 +141,7 @@
   <string name="home_snackbar_items_alias_enabled_success">S\'ha activat l\'àlies.</string>
   <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
   <string name="home_snackbar_items_alias_enabled_error">S\'ha produït un error en activar els àlies.</string>
-  <string name="home_snackbar_items_alias_disabled_success">Alias disabled successfully</string>
+  <string name="home_snackbar_items_alias_disabled_success">S\'ha desactivat l\'àlies.</string>
   <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">S\'ha produït un error en desactivar els àlies.</string>
   <string name="bulk_action_unpin">No fixis</string>

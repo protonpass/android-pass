@@ -27,12 +27,12 @@
   <string name="upsell_paid_feature_unlimited_aliases">Aliasuri nelimitate hide-my-email</string>
   <string name="upsell_paid_feature_vault_sharing">Partajare seif (maxim 10 persoane)</string>
   <string name="upsell_paid_feature_secure_links">Legături web securizate</string>
-  <string name="upsell_paid_feature_advance_alias_management">Advanced alias management</string>
+  <string name="upsell_paid_feature_advance_alias_management">Gestionare avansată aliasuri</string>
   <string name="upsell_paid_feature_authenticator_essential">Este necesară A2F pentru organizație</string>
   <string name="upsell_paid_feature_sso_essential">Integrare SSO (în curând)</string>
-  <string name="upsell_paid_feature_advance_alias_management_title">Manage your aliases</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">Advanced alias management is available with Proton Unlimited. Upgrade for immediate access.</string>
+  <string name="upsell_paid_feature_advance_alias_management_title">Gestionați-vă aliasurile</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">Gestionarea avansată a aliasurilor este disponibilă cu Proton Unlimited. Treceți la alt plan pentru acces imediat.</string>
   <string name="upsell_button_upgrade">Luați Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Luați Pass Business</string>
-  <string name="upsell_button_upgrade_unlimited">Get Proton Unlimited</string>
+  <string name="upsell_button_upgrade_unlimited">Lua\'i Proton Unlimited</string>
 </resources>

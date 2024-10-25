@@ -104,8 +104,9 @@
   <string name="passkey_detail_bottomsheet_domain">Τομέας</string>
   <string name="passkey_detail_bottomsheet_key">Κλειδί</string>
   <string name="passkey_detail_bottomsheet_created">Δημιουργήθηκε</string>
-  <string name="activity_in_last_two_weeks">Δραστηριότητα τις τελευταίες δύο εβδομάδες</string>
+  <string name="activity_in_last_two_weeks">Δραστηριότητα στις τελευταίες 14 ημέρες</string>
   <string name="contacts">Επαφές</string>
+  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s προώθηση</item>
     <item quantity="other">%1$s προωθήσεις</item>

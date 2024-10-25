@@ -74,7 +74,6 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Terdapat kesalahan dalam memuat alamat email khusus</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Alamat email tidak dapat diperoleh</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">Verifikasi</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Hapus</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Kebocoran terkini pada %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -99,17 +98,13 @@
   <string name="security_center_custom_email_already_verified">Email sudah diverifikasi</string>
   <string name="security_center_custom_email_error_adding">Terdapat kesalahan dalam menambahkan alamat email</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">Kode</string>
-  <string name="security_center_verify_email_code_error">Kode tidak valid</string>
   <string name="security_center_verify_email_title">Konfirmasikan email Anda</string>
   <string name="security_center_verify_email_subtitle">Kami telah mengirimkan kode verifikasi ke %s. Masukkan kode tersebut pada kolom di bawah ini:</string>
-  <string name="security_center_verify_email_code_resend_header">Belum menerima kodenya?</string>
-  <string name="security_center_verify_email_code_resend_body">Mohon periksa folder Spam Anda untuk email dengan tajuk \"Silakan konfirmasi alamat email Anda untuk Proton Pass\"</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Apabila Anda tidak dapat menemukan email yang bersangkutan, Anda dapat </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">meminta kode baru.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">Email verifikasi baru telah terkirim. Silakan periksa kotak masuk Anda.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Terjadi kesalahan saat mengirim kode verifikasi. Silakan coba lagi nanti.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Terlalu banyak verifikasi yang tidak valid. Menghapus email khusus.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Kode verifikasi tidak valid</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">Terjadi kesalahan saat memverifikasi email. Silakan coba lagi nanti.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Kebocoran terdeteksi untuk</string>
   <string name="security_center_verify_report_title_none">Tidak ada kebocoran yang terdeteksi untuk</string>

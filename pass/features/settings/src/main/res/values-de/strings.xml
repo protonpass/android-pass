@@ -31,9 +31,9 @@
   <string name="settings_share_telemetry">Anonyme Nutzungsdaten teilen</string>
   <string name="settings_share_crashes">Anonyme Absturzberichte teilen</string>
   <string name="settings_preference_updated">Deine Einstellungen wurden aktualisiert.</string>
-  <string name="settings_display_section_title">Display</string>
-  <string name="settings_preference_display_username">Username field always visible</string>
-  <string name="settings_preference_display_autofill_pinning">Autofill pinning always visible</string>
+  <string name="settings_display_section_title">Anzeige</string>
+  <string name="settings_preference_display_username">Feld Benutzername immer sichtbar</string>
+  <string name="settings_preference_display_autofill_pinning">Autofill-Anheftung immer sichtbar</string>
   <string name="view_logs_title">Protokolle anzeigen</string>
   <string name="clipboard_bottomsheet_title">Zwischenablage</string>
   <string name="clipboard_option_clear_clipboard_label">Zwischenablage leeren</string>

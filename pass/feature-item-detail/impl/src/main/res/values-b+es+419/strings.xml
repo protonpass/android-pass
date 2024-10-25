@@ -104,8 +104,9 @@
   <string name="passkey_detail_bottomsheet_domain">Dominio</string>
   <string name="passkey_detail_bottomsheet_key">Clave</string>
   <string name="passkey_detail_bottomsheet_created">Creada</string>
-  <string name="activity_in_last_two_weeks">Actividad en las 2 últimas semanas</string>
+  <string name="activity_in_last_two_weeks">Actividad en los últimos 14 días</string>
   <string name="contacts">Contactos</string>
+  <string name="contacts_section_description">Para mantener la dirección de correo electrónico oculta, se puede crear un alias de contacto para enmascarar la dirección.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s reenvío</item>
     <item quantity="other">%1$s reenvíos</item>

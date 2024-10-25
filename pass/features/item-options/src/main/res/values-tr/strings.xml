@@ -22,7 +22,7 @@
   <string name="item_options_alias_trash_dialog_checkbox_text">Bir daha hatırlatma</string>
   <string name="item_options_alias_trash_dialog_button_text_disable">Onun yerine kullanımdan kaldır</string>
   <string name="item_options_alias_trash_dialog_button_text_trash">Çöpe at</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">Takma adın kullanımdan kaldırılırken bir sorun çıktı</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">Takma ad kullanımdan kaldırılırken bir sorun çıktı</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Takma ad kullanımdan kaldırıldı</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">Takma ad çöpe atılırken bir sorun çıktı</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Takma ad çöpe atıldı</string>

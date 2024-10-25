@@ -76,7 +76,6 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error al cargar la dirección de correo personalizada</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">No se pueden obtener las direcciones de correo.</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">Verificar</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Borrar</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Última vulneración en %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -102,17 +101,13 @@
   <string name="security_center_custom_email_already_verified">Correo ya verificado</string>
   <string name="security_center_custom_email_error_adding">Error al añadir la dirección de correo electrónico</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">Código</string>
-  <string name="security_center_verify_email_code_error">Código inválido</string>
   <string name="security_center_verify_email_title">Confirme el correo electrónico</string>
   <string name="security_center_verify_email_subtitle">Hemos enviado un código de verificación a %s. Ingrese el código abajo:</string>
-  <string name="security_center_verify_email_code_resend_header">¿No recibió el código?</string>
-  <string name="security_center_verify_email_code_resend_body">Busque en la carpeta de spam un correo electrónico que diga «Confirme su dirección de correo electrónico para Proton Pass».</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Si no encuentra dicho correo electrónico, puede </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">solicitar un código nuevo.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">Se ha enviado una nueva verificación, compruebe su bandeja de entrada.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Hubo un error al enviar el código de verificación. Intente de nuevo más tarde.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Hay demasiadas verificaciones no válidas. Borrando el correo electrónico personalizado.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">El código de verificación no es válido.</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">Ocurrió un error al verificar el correo. Intente de nuevo más tarde.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Vulneraciones detectadas para</string>
   <string name="security_center_verify_report_title_none">No se detectaron vulneraciones para</string>

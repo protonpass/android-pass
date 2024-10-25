@@ -104,8 +104,9 @@
   <string name="passkey_detail_bottomsheet_domain">Domini</string>
   <string name="passkey_detail_bottomsheet_key">Clau</string>
   <string name="passkey_detail_bottomsheet_created">Creada</string>
-  <string name="activity_in_last_two_weeks">Activity in last two weeks</string>
+  <string name="activity_in_last_two_weeks">Activitat en els darrers 14 dies</string>
   <string name="contacts">Contactes</string>
+  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s reenviament</item>
     <item quantity="other">%1$s reenviaments</item>

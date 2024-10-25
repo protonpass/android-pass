@@ -12,7 +12,7 @@
   <string name="profile_option_autofill">Otomatik doldurma</string>
   <string name="profile_option_autofill_subtitle">Kullanıcı adı ve parolalarınızı otomatik olarak doldurun.</string>
   <string name="profile_option_secure_links">Güvenli bağlantılar</string>
-  <string name="profile_option_alias_management">Alias management</string>
+  <string name="profile_option_alias_management">Takma ad yönetimi</string>
   <string name="profile_error_biometry_failed_to_start">Biyometrik kimlik doğrulaması başlatılamadı</string>
   <string name="profile_error_biometry_failed_to_authenticate">Kimlik doğrulanamadı</string>
   <string name="profile_fingerprint_lock_enabled">Parmak izi kilidi kullanıma alındı</string>

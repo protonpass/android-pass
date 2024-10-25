@@ -80,7 +80,6 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Памылка загрузкі карыстальніцкіх адрасоў электроннай пошты</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Немагчыма атрымаць адрасы электроннай пошты</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">Праверка</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Выдаліць</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Апошняе парушэнне ў %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -99,7 +98,7 @@
   <string name="security_center_dark_web_monitor_no_proton_addresses">Няма адрасоў Proton</string>
   <string name="security_center_dark_web_monitor_no_aliases">Няма псеўданімаў</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Адбылася памылка падчас адпраўкі праверачнага кода. Паспрабуйце яшчэ раз пазней.</string>
-  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Адбылася памылка падчас адпраўкі праверачнага кода. Паспрабуйце яшчэ раз пазней.</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Адбылася памылка выдалення электроннай пошты. Паспрабуйце яшчэ раз пазней.</string>
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">Карыстальніцкае назіранне за электроннай поштай</string>
   <string name="security_center_custom_email_email_address_placeholder">Адрас электроннай пошты</string>
@@ -108,17 +107,13 @@
   <string name="security_center_custom_email_already_verified">Электроная пошта ўжо праверана</string>
   <string name="security_center_custom_email_error_adding">Памылка дадавання адраса электроннай пошты</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">Код</string>
-  <string name="security_center_verify_email_code_error">Памылковы код</string>
   <string name="security_center_verify_email_title">Пацвердзіце сваю электронную пошту</string>
   <string name="security_center_verify_email_subtitle">Мы адправілі вам праверачны код на %s. Увядзіце яго ніжэй:</string>
-  <string name="security_center_verify_email_code_resend_header">Не атрымалі код?</string>
-  <string name="security_center_verify_email_code_resend_body">Праверце ў сваёй папцы са спамам наяўнасць ліста з назвай \"Пацвярджэнне вашага адраса электроннай пошты для Proton Pass\"</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Калі вы не можаце знайсці ліст з такой назвай, вы можаце </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">запытаць новы код.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">Адпраўлены новы праверачны код. Праверце сваю паштовую скрыню.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Адбылася памылка падчас адпраўкі праверачнага кода. Паспрабуйце яшчэ раз пазней.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Занадта шмат памылковых праверак. Выдаленне карыстальніцкай электроннай пошты.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Памылковы праверачны код</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">Адбылася памылка праверкі электроннай пошты. Паспрабуйце яшчэ раз пазней.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Выяўлены парушэнні для</string>
   <string name="security_center_verify_report_title_none">Не выяўлена парушэнняў для</string>

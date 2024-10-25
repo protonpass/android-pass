@@ -18,62 +18,59 @@
   -->
 <resources>
   <!-- Management screen -->
-  <string name="simple_login_sync_management_title">Alias management</string>
-  <string name="simple_login_sync_management_domain_label">Domain</string>
-  <string name="simple_login_sync_management_domain_title">Default domain for aliases</string>
-  <string name="simple_login_sync_management_domain_option_blank">Not selected</string>
-  <string name="simple_login_sync_management_mailboxes_label">Mailboxes</string>
-  <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
-  <string name="simple_login_sync_management_mailbox_default">Default</string>
-  <string name="simple_login_sync_management_mailbox_unverified">Unverified mailbox</string>
-  <string name="simple_login_sync_management_vault_title">SimpleLogin sync</string>
-  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
-  <string name="simple_login_sync_management_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_domains">Default domain for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_mailboxes">Default mailbox for aliases</string>
+  <string name="simple_login_sync_management_title">별칭 관리</string>
+  <string name="simple_login_sync_management_domain_label">도메인</string>
+  <string name="simple_login_sync_management_domain_title">별칭의 기본 도메인</string>
+  <string name="simple_login_sync_management_domain_option_blank">선택되지 않음</string>
+  <string name="simple_login_sync_management_mailboxes_label">메일함</string>
+  <string name="simple_login_sync_management_mailboxes_description">메일함은 별칭으로 전송된 이메일이 전달되는 공간입니다. Gmail, Outlook, Proton Mail 등과 같은 일반적인 메일함입니다.</string>
+  <string name="simple_login_sync_management_mailbox_default">기본</string>
+  <string name="simple_login_sync_management_mailbox_unverified">확인되지 않은 메일함</string>
+  <string name="simple_login_sync_management_vault_title">SimpleLogin 동기화</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">SL 별칭 사항 가져오기 중 오류가 발생했습니다.</string>
+  <string name="simple_login_sync_management_mailboxes_title">별칭에 대한 기본 메일함</string>
+  <string name="simple_login_sync_management_dialog_title_domains">별칭의 기본 도메인</string>
+  <string name="simple_login_sync_management_dialog_title_mailboxes">별칭에 대한 기본 메일함</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">별칭 동기화</string>
   <string name="simple_login_sync_enable_snackbar_error">SimpleLogin 별칭 동기화 활성화 중 오류가 발생했습니다.</string>
   <string name="simple_login_sync_enable_snackbar_success">SimpleLogin 별칭 동기화가 성공적으로 활성화되었습니다.</string>
   <!-- Mailbox create screen -->
-  <string name="simple_login_sync_mailbox_create_title">Add mailbox</string>
-  <string name="simple_login_sync_mailbox_create_message_error">There was an error adding the mailbox</string>
+  <string name="simple_login_sync_mailbox_create_title">메일함 추가</string>
+  <string name="simple_login_sync_mailbox_create_message_error">메일함 추가 중 오류가 발생했습니다.</string>
   <!-- Mailbox verify screen -->
-  <string name="simple_login_sync_mailbox_verify_title">Confirm your mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">We sent a verification code to %s. Enter it below:</string>
-  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">your email address</string>
-  <string name="simple_login_sync_mailbox_verify_code_resend">Resend code in %s</string>
-  <string name="simple_login_sync_mailbox_verify_code_request_new">request a new code</string>
-  <string name="simple_login_sync_mailbox_verify_code_not_received" comment="the placeholder will be replaced by 'request a new code' link text">Code not received? Check your spam folder and if not there %s instead.</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Invalid mailbox verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_error">There was an error verifying the mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_success">Mailbox successfully verified</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">There was an error sending verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verification code successfully sent</string>
+  <string name="simple_login_sync_mailbox_verify_title">메일함을 확인하세요</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">%s(으)로 인증 코드를 발송하였습니다. 아래에 코드를 입력해 주세요:</string>
+  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">나의 이메일 주소</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">유효하지 메일함 인증 코드입니다.</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_error">메일함 인증 중 오류가 발생했습니다.</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_success">메일함이 성공적으로 인증되었어요.</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">인증 코드 발송 중 오류가 발생했습니다.</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">인증 코드가 성공적으로 발송되었습니다.</string>
   <!-- Mailbox delete screen -->
-  <string name="simple_login_sync_mailbox_delete_title">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">All aliases using the mailbox %s will be also deleted. To keep receiving emails transfer these aliases to a different mailbox:</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfer aliases</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">To mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transfer and delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_error">There was an error deleting mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_success">Mailbox successfully deleted</string>
-  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transfer aliases to</string>
+  <string name="simple_login_sync_mailbox_delete_title">메일함 삭제</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">메일함 %s을(를) 사용하는 모든 별칭이 삭제됩니다. 이메일을 계속 수신하려면 다른 메일함으로 별칭을 전환하세요:</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">별칭 이동</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">메일함으로</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete">메일함 삭제</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">이동 및 메일함 삭제</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">메일함 삭제 중 오류가 발생했습니다.</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_success">메일함을 성공적으로 삭제했습니다.</string>
+  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">다음으로 별칭 이동:</string>
   <!-- Domain select screen -->
-  <string name="simple_login_sync_domain_select_title">Default domain</string>
-  <string name="simple_login_sync_domain_select_title_none">none</string>
-  <string name="simple_login_sync_domain_select_description_none">No domain</string>
-  <string name="simple_login_sync_domain_select_description_custom">Your domain</string>
-  <string name="simple_login_sync_domain_select_description_free">Public domain</string>
-  <string name="simple_login_sync_domain_select_description_premium">Premium domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">There was an error fetching SL alias domains</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
+  <string name="simple_login_sync_domain_select_title">기본 도메인</string>
+  <string name="simple_login_sync_domain_select_title_none">없음</string>
+  <string name="simple_login_sync_domain_select_description_none">도메인이 없습니다.</string>
+  <string name="simple_login_sync_domain_select_description_custom">나의 도메인</string>
+  <string name="simple_login_sync_domain_select_description_free">공개 도메인</string>
+  <string name="simple_login_sync_domain_select_description_premium">프리미엄 도메인</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">SL 별칭 사항 가져오기 중 오류가 발생했습니다.</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">SL 별칭 사항 업데이트 중 오류가 발생했습니다.</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL 별칭 도메인이 성공적으로 업데이트되었습니다.</string>
   <!-- Mailbox options screen -->
-  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Cannot display mailbox options</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_error">There was an error updating default mailbox</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Default mailbox successfully updated</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_options_error">메일함 옵션을 표시할 수 없음</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_error">기본 메일함을 업데이트하는데 오류가 발생했습니다.</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_success">기본 메일함을 성공적으로 업데이트했습니다.</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">기본 SL 금고</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin 별칭이 이 금고에 불러와집니다.</string>

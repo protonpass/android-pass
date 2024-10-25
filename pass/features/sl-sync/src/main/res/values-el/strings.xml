@@ -18,62 +18,59 @@
   -->
 <resources>
   <!-- Management screen -->
-  <string name="simple_login_sync_management_title">Alias management</string>
-  <string name="simple_login_sync_management_domain_label">Domain</string>
-  <string name="simple_login_sync_management_domain_title">Default domain for aliases</string>
-  <string name="simple_login_sync_management_domain_option_blank">Not selected</string>
-  <string name="simple_login_sync_management_mailboxes_label">Mailboxes</string>
-  <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
-  <string name="simple_login_sync_management_mailbox_default">Default</string>
-  <string name="simple_login_sync_management_mailbox_unverified">Unverified mailbox</string>
-  <string name="simple_login_sync_management_vault_title">SimpleLogin sync</string>
-  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
-  <string name="simple_login_sync_management_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_domains">Default domain for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_mailboxes">Default mailbox for aliases</string>
+  <string name="simple_login_sync_management_title">Διαχείρισης ψευδωνύμων</string>
+  <string name="simple_login_sync_management_domain_label">Τομέας</string>
+  <string name="simple_login_sync_management_domain_title">Προεπιλεγμένος τομέας για ψευδώνυμα</string>
+  <string name="simple_login_sync_management_domain_option_blank">Δεν είναι επιλεγμένο</string>
+  <string name="simple_login_sync_management_mailboxes_label">Γραμματοκιβώτια</string>
+  <string name="simple_login_sync_management_mailboxes_description">Το γραμματοκιβώτιο είναι το σημείο όπου προωθούνται τα μηνύματα ηλεκτρονικού ταχυδρομείου που αποστέλλονται σε ένα ψευδώνυμο. Είναι το συνηθισμένο γραμματοκιβώτιό σας, π.χ. Gmail, Outlook, Proton Mail κ.λπ.</string>
+  <string name="simple_login_sync_management_mailbox_default">Προεπιλογή</string>
+  <string name="simple_login_sync_management_mailbox_unverified">Μη επαληθευμένο γραμματοκιβώτιο</string>
+  <string name="simple_login_sync_management_vault_title">Συγχρονισμός SimpleLogin</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Παρουσιάστηκε σφάλμα κατά τη λήψη λεπτομερειών ψευδωνύμου SL</string>
+  <string name="simple_login_sync_management_mailboxes_title">Προεπιλεγμένο γραμματοκιβώτιο για ψευδώνυμα</string>
+  <string name="simple_login_sync_management_dialog_title_domains">Προεπιλεγμένος τομέας για ψευδώνυμα</string>
+  <string name="simple_login_sync_management_dialog_title_mailboxes">Προεπιλεγμένο γραμματοκιβώτιο για ψευδώνυμα</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Συγχρονισμός ψευδωνύμων</string>
   <string name="simple_login_sync_enable_snackbar_error">Παρουσιάστηκε σφάλμα κατά την ενεργοποίηση του συγχρονισμού ψευδωνύμων SimpleLogin</string>
   <string name="simple_login_sync_enable_snackbar_success">Ο συγχρονισμός ψευδώνυμων SimpleLogin έχει ενεργοποιηθεί με επιτυχία</string>
   <!-- Mailbox create screen -->
-  <string name="simple_login_sync_mailbox_create_title">Add mailbox</string>
-  <string name="simple_login_sync_mailbox_create_message_error">There was an error adding the mailbox</string>
+  <string name="simple_login_sync_mailbox_create_title">Προσθήκη γραμματοκιβωτίου</string>
+  <string name="simple_login_sync_mailbox_create_message_error">Παρουσιάστηκε σφάλμα κατά την προσθήκη του γραμματοκιβωτίου</string>
   <!-- Mailbox verify screen -->
-  <string name="simple_login_sync_mailbox_verify_title">Confirm your mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">We sent a verification code to %s. Enter it below:</string>
-  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">your email address</string>
-  <string name="simple_login_sync_mailbox_verify_code_resend">Resend code in %s</string>
-  <string name="simple_login_sync_mailbox_verify_code_request_new">request a new code</string>
-  <string name="simple_login_sync_mailbox_verify_code_not_received" comment="the placeholder will be replaced by 'request a new code' link text">Code not received? Check your spam folder and if not there %s instead.</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Invalid mailbox verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_error">There was an error verifying the mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_success">Mailbox successfully verified</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">There was an error sending verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verification code successfully sent</string>
+  <string name="simple_login_sync_mailbox_verify_title">Επιβεβαιώστε το γραμματοκιβώτιό σας</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Στείλαμε έναν κωδικό επαλήθευσης στη διεύθυνση %s. Εισάγετε τον παρακάτω:</string>
+  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">η διεύθυνση ηλεκτρονικού ταχυδρομείου σας</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Μη έγκυρος κωδικός επαλήθευσης γραμματοκιβωτίου</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_error">Παρουσιάστηκε σφάλμα κατά την επαλήθευση του γραμματοκιβωτίου</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_success">Το γραμματοκιβώτιο επαληθεύτηκε με επιτυχία</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Παρουσιάστηκε σφάλμα κατά την αποστολή κωδικού επαλήθευσης</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Ο κωδικός επαλήθευσης στάλθηκε με επιτυχία</string>
   <!-- Mailbox delete screen -->
-  <string name="simple_login_sync_mailbox_delete_title">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">All aliases using the mailbox %s will be also deleted. To keep receiving emails transfer these aliases to a different mailbox:</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfer aliases</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">To mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transfer and delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_error">There was an error deleting mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_success">Mailbox successfully deleted</string>
-  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transfer aliases to</string>
+  <string name="simple_login_sync_mailbox_delete_title">Διαγραφή γραμματοκιβωτίου</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">Όλα τα ψευδώνυμα που χρησιμοποιούν το γραμματοκιβώτιο %s θα διαγραφούν επίσης. Για να συνεχίσετε να λαμβάνετε μηνύματα ηλεκτρονικού ταχυδρομείου, μεταφέρετε αυτά τα ψευδώνυμα σε διαφορετική θυρίδα:</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Μεταφορά ψευδωνύμων</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Στο γραμματοκιβώτιο</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete">Διαγραφή γραμματοκιβωτίου</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Μεταφορά και διαγραφή γραμματοκιβωτίου</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">Παρουσιάστηκε σφάλμα κατά το διαγραφή του γραμματοκιβωτίου</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_success">Το γραμματοκιβώτιο διαγράφηκε με επιτυχία</string>
+  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Μεταφορά ψευδωνύμων στο</string>
   <!-- Domain select screen -->
-  <string name="simple_login_sync_domain_select_title">Default domain</string>
-  <string name="simple_login_sync_domain_select_title_none">none</string>
-  <string name="simple_login_sync_domain_select_description_none">No domain</string>
-  <string name="simple_login_sync_domain_select_description_custom">Your domain</string>
-  <string name="simple_login_sync_domain_select_description_free">Public domain</string>
-  <string name="simple_login_sync_domain_select_description_premium">Premium domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">There was an error fetching SL alias domains</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
+  <string name="simple_login_sync_domain_select_title">Προκαθορισμένος τομέας</string>
+  <string name="simple_login_sync_domain_select_title_none">κανένα</string>
+  <string name="simple_login_sync_domain_select_description_none">Κανένας τομέας</string>
+  <string name="simple_login_sync_domain_select_description_custom">Ο τομέας σας</string>
+  <string name="simple_login_sync_domain_select_description_free">Δημόσιος τομέας</string>
+  <string name="simple_login_sync_domain_select_description_premium">Premium τομέας</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">Παρουσιάστηκε σφάλμα κατά τη λήψη τομέων ψευδωνύμων SL</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Παρουσιάστηκε σφάλμα κατά την ενημέρωση του τομέα ψευδωνύμου SL</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Ο τομέας ψευδωνύμου SL ενημερώθηκε με επιτυχία</string>
   <!-- Mailbox options screen -->
-  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Cannot display mailbox options</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_error">There was an error updating default mailbox</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Default mailbox successfully updated</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Δεν είναι δυνατή η εμφάνιση επιλογών γραμματοκιβωτίου</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_error">Παρουσιάστηκε σφάλμα κατά την ενημέρωση του προεπιλεγμένου γραμματοκιβωτίου</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Το προεπιλεγμένο γραμματοκιβώτιο ενημερώθηκε με επιτυχία</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Προεπιλεγμένη SL κρύπτη</string>
   <string name="simple_login_sync_shared_default_vault_description">Τα ψευδώνυμα SimpleLogin θα εισαχθούν σε αυτή την κρύπτη.</string>

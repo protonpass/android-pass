@@ -33,7 +33,7 @@
   <string name="settings_preference_updated">Ustawienia zostały zaktualizowane</string>
   <string name="settings_display_section_title">Wyświetlanie</string>
   <string name="settings_preference_display_username">Pole nazwy użytkownika jest zawsze widoczne</string>
-  <string name="settings_preference_display_autofill_pinning">Autofill pinning always visible</string>
+  <string name="settings_preference_display_autofill_pinning">Autouzupełnianie przypięć zawsze widoczne</string>
   <string name="view_logs_title">Pokaż logi</string>
   <string name="clipboard_bottomsheet_title">Schowek</string>
   <string name="clipboard_option_clear_clipboard_label">Wyczyść schowek</string>

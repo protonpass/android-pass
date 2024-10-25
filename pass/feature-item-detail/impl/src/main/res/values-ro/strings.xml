@@ -105,8 +105,9 @@
   <string name="passkey_detail_bottomsheet_domain">Domeniu</string>
   <string name="passkey_detail_bottomsheet_key">Cheia</string>
   <string name="passkey_detail_bottomsheet_created">Creată la</string>
-  <string name="activity_in_last_two_weeks">Activitate în ultimele două săptămâni</string>
+  <string name="activity_in_last_two_weeks">Activitate în ultimele 14 zile</string>
   <string name="contacts">Contacte</string>
+  <string name="contacts_section_description">Pentru a vă păstra adresa de e-mail personală ascunsă, puteți crea un alias de contact care vă maschează adresa.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">Redirecționări: %1$s</item>
     <item quantity="few">Redirecționări: %1$s</item>

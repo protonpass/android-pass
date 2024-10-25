@@ -208,16 +208,16 @@
   <string name="tooltip_dismiss_button_content_description">Bouton pour fermer cette info-bulle et ne plus l\'afficher</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="one">%d year</item>
-    <item quantity="other">%d years</item>
+    <item quantity="one">%d an</item>
+    <item quantity="other">%d ans</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d month</item>
-    <item quantity="other">%d months</item>
+    <item quantity="one">%d mois</item>
+    <item quantity="other">%d mois</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="one">%d week</item>
-    <item quantity="other">%d weeks</item>
+    <item quantity="one">%d semaine</item>
+    <item quantity="other">%d semaines</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d jour</item>
@@ -263,4 +263,9 @@
     <item quantity="other">Nous avons détecté que vous avez %d alias qui sont présents dans SimpleLogin mais manquants dans Proton Pass. Souhaitez-vous les importer ?</item>
   </plurals>
   <string name="simple_login_widget_action">Synchroniser les alias</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">Vous n\'avez pas reçu le code ?</string>
+  <string name="verification_code_suggestion_spam">Vérifiez le dossier Indésirables/spam la présence d\'un message intitulé « Confirmez votre adresse e-mail pour Proton Pass ».</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Si vous ne trouvez pas ce message, vous pouvez %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">demander un nouveau code</string>
 </resources>

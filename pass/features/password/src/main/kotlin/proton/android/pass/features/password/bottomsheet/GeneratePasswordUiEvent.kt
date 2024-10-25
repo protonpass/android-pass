@@ -21,15 +21,17 @@ package proton.android.pass.features.password.bottomsheet
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
 import proton.android.pass.preferences.PasswordGenerationMode
 
-internal sealed interface GeneratePasswordEvent {
-    data object OnPasswordModeChangeClick : GeneratePasswordEvent
-    data class OnPasswordModeChange(val mode: PasswordGenerationMode) : GeneratePasswordEvent
+internal sealed interface GeneratePasswordUiEvent {
 
-    data object OnWordsSeparatorClick : GeneratePasswordEvent
+    data object OnPasswordModeChangeClick : GeneratePasswordUiEvent
+
+    data class OnPasswordModeChange(val mode: PasswordGenerationMode) : GeneratePasswordUiEvent
+
+    data object OnWordsSeparatorClick : GeneratePasswordUiEvent
 
     @JvmInline
-    value class OnPasswordConfigChanged(val config: PasswordConfig) : GeneratePasswordEvent
+    value class OnPasswordConfigChanged(val config: PasswordConfig) : GeneratePasswordUiEvent
 
-    data object OnRegeneratePasswordClick : GeneratePasswordEvent
+    data object OnRegeneratePasswordClick : GeneratePasswordUiEvent
 
 }

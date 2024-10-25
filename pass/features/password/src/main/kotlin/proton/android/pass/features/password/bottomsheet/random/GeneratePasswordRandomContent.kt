@@ -43,7 +43,7 @@ import proton.android.pass.composecomponents.impl.container.AnimatedVisibilityWi
 import proton.android.pass.composecomponents.impl.container.rememberAnimatedVisibilityState
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.features.password.R
-import proton.android.pass.features.password.bottomsheet.GeneratePasswordEvent
+import proton.android.pass.features.password.bottomsheet.GeneratePasswordUiEvent
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordToggleRow
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordTypeRow
 import proton.android.pass.preferences.PasswordGenerationMode
@@ -52,7 +52,7 @@ import proton.android.pass.preferences.PasswordGenerationMode
 internal fun GeneratePasswordRandomContent(
     modifier: Modifier = Modifier,
     config: PasswordConfig.Random,
-    onEvent: (GeneratePasswordEvent) -> Unit
+    onEvent: (GeneratePasswordUiEvent) -> Unit
 ) = with(config) {
     var showAdvancedOptions by rememberSaveable { mutableStateOf(false) }
     val state = rememberAnimatedVisibilityState(initialState = true)
@@ -64,7 +64,7 @@ internal fun GeneratePasswordRandomContent(
         GeneratePasswordTypeRow(
             current = PasswordGenerationMode.Random,
             onClick = {
-                onEvent(GeneratePasswordEvent.OnPasswordModeChangeClick)
+                onEvent(GeneratePasswordUiEvent.OnPasswordModeChangeClick)
             }
         )
 
@@ -75,7 +75,7 @@ internal fun GeneratePasswordRandomContent(
             minLength = minLength,
             maxLength = maxLength,
             onLengthChange = { newPasswordLength ->
-                GeneratePasswordEvent.OnPasswordConfigChanged(
+                GeneratePasswordUiEvent.OnPasswordConfigChanged(
                     config = config.copy(passwordLength = newPasswordLength)
                 ).also(onEvent)
             }
@@ -88,7 +88,7 @@ internal fun GeneratePasswordRandomContent(
             value = includeSymbols,
             isEnabled = canToggleSymbols,
             onChange = { newIncludeSymbols ->
-                GeneratePasswordEvent.OnPasswordConfigChanged(
+                GeneratePasswordUiEvent.OnPasswordConfigChanged(
                     config = config.copy(includeSymbols = newIncludeSymbols)
                 ).also(onEvent)
             }
@@ -121,7 +121,7 @@ internal fun GeneratePasswordRandomContent(
                     value = includeUppercase,
                     isEnabled = canToggleUppercase,
                     onChange = { newIncludeUppercase ->
-                        GeneratePasswordEvent.OnPasswordConfigChanged(
+                        GeneratePasswordUiEvent.OnPasswordConfigChanged(
                             config = config.copy(includeUppercase = newIncludeUppercase)
                         ).also(onEvent)
                     }
@@ -134,7 +134,7 @@ internal fun GeneratePasswordRandomContent(
                     value = includeNumbers,
                     isEnabled = canToggleNumbers,
                     onChange = { newIncludeNumbers ->
-                        GeneratePasswordEvent.OnPasswordConfigChanged(
+                        GeneratePasswordUiEvent.OnPasswordConfigChanged(
                             config = config.copy(includeNumbers = newIncludeNumbers)
                         ).also(onEvent)
                     }

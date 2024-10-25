@@ -41,7 +41,7 @@ sealed interface ProfileUiEvent {
 
     data object OnImportExportClick : ProfileUiEvent
 
-    data object OnListClick : ProfileUiEvent
+    data object OnHomeClick : ProfileUiEvent
 
     data object OnRateAppClick : ProfileUiEvent
 
@@ -59,5 +59,17 @@ sealed interface ProfileUiEvent {
     data object OnSecureLinksClicked : ProfileUiEvent
 
     data object OnAliasesClicked : ProfileUiEvent
+
+    data object OnLoginCountClick : ProfileUiEvent
+
+    data object OnAliasCountClick : ProfileUiEvent
+
+    data object OnCreditCardCountClick : ProfileUiEvent
+
+    data object OnNoteCountClick : ProfileUiEvent
+
+    data object OnIdentityCountClick : ProfileUiEvent
+
+    data object OnMFACountClick : ProfileUiEvent
 
 }

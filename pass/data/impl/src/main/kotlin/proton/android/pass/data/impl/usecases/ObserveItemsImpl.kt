@@ -19,10 +19,12 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItems
@@ -34,6 +36,7 @@ import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
 
 class ObserveItemsImpl @Inject constructor(
+    private val syncStatusRepository: ItemSyncStatusRepository,
     private val itemRepository: ItemRepository,
     private val observeCurrentUser: ObserveCurrentUser
 ) : ObserveItems {
@@ -45,11 +48,24 @@ class ObserveItemsImpl @Inject constructor(
         userId: UserId?,
         securityCheckFilter: ItemSecurityCheckFilter,
         isBreachedFilter: ItemIsBreachedFilter
-    ): Flow<List<Item>> = if (userId == null) {
-        observeCurrentUser()
-            .flatMapLatest {
+    ): Flow<List<Item>> = syncStatusRepository.observeSyncState()
+        .filter { syncState -> !syncState.isVisibleSyncing }
+        .flatMapLatest {
+            if (userId == null) {
+                observeCurrentUser()
+                    .flatMapLatest { currentUser ->
+                        observeItems(
+                            userId = currentUser.userId,
+                            selection = selection,
+                            itemState = itemState,
+                            filter = filter,
+                            exclusionFilter = securityCheckFilter,
+                            isBreachedFilter = isBreachedFilter
+                        )
+                    }
+            } else {
                 observeItems(
-                    userId = it.userId,
+                    userId = userId,
                     selection = selection,
                     itemState = itemState,
                     filter = filter,
@@ -57,9 +73,7 @@ class ObserveItemsImpl @Inject constructor(
                     isBreachedFilter = isBreachedFilter
                 )
             }
-    } else {
-        observeItems(userId, selection, itemState, filter, securityCheckFilter, isBreachedFilter)
-    }
+        }
 
     @Suppress("LongParameterList")
     private fun observeItems(
@@ -88,4 +102,3 @@ class ObserveItemsImpl @Inject constructor(
         }
     }
 }
-

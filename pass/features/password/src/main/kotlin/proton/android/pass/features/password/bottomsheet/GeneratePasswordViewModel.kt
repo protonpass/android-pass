@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
@@ -48,9 +47,6 @@ import proton.android.pass.features.password.GeneratePasswordBottomsheetMode
 import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.features.password.GeneratePasswordSnackbarMessage
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.PasswordGenerationMode
-import proton.android.pass.preferences.PasswordGenerationPreference
-import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -63,8 +59,7 @@ class GeneratePasswordViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clipboardManager: ClipboardManager,
     private val draftRepository: DraftRepository,
-    private val encryptionContextProvider: EncryptionContextProvider,
-    private val userPreferencesRepository: UserPreferencesRepository
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
 
     private val mode = stateHandleProvider.get()
@@ -128,11 +123,6 @@ class GeneratePasswordViewModel @Inject constructor(
         regeneratePasswordFlow.update { true }
     }
 
-    fun onPasswordModeChange(value: PasswordGenerationMode) = viewModelScope.launch {
-        val updated = getCurrentPreference().copy(mode = value)
-        updateAndRegenerate(updated)
-    }
-
     internal fun onConfirmPassword() {
         viewModelScope.launch {
             encryptionContextProvider.withEncryptionContextSuspendable {
@@ -152,12 +142,5 @@ class GeneratePasswordViewModel @Inject constructor(
             eventFlow.update { GeneratePasswordEvent.OnPasswordCopied }
         }
     }
-
-    private fun updateAndRegenerate(pref: PasswordGenerationPreference) {
-        userPreferencesRepository.setPasswordGenerationPreference(pref)
-    }
-
-    private suspend fun getCurrentPreference(): PasswordGenerationPreference =
-        userPreferencesRepository.getPasswordGenerationPreference().first()
 
 }

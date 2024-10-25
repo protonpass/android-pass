@@ -41,23 +41,25 @@ sealed interface CustomFieldContent {
 
 @Stable
 @Serializable
-sealed class HiddenState {
-    abstract val encrypted: EncryptedString
+sealed interface HiddenState {
+    val encrypted: EncryptedString
 
     @Stable
     @Serializable
-    data class Empty(override val encrypted: EncryptedString) : HiddenState()
+    @JvmInline
+    value class Empty(override val encrypted: EncryptedString) : HiddenState
 
     @Stable
     @Serializable
-    data class Concealed(override val encrypted: EncryptedString) : HiddenState()
+    @JvmInline
+    value class Concealed(override val encrypted: EncryptedString) : HiddenState
 
     @Stable
     @Serializable
     data class Revealed(
         override val encrypted: EncryptedString,
         val clearText: String
-    ) : HiddenState()
+    ) : HiddenState
 }
 
 @Serializable

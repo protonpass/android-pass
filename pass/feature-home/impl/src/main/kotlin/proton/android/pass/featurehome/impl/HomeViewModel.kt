@@ -95,7 +95,6 @@ import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.repositories.AliasItemsChangeStatusResult
 import proton.android.pass.data.api.repositories.BulkMoveToVaultEvent
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
-import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.PinItemsResult
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.ClearTrash
@@ -200,7 +199,6 @@ class HomeViewModel @Inject constructor(
     private val unpinItems: UnpinItems,
     private val changeAliasStatus: ChangeAliasStatus,
     private val observeCurrentUser: ObserveCurrentUser,
-    private val syncStatusRepository: ItemSyncStatusRepository,
     observeVaults: ObserveVaults,
     clock: Clock,
     observeItems: ObserveItems,
@@ -315,27 +313,22 @@ class HomeViewModel @Inject constructor(
                 VaultSelectionOption.Trash -> ShareSelection.AllShares to ItemState.Trashed
             }
 
-            syncStatusRepository.observeSyncState()
-                .flatMapLatest {
-                    if (it.isVisibleSyncing) {
-                        emptyFlow()
-                    } else {
-                        observeItems(
-                            selection = shareSelection,
-                            itemState = itemState,
+            observeItems(
+                selection = shareSelection,
+                itemState = itemState,
 
-                            // We observe them all, because otherwise in the All part of the search we would not
-                            // know how many ItemTypes are there for the other ItemTypes.
-                            // We filter out the results using the filterByType function
-                            filter = ItemTypeFilter.All
-                        ).asResultWithoutLoading()
-                            .map { itemResult ->
-                                itemResult.map { list ->
-                                    encryptionContextProvider.withEncryptionContextSuspendable {
-                                        list.map { item -> item.toUiModel(this@withEncryptionContextSuspendable) }
-                                    }
-                                }
-                            }
+                // We observe them all, because otherwise in the All part of the search we would not
+                // know how many ItemTypes are there for the other ItemTypes.
+                // We filter out the results using the filterByType function
+                filter = ItemTypeFilter.All
+            ).asResultWithoutLoading()
+                .map { itemResult ->
+                    itemResult.map { list ->
+                        encryptionContextProvider.withEncryptionContextSuspendable {
+                            list.asSequence()
+                                .map { item -> item.toUiModel(this@withEncryptionContextSuspendable) }
+                                .toList()
+                        }
                     }
                 }
         }
@@ -1055,18 +1048,18 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun List<ItemUiModel>.filterByType(searchFilterType: SearchFilterType) = filter { item ->
-        when (searchFilterType) {
-            SearchFilterType.All -> true
-            SearchFilterType.Alias -> item.contents is ItemContents.Alias
-            SearchFilterType.Login -> item.contents is ItemContents.Login
-            SearchFilterType.Note -> item.contents is ItemContents.Note
-            SearchFilterType.CreditCard -> item.contents is ItemContents.CreditCard
-            SearchFilterType.Identity -> item.contents is ItemContents.Identity
+    private fun List<ItemUiModel>.filterByType(searchFilterType: SearchFilterType) =
+        filter { item ->
+            when (searchFilterType) {
+                SearchFilterType.All -> true
+                SearchFilterType.Alias -> item.contents is ItemContents.Alias
+                SearchFilterType.Login -> item.contents is ItemContents.Login
+                SearchFilterType.Note -> item.contents is ItemContents.Note
+                SearchFilterType.CreditCard -> item.contents is ItemContents.CreditCard
+                SearchFilterType.Identity -> item.contents is ItemContents.Identity
             SearchFilterType.LoginMFA ->
-                item.contents is ItemContents.Login && (item.contents as ItemContents.Login).hasPrimaryTotp
+                item.contents is ItemContents.Login && (item.contents as ItemContents.Login).hasPrimaryTotp}
         }
-    }
 
     private fun emitDeletedItems(items: List<GroupedItemList>) {
         items.forEach { list ->
@@ -1082,15 +1075,17 @@ class HomeViewModel @Inject constructor(
     private fun groupItems(items: ImmutableSet<Pair<ShareId, ItemId>>): Map<ShareId, List<ItemId>> =
         items.groupBy({ it.first }, { it.second })
 
-    private fun List<ItemUiModel>.toShareIdItemId(): List<Pair<ShareId, ItemId>> = map { it.shareId to it.id }
+    private fun List<ItemUiModel>.toShareIdItemId(): List<Pair<ShareId, ItemId>> =
+        map { it.shareId to it.id }
 
-    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) = when (sortingOption.searchSortingType) {
-        SearchSortingType.MostRecent -> sortMostRecent()
-        SearchSortingType.TitleAsc -> sortByTitleAsc()
-        SearchSortingType.TitleDesc -> sortByTitleDesc()
-        SearchSortingType.CreationAsc -> sortByCreationAsc()
-        SearchSortingType.CreationDesc -> sortByCreationDesc()
-    }
+    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) =
+        when (sortingOption.searchSortingType) {
+            SearchSortingType.MostRecent -> sortMostRecent()
+            SearchSortingType.TitleAsc -> sortByTitleAsc()
+            SearchSortingType.TitleDesc -> sortByTitleDesc()
+            SearchSortingType.CreationAsc -> sortByCreationAsc()
+            SearchSortingType.CreationDesc -> sortByCreationDesc()
+        }
 
     private fun List<ItemUiModel>.groupedItemLists(sortingOption: SortingOption, instant: Instant) =
         when (sortingOption.searchSortingType) {

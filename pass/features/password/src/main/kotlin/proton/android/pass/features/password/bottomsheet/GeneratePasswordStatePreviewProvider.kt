@@ -31,9 +31,9 @@ internal class GeneratePasswordStatePreviewProvider :
             passwordStrength = PasswordStrength.Strong,
             passwordConfig = PasswordConfig.Random(
                 passwordLength = 12,
-                passwordIncludeSymbols = true,
-                passwordIncludeUppercase = false,
-                passwordIncludeNumbers = true
+                includeSymbols = true,
+                includeUppercase = false,
+                includeNumbers = true
             ),
             mode = GeneratePasswordMode.CopyAndClose
         ),
@@ -42,9 +42,9 @@ internal class GeneratePasswordStatePreviewProvider :
             passwordStrength = PasswordStrength.Strong,
             passwordConfig = PasswordConfig.Random(
                 passwordLength = 4,
-                passwordIncludeSymbols = false,
-                passwordIncludeUppercase = false,
-                passwordIncludeNumbers = true
+                includeSymbols = false,
+                includeUppercase = false,
+                includeNumbers = true
             ),
             mode = GeneratePasswordMode.CopyAndClose
         ),
@@ -53,9 +53,9 @@ internal class GeneratePasswordStatePreviewProvider :
             passwordStrength = PasswordStrength.Strong,
             passwordConfig = PasswordConfig.Random(
                 passwordLength = 64,
-                passwordIncludeSymbols = false,
-                passwordIncludeUppercase = true,
-                passwordIncludeNumbers = false
+                includeSymbols = false,
+                includeUppercase = true,
+                includeNumbers = false
             ),
             mode = GeneratePasswordMode.CancelConfirm
         )

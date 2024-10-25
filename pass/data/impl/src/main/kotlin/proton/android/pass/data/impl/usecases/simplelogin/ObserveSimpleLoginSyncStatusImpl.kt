@@ -19,16 +19,22 @@
 package proton.android.pass.data.impl.usecases.simplelogin
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import javax.inject.Inject
 
 class ObserveSimpleLoginSyncStatusImpl @Inject constructor(
-    private val repository: SimpleLoginRepository
-
+    private val repository: SimpleLoginRepository,
+    private val accountManager: AccountManager
 ) : ObserveSimpleLoginSyncStatus {
 
-    override fun invoke(): Flow<SimpleLoginSyncStatus> = repository.observeSyncStatus()
-
+    override fun invoke(): Flow<SimpleLoginSyncStatus> = accountManager.getPrimaryUserId()
+        .filterNotNull()
+        .flatMapLatest { userId ->
+            repository.observeSyncStatus(userId)
+        }
 }

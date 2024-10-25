@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
@@ -78,14 +79,9 @@ class SimpleLoginRepositoryImpl @Inject constructor(
         .filterNotNull()
         .distinctUntilChanged()
 
-    override fun observeSyncStatus(): Flow<SimpleLoginSyncStatus> = userIdFlow
-        .onEach { userId ->
-            refreshSyncStatus(userId)
-        }
-        .flatMapLatest { userId ->
-            syncStatusForUser(userId)
-        }
+    override fun observeSyncStatus(userId: UserId): Flow<SimpleLoginSyncStatus> = syncStatusForUser(userId)
         .filterNotNull()
+        .onStart { refreshSyncStatus(userId) }
 
     override fun disableSyncPreference() {
         localSimpleLoginDataSource.disableSyncPreference()
@@ -268,13 +264,13 @@ class SimpleLoginRepositoryImpl @Inject constructor(
             localSimpleLoginDataSource.observeAliasSettings()
         }
 
-    override suspend fun getPendingAliases(): SimpleLoginPendingAliases = withUserId { userId ->
+    override suspend fun getPendingAliases(userId: UserId): SimpleLoginPendingAliases =
         remoteSimpleLoginDataSource.getSimpleLoginPendingAliases(userId)
             .pendingAliases
             .toDomain()
-    }
 
     override suspend fun createPendingAliases(
+        userId: UserId,
         defaultShareId: ShareId,
         pendingAliasesItems: List<Pair<String, EncryptedCreateItem>>
     ) {
@@ -282,20 +278,18 @@ class SimpleLoginRepositoryImpl @Inject constructor(
             return
         }
 
-        withUserId { userId ->
-            remoteSimpleLoginDataSource.createSimpleLoginPendingAliases(
-                userId = userId,
-                shareId = defaultShareId,
-                request = SimpleLoginCreatePendingAliasesRequest(
-                    items = pendingAliasesItems.map { (pendingAliasId, pendingAliasesItem) ->
-                        SimpleLoginCreatePendingAliasesData(
-                            pendingAliasId = pendingAliasId,
-                            item = pendingAliasesItem.toRequest()
-                        )
-                    }
-                )
+        remoteSimpleLoginDataSource.createSimpleLoginPendingAliases(
+            userId = userId,
+            shareId = defaultShareId,
+            request = SimpleLoginCreatePendingAliasesRequest(
+                items = pendingAliasesItems.map { (pendingAliasId, pendingAliasesItem) ->
+                    SimpleLoginCreatePendingAliasesData(
+                        pendingAliasId = pendingAliasId,
+                        item = pendingAliasesItem.toRequest()
+                    )
+                }
             )
-        }
+        )
     }
 
     private suspend fun <T> withUserId(block: suspend (UserId) -> T): T = accountManager

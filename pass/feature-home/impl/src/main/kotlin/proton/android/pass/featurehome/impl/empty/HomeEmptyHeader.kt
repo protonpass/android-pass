@@ -36,22 +36,46 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.featurehome.impl.R
+import proton.android.pass.featuresearchoptions.api.SearchFilterType
 
 @Composable
-fun HomeEmptyHeader(modifier: Modifier = Modifier) {
+fun HomeEmptyHeader(modifier: Modifier = Modifier, filterType: SearchFilterType) {
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
+        val (title, desc) = when (filterType) {
+            SearchFilterType.All ->
+                R.string.home_empty_vault_title to
+                    R.string.home_empty_vault_subtitle
+            SearchFilterType.Login ->
+                R.string.home_empty_vault_login_title to
+                    R.string.home_empty_vault_login_subtitle
+            SearchFilterType.LoginMFA ->
+                R.string.home_empty_vault_logins_mfa_title to
+                    R.string.home_empty_vault_logins_mfa_subtitle
+            SearchFilterType.Alias ->
+                R.string.home_empty_vault_aliases_title to
+                    R.string.home_empty_vault_aliases_subtitle
+            SearchFilterType.Note ->
+                R.string.home_empty_vault_notes_title to
+                    R.string.home_empty_vault_notes_subtitle
+            SearchFilterType.CreditCard ->
+                R.string.home_empty_vault_cc_title to
+                    R.string.home_empty_vault_cc_subtitle
+            SearchFilterType.Identity ->
+                R.string.home_empty_vault_identity_title to
+                    R.string.home_empty_vault_identity_subtitle
+        }
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.home_empty_vault_title),
+            text = stringResource(title),
             style = ProtonTheme.typography.headlineSmallNorm,
             textAlign = TextAlign.Center
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.home_empty_vault_subtitle),
+            text = stringResource(desc),
             style = PassTheme.typography.body3Norm(),
             color = PassTheme.colors.textWeak,
             textAlign = TextAlign.Center
@@ -64,7 +88,7 @@ fun HomeEmptyHeader(modifier: Modifier = Modifier) {
 fun HomeEmptyHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            HomeEmptyHeader()
+            HomeEmptyHeader(filterType = SearchFilterType.All)
         }
     }
 }

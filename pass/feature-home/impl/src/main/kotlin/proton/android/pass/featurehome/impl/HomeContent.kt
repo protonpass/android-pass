@@ -335,6 +335,7 @@ internal fun HomeContent(
                         modifier = Modifier.testTag(HOME_EMPTY_TAG),
                         isTrashMode = isTrashMode,
                         inSearchMode = isPinningOrSearch,
+                        filterType = uiState.homeListUiState.searchFilterType,
                         readOnly = uiState.isSelectedVaultReadOnly(),
                         shareId = uiState.homeListUiState.selectedShare.map { it.id },
                         onEvent = onEvent

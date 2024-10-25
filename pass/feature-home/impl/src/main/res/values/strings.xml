@@ -3,6 +3,19 @@
     <!-- Home -->
     <string name="home_empty_vault_title">Your vault is empty</string>
     <string name="home_empty_vault_subtitle">Get started by creating your first item.</string>
+    <string name="home_empty_vault_login_title">No logins found</string>
+    <string name="home_empty_vault_login_subtitle">Get started by creating your first login item.</string>
+    <string name="home_empty_vault_aliases_title">No aliases found</string>
+    <string name="home_empty_vault_aliases_subtitle">Get started by creating your first alias item.</string>
+    <string name="home_empty_vault_notes_title">No notes found</string>
+    <string name="home_empty_vault_notes_subtitle">Get started by creating your first note item.</string>
+    <string name="home_empty_vault_logins_mfa_title">No logins with TOTP found</string>
+    <string name="home_empty_vault_logins_mfa_subtitle">Get started by creating your first login with TOTP.</string>
+    <string name="home_empty_vault_identity_title">No identity found</string>
+    <string name="home_empty_vault_identity_subtitle">Get started by creating your first identity item.</string>
+    <string name="home_empty_vault_cc_title">No credit card found</string>
+    <string name="home_empty_vault_cc_subtitle">Get started by creating your first credit card item.</string>
+
     <string name="home_empty_read_only_vault_title">This vault is empty</string>
     <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>
     <string name="home_empty_vault_create_login">Create a login</string>

@@ -27,6 +27,7 @@ import proton.android.pass.account.fakes.TestUserAddressRepository
 import proton.android.pass.account.fakes.TestUserRepository
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.usecases.TestCreateVault
+import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.fakes.TestLocalShareDataSource
 import proton.android.pass.data.impl.fakes.TestPassDatabase
@@ -70,6 +71,9 @@ class ShareRepositoryTest {
             encryptionContextProvider = encryptionContextProvider,
             shareKeyRepository = TestShareKeyRepository().apply {
                 emitGetShareKeys(listOf())
+            },
+            userAccessDataRepository = TestUserAccessDataRepository().apply {
+                sendValue(null)
             }
         )
     }

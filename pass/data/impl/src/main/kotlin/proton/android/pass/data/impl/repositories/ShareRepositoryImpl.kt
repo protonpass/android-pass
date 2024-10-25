@@ -24,6 +24,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.SessionUserId
@@ -35,7 +36,9 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContext
@@ -46,6 +49,7 @@ import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.UpdateShareEvent
+import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.impl.crypto.ReencryptShareContents
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
@@ -74,6 +78,7 @@ import proton_pass_vault_v1.VaultV1
 import java.sql.Date
 import javax.inject.Inject
 
+@Suppress("TooManyFunctions")
 class ShareRepositoryImpl @Inject constructor(
     private val database: PassDatabase,
     private val userRepository: UserRepository,
@@ -84,7 +89,8 @@ class ShareRepositoryImpl @Inject constructor(
     private val createVault: CreateVault,
     private val updateVault: UpdateVault,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val shareKeyRepository: ShareKeyRepository
+    private val shareKeyRepository: ShareKeyRepository,
+    private val userAccessDataRepository: UserAccessDataRepository
 ) : ShareRepository {
 
     override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share {
@@ -137,6 +143,7 @@ class ShareRepositoryImpl @Inject constructor(
     override suspend fun deleteVault(userId: UserId, shareId: ShareId) {
         remoteShareDataSource.deleteVault(userId, shareId)
         localShareDataSource.deleteShares(setOf(shareId))
+        refreshDefaultShareIfNeeded(userId, setOf(shareId))
     }
 
     override fun observeAllShares(userId: SessionUserId): Flow<List<Share>> =
@@ -174,6 +181,8 @@ class ShareRepositoryImpl @Inject constructor(
 
         // Delete from the local data source the shares that are not in remote response
         val toDelete = localSharesMap.keys.subtract(remoteSharesMap.keys)
+
+        refreshDefaultShareIfNeeded(userId, toDelete)
 
         if (sharesToUpdate.isNotEmpty() || toDelete.isNotEmpty()) {
             database.inTransaction("refreshShares") {
@@ -582,6 +591,25 @@ class ShareRepositoryImpl @Inject constructor(
         newUserInvitesReady = response.newUserInvitesReady,
         pendingInvites = response.pendingInvites
     )
+
+    private suspend fun refreshDefaultShareIfNeeded(userId: UserId, toDelete: Set<ShareId>) {
+        if (toDelete.isEmpty()) return
+
+        val defaultShareId = getSlSyncDefaultShareId(userId).value() ?: return
+        if (toDelete.contains(defaultShareId)) {
+            PassLogger.i(TAG, "Detected removal of SLSync ShareID. Refreshing")
+            userAccessDataRepository.refresh(userId)
+        }
+    }
+
+    private suspend fun getSlSyncDefaultShareId(userId: UserId): Option<ShareId> {
+        val userData = userAccessDataRepository.observe(userId).firstOrNull()
+        return when {
+            userData == null -> None
+            userData.simpleLoginSyncDefaultShareId.isBlank() -> None
+            else -> ShareId(userData.simpleLoginSyncDefaultShareId).some()
+        }
+    }
 
 
     internal data class ShareResponseEntity(

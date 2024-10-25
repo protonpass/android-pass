@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.fakes.usecases.simplelogin
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.simplelogin.SyncSimpleLoginPendingAliases
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -25,6 +26,6 @@ import javax.inject.Singleton
 @Singleton
 class FakeSyncSimpleLoginPendingAliases @Inject constructor() : SyncSimpleLoginPendingAliases {
 
-    override suspend fun invoke() = Unit
+    override suspend fun invoke(userId: UserId) = Unit
 
 }

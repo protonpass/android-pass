@@ -42,9 +42,6 @@
   <string name="simple_login_sync_mailbox_verify_title">Confirm your mailbox</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">We sent a verification code to %s. Enter it below:</string>
   <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">your email address</string>
-  <string name="simple_login_sync_mailbox_verify_code_resend">Resend code in %s</string>
-  <string name="simple_login_sync_mailbox_verify_code_request_new">request a new code</string>
-  <string name="simple_login_sync_mailbox_verify_code_not_received" comment="the placeholder will be replaced by 'request a new code' link text">Code not received? Check your spam folder and if not there %s instead.</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Invalid mailbox verification code</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_error">There was an error verifying the mailbox</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_success">Mailbox successfully verified</string>

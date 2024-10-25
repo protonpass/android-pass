@@ -18,62 +18,59 @@
   -->
 <resources>
   <!-- Management screen -->
-  <string name="simple_login_sync_management_title">Alias management</string>
-  <string name="simple_login_sync_management_domain_label">Domain</string>
-  <string name="simple_login_sync_management_domain_title">Default domain for aliases</string>
-  <string name="simple_login_sync_management_domain_option_blank">Not selected</string>
-  <string name="simple_login_sync_management_mailboxes_label">Mailboxes</string>
-  <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
-  <string name="simple_login_sync_management_mailbox_default">Default</string>
-  <string name="simple_login_sync_management_mailbox_unverified">Unverified mailbox</string>
-  <string name="simple_login_sync_management_vault_title">SimpleLogin sync</string>
-  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
-  <string name="simple_login_sync_management_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_domains">Default domain for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_mailboxes">Default mailbox for aliases</string>
+  <string name="simple_login_sync_management_title">Aliasadministrasjon</string>
+  <string name="simple_login_sync_management_domain_label">Domene</string>
+  <string name="simple_login_sync_management_domain_title">Standard domene for aliaser</string>
+  <string name="simple_login_sync_management_domain_option_blank">Ikke valgt</string>
+  <string name="simple_login_sync_management_mailboxes_label">Postbokser</string>
+  <string name="simple_login_sync_management_mailboxes_description">Postboks er der e-poster sendt til et alias videresendes til. Det er din vanlige postboks, for eksempel Gmail, Outlook, Proton Mail, osv.</string>
+  <string name="simple_login_sync_management_mailbox_default">Standard</string>
+  <string name="simple_login_sync_management_mailbox_unverified">Ubekreftet postboks</string>
+  <string name="simple_login_sync_management_vault_title">SimpleLogin synkronisering</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Det oppstod en feil under henting av SL-aliasdetaljer</string>
+  <string name="simple_login_sync_management_mailboxes_title">Standard postboks for aliaser</string>
+  <string name="simple_login_sync_management_dialog_title_domains">Standard domene for aliaser</string>
+  <string name="simple_login_sync_management_dialog_title_mailboxes">Standard postboks for aliaser</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Synkroniser aliaser</string>
   <string name="simple_login_sync_enable_snackbar_error">Det oppstod en feil ved aktivering av synkronisering av SimpleLogin-aliaser</string>
   <string name="simple_login_sync_enable_snackbar_success">Synkronisering av SimpleLogin-aliaser er aktivert</string>
   <!-- Mailbox create screen -->
-  <string name="simple_login_sync_mailbox_create_title">Add mailbox</string>
-  <string name="simple_login_sync_mailbox_create_message_error">There was an error adding the mailbox</string>
+  <string name="simple_login_sync_mailbox_create_title">Legg til postboks</string>
+  <string name="simple_login_sync_mailbox_create_message_error">Det oppstod en feil under å legge til postboksen</string>
   <!-- Mailbox verify screen -->
-  <string name="simple_login_sync_mailbox_verify_title">Confirm your mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">We sent a verification code to %s. Enter it below:</string>
-  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">your email address</string>
-  <string name="simple_login_sync_mailbox_verify_code_resend">Resend code in %s</string>
-  <string name="simple_login_sync_mailbox_verify_code_request_new">request a new code</string>
-  <string name="simple_login_sync_mailbox_verify_code_not_received" comment="the placeholder will be replaced by 'request a new code' link text">Code not received? Check your spam folder and if not there %s instead.</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Invalid mailbox verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_error">There was an error verifying the mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_success">Mailbox successfully verified</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">There was an error sending verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verification code successfully sent</string>
+  <string name="simple_login_sync_mailbox_verify_title">Bekreft postboksen din</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Vi har sendt en verifiseringskode til %s. Angi den nedenfor:</string>
+  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">din e-postadresse</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Ugyldig verifiseringskode for postboks</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_error">Det oppstod en feil under bekreftelse av postboksen</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_success">Postboks verifisert</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Det oppstod en feil under sending av verifiseringskode</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verifiseringskode ble sendt</string>
   <!-- Mailbox delete screen -->
-  <string name="simple_login_sync_mailbox_delete_title">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">All aliases using the mailbox %s will be also deleted. To keep receiving emails transfer these aliases to a different mailbox:</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfer aliases</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">To mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transfer and delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_error">There was an error deleting mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_success">Mailbox successfully deleted</string>
-  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transfer aliases to</string>
+  <string name="simple_login_sync_mailbox_delete_title">Slett postboks</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">Alle aliaser som bruker postboksen %s vil også bli slettet. Hvis du vil fortsette å motta e-post, flytter du disse aliasene til en annen postboks:</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Overfør aliaser</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Til postboks</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete">Slett postboks</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Overfør og slett postboks</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">Det oppstod en feil under sletting av postboks</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_success">Postboks ble slettet</string>
+  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Overfør aliaser til</string>
   <!-- Domain select screen -->
-  <string name="simple_login_sync_domain_select_title">Default domain</string>
-  <string name="simple_login_sync_domain_select_title_none">none</string>
-  <string name="simple_login_sync_domain_select_description_none">No domain</string>
-  <string name="simple_login_sync_domain_select_description_custom">Your domain</string>
-  <string name="simple_login_sync_domain_select_description_free">Public domain</string>
-  <string name="simple_login_sync_domain_select_description_premium">Premium domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">There was an error fetching SL alias domains</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
+  <string name="simple_login_sync_domain_select_title">Standard domene</string>
+  <string name="simple_login_sync_domain_select_title_none">ingen</string>
+  <string name="simple_login_sync_domain_select_description_none">Ingen domene</string>
+  <string name="simple_login_sync_domain_select_description_custom">Ditt domene</string>
+  <string name="simple_login_sync_domain_select_description_free">Offentlig domene</string>
+  <string name="simple_login_sync_domain_select_description_premium">Premium-domene</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">Det oppstod en feil under henting av SL-aliasdomener</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Det oppstod en feil under oppdatering av SL-aliasdomene</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL-aliasdomene er oppdatert</string>
   <!-- Mailbox options screen -->
-  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Cannot display mailbox options</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_error">There was an error updating default mailbox</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Default mailbox successfully updated</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Kan ikke vise alternativer for postboks</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_error">Det oppstod en feil under oppdatering av standard postboks</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Standard postboks ble oppdatert</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Standard SimpleLogin-hvelv</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin-aliaser vil bli importert til dette hvelvet.</string>

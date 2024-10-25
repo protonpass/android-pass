@@ -46,8 +46,8 @@
   <string name="action_edit">Muokkaa</string>
   <string name="action_add">Lisää</string>
   <string name="action_delete">Poista</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
+  <string name="action_make_default">Aseta oletukseksi</string>
+  <string name="action_verify">Vahvista</string>
   <string name="action_close">Sulje</string>
   <string name="action_update">Vaihda</string>
   <!-- Empty list -->
@@ -202,22 +202,22 @@
   <string name="dialog_upgrade_plan_action_cancel">Ei nyt</string>
   <!-- Words -->
   <string name="email_address">Sähköpostiosoite</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">Virheellinen sähköpostiosoite</string>
   <string name="password">Salasana</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Painike, joka sulkee työkaluvihjeen ja estää sitä näkymästä uudelleen.</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="one">%d year</item>
-    <item quantity="other">%d years</item>
+    <item quantity="one">%d vuosi</item>
+    <item quantity="other">%d vuotta</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d month</item>
-    <item quantity="other">%d months</item>
+    <item quantity="one">%d kuukausi</item>
+    <item quantity="other">%d kuukautta</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="one">%d week</item>
-    <item quantity="other">%d weeks</item>
+    <item quantity="one">%d viikko</item>
+    <item quantity="other">%d viikkoa</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d vuorokausi</item>
@@ -237,7 +237,7 @@
   </plurals>
   <plurals name="aliases_count">
     <item quantity="one">%d alias</item>
-    <item quantity="other">%d aliases</item>
+    <item quantity="other">%d aliasta</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Muistiinpano kopioitiin</string>
@@ -263,4 +263,9 @@
     <item quantity="other">Havaitsimme, että sinulla on SimpleLoginissa %d Proton Passista puuttuvaa aliasta. Haluaisitko tuoda ne?</item>
   </plurals>
   <string name="simple_login_widget_action">Synkronoi aliakset</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">Etkö saanut koodia?</string>
+  <string name="verification_code_suggestion_spam">Varmista, ettei roskapostistasi löydy viestiä otsikolla “Vahvista sähköpostiosoitteen lisäys Proton Passiin“.</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Jos et löydä sellaista sähköpostia, voit %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">pyytää uutta koodia</string>
 </resources>

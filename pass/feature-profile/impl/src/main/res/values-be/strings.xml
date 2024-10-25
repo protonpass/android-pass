@@ -12,7 +12,7 @@
   <string name="profile_option_autofill">Аўтазапаўненне</string>
   <string name="profile_option_autofill_subtitle">Аўтаматычна запаўняць імя карыстальніка і пароль.</string>
   <string name="profile_option_secure_links">Бяспечныя спасылкі</string>
-  <string name="profile_option_alias_management">Alias management</string>
+  <string name="profile_option_alias_management">Кіраванне псеўданімамі</string>
   <string name="profile_error_biometry_failed_to_start">Немагчыма запусціць біяметрычную аўтэнтыфікацыю</string>
   <string name="profile_error_biometry_failed_to_authenticate">Не ўдалося аўтэнтыфікаваць</string>
   <string name="profile_fingerprint_lock_enabled">Блакіроўка адбіткам пальца ўключана</string>

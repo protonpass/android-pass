@@ -104,8 +104,9 @@
   <string name="passkey_detail_bottomsheet_domain">Domínio</string>
   <string name="passkey_detail_bottomsheet_key">Chave</string>
   <string name="passkey_detail_bottomsheet_created">Criado</string>
-  <string name="activity_in_last_two_weeks">Atividade nas duas últimas semanas</string>
+  <string name="activity_in_last_two_weeks">Atividade nos últimos 14 dias</string>
   <string name="contacts">Contatos</string>
+  <string name="contacts_section_description">Para manter seu endereço de e-mail pessoal oculto, você pode criar um contato alias que oculte seu endereço.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s encaminhado</item>
     <item quantity="other">%1$s encaminhados</item>

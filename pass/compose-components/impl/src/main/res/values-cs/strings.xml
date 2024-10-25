@@ -48,8 +48,8 @@
   <string name="action_edit">Upravit</string>
   <string name="action_add">Přidat</string>
   <string name="action_delete">Smazat</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
+  <string name="action_make_default">Nastavit jako výchozí</string>
+  <string name="action_verify">Ověřit</string>
   <string name="action_close">Zavřít</string>
   <string name="action_update">Aktualizovat</string>
   <!-- Empty list -->
@@ -206,28 +206,28 @@
   <string name="dialog_upgrade_plan_action_cancel">Nyní ne</string>
   <!-- Words -->
   <string name="email_address">E-mailová adresa</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">Neplatná e-mailová adresa</string>
   <string name="password">Heslo</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Tlačítko pro odmítnutí této nápovědy a zamezení jejímu opětovnému zobrazení</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="one">%d year</item>
-    <item quantity="few">%d years</item>
-    <item quantity="many">%d years</item>
-    <item quantity="other">%d years</item>
+    <item quantity="one">%d rok</item>
+    <item quantity="few">%d roky</item>
+    <item quantity="many">%d let</item>
+    <item quantity="other">%d let</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d month</item>
-    <item quantity="few">%d months</item>
-    <item quantity="many">%d months</item>
-    <item quantity="other">%d months</item>
+    <item quantity="one">%d měsíc</item>
+    <item quantity="few">%d měsíce</item>
+    <item quantity="many">%d měsíců</item>
+    <item quantity="other">%d měsíců</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="one">%d week</item>
-    <item quantity="few">%d weeks</item>
-    <item quantity="many">%d weeks</item>
-    <item quantity="other">%d weeks</item>
+    <item quantity="one">%d týden</item>
+    <item quantity="few">%d týdny</item>
+    <item quantity="many">%d týdnů</item>
+    <item quantity="other">%d týdnů</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d den</item>
@@ -255,9 +255,9 @@
   </plurals>
   <plurals name="aliases_count">
     <item quantity="one">%d alias</item>
-    <item quantity="few">%d aliases</item>
-    <item quantity="many">%d aliases</item>
-    <item quantity="other">%d aliases</item>
+    <item quantity="few">%d aliasy</item>
+    <item quantity="many">%d aliasů</item>
+    <item quantity="other">%d aliasů</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Poznámka zkopírována</string>
@@ -285,4 +285,9 @@
     <item quantity="other">Zjistili jsme, že máte %d aliasů, které jsou přítomné v SimpleLogin, ale chybí v Proton Pass. Chcete je importovat?</item>
   </plurals>
   <string name="simple_login_widget_action">Synchronizovat aliasy</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">Neobdrželi jste kód?</string>
+  <string name="verification_code_suggestion_spam">Prosím, podívejte se do spamu, jestli v něm není e-mail nazvaný \"Prosím potvrďte svoji e-mailovou adresu pro Proton Pass\"</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Pokud takový e-mail nelze najít, tak můžete %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">požádat o nový kód</string>
 </resources>

@@ -24,7 +24,7 @@
   <string name="account_settings_list_item_extra_password_header_set">Proton Pass 추가 비밀번호 설정</string>
   <string name="account_settings_list_item_extra_password_active">활성</string>
   <string name="account_settings_list_item_extra_password_description">추가 비밀번호가 Pass 사용에 필요해 집니다. 사용자의 Proton 비밀번호의 추가적인 비밀번호가 됩니다.</string>
-  <string name="account_settings_list_item_security_keys_hint_not_set">설정하지 않음</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">설정되지 않음</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
     <item quantity="other">%d개 보안 키 설정됨</item>

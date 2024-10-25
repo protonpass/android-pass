@@ -104,8 +104,9 @@
   <string name="passkey_detail_bottomsheet_domain">Verkkotunnus</string>
   <string name="passkey_detail_bottomsheet_key">Avain</string>
   <string name="passkey_detail_bottomsheet_created">Luotu</string>
-  <string name="activity_in_last_two_weeks">Toiminta kahden edeltävän viikon aikana</string>
+  <string name="activity_in_last_two_weeks">Toiminta viimeisten 14 päivän aikana</string>
   <string name="contacts">Yhteystiedot</string>
+  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s välitys</item>
     <item quantity="other">%1$s välitystä</item>

@@ -17,29 +17,62 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="create_contact_button">Create contact</string>
-  <string name="save_contact_alias">Save</string>
-  <string name="snackbar_contact_create_success">Contact created successfully</string>
-  <string name="snackbar_contact_create_error">Failed to create contact</string>
-  <string name="create_contact_title">Create contact</string>
-  <string name="detail_contact_title">Contacts</string>
-  <string name="email_input_error">Invalid email address</string>
-  <string name="detail_contact_sender_name">Sender name</string>
-  <string name="detail_contact_display_name" comment="sender email address">When sending an email from this alias, the email will have %s as sender.</string>
-  <string name="empty_alias_contacts_title">Alias contacts</string>
-  <string name="empty_alias_contacts_body">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
-  <string name="empty_alias_contacts_learn_more">Learn more</string>
-  <string name="unblock_button">Unblock contact</string>
-  <string name="block_button">Block contact</string>
-  <string name="contact_created_date" comment="date of creation">Created %1$s ago</string>
-  <string name="no_activity_contact">No Activity in the last 14 days.</string>
-  <string name="activity_summary" comment="amount of items of each category">%1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.</string>
-  <string name="blocked_addresses_subtitle">Blocked addresses</string>
-  <string name="forwarding_addresses_subtitle">Forwarding addresses</string>
-  <string name="snackbar_contact_block_success">Contact blocked</string>
-  <string name="snackbar_contact_block_error">Could not block contact</string>
-  <string name="snackbar_contact_unblock_success">Contact unblocked</string>
-  <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
-  <string name="snackbar_sender_name_success">Sender name updated</string>
-  <string name="snackbar_sender_name_error">Could not update sender name</string>
+  <string name="create_contact_button">Создать контакт</string>
+  <string name="save_contact_alias">Сохранить</string>
+  <string name="snackbar_contact_create_success">Контакт успешно создан</string>
+  <string name="snackbar_contact_create_error">Не удалось создать контакт</string>
+  <string name="create_contact_title">Создать контакт</string>
+  <string name="detail_contact_title">Контакты</string>
+  <string name="email_input_error">Недействительный адрес электронной почты</string>
+  <string name="detail_contact_sender_name">Имя отправителя</string>
+  <string name="detail_contact_display_name" comment="sender email address">При отправке письма с этого псевдонима в качестве отправителя будет %s адрес электронной почты.</string>
+  <string name="empty_alias_contacts_title">Контакты псевдонима</string>
+  <string name="empty_alias_contacts_body">Чтобы скрыть свой личный адрес электронной почты, вы можете создать контакт с псевдонимом, который будет маскировать ваш адрес.</string>
+  <string name="empty_alias_contacts_learn_more">Подробнее</string>
+  <string name="unblock_button">Разблокировать контакт</string>
+  <string name="block_button">Заблокировать контакт</string>
+  <string name="contact_created_date" comment="date of creation">Создан %1$s назад</string>
+  <string name="no_activity_contact">Нет активности за последние 14 дней.</string>
+  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">за последние 14 дней.</string>
+  <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$dпереслано</item>
+    <item quantity="few">%1$dпересланы</item>
+    <item quantity="many">%1$dпересланы</item>
+    <item quantity="other">%1$dпересланы</item>
+  </plurals>
+  <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d отправлено</item>
+    <item quantity="few">%1$d отправлены</item>
+    <item quantity="many">%1$d отправлены</item>
+    <item quantity="other">%1$d отправлены</item>
+  </plurals>
+  <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d заблокировано</item>
+    <item quantity="few">%1$d заблокированы</item>
+    <item quantity="many">%1$d заблокированы</item>
+    <item quantity="other">%1$d заблокированы</item>
+  </plurals>
+  <string name="blocked_addresses_subtitle">Заблокированные адреса</string>
+  <string name="forwarding_addresses_subtitle">Адреса для пересылки</string>
+  <string name="snackbar_contact_block_success">Контакт заблокирован</string>
+  <string name="snackbar_contact_block_error">Не удалось заблокировать контакт</string>
+  <string name="snackbar_contact_unblock_success">Контакт разблокирован</string>
+  <string name="snackbar_contact_unblock_error">Не удалось разблокировать контакт</string>
+  <string name="snackbar_sender_name_success">Имя отправителя обновлено</string>
+  <string name="snackbar_sender_name_error">Не удалось обновить имя отправителя</string>
+  <string name="snackbar_delete_contact_success">Contact deleted</string>
+  <string name="snackbar_delete_contact_error">Could not delete contact</string>
+  <string name="snackbar_email_copied_success">Email copied to clipboard</string>
+  <string name="contact_option_send_email">Send email</string>
+  <string name="contact_option_copy_address">Copy address</string>
+  <string name="contact_option_block_contact">Block contact</string>
+  <string name="contact_option_unblock_contact">Unblock contact</string>
+  <string name="contact_option_delete">Delete</string>
+  <string name="alias_contacts_bottomsheet_title">Контакты 
+Псевдонима</string>
+  <string name="alias_contacts_bottomsheet_subtitle">Чтобы скрыть свой личный адрес электронной почты, вы можете создать контакт с псевдонимом, который будет маскировать ваш адрес.</string>
+  <string name="alias_contacts_explanation">Вот как это работает:</string>
+  <string name="alias_contacts_bottomsheet_section_1">Введите адрес, на который вы хотите отправить электронное письмо.</string>
+  <string name="alias_contacts_bottomsheet_section_2">Proton Pass сгенерирует адрес пересылки (также называемый обратным псевдонимом).</string>
+  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Отправьте электронное письмо на этот адрес, и будет казаться, что оно отправлено с него.</string>
 </resources>

@@ -114,7 +114,7 @@
   <string name="share_with_secure_link_description">이 항목으로의 안전한 링크를 만듭니다.</string>
   <string name="share_with_manage_shared_vault_title">금고 접근 관리</string>
   <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="other">이 금고의 항목이 %d명 사용자와 공유 중입니ㅏㄷ.</item>
+    <item quantity="other">이 금고의 항목이 %d명 사용자와 공유 중입니다.</item>
   </plurals>
   <string name="share_with_view_shared_vault_members_title">금고 구성원 보기</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">전체 구성원의 접근 수준을 설정하세요.</string>

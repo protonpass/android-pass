@@ -18,62 +18,59 @@
   -->
 <resources>
   <!-- Management screen -->
-  <string name="simple_login_sync_management_title">Alias management</string>
+  <string name="simple_login_sync_management_title">Alias-Verwaltung</string>
   <string name="simple_login_sync_management_domain_label">Domain</string>
-  <string name="simple_login_sync_management_domain_title">Default domain for aliases</string>
-  <string name="simple_login_sync_management_domain_option_blank">Not selected</string>
-  <string name="simple_login_sync_management_mailboxes_label">Mailboxes</string>
-  <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
-  <string name="simple_login_sync_management_mailbox_default">Default</string>
-  <string name="simple_login_sync_management_mailbox_unverified">Unverified mailbox</string>
-  <string name="simple_login_sync_management_vault_title">SimpleLogin sync</string>
-  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
-  <string name="simple_login_sync_management_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_domains">Default domain for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_mailboxes">Default mailbox for aliases</string>
+  <string name="simple_login_sync_management_domain_title">Standard-Domain für Aliasse</string>
+  <string name="simple_login_sync_management_domain_option_blank">Nicht ausgewählt</string>
+  <string name="simple_login_sync_management_mailboxes_label">Postfächer</string>
+  <string name="simple_login_sync_management_mailboxes_description">Das Postfach ist der Ort, an den die an einen Alias gesendeten E-Mails weitergeleitet werden. Es ist dein übliches Postfach, z.B. Gmail, Outlook, Proton Mail, etc.</string>
+  <string name="simple_login_sync_management_mailbox_default">Standard</string>
+  <string name="simple_login_sync_management_mailbox_unverified">Nicht verifiziertes Postfach</string>
+  <string name="simple_login_sync_management_vault_title">SimpleLogin-Synchronisierung</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Fehler beim Abrufen der SimpleLogin-Aliasdetails.</string>
+  <string name="simple_login_sync_management_mailboxes_title">Standardpostfach für Aliasse</string>
+  <string name="simple_login_sync_management_dialog_title_domains">Standard-Domain für Aliasse</string>
+  <string name="simple_login_sync_management_dialog_title_mailboxes">Standardpostfach für Aliasse</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Aliasse synchronisieren</string>
   <string name="simple_login_sync_enable_snackbar_error">Es gab einen Fehler bei der Aktivierung der SimpleLogin-Alias- Synchronisierung</string>
   <string name="simple_login_sync_enable_snackbar_success">SimpleLogin-Alias-Synchronisierung erfolgreich aktiviert</string>
   <!-- Mailbox create screen -->
-  <string name="simple_login_sync_mailbox_create_title">Add mailbox</string>
-  <string name="simple_login_sync_mailbox_create_message_error">There was an error adding the mailbox</string>
+  <string name="simple_login_sync_mailbox_create_title">Postfach hinzufügen</string>
+  <string name="simple_login_sync_mailbox_create_message_error">Fehler beim Hinzufügen des Postfachs</string>
   <!-- Mailbox verify screen -->
-  <string name="simple_login_sync_mailbox_verify_title">Confirm your mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">We sent a verification code to %s. Enter it below:</string>
-  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">your email address</string>
-  <string name="simple_login_sync_mailbox_verify_code_resend">Resend code in %s</string>
-  <string name="simple_login_sync_mailbox_verify_code_request_new">request a new code</string>
-  <string name="simple_login_sync_mailbox_verify_code_not_received" comment="the placeholder will be replaced by 'request a new code' link text">Code not received? Check your spam folder and if not there %s instead.</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Invalid mailbox verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_error">There was an error verifying the mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_success">Mailbox successfully verified</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">There was an error sending verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verification code successfully sent</string>
+  <string name="simple_login_sync_mailbox_verify_title">Postfach bestätigen</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Wir haben einen Verifizierungscode an %s gesendet. Bitte gib ihn unten ein:</string>
+  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">deine E-Mail-Adresse</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Ungültiger Postfach-Verifizierungscode</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_error">Fehler beim Verifizieren des Postfachs</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_success">Postfach erfolgreich verifiziert</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Fehler beim Senden des Verifizierungscodes</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verifizierungscode erfolgreich gesendet</string>
   <!-- Mailbox delete screen -->
-  <string name="simple_login_sync_mailbox_delete_title">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">All aliases using the mailbox %s will be also deleted. To keep receiving emails transfer these aliases to a different mailbox:</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfer aliases</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">To mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transfer and delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_error">There was an error deleting mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_success">Mailbox successfully deleted</string>
-  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transfer aliases to</string>
+  <string name="simple_login_sync_mailbox_delete_title">Postfach löschen</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">Alle Aliase, die das Postfach %s verwenden, werden ebenfalls gelöscht. Um weiterhin E-Mails zu erhalten, übertrage diese Aliase auf ein anderes Postfach:</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Aliasse übertragen</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Zum Postfach</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete">Postfach löschen</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Postfach übertragen und löschen</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">Fehler beim Löschen des Postfachs</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_success">Postfach erfolgreich gelöscht</string>
+  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Aliasse übertragen nach</string>
   <!-- Domain select screen -->
-  <string name="simple_login_sync_domain_select_title">Default domain</string>
-  <string name="simple_login_sync_domain_select_title_none">none</string>
-  <string name="simple_login_sync_domain_select_description_none">No domain</string>
-  <string name="simple_login_sync_domain_select_description_custom">Your domain</string>
-  <string name="simple_login_sync_domain_select_description_free">Public domain</string>
-  <string name="simple_login_sync_domain_select_description_premium">Premium domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">There was an error fetching SL alias domains</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
+  <string name="simple_login_sync_domain_select_title">Standard-Domain</string>
+  <string name="simple_login_sync_domain_select_title_none">keine</string>
+  <string name="simple_login_sync_domain_select_description_none">Keine Domain</string>
+  <string name="simple_login_sync_domain_select_description_custom">Deine Domain</string>
+  <string name="simple_login_sync_domain_select_description_free">Öffentliche Domain</string>
+  <string name="simple_login_sync_domain_select_description_premium">Premium-Domain</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">Fehler beim Abrufen von SimpleLogin-Alias-Domains</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Fehler beim Aktualisieren der SimpleLogin-Alias-Domain</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SimpleLogin-Alias-Domain erfolgreich aktualisiert</string>
   <!-- Mailbox options screen -->
-  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Cannot display mailbox options</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_error">There was an error updating default mailbox</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Default mailbox successfully updated</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Postfach-Optionen können nicht angezeigt werden</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_error">Fehler beim Aktualisieren des Standard-Postfachs</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Standard-Postfach erfolgreich aktualisiert</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Standard-SL-Tresor</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin-Aliasse werden in diesen Tresor importiert.</string>

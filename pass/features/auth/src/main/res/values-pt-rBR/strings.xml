@@ -49,5 +49,5 @@
     <item quantity="other">%d tentativas restantes</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Muitas tentativas de acesso com PIN falharam. Todos os seus usuários estão sendo desconectados.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Muitas tentativas de código PIN com falha.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
 </resources>

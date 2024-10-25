@@ -62,7 +62,7 @@
   <string name="sharing_snackbar_change_permission_error">Не могу изменить разрешения</string>
   <string name="sharing_snackbar_remove_member_success">Участник удалён из хранилища</string>
   <string name="sharing_snackbar_remove_member_error">Не могу удалить из хранилища</string>
-  <string name="share_summary_title">Review and share</string>
+  <string name="share_summary_title">Проверить и поделиться</string>
   <string name="share_summary_vault">%s хранилище</string>
   <string name="share_summary_share_vault">Поделиться хранилищем</string>
   <string name="share_summary_vault_title">Хранилище</string>
@@ -100,7 +100,7 @@
   <string name="sharing_snackbar_cancel_invite_error">Ошибка отмены приглашения</string>
   <string name="sharing_snackbar_resend_invite_success">Приглашение отправлено повторно</string>
   <string name="sharing_snackbar_resend_invite_error">Ошибка при повторной отправке приглашения</string>
-  <string name="sharing_snackbar_confirm_invite_success">Invite confirmed</string>
+  <string name="sharing_snackbar_confirm_invite_success">Приглашение подтверждено</string>
   <string name="sharing_snackbar_confirm_invite_error">Ошибка подтверждения приглашения</string>
   <string name="sharing_snackbar_too_many_invites_sent">Адрес приглашался слишком много раз</string>
   <string name="sharing_snackbar_transfer_ownership_success">Владение передано</string>

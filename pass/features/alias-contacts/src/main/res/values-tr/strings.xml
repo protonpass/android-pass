@@ -22,24 +22,50 @@
   <string name="snackbar_contact_create_success">Kişi eklendi</string>
   <string name="snackbar_contact_create_error">Kişi eklenemedi</string>
   <string name="create_contact_title">Kişi ekle</string>
-  <string name="detail_contact_title">Contacts</string>
+  <string name="detail_contact_title">Kişiler</string>
   <string name="email_input_error">E-posta adresi geçersiz</string>
-  <string name="detail_contact_sender_name">Sender name</string>
-  <string name="detail_contact_display_name" comment="sender email address">When sending an email from this alias, the email will have %s as sender.</string>
-  <string name="empty_alias_contacts_title">Alias contacts</string>
-  <string name="empty_alias_contacts_body">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
-  <string name="empty_alias_contacts_learn_more">Learn more</string>
-  <string name="unblock_button">Unblock contact</string>
-  <string name="block_button">Block contact</string>
-  <string name="contact_created_date" comment="date of creation">Created %1$s ago</string>
-  <string name="no_activity_contact">No Activity in the last 14 days.</string>
-  <string name="activity_summary" comment="amount of items of each category">%1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.</string>
-  <string name="blocked_addresses_subtitle">Blocked addresses</string>
-  <string name="forwarding_addresses_subtitle">Forwarding addresses</string>
-  <string name="snackbar_contact_block_success">Contact blocked</string>
-  <string name="snackbar_contact_block_error">Could not block contact</string>
-  <string name="snackbar_contact_unblock_success">Contact unblocked</string>
-  <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
-  <string name="snackbar_sender_name_success">Sender name updated</string>
-  <string name="snackbar_sender_name_error">Could not update sender name</string>
+  <string name="detail_contact_sender_name">Gönderici adı</string>
+  <string name="detail_contact_display_name" comment="sender email address">Bu takma addan gönderilecek e-postaların göndericisi %s olacak.</string>
+  <string name="empty_alias_contacts_title">Takma ad kişileri</string>
+  <string name="empty_alias_contacts_body">Kişisel e-posta adresinizi gizli tutmak için bir takma ad kişisi oluşturarak adresinizi gizleyebilirsiniz.</string>
+  <string name="empty_alias_contacts_learn_more">Ayrıntılı bilgi alın</string>
+  <string name="unblock_button">Kişinin engellemesini kaldır</string>
+  <string name="block_button">Kişiyi engelle</string>
+  <string name="contact_created_date" comment="date of creation">%1$s önce oluşturuldu</string>
+  <string name="no_activity_contact">Son 14 günde herhangi bir etkinlik yok.</string>
+  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">son 14 günde.</string>
+  <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d iletildi</item>
+    <item quantity="other">%1$d iletildi</item>
+  </plurals>
+  <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d gönderildi</item>
+    <item quantity="other">%1$d gönderildi</item>
+  </plurals>
+  <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
+    <item quantity="one">%1$d engellendi</item>
+    <item quantity="other">%1$d engellendi</item>
+  </plurals>
+  <string name="blocked_addresses_subtitle">Engellenmiş adresler</string>
+  <string name="forwarding_addresses_subtitle">İletme adresleri</string>
+  <string name="snackbar_contact_block_success">Kişi engellendi</string>
+  <string name="snackbar_contact_block_error">Kişi engellenemedi</string>
+  <string name="snackbar_contact_unblock_success">Kişinin engellemesi kaldırıldı</string>
+  <string name="snackbar_contact_unblock_error">Kişinin engellemesi kaldırılamadı</string>
+  <string name="snackbar_sender_name_success">Gönderici adı güncellendi</string>
+  <string name="snackbar_sender_name_error">Gönderici adı güncellenemedi</string>
+  <string name="snackbar_delete_contact_success">Kişi silindi</string>
+  <string name="snackbar_delete_contact_error">Kişi silinemedi</string>
+  <string name="snackbar_email_copied_success">E-posta adresi panoya kopyalandı</string>
+  <string name="contact_option_send_email">E-posta gönder</string>
+  <string name="contact_option_copy_address">Adresi kopyala</string>
+  <string name="contact_option_block_contact">Kişiyi engelle</string>
+  <string name="contact_option_unblock_contact">Kişinin engellemesini kaldır</string>
+  <string name="contact_option_delete">Sil</string>
+  <string name="alias_contacts_bottomsheet_title">Takma ad kişileri</string>
+  <string name="alias_contacts_bottomsheet_subtitle">Kişisel e-posta adresinizi gizli tutmak için bir takma ad kişisi oluşturarak adresinizi gizleyebilirsiniz.</string>
+  <string name="alias_contacts_explanation">Nasıl çalışıyor:</string>
+  <string name="alias_contacts_bottomsheet_section_1">E-posta göndermek istediğiniz adresi yazın.</string>
+  <string name="alias_contacts_bottomsheet_section_2">Proton Pass bir iletme adresi (ters takma ad olarak da bilinir) oluşturacak.</string>
+  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Bu adrese e-posta gönderdiğinizde şu adresten gönderilmiş gibi görünecek</string>
 </resources>

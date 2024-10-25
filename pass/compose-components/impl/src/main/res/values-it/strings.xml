@@ -46,8 +46,8 @@
   <string name="action_edit">Modifica</string>
   <string name="action_add">Aggiungi</string>
   <string name="action_delete">Elimina</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
+  <string name="action_make_default">Rendi predefinito</string>
+  <string name="action_verify">Verifica</string>
   <string name="action_close">Chiudi</string>
   <string name="action_update">Aggiorna</string>
   <!-- Empty list -->
@@ -202,22 +202,22 @@
   <string name="dialog_upgrade_plan_action_cancel">Non adesso</string>
   <!-- Words -->
   <string name="email_address">Indirizzo email</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">Indirizzo email non valido</string>
   <string name="password">Password</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Pulsante per chiudere questo suggerimento e non mostrarlo più</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="one">%d year</item>
-    <item quantity="other">%d years</item>
+    <item quantity="one">%d anno</item>
+    <item quantity="other">%d anni</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d month</item>
-    <item quantity="other">%d months</item>
+    <item quantity="one">%d mese</item>
+    <item quantity="other">%d mesi</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="one">%d week</item>
-    <item quantity="other">%d weeks</item>
+    <item quantity="one">%d settimana</item>
+    <item quantity="other">%d settimane</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d giorno</item>
@@ -237,7 +237,7 @@
   </plurals>
   <plurals name="aliases_count">
     <item quantity="one">%d alias</item>
-    <item quantity="other">%d aliases</item>
+    <item quantity="other">%d alias</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Nota copiata</string>
@@ -263,4 +263,9 @@
     <item quantity="other">Abbiamo rilevato che hai alias %d presenti in SimpleLogin ma mancanti in Proton Pass. Desideri importarli?</item>
   </plurals>
   <string name="simple_login_widget_action">Sincronizza gli alias</string>
+  <!-- Verification codes -->
+  <string name="verification_code_not_received">Non hai ricevuto il codice?</string>
+  <string name="verification_code_suggestion_spam">Controlla se nella cartella spam è presente un\'email denominata \"Conferma l\'indirizzo email per Proton Pass\"</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Se non riesci a trovare questo indirizzo email, puoi %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">richiedi un nuovo codice</string>
 </resources>

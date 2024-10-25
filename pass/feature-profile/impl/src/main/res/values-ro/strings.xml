@@ -12,7 +12,7 @@
   <string name="profile_option_autofill">Autocompletare</string>
   <string name="profile_option_autofill_subtitle">Completați automat numele de utilizator și parolele.</string>
   <string name="profile_option_secure_links">Legături web securizate</string>
-  <string name="profile_option_alias_management">Alias management</string>
+  <string name="profile_option_alias_management">Gestionare aliasuri</string>
   <string name="profile_error_biometry_failed_to_start">Nu s-a putut porni autentificarea biometrică.</string>
   <string name="profile_error_biometry_failed_to_authenticate">Autentificare nereușită.</string>
   <string name="profile_fingerprint_lock_enabled">Blocarea cu amprentă este activată</string>

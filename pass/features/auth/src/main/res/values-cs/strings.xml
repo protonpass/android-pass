@@ -55,5 +55,5 @@
     <item quantity="other">Zbývá %d pokusů</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Příliš mnoho chybných pokusů PIN. Všichni vaši uživatelé jsou odhlašováni.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Příliš mnoho neúspěšných pokusů o zadání PINu.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
 </resources>

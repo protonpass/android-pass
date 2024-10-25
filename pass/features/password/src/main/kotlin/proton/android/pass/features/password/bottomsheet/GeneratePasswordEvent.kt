@@ -20,14 +20,12 @@ package proton.android.pass.features.password.bottomsheet
 
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
 import proton.android.pass.preferences.PasswordGenerationMode
-import proton.android.pass.preferences.WordSeparator
 
 internal sealed interface GeneratePasswordEvent {
     data object OnPasswordModeChangeClick : GeneratePasswordEvent
     data class OnPasswordModeChange(val mode: PasswordGenerationMode) : GeneratePasswordEvent
 
     data object OnWordsSeparatorClick : GeneratePasswordEvent
-    data class OnWordsSeparatorChange(val separator: WordSeparator) : GeneratePasswordEvent
 
     @JvmInline
     value class OnPasswordConfigChanged(val config: PasswordConfig) : GeneratePasswordEvent

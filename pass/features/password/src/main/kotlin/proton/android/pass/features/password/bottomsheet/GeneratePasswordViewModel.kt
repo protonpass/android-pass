@@ -50,7 +50,6 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.PasswordGenerationMode
 import proton.android.pass.preferences.PasswordGenerationPreference
 import proton.android.pass.preferences.UserPreferencesRepository
-import proton.android.pass.preferences.WordSeparator
 import javax.inject.Inject
 
 @HiltViewModel
@@ -115,11 +114,6 @@ class GeneratePasswordViewModel @Inject constructor(
 
     fun onPasswordModeChange(value: PasswordGenerationMode) = viewModelScope.launch {
         val updated = getCurrentPreference().copy(mode = value)
-        updateAndRegenerate(updated)
-    }
-
-    fun onWordsSeparatorChange(value: WordSeparator) = viewModelScope.launch {
-        val updated = getCurrentPreference().copy(wordsSeparator = value)
         updateAndRegenerate(updated)
     }
 

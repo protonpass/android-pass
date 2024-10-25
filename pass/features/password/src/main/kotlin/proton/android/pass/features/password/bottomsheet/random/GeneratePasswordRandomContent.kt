@@ -133,8 +133,10 @@ internal fun GeneratePasswordRandomContent(
                     text = stringResource(R.string.bottomsheet_option_include_numbers),
                     value = includeNumbers,
                     isEnabled = canToggleNumbers,
-                    onChange = {
-                        onEvent(GeneratePasswordEvent.OnRandomIncludeNumbersChange(it))
+                    onChange = { newIncludeNumbers ->
+                        GeneratePasswordEvent.OnPasswordConfigChanged(
+                            config = config.copy(includeNumbers = newIncludeNumbers)
+                        ).also(onEvent)
                     }
                 )
             }

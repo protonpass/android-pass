@@ -23,11 +23,8 @@ import proton.android.pass.preferences.PasswordGenerationMode
 import proton.android.pass.preferences.WordSeparator
 
 internal sealed interface GeneratePasswordEvent {
-    data object OnRegeneratePasswordClick : GeneratePasswordEvent
     data object OnPasswordModeChangeClick : GeneratePasswordEvent
     data class OnPasswordModeChange(val mode: PasswordGenerationMode) : GeneratePasswordEvent
-
-    data class OnRandomIncludeNumbersChange(val value: Boolean) : GeneratePasswordEvent
 
     data class OnWordsCountChange(val count: Int) : GeneratePasswordEvent
     data class OnWordsCapitalizeChange(val value: Boolean) : GeneratePasswordEvent
@@ -37,5 +34,7 @@ internal sealed interface GeneratePasswordEvent {
 
     @JvmInline
     value class OnPasswordConfigChanged(val config: PasswordConfig) : GeneratePasswordEvent
+
+    data object OnRegeneratePasswordClick : GeneratePasswordEvent
 
 }

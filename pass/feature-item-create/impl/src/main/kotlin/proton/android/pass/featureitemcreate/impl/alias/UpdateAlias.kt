@@ -93,6 +93,8 @@ fun UpdateAlias(
                     is AliasContentUiEvent.OnMailBoxChanged -> viewModel.onMailboxesChanged(event.list)
                     is AliasContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
                     is AliasContentUiEvent.OnSLNoteChange -> viewModel.onSLNoteChange(event.newSLNote)
+                    is AliasContentUiEvent.OnDisplayNameChange ->
+                        viewModel.onDisplayNameChange(event.value)
                     is AliasContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
                     AliasContentUiEvent.OnUpgrade ->
                         actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Upgrade) }
@@ -103,6 +105,7 @@ fun UpdateAlias(
                     is AliasContentUiEvent.OnVaultSelect -> {
                         // Only on create
                     }
+
                 }
             }
         )

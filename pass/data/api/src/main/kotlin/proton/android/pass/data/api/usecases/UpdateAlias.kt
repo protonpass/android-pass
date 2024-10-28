@@ -33,7 +33,8 @@ data class UpdateAliasItemContent(
 data class UpdateAliasContent(
     val mailboxes: Option<List<AliasMailbox>>,
     val itemData: Option<UpdateAliasItemContent>,
-    private val slNoteOption: Option<String>
+    private val slNoteOption: Option<String>,
+    private val displayNameOption: Option<String>
 ) {
 
     val hasSLNote: Boolean = when (slNoteOption) {
@@ -44,6 +45,16 @@ data class UpdateAliasContent(
     val slNote: String = when (slNoteOption) {
         None -> ""
         is Some -> slNoteOption.value
+    }
+
+    val hasDisplayName: Boolean = when (displayNameOption) {
+        None -> false
+        is Some -> true
+    }
+
+    val displayName: String = when (displayNameOption) {
+        None -> ""
+        is Some -> displayNameOption.value
     }
 
 }

@@ -56,11 +56,11 @@ import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.DeleteItems
-import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemActions
+import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
@@ -223,6 +223,7 @@ class AliasDetailViewModel @Inject constructor(
                     vault = vault,
                     mailboxes = aliasDetails?.mailboxes?.toPersistentList() ?: persistentListOf(),
                     slNote = aliasDetails?.slNote.orEmpty(),
+                    displayName = aliasDetails?.name.orEmpty(),
                     stats = aliasDetails?.stats.toOption(),
                     contactsCount = aliasContactsResult.getOrNull()?.total ?: 0,
                     isLoading = isAliasDetailsLoading || isLoading.value(),

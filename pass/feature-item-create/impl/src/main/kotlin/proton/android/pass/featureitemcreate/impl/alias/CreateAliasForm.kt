@@ -34,6 +34,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.form.SenderNameSection
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.featureitemcreate.impl.R
@@ -129,5 +130,11 @@ internal fun CreateAliasForm(
                 onChange = { onEvent(AliasContentUiEvent.OnSLNoteChange(it)) }
             )
         }
+
+        SenderNameSection(
+            value = aliasItemFormState.senderName.orEmpty(),
+            enabled = isEditAllowed,
+            onChange = { onEvent(AliasContentUiEvent.OnDisplayNameChange(it)) }
+        )
     }
 }

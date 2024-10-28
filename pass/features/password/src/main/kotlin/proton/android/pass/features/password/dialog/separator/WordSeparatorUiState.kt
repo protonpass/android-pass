@@ -23,24 +23,39 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.commonrust.api.WordSeparator
+import proton.android.pass.commonrust.api.passwords.PasswordConfig
 
-sealed interface WordSeparatorUiEvent {
-    data object Unknown : WordSeparatorUiEvent
+internal sealed interface WordSeparatorUiEvent {
+
+    data object Idle : WordSeparatorUiEvent
+
     data object Close : WordSeparatorUiEvent
+
 }
 
 @Immutable
-data class WordSeparatorUiState(
-    val options: PersistentList<WordSeparator>,
-    val selected: Option<WordSeparator>,
-    val event: WordSeparatorUiEvent
+internal data class WordSeparatorUiState(
+    internal val config: Option<PasswordConfig.Memorable>,
+    internal val event: WordSeparatorUiEvent
 ) {
-    companion object {
-        val Initial = WordSeparatorUiState(
-            options = WordSeparator.entries.toPersistentList(),
-            selected = None,
-            event = WordSeparatorUiEvent.Unknown
-        )
+
+    internal val options: PersistentList<WordSeparator> = WordSeparator.entries.toPersistentList()
+
+    internal val selected: Option<WordSeparator> = when (config) {
+        None -> None
+        is Some -> config.value.wordSeparator.some()
     }
+
+    internal companion object {
+
+        internal val Initial = WordSeparatorUiState(
+            config = None,
+            event = WordSeparatorUiEvent.Idle
+        )
+
+    }
+
 }

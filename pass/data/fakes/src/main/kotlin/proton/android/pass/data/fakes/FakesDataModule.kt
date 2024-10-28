@@ -69,7 +69,6 @@ import proton.android.pass.data.api.usecases.InviteToVault
 import proton.android.pass.data.api.usecases.LeaveVault
 import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.data.api.usecases.MigrateVault
-import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAddressesByUserId
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
@@ -246,7 +245,6 @@ import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.TestLeaveVault
 import proton.android.pass.data.fakes.usecases.TestMigrateItems
 import proton.android.pass.data.fakes.usecases.TestMigrateVault
-import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveAliasDetails
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveAnyAccountHasEnforcedLock
@@ -374,9 +372,6 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindCreateItem(impl: TestCreateItem): CreateItem
-
-    @Binds
-    abstract fun bindObserveActiveItems(impl: TestObserveActiveItems): ObserveActiveItems
 
     @Binds
     abstract fun bindObserveVaults(impl: TestObserveVaults): ObserveVaults

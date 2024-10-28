@@ -387,40 +387,52 @@ class ProfileViewModel @Inject constructor(
         searchOptionsRepository.setFilterOption(FilterOption(filterType))
     }
 
-    fun onAliasCountClick() = viewModelScope.launch {
-        selectFilters(SearchFilterType.Alias)
-        eventFlow.update { ProfileEvent.HomeAliases }
-        snackbarDispatcher(FilteredByAliases)
+    fun onAliasCountClick() {
+        viewModelScope.launch {
+            selectFilters(SearchFilterType.Alias)
+            eventFlow.update { ProfileEvent.HomeAliases }
+            snackbarDispatcher(FilteredByAliases)
+        }
     }
 
-    fun onCreditCardCountClick() = viewModelScope.launch {
-        selectFilters(SearchFilterType.CreditCard)
-        eventFlow.update { ProfileEvent.HomeCreditCards }
-        snackbarDispatcher(FilteredByCreditCards)
+    fun onCreditCardCountClick() {
+        viewModelScope.launch {
+            selectFilters(SearchFilterType.CreditCard)
+            eventFlow.update { ProfileEvent.HomeCreditCards }
+            snackbarDispatcher(FilteredByCreditCards)
+        }
     }
 
-    fun onIdentityCountClick() = viewModelScope.launch {
-        selectFilters(SearchFilterType.Identity)
-        eventFlow.update { ProfileEvent.HomeIdentities }
-        snackbarDispatcher(FilteredByIdentities)
+    fun onIdentityCountClick() {
+        viewModelScope.launch {
+            selectFilters(SearchFilterType.Identity)
+            eventFlow.update { ProfileEvent.HomeIdentities }
+            snackbarDispatcher(FilteredByIdentities)
+        }
     }
 
-    fun onLoginCountClick() = viewModelScope.launch {
-        selectFilters(SearchFilterType.Login)
-        eventFlow.update { ProfileEvent.HomeLogins }
-        snackbarDispatcher(FilteredByLogins)
+    fun onLoginCountClick() {
+        viewModelScope.launch {
+            selectFilters(SearchFilterType.Login)
+            eventFlow.update { ProfileEvent.HomeLogins }
+            snackbarDispatcher(FilteredByLogins)
+        }
     }
 
-    fun onMFACountClick() = viewModelScope.launch {
-        selectFilters(SearchFilterType.LoginMFA)
-        eventFlow.update { ProfileEvent.AllMFA }
-        snackbarDispatcher(FilteredByLoginsWithMFA)
+    fun onMFACountClick() {
+        viewModelScope.launch {
+            selectFilters(SearchFilterType.LoginMFA)
+            eventFlow.update { ProfileEvent.AllMFA }
+            snackbarDispatcher(FilteredByLoginsWithMFA)
+        }
     }
 
-    fun onNoteCountClick() = viewModelScope.launch {
-        selectFilters(SearchFilterType.Note)
-        eventFlow.update { ProfileEvent.HomeNotes }
-        snackbarDispatcher(FilteredByNote)
+    fun onNoteCountClick() {
+        viewModelScope.launch {
+            selectFilters(SearchFilterType.Note)
+            eventFlow.update { ProfileEvent.HomeNotes }
+            snackbarDispatcher(FilteredByNote)
+        }
     }
 
     private companion object {

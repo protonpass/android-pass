@@ -638,7 +638,13 @@ class IdentityActionsProviderImpl @Inject constructor(
     override fun onItemReceivedState(item: Item) {
         itemState.update { item.some() }
         val itemContents = encryptionContextProvider.withEncryptionContext {
-            item.toItemContents(this@withEncryptionContext) as ItemContents.Identity
+            toItemContents(
+                itemType = item.itemType,
+                encryptionContext = this,
+                title = item.title,
+                note = item.note,
+                flags = item.flags
+            ) as ItemContents.Identity
         }
         val personalDetails = itemContents.personalDetailsContent
         val addressDetails = itemContents.addressDetailsContent

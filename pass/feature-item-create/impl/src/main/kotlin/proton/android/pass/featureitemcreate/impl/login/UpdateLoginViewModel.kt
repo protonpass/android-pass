@@ -235,7 +235,13 @@ class UpdateLoginViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             val default = LoginItemFormState.default(this)
             if (loginItemFormState.compare(default, this)) {
-                val itemContents = item.toItemContents(this@withEncryptionContext) as ItemContents.Login
+                val itemContents = toItemContents(
+                    itemType = item.itemType,
+                    encryptionContext = this,
+                    title = item.title,
+                    note = item.note,
+                    flags = item.flags
+                ) as ItemContents.Login
 
                 val decryptedTotp = handleTotp(
                     encryptionContext = this@withEncryptionContext,

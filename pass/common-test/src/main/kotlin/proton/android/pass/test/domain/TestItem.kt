@@ -28,6 +28,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.toOption
+import proton.android.pass.domain.Flags
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
@@ -65,7 +66,7 @@ object TestItem {
             createTime = now,
             lastAutofillTime = None,
             isPinned = false,
-            flags = 0
+            flags = Flags(0)
         )
     }
 
@@ -112,7 +113,7 @@ object TestItem {
             lastAutofillTime = lastAutofillTime?.let { Instant.fromEpochMilliseconds(it) }
                 .toOption(),
             isPinned = Random.nextBoolean(),
-            flags = Random.nextInt()
+            flags = Flags(Random.nextInt())
         )
     }
 }

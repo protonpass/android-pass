@@ -42,6 +42,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
+import proton.android.pass.featureitemdetail.impl.common.SenderNameSection
 
 @Composable
 fun AliasDetailContent(
@@ -50,6 +51,7 @@ fun AliasDetailContent(
     vault: Vault?,
     mailboxes: PersistentList<AliasMailbox>,
     slNote: String,
+    displayName: String,
     stats: Option<AliasStats>,
     contactsCount: Int,
     isLoading: Boolean,
@@ -110,15 +112,20 @@ fun AliasDetailContent(
         }
 
         if (isAliasManagementEnabled) {
+            SenderNameSection(
+                text = displayName,
+                isLoading = isLoading
+            )
+
             ContactsSection(
                 modifier = Modifier.padding(bottom = Spacing.small),
                 counter = contactsCount,
                 onClick = onContactsClicked
             )
-        }
 
-        if (isAliasManagementEnabled && stats is Some) {
-            AliasStats(stats = stats.value)
+            if (stats is Some) {
+                AliasStats(stats = stats.value)
+            }
         }
 
         PassItemDetailsHistorySection(

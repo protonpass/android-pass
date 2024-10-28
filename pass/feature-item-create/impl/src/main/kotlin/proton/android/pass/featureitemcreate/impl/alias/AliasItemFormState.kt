@@ -39,7 +39,8 @@ data class AliasItemFormState(
     val selectedSuffix: AliasSuffixUiModel? = null,
     val mailboxes: List<SelectedAliasMailboxUiModel> = emptyList(),
     val aliasToBeCreated: String? = null,
-    val slNote: String? = null
+    val slNote: String? = null,
+    val senderName: String? = null
 ) : Parcelable {
 
     fun validate(allowEmptyTitle: Boolean, aliasPrefixValidator: AliasPrefixValidator): Set<AliasItemValidationErrors> {

@@ -31,7 +31,6 @@ androidComponents.beforeVariants { variant ->
 dependencies {
     api(projects.pass.totp.api)
 
-    implementation(libs.commons.codec)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
     implementation(libs.pass.common)

@@ -45,7 +45,8 @@ import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.features.password.R
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordUiEvent
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordToggleRow
-import proton.android.pass.features.password.bottomsheet.GeneratePasswordTypeRow
+import proton.android.pass.features.password.bottomsheet.GeneratePasswordSelectorRow
+import proton.android.pass.features.password.extensions.toResourceString
 import proton.android.pass.preferences.PasswordGenerationMode
 
 @Composable
@@ -61,8 +62,10 @@ internal fun GeneratePasswordRandomContent(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
-        GeneratePasswordTypeRow(
-            current = PasswordGenerationMode.Random,
+        GeneratePasswordSelectorRow(
+            title = stringResource(R.string.password_type),
+            selectedValue = PasswordGenerationMode.Random.toResourceString(),
+            iconContentDescription = stringResource(R.string.password_mode_icon),
             onClick = {
                 onEvent(GeneratePasswordUiEvent.OnPasswordModeChangeClick)
             }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,33 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonrust.api
+package proton.android.pass.commonrust.api.passwords
 
 interface PasswordGenerator {
-    fun generatePassword(config: PasswordGeneratorConfig): String
-    fun generatePassphrase(config: PassphraseConfig): String
+
+    suspend fun generatePassword(config: PasswordConfig): String
+
 }
-
-data class PasswordGeneratorConfig(
-    val length: UInt,
-    val numbers: Boolean,
-    val uppercaseLetters: Boolean,
-    val symbols: Boolean
-)
-
-enum class WordSeparator {
-    Hyphen,
-    Space,
-    Period,
-    Comma,
-    Underscore,
-    Numbers,
-    NumbersAndSymbols
-}
-
-data class PassphraseConfig(
-    val separator: WordSeparator,
-    val capitalise: Boolean,
-    val numbers: Boolean,
-    val count: UInt
-)

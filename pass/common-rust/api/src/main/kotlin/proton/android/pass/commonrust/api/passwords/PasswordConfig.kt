@@ -18,8 +18,6 @@
 
 package proton.android.pass.commonrust.api.passwords
 
-import proton.android.pass.commonrust.api.WordSeparator
-
 sealed interface PasswordConfig {
 
     val canToggleMode: Boolean
@@ -56,7 +54,7 @@ sealed interface PasswordConfig {
         val canToggleCapitalise: Boolean = true,
         val canToggleNumbers: Boolean = true,
         private val passwordWordsCount: Int,
-        private val passwordWordsSeparator: WordSeparator,
+        private val passwordWordsSeparator: PasswordWordSeparator,
         private val passwordMinWords: Int? = null,
         private val passwordMaxWords: Int? = null
     ) : PasswordConfig {
@@ -72,7 +70,7 @@ sealed interface PasswordConfig {
             ?.coerceIn(range = PASSWORD_MIN_WORDS..PASSWORD_MAX_WORDS)
             ?: PASSWORD_MAX_WORDS
 
-        val wordSeparator: WordSeparator = passwordWordsSeparator
+        val wordSeparator: PasswordWordSeparator = passwordWordsSeparator
 
     }
 

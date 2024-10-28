@@ -19,10 +19,11 @@
 package proton.android.pass.data.impl.usecases.passwords
 
 import kotlinx.coroutines.flow.firstOrNull
-import proton.android.pass.commonrust.api.WordSeparator
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
+import proton.android.pass.commonrust.api.passwords.PasswordWordSeparator
 import proton.android.pass.data.api.usecases.passwords.UpdatePasswordConfig
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.WordSeparator
 import javax.inject.Inject
 
 class UpdatePasswordConfigImpl @Inject constructor(
@@ -51,14 +52,14 @@ class UpdatePasswordConfigImpl @Inject constructor(
             }
     }
 
-    private fun WordSeparator.toPreference(): proton.android.pass.preferences.WordSeparator = when (this) {
-        WordSeparator.Hyphen -> proton.android.pass.preferences.WordSeparator.Hyphen
-        WordSeparator.Space -> proton.android.pass.preferences.WordSeparator.Space
-        WordSeparator.Period -> proton.android.pass.preferences.WordSeparator.Period
-        WordSeparator.Comma -> proton.android.pass.preferences.WordSeparator.Comma
-        WordSeparator.Underscore -> proton.android.pass.preferences.WordSeparator.Underscore
-        WordSeparator.Numbers -> proton.android.pass.preferences.WordSeparator.Numbers
-        WordSeparator.NumbersAndSymbols -> proton.android.pass.preferences.WordSeparator.NumbersAndSymbols
+    private fun PasswordWordSeparator.toPreference(): WordSeparator = when (this) {
+        PasswordWordSeparator.Hyphen -> WordSeparator.Hyphen
+        PasswordWordSeparator.Space -> WordSeparator.Space
+        PasswordWordSeparator.Period -> WordSeparator.Period
+        PasswordWordSeparator.Comma -> WordSeparator.Comma
+        PasswordWordSeparator.Underscore -> WordSeparator.Underscore
+        PasswordWordSeparator.Numbers -> WordSeparator.Numbers
+        PasswordWordSeparator.NumbersAndSymbols -> WordSeparator.NumbersAndSymbols
     }
 
 }

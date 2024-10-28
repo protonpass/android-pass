@@ -18,8 +18,12 @@
 
 package proton.android.pass.commonrust.api.passwords
 
-interface PasswordCreator {
-
-    suspend fun createPassword(config: PasswordConfig): String
-
+enum class PasswordWordSeparator {
+    Comma,
+    Hyphen,
+    Numbers,
+    NumbersAndSymbols,
+    Period,
+    Space,
+    Underscore
 }

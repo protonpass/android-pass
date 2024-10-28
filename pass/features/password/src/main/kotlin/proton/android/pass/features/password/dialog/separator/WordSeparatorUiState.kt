@@ -25,8 +25,8 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
-import proton.android.pass.commonrust.api.WordSeparator
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
+import proton.android.pass.commonrust.api.passwords.PasswordWordSeparator
 
 internal sealed interface WordSeparatorUiEvent {
 
@@ -42,9 +42,10 @@ internal data class WordSeparatorUiState(
     internal val event: WordSeparatorUiEvent
 ) {
 
-    internal val options: PersistentList<WordSeparator> = WordSeparator.entries.toPersistentList()
+    internal val options: PersistentList<PasswordWordSeparator> = PasswordWordSeparator.entries
+        .toPersistentList()
 
-    internal val selected: Option<WordSeparator> = when (config) {
+    internal val selected: Option<PasswordWordSeparator> = when (config) {
         None -> None
         is Some -> config.value.wordSeparator.some()
     }

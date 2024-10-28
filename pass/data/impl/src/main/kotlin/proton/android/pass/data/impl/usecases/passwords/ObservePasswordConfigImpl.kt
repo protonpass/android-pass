@@ -62,8 +62,7 @@ class ObservePasswordConfigImpl @Inject constructor(
             passwordWordsCount = wordsCount,
             passwordWordsSeparator = wordsSeparator.toDomain(),
             capitalizeWords = wordsCapitalise,
-            includeNumbers = wordsIncludeNumbers,
-            includeSeparator = true
+            includeNumbers = wordsIncludeNumbers
         )
     }
 
@@ -88,7 +87,6 @@ class ObservePasswordConfigImpl @Inject constructor(
                 passwordMaxWords = memorablePasswordMaxWords,
                 capitalizeWords = memorablePasswordCapitalize ?: preference.wordsCapitalise,
                 includeNumbers = memorablePasswordIncludeNumbers ?: preference.wordsIncludeNumbers,
-                includeSeparator = memorablePasswordIncludeSeparator ?: true,
                 canToggleCapitalise = canToggleMemorablePasswordCapitalize,
                 canToggleNumbers = canToggleMemorablePasswordNumbers
             )

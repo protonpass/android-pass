@@ -49,7 +49,6 @@ sealed interface PasswordConfig {
     data class Memorable(
         val capitalizeWords: Boolean,
         val includeNumbers: Boolean,
-        val includeSeparator: Boolean,
         val canToggleCapitalise: Boolean = true,
         val canToggleNumbers: Boolean = true,
         private val passwordWordsCount: Int,
@@ -69,7 +68,7 @@ sealed interface PasswordConfig {
             ?.coerceIn(range = PASSWORD_MIN_WORDS..PASSWORD_MAX_WORDS)
             ?: PASSWORD_MAX_WORDS
 
-        val wordSeparator: WordSeparator? = passwordWordsSeparator.takeIf { includeSeparator }
+        val wordSeparator: WordSeparator = passwordWordsSeparator
 
     }
 

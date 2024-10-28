@@ -354,26 +354,34 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareSelection: ShareSelection,
         itemState: ItemState?,
-        itemTypeFilter: ItemTypeFilter
+        itemTypeFilter: ItemTypeFilter,
+        setFlags: Int?,
+        clearFlags: Int?
     ): Flow<List<Item>> = when (shareSelection) {
         is ShareSelection.Share -> localItemDataSource.observeItemsForShares(
             userId = userId,
             shareIds = listOf(shareSelection.shareId),
             itemState = itemState,
-            filter = itemTypeFilter
+            filter = itemTypeFilter,
+            setFlags = setFlags,
+            clearFlags = clearFlags
         )
 
         is ShareSelection.Shares -> localItemDataSource.observeItemsForShares(
             userId = userId,
             shareIds = shareSelection.shareIds,
             itemState = itemState,
-            filter = itemTypeFilter
+            filter = itemTypeFilter,
+            setFlags = setFlags,
+            clearFlags = clearFlags
         )
 
         is ShareSelection.AllShares -> localItemDataSource.observeItems(
             userId = userId,
             itemState = itemState,
-            filter = itemTypeFilter
+            filter = itemTypeFilter,
+            setFlags = setFlags,
+            clearFlags = clearFlags
         )
     }.map { items ->
         encryptionContextProvider.withEncryptionContextSuspendable {

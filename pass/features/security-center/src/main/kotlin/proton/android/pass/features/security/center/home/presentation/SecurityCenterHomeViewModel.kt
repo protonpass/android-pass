@@ -33,8 +33,8 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
-import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.Breach
@@ -65,7 +65,7 @@ class SecurityCenterHomeViewModel @Inject constructor(
         selection = ShareSelection.AllShares,
         filter = ItemTypeFilter.Logins,
         itemState = ItemState.Active,
-        securityCheckFilter = ItemSecurityCheckFilter.Excluded
+        itemFlags = mapOf(ItemFlag.SkipHealthCheck to true)
     )
 
     private val observeBreachesFlow: Flow<LoadingResult<Breach>> = observeAllBreachByUserId()

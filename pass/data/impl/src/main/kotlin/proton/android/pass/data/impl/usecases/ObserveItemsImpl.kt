@@ -21,16 +21,14 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItems
-import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
-import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
@@ -46,8 +44,7 @@ class ObserveItemsImpl @Inject constructor(
         itemState: ItemState?,
         filter: ItemTypeFilter,
         userId: UserId?,
-        securityCheckFilter: ItemSecurityCheckFilter,
-        isBreachedFilter: ItemIsBreachedFilter
+        itemFlags: Map<ItemFlag, Boolean>
     ): Flow<List<Item>> = syncStatusRepository.observeSyncState()
         .filter { syncState -> !syncState.isVisibleSyncing }
         .flatMapLatest {
@@ -59,8 +56,7 @@ class ObserveItemsImpl @Inject constructor(
                             selection = selection,
                             itemState = itemState,
                             filter = filter,
-                            exclusionFilter = securityCheckFilter,
-                            isBreachedFilter = isBreachedFilter
+                            itemFlags = itemFlags
                         )
                     }
             } else {
@@ -69,8 +65,7 @@ class ObserveItemsImpl @Inject constructor(
                     selection = selection,
                     itemState = itemState,
                     filter = filter,
-                    exclusionFilter = securityCheckFilter,
-                    isBreachedFilter = isBreachedFilter
+                    itemFlags = itemFlags
                 )
             }
         }
@@ -81,24 +76,18 @@ class ObserveItemsImpl @Inject constructor(
         selection: ShareSelection,
         itemState: ItemState?,
         filter: ItemTypeFilter,
-        exclusionFilter: ItemSecurityCheckFilter,
-        isBreachedFilter: ItemIsBreachedFilter
-    ): Flow<List<Item>> = itemRepository.observeItems(
-        userId = userId,
-        shareSelection = selection,
-        itemState = itemState,
-        itemTypeFilter = filter
-    ).map { items ->
-        items.filter { item ->
-            when (exclusionFilter) {
-                ItemSecurityCheckFilter.Excluded -> item.hasSkippedHealthCheck
-                ItemSecurityCheckFilter.Included -> !item.hasSkippedHealthCheck
-                ItemSecurityCheckFilter.All -> true
-            } && when (isBreachedFilter) {
-                ItemIsBreachedFilter.Breached -> item.isEmailBreached
-                ItemIsBreachedFilter.NotBreached -> !item.isEmailBreached
-                ItemIsBreachedFilter.All -> true
-            }
-        }
+        itemFlags: Map<ItemFlag, Boolean>
+    ): Flow<List<Item>> {
+        val (setFlags, clearFlags) = itemFlags.entries.partition { it.value }
+        return itemRepository.observeItems(
+            userId = userId,
+            shareSelection = selection,
+            itemState = itemState,
+            itemTypeFilter = filter,
+            setFlags = foldFlags(setFlags.map { it.key }),
+            clearFlags = foldFlags(clearFlags.map { it.key })
+        )
     }
+
+    private fun foldFlags(flags: List<ItemFlag>): Int = flags.fold(0) { acc, flag -> acc or flag.value }
 }

@@ -98,7 +98,9 @@ interface ItemRepository {
         userId: UserId,
         shareSelection: ShareSelection,
         itemState: ItemState?,
-        itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All
+        itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All,
+        setFlags: Int? = null,
+        clearFlags: Int? = null
     ): Flow<List<Item>>
 
     fun observePinnedItems(

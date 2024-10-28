@@ -45,10 +45,17 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         SELECT * FROM ${ItemEntity.TABLE} 
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
+          AND (:setFlags IS NULL OR (flags & :setFlags) == :setFlags)
+          AND (:clearFlags IS NULL OR (flags & :clearFlags) == 0)
         ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
         """
     )
-    abstract fun observeAllForAddress(userId: String, itemState: Int?): Flow<List<ItemEntity>>
+    abstract fun observeAllForAddress(
+        userId: String,
+        itemState: Int?,
+        setFlags: Int?,
+        clearFlags: Int?
+    ): Flow<List<ItemEntity>>
 
     @Query(
         """
@@ -56,13 +63,17 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND (${ItemEntity.Columns.STATE} = :itemState OR :itemState IS NULL)
           AND ${ItemEntity.Columns.ITEM_TYPE} = :itemType
+          AND (:setFlags IS NULL OR (flags & :setFlags) == :setFlags)
+          AND (:clearFlags IS NULL OR (flags & :clearFlags) == 0)
         ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
         """
     )
     abstract fun observeAllForAddress(
         userId: String,
         itemState: Int?,
-        itemType: Int
+        itemType: Int,
+        setFlags: Int?,
+        clearFlags: Int?
     ): Flow<List<ItemEntity>>
 
     @Query(

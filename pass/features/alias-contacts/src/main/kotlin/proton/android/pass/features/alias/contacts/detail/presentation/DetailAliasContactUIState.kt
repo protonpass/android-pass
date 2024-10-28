@@ -34,7 +34,6 @@ data class DetailAliasContactUIState(
     val itemId: Option<ItemId>,
     val event: DetailAliasContactEvent,
     val displayName: String,
-    val senderNameUIState: SenderNameUIState,
     val aliasContactsListUIState: AliasContactsListUIState,
     val contactBlockIsLoading: PersistentSet<ContactId>,
     val hasShownAliasContactsOnboarding: Boolean,
@@ -47,27 +46,10 @@ data class DetailAliasContactUIState(
             itemId = None,
             event = DetailAliasContactEvent.Idle,
             displayName = "",
-            senderNameUIState = SenderNameUIState.Empty,
             aliasContactsListUIState = AliasContactsListUIState.Empty,
             contactBlockIsLoading = persistentSetOf(),
             hasShownAliasContactsOnboarding = true,
             canManageContacts = false
-        )
-    }
-}
-
-enum class SenderNameMode {
-    Idle,
-    Edit,
-    Loading
-}
-
-data class SenderNameUIState(
-    val nameMode: SenderNameMode
-) {
-    companion object {
-        val Empty = SenderNameUIState(
-            nameMode = SenderNameMode.Idle
         )
     }
 }

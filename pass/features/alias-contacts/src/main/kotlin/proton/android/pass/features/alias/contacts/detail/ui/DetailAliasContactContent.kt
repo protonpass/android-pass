@@ -118,6 +118,7 @@ fun DetailAliasContactContent(
                         blockedContacts = state.aliasContactsListUIState.blockedContacts,
                         forwardingContacts = state.aliasContactsListUIState.forwardingContacts,
                         contactBlockIsLoading = state.contactBlockIsLoading,
+                        canSendEmail = state.canManageContacts,
                         onEvent = onEvent
                     )
                 } else {

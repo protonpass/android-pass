@@ -19,25 +19,28 @@
 package proton.android.pass.crypto.impl
 
 import org.junit.Test
-import proton.android.pass.crypto.api.KotlinBase64
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
+@OptIn(ExperimentalEncodingApi::class)
 class KotlinBase64Test {
+
     @Test
     fun `can encode`() {
         Cases.forEach { (str, encoded) ->
             assertEquals(
                 encoded,
-                KotlinBase64.UrlSafe.encode(str.encodeToByteArray())
+                Base64.UrlSafe.encode(str.encodeToByteArray())
             )
             assertEquals(
                 encoded,
-                KotlinBase64.UrlSafe.encode(str.encodeToByteArray())
+                Base64.UrlSafe.encode(str.encodeToByteArray())
             )
             assertContentEquals(
                 encoded.encodeToByteArray(),
-                KotlinBase64.UrlSafe.encodeToByteArray(str.encodeToByteArray())
+                Base64.UrlSafe.encodeToByteArray(str.encodeToByteArray())
             )
         }
     }
@@ -47,11 +50,11 @@ class KotlinBase64Test {
         Cases.forEach { (str, encoded) ->
             assertEquals(
                 str,
-                String(KotlinBase64.UrlSafe.decode(encoded), Charsets.UTF_8)
+                String(Base64.UrlSafe.decode(encoded), Charsets.UTF_8)
             )
             assertContentEquals(
                 str.encodeToByteArray(),
-                KotlinBase64.UrlSafe.decode(encoded)
+                Base64.UrlSafe.decode(encoded)
             )
         }
     }
@@ -59,8 +62,8 @@ class KotlinBase64Test {
     @Test
     fun canEncodeDecode() {
         val input = "this is a test"
-        val encoded = KotlinBase64.encode(input.encodeToByteArray())
-        val decoded = KotlinBase64.decode(encoded)
+        val encoded = Base64.encode(input.encodeToByteArray())
+        val decoded = Base64.decode(encoded)
         assertContentEquals(input.toByteArray(), decoded)
         assertEquals(input, String(decoded, Charsets.US_ASCII))
     }

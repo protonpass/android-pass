@@ -103,7 +103,7 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.PerformSync
@@ -201,7 +201,7 @@ class HomeViewModel @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
     observeVaults: ObserveVaults,
     clock: Clock,
-    observeItems: ObserveItems,
+    observeEncryptedItems: ObserveEncryptedItems,
     observePinnedItems: ObservePinnedItems,
     preferencesRepository: UserPreferencesRepository,
     observeAppNeedsUpdate: ObserveAppNeedsUpdate,
@@ -313,7 +313,7 @@ class HomeViewModel @Inject constructor(
                 VaultSelectionOption.Trash -> ShareSelection.AllShares to ItemState.Trashed
             }
 
-            observeItems(
+            observeEncryptedItems(
                 selection = shareSelection,
                 itemState = itemState,
 

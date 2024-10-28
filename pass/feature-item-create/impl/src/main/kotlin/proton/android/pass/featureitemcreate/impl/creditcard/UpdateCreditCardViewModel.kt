@@ -95,7 +95,13 @@ class UpdateCreditCardViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             val default = CreditCardItemFormState.default(this)
             if (creditCardItemFormState.compare(default, this)) {
-                val itemContents = item.toItemContents(this) as ItemContents.CreditCard
+                val itemContents = toItemContents(
+                    itemType = item.itemType,
+                    encryptionContext = this,
+                    title = item.title,
+                    note = item.note,
+                    flags = item.flags
+                )as ItemContents.CreditCard
                 val expirationDate =
                     ExpirationDateProtoMapper.fromProto(itemContents.expirationDate)
                 creditCardItemFormMutableState =

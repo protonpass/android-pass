@@ -93,7 +93,13 @@ class ItemHistoryRestoreViewModel @Inject constructor(
 
     private val revisionItemContentsFlow = revisionItemFlow.map { revisionItem ->
         encryptionContextProvider.withEncryptionContext {
-            revisionItem.toItemContents(this@withEncryptionContext)
+            toItemContents(
+                itemType = revisionItem.itemType,
+                encryptionContext = this,
+                title = revisionItem.title,
+                note = revisionItem.note,
+                flags = revisionItem.flags
+            )
         }
     }
 
@@ -103,7 +109,13 @@ class ItemHistoryRestoreViewModel @Inject constructor(
 
     private val currentItemContentsFlow = currentItemFlow.map { currentItem ->
         encryptionContextProvider.withEncryptionContext {
-            currentItem.toItemContents(this@withEncryptionContext)
+            toItemContents(
+                itemType = currentItem.itemType,
+                encryptionContext = this,
+                title = currentItem.title,
+                note = currentItem.note,
+                flags = currentItem.flags
+            )
         }
     }
 

@@ -72,6 +72,7 @@ import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
+import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
@@ -251,6 +252,7 @@ import proton.android.pass.data.impl.usecases.ObserveAppNeedsUpdateImpl
 import proton.android.pass.data.impl.usecases.ObserveCurrentUserImpl
 import proton.android.pass.data.impl.usecases.ObserveCurrentUserSettingsImpl
 import proton.android.pass.data.impl.usecases.ObserveDefaultVaultImpl
+import proton.android.pass.data.impl.usecases.ObserveEncryptedItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveGlobalMonitorStateImpl
 import proton.android.pass.data.impl.usecases.ObserveHasConfirmedInviteImpl
 import proton.android.pass.data.impl.usecases.ObserveInviteRecommendationsImpl
@@ -435,6 +437,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveItems(impl: ObserveItemsImpl): ObserveItems
+
+    @Binds
+    abstract fun bindObserveEncryptedItems(impl: ObserveEncryptedItemsImpl): ObserveEncryptedItems
 
     @Binds
     abstract fun bindObservePinnedItems(impl: ObservePinnedItemsImpl): ObservePinnedItems

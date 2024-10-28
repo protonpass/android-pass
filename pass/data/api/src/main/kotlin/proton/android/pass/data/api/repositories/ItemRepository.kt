@@ -29,6 +29,7 @@ import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -102,6 +103,15 @@ interface ItemRepository {
         setFlags: Int? = null,
         clearFlags: Int? = null
     ): Flow<List<Item>>
+
+    fun observeEncryptedItems(
+        userId: UserId,
+        shareSelection: ShareSelection,
+        itemState: ItemState?,
+        itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All,
+        setFlags: Int? = null,
+        clearFlags: Int? = null
+    ): Flow<List<ItemEncrypted>>
 
     fun observePinnedItems(
         userId: UserId,

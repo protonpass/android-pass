@@ -21,9 +21,9 @@ package proton.android.pass.data.impl.usecases.items
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
-import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
@@ -36,7 +36,7 @@ class ObserveMonitoredItemsImpl @Inject constructor(
         selection = ShareSelection.AllShares,
         itemState = ItemState.Active,
         filter = ItemTypeFilter.Logins,
-        securityCheckFilter = ItemSecurityCheckFilter.Included
+        itemFlags = mapOf(ItemFlag.SkipHealthCheck to false)
     )
 
 }

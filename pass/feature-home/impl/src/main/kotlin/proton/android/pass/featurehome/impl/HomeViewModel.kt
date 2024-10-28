@@ -1048,18 +1048,17 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun List<ItemUiModel>.filterByType(searchFilterType: SearchFilterType) =
-        filter { item ->
-            when (searchFilterType) {
-                SearchFilterType.All -> true
-                SearchFilterType.Alias -> item.contents is ItemContents.Alias
-                SearchFilterType.Login -> item.contents is ItemContents.Login
-                SearchFilterType.Note -> item.contents is ItemContents.Note
-                SearchFilterType.CreditCard -> item.contents is ItemContents.CreditCard
-                SearchFilterType.Identity -> item.contents is ItemContents.Identity
+    private fun List<ItemUiModel>.filterByType(searchFilterType: SearchFilterType) = filter { item ->
+        when (searchFilterType) {
+            SearchFilterType.All -> true
+            SearchFilterType.Alias -> item.contents is ItemContents.Alias
+            SearchFilterType.Login -> item.contents is ItemContents.Login
+            SearchFilterType.Note -> item.contents is ItemContents.Note
+            SearchFilterType.CreditCard -> item.contents is ItemContents.CreditCard
+            SearchFilterType.Identity -> item.contents is ItemContents.Identity
             SearchFilterType.LoginMFA ->
-                item.contents is ItemContents.Login && (item.contents as ItemContents.Login).hasPrimaryTotp}
-        }
+                item.contents is ItemContents.Login && (item.contents as ItemContents.Login).hasPrimaryTotp }
+    }
 
     private fun emitDeletedItems(items: List<GroupedItemList>) {
         items.forEach { list ->
@@ -1075,17 +1074,15 @@ class HomeViewModel @Inject constructor(
     private fun groupItems(items: ImmutableSet<Pair<ShareId, ItemId>>): Map<ShareId, List<ItemId>> =
         items.groupBy({ it.first }, { it.second })
 
-    private fun List<ItemUiModel>.toShareIdItemId(): List<Pair<ShareId, ItemId>> =
-        map { it.shareId to it.id }
+    private fun List<ItemUiModel>.toShareIdItemId(): List<Pair<ShareId, ItemId>> = map { it.shareId to it.id }
 
-    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) =
-        when (sortingOption.searchSortingType) {
-            SearchSortingType.MostRecent -> sortMostRecent()
-            SearchSortingType.TitleAsc -> sortByTitleAsc()
-            SearchSortingType.TitleDesc -> sortByTitleDesc()
-            SearchSortingType.CreationAsc -> sortByCreationAsc()
-            SearchSortingType.CreationDesc -> sortByCreationDesc()
-        }
+    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) = when (sortingOption.searchSortingType) {
+        SearchSortingType.MostRecent -> sortMostRecent()
+        SearchSortingType.TitleAsc -> sortByTitleAsc()
+        SearchSortingType.TitleDesc -> sortByTitleDesc()
+        SearchSortingType.CreationAsc -> sortByCreationAsc()
+        SearchSortingType.CreationDesc -> sortByCreationDesc()
+    }
 
     private fun List<ItemUiModel>.groupedItemLists(sortingOption: SortingOption, instant: Instant) =
         when (sortingOption.searchSortingType) {

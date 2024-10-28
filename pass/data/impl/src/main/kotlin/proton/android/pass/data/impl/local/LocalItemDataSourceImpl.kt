@@ -53,7 +53,9 @@ class LocalItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?,
-        filter: ItemTypeFilter
+        filter: ItemTypeFilter,
+        setFlags: Int?,
+        clearFlags: Int?
     ): Flow<List<ItemEntity>> = if (filter == ItemTypeFilter.All) {
         database.itemsDao().observeAllForShares(
             userId = userId.id,
@@ -72,11 +74,24 @@ class LocalItemDataSourceImpl @Inject constructor(
     override fun observeItems(
         userId: UserId,
         itemState: ItemState?,
-        filter: ItemTypeFilter
+        filter: ItemTypeFilter,
+        setFlags: Int?,
+        clearFlags: Int?
     ): Flow<List<ItemEntity>> = if (filter == ItemTypeFilter.All) {
-        database.itemsDao().observeAllForAddress(userId.id, itemState?.value)
+        database.itemsDao().observeAllForAddress(
+            userId = userId.id,
+            itemState = itemState?.value,
+            setFlags = setFlags,
+            clearFlags = clearFlags
+        )
     } else {
-        database.itemsDao().observeAllForAddress(userId.id, itemState?.value, filter.value())
+        database.itemsDao().observeAllForAddress(
+            userId = userId.id,
+            itemState = itemState?.value,
+            itemType = filter.value(),
+            setFlags = setFlags,
+            clearFlags = clearFlags
+        )
     }
 
     override fun observePinnedItems(userId: UserId, filter: ItemTypeFilter): Flow<List<ItemEntity>> =

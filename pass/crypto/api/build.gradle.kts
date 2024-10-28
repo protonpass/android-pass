@@ -15,6 +15,4 @@ dependencies {
 
     implementation(projects.pass.domain)
     implementation(projects.pass.protos)
-
-    implementation(libs.commons.codec)
 }

@@ -19,6 +19,8 @@
 package proton.android.pass.crypto.api
 
 import me.proton.core.crypto.common.keystore.EncryptedString
+import kotlin.io.encoding.ExperimentalEncodingApi
+import kotlin.io.encoding.Base64 as KBase64
 
 object Base64 {
 
@@ -32,46 +34,24 @@ object Base64 {
 
     fun decodeBase64(content: EncryptedString): ByteArray = decodeBase64(content.toByteArray())
 
-    fun encodeBase64(array: ByteArray, mode: Mode = Mode.Standard): ByteArray = runCatching {
-        when (mode) {
-            Mode.Standard -> org.apache.commons.codec.binary.Base64.encodeBase64(array)
-            Mode.UrlSafe -> org.apache.commons.codec.binary.Base64.encodeBase64URLSafe(array)
-        }
-    }.getOrElse {
-        if (it is NoSuchMethodError) {
-            // This is a workaround for implementations that don't have the proper support for B64
-            Base64Fallback.encodeBase64(array, mode)
-        } else {
-            throw it
-        }
-    }
+    fun encodeBase64(array: ByteArray, mode: Mode = Mode.Standard): ByteArray = KotlinBase64.encodeBase64(array, mode)
 
-    fun decodeBase64(array: ByteArray, mode: Mode = Mode.Standard): ByteArray = runCatching {
-        // We don't need to use the mode here, as the commons implementation is able to detect
-        // which encoding is used
-        org.apache.commons.codec.binary.Base64.decodeBase64(array)
-    }.getOrElse { error ->
-        if (error is NoSuchMethodError) {
-            // This is a workaround for implementations that don't have the proper support for B64
-            Base64Fallback.decodeBase64(array, mode)
-        } else {
-            throw error
-        }
-    }
+    fun decodeBase64(array: ByteArray, mode: Mode = Mode.Standard): ByteArray = KotlinBase64.decodeBase64(array, mode)
 }
 
-object Base64Fallback {
+@OptIn(ExperimentalEncodingApi::class)
+object KotlinBase64 {
     fun encodeBase64(array: ByteArray, mode: Base64.Mode): ByteArray = when (mode) {
-        Base64.Mode.Standard -> KotlinBase64.encodeToByteArray(array)
-        Base64.Mode.UrlSafe -> KotlinBase64.UrlSafe.encodeToByteArray(array)
-
+        Base64.Mode.Standard -> KBase64.encodeToByteArray(array)
+        Base64.Mode.UrlSafe -> KBase64.UrlSafe.encodeToByteArray(array)
     }
+
     fun decodeBase64(array: ByteArray, mode: Base64.Mode): ByteArray = runCatching {
         when (mode) {
-            Base64.Mode.Standard -> KotlinBase64.decode(array)
-            Base64.Mode.UrlSafe -> KotlinBase64.UrlSafe.decode(array)
+            Base64.Mode.Standard -> KBase64.decode(array)
+            Base64.Mode.UrlSafe -> KBase64.UrlSafe.decode(array)
         }
     }.getOrElse {
-        KotlinBase64.decode(array)
+        KBase64.decode(array)
     }
 }

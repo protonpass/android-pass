@@ -89,7 +89,13 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
 
     private fun observeLoginItemContents(item: Item): Flow<ItemContents.Login> = flow {
         encryptionContextProvider.withEncryptionContext {
-            item.toItemContents(this@withEncryptionContext) as ItemContents.Login
+            toItemContents(
+                itemType = item.itemType,
+                encryptionContext = this,
+                title = item.title,
+                note = item.note,
+                flags = item.flags
+            ) as ItemContents.Login
         }.let { loginItemContents ->
             emit(loginItemContents)
         }

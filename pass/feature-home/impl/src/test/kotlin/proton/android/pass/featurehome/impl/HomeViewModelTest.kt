@@ -41,6 +41,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.FakeChangeAliasStatus
+import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakeUnpinItem
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
@@ -51,7 +52,6 @@ import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
-import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObservePinnedItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
@@ -61,7 +61,7 @@ import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.data.fakes.usecases.TestUnpinItems
-import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.featuresearchoptions.fakes.TestHomeSearchOptionsRepository
@@ -101,7 +101,7 @@ internal class HomeViewModelTest {
     private lateinit var searchOptionsRepository: TestHomeSearchOptionsRepository
     private lateinit var observeVaults: TestObserveVaults
     private lateinit var clock: FixedClock
-    private lateinit var observeItems: TestObserveItems
+    private lateinit var observeEncryptedItems: FakeObserveEncryptedItems
     private lateinit var observePinnedItems: TestObservePinnedItems
     private lateinit var preferencesRepository: TestPreferenceRepository
     private lateinit var getUserPlan: TestGetUserPlan
@@ -129,7 +129,7 @@ internal class HomeViewModelTest {
         searchOptionsRepository = TestHomeSearchOptionsRepository()
         observeVaults = TestObserveVaults()
         clock = FixedClock(Clock.System.now())
-        observeItems = TestObserveItems()
+        observeEncryptedItems = FakeObserveEncryptedItems()
         preferencesRepository = TestPreferenceRepository()
         getUserPlan = TestGetUserPlan()
         savedState = TestSavedStateHandleProvider()
@@ -178,7 +178,7 @@ internal class HomeViewModelTest {
 
         // Change vault and emit empty
         instance.setVaultSelection(VaultSelectionOption.Vault(ShareId("random")))
-        observeItems.emitValue(emptyList())
+        observeEncryptedItems.emitValue(emptyList())
 
         instance.homeUiState.test {
             val state = awaitItem()
@@ -197,8 +197,8 @@ internal class HomeViewModelTest {
         assertThat(vaultSelection).isEqualTo(VaultSelectionOption.Vault(ShareId(shareId)))
     }
 
-    private fun setupItems(): List<Item> {
-        val items = TestObserveItems.defaultValues
+    private fun setupItems(): List<ItemEncrypted> {
+        val items = FakeObserveEncryptedItems.defaultValues
             .asList()
             .map {
                 it.copy(
@@ -207,7 +207,7 @@ internal class HomeViewModelTest {
                 )
             }
 
-        observeItems.emitValue(items)
+        observeEncryptedItems.emitValue(items)
 
         preferencesRepository.setUseFaviconsPreference(UseFaviconsPreference.Disabled)
 
@@ -226,7 +226,7 @@ internal class HomeViewModelTest {
         }
 
         observeVaults.sendResult(Result.success(vaults))
-        observeItems.emitValue(items)
+        observeEncryptedItems.emitValue(items)
         observeSearchEntry.emit(searchEntries)
 
         return items
@@ -258,7 +258,7 @@ internal class HomeViewModelTest {
             homeSearchOptionsRepository = searchOptionsRepository,
             observeVaults = observeVaults,
             clock = clock,
-            observeItems = observeItems,
+            observeEncryptedItems = observeEncryptedItems,
             observePinnedItems = observePinnedItems,
             preferencesRepository = preferencesRepository,
             getUserPlan = getUserPlan,

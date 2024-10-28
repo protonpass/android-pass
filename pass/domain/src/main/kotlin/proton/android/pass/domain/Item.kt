@@ -29,6 +29,13 @@ import proton.android.pass.domain.entity.PackageInfo
 @JvmInline
 value class ItemId(val id: String)
 
+@JvmInline
+value class Flags(val value: Int) {
+    fun hasSkippedHealthCheck(): Boolean = value.hasFlag(ItemFlag.SkipHealthCheck.value)
+    fun isEmailBreached(): Boolean = value.hasFlag(ItemFlag.EmailBreached.value)
+    fun isAliasDisabled(): Boolean = value.hasFlag(ItemFlag.AliasDisabled.value)
+}
+
 data class Item(
     val id: ItemId,
     val userId: UserId,
@@ -45,14 +52,30 @@ data class Item(
     val modificationTime: Instant,
     val lastAutofillTime: Option<Instant>,
     val isPinned: Boolean,
-    val flags: Int
+    val flags: Flags
 ) {
     val hasPasskeys: Boolean = when (val type = itemType) {
         is ItemType.Login -> type.passkeys.isNotEmpty()
         else -> false
     }
 
-    val hasSkippedHealthCheck: Boolean = flags.hasFlag(ItemFlag.SkipHealthCheck.value)
-    val isEmailBreached: Boolean = flags.hasFlag(ItemFlag.EmailBreached.value)
-    val isAliasDisabled: Boolean = flags.hasFlag(ItemFlag.AliasDisabled.value)
+    val hasSkippedHealthCheck: Boolean = flags.hasSkippedHealthCheck()
+    val isEmailBreached: Boolean = flags.isEmailBreached()
 }
+
+data class ItemEncrypted(
+    val id: ItemId,
+    val userId: UserId,
+    val revision: Long,
+    val shareId: ShareId,
+    val title: EncryptedString,
+    val note: EncryptedString,
+    val content: EncryptedByteArray,
+    val aliasEmail: String?,
+    val state: Int,
+    val createTime: Instant,
+    val modificationTime: Instant,
+    val lastAutofillTime: Option<Instant>,
+    val isPinned: Boolean,
+    val flags: Flags
+)

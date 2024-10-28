@@ -33,6 +33,7 @@ import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
 import proton.android.pass.crypto.impl.Constants.ITEM_CONTENT_FORMAT_VERSION
 import proton.android.pass.datamodels.api.fromParsed
+import proton.android.pass.domain.Flags
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
@@ -197,7 +198,7 @@ class OpenItemImpl @Inject constructor(
             modificationTime = Instant.fromEpochSeconds(response.modifyTime),
             lastAutofillTime = response.lastUseTime.toOption().map(Instant::fromEpochSeconds),
             isPinned = response.isPinned,
-            flags = response.flags
+            flags = Flags(response.flags)
         )
     }
 

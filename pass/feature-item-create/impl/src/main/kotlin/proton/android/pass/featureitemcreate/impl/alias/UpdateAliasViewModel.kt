@@ -98,6 +98,7 @@ class UpdateAliasViewModel @Inject constructor(
     private var itemDataChanged = false
     private var mailboxesChanged = false
     private var isSLNoteChanged = false
+    private var isDisplayNameChanged = false
 
     init {
         viewModelScope.launch(coroutineExceptionHandler) {
@@ -143,6 +144,12 @@ class UpdateAliasViewModel @Inject constructor(
         super.onSLNoteChange(newSLNote)
         isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
         isSLNoteChanged = true
+    }
+
+    override fun onDisplayNameChange(value: String) {
+        super.onDisplayNameChange(value)
+        isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
+        isDisplayNameChanged = true
     }
 
     override fun onTitleChange(value: String) {
@@ -207,7 +214,8 @@ class UpdateAliasViewModel @Inject constructor(
                     selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
                     mailboxes = mailboxes,
                     aliasToBeCreated = email,
-                    slNote = aliasDetails.slNote.takeIfNotBlank()
+                    slNote = aliasDetails.slNote.takeIfNotBlank(),
+                    senderName = aliasDetails.name?.takeIfNotBlank()
                 )
             } else {
                 aliasItemFormMutableState = encryptionContextProvider.withEncryptionContext {
@@ -219,7 +227,8 @@ class UpdateAliasViewModel @Inject constructor(
                         selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
                         mailboxes = mailboxes,
                         aliasToBeCreated = email,
-                        slNote = aliasDetails.slNote.takeIfNotBlank()
+                        slNote = aliasDetails.slNote.takeIfNotBlank(),
+                        senderName = aliasDetails.name?.takeIfNotBlank()
                     )
                 }
             }
@@ -291,8 +300,9 @@ class UpdateAliasViewModel @Inject constructor(
     }
 
     private fun canUpdateAlias(): Boolean {
-        if (!itemDataChanged && !mailboxesChanged && !isSLNoteChanged) {
-            PassLogger.i(TAG, "Nor item nor mailboxes have changed")
+        val noChangesDetected = !itemDataChanged && !mailboxesChanged && !isSLNoteChanged && !isDisplayNameChanged
+        if (noChangesDetected) {
+            PassLogger.i(TAG, "No changes detected")
             return false
         }
 
@@ -331,6 +341,9 @@ class UpdateAliasViewModel @Inject constructor(
             itemData = itemData,
             slNoteOption = aliasItemFormState.slNote
                 .takeIf { isSLNoteChanged }
+                .toOption(),
+            displayNameOption = aliasItemFormState.senderName
+                .takeIf { isDisplayNameChanged }
                 .toOption()
         )
     }

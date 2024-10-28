@@ -195,6 +195,7 @@ fun AliasDetail(
                         vault = state.vault,
                         mailboxes = state.mailboxes,
                         slNote = state.slNote,
+                        displayName = state.displayName,
                         stats = state.stats,
                         contactsCount = state.contactsCount,
                         isLoading = state.isLoadingMailboxes,

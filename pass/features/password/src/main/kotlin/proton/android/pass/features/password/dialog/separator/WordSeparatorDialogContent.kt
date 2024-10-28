@@ -25,7 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.component.ProtonDialogTitle
-import proton.android.pass.commonrust.api.WordSeparator
+import proton.android.pass.commonrust.api.passwords.PasswordWordSeparator
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.features.password.R
 
@@ -33,7 +33,7 @@ import proton.android.pass.features.password.R
 internal fun WordSeparatorDialogContent(
     modifier: Modifier = Modifier,
     state: WordSeparatorUiState,
-    onOptionSelected: (WordSeparator) -> Unit
+    onOptionSelected: (PasswordWordSeparator) -> Unit
 ) = with(state) {
     Column(
         modifier = modifier.padding(vertical = Spacing.medium),

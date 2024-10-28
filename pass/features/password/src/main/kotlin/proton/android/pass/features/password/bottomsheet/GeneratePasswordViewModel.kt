@@ -34,7 +34,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
-import proton.android.pass.commonrust.api.passwords.PasswordCreator
+import proton.android.pass.commonrust.api.passwords.PasswordGenerator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -53,7 +53,7 @@ import javax.inject.Inject
 class GeneratePasswordViewModel @Inject constructor(
     stateHandleProvider: SavedStateHandleProvider,
     observePasswordConfig: ObservePasswordConfig,
-    passwordCreator: PasswordCreator,
+    passwordGenerator: PasswordGenerator,
     passwordStrengthCalculator: PasswordStrengthCalculator,
     private val updatePasswordConfig: UpdatePasswordConfig,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -82,7 +82,7 @@ class GeneratePasswordViewModel @Inject constructor(
             .onEach { regeneratePasswordFlow.update { false } }
             .filter { it }
     ) { passwordConfig, _ ->
-        passwordCreator.createPassword(passwordConfig)
+        passwordGenerator.generatePassword(passwordConfig)
     }
 
     private val passwordStrengthFlow = passwordFlow

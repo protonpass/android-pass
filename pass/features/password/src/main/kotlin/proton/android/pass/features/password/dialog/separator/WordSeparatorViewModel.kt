@@ -32,8 +32,8 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
-import proton.android.pass.commonrust.api.WordSeparator
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
+import proton.android.pass.commonrust.api.passwords.PasswordWordSeparator
 import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
 import proton.android.pass.data.api.usecases.passwords.UpdatePasswordConfig
 import javax.inject.Inject
@@ -64,17 +64,17 @@ class WordSeparatorViewModel @Inject constructor(
         initialValue = WordSeparatorUiState.Initial
     )
 
-    internal fun onUpdateWordSeparator(newWordSeparator: WordSeparator) {
+    internal fun onUpdateWordSeparator(newPasswordWordSeparator: PasswordWordSeparator) {
         when (val config = stateFlow.value.config) {
             None -> return
             is Some -> viewModelScope.launch {
                 config.value.copy(
-                    passwordWordsSeparator = newWordSeparator
+                    passwordWordsSeparator = newPasswordWordSeparator
                 ).also { newConfig ->
                     updatePasswordConfig(newConfig)
+
                     eventFlow.update { WordSeparatorUiEvent.Close }
                 }
-
             }
         }
     }

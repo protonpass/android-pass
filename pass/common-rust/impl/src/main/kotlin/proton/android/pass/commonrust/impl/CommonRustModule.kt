@@ -27,11 +27,10 @@ import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.commonrust.api.DomainManager
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
-import proton.android.pass.commonrust.api.PasswordGenerator
 import proton.android.pass.commonrust.api.PasswordScorer
-import proton.android.pass.commonrust.api.passwords.PasswordCreator
+import proton.android.pass.commonrust.api.passwords.PasswordGenerator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
-import proton.android.pass.commonrust.impl.passwords.PasswordCreatorImpl
+import proton.android.pass.commonrust.impl.passwords.PasswordGeneratorImpl
 import proton.android.pass.commonrust.impl.passwords.strengths.RustPasswordStrengthCalculator
 import javax.inject.Singleton
 
@@ -53,7 +52,7 @@ abstract class CommonRustModule {
         impl: NewUserInviteSignatureBodyCreatorImpl
     ): NewUserInviteSignatureBodyCreator
 
-    @Binds
+    @[Binds Singleton]
     abstract fun bindPasswordGenerator(impl: PasswordGeneratorImpl): PasswordGenerator
 
     @Binds
@@ -64,8 +63,5 @@ abstract class CommonRustModule {
 
     @[Binds Singleton]
     abstract fun bindDomainManager(calculator: DomainManagerImpl): DomainManager
-
-    @[Binds Singleton]
-    abstract fun bindPasswordCreator(impl: PasswordCreatorImpl): PasswordCreator
 
 }

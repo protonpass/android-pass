@@ -74,7 +74,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
                 title = item.title,
                 note = item.note,
                 flags = item.flags
-            )as ItemContents.Alias
+            ) as ItemContents.Alias
         }.also { aliasItemContents ->
             emit(aliasItemContents)
         }

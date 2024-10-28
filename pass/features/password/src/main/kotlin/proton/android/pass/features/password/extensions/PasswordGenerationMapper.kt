@@ -20,19 +20,19 @@ package proton.android.pass.features.password.extensions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import proton.android.pass.commonrust.api.passwords.PasswordWordSeparator
 import proton.android.pass.features.password.R
 import proton.android.pass.preferences.PasswordGenerationMode
-import proton.android.pass.commonrust.api.WordSeparator as ApiWordSeparator
 
 @Composable
-internal fun ApiWordSeparator.toResourceString() = when (this) {
-    ApiWordSeparator.Hyphen -> stringResource(R.string.bottomsheet_option_word_separator_hyphens)
-    ApiWordSeparator.Space -> stringResource(R.string.bottomsheet_option_word_separator_spaces)
-    ApiWordSeparator.Period -> stringResource(R.string.bottomsheet_option_word_separator_periods)
-    ApiWordSeparator.Comma -> stringResource(R.string.bottomsheet_option_word_separator_commas)
-    ApiWordSeparator.Underscore -> stringResource(R.string.bottomsheet_option_word_separator_underscores)
-    ApiWordSeparator.Numbers -> stringResource(R.string.bottomsheet_option_word_separator_numbers)
-    ApiWordSeparator.NumbersAndSymbols ->
+internal fun PasswordWordSeparator.toResourceString() = when (this) {
+    PasswordWordSeparator.Hyphen -> stringResource(R.string.bottomsheet_option_word_separator_hyphens)
+    PasswordWordSeparator.Space -> stringResource(R.string.bottomsheet_option_word_separator_spaces)
+    PasswordWordSeparator.Period -> stringResource(R.string.bottomsheet_option_word_separator_periods)
+    PasswordWordSeparator.Comma -> stringResource(R.string.bottomsheet_option_word_separator_commas)
+    PasswordWordSeparator.Underscore -> stringResource(R.string.bottomsheet_option_word_separator_underscores)
+    PasswordWordSeparator.Numbers -> stringResource(R.string.bottomsheet_option_word_separator_numbers)
+    PasswordWordSeparator.NumbersAndSymbols ->
         stringResource(R.string.bottomsheet_option_word_separator_numbers_and_symbols)
 }
 

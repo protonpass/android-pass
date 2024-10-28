@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.combine
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
+import proton.android.pass.commonrust.api.passwords.PasswordWordSeparator
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationPasswordPolicy
 import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
 import proton.android.pass.domain.organizations.OrganizationPasswordPolicy
@@ -75,8 +76,10 @@ class ObservePasswordConfigImpl @Inject constructor(
                 passwordMinLength = randomPasswordMinLength,
                 passwordMaxLength = randomPasswordMaxLength,
                 includeNumbers = randomPasswordIncludeNumbers ?: preference.randomIncludeNumbers,
-                includeSymbols = randomPasswordIncludeSymbols ?: preference.randomHasSpecialCharacters,
-                includeUppercase = randomPasswordIncludeUppercase ?: preference.randomHasCapitalLetters,
+                includeSymbols = randomPasswordIncludeSymbols
+                    ?: preference.randomHasSpecialCharacters,
+                includeUppercase = randomPasswordIncludeUppercase
+                    ?: preference.randomHasCapitalLetters,
                 canToggleNumbers = canToggleRandomPasswordNumbers,
                 canToggleSymbols = canToggleRandomPasswordSymbols,
                 canToggleUppercase = canToggleRandomPasswordUppercase,
@@ -103,14 +106,14 @@ class ObservePasswordConfigImpl @Inject constructor(
         else -> preference.mode
     }
 
-    private fun WordSeparator.toDomain(): proton.android.pass.commonrust.api.WordSeparator = when (this) {
-        WordSeparator.Hyphen -> proton.android.pass.commonrust.api.WordSeparator.Hyphen
-        WordSeparator.Space -> proton.android.pass.commonrust.api.WordSeparator.Space
-        WordSeparator.Period -> proton.android.pass.commonrust.api.WordSeparator.Period
-        WordSeparator.Comma -> proton.android.pass.commonrust.api.WordSeparator.Comma
-        WordSeparator.Underscore -> proton.android.pass.commonrust.api.WordSeparator.Underscore
-        WordSeparator.Numbers -> proton.android.pass.commonrust.api.WordSeparator.Numbers
-        WordSeparator.NumbersAndSymbols -> proton.android.pass.commonrust.api.WordSeparator.NumbersAndSymbols
+    private fun WordSeparator.toDomain(): PasswordWordSeparator = when (this) {
+        WordSeparator.Hyphen -> PasswordWordSeparator.Hyphen
+        WordSeparator.Space -> PasswordWordSeparator.Space
+        WordSeparator.Period -> PasswordWordSeparator.Period
+        WordSeparator.Comma -> PasswordWordSeparator.Comma
+        WordSeparator.Underscore -> PasswordWordSeparator.Underscore
+        WordSeparator.Numbers -> PasswordWordSeparator.Numbers
+        WordSeparator.NumbersAndSymbols -> PasswordWordSeparator.NumbersAndSymbols
     }
 
 }

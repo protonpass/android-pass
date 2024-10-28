@@ -46,13 +46,11 @@ sealed interface HiddenState {
 
     @Stable
     @Serializable
-    @JvmInline
-    value class Empty(override val encrypted: EncryptedString) : HiddenState
+    data class Empty(override val encrypted: EncryptedString) : HiddenState
 
     @Stable
     @Serializable
-    @JvmInline
-    value class Concealed(override val encrypted: EncryptedString) : HiddenState
+    data class Concealed(override val encrypted: EncryptedString) : HiddenState
 
     @Stable
     @Serializable

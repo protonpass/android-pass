@@ -63,8 +63,7 @@ class OrganizationSettingsRepositoryImpl @Inject constructor(
             memorablePasswordMinWords = settings?.passwordPolicy?.memorablePasswordMinWords,
             memorablePasswordMaxWords = settings?.passwordPolicy?.memorablePasswordMaxWords,
             memorablePasswordCapitalize = settings?.passwordPolicy?.memorablePasswordMustCapitalize,
-            memorablePasswordIncludeNumbers = settings?.passwordPolicy?.memorablePasswordMustIncludeNumbers,
-            memorablePasswordIncludeSeparator = settings?.passwordPolicy?.memorablePasswordMustIncludeSeparator
+            memorablePasswordIncludeNumbers = settings?.passwordPolicy?.memorablePasswordMustIncludeNumbers
         )
     }
 
@@ -84,8 +83,7 @@ class OrganizationSettingsRepositoryImpl @Inject constructor(
                 memorablePasswordMinWords = memorablePasswordMinWords,
                 memorablePasswordMaxWords = memorablePasswordMaxWords,
                 memorablePasswordCapitalize = memorablePasswordCapitalize,
-                memorablePasswordIncludeNumbers = memorablePasswordIncludeNumbers,
-                memorablePasswordIncludeSeparator = memorablePasswordIncludeSeparator
+                memorablePasswordIncludeNumbers = memorablePasswordIncludeNumbers
             )
         )
     } else {

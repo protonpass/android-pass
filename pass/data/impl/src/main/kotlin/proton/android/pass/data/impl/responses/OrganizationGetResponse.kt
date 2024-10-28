@@ -70,7 +70,5 @@ data class OrganizationGetOrganizationSettingsPasswordPolicy(
     @SerialName("MemorablePasswordMustCapitalize")
     val memorablePasswordMustCapitalize: Boolean?,
     @SerialName("MemorablePasswordMustIncludeNumbers")
-    val memorablePasswordMustIncludeNumbers: Boolean?,
-    @SerialName("MemorablePasswordMustIncludeSeparator")
-    val memorablePasswordMustIncludeSeparator: Boolean?
+    val memorablePasswordMustIncludeNumbers: Boolean?
 )

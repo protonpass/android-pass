@@ -80,14 +80,11 @@ data class PassOrganizationSettingsEntity(
     @ColumnInfo(name = Columns.MEMORABLE_PASSWORD_MAX_WORDS)
     val memorablePasswordMaxWords: Int?,
 
-    @ColumnInfo(name = Columns.MEMORABLE_PASSWORD_INCLUDE_NUMBERS)
+    @ColumnInfo(name = Columns.MEMORABLE_PASSWORD_CAPITALIZED)
     val memorablePasswordCapitalize: Boolean?,
 
-    @ColumnInfo(name = Columns.MEMORABLE_PASSWORD_INCLUDE_SEPARATORS)
-    val memorablePasswordIncludeNumbers: Boolean?,
-
-    @ColumnInfo(name = Columns.MEMORABLE_PASSWORD_CAPITALIZED)
-    val memorablePasswordIncludeSeparator: Boolean?
+    @ColumnInfo(name = Columns.MEMORABLE_PASSWORD_INCLUDE_NUMBERS)
+    val memorablePasswordIncludeNumbers: Boolean?
 ) {
     object Columns {
         const val USER_ID = "user_id"
@@ -105,7 +102,6 @@ data class PassOrganizationSettingsEntity(
         const val MEMORABLE_PASSWORD_MIN_WORDS = "memorable_password_min_words"
         const val MEMORABLE_PASSWORD_MAX_WORDS = "memorable_password_max_words"
         const val MEMORABLE_PASSWORD_INCLUDE_NUMBERS = "memorable_password_include_numbers"
-        const val MEMORABLE_PASSWORD_INCLUDE_SEPARATORS = "memorable_password_include_separators"
         const val MEMORABLE_PASSWORD_CAPITALIZED = "memorable_password_capitalized"
     }
 
@@ -128,8 +124,7 @@ data class PassOrganizationSettingsEntity(
             memorablePasswordMinWords = null,
             memorablePasswordMaxWords = null,
             memorablePasswordCapitalize = null,
-            memorablePasswordIncludeNumbers = null,
-            memorablePasswordIncludeSeparator = null
+            memorablePasswordIncludeNumbers = null
         )
     }
 }

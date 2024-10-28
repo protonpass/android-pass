@@ -68,7 +68,13 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
 
     private fun observeAliasItemContents(item: Item): Flow<ItemContents.Alias> = flow {
         encryptionContextProvider.withEncryptionContext {
-            item.toItemContents(this@withEncryptionContext) as ItemContents.Alias
+            toItemContents(
+                itemType = item.itemType,
+                encryptionContext = this,
+                title = item.title,
+                note = item.note,
+                flags = item.flags
+            )as ItemContents.Alias
         }.also { aliasItemContents ->
             emit(aliasItemContents)
         }

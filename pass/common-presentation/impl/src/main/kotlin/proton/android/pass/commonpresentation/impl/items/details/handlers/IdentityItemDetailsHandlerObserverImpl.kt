@@ -61,7 +61,13 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
 
     private fun observeIdentityItemContents(item: Item): Flow<ItemContents.Identity> = flow {
         encryptionContextProvider.withEncryptionContext {
-            item.toItemContents(this@withEncryptionContext) as ItemContents.Identity
+            toItemContents(
+                itemType = item.itemType,
+                encryptionContext = this,
+                title = item.title,
+                note = item.note,
+                flags = item.flags
+            ) as ItemContents.Identity
         }.let { identityItemContents ->
             emit(identityItemContents)
         }

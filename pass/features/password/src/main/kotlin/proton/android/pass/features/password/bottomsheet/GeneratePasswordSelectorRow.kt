@@ -37,7 +37,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.text.Text
 import me.proton.core.presentation.R as CoreR
 
@@ -46,8 +47,9 @@ internal fun GeneratePasswordSelectorRow(
     modifier: Modifier = Modifier,
     title: String,
     selectedValue: String,
-    iconContentDescription: String?,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    isSelectable: Boolean = true,
+    iconContentDescription: String? = null
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -61,39 +63,56 @@ internal fun GeneratePasswordSelectorRow(
 
         Row(
             modifier = Modifier
+                .padding(vertical = Spacing.small)
                 .clip(RoundedCornerShape(size = Radius.small))
-                .background(PassTheme.colors.loginInteractionNormMajor1)
-                .clickable(onClick = onClick)
-                .padding(
-                    start = Spacing.small,
-                    top = Spacing.extraSmall,
-                    bottom = Spacing.extraSmall,
-                    end = Spacing.extraSmall
+                .applyIf(
+                    condition = isSelectable,
+                    ifTrue = {
+                        background(PassTheme.colors.loginInteractionNormMajor1)
+                            .clickable(onClick = onClick)
+                            .padding(
+                                start = Spacing.small,
+                                top = Spacing.extraSmall,
+                                bottom = Spacing.extraSmall,
+                                end = Spacing.extraSmall
+                            )
+                    },
+                    ifFalse = {
+                        background(PassTheme.colors.loginInteractionNormMinor1)
+                            .padding(all = Spacing.small)
+                    }
                 ),
             horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text.Body3Medium(
                 text = selectedValue,
-                color = PassTheme.colors.textInvert
+                color = if (isSelectable) PassTheme.colors.textInvert else PassTheme.colors.textNorm
             )
 
-            Icon(
-                painter = painterResource(CoreR.drawable.ic_proton_chevron_tiny_down),
-                contentDescription = iconContentDescription,
-                tint = PassTheme.colors.textInvert
-            )
+            if (isSelectable) {
+                Icon(
+                    painter = painterResource(CoreR.drawable.ic_proton_chevron_tiny_down),
+                    contentDescription = iconContentDescription,
+                    tint = PassTheme.colors.textInvert
+                )
+            }
         }
     }
 }
 
 @[Preview Composable]
-internal fun GeneratePasswordSelectorRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun GeneratePasswordSelectorRowPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, isSelectable) = input
+
     PassTheme(isDark = isDark) {
         Surface {
             GeneratePasswordSelectorRow(
                 title = "Title",
                 selectedValue = "Selected option value",
+                isSelectable = isSelectable,
                 iconContentDescription = null,
                 onClick = {}
             )

@@ -42,11 +42,13 @@ class ObservePasswordConfigImpl @Inject constructor(
         userPreferencesRepository.getPasswordGenerationPreference()
     ) { organizationPasswordPolicyOption, passwordGenerationPreference ->
         when (organizationPasswordPolicyOption) {
-            None -> passwordGenerationPreference.asPasswordConfig()
-            is Some ->
-                organizationPasswordPolicyOption
-                    .value
-                    .asPasswordConfig(passwordGenerationPreference)
+            None -> {
+                passwordGenerationPreference.asPasswordConfig()
+            }
+
+            is Some -> {
+                organizationPasswordPolicyOption.value.asPasswordConfig(passwordGenerationPreference)
+            }
         }
     }
 
@@ -67,7 +69,7 @@ class ObservePasswordConfigImpl @Inject constructor(
     }
 
     private fun OrganizationPasswordPolicy.asPasswordConfig(preference: PasswordGenerationPreference) =
-        when (preference.mode) {
+        when (getMode(preference)) {
             PasswordGenerationMode.Random -> PasswordConfig.Random(
                 passwordLength = preference.randomPasswordLength,
                 passwordMinLength = randomPasswordMinLength,
@@ -77,7 +79,8 @@ class ObservePasswordConfigImpl @Inject constructor(
                 includeUppercase = randomPasswordIncludeUppercase ?: preference.randomHasCapitalLetters,
                 canToggleNumbers = canToggleRandomPasswordNumbers,
                 canToggleSymbols = canToggleRandomPasswordSymbols,
-                canToggleUppercase = canToggleRandomPasswordUppercase
+                canToggleUppercase = canToggleRandomPasswordUppercase,
+                canToggleMode = canToggleRandomPasswordToMemorable
             )
 
             PasswordGenerationMode.Words -> PasswordConfig.Memorable(
@@ -88,9 +91,17 @@ class ObservePasswordConfigImpl @Inject constructor(
                 capitalizeWords = memorablePasswordCapitalize ?: preference.wordsCapitalise,
                 includeNumbers = memorablePasswordIncludeNumbers ?: preference.wordsIncludeNumbers,
                 canToggleCapitalise = canToggleMemorablePasswordCapitalize,
-                canToggleNumbers = canToggleMemorablePasswordNumbers
+                canToggleNumbers = canToggleMemorablePasswordNumbers,
+                canToggleMode = canToggleMemorablePasswordToRandom
             )
         }
+
+    private fun OrganizationPasswordPolicy.getMode(preference: PasswordGenerationPreference) = when {
+        canToggleRandomPasswordToMemorable && canToggleMemorablePasswordToRandom -> preference.mode
+        canToggleRandomPasswordToMemorable -> PasswordGenerationMode.Words
+        canToggleMemorablePasswordToRandom -> PasswordGenerationMode.Random
+        else -> preference.mode
+    }
 
     private fun WordSeparator.toDomain(): proton.android.pass.commonrust.api.WordSeparator = when (this) {
         WordSeparator.Hyphen -> proton.android.pass.commonrust.api.WordSeparator.Hyphen

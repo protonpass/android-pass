@@ -22,7 +22,10 @@ import proton.android.pass.commonrust.api.WordSeparator
 
 sealed interface PasswordConfig {
 
+    val canToggleMode: Boolean
+
     data class Random(
+        override val canToggleMode: Boolean = true,
         val includeUppercase: Boolean,
         val includeNumbers: Boolean,
         val includeSymbols: Boolean,
@@ -47,6 +50,7 @@ sealed interface PasswordConfig {
     }
 
     data class Memorable(
+        override val canToggleMode: Boolean = true,
         val capitalizeWords: Boolean,
         val includeNumbers: Boolean,
         val canToggleCapitalise: Boolean = true,

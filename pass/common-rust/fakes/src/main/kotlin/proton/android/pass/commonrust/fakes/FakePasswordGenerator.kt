@@ -18,16 +18,14 @@
 
 package proton.android.pass.commonrust.fakes
 
-import proton.android.pass.commonrust.api.PassphraseConfig
-import proton.android.pass.commonrust.api.PasswordGenerator
-import proton.android.pass.commonrust.api.PasswordGeneratorConfig
+import proton.android.pass.commonrust.api.passwords.PasswordConfig
+import proton.android.pass.commonrust.api.passwords.PasswordGenerator
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestPasswordGenerator @Inject constructor() : PasswordGenerator {
+class FakePasswordGenerator @Inject constructor() : PasswordGenerator {
 
-    override fun generatePassword(config: PasswordGeneratorConfig): String = "test-password"
+    override suspend fun generatePassword(config: PasswordConfig): String = "test-password"
 
-    override fun generatePassphrase(config: PassphraseConfig): String = "test-password"
 }

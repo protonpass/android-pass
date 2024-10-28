@@ -76,13 +76,17 @@ class TestLocalItemDataSource : LocalItemDataSource {
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?,
-        filter: ItemTypeFilter
+        filter: ItemTypeFilter,
+        setFlags: Int?,
+        clearFlags: Int?
     ): Flow<List<ItemEntity>> = flowOf(memory)
 
     override fun observeItems(
         userId: UserId,
         itemState: ItemState?,
-        filter: ItemTypeFilter
+        filter: ItemTypeFilter,
+        setFlags: Int?,
+        clearFlags: Int?
     ): Flow<List<ItemEntity>> {
         throw IllegalStateException("Not yet implemented")
     }

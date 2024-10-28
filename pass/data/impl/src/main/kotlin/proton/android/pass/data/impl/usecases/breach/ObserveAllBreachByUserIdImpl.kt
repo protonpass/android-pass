@@ -30,8 +30,7 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
-import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
-import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.AliasEmailId
@@ -62,8 +61,7 @@ class ObserveAllBreachByUserIdImpl @Inject constructor(
         selection = ShareSelection.AllShares,
         filter = ItemTypeFilter.Aliases,
         itemState = ItemState.Active,
-        securityCheckFilter = ItemSecurityCheckFilter.Included,
-        isBreachedFilter = ItemIsBreachedFilter.Breached
+        itemFlags = mapOf(ItemFlag.EmailBreached to true, ItemFlag.SkipHealthCheck to false)
     ).flatMapLatest { aliases ->
         val firstAlias = aliases.firstOrNull()
             ?: return@flatMapLatest flowOf(emptyList<BreachAlias>())

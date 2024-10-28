@@ -46,13 +46,17 @@ interface LocalItemDataSource {
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?,
-        filter: ItemTypeFilter
+        filter: ItemTypeFilter,
+        setFlags: Int? = null,
+        clearFlags: Int? = null
     ): Flow<List<ItemEntity>>
 
     fun observeItems(
         userId: UserId,
         itemState: ItemState?,
-        filter: ItemTypeFilter
+        filter: ItemTypeFilter,
+        setFlags: Int? = null,
+        clearFlags: Int? = null
     ): Flow<List<ItemEntity>>
 
     fun observePinnedItems(userId: UserId, filter: ItemTypeFilter): Flow<List<ItemEntity>>

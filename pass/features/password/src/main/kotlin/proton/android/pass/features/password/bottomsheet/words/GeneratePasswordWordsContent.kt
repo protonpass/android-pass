@@ -39,9 +39,8 @@ import proton.android.pass.composecomponents.impl.container.rememberAnimatedVisi
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.features.password.R
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordUiEvent
-import proton.android.pass.features.password.bottomsheet.GeneratePasswordSelectorRow
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordToggleRow
-import proton.android.pass.features.password.bottomsheet.GeneratePasswordTypeRow
+import proton.android.pass.features.password.bottomsheet.GeneratePasswordSelectorRow
 import proton.android.pass.features.password.extensions.toResourceString
 import proton.android.pass.preferences.PasswordGenerationMode
 
@@ -58,8 +57,10 @@ internal fun GeneratePasswordWordsContent(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
-        GeneratePasswordTypeRow(
-            current = PasswordGenerationMode.Words,
+        GeneratePasswordSelectorRow(
+            title = stringResource(R.string.password_type),
+            selectedValue = PasswordGenerationMode.Words.toResourceString(),
+            iconContentDescription = null,
             onClick = {
                 onEvent(GeneratePasswordUiEvent.OnPasswordModeChangeClick)
             }
@@ -116,7 +117,7 @@ internal fun GeneratePasswordWordsContent(
                 wordSeparator?.let { separator ->
                     GeneratePasswordSelectorRow(
                         title = stringResource(R.string.word_separator),
-                        value = separator.toResourceString(),
+                        selectedValue = separator.toResourceString(),
                         iconContentDescription = stringResource(R.string.password_words_separator_icon),
                         onClick = {
                             onEvent(GeneratePasswordUiEvent.OnWordsSeparatorClick)

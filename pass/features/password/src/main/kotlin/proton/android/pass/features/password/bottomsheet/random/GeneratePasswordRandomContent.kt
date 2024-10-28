@@ -65,6 +65,7 @@ internal fun GeneratePasswordRandomContent(
         GeneratePasswordSelectorRow(
             title = stringResource(R.string.password_type),
             selectedValue = PasswordGenerationMode.Random.toResourceString(),
+            isSelectable = canToggleMode,
             iconContentDescription = stringResource(R.string.password_mode_icon),
             onClick = {
                 onEvent(GeneratePasswordUiEvent.OnPasswordModeChangeClick)

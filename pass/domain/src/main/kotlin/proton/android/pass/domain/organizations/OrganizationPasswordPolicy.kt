@@ -38,8 +38,12 @@ data class OrganizationPasswordPolicy(
 
     val canToggleRandomPasswordUppercase: Boolean = randomPasswordIncludeUppercase == null
 
+    val canToggleRandomPasswordToMemorable: Boolean = memorablePasswordAllowed != false
+
     val canToggleMemorablePasswordNumbers: Boolean = memorablePasswordIncludeNumbers == null
 
     val canToggleMemorablePasswordCapitalize: Boolean = memorablePasswordCapitalize == null
+
+    val canToggleMemorablePasswordToRandom: Boolean = randomPasswordAllowed != false
 
 }

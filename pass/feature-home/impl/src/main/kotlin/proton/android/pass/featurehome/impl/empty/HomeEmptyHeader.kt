@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -44,28 +45,30 @@ fun HomeEmptyHeader(modifier: Modifier = Modifier, filterType: SearchFilterType)
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        val (title, desc) = when (filterType) {
-            SearchFilterType.All ->
-                R.string.home_empty_vault_title to
-                    R.string.home_empty_vault_subtitle
-            SearchFilterType.Login ->
-                R.string.home_empty_vault_login_title to
-                    R.string.home_empty_vault_login_subtitle
-            SearchFilterType.LoginMFA ->
-                R.string.home_empty_vault_logins_mfa_title to
-                    R.string.home_empty_vault_logins_mfa_subtitle
-            SearchFilterType.Alias ->
-                R.string.home_empty_vault_aliases_title to
-                    R.string.home_empty_vault_aliases_subtitle
-            SearchFilterType.Note ->
-                R.string.home_empty_vault_notes_title to
-                    R.string.home_empty_vault_notes_subtitle
-            SearchFilterType.CreditCard ->
-                R.string.home_empty_vault_cc_title to
-                    R.string.home_empty_vault_cc_subtitle
-            SearchFilterType.Identity ->
-                R.string.home_empty_vault_identity_title to
-                    R.string.home_empty_vault_identity_subtitle
+        val (title, desc) = remember(filterType) {
+            when (filterType) {
+                SearchFilterType.All ->
+                    R.string.home_empty_vault_title to
+                        R.string.home_empty_vault_subtitle
+                SearchFilterType.Login ->
+                    R.string.home_empty_vault_login_title to
+                        R.string.home_empty_vault_login_subtitle
+                SearchFilterType.LoginMFA ->
+                    R.string.home_empty_vault_logins_mfa_title to
+                        R.string.home_empty_vault_logins_mfa_subtitle
+                SearchFilterType.Alias ->
+                    R.string.home_empty_vault_aliases_title to
+                        R.string.home_empty_vault_aliases_subtitle
+                SearchFilterType.Note ->
+                    R.string.home_empty_vault_notes_title to
+                        R.string.home_empty_vault_notes_subtitle
+                SearchFilterType.CreditCard ->
+                    R.string.home_empty_vault_cc_title to
+                        R.string.home_empty_vault_cc_subtitle
+                SearchFilterType.Identity ->
+                    R.string.home_empty_vault_identity_title to
+                        R.string.home_empty_vault_identity_subtitle
+            }
         }
         Text(
             modifier = Modifier.fillMaxWidth(),

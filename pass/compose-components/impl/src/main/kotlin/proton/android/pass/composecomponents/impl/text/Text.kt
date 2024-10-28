@@ -32,6 +32,7 @@ import me.proton.core.compose.theme.headlineNorm
 import me.proton.core.compose.theme.overlineNorm
 import me.proton.core.compose.theme.subheadlineNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.body3Medium
 import proton.android.pass.commonui.api.body3Norm
 
 object Text {
@@ -98,6 +99,21 @@ object Text {
         Text(
             text = text,
             style = ProtonTheme.typography.defaultSmallNorm.copy(color = color),
+            modifier = modifier,
+            textAlign = textAlign
+        )
+    }
+
+    @Composable
+    fun Body3Medium(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textNorm,
+        textAlign: TextAlign = TextAlign.Start
+    ) {
+        Text(
+            text = text,
+            style = PassTheme.typography.body3Medium().copy(color = color),
             modifier = modifier,
             textAlign = textAlign
         )

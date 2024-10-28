@@ -25,8 +25,8 @@ import dagger.hilt.components.SingletonComponent
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
-import proton.android.pass.commonrust.api.PasswordGenerator
 import proton.android.pass.commonrust.api.PasswordScorer
+import proton.android.pass.commonrust.api.passwords.PasswordGenerator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
 import javax.inject.Singleton
@@ -47,7 +47,7 @@ abstract class FakesCommonRustModule {
     ): NewUserInviteSignatureBodyCreator
 
     @Binds
-    abstract fun bindPasswordGenerator(impl: TestPasswordGenerator): PasswordGenerator
+    abstract fun bindPasswordGenerator(impl: FakePasswordGenerator): PasswordGenerator
 
     @Binds
     abstract fun bindPasswordScorer(impl: TestPasswordScorer): PasswordScorer

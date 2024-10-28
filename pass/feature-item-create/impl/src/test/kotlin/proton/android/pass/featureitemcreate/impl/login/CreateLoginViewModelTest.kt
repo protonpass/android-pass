@@ -192,7 +192,13 @@ internal class CreateLoginViewModelTest {
                             id = item.id,
                             userId = UserId("user-id"),
                             shareId = item.shareId,
-                            contents = item.toItemContents(TestEncryptionContext),
+                            contents = toItemContents(
+                                itemType = item.itemType,
+                                encryptionContext = TestEncryptionContext,
+                                title = item.title,
+                                note = item.note,
+                                flags = item.flags
+                            ),
                             createTime = item.createTime,
                             state = ItemState.Active.value,
                             modificationTime = item.modificationTime,

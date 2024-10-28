@@ -19,6 +19,8 @@
 package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
@@ -26,52 +28,73 @@ import proton.android.pass.common.api.None
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
-import proton.android.pass.data.api.usecases.ObservePinnedItems
-import proton.android.pass.datamodels.api.fromParsed
+import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.datamodels.api.serializeToProto
+import proton.android.pass.domain.AddressDetailsContent
+import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.Flags
 import proton.android.pass.domain.HiddenState
-import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemEncrypted
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.WorkDetailsContent
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestObservePinnedItems @Inject constructor() : ObservePinnedItems {
+class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
 
-    private val flow = testFlow<List<Item>>()
+    private val fallback: MutableSharedFlow<Result<List<ItemEncrypted>>> = testFlow()
+    private val flowsMap = mutableMapOf<Params, MutableSharedFlow<List<ItemEncrypted>>>()
 
-    fun emitValue(value: List<Item>) {
-        flow.tryEmit(value)
+    fun emitValue(value: List<ItemEncrypted>) {
+        fallback.tryEmit(Result.success(value))
     }
 
-    fun emitDefault() {
-        flow.tryEmit(defaultValues.asList())
+    fun emit(params: Params, value: List<ItemEncrypted>) {
+        flowsMap[params] = flowsMap[params] ?: testFlow()
+        flowsMap[params]?.tryEmit(value)
+    }
+
+    fun sendException(exception: Exception) {
+        fallback.tryEmit(Result.failure(exception))
     }
 
     override fun invoke(
-        userId: UserId?,
+        selection: ShareSelection,
+        itemState: ItemState?,
         filter: ItemTypeFilter,
-        shareSelection: ShareSelection
-    ): Flow<List<Item>> = flow
+        userId: UserId?,
+        itemFlags: Map<ItemFlag, Boolean>
+    ): Flow<List<ItemEncrypted>> {
+        val params = Params(
+            selection = selection,
+            itemState = itemState,
+            filter = filter,
+            userId = userId,
+            itemFlags = itemFlags
+        )
+        val flow = flowsMap[params]
+        return flow ?: fallback.map { it.getOrThrow() }
+    }
 
     data class DefaultValues(
-        val login: Item,
-        val alias: Item,
-        val note: Item
+        val login: ItemEncrypted,
+        val alias: ItemEncrypted,
+        val note: ItemEncrypted
     ) {
-        fun asList(): List<Item> = listOf(login, alias, note)
+        fun asList(): List<ItemEncrypted> = listOf(login, alias, note)
     }
 
     companion object {
 
-        val defaultValues = DefaultValues(
+        val defaultValues: DefaultValues = DefaultValues(
             createLogin(itemId = ItemId("login")),
             createAlias(itemId = ItemId("alias")),
             createNote(itemId = ItemId("note"))
@@ -81,31 +104,30 @@ class TestObservePinnedItems @Inject constructor() : ObservePinnedItems {
             shareId: ShareId = ShareId("share-123"),
             itemId: ItemId = ItemId("item-123"),
             aliasEmail: String? = null,
+            flags: Int = 0,
             itemContents: ItemContents
-        ): Item {
+        ): ItemEncrypted {
             val now = Clock.System.now()
             val asProto = itemContents.serializeToProto(
                 itemUuid = "123",
                 encryptionContext = TestEncryptionContext
             )
             return TestEncryptionContextProvider().withEncryptionContext {
-                Item(
+                ItemEncrypted(
                     id = itemId,
                     userId = UserId("user-id"),
-                    itemUuid = "",
                     revision = 1,
                     shareId = shareId,
-                    itemType = ItemType.fromParsed(this, asProto, aliasEmail),
                     title = encrypt(itemContents.title),
                     note = encrypt(itemContents.note),
                     content = encrypt(asProto.toByteArray()),
-                    packageInfoSet = emptySet(),
+                    aliasEmail = aliasEmail,
                     state = ItemState.Active.value,
                     modificationTime = now,
                     createTime = now,
                     lastAutofillTime = None,
                     isPinned = false,
-                    flags = Flags(0)
+                    flags = Flags(flags)
                 )
             }
         }
@@ -119,7 +141,7 @@ class TestObservePinnedItems @Inject constructor() : ObservePinnedItems {
             password: String = "",
             primaryTotp: String = "",
             note: String = "note"
-        ): Item = createItem(
+        ): ItemEncrypted = createItem(
             shareId = shareId,
             itemId = itemId,
             itemContents = ItemContents.Login(
@@ -144,11 +166,13 @@ class TestObservePinnedItems @Inject constructor() : ObservePinnedItems {
             itemId: ItemId = ItemId("item-123"),
             title: String = "alias-item",
             alias: String = "some.alias@domain.test",
-            note: String = "note"
+            note: String = "note",
+            flags: Int = 0
         ) = createItem(
             shareId = shareId,
             itemId = itemId,
             aliasEmail = alias,
+            flags = flags,
             itemContents = ItemContents.Alias(
                 title = title,
                 note = note,
@@ -202,5 +226,43 @@ class TestObservePinnedItems @Inject constructor() : ObservePinnedItems {
                 expirationDate = expirationDate
             )
         )
+
+        fun createIdentity(
+            shareId: ShareId = ShareId("share-123"),
+            itemId: ItemId = ItemId("item-123"),
+            fullName: String = "John Doe"
+        ) = createItem(
+            shareId = shareId,
+            itemId = itemId,
+            itemContents = ItemContents.Identity(
+                title = "Identity",
+                note = "note",
+                personalDetailsContent = PersonalDetailsContent.EMPTY.copy(
+                    fullName = fullName,
+                    firstName = "First name",
+                    middleName = "Middle name",
+                    lastName = "Last name",
+                    phoneNumber = "1234567890"
+                ),
+                addressDetailsContent = AddressDetailsContent.EMPTY.copy(
+                    streetAddress = "123 Main St",
+                    zipOrPostalCode = "12345",
+                    city = "City",
+                    countryOrRegion = "Country",
+                    organization = "Organization"
+                ),
+                contactDetailsContent = ContactDetailsContent.EMPTY,
+                workDetailsContent = WorkDetailsContent.EMPTY,
+                extraSectionContentList = emptyList()
+            )
+        )
     }
+
+    data class Params(
+        val selection: ShareSelection = ShareSelection.AllShares,
+        val itemState: ItemState? = ItemState.Active,
+        val filter: ItemTypeFilter = ItemTypeFilter.All,
+        val userId: UserId? = null,
+        val itemFlags: Map<ItemFlag, Boolean> = emptyMap()
+    )
 }

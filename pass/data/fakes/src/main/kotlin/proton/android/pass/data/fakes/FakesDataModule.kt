@@ -75,6 +75,7 @@ import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
+import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
@@ -197,6 +198,7 @@ import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
 import proton.android.pass.data.fakes.usecases.FakeChangeAliasStatus
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.FakeObserveAddressesByUserId
+import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakeUnpinItem
@@ -466,6 +468,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveItems(impl: TestObserveItems): ObserveItems
+
+    @Binds
+    abstract fun bindObserveEncryptedItems(impl: FakeObserveEncryptedItems): ObserveEncryptedItems
 
     @Binds
     abstract fun bindObservePinnedItems(impl: TestObservePinnedItems): ObservePinnedItems

@@ -37,6 +37,7 @@ import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -58,6 +59,8 @@ class TestItemRepository @Inject constructor() : ItemRepository {
     private var migrateItemResult: Result<MigrateItemsResult> =
         Result.failure(IllegalStateException("TestItemRepository.migrateItemResult not initialized"))
     private val observeItemListFlow: MutableSharedFlow<List<Item>> =
+        MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val observeItemEncryptedListFlow: MutableSharedFlow<List<ItemEncrypted>> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
     private val itemFlow = testFlow<Item>()
@@ -141,6 +144,15 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         setFlags: Int?,
         clearFlags: Int?
     ): Flow<List<Item>> = observeItemListFlow
+
+    override fun observeEncryptedItems(
+        userId: UserId,
+        shareSelection: ShareSelection,
+        itemState: ItemState?,
+        itemTypeFilter: ItemTypeFilter,
+        setFlags: Int?,
+        clearFlags: Int?
+    ): Flow<List<ItemEncrypted>> = observeItemEncryptedListFlow
 
     override fun observePinnedItems(
         userId: UserId,

@@ -21,22 +21,37 @@ package proton.android.pass.commonui.api
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
+import proton.android.pass.datamodels.api.fromParsed
 import proton.android.pass.datamodels.api.toContent
+import proton.android.pass.domain.AddressDetails
 import proton.android.pass.domain.AddressDetailsContent
+import proton.android.pass.domain.ContactDetails
 import proton.android.pass.domain.ContactDetailsContent
+import proton.android.pass.domain.ExtraSection
 import proton.android.pass.domain.ExtraSectionContent
+import proton.android.pass.domain.Flags
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.PersonalDetails
 import proton.android.pass.domain.PersonalDetailsContent
+import proton.android.pass.domain.WorkDetails
 import proton.android.pass.domain.WorkDetailsContent
+import proton_pass_item_v1.ItemV1
 
 fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     id = id,
     shareId = shareId,
     userId = userId,
-    contents = toItemContents(context),
+    contents = toItemContents(
+        itemType = itemType,
+        encryptionContext = context,
+        title = title,
+        note = note,
+        flags = flags
+    ),
     state = state,
     createTime = createTime,
     modificationTime = modificationTime,
@@ -46,15 +61,45 @@ fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     revision = revision
 )
 
+fun ItemEncrypted.toUiModel(context: EncryptionContext): ItemUiModel {
+    val decryptedContent = context.decrypt(content)
+    val parsed = ItemV1.Item.parseFrom(decryptedContent)
+    val itemType = ItemType.fromParsed(context, parsed, aliasEmail)
+    return ItemUiModel(
+        id = id,
+        shareId = shareId,
+        userId = userId,
+        contents = toItemContents(
+            encryptionContext = context,
+            itemType = itemType,
+            title = title,
+            note = note,
+            flags = flags
+        ),
+        state = state,
+        createTime = createTime,
+        modificationTime = modificationTime,
+        lastAutofillTime = lastAutofillTime.value(),
+        isPinned = isPinned,
+        category = itemType.category,
+        revision = revision
+    )
+}
+
 fun Item.itemName(context: EncryptionContext): String = context.decrypt(title)
 
-fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents = when (val type = itemType) {
-    is ItemType.Alias -> createAlias(encryptionContext, type)
-    is ItemType.Login -> createLogin(encryptionContext, type)
-    is ItemType.Note -> createNote(encryptionContext)
-    is ItemType.CreditCard -> createCreditCard(encryptionContext, type)
-    is ItemType.Identity -> createIdentity(encryptionContext, type)
-
+fun toItemContents(
+    itemType: ItemType,
+    encryptionContext: EncryptionContext,
+    title: String,
+    note: String,
+    flags: Flags
+): ItemContents = when (itemType) {
+    is ItemType.Alias -> createAlias(encryptionContext, title, note, itemType, flags.isAliasDisabled())
+    is ItemType.Login -> createLogin(encryptionContext, title, note, itemType)
+    is ItemType.Note -> createNote(encryptionContext, title, note)
+    is ItemType.CreditCard -> createCreditCard(encryptionContext, title, note, itemType)
+    is ItemType.Identity -> createIdentity(encryptionContext, title, note, itemType)
     ItemType.Password,
     ItemType.Unknown -> ItemContents.Unknown(
         title = encryptionContext.decrypt(title),
@@ -62,14 +107,25 @@ fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents = wh
     )
 }
 
-private fun Item.createAlias(encryptionContext: EncryptionContext, type: ItemType.Alias) = ItemContents.Alias(
+private fun createAlias(
+    encryptionContext: EncryptionContext,
+    title: String,
+    note: String,
+    type: ItemType.Alias,
+    isAliasDisabled: Boolean
+) = ItemContents.Alias(
     title = encryptionContext.decrypt(title),
     note = encryptionContext.decrypt(note),
     aliasEmail = type.aliasEmail,
     isDisabled = isAliasDisabled
 )
 
-private fun Item.createLogin(encryptionContext: EncryptionContext, type: ItemType.Login) = ItemContents.Login(
+private fun createLogin(
+    encryptionContext: EncryptionContext,
+    title: String,
+    note: String,
+    type: ItemType.Login
+) = ItemContents.Login(
     title = encryptionContext.decrypt(title),
     note = encryptionContext.decrypt(note),
     itemEmail = type.itemEmail,
@@ -82,90 +138,97 @@ private fun Item.createLogin(encryptionContext: EncryptionContext, type: ItemTyp
     passkeys = type.passkeys
 )
 
-private fun Item.createNote(encryptionContext: EncryptionContext) = ItemContents.Note(
+private fun createNote(
+    encryptionContext: EncryptionContext,
+    title: String,
+    note: String
+) = ItemContents.Note(
     title = encryptionContext.decrypt(title),
     note = encryptionContext.decrypt(note)
 )
 
-private fun Item.createCreditCard(encryptionContext: EncryptionContext, type: ItemType.CreditCard) =
-    ItemContents.CreditCard(
-        title = encryptionContext.decrypt(title),
-        note = encryptionContext.decrypt(note),
-        type = type.creditCardType,
-        cardHolder = type.cardHolder,
-        number = encryptionContext.decrypt(type.number),
-        cvv = concealedOrEmpty(type.cvv, encryptionContext),
-        pin = concealedOrEmpty(type.pin, encryptionContext),
-        expirationDate = type.expirationDate
-    )
-
-@Suppress("LongMethod")
-private fun Item.createIdentity(encryptionContext: EncryptionContext, type: ItemType.Identity) = ItemContents.Identity(
+private fun createCreditCard(
+    encryptionContext: EncryptionContext,
+    title: String,
+    note: String,
+    type: ItemType.CreditCard
+) = ItemContents.CreditCard(
     title = encryptionContext.decrypt(title),
     note = encryptionContext.decrypt(note),
-    personalDetailsContent = PersonalDetailsContent(
-        fullName = type.personalDetails.fullName,
-        firstName = type.personalDetails.firstName,
-        middleName = type.personalDetails.middleName,
-        lastName = type.personalDetails.lastName,
-        birthdate = type.personalDetails.birthdate,
-        gender = type.personalDetails.gender,
-        email = type.personalDetails.email,
-        phoneNumber = type.personalDetails.phoneNumber,
-        customFields = type.personalDetails.customFields.mapNotNull {
-            it.toContent(encryptionContext, true)
-        }
-    ),
-    addressDetailsContent = AddressDetailsContent(
-        organization = type.addressDetails.organization,
-        streetAddress = type.addressDetails.streetAddress,
-        zipOrPostalCode = type.addressDetails.zipOrPostalCode,
-        city = type.addressDetails.city,
-        stateOrProvince = type.addressDetails.stateOrProvince,
-        countryOrRegion = type.addressDetails.countryOrRegion,
-        floor = type.addressDetails.floor,
-        county = type.addressDetails.county,
-        customFields = type.addressDetails.customFields.mapNotNull {
-            it.toContent(encryptionContext, true)
-        }
-    ),
-    contactDetailsContent = ContactDetailsContent(
-        socialSecurityNumber = type.contactDetails.socialSecurityNumber,
-        passportNumber = type.contactDetails.passportNumber,
-        licenseNumber = type.contactDetails.licenseNumber,
-        website = type.contactDetails.website,
-        xHandle = type.contactDetails.xHandle,
-        secondPhoneNumber = type.contactDetails.secondPhoneNumber,
-        linkedin = type.contactDetails.linkedin,
-        reddit = type.contactDetails.reddit,
-        facebook = type.contactDetails.facebook,
-        yahoo = type.contactDetails.yahoo,
-        instagram = type.contactDetails.instagram,
-        customFields = type.contactDetails.customFields.mapNotNull {
-            it.toContent(encryptionContext, true)
-        }
-    ),
-    workDetailsContent = WorkDetailsContent(
-        company = type.workDetails.company,
-        jobTitle = type.workDetails.jobTitle,
-        personalWebsite = type.workDetails.personalWebsite,
-        workPhoneNumber = type.workDetails.workPhoneNumber,
-        workEmail = type.workDetails.workEmail,
-        customFields = type.workDetails.customFields.mapNotNull {
-            it.toContent(encryptionContext, true)
-        }
-    ),
-    extraSectionContentList = type.extraSections.map {
-        ExtraSectionContent(
-            title = it.sectionName,
-            customFields = it.customFields.mapNotNull { customField ->
-                customField.toContent(
-                    encryptionContext,
-                    true
-                )
-            }
-        )
-    }
+    type = type.creditCardType,
+    cardHolder = type.cardHolder,
+    number = encryptionContext.decrypt(type.number),
+    cvv = concealedOrEmpty(type.cvv, encryptionContext),
+    pin = concealedOrEmpty(type.pin, encryptionContext),
+    expirationDate = type.expirationDate
+)
+
+private fun createIdentity(
+    encryptionContext: EncryptionContext,
+    title: String,
+    note: String,
+    type: ItemType.Identity
+) = ItemContents.Identity(
+    title = encryptionContext.decrypt(title),
+    note = encryptionContext.decrypt(note),
+    personalDetailsContent = type.personalDetails.toContent(encryptionContext),
+    addressDetailsContent = type.addressDetails.toContent(encryptionContext),
+    contactDetailsContent = type.contactDetails.toContent(encryptionContext),
+    workDetailsContent = type.workDetails.toContent(encryptionContext),
+    extraSectionContentList = type.extraSections.map { it.toContent(encryptionContext) }
+)
+
+private fun PersonalDetails.toContent(encryptionContext: EncryptionContext) = PersonalDetailsContent(
+    fullName = fullName,
+    firstName = firstName,
+    middleName = middleName,
+    lastName = lastName,
+    birthdate = birthdate,
+    gender = gender,
+    email = email,
+    phoneNumber = phoneNumber,
+    customFields = customFields.mapNotNull { it.toContent(encryptionContext, true) }
+)
+
+private fun AddressDetails.toContent(encryptionContext: EncryptionContext) = AddressDetailsContent(
+    organization = organization,
+    streetAddress = streetAddress,
+    zipOrPostalCode = zipOrPostalCode,
+    city = city,
+    stateOrProvince = stateOrProvince,
+    countryOrRegion = countryOrRegion,
+    floor = floor,
+    county = county,
+    customFields = customFields.mapNotNull { it.toContent(encryptionContext, true) }
+)
+
+private fun ContactDetails.toContent(encryptionContext: EncryptionContext) = ContactDetailsContent(
+    socialSecurityNumber = socialSecurityNumber,
+    passportNumber = passportNumber,
+    licenseNumber = licenseNumber,
+    website = website,
+    xHandle = xHandle,
+    secondPhoneNumber = secondPhoneNumber,
+    linkedin = linkedin,
+    reddit = reddit,
+    facebook = facebook,
+    yahoo = yahoo,
+    instagram = instagram,
+    customFields = customFields.mapNotNull { it.toContent(encryptionContext, true) }
+)
+
+private fun WorkDetails.toContent(encryptionContext: EncryptionContext) = WorkDetailsContent(
+    company = company,
+    jobTitle = jobTitle,
+    personalWebsite = personalWebsite,
+    workPhoneNumber = workPhoneNumber,
+    workEmail = workEmail,
+    customFields = customFields.mapNotNull { it.toContent(encryptionContext, true) }
+)
+
+private fun ExtraSection.toContent(encryptionContext: EncryptionContext) = ExtraSectionContent(
+    title = sectionName,
+    customFields = customFields.mapNotNull { it.toContent(encryptionContext, true) }
 )
 
 private fun concealedOrEmpty(value: String, encryptionContext: EncryptionContext): HiddenState {

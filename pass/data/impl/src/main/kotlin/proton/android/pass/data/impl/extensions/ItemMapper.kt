@@ -20,11 +20,15 @@ package proton.android.pass.data.impl.extensions
 
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.datamodels.api.fromParsed
+import proton.android.pass.domain.Flags
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
@@ -67,6 +71,23 @@ fun ItemEntity.toDomain(context: EncryptionContext): Item {
         createTime = Instant.fromEpochSeconds(createTime),
         lastAutofillTime = lastUsedTime.toOption().map(Instant::fromEpochSeconds),
         isPinned = isPinned,
-        flags = flags
+        flags = Flags(flags)
     )
 }
+
+fun ItemEntity.toEncryptedDomain(): ItemEncrypted = ItemEncrypted(
+    id = ItemId(id),
+    userId = UserId(userId),
+    revision = revision,
+    shareId = ShareId(shareId),
+    title = encryptedTitle,
+    note = encryptedNote,
+    content = encryptedContent,
+    state = state,
+    aliasEmail = aliasEmail,
+    createTime = Instant.fromEpochSeconds(createTime),
+    modificationTime = Instant.fromEpochSeconds(modifyTime),
+    lastAutofillTime = lastUsedTime?.let { Some(Instant.fromEpochSeconds(it)) } ?: None,
+    isPinned = isPinned,
+    flags = Flags(flags)
+)

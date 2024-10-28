@@ -21,7 +21,6 @@ package proton.android.pass.commonpresentation.impl.items.details.handlers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
@@ -31,6 +30,7 @@ import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import javax.inject.Inject
@@ -61,7 +61,13 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
 
     private fun observeNoteItemContents(item: Item): Flow<ItemContents.Note> = flow {
         encryptionContextProvider.withEncryptionContext {
-            item.toItemContents(this@withEncryptionContext) as ItemContents.Note
+            toItemContents(
+                itemType = item.itemType,
+                encryptionContext = this,
+                title = item.title,
+                note = item.note,
+                flags = item.flags
+            ) as ItemContents.Note
         }.let { noteItemContents ->
             emit(noteItemContents)
         }

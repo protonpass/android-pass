@@ -47,12 +47,14 @@ internal fun OptionsAliasContactContent(
     onUiEvent: (OptionsAliasBottomSheetUiEvent) -> Unit
 ) {
     val bottomSheetItems = buildList {
-        add(
-            sendEmail(
-                isEnabled = !state.isAnyLoading,
-                onClick = { onUiEvent(OnSendEmailClicked) }
+        if (state.contact != null && !state.contact.blocked) {
+            add(
+                sendEmail(
+                    isEnabled = !state.isAnyLoading,
+                    onClick = { onUiEvent(OnSendEmailClicked) }
+                )
             )
-        )
+        }
         add(
             copyEmail(
                 isEnabled = !state.isAnyLoading,

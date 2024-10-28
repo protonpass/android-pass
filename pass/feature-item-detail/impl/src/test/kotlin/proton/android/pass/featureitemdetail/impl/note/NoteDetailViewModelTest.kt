@@ -45,6 +45,7 @@ import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItems
+import proton.android.pass.domain.Flags
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
@@ -325,7 +326,7 @@ class NoteDetailViewModelTest {
                 createTime = now,
                 lastAutofillTime = None,
                 isPinned = false,
-                flags = 0
+                flags = Flags(0)
             )
         }
     }

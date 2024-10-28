@@ -150,7 +150,13 @@ class SelectPasskeyBottomsheetViewModel @Inject constructor(
     }.fold(
         onSuccess = { item ->
             val itemContents = encryptionContextProvider.withEncryptionContext {
-                item.toItemContents(this@withEncryptionContext)
+                toItemContents(
+                    itemType = item.itemType,
+                    encryptionContext = this,
+                    title = item.title,
+                    note = item.note,
+                    flags = item.flags
+                )
             }
 
             when (itemContents) {

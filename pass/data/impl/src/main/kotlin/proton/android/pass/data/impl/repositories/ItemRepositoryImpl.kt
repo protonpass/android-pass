@@ -68,6 +68,7 @@ import proton.android.pass.data.impl.extensions.hasTotp
 import proton.android.pass.data.impl.extensions.hasWebsite
 import proton.android.pass.data.impl.extensions.toCrypto
 import proton.android.pass.data.impl.extensions.toDomain
+import proton.android.pass.data.impl.extensions.toEncryptedDomain
 import proton.android.pass.data.impl.extensions.toItemRevision
 import proton.android.pass.data.impl.extensions.toRequest
 import proton.android.pass.data.impl.extensions.with
@@ -87,6 +88,7 @@ import proton.android.pass.data.impl.util.TimeUtil
 import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -357,7 +359,45 @@ class ItemRepositoryImpl @Inject constructor(
         itemTypeFilter: ItemTypeFilter,
         setFlags: Int?,
         clearFlags: Int?
-    ): Flow<List<Item>> = when (shareSelection) {
+    ): Flow<List<Item>> = innerObserveItems(
+        shareSelection,
+        userId,
+        itemState,
+        itemTypeFilter,
+        setFlags,
+        clearFlags
+    ).map { items ->
+        encryptionContextProvider.withEncryptionContextSuspendable {
+            items.map { item -> item.toDomain(this) }
+        }
+    }
+
+    override fun observeEncryptedItems(
+        userId: UserId,
+        shareSelection: ShareSelection,
+        itemState: ItemState?,
+        itemTypeFilter: ItemTypeFilter,
+        setFlags: Int?,
+        clearFlags: Int?
+    ): Flow<List<ItemEncrypted>> = innerObserveItems(
+        shareSelection,
+        userId,
+        itemState,
+        itemTypeFilter,
+        setFlags,
+        clearFlags
+    ).map { items ->
+        items.map(ItemEntity::toEncryptedDomain)
+    }
+
+    private fun innerObserveItems(
+        shareSelection: ShareSelection,
+        userId: UserId,
+        itemState: ItemState?,
+        itemTypeFilter: ItemTypeFilter,
+        setFlags: Int?,
+        clearFlags: Int?
+    ) = when (shareSelection) {
         is ShareSelection.Share -> localItemDataSource.observeItemsForShares(
             userId = userId,
             shareIds = listOf(shareSelection.shareId),
@@ -383,10 +423,6 @@ class ItemRepositoryImpl @Inject constructor(
             setFlags = setFlags,
             clearFlags = clearFlags
         )
-    }.map { items ->
-        encryptionContextProvider.withEncryptionContextSuspendable {
-            items.map { item -> item.toDomain(this) }
-        }
     }
 
     override fun observePinnedItems(

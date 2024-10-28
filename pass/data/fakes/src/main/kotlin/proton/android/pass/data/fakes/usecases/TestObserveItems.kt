@@ -34,6 +34,7 @@ import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.AddressDetailsContent
 import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.CreditCardType
+import proton.android.pass.domain.Flags
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -130,7 +131,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                     createTime = now,
                     lastAutofillTime = None,
                     isPinned = false,
-                    flags = flags
+                    flags = Flags(flags)
                 )
             }
         }

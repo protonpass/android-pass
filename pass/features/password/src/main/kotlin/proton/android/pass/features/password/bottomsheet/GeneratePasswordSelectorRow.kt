@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.password.bottomsheet
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -25,22 +26,26 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultSmallNorm
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Radius
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.text.Text
+import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun GeneratePasswordSelectorRow(
+internal fun GeneratePasswordSelectorRow(
     modifier: Modifier = Modifier,
     title: String,
-    value: String,
+    selectedValue: String,
     iconContentDescription: String?,
     onClick: () -> Unit
 ) {
@@ -49,29 +54,48 @@ fun GeneratePasswordSelectorRow(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
+        Text.Body2Regular(
             text = title,
-            color = PassTheme.colors.textNorm,
-            style = ProtonTheme.typography.defaultSmallNorm
+            color = PassTheme.colors.textNorm
         )
 
         Row(
             modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
+                .clip(RoundedCornerShape(size = Radius.small))
+                .background(PassTheme.colors.loginInteractionNormMajor1)
                 .clickable(onClick = onClick)
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                .padding(
+                    start = Spacing.small,
+                    top = Spacing.extraSmall,
+                    bottom = Spacing.extraSmall,
+                    end = Spacing.extraSmall
+                ),
+            horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = value,
-                color = PassTheme.colors.textNorm,
-                style = ProtonTheme.typography.defaultSmallNorm
+            Text.Body3Medium(
+                text = selectedValue,
+                color = PassTheme.colors.textInvert
             )
 
             Icon(
-                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_chevron_down_filled),
+                painter = painterResource(CoreR.drawable.ic_proton_chevron_tiny_down),
                 contentDescription = iconContentDescription,
-                tint = PassTheme.colors.textHint
+                tint = PassTheme.colors.textInvert
+            )
+        }
+    }
+}
+
+@[Preview Composable]
+internal fun GeneratePasswordSelectorRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            GeneratePasswordSelectorRow(
+                title = "Title",
+                selectedValue = "Selected option value",
+                iconContentDescription = null,
+                onClick = {}
             )
         }
     }

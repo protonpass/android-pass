@@ -33,7 +33,6 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
-import proton.android.pass.data.fakes.usecases.FakeUpdateAliasName
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
@@ -251,8 +250,7 @@ class CreateAliasViewModelTest {
         inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
         encryptionContextProvider = TestEncryptionContextProvider(),
         aliasPrefixValidator = TestAliasPrefixValidator(),
-        observeDefaultVault = TestObserveDefaultVault(),
-        updateAliasName = FakeUpdateAliasName()
+        observeDefaultVault = TestObserveDefaultVault()
     ).apply {
         setDraftStatus(isDraft)
     }

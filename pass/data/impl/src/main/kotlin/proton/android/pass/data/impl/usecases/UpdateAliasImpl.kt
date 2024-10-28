@@ -71,6 +71,10 @@ class UpdateAliasImpl @Inject constructor(
             aliasRepository.updateAliasNote(userId, item.shareId, item.id, content.slNote)
         }
 
+        if (content.hasDisplayName) {
+            aliasRepository.updateAliasName(userId, item.shareId, item.id, content.displayName)
+        }
+
         if (content.itemData is Some) {
             val itemData = (content.itemData as Some<UpdateAliasItemContent>).value
             return updateItemContent(userId, item, itemData)

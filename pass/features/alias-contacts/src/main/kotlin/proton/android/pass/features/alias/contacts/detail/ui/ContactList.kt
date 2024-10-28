@@ -42,6 +42,7 @@ fun ContactList(
     blockedContacts: ImmutableList<Contact>,
     forwardingContacts: ImmutableList<Contact>,
     contactBlockIsLoading: PersistentSet<ContactId>,
+    canSendEmail: Boolean,
     onEvent: (DetailAliasContactUIEvent) -> Unit
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)) {
@@ -52,6 +53,7 @@ fun ContactList(
                 ContactRow(
                     contact = contact,
                     isBlockLoading = contactBlockIsLoading.contains(contact.id),
+                    canSendEmail = canSendEmail,
                     onEvent = onEvent
                 )
             }
@@ -68,6 +70,7 @@ fun ContactList(
                 ContactRow(
                     contact = contact,
                     isBlockLoading = contactBlockIsLoading.contains(contact.id),
+                    canSendEmail = canSendEmail,
                     onEvent = onEvent
                 )
             }

@@ -25,12 +25,16 @@ import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.error.BadTagException
+import java.lang.System.arraycopy
 import javax.crypto.AEADBadTagException
 import javax.crypto.Cipher
 import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
-class EncryptionContextImpl(private val key: EncryptionKey) : EncryptionContext {
+class EncryptionContextImpl(key: EncryptionKey) : EncryptionContext {
+
+    private val secretKeySpec = SecretKeySpec(key.value(), ALGORITHM)
+
     override fun encrypt(content: String): EncryptedString {
         val encrypted = encrypt(content.encodeToByteArray())
         return Base64.encodeBase64String(encrypted.array)
@@ -38,12 +42,15 @@ class EncryptionContextImpl(private val key: EncryptionKey) : EncryptionContext 
 
     override fun encrypt(content: ByteArray, tag: EncryptionTag?): EncryptedByteArray {
         val cipher = cipherFactory()
-        val keyBytes = key.value()
-        val secretKey = SecretKeySpec(keyBytes, 0, keyBytes.size, algorithm)
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
+        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec)
+
         tag?.let { cipher.updateAAD(it.value) }
+
         val cipherByteArray = cipher.doFinal(content)
-        return EncryptedByteArray(cipher.iv + cipherByteArray)
+        val result = ByteArray(IV_SIZE + cipherByteArray.size)
+        arraycopy(cipher.iv, 0, result, 0, IV_SIZE)
+        arraycopy(cipherByteArray, 0, result, IV_SIZE, cipherByteArray.size)
+        return EncryptedByteArray(result)
     }
 
     override fun decrypt(content: EncryptedString): String {
@@ -54,11 +61,12 @@ class EncryptionContextImpl(private val key: EncryptionKey) : EncryptionContext 
 
     override fun decrypt(content: EncryptedByteArray, tag: EncryptionTag?): ByteArray {
         val cipher = cipherFactory()
-        val iv = content.array.copyOf(ivSize)
-        val cipherByteArray = content.array.copyOfRange(ivSize, content.array.size)
-        val keyBytes = key.value()
-        val secretKey = SecretKeySpec(keyBytes, 0, keyBytes.size, algorithm)
-        cipher.init(Cipher.DECRYPT_MODE, secretKey, GCMParameterSpec(cipherGCMTagBits, iv))
+
+        val iv = content.array.copyOfRange(0, IV_SIZE)
+        val cipherByteArray = content.array.copyOfRange(IV_SIZE, content.array.size)
+
+        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, GCMParameterSpec(CIPHER_GCM_TAG_BITS, iv))
+
         tag?.let { cipher.updateAAD(it.value) }
         try {
             return cipher.doFinal(cipherByteArray)
@@ -69,11 +77,11 @@ class EncryptionContextImpl(private val key: EncryptionKey) : EncryptionContext 
     }
 
     companion object {
-        private const val algorithm = "AES"
-        private const val cipherTransformation = "AES/GCM/NoPadding"
-        private const val ivSize = 12
-        private const val cipherGCMTagBits = 128
+        private const val ALGORITHM = "AES"
+        private const val CIPHER_TRANSFORMATION = "AES/GCM/NoPadding"
+        private const val IV_SIZE = 12
+        private const val CIPHER_GCM_TAG_BITS = 128
 
-        private fun cipherFactory(): Cipher = Cipher.getInstance(cipherTransformation)
+        private fun cipherFactory(): Cipher = Cipher.getInstance(CIPHER_TRANSFORMATION)
     }
 }

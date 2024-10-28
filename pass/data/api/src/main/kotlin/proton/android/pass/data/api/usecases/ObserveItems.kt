@@ -20,9 +20,8 @@ package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
-import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
 
@@ -33,8 +32,7 @@ interface ObserveItems {
         itemState: ItemState?,
         filter: ItemTypeFilter,
         userId: UserId? = null,
-        securityCheckFilter: ItemSecurityCheckFilter = ItemSecurityCheckFilter.All,
-        isBreachedFilter: ItemIsBreachedFilter = ItemIsBreachedFilter.All
+        itemFlags: Map<ItemFlag, Boolean> = emptyMap()
     ): Flow<List<Item>>
 
 }

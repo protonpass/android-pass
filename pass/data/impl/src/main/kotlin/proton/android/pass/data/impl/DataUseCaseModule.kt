@@ -65,7 +65,6 @@ import proton.android.pass.data.api.usecases.LeaveVault
 import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveAccounts
-import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAddressesByUserId
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
@@ -244,7 +243,6 @@ import proton.android.pass.data.impl.usecases.LeaveVaultImpl
 import proton.android.pass.data.impl.usecases.MigrateItemsImpl
 import proton.android.pass.data.impl.usecases.MigrateVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveAccountsImpl
-import proton.android.pass.data.impl.usecases.ObserveActiveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveAddressesByUserIdImpl
 import proton.android.pass.data.impl.usecases.ObserveAliasDetailsImpl
 import proton.android.pass.data.impl.usecases.ObserveAliasOptionsImpl
@@ -431,9 +429,6 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveAccounts(impl: ObserveAccountsImpl): ObserveAccounts
-
-    @Binds
-    abstract fun bindObserveActiveItems(impl: ObserveActiveItemsImpl): ObserveActiveItems
 
     @Binds
     abstract fun bindObserveCurrentUser(impl: ObserveCurrentUserImpl): ObserveCurrentUser

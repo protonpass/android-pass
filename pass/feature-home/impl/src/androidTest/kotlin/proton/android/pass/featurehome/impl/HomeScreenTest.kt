@@ -46,13 +46,13 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.repositories.ItemSyncStatus
+import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
-import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestTrashItems
-import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
@@ -86,7 +86,7 @@ class HomeScreenTest {
     lateinit var itemSyncStatusRepository: TestItemSyncStatusRepository
 
     @Inject
-    lateinit var observeItems: TestObserveItems
+    lateinit var observeEncryptedItems: FakeObserveEncryptedItems
 
     @Inject
     lateinit var observeVaults: TestObserveVaults
@@ -117,9 +117,9 @@ class HomeScreenTest {
         val loginItemId = ItemId("login")
         val loginItemTitle = "login item"
         val items = listOf(
-            TestObserveItems.createLogin(shareId, loginItemId, loginItemTitle),
-            TestObserveItems.createAlias(shareId, ItemId("alias"), "alias-item"),
-            TestObserveItems.createNote(shareId, ItemId("note"), "note-item"),
+            FakeObserveEncryptedItems.createLogin(shareId, loginItemId, loginItemTitle),
+            FakeObserveEncryptedItems.createAlias(shareId, ItemId("alias"), "alias-item"),
+            FakeObserveEncryptedItems.createNote(shareId, ItemId("note"), "note-item"),
         )
         setupWithItems(items)
 
@@ -230,7 +230,7 @@ class HomeScreenTest {
     @Test
     fun showsConfirmationDialogBeforeTrashingAlias() {
         val title = "Some alias"
-        val aliasItem = TestObserveItems.createAlias(title = title)
+        val aliasItem = FakeObserveEncryptedItems.createAlias(title = title)
         setupWithItems(listOf(aliasItem))
 
         composeTestRule.apply {
@@ -299,7 +299,7 @@ class HomeScreenTest {
         assertEquals(itemTypeUiState, checker.memory)
     }
 
-    private fun setupWithItems(items: List<Item> = TestObserveItems.defaultValues.asList()) {
+    private fun setupWithItems(items: List<ItemEncrypted> = FakeObserveEncryptedItems.defaultValues.asList()) {
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         preferencesRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
         preferencesRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.Dismissed)
@@ -331,7 +331,7 @@ class HomeScreenTest {
 
         itemSyncStatusRepository.tryEmit(ItemSyncStatus.SyncSuccess)
         observeVaults.sendResult(Result.success(vaults))
-        observeItems.emitValue(items)
+        observeEncryptedItems.emitValue(items)
         observeSearchEntry.emit(searchEntries)
 
     }

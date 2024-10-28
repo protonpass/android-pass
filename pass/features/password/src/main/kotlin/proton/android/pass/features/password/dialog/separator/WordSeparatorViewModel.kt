@@ -25,72 +25,58 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonrust.api.WordSeparator
-import proton.android.pass.features.password.extensions.toDomain
-import proton.android.pass.features.password.extensions.toPassword
-import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.commonrust.api.passwords.PasswordConfig
+import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
+import proton.android.pass.data.api.usecases.passwords.UpdatePasswordConfig
 import javax.inject.Inject
 
 @HiltViewModel
 class WordSeparatorViewModel @Inject constructor(
-    private val userPreferencesRepository: UserPreferencesRepository
+    observePasswordConfig: ObservePasswordConfig,
+    private val updatePasswordConfig: UpdatePasswordConfig
 ) : ViewModel() {
 
-    private val selectedSeparatorFlow =
-        MutableStateFlow<Option<WordSeparator>>(None)
-    private val eventFlow = MutableStateFlow<WordSeparatorUiEvent>(WordSeparatorUiEvent.Unknown)
+    private val eventFlow = MutableStateFlow<WordSeparatorUiEvent>(WordSeparatorUiEvent.Idle)
 
-    private val preferenceFlow = userPreferencesRepository.getPasswordGenerationPreference()
-        .onEach { pref ->
-            if (selectedSeparatorFlow.value is None) {
-                selectedSeparatorFlow.update { pref.wordsSeparator.toDomain().some() }
+    private val passwordConfigFlow = observePasswordConfig()
+        .mapLatest { config ->
+            when (config) {
+                is PasswordConfig.Memorable -> config.some()
+                is PasswordConfig.Random -> None
             }
         }
 
-    val state: StateFlow<WordSeparatorUiState> = combine(
-        selectedSeparatorFlow,
-        preferenceFlow,
-        eventFlow
-    ) { selectedSeparator, preference, event ->
-        val selected = when (selectedSeparator) {
-            None -> preference.wordsSeparator.toDomain().some()
-            else -> selectedSeparator
+    internal val stateFlow: StateFlow<WordSeparatorUiState> = combine(
+        passwordConfigFlow,
+        eventFlow,
+        ::WordSeparatorUiState
+    ).stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000L),
+        initialValue = WordSeparatorUiState.Initial
+    )
+
+    internal fun onUpdateWordSeparator(newWordSeparator: WordSeparator) {
+        when (val config = stateFlow.value.config) {
+            None -> return
+            is Some -> viewModelScope.launch {
+                config.value.copy(
+                    passwordWordsSeparator = newWordSeparator
+                ).also { newConfig ->
+                    updatePasswordConfig(newConfig)
+                    eventFlow.update { WordSeparatorUiEvent.Close }
+                }
+
+            }
         }
-
-        WordSeparatorUiState(
-            options = WordSeparatorUiState.Initial.options,
-            selected = selected,
-            event = event
-        )
-    }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000L),
-            initialValue = WordSeparatorUiState.Initial
-        )
-
-    fun onChange(value: WordSeparator) {
-        selectedSeparatorFlow.update { value.some() }
-    }
-
-    fun onConfirm() = viewModelScope.launch {
-        val current = userPreferencesRepository.getPasswordGenerationPreference().first()
-        val selectedSeparator = selectedSeparatorFlow.value
-        if (selectedSeparator is Some) {
-            val updated = current.copy(wordsSeparator = selectedSeparator.value.toPassword())
-            userPreferencesRepository.setPasswordGenerationPreference(updated)
-        }
-
-        eventFlow.update { WordSeparatorUiEvent.Close }
     }
 
 }

@@ -111,6 +111,7 @@ import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.UnpinItems
 import proton.android.pass.data.api.usecases.UpdateAlias
+import proton.android.pass.data.api.usecases.UpdateAliasName
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
@@ -204,6 +205,7 @@ import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakeUnpinItem
+import proton.android.pass.data.fakes.usecases.FakeUpdateAliasName
 import proton.android.pass.data.fakes.usecases.TestAcceptInvite
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
 import proton.android.pass.data.fakes.usecases.TestApplyPendingEvents
@@ -901,5 +903,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindUpdatePasswordConfig(impl: FakeUpdatePasswordConfig): UpdatePasswordConfig
+
+    @Binds
+    abstract fun bindUpdateAliasName(impl: FakeUpdateAliasName): UpdateAliasName
 
 }

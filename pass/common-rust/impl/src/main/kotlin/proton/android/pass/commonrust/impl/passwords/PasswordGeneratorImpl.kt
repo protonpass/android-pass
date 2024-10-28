@@ -24,17 +24,17 @@ import proton.android.pass.commonrust.PassphraseConfig
 import proton.android.pass.commonrust.PassphraseGenerator
 import proton.android.pass.commonrust.RandomPasswordConfig
 import proton.android.pass.commonrust.RandomPasswordGenerator
-import proton.android.pass.commonrust.api.WordSeparator
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
-import proton.android.pass.commonrust.api.passwords.PasswordCreator
+import proton.android.pass.commonrust.api.passwords.PasswordGenerator
+import proton.android.pass.commonrust.api.passwords.PasswordWordSeparator
 import javax.inject.Inject
 import proton.android.pass.commonrust.WordSeparator as RustWordSeparator
 
-class PasswordCreatorImpl @Inject constructor(
+class PasswordGeneratorImpl @Inject constructor(
     private val appDispatchers: AppDispatchers
-) : PasswordCreator {
+) : PasswordGenerator {
 
-    override suspend fun createPassword(config: PasswordConfig): String = withContext(appDispatchers.default) {
+    override suspend fun generatePassword(config: PasswordConfig): String = withContext(appDispatchers.default) {
         when (config) {
             is PasswordConfig.Random -> {
                 RandomPasswordConfig(
@@ -56,15 +56,14 @@ class PasswordCreatorImpl @Inject constructor(
         }
     }
 
-    private fun WordSeparator?.asRustWordSeparator() = when (this) {
-        WordSeparator.Hyphen -> RustWordSeparator.HYPHENS
-        WordSeparator.Space -> RustWordSeparator.SPACES
-        WordSeparator.Period -> RustWordSeparator.PERIODS
-        WordSeparator.Comma -> RustWordSeparator.COMMAS
-        WordSeparator.Underscore -> RustWordSeparator.UNDERSCORES
-        WordSeparator.Numbers -> RustWordSeparator.NUMBERS
-        WordSeparator.NumbersAndSymbols -> RustWordSeparator.NUMBERS_AND_SYMBOLS
-        else -> RustWordSeparator.SPACES
+    private fun PasswordWordSeparator.asRustWordSeparator() = when (this) {
+        PasswordWordSeparator.Hyphen -> RustWordSeparator.HYPHENS
+        PasswordWordSeparator.Space -> RustWordSeparator.SPACES
+        PasswordWordSeparator.Period -> RustWordSeparator.PERIODS
+        PasswordWordSeparator.Comma -> RustWordSeparator.COMMAS
+        PasswordWordSeparator.Underscore -> RustWordSeparator.UNDERSCORES
+        PasswordWordSeparator.Numbers -> RustWordSeparator.NUMBERS
+        PasswordWordSeparator.NumbersAndSymbols -> RustWordSeparator.NUMBERS_AND_SYMBOLS
     }
 
 }

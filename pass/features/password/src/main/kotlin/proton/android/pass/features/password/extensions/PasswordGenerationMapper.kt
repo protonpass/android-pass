@@ -22,31 +22,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.features.password.R
 import proton.android.pass.preferences.PasswordGenerationMode
-import proton.android.pass.preferences.WordSeparator
 import proton.android.pass.commonrust.api.WordSeparator as ApiWordSeparator
 
-fun WordSeparator.toDomain(): ApiWordSeparator = when (this) {
-    WordSeparator.Hyphen -> ApiWordSeparator.Hyphen
-    WordSeparator.Space -> ApiWordSeparator.Space
-    WordSeparator.Period -> ApiWordSeparator.Period
-    WordSeparator.Comma -> ApiWordSeparator.Comma
-    WordSeparator.Underscore -> ApiWordSeparator.Underscore
-    WordSeparator.Numbers -> ApiWordSeparator.Numbers
-    WordSeparator.NumbersAndSymbols -> ApiWordSeparator.NumbersAndSymbols
-}
-
-fun ApiWordSeparator.toPassword(): WordSeparator = when (this) {
-    ApiWordSeparator.Hyphen -> WordSeparator.Hyphen
-    ApiWordSeparator.Space -> WordSeparator.Space
-    ApiWordSeparator.Period -> WordSeparator.Period
-    ApiWordSeparator.Comma -> WordSeparator.Comma
-    ApiWordSeparator.Underscore -> WordSeparator.Underscore
-    ApiWordSeparator.Numbers -> WordSeparator.Numbers
-    ApiWordSeparator.NumbersAndSymbols -> WordSeparator.NumbersAndSymbols
-}
-
 @Composable
-fun ApiWordSeparator.toResourceString() = when (this) {
+internal fun ApiWordSeparator.toResourceString() = when (this) {
     ApiWordSeparator.Hyphen -> stringResource(R.string.bottomsheet_option_word_separator_hyphens)
     ApiWordSeparator.Space -> stringResource(R.string.bottomsheet_option_word_separator_spaces)
     ApiWordSeparator.Period -> stringResource(R.string.bottomsheet_option_word_separator_periods)
@@ -58,7 +37,7 @@ fun ApiWordSeparator.toResourceString() = when (this) {
 }
 
 @Composable
-fun PasswordGenerationMode.toResourceString() = when (this) {
+internal fun PasswordGenerationMode.toResourceString() = when (this) {
     PasswordGenerationMode.Words -> stringResource(R.string.password_mode_memorable)
     PasswordGenerationMode.Random -> stringResource(R.string.password_mode_random)
 }

@@ -29,8 +29,6 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
-import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
-import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.datamodels.api.fromParsed
 import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.AddressDetailsContent
@@ -39,6 +37,7 @@ import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
@@ -73,16 +72,14 @@ class TestObserveItems @Inject constructor() : ObserveItems {
         itemState: ItemState?,
         filter: ItemTypeFilter,
         userId: UserId?,
-        securityCheckFilter: ItemSecurityCheckFilter,
-        isBreachedFilter: ItemIsBreachedFilter
+        itemFlags: Map<ItemFlag, Boolean>
     ): Flow<List<Item>> {
         val params = Params(
             selection = selection,
             itemState = itemState,
             filter = filter,
             userId = userId,
-            securityCheckFilter = securityCheckFilter,
-            isBreachedFilter = isBreachedFilter
+            itemFlags = itemFlags
         )
         val flow = flowsMap[params]
         return flow ?: fallback.map { it.getOrThrow() }
@@ -269,7 +266,6 @@ class TestObserveItems @Inject constructor() : ObserveItems {
         val itemState: ItemState? = ItemState.Active,
         val filter: ItemTypeFilter = ItemTypeFilter.All,
         val userId: UserId? = null,
-        val securityCheckFilter: ItemSecurityCheckFilter = ItemSecurityCheckFilter.All,
-        val isBreachedFilter: ItemIsBreachedFilter = ItemIsBreachedFilter.All
+        val itemFlags: Map<ItemFlag, Boolean> = emptyMap()
     )
 }

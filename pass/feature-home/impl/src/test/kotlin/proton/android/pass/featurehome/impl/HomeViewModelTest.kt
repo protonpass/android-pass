@@ -49,7 +49,6 @@ import proton.android.pass.data.fakes.usecases.TestDeleteAllSearchEntry
 import proton.android.pass.data.fakes.usecases.TestDeleteItems
 import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
-import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItems
@@ -274,8 +273,7 @@ internal class HomeViewModelTest {
             appDispatchers = TestAppDispatchers(),
             featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository(),
             observeCurrentUser = observeCurrentUser,
-            changeAliasStatus = FakeChangeAliasStatus(),
-            syncStatusRepository = TestItemSyncStatusRepository()
+            changeAliasStatus = FakeChangeAliasStatus()
         )
     }
 

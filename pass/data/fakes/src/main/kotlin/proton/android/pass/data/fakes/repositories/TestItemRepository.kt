@@ -137,7 +137,9 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         userId: UserId,
         shareSelection: ShareSelection,
         itemState: ItemState?,
-        itemTypeFilter: ItemTypeFilter
+        itemTypeFilter: ItemTypeFilter,
+        setFlags: Int?,
+        clearFlags: Int?
     ): Flow<List<Item>> = observeItemListFlow
 
     override fun observePinnedItems(

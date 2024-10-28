@@ -54,13 +54,15 @@ internal fun GeneratePasswordBottomSheetContent(
             .bottomSheet(horizontalPadding = PassTheme.dimens.bottomsheetHorizontalPadding),
         verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
-        GeneratePasswordBottomSheetTitle(onRegenerate = {
-            onEvent(GeneratePasswordUiEvent.OnRegeneratePasswordClick)
-        })
+        GeneratePasswordBottomSheetTitle(
+            onRegenerate = { onEvent(GeneratePasswordUiEvent.OnRegeneratePasswordClick) }
+        )
+
         GeneratePasswordViewContent(
             state = state,
             onEvent = onEvent
         )
+
         buttonSection()
     }
 }
@@ -70,13 +72,14 @@ internal class ThemeAndCreatePasswordUiStateProvider :
 
 @[Preview Composable]
 internal fun GenPasswordBottomSheetContentPreview(
-    @PreviewParameter(ThemeAndCreatePasswordUiStateProvider::class)
-    input: Pair<Boolean, GeneratePasswordUiState>
+    @PreviewParameter(ThemeAndCreatePasswordUiStateProvider::class) input: Pair<Boolean, GeneratePasswordUiState>
 ) {
-    PassTheme(isDark = input.first) {
+    val (isDark, state) = input
+
+    PassTheme(isDark = isDark) {
         Surface {
             GeneratePasswordBottomSheetContent(
-                state = input.second,
+                state = state,
                 onEvent = {},
                 buttonSection = {
                     CircleButton(

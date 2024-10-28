@@ -27,7 +27,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.api.PasswordStrength
-import proton.android.pass.commonrust.fakes.TestPasswordGenerator
+import proton.android.pass.commonrust.fakes.FakePasswordGenerator
 import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
@@ -63,7 +63,7 @@ internal class GeneratePasswordViewModelTest {
             clipboardManager = TestClipboardManager(),
             draftRepository = TestDraftRepository(),
             encryptionContextProvider = TestEncryptionContextProvider(),
-            passwordGenerator = TestPasswordGenerator()
+            passwordGenerator = FakePasswordGenerator()
         )
     }
 

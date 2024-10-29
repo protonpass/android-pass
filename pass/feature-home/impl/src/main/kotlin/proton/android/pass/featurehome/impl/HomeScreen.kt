@@ -46,6 +46,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
@@ -89,6 +90,8 @@ import proton.android.pass.featurehome.impl.trash.ConfirmRestoreItemsDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmTrashItemsDialog
 import proton.android.pass.featurehome.impl.vault.VaultDrawerContent
 import proton.android.pass.featurehome.impl.vault.VaultDrawerViewModel
+import proton.android.pass.features.trash.ConfirmDeleteDisabledAliasDialog
+import proton.android.pass.features.trash.ConfirmDeleteEnabledAliasDialog
 import proton.android.pass.features.trash.ConfirmDeleteItemDialog
 import proton.android.pass.features.trash.ConfirmTrashAliasDialog
 import proton.android.pass.features.trash.TrashItemBottomSheetContents
@@ -149,7 +152,10 @@ fun HomeScreen(
     var shouldShowRestoreItemsDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowMoveToTrashItemsDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowDeleteItemsDialog by rememberSaveable { mutableStateOf(false) }
-    var aliasToBeTrashed by rememberSaveable(stateSaver = ItemUiModelSaver) { mutableStateOf(null) }
+    var shouldShowMoveToTrashAliasDialog by rememberSaveable { mutableStateOf(false) }
+    var shouldShowDeleteEnabledAliasDialog by rememberSaveable { mutableStateOf(false) }
+    var shouldShowDeleteDisabledAliasDialog by rememberSaveable { mutableStateOf(false) }
+    var shouldShowBulkDeleteAliasDialog by rememberSaveable { mutableStateOf(false) }
     val scrollableState = rememberLazyListState()
 
     LaunchedEffect(enableBulkActions) {
@@ -173,6 +179,10 @@ fun HomeScreen(
             shouldShowRestoreItemsDialog = false
             shouldShowMoveToTrashItemsDialog = false
             shouldShowDeleteItemsDialog = false
+            shouldShowMoveToTrashAliasDialog = false
+            shouldShowDeleteEnabledAliasDialog = false
+            shouldShowDeleteDisabledAliasDialog = false
+            shouldShowBulkDeleteAliasDialog = false
             homeViewModel.restoreActionState()
         }
     }
@@ -373,7 +383,8 @@ fun HomeScreen(
                                     }
 
                                     else -> {
-                                        aliasToBeTrashed = itemUiModel
+                                        selectedItem = itemUiModel
+                                        shouldShowMoveToTrashAliasDialog = true
                                     }
                                 }
                             }
@@ -557,10 +568,18 @@ fun HomeScreen(
                                 }
                             }
                         },
-                        onDeleteItem = remember {
-                            {
-                                scope.launch {
-                                    bottomSheetState.hide()
+                        onDeleteItem = {
+                            val contents = it.contents
+                            scope.launch {
+                                bottomSheetState.hide()
+                                if (contents is ItemContents.Alias) {
+                                    selectedItem = it
+                                    if (contents.isEnabled) {
+                                        shouldShowDeleteEnabledAliasDialog = true
+                                    } else {
+                                        shouldShowDeleteDisabledAliasDialog = true
+                                    }
+                                } else {
                                     shouldShowDeleteItemDialog = true
                                 }
                             }
@@ -890,13 +909,16 @@ fun HomeScreen(
             )
 
             ConfirmTrashAliasDialog(
-                show = aliasToBeTrashed != null,
+                show = shouldShowMoveToTrashAliasDialog,
                 onConfirm = {
-                    val item = aliasToBeTrashed ?: return@ConfirmTrashAliasDialog
+                    val item = selectedItem ?: return@ConfirmTrashAliasDialog
                     homeViewModel.sendItemsToTrash(listOf(item))
-                    aliasToBeTrashed = null
+                    selectedItem = null
                 },
-                onDismiss = { aliasToBeTrashed = null }
+                onDismiss = {
+                    shouldShowMoveToTrashAliasDialog = false
+                    selectedItem = null
+                }
             )
 
             ConfirmRestoreItemsDialog(
@@ -933,6 +955,42 @@ fun HomeScreen(
                     )
                 },
                 onDismiss = { shouldShowDeleteItemsDialog = false }
+            )
+
+            ConfirmDeleteEnabledAliasDialog(
+                show = shouldShowDeleteEnabledAliasDialog,
+                isDeleteLoading = false,
+                isDisableLoading = false,
+                alias = (selectedItem?.contents as? ItemContents.Alias)?.aliasEmail.orEmpty(),
+                onDelete = {
+                    val item = selectedItem ?: return@ConfirmDeleteEnabledAliasDialog
+                    homeViewModel.deleteItems(listOf(item))
+                    selectedItem = null
+                },
+                onDisable = {
+                    val item = selectedItem ?: return@ConfirmDeleteEnabledAliasDialog
+                    homeViewModel.disableSelectedAliasItems(listOf(item).toPersistentList())
+                    selectedItem = null
+                },
+                onDismiss = {
+                    shouldShowDeleteEnabledAliasDialog = false
+                    selectedItem = null
+                }
+            )
+
+            ConfirmDeleteDisabledAliasDialog(
+                show = shouldShowDeleteDisabledAliasDialog,
+                isLoading = false,
+                alias = (selectedItem?.contents as? ItemContents.Alias)?.aliasEmail.orEmpty(),
+                onConfirm = {
+                    val item = selectedItem ?: return@ConfirmDeleteDisabledAliasDialog
+                    homeViewModel.deleteItems(listOf(item))
+                    selectedItem = null
+                },
+                onDismiss = {
+                    shouldShowDeleteDisabledAliasDialog = false
+                    selectedItem = null
+                }
             )
         }
     }

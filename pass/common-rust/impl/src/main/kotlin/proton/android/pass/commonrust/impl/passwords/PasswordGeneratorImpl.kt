@@ -31,7 +31,9 @@ import javax.inject.Inject
 import proton.android.pass.commonrust.WordSeparator as RustWordSeparator
 
 class PasswordGeneratorImpl @Inject constructor(
-    private val appDispatchers: AppDispatchers
+    private val appDispatchers: AppDispatchers,
+    private val randomPasswordGenerator: RandomPasswordGenerator,
+    private val passphraseGenerator: PassphraseGenerator
 ) : PasswordGenerator {
 
     override suspend fun generatePassword(config: PasswordConfig): String = withContext(appDispatchers.default) {
@@ -42,7 +44,7 @@ class PasswordGeneratorImpl @Inject constructor(
                     numbers = config.includeNumbers,
                     uppercaseLetters = config.includeUppercase,
                     symbols = config.includeSymbols
-                ).let(RandomPasswordGenerator()::generate)
+                ).let(randomPasswordGenerator::generate)
             }
 
             is PasswordConfig.Memorable -> {
@@ -51,7 +53,7 @@ class PasswordGeneratorImpl @Inject constructor(
                     capitalise = config.capitalizeWords,
                     includeNumbers = config.includeNumbers,
                     count = config.wordsCount.toUInt()
-                ).let(PassphraseGenerator()::generateRandomPassphrase)
+                ).let(passphraseGenerator::generateRandomPassphrase)
             }
         }
     }

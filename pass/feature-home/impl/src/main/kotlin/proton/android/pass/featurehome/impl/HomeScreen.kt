@@ -46,7 +46,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
@@ -883,7 +882,7 @@ fun HomeScreen(
 
             ConfirmRestoreAllDialog(
                 show = shouldShowRestoreAllDialog,
-                isLoading = actionState == ActionState.Loading,
+                isLoading = actionState is ActionState.Loading,
                 onDismiss = {
                     shouldShowRestoreAllDialog = false
                 },
@@ -894,7 +893,7 @@ fun HomeScreen(
 
             ConfirmClearTrashDialog(
                 show = shouldShowClearTrashDialog,
-                isLoading = actionState == ActionState.Loading,
+                isLoading = actionState is ActionState.Loading,
                 onDismiss = {
                     shouldShowClearTrashDialog = false
                 },
@@ -904,7 +903,7 @@ fun HomeScreen(
             )
 
             ConfirmDeleteItemDialog(
-                isLoading = actionState == ActionState.Loading,
+                isLoading = actionState is ActionState.Loading,
                 show = shouldShowDeleteItemDialog,
                 onConfirm = {
                     selectedItem?.let {
@@ -929,7 +928,7 @@ fun HomeScreen(
 
             ConfirmRestoreItemsDialog(
                 show = shouldShowRestoreItemsDialog,
-                isLoading = actionState == ActionState.Loading,
+                isLoading = actionState is ActionState.Loading,
                 amount = homeUiState.homeListUiState.selectionState.selectedItems.size,
                 onConfirm = {
                     homeViewModel.restoreItems(
@@ -941,7 +940,7 @@ fun HomeScreen(
 
             ConfirmTrashItemsDialog(
                 show = shouldShowMoveToTrashItemsDialog,
-                isLoading = actionState == ActionState.Loading,
+                isLoading = actionState is ActionState.Loading,
                 amount = homeUiState.homeListUiState.selectionState.selectedItems.size,
                 onConfirm = {
                     homeViewModel.sendItemsToTrash(
@@ -953,7 +952,7 @@ fun HomeScreen(
 
             ConfirmDeleteItemsDialog(
                 show = shouldShowDeleteItemsDialog,
-                isLoading = actionState == ActionState.Loading,
+                isLoading = actionState is ActionState.Loading,
                 amount = homeUiState.homeListUiState.selectionState.selectedItems.size,
                 onConfirm = {
                     homeViewModel.deleteItems(
@@ -965,8 +964,10 @@ fun HomeScreen(
 
             ConfirmDeleteEnabledAliasDialog(
                 show = shouldShowDeleteEnabledAliasDialog,
-                isDeleteLoading = false,
-                isDisableLoading = false,
+                isDeleteLoading = actionState is ActionState.Loading &&
+                    actionState.loadingDialog == LoadingDialog.Other,
+                isDisableLoading = actionState is ActionState.Loading &&
+                    actionState.loadingDialog == LoadingDialog.DisableAlias,
                 alias = (selectedItem?.contents as? ItemContents.Alias)?.aliasEmail.orEmpty(),
                 onDelete = {
                     val item = selectedItem ?: return@ConfirmDeleteEnabledAliasDialog
@@ -975,7 +976,7 @@ fun HomeScreen(
                 },
                 onDisable = {
                     val item = selectedItem ?: return@ConfirmDeleteEnabledAliasDialog
-                    homeViewModel.disableSelectedAliasItems(listOf(item).toPersistentList())
+                    homeViewModel.disableAlias(item)
                     selectedItem = null
                 },
                 onDismiss = {
@@ -986,7 +987,7 @@ fun HomeScreen(
 
             ConfirmDeleteDisabledAliasDialog(
                 show = shouldShowDeleteDisabledAliasDialog,
-                isLoading = actionState == ActionState.Loading,
+                isLoading = actionState is ActionState.Loading,
                 alias = (selectedItem?.contents as? ItemContents.Alias)?.aliasEmail.orEmpty(),
                 onConfirm = {
                     val item = selectedItem ?: return@ConfirmDeleteDisabledAliasDialog
@@ -1001,7 +1002,7 @@ fun HomeScreen(
 
             ConfirmBulkDeleteAliasDialog(
                 show = shouldShowBulkDeleteAliasDialog,
-                isLoading = actionState == ActionState.Loading,
+                isLoading = actionState is ActionState.Loading,
                 aliasCount = homeUiState.homeListUiState.selectionState.selectedItems
                     .filter { it.contents is ItemContents.Alias }
                     .size,

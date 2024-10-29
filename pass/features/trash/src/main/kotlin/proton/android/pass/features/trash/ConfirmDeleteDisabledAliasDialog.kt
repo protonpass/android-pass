@@ -20,6 +20,7 @@ package proton.android.pass.features.trash
 
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -29,6 +30,7 @@ import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDial
 
 @Composable
 fun ConfirmDeleteDisabledAliasDialog(
+    modifier: Modifier = Modifier,
     show: Boolean,
     isLoading: Boolean,
     alias: String,
@@ -36,6 +38,7 @@ fun ConfirmDeleteDisabledAliasDialog(
     onConfirm: () -> Unit
 ) {
     ConfirmWithLoadingDialog(
+        modifier = modifier,
         show = show,
         isLoading = isLoading,
         isConfirmActionDestructive = true,

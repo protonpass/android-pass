@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionNorm
 import me.proton.core.compose.theme.captionWeak
@@ -79,12 +80,16 @@ object Text {
     fun Body1Regular(
         text: String,
         modifier: Modifier = Modifier,
-        color: Color = ProtonTheme.colors.textNorm
+        color: Color = ProtonTheme.colors.textNorm,
+        maxLines: Int = Int.MAX_VALUE,
+        overflow: TextOverflow = TextOverflow.Clip
     ) {
         Text(
             text = text,
             style = ProtonTheme.typography.defaultNorm.copy(color = color),
-            modifier = modifier
+            modifier = modifier,
+            maxLines = maxLines,
+            overflow = overflow
         )
     }
 

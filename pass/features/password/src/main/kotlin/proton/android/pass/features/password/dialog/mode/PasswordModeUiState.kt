@@ -25,22 +25,30 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.preferences.PasswordGenerationMode
 
-sealed interface PasswordModeUiEvent {
-    data object Unknown : PasswordModeUiEvent
+internal sealed interface PasswordModeUiEvent {
+
+    data object Idle : PasswordModeUiEvent
+
     data object Close : PasswordModeUiEvent
+
 }
 
 @Immutable
-data class PasswordModeUiState(
-    val options: PersistentList<PasswordGenerationMode>,
-    val selected: Option<PasswordGenerationMode>,
-    val event: PasswordModeUiEvent
+internal data class PasswordModeUiState(
+    internal val selected: Option<PasswordGenerationMode>,
+    internal val event: PasswordModeUiEvent
 ) {
-    companion object {
-        val Initial = PasswordModeUiState(
-            options = PasswordGenerationMode.entries.toPersistentList(),
+
+    internal val options: PersistentList<PasswordGenerationMode> = PasswordGenerationMode.entries
+        .toPersistentList()
+
+    internal companion object {
+
+        internal val Initial = PasswordModeUiState(
             selected = None,
-            event = PasswordModeUiEvent.Unknown
+            event = PasswordModeUiEvent.Idle
         )
+
     }
+
 }

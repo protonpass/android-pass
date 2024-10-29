@@ -18,7 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.dialogs
 
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.CircularProgressIndicator
@@ -51,9 +51,7 @@ fun DialogButton(
         onClick = onClick
     ) {
         if (isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier.height(48.dp)
-            )
+            CircularProgressIndicator(modifier = Modifier.size(24.dp))
         } else {
             Text.Body1Regular(
                 text = text,

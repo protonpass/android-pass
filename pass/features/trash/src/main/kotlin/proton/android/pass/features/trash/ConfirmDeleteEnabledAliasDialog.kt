@@ -20,6 +20,7 @@ package proton.android.pass.features.trash
 
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -33,6 +34,7 @@ import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun ConfirmDeleteEnabledAliasDialog(
+    modifier: Modifier = Modifier,
     show: Boolean,
     isDeleteLoading: Boolean,
     isDisableLoading: Boolean,
@@ -42,6 +44,7 @@ fun ConfirmDeleteEnabledAliasDialog(
     onDisable: () -> Unit
 ) {
     LoadingDialog(
+        modifier = modifier,
         title = stringResource(R.string.delete_alias_title, alias),
         show = show,
         onDismiss = onDismiss,
@@ -50,27 +53,33 @@ fun ConfirmDeleteEnabledAliasDialog(
                 text = stringResource(R.string.delete_alias_enabled_subtitle)
             )
         },
-        buttons = {
+        buttons = buildList {
             val isAnyLoading = isDeleteLoading || isDisableLoading
-            DialogButton(
-                text = stringResource(id = CoreR.string.presentation_alert_cancel),
-                isEnabled = !isAnyLoading,
-                onClick = onDismiss
-            )
-            DialogButton(
-                text = stringResource(R.string.delete_alias_disable),
-                textColor = dialogConfirmColor(!isDisableLoading, false),
-                isEnabled = !isAnyLoading,
-                isLoading = isDisableLoading,
-                onClick = onDisable
-            )
-            DialogButton(
-                text = stringResource(R.string.delete_alias_confirm),
-                textColor = dialogConfirmColor(!isDeleteLoading, true),
-                isEnabled = !isAnyLoading,
-                isLoading = isDeleteLoading,
-                onClick = onDelete
-            )
+            add {
+                DialogButton(
+                    text = stringResource(R.string.delete_alias_confirm),
+                    textColor = dialogConfirmColor(!isDeleteLoading, true),
+                    isEnabled = !isAnyLoading,
+                    isLoading = isDeleteLoading,
+                    onClick = onDelete
+                )
+            }
+            add {
+                DialogButton(
+                    text = stringResource(R.string.delete_alias_disable),
+                    textColor = dialogConfirmColor(!isDisableLoading, false),
+                    isEnabled = !isAnyLoading,
+                    isLoading = isDisableLoading,
+                    onClick = onDisable
+                )
+            }
+            add {
+                DialogButton(
+                    text = stringResource(id = CoreR.string.presentation_alert_cancel),
+                    isEnabled = !isAnyLoading,
+                    onClick = onDismiss
+                )
+            }
         }
     )
 }

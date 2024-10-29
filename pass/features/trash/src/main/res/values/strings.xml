@@ -9,4 +9,12 @@
     <string name="alias_dialog_move_to_trash_title">Move to trash?</string>
     <string name="alias_dialog_move_to_trash_content">If you move an alias to the trash, it will stop forwarding emails to your mailbox.</string>
     <string name="alias_dialog_move_to_trash_confirm">Confirm</string>
+    <string name="delete_alias_confirm">Delete it, I will never need it</string>
+    <string name="delete_alias_title">Delete %s</string>
+    <string name="delete_alias_enabled_subtitle">"Please note once deleted, the alias can\'t be restored. Maybe you want to disable the alias instead? "</string>
+    <string name="delete_alias_disabled_subtitle">Please note once deleted, the alias can\'t be restored. The alias is already disabled and won’t forward emails to your mailbox.</string>
+    <string name="bulk_delete_alias_title">You\'re about to permanently delete %d aliases</string>
+    <string name="bulk_delete_alias_subtitle">Please note once deleted, the aliases can\'t be restored</string>
+    <string name="bulk_delete_alias_confirm">Understood, I will never need them</string>
+    <string name="delete_alias_disable">Disable alias</string>
 </resources>

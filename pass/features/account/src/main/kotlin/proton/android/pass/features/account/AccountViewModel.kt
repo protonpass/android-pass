@@ -34,6 +34,7 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.onAccountState
 import me.proton.core.auth.domain.feature.IsFido2Enabled
+import me.proton.core.user.domain.extension.isSso
 import me.proton.core.usersettings.domain.usecase.ObserveRegisteredSecurityKeys
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
@@ -115,11 +116,13 @@ class AccountViewModel @Inject constructor(
                 recoveryState = null,
                 plan = PlanSection.Hide,
                 isLoadingState = IsLoadingState.NotLoading,
+                showChangePassword = false,
+                showRecoveryEmail = false,
+                showSecurityKeys = false,
                 showUpgradeButton = isUpgradeAvailable,
                 showSubscriptionButton = isSubscriptionAvailable,
                 isExtraPasswordEnabled = hasExtraPassword.getOrNull() ?: false,
                 userId = null,
-                isFido2Enabled = false,
                 registeredSecurityKeys = emptyList()
             )
 
@@ -130,11 +133,13 @@ class AccountViewModel @Inject constructor(
                     recoveryState = userResult.data.recovery?.state?.enum,
                     plan = plan,
                     isLoadingState = IsLoadingState.NotLoading,
-                    showUpgradeButton = isUpgradeAvailable,
+                    showChangePassword = !userResult.data.isSso(),
+                    showRecoveryEmail = !userResult.data.isSso(),
+                    showSecurityKeys = !userResult.data.isSso() && isFido2Enabled(userResult.data.userId),
+                    showUpgradeButton = !userResult.data.isSso() && isUpgradeAvailable,
                     showSubscriptionButton = isSubscriptionAvailable,
                     isExtraPasswordEnabled = hasExtraPassword.getOrNull() ?: false,
                     userId = userResult.data.userId,
-                    isFido2Enabled = isFido2Enabled(userResult.data.userId),
                     registeredSecurityKeys = securityKeys.firstOrNull() ?: emptyList()
                 )
         }

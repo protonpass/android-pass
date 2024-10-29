@@ -155,6 +155,8 @@ import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEn
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
+import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
+import proton.android.pass.data.api.usecases.passwords.UpdatePasswordConfig
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
@@ -323,6 +325,8 @@ import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
 import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
 import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
 import proton.android.pass.data.fakes.usecases.items.FakeUpdateItemFlag
+import proton.android.pass.data.fakes.usecases.passwords.FakeObservePasswordConfig
+import proton.android.pass.data.fakes.usecases.passwords.FakeUpdatePasswordConfig
 import proton.android.pass.data.fakes.usecases.securelink.FakeDeleteInactiveSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeDeleteSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeGenerateSecureLink
@@ -891,5 +895,11 @@ abstract class FakesDataModule {
     abstract fun bindDeleteSimpleLoginAliasMailbox(
         impl: FakeDeleteSimpleLoginAliasMailbox
     ): DeleteSimpleLoginAliasMailbox
+
+    @Binds
+    abstract fun bindObservePasswordConfig(impl: FakeObservePasswordConfig): ObservePasswordConfig
+
+    @Binds
+    abstract fun bindUpdatePasswordConfig(impl: FakeUpdatePasswordConfig): UpdatePasswordConfig
 
 }

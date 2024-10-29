@@ -43,14 +43,17 @@ import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.preferences.AliasTrashDialogStatusPreference
 
-internal sealed interface ActionState {
+internal enum class LoadingDialog {
+    DisableAlias,
+    Other
+}
 
+internal sealed interface ActionState {
     data object Done : ActionState
 
-    data object Loading : ActionState
-
+    @JvmInline
+    value class Loading(val loadingDialog: LoadingDialog = LoadingDialog.Other) : ActionState
     data object Unknown : ActionState
-
 }
 
 internal sealed interface HomeNavEvent {

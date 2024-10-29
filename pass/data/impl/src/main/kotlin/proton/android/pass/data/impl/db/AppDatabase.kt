@@ -189,7 +189,8 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
         AutoMigration(from = 52, to = 53, spec = AppDatabaseMigrations.MIGRATION_52_53::class),
         AutoMigration(from = 53, to = 54),
         AutoMigration(from = 55, to = 56),
-        AutoMigration(from = 57, to = 58)
+        AutoMigration(from = 57, to = 58),
+        AutoMigration(from = 58, to = 59)
     ],
     version = AppDatabase.VERSION,
     exportSchema = true

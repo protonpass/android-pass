@@ -18,29 +18,29 @@
 
 package proton.android.pass.features.password.dialog.mode
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonDialogTitle
-import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.features.password.R
 import proton.android.pass.preferences.PasswordGenerationMode
 
 @Composable
-fun PasswordModeDialogContent(
+internal fun PasswordModeDialogContent(
     modifier: Modifier = Modifier,
     state: PasswordModeUiState,
-    onOptionSelected: (PasswordGenerationMode) -> Unit,
-    onConfirm: () -> Unit,
-    onCancel: () -> Unit
+    onOptionSelected: (PasswordGenerationMode) -> Unit
 ) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier.padding(vertical = Spacing.medium),
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+    ) {
         ProtonDialogTitle(
-            modifier = Modifier.padding(horizontal = 32.dp, vertical = 16.dp),
+            modifier = Modifier.padding(start = Spacing.large),
             title = stringResource(R.string.password_type)
         )
 
@@ -48,13 +48,6 @@ fun PasswordModeDialogContent(
             options = state.options,
             selected = state.selected,
             onSelected = onOptionSelected
-        )
-
-        DialogCancelConfirmSection(
-            modifier = Modifier.padding(16.dp),
-            color = PassTheme.colors.loginInteractionNormMajor1,
-            onDismiss = onCancel,
-            onConfirm = onConfirm
         )
     }
 }

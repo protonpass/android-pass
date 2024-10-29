@@ -32,12 +32,13 @@ fun PasswordModeDialog(
     modifier: Modifier = Modifier,
     onNavigate: (GeneratePasswordNavigation) -> Unit,
     viewModel: PasswordModeViewModel = hiltViewModel()
-) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+) = with(viewModel) {
+    val state by stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
-        if (state.event == PasswordModeUiEvent.Close) {
-            onNavigate(GeneratePasswordNavigation.CloseDialog)
+        when (state.event) {
+            PasswordModeUiEvent.Idle -> Unit
+            PasswordModeUiEvent.Close -> onNavigate(GeneratePasswordNavigation.CloseDialog)
         }
     }
 
@@ -49,13 +50,7 @@ fun PasswordModeDialog(
     ) {
         PasswordModeDialogContent(
             state = state,
-            onOptionSelected = viewModel::onChange,
-            onConfirm = viewModel::onConfirm,
-            onCancel = {
-                onNavigate(GeneratePasswordNavigation.CloseDialog)
-            }
+            onOptionSelected = ::onUpdatePasswordGenerationMode
         )
     }
-
 }
-

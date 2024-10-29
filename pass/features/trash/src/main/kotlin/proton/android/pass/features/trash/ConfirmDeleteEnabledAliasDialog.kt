@@ -43,6 +43,7 @@ fun ConfirmDeleteEnabledAliasDialog(
 ) {
     LoadingDialog(
         title = stringResource(R.string.delete_alias_title, alias),
+        show = show,
         onDismiss = onDismiss,
         content = {
             ProtonAlertDialogText(

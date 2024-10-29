@@ -96,11 +96,9 @@ fun ConfirmWithLoadingDialog(
     onConfirm: () -> Unit,
     onCancel: () -> Unit
 ) {
-    if (!show) return
-    BackHandler { onDismiss() }
-
     LoadingDialog(
         modifier = modifier,
+        show = show,
         title = title,
         content = content,
         onDismiss = onDismiss,
@@ -134,11 +132,14 @@ fun dialogConfirmColor(isConfirmEnabled: Boolean = true, isConfirmActionDestruct
 @Composable
 fun LoadingDialog(
     modifier: Modifier = Modifier,
+    show: Boolean,
     title: String,
     content: @Composable () -> Unit,
     buttons: @Composable () -> Unit,
     onDismiss: () -> Unit
 ) {
+    if (!show) return
+    BackHandler { onDismiss() }
     AlertDialog(
         modifier = modifier
             .fillMaxWidth(fraction = ALERT_DIALOG_WIDTH_FRACTION)

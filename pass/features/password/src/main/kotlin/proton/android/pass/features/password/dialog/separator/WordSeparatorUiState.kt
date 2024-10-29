@@ -38,22 +38,22 @@ internal sealed interface WordSeparatorUiEvent {
 
 @Immutable
 internal data class WordSeparatorUiState(
-    internal val config: Option<PasswordConfig.Memorable>,
+    internal val configOption: Option<PasswordConfig.Memorable>,
     internal val event: WordSeparatorUiEvent
 ) {
 
     internal val options: PersistentList<PasswordWordSeparator> = PasswordWordSeparator.entries
         .toPersistentList()
 
-    internal val selected: Option<PasswordWordSeparator> = when (config) {
+    internal val selected: Option<PasswordWordSeparator> = when (configOption) {
         None -> None
-        is Some -> config.value.wordSeparator.some()
+        is Some -> configOption.value.wordSeparator.some()
     }
 
     internal companion object {
 
         internal val Initial = WordSeparatorUiState(
-            config = None,
+            configOption = None,
             event = WordSeparatorUiEvent.Idle
         )
 

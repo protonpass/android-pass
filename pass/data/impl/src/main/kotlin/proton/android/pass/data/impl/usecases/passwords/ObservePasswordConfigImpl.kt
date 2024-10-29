@@ -76,10 +76,8 @@ class ObservePasswordConfigImpl @Inject constructor(
                 passwordMinLength = randomPasswordMinLength,
                 passwordMaxLength = randomPasswordMaxLength,
                 includeNumbers = randomPasswordIncludeNumbers ?: preference.randomIncludeNumbers,
-                includeSymbols = randomPasswordIncludeSymbols
-                    ?: preference.randomHasSpecialCharacters,
-                includeUppercase = randomPasswordIncludeUppercase
-                    ?: preference.randomHasCapitalLetters,
+                includeSymbols = randomPasswordIncludeSymbols ?: preference.randomHasSpecialCharacters,
+                includeUppercase = randomPasswordIncludeUppercase ?: preference.randomHasCapitalLetters,
                 canToggleNumbers = canToggleRandomPasswordNumbers,
                 canToggleSymbols = canToggleRandomPasswordSymbols,
                 canToggleUppercase = canToggleRandomPasswordUppercase,

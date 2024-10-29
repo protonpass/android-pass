@@ -18,7 +18,6 @@
 
 package proton.android.pass.features.password.bottomsheet
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
@@ -29,13 +28,15 @@ import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonrust.fakes.FakePasswordGenerator
 import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
+import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
+import proton.android.pass.data.fakes.usecases.passwords.FakeObservePasswordConfig
+import proton.android.pass.data.fakes.usecases.passwords.FakeUpdatePasswordConfig
 import proton.android.pass.features.password.GeneratePasswordBottomsheetMode
 import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 
 internal class GeneratePasswordViewModelTest {
@@ -43,27 +44,28 @@ internal class GeneratePasswordViewModelTest {
     @get:Rule
     internal val dispatcherRule = MainDispatcherRule()
 
-    private lateinit var savedStateHandle: SavedStateHandle
+    private lateinit var stateHandleProvider: SavedStateHandleProvider
     private lateinit var passwordStrengthCalculator: TestPasswordStrengthCalculator
     private lateinit var viewModel: GeneratePasswordViewModel
 
     @Before
     internal fun setUp() {
-        savedStateHandle = TestSavedStateHandleProvider().get()
-        savedStateHandle[GeneratePasswordBottomsheetMode.key] =
+        stateHandleProvider = TestSavedStateHandleProvider()
+        stateHandleProvider.get()[GeneratePasswordBottomsheetMode.key] =
             GeneratePasswordBottomsheetModeValue.CancelConfirm.name
 
         passwordStrengthCalculator = TestPasswordStrengthCalculator()
 
         viewModel = GeneratePasswordViewModel(
-            savedStateHandle = savedStateHandle,
-            userPreferencesRepository = TestPreferenceRepository(),
+            stateHandleProvider = stateHandleProvider,
             passwordStrengthCalculator = passwordStrengthCalculator,
             snackbarDispatcher = TestSnackbarDispatcher(),
             clipboardManager = TestClipboardManager(),
             draftRepository = TestDraftRepository(),
             encryptionContextProvider = TestEncryptionContextProvider(),
-            passwordGenerator = FakePasswordGenerator()
+            passwordGenerator = FakePasswordGenerator(),
+            observePasswordConfig = FakeObservePasswordConfig(),
+            updatePasswordConfig = FakeUpdatePasswordConfig()
         )
     }
 

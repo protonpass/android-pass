@@ -20,8 +20,11 @@ package proton.android.pass.commonrust.impl
 
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.commonrust.PassphraseGenerator
+import proton.android.pass.commonrust.RandomPasswordGenerator
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.commonrust.api.DomainManager
@@ -63,5 +66,15 @@ abstract class CommonRustModule {
 
     @[Binds Singleton]
     abstract fun bindDomainManager(calculator: DomainManagerImpl): DomainManager
+
+    companion object {
+
+        @[Provides Singleton]
+        fun provideRandomPasswordGenerator() = RandomPasswordGenerator()
+
+        @[Provides Singleton]
+        fun providePassphraseGenerator() = PassphraseGenerator()
+
+    }
 
 }

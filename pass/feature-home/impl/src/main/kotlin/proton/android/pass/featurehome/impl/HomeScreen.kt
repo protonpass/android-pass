@@ -90,6 +90,7 @@ import proton.android.pass.featurehome.impl.trash.ConfirmRestoreItemsDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmTrashItemsDialog
 import proton.android.pass.featurehome.impl.vault.VaultDrawerContent
 import proton.android.pass.featurehome.impl.vault.VaultDrawerViewModel
+import proton.android.pass.features.trash.ConfirmBulkDeleteAliasDialog
 import proton.android.pass.features.trash.ConfirmDeleteDisabledAliasDialog
 import proton.android.pass.features.trash.ConfirmDeleteEnabledAliasDialog
 import proton.android.pass.features.trash.ConfirmDeleteItemDialog
@@ -821,9 +822,14 @@ fun HomeScreen(
                             homeViewModel.clearSelection()
                         }
 
-
                         HomeUiEvent.PermanentlyDeleteItemsActionClick -> {
-                            shouldShowDeleteItemsDialog = true
+                            val containsAlias = homeUiState.homeListUiState.selectionState.selectedItems
+                                .any { it.contents is ItemContents.Alias }
+                            if (containsAlias) {
+                                shouldShowBulkDeleteAliasDialog = true
+                            } else {
+                                shouldShowDeleteItemsDialog = true
+                            }
                         }
 
                         HomeUiEvent.RestoreItemsActionClick -> {
@@ -980,7 +986,7 @@ fun HomeScreen(
 
             ConfirmDeleteDisabledAliasDialog(
                 show = shouldShowDeleteDisabledAliasDialog,
-                isLoading = false,
+                isLoading = actionState == ActionState.Loading,
                 alias = (selectedItem?.contents as? ItemContents.Alias)?.aliasEmail.orEmpty(),
                 onConfirm = {
                     val item = selectedItem ?: return@ConfirmDeleteDisabledAliasDialog
@@ -990,6 +996,22 @@ fun HomeScreen(
                 onDismiss = {
                     shouldShowDeleteDisabledAliasDialog = false
                     selectedItem = null
+                }
+            )
+
+            ConfirmBulkDeleteAliasDialog(
+                show = shouldShowBulkDeleteAliasDialog,
+                isLoading = actionState == ActionState.Loading,
+                aliasCount = homeUiState.homeListUiState.selectionState.selectedItems
+                    .filter { it.contents is ItemContents.Alias }
+                    .size,
+                onConfirm = {
+                    homeViewModel.deleteItems(
+                        homeUiState.homeListUiState.selectionState.selectedItems
+                    )
+                },
+                onDismiss = {
+                    shouldShowBulkDeleteAliasDialog = false
                 }
             )
         }

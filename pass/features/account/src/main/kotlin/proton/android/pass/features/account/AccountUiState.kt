@@ -51,10 +51,12 @@ data class AccountUiState(
     val recoveryState: UserRecovery.State?,
     val plan: PlanSection,
     val isLoadingState: IsLoadingState,
+    val showChangePassword: Boolean,
+    val showRecoveryEmail: Boolean,
+    val showSecurityKeys: Boolean,
     val showUpgradeButton: Boolean,
     val showSubscriptionButton: Boolean,
     val isExtraPasswordEnabled: Boolean,
-    val isFido2Enabled: Boolean,
     val registeredSecurityKeys: List<Fido2RegisteredKey>?
 ) {
     companion object {
@@ -65,10 +67,12 @@ data class AccountUiState(
             recoveryState = null,
             plan = PlanSection.Hide,
             isLoadingState = IsLoadingState.Loading,
+            showChangePassword = false,
+            showRecoveryEmail = false,
+            showSecurityKeys = false,
             showUpgradeButton = false,
             showSubscriptionButton = false,
             isExtraPasswordEnabled = false,
-            isFido2Enabled = false,
             registeredSecurityKeys = emptyList()
         )
     }

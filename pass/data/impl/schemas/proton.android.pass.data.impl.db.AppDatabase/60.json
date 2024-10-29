@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 59,
-    "identityHash": "f6adf7f5b7228628bca4b6d4b3e7a4a9",
+    "version": 60,
+    "identityHash": "948a20cc0c9ddab3b10633ff70454ed6",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -4074,7 +4074,7 @@
       },
       {
         "tableName": "PassOrganizationSettingsEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` TEXT NOT NULL, `can_update` INTEGER NOT NULL, `share_mode` INTEGER NOT NULL, `has_organization` INTEGER NOT NULL, `force_lock_seconds` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`user_id`), FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` TEXT NOT NULL, `can_update` INTEGER NOT NULL, `share_mode` INTEGER NOT NULL, `has_organization` INTEGER NOT NULL, `force_lock_seconds` INTEGER NOT NULL DEFAULT 0, `random_password_allowed` INTEGER, `random_password_min_length` INTEGER, `random_password_max_length` INTEGER, `random_password_include_numbers` INTEGER, `random_password_include_symbols` INTEGER, `random_password_include_uppercase` INTEGER, `memorable_password_allowed` INTEGER, `memorable_password_min_words` INTEGER, `memorable_password_max_words` INTEGER, `memorable_password_capitalized` INTEGER, `memorable_password_include_numbers` INTEGER, PRIMARY KEY(`user_id`), FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "userId",
@@ -4106,6 +4106,72 @@
             "affinity": "INTEGER",
             "notNull": true,
             "defaultValue": "0"
+          },
+          {
+            "fieldPath": "randomPasswordAllowed",
+            "columnName": "random_password_allowed",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "randomPasswordMinLength",
+            "columnName": "random_password_min_length",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "randomPasswordMaxLength",
+            "columnName": "random_password_max_length",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "randomPasswordIncludeNumbers",
+            "columnName": "random_password_include_numbers",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "randomPasswordIncludeSymbols",
+            "columnName": "random_password_include_symbols",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "randomPasswordIncludeUppercase",
+            "columnName": "random_password_include_uppercase",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "memorablePasswordAllowed",
+            "columnName": "memorable_password_allowed",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "memorablePasswordMinWords",
+            "columnName": "memorable_password_min_words",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "memorablePasswordMaxWords",
+            "columnName": "memorable_password_max_words",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "memorablePasswordCapitalize",
+            "columnName": "memorable_password_capitalized",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "memorablePasswordIncludeNumbers",
+            "columnName": "memorable_password_include_numbers",
+            "affinity": "INTEGER",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -4365,7 +4431,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f6adf7f5b7228628bca4b6d4b3e7a4a9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '948a20cc0c9ddab3b10633ff70454ed6')"
     ]
   }
 }

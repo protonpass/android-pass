@@ -20,10 +20,11 @@ package proton.android.pass.data.fakes.usecases.passwords
 
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
 import proton.android.pass.data.api.usecases.passwords.UpdatePasswordConfig
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FakeUpdatePasswordConfig : UpdatePasswordConfig {
+class FakeUpdatePasswordConfig @Inject constructor() : UpdatePasswordConfig {
 
     override suspend fun invoke(config: PasswordConfig) = Unit
 

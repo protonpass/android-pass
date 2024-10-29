@@ -22,10 +22,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import proton.android.pass.commonrust.api.passwords.PasswordConfig
 import proton.android.pass.data.api.usecases.passwords.ObservePasswordConfig
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FakeObservePasswordConfig : ObservePasswordConfig {
+class FakeObservePasswordConfig @Inject constructor() : ObservePasswordConfig {
 
     private val passwordConfigFlow = MutableStateFlow(PasswordConfigMother.random())
 

@@ -645,7 +645,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch(coroutineExceptionHandler) {
             if (items.isEmpty()) return@launch
 
-            actionStateFlow.update { ActionState.Loading }
+            actionStateFlow.update { ActionState.Loading() }
             bottomSheetItemActionFlow.update { BottomSheetItemAction.Trash }
 
             val mappedItems = items.toShareIdItemId().toPersistentSet()
@@ -810,7 +810,7 @@ class HomeViewModel @Inject constructor(
 
     fun restoreItems(items: List<ItemUiModel>) = viewModelScope.launch(coroutineExceptionHandler) {
         if (items.isEmpty()) return@launch
-        actionStateFlow.update { ActionState.Loading }
+        actionStateFlow.update { ActionState.Loading() }
 
         val mappedItems = groupItems(items.toShareIdItemId().toPersistentSet())
         runCatching { restoreItems(items = mappedItems) }
@@ -828,7 +828,7 @@ class HomeViewModel @Inject constructor(
 
     fun deleteItems(items: List<ItemUiModel>) = viewModelScope.launch(coroutineExceptionHandler) {
         if (items.isEmpty()) return@launch
-        actionStateFlow.update { ActionState.Loading }
+        actionStateFlow.update { ActionState.Loading() }
 
         val mappedItems = items.toShareIdItemId()
         val itemTypes = homeUiState.value.homeListUiState.items
@@ -862,7 +862,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun clearTrash() = viewModelScope.launch {
-        actionStateFlow.update { ActionState.Loading }
+        actionStateFlow.update { ActionState.Loading() }
 
         val deletedItems = homeUiState.value.homeListUiState.items
         runCatching {
@@ -879,7 +879,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun restoreAllItems() = viewModelScope.launch {
-        actionStateFlow.update { ActionState.Loading }
+        actionStateFlow.update { ActionState.Loading() }
         runCatching {
             restoreAllItems.invoke()
         }.onSuccess {
@@ -1119,7 +1119,37 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun disableSelectedAliasItems(items: ImmutableList<ItemUiModel>) = viewModelScope.launch {
+    fun disableAlias(item: ItemUiModel) {
+        viewModelScope.launch {
+            actionStateFlow.update { ActionState.Loading(LoadingDialog.DisableAlias) }
+            runCatching {
+                changeAliasStatus(listOf(item).toShareIdItemId(), false)
+            }.onSuccess {
+                when (it) {
+                    is AliasItemsChangeStatusResult.AllChanged -> {
+                        snackbarDispatcher(AliasItemsEnabledSuccess)
+                        clearSelection()
+                    }
+
+                    is AliasItemsChangeStatusResult.NoneChanged -> {
+                        snackbarDispatcher(AliasItemsDisabledError)
+                    }
+
+                    is AliasItemsChangeStatusResult.SomeChanged -> {
+                        snackbarDispatcher(AliasItemsEnabledSuccess)
+                        clearSelection()
+                    }
+                }
+            }.onFailure { error ->
+                PassLogger.w(TAG, "Error disabling alias items")
+                PassLogger.w(TAG, error)
+                snackbarDispatcher(AliasItemsDisabledError)
+            }
+            actionStateFlow.update { ActionState.Done }
+        }
+    }
+
+    fun disableSelectedAliasItems(items: List<ItemUiModel>) = viewModelScope.launch {
         val aliasItems = items.filter { it.contents is ItemContents.Alias }.toShareIdItemId()
         if (aliasItems.isEmpty()) {
             PassLogger.w(TAG, "No items to be disabled")

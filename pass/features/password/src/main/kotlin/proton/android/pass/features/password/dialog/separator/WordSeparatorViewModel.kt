@@ -46,7 +46,7 @@ class WordSeparatorViewModel @Inject constructor(
 
     private val eventFlow = MutableStateFlow<WordSeparatorUiEvent>(WordSeparatorUiEvent.Idle)
 
-    private val passwordConfigFlow = observePasswordConfig()
+    private val passwordConfigOptionFlow = observePasswordConfig()
         .mapLatest { config ->
             when (config) {
                 is PasswordConfig.Memorable -> config.some()
@@ -55,7 +55,7 @@ class WordSeparatorViewModel @Inject constructor(
         }
 
     internal val stateFlow: StateFlow<WordSeparatorUiState> = combine(
-        passwordConfigFlow,
+        passwordConfigOptionFlow,
         eventFlow,
         ::WordSeparatorUiState
     ).stateIn(
@@ -65,7 +65,7 @@ class WordSeparatorViewModel @Inject constructor(
     )
 
     internal fun onUpdateWordSeparator(newPasswordWordSeparator: PasswordWordSeparator) {
-        when (val config = stateFlow.value.config) {
+        when (val config = stateFlow.value.configOption) {
             None -> return
             is Some -> viewModelScope.launch {
                 config.value.copy(

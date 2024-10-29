@@ -19,17 +19,17 @@
 package proton.android.pass.domain.organizations
 
 data class OrganizationPasswordPolicy(
-    val randomPasswordAllowed: Boolean?,
-    val randomPasswordMinLength: Int?,
-    val randomPasswordMaxLength: Int?,
-    val randomPasswordIncludeNumbers: Boolean?,
-    val randomPasswordIncludeSymbols: Boolean?,
-    val randomPasswordIncludeUppercase: Boolean?,
-    val memorablePasswordAllowed: Boolean?,
-    val memorablePasswordMinWords: Int?,
-    val memorablePasswordMaxWords: Int?,
-    val memorablePasswordCapitalize: Boolean?,
-    val memorablePasswordIncludeNumbers: Boolean?
+    val randomPasswordAllowed: Boolean? = null,
+    val randomPasswordMinLength: Int? = null,
+    val randomPasswordMaxLength: Int? = null,
+    val randomPasswordIncludeNumbers: Boolean? = null,
+    val randomPasswordIncludeSymbols: Boolean? = null,
+    val randomPasswordIncludeUppercase: Boolean? = null,
+    val memorablePasswordAllowed: Boolean? = null,
+    val memorablePasswordMinWords: Int? = null,
+    val memorablePasswordMaxWords: Int? = null,
+    val memorablePasswordCapitalize: Boolean? = null,
+    val memorablePasswordIncludeNumbers: Boolean? = null
 ) {
 
     val canToggleRandomPasswordSymbols: Boolean = randomPasswordIncludeSymbols == null

@@ -20,28 +20,25 @@ package proton.android.pass.composecomponents.impl.dialogs
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.layout.Placeable
-import androidx.compose.ui.unit.Constraints
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
-import androidx.compose.ui.util.fastForEachIndexed
 import androidx.compose.ui.window.DialogProperties
 import me.proton.core.compose.component.ProtonAlertDialogText
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.headlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import kotlin.math.max
 
 @Composable
 fun ConfirmWithLoadingDialog(
@@ -54,7 +51,7 @@ fun ConfirmWithLoadingDialog(
     message: String,
     confirmText: String,
     cancelText: String,
-    extraButtons: (@Composable () -> Unit)? = null,
+    extraButtons: List<@Composable () -> Unit> = emptyList(),
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
     onCancel: () -> Unit
@@ -89,7 +86,7 @@ fun ConfirmWithLoadingDialog(
     isConfirmEnabled: Boolean = true,
     title: String,
     content: @Composable () -> Unit,
-    extraButtons: (@Composable () -> Unit)? = null,
+    extraButtons: List<(@Composable () -> Unit)> = emptyList(),
     confirmText: String,
     cancelText: String,
     onDismiss: () -> Unit,
@@ -102,18 +99,24 @@ fun ConfirmWithLoadingDialog(
         title = title,
         content = content,
         onDismiss = onDismiss,
-        buttons = {
-            DialogButton(text = cancelText, isEnabled = !isLoading, onClick = onCancel)
-
-            extraButtons?.invoke()
-
-            DialogButton(
-                text = confirmText,
-                textColor = dialogConfirmColor(isConfirmEnabled, isConfirmActionDestructive),
-                isEnabled = isConfirmEnabled,
-                isLoading = isLoading,
-                onClick = onConfirm
-            )
+        buttons = buildList {
+            add {
+                DialogButton(
+                    text = cancelText,
+                    isEnabled = !isLoading,
+                    onClick = onCancel
+                )
+            }
+            addAll(extraButtons)
+            add {
+                DialogButton(
+                    text = confirmText,
+                    textColor = dialogConfirmColor(isConfirmEnabled, isConfirmActionDestructive),
+                    isEnabled = isConfirmEnabled,
+                    isLoading = isLoading,
+                    onClick = onConfirm
+                )
+            }
         }
     )
 }
@@ -129,13 +132,14 @@ fun dialogConfirmColor(isConfirmEnabled: Boolean = true, isConfirmActionDestruct
     PassTheme.colors.textDisabled
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun LoadingDialog(
     modifier: Modifier = Modifier,
     show: Boolean,
     title: String,
     content: @Composable () -> Unit,
-    buttons: @Composable () -> Unit,
+    buttons: List<@Composable () -> Unit>,
     onDismiss: () -> Unit
 ) {
     if (!show) return
@@ -159,120 +163,27 @@ fun LoadingDialog(
         text = content,
         onDismissRequest = onDismiss,
         buttons = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = Spacing.small,
-                        vertical = Spacing.extraSmall / 2
-                    )
-            ) {
-                AlertDialogFlowRow(
-                    mainAxisSpacing = Spacing.small,
-                    crossAxisSpacing = Spacing.mediumSmall
+            if (buttons.size > 2) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Spacing.mediumSmall),
+                    horizontalAlignment = Alignment.End
                 ) {
-                    buttons()
+                    buttons.fastForEach { button -> button() }
+                }
+            } else {
+                FlowRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Spacing.mediumSmall),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    buttons.fastForEach { button -> button() }
                 }
             }
         }
     )
-}
-
-// Copied from AndroidAlertDialog.Kt
-@Composable
-private fun AlertDialogFlowRow(
-    mainAxisSpacing: Dp,
-    crossAxisSpacing: Dp,
-    content: @Composable () -> Unit
-) {
-    Layout(content) { measurables, constraints ->
-        val sequences = mutableListOf<List<Placeable>>()
-        val crossAxisSizes = mutableListOf<Int>()
-        val crossAxisPositions = mutableListOf<Int>()
-
-        var mainAxisSpace = 0
-        var crossAxisSpace = 0
-
-        val currentSequence = mutableListOf<Placeable>()
-        var currentMainAxisSize = 0
-        var currentCrossAxisSize = 0
-
-        val childConstraints = Constraints(maxWidth = constraints.maxWidth)
-
-        // Return whether the placeable can be added to the current sequence.
-        fun canAddToCurrentSequence(placeable: Placeable) =
-            currentSequence.isEmpty() || currentMainAxisSize + mainAxisSpacing.roundToPx() +
-                placeable.width <= constraints.maxWidth
-
-        // Store current sequence information and start a new sequence.
-        fun startNewSequence() {
-            if (sequences.isNotEmpty()) {
-                crossAxisSpace += crossAxisSpacing.roundToPx()
-            }
-            // Ensures that confirming actions appear above dismissive actions.
-            @Suppress("ListIterator")
-            sequences.add(0, currentSequence.toList())
-            crossAxisSizes += currentCrossAxisSize
-            crossAxisPositions += crossAxisSpace
-
-            crossAxisSpace += currentCrossAxisSize
-            mainAxisSpace = max(mainAxisSpace, currentMainAxisSize)
-
-            currentSequence.clear()
-            currentMainAxisSize = 0
-            currentCrossAxisSize = 0
-        }
-
-        measurables.fastForEach { measurable ->
-            // Ask the child for its preferred size.
-            val placeable = measurable.measure(childConstraints)
-
-            // Start a new sequence if there is not enough space.
-            if (!canAddToCurrentSequence(placeable)) startNewSequence()
-
-            // Add the child to the current sequence.
-            if (currentSequence.isNotEmpty()) {
-                currentMainAxisSize += mainAxisSpacing.roundToPx()
-            }
-            currentSequence.add(placeable)
-            currentMainAxisSize += placeable.width
-            currentCrossAxisSize = max(currentCrossAxisSize, placeable.height)
-        }
-
-        if (currentSequence.isNotEmpty()) startNewSequence()
-
-        val mainAxisLayoutSize = if (constraints.maxWidth != Constraints.Infinity) {
-            constraints.maxWidth
-        } else {
-            max(mainAxisSpace, constraints.minWidth)
-        }
-        val crossAxisLayoutSize = max(crossAxisSpace, constraints.minHeight)
-
-        val layoutWidth = mainAxisLayoutSize
-
-        val layoutHeight = crossAxisLayoutSize
-
-        layout(layoutWidth, layoutHeight) {
-            sequences.fastForEachIndexed { i, placeables ->
-                val childrenMainAxisSizes = IntArray(placeables.size) { j ->
-                    placeables[j].width +
-                        if (j < placeables.lastIndex) mainAxisSpacing.roundToPx() else 0
-                }
-                val arrangement = Arrangement.Bottom
-                // Handle vertical direction
-                val mainAxisPositions = IntArray(childrenMainAxisSizes.size) { 0 }
-                with(arrangement) {
-                    arrange(mainAxisLayoutSize, childrenMainAxisSizes, mainAxisPositions)
-                }
-                placeables.fastForEachIndexed { j, placeable ->
-                    placeable.place(
-                        x = mainAxisPositions[j],
-                        y = crossAxisPositions[i]
-                    )
-                }
-            }
-        }
-    }
 }
 
 private const val ALERT_DIALOG_WIDTH_FRACTION = 0.9f

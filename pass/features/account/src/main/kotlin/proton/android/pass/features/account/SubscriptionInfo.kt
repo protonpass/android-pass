@@ -58,11 +58,13 @@ fun SubscriptionInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDar
                     recoveryEmail = "myrecoveryemail@proton.me",
                     recoveryState = null,
                     isLoadingState = IsLoadingState.NotLoading,
+                    showChangePassword = false,
+                    showRecoveryEmail = false,
+                    showSecurityKeys = false,
                     showUpgradeButton = true,
                     showSubscriptionButton = true,
                     isExtraPasswordEnabled = false,
                     userId = null,
-                    isFido2Enabled = false,
                     registeredSecurityKeys = emptyList()
                 )
             )

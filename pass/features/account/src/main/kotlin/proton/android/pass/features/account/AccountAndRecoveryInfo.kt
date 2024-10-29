@@ -99,21 +99,25 @@ internal fun AccountPasswordAndRecoveryInfo(state: AccountUiState, onEvent: (Acc
         UserRecovery.State.Insecure -> stringResource(R.string.account_settings_list_item_password_hint_insecure)
     }
 
-    SettingOption(
-        label = stringResource(R.string.account_settings_list_item_password_header),
-        text = passwordHint.orEmpty(),
-        onClick = { onEvent(AccountContentEvent.PasswordManagement) }
-    )
+    if (state.showChangePassword) {
+        SettingOption(
+            label = stringResource(R.string.account_settings_list_item_password_header),
+            text = passwordHint.orEmpty(),
+            onClick = { onEvent(AccountContentEvent.PasswordManagement) }
+        )
 
-    Divider(color = PassTheme.colors.inputBorderNorm)
+        Divider(color = PassTheme.colors.inputBorderNorm)
+    }
 
-    SettingOption(
-        label = stringResource(R.string.account_settings_list_item_recovery_header),
-        text = recoveryHint,
-        onClick = { onEvent(AccountContentEvent.RecoveryEmail) }
-    )
+    if (state.showRecoveryEmail) {
+        SettingOption(
+            label = stringResource(R.string.account_settings_list_item_recovery_header),
+            text = recoveryHint,
+            onClick = { onEvent(AccountContentEvent.RecoveryEmail) }
+        )
+    }
 
-    if (state.isFido2Enabled) {
+    if (state.showSecurityKeys) {
         Divider(color = PassTheme.colors.inputBorderNorm)
 
         SettingOption(
@@ -153,11 +157,13 @@ fun AccountInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                     recoveryState = UserRecovery.State.Grace,
                     plan = PlanSection.Data("Free"),
                     isLoadingState = IsLoadingState.NotLoading,
+                    showChangePassword = true,
+                    showRecoveryEmail = true,
+                    showSecurityKeys = true,
                     showUpgradeButton = true,
                     showSubscriptionButton = true,
                     isExtraPasswordEnabled = false,
                     userId = UserId(""),
-                    isFido2Enabled = true,
                     registeredSecurityKeys = emptyList()
                 ),
                 onEvent = {}

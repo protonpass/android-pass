@@ -19,7 +19,9 @@
 package proton.android.pass.data.impl.remote.assetlink
 
 import proton.android.pass.data.impl.responses.AssetLinkResponse
+import proton.android.pass.data.impl.responses.IgnoredAssetLinkResponse
 
 interface RemoteAssetLinkDataSource {
     suspend fun fetch(website: String): List<AssetLinkResponse>
+    suspend fun fetchIgnored(): IgnoredAssetLinkResponse
 }

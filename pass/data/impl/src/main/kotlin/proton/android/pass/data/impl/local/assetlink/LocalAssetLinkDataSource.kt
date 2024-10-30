@@ -27,4 +27,5 @@ interface LocalAssetLinkDataSource {
     suspend fun purgeAll()
     suspend fun purgeOlderThan(date: Instant)
     fun observeByPackageName(packageName: String): Flow<List<AssetLinkEntity>>
+    suspend fun refreshIgnored(ignoredDomains: List<String>)
 }

@@ -24,6 +24,7 @@ import proton.android.pass.domain.assetlink.AssetLink
 
 interface AssetLinkRepository {
     suspend fun fetch(website: String): AssetLink
+    suspend fun refreshIgnored(): List<String>
     suspend fun insert(list: List<AssetLink>)
     suspend fun purgeAll()
     suspend fun purgeOlderThan(date: Instant)

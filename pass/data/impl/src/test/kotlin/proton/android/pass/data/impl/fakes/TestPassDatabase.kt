@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.fakes
 
 import proton.android.pass.data.impl.db.PassDatabase
-import proton.android.pass.data.impl.db.dao.assetlink.AssetLinkDao
 import proton.android.pass.data.impl.db.dao.InviteDao
 import proton.android.pass.data.impl.db.dao.InviteKeyDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
@@ -33,6 +32,8 @@ import proton.android.pass.data.impl.db.dao.ShareKeysDao
 import proton.android.pass.data.impl.db.dao.SharesDao
 import proton.android.pass.data.impl.db.dao.TelemetryDao
 import proton.android.pass.data.impl.db.dao.UserAccessDataDao
+import proton.android.pass.data.impl.db.dao.assetlink.AssetLinkDao
+import proton.android.pass.data.impl.db.dao.assetlink.IgnoredAssetLinkDao
 import proton.android.pass.data.impl.db.dao.securelinks.SecureLinksDao
 
 internal class TestPassDatabase : PassDatabase {
@@ -90,6 +91,10 @@ internal class TestPassDatabase : PassDatabase {
     }
 
     override fun assetLinkDao(): AssetLinkDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun ignoredAssetLinkDao(): IgnoredAssetLinkDao {
         throw IllegalStateException("This method should not be called")
     }
 

@@ -64,6 +64,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.Upd
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -78,8 +79,13 @@ class UpdateAliasViewModel @Inject constructor(
     private val aliasPrefixValidator: AliasPrefixValidator,
     private val getItemById: GetItemById,
     private val observeAliasDetails: ObserveAliasDetails,
-    savedStateHandleProvider: SavedStateHandleProvider
-) : BaseAliasViewModel(snackbarDispatcher, savedStateHandleProvider) {
+    savedStateHandleProvider: SavedStateHandleProvider,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository
+) : BaseAliasViewModel(
+    snackbarDispatcher,
+    savedStateHandleProvider,
+    featureFlagsRepository
+) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.w(TAG, throwable)

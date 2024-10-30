@@ -127,8 +127,8 @@ fun CreateAliasScreen(
                     is AliasContentUiEvent.OnUpgrade ->
                         actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.Upgrade) }
                     is AliasContentUiEvent.OnSLNoteChange -> viewModel.onSLNoteChange(event.newSLNote)
-                    is AliasContentUiEvent.OnDisplayNameChange ->
-                        throw IllegalArgumentException("Not supported in create mode")
+                    is AliasContentUiEvent.OnSenderNameChange ->
+                        viewModel.onSenderNameChange(event.value)
                 }
             }
         )

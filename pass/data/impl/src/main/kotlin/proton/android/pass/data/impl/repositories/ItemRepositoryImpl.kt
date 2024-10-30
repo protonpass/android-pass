@@ -172,6 +172,7 @@ class ItemRepositoryImpl @Inject constructor(
             prefix = newAlias.prefix,
             signedSuffix = newAlias.suffix.signedSuffix,
             mailboxes = mailboxIds,
+            aliasName = newAlias.aliasName,
             item = body.request.toRequest()
         )
 
@@ -209,6 +210,7 @@ class ItemRepositoryImpl @Inject constructor(
                 alias = CreateAliasRequest(
                     prefix = newAlias.prefix,
                     signedSuffix = newAlias.suffix.signedSuffix,
+                    aliasName = newAlias.aliasName,
                     mailboxes = newAlias.mailboxes.map { it.id },
                     item = aliasBody.request.toRequest()
                 ),

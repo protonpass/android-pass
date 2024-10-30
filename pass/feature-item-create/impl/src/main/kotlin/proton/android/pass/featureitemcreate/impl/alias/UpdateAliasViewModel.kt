@@ -146,8 +146,8 @@ class UpdateAliasViewModel @Inject constructor(
         isSLNoteChanged = true
     }
 
-    override fun onDisplayNameChange(value: String) {
-        super.onDisplayNameChange(value)
+    override fun onSenderNameChange(value: String) {
+        super.onSenderNameChange(value)
         isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
         isDisplayNameChanged = true
     }

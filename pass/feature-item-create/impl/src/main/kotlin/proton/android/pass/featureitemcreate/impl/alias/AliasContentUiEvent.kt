@@ -51,6 +51,6 @@ sealed interface AliasContentUiEvent {
     value class OnSLNoteChange(val newSLNote: String) : AliasContentUiEvent
 
     @JvmInline
-    value class OnDisplayNameChange(val value: String) : AliasContentUiEvent
+    value class OnSenderNameChange(val value: String) : AliasContentUiEvent
 
 }

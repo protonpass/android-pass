@@ -22,9 +22,11 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 
 object ItemTrashMenuNavItem : NavItem(
     baseRoute = "item/trash/menu",
+    navItemType = NavItemType.Bottomsheet,
     navArgIds = listOf(
         CommonNavArgId.ShareId,
         CommonNavArgId.ItemId

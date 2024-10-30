@@ -50,6 +50,13 @@ class AssetLinkRepositoryImpl @Inject constructor(
         return androidAppLinks.toDomain(website)
     }
 
+    override suspend fun refreshIgnored(): List<String> {
+        PassLogger.d(TAG, "Refreshing ignored asset links")
+        val response = remoteAssetLinkDataSource.fetchIgnored()
+        localAssetLinkDataSource.refreshIgnored(response.ignoredDomains)
+        return response.ignoredDomains
+    }
+
     override suspend fun insert(list: List<AssetLink>) {
         PassLogger.d(TAG, "Inserting asset links: $list")
         localAssetLinkDataSource.insertAssetLink(list.toEntityList(clock.now()))

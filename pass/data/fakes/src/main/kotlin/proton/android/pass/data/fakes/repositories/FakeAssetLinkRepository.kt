@@ -40,6 +40,8 @@ class FakeAssetLinkRepository @Inject constructor() : AssetLinkRepository {
     override suspend fun fetch(website: String): AssetLink =
         fakeData.find { it.website == website } ?: AssetLink(website, emptySet())
 
+    override suspend fun refreshIgnored(): List<String> = emptyList()
+
     override suspend fun insert(list: List<AssetLink>) {
         fakeData += list
     }

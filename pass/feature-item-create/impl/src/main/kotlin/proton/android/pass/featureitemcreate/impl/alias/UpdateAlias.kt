@@ -35,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.composecomponents.impl.dialogs.PassInfoDialog
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
@@ -106,8 +107,9 @@ fun UpdateAlias(
                     is AliasContentUiEvent.OnVaultSelect -> {
                         // Only on create
                     }
+
                     AliasContentUiEvent.OnSlNoteInfoClick -> {
-                        println("JIBIRI: show sl note info dialog")
+                        showSLNoteInfoDialog = true
                     }
                 }
             }
@@ -134,4 +136,12 @@ fun UpdateAlias(
     InAppReviewTriggerLaunchedEffect(
         triggerCondition = uiState.baseAliasUiState.itemSavedState is ItemSavedState.Success
     )
+
+    if (showSLNoteInfoDialog) {
+        PassInfoDialog(
+            title = stringResource(id = R.string.sl_note_info_title),
+            message = stringResource(id = R.string.sl_note_info_message),
+            onDismiss = { showSLNoteInfoDialog = false }
+        )
+    }
 }

@@ -127,9 +127,7 @@ fun CreateAliasScreen(
                     is AliasContentUiEvent.OnUpgrade ->
                         actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.Upgrade) }
                     is AliasContentUiEvent.OnSLNoteChange -> viewModel.onSLNoteChange(event.newSLNote)
-                    is AliasContentUiEvent.OnSenderNameChange ->
-                        viewModel.onSenderNameChange(event.value)
-                    // Only supported for update, SL note creation is not allowed
+                    is AliasContentUiEvent.OnSenderNameChange -> viewModel.onSenderNameChange(event.value)
                     AliasContentUiEvent.OnSlNoteInfoClick -> Unit
                 }
             }

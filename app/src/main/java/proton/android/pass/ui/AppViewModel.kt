@@ -43,6 +43,7 @@ import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.network.api.NetworkMonitor
 import proton.android.pass.network.api.NetworkStatus
+import proton.android.pass.notifications.api.InAppMessageManager
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -54,6 +55,7 @@ class AppViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val needsBiometricAuth: NeedsBiometricAuth,
     private val inAppUpdatesManager: InAppUpdatesManager,
+    inAppMessageManager: InAppMessageManager,
     networkMonitor: NetworkMonitor
 ) : ViewModel() {
 
@@ -85,13 +87,15 @@ class AppViewModel @Inject constructor(
         snackbarDispatcher.snackbarMessage,
         themePreference,
         networkStatus,
-        inAppUpdatesManager.observeInAppUpdateState()
-    ) { snackbarMessage, theme, networkStatus, inAppUpdateState ->
+        inAppUpdatesManager.observeInAppUpdateState(),
+        inAppMessageManager.observe()
+    ) { snackbarMessage, theme, networkStatus, inAppUpdateState, inAppMessage ->
         AppUiState(
             snackbarMessage = snackbarMessage,
             theme = theme,
             networkStatus = networkStatus,
-            inAppUpdateState = inAppUpdateState
+            inAppUpdateState = inAppUpdateState,
+            inAppMessage = inAppMessage
         )
     }.stateIn(
         scope = viewModelScope,

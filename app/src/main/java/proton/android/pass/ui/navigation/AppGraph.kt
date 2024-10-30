@@ -2009,13 +2009,15 @@ fun NavGraphBuilder.appGraph(
                     )
                 )
 
-                is SimpleLoginSyncNavDestination.VerifyMailbox -> appNavigator.navigate(
-                    destination = SimpleLoginSyncMailboxVerifyNavItem,
-                    route = SimpleLoginSyncMailboxVerifyNavItem.buildRoute(
-                        mailboxId = destination.mailboxId
-                    ),
-                    backDestination = SimpleLoginSyncManagementNavItem
-                )
+                is SimpleLoginSyncNavDestination.VerifyMailbox -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = SimpleLoginSyncMailboxVerifyNavItem,
+                        route = SimpleLoginSyncMailboxVerifyNavItem.buildRoute(
+                            mailboxId = destination.mailboxId
+                        ),
+                        backDestination = SimpleLoginSyncManagementNavItem
+                    )
+                }
 
                 is SimpleLoginSyncNavDestination.SelectDomain -> appNavigator.navigate(
                     destination = SimpleLoginSyncDomainSelectNavItem,

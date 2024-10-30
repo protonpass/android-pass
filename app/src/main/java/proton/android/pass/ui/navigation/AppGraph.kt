@@ -1983,7 +1983,6 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 is SimpleLoginSyncNavDestination.Back -> appNavigator.navigateBack(
-                    comesFromBottomsheet = destination.comesFromBottomSheet,
                     force = destination.force
                 )
 
@@ -2040,6 +2039,10 @@ fun NavGraphBuilder.appGraph(
                         ),
                         backDestination = SimpleLoginSyncManagementNavItem
                     )
+                }
+
+                SimpleLoginSyncNavDestination.DismissBottomSheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
             }
         }

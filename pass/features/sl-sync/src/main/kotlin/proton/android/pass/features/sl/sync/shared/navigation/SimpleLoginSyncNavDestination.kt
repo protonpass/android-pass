@@ -24,10 +24,8 @@ sealed interface SimpleLoginSyncNavDestination {
 
     data object AliasManagement : SimpleLoginSyncNavDestination
 
-    data class Back(
-        val comesFromBottomSheet: Boolean = false,
-        val force: Boolean = false
-    ) : SimpleLoginSyncNavDestination
+    @JvmInline
+    value class Back(val force: Boolean = false) : SimpleLoginSyncNavDestination
 
     data object CreateMailbox : SimpleLoginSyncNavDestination
 
@@ -50,5 +48,7 @@ sealed interface SimpleLoginSyncNavDestination {
 
     @JvmInline
     value class DeleteMailbox(val mailboxId: Long) : SimpleLoginSyncNavDestination
+
+    data object DismissBottomSheet : SimpleLoginSyncNavDestination
 
 }

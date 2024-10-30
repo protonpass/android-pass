@@ -64,7 +64,7 @@ internal fun SenderNameSection(
                 ) {
                     Icon.Default(
                         id = CoreR.drawable.ic_proton_card_identity,
-                        tint = PassTheme.colors.aliasInteractionNormMajor1
+                        tint = PassTheme.colors.aliasInteractionNorm
                     )
 
                     Column(verticalArrangement = Arrangement.spacedBy(space = Spacing.small)) {
@@ -88,9 +88,9 @@ internal fun SenderNameSection(
 internal fun SenderNameSectionPreview(@PreviewParameter(ThemePreviewProvider::class) input: Boolean) {
     PassTheme(isDark = input) {
         Surface {
-            NoteSection(
+            SenderNameSection(
                 text = "John Doe",
-                accentColor = PassTheme.colors.loginInteractionNormMajor1
+                isLoading = false
             )
         }
     }

@@ -19,11 +19,14 @@
 package proton.android.pass.composecomponents.impl.form
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -46,7 +49,8 @@ fun SimpleNoteSection(
     placeholder: String = stringResource(id = R.string.field_note_hint),
     @DrawableRes icon: Int = me.proton.core.presentation.R.drawable.ic_proton_note,
     enabled: Boolean = true,
-    onChange: (String) -> Unit
+    onChange: (String) -> Unit,
+    labelIcon: @Composable (() -> Unit)? = null
 ) {
     ProtonTextField(
         modifier = modifier
@@ -58,7 +62,16 @@ fun SimpleNoteSection(
                 bottom = Spacing.medium
             ),
         textStyle = ProtonTheme.typography.defaultNorm(enabled),
-        label = { ProtonTextFieldLabel(text = label) },
+        label = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
+            ) {
+                ProtonTextFieldLabel(text = label)
+
+                labelIcon?.invoke()
+            }
+        },
         placeholder = { ProtonTextFieldPlaceHolder(text = placeholder) },
         editable = enabled,
         value = value,

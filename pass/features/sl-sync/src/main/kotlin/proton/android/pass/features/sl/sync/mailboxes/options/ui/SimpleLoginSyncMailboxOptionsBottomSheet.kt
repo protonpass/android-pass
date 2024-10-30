@@ -53,9 +53,7 @@ fun SimpleLoginSyncMailboxOptionsBottomSheet(
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxSetAsDefaultError,
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxSetAsDefaultSuccess,
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxVerifyError -> {
-                SimpleLoginSyncNavDestination.Back(
-                    comesFromBottomSheet = true
-                ).also(onNavigated)
+                onNavigated(SimpleLoginSyncNavDestination.DismissBottomSheet)
             }
         }
     }

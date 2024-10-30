@@ -341,6 +341,7 @@ open class CreateAliasViewModel @Inject constructor(
                         title = aliasItemFormState.title,
                         note = aliasItemFormState.note,
                         prefix = aliasItemFormState.prefix,
+                        aliasName = aliasItemFormState.senderName,
                         suffix = aliasSuffix.toDomain(),
                         mailboxes = mailboxes.map(AliasMailboxUiModel::toDomain)
                     )

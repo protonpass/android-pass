@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,29 +18,29 @@
 
 package proton.android.pass.notifications.implementation
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.notifications.api.InAppMessage
 import proton.android.pass.notifications.api.InAppMessageManager
-import proton.android.pass.notifications.api.NotificationManager
-import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.notifications.api.ToastManager
+import javax.inject.Inject
 import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class NotificationsModule {
+@Singleton
+class InAppMessageManagerImpl @Inject constructor() : InAppMessageManager {
 
-    @Binds
-    abstract fun bindSnackbarDispatcher(impl: SnackbarDispatcherImpl): SnackbarDispatcher
+    private val inAppMessageStateFlow = MutableStateFlow<Option<InAppMessage>>(None)
 
-    @Binds
-    abstract fun bindNotificationManager(impl: NotificationManagerImpl): NotificationManager
+    override fun emit(message: InAppMessage) {
+        inAppMessageStateFlow.update { Some(message) }
+    }
 
-    @Binds
-    abstract fun bindToastManager(impl: ToastManagerImpl): ToastManager
+    override fun clear() {
+        inAppMessageStateFlow.update { None }
+    }
 
-    @[Binds Singleton]
-    abstract fun bindInAppMessageManager(impl: InAppMessageManagerImpl): InAppMessageManager
+    override fun observe(): Flow<Option<InAppMessage>> = inAppMessageStateFlow
 }

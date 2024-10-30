@@ -129,6 +129,8 @@ fun CreateAliasScreen(
                     is AliasContentUiEvent.OnSLNoteChange -> viewModel.onSLNoteChange(event.newSLNote)
                     is AliasContentUiEvent.OnSenderNameChange ->
                         viewModel.onSenderNameChange(event.value)
+                    // Only supported for update, SL note creation is not allowed
+                    AliasContentUiEvent.OnSlNoteInfoClick -> Unit
                 }
             }
         )

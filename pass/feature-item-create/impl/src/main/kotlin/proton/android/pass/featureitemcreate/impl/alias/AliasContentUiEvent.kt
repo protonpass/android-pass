@@ -53,4 +53,6 @@ sealed interface AliasContentUiEvent {
     @JvmInline
     value class OnSenderNameChange(val value: String) : AliasContentUiEvent
 
+    data object OnSlNoteInfoClick : AliasContentUiEvent
+
 }

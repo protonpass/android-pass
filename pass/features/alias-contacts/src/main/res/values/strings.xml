@@ -24,7 +24,6 @@
     <string name="create_contact_title">Create contact</string>
     <string name="detail_contact_title">Contacts</string>
     <string name="email_input_error">Invalid email address</string>
-    <string name="detail_contact_sender_name">Sender name</string>
     <string name="detail_contact_display_name" comment="sender email address">A contact is created for every email address that sends emails to or receives emails from %1$s</string>
     <string name="empty_alias_contacts_title">Alias contacts</string>
     <string name="empty_alias_contacts_body">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>

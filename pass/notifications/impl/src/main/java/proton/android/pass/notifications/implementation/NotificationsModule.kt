@@ -22,22 +22,25 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.notifications.api.InAppMessageManager
 import proton.android.pass.notifications.api.NotificationManager
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.ToastManager
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class NotificationsModule {
 
     @Binds
-    abstract fun bindSnackbarMessageRepository(
-        snackbarMessageRepositoryImpl: SnackbarDispatcherImpl
-    ): SnackbarDispatcher
+    abstract fun bindSnackbarDispatcher(impl: SnackbarDispatcherImpl): SnackbarDispatcher
 
     @Binds
-    abstract fun bindNotificationManager(notificationManagerImpl: NotificationManagerImpl): NotificationManager
+    abstract fun bindNotificationManager(impl: NotificationManagerImpl): NotificationManager
 
     @Binds
-    abstract fun bindToastManager(toastManagerImpl: ToastManagerImpl): ToastManager
+    abstract fun bindToastManager(impl: ToastManagerImpl): ToastManager
+
+    @[Binds Singleton]
+    abstract fun bindInAppMessageManager(impl: InAppMessageManagerImpl): InAppMessageManager
 }

@@ -21,9 +21,11 @@ package proton.android.pass.features.secure.links.overview.navigation
 import proton.android.pass.domain.securelinks.SecureLinkId
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksLinkIdNavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 
 object SecureLinksOverviewBottomSheetNavItem : NavItem(
     baseRoute = "secure-links/overview/bottom-sheet",
+    navItemType = NavItemType.Bottomsheet,
     navArgIds = listOf(SecureLinksLinkIdNavArgId)
 ) {
 

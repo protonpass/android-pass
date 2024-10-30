@@ -20,9 +20,11 @@ package proton.android.pass.features.sl.sync.mailboxes.delete.navigation
 
 import proton.android.pass.features.sl.sync.shared.navigation.mailboxes.SimpleLoginSyncMailboxIdNavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 
 object SimpleLoginSyncMailboxDeleteNavItem : NavItem(
     baseRoute = "sl/sync/mailboxes/delete",
+    navItemType = NavItemType.Bottomsheet,
     navArgIds = listOf(SimpleLoginSyncMailboxIdNavArgId)
 ) {
 

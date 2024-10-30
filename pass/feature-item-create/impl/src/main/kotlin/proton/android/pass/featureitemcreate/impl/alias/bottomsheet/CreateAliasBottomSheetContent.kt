@@ -203,7 +203,8 @@ fun CreateAliasBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider:
                     closeScreenEvent = CloseScreenEvent.NotClose,
                     hasUserEditedContent = false,
                     hasReachedAliasLimit = false,
-                    canUpgrade = false
+                    canUpgrade = false,
+                    isAliasManagementEnabled = false
                 ),
                 aliasItemFormState = AliasItemFormState(
                     title = "some title",

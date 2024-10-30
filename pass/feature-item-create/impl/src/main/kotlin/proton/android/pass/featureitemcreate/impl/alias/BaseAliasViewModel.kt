@@ -39,10 +39,13 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 
 abstract class BaseAliasViewModel(
     private val snackbarDispatcher: SnackbarDispatcher,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val title: Option<String> = savedStateHandleProvider.get()
@@ -91,8 +94,9 @@ abstract class BaseAliasViewModel(
         aliasItemValidationErrorsState,
         isLoadingState,
         eventWrapperState,
-        hasUserEditedContentFlow
-    ) { aliasItemValidationErrors, isLoading, eventWrapper, hasUserEditedContent ->
+        hasUserEditedContentFlow,
+        featureFlagsRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1)
+    ) { aliasItemValidationErrors, isLoading, eventWrapper, hasUserEditedContent, isAliasManagementEnabled ->
         BaseAliasUiState(
             isDraft = isDraft,
             errorList = aliasItemValidationErrors,
@@ -103,7 +107,8 @@ abstract class BaseAliasViewModel(
             closeScreenEvent = eventWrapper.closeScreenEvent,
             hasUserEditedContent = hasUserEditedContent,
             hasReachedAliasLimit = false,
-            canUpgrade = false
+            canUpgrade = false,
+            isAliasManagementEnabled = isAliasManagementEnabled
         )
     }
         .stateIn(

@@ -105,7 +105,8 @@ internal fun AliasContent(
                     showMailboxDialog = true
                 }
             },
-            onEvent = onEvent
+            onEvent = onEvent,
+            isAliasManagementEnabled = uiState.isAliasManagementEnabled
         )
 
         SelectSuffixDialog(

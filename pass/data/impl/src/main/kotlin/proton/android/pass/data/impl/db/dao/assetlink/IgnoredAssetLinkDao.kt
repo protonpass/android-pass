@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,16 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.local.assetlink
+package proton.android.pass.data.impl.db.dao.assetlink
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Instant
-import proton.android.pass.data.impl.db.entities.AssetLinkEntity
+import androidx.room.Dao
+import androidx.room.Query
+import me.proton.core.data.room.db.BaseDao
+import proton.android.pass.data.impl.db.entities.IgnoredAssetLinkEntity
 
-interface LocalAssetLinkDataSource {
-    suspend fun insertAssetLink(list: List<AssetLinkEntity>)
-    suspend fun purgeAll()
-    suspend fun purgeOlderThan(date: Instant)
-    fun observeByPackageName(packageName: String): Flow<List<AssetLinkEntity>>
-    suspend fun refreshIgnored(ignoredDomains: List<String>)
+@Dao
+abstract class IgnoredAssetLinkDao : BaseDao<IgnoredAssetLinkEntity>() {
+
+    @Query("DELETE FROM ${IgnoredAssetLinkEntity.TABLE}")
+    abstract suspend fun deleteAll()
 }

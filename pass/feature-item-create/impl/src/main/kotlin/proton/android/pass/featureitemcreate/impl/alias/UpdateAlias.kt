@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.dialogs.PassInfoDialog
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -97,6 +98,7 @@ fun UpdateAlias(
                     is AliasContentUiEvent.OnSLNoteChange -> viewModel.onSLNoteChange(event.newSLNote)
                     is AliasContentUiEvent.OnSenderNameChange ->
                         viewModel.onSenderNameChange(event.value)
+
                     is AliasContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
                     AliasContentUiEvent.OnUpgrade ->
                         actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Upgrade) }
@@ -140,7 +142,11 @@ fun UpdateAlias(
     if (showSLNoteInfoDialog) {
         PassInfoDialog(
             title = stringResource(id = R.string.sl_note_info_title),
-            message = stringResource(id = R.string.sl_note_info_message),
+            message = listOf(
+                stringResource(id = R.string.sl_note_info_message_part1),
+                stringResource(id = R.string.sl_note_info_message_part2),
+                stringResource(id = R.string.sl_note_info_message_part3)
+            ).joinToString(separator = SpecialCharacters.SPACE.toString()),
             onDismiss = { showSLNoteInfoDialog = false }
         )
     }

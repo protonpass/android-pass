@@ -18,28 +18,28 @@
 
 package proton.android.pass.notifications.fakes
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.notifications.api.InAppMessage
 import proton.android.pass.notifications.api.InAppMessageManager
-import proton.android.pass.notifications.api.NotificationManager
-import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.notifications.api.ToastManager
+import javax.inject.Inject
+import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class FakesNotificationsModule {
+@Singleton
+class FakeInAppMessageManager @Inject constructor() : InAppMessageManager {
+    private val stateFlow = MutableStateFlow<Option<InAppMessage>>(None)
 
-    @Binds
-    abstract fun bindSnackbarDispatcher(impl: TestSnackbarDispatcher): SnackbarDispatcher
+    override fun emit(message: InAppMessage) {
+        stateFlow.update { Some(message) }
+    }
 
-    @Binds
-    abstract fun bindNotificationManager(impl: TestNotificationManager): NotificationManager
+    override fun clear() {
+        stateFlow.update { None }
+    }
 
-    @Binds
-    abstract fun bindToastManager(impl: TestToastManager): ToastManager
-
-    @Binds
-    abstract fun bindInAppMessageManager(impl: FakeInAppMessageManager): InAppMessageManager
+    override fun observe(): Flow<Option<InAppMessage>> = stateFlow
 }

@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
+import proton.android.pass.data.impl.db.entities.IgnoredAssetLinkEntity
 import javax.inject.Inject
 
 class LocalAssetLinkDataSourceImpl @Inject constructor(
@@ -42,5 +43,10 @@ class LocalAssetLinkDataSourceImpl @Inject constructor(
 
     override fun observeByPackageName(packageName: String): Flow<List<AssetLinkEntity>> =
         database.assetLinkDao().observeByPackageName(packageName)
+
+    override suspend fun refreshIgnored(ignoredDomains: List<String>) {
+        database.ignoredAssetLinkDao().deleteAll()
+        database.ignoredAssetLinkDao().insertOrUpdate(*ignoredDomains.map(::IgnoredAssetLinkEntity).toTypedArray())
+    }
 
 }

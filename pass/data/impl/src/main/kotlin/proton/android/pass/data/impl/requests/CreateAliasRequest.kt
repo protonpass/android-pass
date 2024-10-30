@@ -29,6 +29,8 @@ data class CreateAliasRequest(
     val signedSuffix: String,
     @SerialName("MailboxIDs")
     val mailboxes: List<Int>,
+    @SerialName("AliasName")
+    val aliasName: String?,
     @SerialName("Item")
     val item: CreateItemRequest
 )

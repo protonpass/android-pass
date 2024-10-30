@@ -25,6 +25,7 @@ data class NewAlias(
     val title: String,
     val note: String,
     val prefix: String,
+    val aliasName: String?,
     val suffix: AliasSuffix,
     val mailboxes: List<AliasMailbox>
 )

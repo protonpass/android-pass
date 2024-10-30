@@ -134,7 +134,7 @@ internal fun CreateAliasForm(
         SenderNameSection(
             value = aliasItemFormState.senderName.orEmpty(),
             enabled = isEditAllowed,
-            onChange = { onEvent(AliasContentUiEvent.OnDisplayNameChange(it)) }
+            onChange = { onEvent(AliasContentUiEvent.OnSenderNameChange(it)) }
         )
     }
 }

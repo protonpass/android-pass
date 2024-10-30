@@ -124,7 +124,7 @@ abstract class BaseAliasViewModel(
         aliasItemFormMutableState = aliasItemFormMutableState.copy(slNote = newSLNote)
     }
 
-    open fun onDisplayNameChange(value: String) {
+    open fun onSenderNameChange(value: String) {
         onUserEditedContent()
         aliasItemFormMutableState = aliasItemFormMutableState.copy(senderName = value)
     }

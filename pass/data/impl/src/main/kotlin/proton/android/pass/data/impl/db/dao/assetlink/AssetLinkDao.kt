@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
 import me.proton.core.data.room.db.BaseDao
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
+import proton.android.pass.data.impl.db.entities.IgnoredAssetLinkEntity
 
 @Dao
 abstract class AssetLinkDao : BaseDao<AssetLinkEntity>() {
@@ -47,6 +48,15 @@ abstract class AssetLinkDao : BaseDao<AssetLinkEntity>() {
         }
     }
 
-    @Query("SELECT * FROM ${AssetLinkEntity.TABLE} WHERE ${AssetLinkEntity.Columns.PACKAGE_NAME} = :packageName")
+    @Query(
+        """
+        SELECT * FROM ${AssetLinkEntity.TABLE}
+        WHERE ${AssetLinkEntity.Columns.PACKAGE_NAME} = :packageName
+        AND ${AssetLinkEntity.Columns.WEBSITE} NOT IN (
+            SELECT ${IgnoredAssetLinkEntity.Columns.WEBSITE}
+            FROM ${IgnoredAssetLinkEntity.TABLE}
+        )
+        """
+    )
     abstract fun observeByPackageName(packageName: String): Flow<List<AssetLinkEntity>>
 }

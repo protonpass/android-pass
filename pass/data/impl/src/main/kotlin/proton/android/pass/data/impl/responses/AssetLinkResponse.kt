@@ -40,3 +40,10 @@ data class TargetResponse(
     @SerialName("site")
     val site: String? = null
 )
+
+
+@Serializable
+data class IgnoredAssetLinkResponse(
+    @SerialName("ignoredDomains")
+    val ignoredDomains: List<String>
+)

@@ -181,6 +181,19 @@ object Text {
     }
 
     @Composable
+    fun CaptionMedium(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = PassTheme.colors.textNorm
+    ) {
+        Text(
+            text = text,
+            style = ProtonTheme.typography.captionMedium.copy(color = color),
+            modifier = modifier
+        )
+    }
+
+    @Composable
     fun OverlineRegular(
         text: String,
         modifier: Modifier = Modifier,

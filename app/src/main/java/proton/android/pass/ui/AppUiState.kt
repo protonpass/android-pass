@@ -23,6 +23,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.network.api.NetworkStatus
+import proton.android.pass.notifications.api.InAppMessage
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.preferences.ThemePreference
 
@@ -31,14 +32,16 @@ data class AppUiState(
     val snackbarMessage: Option<SnackbarMessage>,
     val theme: ThemePreference,
     val networkStatus: NetworkStatus,
-    val inAppUpdateState: InAppUpdateState
+    val inAppUpdateState: InAppUpdateState,
+    val inAppMessage: Option<InAppMessage>
 ) {
     companion object {
         fun default(theme: ThemePreference) = AppUiState(
             snackbarMessage = None,
             theme = theme,
             networkStatus = NetworkStatus.Online,
-            inAppUpdateState = InAppUpdateState.Idle
+            inAppUpdateState = InAppUpdateState.Idle,
+            inAppMessage = None
         )
     }
 }

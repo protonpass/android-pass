@@ -31,10 +31,17 @@ enum class InAppMessageMode {
     Banner, Modal
 }
 
+@JvmInline
+value class InAppMessageId(val value: String)
+
+@JvmInline
+value class InAppMessageCTA(val value: String)
+
 data class InAppMessage(
-    val id: String,
-    val title: String,
-    val message: String?,
+    val id: InAppMessageId,
     val mode: InAppMessageMode,
-    val cta: String
+    val title: String,
+    val message: Option<String>,
+    val imageUrl: Option<String>,
+    val cta: Option<InAppMessageCTA>
 )

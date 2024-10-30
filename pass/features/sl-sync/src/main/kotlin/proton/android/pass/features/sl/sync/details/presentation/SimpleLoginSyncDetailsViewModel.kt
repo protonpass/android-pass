@@ -89,7 +89,7 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
 
     private val isUpdatingFlow = MutableStateFlow(false)
 
-    internal val state: StateFlow<SimpleLoginSyncDetailsState> = combine(
+    internal val stateFlow: StateFlow<SimpleLoginSyncDetailsState> = combine(
         isUpdatingFlow,
         eventFlow,
         modelOptionFlow,
@@ -110,15 +110,25 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
         selectedDomainOptionFlow.update { selectedAliasDomain?.domain?.some() ?: null.some() }
     }
 
+    internal fun onRevertAliasDomainSelection() {
+        selectedDomainOptionFlow.update { None }
+        eventFlow.update { SimpleLoginSyncDetailsEvent.OnAliasDomainUpdated }
+    }
+
     internal fun onSelectAliasMailbox(selectedAliasMailbox: SimpleLoginAliasMailbox) {
         selectedMailboxOptionFlow.update { selectedAliasMailbox.some() }
+    }
+
+    internal fun onRevertAliasMailboxSelection() {
+        selectedMailboxOptionFlow.update { None }
+        eventFlow.update { SimpleLoginSyncDetailsEvent.OnAliasMailboxUpdated }
     }
 
     internal fun onUpdateAliasDomain() {
         viewModelScope.launch {
             isUpdatingFlow.update { true }
 
-            runCatching { updateSimpleLoginAliasDomain(domain = state.value.selectedAliasDomain) }
+            runCatching { updateSimpleLoginAliasDomain(domain = stateFlow.value.selectedAliasDomain) }
                 .onError { error ->
                     PassLogger.w(TAG, "There was an error updating SL alias domain")
                     PassLogger.w(TAG, error)
@@ -138,7 +148,7 @@ class SimpleLoginSyncDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             isUpdatingFlow.update { true }
 
-            when (val mailboxId = state.value.selectedAliasMailboxId) {
+            when (val mailboxId = stateFlow.value.selectedAliasMailboxId) {
                 None -> {
                     eventFlow.update { SimpleLoginSyncDetailsEvent.OnAliasMailboxUpdated }
                     snackbarDispatcher(SimpleLoginSyncDetailsSnackBarMessage.UpdateAliasMailboxSuccess)

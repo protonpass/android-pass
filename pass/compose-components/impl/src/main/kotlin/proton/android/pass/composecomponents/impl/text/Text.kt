@@ -95,6 +95,19 @@ object Text {
     }
 
     @Composable
+    fun Body1Medium(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textNorm
+    ) {
+        Text(
+            text = text,
+            style = ProtonTheme.typography.body1Medium.copy(color = color),
+            modifier = modifier
+        )
+    }
+
+    @Composable
     fun Body2Regular(
         text: String,
         modifier: Modifier = Modifier,

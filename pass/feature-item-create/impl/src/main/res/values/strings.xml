@@ -82,6 +82,9 @@
     <string name="alias_created">Alias created</string>
     <string name="cannot_retrieve_alias_options">Cannot retrieve alias options</string>
     <string name="alias_mailbox_dialog_title">Forward to</string>
+    <string name="sl_note_info_title">What is a SimpleLogin note?</string>
+    <string name="sl_note_info_message">In Pass, an item note is encrypted with the item encryption key and only users who have access to the item can view the note. Not even Proton or SimpleLogin can see it. SimpleLogin note is stored together in the same location with alias address and while it is protected by encryption at rest, it isn\'t E2E encrypted meaning anyone who has access to SimpleLogin database can read it.</string>
+    <string name="sl_note_info_content_description">Show SL note information dialog</string>
     <!-- Create note -->
     <string name="note_hint">Note</string>
     <!-- Create Credit Card -->

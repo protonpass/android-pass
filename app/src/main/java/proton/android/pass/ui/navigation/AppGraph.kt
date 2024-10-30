@@ -2032,13 +2032,15 @@ fun NavGraphBuilder.appGraph(
                     )
                 )
 
-                is SimpleLoginSyncNavDestination.DeleteMailbox -> appNavigator.navigate(
-                    destination = SimpleLoginSyncMailboxDeleteNavItem,
-                    route = SimpleLoginSyncMailboxDeleteNavItem.createNavRoute(
-                        mailboxId = destination.mailboxId
-                    ),
-                    backDestination = SimpleLoginSyncManagementNavItem
-                )
+                is SimpleLoginSyncNavDestination.DeleteMailbox -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = SimpleLoginSyncMailboxDeleteNavItem,
+                        route = SimpleLoginSyncMailboxDeleteNavItem.createNavRoute(
+                            mailboxId = destination.mailboxId
+                        ),
+                        backDestination = SimpleLoginSyncManagementNavItem
+                    )
+                }
             }
         }
     )

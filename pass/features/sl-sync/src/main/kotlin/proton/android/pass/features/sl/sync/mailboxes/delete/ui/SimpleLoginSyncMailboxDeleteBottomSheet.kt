@@ -48,8 +48,7 @@ fun SimpleLoginSyncMailboxDeleteBottomSheet(
 
             SimpleLoginSyncMailboxDeleteEvent.OnDeleteAliasMailboxError,
             SimpleLoginSyncMailboxDeleteEvent.OnDeleteAliasMailboxSuccess -> {
-                SimpleLoginSyncNavDestination.Back(comesFromBottomSheet = true)
-                    .let(onNavigated)
+                onNavigated(SimpleLoginSyncNavDestination.DismissBottomSheet)
             }
         }
     }
@@ -60,8 +59,7 @@ fun SimpleLoginSyncMailboxDeleteBottomSheet(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SimpleLoginSyncMailboxDeleteUiEvent.OnCancelClicked -> {
-                    SimpleLoginSyncNavDestination.Back(comesFromBottomSheet = true)
-                        .let(onNavigated)
+                    onNavigated(SimpleLoginSyncNavDestination.DismissBottomSheet)
                 }
 
                 SimpleLoginSyncMailboxDeleteUiEvent.OnDeleteClicked -> {

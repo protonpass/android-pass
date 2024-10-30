@@ -42,7 +42,7 @@ fun SimpleLoginSyncDomainSelectBottomSheet(
             SimpleLoginSyncDomainSelectEvent.OnFetchAliasDomainsError,
             SimpleLoginSyncDomainSelectEvent.OnUpdateAliasDomainError,
             SimpleLoginSyncDomainSelectEvent.OnUpdateAliasDomainSuccess -> {
-                onNavigated(SimpleLoginSyncNavDestination.Back(comesFromBottomSheet = true))
+                onNavigated(SimpleLoginSyncNavDestination.DismissBottomSheet)
             }
         }
     }

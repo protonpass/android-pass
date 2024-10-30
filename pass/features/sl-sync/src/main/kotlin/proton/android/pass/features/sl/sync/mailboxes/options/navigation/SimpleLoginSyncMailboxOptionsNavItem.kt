@@ -20,9 +20,11 @@ package proton.android.pass.features.sl.sync.mailboxes.options.navigation
 
 import proton.android.pass.features.sl.sync.shared.navigation.mailboxes.SimpleLoginSyncMailboxIdNavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 
 object SimpleLoginSyncMailboxOptionsNavItem : NavItem(
     baseRoute = "sl/sync/mailboxes/options",
+    navItemType = NavItemType.Bottomsheet,
     navArgIds = listOf(SimpleLoginSyncMailboxIdNavArgId)
 ) {
 

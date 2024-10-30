@@ -19,15 +19,20 @@
 package proton.android.pass.featureitemcreate.impl.alias
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.PassTheme
@@ -38,6 +43,7 @@ import proton.android.pass.composecomponents.impl.form.SenderNameSection
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.featureitemcreate.impl.R
+import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
@@ -53,7 +59,8 @@ internal fun CreateAliasForm(
     showUpgrade: Boolean,
     onSuffixClick: () -> Unit,
     onMailboxClick: () -> Unit,
-    onEvent: (AliasContentUiEvent) -> Unit
+    onEvent: (AliasContentUiEvent) -> Unit,
+    isAliasManagementEnabled: Boolean
 ) {
     Column(
         modifier = modifier
@@ -118,17 +125,29 @@ internal fun CreateAliasForm(
             onChange = { onEvent(AliasContentUiEvent.OnNoteChange(it)) }
         )
 
-        aliasItemFormState.slNote?.let { slNote ->
-            SimpleNoteSection(
-                label = buildString {
-                    append(stringResource(id = CompR.string.field_note_title))
-                    append(" ${SpecialCharacters.DOT_SEPARATOR} ")
-                    append(stringResource(id = CompR.string.simple_login_brand_name))
-                },
-                value = slNote,
-                enabled = isEditAllowed,
-                onChange = { onEvent(AliasContentUiEvent.OnSLNoteChange(it)) }
-            )
+        if (isAliasManagementEnabled) {
+            aliasItemFormState.slNote?.let { slNote ->
+                SimpleNoteSection(
+                    label = buildString {
+                        append(stringResource(id = CompR.string.field_note_title))
+                        append(" ${SpecialCharacters.DOT_SEPARATOR} ")
+                        append(stringResource(id = CompR.string.simple_login_brand_name))
+                    },
+                    labelIcon = {
+                        Icon(
+                            modifier = Modifier
+                                .size(size = 16.dp)
+                                .clickable { onEvent(AliasContentUiEvent.OnSlNoteInfoClick) },
+                            painter = painterResource(CoreR.drawable.ic_proton_question_circle),
+                            contentDescription = null,
+                            tint = PassTheme.colors.textWeak
+                        )
+                    },
+                    value = slNote,
+                    enabled = isEditAllowed,
+                    onChange = { onEvent(AliasContentUiEvent.OnSLNoteChange(it)) }
+                )
+            }
         }
 
         SenderNameSection(

@@ -34,7 +34,7 @@ fun BottomSheetItemTitle(
     color: Color = if (isEnabled) {
         PassTheme.colors.textNorm
     } else {
-        PassTheme.colors.textDisabled
+        PassTheme.colors.textWeak
     }
 ) {
     Text(

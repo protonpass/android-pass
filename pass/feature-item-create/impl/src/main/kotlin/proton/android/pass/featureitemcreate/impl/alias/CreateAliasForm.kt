@@ -136,10 +136,10 @@ internal fun CreateAliasForm(
                     labelIcon = {
                         Icon(
                             modifier = Modifier
-                                .size(size = 16.dp)
-                                .clickable { onEvent(AliasContentUiEvent.OnSlNoteInfoClick) },
+                                .clickable { onEvent(AliasContentUiEvent.OnSlNoteInfoClick) }
+                                .size(size = 16.dp),
                             painter = painterResource(CoreR.drawable.ic_proton_question_circle),
-                            contentDescription = null,
+                            contentDescription = stringResource(id = R.string.sl_note_info_content_description),
                             tint = PassTheme.colors.textWeak
                         )
                     },

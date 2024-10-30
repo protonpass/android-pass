@@ -39,7 +39,7 @@ fun SimpleLoginSyncDetailsScreen(
     onNavigated: (SimpleLoginSyncNavDestination) -> Unit,
     viewModel: SimpleLoginSyncDetailsViewModel = hiltViewModel()
 ) = with(viewModel) {
-    val state by state.collectAsStateWithLifecycle()
+    val state by stateFlow.collectAsStateWithLifecycle()
 
     var dialogOptionTypeOption by remember {
         mutableStateOf<Option<SimpleLoginSyncDetailsOptionType>>(None)
@@ -60,7 +60,7 @@ fun SimpleLoginSyncDetailsScreen(
                 dialogOptionTypeOption = None
             }
 
-            SimpleLoginSyncDetailsEvent.Idle -> {}
+            SimpleLoginSyncDetailsEvent.Idle -> Unit
         }
 
         onConsumeEvent(event = state.event)
@@ -96,7 +96,11 @@ fun SimpleLoginSyncDetailsScreen(
                 }
 
                 SimpleLoginSyncDetailsUiEvent.OnOptionsDialogDismissed -> {
-                    dialogOptionTypeOption = None
+                    when (dialogOptionTypeOption.value()) {
+                        SimpleLoginSyncDetailsOptionType.Domain -> onRevertAliasDomainSelection()
+                        SimpleLoginSyncDetailsOptionType.Mailbox -> onRevertAliasMailboxSelection()
+                        else -> dialogOptionTypeOption = None
+                    }
                 }
 
                 is SimpleLoginSyncDetailsUiEvent.OnDomainSelected -> {

@@ -19,6 +19,9 @@
 package proton.android.pass.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -34,6 +37,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -41,18 +45,21 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import proton.android.pass.R
+import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
+import proton.android.pass.composecomponents.impl.inappmessages.InAppMessageBanner
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
-import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
+import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 import proton.android.pass.network.api.NetworkStatus
+import proton.android.pass.notifications.api.InAppMessageMode
 import proton.android.pass.notifications.api.SnackbarType
 import proton.android.pass.ui.internal.InternalDrawerState
 import proton.android.pass.ui.internal.InternalDrawerValue
@@ -119,6 +126,7 @@ fun PassAppContent(
             }
         }
     }
+
     val internalDrawerState: InternalDrawerState =
         rememberInternalDrawerState(InternalDrawerValue.Closed)
     Scaffold(
@@ -134,73 +142,91 @@ fun PassAppContent(
             },
             onAppNavigation = onNavigate,
             content = {
-                Column(modifier = Modifier.padding(contentPadding)) {
-                    AnimatedVisibility(
-                        visible = appUiState.networkStatus == NetworkStatus.Offline,
-                        label = "PassAppContent-OfflineIndicator"
-                    ) {
-                        OfflineIndicator()
-                    }
-                    AnimatedVisibility(
-                        visible = appUiState.inAppUpdateState is InAppUpdateState.Downloading,
-                        label = "PassAppContent-InAppUpdateIndicator"
-                    ) {
-                        if (appUiState.inAppUpdateState !is InAppUpdateState.Downloading) return@AnimatedVisibility
-                        LinearProgressIndicator(
-                            modifier = Modifier.fillMaxWidth(),
-                            progress = appUiState.inAppUpdateState.progress
-                        )
-                    }
-                    if (needsAuth) {
-                        val unAuthBottomSheetState = rememberModalBottomSheetState(
-                            initialValue = ModalBottomSheetValue.Hidden,
-                            skipHalfExpanded = true
-                        )
+                Box(modifier = Modifier.padding(contentPadding)) {
+                    Column {
+                        AnimatedVisibility(
+                            visible = appUiState.networkStatus == NetworkStatus.Offline,
+                            label = "PassAppContent-OfflineIndicator"
+                        ) {
+                            OfflineIndicator()
+                        }
+                        AnimatedVisibility(
+                            visible = appUiState.inAppUpdateState is InAppUpdateState.Downloading,
+                            label = "PassAppContent-InAppUpdateIndicator"
+                        ) {
+                            if (appUiState.inAppUpdateState !is InAppUpdateState.Downloading) return@AnimatedVisibility
+                            LinearProgressIndicator(
+                                modifier = Modifier.fillMaxWidth(),
+                                progress = appUiState.inAppUpdateState.progress
+                            )
+                        }
+                        if (needsAuth) {
+                            val unAuthBottomSheetState = rememberModalBottomSheetState(
+                                initialValue = ModalBottomSheetValue.Hidden,
+                                skipHalfExpanded = true
+                            )
 
-                        val unAuthBottomSheetNavigator =
-                            rememberBottomSheetNavigator(unAuthBottomSheetState)
-                        val unAuthAppNavigator = rememberAppNavigator(unAuthBottomSheetNavigator)
-                        PassModalBottomSheetLayout(unAuthAppNavigator.passBottomSheetNavigator) {
-                            PassNavHost(
-                                modifier = Modifier.weight(1f),
-                                appNavigator = unAuthAppNavigator,
-                                startDestination = UN_AUTH_GRAPH,
-                                graph = {
-                                    unAuthGraph(
-                                        appNavigator = unAuthAppNavigator,
-                                        onNavigate = onNavigate,
-                                        origin = AuthOrigin.AUTO_LOCK,
-                                        dismissBottomSheet = { block ->
-                                            onBottomSheetDismissed(
-                                                coroutineScope = coroutineScope,
-                                                modalBottomSheetState = unAuthBottomSheetState,
-                                                block = block
-                                            )
-                                        }
-                                    )
-                                }
-                            )
+                            val unAuthBottomSheetNavigator =
+                                rememberBottomSheetNavigator(unAuthBottomSheetState)
+                            val unAuthAppNavigator =
+                                rememberAppNavigator(unAuthBottomSheetNavigator)
+                            PassModalBottomSheetLayout(unAuthAppNavigator.passBottomSheetNavigator) {
+                                PassNavHost(
+                                    modifier = Modifier.weight(1f),
+                                    appNavigator = unAuthAppNavigator,
+                                    startDestination = UN_AUTH_GRAPH,
+                                    graph = {
+                                        unAuthGraph(
+                                            appNavigator = unAuthAppNavigator,
+                                            onNavigate = onNavigate,
+                                            origin = AuthOrigin.AUTO_LOCK,
+                                            dismissBottomSheet = { block ->
+                                                onBottomSheetDismissed(
+                                                    coroutineScope = coroutineScope,
+                                                    modalBottomSheetState = unAuthBottomSheetState,
+                                                    block = block
+                                                )
+                                            }
+                                        )
+                                    }
+                                )
+                            }
+                        } else {
+                            PassModalBottomSheetLayout(appNavigator.passBottomSheetNavigator) {
+                                PassNavHost(
+                                    modifier = Modifier.weight(1f),
+                                    appNavigator = appNavigator,
+                                    graph = {
+                                        appGraph(
+                                            appNavigator = appNavigator,
+                                            onNavigate = onNavigate,
+                                            dismissBottomSheet = { block ->
+                                                onBottomSheetDismissed(
+                                                    coroutineScope = coroutineScope,
+                                                    modalBottomSheetState = bottomSheetState,
+                                                    block = block
+                                                )
+                                            }
+                                        )
+                                    }
+                                )
+                            }
                         }
-                    } else {
-                        PassModalBottomSheetLayout(appNavigator.passBottomSheetNavigator) {
-                            PassNavHost(
-                                modifier = Modifier.weight(1f),
-                                appNavigator = appNavigator,
-                                graph = {
-                                    appGraph(
-                                        appNavigator = appNavigator,
-                                        onNavigate = onNavigate,
-                                        dismissBottomSheet = { block ->
-                                            onBottomSheetDismissed(
-                                                coroutineScope = coroutineScope,
-                                                modalBottomSheetState = bottomSheetState,
-                                                block = block
-                                            )
-                                        }
-                                    )
-                                }
-                            )
-                        }
+                    }
+                    val shouldShowBanner = appUiState.inAppMessage is Some &&
+                        appUiState.inAppMessage.value.mode == InAppMessageMode.Banner
+                    AnimatedVisibility(
+                        modifier = Modifier.align(Alignment.BottomCenter),
+                        visible = shouldShowBanner,
+                        enter = slideInVertically(),
+                        exit = slideOutVertically()
+                    ) {
+                        val message = appUiState.inAppMessage.value() ?: return@AnimatedVisibility
+                        InAppMessageBanner(
+                            inAppMessage = message,
+                            onDismiss = { },
+                            onCTAClick = { }
+                        )
                     }
                 }
             }

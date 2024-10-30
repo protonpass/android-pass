@@ -50,12 +50,13 @@ abstract class AssetLinkDao : BaseDao<AssetLinkEntity>() {
 
     @Query(
         """
-        SELECT * FROM ${AssetLinkEntity.TABLE}
-        WHERE ${AssetLinkEntity.Columns.PACKAGE_NAME} = :packageName
-        AND ${AssetLinkEntity.Columns.WEBSITE} NOT IN (
-            SELECT ${IgnoredAssetLinkEntity.Columns.WEBSITE}
-            FROM ${IgnoredAssetLinkEntity.TABLE}
-        )
+        SELECT * FROM ${AssetLinkEntity.TABLE} AS assetLink
+        WHERE assetLink.${AssetLinkEntity.Columns.PACKAGE_NAME} = :packageName
+          AND NOT EXISTS (
+            SELECT 1 FROM ${IgnoredAssetLinkEntity.TABLE} AS ignoredLink
+            WHERE assetLink.${AssetLinkEntity.Columns.WEBSITE} = ignoredLink.${IgnoredAssetLinkEntity.Columns.WEBSITE}
+               OR assetLink.${AssetLinkEntity.Columns.WEBSITE} LIKE '%.' || ignoredLink.${IgnoredAssetLinkEntity.Columns.WEBSITE}
+          )
         """
     )
     abstract fun observeByPackageName(packageName: String): Flow<List<AssetLinkEntity>>

@@ -183,6 +183,7 @@ class CreateAliasScreenTest {
             note = note,
             prefix = expectedPrefix,
             suffix = DEFAULT_SUFFIX,
+            aliasName = null,
             mailboxes = listOf(DEFAULT_MAILBOX)
         )
 

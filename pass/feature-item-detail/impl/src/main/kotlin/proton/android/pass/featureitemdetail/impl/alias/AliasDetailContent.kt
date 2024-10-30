@@ -99,7 +99,7 @@ fun AliasDetailContent(
             )
         }
 
-        if (slNote.isNotBlank()) {
+        if (isAliasManagementEnabled && slNote.isNotBlank()) {
             NoteSection(
                 title = buildString {
                     append(stringResource(id = R.string.item_details_shared_section_note_title))

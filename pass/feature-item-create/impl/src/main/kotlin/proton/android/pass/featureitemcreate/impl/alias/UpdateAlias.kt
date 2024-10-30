@@ -58,6 +58,7 @@ fun UpdateAlias(
     )
     val uiState by viewModel.updateAliasUiState.collectAsStateWithLifecycle()
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
+    var showSLNoteInfoDialog by rememberSaveable { mutableStateOf(false) }
     val onExit = {
         if (uiState.baseAliasUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
@@ -105,7 +106,9 @@ fun UpdateAlias(
                     is AliasContentUiEvent.OnVaultSelect -> {
                         // Only on create
                     }
-
+                    AliasContentUiEvent.OnSlNoteInfoClick -> {
+                        println("JIBIRI: show sl note info dialog")
+                    }
                 }
             }
         )

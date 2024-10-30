@@ -36,7 +36,8 @@ data class BaseAliasUiState(
     val closeScreenEvent: CloseScreenEvent,
     val hasUserEditedContent: Boolean,
     val hasReachedAliasLimit: Boolean,
-    val canUpgrade: Boolean
+    val canUpgrade: Boolean,
+    val isAliasManagementEnabled: Boolean
 ) {
     companion object {
         val Initial = BaseAliasUiState(
@@ -49,7 +50,8 @@ data class BaseAliasUiState(
             closeScreenEvent = CloseScreenEvent.NotClose,
             hasUserEditedContent = false,
             hasReachedAliasLimit = false,
-            canUpgrade = false
+            canUpgrade = false,
+            isAliasManagementEnabled = false
         )
     }
 }

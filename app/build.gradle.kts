@@ -471,6 +471,7 @@ dependencies {
     implementation(projects.pass.features.report)
     implementation(projects.pass.features.slSync)
     implementation(projects.pass.features.upsell)
+    implementation(projects.pass.features.inAppMessages)
     implementation(projects.pass.log.api)
     implementation(projects.pass.log.impl)
     implementation(projects.pass.navigation.api)

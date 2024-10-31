@@ -82,23 +82,24 @@ fun InAppMessageBanner(
                 .applyIf(
                     condition = inAppMessage.ctaRoute is Some,
                     ifTrue = {
-                        inAppMessage.ctaRoute
-                            .value()
-                            ?.let { clickable { onCTAClick(it) } }
-                            ?: Modifier
+                        when (val route = inAppMessage.ctaRoute) {
+                            None -> Modifier
+                            is Some -> clickable { onCTAClick(route.value) }
+                        }
                     }
                 )
                 .padding(Spacing.mediumSmall),
             horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            inAppMessage.imageUrl.value()?.let { url ->
-                AsyncImage(
+            when (val url = inAppMessage.imageUrl) {
+                None -> {}
+                is Some -> AsyncImage(
                     modifier = Modifier
                         .height(48.dp)
                         .aspectRatio(1f, true),
                     contentScale = ContentScale.Fit,
-                    model = url,
+                    model = url.value,
                     placeholder = if (LocalInspectionMode.current) {
                         ColorPainter(Color.Red)
                     } else {
@@ -112,8 +113,9 @@ fun InAppMessageBanner(
                 verticalArrangement = Arrangement.spacedBy(Spacing.small)
             ) {
                 Text.CaptionMedium(inAppMessage.title)
-                inAppMessage.message.value()?.let {
-                    Text.CaptionRegular(it)
+                when (val ctaText = inAppMessage.ctaText) {
+                    None -> {}
+                    is Some -> Text.CaptionRegular(ctaText.value)
                 }
             }
             Icon.Default(

@@ -23,8 +23,10 @@ import android.content.Intent
 import android.net.Uri
 
 fun sendEmailIntent(context: Context, email: String) {
-    val emailIntent = Intent(Intent.ACTION_SENDTO)
-    emailIntent.setData(Uri.parse("mailto:$email"))
+    val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+        data = Uri.parse("mailto:")
+        putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+    }
     if (emailIntent.resolveActivity(context.packageManager) != null) {
         context.startActivity(emailIntent)
     }

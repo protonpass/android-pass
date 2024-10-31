@@ -29,17 +29,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
-import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarSelection
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
 import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.row.CounterRow
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.security.center.R
-import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.features.security.center.home.presentation.SecurityCenterHomeState
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterCounterRow
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterCounterRowModel
@@ -58,21 +54,6 @@ internal fun SecurityCenterHomeContent(
                 modifier = Modifier
                     .padding(top = Spacing.medium),
                 title = stringResource(R.string.security_center_home_top_bar_title)
-            )
-        },
-        bottomBar = {
-            PassHomeBottomBar(
-                selection = HomeBottomBarSelection.SecurityCenter,
-                onEvent = { homeBottomBarEvent ->
-                    when (homeBottomBarEvent) {
-                        HomeBottomBarEvent.OnHomeSelected -> SecurityCenterHomeNavDestination.Home
-                        HomeBottomBarEvent.OnNewItemSelected -> SecurityCenterHomeNavDestination.NewItem
-                        HomeBottomBarEvent.OnProfileSelected -> SecurityCenterHomeNavDestination.Profile
-                        HomeBottomBarEvent.OnSecurityCenterSelected -> null
-                    }.also { destination ->
-                        onUiEvent(SecurityCenterHomeUiEvent.OnHomeBarNavigation(destination))
-                    }
-                }
             )
         }
     ) { innerPaddingValues ->

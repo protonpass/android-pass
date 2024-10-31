@@ -41,7 +41,7 @@ import proton.android.pass.navigation.api.toPath
 const val HOME_GO_TO_VAULT_KEY = "home_go_to_vault"
 const val HOME_ENABLE_BULK_ACTIONS_KEY = "home_enable_bulk_actions"
 
-object Home : NavItem(
+object HomeNavItem : NavItem(
     baseRoute = "home",
     optionalArgIds = listOf(CommonOptionalNavArgId.ShareId),
     isTopLevel = true
@@ -62,7 +62,7 @@ object HomeUpgradeDialog : NavItem(
 )
 
 fun NavGraphBuilder.homeGraph(onNavigateEvent: (HomeNavigation) -> Unit) {
-    composable(Home) { navBackStack ->
+    composable(HomeNavItem) { navBackStack ->
         val goToVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(HOME_GO_TO_VAULT_KEY, null)
             .collectAsStateWithLifecycle()

@@ -21,8 +21,10 @@ package proton.android.pass.commonpresentation.api.bars.bottom.home.presentation
 import androidx.compose.runtime.Stable
 
 @Stable
-enum class HomeBottomBarSelection {
+enum class BottomBarSelection {
     Home,
     Profile,
-    SecurityCenter
+    SecurityCenter,
+    ItemCreate,
+    None
 }

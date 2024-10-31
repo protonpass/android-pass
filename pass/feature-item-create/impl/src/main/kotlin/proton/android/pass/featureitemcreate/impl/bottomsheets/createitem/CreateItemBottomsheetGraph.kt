@@ -29,7 +29,7 @@ import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.toPath
 
-object CreateItemBottomsheet : NavItem(
+object CreateItemBottomsheetNavItem : NavItem(
     baseRoute = "item/create/bottomsheet",
     optionalArgIds = listOf(CommonOptionalNavArgId.ShareId),
     navItemType = NavItemType.Bottomsheet
@@ -58,7 +58,7 @@ fun NavGraphBuilder.bottomsheetCreateItemGraph(
     mode: CreateItemBottomSheetMode,
     onNavigate: (CreateItemBottomsheetNavigation) -> Unit
 ) {
-    bottomSheet(CreateItemBottomsheet) {
+    bottomSheet(CreateItemBottomsheetNavItem) {
         CreateItemBottomSheet(
             mode = mode,
             onNavigate = onNavigate

@@ -22,14 +22,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
-import proton.android.pass.featurehome.impl.Home
+import proton.android.pass.featurehome.impl.HomeNavItem
 import proton.android.pass.navigation.api.AppNavigator
 
 @Composable
 fun PassNavHost(
     modifier: Modifier = Modifier,
     appNavigator: AppNavigator,
-    startDestination: String = Home.route,
+    startDestination: String = HomeNavItem.route,
     graph: NavGraphBuilder.() -> Unit
 ) {
     NavHost(

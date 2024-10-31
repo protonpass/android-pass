@@ -34,7 +34,6 @@ import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.api.errors.CustomEmailDoesNotExistException
-import proton.android.pass.data.api.errors.InvalidVerificationCodeException
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.impl.local.LocalBreachesDataSource
@@ -141,16 +140,16 @@ class BreachRepositoryImpl @Inject constructor(
                     localBreachesDataSource.upsertCustomEmail(userId, verifiedCustomEmail)
                 }
                 .also { refreshFlow.update { true } }
-        }.onFailure {
+        }.onFailure { error ->
             PassLogger.w(TAG, "Error verifying custom email")
-            PassLogger.w(TAG, it)
-            when (it) {
-                is InvalidVerificationCodeException -> throw InvalidVerificationCodeException()
+            PassLogger.w(TAG, error)
+            when (error) {
                 is CustomEmailDoesNotExistException -> {
                     localBreachesDataSource.deleteCustomEmail(userId, emailId)
                     refreshFlow.update { true }
                 }
-                else -> throw it
+
+                else -> throw error
             }
         }
     }

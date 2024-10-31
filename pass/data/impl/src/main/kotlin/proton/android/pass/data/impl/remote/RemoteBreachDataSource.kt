@@ -23,7 +23,7 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.api.errors.CustomEmailDoesNotExistException
-import proton.android.pass.data.api.errors.InvalidVerificationCodeException
+import proton.android.pass.data.api.errors.InvalidVerificationCodeError
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.BreachAddEmailRequest
 import proton.android.pass.data.impl.requests.BreachVerifyEmailRequest
@@ -129,7 +129,7 @@ class RemoteBreachDataSourceImpl @Inject constructor(
                 val protonCode = response.proton?.code
 
                 when (protonCode) {
-                    INVALID_VALUE -> throw InvalidVerificationCodeException()
+                    INVALID_VALUE -> throw InvalidVerificationCodeError
                     NOT_ALLOWED -> throw CustomEmailDoesNotExistException()
                     else -> response.throwIfError()
                 }

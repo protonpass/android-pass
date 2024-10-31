@@ -35,7 +35,8 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.errors.InvalidVerificationCodeException
+import proton.android.pass.data.api.errors.InvalidVerificationCodeError
+import proton.android.pass.data.api.errors.InvalidVerificationCodeLimitError
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.ResendSimpleLoginAliasMailboxVerificationCode
 import proton.android.pass.data.api.usecases.simplelogin.VerifySimpleLoginAliasMailbox
@@ -105,14 +106,23 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
             }.onFailure { error ->
                 PassLogger.w(TAG, "There was an error verifying alias mailbox")
                 PassLogger.w(TAG, error)
-                if (error is InvalidVerificationCodeException) {
-                    SimpleLoginSyncMailboxVerifySnackbarMessage.VerifyCodeError
-                } else {
-                    SimpleLoginSyncMailboxVerifySnackbarMessage.VerifyMailboxError
+                when (error) {
+                    InvalidVerificationCodeError -> {
+                        SimpleLoginSyncMailboxVerifyMessage.VerifyCodeError
+                    }
+
+                    InvalidVerificationCodeLimitError -> {
+                        eventFlow.update { SimpleLoginSyncMailboxVerifyEvent.OnVerifyAliasMailboxCompleted }
+                        SimpleLoginSyncMailboxVerifyMessage.VerifyCodeLimitError
+                    }
+
+                    else -> {
+                        SimpleLoginSyncMailboxVerifyMessage.VerifyMailboxError
+                    }
                 }.also { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
             }.onSuccess {
-                snackbarDispatcher(SimpleLoginSyncMailboxVerifySnackbarMessage.VerifyMailboxSuccess)
-                eventFlow.update { SimpleLoginSyncMailboxVerifyEvent.OnVerifyAliasMailboxSuccess }
+                snackbarDispatcher(SimpleLoginSyncMailboxVerifyMessage.VerifyMailboxSuccess)
+                eventFlow.update { SimpleLoginSyncMailboxVerifyEvent.OnVerifyAliasMailboxCompleted }
             }
 
             isLoadingStateFlow.update { IsLoadingState.NotLoading }
@@ -127,10 +137,10 @@ class SimpleLoginSyncMailboxVerifyViewModel @Inject constructor(
                 .onFailure { error ->
                     PassLogger.w(TAG, "There was an error resending alias mailbox verification code")
                     PassLogger.w(TAG, error)
-                    snackbarDispatcher(SimpleLoginSyncMailboxVerifySnackbarMessage.ResendCodeError)
+                    snackbarDispatcher(SimpleLoginSyncMailboxVerifyMessage.ResendCodeError)
                 }
                 .onSuccess {
-                    snackbarDispatcher(SimpleLoginSyncMailboxVerifySnackbarMessage.ResendCodeSuccess)
+                    snackbarDispatcher(SimpleLoginSyncMailboxVerifyMessage.ResendCodeSuccess)
                 }
 
             isLoadingStateFlow.update { IsLoadingState.NotLoading }

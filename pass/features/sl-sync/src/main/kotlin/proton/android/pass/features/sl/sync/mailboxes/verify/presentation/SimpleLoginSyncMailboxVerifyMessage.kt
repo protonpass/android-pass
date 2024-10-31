@@ -23,7 +23,7 @@ import proton.android.pass.features.sl.sync.R
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.notifications.api.SnackbarType
 
-internal enum class SimpleLoginSyncMailboxVerifySnackbarMessage(
+internal enum class SimpleLoginSyncMailboxVerifyMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
@@ -31,6 +31,11 @@ internal enum class SimpleLoginSyncMailboxVerifySnackbarMessage(
 
     VerifyCodeError(
         id = R.string.simple_login_sync_mailbox_verify_message_verification_code_error,
+        type = SnackbarType.ERROR
+    ),
+
+    VerifyCodeLimitError(
+        id = R.string.simple_login_sync_mailbox_verify_message_verification_code_limit_error,
         type = SnackbarType.ERROR
     ),
 

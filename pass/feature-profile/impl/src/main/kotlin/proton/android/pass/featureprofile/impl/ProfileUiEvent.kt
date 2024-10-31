@@ -35,17 +35,11 @@ sealed interface ProfileUiEvent {
 
     data object OnCopyAppVersionClick : ProfileUiEvent
 
-    data object OnCreateItemClick : ProfileUiEvent
-
     data object OnFeedbackClick : ProfileUiEvent
 
     data object OnImportExportClick : ProfileUiEvent
 
-    data object OnHomeClick : ProfileUiEvent
-
     data object OnRateAppClick : ProfileUiEvent
-
-    data object OnSecurityCenterClick : ProfileUiEvent
 
     data object OnSettingsClick : ProfileUiEvent
 

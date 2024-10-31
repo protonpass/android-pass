@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -58,12 +59,16 @@ fun InAppMessageContent(
             title = inAppMessage.title,
             message = inAppMessage.message.value()
         )
-        InAppMessageFooter(
-            modifier = Modifier.padding(Spacing.medium),
-            ctaText = inAppMessage.ctaText.value(),
-            ctaRoute = inAppMessage.ctaRoute.value(),
-            onCTAClick = onCTAClick
-        )
+        val ctaText = inAppMessage.ctaText
+        val ctaRoute = inAppMessage.ctaRoute
+        if (ctaText is Some && ctaRoute is Some) {
+            InAppMessageFooter(
+                modifier = Modifier.padding(Spacing.medium),
+                ctaText = ctaText.value,
+                ctaRoute = ctaRoute.value,
+                onCTAClick = onCTAClick
+            )
+        }
     }
 }
 

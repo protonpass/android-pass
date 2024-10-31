@@ -45,7 +45,7 @@ import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode.AutofillCreditCard
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode.AutofillIdentity
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode.AutofillLogin
-import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheet
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavItem
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
@@ -153,7 +153,7 @@ fun NavGraphBuilder.autofillActivityGraph(
         onScreenShown = { onEvent(AutofillEvent.SelectItemScreenShown) },
         onNavigate = {
             when (it) {
-                SelectItemNavigation.AddItem -> appNavigator.navigate(CreateItemBottomsheet)
+                SelectItemNavigation.AddItem -> appNavigator.navigate(CreateItemBottomsheetNavItem)
                 SelectItemNavigation.Cancel -> onNavigate(AutofillNavigation.Cancel)
                 is SelectItemNavigation.ItemSelected -> {
                     onEvent(AutofillEvent.AutofillItemSelected(it.item.toAutoFillItem()))
@@ -557,7 +557,7 @@ fun NavGraphBuilder.autofillActivityGraph(
     accountSwitchNavGraph {
         when (it) {
             AccountSwitchNavigation.CreateItem -> dismissBottomSheet {
-                appNavigator.navigate(CreateItemBottomsheet)
+                appNavigator.navigate(CreateItemBottomsheetNavItem)
             }
         }
     }

@@ -47,7 +47,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.R
 import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
-import proton.android.pass.composecomponents.impl.inappmessages.InAppMessageBanner
+import proton.android.pass.features.inappmessages.banner.ui.InAppMessageBanner
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState

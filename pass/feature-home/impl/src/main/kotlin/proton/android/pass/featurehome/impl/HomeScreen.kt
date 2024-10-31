@@ -158,6 +158,12 @@ fun HomeScreen(
     var shouldShowBulkDeleteAliasDialog by rememberSaveable { mutableStateOf(false) }
     val scrollableState = rememberLazyListState()
 
+    DisposableEffect(Unit) {
+        onDispose {
+            homeViewModel.clearSelection()
+        }
+    }
+
     LaunchedEffect(enableBulkActions) {
         if (enableBulkActions) {
             homeViewModel.onBulkEnabled()

@@ -35,7 +35,7 @@ enum class InAppMessageMode {
 value class InAppMessageId(val value: String)
 
 @JvmInline
-value class InAppMessageCTA(val value: String)
+value class InAppMessageCTARoute(val value: String)
 
 data class InAppMessage(
     val id: InAppMessageId,
@@ -43,5 +43,6 @@ data class InAppMessage(
     val title: String,
     val message: Option<String>,
     val imageUrl: Option<String>,
-    val cta: Option<InAppMessageCTA>
+    val ctaRoute: Option<InAppMessageCTARoute>,
+    val ctaText: Option<String>
 )

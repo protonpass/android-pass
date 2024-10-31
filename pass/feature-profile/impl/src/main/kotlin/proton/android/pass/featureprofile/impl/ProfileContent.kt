@@ -50,12 +50,9 @@ import me.proton.core.compose.theme.captionWeak
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
-import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
-import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarSelection
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
-import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
 import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 import proton.android.pass.featureprofile.impl.accountswitcher.AccountSwitcherList
 
@@ -86,19 +83,6 @@ internal fun ProfileContent(
                                 onUpgradeClick = { onEvent(ProfileUiEvent.OnUpgradeClick) }
                             )
                         }
-                    }
-                )
-            },
-            bottomBar = {
-                PassHomeBottomBar(
-                    selection = HomeBottomBarSelection.Profile,
-                    onEvent = { homeBottomBarEvent ->
-                        when (homeBottomBarEvent) {
-                            HomeBottomBarEvent.OnHomeSelected -> ProfileUiEvent.OnHomeClick
-                            HomeBottomBarEvent.OnNewItemSelected -> ProfileUiEvent.OnCreateItemClick
-                            HomeBottomBarEvent.OnProfileSelected -> null
-                            HomeBottomBarEvent.OnSecurityCenterSelected -> ProfileUiEvent.OnSecurityCenterClick
-                        }.also { profileUiEvent -> profileUiEvent?.let(onEvent) }
                     }
                 )
             }

@@ -31,7 +31,7 @@ import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.featurefeatureflags.impl.featureFlagsGraph
 import proton.android.pass.featurehome.impl.HOME_ENABLE_BULK_ACTIONS_KEY
 import proton.android.pass.featurehome.impl.HOME_GO_TO_VAULT_KEY
-import proton.android.pass.featurehome.impl.Home
+import proton.android.pass.featurehome.impl.HomeNavItem
 import proton.android.pass.featurehome.impl.HomeNavigation
 import proton.android.pass.featurehome.impl.HomeUpgradeDialog
 import proton.android.pass.featurehome.impl.homeGraph
@@ -43,7 +43,7 @@ import proton.android.pass.featureitemcreate.impl.alias.UpdateAliasNavigation
 import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
 import proton.android.pass.featureitemcreate.impl.alias.updateAliasGraph
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode
-import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheet
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavItem
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
@@ -104,7 +104,7 @@ import proton.android.pass.featureprofile.impl.AppLockTypeBottomsheet
 import proton.android.pass.featureprofile.impl.ENTER_PIN_PARAMETER_KEY
 import proton.android.pass.featureprofile.impl.FeedbackBottomsheet
 import proton.android.pass.featureprofile.impl.PinConfig
-import proton.android.pass.featureprofile.impl.Profile
+import proton.android.pass.featureprofile.impl.ProfileNavItem
 import proton.android.pass.featureprofile.impl.ProfileNavigation
 import proton.android.pass.featureprofile.impl.profileGraph
 import proton.android.pass.features.account.Account
@@ -262,7 +262,7 @@ fun NavGraphBuilder.appGraph(
                 is HomeNavigation.AddItem -> {
                     val (destination, route) = when (it.itemTypeUiState) {
                         ItemTypeUiState.Unknown ->
-                            CreateItemBottomsheet to CreateItemBottomsheet.createNavRoute(it.shareId)
+                            CreateItemBottomsheetNavItem to CreateItemBottomsheetNavItem.createNavRoute(it.shareId)
 
                         ItemTypeUiState.Login -> CreateLogin to CreateLogin.createNavRoute(it.shareId)
                         ItemTypeUiState.Note -> CreateNote to CreateNote.createNavRoute(it.shareId)
@@ -332,7 +332,7 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 HomeNavigation.Profile -> {
-                    appNavigator.navigate(Profile)
+                    appNavigator.navigate(ProfileNavItem)
                 }
 
                 is HomeNavigation.SortingBottomsheet -> {
@@ -352,7 +352,7 @@ fun NavGraphBuilder.appGraph(
                 HomeNavigation.TrialInfo -> appNavigator.navigate(TrialScreen)
                 HomeNavigation.OpenInvite -> appNavigator.navigate(
                     destination = AcceptInvite,
-                    backDestination = Home
+                    backDestination = HomeNavItem
                 )
 
                 HomeNavigation.Finish -> onNavigate(AppNavigation.Finish)
@@ -374,7 +374,7 @@ fun NavGraphBuilder.appGraph(
                 is HomeNavigation.SearchOptions -> appNavigator.navigate(
                     destination = SearchOptionsBottomsheet,
                     route = SearchOptionsBottomsheet.createRoute(it.bulkActionsEnabled),
-                    backDestination = Home
+                    backDestination = HomeNavItem
                 )
 
                 HomeNavigation.MoveToVault -> appNavigator.navigate(
@@ -430,7 +430,7 @@ fun NavGraphBuilder.appGraph(
                 SearchOptionsNavigation.Filter -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = FilterBottomsheet,
-                        backDestination = Home
+                        backDestination = HomeNavItem
                     )
                 }
 
@@ -440,7 +440,7 @@ fun NavGraphBuilder.appGraph(
                         SortingBottomsheet.createNavRoute(
                             location = SortingLocation.Home
                         ),
-                        Home
+                        HomeNavItem
                     )
                 }
 
@@ -479,8 +479,8 @@ fun NavGraphBuilder.appGraph(
 
                     CreateItemBottomsheetNavigation.CreatePassword -> {
                         val backDestination = when {
-                            appNavigator.hasDestinationInStack(Profile) -> Profile
-                            appNavigator.hasDestinationInStack(Home) -> Home
+                            appNavigator.hasDestinationInStack(ProfileNavItem) -> ProfileNavItem
+                            appNavigator.hasDestinationInStack(HomeNavItem) -> HomeNavItem
                             else -> null
                         }
                         appNavigator.navigate(
@@ -539,7 +539,7 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = DeleteVaultDialog,
                         route = DeleteVaultDialog.createNavRoute(it.shareId),
-                        backDestination = Home
+                        backDestination = HomeNavItem
                     )
                 }
 
@@ -557,7 +557,7 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = LeaveVaultDialog,
                         route = LeaveVaultDialog.createNavRoute(it.shareId),
-                        backDestination = Home
+                        backDestination = HomeNavItem
                     )
                 }
 
@@ -565,7 +565,7 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = ManageVault,
                         route = ManageVault.createRoute(it.shareId),
-                        backDestination = Home
+                        backDestination = HomeNavItem
                     )
                 }
             }
@@ -640,8 +640,8 @@ fun NavGraphBuilder.appGraph(
             when (it) {
                 ProfileNavigation.Account -> appNavigator.navigate(Account)
                 ProfileNavigation.Settings -> appNavigator.navigate(Settings)
-                ProfileNavigation.Home -> appNavigator.popUpTo(Home)
-                ProfileNavigation.CreateItem -> appNavigator.navigate(CreateItemBottomsheet)
+                ProfileNavigation.Home -> appNavigator.popUpTo(HomeNavItem)
+                ProfileNavigation.CreateItem -> appNavigator.navigate(CreateItemBottomsheetNavItem)
                 ProfileNavigation.Feedback -> appNavigator.navigate(FeedbackBottomsheet)
                 ProfileNavigation.Report -> dismissBottomSheet {
                     appNavigator.navigate(ReportNavItem)
@@ -776,7 +776,7 @@ fun NavGraphBuilder.appGraph(
                             appNavigator.navigate(
                                 destination = ViewItem,
                                 route = ViewItem.createNavRoute(event.shareId, event.itemId),
-                                backDestination = Home
+                                backDestination = HomeNavItem
                             )
                         } else {
                             appNavigator.navigateBack()
@@ -888,7 +888,7 @@ fun NavGraphBuilder.appGraph(
                 is UpdateNoteNavigation.NoteUpdated -> appNavigator.navigate(
                     destination = ViewItem,
                     route = ViewItem.createNavRoute(it.shareId, it.itemId),
-                    backDestination = Home
+                    backDestination = HomeNavItem
                 )
             }
         }
@@ -917,7 +917,7 @@ fun NavGraphBuilder.appGraph(
                     is UpdateCreditCardNavigation.ItemUpdated -> appNavigator.navigate(
                         destination = ViewItem,
                         route = ViewItem.createNavRoute(it.shareId, it.itemId),
-                        backDestination = Home
+                        backDestination = HomeNavItem
                     )
                 }
             }
@@ -959,7 +959,7 @@ fun NavGraphBuilder.appGraph(
                 is UpdateAliasNavigation.Updated -> appNavigator.navigate(
                     destination = ViewItem,
                     route = ViewItem.createNavRoute(it.shareId, it.itemId),
-                    backDestination = Home
+                    backDestination = HomeNavItem
                 )
 
                 UpdateAliasNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
@@ -1056,7 +1056,7 @@ fun NavGraphBuilder.appGraph(
                         shareId = it.shareId,
                         itemId = it.itemId
                     ),
-                    backDestination = Home
+                    backDestination = HomeNavItem
                 )
             }
         }
@@ -1079,7 +1079,7 @@ fun NavGraphBuilder.appGraph(
                             emailOption = it.alias.some(),
                             shareId = it.shareId.toOption()
                         ),
-                        backDestination = Home
+                        backDestination = HomeNavItem
                     )
                 }
 
@@ -1228,7 +1228,7 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 ItemDetailsNavDestination.Home -> dismissBottomSheet {
-                    appNavigator.popUpTo(destination = Home)
+                    appNavigator.popUpTo(destination = HomeNavItem)
                 }
 
                 is ItemDetailsNavDestination.EditItem -> when (itemDetailsNavDestination.itemCategory) {
@@ -1387,7 +1387,7 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 ItemTrashNavDestination.Home -> dismissBottomSheet {
-                    appNavigator.popUpTo(destination = Home)
+                    appNavigator.popUpTo(destination = HomeNavItem)
                 }
 
                 ItemTrashNavDestination.DismissBottomSheet -> dismissBottomSheet {
@@ -1424,10 +1424,10 @@ fun NavGraphBuilder.appGraph(
                         appNavigator.navigate(
                             destination = ViewItem,
                             route = ViewItem.createNavRoute(it.shareId, it.itemId),
-                            backDestination = Home
+                            backDestination = HomeNavItem
                         )
-                    } else if (appNavigator.hasDestinationInStack(Home)) {
-                        appNavigator.popUpTo(Home, comesFromBottomsheet = true)
+                    } else if (appNavigator.hasDestinationInStack(HomeNavItem)) {
+                        appNavigator.popUpTo(HomeNavItem, comesFromBottomsheet = true)
                     }
                 }
 
@@ -1443,7 +1443,7 @@ fun NavGraphBuilder.appGraph(
                             sourceShareId = it.sourceShareId,
                             destShareId = it.destShareId
                         ),
-                        backDestination = Home
+                        backDestination = HomeNavItem
                     )
                 }
 
@@ -1506,7 +1506,7 @@ fun NavGraphBuilder.appGraph(
         }
     )
     onBoardingGraph(
-        onOnBoardingFinished = { appNavigator.popUpTo(Home) },
+        onOnBoardingFinished = { appNavigator.popUpTo(HomeNavItem) },
         onNavigateBack = { onNavigate(AppNavigation.Finish) }
     )
     featureFlagsGraph()
@@ -1532,7 +1532,7 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 SecurityCenterNavDestination.MainHome -> appNavigator.navigate(
-                    destination = Home
+                    destination = HomeNavItem
                 )
 
                 is SecurityCenterNavDestination.ItemDetails -> appNavigator.navigate(
@@ -1551,11 +1551,11 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 SecurityCenterNavDestination.MainNewItem -> appNavigator.navigate(
-                    destination = CreateItemBottomsheet
+                    destination = CreateItemBottomsheetNavItem
                 )
 
                 SecurityCenterNavDestination.MainProfile -> appNavigator.navigate(
-                    destination = Profile
+                    destination = ProfileNavItem
                 )
 
                 SecurityCenterNavDestination.DarkWebMonitoring -> appNavigator.navigate(
@@ -1737,7 +1737,7 @@ fun NavGraphBuilder.appGraph(
             SharingNavigation.Back -> appNavigator.navigateBack()
 
             SharingNavigation.BackToHome -> dismissBottomSheet {
-                appNavigator.popUpTo(Home)
+                appNavigator.popUpTo(HomeNavItem)
             }
 
             SharingNavigation.Upgrade -> dismissBottomSheet {
@@ -1785,7 +1785,7 @@ fun NavGraphBuilder.appGraph(
             is SharingNavigation.ManageVault -> appNavigator.navigate(
                 destination = ManageVault,
                 route = ManageVault.createRoute(it.shareId),
-                backDestination = Home
+                backDestination = HomeNavItem
             )
 
             is SharingNavigation.MemberOptions -> appNavigator.navigate(
@@ -1855,7 +1855,7 @@ fun NavGraphBuilder.appGraph(
 
             is SharingNavigation.ViewVault -> dismissBottomSheet {
                 when {
-                    appNavigator.hasDestinationInStack(Home) -> {
+                    appNavigator.hasDestinationInStack(HomeNavItem) -> {
                         appNavigator.navigateBackWithResult(
                             key = HOME_GO_TO_VAULT_KEY,
                             value = it.shareId.id,
@@ -1865,8 +1865,8 @@ fun NavGraphBuilder.appGraph(
 
                     else -> {
                         appNavigator.navigate(
-                            destination = Home,
-                            route = Home.buildRoute(it.shareId)
+                            destination = HomeNavItem,
+                            route = HomeNavItem.buildRoute(it.shareId)
                         )
                     }
                 }
@@ -1947,7 +1947,7 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 SecureLinksNavDestination.Profile -> appNavigator.navigate(
-                    destination = Profile
+                    destination = ProfileNavItem
                 )
 
                 is SecureLinksNavDestination.SecureLinkOverview -> when (destination.scope) {

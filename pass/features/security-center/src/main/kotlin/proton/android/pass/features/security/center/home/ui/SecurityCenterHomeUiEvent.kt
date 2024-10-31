@@ -19,14 +19,8 @@
 package proton.android.pass.features.security.center.home.ui
 
 import proton.android.pass.domain.features.PaidFeature
-import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 
 internal sealed interface SecurityCenterHomeUiEvent {
-
-    @JvmInline
-    value class OnHomeBarNavigation(
-        internal val destination: SecurityCenterHomeNavDestination?
-    ) : SecurityCenterHomeUiEvent
 
     data object OnShowDataBreaches : SecurityCenterHomeUiEvent
 

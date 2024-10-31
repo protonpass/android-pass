@@ -31,12 +31,10 @@ import proton.android.pass.notifications.api.InAppMessageCTARoute
 @Composable
 fun InAppMessageFooter(
     modifier: Modifier = Modifier,
-    ctaText: String?,
-    ctaRoute: InAppMessageCTARoute?,
+    ctaText: String,
+    ctaRoute: InAppMessageCTARoute,
     onCTAClick: (InAppMessageCTARoute) -> Unit
 ) {
-    ctaRoute ?: return
-    ctaText ?: return
     Button.Circular(
         modifier = modifier.fillMaxWidth(),
         contentPadding = PaddingValues(Spacing.mediumSmall),

@@ -16,29 +16,31 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.inappmessages
+package proton.android.pass.features.inappmessages.bottomsheet.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.common.api.None
+import proton.android.pass.notifications.api.InAppMessage
+import proton.android.pass.notifications.api.InAppMessageId
+import proton.android.pass.notifications.api.InAppMessageMode
 
 @Composable
-fun InAppMessageBody(
-    modifier: Modifier = Modifier,
-    title: String,
-    message: String?
-) {
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(Spacing.small),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text.Headline(title)
-        message?.let { Text.Body1Weak(it) }
-    }
+fun InAppMessageBottomsheet(modifier: Modifier = Modifier) {
+    InAppMessageContent(
+        modifier = modifier,
+        inAppMessage = InAppMessage(
+            id = InAppMessageId(value = ""),
+            mode = InAppMessageMode.Modal,
+            title = "",
+            message = None,
+            imageUrl = None,
+            ctaRoute = None,
+            ctaText = None
+
+        ),
+        onCTAClick = {},
+        onClose = {}
+    )
 }
+

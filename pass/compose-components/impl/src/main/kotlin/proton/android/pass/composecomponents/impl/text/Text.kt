@@ -29,6 +29,7 @@ import me.proton.core.compose.theme.captionNorm
 import me.proton.core.compose.theme.captionWeak
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultSmallNorm
+import me.proton.core.compose.theme.defaultWeak
 import me.proton.core.compose.theme.headlineNorm
 import me.proton.core.compose.theme.overlineNorm
 import me.proton.core.compose.theme.subheadlineNorm
@@ -103,6 +104,19 @@ object Text {
         Text(
             text = text,
             style = ProtonTheme.typography.body1Medium.copy(color = color),
+            modifier = modifier
+        )
+    }
+
+    @Composable
+    fun Body1Weak(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textWeak
+    ) {
+        Text(
+            text = text,
+            style = ProtonTheme.typography.defaultWeak.copy(color = color),
             modifier = modifier
         )
     }

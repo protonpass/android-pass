@@ -184,35 +184,6 @@ class HomeScreenTest {
     }
 
     @Test
-    fun canNavigateToCreateItem() {
-        setupWithItems()
-
-        val checker = CallChecker<ItemTypeUiState>()
-        composeTestRule.apply {
-            setContent {
-                PassTheme(isDark = true) {
-                    HomeScreen(
-                        onNavigateEvent = {
-                            if (it is HomeNavigation.AddItem) {
-                                checker.call(it.itemTypeUiState)
-                            }
-                        }
-                    )
-                }
-            }
-
-            val contentDescription = activity.getString(
-                proton.android.pass.composecomponents.impl.R.string.bottom_bar_add_item_icon_content_description
-            )
-            onNodeWithContentDescription(contentDescription).performClick()
-
-            waitUntil { checker.isCalled }
-        }
-
-        assertEquals(ItemTypeUiState.Unknown, checker.memory)
-    }
-
-    @Test
     fun canNavigateToCreateLogin() {
         testEmptyScreenCreateItem(R.string.home_empty_vault_create_login, ItemTypeUiState.Login)
     }

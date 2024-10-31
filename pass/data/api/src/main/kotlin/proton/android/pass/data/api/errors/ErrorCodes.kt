@@ -16,12 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.mailboxes.verify.presentation
+package proton.android.pass.data.api.errors
 
-internal interface SimpleLoginSyncMailboxVerifyEvent {
+object ErrorCodes {
 
-    data object Idle : SimpleLoginSyncMailboxVerifyEvent
+    const val INVALID_VERIFICATION_CODE = 2001
 
-    data object OnVerifyAliasMailboxCompleted : SimpleLoginSyncMailboxVerifyEvent
+    const val INVALID_VERIFICATION_CODE_LIMIT = 2011
 
 }

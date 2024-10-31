@@ -16,12 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.mailboxes.verify.presentation
+package proton.android.pass.data.api.errors
 
-internal interface SimpleLoginSyncMailboxVerifyEvent {
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult
 
-    data object Idle : SimpleLoginSyncMailboxVerifyEvent
-
-    data object OnVerifyAliasMailboxCompleted : SimpleLoginSyncMailboxVerifyEvent
-
-}
+fun Throwable.getProtonErrorCode(): Int? = if (this is ApiException) {
+    (error as? ApiResult.Error.Http)?.proton?.code
+} else null

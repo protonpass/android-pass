@@ -35,7 +35,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.errors.CustomEmailDoesNotExistException
-import proton.android.pass.data.api.errors.InvalidVerificationCodeException
+import proton.android.pass.data.api.errors.InvalidVerificationCodeError
 import proton.android.pass.data.api.usecases.breach.ResendVerificationCode
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
 import proton.android.pass.domain.breach.CustomEmailId
@@ -118,7 +118,7 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
                             eventFlow.update { SecurityCenterVerifyEmailEvent.GoBackToHome }
                         }
 
-                        is InvalidVerificationCodeException -> {
+                        is InvalidVerificationCodeError -> {
                             snackbarDispatcher(SecurityCenterVerifyEmailSnackbarMessage.InvalidVerificationError)
                         }
 

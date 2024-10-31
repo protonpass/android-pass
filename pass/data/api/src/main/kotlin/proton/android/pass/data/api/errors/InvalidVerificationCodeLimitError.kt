@@ -18,5 +18,4 @@
 
 package proton.android.pass.data.api.errors
 
-class InvalidVerificationCodeException : Throwable("Invalid verification code")
-
+object InvalidVerificationCodeLimitError : Throwable("Invalid verification codes limit reached")

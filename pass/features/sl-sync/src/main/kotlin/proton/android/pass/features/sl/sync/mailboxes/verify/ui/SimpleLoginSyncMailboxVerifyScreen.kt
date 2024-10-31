@@ -36,8 +36,8 @@ fun SimpleLoginSyncMailboxVerifyScreen(
 
     LaunchedEffect(key1 = state.event) {
         when (state.event) {
-            SimpleLoginSyncMailboxVerifyEvent.Idle -> {}
-            SimpleLoginSyncMailboxVerifyEvent.OnVerifyAliasMailboxSuccess -> {
+            SimpleLoginSyncMailboxVerifyEvent.Idle -> Unit
+            SimpleLoginSyncMailboxVerifyEvent.OnVerifyAliasMailboxCompleted -> {
                 onNavigated(SimpleLoginSyncNavDestination.AliasManagement)
             }
         }

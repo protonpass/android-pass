@@ -19,8 +19,6 @@
 package proton.android.pass.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,7 +35,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -47,19 +44,18 @@ import kotlinx.coroutines.launch
 import proton.android.pass.R
 import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
-import proton.android.pass.features.inappmessages.banner.ui.InAppMessageBanner
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.features.auth.AuthOrigin
+import proton.android.pass.features.inappmessages.banner.ui.InAppMessageBanner
 import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 import proton.android.pass.network.api.NetworkStatus
-import proton.android.pass.notifications.api.InAppMessageMode
 import proton.android.pass.notifications.api.SnackbarType
 import proton.android.pass.ui.internal.InternalDrawerState
 import proton.android.pass.ui.internal.InternalDrawerValue
@@ -213,17 +209,11 @@ fun PassAppContent(
                             }
                         }
                     }
-                    val shouldShowBanner = appUiState.inAppMessage is Some &&
-                        appUiState.inAppMessage.value.mode == InAppMessageMode.Banner
-                    AnimatedVisibility(
-                        modifier = Modifier.align(Alignment.BottomCenter),
-                        visible = shouldShowBanner,
-                        enter = slideInVertically(),
-                        exit = slideOutVertically()
-                    ) {
-                        val message = appUiState.inAppMessage.value() ?: return@AnimatedVisibility
+
+                    val message = appUiState.inAppMessage
+                    if (message is Some) {
                         InAppMessageBanner(
-                            inAppMessage = message,
+                            inAppMessage = message.value,
                             onDismiss = { },
                             onCTAClick = { }
                         )

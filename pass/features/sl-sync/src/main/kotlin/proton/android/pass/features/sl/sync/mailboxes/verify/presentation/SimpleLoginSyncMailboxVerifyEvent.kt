@@ -22,6 +22,6 @@ internal interface SimpleLoginSyncMailboxVerifyEvent {
 
     data object Idle : SimpleLoginSyncMailboxVerifyEvent
 
-    data object OnVerifyAliasMailboxSuccess : SimpleLoginSyncMailboxVerifyEvent
+    data object OnVerifyAliasMailboxCompleted : SimpleLoginSyncMailboxVerifyEvent
 
 }

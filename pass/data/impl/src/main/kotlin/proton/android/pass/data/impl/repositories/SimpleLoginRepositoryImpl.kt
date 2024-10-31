@@ -36,7 +36,11 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
+import proton.android.pass.data.api.errors.ErrorCodes
+import proton.android.pass.data.api.errors.InvalidVerificationCodeError
+import proton.android.pass.data.api.errors.InvalidVerificationCodeLimitError
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
+import proton.android.pass.data.api.errors.getProtonErrorCode
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.usecases.GetVaultByShareId
@@ -202,11 +206,22 @@ class SimpleLoginRepositoryImpl @Inject constructor(
 
     override suspend fun verifyAliasMailbox(mailboxId: Long, verificationCode: String) {
         withUserId { userId ->
-            remoteSimpleLoginDataSource.verifySimpleLoginAliasMailbox(
-                userId = userId,
-                mailboxId = mailboxId,
-                request = SimpleLoginVerifyAliasMailboxRequest(code = verificationCode)
-            )
+            runCatching {
+                remoteSimpleLoginDataSource.verifySimpleLoginAliasMailbox(
+                    userId = userId,
+                    mailboxId = mailboxId,
+                    request = SimpleLoginVerifyAliasMailboxRequest(code = verificationCode)
+                )
+            }.onFailure { error ->
+                when (error.getProtonErrorCode()) {
+                    ErrorCodes.INVALID_VERIFICATION_CODE -> throw InvalidVerificationCodeError
+                    ErrorCodes.INVALID_VERIFICATION_CODE_LIMIT -> {
+                        localSimpleLoginDataSource.deleteAliasMailbox(userId, mailboxId)
+                        throw InvalidVerificationCodeLimitError
+                    }
+                    else -> throw error
+                }
+            }
         }
     }
 

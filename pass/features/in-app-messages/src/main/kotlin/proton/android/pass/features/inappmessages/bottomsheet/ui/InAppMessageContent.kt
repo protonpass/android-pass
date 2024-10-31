@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.inappmessages
+package proton.android.pass.features.inappmessages.bottomsheet.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

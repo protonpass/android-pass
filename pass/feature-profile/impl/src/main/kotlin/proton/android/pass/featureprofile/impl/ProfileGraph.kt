@@ -38,7 +38,7 @@ import proton.android.pass.navigation.api.composable
 const val ENTER_PIN_PARAMETER_KEY = "enterPin"
 private const val PROFILE_GRAPH = "profile_graph"
 
-object Profile : NavItem(baseRoute = "profile", isTopLevel = true)
+object ProfileNavItem : NavItem(baseRoute = "profile", isTopLevel = true)
 object FeedbackBottomsheet : NavItem(
     baseRoute = "feedback/bottomsheet",
     navItemType = NavItemType.Bottomsheet
@@ -124,9 +124,9 @@ sealed interface ProfileNavigation {
 fun NavGraphBuilder.profileGraph(onNavigateEvent: (ProfileNavigation) -> Unit) {
     navigation(
         route = PROFILE_GRAPH,
-        startDestination = Profile.route
+        startDestination = ProfileNavItem.route
     ) {
-        composable(Profile) {
+        composable(ProfileNavItem) {
             val enterPinSuccess by it.savedStateHandle.getStateFlow(ENTER_PIN_PARAMETER_KEY, false)
                 .collectAsStateWithLifecycle()
             ProfileScreen(

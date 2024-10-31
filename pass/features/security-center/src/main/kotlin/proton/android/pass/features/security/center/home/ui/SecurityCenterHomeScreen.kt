@@ -36,10 +36,6 @@ fun SecurityCenterHomeScreen(
         state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
-                is SecurityCenterHomeUiEvent.OnHomeBarNavigation -> {
-                    uiEvent.destination?.let(onNavigated)
-                }
-
                 SecurityCenterHomeUiEvent.OnShowDataBreaches -> {
                     onNavigated(SecurityCenterHomeNavDestination.DarkWebMonitoring)
                 }

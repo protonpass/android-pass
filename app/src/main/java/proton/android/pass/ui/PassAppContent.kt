@@ -19,12 +19,16 @@
 package proton.android.pass.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
@@ -34,25 +38,36 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import proton.android.pass.R
 import proton.android.pass.common.api.Some
+import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.BottomBarSelection
+import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
+import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
+import proton.android.pass.featurehome.impl.HomeNavItem
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavItem
+import proton.android.pass.featureprofile.impl.ProfileNavItem
 import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.features.inappmessages.banner.ui.InAppMessageBanner
+import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.AppNavigator
+import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 import proton.android.pass.network.api.NetworkStatus
@@ -63,6 +78,7 @@ import proton.android.pass.ui.internal.rememberInternalDrawerState
 import proton.android.pass.ui.navigation.UN_AUTH_GRAPH
 import proton.android.pass.ui.navigation.appGraph
 import proton.android.pass.ui.navigation.unAuthGraph
+import kotlin.coroutines.cancellation.CancellationException
 
 @OptIn(
     ExperimentalMaterialNavigationApi::class,
@@ -125,10 +141,33 @@ fun PassAppContent(
 
     val internalDrawerState: InternalDrawerState =
         rememberInternalDrawerState(InternalDrawerValue.Closed)
+    val currentRoute = appNavigator.navController.currentDestination?.route
+    val bottomBarSelected = remember(currentRoute) { determineBottomBarSelection(currentRoute) }
+    val shouldShowBottomBar = bottomBarSelected != BottomBarSelection.None
     Scaffold(
         modifier = modifier,
         scaffoldState = scaffoldState,
-        snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
+        snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) },
+        bottomBar = {
+            AnimatedVisibility(
+                visible = shouldShowBottomBar,
+                enter = slideInVertically { it }, // Slide in from the bottom
+                exit = slideOutVertically { it } // Slide out to the bottom
+            ) {
+                PassHomeBottomBar(
+                    selection = bottomBarSelected,
+                    onEvent = {
+                        handleBottomBarEvent(
+                            event = it,
+                            appNavigator = appNavigator,
+                            coroutineScope = coroutineScope,
+                            bottomSheetState = bottomSheetState,
+                            currentRoute = currentRoute
+                        )
+                    }
+                )
+            }
+        }
     ) { contentPadding ->
         InternalDrawer(
             drawerState = internalDrawerState,
@@ -138,7 +177,13 @@ fun PassAppContent(
             },
             onAppNavigation = onNavigate,
             content = {
-                Box(modifier = Modifier.padding(contentPadding)) {
+                Box(
+                    modifier = Modifier
+                        .padding(
+                            bottom = if (shouldShowBottomBar) contentPadding.calculateBottomPadding() else 0.dp
+                        )
+                        .animateContentSize()
+                ) {
                     Column {
                         AnimatedVisibility(
                             visible = appUiState.networkStatus == NetworkStatus.Offline,
@@ -221,6 +266,63 @@ fun PassAppContent(
                 }
             }
         )
+    }
+}
+
+private fun determineBottomBarSelection(route: String?): BottomBarSelection = when (route) {
+    HomeNavItem.route -> BottomBarSelection.Home
+    ProfileNavItem.route -> BottomBarSelection.Profile
+    SecurityCenterHomeNavItem.route -> BottomBarSelection.SecurityCenter
+    CreateItemBottomsheetNavItem.route -> BottomBarSelection.ItemCreate
+    else -> BottomBarSelection.None
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+private fun handleBottomBarEvent(
+    event: HomeBottomBarEvent,
+    appNavigator: AppNavigator,
+    coroutineScope: CoroutineScope,
+    bottomSheetState: ModalBottomSheetState,
+    currentRoute: String?
+) {
+    val destination = when (event) {
+        HomeBottomBarEvent.OnHomeSelected -> HomeNavItem
+        HomeBottomBarEvent.OnNewItemSelected -> CreateItemBottomsheetNavItem
+        HomeBottomBarEvent.OnProfileSelected -> ProfileNavItem
+        HomeBottomBarEvent.OnSecurityCenterSelected -> SecurityCenterHomeNavItem
+    }
+
+    if (event == HomeBottomBarEvent.OnNewItemSelected && currentRoute == CreateItemBottomsheetNavItem.route) return
+
+    navigateWithDismiss(
+        destination = destination,
+        appNavigator = appNavigator,
+        coroutineScope = coroutineScope,
+        bottomSheetState = bottomSheetState,
+        currentRoute = currentRoute
+    )
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+private fun navigateWithDismiss(
+    destination: NavItem,
+    appNavigator: AppNavigator,
+    coroutineScope: CoroutineScope,
+    bottomSheetState: ModalBottomSheetState,
+    currentRoute: String?
+) {
+    coroutineScope.launch {
+        if (bottomSheetState.isVisible) {
+            try {
+                bottomSheetState.hide()
+            } catch (e: CancellationException) {
+                PassLogger.d(TAG, e, "Bottom sheet hidden animation interrupted")
+            }
+        }
+        if (currentRoute == CreateItemBottomsheetNavItem.route) {
+            appNavigator.navigateBack()
+        }
+        appNavigator.navigate(destination)
     }
 }
 

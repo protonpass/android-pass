@@ -33,8 +33,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.presentation.R
+import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.BottomBarSelection
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
-import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarSelection
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarState
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarViewModel
 import proton.android.pass.commonpresentation.impl.bars.bottom.home.presentation.HomeBottomBarViewModelImpl
@@ -47,7 +47,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 @Composable
 fun PassHomeBottomBar(
     modifier: Modifier = Modifier,
-    selection: HomeBottomBarSelection,
+    selection: BottomBarSelection,
     onEvent: (HomeBottomBarEvent) -> Unit,
     viewModel: HomeBottomBarViewModel = hiltViewModel<HomeBottomBarViewModelImpl>()
 ) = with(viewModel) {
@@ -64,7 +64,7 @@ fun PassHomeBottomBar(
 @Composable
 fun HomeBottomBarContent(
     modifier: Modifier = Modifier,
-    selection: HomeBottomBarSelection,
+    selection: BottomBarSelection,
     onEvent: (HomeBottomBarEvent) -> Unit,
     state: HomeBottomBarState
 ) = with(state) {
@@ -73,7 +73,7 @@ fun HomeBottomBarContent(
         backgroundColor = PassTheme.colors.bottomBarBackground
     ) {
         BottomNavigationItem(
-            selected = selection == HomeBottomBarSelection.Home,
+            selected = selection == BottomBarSelection.Home,
             selectedContentColor = PassTheme.colors.interactionNormMajor2,
             unselectedContentColor = PassTheme.colors.textNorm,
             onClick = { onEvent(HomeBottomBarEvent.OnHomeSelected) },
@@ -86,7 +86,7 @@ fun HomeBottomBarContent(
         )
 
         BottomNavigationItem(
-            selected = false,
+            selected = selection == BottomBarSelection.ItemCreate,
             selectedContentColor = PassTheme.colors.interactionNormMajor2,
             unselectedContentColor = PassTheme.colors.textNorm,
             onClick = { onEvent(HomeBottomBarEvent.OnNewItemSelected) },
@@ -99,7 +99,7 @@ fun HomeBottomBarContent(
         )
 
         BottomNavigationItem(
-            selected = selection == HomeBottomBarSelection.SecurityCenter,
+            selected = selection == BottomBarSelection.SecurityCenter,
             selectedContentColor = PassTheme.colors.interactionNormMajor2,
             unselectedContentColor = PassTheme.colors.textNorm,
             onClick = { onEvent(HomeBottomBarEvent.OnSecurityCenterSelected) },
@@ -112,7 +112,7 @@ fun HomeBottomBarContent(
         )
 
         BottomNavigationItem(
-            selected = selection == HomeBottomBarSelection.Profile,
+            selected = selection == BottomBarSelection.Profile,
             selectedContentColor = PassTheme.colors.interactionNormMajor2,
             unselectedContentColor = PassTheme.colors.textNorm,
             onClick = { onEvent(HomeBottomBarEvent.OnProfileSelected) },
@@ -133,7 +133,7 @@ fun HomeBottomBarContentPreview(@PreviewParameter(ThemePreviewProvider::class) i
     PassTheme(isDark = isDark) {
         Surface {
             HomeBottomBarContent(
-                selection = HomeBottomBarSelection.Home,
+                selection = BottomBarSelection.Home,
                 onEvent = {},
                 state = HomeBottomBarState(
                     planType = PlanType.Unknown(),

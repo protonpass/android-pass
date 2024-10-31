@@ -90,10 +90,8 @@ fun ProfileScreen(
                 ProfileUiEvent.OnAppVersionLongClick -> viewModel.onAppVersionLongClick()
                 is ProfileUiEvent.OnAutofillClicked -> viewModel.onToggleAutofill(it.value)
                 ProfileUiEvent.OnCopyAppVersionClick -> viewModel.copyAppVersion(state.appVersion)
-                ProfileUiEvent.OnCreateItemClick -> onNavigateEvent(ProfileNavigation.CreateItem)
                 ProfileUiEvent.OnFeedbackClick -> onNavigateEvent(ProfileNavigation.Feedback)
                 ProfileUiEvent.OnImportExportClick -> openWebsite(context, PASS_IMPORT)
-                ProfileUiEvent.OnHomeClick -> onNavigateEvent(ProfileNavigation.Home)
                 ProfileUiEvent.OnRateAppClick -> openWebsite(context, PASS_STORE)
                 ProfileUiEvent.OnSettingsClick -> onNavigateEvent(ProfileNavigation.Settings)
                 ProfileUiEvent.OnUpgradeClick -> onNavigateEvent(ProfileNavigation.Upgrade)
@@ -104,7 +102,6 @@ fun ProfileScreen(
 
                 ProfileUiEvent.OnChangePinClick -> onNavigateEvent(ProfileNavigation.EnterPin)
                 ProfileUiEvent.OnTutorialClick -> openWebsite(context, PASS_TUTORIAL)
-                ProfileUiEvent.OnSecurityCenterClick -> onNavigateEvent(ProfileNavigation.SecurityCenter)
                 ProfileUiEvent.OnSecureLinksClicked -> {
                     if (state.showUpgradeButton) {
                         ProfileNavigation.UpsellSecureLinks(PaidFeature.SecureLinks)

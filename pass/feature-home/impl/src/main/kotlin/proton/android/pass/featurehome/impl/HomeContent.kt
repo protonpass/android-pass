@@ -22,7 +22,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -52,15 +51,11 @@ import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
-import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarSelection
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.TestTags.HOME_EMPTY_TAG
 import proton.android.pass.commonui.api.TestTags.HOME_ITEM_LIST_TAG
-import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.commonuimodels.api.ShareUiModel
-import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
@@ -160,33 +155,6 @@ internal fun HomeContent(
                             modifier = Modifier.clip(CircleShape).background(backgroundColor),
                             dotsColor = iconColor
                         ) { onEvent(HomeUiEvent.ActionsClick) }
-                    }
-                )
-            }
-        },
-        bottomBar = {
-            AnimatedVisibility(
-                visible = !uiState.homeListUiState.selectionState.isInSelectMode,
-                enter = fadeIn() + expandVertically(),
-                exit = fadeOut() + shrinkVertically(),
-                label = "HomeContent-BottomBar"
-            ) {
-                PassHomeBottomBar(
-                    selection = HomeBottomBarSelection.Home,
-                    onEvent = { homeBottomBarEvent ->
-                        when (homeBottomBarEvent) {
-                            HomeBottomBarEvent.OnHomeSelected -> null
-                            HomeBottomBarEvent.OnNewItemSelected -> {
-                                uiState.homeListUiState.selectedShare
-                                    .map { shareUiModel -> shareUiModel.id }
-                                    .let { shareId ->
-                                        HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Unknown)
-                                    }
-                            }
-
-                            HomeBottomBarEvent.OnProfileSelected -> HomeUiEvent.ProfileClick
-                            HomeBottomBarEvent.OnSecurityCenterSelected -> HomeUiEvent.SecurityCenterClick
-                        }.also { homeUiEvent -> homeUiEvent?.let(onEvent) }
                     }
                 )
             }

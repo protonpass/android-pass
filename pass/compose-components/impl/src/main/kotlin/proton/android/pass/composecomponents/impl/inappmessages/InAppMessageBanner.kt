@@ -46,6 +46,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -55,7 +56,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.notifications.api.InAppMessage
-import proton.android.pass.notifications.api.InAppMessageCTA
+import proton.android.pass.notifications.api.InAppMessageCTARoute
 import proton.android.pass.notifications.api.InAppMessageId
 import proton.android.pass.notifications.api.InAppMessageMode
 import me.proton.core.presentation.R as CoreR
@@ -64,7 +65,7 @@ import me.proton.core.presentation.R as CoreR
 fun InAppMessageBanner(
     modifier: Modifier = Modifier,
     inAppMessage: InAppMessage,
-    onCTAClick: (InAppMessageCTA) -> Unit,
+    onCTAClick: (InAppMessageCTARoute) -> Unit,
     onDismiss: (InAppMessageId) -> Unit
 ) {
     Box(modifier = modifier) {
@@ -79,9 +80,9 @@ fun InAppMessageBanner(
                     borderColor = PassTheme.colors.inputBorderNorm
                 )
                 .applyIf(
-                    condition = inAppMessage.cta is Some,
+                    condition = inAppMessage.ctaRoute is Some,
                     ifTrue = {
-                        inAppMessage.cta
+                        inAppMessage.ctaRoute
                             .value()
                             ?.let { clickable { onCTAClick(it) } }
                             ?: Modifier
@@ -158,7 +159,8 @@ fun InAppBannerPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                     title = "Title",
                     message = Some("Message"),
                     imageUrl = Some(""),
-                    cta = Some(InAppMessageCTA("CTA"))
+                    ctaRoute = Some(InAppMessageCTARoute("CTA")),
+                    ctaText = None
                 ),
                 onCTAClick = {},
                 onDismiss = {}

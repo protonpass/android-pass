@@ -55,9 +55,9 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
     @StringRes
     internal val title: Int = when (paidFeature) {
         PaidFeature.AdvanceAliasManagement -> R.string.upsell_paid_feature_advance_alias_management_title
+        PaidFeature.ItemSharing -> R.string.upsell_paid_feature_item_sharing_title
         PaidFeature.SentinelEssential,
         PaidFeature.DarkWebMonitoring,
-        PaidFeature.ItemSharing,
         PaidFeature.SentinelFree,
         PaidFeature.SecureLinks,
         PaidFeature.ViewMissing2fa -> R.string.upsell_monitor_title
@@ -67,7 +67,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
     internal val subtitle: Int = when (paidFeature) {
         PaidFeature.AdvanceAliasManagement -> R.string.upsell_paid_feature_advance_alias_management_subtitle
         PaidFeature.DarkWebMonitoring -> R.string.upsell_dark_web_monitoring_subtitle
-        PaidFeature.ItemSharing,
+        PaidFeature.ItemSharing -> R.string.upsell_paid_feature_item_sharing_subtitle
         PaidFeature.SecureLinks,
         PaidFeature.SentinelEssential,
         PaidFeature.SentinelFree -> R.string.upsell_sentinel_subtitle

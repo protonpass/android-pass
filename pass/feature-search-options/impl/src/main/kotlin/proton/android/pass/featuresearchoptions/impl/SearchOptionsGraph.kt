@@ -40,7 +40,7 @@ object EnableBulkActionsNavArgId : NavArgId {
     override val navType = NavType.BoolType
 }
 
-object SortingBottomsheet : NavItem(
+object SortingBottomsheetNavItem : NavItem(
     baseRoute = "searchoptions/sorting/bottomsheet",
     navArgIds = listOf(SortingLocationNavArgId),
     navItemType = NavItemType.Bottomsheet
@@ -48,7 +48,7 @@ object SortingBottomsheet : NavItem(
     fun createNavRoute(location: SortingLocation): String = "$baseRoute/${location.name}"
 }
 
-object SearchOptionsBottomsheet : NavItem(
+object SearchOptionsBottomsheetNavItem : NavItem(
     baseRoute = "searchoptions/bottomsheet",
     navArgIds = listOf(EnableBulkActionsNavArgId),
     navItemType = NavItemType.Bottomsheet
@@ -56,23 +56,23 @@ object SearchOptionsBottomsheet : NavItem(
     fun createRoute(bulkActionsEnabled: Boolean) = "$baseRoute/$bulkActionsEnabled"
 }
 
-object FilterBottomsheet : NavItem(
+object FilterBottomsheetNavItem : NavItem(
     baseRoute = "searchoptions/filter/bottomsheet",
     navItemType = NavItemType.Bottomsheet
 )
 
 fun NavGraphBuilder.searchOptionsGraph(onNavigateEvent: (SearchOptionsNavigation) -> Unit) {
-    bottomSheet(SearchOptionsBottomsheet) {
+    bottomSheet(SearchOptionsBottomsheetNavItem) {
         SearchOptionsBottomSheet(
             onNavigateEvent = onNavigateEvent
         )
     }
-    bottomSheet(SortingBottomsheet) {
+    bottomSheet(SortingBottomsheetNavItem) {
         SortingBottomSheet(
             onNavigateEvent = onNavigateEvent
         )
     }
-    bottomSheet(FilterBottomsheet) {
+    bottomSheet(FilterBottomsheetNavItem) {
         FilterBottomSheet(
             onNavigateEvent = onNavigateEvent
         )

@@ -43,7 +43,7 @@ class CreateItemBottomsheetNavItemTest {
     @Test
     fun testCreateLoginFullMode() {
         performTest(
-            mode = CreateItemBottomSheetMode.Full,
+            mode = CreateItemBottomSheetMode.HomeFull,
             text = R.string.item_type_login_description,
         ) { navigation, checker ->
             if (navigation is CreateItemBottomsheetNavigation.CreateLogin) {
@@ -67,7 +67,7 @@ class CreateItemBottomsheetNavItemTest {
     @Test
     fun testCreateAliasFullMode() {
         performTest(
-            mode = CreateItemBottomSheetMode.Full,
+            mode = CreateItemBottomSheetMode.HomeFull,
             text = R.string.item_type_alias_description,
         ) { navigation, checker ->
             if (navigation is CreateItemBottomsheetNavigation.CreateAlias) {
@@ -91,7 +91,7 @@ class CreateItemBottomsheetNavItemTest {
     @Test
     fun testCreateNote() {
         performTest(
-            mode = CreateItemBottomSheetMode.Full,
+            mode = CreateItemBottomSheetMode.HomeFull,
             text = R.string.item_type_note_description,
         ) { navigation, checker ->
             if (navigation is CreateItemBottomsheetNavigation.CreateNote) {
@@ -103,7 +103,7 @@ class CreateItemBottomsheetNavItemTest {
     @Test
     fun testCreatePassword() {
         performTest(
-            mode = CreateItemBottomSheetMode.Full,
+            mode = CreateItemBottomSheetMode.HomeFull,
             text = R.string.item_type_password_description,
         ) { navigation, checker ->
             if (navigation is CreateItemBottomsheetNavigation.CreatePassword) {

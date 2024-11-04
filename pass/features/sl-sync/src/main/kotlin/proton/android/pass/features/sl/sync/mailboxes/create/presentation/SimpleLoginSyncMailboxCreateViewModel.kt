@@ -97,7 +97,8 @@ class SimpleLoginSyncMailboxCreateViewModel @Inject constructor(
                 .onSuccess { createdAliasMailbox ->
                     eventFlow.update {
                         SimpleLoginSyncMailboxCreateEvent.OnMailboxCreated(
-                            mailboxId = createdAliasMailbox.id
+                            mailboxId = createdAliasMailbox.id,
+                            isVerified = createdAliasMailbox.isVerified
                         )
                     }
                 }

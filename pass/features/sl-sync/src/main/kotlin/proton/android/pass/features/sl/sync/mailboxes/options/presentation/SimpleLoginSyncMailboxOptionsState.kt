@@ -41,11 +41,18 @@ internal data class SimpleLoginSyncMailboxOptionsState(
         is Some -> aliasMailboxOption.value.isVerified
     }
 
-    internal val canSetAsDefault = !isDefault && isVerified
+    private val hasAliases = when (aliasMailboxOption) {
+        None -> false
+        is Some -> aliasMailboxOption.value.aliasCount > 0
+    }
 
-    internal val canVerify = !isVerified
+    internal val canSetAsDefault: Boolean = !isDefault && isVerified
 
-    internal val canDelete = !isDefault
+    internal val canVerify: Boolean = !isVerified
+
+    internal val canDelete: Boolean = !isDefault
+
+    internal val canTransferAliases: Boolean = isVerified && hasAliases
 
     internal companion object {
 

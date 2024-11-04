@@ -35,9 +35,6 @@ import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.I
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsNavDestination
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.itemOptionsNavGraph
 import proton.android.pass.commonuimodels.api.PackageInfoUi
-import proton.android.pass.features.auth.AuthNavigation
-import proton.android.pass.features.auth.EnterPin
-import proton.android.pass.features.auth.authGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAlias
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
@@ -76,6 +73,9 @@ import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions
 import proton.android.pass.featureitemcreate.impl.login.createUpdateLoginGraph
 import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
+import proton.android.pass.features.auth.AuthNavigation
+import proton.android.pass.features.auth.EnterPin
+import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.password.GeneratePasswordBottomsheet
 import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.features.password.GeneratePasswordNavigation
@@ -118,6 +118,15 @@ fun NavGraphBuilder.autofillActivityGraph(
     onEvent: (AutofillEvent) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
 ) {
+    val mode = when (autofillAppState.autofillData.assistInfo.cluster) {
+        is NodeCluster.CreditCard -> AutofillCreditCard
+        is NodeCluster.Login,
+        is NodeCluster.SignUp -> AutofillLogin
+
+        is NodeCluster.Identity -> AutofillIdentity
+
+        NodeCluster.Empty -> AutofillLogin
+    }
     authGraph(
         canLogout = false,
         navigation = {
@@ -153,7 +162,10 @@ fun NavGraphBuilder.autofillActivityGraph(
         onScreenShown = { onEvent(AutofillEvent.SelectItemScreenShown) },
         onNavigate = {
             when (it) {
-                SelectItemNavigation.AddItem -> appNavigator.navigate(CreateItemBottomsheetNavItem)
+                SelectItemNavigation.AddItem -> appNavigator.navigate(
+                    CreateItemBottomsheetNavItem,
+                    CreateItemBottomsheetNavItem.createNavRoute(mode)
+                )
                 SelectItemNavigation.Cancel -> onNavigate(AutofillNavigation.Cancel)
                 is SelectItemNavigation.ItemSelected -> {
                     onEvent(AutofillEvent.AutofillItemSelected(it.item.toAutoFillItem()))
@@ -472,17 +484,7 @@ fun NavGraphBuilder.autofillActivityGraph(
             }
         }
     )
-    val mode = when (autofillAppState.autofillData.assistInfo.cluster) {
-        is NodeCluster.CreditCard -> AutofillCreditCard
-        is NodeCluster.Login,
-        is NodeCluster.SignUp -> AutofillLogin
-
-        is NodeCluster.Identity -> AutofillIdentity
-
-        NodeCluster.Empty -> AutofillLogin
-    }
     bottomsheetCreateItemGraph(
-        mode = mode,
         onNavigate = {
             when (it) {
                 is CreateItemBottomsheetNavigation.CreateAlias -> dismissBottomSheet {
@@ -557,7 +559,10 @@ fun NavGraphBuilder.autofillActivityGraph(
     accountSwitchNavGraph {
         when (it) {
             AccountSwitchNavigation.CreateItem -> dismissBottomSheet {
-                appNavigator.navigate(CreateItemBottomsheetNavItem)
+                appNavigator.navigate(
+                    CreateItemBottomsheetNavItem,
+                    CreateItemBottomsheetNavItem.createNavRoute(mode)
+                )
             }
         }
     }

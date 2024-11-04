@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,24 +18,9 @@
 
 package proton.android.pass.featureitemcreate.impl.bottomsheets.createitem
 
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun CreateItemBottomSheet(
-    modifier: Modifier = Modifier,
-    onNavigate: (CreateItemBottomsheetNavigation) -> Unit,
-    viewModel: CreateItemBottomSheetViewModel = hiltViewModel()
-) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-    CreateItemBottomSheetContents(
-        modifier = modifier,
-        state = state,
-        onNavigate = onNavigate
-    )
+enum class CreateItemBottomSheetMode {
+    HomeFull,
+    AutofillLogin,
+    AutofillCreditCard,
+    AutofillIdentity
 }

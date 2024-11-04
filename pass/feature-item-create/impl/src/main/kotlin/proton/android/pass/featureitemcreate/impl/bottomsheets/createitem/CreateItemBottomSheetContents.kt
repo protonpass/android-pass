@@ -59,24 +59,16 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.Create
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateNote
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreatePassword
 
-enum class CreateItemBottomSheetMode {
-    Full,
-    AutofillLogin,
-    AutofillCreditCard,
-    AutofillIdentity
-}
-
 @ExperimentalMaterialApi
 @Composable
 fun CreateItemBottomSheetContents(
     modifier: Modifier = Modifier,
     state: CreateItemBottomSheetUIState,
-    mode: CreateItemBottomSheetMode,
     onNavigate: (CreateItemBottomsheetNavigation) -> Unit
 ) {
 
-    val items = when (mode) {
-        CreateItemBottomSheetMode.Full -> listOfNotNull(
+    val items = when (state.mode) {
+        CreateItemBottomSheetMode.HomeFull -> listOfNotNull(
             createLogin(state.shareId) { onNavigate(CreateLogin(it)) },
             createAlias(
                 shareId = state.shareId,
@@ -102,6 +94,8 @@ fun CreateItemBottomSheetContents(
         CreateItemBottomSheetMode.AutofillIdentity -> listOf(
             createIdentity(state.shareId) { onNavigate(CreateIdentity(it)) }
         )
+
+        null -> emptyList()
     }
 
     BottomSheetItemList(
@@ -276,7 +270,6 @@ fun CreateItemBottomSheetLimitPreview(
     PassTheme(isDark = input.first) {
         Surface {
             CreateItemBottomSheetContents(
-                mode = CreateItemBottomSheetMode.Full,
                 onNavigate = {},
                 state = input.second
             )
@@ -302,9 +295,8 @@ fun CreateItemBottomSheetContentsPreview(
     PassTheme(isDark = input.first) {
         Surface {
             CreateItemBottomSheetContents(
-                mode = input.second,
                 onNavigate = {},
-                state = CreateItemBottomSheetUIState.DEFAULT
+                state = CreateItemBottomSheetUIState.DEFAULT.copy(mode = input.second)
             )
         }
     }

@@ -51,6 +51,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.text.PassTextWithLink
 import proton.android.pass.composecomponents.impl.text.Text
+import me.proton.core.presentation.R as CoreR
 
 private const val CHEVRON_ROTATION_INITIAL = 0F
 private const val CHEVRON_ROTATION_TOGGLED = -180F
@@ -59,6 +60,7 @@ private const val CHEVRON_ROTATION_LABEL = "chevron_rotation_label"
 @Composable
 fun PassRequestVerificationCode(
     modifier: Modifier = Modifier,
+    emailSubject: String,
     showRequestVerificationCodeOptions: Boolean,
     onResendVerificationCodeClick: () -> Unit
 ) {
@@ -107,7 +109,7 @@ fun PassRequestVerificationCode(
 
                 Icon(
                     modifier = Modifier.rotate(degrees = chevronRotationDegrees),
-                    painter = painterResource(id = me.proton.core.presentation.R.drawable.ic_proton_chevron_tiny_down),
+                    painter = painterResource(id = CoreR.drawable.ic_proton_chevron_tiny_down),
                     contentDescription = null,
                     tint = PassTheme.colors.textWeak
                 )
@@ -120,7 +122,10 @@ fun PassRequestVerificationCode(
                 ) {
                     Text.CaptionWeak(
                         modifier = Modifier.fillMaxWidth(),
-                        text = stringResource(id = R.string.verification_code_suggestion_spam),
+                        text = stringResource(
+                            id = R.string.verification_code_suggestion_spam,
+                            emailSubject
+                        ),
                         textAlign = TextAlign.Center
                     )
 

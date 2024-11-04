@@ -85,6 +85,13 @@ fun ShareFromItemBottomSheet(
                     ShareFromItemEvent.ManageSharedVault -> SharingNavigation.ManageSharedVault(
                         sharedVaultId = vault.vault.shareId
                     ).also(onNavigateEvent)
+
+                    ShareFromItemEvent.ShareItem -> {
+                        // Will be implemented in IDTEAM-4076
+                    }
+                    ShareFromItemEvent.UpsellItemSharing -> {
+                        // Will be implemented in IDTEAM-4075
+                    }
                 }
             }
         }

@@ -52,6 +52,8 @@ import proton.android.pass.domain.canCreate
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -63,7 +65,8 @@ class ShareFromItemViewModel @Inject constructor(
     canCreateVault: CanCreateVault,
     getUserPlan: GetUserPlan,
     getItemById: GetItemById,
-    canManageVaultAccess: CanManageVaultAccess
+    canManageVaultAccess: CanManageVaultAccess,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -100,7 +103,7 @@ class ShareFromItemViewModel @Inject constructor(
         }
     }.asLoadingResult()
 
-    private val isSecureLinkAvailableFlow = oneShot { getItemById(shareId, itemId) }.map { item ->
+    private val isSingleSharingAvailableFlow = oneShot { getItemById(shareId, itemId) }.map { item ->
         when (item.itemType.category) {
             ItemCategory.Login,
             ItemCategory.Note,
@@ -129,18 +132,21 @@ class ShareFromItemViewModel @Inject constructor(
         canMoveToSharedVaultFlow,
         showCreateVaultFlow,
         navEventState,
-        isSecureLinkAvailableFlow,
-        canUsePaidFeaturesFlow
-    ) { vault, canMoveToSharedVault, createVault, event, isSecureLinkAvailable, canUsePaidFeatures ->
+        isSingleSharingAvailableFlow,
+        canUsePaidFeaturesFlow,
+        featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
+    ) { vault, canMoveToSharedVault, createVault, event, isSecureLinkAvailable, canUsePaidFeatures,
+        isItemSharingAvailable ->
         ShareFromItemUiState(
             vault = vault.some(),
             itemId = itemId,
             showMoveToSharedVault = canMoveToSharedVault.getOrNull() ?: false,
             showCreateVault = createVault.getOrNull() ?: CreateNewVaultState.Hide,
             event = event,
-            isSecureLinkAvailable = isSecureLinkAvailable,
+            isSingleSharingAvailable = isSecureLinkAvailable,
             canUsePaidFeatures = canUsePaidFeatures,
-            vaultAccessData = canManageVaultAccess(vault.vault)
+            vaultAccessData = canManageVaultAccess(vault.vault),
+            isItemSharingAvailable = isItemSharingAvailable
         )
     }.stateIn(
         scope = viewModelScope,

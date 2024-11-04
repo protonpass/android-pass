@@ -61,8 +61,9 @@ internal data class ShareFromItemUiState(
     val showMoveToSharedVault: Boolean,
     val showCreateVault: CreateNewVaultState,
     val event: ShareFromItemNavEvent,
-    val isSecureLinkAvailable: Boolean,
+    val isSingleSharingAvailable: Boolean,
     val canUsePaidFeatures: Boolean,
+    val isItemSharingAvailable: Boolean,
     private val vaultAccessData: VaultAccessData
 ) {
 
@@ -90,8 +91,9 @@ internal data class ShareFromItemUiState(
             showMoveToSharedVault = false,
             showCreateVault = CreateNewVaultState.Hide,
             event = ShareFromItemNavEvent.Unknown,
-            isSecureLinkAvailable = false,
+            isSingleSharingAvailable = false,
             canUsePaidFeatures = false,
+            isItemSharingAvailable = false,
             vaultAccessData = VaultAccessData(
                 canManageAccess = false,
                 canViewMembers = false

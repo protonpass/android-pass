@@ -55,6 +55,7 @@ fun PassCodeVerificationContent(
     canEnterVerificationCode: Boolean,
     onVerificationCodeChange: (String) -> Unit,
     onResendVerificationCodeClick: () -> Unit,
+    emailSubject: String,
     verificationCodeLength: Int = VERIFICATION_CODE_LENGTH
 ) {
     val isActionEnabled = remember(verificationCode) {
@@ -110,6 +111,7 @@ fun PassCodeVerificationContent(
             )
 
             PassRequestVerificationCode(
+                emailSubject = emailSubject,
                 showRequestVerificationCodeOptions = canEnterVerificationCode,
                 onResendVerificationCodeClick = onResendVerificationCodeClick
             )
@@ -130,7 +132,8 @@ internal fun PassCodeVerificationContentPreview(@PreviewParameter(ThemePreviewPr
                 verificationCode = "123456",
                 canEnterVerificationCode = true,
                 onVerificationCodeChange = {},
-                onResendVerificationCodeClick = {}
+                onResendVerificationCodeClick = {},
+                emailSubject = ""
             )
         }
     }

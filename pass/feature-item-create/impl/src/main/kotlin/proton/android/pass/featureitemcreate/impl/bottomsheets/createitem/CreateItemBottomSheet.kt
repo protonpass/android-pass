@@ -29,7 +29,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun CreateItemBottomSheet(
     modifier: Modifier = Modifier,
-    mode: CreateItemBottomSheetMode,
     onNavigate: (CreateItemBottomsheetNavigation) -> Unit,
     viewModel: CreateItemBottomSheetViewModel = hiltViewModel()
 ) {
@@ -37,7 +36,6 @@ fun CreateItemBottomSheet(
     CreateItemBottomSheetContents(
         modifier = modifier,
         state = state,
-        mode = mode,
         onNavigate = onNavigate
     )
 }

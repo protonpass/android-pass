@@ -37,7 +37,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.featurehome.impl.R
-import proton.android.pass.featuresearchoptions.api.SearchFilterType
+import proton.android.pass.searchoptions.api.SearchFilterType
 
 @Composable
 fun HomeEmptyHeader(modifier: Modifier = Modifier, filterType: SearchFilterType) {

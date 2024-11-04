@@ -63,8 +63,8 @@ import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.data.fakes.usecases.TestUnpinItems
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ShareId
-import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
-import proton.android.pass.featuresearchoptions.fakes.TestHomeSearchOptionsRepository
+import proton.android.pass.searchoptions.api.VaultSelectionOption
+import proton.android.pass.searchoptions.fakes.TestHomeSearchOptionsRepository
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.notifications.fakes.TestToastManager

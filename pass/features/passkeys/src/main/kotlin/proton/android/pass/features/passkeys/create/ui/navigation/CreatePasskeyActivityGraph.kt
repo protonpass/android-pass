@@ -53,16 +53,16 @@ import proton.android.pass.features.password.generatePasswordBottomsheetGraph
 import proton.android.pass.features.report.navigation.AccountSwitchNavItem
 import proton.android.pass.features.report.navigation.AccountSwitchNavigation
 import proton.android.pass.features.report.navigation.accountSwitchNavGraph
+import proton.android.pass.features.searchoptions.SearchOptionsNavigation
+import proton.android.pass.features.searchoptions.SortingBottomsheetNavItem
+import proton.android.pass.features.searchoptions.SortingLocation
+import proton.android.pass.features.searchoptions.searchOptionsGraph
 import proton.android.pass.features.selectitem.navigation.SelectItem
 import proton.android.pass.features.selectitem.navigation.SelectItemNavigation
 import proton.android.pass.features.selectitem.navigation.selectItemGraph
 import proton.android.pass.features.vault.VaultNavigation
 import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.features.vault.vaultGraph
-import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
-import proton.android.pass.featuresearchoptions.impl.SortingBottomsheetNavItem
-import proton.android.pass.featuresearchoptions.impl.SortingLocation
-import proton.android.pass.featuresearchoptions.impl.searchOptionsGraph
 import proton.android.pass.navigation.api.AppNavigator
 
 @Suppress("LongMethod", "CyclomaticComplexMethod", "ComplexMethod", "ThrowsCount")

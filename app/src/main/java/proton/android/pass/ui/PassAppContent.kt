@@ -59,6 +59,7 @@ import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarH
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.featurehome.impl.HomeNavItem
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavItem
 import proton.android.pass.featureprofile.impl.ProfileNavItem
 import proton.android.pass.features.auth.AuthOrigin
@@ -291,17 +292,20 @@ private fun handleBottomBarEvent(
     bottomSheetState: ModalBottomSheetState,
     currentRoute: String?
 ) {
-    val destination = when (event) {
-        HomeBottomBarEvent.OnHomeSelected -> HomeNavItem
-        HomeBottomBarEvent.OnNewItemSelected -> CreateItemBottomsheetNavItem
-        HomeBottomBarEvent.OnProfileSelected -> ProfileNavItem
-        HomeBottomBarEvent.OnSecurityCenterSelected -> SecurityCenterHomeNavItem
+    val (destination, route) = when (event) {
+        HomeBottomBarEvent.OnHomeSelected -> HomeNavItem to null
+        HomeBottomBarEvent.OnNewItemSelected ->
+            CreateItemBottomsheetNavItem to
+                CreateItemBottomsheetNavItem.createNavRoute(CreateItemBottomSheetMode.HomeFull)
+        HomeBottomBarEvent.OnProfileSelected -> ProfileNavItem to null
+        HomeBottomBarEvent.OnSecurityCenterSelected -> SecurityCenterHomeNavItem to null
     }
 
     if (event == HomeBottomBarEvent.OnNewItemSelected && currentRoute == CreateItemBottomsheetNavItem.route) return
 
     navigateWithDismiss(
         destination = destination,
+        route = route,
         appNavigator = appNavigator,
         coroutineScope = coroutineScope,
         bottomSheetState = bottomSheetState,
@@ -309,9 +313,11 @@ private fun handleBottomBarEvent(
     )
 }
 
+@Suppress("LongParameterList")
 @OptIn(ExperimentalMaterialApi::class)
 private fun navigateWithDismiss(
     destination: NavItem,
+    route: String?,
     appNavigator: AppNavigator,
     coroutineScope: CoroutineScope,
     bottomSheetState: ModalBottomSheetState,
@@ -328,7 +334,7 @@ private fun navigateWithDismiss(
         if (currentRoute == CreateItemBottomsheetNavItem.route) {
             appNavigator.navigateBack()
         }
-        appNavigator.navigate(destination)
+        appNavigator.navigate(destination, route)
     }
 }
 

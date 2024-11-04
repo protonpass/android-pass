@@ -50,7 +50,8 @@ import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
 import proton.android.pass.featureitemdetail.impl.common.onEditClick
 import proton.android.pass.featureitemdetail.impl.common.onShareClick
-import proton.android.pass.features.trash.ConfirmDeleteItemDialog
+import proton.android.pass.features.trash.ConfirmDeleteDisabledAliasDialog
+import proton.android.pass.features.trash.ConfirmDeleteEnabledAliasDialog
 import proton.android.pass.features.trash.ConfirmTrashAliasDialog
 import proton.android.pass.features.trash.TrashItemBottomSheetContents
 
@@ -81,8 +82,18 @@ fun AliasDetail(
                 viewModel.onConsumeEvent(state.event)
             }
 
-            var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
             var shouldShowMoveToTrashItemDialog by rememberSaveable { mutableStateOf(false) }
+            var shouldShowRemoveEnabledAliasDialog by rememberSaveable { mutableStateOf(false) }
+            var shouldShowRemoveDisabledAliasDialog by rememberSaveable { mutableStateOf(false) }
+
+            LaunchedEffect(state.isLoadingMap) {
+                if (!state.isAnyLoading) {
+                    shouldShowMoveToTrashItemDialog = false
+                    shouldShowRemoveEnabledAliasDialog = false
+                    shouldShowRemoveDisabledAliasDialog = false
+                }
+            }
+
             if (state.requiresBackNavigation || isItemMovedToTrash) {
                 LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
             }
@@ -149,9 +160,11 @@ fun AliasDetail(
                                 viewModel.onItemRestore(item.shareId, item.id)
                             },
                             onDeleteItem = {
-                                scope.launch {
-                                    bottomSheetState.hide()
-                                    shouldShowDeleteItemDialog = true
+                                scope.launch { bottomSheetState.hide() }
+                                if (contents.isEnabled) {
+                                    shouldShowRemoveEnabledAliasDialog = true
+                                } else {
+                                    shouldShowRemoveDisabledAliasDialog = true
                                 }
                             },
                             icon = {
@@ -167,7 +180,7 @@ fun AliasDetail(
                     modifier = modifier,
                     topBar = {
                         ItemDetailTopBar(
-                            isLoading = state.isLoading,
+                            isLoading = state.isAnyLoading,
                             actions = state.itemActions,
                             actionColor = PassTheme.colors.aliasInteractionNormMajor1,
                             iconColor = PassTheme.colors.aliasInteractionNormMajor2,
@@ -201,7 +214,7 @@ fun AliasDetail(
                         isLoading = state.isLoadingMailboxes,
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
                         isAliasSyncEnabled = state.isSLAliasSyncEnabled,
-                        isAliasStateToggling = state.isAliasStateToggling,
+                        isAliasStateToggling = state.isLoading(LoadingStateKey.AliasStateToggling),
                         isAliasManagementEnabled = state.isAliasManagementEnabled,
                         onCopyAlias = { viewModel.onCopyAlias(it) },
                         onCreateLoginFromAlias = { alias ->
@@ -254,14 +267,36 @@ fun AliasDetail(
                     onDismiss = { shouldShowMoveToTrashItemDialog = false }
                 )
 
-                ConfirmDeleteItemDialog(
-                    isLoading = state.isLoading,
-                    show = shouldShowDeleteItemDialog,
-                    onConfirm = {
-                        shouldShowDeleteItemDialog = false
+                ConfirmDeleteEnabledAliasDialog(
+                    show = shouldShowRemoveEnabledAliasDialog,
+                    isDeleteLoading = state.isLoading(LoadingStateKey.PermanentlyDeleting),
+                    isDisableLoading = state.isLoading(LoadingStateKey.AliasStateToggling),
+                    alias = (state.itemUiModel.contents as ItemContents.Alias).aliasEmail,
+                    onDelete = {
                         viewModel.onPermanentlyDelete(state.itemUiModel)
                     },
-                    onDismiss = { shouldShowDeleteItemDialog = false }
+                    onDisable = {
+                        viewModel.toggleAliasState(
+                            shareId = state.itemUiModel.shareId,
+                            itemId = state.itemUiModel.id,
+                            state = false
+                        )
+                    },
+                    onDismiss = {
+                        shouldShowRemoveEnabledAliasDialog = false
+                    }
+                )
+
+                ConfirmDeleteDisabledAliasDialog(
+                    show = shouldShowRemoveDisabledAliasDialog,
+                    isLoading = state.isLoading(LoadingStateKey.PermanentlyDeleting),
+                    alias = (state.itemUiModel.contents as ItemContents.Alias).aliasEmail,
+                    onConfirm = {
+                        viewModel.onPermanentlyDelete(state.itemUiModel)
+                    },
+                    onDismiss = {
+                        shouldShowRemoveDisabledAliasDialog = false
+                    }
                 )
             }
         }

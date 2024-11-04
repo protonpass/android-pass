@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.notifications.api.InAppMessage
+import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.notifications.api.InAppMessageManager
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -22,10 +22,10 @@ import androidx.compose.runtime.Immutable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.domain.inappmessages.InAppMessage
+import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.network.api.NetworkStatus
-import proton.android.pass.notifications.api.InAppMessage
-import proton.android.pass.notifications.api.InAppMessageMode
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.preferences.ThemePreference
 

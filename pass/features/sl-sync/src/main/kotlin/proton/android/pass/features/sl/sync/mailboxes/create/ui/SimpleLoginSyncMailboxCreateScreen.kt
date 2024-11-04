@@ -36,11 +36,13 @@ fun SimpleLoginSyncMailboxCreateScreen(
 
     LaunchedEffect(state.event) {
         when (val event = state.event) {
-            SimpleLoginSyncMailboxCreateEvent.Idle -> {}
+            SimpleLoginSyncMailboxCreateEvent.Idle -> Unit
             is SimpleLoginSyncMailboxCreateEvent.OnMailboxCreated -> {
-                SimpleLoginSyncNavDestination.VerifyMailbox(
-                    mailboxId = event.mailboxId
-                ).also(onNavigated)
+                if (event.isVerified) {
+                    SimpleLoginSyncNavDestination.AliasManagement
+                } else {
+                    SimpleLoginSyncNavDestination.VerifyMailbox(mailboxId = event.mailboxId)
+                }.also(onNavigated)
             }
         }
 

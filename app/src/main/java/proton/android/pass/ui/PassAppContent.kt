@@ -65,9 +65,9 @@ import proton.android.pass.featureprofile.impl.ProfileNavItem
 import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.features.inappmessages.banner.ui.InAppMessageBanner
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
-import proton.android.pass.featuresearchoptions.impl.FilterBottomsheetNavItem
-import proton.android.pass.featuresearchoptions.impl.SearchOptionsBottomsheetNavItem
-import proton.android.pass.featuresearchoptions.impl.SortingBottomsheetNavItem
+import proton.android.pass.features.searchoptions.FilterBottomsheetNavItem
+import proton.android.pass.features.searchoptions.SearchOptionsBottomsheetNavItem
+import proton.android.pass.features.searchoptions.SortingBottomsheetNavItem
 import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.AppNavigator

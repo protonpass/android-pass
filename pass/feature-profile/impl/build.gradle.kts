@@ -77,7 +77,7 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.passkeys.api)
     implementation(projects.pass.preferences.api)
-    implementation(projects.pass.featureSearchOptions.api)
+    implementation(projects.pass.searchOptions.api)
 
     androidTestImplementation(libs.androidx.test.espresso.intents)
 
@@ -90,7 +90,7 @@ dependencies {
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.crypto.fakes)
     androidTestImplementation(projects.pass.data.fakes)
-    androidTestImplementation(projects.pass.featureSearchOptions.fakes)
+    androidTestImplementation(projects.pass.searchOptions.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)
     androidTestImplementation(projects.pass.passkeys.fakes)
     androidTestImplementation(projects.pass.preferences.fakes)

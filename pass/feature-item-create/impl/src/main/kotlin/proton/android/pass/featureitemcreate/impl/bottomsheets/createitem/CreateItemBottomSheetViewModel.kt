@@ -34,8 +34,8 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.domain.ShareId
-import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
-import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
+import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
+import proton.android.pass.searchoptions.api.VaultSelectionOption
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import javax.inject.Inject
 

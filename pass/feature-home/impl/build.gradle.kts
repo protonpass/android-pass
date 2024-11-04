@@ -90,7 +90,7 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.telemetry.api)
-    implementation(projects.pass.featureSearchOptions.api)
+    implementation(projects.pass.searchOptions.api)
 
     // Temporarily depend on the impl module until move the bottomsheets to routes
     implementation(projects.pass.features.trash)
@@ -114,7 +114,7 @@ dependencies {
     testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.preferences.fakes)
     testImplementation(projects.pass.telemetry.fakes)
-    testImplementation(projects.pass.featureSearchOptions.fakes)
+    testImplementation(projects.pass.searchOptions.fakes)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)
@@ -131,7 +131,7 @@ dependencies {
     androidTestImplementation(projects.pass.notifications.fakes)
     androidTestImplementation(projects.pass.preferences.fakes)
     androidTestImplementation(projects.pass.telemetry.fakes)
-    androidTestImplementation(projects.pass.featureSearchOptions.fakes)
+    androidTestImplementation(projects.pass.searchOptions.fakes)
     androidTestImplementation(projects.pass.securityCenter.fakes)
 
     baselineProfile(projects.pass.featureHome.macrobenchmark)

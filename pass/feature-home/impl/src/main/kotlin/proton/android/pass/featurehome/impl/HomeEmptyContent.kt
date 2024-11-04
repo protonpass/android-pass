@@ -28,7 +28,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.empty.EmptyReadOnly
 import proton.android.pass.featurehome.impl.empty.HomeEmptyList
 import proton.android.pass.featurehome.impl.trash.EmptyTrashContent
-import proton.android.pass.featuresearchoptions.api.SearchFilterType
+import proton.android.pass.searchoptions.api.SearchFilterType
 
 @Composable
 fun HomeEmptyContent(

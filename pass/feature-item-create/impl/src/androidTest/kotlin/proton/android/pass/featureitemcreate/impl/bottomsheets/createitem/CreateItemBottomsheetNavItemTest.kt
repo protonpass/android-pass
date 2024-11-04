@@ -24,12 +24,15 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import javax.inject.Inject
 
 @HiltAndroidTest
 class CreateItemBottomsheetNavItemTest {
@@ -39,7 +42,15 @@ class CreateItemBottomsheetNavItemTest {
 
     @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
-    
+
+    @Inject
+    lateinit var savedStateHandle: TestSavedStateHandleProvider
+
+    @Before
+    fun setup() {
+        hiltRule.inject()
+    }
+
     @Test
     fun testCreateLoginFullMode() {
         performTest(
@@ -124,23 +135,23 @@ class CreateItemBottomsheetNavItemTest {
         }
     }
 
-
     private fun performTest(
         mode: CreateItemBottomSheetMode,
         @StringRes text: Int,
         callback: (CreateItemBottomsheetNavigation, CallChecker<Unit>) -> Unit
     ) {
+        savedStateHandle.get().apply {
+            set(CreateItemBottomSheetModeNavArgId.key, mode)
+        }
         val checker = CallChecker<Unit>()
         composeTestRule.apply {
             setContent {
                 PassTheme {
                     CreateItemBottomSheet(
-                        mode = mode,
-                        onNavigate =  { callback(it, checker) }
+                        onNavigate = { callback(it, checker) }
                     )
                 }
             }
-
             onNodeWithText(activity.getString(text)).performClick()
             waitUntil { checker.isCalled }
         }

@@ -47,7 +47,11 @@ internal fun delete(action: SimpleLoginSyncMailboxOptionsAction, onClick: () -> 
         BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_trash)
     }
 
-    override val endIcon: @Composable (() -> Unit)? = null
+    override val endIcon: @Composable (() -> Unit) = {
+        if (action == SimpleLoginSyncMailboxOptionsAction.Delete) {
+            CircularProgressIndicator(modifier = Modifier.size(20.dp))
+        }
+    }
 
     override val onClick: (() -> Unit) = {
         if (action == SimpleLoginSyncMailboxOptionsAction.None) {

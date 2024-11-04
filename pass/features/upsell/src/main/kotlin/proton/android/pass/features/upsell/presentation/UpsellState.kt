@@ -35,6 +35,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
         PaidFeature.SentinelEssential -> false
         PaidFeature.AdvanceAliasManagement,
         PaidFeature.DarkWebMonitoring,
+        PaidFeature.ItemSharing,
         PaidFeature.SecureLinks,
         PaidFeature.SentinelFree,
         PaidFeature.ViewMissing2fa -> true
@@ -45,6 +46,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
         PaidFeature.AdvanceAliasManagement -> R.drawable.logo_feature_pass_unlimited
         PaidFeature.SentinelEssential,
         PaidFeature.DarkWebMonitoring,
+        PaidFeature.ItemSharing,
         PaidFeature.SentinelFree,
         PaidFeature.SecureLinks,
         PaidFeature.ViewMissing2fa -> R.drawable.logo_feature_pass_plus
@@ -55,6 +57,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
         PaidFeature.AdvanceAliasManagement -> R.string.upsell_paid_feature_advance_alias_management_title
         PaidFeature.SentinelEssential,
         PaidFeature.DarkWebMonitoring,
+        PaidFeature.ItemSharing,
         PaidFeature.SentinelFree,
         PaidFeature.SecureLinks,
         PaidFeature.ViewMissing2fa -> R.string.upsell_monitor_title
@@ -64,6 +67,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
     internal val subtitle: Int = when (paidFeature) {
         PaidFeature.AdvanceAliasManagement -> R.string.upsell_paid_feature_advance_alias_management_subtitle
         PaidFeature.DarkWebMonitoring -> R.string.upsell_dark_web_monitoring_subtitle
+        PaidFeature.ItemSharing,
         PaidFeature.SecureLinks,
         PaidFeature.SentinelEssential,
         PaidFeature.SentinelFree -> R.string.upsell_sentinel_subtitle
@@ -76,6 +80,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
         PaidFeature.AdvanceAliasManagement -> R.string.upsell_button_upgrade_unlimited
         PaidFeature.SentinelEssential -> R.string.upsell_button_upgrade_essentials
         PaidFeature.DarkWebMonitoring,
+        PaidFeature.ItemSharing,
         PaidFeature.SentinelFree,
         PaidFeature.SecureLinks,
         PaidFeature.ViewMissing2fa -> R.string.upsell_button_upgrade
@@ -98,6 +103,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
         )
 
         PaidFeature.DarkWebMonitoring,
+        PaidFeature.ItemSharing,
         PaidFeature.SentinelFree,
         PaidFeature.ViewMissing2fa -> persistentListOf(
             CompR.drawable.ic_shield_union to R.string.upsell_paid_feature_dark_web_monitoring,

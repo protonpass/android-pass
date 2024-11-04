@@ -92,7 +92,7 @@ import proton.android.pass.features.vault.VaultNavigation
 import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.features.vault.vaultGraph
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
-import proton.android.pass.featuresearchoptions.impl.SortingBottomsheet
+import proton.android.pass.featuresearchoptions.impl.SortingBottomsheetNavItem
 import proton.android.pass.featuresearchoptions.impl.SortingLocation
 import proton.android.pass.featuresearchoptions.impl.searchOptionsGraph
 import proton.android.pass.navigation.api.AppNavigator
@@ -165,8 +165,8 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 is SelectItemNavigation.SortingBottomsheet ->
                     appNavigator.navigate(
-                        SortingBottomsheet,
-                        SortingBottomsheet.createNavRoute(
+                        SortingBottomsheetNavItem,
+                        SortingBottomsheetNavItem.createNavRoute(
                             location = SortingLocation.Autofill
                         )
                     )

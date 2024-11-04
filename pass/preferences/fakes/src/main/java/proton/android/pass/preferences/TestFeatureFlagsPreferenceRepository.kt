@@ -27,6 +27,7 @@ import proton.android.pass.preferences.FeatureFlag.ACCOUNT_SWITCH_V1
 import proton.android.pass.preferences.FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.DIGITAL_ASSET_LINKS
+import proton.android.pass.preferences.FeatureFlag.ITEM_SHARING_V1
 import proton.android.pass.preferences.FeatureFlag.SL_ALIASES_SYNC
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -46,6 +47,7 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
             SL_ALIASES_SYNC -> it.getOrDefault(SL_ALIASES_SYNC, false) as T
             DIGITAL_ASSET_LINKS -> it.getOrDefault(DIGITAL_ASSET_LINKS, false) as T
             ADVANCED_ALIAS_MANAGEMENT_V1 -> it.getOrDefault(ADVANCED_ALIAS_MANAGEMENT_V1, false) as T
+            ITEM_SHARING_V1 -> it.getOrDefault(ITEM_SHARING_V1, false) as T
         }
     }
 

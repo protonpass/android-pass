@@ -55,10 +55,10 @@ import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
-import proton.android.pass.notifications.api.InAppMessage
-import proton.android.pass.notifications.api.InAppMessageCTARoute
-import proton.android.pass.notifications.api.InAppMessageId
-import proton.android.pass.notifications.api.InAppMessageMode
+import proton.android.pass.domain.inappmessages.InAppMessage
+import proton.android.pass.domain.inappmessages.InAppMessageCTARoute
+import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.domain.inappmessages.InAppMessageMode
 import me.proton.core.presentation.R as CoreR
 
 @Composable

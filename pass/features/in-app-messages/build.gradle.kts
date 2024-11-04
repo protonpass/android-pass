@@ -65,6 +65,7 @@ dependencies {
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUi.impl)
     implementation(projects.pass.composeComponents.impl)
+    implementation(projects.pass.domain)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
 

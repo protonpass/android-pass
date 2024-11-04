@@ -36,6 +36,8 @@ import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteImageFetcher
 import proton.android.pass.data.impl.remote.RemoteImageFetcherImpl
+import proton.android.pass.data.impl.remote.inappmessages.RemoteInAppMessagesDataSource
+import proton.android.pass.data.impl.remote.inappmessages.RemoteInAppMessagesDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
 import proton.android.pass.data.impl.remote.RemoteInviteDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
@@ -135,6 +137,11 @@ abstract class DataRemoteDataSourceModule {
     abstract fun bindRemoteAliasContactsDataSource(
         impl: RemoteAliasContactsDataSourceImpl
     ): RemoteAliasContactsDataSource
+
+    @[Binds Singleton]
+    abstract fun bindRemoteInAppMessagesDataSource(
+        impl: RemoteInAppMessagesDataSourceImpl
+    ): RemoteInAppMessagesDataSource
 
 }
 

@@ -8,4 +8,5 @@ dependencies {
     compileOnly(libs.compose.stable.marker)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.domain)
 }

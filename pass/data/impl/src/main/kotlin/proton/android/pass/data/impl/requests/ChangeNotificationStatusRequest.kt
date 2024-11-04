@@ -16,14 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.notifications.api
+package proton.android.pass.data.impl.requests
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
-import proton.android.pass.domain.inappmessages.InAppMessage
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-interface InAppMessageManager {
-    fun emit(message: InAppMessage)
-    fun clear()
-    fun observe(): Flow<Option<InAppMessage>>
-}
+@Serializable
+data class ChangeNotificationStatusRequest(
+    @SerialName("State")
+    val state: Int
+)

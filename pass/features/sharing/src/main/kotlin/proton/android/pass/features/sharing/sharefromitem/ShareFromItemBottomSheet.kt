@@ -89,9 +89,10 @@ fun ShareFromItemBottomSheet(
                     ShareFromItemEvent.ShareItem -> {
                         // Will be implemented in IDTEAM-4076
                     }
-                    ShareFromItemEvent.UpsellItemSharing -> {
-                        // Will be implemented in IDTEAM-4075
-                    }
+
+                    ShareFromItemEvent.UpsellItemSharing -> SharingNavigation.Upsell(
+                        paidFeature = PaidFeature.ItemSharing
+                    ).also(onNavigateEvent)
                 }
             }
         }

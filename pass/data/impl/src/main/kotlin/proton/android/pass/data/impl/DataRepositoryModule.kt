@@ -30,6 +30,7 @@ import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -54,6 +55,7 @@ import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepositoryImpl
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepository
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepositoryImpl
+import proton.android.pass.data.impl.repositories.InAppMessagesRepositoryImpl
 import proton.android.pass.data.impl.repositories.InviteRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemKeyRepository
 import proton.android.pass.data.impl.repositories.ItemKeyRepositoryImpl
@@ -162,4 +164,8 @@ abstract class DataRepositoryModule {
 
     @[Binds Singleton]
     abstract fun bindAliasContactsRepository(impl: AliasContactsRepositoryImpl): AliasContactsRepository
+
+    @[Binds Singleton]
+    abstract fun bindInAppMessagesRepository(impl: InAppMessagesRepositoryImpl): InAppMessagesRepository
+
 }

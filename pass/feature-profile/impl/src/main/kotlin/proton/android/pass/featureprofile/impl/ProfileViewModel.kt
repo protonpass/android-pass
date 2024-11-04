@@ -79,10 +79,10 @@ import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.FilteredBy
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.FilteredByNote
 import proton.android.pass.featureprofile.impl.accountswitcher.AccountItem
 import proton.android.pass.featureprofile.impl.accountswitcher.AccountListItem
-import proton.android.pass.featuresearchoptions.api.FilterOption
-import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
-import proton.android.pass.featuresearchoptions.api.SearchFilterType
-import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
+import proton.android.pass.searchoptions.api.FilterOption
+import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
+import proton.android.pass.searchoptions.api.SearchFilterType
+import proton.android.pass.searchoptions.api.VaultSelectionOption
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.CheckPasskeySupport

@@ -72,8 +72,8 @@ import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIco
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.HomeContentTestTag.DRAWER_ICON_TEST_TAG
-import proton.android.pass.featuresearchoptions.api.SearchFilterType
-import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
+import proton.android.pass.searchoptions.api.SearchFilterType
+import proton.android.pass.searchoptions.api.VaultSelectionOption
 
 @Suppress("ComplexMethod")
 @ExperimentalComposeUiApi

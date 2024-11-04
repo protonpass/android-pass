@@ -36,7 +36,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.featurehome.impl.R
-import proton.android.pass.featuresearchoptions.api.SearchFilterType
+import proton.android.pass.searchoptions.api.SearchFilterType
 import me.proton.core.presentation.R as CoreR
 
 @Composable

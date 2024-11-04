@@ -116,9 +116,9 @@ import proton.android.pass.features.selectitem.ui.SelectItemListItems
 import proton.android.pass.features.selectitem.ui.SelectItemListUiState
 import proton.android.pass.features.selectitem.ui.SelectItemSnackbarMessage
 import proton.android.pass.features.selectitem.ui.SelectItemUiState
-import proton.android.pass.featuresearchoptions.api.AutofillSearchOptionsRepository
-import proton.android.pass.featuresearchoptions.api.SearchSortingType
-import proton.android.pass.featuresearchoptions.api.SortingOption
+import proton.android.pass.searchoptions.api.AutofillSearchOptionsRepository
+import proton.android.pass.searchoptions.api.SearchSortingType
+import proton.android.pass.searchoptions.api.SortingOption
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.UserPreferencesRepository

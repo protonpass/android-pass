@@ -39,7 +39,7 @@ import proton.android.pass.composecomponents.impl.item.ItemsList
 import proton.android.pass.composecomponents.impl.item.header.ItemCount
 import proton.android.pass.composecomponents.impl.item.header.ItemListHeader
 import proton.android.pass.composecomponents.impl.item.header.SortingButton
-import proton.android.pass.featuresearchoptions.api.SearchFilterType
+import proton.android.pass.searchoptions.api.SearchFilterType
 import proton.android.pass.features.selectitem.R
 import proton.android.pass.features.selectitem.navigation.SelectItemNavigation
 import proton.android.pass.features.selectitem.previewproviders.SelectItemUiStatePreviewProvider

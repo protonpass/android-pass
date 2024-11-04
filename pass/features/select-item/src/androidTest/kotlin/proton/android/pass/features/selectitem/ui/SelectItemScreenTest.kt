@@ -65,7 +65,7 @@ import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.features.selectitem.R
 import proton.android.pass.features.selectitem.navigation.SelectItemNavigation
 import proton.android.pass.features.selectitem.navigation.SelectItemState
-import proton.android.pass.featuresearchoptions.impl.SearchOptionsModule
+import proton.android.pass.searchoptions.impl.SearchOptionsModule
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.TestConstants

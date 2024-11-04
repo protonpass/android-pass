@@ -44,14 +44,14 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
-import proton.android.pass.featuresearchoptions.api.SearchFilterType
-import proton.android.pass.featuresearchoptions.api.SearchFilterType.Alias
-import proton.android.pass.featuresearchoptions.api.SearchFilterType.All
-import proton.android.pass.featuresearchoptions.api.SearchFilterType.CreditCard
-import proton.android.pass.featuresearchoptions.api.SearchFilterType.Identity
-import proton.android.pass.featuresearchoptions.api.SearchFilterType.Login
-import proton.android.pass.featuresearchoptions.api.SearchFilterType.LoginMFA
-import proton.android.pass.featuresearchoptions.api.SearchFilterType.Note
+import proton.android.pass.searchoptions.api.SearchFilterType
+import proton.android.pass.searchoptions.api.SearchFilterType.Alias
+import proton.android.pass.searchoptions.api.SearchFilterType.All
+import proton.android.pass.searchoptions.api.SearchFilterType.CreditCard
+import proton.android.pass.searchoptions.api.SearchFilterType.Identity
+import proton.android.pass.searchoptions.api.SearchFilterType.Login
+import proton.android.pass.searchoptions.api.SearchFilterType.LoginMFA
+import proton.android.pass.searchoptions.api.SearchFilterType.Note
 import me.proton.core.presentation.R as CoreR
 
 @Composable

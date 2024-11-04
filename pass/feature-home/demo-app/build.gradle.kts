@@ -125,7 +125,7 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.inAppReview.fakes)
     implementation(projects.pass.featureHome.impl)
-    implementation(projects.pass.featureSearchOptions.fakes)
+    implementation(projects.pass.searchOptions.fakes)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.fakes)
     implementation(projects.pass.telemetry.fakes)

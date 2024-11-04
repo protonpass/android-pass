@@ -33,7 +33,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.featuresearchoptions.api.SearchSortingType
+import proton.android.pass.searchoptions.api.SearchSortingType
 import proton.android.pass.features.selectitem.ui.AccountSwitchUIState
 import proton.android.pass.features.selectitem.ui.AutofillItemClickedEvent
 import proton.android.pass.features.selectitem.ui.PinningUiState

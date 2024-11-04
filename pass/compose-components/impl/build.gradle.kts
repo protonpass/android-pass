@@ -62,7 +62,7 @@ dependencies {
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.domain)
-    implementation(projects.pass.featureSearchOptions.api)
+    implementation(projects.pass.searchOptions.api)
     implementation(projects.pass.inAppReview.api)
     implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)

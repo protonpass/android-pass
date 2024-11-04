@@ -40,7 +40,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.body3Bold
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.featuresearchoptions.api.SearchFilterType
+import proton.android.pass.searchoptions.api.SearchFilterType
 
 @Composable
 fun ItemCount(

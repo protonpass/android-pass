@@ -28,14 +28,14 @@ import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.passkeys.select.presentation.SelectPasskeyActionAfterAuth
 import proton.android.pass.features.passkeys.select.ui.app.SelectPasskeyEvent
 import proton.android.pass.features.passkeys.select.ui.bottomsheet.selectpasskey.selectPasskeyBottomsheetGraph
+import proton.android.pass.features.searchoptions.SearchOptionsNavigation
+import proton.android.pass.features.searchoptions.SortingBottomsheetNavItem
+import proton.android.pass.features.searchoptions.SortingLocation
+import proton.android.pass.features.searchoptions.searchOptionsGraph
 import proton.android.pass.features.selectitem.navigation.SelectItem
 import proton.android.pass.features.selectitem.navigation.SelectItemNavigation
 import proton.android.pass.features.selectitem.navigation.SelectItemState
 import proton.android.pass.features.selectitem.navigation.selectItemGraph
-import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
-import proton.android.pass.featuresearchoptions.impl.SortingBottomsheetNavItem
-import proton.android.pass.featuresearchoptions.impl.SortingLocation
-import proton.android.pass.featuresearchoptions.impl.searchOptionsGraph
 import proton.android.pass.navigation.api.AppNavigator
 
 @Suppress(

@@ -37,8 +37,8 @@ import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
-import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
-import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
+import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
+import proton.android.pass.searchoptions.api.VaultSelectionOption
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 

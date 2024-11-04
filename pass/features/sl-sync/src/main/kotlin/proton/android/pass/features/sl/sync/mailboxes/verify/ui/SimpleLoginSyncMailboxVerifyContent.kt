@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import proton.android.pass.composecomponents.impl.codes.PassCodeVerificationContent
 import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.mailboxes.verify.presentation.SimpleLoginSyncMailboxVerifyState
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun SimpleLoginSyncMailboxVerifyContent(
@@ -41,6 +42,7 @@ internal fun SimpleLoginSyncMailboxVerifyContent(
                 stringResource(id = R.string.simple_login_sync_mailbox_verify_email_fallback)
             }
         ),
+        emailSubject = stringResource(CompR.string.verification_code_suggestion_subject_new_mailbox),
         onUpClick = { onUiEvent(SimpleLoginSyncMailboxVerifyUiEvent.OnCloseClicked) },
         isActionLoading = isLoading,
         onActionClick = {

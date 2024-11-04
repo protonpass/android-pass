@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import proton.android.pass.composecomponents.impl.codes.PassCodeVerificationContent
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.verifyemail.presentation.SecurityCenterVerifyEmailState
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun SecurityCenterVerifyEmailContent(
@@ -39,6 +40,7 @@ internal fun SecurityCenterVerifyEmailContent(
             R.string.security_center_verify_email_subtitle,
             email
         ),
+        emailSubject = stringResource(CompR.string.verification_code_suggestion_subject_new_email_address),
         onUpClick = { onUiEvent(SecurityCenterVerifyEmailUiEvent.Back) },
         isActionLoading = isLoading,
         onActionClick = { onUiEvent(SecurityCenterVerifyEmailUiEvent.Verify) },

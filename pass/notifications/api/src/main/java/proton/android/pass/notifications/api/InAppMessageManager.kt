@@ -20,29 +20,10 @@ package proton.android.pass.notifications.api
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.Option
+import proton.android.pass.domain.inappmessages.InAppMessage
 
 interface InAppMessageManager {
     fun emit(message: InAppMessage)
     fun clear()
     fun observe(): Flow<Option<InAppMessage>>
 }
-
-enum class InAppMessageMode {
-    Banner, Modal
-}
-
-@JvmInline
-value class InAppMessageId(val value: String)
-
-@JvmInline
-value class InAppMessageCTARoute(val value: String)
-
-data class InAppMessage(
-    val id: InAppMessageId,
-    val mode: InAppMessageMode,
-    val title: String,
-    val message: Option<String>,
-    val imageUrl: Option<String>,
-    val ctaRoute: Option<InAppMessageCTARoute>,
-    val ctaText: Option<String>
-)

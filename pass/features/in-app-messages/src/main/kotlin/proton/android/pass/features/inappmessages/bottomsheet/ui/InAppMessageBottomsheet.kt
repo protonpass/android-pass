@@ -21,9 +21,9 @@ package proton.android.pass.features.inappmessages.bottomsheet.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.common.api.None
-import proton.android.pass.notifications.api.InAppMessage
-import proton.android.pass.notifications.api.InAppMessageId
-import proton.android.pass.notifications.api.InAppMessageMode
+import proton.android.pass.domain.inappmessages.InAppMessage
+import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.domain.inappmessages.InAppMessageMode
 
 @Composable
 fun InAppMessageBottomsheet(modifier: Modifier = Modifier) {

@@ -31,6 +31,7 @@ dependencies {
     api(projects.pass.notifications.api)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.domain)
 
     implementation(libs.kotlinx.coroutines.core)
 

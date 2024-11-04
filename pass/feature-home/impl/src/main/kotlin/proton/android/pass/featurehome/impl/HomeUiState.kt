@@ -38,9 +38,9 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
-import proton.android.pass.featuresearchoptions.api.SearchFilterType
-import proton.android.pass.featuresearchoptions.api.SearchSortingType
-import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
+import proton.android.pass.searchoptions.api.SearchFilterType
+import proton.android.pass.searchoptions.api.SearchSortingType
+import proton.android.pass.searchoptions.api.VaultSelectionOption
 import proton.android.pass.preferences.AliasTrashDialogStatusPreference
 
 internal enum class LoadingDialog {

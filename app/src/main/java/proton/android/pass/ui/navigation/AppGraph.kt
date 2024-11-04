@@ -152,6 +152,12 @@ import proton.android.pass.features.password.generatePasswordBottomsheetGraph
 import proton.android.pass.features.report.navigation.ReportNavDestination
 import proton.android.pass.features.report.navigation.ReportNavItem
 import proton.android.pass.features.report.navigation.reportNavGraph
+import proton.android.pass.features.searchoptions.FilterBottomsheetNavItem
+import proton.android.pass.features.searchoptions.SearchOptionsBottomsheetNavItem
+import proton.android.pass.features.searchoptions.SearchOptionsNavigation
+import proton.android.pass.features.searchoptions.SortingBottomsheetNavItem
+import proton.android.pass.features.searchoptions.SortingLocation
+import proton.android.pass.features.searchoptions.searchOptionsGraph
 import proton.android.pass.features.secure.links.create.navigation.SecureLinksCreateNavItem
 import proton.android.pass.features.secure.links.list.navigation.SecureLinksListNavItem
 import proton.android.pass.features.secure.links.listmenu.navigation.SecureLinksListMenuNavItem
@@ -240,12 +246,6 @@ import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsh
 import proton.android.pass.features.vault.delete.DeleteVaultDialog
 import proton.android.pass.features.vault.leave.LeaveVaultDialog
 import proton.android.pass.features.vault.vaultGraph
-import proton.android.pass.featuresearchoptions.impl.FilterBottomsheetNavItem
-import proton.android.pass.featuresearchoptions.impl.SearchOptionsBottomsheetNavItem
-import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
-import proton.android.pass.featuresearchoptions.impl.SortingBottomsheetNavItem
-import proton.android.pass.featuresearchoptions.impl.SortingLocation
-import proton.android.pass.featuresearchoptions.impl.searchOptionsGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.CommonNavArgKey
 import proton.android.pass.ui.AppNavigation

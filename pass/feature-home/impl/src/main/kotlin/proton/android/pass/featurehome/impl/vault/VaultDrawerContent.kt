@@ -38,7 +38,7 @@ import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.R
-import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
+import proton.android.pass.searchoptions.api.VaultSelectionOption
 
 @Composable
 fun VaultDrawerContent(

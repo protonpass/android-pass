@@ -51,13 +51,29 @@ internal fun ShareFromItemContent(
         ),
         verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
-        if (state.isSecureLinkAvailable) {
+        if (state.isSingleSharingAvailable) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.sharing_from_item_title),
                 style = ProtonTheme.typography.defaultHighlightNorm,
                 textAlign = TextAlign.Center
             )
+
+            if (state.isItemSharingAvailable) {
+                ShareItemSecureLinkRow(
+                    iconResId = CoreR.drawable.ic_proton_user_plus,
+                    title = stringResource(id = R.string.share_with_user_title),
+                    description = stringResource(id = R.string.share_with_user_description),
+                    shouldShowPlusIcon = !state.canUsePaidFeatures,
+                    onClick = {
+                        if (state.canUsePaidFeatures) {
+                            ShareFromItemEvent.ShareItem
+                        } else {
+                            ShareFromItemEvent.UpsellItemSharing
+                        }.also(onEvent)
+                    }
+                )
+            }
 
             ShareItemSecureLinkRow(
                 iconResId = CoreR.drawable.ic_proton_link,

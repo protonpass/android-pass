@@ -126,8 +126,21 @@ class AliasDetailViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
-    private val isLoadingState: MutableStateFlow<IsLoadingState> =
-        MutableStateFlow(IsLoadingState.NotLoading)
+    private val loadingStates: Map<LoadingStateKey, MutableStateFlow<IsLoadingState>> = mapOf(
+        LoadingStateKey.MovingToTrash to MutableStateFlow(IsLoadingState.NotLoading),
+        LoadingStateKey.PermanentlyDeleting to MutableStateFlow(IsLoadingState.NotLoading),
+        LoadingStateKey.RestoringFromTrash to MutableStateFlow(IsLoadingState.NotLoading),
+        LoadingStateKey.Pinning to MutableStateFlow(IsLoadingState.NotLoading),
+        LoadingStateKey.Unpinning to MutableStateFlow(IsLoadingState.NotLoading),
+        LoadingStateKey.AliasStateToggling to MutableStateFlow(IsLoadingState.NotLoading)
+    )
+    private val allLoadingStates =
+        combine<Pair<LoadingStateKey, IsLoadingState>, Map<LoadingStateKey, IsLoadingState>>(
+            loadingStates.map { (key, flow) ->
+                flow.map { key to it }
+            },
+            Array<Pair<LoadingStateKey, IsLoadingState>>::toMap
+        )
     private val isItemSentToTrashState: MutableStateFlow<IsSentToTrashState> =
         MutableStateFlow(IsSentToTrashState.NotSent)
     private val isPermanentlyDeletedState: MutableStateFlow<IsPermanentlyDeletedState> =
@@ -165,8 +178,6 @@ class AliasDetailViewModel @Inject constructor(
         ::AliasItemFeatures
     )
 
-    private val isAliasStateTogglingFlow = MutableStateFlow(false)
-
     private val aliasDetailsAndContactsFlow = combine(
         observeAliasDetails(shareId, itemId).asLoadingResult(),
         observeAliasContacts(shareId, itemId).asLoadingResult(),
@@ -176,26 +187,24 @@ class AliasDetailViewModel @Inject constructor(
     internal val uiState: StateFlow<AliasDetailUiState> = combineN(
         aliasItemDetailsResultFlow,
         aliasDetailsAndContactsFlow,
-        isLoadingState,
+        allLoadingStates,
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
         shareActionFlow,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
         eventState,
-        itemFeaturesFlow,
-        isAliasStateTogglingFlow
+        itemFeaturesFlow
     ) { itemLoadingResult,
         (aliasDetailsResult, aliasContactsResult),
-        isLoading,
+        allLoadingStates,
         isItemSentToTrash,
         isPermanentlyDeleted,
         isRestoredFromTrash,
         shareAction,
         itemActions,
         event,
-        itemFeatures,
-        isAliasStateToggling ->
+        itemFeatures ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 if (!isPermanentlyDeleted.value()) {
@@ -226,7 +235,7 @@ class AliasDetailViewModel @Inject constructor(
                     displayName = aliasDetails?.name.orEmpty(),
                     stats = aliasDetails?.stats.toOption(),
                     contactsCount = aliasContactsResult.getOrNull()?.total ?: 0,
-                    isLoading = isAliasDetailsLoading || isLoading.value(),
+                    isLoadingMap = allLoadingStates,
                     isLoadingMailboxes = isAliasDetailsLoading,
                     isItemSentToTrash = isItemSentToTrash.value(),
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
@@ -238,7 +247,6 @@ class AliasDetailViewModel @Inject constructor(
                     isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
                     isSLAliasSyncEnabled = itemFeatures.slAliasSyncEnabled,
                     isAliasManagementEnabled = itemFeatures.isAliasManagementEnabled,
-                    isAliasStateToggling = isAliasStateToggling,
                     isAliasTrashDialogChecked = itemFeatures.isAliasTrashDialogChecked
                 )
             }
@@ -259,7 +267,7 @@ class AliasDetailViewModel @Inject constructor(
 
     internal fun onMoveToTrash(shareId: ShareId, itemId: ItemId) {
         viewModelScope.launch {
-            isLoadingState.update { IsLoadingState.Loading }
+            setLoadingState(LoadingStateKey.MovingToTrash, IsLoadingState.Loading)
 
             runCatching { trashItem(items = mapOf(shareId to listOf(itemId))) }
                 .onSuccess {
@@ -270,15 +278,13 @@ class AliasDetailViewModel @Inject constructor(
                     snackbarDispatcher(ItemNotMovedToTrash)
                     PassLogger.d(TAG, it, "Could not delete item")
                 }
-
-            isLoadingState.update { IsLoadingState.NotLoading }
+            setLoadingState(LoadingStateKey.MovingToTrash, IsLoadingState.NotLoading)
         }
     }
 
     internal fun onPermanentlyDelete(itemUiModel: ItemUiModel) {
         viewModelScope.launch {
-            isLoadingState.update { IsLoadingState.Loading }
-
+            setLoadingState(LoadingStateKey.PermanentlyDeleting, IsLoadingState.Loading)
             runCatching {
                 deleteItem(items = mapOf(itemUiModel.shareId to listOf(itemUiModel.id)))
             }.onSuccess {
@@ -290,15 +296,13 @@ class AliasDetailViewModel @Inject constructor(
                 snackbarDispatcher(DetailSnackbarMessages.ItemNotPermanentlyDeleted)
                 PassLogger.i(TAG, it, "Could not delete item")
             }
-
-            isLoadingState.update { IsLoadingState.NotLoading }
+            setLoadingState(LoadingStateKey.PermanentlyDeleting, IsLoadingState.NotLoading)
         }
     }
 
     internal fun onItemRestore(shareId: ShareId, itemId: ItemId) {
         viewModelScope.launch {
-            isLoadingState.update { IsLoadingState.Loading }
-
+            setLoadingState(LoadingStateKey.RestoringFromTrash, IsLoadingState.Loading)
             runCatching {
                 restoreItem(items = mapOf(shareId to listOf(itemId)))
             }.onSuccess {
@@ -309,8 +313,7 @@ class AliasDetailViewModel @Inject constructor(
                 PassLogger.i(TAG, it, "Error restoring item")
                 snackbarDispatcher(ItemNotRestored)
             }
-
-            isLoadingState.update { IsLoadingState.NotLoading }
+            setLoadingState(LoadingStateKey.RestoringFromTrash, IsLoadingState.NotLoading)
         }
     }
 
@@ -327,31 +330,27 @@ class AliasDetailViewModel @Inject constructor(
 
     internal fun pinItem(shareId: ShareId, itemId: ItemId) {
         viewModelScope.launch {
-            isLoadingState.update { IsLoadingState.Loading }
-
+            setLoadingState(LoadingStateKey.Pinning, IsLoadingState.Loading)
             runCatching { pinItem.invoke(shareId, itemId) }
                 .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemPinnedSuccess) }
                 .onFailure { error ->
                     PassLogger.w(TAG, error, "An error occurred pinning Alias item")
                     snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError)
                 }
-
-            isLoadingState.update { IsLoadingState.NotLoading }
+            setLoadingState(LoadingStateKey.Unpinning, IsLoadingState.NotLoading)
         }
     }
 
     internal fun unpinItem(shareId: ShareId, itemId: ItemId) {
         viewModelScope.launch {
-            isLoadingState.update { IsLoadingState.Loading }
-
+            setLoadingState(LoadingStateKey.Unpinning, IsLoadingState.Loading)
             runCatching { unpinItem.invoke(shareId, itemId) }
                 .onSuccess { snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedSuccess) }
                 .onFailure { error ->
                     PassLogger.w(TAG, error, "An error occurred unpinning Alias item")
                     snackbarDispatcher(DetailSnackbarMessages.ItemUnpinnedError)
                 }
-
-            isLoadingState.update { IsLoadingState.NotLoading }
+            setLoadingState(LoadingStateKey.Unpinning, IsLoadingState.NotLoading)
         }
     }
 
@@ -361,8 +360,7 @@ class AliasDetailViewModel @Inject constructor(
         state: Boolean
     ) {
         viewModelScope.launch {
-            isAliasStateTogglingFlow.update { true }
-
+            setLoadingState(LoadingStateKey.AliasStateToggling, IsLoadingState.Loading)
             runCatching { changeAliasStatus(shareId, itemId, state) }
                 .onSuccess {
                     PassLogger.i(TAG, "Alias status changed successfully")
@@ -372,8 +370,12 @@ class AliasDetailViewModel @Inject constructor(
                     PassLogger.w(TAG, "Error changing alias status")
                     PassLogger.w(TAG, it)
                 }
-            isAliasStateTogglingFlow.update { false }
+            setLoadingState(LoadingStateKey.AliasStateToggling, IsLoadingState.NotLoading)
         }
+    }
+
+    private fun setLoadingState(key: LoadingStateKey, isLoading: IsLoadingState) {
+        loadingStates[key]?.update { isLoading }
     }
 
     private companion object {
@@ -382,4 +384,13 @@ class AliasDetailViewModel @Inject constructor(
 
     }
 
+}
+
+enum class LoadingStateKey {
+    MovingToTrash,
+    PermanentlyDeleting,
+    RestoringFromTrash,
+    Pinning,
+    Unpinning,
+    AliasStateToggling
 }

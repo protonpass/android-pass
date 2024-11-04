@@ -22,6 +22,7 @@ import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.PersistentList
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasStats
@@ -49,7 +50,7 @@ sealed interface AliasDetailUiState {
         val displayName: String,
         val stats: Option<AliasStats>,
         val contactsCount: Int,
-        val isLoading: Boolean,
+        val isLoadingMap: Map<LoadingStateKey, IsLoadingState>,
         val isLoadingMailboxes: Boolean,
         val isItemSentToTrash: Boolean,
         val isPermanentlyDeleted: Boolean,
@@ -60,7 +61,6 @@ sealed interface AliasDetailUiState {
         val event: ItemDetailEvent,
         val isHistoryFeatureEnabled: Boolean,
         val isSLAliasSyncEnabled: Boolean,
-        val isAliasStateToggling: Boolean,
         val isAliasTrashDialogChecked: Boolean,
         val isAliasManagementEnabled: Boolean
     ) : AliasDetailUiState {
@@ -68,6 +68,11 @@ sealed interface AliasDetailUiState {
         internal val requiresBackNavigation: Boolean = isItemSentToTrash ||
             isPermanentlyDeleted ||
             isRestoredFromTrash
+
+        internal val isAnyLoading: Boolean
+            get() = isLoadingMap.values.any { it.value() }
+
+        internal fun isLoading(key: LoadingStateKey): Boolean = isLoadingMap[key]?.value() ?: false
 
     }
 

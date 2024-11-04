@@ -53,5 +53,11 @@ enum class FeatureFlag(
         description = "Enable advanced alias management",
         key = "PassAdvancedAliasManagementV1",
         isEnabledDefault = false
+    ),
+    ITEM_SHARING_V1(
+        title = "Item sharing (v1)",
+        description = "Enable single item sharing",
+        key = "PassItemSharingV1",
+        isEnabledDefault = false
     )
 }

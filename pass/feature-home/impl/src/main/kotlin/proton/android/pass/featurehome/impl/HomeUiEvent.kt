@@ -22,7 +22,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ShareId
-import proton.android.pass.featuresearchoptions.api.SearchFilterType
+import proton.android.pass.searchoptions.api.SearchFilterType
 
 sealed interface HomeUiEvent {
 

@@ -29,7 +29,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
-import proton.android.pass.featuresearchoptions.api.SearchSortingType
+import proton.android.pass.searchoptions.api.SearchSortingType
 
 @Composable
 fun SortingButton(

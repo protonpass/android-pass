@@ -21,7 +21,7 @@ package proton.android.pass.featurehome.impl.vault
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
-import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
+import proton.android.pass.searchoptions.api.VaultSelectionOption
 
 @Immutable
 data class VaultDrawerUiState(

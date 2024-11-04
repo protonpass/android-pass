@@ -37,6 +37,7 @@ import proton.android.pass.preferences.FeatureFlag.ACCOUNT_SWITCH_V1
 import proton.android.pass.preferences.FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.DIGITAL_ASSET_LINKS
+import proton.android.pass.preferences.FeatureFlag.ITEM_SHARING_V1
 import proton.android.pass.preferences.FeatureFlag.SL_ALIASES_SYNC
 import java.io.IOException
 import javax.inject.Inject
@@ -75,6 +76,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { advanceAliasManagementV1Enabled.value }
+
+        ITEM_SHARING_V1 -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { itemSharingV1Enabled.value }
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
@@ -96,6 +102,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         ADVANCED_ALIAS_MANAGEMENT_V1 -> setFeatureFlag {
             advanceAliasManagementV1Enabled = boolFlagPrefProto(value)
+        }
+
+        ITEM_SHARING_V1 -> setFeatureFlag {
+            itemSharingV1Enabled = boolFlagPrefProto(value)
         }
     }
 
@@ -192,6 +202,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             SL_ALIASES_SYNC -> simpleLoginAliasesSyncEnabled
             DIGITAL_ASSET_LINKS -> digitalAssetLinkEnabled
             ADVANCED_ALIAS_MANAGEMENT_V1 -> advanceAliasManagementV1Enabled
+            ITEM_SHARING_V1 -> itemSharingV1Enabled
         }.value
     }
 }

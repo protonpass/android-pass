@@ -26,6 +26,7 @@ class CreateItemBottomSheetUIStatePreviewProvider :
         get() = sequenceOf(
             CreateItemBottomSheetUIState(
                 shareId = null,
+                mode = CreateItemBottomSheetMode.HomeFull,
                 createItemAliasUIState = CreateItemAliasUIState(
                     canUpgrade = true,
                     aliasCount = 5,
@@ -34,6 +35,7 @@ class CreateItemBottomSheetUIStatePreviewProvider :
             ),
             CreateItemBottomSheetUIState(
                 shareId = null,
+                mode = CreateItemBottomSheetMode.HomeFull,
                 createItemAliasUIState = CreateItemAliasUIState(
                     canUpgrade = true,
                     aliasCount = 10,

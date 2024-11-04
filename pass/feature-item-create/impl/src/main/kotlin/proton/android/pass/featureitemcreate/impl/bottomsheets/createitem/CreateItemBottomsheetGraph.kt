@@ -19,23 +19,31 @@
 package proton.android.pass.featureitemcreate.impl.bottomsheets.createitem
 
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
+import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.toPath
 
+object CreateItemBottomSheetModeNavArgId : NavArgId {
+    override val key: String = "createItemMode"
+    override val navType: NavType<*> = NavType.EnumType(CreateItemBottomSheetMode::class.java)
+}
+
 object CreateItemBottomsheetNavItem : NavItem(
     baseRoute = "item/create/bottomsheet",
+    navArgIds = listOf(CreateItemBottomSheetModeNavArgId),
     optionalArgIds = listOf(CommonOptionalNavArgId.ShareId),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun createNavRoute(shareId: Option<ShareId> = None) = buildString {
-        append(baseRoute)
+    fun createNavRoute(mode: CreateItemBottomSheetMode, shareId: Option<ShareId> = None) = buildString {
+        append("$baseRoute/$mode")
         val map = mutableMapOf<String, Any>()
         if (shareId is Some) {
             map[CommonOptionalNavArgId.ShareId.key] = shareId.value.id
@@ -54,13 +62,9 @@ sealed interface CreateItemBottomsheetNavigation {
     data object CreatePassword : CreateItemBottomsheetNavigation
 }
 
-fun NavGraphBuilder.bottomsheetCreateItemGraph(
-    mode: CreateItemBottomSheetMode,
-    onNavigate: (CreateItemBottomsheetNavigation) -> Unit
-) {
+fun NavGraphBuilder.bottomsheetCreateItemGraph(onNavigate: (CreateItemBottomsheetNavigation) -> Unit) {
     bottomSheet(CreateItemBottomsheetNavItem) {
         CreateItemBottomSheet(
-            mode = mode,
             onNavigate = onNavigate
         )
     }

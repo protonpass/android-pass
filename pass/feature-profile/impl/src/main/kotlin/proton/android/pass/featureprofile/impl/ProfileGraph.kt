@@ -71,8 +71,6 @@ sealed interface ProfileNavigation {
 
     data object ConfigurePin : ProfileNavigation
 
-    data object CreateItem : ProfileNavigation
-
     data object EnterPin : ProfileNavigation
 
     data object FeatureFlags : ProfileNavigation
@@ -84,8 +82,6 @@ sealed interface ProfileNavigation {
     data object Home : ProfileNavigation
 
     data object Report : ProfileNavigation
-
-    data object SecurityCenter : ProfileNavigation
 
     data object Settings : ProfileNavigation
 

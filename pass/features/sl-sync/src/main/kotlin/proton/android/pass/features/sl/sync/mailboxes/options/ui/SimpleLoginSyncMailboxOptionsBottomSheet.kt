@@ -49,6 +49,8 @@ fun SimpleLoginSyncMailboxOptionsBottomSheet(
                 ).also(onNavigated)
             }
 
+            SimpleLoginSyncMailboxOptionsEvent.OnMailboxDeleteError,
+            SimpleLoginSyncMailboxOptionsEvent.OnMailboxDeleteSuccess,
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxOptionsError,
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxSetAsDefaultError,
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxSetAsDefaultSuccess,

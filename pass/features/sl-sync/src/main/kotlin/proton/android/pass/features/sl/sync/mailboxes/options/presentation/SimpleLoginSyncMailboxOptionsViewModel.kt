@@ -26,14 +26,17 @@ import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.simplelogin.DeleteSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.ResendSimpleLoginAliasMailboxVerificationCode
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasMailbox
@@ -47,6 +50,7 @@ class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeSimpleLoginAliasMailbox: ObserveSimpleLoginAliasMailbox,
     private val updateSimpleLoginAliasMailbox: UpdateSimpleLoginAliasMailbox,
+    private val deleteSimpleLoginAliasMailbox: DeleteSimpleLoginAliasMailbox,
     private val resendAliasMailboxVerificationCode: ResendSimpleLoginAliasMailboxVerificationCode,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
@@ -54,7 +58,7 @@ class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
     private val mailboxId = savedStateHandleProvider.get()
         .require<Long>(SimpleLoginSyncMailboxIdNavArgId.key)
 
-    private val aliasMailboxOptionFlow = observeSimpleLoginAliasMailbox(mailboxId)
+    private val aliasMailboxOptionFlow = oneShot { observeSimpleLoginAliasMailbox(mailboxId).first() }
         .mapLatest { aliasMailbox ->
             if (aliasMailbox == null) {
                 throw IllegalStateException("Alias mailbox is null")
@@ -133,7 +137,29 @@ class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
     }
 
     internal fun onDeleteMailbox() {
-        eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnDeleteMailbox(mailboxId) }
+        if (stateFlow.value.canTransferAliases) {
+            eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnDeleteMailbox(mailboxId) }
+            return
+        }
+
+        viewModelScope.launch {
+            actionFlow.update { SimpleLoginSyncMailboxOptionsAction.Delete }
+
+            runCatching { deleteSimpleLoginAliasMailbox(mailboxId) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "There was an error deleting mailbox")
+                    PassLogger.w(TAG, error)
+                    eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnMailboxDeleteSuccess }
+                    snackbarDispatcher(SimpleLoginSyncMailboxOptionsMessage.DeleteMailboxError)
+                }
+                .onSuccess {
+                    eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnMailboxDeleteError }
+                    snackbarDispatcher(SimpleLoginSyncMailboxOptionsMessage.DeleteMailboxSuccess)
+                }
+
+            actionFlow.update { SimpleLoginSyncMailboxOptionsAction.None }
+        }
+
     }
 
     private companion object {

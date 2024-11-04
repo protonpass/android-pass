@@ -20,6 +20,6 @@ package proton.android.pass.data.api.usecases.simplelogin
 
 interface DeleteSimpleLoginAliasMailbox {
 
-    suspend operator fun invoke(mailboxId: Long, transferMailboxId: Long?)
+    suspend operator fun invoke(mailboxId: Long, transferMailboxId: Long? = null)
 
 }

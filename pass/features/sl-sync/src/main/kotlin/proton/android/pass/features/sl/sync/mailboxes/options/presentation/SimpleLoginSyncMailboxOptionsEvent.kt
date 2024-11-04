@@ -36,4 +36,8 @@ internal sealed interface SimpleLoginSyncMailboxOptionsEvent {
     @JvmInline
     value class OnDeleteMailbox(val mailboxId: Long) : SimpleLoginSyncMailboxOptionsEvent
 
+    data object OnMailboxDeleteSuccess : SimpleLoginSyncMailboxOptionsEvent
+
+    data object OnMailboxDeleteError : SimpleLoginSyncMailboxOptionsEvent
+
 }

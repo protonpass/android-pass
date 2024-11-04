@@ -64,6 +64,9 @@ import proton.android.pass.featureprofile.impl.ProfileNavItem
 import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.features.inappmessages.banner.ui.InAppMessageBanner
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
+import proton.android.pass.featuresearchoptions.impl.FilterBottomsheetNavItem
+import proton.android.pass.featuresearchoptions.impl.SearchOptionsBottomsheetNavItem
+import proton.android.pass.featuresearchoptions.impl.SortingBottomsheetNavItem
 import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.AppNavigator
@@ -270,7 +273,10 @@ fun PassAppContent(
 }
 
 private fun determineBottomBarSelection(route: String?): BottomBarSelection = when (route) {
-    HomeNavItem.route -> BottomBarSelection.Home
+    HomeNavItem.route,
+    SortingBottomsheetNavItem.route,
+    SearchOptionsBottomsheetNavItem.route,
+    FilterBottomsheetNavItem.route -> BottomBarSelection.Home
     ProfileNavItem.route -> BottomBarSelection.Profile
     SecurityCenterHomeNavItem.route -> BottomBarSelection.SecurityCenter
     CreateItemBottomsheetNavItem.route -> BottomBarSelection.ItemCreate

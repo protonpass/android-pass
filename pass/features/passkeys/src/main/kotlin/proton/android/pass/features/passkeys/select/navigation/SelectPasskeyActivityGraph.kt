@@ -33,7 +33,7 @@ import proton.android.pass.features.selectitem.navigation.SelectItemNavigation
 import proton.android.pass.features.selectitem.navigation.SelectItemState
 import proton.android.pass.features.selectitem.navigation.selectItemGraph
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
-import proton.android.pass.featuresearchoptions.impl.SortingBottomsheet
+import proton.android.pass.featuresearchoptions.impl.SortingBottomsheetNavItem
 import proton.android.pass.featuresearchoptions.impl.SortingLocation
 import proton.android.pass.featuresearchoptions.impl.searchOptionsGraph
 import proton.android.pass.navigation.api.AppNavigator
@@ -106,8 +106,8 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
 
                 is SelectItemNavigation.SortingBottomsheet ->
                     appNavigator.navigate(
-                        SortingBottomsheet,
-                        SortingBottomsheet.createNavRoute(
+                        SortingBottomsheetNavItem,
+                        SortingBottomsheetNavItem.createNavRoute(
                             location = SortingLocation.Autofill
                         )
                     )

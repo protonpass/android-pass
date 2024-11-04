@@ -240,10 +240,10 @@ import proton.android.pass.features.vault.bottomsheet.select.SelectVaultBottomsh
 import proton.android.pass.features.vault.delete.DeleteVaultDialog
 import proton.android.pass.features.vault.leave.LeaveVaultDialog
 import proton.android.pass.features.vault.vaultGraph
-import proton.android.pass.featuresearchoptions.impl.FilterBottomsheet
-import proton.android.pass.featuresearchoptions.impl.SearchOptionsBottomsheet
+import proton.android.pass.featuresearchoptions.impl.FilterBottomsheetNavItem
+import proton.android.pass.featuresearchoptions.impl.SearchOptionsBottomsheetNavItem
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
-import proton.android.pass.featuresearchoptions.impl.SortingBottomsheet
+import proton.android.pass.featuresearchoptions.impl.SortingBottomsheetNavItem
 import proton.android.pass.featuresearchoptions.impl.SortingLocation
 import proton.android.pass.featuresearchoptions.impl.searchOptionsGraph
 import proton.android.pass.navigation.api.AppNavigator
@@ -337,8 +337,8 @@ fun NavGraphBuilder.appGraph(
 
                 is HomeNavigation.SortingBottomsheet -> {
                     appNavigator.navigate(
-                        SortingBottomsheet,
-                        SortingBottomsheet.createNavRoute(
+                        SortingBottomsheetNavItem,
+                        SortingBottomsheetNavItem.createNavRoute(
                             location = SortingLocation.Home
                         )
                     )
@@ -372,8 +372,8 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 is HomeNavigation.SearchOptions -> appNavigator.navigate(
-                    destination = SearchOptionsBottomsheet,
-                    route = SearchOptionsBottomsheet.createRoute(it.bulkActionsEnabled),
+                    destination = SearchOptionsBottomsheetNavItem,
+                    route = SearchOptionsBottomsheetNavItem.createRoute(it.bulkActionsEnabled),
                     backDestination = HomeNavItem
                 )
 
@@ -429,15 +429,15 @@ fun NavGraphBuilder.appGraph(
 
                 SearchOptionsNavigation.Filter -> dismissBottomSheet {
                     appNavigator.navigate(
-                        destination = FilterBottomsheet,
+                        destination = FilterBottomsheetNavItem,
                         backDestination = HomeNavItem
                     )
                 }
 
                 SearchOptionsNavigation.Sorting -> dismissBottomSheet {
                     appNavigator.navigate(
-                        SortingBottomsheet,
-                        SortingBottomsheet.createNavRoute(
+                        SortingBottomsheetNavItem,
+                        SortingBottomsheetNavItem.createNavRoute(
                             location = SortingLocation.Home
                         ),
                         HomeNavItem

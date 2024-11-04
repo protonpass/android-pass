@@ -22,43 +22,63 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.take
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
+import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
 class CreateItemBottomSheetViewModel @Inject constructor(
+    searchOptionsRepository: HomeSearchOptionsRepository,
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val navShareId: Option<ShareId> =
-        savedStateHandle.get<String>(CommonOptionalNavArgId.ShareId.key)
-            .toOption()
-            .map { ShareId(it) }
 
-    val state: StateFlow<CreateItemBottomSheetUIState> =
-        observeUpgradeInfo().map { upgradeInfo ->
-            CreateItemBottomSheetUIState(
-                shareId = navShareId.value(),
-                createItemAliasUIState = CreateItemAliasUIState(
-                    canUpgrade = upgradeInfo.isUpgradeAvailable,
-                    aliasCount = upgradeInfo.totalAlias,
-                    aliasLimit = upgradeInfo.plan.aliasLimit.limitOrNull() ?: 0
-                )
-            )
+    private val navShareIdFlow: Flow<Option<ShareId>> =
+        savedStateHandle.getStateFlow<String?>(CommonOptionalNavArgId.ShareId.key, null)
+            .map { value -> value.toOption().map(::ShareId) }
+
+    private val selectedShareIdFlow = combine(
+        navShareIdFlow,
+        searchOptionsRepository.observeVaultSelectionOption().take(1)
+    ) { navShareId: Option<ShareId>, vaultSelectionOption: VaultSelectionOption ->
+        when {
+            navShareId is Some -> navShareId.value
+            vaultSelectionOption is VaultSelectionOption.Vault -> vaultSelectionOption.shareId
+            else -> null
         }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000),
-                initialValue = CreateItemBottomSheetUIState.DEFAULT
+    }
+
+    val state: StateFlow<CreateItemBottomSheetUIState> = combine(
+        observeUpgradeInfo(),
+        selectedShareIdFlow
+    ) { upgradeInfo, selectedShare ->
+        CreateItemBottomSheetUIState(
+            shareId = selectedShare,
+            createItemAliasUIState = CreateItemAliasUIState(
+                canUpgrade = upgradeInfo.isUpgradeAvailable,
+                aliasCount = upgradeInfo.totalAlias,
+                aliasLimit = upgradeInfo.plan.aliasLimit.limitOrNull() ?: 0
             )
+        )
+    }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = CreateItemBottomSheetUIState.DEFAULT
+        )
 }
 
 data class CreateItemBottomSheetUIState(

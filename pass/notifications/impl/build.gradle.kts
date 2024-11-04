@@ -39,4 +39,5 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.domain)
 }

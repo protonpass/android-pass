@@ -23,6 +23,7 @@ import proton.android.pass.data.impl.requests.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.BreachAddEmailRequest
 import proton.android.pass.data.impl.requests.BreachVerifyEmailRequest
 import proton.android.pass.data.impl.requests.ChangeAliasStatusRequest
+import proton.android.pass.data.impl.requests.ChangeNotificationStatusRequest
 import proton.android.pass.data.impl.requests.CheckAddressesCanBeInvitedRequest
 import proton.android.pass.data.impl.requests.ConfirmInviteRequest
 import proton.android.pass.data.impl.requests.CreateAliasRequest
@@ -64,6 +65,7 @@ import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
 import proton.android.pass.data.impl.responses.BreachEmailsResponse
 import proton.android.pass.data.impl.responses.BreachesResponse
+import proton.android.pass.data.impl.responses.ChangeNotificationStateResponse
 import proton.android.pass.data.impl.responses.CheckAddressesCanBeInvitedResponse
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.CreateItemAliasResponse
@@ -83,6 +85,7 @@ import proton.android.pass.data.impl.responses.GetShareMembersResponse
 import proton.android.pass.data.impl.responses.GetSharePendingInvitesResponse
 import proton.android.pass.data.impl.responses.GetShareResponse
 import proton.android.pass.data.impl.responses.GetSharesResponse
+import proton.android.pass.data.impl.responses.GetUserNotificationsResponse
 import proton.android.pass.data.impl.responses.InviteRecommendationsResponse
 import proton.android.pass.data.impl.responses.ItemRevisionResponse
 import proton.android.pass.data.impl.responses.LastEventIdResponse
@@ -559,6 +562,16 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("shareId") shareId: String,
         @Body request: SimpleLoginCreatePendingAliasesRequest
     ): GetItemsResponse
+
+    // Notifications
+    @GET("$PREFIX/notification")
+    suspend fun fetchUserNotifications(@Query("Since") sinceToken: String?): GetUserNotificationsResponse
+
+    @PUT("$PREFIX/notification/{notificationId}")
+    suspend fun changeNotificationStatus(
+        @Path("notificationId") notificationId: String,
+        @Body request: ChangeNotificationStatusRequest
+    ): ChangeNotificationStateResponse
 
     // Core
     @GET("core/v4/keys/all")

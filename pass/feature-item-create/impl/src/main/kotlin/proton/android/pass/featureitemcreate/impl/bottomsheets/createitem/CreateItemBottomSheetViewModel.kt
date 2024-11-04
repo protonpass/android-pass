@@ -41,7 +41,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateItemBottomSheetViewModel @Inject constructor(
-    searchOptionsRepository: HomeSearchOptionsRepository,
+    homeSearchOptionsRepository: HomeSearchOptionsRepository,
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -49,24 +49,30 @@ class CreateItemBottomSheetViewModel @Inject constructor(
     private val navShareIdFlow: Flow<Option<ShareId>> =
         savedStateHandle.getStateFlow<String?>(CommonOptionalNavArgId.ShareId.key, null)
             .map { value -> value.toOption().map(::ShareId) }
+    private val createItemModeFlow: Flow<CreateItemBottomSheetMode?> =
+        savedStateHandle.getStateFlow(CreateItemBottomSheetModeNavArgId.key, null)
 
     private val selectedShareIdFlow = combine(
         navShareIdFlow,
-        searchOptionsRepository.observeVaultSelectionOption().take(1)
-    ) { navShareId: Option<ShareId>, vaultSelectionOption: VaultSelectionOption ->
+        homeSearchOptionsRepository.observeVaultSelectionOption().take(1),
+        createItemModeFlow
+    ) { navShareId: Option<ShareId>, vaultSelectionOption: VaultSelectionOption, mode: CreateItemBottomSheetMode? ->
         when {
             navShareId is Some -> navShareId.value
-            vaultSelectionOption is VaultSelectionOption.Vault -> vaultSelectionOption.shareId
+            mode == CreateItemBottomSheetMode.HomeFull &&
+                vaultSelectionOption is VaultSelectionOption.Vault -> vaultSelectionOption.shareId
             else -> null
         }
     }
 
     val state: StateFlow<CreateItemBottomSheetUIState> = combine(
         observeUpgradeInfo(),
-        selectedShareIdFlow
-    ) { upgradeInfo, selectedShare ->
+        selectedShareIdFlow,
+        createItemModeFlow
+    ) { upgradeInfo, selectedShare, mode ->
         CreateItemBottomSheetUIState(
             shareId = selectedShare,
+            mode = mode,
             createItemAliasUIState = CreateItemAliasUIState(
                 canUpgrade = upgradeInfo.isUpgradeAvailable,
                 aliasCount = upgradeInfo.totalAlias,
@@ -83,11 +89,13 @@ class CreateItemBottomSheetViewModel @Inject constructor(
 
 data class CreateItemBottomSheetUIState(
     val shareId: ShareId?,
+    val mode: CreateItemBottomSheetMode?,
     val createItemAliasUIState: CreateItemAliasUIState
 ) {
     companion object {
         val DEFAULT = CreateItemBottomSheetUIState(
             shareId = null,
+            mode = null,
             createItemAliasUIState = CreateItemAliasUIState.DEFAULT
         )
     }

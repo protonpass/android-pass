@@ -262,7 +262,10 @@ fun NavGraphBuilder.appGraph(
                 is HomeNavigation.AddItem -> {
                     val (destination, route) = when (it.itemTypeUiState) {
                         ItemTypeUiState.Unknown ->
-                            CreateItemBottomsheetNavItem to CreateItemBottomsheetNavItem.createNavRoute(it.shareId)
+                            CreateItemBottomsheetNavItem to CreateItemBottomsheetNavItem.createNavRoute(
+                                mode = CreateItemBottomSheetMode.HomeFull,
+                                shareId = it.shareId
+                            )
 
                         ItemTypeUiState.Login -> CreateLogin to CreateLogin.createNavRoute(it.shareId)
                         ItemTypeUiState.Note -> CreateNote to CreateNote.createNavRoute(it.shareId)
@@ -455,7 +458,6 @@ fun NavGraphBuilder.appGraph(
         }
     )
     bottomsheetCreateItemGraph(
-        mode = CreateItemBottomSheetMode.Full,
         onNavigate = {
             dismissBottomSheet {
                 when (it) {
@@ -641,7 +643,6 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.Account -> appNavigator.navigate(Account)
                 ProfileNavigation.Settings -> appNavigator.navigate(Settings)
                 ProfileNavigation.Home -> appNavigator.popUpTo(HomeNavItem)
-                ProfileNavigation.CreateItem -> appNavigator.navigate(CreateItemBottomsheetNavItem)
                 ProfileNavigation.Feedback -> appNavigator.navigate(FeedbackBottomsheet)
                 ProfileNavigation.Report -> dismissBottomSheet {
                     appNavigator.navigate(ReportNavItem)
@@ -667,10 +668,6 @@ fun NavGraphBuilder.appGraph(
                         route = EnterPin.buildRoute(AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY)
                     )
                 }
-
-                ProfileNavigation.SecurityCenter -> appNavigator.navigate(
-                    destination = SecurityCenterHomeNavItem
-                )
 
                 ProfileNavigation.SecureLinks -> appNavigator.navigate(
                     destination = SecureLinksListNavItem
@@ -1551,7 +1548,8 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 SecurityCenterNavDestination.MainNewItem -> appNavigator.navigate(
-                    destination = CreateItemBottomsheetNavItem
+                    destination = CreateItemBottomsheetNavItem,
+                    route = CreateItemBottomsheetNavItem.createNavRoute(CreateItemBottomSheetMode.HomeFull)
                 )
 
                 SecurityCenterNavDestination.MainProfile -> appNavigator.navigate(

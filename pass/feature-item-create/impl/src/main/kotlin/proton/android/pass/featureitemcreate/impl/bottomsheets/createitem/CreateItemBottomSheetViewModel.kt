@@ -18,7 +18,6 @@
 
 package proton.android.pass.featureitemcreate.impl.bottomsheets.createitem
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,6 +31,7 @@ import kotlinx.coroutines.flow.take
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
@@ -43,14 +43,14 @@ import javax.inject.Inject
 class CreateItemBottomSheetViewModel @Inject constructor(
     homeSearchOptionsRepository: HomeSearchOptionsRepository,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    savedStateHandle: SavedStateHandle
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val navShareIdFlow: Flow<Option<ShareId>> =
-        savedStateHandle.getStateFlow<String?>(CommonOptionalNavArgId.ShareId.key, null)
+        savedStateHandleProvider.get().getStateFlow<String?>(CommonOptionalNavArgId.ShareId.key, null)
             .map { value -> value.toOption().map(::ShareId) }
     private val createItemModeFlow: Flow<CreateItemBottomSheetMode?> =
-        savedStateHandle.getStateFlow(CreateItemBottomSheetModeNavArgId.key, null)
+        savedStateHandleProvider.get().getStateFlow(CreateItemBottomSheetModeNavArgId.key, null)
 
     private val selectedShareIdFlow = combine(
         navShareIdFlow,

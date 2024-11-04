@@ -39,14 +39,16 @@ class FeatureFlagsViewModel @Inject constructor(
             ffRepository.get<Boolean>(FeatureFlag.ACCOUNT_SWITCH_V1),
             ffRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
             ffRepository.get<Boolean>(FeatureFlag.DIGITAL_ASSET_LINKS),
-            ffRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1)
+            ffRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1),
+            ffRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
         ) { isAccountSwitchEnabled, isSimpleLoginAliasesSyncEnabled, isDigitalAssetLinksEnabled,
-            isAdvanceAliasManagementEnabled ->
+            isAdvanceAliasManagementEnabled, isItemSharingEnabled ->
             mapOf(
                 FeatureFlag.ACCOUNT_SWITCH_V1 to isAccountSwitchEnabled,
                 FeatureFlag.SL_ALIASES_SYNC to isSimpleLoginAliasesSyncEnabled,
                 FeatureFlag.DIGITAL_ASSET_LINKS to isDigitalAssetLinksEnabled,
-                FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1 to isAdvanceAliasManagementEnabled
+                FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1 to isAdvanceAliasManagementEnabled,
+                FeatureFlag.ITEM_SHARING_V1 to isItemSharingEnabled
             )
         }.stateIn(
             scope = viewModelScope,

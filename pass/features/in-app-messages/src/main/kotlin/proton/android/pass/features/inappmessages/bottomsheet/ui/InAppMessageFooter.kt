@@ -26,7 +26,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.Button
 import proton.android.pass.composecomponents.impl.text.Text
-import proton.android.pass.notifications.api.InAppMessageCTARoute
+import proton.android.pass.domain.inappmessages.InAppMessageCTARoute
 
 @Composable
 fun InAppMessageFooter(

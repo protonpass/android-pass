@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,14 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.notifications.api
+package proton.android.pass.data.impl.responses
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
-import proton.android.pass.domain.inappmessages.InAppMessage
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-interface InAppMessageManager {
-    fun emit(message: InAppMessage)
-    fun clear()
-    fun observe(): Flow<Option<InAppMessage>>
-}
+@Serializable
+data class ChangeNotificationStateResponse(
+    @SerialName("Code")
+    val code: Int
+)

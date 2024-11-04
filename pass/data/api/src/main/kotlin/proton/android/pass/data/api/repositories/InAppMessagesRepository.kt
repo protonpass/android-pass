@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,31 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.inappmessages.bottomsheet.ui
+package proton.android.pass.data.api.repositories
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import proton.android.pass.common.api.None
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
-import proton.android.pass.domain.inappmessages.InAppMessageMode
 
-@Composable
-fun InAppMessageBottomsheet(modifier: Modifier = Modifier) {
-    InAppMessageContent(
-        modifier = modifier,
-        inAppMessage = InAppMessage(
-            id = InAppMessageId(value = ""),
-            mode = InAppMessageMode.Modal,
-            title = "",
-            message = None,
-            imageUrl = None,
-            ctaRoute = None,
-            ctaText = None
+interface InAppMessagesRepository {
 
-        ),
-        onCTAClick = {},
-        onClose = {}
+    fun observeUserMessages(userId: UserId): Flow<List<InAppMessage>>
+
+    suspend fun changeMessageStatus(
+        userId: UserId,
+        messageId: InAppMessageId,
+        status: InAppMessageStatus
     )
 }
 
+enum class InAppMessageStatus(val value: Int) {
+    UNREAD(0),
+    READ(1),
+    DISMISSED(2)
+}

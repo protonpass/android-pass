@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,14 +16,33 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.notifications.api
+package proton.android.pass.domain.inappmessages
 
-import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.Option
-import proton.android.pass.domain.inappmessages.InAppMessage
 
-interface InAppMessageManager {
-    fun emit(message: InAppMessage)
-    fun clear()
-    fun observe(): Flow<Option<InAppMessage>>
+enum class InAppMessageMode(val value: Int) {
+    Banner(0),
+    Modal(1),
+    Unknown(Integer.MAX_VALUE)
+    ;
+
+    companion object {
+        fun fromValue(value: Int): InAppMessageMode = entries.find { it.value == value } ?: Unknown
+    }
 }
+
+@JvmInline
+value class InAppMessageId(val value: String)
+
+@JvmInline
+value class InAppMessageCTARoute(val value: String)
+
+data class InAppMessage(
+    val id: InAppMessageId,
+    val mode: InAppMessageMode,
+    val title: String,
+    val message: Option<String>,
+    val imageUrl: Option<String>,
+    val ctaRoute: Option<InAppMessageCTARoute>,
+    val ctaText: Option<String>
+)

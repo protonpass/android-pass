@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,31 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.inappmessages.bottomsheet.ui
+package proton.android.pass.data.impl.extensions
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import proton.android.pass.common.api.None
+import proton.android.pass.common.api.toOption
+import proton.android.pass.data.impl.responses.NotificationResponse
 import proton.android.pass.domain.inappmessages.InAppMessage
+import proton.android.pass.domain.inappmessages.InAppMessageCTARoute
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageMode
 
-@Composable
-fun InAppMessageBottomsheet(modifier: Modifier = Modifier) {
-    InAppMessageContent(
-        modifier = modifier,
-        inAppMessage = InAppMessage(
-            id = InAppMessageId(value = ""),
-            mode = InAppMessageMode.Modal,
-            title = "",
-            message = None,
-            imageUrl = None,
-            ctaRoute = None,
-            ctaText = None
+fun List<NotificationResponse>.toDomain(): List<InAppMessage> = this.map(NotificationResponse::toDomain)
 
-        ),
-        onCTAClick = {},
-        onClose = {}
-    )
-}
-
+fun NotificationResponse.toDomain(): InAppMessage = InAppMessage(
+    id = InAppMessageId(this.id),
+    mode = InAppMessageMode.fromValue(this.content.displayType),
+    title = this.content.title,
+    message = this.content.message.toOption(),
+    imageUrl = this.content.imageUrl.toOption(),
+    ctaRoute = this.content.cta.ref.toOption().map(::InAppMessageCTARoute),
+    ctaText = this.content.cta.text.toOption()
+)

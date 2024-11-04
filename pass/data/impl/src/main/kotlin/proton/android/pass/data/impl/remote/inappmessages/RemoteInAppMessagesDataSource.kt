@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,14 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.notifications.api
+package proton.android.pass.data.impl.remote.inappmessages
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
-import proton.android.pass.domain.inappmessages.InAppMessage
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.repositories.InAppMessageStatus
+import proton.android.pass.data.impl.responses.NotificationResponse
+import proton.android.pass.domain.inappmessages.InAppMessageId
 
-interface InAppMessageManager {
-    fun emit(message: InAppMessage)
-    fun clear()
-    fun observe(): Flow<Option<InAppMessage>>
+interface RemoteInAppMessagesDataSource {
+
+    suspend fun fetchInAppMessages(userId: UserId, lastToken: String? = null): List<NotificationResponse>
+
+    suspend fun changeMessageStatus(
+        userId: UserId,
+        messageId: InAppMessageId,
+        status: InAppMessageStatus
+    )
 }

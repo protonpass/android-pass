@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.extensions
 
 import kotlinx.datetime.Instant
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.impl.responses.CtaResponse
 import proton.android.pass.data.impl.responses.NotificationResponse
@@ -30,10 +31,11 @@ import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 
-fun List<NotificationResponse>.toDomain(): List<InAppMessage> = this.map(NotificationResponse::toDomain)
+fun List<NotificationResponse>.toDomain(userId: UserId): List<InAppMessage> = this.map { it.toDomain(userId) }
 
-fun NotificationResponse.toDomain(): InAppMessage = InAppMessage(
+fun NotificationResponse.toDomain(userId: UserId): InAppMessage = InAppMessage(
     id = InAppMessageId(this.id),
+    userId = userId,
     mode = InAppMessageMode.fromValue(this.content.displayType),
     title = this.content.title,
     message = this.content.message.toOption(),

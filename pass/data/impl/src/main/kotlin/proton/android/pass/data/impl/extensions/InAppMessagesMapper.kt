@@ -18,12 +18,17 @@
 
 package proton.android.pass.data.impl.extensions
 
+import kotlinx.datetime.Instant
 import proton.android.pass.common.api.toOption
+import proton.android.pass.data.impl.responses.CtaResponse
 import proton.android.pass.data.impl.responses.NotificationResponse
 import proton.android.pass.domain.inappmessages.InAppMessage
-import proton.android.pass.domain.inappmessages.InAppMessageCTARoute
+import proton.android.pass.domain.inappmessages.InAppMessageCTA
+import proton.android.pass.domain.inappmessages.InAppMessageCTAType
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageMode
+import proton.android.pass.domain.inappmessages.InAppMessageRange
+import proton.android.pass.domain.inappmessages.InAppMessageStatus
 
 fun List<NotificationResponse>.toDomain(): List<InAppMessage> = this.map(NotificationResponse::toDomain)
 
@@ -33,6 +38,17 @@ fun NotificationResponse.toDomain(): InAppMessage = InAppMessage(
     title = this.content.title,
     message = this.content.message.toOption(),
     imageUrl = this.content.imageUrl.toOption(),
-    ctaRoute = this.content.cta.ref.toOption().map(::InAppMessageCTARoute),
-    ctaText = this.content.cta.text.toOption()
+    cta = this.content.cta.toOption().map(CtaResponse::toDomain),
+    state = InAppMessageStatus.fromValue(this.state),
+    range = InAppMessageRange(
+        start = Instant.fromEpochMilliseconds(this.startTime),
+        end = this.endTime?.let(Instant.Companion::fromEpochMilliseconds).toOption()
+    )
 )
+
+private fun CtaResponse.toDomain(): InAppMessageCTA = InAppMessageCTA(
+    text = this.text,
+    route = this.ref,
+    type = InAppMessageCTAType.fromValue(this.type)
+)
+

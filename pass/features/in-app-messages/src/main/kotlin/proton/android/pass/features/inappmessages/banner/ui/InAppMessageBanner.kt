@@ -45,6 +45,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import kotlinx.datetime.Instant
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
@@ -56,16 +57,17 @@ import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.inappmessages.InAppMessage
-import proton.android.pass.domain.inappmessages.InAppMessageCTARoute
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageMode
+import proton.android.pass.domain.inappmessages.InAppMessageRange
+import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun InAppMessageBanner(
     modifier: Modifier = Modifier,
     inAppMessage: InAppMessage,
-    onCTAClick: (InAppMessageCTARoute) -> Unit,
+    onCTAClick: (String) -> Unit,
     onDismiss: (InAppMessageId) -> Unit
 ) {
     Box(modifier = modifier) {
@@ -80,11 +82,11 @@ fun InAppMessageBanner(
                     borderColor = PassTheme.colors.inputBorderNorm
                 )
                 .applyIf(
-                    condition = inAppMessage.ctaRoute is Some,
+                    condition = inAppMessage.cta is Some,
                     ifTrue = {
-                        when (val route = inAppMessage.ctaRoute) {
+                        when (val cta = inAppMessage.cta) {
                             None -> Modifier
-                            is Some -> clickable { onCTAClick(route.value) }
+                            is Some -> clickable { onCTAClick(cta.value.route) }
                         }
                     }
                 )
@@ -113,9 +115,9 @@ fun InAppMessageBanner(
                 verticalArrangement = Arrangement.spacedBy(Spacing.small)
             ) {
                 Text.CaptionMedium(inAppMessage.title)
-                when (val ctaText = inAppMessage.ctaText) {
+                when (val cta = inAppMessage.cta) {
                     None -> {}
-                    is Some -> Text.CaptionRegular(ctaText.value)
+                    is Some -> Text.CaptionRegular(cta.value.text)
                 }
             }
             Icon.Default(
@@ -160,9 +162,13 @@ fun InAppBannerPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                     mode = InAppMessageMode.Banner,
                     title = "Title",
                     message = Some("Message"),
-                    imageUrl = Some(""),
-                    ctaRoute = Some(InAppMessageCTARoute("CTA")),
-                    ctaText = None
+                    imageUrl = None,
+                    cta = None,
+                    state = InAppMessageStatus.Unread,
+                    range = InAppMessageRange(
+                        start = Instant.DISTANT_PAST,
+                        end = None
+                    )
                 ),
                 onCTAClick = {},
                 onDismiss = {}

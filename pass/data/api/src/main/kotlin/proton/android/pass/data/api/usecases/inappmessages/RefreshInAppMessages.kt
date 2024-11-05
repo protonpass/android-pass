@@ -16,21 +16,8 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.data.api.usecases.inappmessages
 
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.inappmessages.InAppMessage
-import proton.android.pass.domain.inappmessages.InAppMessageId
-import proton.android.pass.domain.inappmessages.InAppMessageStatus
-
-interface InAppMessagesRepository {
-
-    fun observeUserMessages(userId: UserId): Flow<List<InAppMessage>>
-
-    suspend fun changeMessageStatus(
-        userId: UserId,
-        messageId: InAppMessageId,
-        status: InAppMessageStatus
-    )
+interface RefreshInAppMessages {
+    suspend operator fun invoke()
 }

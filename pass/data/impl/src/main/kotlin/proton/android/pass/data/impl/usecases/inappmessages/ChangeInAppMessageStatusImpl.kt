@@ -18,23 +18,22 @@
 
 package proton.android.pass.data.impl.usecases.inappmessages
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.data.api.errors.UserIdNotAvailableError
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
-import proton.android.pass.data.api.usecases.inappmessages.RefreshInAppMessages
-import proton.android.pass.notifications.api.InAppMessageManager
+import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
+import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import javax.inject.Inject
 
-class RefreshInAppMessagesImpl @Inject constructor(
-    private val accountManager: AccountManager,
-    private val inAppMessagesRepository: InAppMessagesRepository,
-    private val inAppMessageManager: InAppMessageManager
-) : RefreshInAppMessages {
+class ChangeInAppMessageStatusImpl @Inject constructor(
+    private val inAppMessagesRepository: InAppMessagesRepository
+) : ChangeInAppMessageStatus {
 
-    override suspend fun invoke() {
-        val userId = accountManager.getPrimaryUserId().firstOrNull() ?: throw UserIdNotAvailableError()
-        val messages = inAppMessagesRepository.observeUserMessages(userId).firstOrNull() ?: emptyList()
-        messages.firstOrNull()?.let { inAppMessageManager.emit(it) }
+    override suspend fun invoke(
+        userId: UserId,
+        messageId: InAppMessageId,
+        status: InAppMessageStatus
+    ) {
+        inAppMessagesRepository.changeMessageStatus(userId, messageId, status)
     }
 }

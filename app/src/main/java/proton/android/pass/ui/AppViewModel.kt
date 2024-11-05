@@ -36,18 +36,22 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
-import proton.android.pass.data.api.usecases.inappmessages.RefreshInAppMessages
+import proton.android.pass.common.api.toOption
+import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
+import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableInAppMessages
+import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.network.api.NetworkMonitor
 import proton.android.pass.network.api.NetworkStatus
-import proton.android.pass.notifications.api.InAppMessageManager
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -59,23 +63,10 @@ class AppViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val needsBiometricAuth: NeedsBiometricAuth,
     private val inAppUpdatesManager: InAppUpdatesManager,
-    inAppMessageManager: InAppMessageManager,
+    private val changeInAppMessageStatus: ChangeInAppMessageStatus,
     networkMonitor: NetworkMonitor,
-    refreshInAppMessages: RefreshInAppMessages
+    observeDeliverableInAppMessages: ObserveDeliverableInAppMessages
 ) : ViewModel() {
-
-    init {
-        viewModelScope.launch {
-            runCatching { refreshInAppMessages() }
-                .onSuccess {
-                    PassLogger.i(TAG, "In-app messages refreshed")
-                }
-                .onError {
-                    PassLogger.w(TAG, "Error refreshing in-app messages")
-                    PassLogger.w(TAG, it)
-                }
-        }
-    }
 
     private val themePreference: Flow<ThemePreference> = preferenceRepository
         .getThemePreference()
@@ -101,12 +92,15 @@ class AppViewModel @Inject constructor(
             initialValue = runBlocking { needsBiometricAuth().first() }
         )
 
+    private val inAppMessageFlow = observeDeliverableInAppMessages()
+        .map { it.firstOrNull().toOption() }
+
     val appUiState: StateFlow<AppUiState> = combine(
         snackbarDispatcher.snackbarMessage,
         themePreference,
         networkStatus,
         inAppUpdatesManager.observeInAppUpdateState(),
-        inAppMessageManager.observeMessages()
+        inAppMessageFlow
     ) { snackbarMessage, theme, networkStatus, inAppUpdateState, inAppMessage ->
         AppUiState(
             snackbarMessage = snackbarMessage,
@@ -149,6 +143,21 @@ class AppViewModel @Inject constructor(
             PassLogger.w(TAG, "Error getting ThemePreference")
             PassLogger.w(TAG, state.exception)
             ThemePreference.System
+        }
+    }
+
+    fun onInAppMessageBannerRead(userId: UserId, inAppMessageId: InAppMessageId) {
+        viewModelScope.launch {
+            runCatching {
+                changeInAppMessageStatus(userId, inAppMessageId, InAppMessageStatus.Read)
+            }
+                .onSuccess {
+                    PassLogger.i(TAG, "In-app message read")
+                }
+                .onError {
+                    PassLogger.w(TAG, "Error reading in-app message")
+                    PassLogger.w(TAG, it)
+                }
         }
     }
 

@@ -151,7 +151,8 @@ import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPasswo
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
-import proton.android.pass.data.api.usecases.inappmessages.RefreshInAppMessages
+import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
+import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableInAppMessages
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.GetItemOptions
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
@@ -338,7 +339,8 @@ import proton.android.pass.data.impl.usecases.extrapassword.CheckLocalExtraPassw
 import proton.android.pass.data.impl.usecases.extrapassword.HasExtraPasswordImpl
 import proton.android.pass.data.impl.usecases.extrapassword.RemoveExtraPasswordImpl
 import proton.android.pass.data.impl.usecases.extrapassword.SetupExtraPasswordImpl
-import proton.android.pass.data.impl.usecases.inappmessages.RefreshInAppMessagesImpl
+import proton.android.pass.data.impl.usecases.inappmessages.ChangeInAppMessageStatusImpl
+import proton.android.pass.data.impl.usecases.inappmessages.ObserveDeliverableInAppMessagesImpl
 import proton.android.pass.data.impl.usecases.items.GetItemCategoryImpl
 import proton.android.pass.data.impl.usecases.items.GetItemOptionsImpl
 import proton.android.pass.data.impl.usecases.items.ObserveItemRevisionsImpl
@@ -988,6 +990,11 @@ abstract class DataUseCaseModule {
     abstract fun bindUpdatePasswordConfig(impl: UpdatePasswordConfigImpl): UpdatePasswordConfig
 
     @[Binds Singleton]
-    abstract fun bindRefreshInAppMessages(impl: RefreshInAppMessagesImpl): RefreshInAppMessages
+    abstract fun bindChangeInAppMessageStatus(impl: ChangeInAppMessageStatusImpl): ChangeInAppMessageStatus
+
+    @[Binds Singleton]
+    abstract fun bindObserveDeliverableInAppMessages(
+        impl: ObserveDeliverableInAppMessagesImpl
+    ): ObserveDeliverableInAppMessages
 
 }

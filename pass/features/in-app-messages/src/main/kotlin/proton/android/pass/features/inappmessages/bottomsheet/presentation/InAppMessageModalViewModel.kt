@@ -25,18 +25,26 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.onSuccess
+import proton.android.pass.common.api.runCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.data.api.repositories.InAppMessagesRepository
+import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
+import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableInAppMessages
 import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageNavArgId
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
 class InAppMessageModalViewModel @Inject constructor(
-    inAppMessagesRepository: InAppMessagesRepository,
+    private val changeInAppMessageStatus: ChangeInAppMessageStatus,
+    observeDeliverableInAppMessages: ObserveDeliverableInAppMessages,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -48,7 +56,7 @@ class InAppMessageModalViewModel @Inject constructor(
         .require<String>(InAppMessageNavArgId.key)
         .let(::InAppMessageId)
 
-    val state = inAppMessagesRepository.observeUserMessages(userId)
+    val state = observeDeliverableInAppMessages(userId)
         .filter { it.any { message -> message.id == inAppMessageId } }
         .map {
             val firstElement = it.firstOrNull()
@@ -63,4 +71,23 @@ class InAppMessageModalViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = InAppMessageModalState.Loading
         )
+
+    fun onInAppMessageRead(userId: UserId, inAppMessageId: InAppMessageId) {
+        viewModelScope.launch {
+            runCatching {
+                changeInAppMessageStatus(userId, inAppMessageId, InAppMessageStatus.Read)
+            }
+                .onSuccess {
+                    PassLogger.i(TAG, "In-app message read")
+                }
+                .onError {
+                    PassLogger.w(TAG, "Error reading in-app message")
+                    PassLogger.w(TAG, it)
+                }
+        }
+    }
+
+    companion object {
+        private const val TAG = "InAppMessageModalViewModel"
+    }
 }

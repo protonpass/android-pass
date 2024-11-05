@@ -41,5 +41,5 @@ class FakeInAppMessageManager @Inject constructor() : InAppMessageManager {
         stateFlow.update { None }
     }
 
-    override fun observe(): Flow<Option<InAppMessage>> = stateFlow
+    override fun observeMessages(): Flow<Option<InAppMessage>> = stateFlow
 }

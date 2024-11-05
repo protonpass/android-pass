@@ -63,7 +63,10 @@ fun PassApp(
                 onNavigate(it)
             },
             onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() },
-            onCompleteUpdate = { appViewModel.onCompleteUpdate() }
+            onCompleteUpdate = { appViewModel.onCompleteUpdate() },
+            onInAppMessageBannerRead = { userId, inAppMessageId ->
+                appViewModel.onInAppMessageBannerRead(userId, inAppMessageId)
+            }
         )
     }
 }

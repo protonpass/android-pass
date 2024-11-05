@@ -21,14 +21,17 @@ package proton.android.pass.features.inappmessages.bottomsheet.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.features.inappmessages.bottomsheet.presentation.InAppMessageModalState
 import proton.android.pass.features.inappmessages.bottomsheet.presentation.InAppMessageModalViewModel
 
 @Composable
 fun InAppMessageBottomsheet(modifier: Modifier = Modifier, viewModel: InAppMessageModalViewModel = hiltViewModel()) {
 
+    val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     when (state) {
@@ -37,8 +40,16 @@ fun InAppMessageBottomsheet(modifier: Modifier = Modifier, viewModel: InAppMessa
             InAppMessageContent(
                 modifier = modifier,
                 inAppMessage = successState.inAppMessage,
-                onCTAClick = { },
-                onClose = { }
+                onExternalCTAClick = {
+                    BrowserUtils.openWebsite(context, it)
+                    viewModel.onInAppMessageRead(successState.inAppMessage.userId, successState.inAppMessage.id)
+                },
+                onInternalCTAClick = {
+                    viewModel.onInAppMessageRead(successState.inAppMessage.userId, successState.inAppMessage.id)
+                },
+                onClose = {
+                    viewModel.onInAppMessageRead(successState.inAppMessage.userId, successState.inAppMessage.id)
+                }
             )
         }
         is InAppMessageModalState.Loading -> {

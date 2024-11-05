@@ -127,6 +127,7 @@ import proton.android.pass.features.extrapassword.confirm.navigation.ConfirmExtr
 import proton.android.pass.features.extrapassword.extraPasswordGraph
 import proton.android.pass.features.extrapassword.infosheet.navigation.ExtraPasswordInfoNavItem
 import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
+import proton.android.pass.features.inappmessages.bottomsheet.navigation.inAppMessageGraph
 import proton.android.pass.features.item.details.detail.navigation.ItemDetailsNavItem
 import proton.android.pass.features.item.details.detailforbidden.navigation.ItemDetailsForbiddenNavItem
 import proton.android.pass.features.item.details.detailmenu.navigation.ItemDetailsMenuNavItem
@@ -2101,6 +2102,8 @@ fun NavGraphBuilder.appGraph(
             AliasContactsNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
         }
     }
+
+    inAppMessageGraph {}
 }
 
 // This fun should be removed once all categories are migrated to new item-details feature

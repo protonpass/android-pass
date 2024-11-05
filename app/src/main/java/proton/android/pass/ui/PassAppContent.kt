@@ -55,12 +55,14 @@ import proton.android.pass.R
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.BottomBarSelection
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
+import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.featurehome.impl.HomeNavItem
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode
@@ -68,6 +70,7 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.Create
 import proton.android.pass.featureprofile.impl.ProfileNavItem
 import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.features.inappmessages.banner.ui.InAppMessageBanner
+import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalNavItem
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.searchoptions.FilterBottomsheetNavItem
 import proton.android.pass.features.searchoptions.SearchOptionsBottomsheetNavItem
@@ -125,10 +128,21 @@ fun PassAppContent(
     val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
     val isSnackbarVisible by remember { derivedStateOf { scaffoldState.snackbarHostState.currentSnackbarData != null } }
     val bannerBottomPadding by animateDpAsState(
-        targetValue = if (isSnackbarVisible) 56.dp else 0.dp,
-        animationSpec = tween(durationMillis = 300),
+        targetValue = if (isSnackbarVisible) 72.dp else Spacing.medium,
+        animationSpec = tween(),
         label = "BannerBottomPadding"
     )
+
+    val inAppMessageOption = appUiState.inAppMessage
+    LaunchedEffect(inAppMessageOption) {
+        if (inAppMessageOption is Some && inAppMessageOption.value.mode == InAppMessageMode.Modal) {
+            appNavigator.navigate(
+                InAppMessageModalNavItem,
+                InAppMessageModalNavItem.createNavRoute(inAppMessageOption.value.userId, inAppMessageOption.value.id)
+            )
+        }
+    }
+
     SnackBarLaunchedEffect(
         appUiState.snackbarMessage.value(),
         passSnackbarHostState,
@@ -268,15 +282,18 @@ fun PassAppContent(
                         }
                     }
 
-                    val message = appUiState.inAppMessage
-                    if (message is Some) {
-                        InAppMessageBanner(
-                            modifier = Modifier.align(Alignment.BottomCenter)
-                                .padding(bottom = bannerBottomPadding),
-                            inAppMessage = message.value,
-                            onDismiss = { },
-                            onCTAClick = { }
-                        )
+                    if (inAppMessageOption is Some && inAppMessageOption.value.mode == InAppMessageMode.Banner) {
+                        Column(
+                            modifier = Modifier
+                                .align(Alignment.BottomCenter)
+                                .padding(bottom = bannerBottomPadding)
+                        ) {
+                            InAppMessageBanner(
+                                inAppMessage = inAppMessageOption.value,
+                                onDismiss = { },
+                                onCTAClick = { }
+                            )
+                        }
                     }
                 }
             }

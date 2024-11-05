@@ -41,5 +41,4 @@
 
     <string name="upsell_button_upgrade">Get Pass Plus</string>
     <string name="upsell_button_upgrade_essentials">Get Pass Business</string>
-    <string name="upsell_button_upgrade_unlimited">Get Proton Unlimited</string>
 </resources>

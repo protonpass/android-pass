@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.datetime.Instant
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
@@ -83,6 +84,7 @@ fun InAppMessageContentPreview(@PreviewParameter(ThemePreviewProvider::class) is
             InAppMessageContent(
                 inAppMessage = InAppMessage(
                     id = InAppMessageId("q"),
+                    userId = UserId(""),
                     title = "Upgrade to Pass Plus",
                     message = "Get access to all features".some(),
                     imageUrl = "url".some(),

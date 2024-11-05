@@ -34,7 +34,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
-import proton.android.pass.composecomponents.impl.icon.PassUnlimitedIcon
+import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.domain.simplelogin.SimpleLoginAliasDomain
 import proton.android.pass.features.sl.sync.R
 import me.proton.core.presentation.R as CoreR
@@ -89,7 +89,7 @@ internal fun simpleLoginAliasDomainSelectItem(
             }
 
             aliasDomain.isPremium && !canSelectPremiumDomains -> {
-                PassUnlimitedIcon()
+                PassPlusIcon()
             }
         }
     }

@@ -25,7 +25,6 @@ import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.remote.inappmessages.RemoteInAppMessagesDataSource
-import proton.android.pass.data.impl.responses.NotificationResponse
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
@@ -37,7 +36,7 @@ class InAppMessagesRepositoryImpl @Inject constructor(
 
     override fun observeUserMessages(userId: UserId): Flow<List<InAppMessage>> =
         oneShot { remote.fetchInAppMessages(userId) }
-            .map(List<NotificationResponse>::toDomain)
+            .map { it.toDomain(userId) }
 
     override suspend fun changeMessageStatus(
         userId: UserId,

@@ -19,13 +19,11 @@
 package proton.android.pass.domain.inappmessages
 
 import kotlinx.datetime.Instant
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 
 @JvmInline
 value class InAppMessageId(val value: String)
-
-@JvmInline
-value class InAppMessageCTARoute(val value: String)
 
 data class InAppMessage(
     val id: InAppMessageId,
@@ -35,7 +33,8 @@ data class InAppMessage(
     val imageUrl: Option<String>,
     val cta: Option<InAppMessageCTA>,
     val state: InAppMessageStatus,
-    val range: InAppMessageRange
+    val range: InAppMessageRange,
+    val userId: UserId
 )
 
 enum class InAppMessageStatus(val value: Int) {
@@ -44,6 +43,7 @@ enum class InAppMessageStatus(val value: Int) {
     Dismissed(2),
     Unknown(Integer.MAX_VALUE)
     ;
+
     companion object {
         fun fromValue(value: Int): InAppMessageStatus = entries.find { it.value == value } ?: Unknown
     }
@@ -60,6 +60,7 @@ enum class InAppMessageCTAType(val value: String) {
     External("external_link"),
     Unknown("unknown")
     ;
+
     companion object {
         fun fromValue(value: String): InAppMessageCTAType = entries.find { it.value == value } ?: Unknown
     }

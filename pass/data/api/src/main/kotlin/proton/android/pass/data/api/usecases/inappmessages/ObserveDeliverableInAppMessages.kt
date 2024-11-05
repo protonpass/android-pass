@@ -16,30 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.notifications.fakes
+package proton.android.pass.data.api.usecases.inappmessages
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
-import proton.android.pass.notifications.api.InAppMessageManager
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class FakeInAppMessageManager @Inject constructor() : InAppMessageManager {
-    private val stateFlow = MutableStateFlow<Option<InAppMessage>>(None)
-
-    override fun emit(message: InAppMessage) {
-        stateFlow.update { Some(message) }
-    }
-
-    override fun clear() {
-        stateFlow.update { None }
-    }
-
-    override fun observeMessages(): Flow<Option<InAppMessage>> = stateFlow
+interface ObserveDeliverableInAppMessages {
+    operator fun invoke(userId: UserId? = null): Flow<List<InAppMessage>>
 }

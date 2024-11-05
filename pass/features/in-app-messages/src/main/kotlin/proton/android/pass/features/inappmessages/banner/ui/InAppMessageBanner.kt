@@ -58,6 +58,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.inappmessages.InAppMessage
+import proton.android.pass.domain.inappmessages.InAppMessageCTAType
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.domain.inappmessages.InAppMessageRange
@@ -68,7 +69,8 @@ import me.proton.core.presentation.R as CoreR
 fun InAppMessageBanner(
     modifier: Modifier = Modifier,
     inAppMessage: InAppMessage,
-    onCTAClick: (String) -> Unit,
+    onInternalCTAClick: (String) -> Unit,
+    onExternalCTAClick: (String) -> Unit,
     onDismiss: (InAppMessageId) -> Unit
 ) {
     Box(modifier = modifier) {
@@ -88,7 +90,13 @@ fun InAppMessageBanner(
                     ifTrue = {
                         when (val cta = inAppMessage.cta) {
                             None -> Modifier
-                            is Some -> clickable { onCTAClick(cta.value.route) }
+                            is Some -> clickable {
+                                when (cta.value.type) {
+                                    InAppMessageCTAType.Internal -> onInternalCTAClick(cta.value.route)
+                                    InAppMessageCTAType.External -> onExternalCTAClick(cta.value.route)
+                                    InAppMessageCTAType.Unknown -> Unit
+                                }
+                            }
                         }
                     }
                 )
@@ -173,7 +181,8 @@ fun InAppBannerPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                         end = None
                     )
                 ),
-                onCTAClick = {},
+                onInternalCTAClick = {},
+                onExternalCTAClick = {},
                 onDismiss = {}
             )
         }

@@ -22,7 +22,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.notifications.api.InAppMessageManager
 import proton.android.pass.notifications.api.NotificationManager
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.ToastManager
@@ -39,7 +38,4 @@ abstract class FakesNotificationsModule {
 
     @Binds
     abstract fun bindToastManager(impl: TestToastManager): ToastManager
-
-    @Binds
-    abstract fun bindInAppMessageManager(impl: FakeInAppMessageManager): InAppMessageManager
 }

@@ -26,20 +26,28 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.Button
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.domain.inappmessages.InAppMessageCTA
+import proton.android.pass.domain.inappmessages.InAppMessageCTAType
 
 @Composable
 fun InAppMessageFooter(
     modifier: Modifier = Modifier,
-    ctaText: String,
-    ctaRoute: String,
-    onCTAClick: (String) -> Unit
+    cta: InAppMessageCTA,
+    onInternalCTAClick: (String) -> Unit,
+    onExternalCTAClick: (String) -> Unit
 ) {
     Button.Circular(
         modifier = modifier.fillMaxWidth(),
         contentPadding = PaddingValues(Spacing.mediumSmall),
         color = PassTheme.colors.interactionNormMajor2,
-        onClick = { onCTAClick(ctaRoute) }
+        onClick = {
+            when (cta.type) {
+                InAppMessageCTAType.Internal -> onInternalCTAClick(cta.route)
+                InAppMessageCTAType.External -> onExternalCTAClick(cta.route)
+                InAppMessageCTAType.Unknown -> {}
+            }
+        }
     ) {
-        Text.Body1Regular(ctaText, color = PassTheme.colors.interactionNormMinor1)
+        Text.Body1Regular(cta.text, color = PassTheme.colors.interactionNormMinor1)
     }
 }

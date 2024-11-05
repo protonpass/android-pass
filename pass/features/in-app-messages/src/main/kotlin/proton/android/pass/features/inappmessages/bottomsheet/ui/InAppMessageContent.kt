@@ -47,7 +47,8 @@ import proton.android.pass.domain.inappmessages.InAppMessageStatus
 fun InAppMessageContent(
     modifier: Modifier = Modifier,
     inAppMessage: InAppMessage,
-    onCTAClick: (String) -> Unit,
+    onInternalCTAClick: (String) -> Unit,
+    onExternalCTAClick: (String) -> Unit,
     onClose: () -> Unit
 ) {
     Column(
@@ -68,9 +69,9 @@ fun InAppMessageContent(
         if (cta is Some) {
             InAppMessageFooter(
                 modifier = Modifier.padding(Spacing.medium),
-                ctaText = cta.value.text,
-                ctaRoute = cta.value.route,
-                onCTAClick = onCTAClick
+                cta = cta.value,
+                onInternalCTAClick = onInternalCTAClick,
+                onExternalCTAClick = onExternalCTAClick
             )
         }
     }
@@ -100,7 +101,8 @@ fun InAppMessageContentPreview(@PreviewParameter(ThemePreviewProvider::class) is
                         end = Some(Instant.DISTANT_FUTURE)
                     )
                 ),
-                onCTAClick = {},
+                onExternalCTAClick = {},
+                onInternalCTAClick = {},
                 onClose = {}
             )
         }

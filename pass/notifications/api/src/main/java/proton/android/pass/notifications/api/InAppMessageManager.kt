@@ -25,5 +25,5 @@ import proton.android.pass.domain.inappmessages.InAppMessage
 interface InAppMessageManager {
     fun emit(message: InAppMessage)
     fun clear()
-    fun observe(): Flow<Option<InAppMessage>>
+    fun observeMessages(): Flow<Option<InAppMessage>>
 }

@@ -20,6 +20,8 @@ package proton.android.pass.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
@@ -37,9 +39,11 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -119,7 +123,12 @@ fun PassAppContent(
 
     val scaffoldState = rememberScaffoldState()
     val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
-
+    val isSnackbarVisible by remember { derivedStateOf { scaffoldState.snackbarHostState.currentSnackbarData != null } }
+    val bannerBottomPadding by animateDpAsState(
+        targetValue = if (isSnackbarVisible) 56.dp else 0.dp,
+        animationSpec = tween(durationMillis = 300),
+        label = "BannerBottomPadding"
+    )
     SnackBarLaunchedEffect(
         appUiState.snackbarMessage.value(),
         passSnackbarHostState,
@@ -262,6 +271,8 @@ fun PassAppContent(
                     val message = appUiState.inAppMessage
                     if (message is Some) {
                         InAppMessageBanner(
+                            modifier = Modifier.align(Alignment.BottomCenter)
+                                .padding(bottom = bannerBottomPadding),
                             inAppMessage = message.value,
                             onDismiss = { },
                             onCTAClick = { }

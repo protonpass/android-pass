@@ -22,13 +22,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.oneShot
-import proton.android.pass.data.api.repositories.InAppMessageStatus
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.remote.inappmessages.RemoteInAppMessagesDataSource
 import proton.android.pass.data.impl.responses.NotificationResponse
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import javax.inject.Inject
 
 class InAppMessagesRepositoryImpl @Inject constructor(

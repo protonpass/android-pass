@@ -42,5 +42,5 @@ class InAppMessageManagerImpl @Inject constructor() : InAppMessageManager {
         inAppMessageStateFlow.update { None }
     }
 
-    override fun observe(): Flow<Option<InAppMessage>> = inAppMessageStateFlow
+    override fun observeMessages(): Flow<Option<InAppMessage>> = inAppMessageStateFlow
 }

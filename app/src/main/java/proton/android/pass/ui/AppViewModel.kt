@@ -39,6 +39,10 @@ import kotlinx.coroutines.runBlocking
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.onSuccess
+import proton.android.pass.common.api.runCatching
+import proton.android.pass.data.api.usecases.inappmessages.RefreshInAppMessages
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.network.api.NetworkMonitor
@@ -56,8 +60,22 @@ class AppViewModel @Inject constructor(
     private val needsBiometricAuth: NeedsBiometricAuth,
     private val inAppUpdatesManager: InAppUpdatesManager,
     inAppMessageManager: InAppMessageManager,
-    networkMonitor: NetworkMonitor
+    networkMonitor: NetworkMonitor,
+    refreshInAppMessages: RefreshInAppMessages
 ) : ViewModel() {
+
+    init {
+        viewModelScope.launch {
+            runCatching { refreshInAppMessages() }
+                .onSuccess {
+                    PassLogger.i(TAG, "In-app messages refreshed")
+                }
+                .onError {
+                    PassLogger.w(TAG, "Error refreshing in-app messages")
+                    PassLogger.w(TAG, it)
+                }
+        }
+    }
 
     private val themePreference: Flow<ThemePreference> = preferenceRepository
         .getThemePreference()
@@ -88,7 +106,7 @@ class AppViewModel @Inject constructor(
         themePreference,
         networkStatus,
         inAppUpdatesManager.observeInAppUpdateState(),
-        inAppMessageManager.observe()
+        inAppMessageManager.observeMessages()
     ) { snackbarMessage, theme, networkStatus, inAppUpdateState, inAppMessage ->
         AppUiState(
             snackbarMessage = snackbarMessage,

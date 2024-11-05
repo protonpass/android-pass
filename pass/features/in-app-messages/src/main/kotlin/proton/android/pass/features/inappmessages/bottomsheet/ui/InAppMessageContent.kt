@@ -28,21 +28,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.domain.inappmessages.InAppMessage
-import proton.android.pass.domain.inappmessages.InAppMessageCTARoute
+import proton.android.pass.domain.inappmessages.InAppMessageCTA
+import proton.android.pass.domain.inappmessages.InAppMessageCTAType
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageMode
+import proton.android.pass.domain.inappmessages.InAppMessageRange
+import proton.android.pass.domain.inappmessages.InAppMessageStatus
 
 @Composable
 fun InAppMessageContent(
     modifier: Modifier = Modifier,
     inAppMessage: InAppMessage,
-    onCTAClick: (InAppMessageCTARoute) -> Unit,
+    onCTAClick: (String) -> Unit,
     onClose: () -> Unit
 ) {
     Column(
@@ -59,13 +63,12 @@ fun InAppMessageContent(
             title = inAppMessage.title,
             message = inAppMessage.message.value()
         )
-        val ctaText = inAppMessage.ctaText
-        val ctaRoute = inAppMessage.ctaRoute
-        if (ctaText is Some && ctaRoute is Some) {
+        val cta = inAppMessage.cta
+        if (cta is Some) {
             InAppMessageFooter(
                 modifier = Modifier.padding(Spacing.medium),
-                ctaText = ctaText.value,
-                ctaRoute = ctaRoute.value,
+                ctaText = cta.value.text,
+                ctaRoute = cta.value.route,
                 onCTAClick = onCTAClick
             )
         }
@@ -79,13 +82,21 @@ fun InAppMessageContentPreview(@PreviewParameter(ThemePreviewProvider::class) is
         Surface {
             InAppMessageContent(
                 inAppMessage = InAppMessage(
+                    id = InAppMessageId("q"),
                     title = "Upgrade to Pass Plus",
                     message = "Get access to all features".some(),
-                    ctaText = "Upgrade".some(),
-                    ctaRoute = "pass://upgrade".some().map(::InAppMessageCTARoute),
                     imageUrl = "url".some(),
                     mode = InAppMessageMode.Modal,
-                    id = InAppMessageId("q")
+                    cta = InAppMessageCTA(
+                        text = "Upgrade",
+                        route = "pass://upgrade",
+                        type = InAppMessageCTAType.Internal
+                    ).some(),
+                    state = InAppMessageStatus.Unread,
+                    range = InAppMessageRange(
+                        start = Instant.DISTANT_PAST,
+                        end = Some(Instant.DISTANT_FUTURE)
+                    )
                 ),
                 onCTAClick = {},
                 onClose = {}

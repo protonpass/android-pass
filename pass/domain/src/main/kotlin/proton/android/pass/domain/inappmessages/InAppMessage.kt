@@ -18,18 +18,8 @@
 
 package proton.android.pass.domain.inappmessages
 
+import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Option
-
-enum class InAppMessageMode(val value: Int) {
-    Banner(0),
-    Modal(1),
-    Unknown(Integer.MAX_VALUE)
-    ;
-
-    companion object {
-        fun fromValue(value: Int): InAppMessageMode = entries.find { it.value == value } ?: Unknown
-    }
-}
 
 @JvmInline
 value class InAppMessageId(val value: String)
@@ -43,6 +33,50 @@ data class InAppMessage(
     val title: String,
     val message: Option<String>,
     val imageUrl: Option<String>,
-    val ctaRoute: Option<InAppMessageCTARoute>,
-    val ctaText: Option<String>
+    val cta: Option<InAppMessageCTA>,
+    val state: InAppMessageStatus,
+    val range: InAppMessageRange
 )
+
+enum class InAppMessageStatus(val value: Int) {
+    Unread(0),
+    Read(1),
+    Dismissed(2),
+    Unknown(Integer.MAX_VALUE)
+    ;
+    companion object {
+        fun fromValue(value: Int): InAppMessageStatus = entries.find { it.value == value } ?: Unknown
+    }
+}
+
+data class InAppMessageCTA(
+    val text: String,
+    val route: String,
+    val type: InAppMessageCTAType
+)
+
+enum class InAppMessageCTAType(val value: String) {
+    Internal("internal_navigation"),
+    External("external_link"),
+    Unknown("unknown")
+    ;
+    companion object {
+        fun fromValue(value: String): InAppMessageCTAType = entries.find { it.value == value } ?: Unknown
+    }
+}
+
+data class InAppMessageRange(
+    val start: Instant,
+    val end: Option<Instant>
+)
+
+enum class InAppMessageMode(val value: Int) {
+    Banner(0),
+    Modal(1),
+    Unknown(Integer.MAX_VALUE)
+    ;
+
+    companion object {
+        fun fromValue(value: Int): InAppMessageMode = entries.find { it.value == value } ?: Unknown
+    }
+}

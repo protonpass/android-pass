@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import kotlinx.datetime.Instant
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
@@ -74,8 +75,9 @@ fun InAppMessageBanner(
         Row(
             modifier = Modifier
                 .padding(
-                    horizontal = Spacing.medium + Spacing.extraSmall,
-                    vertical = Spacing.medium
+                    start = Spacing.medium + Spacing.extraSmall,
+                    end = Spacing.medium + Spacing.extraSmall,
+                    top = Spacing.medium + Spacing.extraSmall
                 )
                 .roundedContainer(
                     backgroundColor = PassTheme.colors.backgroundWeak,
@@ -159,6 +161,7 @@ fun InAppBannerPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
             InAppMessageBanner(
                 inAppMessage = InAppMessage(
                     id = InAppMessageId("1"),
+                    userId = UserId(""),
                     mode = InAppMessageMode.Banner,
                     title = "Title",
                     message = Some("Message"),

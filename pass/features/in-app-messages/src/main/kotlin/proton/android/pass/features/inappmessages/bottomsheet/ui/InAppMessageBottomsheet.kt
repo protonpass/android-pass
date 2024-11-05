@@ -19,34 +19,32 @@
 package proton.android.pass.features.inappmessages.bottomsheet.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import kotlinx.datetime.Instant
-import proton.android.pass.common.api.None
-import proton.android.pass.domain.inappmessages.InAppMessage
-import proton.android.pass.domain.inappmessages.InAppMessageId
-import proton.android.pass.domain.inappmessages.InAppMessageMode
-import proton.android.pass.domain.inappmessages.InAppMessageRange
-import proton.android.pass.domain.inappmessages.InAppMessageStatus
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.features.inappmessages.bottomsheet.presentation.InAppMessageModalState
+import proton.android.pass.features.inappmessages.bottomsheet.presentation.InAppMessageModalViewModel
 
 @Composable
-fun InAppMessageBottomsheet(modifier: Modifier = Modifier) {
-    InAppMessageContent(
-        modifier = modifier,
-        inAppMessage = InAppMessage(
-            id = InAppMessageId(value = ""),
-            mode = InAppMessageMode.Modal,
-            title = "",
-            message = None,
-            imageUrl = None,
-            cta = None,
-            state = InAppMessageStatus.Unread,
-            range = InAppMessageRange(
-                start = Instant.DISTANT_PAST,
-                end = None
+fun InAppMessageBottomsheet(modifier: Modifier = Modifier, viewModel: InAppMessageModalViewModel = hiltViewModel()) {
+
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    when (state) {
+        is InAppMessageModalState.Success -> {
+            val successState = state as InAppMessageModalState.Success
+            InAppMessageContent(
+                modifier = modifier,
+                inAppMessage = successState.inAppMessage,
+                onCTAClick = { },
+                onClose = { }
             )
-        ),
-        onCTAClick = {},
-        onClose = {}
-    )
+        }
+        is InAppMessageModalState.Loading -> {
+        }
+        is InAppMessageModalState.Error -> {
+        }
+    }
 }
 

@@ -43,7 +43,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
 
     @DrawableRes
     internal val logo: Int = when (paidFeature) {
-        PaidFeature.AdvanceAliasManagement -> R.drawable.logo_feature_pass_unlimited
+        PaidFeature.AdvanceAliasManagement,
         PaidFeature.SentinelEssential,
         PaidFeature.DarkWebMonitoring,
         PaidFeature.ItemSharing,
@@ -77,8 +77,8 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
 
     @StringRes
     internal val submitText: Int = when (paidFeature) {
-        PaidFeature.AdvanceAliasManagement -> R.string.upsell_button_upgrade_unlimited
         PaidFeature.SentinelEssential -> R.string.upsell_button_upgrade_essentials
+        PaidFeature.AdvanceAliasManagement,
         PaidFeature.DarkWebMonitoring,
         PaidFeature.ItemSharing,
         PaidFeature.SentinelFree,

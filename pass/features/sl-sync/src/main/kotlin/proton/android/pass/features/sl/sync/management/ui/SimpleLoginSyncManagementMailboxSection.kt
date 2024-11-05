@@ -43,7 +43,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
-import proton.android.pass.composecomponents.impl.icon.PassUnlimitedIcon
+import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
@@ -80,7 +80,7 @@ internal fun SimpleLoginSyncManagementMailboxSection(
             )
 
             if (!canManageAliases) {
-                PassUnlimitedIcon()
+                PassPlusIcon()
             }
         }
 

@@ -20,10 +20,13 @@ package proton.android.pass.features.inappmessages.bottomsheet.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlinx.datetime.Instant
 import proton.android.pass.common.api.None
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageMode
+import proton.android.pass.domain.inappmessages.InAppMessageRange
+import proton.android.pass.domain.inappmessages.InAppMessageStatus
 
 @Composable
 fun InAppMessageBottomsheet(modifier: Modifier = Modifier) {
@@ -35,9 +38,12 @@ fun InAppMessageBottomsheet(modifier: Modifier = Modifier) {
             title = "",
             message = None,
             imageUrl = None,
-            ctaRoute = None,
-            ctaText = None
-
+            cta = None,
+            state = InAppMessageStatus.Unread,
+            range = InAppMessageRange(
+                start = Instant.DISTANT_PAST,
+                end = None
+            )
         ),
         onCTAClick = {},
         onClose = {}

@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.domain.inappmessages.InAppMessageStatus
 
 interface InAppMessagesRepository {
 
@@ -32,10 +33,4 @@ interface InAppMessagesRepository {
         messageId: InAppMessageId,
         status: InAppMessageStatus
     )
-}
-
-enum class InAppMessageStatus(val value: Int) {
-    UNREAD(0),
-    READ(1),
-    DISMISSED(2)
 }

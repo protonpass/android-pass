@@ -36,7 +36,7 @@ data class NotificationsResponse(
     @SerialName("Total")
     val total: Int,
     @SerialName("LastID")
-    val lastID: String
+    val lastID: String?
 )
 
 @Serializable
@@ -48,7 +48,7 @@ data class NotificationResponse(
     @SerialName("StartTime")
     val startTime: Long,
     @SerialName("EndTime")
-    val endTime: Long,
+    val endTime: Long?,
     @SerialName("State")
     val state: Int,
     @SerialName("Content")
@@ -58,17 +58,15 @@ data class NotificationResponse(
 @Serializable
 data class ContentResponse(
     @SerialName("ImageUrl")
-    val imageUrl: String,
+    val imageUrl: String?,
     @SerialName("DisplayType")
     val displayType: Int,
     @SerialName("Title")
     val title: String,
     @SerialName("Message")
     val message: String,
-    @SerialName("Theme")
-    val theme: String,
     @SerialName("Cta")
-    val cta: CtaResponse
+    val cta: CtaResponse?
 )
 
 @Serializable

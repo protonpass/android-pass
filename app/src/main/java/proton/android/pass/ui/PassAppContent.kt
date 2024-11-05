@@ -22,6 +22,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
@@ -41,8 +43,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -143,7 +147,10 @@ fun PassAppContent(
         if (inAppMessageOption is Some && inAppMessageOption.value.mode == InAppMessageMode.Modal) {
             appNavigator.navigate(
                 InAppMessageModalNavItem,
-                InAppMessageModalNavItem.createNavRoute(inAppMessageOption.value.userId, inAppMessageOption.value.id)
+                InAppMessageModalNavItem.createNavRoute(
+                    inAppMessageOption.value.userId,
+                    inAppMessageOption.value.id
+                )
             )
         }
     }
@@ -287,35 +294,44 @@ fun PassAppContent(
                         }
                     }
 
-                    if (inAppMessageOption is Some && inAppMessageOption.value.mode == InAppMessageMode.Banner) {
-                        Column(
-                            modifier = Modifier
-                                .align(Alignment.BottomCenter)
-                                .padding(bottom = bannerBottomPadding)
-                        ) {
-                            InAppMessageBanner(
-                                inAppMessage = inAppMessageOption.value,
-                                onDismiss = {
-                                    onInAppMessageBannerRead(
-                                        inAppMessageOption.value.userId,
-                                        inAppMessageOption.value.id
-                                    )
-                                },
-                                onInternalCTAClick = {
-                                    onInAppMessageBannerRead(
-                                        inAppMessageOption.value.userId,
-                                        inAppMessageOption.value.id
-                                    )
-                                },
-                                onExternalCTAClick = {
-                                    onInAppMessageBannerRead(
-                                        inAppMessageOption.value.userId,
-                                        inAppMessageOption.value.id
-                                    )
-                                    BrowserUtils.openWebsite(context, it)
-                                }
-                            )
-                        }
+                    var isBannerVisible by remember { mutableStateOf(false) }
+                    LaunchedEffect(inAppMessageOption) {
+                        isBannerVisible = inAppMessageOption is Some &&
+                            inAppMessageOption.value.mode == InAppMessageMode.Banner
+                    }
+                    AnimatedVisibility(
+                        modifier = Modifier.align(Alignment.BottomCenter),
+                        visible = isBannerVisible,
+                        enter = slideInVertically { it } + fadeIn(),
+                        exit = slideOutVertically { it } + fadeOut()
+                    ) {
+                        if (inAppMessageOption !is Some) return@AnimatedVisibility
+                        InAppMessageBanner(
+                            modifier = Modifier.padding(bottom = bannerBottomPadding),
+                            inAppMessage = inAppMessageOption.value,
+                            onDismiss = {
+                                onInAppMessageBannerRead(
+                                    inAppMessageOption.value.userId,
+                                    inAppMessageOption.value.id
+                                )
+                                isBannerVisible = false
+                            },
+                            onInternalCTAClick = {
+                                onInAppMessageBannerRead(
+                                    inAppMessageOption.value.userId,
+                                    inAppMessageOption.value.id
+                                )
+                                isBannerVisible = false
+                            },
+                            onExternalCTAClick = {
+                                onInAppMessageBannerRead(
+                                    inAppMessageOption.value.userId,
+                                    inAppMessageOption.value.id
+                                )
+                                isBannerVisible = false
+                                BrowserUtils.openWebsite(context, it)
+                            }
+                        )
                     }
                 }
             }
@@ -328,6 +344,7 @@ private fun determineBottomBarSelection(route: String?): BottomBarSelection = wh
     SortingBottomsheetNavItem.route,
     SearchOptionsBottomsheetNavItem.route,
     FilterBottomsheetNavItem.route -> BottomBarSelection.Home
+
     ProfileNavItem.route -> BottomBarSelection.Profile
     SecurityCenterHomeNavItem.route -> BottomBarSelection.SecurityCenter
     CreateItemBottomsheetNavItem.route -> BottomBarSelection.ItemCreate
@@ -347,6 +364,7 @@ private fun handleBottomBarEvent(
         HomeBottomBarEvent.OnNewItemSelected ->
             CreateItemBottomsheetNavItem to
                 CreateItemBottomsheetNavItem.createNavRoute(CreateItemBottomSheetMode.HomeFull)
+
         HomeBottomBarEvent.OnProfileSelected -> ProfileNavItem to null
         HomeBottomBarEvent.OnSecurityCenterSelected -> SecurityCenterHomeNavItem to null
     }

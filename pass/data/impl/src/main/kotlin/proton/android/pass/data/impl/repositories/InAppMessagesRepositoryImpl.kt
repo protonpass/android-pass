@@ -19,9 +19,11 @@
 package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.remote.inappmessages.RemoteInAppMessagesDataSource
@@ -34,9 +36,17 @@ class InAppMessagesRepositoryImpl @Inject constructor(
     private val remote: RemoteInAppMessagesDataSource
 ) : InAppMessagesRepository {
 
-    override fun observeUserMessages(userId: UserId): Flow<List<InAppMessage>> =
-        oneShot { remote.fetchInAppMessages(userId) }
-            .map { it.toDomain(userId) }
+    private val messageCache = MutableStateFlow<Map<UserId, List<InAppMessage>>>(emptyMap())
+
+    override fun observeUserMessages(userId: UserId): Flow<List<InAppMessage>> = messageCache
+        .map { it[userId] ?: emptyList() }
+        .distinctUntilChanged()
+        .onStart {
+            if (!messageCache.value.containsKey(userId)) {
+                val messages = remote.fetchInAppMessages(userId).toDomain(userId)
+                messageCache.value += userId to messages
+            }
+        }
 
     override suspend fun changeMessageStatus(
         userId: UserId,
@@ -44,5 +54,12 @@ class InAppMessagesRepositoryImpl @Inject constructor(
         status: InAppMessageStatus
     ) {
         remote.changeMessageStatus(userId, messageId, status)
+
+        messageCache.value[userId]?.let { cachedMessages ->
+            val updatedMessages = cachedMessages.map { message ->
+                if (message.id == messageId) message.copy(state = status) else message
+            }
+            messageCache.value += userId to updatedMessages
+        }
     }
 }

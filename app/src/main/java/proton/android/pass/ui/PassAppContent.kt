@@ -45,16 +45,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.R
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.BottomBarSelection
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
+import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
@@ -62,6 +65,7 @@ import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
+import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.featurehome.impl.HomeNavItem
@@ -101,11 +105,12 @@ fun PassAppContent(
     appUiState: AppUiState,
     onNavigate: (AppNavigation) -> Unit,
     onSnackbarMessageDelivered: () -> Unit,
+    onInAppMessageBannerRead: (UserId, InAppMessageId) -> Unit,
     onCompleteUpdate: () -> Unit,
     needsAuth: Boolean
 ) {
+    val context = LocalContext.current
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
-
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
@@ -290,8 +295,25 @@ fun PassAppContent(
                         ) {
                             InAppMessageBanner(
                                 inAppMessage = inAppMessageOption.value,
-                                onDismiss = { },
-                                onCTAClick = { }
+                                onDismiss = {
+                                    onInAppMessageBannerRead(
+                                        inAppMessageOption.value.userId,
+                                        inAppMessageOption.value.id
+                                    )
+                                },
+                                onInternalCTAClick = {
+                                    onInAppMessageBannerRead(
+                                        inAppMessageOption.value.userId,
+                                        inAppMessageOption.value.id
+                                    )
+                                },
+                                onExternalCTAClick = {
+                                    onInAppMessageBannerRead(
+                                        inAppMessageOption.value.userId,
+                                        inAppMessageOption.value.id
+                                    )
+                                    BrowserUtils.openWebsite(context, it)
+                                }
                             )
                         }
                     }

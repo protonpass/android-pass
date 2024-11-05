@@ -21,6 +21,7 @@ package proton.android.pass.domain.inappmessages
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 
 @JvmInline
 value class InAppMessageId(val value: String)
@@ -69,7 +70,16 @@ enum class InAppMessageCTAType(val value: String) {
 data class InAppMessageRange(
     val start: Instant,
     val end: Option<Instant>
-)
+) {
+    private val isClosedRange: Boolean
+        get() = end is Some
+
+    fun inRange(now: Instant): Boolean = if (isClosedRange) {
+        now in start..(end as Some).value
+    } else {
+        now >= start
+    }
+}
 
 enum class InAppMessageMode(val value: Int) {
     Banner(0),

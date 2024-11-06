@@ -25,4 +25,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto digital_asset_link_enabled = 17;
   BoolFlagPrefProto advance_alias_management_v1_enabled = 18;
   BoolFlagPrefProto item_sharing_v1_enabled = 19;
+  BoolFlagPrefProto extra_logging_enabled = 20;
 }

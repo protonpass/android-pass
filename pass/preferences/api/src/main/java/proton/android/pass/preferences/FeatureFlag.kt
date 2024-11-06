@@ -59,5 +59,11 @@ enum class FeatureFlag(
         description = "Enable single item sharing",
         key = "PassItemSharingV1",
         isEnabledDefault = false
+    ),
+    EXTRA_LOGGING(
+        title = "Extra logging",
+        description = "Enable extra logging",
+        key = "PassAndroidExtraLogging",
+        isEnabledDefault = false
     )
 }

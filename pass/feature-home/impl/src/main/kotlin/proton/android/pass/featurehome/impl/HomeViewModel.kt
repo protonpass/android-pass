@@ -219,19 +219,26 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     init {
-        observeItemCount()
-            .map { it.total }
-            .distinctUntilChanged()
-            .scan(initial = null to 0L) { previousPair: Pair<Long?, Long>, current: Long ->
-                previousPair.second to current
+        viewModelScope.launch {
+            val isExtraLoggingEnabled = featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.EXTRA_LOGGING)
+                .firstOrNull()
+                ?: false
+            if (isExtraLoggingEnabled) {
+                observeItemCount()
+                    .map { it.total }
+                    .distinctUntilChanged()
+                    .scan(initial = null to 0L) { previousPair: Pair<Long?, Long>, current: Long ->
+                        previousPair.second to current
+                    }
+                    .filter { (previous, _) -> previous != null }
+                    .onEach { (previous, current) ->
+                        if (previous != null && previous > ITEM_DELETED_THRESHOLD && current == 0L) {
+                            PassLogger.e(TAG, "All items have been deleted!")
+                        }
+                    }
+                    .launchIn(this)
             }
-            .filter { (previous, _) -> previous != null }
-            .onEach { (previous, current) ->
-                if (previous != null && previous > ITEM_DELETED_THRESHOLD && current == 0L) {
-                    PassLogger.e(TAG, "All items have been deleted!")
-                }
-            }
-            .launchIn(viewModelScope)
+        }
     }
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -1286,7 +1293,7 @@ class HomeViewModel @Inject constructor(
     }
 
     companion object {
-        private const val ITEM_DELETED_THRESHOLD = 10
+        private const val ITEM_DELETED_THRESHOLD = 5
         private const val DEBOUNCE_TIMEOUT = 300L
         private const val TAG = "HomeViewModel"
         private const val MAX_CLIPBOARD_LENGTH = 2500

@@ -52,6 +52,7 @@ import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObservePinnedItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
@@ -63,14 +64,14 @@ import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.data.fakes.usecases.TestUnpinItems
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ShareId
-import proton.android.pass.searchoptions.api.VaultSelectionOption
-import proton.android.pass.searchoptions.fakes.TestHomeSearchOptionsRepository
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.notifications.fakes.TestToastManager
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
+import proton.android.pass.searchoptions.api.VaultSelectionOption
+import proton.android.pass.searchoptions.fakes.TestHomeSearchOptionsRepository
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
@@ -273,7 +274,8 @@ internal class HomeViewModelTest {
             appDispatchers = TestAppDispatchers(),
             featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository(),
             observeCurrentUser = observeCurrentUser,
-            changeAliasStatus = FakeChangeAliasStatus()
+            changeAliasStatus = FakeChangeAliasStatus(),
+            observeItemCount = TestObserveItemCount()
         )
     }
 

@@ -23,8 +23,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.common.api.combineN
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
@@ -35,20 +35,22 @@ class FeatureFlagsViewModel @Inject constructor(
 ) : ViewModel() {
 
     internal val state: StateFlow<Map<FeatureFlag, Boolean>> =
-        combine(
+        combineN(
             ffRepository.get<Boolean>(FeatureFlag.ACCOUNT_SWITCH_V1),
             ffRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
             ffRepository.get<Boolean>(FeatureFlag.DIGITAL_ASSET_LINKS),
             ffRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1),
-            ffRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
+            ffRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1),
+            ffRepository.get<Boolean>(FeatureFlag.EXTRA_LOGGING)
         ) { isAccountSwitchEnabled, isSimpleLoginAliasesSyncEnabled, isDigitalAssetLinksEnabled,
-            isAdvanceAliasManagementEnabled, isItemSharingEnabled ->
+            isAdvanceAliasManagementEnabled, isItemSharingEnabled, isExtraLoggingEnabled ->
             mapOf(
                 FeatureFlag.ACCOUNT_SWITCH_V1 to isAccountSwitchEnabled,
                 FeatureFlag.SL_ALIASES_SYNC to isSimpleLoginAliasesSyncEnabled,
                 FeatureFlag.DIGITAL_ASSET_LINKS to isDigitalAssetLinksEnabled,
                 FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1 to isAdvanceAliasManagementEnabled,
-                FeatureFlag.ITEM_SHARING_V1 to isItemSharingEnabled
+                FeatureFlag.ITEM_SHARING_V1 to isItemSharingEnabled,
+                FeatureFlag.EXTRA_LOGGING to isExtraLoggingEnabled
             )
         }.stateIn(
             scope = viewModelScope,

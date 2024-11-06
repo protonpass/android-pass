@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -48,6 +49,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.featurehome.impl.R
 
 @Composable
@@ -56,6 +58,7 @@ fun SpotlightCard(
     backgroundColor: Color,
     title: String,
     body: String,
+    caption: String? = null,
     titleColor: Color = PassTheme.colors.textInvert,
     subtitleColor: Color = titleColor,
     buttonColor: Color = titleColor,
@@ -94,6 +97,11 @@ fun SpotlightCard(
                         style = PassTheme.typography.body3Norm(),
                         color = subtitleColor
                     )
+
+                    caption?.let {
+                        Spacer(modifier = Modifier.height(Spacing.extraSmall))
+                        Text.CaptionMedium(text = it, color = titleColor)
+                    }
                     if (buttonText != null) {
                         Spacer(modifier = Modifier.size(4.dp))
                         Text(

@@ -41,12 +41,15 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -104,6 +107,7 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -210,8 +214,25 @@ class HomeViewModel @Inject constructor(
     appDispatchers: AppDispatchers,
     getUserPlan: GetUserPlan,
     savedState: SavedStateHandleProvider,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
+    observeItemCount: ObserveItemCount
 ) : ViewModel() {
+
+    init {
+        observeItemCount()
+            .map { it.total }
+            .distinctUntilChanged()
+            .scan(initial = null to 0L) { previousPair: Pair<Long?, Long>, current: Long ->
+                previousPair.second to current
+            }
+            .filter { (previous, _) -> previous != null }
+            .onEach { (previous, current) ->
+                if (previous != null && previous > ITEM_DELETED_THRESHOLD && current == 0L) {
+                    PassLogger.e(TAG, "All items have been deleted!")
+                }
+            }
+            .launchIn(viewModelScope)
+    }
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.w(TAG, throwable)
@@ -1265,6 +1286,7 @@ class HomeViewModel @Inject constructor(
     }
 
     companion object {
+        private const val ITEM_DELETED_THRESHOLD = 10
         private const val DEBOUNCE_TIMEOUT = 300L
         private const val TAG = "HomeViewModel"
         private const val MAX_CLIPBOARD_LENGTH = 2500

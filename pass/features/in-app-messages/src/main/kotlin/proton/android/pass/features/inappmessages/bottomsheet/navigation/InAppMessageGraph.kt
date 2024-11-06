@@ -23,10 +23,10 @@ import proton.android.pass.features.inappmessages.bottomsheet.ui.InAppMessageBot
 import proton.android.pass.navigation.api.bottomSheet
 
 
-fun NavGraphBuilder.inAppMessageGraph(onNavigated: () -> Unit) {
+fun NavGraphBuilder.inAppMessageGraph(onNavigate: (InAppMessageModalDestination) -> Unit) {
 
     bottomSheet(navItem = InAppMessageModalNavItem) {
-        InAppMessageBottomsheet()
+        InAppMessageBottomsheet(onNavigate = onNavigate)
     }
 }
 

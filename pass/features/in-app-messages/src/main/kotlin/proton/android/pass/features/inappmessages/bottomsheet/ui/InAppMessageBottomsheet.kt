@@ -19,17 +19,23 @@
 package proton.android.pass.features.inappmessages.bottomsheet.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.BrowserUtils
+import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalDestination
 import proton.android.pass.features.inappmessages.bottomsheet.presentation.InAppMessageModalState
 import proton.android.pass.features.inappmessages.bottomsheet.presentation.InAppMessageModalViewModel
 
 @Composable
-fun InAppMessageBottomsheet(modifier: Modifier = Modifier, viewModel: InAppMessageModalViewModel = hiltViewModel()) {
+fun InAppMessageBottomsheet(
+    modifier: Modifier = Modifier,
+    viewModel: InAppMessageModalViewModel = hiltViewModel(),
+    onNavigate: (InAppMessageModalDestination) -> Unit
+) {
 
     val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -37,24 +43,29 @@ fun InAppMessageBottomsheet(modifier: Modifier = Modifier, viewModel: InAppMessa
     when (state) {
         is InAppMessageModalState.Success -> {
             val successState = state as InAppMessageModalState.Success
+            DisposableEffect(successState) {
+                onDispose {
+                    viewModel.onInAppMessageRead(successState.inAppMessage.userId, successState.inAppMessage.id)
+                }
+            }
+
             InAppMessageContent(
                 modifier = modifier,
                 inAppMessage = successState.inAppMessage,
                 onExternalCTAClick = {
                     BrowserUtils.openWebsite(context, it)
-                    viewModel.onInAppMessageRead(successState.inAppMessage.userId, successState.inAppMessage.id)
                 },
                 onInternalCTAClick = {
-                    viewModel.onInAppMessageRead(successState.inAppMessage.userId, successState.inAppMessage.id)
                 },
                 onClose = {
-                    viewModel.onInAppMessageRead(successState.inAppMessage.userId, successState.inAppMessage.id)
+                    onNavigate(InAppMessageModalDestination.CloseBottomsheet)
                 }
             )
         }
         is InAppMessageModalState.Loading -> {
         }
         is InAppMessageModalState.Error -> {
+            onNavigate(InAppMessageModalDestination.CloseBottomsheet)
         }
     }
 }

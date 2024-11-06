@@ -6,6 +6,17 @@
 
 ### Other
 
+## 1.26.3 (2024-11-06)
+
+### Fixes :bug:
+
+- Avoid items loading delay on the home screen.
+
+### Other
+
+- Add SL aliases permanent removal warning.
+- Updated core libraries.
+
 ## 1.26.2 (2024-10-25)
 
 ### Fixes :bug:

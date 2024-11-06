@@ -127,6 +127,7 @@ import proton.android.pass.features.extrapassword.confirm.navigation.ConfirmExtr
 import proton.android.pass.features.extrapassword.extraPasswordGraph
 import proton.android.pass.features.extrapassword.infosheet.navigation.ExtraPasswordInfoNavItem
 import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
+import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalDestination
 import proton.android.pass.features.inappmessages.bottomsheet.navigation.inAppMessageGraph
 import proton.android.pass.features.item.details.detail.navigation.ItemDetailsNavItem
 import proton.android.pass.features.item.details.detailforbidden.navigation.ItemDetailsForbiddenNavItem
@@ -2103,7 +2104,13 @@ fun NavGraphBuilder.appGraph(
         }
     }
 
-    inAppMessageGraph {}
+    inAppMessageGraph {
+        when (it) {
+            InAppMessageModalDestination.CloseBottomsheet -> dismissBottomSheet {
+                appNavigator.navigateBack(comesFromBottomsheet = true)
+            }
+        }
+    }
 }
 
 // This fun should be removed once all categories are migrated to new item-details feature

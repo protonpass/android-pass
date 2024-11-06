@@ -18,12 +18,20 @@
 
 package proton.android.pass.data.api.work
 
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.inappmessages.InAppMessageId
+
 interface WorkerLauncher {
     fun launch(workerItem: WorkerItem)
 }
 
 sealed interface WorkerItem {
+
     @JvmInline
     value class SingleItemAssetLink(val websites: Set<String>) : WorkerItem
-}
 
+    data class MarkInAppMessageAsRead(
+        val userId: UserId,
+        val inAppMessageId: InAppMessageId
+    ) : WorkerItem
+}

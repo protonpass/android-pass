@@ -32,6 +32,11 @@ class WorkerLauncherImpl @Inject constructor(
                 val request = SingleItemAssetLinkWorker.getRequestFor(workerItem.websites)
                 workManager.enqueue(request)
             }
+
+            is WorkerItem.MarkInAppMessageAsRead -> {
+                val request = MarkInAppMessageAsReadWorker.getRequestFor(workerItem.userId, workerItem.inAppMessageId)
+                workManager.enqueue(request)
+            }
         }
     }
 }

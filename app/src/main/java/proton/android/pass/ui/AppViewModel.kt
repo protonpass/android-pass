@@ -40,6 +40,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
@@ -93,7 +94,8 @@ class AppViewModel @Inject constructor(
         )
 
     private val inAppMessageFlow = observeDeliverableInAppMessages()
-        .map { it.firstOrNull().toOption() }
+        .asResultWithoutLoading()
+        .map { it.getOrNull()?.firstOrNull().toOption() }
 
     val appUiState: StateFlow<AppUiState> = combine(
         snackbarDispatcher.snackbarMessage,

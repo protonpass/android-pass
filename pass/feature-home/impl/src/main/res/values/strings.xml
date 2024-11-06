@@ -40,12 +40,12 @@
     <string name="home_trial_banner_title">Our welcome gift to you</string>
     <string name="home_trial_banner_text">7 days to try premium features for free. Only during your first week of Proton Pass.</string>
     <string name="home_trial_banner_settings">Learn more ›</string>
-    <string name="sl_sync_banner_title">Import your aliases from SimpleLogin</string>
+    <string name="sl_sync_banner_title">Sync your aliases from SimpleLogin</string>
     <plurals name="sl_sync_banner_text">
-        <item quantity="one">You have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to import it?</item>
-        <item quantity="other">You have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
+        <item quantity="one">You have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to sync it?</item>
+        <item quantity="other">You have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to sync them?</item>
     </plurals>
-    <string name="sl_sync_banner_settings">Import aliases ›</string>
+    <string name="sl_sync_banner_settings">Sync aliases ›</string>
     <string name="home_notification_permission_banner_title">Get important updates</string>
     <string name="home_notification_permission_banner_text">Enable push notifications to be informed when others share a vault with you.</string>
     <string name="home_notification_permission_banner_settings">Enable permission ›</string>

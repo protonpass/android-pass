@@ -18,15 +18,8 @@
 
 package proton.android.pass.features.inappmessages.bottomsheet.navigation
 
-import androidx.navigation.NavGraphBuilder
-import proton.android.pass.features.inappmessages.bottomsheet.ui.InAppMessageBottomsheet
-import proton.android.pass.navigation.api.bottomSheet
+sealed interface InAppMessageModalDestination {
 
+    data object CloseBottomsheet : InAppMessageModalDestination
 
-fun NavGraphBuilder.inAppMessageGraph(onNavigate: (InAppMessageModalDestination) -> Unit) {
-
-    bottomSheet(navItem = InAppMessageModalNavItem) {
-        InAppMessageBottomsheet(onNavigate = onNavigate)
-    }
 }
-

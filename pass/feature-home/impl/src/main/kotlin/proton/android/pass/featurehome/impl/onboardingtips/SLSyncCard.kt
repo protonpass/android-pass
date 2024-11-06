@@ -43,6 +43,7 @@ fun SLSyncCard(
         title = stringResource(id = R.string.sl_sync_banner_title),
         body = pluralStringResource(id = R.plurals.sl_sync_banner_text, aliasCount, aliasCount),
         buttonText = stringResource(id = R.string.sl_sync_banner_settings),
+        caption = stringResource(id = R.string.sl_sync_banner_note),
         titleColor = PassTheme.colors.textNorm,
         image = { Image.Default(R.drawable.spotlight_sl_sync) },
         onClick = onClick,

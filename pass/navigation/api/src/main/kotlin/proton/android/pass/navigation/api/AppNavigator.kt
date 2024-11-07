@@ -116,6 +116,12 @@ class AppNavigator(
         navController.navigateUp()
     }
 
+    fun findCloserDestination(vararg destinations: NavItem): NavItem? = navController.currentBackStack.value
+        .asReversed()
+        .firstNotNullOfOrNull { entry ->
+            destinations.find { it.route == entry.destination.route }
+        }
+
     fun navigateBackWithResult(
         key: String,
         value: Any,

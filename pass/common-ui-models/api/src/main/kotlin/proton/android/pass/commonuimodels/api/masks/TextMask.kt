@@ -19,6 +19,7 @@
 package proton.android.pass.commonuimodels.api.masks
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.common.api.CommonRegex
 import proton.android.pass.common.api.SpecialCharacters
 
 private const val CREDIT_CARD_CHUNK_SIZE = 4
@@ -40,10 +41,10 @@ sealed interface TextMask {
                         if (i < CREDIT_CARD_CHUNK_SIZE || i >= cleanedNumber.length - CREDIT_CARD_CHUNK_SIZE) {
                             append(cleanedNumber[i])
                         } else {
-                            append('•')
+                            append(SpecialCharacters.DOT_SEPARATOR)
                         }
                         if ((i + 1) % CREDIT_CARD_CHUNK_SIZE == 0 && i < cleanedNumber.length - 1) {
-                            append(" ")
+                            append(SpecialCharacters.SPACE)
                         }
                     }
                 }
@@ -54,19 +55,19 @@ sealed interface TextMask {
 
         override val unmasked: String = input
             .chunked(size = CREDIT_CARD_CHUNK_SIZE)
-            .joinToString(separator = " ")
+            .joinToString(separator = SpecialCharacters.SPACE.toString())
 
     }
 
     @Stable
     data class ExpirationDate(private val input: String) : TextMask {
 
-        override val masked: String = if (input.length <= 2) {
-            input
+        override val masked: String = if (CommonRegex.EXPIRATION_DATE_REGEX.matches(input)) {
+            val month = input.takeLast(n = 2)
+            val year = input.substring(startIndex = 2, endIndex = 4)
+            "$month ${SpecialCharacters.SLASH} $year"
         } else {
-            val month = input.substring(0, 2)
-            val year = input.substring(2, 4.coerceAtMost(input.length))
-            "$month / $year"
+            input
         }
 
         override val unmasked: String = input
@@ -88,7 +89,7 @@ sealed interface TextMask {
     data class TextBetweenFirstAndLastChar(
         private val input: String,
         private val replacementLength: Int = 10,
-        private val replacementSymbol: Char = '•'
+        private val replacementSymbol: Char = SpecialCharacters.DOT_SEPARATOR
     ) : TextMask {
 
         override val masked: String = if (input.length < 2) {

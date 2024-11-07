@@ -19,6 +19,8 @@
 package proton.android.pass.common.api
 
 object CommonRegex {
+    val EXPIRATION_DATE_REGEX: Regex = "^\\d{4}-(0[1-9]|1[0-2])$".toRegex()
+
     val NON_DIGIT_REGEX: Regex = "\\D".toRegex()
 
     @Suppress("MaxLineLength")

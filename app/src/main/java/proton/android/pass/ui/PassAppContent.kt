@@ -182,7 +182,7 @@ fun PassAppContent(
         rememberInternalDrawerState(InternalDrawerValue.Closed)
     val currentRoute = appNavigator.navController.currentDestination?.route
     val bottomBarSelected = remember(currentRoute) { determineBottomBarSelection(currentRoute) }
-    val shouldShowBottomBar = bottomBarSelected != BottomBarSelection.None
+    val shouldShowBottomBar = !needsAuth && bottomBarSelected != BottomBarSelection.None
     Scaffold(
         modifier = modifier,
         scaffoldState = scaffoldState,
@@ -401,9 +401,13 @@ private fun navigateWithDismiss(
             }
         }
         if (currentRoute == CreateItemBottomsheetNavItem.route) {
-            appNavigator.navigateBack()
+            appNavigator.navigateBack(comesFromBottomsheet = true)
         }
-        appNavigator.navigate(destination, route)
+        val backDestination = if (destination == CreateItemBottomsheetNavItem) {
+            appNavigator.findCloserDestination(HomeNavItem, ProfileNavItem, SecurityCenterHomeNavItem)
+        } else null
+
+        appNavigator.navigate(destination, route, backDestination)
     }
 }
 

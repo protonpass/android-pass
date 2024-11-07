@@ -68,10 +68,12 @@ fun CreditCardDetailContent(
             onEvent = onEvent
         )
 
-        NoteSection(
-            text = model.note,
-            accentColor = PassTheme.colors.cardInteractionNorm
-        )
+        if (model.note.isNotBlank()) {
+            NoteSection(
+                text = model.note,
+                accentColor = PassTheme.colors.cardInteractionNorm
+            )
+        }
 
         PassItemDetailsHistorySection(
             lastAutofillAtOption = contents.model.lastAutofillTime.toOption(),

@@ -29,6 +29,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.fakes.TestAppDispatchers
 import proton.android.pass.commonui.api.DateFormatUtils
@@ -275,7 +276,8 @@ internal class HomeViewModelTest {
             featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository(),
             observeCurrentUser = observeCurrentUser,
             changeAliasStatus = FakeChangeAliasStatus(),
-            observeItemCount = TestObserveItemCount()
+            observeItemCount = TestObserveItemCount(),
+            accountManager = TestAccountManager()
         )
     }
 

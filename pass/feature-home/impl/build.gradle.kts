@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.user.domain)
+    implementation(libs.core.accountManager.domain)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
@@ -102,6 +103,7 @@ dependencies {
     testImplementation(libs.truth)
     testImplementation(libs.coroutines.test)
 
+    testImplementation(projects.pass.account.fakes)
     testImplementation(projects.pass.appConfig.fakes)
     testImplementation(projects.pass.autofill.fakes)
     testImplementation(projects.pass.biometry.fakes)
@@ -119,6 +121,7 @@ dependencies {
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)
     androidTestImplementation(libs.truth)
+    androidTestImplementation(projects.pass.account.fakes)
     androidTestImplementation(projects.pass.appConfig.fakes)
     androidTestImplementation(projects.pass.autofill.fakes)
     androidTestImplementation(projects.pass.common.fakes)

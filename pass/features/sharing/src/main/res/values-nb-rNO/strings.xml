@@ -115,6 +115,8 @@
   <string name="share_with_suggestions_title">Forslag</string>
   <string name="share_with_recents_title">Nylige</string>
   <string name="share_with_remove_email_content_description">Fjern e-postadresse</string>
+  <string name="share_with_user_title">Del med</string>
+  <string name="share_with_user_description">Del dette elementet med andre Proton-brukere.</string>
   <string name="share_with_secure_link_title">Via sikker kobling</string>
   <string name="share_with_secure_link_description">Generer en sikker kobling til dette elementet.</string>
   <string name="share_with_manage_shared_vault_title">Administrer hvelvtilgang</string>

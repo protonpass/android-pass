@@ -82,6 +82,11 @@
   <string name="alias_created">ფსევდონიმი შეიქმნა</string>
   <string name="cannot_retrieve_alias_options">ფსევდონიმის პარამეტების მიღების შეცდომა</string>
   <string name="alias_mailbox_dialog_title">გადაგზავნა</string>
+  <string name="sl_note_info_title">რა არის SimpleLogin-ის შენიშვნა?</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">Pass-ში ელემენტის შენიშვნა ელემენტთან ერთად იშიფრება და, მხოლოდ, მომხმარებლებს, რომლებსაც აქვთ წვდომა ელემენთან, აქვთ წვდომა შენიშვნასთან.</string>
+  <string name="sl_note_info_message_part2">მისი დანახვა Proton-ს ან SimpleLogin-საც კი არ შეუძლიათ.</string>
+  <string name="sl_note_info_message_part3">SimpleLogin note is stored together in the same location with alias address and while it is protected by encryption at rest, it isn\'t E2E encrypted meaning anyone who has access to SimpleLogin database can read it.</string>
+  <string name="sl_note_info_content_description">SL-ის შენიშვნის ინფორმაციის დიალოგის ჩვენება</string>
   <!-- Create note -->
   <string name="note_hint">შენიშვნა</string>
   <!-- Create Credit Card -->

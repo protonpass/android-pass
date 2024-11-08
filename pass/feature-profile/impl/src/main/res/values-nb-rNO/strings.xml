@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Kunne ikke autentisere</string>
   <string name="profile_fingerprint_lock_enabled">Fingeravtrykkslås aktivert</string>
   <string name="profile_fingerprint_lock_disabled">Fingeravtrykkslås deaktivert</string>
-  <string name="profile_error_performing_operation">Feil under utførelse av operasjon</string>
   <string name="profile_app_version_copied_to_clipboard">Appversjon kopiert</string>
   <string name="feedback_option_reddit">Sjekk ut Proton på Reddit</string>
   <string name="feedback_option_mail">Send oss en melding</string>
@@ -74,4 +73,10 @@
   <string name="account_switcher_switch_to">Bytt til</string>
   <string name="account_switcher_add_account">Legg til konto</string>
   <string name="account_switcher_remove">Fjern</string>
+  <string name="filtered_by_logins">Filtrert etter pålogginger. Elementer som er slettet, vises ikke</string>
+  <string name="filtered_by_logins_with_mfa">Filtrert etter pålogginger med TOTP. Elementer som er slettet, vises ikke</string>
+  <string name="filtered_by_aliases">Filtrert etter aliaser. Elementer som er slettet, vises ikke</string>
+  <string name="filtered_by_notes">Filtrert etter notater. Elementer som er slettet, vises ikke</string>
+  <string name="filtered_by_credit_cards">Filtrert etter kredittkort. Elementer som er slettet, vises ikke</string>
+  <string name="filtered_by_identities">Filtrert etter identiteter. Elementer som er slettet, vises ikke</string>
 </resources>

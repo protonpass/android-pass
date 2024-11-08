@@ -31,8 +31,9 @@
   <string name="upsell_paid_feature_authenticator_essential">Este necesară A2F pentru organizație</string>
   <string name="upsell_paid_feature_sso_essential">Integrare SSO (în curând)</string>
   <string name="upsell_paid_feature_advance_alias_management_title">Gestionați-vă aliasurile</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">Gestionarea avansată a aliasurilor este disponibilă cu Proton Unlimited. Treceți la alt plan pentru acces imediat.</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">Gestionarea avansată a aliasurilor este disponibilă cu un plan cu plată. Treceți la alt plan pentru acces imediat.</string>
+  <string name="upsell_paid_feature_item_sharing_title">Partajați rapid un articol</string>
+  <string name="upsell_paid_feature_item_sharing_subtitle">Modificați planul acum pentru a partaja un articol cu orice utilizator al Pass. Și beneficiați și de alte funcții premium:</string>
   <string name="upsell_button_upgrade">Luați Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Luați Pass Business</string>
-  <string name="upsell_button_upgrade_unlimited">Lua\'i Proton Unlimited</string>
 </resources>

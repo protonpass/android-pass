@@ -43,6 +43,7 @@
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Abbiamo inviato un codice di verifica a %s. Inseriscilo qui sotto:</string>
   <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">la tua email</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Codice di verifica casella email non valido</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">È stato raggiunto il limite del codice di verifica della casella di posta non valido, la casella di posta è stata eliminata</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_error">Si è verificato un errore durante la verifica della casella</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_success">Casella email verificata correttamente</string>
   <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Si è verificato un errore durante l\'invio del codice di verifica</string>

@@ -3,6 +3,18 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Din boks er tom</string>
   <string name="home_empty_vault_subtitle">Kom i gang ved at oprette dit første element.</string>
+  <string name="home_empty_vault_login_title">Ingen logins fundet</string>
+  <string name="home_empty_vault_login_subtitle">Kom i gang ved at oprette dit første login-element.</string>
+  <string name="home_empty_vault_aliases_title">Ingen aliasser fundet</string>
+  <string name="home_empty_vault_aliases_subtitle">Kom i gang ved at oprette dit første alias-element.</string>
+  <string name="home_empty_vault_notes_title">Ingen noter fundet</string>
+  <string name="home_empty_vault_notes_subtitle">Kom i gang ved at oprette dit første note-element.</string>
+  <string name="home_empty_vault_logins_mfa_title">Ingen logins med TOTP fundet</string>
+  <string name="home_empty_vault_logins_mfa_subtitle">Kom i gang ved at oprette dit første login med TOTP.</string>
+  <string name="home_empty_vault_identity_title">Ingen identitet fundet</string>
+  <string name="home_empty_vault_identity_subtitle">Kom i gang ved at oprette dit første identitets-element.</string>
+  <string name="home_empty_vault_cc_title">Intet betalingskort fundet</string>
+  <string name="home_empty_vault_cc_subtitle">Kom i gang ved at oprette dit første betalingskort-element.</string>
   <string name="home_empty_read_only_vault_title">Denne boks er tom</string>
   <string name="home_empty_read_only_vault_subtitle">Du kan ikke tilføje elementer til en skrivebeskyttet boks.</string>
   <string name="home_empty_vault_create_login">Opret et login</string>
@@ -27,12 +39,13 @@
   <string name="home_trial_banner_title">Vores velkomstgave til dig</string>
   <string name="home_trial_banner_text">7 dage til at prøve premium-funktioner gratis. Kun i din første uge med Proton Pass.</string>
   <string name="home_trial_banner_settings">Få mere at vide ›</string>
-  <string name="sl_sync_banner_title">Importer dine aliasser fra SimpleLogin</string>
+  <string name="sl_sync_banner_title">Synkroniser dine aliasser fra SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
-    <item quantity="one">Du har %d alias, som findes i SimpleLogin, men som mangler i Proton Pass. Vil du gerne importere det?</item>
-    <item quantity="other">Du har %d aliasser, som findes i SimpleLogin, men som mangler i Proton Pass. Vil du gerne importere dem?</item>
+    <item quantity="one">Du har %d alias, som findes i SimpleLogin, men som mangler i Proton Pass. Vil du gerne synkronisere det?</item>
+    <item quantity="other">Du har %d aliasser, som findes i SimpleLogin, men som mangler i Proton Pass. Vil du gerne synkronisere dem?</item>
   </plurals>
-  <string name="sl_sync_banner_settings">Importer aliasser ›</string>
+  <string name="sl_sync_banner_settings">Synkroniser aliasser ›</string>
+  <string name="sl_sync_banner_note">Når de er synkroniseret, vil sletning af aliasser i Pass også slette dem i SimpleLogin.</string>
   <string name="home_notification_permission_banner_title">Få vigtige opdateringer</string>
   <string name="home_notification_permission_banner_text">Aktivér push-notifikationer for at blive informeret, når andre deler en boks med dig.</string>
   <string name="home_notification_permission_banner_settings">Aktivér tilladelse ›</string>
@@ -84,6 +97,7 @@
   <string name="item_type_filter_note">Note</string>
   <string name="item_type_filter_credit_card">Kort</string>
   <string name="item_type_filter_identity">Identitet</string>
+  <string name="item_type_filter_login_totp">Login med TOTP</string>
   <!-- Trash -->
   <string name="trash_empty_list_title">Papirkurven er tom</string>
   <string name="trash_empty_list_message">Elementer, der flyttes til papirkurven, vises her.</string>

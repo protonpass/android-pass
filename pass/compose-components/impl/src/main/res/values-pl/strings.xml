@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">Wszystko</string>
   <string name="item_list_header_pinned_search_results">Przypięte</string>
   <string name="item_list_header_logins_type">Dane logowania</string>
+  <string name="item_list_header_logins_totp_type">Dane logowania z kodem TOTP</string>
   <string name="item_list_header_aliases_type">Aliasy</string>
   <string name="item_list_header_notes_type">Notatki</string>
   <string name="item_list_header_credit_cards_type">Karty płatnicze</string>
@@ -286,8 +287,11 @@
   </plurals>
   <string name="simple_login_widget_action">Synchronizuj aliasy</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Nie otrzymano kodu?</string>
-  <string name="verification_code_suggestion_spam">Sprawdź folder Spam w poszukiwaniu wiadomości “Potwierdź adres e-mail w Proton Pass“</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Potwierdź swój adres e-mail Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Jeśli nie możesz znaleźć wiadomości, %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">poproś o nowy kod</string>
+  <string name="field_display_name_title">Nazwa wyświetlana</string>
 </resources>

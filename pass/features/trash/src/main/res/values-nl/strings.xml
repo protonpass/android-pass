@@ -7,4 +7,15 @@
   <string name="alias_dialog_move_to_trash_title">Verplaats naar prullenbak?</string>
   <string name="alias_dialog_move_to_trash_content">Als u een alias naar de prullenbak verplaatst, worden e-mails niet meer doorgestuurd naar uw mailbox.</string>
   <string name="alias_dialog_move_to_trash_confirm">Bevestigen</string>
+  <string name="delete_alias_confirm">Verwijder het, ik heb het nooit nodig</string>
+  <string name="delete_alias_title">%s verwijderen</string>
+  <string name="delete_alias_enabled_subtitle">"Let op: de alias kan niet worden hersteld. Misschien wilt u de alias in plaats daarvan uitschakelen? "</string>
+  <string name="delete_alias_disabled_subtitle">Let op: de alias kan niet worden hersteld. De alias is al uitgeschakeld en zal geen e-mails doorsturen naar uw mailbox.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="one">U staat op het punt %d alias permanent te verwijderen</item>
+    <item quantity="other">U staat op het punt %d aliassen permanent te verwijderen</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Let op: deze aliassen kunnen niet worden hersteld</string>
+  <string name="bulk_delete_alias_confirm">Begrepen, ik zal ze nooit nodig hebben</string>
+  <string name="delete_alias_disable">Alias uitschakelen</string>
 </resources>

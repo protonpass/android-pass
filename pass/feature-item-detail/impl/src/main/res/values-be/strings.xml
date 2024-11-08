@@ -109,6 +109,8 @@
   <string name="activity_in_last_two_weeks">Актыўнасць за апошнія 14 дзён</string>
   <string name="contacts">Кантакты</string>
   <string name="contacts_section_description">Вы можаце стварыць кантакт псеўданіма, які замаскіруе ваш адрас. Гэта дазволіць захаваць ваш персанальны адрас электроннай пошты схаваным.</string>
+  <string name="field_detail_display_name_title">Бачнае імя</string>
+  <string name="display_name_section_description">Бачнае імя пры адпраўцы ліста з гэтага псеўданіма.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s перасылка</item>
     <item quantity="few">%1$s перасылкі</item>

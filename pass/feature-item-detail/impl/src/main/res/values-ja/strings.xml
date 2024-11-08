@@ -7,7 +7,7 @@
   <string name="top_bar_edit_button_text">編集</string>
   <!-- Alias details -->
   <string name="field_alias_title">エイリアスのアドレス</string>
-  <string name="field_alias_disabled_title">Alias address (disabled)</string>
+  <string name="field_alias_disabled_title">エイリアスのアドレス (無効)</string>
   <string name="alias_copied_to_clipboard">コピーされたエイリアス</string>
   <string name="alias_detail_field_mailboxes_title">転送先</string>
   <string name="alias_create_login_from_alias">ログイン情報を作成</string>
@@ -106,6 +106,8 @@
   <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
   <string name="contacts">Contacts</string>
   <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="field_detail_display_name_title">Display name</string>
+  <string name="display_name_section_description">The display name when sending an email from this alias.</string>
   <plurals name="alias_forwards_count">
     <item quantity="other">%1$s forwards</item>
   </plurals>

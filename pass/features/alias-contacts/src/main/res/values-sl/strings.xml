@@ -18,14 +18,13 @@
   -->
 <resources>
   <string name="create_contact_button">Create contact</string>
-  <string name="save_contact_alias">Save</string>
+  <string name="save_contact_alias">Shrani</string>
   <string name="snackbar_contact_create_success">Contact created successfully</string>
   <string name="snackbar_contact_create_error">Failed to create contact</string>
   <string name="create_contact_title">Create contact</string>
   <string name="detail_contact_title">Contacts</string>
   <string name="email_input_error">Invalid email address</string>
-  <string name="detail_contact_sender_name">Sender name</string>
-  <string name="detail_contact_display_name" comment="sender email address">When sending an email from this alias, the email will have %s as sender.</string>
+  <string name="detail_contact_display_name" comment="sender email address">A contact is created for every email address that sends emails to or receives emails from %1$s</string>
   <string name="empty_alias_contacts_title">Alias contacts</string>
   <string name="empty_alias_contacts_body">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
   <string name="empty_alias_contacts_learn_more">Learn more</string>
@@ -58,8 +57,6 @@
   <string name="snackbar_contact_block_error">Could not block contact</string>
   <string name="snackbar_contact_unblock_success">Contact unblocked</string>
   <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
-  <string name="snackbar_sender_name_success">Sender name updated</string>
-  <string name="snackbar_sender_name_error">Could not update sender name</string>
   <string name="snackbar_delete_contact_success">Contact deleted</string>
   <string name="snackbar_delete_contact_error">Could not delete contact</string>
   <string name="snackbar_email_copied_success">Email copied to clipboard</string>
@@ -67,7 +64,7 @@
   <string name="contact_option_copy_address">Copy address</string>
   <string name="contact_option_block_contact">Block contact</string>
   <string name="contact_option_unblock_contact">Unblock contact</string>
-  <string name="contact_option_delete">Delete</string>
+  <string name="contact_option_delete">Izbriši</string>
   <string name="alias_contacts_bottomsheet_title">Alias Contacts</string>
   <string name="alias_contacts_bottomsheet_subtitle">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
   <string name="alias_contacts_explanation">Here’s how it works:</string>

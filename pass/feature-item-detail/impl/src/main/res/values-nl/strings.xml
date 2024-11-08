@@ -7,7 +7,7 @@
   <string name="top_bar_edit_button_text">Bewerken</string>
   <!-- Alias details -->
   <string name="field_alias_title">Alias-adres</string>
-  <string name="field_alias_disabled_title">Alias address (disabled)</string>
+  <string name="field_alias_disabled_title">Aliasadres (uitgeschakeld)</string>
   <string name="alias_copied_to_clipboard">Alias gekopieerd</string>
   <string name="alias_detail_field_mailboxes_title">Doorsturen naar</string>
   <string name="alias_create_login_from_alias">Login aanmaken</string>
@@ -104,19 +104,21 @@
   <string name="passkey_detail_bottomsheet_domain">Domein</string>
   <string name="passkey_detail_bottomsheet_key">Sleutel</string>
   <string name="passkey_detail_bottomsheet_created">Aangemaakt</string>
-  <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
+  <string name="activity_in_last_two_weeks">Activiteiten tijdens de voorbije 14 dagen</string>
   <string name="contacts">Contacten</string>
-  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="contacts_section_description">Om uw persoonlijke e-mailadres verborgen te houden, kunt u een alias-contactpersoon maken die uw adres maskert.</string>
+  <string name="field_detail_display_name_title">Weergavenaam</string>
+  <string name="display_name_section_description">De weergavenaam bij het verzenden van een e-mail van deze alias.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="one">%1$s forward</item>
-    <item quantity="other">%1$s forwards</item>
+    <item quantity="one">%1$s doorgestuurd</item>
+    <item quantity="other">%1$s doorgestuurd</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s antwoord</item>
     <item quantity="other">%1$s antwoorden</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="one">%1$s block</item>
-    <item quantity="other">%1$s blocks</item>
+    <item quantity="one">%1$s blok</item>
+    <item quantity="other">%1$s blokken</item>
   </plurals>
 </resources>

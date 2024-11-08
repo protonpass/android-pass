@@ -82,6 +82,11 @@
   <string name="alias_created">Псеўданім створаны</string>
   <string name="cannot_retrieve_alias_options">Немагчыма атрымаць параметры псеўданіма!</string>
   <string name="alias_mailbox_dialog_title">Перасылаць на</string>
+  <string name="sl_note_info_title">Што такое нататка SimpleLogin?</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">У Pass нататка элемента зашыфравана з дапамогай ключа шыфравання элемента, і паглядзець яе могуць толькі карыстальнікі, якія маюць доступ да элемента.</string>
+  <string name="sl_note_info_message_part2">Нават у Proton або SimpleLogin не могуць бачыць яе.</string>
+  <string name="sl_note_info_message_part3">Нататкі SimpleLogin захоўваюцца ў адным месцы з адрасам псеўданіма, і хоць яны абаронены шыфраваннем у стане спакою, у іх адсутнічае скразное шыфраванне. Такім чынам любы, хто мае доступ да базы даных SimpleLogin, зможа прачытаць іх.</string>
+  <string name="sl_note_info_content_description">Паказаць дыялогавае акно са звесткамі нататкі SL</string>
   <!-- Create note -->
   <string name="note_hint">Нататка</string>
   <!-- Create Credit Card -->

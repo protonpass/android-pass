@@ -31,8 +31,9 @@
   <string name="upsell_paid_feature_authenticator_essential">Вимагати двоетапну автентифікацію для організації</string>
   <string name="upsell_paid_feature_sso_essential">Інтеграція SSO (незабаром)</string>
   <string name="upsell_paid_feature_advance_alias_management_title">Manage your aliases</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">Advanced alias management is available with Proton Unlimited. Upgrade for immediate access.</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">Advanced alias management is available with a paid plan. Upgrade for immediate access.</string>
+  <string name="upsell_paid_feature_item_sharing_title">Quickly share an item</string>
+  <string name="upsell_paid_feature_item_sharing_subtitle">Upgrade today so you can share an item with any Pass user. And enjoy other premium features:</string>
   <string name="upsell_button_upgrade">Отримати Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Отримати Pass Business</string>
-  <string name="upsell_button_upgrade_unlimited">Get Proton Unlimited</string>
 </resources>

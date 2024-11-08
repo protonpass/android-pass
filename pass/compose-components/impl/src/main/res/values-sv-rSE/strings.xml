@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">Alla</string>
   <string name="item_list_header_pinned_search_results">Fäst</string>
   <string name="item_list_header_logins_type">Inloggningar</string>
+  <string name="item_list_header_logins_totp_type">Inloggningar med TOTP</string>
   <string name="item_list_header_aliases_type">Alias</string>
   <string name="item_list_header_notes_type">Anteckningar</string>
   <string name="item_list_header_credit_cards_type">Kreditkort</string>
@@ -264,8 +265,11 @@
   </plurals>
   <string name="simple_login_widget_action">Synkronisera alias</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Har du inte fått koden?</string>
-  <string name="verification_code_suggestion_spam">Kolla i din skräppost för ett e-postmeddelande som heter ”Bekräfta din e-postadress för Proton Pass”</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Kolla i din skräppost efter ett e-postmeddelande som heter ”%s”</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Bekräfta din e-postadress för Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Bekräfta din brevlåda</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Om du inte kan hitta sådan e-post kan du %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">begär en ny kod</string>
+  <string name="field_display_name_title">Visningsnamn</string>
 </resources>

@@ -24,8 +24,7 @@
   <string name="create_contact_title">Kontakt erstellen</string>
   <string name="detail_contact_title">Kontakte</string>
   <string name="email_input_error">Ungültige E-Mail-Adresse</string>
-  <string name="detail_contact_sender_name">Absendername</string>
-  <string name="detail_contact_display_name" comment="sender email address">Wenn du eine E-Mail von diesem Alias aus versendest, wird %s als Absender in der E-Mail erscheinen.</string>
+  <string name="detail_contact_display_name" comment="sender email address">A contact is created for every email address that sends emails to or receives emails from %1$s</string>
   <string name="empty_alias_contacts_title">Alias-Kontakte</string>
   <string name="empty_alias_contacts_body">Um deine persönliche E-Mail-Adresse zu verbergen, kannst du einen Alias-Kontakt erstellen, der deine Adresse verschleiert.</string>
   <string name="empty_alias_contacts_learn_more">Erfahre mehr</string>
@@ -52,16 +51,14 @@
   <string name="snackbar_contact_block_error">Kontakt konnte nicht blockiert werden</string>
   <string name="snackbar_contact_unblock_success">Kontakt entsperrt</string>
   <string name="snackbar_contact_unblock_error">Kontakt konnte nicht entsperrt werden</string>
-  <string name="snackbar_sender_name_success">Absendername aktualisiert</string>
-  <string name="snackbar_sender_name_error">Absendername konnte nicht aktualisiert werden</string>
   <string name="snackbar_delete_contact_success">Contact deleted</string>
   <string name="snackbar_delete_contact_error">Could not delete contact</string>
   <string name="snackbar_email_copied_success">Email copied to clipboard</string>
-  <string name="contact_option_send_email">Send email</string>
-  <string name="contact_option_copy_address">Copy address</string>
-  <string name="contact_option_block_contact">Block contact</string>
+  <string name="contact_option_send_email">E-Mail senden</string>
+  <string name="contact_option_copy_address">Adresse kopieren</string>
+  <string name="contact_option_block_contact">Kontakt blockieren</string>
   <string name="contact_option_unblock_contact">Unblock contact</string>
-  <string name="contact_option_delete">Delete</string>
+  <string name="contact_option_delete">Löschen</string>
   <string name="alias_contacts_bottomsheet_title">Alias Contacts</string>
   <string name="alias_contacts_bottomsheet_subtitle">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
   <string name="alias_contacts_explanation">Here’s how it works:</string>

@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">驗證失敗</string>
   <string name="profile_fingerprint_lock_enabled">啟用指紋鎖</string>
   <string name="profile_fingerprint_lock_disabled">指紋鎖已停用</string>
-  <string name="profile_error_performing_operation">操作過程中出錯</string>
   <string name="profile_app_version_copied_to_clipboard">已複製應用程式版本</string>
   <string name="feedback_option_reddit">於Reddit查看Proton</string>
   <string name="feedback_option_mail">傳送訊息給我們</string>
@@ -71,4 +70,10 @@
   <string name="account_switcher_switch_to">切換為</string>
   <string name="account_switcher_add_account">加入帳號</string>
   <string name="account_switcher_remove">移除</string>
+  <string name="filtered_by_logins">Filtered by logins. Trashed items aren\'t shown</string>
+  <string name="filtered_by_logins_with_mfa">Filtered by logins with TOTP. Trashed items aren\'t shown</string>
+  <string name="filtered_by_aliases">Filtered by aliases. Trashed items aren\'t shown</string>
+  <string name="filtered_by_notes">Filtered by notes. Trashed items aren\'t shown</string>
+  <string name="filtered_by_credit_cards">Filtered by credit cards. Trashed items aren\'t shown</string>
+  <string name="filtered_by_identities">Filtered by identities. Trashed items aren\'t shown</string>
 </resources>

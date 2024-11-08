@@ -115,6 +115,8 @@
   <string name="share_with_suggestions_title">შეთავაზებები</string>
   <string name="share_with_recents_title">ახლახან გამოყენებულები</string>
   <string name="share_with_remove_email_content_description">ელფოსტის წაშლა</string>
+  <string name="share_with_user_title">გაზიარება</string>
+  <string name="share_with_user_description">გააზიარეთ ეს ელემენტი სხვა Proton-ის მომხმარებლებთან.</string>
   <string name="share_with_secure_link_title">დაცული ბმულით</string>
   <string name="share_with_secure_link_description">დაცული ბმულის შექმნა ამ ელემენტისთვის.</string>
   <string name="share_with_manage_shared_vault_title">საცავის წვდომის მართვა</string>

@@ -43,6 +43,7 @@
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Vi har sendt en verifiseringskode til %s. Angi den nedenfor:</string>
   <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">din e-postadresse</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Ugyldig verifiseringskode for postboks</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Ugyldig grense for postboksverifiseringskode nådd, postboks ble slettet</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_error">Det oppstod en feil under bekreftelse av postboksen</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_success">Postboks verifisert</string>
   <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Det oppstod en feil under sending av verifiseringskode</string>

@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Kimlik doğrulanamadı</string>
   <string name="profile_fingerprint_lock_enabled">Parmak izi kilidi kullanıma alındı</string>
   <string name="profile_fingerprint_lock_disabled">Parmak izi kilidi kullanım dışı bırakıldı</string>
-  <string name="profile_error_performing_operation">İşlem yapılırken sorun çıktı</string>
   <string name="profile_app_version_copied_to_clipboard">Uygulama sürümü kopyalandı</string>
   <string name="feedback_option_reddit">Reddit Proton konularına bakın</string>
   <string name="feedback_option_mail">Bize ileti gönderin</string>
@@ -74,4 +73,10 @@
   <string name="account_switcher_switch_to">Şuna geç</string>
   <string name="account_switcher_add_account">Hesap ekle</string>
   <string name="account_switcher_remove">Kaldır</string>
+  <string name="filtered_by_logins">Oturum açma kayıtları süzüldü. Çöpe atılmış ögeler görüntülenmiyor</string>
+  <string name="filtered_by_logins_with_mfa">Tek kullanımlık parola kullanan oturum açma kayıtları süzüldü. Çöpe atılmış ögeler görüntülenmiyor</string>
+  <string name="filtered_by_aliases">Takma adlar süzüldü. Çöpe atılmış ögeler görüntülenmiyor</string>
+  <string name="filtered_by_notes">Notlar süzüldü. Çöpe atılmış ögeler görüntülenmiyor</string>
+  <string name="filtered_by_credit_cards">Kredi kartları süzüldü. Çöpe atılmış ögeler görüntülenmiyor</string>
+  <string name="filtered_by_identities">Kimlikler süzüldü. Çöpe atılmış ögeler görüntülenmiyor</string>
 </resources>

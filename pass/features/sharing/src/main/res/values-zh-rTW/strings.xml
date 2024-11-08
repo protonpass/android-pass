@@ -110,6 +110,8 @@
   <string name="share_with_suggestions_title">建議</string>
   <string name="share_with_recents_title">最近</string>
   <string name="share_with_remove_email_content_description">移除電子郵件</string>
+  <string name="share_with_user_title">Share with</string>
+  <string name="share_with_user_description">Share this item with other Proton users.</string>
   <string name="share_with_secure_link_title">Via secure link</string>
   <string name="share_with_secure_link_description">Generate a secure link to this item.</string>
   <string name="share_with_manage_shared_vault_title">Manage vault access</string>

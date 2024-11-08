@@ -125,6 +125,8 @@
   <string name="share_with_suggestions_title">Прапановы</string>
   <string name="share_with_recents_title">Нядаўнія</string>
   <string name="share_with_remove_email_content_description">Выдаліць электронную пошту</string>
+  <string name="share_with_user_title">Абагуліць з</string>
+  <string name="share_with_user_description">Абагуліць гэты элемент з іншымі карыстальнікамі Proton.</string>
   <string name="share_with_secure_link_title">Праз бяспечную спасылку</string>
   <string name="share_with_secure_link_description">Згенерыраваць бяспечную спасылку для гэтага элемента.</string>
   <string name="share_with_manage_shared_vault_title">Кіраванне доступам да сховішча</string>

@@ -18,59 +18,60 @@
   -->
 <resources>
   <!-- Management screen -->
-  <string name="simple_login_sync_management_title">Alias management</string>
+  <string name="simple_login_sync_management_title">Aliasbeheer</string>
   <string name="simple_login_sync_management_domain_label">Domein</string>
-  <string name="simple_login_sync_management_domain_title">Default domain for aliases</string>
-  <string name="simple_login_sync_management_domain_option_blank">Not selected</string>
-  <string name="simple_login_sync_management_mailboxes_label">Mailboxes</string>
-  <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
+  <string name="simple_login_sync_management_domain_title">Standaarddomein voor aliassen</string>
+  <string name="simple_login_sync_management_domain_option_blank">Niet geselecteerd</string>
+  <string name="simple_login_sync_management_mailboxes_label">Postvakken</string>
+  <string name="simple_login_sync_management_mailboxes_description">Mailbox is waar e-mails verzonden naar een alias worden doorgestuurd. Het is uw gebruikelijke mailbox, bijvoorbeeld Gmail, Outlook, Proton Mail, enz.</string>
   <string name="simple_login_sync_management_mailbox_default">Standaard</string>
-  <string name="simple_login_sync_management_mailbox_unverified">Unverified mailbox</string>
-  <string name="simple_login_sync_management_vault_title">SimpleLogin sync</string>
-  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
-  <string name="simple_login_sync_management_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_domains">Default domain for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_mailboxes">Default mailbox for aliases</string>
+  <string name="simple_login_sync_management_mailbox_unverified">Niet geverifieerd</string>
+  <string name="simple_login_sync_management_vault_title">SimpleLogin synchronisatie</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Er is een fout opgetreden bij het ophalen van de SL-alias details</string>
+  <string name="simple_login_sync_management_mailboxes_title">Standaard mailbox voor aliassen</string>
+  <string name="simple_login_sync_management_dialog_title_domains">Standaarddomein voor aliassen</string>
+  <string name="simple_login_sync_management_dialog_title_mailboxes">Standaard mailbox voor aliassen</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Synchroniseer aliassen</string>
-  <string name="simple_login_sync_enable_snackbar_error">There was an error enabling SimpleLogin aliases sync</string>
-  <string name="simple_login_sync_enable_snackbar_success">SimpleLogin aliases sync successfully enabled</string>
+  <string name="simple_login_sync_enable_snackbar_error">Er is een fout opgetreden bij het inschakelen van synchronisatie SimpleLogin aliassen</string>
+  <string name="simple_login_sync_enable_snackbar_success">SimpleLogin aliassen synchronisatie succesvol ingeschakeld</string>
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Postvak toevoegen</string>
-  <string name="simple_login_sync_mailbox_create_message_error">There was an error adding the mailbox</string>
+  <string name="simple_login_sync_mailbox_create_message_error">Er is een fout opgetreden bij het toevoegen van de mailbox</string>
   <!-- Mailbox verify screen -->
-  <string name="simple_login_sync_mailbox_verify_title">Confirm your mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">We sent a verification code to %s. Enter it below:</string>
-  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">your email address</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Invalid mailbox verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_error">There was an error verifying the mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_success">Mailbox successfully verified</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">There was an error sending verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verification code successfully sent</string>
+  <string name="simple_login_sync_mailbox_verify_title">Bevestig uw mailbox</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">We hebben een verificatiecode gestuurd naar %s. Voer deze hieronder in:</string>
+  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">uw e-mailadres</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Ongeldige verificatiecode mailbox</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Ongeldige limiet voor verificatiecode voor mailbox bereikt, postvak is verwijderd</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_error">Er is een fout opgetreden bij het verifiëren van de mailbox</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_success">Mailbox succesvol geverifieerd</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Er is een fout opgetreden bij het verzenden van de verificatiecode</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verificatiecode succesvol verzonden</string>
   <!-- Mailbox delete screen -->
-  <string name="simple_login_sync_mailbox_delete_title">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">All aliases using the mailbox %s will be also deleted. To keep receiving emails transfer these aliases to a different mailbox:</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfer aliases</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">To mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transfer and delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_error">There was an error deleting mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_success">Mailbox successfully deleted</string>
-  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transfer aliases to</string>
+  <string name="simple_login_sync_mailbox_delete_title">Mailbox verwijderen</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">Alle aliassen die de mailbox %s gebruiken zullen ook worden verwijderd. Om te blijven ontvangen e-mails overdracht deze aliassen naar een ander postvak:</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfer aliassen</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Naar mailbox</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete">Mailbox verwijderen</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Overdracht en verwijder mailbox</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">Er is een fout opgetreden bij het verwijderen van de mailbox</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_success">Mailbox succesvol verwijderd</string>
+  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Verplaats aliassen naar</string>
   <!-- Domain select screen -->
-  <string name="simple_login_sync_domain_select_title">Default domain</string>
-  <string name="simple_login_sync_domain_select_title_none">none</string>
+  <string name="simple_login_sync_domain_select_title">Standaard domein</string>
+  <string name="simple_login_sync_domain_select_title_none">geen</string>
   <string name="simple_login_sync_domain_select_description_none">Geen domein</string>
   <string name="simple_login_sync_domain_select_description_custom">Uw domein</string>
-  <string name="simple_login_sync_domain_select_description_free">Public domain</string>
-  <string name="simple_login_sync_domain_select_description_premium">Premium domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">There was an error fetching SL alias domains</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
+  <string name="simple_login_sync_domain_select_description_free">Publiek domein</string>
+  <string name="simple_login_sync_domain_select_description_premium">Premium domein</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">Er is een fout opgetreden bij het ophalen van SL-aliasdomeinen</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Er is een fout opgetreden bij het bijwerken van het SL-aliasdomein</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL-aliasdomein succesvol bijgewerkt</string>
   <!-- Mailbox options screen -->
-  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Cannot display mailbox options</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_error">There was an error updating default mailbox</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Default mailbox successfully updated</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Kan opties voor mailbox niet weergeven</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_error">Er is een fout opgetreden bij het bijwerken van de standaard mailbox</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Standaard postbus succesvol bijgewerkt</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Standaard SL-kluis</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliassen worden geïmporteerd in deze kluis.</string>

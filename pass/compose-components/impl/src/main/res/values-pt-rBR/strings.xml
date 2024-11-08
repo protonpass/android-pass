@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">Todos</string>
   <string name="item_list_header_pinned_search_results">Fixado</string>
   <string name="item_list_header_logins_type">Entrar</string>
+  <string name="item_list_header_logins_totp_type">Inícios de sessão com TOTP</string>
   <string name="item_list_header_aliases_type">Aliases</string>
   <string name="item_list_header_notes_type">Notas</string>
   <string name="item_list_header_credit_cards_type">Cartões de créditos</string>
@@ -264,8 +265,11 @@
   </plurals>
   <string name="simple_login_widget_action">Sincronizar alias</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Você não recebeu o código?</string>
-  <string name="verification_code_suggestion_spam">Verifique se há um e-mail na sua pasta de Spam chamado “Confirme seu endereço de e-mail para o Proton Pass”</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Confirme sua caixa de correio</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Se você não encontrar o e-mail, você pode %s</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">solicitar um novo código</string>
+  <string name="field_display_name_title">Nome de exibição</string>
 </resources>

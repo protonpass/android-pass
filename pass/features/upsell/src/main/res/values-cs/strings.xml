@@ -31,8 +31,9 @@
   <string name="upsell_paid_feature_authenticator_essential">Vyžadujte u vaší organizace 2FA</string>
   <string name="upsell_paid_feature_sso_essential">SSO integrace (již brzy)</string>
   <string name="upsell_paid_feature_advance_alias_management_title">Správa aliasů</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">Pokročilá správa aliasů je k dispozici v Proton Unlimited. Navyšte pro okamžitý přístup.</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">Pokročilá správa aliasů je k dispozici s placeným tarifem. Navyšte tarif pro okamžitý přístup.</string>
+  <string name="upsell_paid_feature_item_sharing_title">Rychlé sdílení položky</string>
+  <string name="upsell_paid_feature_item_sharing_subtitle">Navyšte tarif ještě dnes, abyste mohli sdílet položku s jakýmkoli uživatelem Pass. A využívejte další prémiové funkce:</string>
   <string name="upsell_button_upgrade">Získejte Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Získejte Pass Business</string>
-  <string name="upsell_button_upgrade_unlimited">Získejte Proton Unlimited</string>
 </resources>

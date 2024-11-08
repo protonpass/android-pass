@@ -109,8 +109,8 @@
   <string name="security_center_verify_email_snackbar_message_resend_code_success">A fost trimis un e-mail nou de verificare. Verificați-vă contul de e-mail.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">A apărut o eroare la trimiterea codului de verificare. Mai reîncercați.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Prea multe verificări nevalide. Se elimină adresa de e-mail personal.</string>
-  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Invalid verification code</string>
-  <string name="security_center_verify_email_snackbar_message_verification_error">There was an error verifying the email. Please try again later.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Cod de verificare nevalid.</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">A apărut o eroare la verificarea adresei de e-mail. Mai reîncercați.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Divulgări detectate pentru</string>
   <string name="security_center_verify_report_title_none">Divulgări nedetectate pentru</string>

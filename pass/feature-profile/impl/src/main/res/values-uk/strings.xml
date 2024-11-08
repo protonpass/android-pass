@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Не вдалося здійснити автентифікацію</string>
   <string name="profile_fingerprint_lock_enabled">Блокування відбитком пальця увімкнено</string>
   <string name="profile_fingerprint_lock_disabled">Блокування відбитком пальця вимкнено</string>
-  <string name="profile_error_performing_operation">Помилка під час виконання операції</string>
   <string name="profile_app_version_copied_to_clipboard">Версію програми скопійовано</string>
   <string name="feedback_option_reddit">Приєднуйтеся до спільноти Proton на Reddit</string>
   <string name="feedback_option_mail">Надішліть нам повідомлення</string>
@@ -80,4 +79,10 @@
   <string name="account_switcher_switch_to">Перейти до</string>
   <string name="account_switcher_add_account">Додати обліковий запис</string>
   <string name="account_switcher_remove">Вилучити</string>
+  <string name="filtered_by_logins">Filtered by logins. Trashed items aren\'t shown</string>
+  <string name="filtered_by_logins_with_mfa">Filtered by logins with TOTP. Trashed items aren\'t shown</string>
+  <string name="filtered_by_aliases">Filtered by aliases. Trashed items aren\'t shown</string>
+  <string name="filtered_by_notes">Filtered by notes. Trashed items aren\'t shown</string>
+  <string name="filtered_by_credit_cards">Filtered by credit cards. Trashed items aren\'t shown</string>
+  <string name="filtered_by_identities">Filtered by identities. Trashed items aren\'t shown</string>
 </resources>

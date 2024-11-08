@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Erro na autenticação</string>
   <string name="profile_fingerprint_lock_enabled">Bloqueio por impressão digital ativado</string>
   <string name="profile_fingerprint_lock_disabled">Bloqueio por impressão digital desativado</string>
-  <string name="profile_error_performing_operation">Ocorreu um erro durante a operação.</string>
   <string name="profile_app_version_copied_to_clipboard">Versão do aplicativo copiado</string>
   <string name="feedback_option_reddit">Confira o Proton no Reddit</string>
   <string name="feedback_option_mail">Envie-nos uma mensagem</string>
@@ -74,4 +73,10 @@
   <string name="account_switcher_switch_to">Alternar para</string>
   <string name="account_switcher_add_account">Adicionar conta</string>
   <string name="account_switcher_remove">Remover</string>
+  <string name="filtered_by_logins">Filtrado por inícios de sessão. Os itens descartados não são exibidos</string>
+  <string name="filtered_by_logins_with_mfa">Filtrado por inícios de sessão com TOTP. Os itens descartados não são exibidos</string>
+  <string name="filtered_by_aliases">Filtrado por aliases. Os itens descartados não são exibidos</string>
+  <string name="filtered_by_notes">Filtrado por notas. Os itens descartados não são exibidos</string>
+  <string name="filtered_by_credit_cards">Filtrado por cartões de crédito. Os itens descartados não são exibidos</string>
+  <string name="filtered_by_identities">Filtrado por identidades. Os itens descartados não são exibidos</string>
 </resources>

@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Authentifizierung fehlgeschlagen.</string>
   <string name="profile_fingerprint_lock_enabled">Fingerabdrucksperre aktiviert</string>
   <string name="profile_fingerprint_lock_disabled">Fingerabdrucksperre deaktiviert</string>
-  <string name="profile_error_performing_operation">Fehler beim Durchführen des Vorgangs.</string>
   <string name="profile_app_version_copied_to_clipboard">App-Version kopiert</string>
   <string name="feedback_option_reddit">Besuche Proton auf Reddit</string>
   <string name="feedback_option_mail">Sende uns eine Nachricht</string>
@@ -74,4 +73,10 @@
   <string name="account_switcher_switch_to">Wechseln zu</string>
   <string name="account_switcher_add_account">Konto hinzufügen</string>
   <string name="account_switcher_remove">Entfernen</string>
+  <string name="filtered_by_logins">Nach Logins gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
+  <string name="filtered_by_logins_with_mfa">Nach Logins mit Einmalpasswort gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
+  <string name="filtered_by_aliases">Nach Aliassen gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
+  <string name="filtered_by_notes">Nach Notizen gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
+  <string name="filtered_by_credit_cards">Nach Kreditkarten gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
+  <string name="filtered_by_identities">Nach Identitäten gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
 </resources>

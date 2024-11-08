@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">Усе</string>
   <string name="item_list_header_pinned_search_results">Замацавана</string>
   <string name="item_list_header_logins_type">Запісы ўваходу</string>
+  <string name="item_list_header_logins_totp_type">Запісы ўваходу з TOTP</string>
   <string name="item_list_header_aliases_type">Псеўданімы</string>
   <string name="item_list_header_notes_type">Нататкі</string>
   <string name="item_list_header_credit_cards_type">Крэдытныя карткі</string>
@@ -286,8 +287,11 @@
   </plurals>
   <string name="simple_login_widget_action">Сінхранізаваць псеўданімы</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Не атрымалі код?</string>
-  <string name="verification_code_suggestion_spam">Праверце ў сваёй папцы са спамам наяўнасць ліста з назвай \"Пацвярджэнне вашага адраса электроннай пошты для Proton Pass\"</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Праверце, ці ёсць у папцы Спам ліст з назвай “%s“</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Пацвердзіце свой адрас электроннай пошты для Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Пацвердзіце сваю паштовую скрыню</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Калі вы не можаце знайсці ліст з такой назвай, вы можаце %s</string>
-  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">запытайце новы код</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">запытаць новы код</string>
+  <string name="field_display_name_title">Бачнае імя</string>
 </resources>

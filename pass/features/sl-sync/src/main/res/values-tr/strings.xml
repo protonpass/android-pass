@@ -43,6 +43,7 @@
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">%s adresine bir doğrulama kodu gönderdik. Kodu aşağıya yazın:</string>
   <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">e-posta adresiniz</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_error">E-posta kutusu doğrulama kodu geçersiz</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Geçersiz e-posta kutusu doğrulama kodu sayısı sınırına ulaşıldı. E-posta kutusu silindi</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_error">E-posta kutusu doğrulanırken bir sorun çıktı</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_success">E-posta kutusu doğrulandı</string>
   <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Doğrulama kodu gönderilirken bir sorun çıktı</string>

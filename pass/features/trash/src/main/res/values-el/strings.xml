@@ -7,4 +7,15 @@
   <string name="alias_dialog_move_to_trash_title">Μετακίνηση στα Διαγραμμένα;</string>
   <string name="alias_dialog_move_to_trash_content">Εάν μετακινήσετε ένα ψευδώνυμο στα διαγραμμένα, θα σταματήσει να προωθεί μηνύματα ηλεκτρονικού ταχυδρομείου στο γραμματοκιβώτιό σας.</string>
   <string name="alias_dialog_move_to_trash_confirm">Επιβεβαίωση</string>
+  <string name="delete_alias_confirm">Διαγράψτε το, δε θα το χρειαστώ ποτέ</string>
+  <string name="delete_alias_title">Διαγραφή %s</string>
+  <string name="delete_alias_enabled_subtitle">"Λάβετε υπόψη ότι μετά τη διαγραφή, δεν είναι δυνατή η επαναφορά του ψευδωνύμου. Ίσως θέλετε να απενεργοποιήσετε το ψευδώνυμο; "</string>
+  <string name="delete_alias_disabled_subtitle">Λάβετε υπόψη ότι μετά τη διαγραφή, δεν είναι δυνατή η επαναφορά του ψευδωνύμου. Το ψευδώνυμο είναι ήδη απενεργοποιημένο και δεν προωθεί μηνύματα ηλεκτρονικού ταχυδρομείου στο γραμματοκιβώτιό σας.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="one">You\'re about to permanently delete %d alias</item>
+    <item quantity="other">You\'re about to permanently delete %d aliases</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Λάβετε υπόψη ότι μετά τη διαγραφή, δεν είναι δυνατή η επαναφορά των ψευδωνύμων</string>
+  <string name="bulk_delete_alias_confirm">Κατανοητό, δεν θα τα χρειαστώ ποτέ</string>
+  <string name="delete_alias_disable">Απενεργοποίηση ψευδωνύμου</string>
 </resources>

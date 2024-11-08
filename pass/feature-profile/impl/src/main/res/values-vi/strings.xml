@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Xác thực thất bại</string>
   <string name="profile_fingerprint_lock_enabled">Đã bật mở khóa bằng vân tay</string>
   <string name="profile_fingerprint_lock_disabled">Đã tắt mở khóa bằng vân tay</string>
-  <string name="profile_error_performing_operation">Lỗi thực hiện thao tác</string>
   <string name="profile_app_version_copied_to_clipboard">Đã sao chép phiên bản ứng dụng</string>
   <string name="feedback_option_reddit">Xem Proton trên Reddit</string>
   <string name="feedback_option_mail">Gửi tin nhắn cho chúng tôi</string>
@@ -71,4 +70,10 @@
   <string name="account_switcher_switch_to">Chuyển sang</string>
   <string name="account_switcher_add_account">Thêm tài khoản</string>
   <string name="account_switcher_remove">Loại bỏ</string>
+  <string name="filtered_by_logins">Filtered by logins. Trashed items aren\'t shown</string>
+  <string name="filtered_by_logins_with_mfa">Filtered by logins with TOTP. Trashed items aren\'t shown</string>
+  <string name="filtered_by_aliases">Filtered by aliases. Trashed items aren\'t shown</string>
+  <string name="filtered_by_notes">Filtered by notes. Trashed items aren\'t shown</string>
+  <string name="filtered_by_credit_cards">Filtered by credit cards. Trashed items aren\'t shown</string>
+  <string name="filtered_by_identities">Filtered by identities. Trashed items aren\'t shown</string>
 </resources>

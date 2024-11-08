@@ -7,4 +7,15 @@
   <string name="alias_dialog_move_to_trash_title">Flyt til papirkurv?</string>
   <string name="alias_dialog_move_to_trash_content">Hvis du flytter et alias til papirkurven, vil det stoppe med at videresende e-mails til din postkasse.</string>
   <string name="alias_dialog_move_to_trash_confirm">Bekræft</string>
+  <string name="delete_alias_confirm">Slet det, jeg får aldrig brug for det</string>
+  <string name="delete_alias_title">Slet %s</string>
+  <string name="delete_alias_enabled_subtitle">"Bemærk, at aliasset ikke kan gendannes, når det er slettet. Måske vil du hellere deaktivere aliasset? "</string>
+  <string name="delete_alias_disabled_subtitle">Bemærk, at aliasset ikke kan gendannes, når det er slettet. Aliasset er allerede deaktiveret og videresender ikke e-mails til din postkasse.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="one">Du er ved at slette %d-alias permanent</item>
+    <item quantity="other">Du er ved at slette %d-aliasser permanent</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Bemærk, at aliasserne ikke kan gendannes, når de er slettet.</string>
+  <string name="bulk_delete_alias_confirm">Forstået, jeg får aldrig brug for dem</string>
+  <string name="delete_alias_disable">Deaktiver alias</string>
 </resources>

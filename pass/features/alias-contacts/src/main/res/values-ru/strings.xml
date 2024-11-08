@@ -24,8 +24,7 @@
   <string name="create_contact_title">Создать контакт</string>
   <string name="detail_contact_title">Контакты</string>
   <string name="email_input_error">Недействительный адрес электронной почты</string>
-  <string name="detail_contact_sender_name">Имя отправителя</string>
-  <string name="detail_contact_display_name" comment="sender email address">При отправке письма с этого псевдонима в качестве отправителя будет %s адрес электронной почты.</string>
+  <string name="detail_contact_display_name" comment="sender email address">A contact is created for every email address that sends emails to or receives emails from %1$s</string>
   <string name="empty_alias_contacts_title">Контакты псевдонима</string>
   <string name="empty_alias_contacts_body">Чтобы скрыть свой личный адрес электронной почты, вы можете создать контакт с псевдонимом, который будет маскировать ваш адрес.</string>
   <string name="empty_alias_contacts_learn_more">Подробнее</string>
@@ -58,8 +57,6 @@
   <string name="snackbar_contact_block_error">Не удалось заблокировать контакт</string>
   <string name="snackbar_contact_unblock_success">Контакт разблокирован</string>
   <string name="snackbar_contact_unblock_error">Не удалось разблокировать контакт</string>
-  <string name="snackbar_sender_name_success">Имя отправителя обновлено</string>
-  <string name="snackbar_sender_name_error">Не удалось обновить имя отправителя</string>
   <string name="snackbar_delete_contact_success">Contact deleted</string>
   <string name="snackbar_delete_contact_error">Could not delete contact</string>
   <string name="snackbar_email_copied_success">Email copied to clipboard</string>

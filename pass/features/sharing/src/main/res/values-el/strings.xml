@@ -115,6 +115,8 @@
   <string name="share_with_suggestions_title">Προτάσεις</string>
   <string name="share_with_recents_title">Πρόσφατες</string>
   <string name="share_with_remove_email_content_description">Αφαίρεση email</string>
+  <string name="share_with_user_title">Κοινοποίηση με</string>
+  <string name="share_with_user_description">Share this item with other Proton users.</string>
   <string name="share_with_secure_link_title">Μέσω ασφαλούς συνδέσμου</string>
   <string name="share_with_secure_link_description">Δημιουργία ασφαλούς σύνδεσης προς αυτό το στοιχείο.</string>
   <string name="share_with_manage_shared_vault_title">Διαχείριση πρόσβασης κρύπτης</string>

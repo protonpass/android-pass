@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">Kaikki</string>
   <string name="item_list_header_pinned_search_results">Kiinnitetyt</string>
   <string name="item_list_header_logins_type">Kirjautumistiedot</string>
+  <string name="item_list_header_logins_totp_type">TOTP-kirjautumistiedot</string>
   <string name="item_list_header_aliases_type">Aliakset</string>
   <string name="item_list_header_notes_type">Muistiinpanot</string>
   <string name="item_list_header_credit_cards_type">Maksukortit</string>
@@ -264,8 +265,11 @@
   </plurals>
   <string name="simple_login_widget_action">Synkronoi aliakset</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Etkö saanut koodia?</string>
-  <string name="verification_code_suggestion_spam">Varmista, ettei roskapostistasi löydy viestiä otsikolla “Vahvista sähköpostiosoitteen lisäys Proton Passiin“.</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Vahvista sähköpostiosoitteesi Proton Passille</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Vahvista postilaatikkosi</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Jos et löydä sellaista sähköpostia, voit %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">pyytää uutta koodia</string>
+  <string name="field_display_name_title">Näyttönimi</string>
 </resources>

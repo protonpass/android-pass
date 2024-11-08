@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">L\'authentification n\'a pas abouti.</string>
   <string name="profile_fingerprint_lock_enabled">Le verrouillage biométrique est activé.</string>
   <string name="profile_fingerprint_lock_disabled">Le verrouillage biométrique est désactivé.</string>
-  <string name="profile_error_performing_operation">Une erreur s\'est produite pendant l\'opération.</string>
   <string name="profile_app_version_copied_to_clipboard">La version de l\'application a été copiée.</string>
   <string name="feedback_option_reddit">Découvrez Proton sur Reddit</string>
   <string name="feedback_option_mail">Envoyez-nous un message</string>
@@ -74,4 +73,10 @@
   <string name="account_switcher_switch_to">Basculer vers</string>
   <string name="account_switcher_add_account">Ajouter un compte</string>
   <string name="account_switcher_remove">Retirer</string>
+  <string name="filtered_by_logins">La liste est filtrée par identifiants. Les éléments dans la corbeille ne s\'affichent pas.</string>
+  <string name="filtered_by_logins_with_mfa">La liste est filtrée par identifiants avec code TOTP. Les éléments dans la corbeille ne s\'affichent pas.</string>
+  <string name="filtered_by_aliases">La liste est filtrée par alias. Les éléments dans la corbeille ne s\'affichent pas.</string>
+  <string name="filtered_by_notes">La liste est filtrée par notes. Les éléments dans la corbeille ne s\'affichent pas.</string>
+  <string name="filtered_by_credit_cards">La liste est filtrée par cartes de paiement. Les éléments dans la corbeille ne s\'affichent pas.</string>
+  <string name="filtered_by_identities">La liste est filtrée par identités. Les éléments dans la corbeille ne s\'affichent pas</string>
 </resources>

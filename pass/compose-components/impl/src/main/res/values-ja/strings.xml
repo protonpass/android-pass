@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">すべて</string>
   <string name="item_list_header_pinned_search_results">ピン留めしました</string>
   <string name="item_list_header_logins_type">ログイン</string>
+  <string name="item_list_header_logins_totp_type">Logins with TOTP</string>
   <string name="item_list_header_aliases_type">エイリアス</string>
   <string name="item_list_header_notes_type">メモ</string>
   <string name="item_list_header_credit_cards_type">クレジットカード</string>
@@ -133,7 +134,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">エイリアスアドレス</string>
-  <string name="item_details_alias_section_alias_disabled_title">Alias address (disabled)</string>
+  <string name="item_details_alias_section_alias_disabled_title">エイリアスのアドレス (無効)</string>
   <string name="item_details_alias_section_mailboxes_title">転送先</string>
   <string name="item_details_credit_card_section_cardholder_title">カード名義人</string>
   <string name="item_details_credit_card_section_card_number_title">カード番号</string>
@@ -247,14 +248,17 @@
   <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
   <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
   <!-- Simple Login -->
-  <string name="simple_login_widget_title">Enable SimpleLogin sync</string>
+  <string name="simple_login_widget_title">SimpleLogin 同期を有効にする</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
+    <item quantity="other">SimpleLogin に存在し Proton Pass に存在しないエイリアスが、%d 件検知されました。インポートしますか？</item>
   </plurals>
-  <string name="simple_login_widget_action">Sync aliases</string>
+  <string name="simple_login_widget_action">エイリアスを同期する</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t receive the code?</string>
-  <string name="verification_code_suggestion_spam">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">If you can\'t find such email, you can %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code</string>
+  <string name="field_display_name_title">Display name</string>
 </resources>

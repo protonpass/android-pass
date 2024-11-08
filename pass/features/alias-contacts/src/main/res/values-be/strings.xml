@@ -24,8 +24,7 @@
   <string name="create_contact_title">Стварыць кантакт</string>
   <string name="detail_contact_title">Кантакты</string>
   <string name="email_input_error">Памылковы адрас электроннай пошты</string>
-  <string name="detail_contact_sender_name">Імя адпраўніка</string>
-  <string name="detail_contact_display_name" comment="sender email address">Пры адпраўцы лістоў з гэтага псеўданіма ў якасці адпраўніка будзе пазначана электронная пошта %s.</string>
+  <string name="detail_contact_display_name" comment="sender email address">Кантакт ствараецца для кожнага адраса электроннай пошты, які адпраўляе лісты або атрымлівае іх ад %1$s.</string>
   <string name="empty_alias_contacts_title">Кантакты псеўданіма</string>
   <string name="empty_alias_contacts_body">Вы можаце стварыць кантакт псеўданіма, які замаскіруе ваш адрас. Гэта дазволіць захаваць ваш персанальны адрас электроннай пошты схаваным.</string>
   <string name="empty_alias_contacts_learn_more">Даведацца больш</string>
@@ -58,8 +57,6 @@
   <string name="snackbar_contact_block_error">Немагчыма заблакіраваць кантакт</string>
   <string name="snackbar_contact_unblock_success">Кантакт разблакіраваны</string>
   <string name="snackbar_contact_unblock_error">Немагчыма разблакіраваць кантакт</string>
-  <string name="snackbar_sender_name_success">Імя адпраўніка абноўлена</string>
-  <string name="snackbar_sender_name_error">Немагчыма абнавіць імя адпраўніка</string>
   <string name="snackbar_delete_contact_success">Кантакт выдалены</string>
   <string name="snackbar_delete_contact_error">Немагчыма выдаліць кантакт</string>
   <string name="snackbar_email_copied_success">Электронная пошта скапіявана ў буфер абмену</string>

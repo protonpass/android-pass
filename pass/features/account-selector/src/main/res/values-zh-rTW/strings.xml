@@ -17,6 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_switch_title">Select account</string>
-  <string name="unknown_email">Unknown email</string>
+  <string name="account_switch_title">選取帳號</string>
+  <string name="unknown_email">未知的電子郵件</string>
 </resources>

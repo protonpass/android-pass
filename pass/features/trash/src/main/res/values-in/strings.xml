@@ -7,4 +7,14 @@
   <string name="alias_dialog_move_to_trash_title">Pindahkan ke sampah?</string>
   <string name="alias_dialog_move_to_trash_content">Apabila Anda memindahkan alias ke sampah, alias yang bersangkutan tidak akan lagi meneruskan email ke kotak surat Anda.</string>
   <string name="alias_dialog_move_to_trash_confirm">Konfirmasi</string>
+  <string name="delete_alias_confirm">Saya mengerti, saya tidak akan lagi butuh alias ini</string>
+  <string name="delete_alias_title">Hapus %s</string>
+  <string name="delete_alias_enabled_subtitle">"Mohon diperhatikan bahwa setelah dihapus, alias ini tidak akan lagi dapat dipulihkan. Apakah Anda ingin sekadar menonaktifkan alias ini? "</string>
+  <string name="delete_alias_disabled_subtitle">Mohon diperhatikan bahwa setelah dihapus, alias ini tidak akan lagi dapat dipulihkan. Alias ini telah dinonaktifkan dan tidak akan lagi meneruskan email ke kotak surat Anda.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="other">Anda akan menghapus %d alias secara permanen</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Mohon diperhatikan bahwa setelah dihapus, rangkaian alias ini tidak akan lagi dapat dipulihkan</string>
+  <string name="bulk_delete_alias_confirm">Saya mengerti, saya tidak akan lagi butuh rangkaian alias ini</string>
+  <string name="delete_alias_disable">Nonaktifkan alias</string>
 </resources>

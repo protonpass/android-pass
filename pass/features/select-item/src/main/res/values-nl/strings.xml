@@ -26,5 +26,5 @@
   <string name="topbar_search_pinned_items">Zoeken in vastgemaakt...</string>
   <string name="topbar_search_query_oldest_vaults">Zoeken in uw oudste kluizen...</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Zoeken...</string>
-  <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">All accounts (%1$s)</string>
+  <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">Alle accounts (%1$s)</string>
 </resources>

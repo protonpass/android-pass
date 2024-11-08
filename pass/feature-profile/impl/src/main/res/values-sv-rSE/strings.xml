@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Misslyckades att autentisera</string>
   <string name="profile_fingerprint_lock_enabled">Fingeravtryckslås aktiverat</string>
   <string name="profile_fingerprint_lock_disabled">Fingeravtryckslås inaktiverat</string>
-  <string name="profile_error_performing_operation">Gick inte utföra åtgärd</string>
   <string name="profile_app_version_copied_to_clipboard">Appversion kopierad</string>
   <string name="feedback_option_reddit">Kolla in Proton på Reddit</string>
   <string name="feedback_option_mail">Skicka oss ett meddelande</string>
@@ -74,4 +73,10 @@
   <string name="account_switcher_switch_to">Byt till</string>
   <string name="account_switcher_add_account">Lägg till konto</string>
   <string name="account_switcher_remove">Ta bort</string>
+  <string name="filtered_by_logins">Filtered by logins. Trashed items aren\'t shown</string>
+  <string name="filtered_by_logins_with_mfa">Filtered by logins with TOTP. Trashed items aren\'t shown</string>
+  <string name="filtered_by_aliases">Filtered by aliases. Trashed items aren\'t shown</string>
+  <string name="filtered_by_notes">Filtered by notes. Trashed items aren\'t shown</string>
+  <string name="filtered_by_credit_cards">Filtered by credit cards. Trashed items aren\'t shown</string>
+  <string name="filtered_by_identities">Filtered by identities. Trashed items aren\'t shown</string>
 </resources>

@@ -115,6 +115,8 @@
   <string name="share_with_suggestions_title">Vorschläge</string>
   <string name="share_with_recents_title">Neueste</string>
   <string name="share_with_remove_email_content_description">E-Mail entfernen</string>
+  <string name="share_with_user_title">Teilen mit</string>
+  <string name="share_with_user_description">Share this item with other Proton users.</string>
   <string name="share_with_secure_link_title">Über sicheren Link</string>
   <string name="share_with_secure_link_description">Einen sicheren Link zu diesem Eintrag generieren.</string>
   <string name="share_with_manage_shared_vault_title">Tresorzugriff verwalten</string>

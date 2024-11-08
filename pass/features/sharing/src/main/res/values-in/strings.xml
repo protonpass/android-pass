@@ -100,7 +100,7 @@
   <string name="sharing_limit_reached">Brankas ini telah mencapai batas jumlah anggota dan undangannya.</string>
   <string name="sharing_invites_info_upgrade_text">Tingkatkan akun Anda sekarang juga untuk mengundang lebih banyak anggota.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Bagikan</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Gunakan brankas untuk membagikan item dengan yang lainnya</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Gunakan brankas untuk membagikan item dengan pengguna lainnya</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Bagikan brankas ini</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Pindahkan ke brankas bersama</string>
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Buat brankas baru untuk dibagikan</string>
@@ -110,6 +110,8 @@
   <string name="share_with_suggestions_title">Saran</string>
   <string name="share_with_recents_title">Terkini</string>
   <string name="share_with_remove_email_content_description">Hapus email</string>
+  <string name="share_with_user_title">Bagikan dengan</string>
+  <string name="share_with_user_description">Bagikan item ini dengan pengguna Proton lainnya.</string>
   <string name="share_with_secure_link_title">Via tautan aman</string>
   <string name="share_with_secure_link_description">Hasilkan tautan aman yang tertuju kepada item ini.</string>
   <string name="share_with_manage_shared_vault_title">Kelola akses brankas</string>

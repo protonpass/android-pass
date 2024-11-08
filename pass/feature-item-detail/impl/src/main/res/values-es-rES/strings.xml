@@ -107,6 +107,8 @@
   <string name="activity_in_last_two_weeks">Actividad en los últimos 14 días</string>
   <string name="contacts">Contactos</string>
   <string name="contacts_section_description">Para mantener la dirección de correo electrónico oculta, se puede crear un alias de contacto para enmascarar la dirección.</string>
+  <string name="field_detail_display_name_title">Nombre a mostrar</string>
+  <string name="display_name_section_description">El nombre a mostrar cuando envíes un correo electrónico desde este alias.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s reenvío</item>
     <item quantity="other">%1$s reenvíos</item>

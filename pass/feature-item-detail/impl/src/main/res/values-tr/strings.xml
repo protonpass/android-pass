@@ -107,6 +107,8 @@
   <string name="activity_in_last_two_weeks">Son 14 gündeki etkinlikler</string>
   <string name="contacts">Kişiler</string>
   <string name="contacts_section_description">Kişisel e-posta adresinizi gizli tutmak için bir takma ad kişisi oluşturarak adresinizi gizleyebilirsiniz.</string>
+  <string name="field_detail_display_name_title">Görüntülenecek ad</string>
+  <string name="display_name_section_description">Bu takma ad ile e-posta gönderilirken görüntülenecek ad.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s iletme</item>
     <item quantity="other">%1$s iletme</item>

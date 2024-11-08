@@ -110,6 +110,8 @@
   <string name="share_with_suggestions_title">제안</string>
   <string name="share_with_recents_title">최근</string>
   <string name="share_with_remove_email_content_description">이메일 제거</string>
+  <string name="share_with_user_title">와 공유하기</string>
+  <string name="share_with_user_description">이 항목을 다른 Proton 사용자들과 공유하세요.</string>
   <string name="share_with_secure_link_title">안전한 링크를 통해 공유</string>
   <string name="share_with_secure_link_description">이 항목으로의 안전한 링크를 만듭니다.</string>
   <string name="share_with_manage_shared_vault_title">금고 접근 관리</string>

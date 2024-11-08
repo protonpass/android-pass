@@ -24,8 +24,7 @@
   <string name="create_contact_title">Buat kontak</string>
   <string name="detail_contact_title">Kontak</string>
   <string name="email_input_error">Alamat email tidak valid</string>
-  <string name="detail_contact_sender_name">Nama pengirim</string>
-  <string name="detail_contact_display_name" comment="sender email address">Pada saat mengirim email dari alias ini, email yang bersangkutan akan memiliki %s sebagai nama pengirimnya.</string>
+  <string name="detail_contact_display_name" comment="sender email address">Kontak dibuat untuk setiap alamat email yang mengirim email atau menerima email dari %1$s</string>
   <string name="empty_alias_contacts_title">Kontak alias</string>
   <string name="empty_alias_contacts_body">Untuk menjaga alamat email pribadi Anda tetap tersembunyi, Anda dapat membuat kontak alias yang menyamarkan alamat Anda.</string>
   <string name="empty_alias_contacts_learn_more">Pelajari lebih lanjut</string>
@@ -49,8 +48,6 @@
   <string name="snackbar_contact_block_error">Tidak dapat memblokir kontak</string>
   <string name="snackbar_contact_unblock_success">Blokir kontak dibuka</string>
   <string name="snackbar_contact_unblock_error">Tidak dapat membuka blokir kontak</string>
-  <string name="snackbar_sender_name_success">Nama pengirim diperbarui</string>
-  <string name="snackbar_sender_name_error">Tidak dapat memperbarui nama pengirim</string>
   <string name="snackbar_delete_contact_success">Kontak dihapus</string>
   <string name="snackbar_delete_contact_error">Tidak dapat menghapus kontak</string>
   <string name="snackbar_email_copied_success">Email disalin ke papan klip</string>

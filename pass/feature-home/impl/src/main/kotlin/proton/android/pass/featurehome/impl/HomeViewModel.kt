@@ -56,6 +56,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.isReady
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
@@ -213,24 +217,35 @@ class HomeViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     savedState: SavedStateHandleProvider,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
-    observeItemCount: ObserveItemCount
+    observeItemCount: ObserveItemCount,
+    accountManager: AccountManager
 ) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            val isExtraLoggingEnabled = featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.EXTRA_LOGGING)
-                .firstOrNull()
-                ?: false
+            val isExtraLoggingEnabled =
+                featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.EXTRA_LOGGING)
+                    .firstOrNull()
+                    ?: false
             if (isExtraLoggingEnabled) {
-                observeItemCount()
-                    .map { it.total }
+                accountManager.getPrimaryAccount()
                     .distinctUntilChanged()
-                    .scan(initial = null to 0L) { previousPair: Pair<Long?, Long>, current: Long ->
-                        previousPair.second to current
+                    .flatMapLatest { account ->
+                        observeItemCount()
+                            .map { it.total }
+                            .distinctUntilChanged()
+                            .scan(initial = null to 0L) { previousPair: Pair<Long?, Long>, current: Long ->
+                                previousPair.second to current
+                            }
+                            .filter { (previous, _) -> previous != null }
+                            .map { account to it }
                     }
-                    .filter { (previous, _) -> previous != null }
-                    .onEach { (previous, current) ->
-                        if (previous != null && previous > ITEM_DELETED_THRESHOLD && current == 0L) {
+                    .map { (account, data): Pair<Account?, Pair<Long?, Long>> ->
+                        val (previous, current) = data
+                        val isAccountReady = account?.isReady() ?: false
+                        val itemsDisappeared =
+                            previous != null && previous > ITEM_DELETED_THRESHOLD && current == 0L
+                        if (isAccountReady && itemsDisappeared) {
                             PassLogger.e(TAG, "All items have been deleted!")
                         }
                     }
@@ -1085,7 +1100,8 @@ class HomeViewModel @Inject constructor(
             SearchFilterType.CreditCard -> item.contents is ItemContents.CreditCard
             SearchFilterType.Identity -> item.contents is ItemContents.Identity
             SearchFilterType.LoginMFA ->
-                item.contents is ItemContents.Login && (item.contents as ItemContents.Login).hasPrimaryTotp }
+                item.contents is ItemContents.Login && (item.contents as ItemContents.Login).hasPrimaryTotp
+        }
     }
 
     private fun emitDeletedItems(items: List<GroupedItemList>) {

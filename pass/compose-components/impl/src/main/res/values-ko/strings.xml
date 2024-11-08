@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">전체</string>
   <string name="item_list_header_pinned_search_results">고정됨</string>
   <string name="item_list_header_logins_type">로그인</string>
+  <string name="item_list_header_logins_totp_type">TOTP가 있는 로그인</string>
   <string name="item_list_header_aliases_type">별칭</string>
   <string name="item_list_header_notes_type">메모</string>
   <string name="item_list_header_credit_cards_type">신용카드</string>
@@ -253,8 +254,11 @@
   </plurals>
   <string name="simple_login_widget_action">별칭 동기화</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">코드를 받지 못하셨나요?</string>
-  <string name="verification_code_suggestion_spam">스팸 메일함에서 “Proton Pass를 위해 이메일 주소를 확인해 주십시오“ 라는 이메일이 있는지 확인해 주십시오.</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">스팸함에 \"%s\" 로 된 이메일이 있는지 확인해주세요</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Proton Pass의 이메일 주소를 확인해주세요</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">메일함을 확인해 주세요</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">이메일을 찾지 못하셨다면, %s 가능합니다.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">새 코드 요청</string>
+  <string name="field_display_name_title">표시되는 이름</string>
 </resources>

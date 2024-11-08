@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">Alle</string>
   <string name="item_list_header_pinned_search_results">Festet</string>
   <string name="item_list_header_logins_type">Pålogginger</string>
+  <string name="item_list_header_logins_totp_type">Pålogginger med TOTP</string>
   <string name="item_list_header_aliases_type">Aliaser</string>
   <string name="item_list_header_notes_type">Notater</string>
   <string name="item_list_header_credit_cards_type">Kredittkort</string>
@@ -264,8 +265,11 @@
   </plurals>
   <string name="simple_login_widget_action">Synkroniser aliaser</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Fikk du ikke koden?</string>
-  <string name="verification_code_suggestion_spam">Vennligst sjekk i søppelposten for en e-post som heter \"Bekreft e-postadressen din for Proton Pass\"</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Vennligst sjekk i søppelposten din for en e-post som heter \"%s\"</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Vennligst bekreft e-postadressen din for Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Vennligst bekreft postboksen din</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Hvis du ikke finner en slik e-post, kan du %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">be om en ny kode</string>
+  <string name="field_display_name_title">Visningsnavn</string>
 </resources>

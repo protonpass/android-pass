@@ -31,8 +31,9 @@
   <string name="upsell_paid_feature_authenticator_essential">Патрабаванне 2ФА для арганізацыі</string>
   <string name="upsell_paid_feature_sso_essential">Інтэграцыя SSO (неўзабаве з\'явіцца)</string>
   <string name="upsell_paid_feature_advance_alias_management_title">Кіраванне вашымі псеўданімамі</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">Пашыранае кіраванне псеўданімамі даступна з Proton Unlimited. Палепшыце, каб атрымаць доступ да гэтай функцыі.</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">Пашыранае кіраванне псеўданімамі даступна з платным тарыфным планам. Палепшыце, каб атрымаць доступ да гэтай функцыі.</string>
+  <string name="upsell_paid_feature_item_sharing_title">Хуткае абагульванне элемента</string>
+  <string name="upsell_paid_feature_item_sharing_subtitle">Палепшыце сёння, каб мець магчымасць абагульваць элементы з любым карыстальнікам Pass. Вы таксама атрымаеце перавагі іншых прэміяльных функцый:</string>
   <string name="upsell_button_upgrade">Атрымаць Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Атрымаць Pass Business</string>
-  <string name="upsell_button_upgrade_unlimited">Атрымаць Proton Unlimited</string>
 </resources>

@@ -108,6 +108,8 @@
   <string name="activity_in_last_two_weeks">Activitate în ultimele 14 zile</string>
   <string name="contacts">Contacte</string>
   <string name="contacts_section_description">Pentru a vă păstra adresa de e-mail personală ascunsă, puteți crea un alias de contact care vă maschează adresa.</string>
+  <string name="field_detail_display_name_title">Nume afișat</string>
+  <string name="display_name_section_description">Numele afișat când se trimite un mesaj de la acest alias.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">Redirecționări: %1$s</item>
     <item quantity="few">Redirecționări: %1$s</item>

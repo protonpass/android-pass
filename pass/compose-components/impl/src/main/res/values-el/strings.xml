@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">Όλα</string>
   <string name="item_list_header_pinned_search_results">Καρφιτσωμένα</string>
   <string name="item_list_header_logins_type">Συνδέσεις</string>
+  <string name="item_list_header_logins_totp_type">Συνδέσεις με TOTP</string>
   <string name="item_list_header_aliases_type">Ψευδώνυμα</string>
   <string name="item_list_header_notes_type">Σημειώσεις</string>
   <string name="item_list_header_credit_cards_type">Πιστωτικές κάρτες</string>
@@ -264,8 +265,11 @@
   </plurals>
   <string name="simple_login_widget_action">Συγχρονισμός ψευδωνύμων</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Δεν έχετε λάβει τον κωδικό;</string>
-  <string name="verification_code_suggestion_spam">Ελέγξτε τα ανεπιθύμητα μηνύματα για ένα μήνυμα που ονομάζεται \"Επιβεβαιώστε τη διεύθυνση email σας για το Proton Pass\"</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Παρακαλούμε ελέγξτε στα Ανεπιθύμητα σας για ένα μήνυμα που ονομάζεται \"%s\"</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Παρακαλούμε επιβεβαιώστε τη διεύθυνση email σας για το Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Παρακαλούμε επιβεβαιώστε το γραμματοκιβώτιό σας</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Εάν δεν μπορείτε να βρείτε τέτοια μηνύματα ηλεκτρονικού ταχυδρομείου, μπορείτε να %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">ζητήστε ένα νέο κωδικό</string>
+  <string name="field_display_name_title">Εμφανιζόμενο Όνομα</string>
 </resources>

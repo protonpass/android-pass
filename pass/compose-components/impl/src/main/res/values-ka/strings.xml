@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">ყველა</string>
   <string name="item_list_header_pinned_search_results">მიმაგრებული</string>
   <string name="item_list_header_logins_type">შესვლები</string>
+  <string name="item_list_header_logins_totp_type">TOTP-ით შესვლის დეტალები</string>
   <string name="item_list_header_aliases_type">ფსევდონიმები</string>
   <string name="item_list_header_notes_type">შენიშვნები</string>
   <string name="item_list_header_credit_cards_type">საკრედიტო ბარათები</string>
@@ -264,8 +265,11 @@
   </plurals>
   <string name="simple_login_widget_action">ფსევდონიმების სინქი</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">კოდი არ მიგიღიათ?</string>
-  <string name="verification_code_suggestion_spam">შეამოწმეთ სპამის საქაღალდე იმეილზე, რომელსაც ჰქვია \"დაადასტურეთ თქვენი ელფოსტის მისამართი Proton Pass-სთვის\"</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">მოძებნეთ თქვენი სპამის საქაღალდეში ელფოსტა სახელით \"%s\"</string>
+  <string name="verification_code_suggestion_subject_new_email_address">დაადასტურეთ თქვენი ელფოსტის მისამართი Proton Pass-სთვის</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">გთხოვთ, დაადასტუროთ საფოსტო ყუთი</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">თუ ასეთ ელფოსტას ვერ პოულობთ, შეგიძლიათ %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">ახალი კოდის გამოთხოვა</string>
+  <string name="field_display_name_title">საჩვენებელი სახელი</string>
 </resources>

@@ -24,8 +24,7 @@
   <string name="create_contact_title">Creare contact</string>
   <string name="detail_contact_title">Contacte</string>
   <string name="email_input_error">Adresă de e-mail nevalidă.</string>
-  <string name="detail_contact_sender_name">Nume expeditor</string>
-  <string name="detail_contact_display_name" comment="sender email address">Când trimiteți un mesaj de pe acest alias, acesta va avea %s setat ca expeditor.</string>
+  <string name="detail_contact_display_name" comment="sender email address">Este creată o persoană de contact pentru fiecare adresă de e-mail care trimite mesaje către sau primește de la %1$s.</string>
   <string name="empty_alias_contacts_title">Contactele aliasului</string>
   <string name="empty_alias_contacts_body">Pentru a vă păstra adresa de e-mail personală ascunsă, puteți crea un alias de contact care vă maschează adresa.</string>
   <string name="empty_alias_contacts_learn_more">Detalii</string>
@@ -55,8 +54,6 @@
   <string name="snackbar_contact_block_error">Contactul nu s-a putut bloca.</string>
   <string name="snackbar_contact_unblock_success">Contactul a fost deblocat.</string>
   <string name="snackbar_contact_unblock_error">Contactul nu s-a putut debloca.</string>
-  <string name="snackbar_sender_name_success">Numele expeditorului a fost actualizat.</string>
-  <string name="snackbar_sender_name_error">Nu s-a putut actualiza numele expeditorului.</string>
   <string name="snackbar_delete_contact_success">Contactul a fost șters.</string>
   <string name="snackbar_delete_contact_error">Nu s-a putut șterge contactul.</string>
   <string name="snackbar_email_copied_success">Adresa de e-mail s-a copiat în memorie.</string>

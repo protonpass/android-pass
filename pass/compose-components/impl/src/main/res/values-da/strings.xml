@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">Alle</string>
   <string name="item_list_header_pinned_search_results">Fastgjorte</string>
   <string name="item_list_header_logins_type">Logins</string>
+  <string name="item_list_header_logins_totp_type">Logins med TOTP</string>
   <string name="item_list_header_aliases_type">Aliasser</string>
   <string name="item_list_header_notes_type">Noter</string>
   <string name="item_list_header_credit_cards_type">Betalingskort</string>
@@ -264,8 +265,11 @@
   </plurals>
   <string name="simple_login_widget_action">Synkroniser aliasser</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t receive the code?</string>
-  <string name="verification_code_suggestion_spam">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
-  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">If you can\'t find such email, you can %s.</string>
-  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Se efter en e-mail med navnet %s i din spam-mappe.</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Bekræft venligst din e-mailadresse for Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Bekræft venligst din postkasse</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Finder du ikke en sådan e-mail, kan du %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">anmode om en ny kode</string>
+  <string name="field_display_name_title">Vist navn</string>
 </resources>

@@ -82,6 +82,11 @@
   <string name="alias_created">Takma ad oluşturuldu</string>
   <string name="cannot_retrieve_alias_options">Takma ad seçenekleri alınamadı</string>
   <string name="alias_mailbox_dialog_title">Şuraya ilet</string>
+  <string name="sl_note_info_title">Bir SimpleLogin notu nedir?</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">Proton Pass uygulamasında bir öge notu, öge şifreleme anahtarıyla şifrelenir ve yalnızca ögeye erişim izni olan kullanıcılar notu görüntüleyebilir.</string>
+  <string name="sl_note_info_message_part2">Proton ya da SimpleLogin tarafından bile görülemez.</string>
+  <string name="sl_note_info_message_part3">SimpleLogin notu, takma ad adresiyle aynı konumda tutulur ve dinlenme halindeyken şifreleme ile korunsa da uçtan uca şifrelenmez. Yani SimpleLogin veri tabanına erişme izni olan herkes onu okuyabilir.</string>
+  <string name="sl_note_info_content_description">SimpleLogin notu bilgilendirme penceresi görüntülensin</string>
   <!-- Create note -->
   <string name="note_hint">Not</string>
   <!-- Create Credit Card -->

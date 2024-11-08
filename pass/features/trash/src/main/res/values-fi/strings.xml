@@ -7,4 +7,15 @@
   <string name="alias_dialog_move_to_trash_title">Siirretäänkö roskakoriin?</string>
   <string name="alias_dialog_move_to_trash_content">Jos siirrät aliaksen roskakoriin, se ei enää ohjaa viestejä postilaatikkoosi.</string>
   <string name="alias_dialog_move_to_trash_confirm">Vahvista</string>
+  <string name="delete_alias_confirm">Poista se, en koskaan tarvitse sitä</string>
+  <string name="delete_alias_title">Poista %s</string>
+  <string name="delete_alias_enabled_subtitle">"Please note once deleted, the alias can't be restored. Maybe you want to disable the alias instead? "</string>
+  <string name="delete_alias_disabled_subtitle">Huomaa, että poistettuja aliaksia ei voi palauttaa. Alias on jo poistettu käytöstä, eikä se välitä sähköposteja postilaatikkoosi.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="one">Olet poistamassa %d aliaksen pysyvästi</item>
+    <item quantity="other">Olet poistamassa %d aliasta pysyvästi</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Huomaa, että poistettuja aliaksia ei voi palauttaa</string>
+  <string name="bulk_delete_alias_confirm">Ymmärrän, en koskaan tarvitse niitä</string>
+  <string name="delete_alias_disable">Poista alias käytöstä</string>
 </resources>

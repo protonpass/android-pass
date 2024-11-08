@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Сбой аутентификации</string>
   <string name="profile_fingerprint_lock_enabled">Отпечаток ключа включен</string>
   <string name="profile_fingerprint_lock_disabled">Отпечаток ключа отключен</string>
-  <string name="profile_error_performing_operation">Ошибка выполнения операции</string>
   <string name="profile_app_version_copied_to_clipboard">Версия приложения скопирована</string>
   <string name="feedback_option_reddit">Узнайте о Proton на Reddit</string>
   <string name="feedback_option_mail">Отправить нам сообщение</string>
@@ -80,4 +79,10 @@
   <string name="account_switcher_switch_to">Переключить на</string>
   <string name="account_switcher_add_account">Добавить аккаунт</string>
   <string name="account_switcher_remove">Удалить</string>
+  <string name="filtered_by_logins">Фильтруется по именам пользователей. Удаленные элементы не отображаются</string>
+  <string name="filtered_by_logins_with_mfa">Фильтруется по именам пользователей с TOTP. Удаленные элементы не отображаются</string>
+  <string name="filtered_by_aliases">Фильтруется по псевдонимам. Удаленные элементы не отображаются</string>
+  <string name="filtered_by_notes">Фильтруется по заметкам. Удаленные элементы не отображаются</string>
+  <string name="filtered_by_credit_cards">Фильтруется по кредитным картам. Удаленные элементы не отображаются</string>
+  <string name="filtered_by_identities">Фильтруется по личным данным. Удаленные элементы не отображаются</string>
 </resources>

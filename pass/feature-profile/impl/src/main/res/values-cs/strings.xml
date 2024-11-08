@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Ověření selhalo</string>
   <string name="profile_fingerprint_lock_enabled">Zamykání otiskem prstu povoleno</string>
   <string name="profile_fingerprint_lock_disabled">Zamykání otiskem prstu zakázáno</string>
-  <string name="profile_error_performing_operation">Chyba při provádění operace</string>
   <string name="profile_app_version_copied_to_clipboard">Verze aplikace zkopírována</string>
   <string name="feedback_option_reddit">Podívejte se na Proton na Redditu</string>
   <string name="feedback_option_mail">Pošlete nám zprávu</string>
@@ -80,4 +79,10 @@
   <string name="account_switcher_switch_to">Přepnout na</string>
   <string name="account_switcher_add_account">Přidat účet</string>
   <string name="account_switcher_remove">Odebrat</string>
+  <string name="filtered_by_logins">Filtrováno podle přihlášení. Položky z koše nejsou zobrazeny</string>
+  <string name="filtered_by_logins_with_mfa">Filtrováno podle přihlášení pomocí TOTP. Položky z koše nejsou zobrazeny</string>
+  <string name="filtered_by_aliases">Filtrováno podle aliasů. Položky z koše nejsou zobrazeny</string>
+  <string name="filtered_by_notes">Filtrováno podle poznámek. Položky z koše nejsou zobrazeny</string>
+  <string name="filtered_by_credit_cards">Filtrováno podle platebních karet. Položky z koše nejsou zobrazeny</string>
+  <string name="filtered_by_identities">Filtrováno podle identit. Položky z koše nejsou zobrazeny</string>
 </resources>

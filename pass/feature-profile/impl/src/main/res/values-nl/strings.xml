@@ -12,12 +12,11 @@
   <string name="profile_option_autofill">Autom. aanvullen</string>
   <string name="profile_option_autofill_subtitle">Vul automatisch uw gebruikersnamen en wachtwoorden in.</string>
   <string name="profile_option_secure_links">Beveiligde links</string>
-  <string name="profile_option_alias_management">Alias management</string>
+  <string name="profile_option_alias_management">Aliasbeheer</string>
   <string name="profile_error_biometry_failed_to_start">Kan de biometrische authenticatie niet starten</string>
   <string name="profile_error_biometry_failed_to_authenticate">Authenticatie mislukt</string>
   <string name="profile_fingerprint_lock_enabled">Vingerafdrukontgrendeling ingeschakeld</string>
   <string name="profile_fingerprint_lock_disabled">Vingerafdrukontgrendeling uitgeschakeld</string>
-  <string name="profile_error_performing_operation">Fout bij het uitvoeren van de bewerking</string>
   <string name="profile_app_version_copied_to_clipboard">App-versie gekopieerd</string>
   <string name="feedback_option_reddit">Bekijk Proton op Reddit</string>
   <string name="feedback_option_mail">Stuur ons een bericht</string>
@@ -74,4 +73,10 @@
   <string name="account_switcher_switch_to">Wisselen naar</string>
   <string name="account_switcher_add_account">Account toevoegen</string>
   <string name="account_switcher_remove">Verwijderen</string>
+  <string name="filtered_by_logins">Gefilterd door inloggegevens. Items worden niet weergegeven</string>
+  <string name="filtered_by_logins_with_mfa">Gefilterd door inloggegevens met TOTP. Items die in de prullenbak zitten worden niet weergegeven</string>
+  <string name="filtered_by_aliases">Gefilterd door aliasen. Verwijderde items worden niet weergegeven</string>
+  <string name="filtered_by_notes">Gefilterd door notities. Items die verplaatst worden, worden niet weergegeven</string>
+  <string name="filtered_by_credit_cards">Gefilterd met creditcards. Verwijderde items worden niet weergegeven</string>
+  <string name="filtered_by_identities">Gefilterd op identiteiten. Verwijderde items worden niet weergegeven</string>
 </resources>

@@ -24,8 +24,7 @@
   <string name="create_contact_title">Kişi ekle</string>
   <string name="detail_contact_title">Kişiler</string>
   <string name="email_input_error">E-posta adresi geçersiz</string>
-  <string name="detail_contact_sender_name">Gönderici adı</string>
-  <string name="detail_contact_display_name" comment="sender email address">Bu takma addan gönderilecek e-postaların göndericisi %s olacak.</string>
+  <string name="detail_contact_display_name" comment="sender email address">%1$s adresiyle e-posta gönderen veya alan her e-posta adresi için bir kişi oluşturulur</string>
   <string name="empty_alias_contacts_title">Takma ad kişileri</string>
   <string name="empty_alias_contacts_body">Kişisel e-posta adresinizi gizli tutmak için bir takma ad kişisi oluşturarak adresinizi gizleyebilirsiniz.</string>
   <string name="empty_alias_contacts_learn_more">Ayrıntılı bilgi alın</string>
@@ -52,8 +51,6 @@
   <string name="snackbar_contact_block_error">Kişi engellenemedi</string>
   <string name="snackbar_contact_unblock_success">Kişinin engellemesi kaldırıldı</string>
   <string name="snackbar_contact_unblock_error">Kişinin engellemesi kaldırılamadı</string>
-  <string name="snackbar_sender_name_success">Gönderici adı güncellendi</string>
-  <string name="snackbar_sender_name_error">Gönderici adı güncellenemedi</string>
   <string name="snackbar_delete_contact_success">Kişi silindi</string>
   <string name="snackbar_delete_contact_error">Kişi silinemedi</string>
   <string name="snackbar_email_copied_success">E-posta adresi panoya kopyalandı</string>

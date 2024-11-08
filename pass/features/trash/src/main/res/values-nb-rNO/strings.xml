@@ -7,4 +7,15 @@
   <string name="alias_dialog_move_to_trash_title">Flytt til papirkurv?</string>
   <string name="alias_dialog_move_to_trash_content">Hvis du flytter et alias til papirkurven, vil det slutte å videresende e-postmeldinger til postboksen din.</string>
   <string name="alias_dialog_move_to_trash_confirm">Bekreft</string>
+  <string name="delete_alias_confirm">Slett det, jeg kommer aldri til å trenge det</string>
+  <string name="delete_alias_title">Slett %s</string>
+  <string name="delete_alias_enabled_subtitle">"Vær oppmerksom på at aliaset ikke kan gjenopprettes når det er slettet. Kanskje du vil deaktivere aliaset i stedet? "</string>
+  <string name="delete_alias_disabled_subtitle">Vær oppmerksom på at aliaset ikke kan gjenopprettes når det er slettet. Aliaset er allerede deaktivert og videresender ikke e-post til postboksen din.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="one">Du er i ferd med å slette permanent %d alias</item>
+    <item quantity="other">Du er i ferd med å slette permanent %d aliaser</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Vær oppmerksom på at aliasene ikke kan gjenopprettes når de er slettet</string>
+  <string name="bulk_delete_alias_confirm">Forstått, jeg kommer aldri til å trenge dem</string>
+  <string name="delete_alias_disable">Deaktiver alias</string>
 </resources>

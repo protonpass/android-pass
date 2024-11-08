@@ -24,8 +24,7 @@
   <string name="create_contact_title">Crear un contacto</string>
   <string name="detail_contact_title">Contactos</string>
   <string name="email_input_error">La dirección de correo electrónico no es válida.</string>
-  <string name="detail_contact_sender_name">Nombre del remitente</string>
-  <string name="detail_contact_display_name" comment="sender email address">Cuando envíes un correo electrónico desde este alias, el correo electrónico tendrá %s como remitente.</string>
+  <string name="detail_contact_display_name" comment="sender email address">Se crea un contacto por cada dirección de correo electrónico que envía o recibe correos electrónicos desde %1$s</string>
   <string name="empty_alias_contacts_title">Contactos del alias</string>
   <string name="empty_alias_contacts_body">Para mantener tu dirección de correo electrónico oculta, puedes crear un alias de contacto para enmascarar tu dirección.</string>
   <string name="empty_alias_contacts_learn_more">Más información</string>
@@ -52,8 +51,6 @@
   <string name="snackbar_contact_block_error">No se ha bloqueado el contacto.</string>
   <string name="snackbar_contact_unblock_success">Se ha desbloqueado el contacto.</string>
   <string name="snackbar_contact_unblock_error">No se ha desbloqueado el contacto.</string>
-  <string name="snackbar_sender_name_success">Se ha actualizado el nombre del remitente.</string>
-  <string name="snackbar_sender_name_error">No se ha podido actualizar el nombre del remitente.</string>
   <string name="snackbar_delete_contact_success">Se ha eliminado el contacto.</string>
   <string name="snackbar_delete_contact_error">No se ha eliminado el contacto.</string>
   <string name="snackbar_email_copied_success">Se ha copiado el correo electrónico al portapapeles.</string>

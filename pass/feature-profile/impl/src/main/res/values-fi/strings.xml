@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Todennus epäonnistui</string>
   <string name="profile_fingerprint_lock_enabled">Sormenjälkilukitus otettiin käyttöön</string>
   <string name="profile_fingerprint_lock_disabled">Sormenjälkilukitus poistettiin käytöstä</string>
-  <string name="profile_error_performing_operation">Virhe suoritettaessa toimintoa</string>
   <string name="profile_app_version_copied_to_clipboard">Sovelluksen versio kopioitiin</string>
   <string name="feedback_option_reddit">Tutustu Protonin Reddit-yhteisöön</string>
   <string name="feedback_option_mail">Lähetä meille viesti</string>
@@ -74,4 +73,10 @@
   <string name="account_switcher_switch_to">Vaihda tiliin</string>
   <string name="account_switcher_add_account">Lisää tili</string>
   <string name="account_switcher_remove">Poista</string>
+  <string name="filtered_by_logins">Suodatettu kirjautumistietojen mukaan. Roskakorissa olevia kohteita ei näytetä</string>
+  <string name="filtered_by_logins_with_mfa">Suodatettu TOTP-kirjautumistietojen mukaan. Roskakorissa olevia kohteita ei näytetä</string>
+  <string name="filtered_by_aliases">Suodatettu aliasten mukaan. Roskakorissa olevia kohteita ei näytetä</string>
+  <string name="filtered_by_notes">Suodatettu muistiinpanojen mukaan. Roskakorissa olevia kohteita ei näytetä</string>
+  <string name="filtered_by_credit_cards">Suodatettu maksukorttien mukaan. Roskakorissa olevia kohteita ei näytetä</string>
+  <string name="filtered_by_identities">Suodatettu identiteettien mukaan. Roskakorissa olevia kohteita ei näytetä</string>
 </resources>

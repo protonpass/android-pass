@@ -24,8 +24,7 @@
   <string name="create_contact_title">Créer un contact</string>
   <string name="detail_contact_title">Contacts</string>
   <string name="email_input_error">L\'adresse e-mail n\'est pas valide.</string>
-  <string name="detail_contact_sender_name">Nom de l\'expéditeur</string>
-  <string name="detail_contact_display_name" comment="sender email address">Lors de l\'envoi d\'un email depuis cet alias, l\'expéditeur sera %s.</string>
+  <string name="detail_contact_display_name" comment="sender email address">Un contact est créé pour chaque adresse e-mail qui envoie ou reçoit des messages depuis %1$s.</string>
   <string name="empty_alias_contacts_title">Contacts de l\'alias</string>
   <string name="empty_alias_contacts_body">Pour masquer votre adresse e-mail personnelle, vous pouvez créer un alias qui la dissimule.</string>
   <string name="empty_alias_contacts_learn_more">En savoir plus</string>
@@ -52,8 +51,6 @@
   <string name="snackbar_contact_block_error">Le contact n\'a pas été bloqué.</string>
   <string name="snackbar_contact_unblock_success">Le contact a été débloqué.</string>
   <string name="snackbar_contact_unblock_error">Le contact n\'a pas été débloqué.</string>
-  <string name="snackbar_sender_name_success">Le nom de l\'expéditeur a été mis à jour.</string>
-  <string name="snackbar_sender_name_error">Le nom de l\'expéditeur n\'a pas été mis à jour.</string>
   <string name="snackbar_delete_contact_success">Le contact a été supprimé.</string>
   <string name="snackbar_delete_contact_error">Le contact n\'a pas été supprimé.</string>
   <string name="snackbar_email_copied_success">L\'e-mail a été copié dans le presse-papiers.</string>

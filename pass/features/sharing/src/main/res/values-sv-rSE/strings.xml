@@ -115,6 +115,8 @@
   <string name="share_with_suggestions_title">Förslag</string>
   <string name="share_with_recents_title">Senaste</string>
   <string name="share_with_remove_email_content_description">Ta bort e-post</string>
+  <string name="share_with_user_title">Dela med</string>
+  <string name="share_with_user_description">Dela detta objekt med andra Proton-användare.</string>
   <string name="share_with_secure_link_title">Via säker länk</string>
   <string name="share_with_secure_link_description">Generera en säker länk till detta objekt.</string>
   <string name="share_with_manage_shared_vault_title">Hantera valvåtkomst</string>

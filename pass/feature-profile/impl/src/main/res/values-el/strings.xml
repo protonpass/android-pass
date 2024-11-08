@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Αποτυχία επαλήθευσης</string>
   <string name="profile_fingerprint_lock_enabled">Ενεργοποιημένο κλείδωμα δακτυλικών αποτυπωμάτων</string>
   <string name="profile_fingerprint_lock_disabled">Απενεργοποιημένο κλείδωμα δακτυλικών αποτυπωμάτων</string>
-  <string name="profile_error_performing_operation">Σφάλμα κατά την εκτέλεση της λειτουργίας</string>
   <string name="profile_app_version_copied_to_clipboard">Η έκδοση της εφαρμογής αντιγράφηκε</string>
   <string name="feedback_option_reddit">Ρίξτε μια ματιά στο Proton στο Reddit</string>
   <string name="feedback_option_mail">Στείλτε μας ένα μήνυμα</string>
@@ -74,4 +73,10 @@
   <string name="account_switcher_switch_to">Αλλαγή σε</string>
   <string name="account_switcher_add_account">Προσθήκη λογαριασμού</string>
   <string name="account_switcher_remove">Αφαίρεση</string>
+  <string name="filtered_by_logins">Φιλτράρεται κατά συνδέσεις. Τα απορριφθέντα στοιχεία δεν εμφανίζονται</string>
+  <string name="filtered_by_logins_with_mfa">Φιλτράρεται κατά συνδέσεις με TOTP. Τα απορριφθέντα στοιχεία δεν εμφανίζονται</string>
+  <string name="filtered_by_aliases">Φιλτράρεται κατά ψευδώνυμα. Τα απορριφθέντα στοιχεία δεν εμφανίζονται</string>
+  <string name="filtered_by_notes">Φιλτράρεται κατά σημειώσεις. Τα απορριφθέντα στοιχεία δεν εμφανίζονται</string>
+  <string name="filtered_by_credit_cards">Φιλτράρεται κατά πιστωτικές κάρτες. Τα απορριφθέντα στοιχεία δεν εμφανίζονται</string>
+  <string name="filtered_by_identities">Φιλτράρεται κατά ταυτότητες. Τα απορριφθέντα στοιχεία δεν εμφανίζονται</string>
 </resources>

@@ -12,12 +12,11 @@
   <string name="profile_option_autofill">自動入力</string>
   <string name="profile_option_autofill_subtitle">ユーザー名とパスワードを自動的に入力します。</string>
   <string name="profile_option_secure_links">セキュアリンク</string>
-  <string name="profile_option_alias_management">Alias management</string>
+  <string name="profile_option_alias_management">エイリアス管理</string>
   <string name="profile_error_biometry_failed_to_start">生体認証を開始できませんでした</string>
   <string name="profile_error_biometry_failed_to_authenticate">認証に失敗しました</string>
   <string name="profile_fingerprint_lock_enabled">指紋ロックが有効</string>
   <string name="profile_fingerprint_lock_disabled">指紋ロックが無効です</string>
-  <string name="profile_error_performing_operation">操作の実行エラー</string>
   <string name="profile_app_version_copied_to_clipboard">コピーされたアプリのバージョン</string>
   <string name="feedback_option_reddit">RedditでProtonをチェック</string>
   <string name="feedback_option_mail">メッセージを送る</string>
@@ -71,4 +70,10 @@
   <string name="account_switcher_switch_to">切り替え:</string>
   <string name="account_switcher_add_account">アカウントを追加</string>
   <string name="account_switcher_remove">削除</string>
+  <string name="filtered_by_logins">Filtered by logins. Trashed items aren\'t shown</string>
+  <string name="filtered_by_logins_with_mfa">Filtered by logins with TOTP. Trashed items aren\'t shown</string>
+  <string name="filtered_by_aliases">Filtered by aliases. Trashed items aren\'t shown</string>
+  <string name="filtered_by_notes">Filtered by notes. Trashed items aren\'t shown</string>
+  <string name="filtered_by_credit_cards">Filtered by credit cards. Trashed items aren\'t shown</string>
+  <string name="filtered_by_identities">Filtered by identities. Trashed items aren\'t shown</string>
 </resources>

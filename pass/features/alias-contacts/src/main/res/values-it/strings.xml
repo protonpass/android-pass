@@ -24,8 +24,7 @@
   <string name="create_contact_title">Crea contatto</string>
   <string name="detail_contact_title">Contatti</string>
   <string name="email_input_error">Indirizzo email non valido</string>
-  <string name="detail_contact_sender_name">Nome mittente</string>
-  <string name="detail_contact_display_name" comment="sender email address">Quando invii un email da questo alias, l\'email avrà %s come mittente</string>
+  <string name="detail_contact_display_name" comment="sender email address">Viene creato un contatto per ogni indirizzo e-mail che invia e-mail o riceve e-mail da %1$s</string>
   <string name="empty_alias_contacts_title">Contatti alias</string>
   <string name="empty_alias_contacts_body">Per mantenere il tuo indirizzo email nascosto, puoi creare un contatto alias che maschererà il tuo indirizzo</string>
   <string name="empty_alias_contacts_learn_more">Scopri di più</string>
@@ -52,8 +51,6 @@
   <string name="snackbar_contact_block_error">Blocco del contatto non riuscito</string>
   <string name="snackbar_contact_unblock_success">Contatto sbloccato</string>
   <string name="snackbar_contact_unblock_error">Sblocco del contatto non riuscito</string>
-  <string name="snackbar_sender_name_success">Nome del mittente aggiornato</string>
-  <string name="snackbar_sender_name_error">Modifica del nome del mittente non riuscito</string>
   <string name="snackbar_delete_contact_success">Contatto eliminato</string>
   <string name="snackbar_delete_contact_error">Impossibile eliminare il contatto</string>
   <string name="snackbar_email_copied_success">Email copiata negli appunti</string>

@@ -115,6 +115,8 @@
   <string name="share_with_suggestions_title">Sugerencias</string>
   <string name="share_with_recents_title">Recientes</string>
   <string name="share_with_remove_email_content_description">Quitar correo</string>
+  <string name="share_with_user_title">Compartir con</string>
+  <string name="share_with_user_description">Comparta este elemento con otros usuarios de Proton.</string>
   <string name="share_with_secure_link_title">Vía enlace seguro</string>
   <string name="share_with_secure_link_description">Genera un enlace seguro para este elemento.</string>
   <string name="share_with_manage_shared_vault_title">Gestionar el acceso a la bóveda</string>

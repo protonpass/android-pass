@@ -107,6 +107,8 @@
   <string name="activity_in_last_two_weeks">Activité au cours des 14 derniers jours</string>
   <string name="contacts">Contacts</string>
   <string name="contacts_section_description">Pour masquer votre adresse e-mail personnelle, vous pouvez créer un alias qui la dissimule.</string>
+  <string name="field_detail_display_name_title">Nom d\'affichage</string>
+  <string name="display_name_section_description">Il s\'agit du nom d\'affichage lors de l\'envoi d\'un message depuis cet alias.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s transfert</item>
     <item quantity="other">%1$s transferts</item>

@@ -24,8 +24,7 @@
   <string name="create_contact_title">Skapa kontakt</string>
   <string name="detail_contact_title">Kontakter</string>
   <string name="email_input_error">Ogiltig e-postadress</string>
-  <string name="detail_contact_sender_name">Avsändarnamn</string>
-  <string name="detail_contact_display_name" comment="sender email address">When sending an email from this alias, the email will have %s as sender.</string>
+  <string name="detail_contact_display_name" comment="sender email address">En kontakt skapas för varje e-postadress som skickar e-post till eller tar emot e-post från %1$s</string>
   <string name="empty_alias_contacts_title">Aliaskontakter</string>
   <string name="empty_alias_contacts_body">För att hålla din personliga e-postadress dold kan du skapa en aliaskontakt som maskerar din adress.</string>
   <string name="empty_alias_contacts_learn_more">Lär dig mer</string>
@@ -47,13 +46,11 @@
     <item quantity="other">%1$d blocked</item>
   </plurals>
   <string name="blocked_addresses_subtitle">Blockerade adresser</string>
-  <string name="forwarding_addresses_subtitle">Forwarding addresses</string>
+  <string name="forwarding_addresses_subtitle">Vidarebefordrande adresser</string>
   <string name="snackbar_contact_block_success">Kontakt blockerad</string>
   <string name="snackbar_contact_block_error">Kunde inte blockera kontakt</string>
   <string name="snackbar_contact_unblock_success">Kontakt avblockerad</string>
   <string name="snackbar_contact_unblock_error">Kunde inte avblockera kontakt</string>
-  <string name="snackbar_sender_name_success">Avsändarnamn uppdaterad</string>
-  <string name="snackbar_sender_name_error">Kunde inte uppdatera avsändarnamn</string>
   <string name="snackbar_delete_contact_success">Kontakt borttagen</string>
   <string name="snackbar_delete_contact_error">Kunde inte ta bort kontakt</string>
   <string name="snackbar_email_copied_success">E-post kopierat till urklipp</string>
@@ -66,6 +63,6 @@
   <string name="alias_contacts_bottomsheet_subtitle">För att hålla din personliga e-postadress dold kan du skapa en aliaskontakt som maskerar din adress.</string>
   <string name="alias_contacts_explanation">Här är hur det fungerar:</string>
   <string name="alias_contacts_bottomsheet_section_1">Ange adressen du vill skicka e-post till</string>
-  <string name="alias_contacts_bottomsheet_section_2">Proton Pass will generate a forwarding address (also referred to as reverse alias).</string>
+  <string name="alias_contacts_bottomsheet_section_2">Proton Pass kommer generera en vidarebefordrande adress (även kallad omvänd alias).</string>
   <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Email this address and it will appear to be sent from</string>
 </resources>

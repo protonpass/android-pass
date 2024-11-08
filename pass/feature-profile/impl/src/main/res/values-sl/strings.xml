@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Preverjanje pristnosti ni uspelo</string>
   <string name="profile_fingerprint_lock_enabled">Omogočeno zaklepanje s prstnim odtisom</string>
   <string name="profile_fingerprint_lock_disabled">Zaklepanje s prstnim odtisom onemogočeno</string>
-  <string name="profile_error_performing_operation">Napaka pri izvajanju operacije</string>
   <string name="profile_app_version_copied_to_clipboard">Različica aplikacije je kopirana</string>
   <string name="feedback_option_reddit">Oglejte si Proton na spletišču Reddit</string>
   <string name="feedback_option_mail">Pošlji sporočilo</string>
@@ -80,4 +79,10 @@
   <string name="account_switcher_switch_to">Preklopite na</string>
   <string name="account_switcher_add_account">Dodaj račun</string>
   <string name="account_switcher_remove">Odstrani</string>
+  <string name="filtered_by_logins">Filtered by logins. Trashed items aren\'t shown</string>
+  <string name="filtered_by_logins_with_mfa">Filtered by logins with TOTP. Trashed items aren\'t shown</string>
+  <string name="filtered_by_aliases">Filtered by aliases. Trashed items aren\'t shown</string>
+  <string name="filtered_by_notes">Filtered by notes. Trashed items aren\'t shown</string>
+  <string name="filtered_by_credit_cards">Filtered by credit cards. Trashed items aren\'t shown</string>
+  <string name="filtered_by_identities">Filtered by identities. Trashed items aren\'t shown</string>
 </resources>

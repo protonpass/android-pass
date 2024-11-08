@@ -32,8 +32,8 @@
   <string name="settings_share_crashes">Anonieme crashrapporten delen</string>
   <string name="settings_preference_updated">Uw voorkeur is bijgewerkt</string>
   <string name="settings_display_section_title">Weergeven</string>
-  <string name="settings_preference_display_username">Username field always visible</string>
-  <string name="settings_preference_display_autofill_pinning">Autofill pinning always visible</string>
+  <string name="settings_preference_display_username">Veld gebruikersnaam is altijd zichtbaar</string>
+  <string name="settings_preference_display_autofill_pinning">Autofill vastzetten altijd zichtbaar</string>
   <string name="view_logs_title">Logboeken bekijken</string>
   <string name="clipboard_bottomsheet_title">Klembord</string>
   <string name="clipboard_option_clear_clipboard_label">Klembord wissen</string>

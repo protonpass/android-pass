@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">Všetko</string>
   <string name="item_list_header_pinned_search_results">Pripnuté</string>
   <string name="item_list_header_logins_type">Prihlásenia</string>
+  <string name="item_list_header_logins_totp_type">Logins with TOTP</string>
   <string name="item_list_header_aliases_type">Aliasy</string>
   <string name="item_list_header_notes_type">Poznámky</string>
   <string name="item_list_header_credit_cards_type">Platobné karty</string>
@@ -48,8 +49,8 @@
   <string name="action_edit">Upraviť</string>
   <string name="action_add">Pridať</string>
   <string name="action_delete">Vymazať</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
+  <string name="action_make_default">Nastaviť ako predvolené</string>
+  <string name="action_verify">Overiť</string>
   <string name="action_close">Zavrieť</string>
   <string name="action_update">Aktualizovať</string>
   <!-- Empty list -->
@@ -206,28 +207,28 @@
   <string name="dialog_upgrade_plan_action_cancel">Teraz nie</string>
   <!-- Words -->
   <string name="email_address">Emailová adresa</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">Neplatná emailová adresa</string>
   <string name="password">Heslo</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Tlačidlo na zrušenie tejto nápovedy a jej opätovné nezobrazenie</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="one">%d year</item>
-    <item quantity="few">%d years</item>
-    <item quantity="many">%d years</item>
-    <item quantity="other">%d years</item>
+    <item quantity="one">%d rok</item>
+    <item quantity="few">%d roky</item>
+    <item quantity="many">%d rokov</item>
+    <item quantity="other">%d rokov</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d month</item>
-    <item quantity="few">%d months</item>
-    <item quantity="many">%d months</item>
-    <item quantity="other">%d months</item>
+    <item quantity="one">%d mesiac</item>
+    <item quantity="few">%d mesiace</item>
+    <item quantity="many">%d mesiacov</item>
+    <item quantity="other">%d mesiacov</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="one">%d week</item>
-    <item quantity="few">%d weeks</item>
-    <item quantity="many">%d weeks</item>
-    <item quantity="other">%d weeks</item>
+    <item quantity="one">%d týždeň</item>
+    <item quantity="few">%d týždne</item>
+    <item quantity="many">%d týždňov</item>
+    <item quantity="other">%d týždňov</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d deň</item>
@@ -255,9 +256,9 @@
   </plurals>
   <plurals name="aliases_count">
     <item quantity="one">%d alias</item>
-    <item quantity="few">%d aliases</item>
-    <item quantity="many">%d aliases</item>
-    <item quantity="other">%d aliases</item>
+    <item quantity="few">%d aliasy</item>
+    <item quantity="many">%d aliasov</item>
+    <item quantity="other">%d aliasov</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Poznámka skopírovaná</string>
@@ -286,8 +287,11 @@
   </plurals>
   <string name="simple_login_widget_action">Synchronizovať aliasy</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t receive the code?</string>
-  <string name="verification_code_suggestion_spam">Skontrolujte, či sa vo vašom spame nenachádza email s názvom „Potvrďte, prosím, svoju emailovú adresu pre Proton Pass“.</string>
-  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">If you can\'t find such email, you can %s.</string>
-  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Ak takýto email nemôžete nájsť, môžete %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">požiadať o nový kód</string>
+  <string name="field_display_name_title">Display name</string>
 </resources>

@@ -31,8 +31,9 @@
   <string name="upsell_paid_feature_authenticator_essential">Authentification A2F requise pour organisation</string>
   <string name="upsell_paid_feature_sso_essential">Intégration de l\'authentification unique SSO (bientôt disponible)</string>
   <string name="upsell_paid_feature_advance_alias_management_title">Gérer vos alias</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">Proton Unlimited permet la gestion avancée des alias. Améliorez votre abonnement pour en profiter immédiatement.</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">Un abonnement payant permet la gestion avancée des alias. Améliorez votre abonnement pour en profiter immédiatement.</string>
+  <string name="upsell_paid_feature_item_sharing_title">Partage rapide d\'un élément</string>
+  <string name="upsell_paid_feature_item_sharing_subtitle">Améliorez votre abonnement pour partager un élément avec n\'importe quel utilisateur de Pass. Profitez également d\'autres fonctionnalités premium :</string>
   <string name="upsell_button_upgrade">Je choisis Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Je choisis Pass Business</string>
-  <string name="upsell_button_upgrade_unlimited">Je choisis Proton Unlimited</string>
 </resources>

@@ -24,10 +24,9 @@
   <string name="create_contact_title">Utwórz kontakt</string>
   <string name="detail_contact_title">Kontakty</string>
   <string name="email_input_error">Adres e-mail jest nieprawidłowy</string>
-  <string name="detail_contact_sender_name">Nazwa nadawcy</string>
-  <string name="detail_contact_display_name" comment="sender email address">Podczas wysyłania wiadomości e-mail z tego aliasu, wiadomość e-mail będzie miała %s jako nadawcę.</string>
+  <string name="detail_contact_display_name" comment="sender email address">A contact is created for every email address that sends emails to or receives emails from %1$s</string>
   <string name="empty_alias_contacts_title">Alias kontaktów</string>
-  <string name="empty_alias_contacts_body">Aby ukryć swój osobisty adres e-mail, można utworzyć alias, który ukryje adres.</string>
+  <string name="empty_alias_contacts_body">Aby ukryć osobisty adres e-mail, możesz utworzyć alias.</string>
   <string name="empty_alias_contacts_learn_more">Dowiedz się więcej</string>
   <string name="unblock_button">Odblokuj kontakt</string>
   <string name="block_button">Zablokuj kontakt</string>
@@ -35,43 +34,41 @@
   <string name="no_activity_contact">Brak aktywności w ciągu ostatnich 14 dni.</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">w ciągu ostatnich 14 dni.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d forwarded</item>
-    <item quantity="few">%1$d forwarded</item>
-    <item quantity="many">%1$d forwarded</item>
-    <item quantity="other">%1$d forwarded</item>
+    <item quantity="one">Przekierowano %1$d</item>
+    <item quantity="few">Przekierowano %1$d</item>
+    <item quantity="many">Przekierowano %1$d</item>
+    <item quantity="other">Przekierowano %1$d</item>
   </plurals>
   <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d sent</item>
-    <item quantity="few">%1$d sent</item>
-    <item quantity="many">%1$d sent</item>
-    <item quantity="other">%1$d sent</item>
+    <item quantity="one">wysłano %1$d</item>
+    <item quantity="few">wysłano %1$d</item>
+    <item quantity="many">wysłano %1$d</item>
+    <item quantity="other">wysłano %1$d</item>
   </plurals>
   <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d blocked</item>
-    <item quantity="few">%1$d blocked</item>
-    <item quantity="many">%1$d blocked</item>
-    <item quantity="other">%1$d blocked</item>
+    <item quantity="one">zablokowano %1$d</item>
+    <item quantity="few">zablokowano %1$d</item>
+    <item quantity="many">zablokowano %1$d</item>
+    <item quantity="other">zablokowano %1$d</item>
   </plurals>
   <string name="blocked_addresses_subtitle">Zablokowane adresy</string>
   <string name="forwarding_addresses_subtitle">Adresy do przekierowania</string>
   <string name="snackbar_contact_block_success">Kontakt został zablokowany</string>
-  <string name="snackbar_contact_block_error">Nie udało się zablokować kontaktu</string>
+  <string name="snackbar_contact_block_error">Nie można zablokować kontaktu</string>
   <string name="snackbar_contact_unblock_success">Kontakt został odblokowany</string>
   <string name="snackbar_contact_unblock_error">Nie można odblokować kontaktu</string>
-  <string name="snackbar_sender_name_success">Nazwa nadawcy została zaktualizowana</string>
-  <string name="snackbar_sender_name_error">Nie można zaktualizować nazwy nadawcy</string>
   <string name="snackbar_delete_contact_success">Kontakt został usunięty</string>
-  <string name="snackbar_delete_contact_error">Nie udało się usunąć kontaktu</string>
-  <string name="snackbar_email_copied_success">Skopiowano wiadomość e-mail do schowka</string>
-  <string name="contact_option_send_email">Wyślij wiadomość e-mail</string>
+  <string name="snackbar_delete_contact_error">Nie można usunąć kontaktu</string>
+  <string name="snackbar_email_copied_success">Adres został skopiowany do schowka</string>
+  <string name="contact_option_send_email">Wyślij wiadomość</string>
   <string name="contact_option_copy_address">Kopiuj adres</string>
   <string name="contact_option_block_contact">Zablokuj kontakt</string>
   <string name="contact_option_unblock_contact">Odblokuj kontakt</string>
   <string name="contact_option_delete">Usuń</string>
   <string name="alias_contacts_bottomsheet_title">Alias Contacts</string>
-  <string name="alias_contacts_bottomsheet_subtitle">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="alias_contacts_bottomsheet_subtitle">Aby ukryć osobisty adres e-mail, możesz utworzyć alias.</string>
   <string name="alias_contacts_explanation">Jak to działa:</string>
-  <string name="alias_contacts_bottomsheet_section_1">Enter the address you want to email.</string>
+  <string name="alias_contacts_bottomsheet_section_1">Wpisz adres odbiorcy.</string>
   <string name="alias_contacts_bottomsheet_section_2">Proton Pass will generate a forwarding address (also referred to as reverse alias).</string>
   <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Email this address and it will appear to be sent from</string>
 </resources>

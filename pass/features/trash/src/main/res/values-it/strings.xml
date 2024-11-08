@@ -8,4 +8,15 @@
   <string name="alias_dialog_move_to_trash_content">Sei sicuro di voler spostare questo alias nel cestino?
 Questo non inoltrerà più le email alla tua casella di posta.</string>
   <string name="alias_dialog_move_to_trash_confirm">Conferma</string>
+  <string name="delete_alias_confirm">Cancellalo, non ne avrò mai bisogno</string>
+  <string name="delete_alias_title">Elimina %s</string>
+  <string name="delete_alias_enabled_subtitle">"Tieni presente che una volta eliminato, l'alias non potrà essere ripristinato. Magari preferisci disabilitare l'alias? "</string>
+  <string name="delete_alias_disabled_subtitle">Tieni presente che una volta eliminato, l\'alias non potrà essere ripristinato. L\'alias è già disabilitato e non inoltrerà le email alla tua casella di posta.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="one">Stai per eliminare definitivamente %d alias</item>
+    <item quantity="other">Stai per eliminare definitivamente %d alias</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Tieni presente che una volta eliminati, gli alias non potranno essere ripristinati</string>
+  <string name="bulk_delete_alias_confirm">Capito, non ne avrò mai bisogno</string>
+  <string name="delete_alias_disable">Disabilita l\'alias</string>
 </resources>

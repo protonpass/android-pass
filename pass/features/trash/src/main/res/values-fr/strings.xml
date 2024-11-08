@@ -7,4 +7,15 @@
   <string name="alias_dialog_move_to_trash_title">Déplacer dans la corbeille ?</string>
   <string name="alias_dialog_move_to_trash_content">Si vous déplacez un alias dans la corbeille, il ne transférera plus de messages vers votre messagerie.</string>
   <string name="alias_dialog_move_to_trash_confirm">Confirmer</string>
+  <string name="delete_alias_confirm">Supprimez-le, je n\'en aurai jamais besoin</string>
+  <string name="delete_alias_title">Supprimer %s</string>
+  <string name="delete_alias_enabled_subtitle">"Veuillez noter qu'une fois supprimé, l'alias ne pourra pas être restauré. Voudriez-vous plutôt la désactiver ? "</string>
+  <string name="delete_alias_disabled_subtitle">Veuillez noter qu\'une fois supprimé, l\'alias ne pourra pas être restauré. Cet alias est déjà désactivé et ne transfèrera plus d\'e-mails dans votre messagerie.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="one">Vous êtes sur le point de supprimer définitivement %d alias.</item>
+    <item quantity="other">Vous êtes sur le point de supprimer définitivement %d alias.</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Veuillez noter qu\'une fois supprimé, les alias ne peuvent pas être restaurés.</string>
+  <string name="bulk_delete_alias_confirm">J\'ai compris et je n\'en aurai jamais besoin.</string>
+  <string name="delete_alias_disable">Désactiver l\'alias</string>
 </resources>

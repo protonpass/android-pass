@@ -105,7 +105,9 @@
   <string name="passkey_detail_bottomsheet_created">생성함</string>
   <string name="activity_in_last_two_weeks">지난 14일간 활동</string>
   <string name="contacts">연락처</string>
-  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="contacts_section_description">개인 이메일을 비공개로 유지하려면 별칭 연락처를 만드세요.</string>
+  <string name="field_detail_display_name_title">표시되는 이름</string>
+  <string name="display_name_section_description">이 별칭으로부터 이메일이 전송되면 표시되는 이름입니다.</string>
   <plurals name="alias_forwards_count">
     <item quantity="other">%1$s개 가져오기</item>
   </plurals>

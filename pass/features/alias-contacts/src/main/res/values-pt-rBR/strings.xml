@@ -24,8 +24,7 @@
   <string name="create_contact_title">Criar contato</string>
   <string name="detail_contact_title">Contatos</string>
   <string name="email_input_error">Endereço de e-mail inválido</string>
-  <string name="detail_contact_sender_name">Nome do remetente</string>
-  <string name="detail_contact_display_name" comment="sender email address">Ao enviar um e-mail a partir desse alias, o e-mail terá %s como remetente.</string>
+  <string name="detail_contact_display_name" comment="sender email address">A contact is created for every email address that sends emails to or receives emails from %1$s</string>
   <string name="empty_alias_contacts_title">Contatos de alias</string>
   <string name="empty_alias_contacts_body">Para manter seu endereço de e-mail pessoal oculto, você pode criar um contato alias que oculte seu endereço.</string>
   <string name="empty_alias_contacts_learn_more">Saiba mais</string>
@@ -52,8 +51,6 @@
   <string name="snackbar_contact_block_error">Não foi possível bloquear o contato</string>
   <string name="snackbar_contact_unblock_success">Contato desbloqueado</string>
   <string name="snackbar_contact_unblock_error">Não foi possível desbloquear o contato</string>
-  <string name="snackbar_sender_name_success">Nome do remetente atualizado</string>
-  <string name="snackbar_sender_name_error">Não foi possível atualizar o nome do remetente</string>
   <string name="snackbar_delete_contact_success">Contato excluído</string>
   <string name="snackbar_delete_contact_error">Não foi possível excluir o contato</string>
   <string name="snackbar_email_copied_success">E-mail copiado para a área de transferência</string>

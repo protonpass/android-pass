@@ -7,4 +7,15 @@
   <string name="alias_dialog_move_to_trash_title">გადავიტანო ნაგვის ყუთში?</string>
   <string name="alias_dialog_move_to_trash_content">თუ ფსევდონიმს ნაგვის ყუთში გადაიტანს, ის შეწყვეტს ელფოსტების გადამისამართებას თქვენს საფოსტო ყუთში</string>
   <string name="alias_dialog_move_to_trash_confirm">დასტური</string>
+  <string name="delete_alias_confirm">წაშალე, ის მე არასდროს დამჭირდება</string>
+  <string name="delete_alias_title">%s-ის წაშლა</string>
+  <string name="delete_alias_enabled_subtitle">"დაიმახსოვრეთ, რომ ფსევდონიმის აღდგენა შეუქცევადია. შეიძლება, მისი, უბრალოდ გათიშვა გნებავთ? "</string>
+  <string name="delete_alias_disabled_subtitle">დაიმახსოვრეთ, რომ როცა წაშლით, ფსევდონიმს ვეღარ აღადგენთ. ფსევდონიმი უკვე გამორთულია და ელფოსტებს თქვენს საგოსტო ყუთში აღარ გადააგზავნის.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="one">აპირებთ, სამუდამოდ წაშალოთ %d ფსევდონიმი</item>
+    <item quantity="other">აპირებთ, სამუდამოდ წაშალოთ %d ფსევდონიმი</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">დაიმახსოვრეთ, მას შემდეგ, რაც ფსევდონიმს წაშლით, მას ვერ აღადგენთ</string>
+  <string name="bulk_delete_alias_confirm">გავიგე. არასდროს დამჭირდება</string>
+  <string name="delete_alias_disable">ფსევდონიმის გათიშვა</string>
 </resources>

@@ -7,4 +7,17 @@
   <string name="alias_dialog_move_to_trash_title">Перамясціць у сметніцу?</string>
   <string name="alias_dialog_move_to_trash_content">Калі вы перамясціце псеўданім у сметніцу, ён перастане перасылаць лісты ў вашу паштовую скрыню.</string>
   <string name="alias_dialog_move_to_trash_confirm">Пацвердзіць</string>
+  <string name="delete_alias_confirm">Выдаліць яго. Ён мне больш не патрэбны</string>
+  <string name="delete_alias_title">Выдаліць %s</string>
+  <string name="delete_alias_enabled_subtitle">"Звярніце ўвагу, што выдалены псеўданім нельга аднавіць. Магчыма, што вы захочаце адключыць яго замест таго, каб выдаляць незваротна? "</string>
+  <string name="delete_alias_disabled_subtitle">Звярніце ўвагу, што выдалены псеўданім нельга аднавіць. Псеўданім ужо адключаны і ён не будзе перасылаць электронныя лісты ў вашу паштовую скрыню.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="one">Вы збіраецеся незваротна выдаліць %d псеўданім</item>
+    <item quantity="few">Вы збіраецеся незваротна выдаліць %d псеўданімы</item>
+    <item quantity="many">Вы збіраецеся незваротна выдаліць %d псеўданімаў</item>
+    <item quantity="other">Вы збіраецеся незваротна выдаліць %d псеўданімаў</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Звярніце ўвагу, што псеўданімы немагчыма аднавіць пасля іх выдалення</string>
+  <string name="bulk_delete_alias_confirm">Я ўсведамляю гэта. Яны мне больш не спатрэбяцца</string>
+  <string name="delete_alias_disable">Адключыць псеўданім</string>
 </resources>

@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">Tutto</string>
   <string name="item_list_header_pinned_search_results">Fissati</string>
   <string name="item_list_header_logins_type">Login</string>
+  <string name="item_list_header_logins_totp_type">Login con TOTP</string>
   <string name="item_list_header_aliases_type">Alias</string>
   <string name="item_list_header_notes_type">Note</string>
   <string name="item_list_header_credit_cards_type">Carte</string>
@@ -259,13 +260,16 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Attiva la sincronizzazione con SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">Abbiamo rilevato che hai un alias %d presente in SimpleLogin ma mancante in Proton Pass. Desideri importarlo?</item>
-    <item quantity="other">Abbiamo rilevato che hai alias %d presenti in SimpleLogin ma mancanti in Proton Pass. Desideri importarli?</item>
+    <item quantity="one">Abbiamo rilevato che hai %d alias presente in SimpleLogin ma mancante in Proton Pass. Vuoi importare questo alias?</item>
+    <item quantity="other">Abbiamo rilevato che hai %d alias presenti in SimpleLogin ma mancanti in Proton Pass. Vuoi importare questi alias?</item>
   </plurals>
   <string name="simple_login_widget_action">Sincronizza gli alias</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Non hai ricevuto il codice?</string>
-  <string name="verification_code_suggestion_spam">Controlla se nella cartella spam è presente un\'email denominata \"Conferma l\'indirizzo email per Proton Pass\"</string>
-  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Se non riesci a trovare questo indirizzo email, puoi %s.</string>
-  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">richiedi un nuovo codice</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Controlla se nella cartella Spam è presente un\'email denominata \"%s\"</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Conferma il tuo indirizzo email per Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Per favore conferma la tua casella di posta</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Se non riesci a trovare questa email, puoi %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">chiedere un nuovo codice</string>
+  <string name="field_display_name_title">Nome visualizzato</string>
 </resources>

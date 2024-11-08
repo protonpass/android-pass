@@ -31,8 +31,9 @@
   <string name="upsell_paid_feature_authenticator_essential">Richiedi 2FA per l\'organizzazione</string>
   <string name="upsell_paid_feature_sso_essential">Integrazione SSO (in arrivo)</string>
   <string name="upsell_paid_feature_advance_alias_management_title">Gestisci i tuoi alias</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">La gestione avanzata degli alias è disponibile con Proton Unlimited. Esegui l\'upgrade per accedervi.</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">La gestione avanzata degli alias è disponibile con un piano a pagamento. Esegui l\'upgrade per l\'accesso immediato.</string>
+  <string name="upsell_paid_feature_item_sharing_title">Condividi rapidamente un elemento</string>
+  <string name="upsell_paid_feature_item_sharing_subtitle">Esegui l\'upgrade oggi per poter condividere un elemento con qualsiasi utente Pass. E goditi altre funzionalità premium:</string>
   <string name="upsell_button_upgrade">Ottieni Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Ottieni Pass Business</string>
-  <string name="upsell_button_upgrade_unlimited">Ottieni Proton Unlimited</string>
 </resources>

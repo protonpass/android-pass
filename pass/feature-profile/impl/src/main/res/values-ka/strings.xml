@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">ავთენტიკაციის შეცდომა</string>
   <string name="profile_fingerprint_lock_enabled">ანაბეჭდით დაბლოკვა ჩართულია</string>
   <string name="profile_fingerprint_lock_disabled">ანაბეჭდით დაბლოკვა გამორთულია</string>
-  <string name="profile_error_performing_operation">ოპერაციის შესრულების შეცდომა</string>
   <string name="profile_app_version_copied_to_clipboard">აპის ვერსია დაკოპირდა</string>
   <string name="feedback_option_reddit">გადახედეთ Proton-ის თემას Reddit-ზე</string>
   <string name="feedback_option_mail">მოგვწერეთ</string>
@@ -74,4 +73,10 @@
   <string name="account_switcher_switch_to">გადართვა</string>
   <string name="account_switcher_add_account">ანგარიშის დამატება</string>
   <string name="account_switcher_remove">წაშლა</string>
+  <string name="filtered_by_logins">გაფილტრულია შესვლის დეტალებით. ნაგავში გადატანილი ელემენტები ნაჩვენები არაა</string>
+  <string name="filtered_by_logins_with_mfa">გაფილტრულია TOTP-ის მქონე შესვლის დეტალებით. ნაგავში გადატანილი ელემენტები ნაჩვენები არაა</string>
+  <string name="filtered_by_aliases">გაფილტრულია ფსევდონიმებით. ნაგავში გადატანილი ელემენტები ნაჩვენები არაა</string>
+  <string name="filtered_by_notes">გაფილტრულია შენიშვნებით. ნაგავში გადატანილი ელემენტები ნაჩვენები არაა</string>
+  <string name="filtered_by_credit_cards">გაფილტრულია საკრედიტო ბარათებით. ნაგავში გადატანილი ელემენტები ნაჩვენები არაა</string>
+  <string name="filtered_by_identities">გაფილტრულია იდენტიფიკატორებით. ნაგავში გადატანილი ელემენტები ნაჩვენები არაა</string>
 </resources>

@@ -7,4 +7,14 @@
   <string name="alias_dialog_move_to_trash_title">휴지통으로 이동할까요?</string>
   <string name="alias_dialog_move_to_trash_content">별칭을 쓰레기통으로 이동하게 되면, 내 메일함으로의 전달도 중단됩니다.</string>
   <string name="alias_dialog_move_to_trash_confirm">확인</string>
+  <string name="delete_alias_confirm">삭제할게요, 필요하지 않아요.</string>
+  <string name="delete_alias_title">%s 삭제</string>
+  <string name="delete_alias_enabled_subtitle">"한 번 삭제하면 별칭 복구가 불가합니다. 별칭을 비활성화하시려는건 아닌가요? "</string>
+  <string name="delete_alias_disabled_subtitle">별칭을 삭제하면 복원할 수 없습니다. 별칭이 이미 비활성화되었기에 내 메일함으로 이메일이 포워딩되지 않습니다.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="other">%d개 별칭을 영구적으로 삭제하려고 합니다.</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">한 번 삭제하면 복구할 수 없습니다.</string>
+  <string name="bulk_delete_alias_confirm">이해했어요, 더 이상 필요하지 않습니다.</string>
+  <string name="delete_alias_disable">별칭 비활성화</string>
 </resources>

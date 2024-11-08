@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Kunne ikke godkende</string>
   <string name="profile_fingerprint_lock_enabled">Fingeraftrykslås aktiveret</string>
   <string name="profile_fingerprint_lock_disabled">Fingeraftrykslås deaktiveret</string>
-  <string name="profile_error_performing_operation">Fejl ved udførelse af handling</string>
   <string name="profile_app_version_copied_to_clipboard">App-version kopieret</string>
   <string name="feedback_option_reddit">Tjek Proton på Reddit</string>
   <string name="feedback_option_mail">Send en besked til os</string>
@@ -74,4 +73,10 @@
   <string name="account_switcher_switch_to">Skift til</string>
   <string name="account_switcher_add_account">Tilføj konto</string>
   <string name="account_switcher_remove">Fjern</string>
+  <string name="filtered_by_logins">Filtreret efter logins. Elementer i papirkurven vises ikke</string>
+  <string name="filtered_by_logins_with_mfa">Filtreret efter logins med TOTP. Elementer i papirkurven vises ikke</string>
+  <string name="filtered_by_aliases">Filtreret efter aliasser. Elementer i papirkurven vises ikke</string>
+  <string name="filtered_by_notes">Filtreret efter noter. Elementer i papirkurven vises ikke</string>
+  <string name="filtered_by_credit_cards">Filtreret efter betalingskort. Elementer i papirkurven vises ikke</string>
+  <string name="filtered_by_identities">Filtreret efter identiteter. Elementer i papirkurven vises ikke</string>
 </resources>

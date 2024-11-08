@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">Vše</string>
   <string name="item_list_header_pinned_search_results">Připnuto</string>
   <string name="item_list_header_logins_type">Přihlášení</string>
+  <string name="item_list_header_logins_totp_type">Přihlášení pomocí TOTP</string>
   <string name="item_list_header_aliases_type">Aliasy</string>
   <string name="item_list_header_notes_type">Poznámky</string>
   <string name="item_list_header_credit_cards_type">Platební karty</string>
@@ -286,8 +287,11 @@
   </plurals>
   <string name="simple_login_widget_action">Synchronizovat aliasy</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Neobdrželi jste kód?</string>
-  <string name="verification_code_suggestion_spam">Prosím, podívejte se do spamu, jestli v něm není e-mail nazvaný \"Prosím potvrďte svoji e-mailovou adresu pro Proton Pass\"</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Zkontrolujte, zda se ve spamu nenachází e-mail s názvem \"%s\"</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Potvrďte prosím svou e-mailovou adresu pro Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Potvrďte prosím svou e-mailovou schránku</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Pokud takový e-mail nelze najít, tak můžete %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">požádat o nový kód</string>
+  <string name="field_display_name_title">Zobrazované jméno</string>
 </resources>

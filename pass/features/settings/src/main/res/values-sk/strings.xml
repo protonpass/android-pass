@@ -31,8 +31,8 @@
   <string name="settings_share_telemetry">Anonymné zdieľanie údajov o používaní</string>
   <string name="settings_share_crashes">Zdieľať anonymné hlásenia o zlyhaniach</string>
   <string name="settings_preference_updated">Vaša predvoľba bola aktualizovaná</string>
-  <string name="settings_display_section_title">Display</string>
-  <string name="settings_preference_display_username">Username field always visible</string>
+  <string name="settings_display_section_title">Zobraziť</string>
+  <string name="settings_preference_display_username">Pole s používateľským menom je vždy viditeľné</string>
   <string name="settings_preference_display_autofill_pinning">Vždy viditeľné pripnutie automatického vyplňovania</string>
   <string name="view_logs_title">Zobraziť záznamy</string>
   <string name="clipboard_bottomsheet_title">Schránka</string>

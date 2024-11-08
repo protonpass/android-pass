@@ -7,4 +7,15 @@
   <string name="alias_dialog_move_to_trash_title">¿Mover a la papelera?</string>
   <string name="alias_dialog_move_to_trash_content">Si mueves un alias a la papelera, dejará de reenviar correos a tu buzón.</string>
   <string name="alias_dialog_move_to_trash_confirm">Confirmar</string>
+  <string name="delete_alias_confirm">Elimínalo, no lo necesitaré</string>
+  <string name="delete_alias_title">Eliminar %s</string>
+  <string name="delete_alias_enabled_subtitle">"Recuerda que una vez eliminado, el alias no puede ser restaurado. ¿Quizás quieres deshabilitar el alias? "</string>
+  <string name="delete_alias_disabled_subtitle">Por favor, recuerda que una vez eliminados, el alias no se pueden recuperar. El alias ya está deshabilitado y no redirigirá correos a su bandeja de entrada.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="one">Estás a punto de eliminar definitivamente el alias %d.</item>
+    <item quantity="other">Estás a punto de eliminar definitivamente los alias %d.</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Por favor, recuerda que una vez eliminados, los alias no se pueden recuperar.</string>
+  <string name="bulk_delete_alias_confirm">Entendido, ya no los necesito.</string>
+  <string name="delete_alias_disable">Desactivar el alias</string>
 </resources>

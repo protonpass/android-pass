@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">Tümü</string>
   <string name="item_list_header_pinned_search_results">Sabitlenmiş</string>
   <string name="item_list_header_logins_type">Oturum açma kayıtları</string>
+  <string name="item_list_header_logins_totp_type">Tek kullanımlık parola kullanan oturum açma kayıtları</string>
   <string name="item_list_header_aliases_type">Takma adlar</string>
   <string name="item_list_header_notes_type">Notlar</string>
   <string name="item_list_header_credit_cards_type">Kredi kartları</string>
@@ -264,8 +265,11 @@
   </plurals>
   <string name="simple_login_widget_action">Takma adları eşitle</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Kodu almadınız mı?</string>
-  <string name="verification_code_suggestion_spam">İstenmeyen kutusunda \"Lütfen Proton Pass için e-posta adresinizi doğrulayın\" konulu bir e-posta olup olmadığına bakın.</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Lütfen istenmeyen klasörünüzde “%s“ konulu bir e-posta olup olmadığına bakın</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Lütfen Proton Pass ile kullanmak istediğiniz e-posta adresini doğrulayın</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Lütfen e-posta kutunuzu doğrulayın</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Böyle bir e-posta bulamıyorsanız, %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">yeni bir kod isteyin</string>
+  <string name="field_display_name_title">Görüntülenecek ad</string>
 </resources>

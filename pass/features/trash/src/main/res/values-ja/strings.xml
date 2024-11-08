@@ -7,4 +7,14 @@
   <string name="alias_dialog_move_to_trash_title">ごみ箱に移動しますか?</string>
   <string name="alias_dialog_move_to_trash_content">エイリアスをごみ箱に移動すると、メールボックスへのメール転送が停止します。</string>
   <string name="alias_dialog_move_to_trash_confirm">確認</string>
+  <string name="delete_alias_confirm">Delete it, I will never need it</string>
+  <string name="delete_alias_title">Delete %s</string>
+  <string name="delete_alias_enabled_subtitle">"Please note once deleted, the alias can't be restored. Maybe you want to disable the alias instead? "</string>
+  <string name="delete_alias_disabled_subtitle">Please note once deleted, the alias can\'t be restored. The alias is already disabled and won’t forward emails to your mailbox.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="other">You\'re about to permanently delete %d aliases</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Please note once deleted, the aliases can\'t be restored</string>
+  <string name="bulk_delete_alias_confirm">Understood, I will never need them</string>
+  <string name="delete_alias_disable">Disable alias</string>
 </resources>

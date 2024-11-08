@@ -3,6 +3,18 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Váš trezor je prázdný</string>
   <string name="home_empty_vault_subtitle">Začněte vytvořením první položky.</string>
+  <string name="home_empty_vault_login_title">Nebyla nalezena žádná přihlášení</string>
+  <string name="home_empty_vault_login_subtitle">Začněte vytvořením první položky přihlášení.</string>
+  <string name="home_empty_vault_aliases_title">Nebyly nalezeny žádné aliasy</string>
+  <string name="home_empty_vault_aliases_subtitle">Začněte vytvořením první položky aliasu.</string>
+  <string name="home_empty_vault_notes_title">Nebyly nalezeny žádné poznámky</string>
+  <string name="home_empty_vault_notes_subtitle">Začněte vytvořením první položky poznámky.</string>
+  <string name="home_empty_vault_logins_mfa_title">Nebyla nalezena žádná přihlášení pomocí TOTP</string>
+  <string name="home_empty_vault_logins_mfa_subtitle">Začněte vytvořením prvního přihlášení pomocí TOTP.</string>
+  <string name="home_empty_vault_identity_title">Nebyla nalezena žádná identita</string>
+  <string name="home_empty_vault_identity_subtitle">Začněte vytvořením první položky identity.</string>
+  <string name="home_empty_vault_cc_title">Nebyla nalezena žádná platební karta</string>
+  <string name="home_empty_vault_cc_subtitle">Začněte vytvořením první položky platební karty.</string>
   <string name="home_empty_read_only_vault_title">Tento trezor je prázdný</string>
   <string name="home_empty_read_only_vault_subtitle">Do trezoru určeného pouze ke čtení nelze přidávat položky.</string>
   <string name="home_empty_vault_create_login">Vytvořit přihlášení</string>
@@ -27,14 +39,15 @@
   <string name="home_trial_banner_title">Náš dárek na přivítanou pro vás</string>
   <string name="home_trial_banner_text">7 dnů na vyzkoušení prémiových funkcí zdarma. Pouze během prvního týdne používání Proton Pass.</string>
   <string name="home_trial_banner_settings">Více informací ›</string>
-  <string name="sl_sync_banner_title">Importujte své aliasy ze SimpleLogin</string>
+  <string name="sl_sync_banner_title">Synchronizujte své aliasy ze SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
-    <item quantity="one">Máte %d alias, který je přítomen v SimpleLogin, ale chybí v Proton Pass. Chcete jej importovat?</item>
-    <item quantity="few">Máte %d aliasy, které jsou přítomné v SimpleLogin, ale chybí v Proton Pass. Chcete je importovat?</item>
-    <item quantity="many">Máte %d aliasů, které jsou přítomné v SimpleLogin, ale chybí v Proton Pass. Chcete je importovat?</item>
-    <item quantity="other">Máte %d aliasů, které jsou přítomné v SimpleLogin, ale chybí v Proton Pass. Chcete je importovat?</item>
+    <item quantity="one">Máte %d alias, který je přítomen v SimpleLogin, ale chybí v Proton Pass. Chcete jej synchronizovat?</item>
+    <item quantity="few">Máte %d aliasy, které jsou přítomné v SimpleLogin, ale chybí v Proton Pass. Chcete je synchronizovat?</item>
+    <item quantity="many">Máte %d aliasů, které jsou přítomné v SimpleLogin, ale chybí v Proton Pass. Chcete je synchronizovat?</item>
+    <item quantity="other">Máte %d aliasů, které jsou přítomné v SimpleLogin, ale chybí v Proton Pass. Chcete je synchronizovat?</item>
   </plurals>
-  <string name="sl_sync_banner_settings">Importovat aliasy ›</string>
+  <string name="sl_sync_banner_settings">Synchronizovat aliasy ›</string>
+  <string name="sl_sync_banner_note">Po synchronizaci se smazáním aliasů v Pass smažou také aliasy v SimpleLogin.</string>
   <string name="home_notification_permission_banner_title">Získejte důležité aktualizace</string>
   <string name="home_notification_permission_banner_text">Povolte vyskakovací oznámení, abyste byli informováni, když s vámi ostatní sdílejí trezor.</string>
   <string name="home_notification_permission_banner_settings">Povolte oprávnění ›</string>
@@ -88,6 +101,7 @@
   <string name="item_type_filter_note">Poznámka</string>
   <string name="item_type_filter_credit_card">Platební karta</string>
   <string name="item_type_filter_identity">Identita</string>
+  <string name="item_type_filter_login_totp">Přihlášení pomocí TOTP</string>
   <!-- Trash -->
   <string name="trash_empty_list_title">Koš je prázdný</string>
   <string name="trash_empty_list_message">Zde se zobrazují položky přesunuté do koše.</string>

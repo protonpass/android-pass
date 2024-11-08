@@ -24,8 +24,7 @@
   <string name="create_contact_title">Opprett kontakt</string>
   <string name="detail_contact_title">Kontakter</string>
   <string name="email_input_error">Ugyldig e-postadresse</string>
-  <string name="detail_contact_sender_name">Avsendernavn</string>
-  <string name="detail_contact_display_name" comment="sender email address">Når du sender en e-post fra dette aliaset, vil e-posten ha %s som avsender.</string>
+  <string name="detail_contact_display_name" comment="sender email address">Det opprettes en kontakt for hver e-postadresse som sender e-post til eller mottar e-post fra %1$s</string>
   <string name="empty_alias_contacts_title">Alias-kontakter</string>
   <string name="empty_alias_contacts_body">Hvis du vil holde den personlige e-postadressen din skjult, kan du opprette en aliaskontakt som maskerer adressen din.</string>
   <string name="empty_alias_contacts_learn_more">Lær mer</string>
@@ -52,8 +51,6 @@
   <string name="snackbar_contact_block_error">Kunne ikke blokkère kontakt</string>
   <string name="snackbar_contact_unblock_success">Kontakt opphevet blokkering</string>
   <string name="snackbar_contact_unblock_error">Kunne ikke oppheve blokkeringen av kontakt</string>
-  <string name="snackbar_sender_name_success">Avsendernavn oppdatert</string>
-  <string name="snackbar_sender_name_error">Kan ikke oppdatere avsendernavn</string>
   <string name="snackbar_delete_contact_success">Kontakt slettet</string>
   <string name="snackbar_delete_contact_error">Kunne ikke slette kontakt</string>
   <string name="snackbar_email_copied_success">E-post kopiert til utklippstavlen</string>

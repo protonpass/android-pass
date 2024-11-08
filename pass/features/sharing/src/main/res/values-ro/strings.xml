@@ -120,6 +120,8 @@
   <string name="share_with_suggestions_title">Sugestii</string>
   <string name="share_with_recents_title">Recente</string>
   <string name="share_with_remove_email_content_description">Eliminare e-mail</string>
+  <string name="share_with_user_title">Partajare cu</string>
+  <string name="share_with_user_description">Partajare acest articol cu alți utilizatori Proton.</string>
   <string name="share_with_secure_link_title">Prin legătură web securizată</string>
   <string name="share_with_secure_link_description">Generează o legătură web sigură pentru acest articol.</string>
   <string name="share_with_manage_shared_vault_title">Gestionare acces la seif</string>

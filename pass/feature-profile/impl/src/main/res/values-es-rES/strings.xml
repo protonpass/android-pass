@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Error al autenticar</string>
   <string name="profile_fingerprint_lock_enabled">El bloqueo biométrico está activado.</string>
   <string name="profile_fingerprint_lock_disabled">El bloqueo biométrico está desactivado.</string>
-  <string name="profile_error_performing_operation">Error al ejecutar la operación</string>
   <string name="profile_app_version_copied_to_clipboard">Versión de la aplicación copiada</string>
   <string name="feedback_option_reddit">Echa un vistazo a Proton en Reddit</string>
   <string name="feedback_option_mail">Envíanos un mensaje</string>
@@ -74,4 +73,10 @@
   <string name="account_switcher_switch_to">Cambiar a</string>
   <string name="account_switcher_add_account">Añadir una cuenta</string>
   <string name="account_switcher_remove">Borrar</string>
+  <string name="filtered_by_logins">Se ha filtrado la lista por inicios de sesión. No se muestran los elementos en la papelera.</string>
+  <string name="filtered_by_logins_with_mfa">Se ha filtrado la lista por inicios de sesión con código TOTP. No se muestran los elementos en la papelera.</string>
+  <string name="filtered_by_aliases">Se ha filtrado la lista por alias. No se muestran los elementos en la papelera.</string>
+  <string name="filtered_by_notes">Se ha filtrado la lista por notas. No se muestran los elementos en la papelera.</string>
+  <string name="filtered_by_credit_cards">Se ha filtrado la lista por tarjetas de crédito. No se muestran los elementos en la papelera.</string>
+  <string name="filtered_by_identities">Se ha filtrado la lista por identidades. No se muestran los elementos en la papelera.</string>
 </resources>

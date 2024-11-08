@@ -21,17 +21,17 @@
   <string name="configure_extra_password_title">Stel uw extra wachtwoord in</string>
   <string name="configure_extra_password_enter_extra_password">Extra wachtwoord</string>
   <string name="configure_extra_password_repeat_extra_password">Wachtwoord herhalen</string>
-  <string name="configure_extra_password_description">You will be asked for this password during login and when switching from another Proton app to Proton Pass on web.</string>
-  <string name="configure_extra_password_warning">Caution: You won’t be able to access your Pass account if you lose this password.</string>
+  <string name="configure_extra_password_description">U wordt gevraagd om dit wachtwoord tijdens het inloggen en wanneer u overschakelt van een andere Proton app naar Proton Pass op het internet.</string>
+  <string name="configure_extra_password_warning">Let op: U heeft geen toegang tot uw Pass-account als u dit wachtwoord kwijtraakt.</string>
   <string name="configure_extra_password_mismatch">Wachtwoorden komen niet overeen</string>
   <string name="extra_password_options_remove">Verwijderen</string>
   <string name="info_extra_password_title">Extra wachtwoord</string>
   <string name="info_extra_password_body">Bescherm Proton Pass met een extra wachtwoord.</string>
   <string name="info_extra_password_button">Stel uw extra wachtwoord in</string>
-  <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>
-  <string name="configure_extra_password_password_too_short">Extra password must have at least 8 characters</string>
+  <string name="configure_extra_password_cannot_be_blank">Wachtwoord mag niet leeg zijn</string>
+  <string name="configure_extra_password_password_too_short">Extra wachtwoord moet ten minste 8 tekens bevatten</string>
   <string name="confirm_extra_password_title">Stel uw extra wachtwoord in</string>
-  <string name="confirm_extra_password_body">You will be logged out and will have to log in again on all of your other devices.</string>
-  <string name="confirm_extra_password_error">Could not set extra password</string>
+  <string name="confirm_extra_password_body">U wordt uitgelogd en moet opnieuw inloggen op al uw andere apparaten.</string>
+  <string name="confirm_extra_password_error">Kan geen extra wachtwoord instellen</string>
   <string name="confirm_extra_password_success">Extra wachtwoord ingesteld</string>
 </resources>

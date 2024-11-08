@@ -24,8 +24,7 @@
   <string name="create_contact_title">Δημιουργία επαφής</string>
   <string name="detail_contact_title">Επαφές</string>
   <string name="email_input_error">Μη έγκυρη διεύθυνση email</string>
-  <string name="detail_contact_sender_name">Όνομα αποστολέα</string>
-  <string name="detail_contact_display_name" comment="sender email address">Κατά την αποστολή ενός μηνύματος ηλεκτρονικού ταχυδρομείου από αυτό το ψευδώνυμο, το μήνυμα ηλεκτρονικού ταχυδρομείου θα έχει ως αποστολέα το %s .</string>
+  <string name="detail_contact_display_name" comment="sender email address">Δημιουργείται μια επαφή για κάθε διεύθυνση ηλεκτρονικού ταχυδρομείου που στέλνει μηνύματα ηλεκτρονικού ταχυδρομείου ή λαμβάνει μηνύματα ηλεκτρονικού ταχυδρομείου από %1$s</string>
   <string name="empty_alias_contacts_title">Ψευδώνυμες επαφές</string>
   <string name="empty_alias_contacts_body">Για να διατηρήσετε κρυφή την προσωπική σας διεύθυνση ηλεκτρονικού ταχυδρομείου, μπορείτε να δημιουργήσετε μια ψευδώνυμη επαφή που καλύπτει τη διεύθυνσή σας.</string>
   <string name="empty_alias_contacts_learn_more">Μάθετε περισσότερα</string>
@@ -52,8 +51,6 @@
   <string name="snackbar_contact_block_error">Δεν ήταν δυνατός ο αποκλεισμός επαφής</string>
   <string name="snackbar_contact_unblock_success">Επιτυχία άρσης αποκλεισμού επαφής</string>
   <string name="snackbar_contact_unblock_error">Δεν ήταν δυνατή η άρση αποκλεισμού επαφής</string>
-  <string name="snackbar_sender_name_success">Το όνομα αποστολέα ενημερώθηκε</string>
-  <string name="snackbar_sender_name_error">Δεν ήταν δυνατή η ενημέρωση του ονόματος αποστολέα</string>
   <string name="snackbar_delete_contact_success">Η επαφή διαγράφηκε</string>
   <string name="snackbar_delete_contact_error">Αδυναμία διαγραφής επαφής</string>
   <string name="snackbar_email_copied_success">Το email αντιγράφτηκε στο πρόχειρο</string>

@@ -82,6 +82,11 @@
   <string name="alias_created">Alias gemaakt</string>
   <string name="cannot_retrieve_alias_options">Kan aliasopties niet ophalen</string>
   <string name="alias_mailbox_dialog_title">Doorsturen naar</string>
+  <string name="sl_note_info_title">Wat is een SimpleLogin notitie?</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">In Pass is een itemnotitie versleuteld met de artikelversleutelingssleutel en alleen gebruikers die toegang hebben tot het item kunnen de notitie bekijken.</string>
+  <string name="sl_note_info_message_part2">Zelfs Proton of SimpleLogin kan het niet zien.</string>
+  <string name="sl_note_info_message_part3">SimpleLogin note wordt samen opgeslagen op dezelfde locatie met alias adres en terwijl het beschermd is door encryptie in de rest het is niet E2E-versleuteld wat betekent dat iedereen die toegang heeft tot SimpleLogin database dit kan lezen.</string>
+  <string name="sl_note_info_content_description">SL-notitie informatie dialoogvenster weergeven</string>
   <!-- Create note -->
   <string name="note_hint">Notitie</string>
   <!-- Create Credit Card -->

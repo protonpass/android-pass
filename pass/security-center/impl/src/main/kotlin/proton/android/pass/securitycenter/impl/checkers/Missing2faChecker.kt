@@ -33,6 +33,7 @@ class MissingTfaCheckerImpl @Inject constructor(
     private val supports2fa: Supports2fa,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : MissingTfaChecker {
+
     override suspend fun invoke(items: List<Item>): Missing2faReport {
         val itemsToReport = encryptionContextProvider.withEncryptionContext {
             items.filter { shouldReportItem(it) }
@@ -42,15 +43,14 @@ class MissingTfaCheckerImpl @Inject constructor(
     }
 
     private fun EncryptionContext.shouldReportItem(item: Item): Boolean {
-        val loginItemType = when (val itemType = item.itemType) {
-            is ItemType.Login -> itemType
-            else -> return false
+        val itemType = item.itemType
+
+        return when {
+            item.hasPasskeys -> false
+            itemType !is ItemType.Login -> false
+            decrypt(itemType.primaryTotp).isNotEmpty() -> false
+            else -> isAnyWebsiteEligible(itemType.websites)
         }
-
-        val decryptedTotp = decrypt(loginItemType.primaryTotp)
-        if (decryptedTotp.isNotEmpty()) return false
-
-        return isAnyWebsiteEligible(loginItemType.websites)
     }
 
     private fun isAnyWebsiteEligible(websites: List<String>): Boolean = runCatching {
@@ -70,7 +70,10 @@ class MissingTfaCheckerImpl @Inject constructor(
         false
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "Missing2faCheckerImpl"
+
     }
+
 }

@@ -6,16 +6,30 @@
 
 ### Other
 
-## 1.26.3 (2024-11-06)
+## 1.27.0 (2024-11-08)
+
+### Features :tada:
+
+- Item count redirects to items list.
 
 ### Fixes :bug:
 
 - Avoid items loading delay on the home screen.
+- Credit card expiration date history.
+
+### Other
+
+- UI tweaks in the password generator.
+- Performance improvements.
+- Exclude items with passkeys from missing 2FA check.
+- Updated core libraries.
+- Updated translations.
+
+## 1.26.3 (2024-11-06)
 
 ### Other
 
 - Add SL aliases permanent removal warning.
-- Updated core libraries.
 
 ## 1.26.2 (2024-10-25)
 

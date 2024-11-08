@@ -3,6 +3,18 @@
   <!-- Home -->
   <string name="home_empty_vault_title">La bóveda está vacía</string>
   <string name="home_empty_vault_subtitle">Comience creando el primer elemento.</string>
+  <string name="home_empty_vault_login_title">No se encontraron inicios de sesión.</string>
+  <string name="home_empty_vault_login_subtitle">Comience creando su primer inicio de sesión.</string>
+  <string name="home_empty_vault_aliases_title">No se encontraron alias.</string>
+  <string name="home_empty_vault_aliases_subtitle">Comience creando su primera alias.</string>
+  <string name="home_empty_vault_notes_title">No se encontraron notas.</string>
+  <string name="home_empty_vault_notes_subtitle">Comience creando su primera nota.</string>
+  <string name="home_empty_vault_logins_mfa_title">No se encontraron inicios de sesión con código TOTP.</string>
+  <string name="home_empty_vault_logins_mfa_subtitle">Comience creando su primer inicio de sesión con código TOTP.</string>
+  <string name="home_empty_vault_identity_title">No se encontraron elementos de identidad.</string>
+  <string name="home_empty_vault_identity_subtitle">Comience creando su primer elemento de identidad.</string>
+  <string name="home_empty_vault_cc_title">No se encontraron tarjetas de crédito.</string>
+  <string name="home_empty_vault_cc_subtitle">Comience creando su primer elemento de tarjeta de crédito.</string>
   <string name="home_empty_read_only_vault_title">Esta bóveda está vacía</string>
   <string name="home_empty_read_only_vault_subtitle">No puede añadir elementos a una bóveda de solo lectura.</string>
   <string name="home_empty_vault_create_login">Crear un inicio de sesión</string>
@@ -27,12 +39,13 @@
   <string name="home_trial_banner_title">Nuestro regalo de bienvenida para usted</string>
   <string name="home_trial_banner_text">Pruebe gratis las funciones premium durante 7 días, solo durante la primera semana de Proton Pass.</string>
   <string name="home_trial_banner_settings">Más información ›</string>
-  <string name="sl_sync_banner_title">Importe sus alias desde SimpleLogin</string>
+  <string name="sl_sync_banner_title">Sincronice sus alias desde SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
-    <item quantity="one">Tiene %d alias en SimpleLogin pero no aparece en Proton Pass. ¿Desea importarlo?</item>
-    <item quantity="other">Tiene %d alias en SimpleLogin pero no aparecen en Proton Pass. ¿Desea importarlos?</item>
+    <item quantity="one">Tiene %d alias en SimpleLogin pero no aparece en Proton Pass. ¿Desea sincronizarlo?</item>
+    <item quantity="other">Tiene %d alias en SimpleLogin pero no aparecen en Proton Pass. ¿Desea sincronizarlos?</item>
   </plurals>
-  <string name="sl_sync_banner_settings">Importar los alias ›</string>
+  <string name="sl_sync_banner_settings">Sincronizar los alias ›</string>
+  <string name="sl_sync_banner_note">Una vez sincronizado, al eliminar los alias en Pass también se eliminarán en SimpleLogin.</string>
   <string name="home_notification_permission_banner_title">Obtenga actualizaciones importantes</string>
   <string name="home_notification_permission_banner_text">Active las notificaciones push para informarse cuando otros compartan una bóveda con usted.</string>
   <string name="home_notification_permission_banner_settings">Activar permiso ›</string>
@@ -84,6 +97,7 @@
   <string name="item_type_filter_note">Nota</string>
   <string name="item_type_filter_credit_card">Tarjeta</string>
   <string name="item_type_filter_identity">Identidad</string>
+  <string name="item_type_filter_login_totp">Inicio de sesión con código TOTP</string>
   <!-- Trash -->
   <string name="trash_empty_list_title">Papelera vacía</string>
   <string name="trash_empty_list_message">Los elementos movidos a la papelera aparecerán aquí.</string>

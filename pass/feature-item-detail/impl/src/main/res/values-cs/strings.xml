@@ -109,6 +109,8 @@
   <string name="activity_in_last_two_weeks">Aktivita za posledních 14 dní</string>
   <string name="contacts">Kontakty</string>
   <string name="contacts_section_description">Chcete-li uchovat vaši osobní e-mailovou adresu v soukromí, můžete pro ni vytvořit alias kontakt, který vaši adresu zamaskuje.</string>
+  <string name="field_detail_display_name_title">Zobrazované jméno</string>
+  <string name="display_name_section_description">Zobrazované jméno při odesílání e-mailu z tohoto aliasu.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s přeposlání</item>
     <item quantity="few">%1$s přeposlání</item>

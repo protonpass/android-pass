@@ -82,6 +82,11 @@
   <string name="alias_created">Alias creado</string>
   <string name="cannot_retrieve_alias_options">No se pueden recuperar las opciones del alias</string>
   <string name="alias_mailbox_dialog_title">Reenviar a</string>
+  <string name="sl_note_info_title">¿Qué es una nota de SimpleLogin?</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">En Pass, una nota se cifra con la clave de cifrado de esa nota y solo los usuarios que tienen acceso a la nota pueden verla.</string>
+  <string name="sl_note_info_message_part2">Ni Proton, ni SimpleLogin pueden verlo.</string>
+  <string name="sl_note_info_message_part3">La nota de SimpleLogin se almacena en la misma ubicación con la dirección de alias y, si bien está protegida con cifrado, no lo está con cifrado de extremo a extremo, lo que significa que cualquiera que tenga acceso a la base de datos de SimpleLogin puede leerla.</string>
+  <string name="sl_note_info_content_description">Mostrar diálogo de información de notas de SimpleLogin</string>
   <!-- Create note -->
   <string name="note_hint">Nota</string>
   <!-- Create Credit Card -->

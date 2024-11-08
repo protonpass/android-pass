@@ -7,4 +7,16 @@
   <string name="alias_dialog_move_to_trash_title">Mutare în gunoi?</string>
   <string name="alias_dialog_move_to_trash_content">Dacă mutați un alias în gunoi, nu va mai redirecționa mesajele primite pe numele său.</string>
   <string name="alias_dialog_move_to_trash_confirm">Confirmare</string>
+  <string name="delete_alias_confirm">Ștergere, nu voi avea nevoie de el</string>
+  <string name="delete_alias_title">Ștergere %s</string>
+  <string name="delete_alias_enabled_subtitle">"Rețineți că, după ștergere, aliasul nu poate fi restaurat. Poate doriți să-l dezactivați?"</string>
+  <string name="delete_alias_disabled_subtitle">Rețineți că, după ștergere, aliasul nu poate fi restaurat. Aliasul este deja dezactivat și nu va redirecționa mesajele către adresa de e-mail.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="one">Urmează să ștergeți definitiv %d alias</item>
+    <item quantity="few">Urmează să ștergeți definitiv %d aliasuri</item>
+    <item quantity="other">Urmează să ștergeți definitiv %d de aliasuri</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Rețineți că, după ștergere, aliasurile nu pot fi restaurate.</string>
+  <string name="bulk_delete_alias_confirm">Am înțeles, nu mai nevoie de ele</string>
+  <string name="delete_alias_disable">Dezactivare alias</string>
 </resources>

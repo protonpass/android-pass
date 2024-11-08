@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">인증 실패</string>
   <string name="profile_fingerprint_lock_enabled">지문 잠금 활성화됨</string>
   <string name="profile_fingerprint_lock_disabled">지문 잠금 비활성화됨</string>
-  <string name="profile_error_performing_operation">작업 처리 오류</string>
   <string name="profile_app_version_copied_to_clipboard">앱 버전 복사됨</string>
   <string name="feedback_option_reddit">Reddit에서 Proton 살펴보기</string>
   <string name="feedback_option_mail">메시지 보내기</string>
@@ -71,4 +70,10 @@
   <string name="account_switcher_switch_to">다음으로 전환:</string>
   <string name="account_switcher_add_account">계정 추가</string>
   <string name="account_switcher_remove">제거</string>
+  <string name="filtered_by_logins">로그인 항목으로 필터되었습니다. 삭제된 항목은 보이지 않습니다</string>
+  <string name="filtered_by_logins_with_mfa">TOTP 진행된 로그인 항목으로 필터되었습니다. 삭제된 항목은 보이지 않습니다</string>
+  <string name="filtered_by_aliases">별칭으로 필터되었습니다. 삭제된 항목은 보이지 않습니다</string>
+  <string name="filtered_by_notes">메모로 필터되었습니다. 삭제된 항목은 보이지 않습니다</string>
+  <string name="filtered_by_credit_cards">신용카드로 필터되었습니다. 삭제된 항목은 보이지 않습니다</string>
+  <string name="filtered_by_identities">신원으로 필터되었습니다. 삭제된 항목은 보이지 않습니다</string>
 </resources>

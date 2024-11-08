@@ -17,20 +17,20 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="description_field_label">What is your issue?</string>
+  <string name="description_field_label">您遇到甚麼問題?</string>
   <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
-  <string name="email_field_label">Email</string>
-  <string name="email_field_hint">email</string>
-  <string name="attach_image_button">Attach image</string>
-  <string name="categories_title">What is your issue?</string>
-  <string name="report_toolbar_title">Report an issue</string>
-  <string name="send_report_button">Send report</string>
-  <string name="cancel_tips_button">Cancel</string>
+  <string name="email_field_label">電子郵件</string>
+  <string name="email_field_hint">電子郵件</string>
+  <string name="attach_image_button">附加圖片</string>
+  <string name="categories_title">您遇到甚麼問題?</string>
+  <string name="report_toolbar_title">回報問題</string>
+  <string name="send_report_button">傳送回報</string>
+  <string name="cancel_tips_button">取消</string>
   <string name="contact_us_button">Contact us</string>
-  <string name="hint_tips_screen">Didn\'t work?</string>
-  <string name="report_reason_autofill">Autofill</string>
-  <string name="report_reason_sharing">Sharing</string>
-  <string name="report_reason_sync">Sync</string>
+  <string name="hint_tips_screen">無法運作？</string>
+  <string name="report_reason_autofill">自動填入</string>
+  <string name="report_reason_sharing">共享</string>
+  <string name="report_reason_sync">同步</string>
   <string name="report_reason_passkeys">Passkeys</string>
   <string name="report_reason_other">Other</string>
   <string name="tips_title">Quick fixes for %1$s</string>
@@ -40,18 +40,18 @@
   <string name="sharing_tip_vault_sharing_guide">Having issues with vault sharing? Check our guide.</string>
   <string name="sharing_tip_secure_links_guide">Having issues with secure links? Check our guide.</string>
   <string name="sync_tip_force_refresh">Is your screen empty? Try doing a force sync.</string>
-  <string name="send_logs_label">Send logs</string>
-  <string name="report_sending_success">Report sent successfully.</string>
+  <string name="send_logs_label">傳送日誌</string>
+  <string name="report_sending_success">回報已成功傳送。</string>
   <string name="report_sending_error">Could not send the report.</string>
   <string name="tips_passkey_check_guide">If you have any issues check our guide.</string>
   <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
   <string name="tips_passkeys_credential_manager_not_supported">The manufacturer of the device doesn\'t provide a credential manager.</string>
-  <string name="tips_passkey_supported">Passkeys supported</string>
+  <string name="tips_passkey_supported">密碼金鑰是支援服務</string>
   <string name="tips_passkey_not_supported">Passkeys not supported</string>
-  <string name="report_steps" comment="Indicator showing report progress">Step %1$d of %2$d</string>
+  <string name="report_steps" comment="Indicator showing report progress">第 %1$d 步，共 %2$d 步</string>
   <string name="description_cannot_be_blank">Description cannot be blank</string>
   <string name="description_is_too_short">Description is too short</string>
-  <string name="description_is_too_long">Description is too long</string>
+  <string name="description_is_too_long">描述太長</string>
   <string name="email_cannot_be_blank">Email cannot be blank</string>
-  <string name="email_invalid">Invalid email address</string>
+  <string name="email_invalid">無效的電郵位址</string>
 </resources>

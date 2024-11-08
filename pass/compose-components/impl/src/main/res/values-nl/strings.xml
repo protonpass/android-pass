@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">Alle</string>
   <string name="item_list_header_pinned_search_results">Vastgemaakt</string>
   <string name="item_list_header_logins_type">Logins</string>
+  <string name="item_list_header_logins_totp_type">Aanmeldingen met TOTP</string>
   <string name="item_list_header_aliases_type">Aliassen</string>
   <string name="item_list_header_notes_type">Notities</string>
   <string name="item_list_header_credit_cards_type">Kredietkaarten</string>
@@ -46,8 +47,8 @@
   <string name="action_edit">Bewerk</string>
   <string name="action_add">Toevoegen</string>
   <string name="action_delete">Verwijder</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
+  <string name="action_make_default">Standaard maken</string>
+  <string name="action_verify">Verifiëren</string>
   <string name="action_close">Sluiten</string>
   <string name="action_update">Bijwerken</string>
   <!-- Empty list -->
@@ -135,7 +136,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Alias adres</string>
-  <string name="item_details_alias_section_alias_disabled_title">Alias address (disabled)</string>
+  <string name="item_details_alias_section_alias_disabled_title">Alias adres (uitgeschakeld)</string>
   <string name="item_details_alias_section_mailboxes_title">Doorsturen naar</string>
   <string name="item_details_credit_card_section_cardholder_title">Naam op de kaart</string>
   <string name="item_details_credit_card_section_card_number_title">Kaartnummer</string>
@@ -171,7 +172,7 @@
   <string name="item_details_identity_section_contact_license_number_title">Licentienummer</string>
   <string name="item_details_identity_section_contact_website_title">Website</string>
   <string name="item_details_identity_section_contact_x_handle_title">X-gebruikersnaam</string>
-  <string name="item_details_identity_section_contact_secondary_phone_number_title">Secondary phone number</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">Tweede telefoonnummer</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
   <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
   <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
@@ -179,7 +180,7 @@
   <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
   <string name="item_details_identity_section_work_title">Werk gegevens</string>
   <string name="item_details_identity_section_work_company_title">Bedrijf</string>
-  <string name="item_details_identity_section_work_occupation_title">Occupation</string>
+  <string name="item_details_identity_section_work_occupation_title">Beroep</string>
   <string name="item_details_identity_section_work_email_title">E-mailadres werk</string>
   <string name="item_details_identity_section_work_phone_number_title">Telefoonnummer werk</string>
   <string name="item_details_identity_section_work_personal_website_title">Persoonlijke website</string>
@@ -189,7 +190,7 @@
   <string name="item_details_shared_section_item_history_modified_times_title">Gewijzigd: (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Bekijk item geschiedenis</string>
   <string name="item_details_shared_section_more_info_header_title">Meer informatie</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">Meer item informatie icoon</string>
   <string name="item_details_shared_section_more_info_item_id">Item-ID</string>
   <string name="item_details_shared_section_more_info_share_id">Kluis-ID</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">De app versie wordt niet meer ondersteund. Update uw app alstublieft.</string>
@@ -202,22 +203,22 @@
   <string name="dialog_upgrade_plan_action_cancel">Niet nu</string>
   <!-- Words -->
   <string name="email_address">E-mailadres</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">Ongeldig e-mailadres</string>
   <string name="password">Wachtwoord</string>
   <!-- Tooltips -->
-  <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
+  <string name="tooltip_dismiss_button_content_description">Knop om deze tooltip te sluiten en niet meer te tonen</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="one">%d year</item>
-    <item quantity="other">%d years</item>
+    <item quantity="one">%d jaar</item>
+    <item quantity="other">%d jaren</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d month</item>
-    <item quantity="other">%d months</item>
+    <item quantity="one">%d maand</item>
+    <item quantity="other">%d maanden</item>
   </plurals>
   <plurals name="time_unit_weeks">
     <item quantity="one">%d week</item>
-    <item quantity="other">%d weeks</item>
+    <item quantity="other">%d weken</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d dag</item>
@@ -241,7 +242,7 @@
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Notitie gekopieerd</string>
-  <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
+  <string name="snack_bar_message_item_migration_error">Er is een fout opgetreden bij het migreren van dit item</string>
   <string name="snack_bar_message_item_monitor_excluded_success">Item succesvol uitgesloten van monitoring</string>
   <string name="snack_bar_message_item_monitor_excluded_error">Er is een fout opgetreden bij het uitsluiten van het item van de monitoring</string>
   <string name="snack_bar_message_item_monitor_included_success">Item succesvol opgenomen in monitoring</string>
@@ -250,22 +251,25 @@
   <string name="snack_bar_message_item_pinned_error">Fout bij het vastmaken van dit item</string>
   <string name="snack_bar_message_item_unpinned_success">Item succesvol losgemaakt</string>
   <string name="snack_bar_message_item_unpinned_error">Er is een fout opgetreden bij het losmaken van dit item</string>
-  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
-  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
-  <string name="snack_bar_message_item_restore_success">Item successfully restored</string>
-  <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
-  <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
-  <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
+  <string name="snack_bar_message_item_trashed_success">Item succesvol verwijderd</string>
+  <string name="snack_bar_message_item_trashed_error">Er is een fout opgetreden bij het verwijderen van dit item</string>
+  <string name="snack_bar_message_item_restore_success">Item succesvol hersteld</string>
+  <string name="snack_bar_message_item_restore_error">Er is een fout opgetreden bij het herstellen van dit item</string>
+  <string name="snack_bar_message_item_delete_success">Item succesvol verwijderd</string>
+  <string name="snack_bar_message_item_delete_error">Er is een fout opgetreden bij het verwijderen van dit item</string>
   <!-- Simple Login -->
-  <string name="simple_login_widget_title">Enable SimpleLogin sync</string>
+  <string name="simple_login_widget_title">Schakel SimpleLogin synchronisatie in</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">We detected that you have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to import it?</item>
-    <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
+    <item quantity="one">We hebben gedetecteerd dat u %d alias hebt die aanwezig is in SimpleLogin, maar ontbreekt in Proton Pass. Wilt u deze importeren?</item>
+    <item quantity="other">We hebben gedetecteerd dat u %d aliassen hebt die aanwezig zijn in SimpleLogin, maar ontbreken in Proton Pass. Wilt u deze importeren?</item>
   </plurals>
   <string name="simple_login_widget_action">Synchroniseer aliassen</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t receive the code?</string>
-  <string name="verification_code_suggestion_spam">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
-  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">If you can\'t find such email, you can %s.</string>
-  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Controleer in uw spam voor een e-mail met onderwerp \"%s\"</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Bevestig uw e-mailadres voor Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Bevestig uw mailbox</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Als u dergelijke e-mail niet kan vinden, kunt u %s gebruiken.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">nieuwe code aanvragen</string>
+  <string name="field_display_name_title">Weergavenaam</string>
 </resources>

@@ -22,14 +22,14 @@
   <string name="email_field_label">Corrreu electrònic</string>
   <string name="email_field_hint">corrreu electrònic</string>
   <string name="attach_image_button">Adjunta una imatge</string>
-  <string name="categories_title">Quin és el vostre problema?</string>
+  <string name="categories_title">Quin és el problema?</string>
   <string name="report_toolbar_title">Informeu d\'un problema</string>
   <string name="send_report_button">Envia l\'informe</string>
   <string name="cancel_tips_button">Cancel·la</string>
   <string name="contact_us_button">Contacteu amb nosaltres</string>
   <string name="hint_tips_screen">No ha funcionat?</string>
   <string name="report_reason_autofill">Emplenament automàtic</string>
-  <string name="report_reason_sharing">Compartint</string>
+  <string name="report_reason_sharing">S\'està compartint</string>
   <string name="report_reason_sync">Sincronitza</string>
   <string name="report_reason_passkeys">Claus d\'accés</string>
   <string name="report_reason_other">Altre</string>

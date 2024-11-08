@@ -18,48 +18,48 @@
   -->
 <resources>
   <!--Create screen-->
-  <string name="secure_links_create_title">Share secure link</string>
+  <string name="secure_links_create_title">Beveiligde link delen</string>
   <string name="secure_links_create_row_expiration_title">Link verloopt na</string>
   <string name="secure_links_create_row_expiration_options_one_hour">1 uur</string>
   <string name="secure_links_create_row_expiration_options_one_day">1 dag</string>
   <string name="secure_links_create_row_expiration_options_seven_days">7 dagen</string>
   <string name="secure_links_create_row_expiration_options_fourteen_days">14 dagen</string>
   <string name="secure_links_create_row_expiration_options_thirty_days">30 dagen</string>
-  <string name="secure_links_create_row_max_views_title">Restrict number of views</string>
-  <string name="secure_links_create_row_max_views_subtitle">Maximum views: %d</string>
+  <string name="secure_links_create_row_max_views_title">Beperk aantal weergaven</string>
+  <string name="secure_links_create_row_max_views_subtitle">Maximaal aantal weergaven: %d</string>
   <string name="secure_links_create_button_generate">Beveiligde link genereren</string>
-  <string name="secure_links_create_snackbar_message_error">There was an error generating secure link</string>
+  <string name="secure_links_create_snackbar_message_error">Fout bij het verwijderen van beveiligde link</string>
   <!--Overview screen-->
   <string name="secure_links_overview_widget_expiration_title">Verloopt over:</string>
-  <string name="secure_links_overview_widget_max_views_title">Can be viewed:</string>
+  <string name="secure_links_overview_widget_max_views_title">Kan worden bekeken:</string>
   <string name="secure_links_overview_widget_open_times_title">Geopend:</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="one">%d keer</item>
     <item quantity="other">%d keer</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">Onbeperkt</string>
-  <string name="secure_links_overview_button_view_all_links">View all your secure links</string>
+  <string name="secure_links_overview_button_view_all_links">Bekijk al uw beveiligde links</string>
   <!--List screen-->
   <string name="secure_links_list_title">Beveiligde links</string>
-  <string name="secure_links_list_empty_title">No secure links</string>
-  <string name="secure_links_list_empty_subtitle">You can start creating secure links from an item details sharing options</string>
+  <string name="secure_links_list_empty_title">Geen beveiligde links</string>
+  <string name="secure_links_list_empty_subtitle">U kunt beginnen met het maken van beveiligde links vanuit een product details delen opties</string>
   <string name="secure_links_list_expiration_description">Verloopt over %s</string>
   <string name="secure_links_list_expired_description">Verlopen</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="one">%d weergave</item>
     <item quantity="other">%d weergaven</item>
   </plurals>
-  <string name="secure_links_list_snackbar_message_links_fetch_error">There was an error fetching secure links</string>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">Er is een fout opgetreden bij het ophalen van beveiligde links</string>
   <string name="secure_links_list_header_title_inactive">Inactieve koppelingen</string>
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">Koppeling kopiëren</string>
   <string name="secure_links_shared_action_share_link">Link delen</string>
   <string name="secure_links_shared_action_delete_link">Link verwijderen</string>
-  <string name="secure_links_shared_action_delete_link_inactive">Remove inactive link</string>
-  <string name="secure_links_shared_action_delete_links_inactive">Remove all inactive links</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Verwijder inactieve link</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Verwijder alle inactieve links</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Veilige link gekopieerd</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Secure link deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_error">There was an error deleting secure link</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Inactive secure links deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">There was an error deleting inactive secure links</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Beveiligde link verwijderen is geannuleerd</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">Fout bij het verwijderen van beveiligde link</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Verwijdering van niet-actieve beveiligde links is geannuleerd</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Fout bij het verwijderen van inactieve beveiligde koppelingen</string>
 </resources>

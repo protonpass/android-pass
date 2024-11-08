@@ -18,12 +18,12 @@
   -->
 <resources>
   <string name="item_options_alias_trash_dialog_title">Verplaats naar prullenbak</string>
-  <string name="item_options_alias_trash_dialog_message">Aliases in Trash will continue forwarding emails. If you want to stop receiving emails on this address, disable it instead.</string>
+  <string name="item_options_alias_trash_dialog_message">Aliassen in de prullenbak worden doorgestuurd naar e-mails. Als u wilt stoppen met het ontvangen van e-mails op dit adres, schakel dit in plaats daarvan uit.</string>
   <string name="item_options_alias_trash_dialog_checkbox_text">Niet opnieuw herinneren</string>
-  <string name="item_options_alias_trash_dialog_button_text_disable">Disable instead</string>
+  <string name="item_options_alias_trash_dialog_button_text_disable">In plaats daarvan uitschakelen</string>
   <string name="item_options_alias_trash_dialog_button_text_trash">Verplaats naar prullenbak</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">There was an error disabling the alias</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">Er is een fout opgetreden bij het uitschakelen van de alias</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Alias uitgeschakeld</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">There was an error moving the alias to trash</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">Fout opgetreden bij het verplaatsen van de alias naar de prullenbak</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Alias verplaatst naar prullenbak</string>
 </resources>

@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Не ўдалося аўтэнтыфікаваць</string>
   <string name="profile_fingerprint_lock_enabled">Блакіроўка адбіткам пальца ўключана</string>
   <string name="profile_fingerprint_lock_disabled">Блакіроўка адбіткам пальца адключана</string>
-  <string name="profile_error_performing_operation">Памылка выканання аперацыі</string>
   <string name="profile_app_version_copied_to_clipboard">Версія праграмы скапіявана</string>
   <string name="feedback_option_reddit">Паглядзець Proton на Reddit</string>
   <string name="feedback_option_mail">Напісаць нам</string>
@@ -80,4 +79,10 @@
   <string name="account_switcher_switch_to">Пераключыцца на</string>
   <string name="account_switcher_add_account">Дадаць уліковы запіс</string>
   <string name="account_switcher_remove">Выдаліць</string>
+  <string name="filtered_by_logins">Адфільтравана па запісах уваходу. Не паказаны элементы, якія знаходзяцца ў сметніцы</string>
+  <string name="filtered_by_logins_with_mfa">Адфільтравана па запісах уваходу з TOTP. Не паказаны элементы, якія знаходзяцца ў сметніцы</string>
+  <string name="filtered_by_aliases">Адфільтравана па псеўданімах. Не паказаны элементы, якія знаходзяцца ў сметніцы</string>
+  <string name="filtered_by_notes">Адфільтравана па нататках. Не паказаны элементы, якія знаходзяцца ў сметніцы</string>
+  <string name="filtered_by_credit_cards">Адфільтравана па крэдытных картках. Не паказаны элементы, якія знаходзяцца ў сметніцы</string>
+  <string name="filtered_by_identities">Адфільтравана па ідэнтычнасцях. Не паказаны элементы, якія знаходзяцца ў сметніцы</string>
 </resources>

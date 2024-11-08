@@ -42,8 +42,9 @@
   <string name="simple_login_sync_mailbox_verify_title">Bekräfta din brevlåda</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Vi skickade en verifieringskod till %s. Ange den nedan:</string>
   <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">din e-postadress</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Invalid mailbox verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_error">There was an error verifying the mailbox</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Ogiltig verifieringskod för brevlåda</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Invalid mailbox verification code limit reached, mailbox was deleted</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_error">Det uppstod ett fel vid verifiering av brevlådan</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_success">Brevlåda verifierad</string>
   <string name="simple_login_sync_mailbox_verify_message_resend_code_error">There was an error sending verification code</string>
   <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verifieringskod skickad</string>
@@ -54,7 +55,7 @@
   <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Till brevlåda</string>
   <string name="simple_login_sync_mailbox_delete_action_delete">Ta bort brevlåda</string>
   <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Överför och ta bort brevlåda</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_error">There was an error deleting mailbox</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">Det uppstod ett fel vid borttagning av brevlåda</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">Brevlåda borttagen</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Överför alias till</string>
   <!-- Domain select screen -->
@@ -64,12 +65,12 @@
   <string name="simple_login_sync_domain_select_description_custom">Din domän</string>
   <string name="simple_login_sync_domain_select_description_free">Offentlig domän</string>
   <string name="simple_login_sync_domain_select_description_premium">Premiumdomän</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">There was an error fetching SL alias domains</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">Det uppstod ett fel vid hämtning av SL-aliasdomäner</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Det uppstod ett fel vid uppdatering av SL-aliasdomän</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL-aliasdomän uppdaterad</string>
   <!-- Mailbox options screen -->
   <string name="simple_login_sync_mailbox_options_snackbar_options_error">Kan inte visa alternativ för brevlåda</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_error">There was an error updating default mailbox</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_error">Det uppstod ett fel vid uppdatering av standardbrevlåda</string>
   <string name="simple_login_sync_mailbox_options_snackbar_default_success">Standardbrevlåda uppdaterad</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Standard SL-valv</string>

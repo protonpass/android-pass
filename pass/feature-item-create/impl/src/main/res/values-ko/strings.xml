@@ -82,6 +82,11 @@
   <string name="alias_created">별칭을 생성했습니다.</string>
   <string name="cannot_retrieve_alias_options">별칭 옵션을 수신할 수 없음</string>
   <string name="alias_mailbox_dialog_title">다음으로 전달:</string>
+  <string name="sl_note_info_title">SimpleLogin 메모란?</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">Pass에서 메모 항목이 암호화 키로 암호화되었으며 이 항목에 접근 가능한 사용자만 메모 확인 가능합니다.</string>
+  <string name="sl_note_info_message_part2">심지어 Proton이나 SimpleLogin도 볼 수 없죠.</string>
+  <string name="sl_note_info_message_part3">SimpleLogin 메모가 별칭 주소와 같은 위치에 함께 저장되며, 저장 시 암호화로 보호되지만, E2E 암호화되지 않아 SimpleLogin 데이터베이스에 접근할 수 있는 사람은 누구나 읽을 수 있습니다.</string>
+  <string name="sl_note_info_content_description">SimpleLogin 메모 정보 대화창 보기</string>
   <!-- Create note -->
   <string name="note_hint">메모</string>
   <!-- Create Credit Card -->

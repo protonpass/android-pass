@@ -82,6 +82,11 @@
   <string name="alias_created">Alias oprettet</string>
   <string name="cannot_retrieve_alias_options">Kan ikke hente alias-indstillinger</string>
   <string name="alias_mailbox_dialog_title">Videresend til</string>
+  <string name="sl_note_info_title">Hvad er en SimpleLogin-note?</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">I Pass er en element-note krypteret med elementets krypteringsnøgle, og kun brugere, der har adgang til elementet, kan se noten.</string>
+  <string name="sl_note_info_message_part2">Ikke engang Proton eller SimpleLogin kan se den.</string>
+  <string name="sl_note_info_message_part3">SimpleLogin-noten gemmes samme sted som alias-adressen, og selvom den er beskyttet af kryptering i hvile, er den ikke E2E-krypteret, hvilket betyder, at alle, der har adgang til SimpleLogin-databasen, kan læse den.</string>
+  <string name="sl_note_info_content_description">Vis dialogboks med information om SL-noter</string>
   <!-- Create note -->
   <string name="note_hint">Note</string>
   <!-- Create Credit Card -->

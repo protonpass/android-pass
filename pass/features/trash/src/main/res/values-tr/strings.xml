@@ -7,4 +7,15 @@
   <string name="alias_dialog_move_to_trash_title">Çöpe atılsın mı?</string>
   <string name="alias_dialog_move_to_trash_content">Bir takma adı çöpe atarsanız e-postaları gelen kutunuza iletmeyi bırakır.</string>
   <string name="alias_dialog_move_to_trash_confirm">Onayla</string>
+  <string name="delete_alias_confirm">Bu takma adı sil. Asla kullanmayacağım</string>
+  <string name="delete_alias_title">%s takma adını sil</string>
+  <string name="delete_alias_enabled_subtitle">"Lütfen takma adı silme işleminin geri alınamayacağını unutmayın. Bunun yerine takma adı kullanımdan kaldırmayı isteyebilirsiniz. "</string>
+  <string name="delete_alias_disabled_subtitle">Lütfen takma adı silme işleminin geri alınamayacağını unutmayın. Takma ad zaten kullanımdan kaldırılmış ve e-posta kutunuza herhangi bir ileti iletmeyecek.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="one">%d takma adı kalıcı olarak silmek üzeresiniz</item>
+    <item quantity="other">%d takma adı kalıcı olarak silmek üzeresiniz</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Lütfen takma adı silme işleminin geri alınamayacağını unutmayın.</string>
+  <string name="bulk_delete_alias_confirm">Anladım. Bu takma adları kullanmıyorum</string>
+  <string name="delete_alias_disable">Takma adı kullanımdan kaldır</string>
 </resources>

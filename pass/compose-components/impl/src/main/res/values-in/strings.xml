@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">Semua</string>
   <string name="item_list_header_pinned_search_results">Disematkan</string>
   <string name="item_list_header_logins_type">Entri masuk</string>
+  <string name="item_list_header_logins_totp_type">Entri masuk dengan TOTP</string>
   <string name="item_list_header_aliases_type">Alias</string>
   <string name="item_list_header_notes_type">Catatan</string>
   <string name="item_list_header_credit_cards_type">Kartu kredit</string>
@@ -25,7 +26,7 @@
   <string name="bottomsheet_unpin_item">Lepas sematan</string>
   <string name="bottomsheet_view_item_history">Lihat riwayat</string>
   <string name="bottomsheet_monitor_exclude">Kecualikan dari pemantauan</string>
-  <string name="bottomsheet_monitor_include">Masukkan dalam pemantauan</string>
+  <string name="bottomsheet_monitor_include">Sertakan dalam pemantauan</string>
   <string name="bottomsheet_migrate_item">Pindahkan ke brankas lainnya</string>
   <string name="bottomsheet_copy_item_note">Salin catatan</string>
   <string name="bottomsheet_delete_permanently">Hapus secara permanen</string>
@@ -253,8 +254,11 @@
   </plurals>
   <string name="simple_login_widget_action">Sinkronisasikan alias</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Belum menerima kodenya?</string>
-  <string name="verification_code_suggestion_spam">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Silakan periksa dalam Spam untuk email bernama “%s”</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Silakan konfirmasi alamat email Anda untuk Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Silakan konfirmasi kotak surat Anda</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Apabila Anda tidak dapat menemukan email tersebut, Anda dapat %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">minta kode baru</string>
+  <string name="field_display_name_title">Nama tampilan</string>
 </resources>

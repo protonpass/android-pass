@@ -43,6 +43,7 @@
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Wir haben einen Verifizierungscode an %s gesendet. Bitte gib ihn unten ein:</string>
   <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">deine E-Mail-Adresse</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Ungültiger Postfach-Verifizierungscode</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Invalid mailbox verification code limit reached, mailbox was deleted</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_error">Fehler beim Verifizieren des Postfachs</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_success">Postfach erfolgreich verifiziert</string>
   <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Fehler beim Senden des Verifizierungscodes</string>

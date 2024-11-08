@@ -82,6 +82,11 @@
   <string name="alias_created">Alias byl vytvořen</string>
   <string name="cannot_retrieve_alias_options">Nelze načíst možnosti aliasu</string>
   <string name="alias_mailbox_dialog_title">Přeposlat na</string>
+  <string name="sl_note_info_title">Co je poznámka SimpleLogin?</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">V aplikaci Pass je poznámka k položce zašifrována šifrovacím klíčem položky a mohou ji zobrazit pouze uživatelé, kteří mají k položce přístup.</string>
+  <string name="sl_note_info_message_part2">Nevidí ji ani Proton nebo SimpleLogin.</string>
+  <string name="sl_note_info_message_part3">Poznámka SimpleLogin je uložena společně na stejném místě s adresou aliasu, a přestože je v klidu chráněna šifrováním, není šifrována E2E, což znamená, že si ji může přečíst každý, kdo má přístup k databázi SimpleLogin.</string>
+  <string name="sl_note_info_content_description">Zobrazení informací o poznámce SL v dialogovém okně</string>
   <!-- Create note -->
   <string name="note_hint">Poznámka</string>
   <!-- Create Credit Card -->

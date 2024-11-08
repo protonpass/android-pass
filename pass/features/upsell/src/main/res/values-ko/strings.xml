@@ -31,8 +31,9 @@
   <string name="upsell_paid_feature_authenticator_essential">조직에 2단계 인증 요구하기</string>
   <string name="upsell_paid_feature_sso_essential">SSO 연동 (출시 예정)</string>
   <string name="upsell_paid_feature_advance_alias_management_title">별칭 관리하기</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">고급 별칭 관리는 Proton Unlimited로 이용하실 수 있습니다. 사용하시려면 계정을 업그레이드 하세요.</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">고급 별칭 관리가 유료 요금제에서 지원됩니다. 업그레이드하여 즉시 이용하세요.</string>
+  <string name="upsell_paid_feature_item_sharing_title">빠르게 항목 공유하기</string>
+  <string name="upsell_paid_feature_item_sharing_subtitle">지금 바로 업그레이드해서 다른 Pass 유저와 항목을 공유하세요. 다른 프리미엄 기능도 있습니다:</string>
   <string name="upsell_button_upgrade">Pass Plus 구매하기</string>
   <string name="upsell_button_upgrade_essentials">Pass Business 구매</string>
-  <string name="upsell_button_upgrade_unlimited">Proton Unlimited로 업그레이드</string>
 </resources>

@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Autentificare nereușită.</string>
   <string name="profile_fingerprint_lock_enabled">Blocarea cu amprentă este activată</string>
   <string name="profile_fingerprint_lock_disabled">Blocarea cu amprentă este dezactivată</string>
-  <string name="profile_error_performing_operation">Eroare executare operație.</string>
   <string name="profile_app_version_copied_to_clipboard">Versiune aplicație copiată.</string>
   <string name="feedback_option_reddit">Accesați Proton pe Reddit</string>
   <string name="feedback_option_mail">Trimiteți-ne un mesaj</string>
@@ -77,4 +76,10 @@
   <string name="account_switcher_switch_to">Comutare la</string>
   <string name="account_switcher_add_account">Adăugare cont</string>
   <string name="account_switcher_remove">Eliminare</string>
+  <string name="filtered_by_logins">Filtrate după date de conectare. Cele din gunoi nu sunt afișate.</string>
+  <string name="filtered_by_logins_with_mfa">Filtrate după date de conectare cu parolă unică (TOTP). Cele din gunoi nu sunt afișate.</string>
+  <string name="filtered_by_aliases">Filtrate după alias. Cele din gunoi nu sunt afișate.</string>
+  <string name="filtered_by_notes">Filtrate după notițe. Cele din gunoi nu sunt afișate.</string>
+  <string name="filtered_by_credit_cards">Filtrate după card de plată. Cele din gunoi nu sunt afișate.</string>
+  <string name="filtered_by_identities">Filtrate după identitate. Cele din gunoi nu sunt afișate.</string>
 </resources>

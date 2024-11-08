@@ -106,7 +106,9 @@
   <string name="passkey_detail_bottomsheet_created">Δημιουργήθηκε</string>
   <string name="activity_in_last_two_weeks">Δραστηριότητα στις τελευταίες 14 ημέρες</string>
   <string name="contacts">Επαφές</string>
-  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="contacts_section_description">Για να διατηρήσετε κρυφή την προσωπική σας διεύθυνση ηλεκτρονικού ταχυδρομείου, μπορείτε να δημιουργήσετε μια ψευδώνυμη επαφή που καλύπτει τη διεύθυνσή σας.</string>
+  <string name="field_detail_display_name_title">Προβολή του ονόματος</string>
+  <string name="display_name_section_description">The display name when sending an email from this alias.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s προώθηση</item>
     <item quantity="other">%1$s προωθήσεις</item>

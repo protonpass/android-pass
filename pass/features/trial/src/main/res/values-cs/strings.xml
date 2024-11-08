@@ -3,7 +3,7 @@
   <string name="trial_title">Dárek na uvítanou</string>
   <string name="trial_subtitle">Užijte si správu hesel na vyšší úrovni</string>
   <string name="trial_feature_1">20 trezorů</string>
-  <string name="trial_feature_3">Integrovaný ověřovací modul 2FA</string>
+  <string name="trial_feature_3">Integrované ověřování 2FA</string>
   <string name="trial_feature_4">Vlastní pole</string>
   <string name="trial_button_text">Navýšit nyní</string>
   <plurals name="trial_days_left">

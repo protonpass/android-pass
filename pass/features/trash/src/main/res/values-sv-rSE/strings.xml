@@ -7,4 +7,15 @@
   <string name="alias_dialog_move_to_trash_title">Flytta till papperskorg?</string>
   <string name="alias_dialog_move_to_trash_content">Om du flyttar ett alias till papperskorgen kommer det att sluta vidarebefordra e-post till din brevlåda.</string>
   <string name="alias_dialog_move_to_trash_confirm">Bekräfta</string>
+  <string name="delete_alias_confirm">Ta bort det, jag kommer aldrig att behöva det</string>
+  <string name="delete_alias_title">Ta bort %s</string>
+  <string name="delete_alias_enabled_subtitle">"Please note once deleted, the alias can't be restored. Maybe you want to disable the alias instead? "</string>
+  <string name="delete_alias_disabled_subtitle">Please note once deleted, the alias can\'t be restored. The alias is already disabled and won’t forward emails to your mailbox.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="one">Du håller på att ta bort %d alias permanent</item>
+    <item quantity="other">Du håller på att ta bort %d alias permanent</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Observera att när alias väl har tagits bort kan de inte återställas</string>
+  <string name="bulk_delete_alias_confirm">Förstått, jag kommer aldrig att behöva dem</string>
+  <string name="delete_alias_disable">Inaktivera alias</string>
 </resources>

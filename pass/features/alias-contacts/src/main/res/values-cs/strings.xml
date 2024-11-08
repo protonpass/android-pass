@@ -24,8 +24,7 @@
   <string name="create_contact_title">Vytvořit kontakt</string>
   <string name="detail_contact_title">Kontakty</string>
   <string name="email_input_error">Neplatná e-mailová adresa</string>
-  <string name="detail_contact_sender_name">Jméno odesílatele</string>
-  <string name="detail_contact_display_name" comment="sender email address">Při odesílání e-mailu z tohoto aliasu bude jako odesílatel uveden e-mail %s.</string>
+  <string name="detail_contact_display_name" comment="sender email address">Pro každou e-mailovou adresu, která odesílá e-maily nebo přijímá e-maily z %1$s, je vytvořen kontakt.</string>
   <string name="empty_alias_contacts_title">Kontakty aliasu</string>
   <string name="empty_alias_contacts_body">Chcete-li, aby vaše osobní e-mailová adresa zůstala skrytá, můžete si vytvořit alias kontaktu, který vaši adresu zamaskuje.</string>
   <string name="empty_alias_contacts_learn_more">Více informací</string>
@@ -58,8 +57,6 @@
   <string name="snackbar_contact_block_error">Nelze blokovat kontakt</string>
   <string name="snackbar_contact_unblock_success">Kontakt odblokován</string>
   <string name="snackbar_contact_unblock_error">Nelze odblokovat kontakt</string>
-  <string name="snackbar_sender_name_success">Jméno odesílatele aktualizováno</string>
-  <string name="snackbar_sender_name_error">Nelze aktualizovat jméno odesílatele</string>
   <string name="snackbar_delete_contact_success">Kontakt smazán</string>
   <string name="snackbar_delete_contact_error">Kontakt se nepodařilo smazat</string>
   <string name="snackbar_email_copied_success">E-mail zkopírován do schránky</string>

@@ -2,7 +2,7 @@
 <resources>
   <string name="snackbar_create_vault_success">S\'ha creat la caixa forta</string>
   <string name="snackbar_create_vault_error">No s\'ha creat la caixa forta</string>
-  <string name="snackbar_cannot_create_more_vaults_error">No es poden crear més caixes fortes</string>
+  <string name="snackbar_cannot_create_more_vaults_error">No es poden crear més caixes fortes.</string>
   <string name="snackbar_edit_vault_success">S\'ha editat la caixa forta</string>
   <string name="snackbar_edit_vault_error">No s\'ha editat la caixa forta</string>
   <string name="snackbar_delete_vault_success">S\'ha eliminat la caixa forta</string>

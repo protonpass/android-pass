@@ -104,9 +104,11 @@
   <string name="passkey_detail_bottomsheet_domain">Domæne</string>
   <string name="passkey_detail_bottomsheet_key">Nøgle</string>
   <string name="passkey_detail_bottomsheet_created">Oprettet</string>
-  <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
+  <string name="activity_in_last_two_weeks">Aktivitet de sidste 14 dage</string>
   <string name="contacts">Kontakter</string>
-  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="contacts_section_description">Hvis du vil holde din personlige e-mailadresse skjult, kan du oprette en alias-kontakt, der maskerer din adresse.</string>
+  <string name="field_detail_display_name_title">Vist navn</string>
+  <string name="display_name_section_description">Det viste navn, når der sendes en e-mail fra dette alias.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s videresendelse</item>
     <item quantity="other">%1$s videresendelser</item>

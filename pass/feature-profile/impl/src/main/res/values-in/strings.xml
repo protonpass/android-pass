@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">Gagal mengautentikasi</string>
   <string name="profile_fingerprint_lock_enabled">Kunci sidik jari diaktifkan</string>
   <string name="profile_fingerprint_lock_disabled">Kunci sidik jari dinonaktifkan</string>
-  <string name="profile_error_performing_operation">Terjadi kesalahan saat melakukan tindakan</string>
   <string name="profile_app_version_copied_to_clipboard">Versi aplikasi disalin</string>
   <string name="feedback_option_reddit">Kunjungi Proton di Reddit</string>
   <string name="feedback_option_mail">Kirim pesan kepada kami</string>
@@ -71,4 +70,10 @@
   <string name="account_switcher_switch_to">Ganti ke</string>
   <string name="account_switcher_add_account">Tambahkan akun</string>
   <string name="account_switcher_remove">Hapus</string>
+  <string name="filtered_by_logins">Difilter berdasarkan entri masuk. Item dalam sampah tidak ditampilkan</string>
+  <string name="filtered_by_logins_with_mfa">Difilter berdasarkan entri masuk dengan TOTP. Item dalam sampah tidak ditampilkan</string>
+  <string name="filtered_by_aliases">Difilter berdasarkan alias. Item dalam sampah tidak ditampilkan</string>
+  <string name="filtered_by_notes">Difilter berdasarkan catatan. Item dalam sampah tidak ditampilkan</string>
+  <string name="filtered_by_credit_cards">Difilter berdasarkan kartu kredit. Item dalam sampah tidak ditampilkan</string>
+  <string name="filtered_by_identities">Difilter berdasarkan identitas. Item dalam sampah tidak ditampilkan</string>
 </resources>

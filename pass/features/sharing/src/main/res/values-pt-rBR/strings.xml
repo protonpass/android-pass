@@ -115,6 +115,8 @@
   <string name="share_with_suggestions_title">Sugestões</string>
   <string name="share_with_recents_title">Recentes</string>
   <string name="share_with_remove_email_content_description">Remover e-mail</string>
+  <string name="share_with_user_title">Compartilhar com</string>
+  <string name="share_with_user_description">Share this item with other Proton users.</string>
   <string name="share_with_secure_link_title">Via link seguro</string>
   <string name="share_with_secure_link_description">Gerar um link seguro para este item.</string>
   <string name="share_with_manage_shared_vault_title">Gerenciar acesso ao cofre</string>

@@ -20,7 +20,7 @@
   <string name="bottomsheet_copy_email">E-mail kopiëren</string>
   <string name="bottomsheet_copy_password">Wachtwoord kopiëren</string>
   <string name="bottomsheet_copy_username">Gebruikersnaam kopiëren</string>
-  <string name="bottomsheet_no_actions">No actions available</string>
+  <string name="bottomsheet_no_actions">Geen acties beschikbaar</string>
   <string name="snackbar_item_move_to_trash_success">Item verplaatst naar prullenbak</string>
   <string name="snackbar_item_move_to_trash_error">Kon niet verplaatsen naar prullenbak</string>
   <string name="snackbar_item_copy_email_success">E-mail gekopieerd naar klembord</string>

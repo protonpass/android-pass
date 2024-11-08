@@ -7,4 +7,17 @@
   <string name="alias_dialog_move_to_trash_title">Přesunout do koše?</string>
   <string name="alias_dialog_move_to_trash_content">Pokud alias přesunete do koše, přestane přeposílat e-maily do vaší e-mailové schránky.</string>
   <string name="alias_dialog_move_to_trash_confirm">Potvrdit</string>
+  <string name="delete_alias_confirm">Smazat, nikdy ho nebudu potřebovat</string>
+  <string name="delete_alias_title">Smazat %s</string>
+  <string name="delete_alias_enabled_subtitle">"Upozorňujeme, že jednou smazaný alias nelze obnovit. Nechcete alias raději deaktivovat? "</string>
+  <string name="delete_alias_disabled_subtitle">Upozorňujeme, že jednou smazaný alias nelze obnovit. Alias je již deaktivován a nepřeposílá e-maily do vaší e-mailové schránky.</string>
+  <plurals name="bulk_delete_alias_title">
+    <item quantity="one">Chystáte se trvale smazat %d alias</item>
+    <item quantity="few">Chystáte se trvale smazat %d aliasy</item>
+    <item quantity="many">Chystáte se trvale smazat %d aliasů</item>
+    <item quantity="other">Chystáte se trvale smazat %d aliasů</item>
+  </plurals>
+  <string name="bulk_delete_alias_subtitle">Upozorňujeme, že jednou smazané aliasy nelze obnovit</string>
+  <string name="bulk_delete_alias_confirm">Rozumím, nikdy je nebudu potřebovat</string>
+  <string name="delete_alias_disable">Deaktivovat alias</string>
 </resources>

@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">Tots</string>
   <string name="item_list_header_pinned_search_results">Ancorat</string>
   <string name="item_list_header_logins_type">Inicis de sessió</string>
+  <string name="item_list_header_logins_totp_type">Inicis de sessió amb TOTP</string>
   <string name="item_list_header_aliases_type">Àlies</string>
   <string name="item_list_header_notes_type">Notes</string>
   <string name="item_list_header_credit_cards_type">Targetes de crèdit</string>
@@ -240,17 +241,17 @@
     <item quantity="other">%d àlies</item>
   </plurals>
   <!-- Snack bars -->
-  <string name="snack_bar_message_item_note_copied">S\'ha copiat la nota</string>
+  <string name="snack_bar_message_item_note_copied">S\'ha copiat la nota.</string>
   <string name="snack_bar_message_item_migration_error">S\'ha produït un error en migrar aquest element</string>
   <string name="snack_bar_message_item_monitor_excluded_success">S\'ha exclòs l\'element de la supervisió.</string>
   <string name="snack_bar_message_item_monitor_excluded_error">S\'ha produït un error en excloure l\'element de la supervisió.</string>
   <string name="snack_bar_message_item_monitor_included_success">Element inclòs correctament al seguiment</string>
   <string name="snack_bar_message_item_monitor_included_error">S\'ha produït un error en incloure l\'element al seguiment.</string>
-  <string name="snack_bar_message_item_pinned_success">S\'ha ancorat l\'element.</string>
+  <string name="snack_bar_message_item_pinned_success">S\'ha fixat l\'element.</string>
   <string name="snack_bar_message_item_pinned_error">S\'ha produït un error en ancorar aquest element.</string>
   <string name="snack_bar_message_item_unpinned_success">S\'ha fixat l\'element.</string>
   <string name="snack_bar_message_item_unpinned_error">S\'ha produït un error en desancorar aquest element.</string>
-  <string name="snack_bar_message_item_trashed_success">L\'element s\'ha enviat correctament</string>
+  <string name="snack_bar_message_item_trashed_success">S\'ha enviat l\'element.</string>
   <string name="snack_bar_message_item_trashed_error">S\'ha produït un error en enviar a la paperera aquest element</string>
   <string name="snack_bar_message_item_restore_success">L\'element s\'ha restaurat correctament.</string>
   <string name="snack_bar_message_item_restore_error">S\'ha produït un error en restaurar a la paperera aquest element.</string>
@@ -265,7 +266,10 @@
   <string name="simple_login_widget_action">Sincronitza els àlies</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">No heu rebut el codi?</string>
-  <string name="verification_code_suggestion_spam">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Si no trobeu aquest correu electrònic, podeu %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">sol·licitar un codi nou</string>
+  <string name="field_display_name_title">Display name</string>
 </resources>

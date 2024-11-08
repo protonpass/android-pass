@@ -17,7 +17,6 @@
   <string name="profile_error_biometry_failed_to_authenticate">No s’ha pogut autenticar</string>
   <string name="profile_fingerprint_lock_enabled">S\'ha activat el bloqueig per empremta digital.</string>
   <string name="profile_fingerprint_lock_disabled">S\'ha desactivat el bloqueig per empremta digital.</string>
-  <string name="profile_error_performing_operation">S\'ha produït un error en realitzar l\'operació</string>
   <string name="profile_app_version_copied_to_clipboard">S\'ha copiat la versió de l\'aplicació</string>
   <string name="feedback_option_reddit">Descobriu Proton en Reddit</string>
   <string name="feedback_option_mail">Envieu-nos un missatge</string>
@@ -52,7 +51,7 @@
   <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Internet is set as the default browser. It does not support autofill by external password managers.</string>
   <string name="profile_passkey_support_section_title">Claus d\'accés</string>
   <string name="profile_passkey_support_subtitle_supported">Les claus d\'accés són compatibles</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">La vostra versió d\'Android no suporta claus de pas.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">El vostre dispositiu no suporta claus d\'accés.</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">No s\'ha pogut comprovar la compatibilitat per a les claus d\'accés</string>
   <plurals name="profile_after_days">
@@ -74,4 +73,10 @@
   <string name="account_switcher_switch_to">Canvia a</string>
   <string name="account_switcher_add_account">Afegeix un compte</string>
   <string name="account_switcher_remove">Esborra</string>
+  <string name="filtered_by_logins">Filtered by logins. Trashed items aren\'t shown</string>
+  <string name="filtered_by_logins_with_mfa">Filtered by logins with TOTP. Trashed items aren\'t shown</string>
+  <string name="filtered_by_aliases">Filtered by aliases. Trashed items aren\'t shown</string>
+  <string name="filtered_by_notes">Filtered by notes. Trashed items aren\'t shown</string>
+  <string name="filtered_by_credit_cards">Filtered by credit cards. Trashed items aren\'t shown</string>
+  <string name="filtered_by_identities">Filtered by identities. Trashed items aren\'t shown</string>
 </resources>

@@ -106,7 +106,9 @@
   <string name="passkey_detail_bottomsheet_created">Luotu</string>
   <string name="activity_in_last_two_weeks">Toiminta viimeisten 14 päivän aikana</string>
   <string name="contacts">Yhteystiedot</string>
-  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="contacts_section_description">Voit pitää henkilökohtaisen sähköpostiosoitteesi piilossa luomalla aliasyhteystiedon, joka naamioi sen.</string>
+  <string name="field_detail_display_name_title">Näyttönimi</string>
+  <string name="display_name_section_description">Näyttönimi, kun lähetät sähköpostia tästä aliaksesta.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s välitys</item>
     <item quantity="other">%1$s välitystä</item>

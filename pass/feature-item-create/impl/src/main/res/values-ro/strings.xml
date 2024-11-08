@@ -82,6 +82,11 @@
   <string name="alias_created">S-a creat aliasul.</string>
   <string name="cannot_retrieve_alias_options">Nu se pot prelua informațiile aliasului.</string>
   <string name="alias_mailbox_dialog_title">Redirecționare către</string>
+  <string name="sl_note_info_title">Ce este o notiță SimpleLogin?</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">În aplicația Pass, o notiță este criptată cu cheia de criptare a acesteia și numai utilizatorii care au acces la ea o pot vizualiza.</string>
+  <string name="sl_note_info_message_part2">Nici măcar Proton sau SimpleLogin nu o pot vedea.</string>
+  <string name="sl_note_info_message_part3">Notița SimpleLogin este stocată în același loc cu împreună o adresă alias și, deși este protejată prin criptare în repaus, nu este criptată bilateral, ceea ce înseamnă că oricine are acces la baza de date SimpleLogin o poate citi.</string>
+  <string name="sl_note_info_content_description">Afișare dialog informații notiță SimpleLogin</string>
   <!-- Create note -->
   <string name="note_hint">Notiță</string>
   <!-- Create Credit Card -->

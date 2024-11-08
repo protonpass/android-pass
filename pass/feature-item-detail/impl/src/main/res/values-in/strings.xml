@@ -98,14 +98,16 @@
   <string name="password_score_vulnerable">Rentan</string>
   <string name="password_score_weak">Lemah</string>
   <string name="password_score_strong">Kuat</string>
-  <string name="passkey_detail_bottomsheet_title">Kunci sandi</string>
+  <string name="passkey_detail_bottomsheet_title">Passkey</string>
   <string name="passkey_detail_bottomsheet_username">Nama pengguna</string>
   <string name="passkey_detail_bottomsheet_domain">Domain</string>
   <string name="passkey_detail_bottomsheet_key">Kunci</string>
   <string name="passkey_detail_bottomsheet_created">Dibuat</string>
   <string name="activity_in_last_two_weeks">Aktivitas dalam 14 hari terakhir</string>
   <string name="contacts">Kontak</string>
-  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="contacts_section_description">Untuk menjaga agar alamat email pribadi Anda tetap tersembunyi, Anda dapat membuat kontak alias yang menyamarkan alamat Anda.</string>
+  <string name="field_detail_display_name_title">Nama tampilan</string>
+  <string name="display_name_section_description">Nama tampilan ketika mengirimkan email dari alias ini.</string>
   <plurals name="alias_forwards_count">
     <item quantity="other">%1$s penerusan</item>
   </plurals>

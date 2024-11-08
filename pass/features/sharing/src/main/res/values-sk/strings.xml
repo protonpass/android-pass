@@ -125,6 +125,8 @@
   <string name="share_with_suggestions_title">Návrhy</string>
   <string name="share_with_recents_title">Nedávne</string>
   <string name="share_with_remove_email_content_description">Odstrániť email</string>
+  <string name="share_with_user_title">Share with</string>
+  <string name="share_with_user_description">Share this item with other Proton users.</string>
   <string name="share_with_secure_link_title">Cez bezpečný odkaz</string>
   <string name="share_with_secure_link_description">Vygenerovať bezpečný odkaz na túto položku.</string>
   <string name="share_with_manage_shared_vault_title">Spravovať prístup k trezoru</string>

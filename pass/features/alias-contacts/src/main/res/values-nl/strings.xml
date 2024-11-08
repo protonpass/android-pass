@@ -24,48 +24,45 @@
   <string name="create_contact_title">Contact aanmaken</string>
   <string name="detail_contact_title">Contacten</string>
   <string name="email_input_error">Ongeldig e-mailadres</string>
-  <string name="detail_contact_sender_name">Naam afzender</string>
-  <string name="detail_contact_display_name" comment="sender email address">Bij het verzenden van een e-mail vanuit deze alias zal de e-mail %s als afzender hebben.</string>
-  <string name="empty_alias_contacts_title">Alias contacts</string>
-  <string name="empty_alias_contacts_body">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="detail_contact_display_name" comment="sender email address">Een contactpersoon wordt gemaakt voor elk e-mailadres dat e-mails naar of ontvangt van %1$s</string>
+  <string name="empty_alias_contacts_title">Alias contacten</string>
+  <string name="empty_alias_contacts_body">Om uw persoonlijke e-mailadres verborgen te houden, kunt u een alias-contactpersoon maken die uw adres maskert.</string>
   <string name="empty_alias_contacts_learn_more">Meer informatie</string>
-  <string name="unblock_button">Unblock contact</string>
-  <string name="block_button">Block contact</string>
+  <string name="unblock_button">Contact deblokkeren</string>
+  <string name="block_button">Contact blokkeren</string>
   <string name="contact_created_date" comment="date of creation">%1$s geleden gemaakt</string>
-  <string name="no_activity_contact">No Activity in the last 14 days.</string>
-  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">in the last 14 days.</string>
+  <string name="no_activity_contact">Geen activiteit in de laatste 14 dagen.</string>
+  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">in de afgelopen 14 dagen.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d forwarded</item>
-    <item quantity="other">%1$d forwarded</item>
+    <item quantity="one">%1$d doorgestuurd</item>
+    <item quantity="other">%1$d doorgestuurd</item>
   </plurals>
   <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d sent</item>
-    <item quantity="other">%1$d sent</item>
+    <item quantity="one">%1$d verzonden</item>
+    <item quantity="other">%1$d verzonden</item>
   </plurals>
   <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d blocked</item>
-    <item quantity="other">%1$d blocked</item>
+    <item quantity="one">%1$d geblokkeerd</item>
+    <item quantity="other">%1$d geblokkeerd</item>
   </plurals>
-  <string name="blocked_addresses_subtitle">Blocked addresses</string>
-  <string name="forwarding_addresses_subtitle">Forwarding addresses</string>
-  <string name="snackbar_contact_block_success">Contact blocked</string>
-  <string name="snackbar_contact_block_error">Could not block contact</string>
-  <string name="snackbar_contact_unblock_success">Contact unblocked</string>
-  <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
-  <string name="snackbar_sender_name_success">Sender name updated</string>
-  <string name="snackbar_sender_name_error">Could not update sender name</string>
-  <string name="snackbar_delete_contact_success">Contact deleted</string>
-  <string name="snackbar_delete_contact_error">Could not delete contact</string>
-  <string name="snackbar_email_copied_success">Email copied to clipboard</string>
-  <string name="contact_option_send_email">Send email</string>
-  <string name="contact_option_copy_address">Copy address</string>
-  <string name="contact_option_block_contact">Block contact</string>
-  <string name="contact_option_unblock_contact">Unblock contact</string>
-  <string name="contact_option_delete">Delete</string>
-  <string name="alias_contacts_bottomsheet_title">Alias Contacts</string>
-  <string name="alias_contacts_bottomsheet_subtitle">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
-  <string name="alias_contacts_explanation">Here’s how it works:</string>
-  <string name="alias_contacts_bottomsheet_section_1">Enter the address you want to email.</string>
-  <string name="alias_contacts_bottomsheet_section_2">Proton Pass will generate a forwarding address (also referred to as reverse alias).</string>
-  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Email this address and it will appear to be sent from</string>
+  <string name="blocked_addresses_subtitle">Geblokkeerde adressen</string>
+  <string name="forwarding_addresses_subtitle">Adressen doorsturen</string>
+  <string name="snackbar_contact_block_success">Contact geblokkeerd</string>
+  <string name="snackbar_contact_block_error">Kon contact niet blokkeren</string>
+  <string name="snackbar_contact_unblock_success">Contact gedeblokkeerd</string>
+  <string name="snackbar_contact_unblock_error">Kon contact niet deblokkeren</string>
+  <string name="snackbar_delete_contact_success">Contactpersoon verwijderd</string>
+  <string name="snackbar_delete_contact_error">Kan contact niet verwijderen</string>
+  <string name="snackbar_email_copied_success">E-mail gekopieerd naar klembord</string>
+  <string name="contact_option_send_email">E-mail verzenden</string>
+  <string name="contact_option_copy_address">Adres kopiëren</string>
+  <string name="contact_option_block_contact">Contact blokkeren</string>
+  <string name="contact_option_unblock_contact">Contact deblokkeren</string>
+  <string name="contact_option_delete">Verwijderen</string>
+  <string name="alias_contacts_bottomsheet_title">Alias contacten</string>
+  <string name="alias_contacts_bottomsheet_subtitle">Om uw persoonlijke e-mailadres verborgen te houden, kunt u een alias-contactpersoon maken die uw adres maskert.</string>
+  <string name="alias_contacts_explanation">Zo werkt het:</string>
+  <string name="alias_contacts_bottomsheet_section_1">Vul het adres in dat u wilt mailen.</string>
+  <string name="alias_contacts_bottomsheet_section_2">Proton Pass zal een doorschakeladres genereren (ook aangeduid als reverse alias).</string>
+  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">E-mail dit adres en het zal lijken te worden verzonden van</string>
 </resources>

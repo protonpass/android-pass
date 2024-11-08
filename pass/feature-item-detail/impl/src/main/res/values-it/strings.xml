@@ -107,6 +107,8 @@
   <string name="activity_in_last_two_weeks">Attività negli ultimi 14 giorni</string>
   <string name="contacts">Contatti</string>
   <string name="contacts_section_description">Per mantenere il tuo indirizzo email nascosto, puoi creare un contatto alias che maschererà il tuo indirizzo</string>
+  <string name="field_detail_display_name_title">Nome visualizzato</string>
+  <string name="display_name_section_description">Il nome visualizzato quando si invia un\'email da questo alias.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s inoltro</item>
     <item quantity="other">%1$s inoltri</item>

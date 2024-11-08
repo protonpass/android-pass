@@ -24,8 +24,7 @@
   <string name="create_contact_title">კონტაქტის შექმნა</string>
   <string name="detail_contact_title">კონტაქტები</string>
   <string name="email_input_error">არასწორი ელფოსტის მისამართი</string>
-  <string name="detail_contact_sender_name">გამგზავნის სახელი</string>
-  <string name="detail_contact_display_name" comment="sender email address">ამ ფსევდონიმიდან ელფოსტის გაგზავნისას მას გამგზავნად %s ექნება.</string>
+  <string name="detail_contact_display_name" comment="sender email address">კონტაქტი შეიქმნება თითოეული ელფოტის მისამართისთვის, რომელიც აგზავნის ელფოსტებს, ან იღებს მათ %1$s-დან</string>
   <string name="empty_alias_contacts_title">ფსევდონიმები კონტაქტებისთვის</string>
   <string name="empty_alias_contacts_body">იმისათვის, რომ თქვენი პირადი ელფოსტის მისამართი დამალული დარჩეს, შეგიძლიათ, შექმნათ ფსევდონიმი კონტაქტი, რომელიც თქვენს მისამართს შენიღბავს.</string>
   <string name="empty_alias_contacts_learn_more">გაიგეთ მეტი</string>
@@ -52,8 +51,6 @@
   <string name="snackbar_contact_block_error">კონტაქტის დაბლოკვა შეუძლებელია</string>
   <string name="snackbar_contact_unblock_success">კონტაქტი განბლოკილია</string>
   <string name="snackbar_contact_unblock_error">კონტაქტის განდაბლოკვა შეუძლებელია</string>
-  <string name="snackbar_sender_name_success">გამომგზავნის სახელი განახლდა</string>
-  <string name="snackbar_sender_name_error">გამგზავნის სახელის განახლება შეუძლებელია</string>
   <string name="snackbar_delete_contact_success">კონტაქტი წაიშალა</string>
   <string name="snackbar_delete_contact_error">კონტაქტის წაშლა შეუძლეელია</string>
   <string name="snackbar_email_copied_success">ელფოსტა დაკოპირდა გაცვლის ბუფერში</string>

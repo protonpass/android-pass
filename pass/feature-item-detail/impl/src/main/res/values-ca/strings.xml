@@ -24,7 +24,7 @@
   <string name="field_copied_to_clipboard">S\'ha copiat el camp</string>
   <string name="move_item_to_trash_message">L\'element s\'ha mogut a la paperera</string>
   <string name="error_move_item_to_trash_message">S\'ha produït un error en moure a la paperera</string>
-  <string name="item_permanently_deleted_message">S\'ha eliminat l\'element de forma permanent</string>
+  <string name="item_permanently_deleted_message">S\'ha eliminat l\'element de forma permanent.</string>
   <string name="item_permanently_deleted_message_error">S\'ha produït un error en eliminar l\'element</string>
   <string name="item_restored_message">S\'ha restaurat l\'element</string>
   <string name="item_restored_message_error">S\'ha produït un error en restaurar l\'element</string>
@@ -33,7 +33,7 @@
   <string name="item_monitor_include_message">Element inclòs correctament al seguiment</string>
   <string name="item_monitor_include_message_error">S\'ha produït un error en incloure l\'element al seguiment.</string>
   <string name="alias_change_status_error">There was an error changing the alias status</string>
-  <string name="login_item_generate_totp_error">S\'ha produït un error en generar el codi A2F</string>
+  <string name="login_item_generate_totp_error">S\'ha produït un error en generar el codi A2F.</string>
   <string name="login_item_view_alias_button">Mostra l\'àlies</string>
   <string name="login_item_monitor_widget_weak_pass_title">Contrasenya feble</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Aquest compte és vulnerable, visiteu el servei i canvieu la contrasenya.</string>
@@ -107,6 +107,8 @@
   <string name="activity_in_last_two_weeks">Activitat en els darrers 14 dies</string>
   <string name="contacts">Contactes</string>
   <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="field_detail_display_name_title">Display name</string>
+  <string name="display_name_section_description">The display name when sending an email from this alias.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s reenviament</item>
     <item quantity="other">%1$s reenviaments</item>
@@ -116,7 +118,7 @@
     <item quantity="other">%1$s respostes</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="one">%1$s block</item>
-    <item quantity="other">%1$s blocks</item>
+    <item quantity="one">%1$s blocat</item>
+    <item quantity="other">%1$s blocats</item>
   </plurals>
 </resources>

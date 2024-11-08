@@ -115,6 +115,8 @@
   <string name="share_with_suggestions_title">Suggerimenti</string>
   <string name="share_with_recents_title">Recenti</string>
   <string name="share_with_remove_email_content_description">Rimuovi questo indirizzo email</string>
+  <string name="share_with_user_title">Condividi con</string>
+  <string name="share_with_user_description">Condividi questo elemento con altri utenti Proton.</string>
   <string name="share_with_secure_link_title">Tramite link sicuro</string>
   <string name="share_with_secure_link_description">Genera un link sicuro per questo elemento.</string>
   <string name="share_with_manage_shared_vault_title">Gestisci l\'accesso alla cassaforte</string>

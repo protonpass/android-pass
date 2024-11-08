@@ -82,6 +82,11 @@
   <string name="alias_created">Alias luotiin</string>
   <string name="cannot_retrieve_alias_options">Aliasvaihtoehtojen nouto ei onnistu</string>
   <string name="alias_mailbox_dialog_title">Ohjaa osoitteeseen</string>
+  <string name="sl_note_info_title">Mikä on SimpleLogin-muistiinpano?</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">In Pass, an item note is encrypted with the item encryption key and only users who have access to the item can view the note.</string>
+  <string name="sl_note_info_message_part2">Edes Proton tai SimpleLogin eivät näe sitä.</string>
+  <string name="sl_note_info_message_part3">SimpleLogin note is stored together in the same location with alias address and while it is protected by encryption at rest, it isn\'t E2E encrypted meaning anyone who has access to SimpleLogin database can read it.</string>
+  <string name="sl_note_info_content_description">Show SL note information dialog</string>
   <!-- Create note -->
   <string name="note_hint">Muistiinpano</string>
   <!-- Create Credit Card -->

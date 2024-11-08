@@ -82,6 +82,11 @@
   <string name="alias_created">Vzdevek ustvarjen</string>
   <string name="cannot_retrieve_alias_options">Možnosti za vzdevke ni mogoče pridobiti</string>
   <string name="alias_mailbox_dialog_title">Posreduj na</string>
+  <string name="sl_note_info_title">What is a SimpleLogin note?</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">In Pass, an item note is encrypted with the item encryption key and only users who have access to the item can view the note.</string>
+  <string name="sl_note_info_message_part2">Not even Proton or SimpleLogin can see it.</string>
+  <string name="sl_note_info_message_part3">SimpleLogin note is stored together in the same location with alias address and while it is protected by encryption at rest, it isn\'t E2E encrypted meaning anyone who has access to SimpleLogin database can read it.</string>
+  <string name="sl_note_info_content_description">Show SL note information dialog</string>
   <!-- Create note -->
   <string name="note_hint">Opomba</string>
   <!-- Create Credit Card -->

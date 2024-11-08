@@ -103,7 +103,7 @@
     <item quantity="other">Aquesta caixa forta pot tenir fins a %1$d membres. Encara us queden %2$d invitacions.</item>
   </plurals>
   <string name="sharing_limit_reached">Aquesta caixa forta ha arribat al límit de membres i invitacions.</string>
-  <string name="sharing_invites_info_upgrade_text">Actualitzeu ara per a convidar-ne més.</string>
+  <string name="sharing_invites_info_upgrade_text">Milloreu ara per a convidar-ne més.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Comparteix</string>
   <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Utilitzeu les caixes fortes per compartir elements amb altres persones</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Comparteix aquesta caixa forta</string>
@@ -115,6 +115,8 @@
   <string name="share_with_suggestions_title">Suggeriments</string>
   <string name="share_with_recents_title">Recents</string>
   <string name="share_with_remove_email_content_description">Esborra el correu electrònic</string>
+  <string name="share_with_user_title">Share with</string>
+  <string name="share_with_user_description">Share this item with other Proton users.</string>
   <string name="share_with_secure_link_title">Mitjançant un enllaç segur</string>
   <string name="share_with_secure_link_description">Generar un enllaç segur a aquest element.</string>
   <string name="share_with_manage_shared_vault_title">Gestiona l\'accés a la caixa forta</string>

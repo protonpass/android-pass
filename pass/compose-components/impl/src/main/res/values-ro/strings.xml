@@ -10,6 +10,7 @@
   <string name="item_list_header_all_search_results">Toate</string>
   <string name="item_list_header_pinned_search_results">Fixate</string>
   <string name="item_list_header_logins_type">Conectări</string>
+  <string name="item_list_header_logins_totp_type">Conectări cu parolă unică (TOTP)</string>
   <string name="item_list_header_aliases_type">Aliasuri</string>
   <string name="item_list_header_notes_type">Note</string>
   <string name="item_list_header_credit_cards_type">Carduri de plată</string>
@@ -275,8 +276,11 @@
   </plurals>
   <string name="simple_login_widget_action">Sincronizare aliasuri</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Nu ați primit codul?</string>
-  <string name="verification_code_suggestion_spam">Verificați în folderul de mesaje nedorite sosirea unui e-mail cu subiectul „Confirmare adresă de e-mail pentru Proton Pass”</string>
+  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Verificați în folderul de mesaje nedorite un e-mail cu subiectul „%s”.</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Confirmați adresa de e-mail pentru Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Confirmați adresa de e-mail</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Dacă nu găsiți un astfel de e-mail, puteți să %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">solicitați un cod nou</string>
+  <string name="field_display_name_title">Nume afișat</string>
 </resources>

@@ -24,8 +24,7 @@
   <string name="create_contact_title">Luo yhteystieto</string>
   <string name="detail_contact_title">Yhteystiedot</string>
   <string name="email_input_error">Virheellinen sähköpostiosoite</string>
-  <string name="detail_contact_sender_name">Lähettäjän nimi</string>
-  <string name="detail_contact_display_name" comment="sender email address">Kun lähetät sähköpostin tästä aliaksesta, sen lähettäjänä näkyy %s.</string>
+  <string name="detail_contact_display_name" comment="sender email address">A contact is created for every email address that sends emails to or receives emails from %1$s</string>
   <string name="empty_alias_contacts_title">Aliasyhteystiedot</string>
   <string name="empty_alias_contacts_body">Pitääksesi henkilökohtaisen sähköpostiosoitteesi piilossa voit luoda aliasyhteystiedon, joka naamioi osoitteesi.</string>
   <string name="empty_alias_contacts_learn_more">Lue lisää</string>
@@ -52,8 +51,6 @@
   <string name="snackbar_contact_block_error">Yhteystietoa ei voitu estää</string>
   <string name="snackbar_contact_unblock_success">Yhteystieto sallittiin</string>
   <string name="snackbar_contact_unblock_error">Yhteystietoa ei voitu sallia</string>
-  <string name="snackbar_sender_name_success">Lähettäjän nimi päivitettiin</string>
-  <string name="snackbar_sender_name_error">Lähettäjän nimeä ei voitu vaihtaa</string>
   <string name="snackbar_delete_contact_success">Yhteystieto poistettiin</string>
   <string name="snackbar_delete_contact_error">Yhteystietoa ei voitu poistaa</string>
   <string name="snackbar_email_copied_success">Sähköpostiosoite kopioitiin leikepöydälle</string>

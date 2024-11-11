@@ -222,6 +222,26 @@ class InternalSettingsRepositoryImpl @Inject constructor(
 
     override fun hasShownAliasContactsOnboarding(): Flow<Boolean> = getPreference { it.hasShownAliasContactsOnboarding }
 
+    override fun setLastTimeUserHasSeenIAM(value: LastTimeUserHasSeenIAMPreference): Result<Unit> = setPreference {
+        it.putLastTimeUserHasSeenIam(
+            value.userId.id,
+            Timestamp.newBuilder()
+                .setSeconds(value.timestamp)
+                .build()
+        )
+    }
+
+    override fun getLastTimeUserHasSeenIAM(userId: UserId): Flow<Option<LastTimeUserHasSeenIAMPreference>> =
+        getPreference {
+            if (it.lastTimeUserHasSeenIamMap.containsKey(userId.id)) {
+                it.lastTimeUserHasSeenIamMap[userId.id]?.let { timestamp ->
+                    LastTimeUserHasSeenIAMPreference(userId, timestamp.seconds)
+                }.toOption()
+            } else {
+                None
+            }
+        }
+
     override fun clearSettings(): Result<Unit> = setPreference { it.clear() }
 
     private fun setPreference(mapper: (InternalSettings.Builder) -> InternalSettings.Builder): Result<Unit> =

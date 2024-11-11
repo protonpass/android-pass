@@ -52,8 +52,8 @@ class ObserveDeliverableInAppMessagesImpl @Inject constructor(
                             .flatMapLatest { preference ->
                                 val now = clock.now()
                                 val lastSeenTime = preference.value()?.timestamp ?: 0L
-                                val thirtyMinutesInMillis = 30.minutes.inWholeMilliseconds
-                                if (now.toEpochMilliseconds() - lastSeenTime > thirtyMinutesInMillis) {
+                                val thirtyMinutesInSeconds = 30.minutes.inWholeSeconds
+                                if (now.epochSeconds - lastSeenTime > thirtyMinutesInSeconds) {
                                     inAppMessagesRepository.observeUserMessages(resolvedUserId)
                                         .map { list ->
                                             list.filter { message ->

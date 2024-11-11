@@ -2,6 +2,7 @@ syntax = "proto3";
 
 import "proton/android/pass/preferences/app_usage.proto";
 import "proton/android/pass/preferences/last_item_autofill.proto";
+import "google/protobuf/timestamp.proto";
 
 option java_package = "proton.android.pass.preferences";
 option java_multiple_files = true;
@@ -25,4 +26,5 @@ message InternalSettings {
   map<string, string> selected_vault_per_user = 16;
   map<string, int32> master_password_attempts_per_user = 17;
   bool has_shown_alias_contacts_onboarding = 18;
+  map<string, google.protobuf.Timestamp> last_time_user_has_seen_iam = 19;
 }

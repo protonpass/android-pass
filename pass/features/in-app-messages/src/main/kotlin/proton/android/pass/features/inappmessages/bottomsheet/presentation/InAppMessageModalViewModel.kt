@@ -34,13 +34,20 @@ import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableInA
 import proton.android.pass.data.api.work.WorkerItem
 import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.domain.inappmessages.InAppMessageKey
+import proton.android.pass.domain.inappmessages.InAppMessageStatus
+import proton.android.pass.features.inappmessages.InAppMessagesChange
+import proton.android.pass.features.inappmessages.InAppMessagesClick
+import proton.android.pass.features.inappmessages.InAppMessagesDisplay
 import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
 class InAppMessageModalViewModel @Inject constructor(
     private val workerLauncher: WorkerLauncher,
+    private val telemetryManager: TelemetryManager,
     observeDeliverableInAppMessages: ObserveDeliverableInAppMessages,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
@@ -70,7 +77,22 @@ class InAppMessageModalViewModel @Inject constructor(
             initialValue = InAppMessageModalState.Loading
         )
 
-    fun onInAppMessageDismissed(userId: UserId, inAppMessageId: InAppMessageId) {
+    fun onInAppMessageDismissed(
+        userId: UserId,
+        inAppMessageId: InAppMessageId,
+        inAppMessageKey: InAppMessageKey
+    ) {
         workerLauncher.launch(WorkerItem.MarkInAppMessageAsDismissed(userId, inAppMessageId))
+        telemetryManager.sendEvent(
+            InAppMessagesChange(inAppMessageKey, InAppMessageStatus.Dismissed)
+        )
+    }
+
+    fun onInAppMessageDisplayed(key: InAppMessageKey) {
+        telemetryManager.sendEvent(InAppMessagesDisplay(key))
+    }
+
+    fun onCTAClicked(key: InAppMessageKey) {
+        telemetryManager.sendEvent(InAppMessagesClick(key))
     }
 }

@@ -64,8 +64,14 @@ fun PassApp(
             },
             onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() },
             onCompleteUpdate = { appViewModel.onCompleteUpdate() },
-            onInAppMessageBannerRead = { userId, inAppMessageId ->
-                appViewModel.onInAppMessageBannerRead(userId, inAppMessageId)
+            onInAppMessageBannerRead = { userId, id, key ->
+                appViewModel.onInAppMessageBannerRead(userId, id, key)
+            },
+            onInAppMessageBannerDisplayed = { inAppMessageKey ->
+                appViewModel.onInAppMessageBannerDisplayed(inAppMessageKey)
+            },
+            onInAppMessageBannerCTAClicked = { inAppMessageKey ->
+                appViewModel.onInAppMessageBannerCTAClicked(inAppMessageKey)
             }
         )
     }

@@ -70,6 +70,7 @@ import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
 import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.featurehome.impl.HomeNavItem
@@ -79,10 +80,10 @@ import proton.android.pass.featureprofile.impl.ProfileNavItem
 import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.features.inappmessages.banner.ui.InAppMessageBanner
 import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalNavItem
-import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.searchoptions.FilterBottomsheetNavItem
 import proton.android.pass.features.searchoptions.SearchOptionsBottomsheetNavItem
 import proton.android.pass.features.searchoptions.SortingBottomsheetNavItem
+import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.AppNavigator
@@ -109,7 +110,9 @@ fun PassAppContent(
     appUiState: AppUiState,
     onNavigate: (AppNavigation) -> Unit,
     onSnackbarMessageDelivered: () -> Unit,
-    onInAppMessageBannerRead: (UserId, InAppMessageId) -> Unit,
+    onInAppMessageBannerRead: (UserId, InAppMessageId, InAppMessageKey) -> Unit,
+    onInAppMessageBannerDisplayed: (InAppMessageKey) -> Unit,
+    onInAppMessageBannerCTAClicked: (InAppMessageKey) -> Unit,
     onCompleteUpdate: () -> Unit,
     needsAuth: Boolean
 ) {
@@ -309,27 +312,23 @@ fun PassAppContent(
                         InAppMessageBanner(
                             modifier = Modifier.padding(bottom = bannerBottomPadding),
                             inAppMessage = inAppMessageOption.value,
-                            onDismiss = {
-                                onInAppMessageBannerRead(
-                                    inAppMessageOption.value.userId,
-                                    inAppMessageOption.value.id
-                                )
+                            onDismiss = { userId, id, key ->
+                                onInAppMessageBannerRead(userId, id, key)
                                 isBannerVisible = false
                             },
-                            onInternalCTAClick = {
-                                onInAppMessageBannerRead(
-                                    inAppMessageOption.value.userId,
-                                    inAppMessageOption.value.id
-                                )
+                            onInternalCTAClick = { userId, id, key, value ->
+                                onInAppMessageBannerRead(userId, id, key)
+                                onInAppMessageBannerCTAClicked(key)
                                 isBannerVisible = false
                             },
-                            onExternalCTAClick = {
-                                onInAppMessageBannerRead(
-                                    inAppMessageOption.value.userId,
-                                    inAppMessageOption.value.id
-                                )
+                            onExternalCTAClick = { userId, id, key, value ->
+                                onInAppMessageBannerRead(userId, id, key)
+                                onInAppMessageBannerCTAClicked(key)
                                 isBannerVisible = false
-                                BrowserUtils.openWebsite(context, it)
+                                BrowserUtils.openWebsite(context, value)
+                            },
+                            onDisplay = { key ->
+                                onInAppMessageBannerDisplayed(key)
                             }
                         )
                     }

@@ -71,5 +71,6 @@ dependencies {
     implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
+    implementation(projects.pass.telemetry.api)
 
 }

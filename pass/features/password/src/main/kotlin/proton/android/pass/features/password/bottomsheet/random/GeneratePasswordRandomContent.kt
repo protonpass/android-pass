@@ -31,6 +31,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -46,6 +47,7 @@ import proton.android.pass.features.password.R
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordUiEvent
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordToggleRow
 import proton.android.pass.features.password.bottomsheet.GeneratePasswordSelectorRow
+import proton.android.pass.features.password.bottomsheet.GeneratePasswordSliderRow
 import proton.android.pass.features.password.extensions.toResourceString
 import proton.android.pass.preferences.PasswordGenerationMode
 
@@ -74,13 +76,14 @@ internal fun GeneratePasswordRandomContent(
 
         PassDivider()
 
-        GeneratePasswordRandomCountRow(
-            length = length,
-            minLength = minLength,
-            maxLength = maxLength,
-            onLengthChange = { newPasswordLength ->
+        GeneratePasswordSliderRow(
+            text = pluralStringResource(R.plurals.character_count, length, length),
+            value = length,
+            minValue = minLength,
+            maxValue = maxLength,
+            onValueChange = { newValue ->
                 GeneratePasswordUiEvent.OnPasswordConfigChanged(
-                    config = config.copy(passwordLength = newPasswordLength)
+                    config = config.copy(passwordLength = newValue)
                 ).also(onEvent)
             }
         )

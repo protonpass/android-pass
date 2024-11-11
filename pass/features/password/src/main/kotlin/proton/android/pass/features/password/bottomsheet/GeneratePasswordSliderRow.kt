@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.password.bottomsheet.random
+package proton.android.pass.features.password.bottomsheet
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -32,7 +32,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
@@ -40,18 +39,35 @@ import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.features.password.R
+
+private const val SLIDER_NORMALIZATION_FACTOR = 100
+
+private const val SLIDER_WEIGHT_CONTENT = 0.65f
+private const val SLIDER_WEIGHT_TEXT = 0.35f
 
 @Composable
-internal fun GeneratePasswordRandomCountRow(
+internal fun GeneratePasswordSliderRow(
     modifier: Modifier = Modifier,
-    length: Int,
-    minLength: Int,
-    maxLength: Int,
-    onLengthChange: (Int) -> Unit
+    text: String,
+    value: Int,
+    minValue: Int,
+    maxValue: Int,
+    onValueChange: (Int) -> Unit,
+    normalizationFactor: Int = SLIDER_NORMALIZATION_FACTOR
 ) {
-    var sliderPosition by remember { mutableFloatStateOf(length.toFloat()) }
-    val valueRange = remember { minLength.toFloat()..maxLength.toFloat() }
+    val normalizationCoefficient = remember(maxValue, minValue) {
+        normalizationFactor / (maxValue - minValue + 1).coerceAtLeast(minimumValue = 1)
+    }
+
+    val sliderValueRange = remember(normalizationCoefficient) {
+        val min = minValue.toFloat().times(normalizationCoefficient)
+        val max = maxValue.toFloat().times(normalizationCoefficient)
+        min..max
+    }
+
+    var sliderValue by remember {
+        mutableFloatStateOf(value.toFloat().times(normalizationCoefficient))
+    }
 
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -59,44 +75,40 @@ internal fun GeneratePasswordRandomCountRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            modifier = Modifier.weight(SLIDER_TEXT_WEIGHT),
-            text = pluralStringResource(R.plurals.character_count, length, length),
+            modifier = Modifier.weight(weight = SLIDER_WEIGHT_TEXT),
+            text = text,
             color = PassTheme.colors.textNorm,
             style = ProtonTheme.typography.defaultSmallNorm
         )
 
         Slider(
-            modifier = Modifier.weight(SLIDER_CONTENT_WEIGHT),
-            value = sliderPosition,
-            valueRange = valueRange,
+            modifier = Modifier.weight(weight = SLIDER_WEIGHT_CONTENT),
+            value = sliderValue,
+            valueRange = sliderValueRange,
             colors = SliderDefaults.colors(
                 thumbColor = PassTheme.colors.loginInteractionNormMajor1,
                 activeTrackColor = PassTheme.colors.loginInteractionNormMajor1,
                 inactiveTrackColor = PassTheme.colors.loginInteractionNormMinor1
             ),
-            onValueChange = { newLength ->
-                if (sliderPosition.toInt() != newLength.toInt()) {
-                    sliderPosition = newLength
-                    onLengthChange(newLength.toInt())
-                }
+            onValueChange = { newValue ->
+                sliderValue = newValue
+                onValueChange(newValue.div(normalizationCoefficient).toInt())
             }
         )
     }
 }
 
 @[Preview Composable]
-internal fun GeneratePasswordRandomCountRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun GeneratePasswordSliderRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            GeneratePasswordRandomCountRow(
-                length = 4,
-                minLength = 4,
-                maxLength = 64,
-                onLengthChange = {}
+            GeneratePasswordSliderRow(
+                text = "text",
+                value = 4,
+                minValue = 1,
+                maxValue = 10,
+                onValueChange = {}
             )
         }
     }
 }
-
-private const val SLIDER_CONTENT_WEIGHT = 0.65f
-private const val SLIDER_TEXT_WEIGHT = 0.35f

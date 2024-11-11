@@ -48,7 +48,11 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageStatus
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableInAppMessages
 import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
+import proton.android.pass.features.inappmessages.InAppMessagesChange
+import proton.android.pass.features.inappmessages.InAppMessagesClick
+import proton.android.pass.features.inappmessages.InAppMessagesDisplay
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.network.api.NetworkMonitor
@@ -56,6 +60,7 @@ import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
@@ -65,6 +70,7 @@ class AppViewModel @Inject constructor(
     private val needsBiometricAuth: NeedsBiometricAuth,
     private val inAppUpdatesManager: InAppUpdatesManager,
     private val changeInAppMessageStatus: ChangeInAppMessageStatus,
+    private val telemetryManager: TelemetryManager,
     networkMonitor: NetworkMonitor,
     observeDeliverableInAppMessages: ObserveDeliverableInAppMessages
 ) : ViewModel() {
@@ -148,12 +154,17 @@ class AppViewModel @Inject constructor(
         }
     }
 
-    fun onInAppMessageBannerRead(userId: UserId, inAppMessageId: InAppMessageId) {
+    fun onInAppMessageBannerRead(
+        userId: UserId,
+        inAppMessageId: InAppMessageId,
+        inAppMessageKey: InAppMessageKey
+    ) {
         viewModelScope.launch {
             runCatching {
                 changeInAppMessageStatus(userId, inAppMessageId, InAppMessageStatus.Read)
             }
                 .onSuccess {
+                    telemetryManager.sendEvent(InAppMessagesChange(inAppMessageKey, InAppMessageStatus.Read))
                     PassLogger.i(TAG, "In-app message read")
                 }
                 .onError {
@@ -161,6 +172,14 @@ class AppViewModel @Inject constructor(
                     PassLogger.w(TAG, it)
                 }
         }
+    }
+
+    fun onInAppMessageBannerDisplayed(inAppMessageKey: InAppMessageKey) {
+        telemetryManager.sendEvent(InAppMessagesDisplay(inAppMessageKey))
+    }
+
+    fun onInAppMessageBannerCTAClicked(inAppMessageKey: InAppMessageKey) {
+        telemetryManager.sendEvent(InAppMessagesClick(inAppMessageKey))
     }
 
     companion object {

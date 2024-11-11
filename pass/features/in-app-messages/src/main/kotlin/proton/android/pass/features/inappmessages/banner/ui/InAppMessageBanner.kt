@@ -34,6 +34,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -70,10 +71,14 @@ import me.proton.core.presentation.R as CoreR
 fun InAppMessageBanner(
     modifier: Modifier = Modifier,
     inAppMessage: InAppMessage,
-    onInternalCTAClick: (String) -> Unit,
-    onExternalCTAClick: (String) -> Unit,
-    onDismiss: (InAppMessageId) -> Unit
+    onInternalCTAClick: (UserId, InAppMessageId, InAppMessageKey, String) -> Unit,
+    onExternalCTAClick: (UserId, InAppMessageId, InAppMessageKey, String) -> Unit,
+    onDismiss: (UserId, InAppMessageId, InAppMessageKey) -> Unit,
+    onDisplay: (InAppMessageKey) -> Unit
 ) {
+    LaunchedEffect(Unit) {
+        onDisplay(inAppMessage.key)
+    }
     Box(modifier = modifier) {
         Row(
             modifier = Modifier
@@ -93,8 +98,20 @@ fun InAppMessageBanner(
                             None -> Modifier
                             is Some -> clickable {
                                 when (cta.value.type) {
-                                    InAppMessageCTAType.Internal -> onInternalCTAClick(cta.value.route)
-                                    InAppMessageCTAType.External -> onExternalCTAClick(cta.value.route)
+                                    InAppMessageCTAType.Internal -> onInternalCTAClick(
+                                        inAppMessage.userId,
+                                        inAppMessage.id,
+                                        inAppMessage.key,
+                                        cta.value.route
+                                    )
+
+                                    InAppMessageCTAType.External -> onExternalCTAClick(
+                                        inAppMessage.userId,
+                                        inAppMessage.id,
+                                        inAppMessage.key,
+                                        cta.value.route
+                                    )
+
                                     InAppMessageCTAType.Unknown -> Unit
                                 }
                             }
@@ -138,7 +155,7 @@ fun InAppMessageBanner(
         }
         IconButton(
             modifier = Modifier.align(Alignment.TopEnd),
-            onClick = { onDismiss(inAppMessage.id) }
+            onClick = { onDismiss(inAppMessage.userId, inAppMessage.id, inAppMessage.key) }
         ) {
             Icon(
                 modifier = Modifier
@@ -183,9 +200,10 @@ fun InAppBannerPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                         end = None
                     )
                 ),
-                onInternalCTAClick = {},
-                onExternalCTAClick = {},
-                onDismiss = {}
+                onInternalCTAClick = { _, _, _, _ -> },
+                onExternalCTAClick = { _, _, _, _ -> },
+                onDismiss = { _, _, _ -> },
+                onDisplay = {}
             )
         }
     }

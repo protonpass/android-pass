@@ -51,6 +51,8 @@ data class NotificationResponse(
     val endTime: Long?,
     @SerialName("State")
     val state: Int,
+    @SerialName("Priority")
+    val priority: Int,
     @SerialName("Content")
     val content: ContentResponse
 )

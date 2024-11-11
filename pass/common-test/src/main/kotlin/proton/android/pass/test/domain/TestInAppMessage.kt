@@ -43,7 +43,8 @@ object TestInAppMessage {
         cta: Option<InAppMessageCTA> = None,
         state: InAppMessageStatus = InAppMessageStatus.Unread,
         range: InAppMessageRange = createInAppMessageRange(),
-        userId: UserId = UserId("default-user-id")
+        userId: UserId = UserId("default-user-id"),
+        priority: Int = 1
     ): InAppMessage = InAppMessage(
         id = InAppMessageId(id),
         key = InAppMessageKey("default-key"),
@@ -54,7 +55,8 @@ object TestInAppMessage {
         cta = cta,
         state = state,
         range = range,
-        userId = userId
+        userId = userId,
+        priority = priority
     )
 
     fun createInAppMessageRange(start: Instant = Clock.System.now(), end: Option<Instant> = None): InAppMessageRange =

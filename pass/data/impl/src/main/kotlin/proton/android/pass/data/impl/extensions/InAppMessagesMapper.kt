@@ -44,6 +44,7 @@ fun NotificationResponse.toDomain(userId: UserId): InAppMessage = InAppMessage(
     imageUrl = this.content.imageUrl.toOption(),
     cta = this.content.cta.toOption().map(CtaResponse::toDomain),
     state = InAppMessageStatus.fromValue(this.state),
+    priority = this.priority,
     range = InAppMessageRange(
         start = Instant.fromEpochMilliseconds(this.startTime),
         end = this.endTime?.let(Instant.Companion::fromEpochMilliseconds).toOption()

@@ -39,6 +39,7 @@ import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageCTA
 import proton.android.pass.domain.inappmessages.InAppMessageCTAType
 import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
@@ -85,6 +86,7 @@ fun InAppMessageContentPreview(@PreviewParameter(ThemePreviewProvider::class) is
             InAppMessageContent(
                 inAppMessage = InAppMessage(
                     id = InAppMessageId("q"),
+                    key = InAppMessageKey(""),
                     userId = UserId(""),
                     title = "Upgrade to Pass Plus",
                     message = "Get access to all features".some(),

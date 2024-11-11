@@ -77,5 +77,8 @@ interface InternalSettingsRepository {
     fun setHasShownAliasContactsOnboarding(value: Boolean): Result<Unit>
     fun hasShownAliasContactsOnboarding(): Flow<Boolean>
 
+    fun setLastTimeUserHasSeenIAM(value: LastTimeUserHasSeenIAMPreference): Result<Unit>
+    fun getLastTimeUserHasSeenIAM(userId: UserId): Flow<Option<LastTimeUserHasSeenIAMPreference>>
+
     fun clearSettings(): Result<Unit>
 }

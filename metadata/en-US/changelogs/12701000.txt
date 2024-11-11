@@ -1,0 +1,5 @@
+## 1.27.1 (2024-11-11)
+
+### Fixes :bug:
+
+- Incorrect display of sync dialog.

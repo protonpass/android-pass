@@ -59,7 +59,7 @@ class ObserveDeliverableInAppMessagesImpl @Inject constructor(
                                             list.filter { message ->
                                                 message.state == InAppMessageStatus.Unread &&
                                                     message.range.inRange(now)
-                                            }
+                                            }.sortedByDescending { it.priority }
                                         }
                                 } else {
                                     flowOf(emptyList())

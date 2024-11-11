@@ -166,4 +166,27 @@ internal class ObserveDeliverableInAppMessagesImplTest {
             cancelAndIgnoreRemainingEvents()
         }
     }
+
+    @Test
+    fun `test messages are ordered by highest priority`() = runTest {
+        val message1 = TestInAppMessage.create(
+            state = InAppMessageStatus.Unread,
+            range = TestInAppMessage.createInAppMessageRange(),
+            priority = 1
+        )
+        val message2 = TestInAppMessage.create(
+            state = InAppMessageStatus.Unread,
+            range = TestInAppMessage.createInAppMessageRange(),
+            priority = 2
+        )
+        inAppMessagesRepository.addMessage(userId, message1)
+        inAppMessagesRepository.addMessage(userId, message2)
+        instance(userId).test {
+            val item = awaitItem()
+            assertThat(item).hasSize(2)
+            assertThat(item.first()).isEqualTo(message2)
+            assertThat(item.last()).isEqualTo(message1)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
 }

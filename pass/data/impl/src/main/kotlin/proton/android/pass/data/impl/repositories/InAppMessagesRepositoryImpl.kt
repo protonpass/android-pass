@@ -19,34 +19,36 @@
 package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.impl.extensions.toDomain
+import proton.android.pass.data.impl.local.inappmessages.LocalInAppMessagesDataSource
 import proton.android.pass.data.impl.remote.inappmessages.RemoteInAppMessagesDataSource
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class InAppMessagesRepositoryImpl @Inject constructor(
-    private val remote: RemoteInAppMessagesDataSource
+    private val remote: RemoteInAppMessagesDataSource,
+    private val local: LocalInAppMessagesDataSource
 ) : InAppMessagesRepository {
 
-    private val messageCache = MutableStateFlow<Map<UserId, List<InAppMessage>>>(emptyMap())
-
-    override fun observeUserMessages(userId: UserId): Flow<List<InAppMessage>> = messageCache
-        .map { it[userId] ?: emptyList() }
-        .distinctUntilChanged()
+    override fun observeUserMessages(userId: UserId): Flow<List<InAppMessage>> = local.observeUserMessages(userId)
         .onStart {
-            if (!messageCache.value.containsKey(userId)) {
-                val messages = remote.fetchInAppMessages(userId).toDomain(userId)
-                messageCache.value += userId to messages
+            runCatching {
+                val remoteMessages = remote.fetchInAppMessages(userId).toDomain(userId)
+                local.storeMessages(userId, remoteMessages)
+            }.onFailure {
+                PassLogger.w(TAG, "Failed to fetch in-app messages for user $userId")
+                PassLogger.w(TAG, it)
             }
         }
+        .distinctUntilChanged()
 
     override suspend fun changeMessageStatus(
         userId: UserId,
@@ -55,11 +57,13 @@ class InAppMessagesRepositoryImpl @Inject constructor(
     ) {
         remote.changeMessageStatus(userId, messageId, status)
 
-        messageCache.value[userId]?.let { cachedMessages ->
-            val updatedMessages = cachedMessages.map { message ->
-                if (message.id == messageId) message.copy(state = status) else message
-            }
-            messageCache.value += userId to updatedMessages
-        }
+        val updatedMessage = local.observeUserMessage(userId, messageId).first()
+            .copy(state = status)
+
+        local.updateMessage(userId, updatedMessage)
+    }
+
+    companion object {
+        private const val TAG = "InAppMessagesRepositoryImpl"
     }
 }

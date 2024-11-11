@@ -60,6 +60,7 @@ import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageCTAType
 import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
@@ -169,6 +170,7 @@ fun InAppBannerPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
             InAppMessageBanner(
                 inAppMessage = InAppMessage(
                     id = InAppMessageId("1"),
+                    key = InAppMessageKey(""),
                     userId = UserId(""),
                     mode = InAppMessageMode.Banner,
                     title = "Title",

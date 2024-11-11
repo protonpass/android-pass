@@ -28,6 +28,7 @@ import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -191,6 +192,7 @@ import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareI
 import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.data.fakes.repositories.FakeAliasRepository
 import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
+import proton.android.pass.data.fakes.repositories.FakeInAppMessagesRepository
 import proton.android.pass.data.fakes.repositories.FakeSentinelRepository
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
@@ -906,5 +908,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindUpdateAliasName(impl: FakeUpdateAliasName): UpdateAliasName
+
+    @Binds
+    abstract fun bindInAppMessagesRepository(impl: FakeInAppMessagesRepository): InAppMessagesRepository
 
 }

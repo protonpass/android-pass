@@ -45,7 +45,7 @@ fun InAppMessageBottomsheet(
             val successState = state as InAppMessageModalState.Success
             DisposableEffect(successState) {
                 onDispose {
-                    viewModel.onInAppMessageRead(successState.inAppMessage.userId, successState.inAppMessage.id)
+                    viewModel.onInAppMessageDismissed(successState.inAppMessage.userId, successState.inAppMessage.id)
                 }
             }
 

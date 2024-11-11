@@ -30,7 +30,7 @@ sealed interface WorkerItem {
     @JvmInline
     value class SingleItemAssetLink(val websites: Set<String>) : WorkerItem
 
-    data class MarkInAppMessageAsRead(
+    data class MarkInAppMessageAsDismissed(
         val userId: UserId,
         val inAppMessageId: InAppMessageId
     ) : WorkerItem

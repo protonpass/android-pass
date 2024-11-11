@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.usecases.inappmessages
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -32,32 +31,45 @@ import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.minutes
 
 class ObserveDeliverableInAppMessagesImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
     private val inAppMessagesRepository: InAppMessagesRepository,
     private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
+    private val internalSettingsRepository: InternalSettingsRepository,
     private val clock: Clock
 ) : ObserveDeliverableInAppMessages {
 
-    override fun invoke(userId: UserId?): Flow<List<InAppMessage>> = combine(
-        getUserId(userId),
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.IN_APP_MESSAGES_V1),
-        ::Pair
-    ).flatMapLatest { (resolvedUserId, isFeatureActive) ->
-        if (isFeatureActive) {
-            inAppMessagesRepository.observeUserMessages(resolvedUserId)
-                .map { list ->
-                    list.filter { message ->
-                        message.state == InAppMessageStatus.Unread &&
-                            message.range.inRange(clock.now())
+    override fun invoke(userId: UserId?): Flow<List<InAppMessage>> =
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.IN_APP_MESSAGES_V1)
+            .flatMapLatest { isFeatureActive ->
+                if (isFeatureActive) {
+                    getUserId(userId).flatMapLatest { resolvedUserId ->
+                        internalSettingsRepository.getLastTimeUserHasSeenIAM(resolvedUserId)
+                            .flatMapLatest { preference ->
+                                val now = clock.now()
+                                val lastSeenTime = preference.value()?.timestamp ?: 0L
+                                val thirtyMinutesInMillis = 30.minutes.inWholeMilliseconds
+                                if (now.toEpochMilliseconds() - lastSeenTime > thirtyMinutesInMillis) {
+                                    inAppMessagesRepository.observeUserMessages(resolvedUserId)
+                                        .map { list ->
+                                            list.filter { message ->
+                                                message.state == InAppMessageStatus.Unread &&
+                                                    message.range.inRange(now)
+                                            }
+                                        }
+                                } else {
+                                    flowOf(emptyList())
+                                }
+                            }
                     }
+                } else {
+                    flowOf(emptyList())
                 }
-        } else {
-            flowOf(emptyList())
-        }
-    }
+            }
 
     fun getUserId(userId: UserId?): Flow<UserId> = if (userId != null) {
         flowOf(userId)

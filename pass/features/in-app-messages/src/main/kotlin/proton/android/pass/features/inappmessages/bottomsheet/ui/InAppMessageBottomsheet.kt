@@ -20,6 +20,7 @@ package proton.android.pass.features.inappmessages.bottomsheet.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -43,9 +44,14 @@ fun InAppMessageBottomsheet(
     when (state) {
         is InAppMessageModalState.Success -> {
             val successState = state as InAppMessageModalState.Success
+            LaunchedEffect(Unit) {
+                viewModel.onInAppMessageDisplayed(successState.inAppMessage.key)
+            }
             DisposableEffect(successState) {
-                onDispose {
-                    viewModel.onInAppMessageDismissed(successState.inAppMessage.userId, successState.inAppMessage.id)
+                with(successState.inAppMessage) {
+                    onDispose {
+                        viewModel.onInAppMessageDismissed(userId, id, key)
+                    }
                 }
             }
 
@@ -53,9 +59,11 @@ fun InAppMessageBottomsheet(
                 modifier = modifier,
                 inAppMessage = successState.inAppMessage,
                 onExternalCTAClick = {
+                    viewModel.onCTAClicked(successState.inAppMessage.key)
                     BrowserUtils.openWebsite(context, it)
                 },
                 onInternalCTAClick = {
+                    viewModel.onCTAClicked(successState.inAppMessage.key)
                 },
                 onClose = {
                     onNavigate(InAppMessageModalDestination.CloseBottomsheet)

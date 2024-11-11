@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.27.1 (2024-11-11)
+
+### Fixes :bug:
+
+- Incorrect display of sync dialog.
+
 ## 1.27.0 (2024-11-08)
 
 ### Features :tada:

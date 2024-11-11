@@ -27,6 +27,7 @@ import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageCTA
 import proton.android.pass.domain.inappmessages.InAppMessageCTAType
 import proton.android.pass.domain.inappmessages.InAppMessageId
+import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.domain.inappmessages.InAppMessageRange
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
@@ -35,6 +36,7 @@ fun List<NotificationResponse>.toDomain(userId: UserId): List<InAppMessage> = th
 
 fun NotificationResponse.toDomain(userId: UserId): InAppMessage = InAppMessage(
     id = InAppMessageId(this.id),
+    key = InAppMessageKey(this.notificationKey),
     userId = userId,
     mode = InAppMessageMode.fromValue(this.content.displayType),
     title = this.content.title,

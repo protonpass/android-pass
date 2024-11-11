@@ -26,8 +26,12 @@ import proton.android.pass.common.api.Some
 @JvmInline
 value class InAppMessageId(val value: String)
 
+@JvmInline
+value class InAppMessageKey(val value: String)
+
 data class InAppMessage(
     val id: InAppMessageId,
+    val key: InAppMessageKey,
     val mode: InAppMessageMode,
     val title: String,
     val message: Option<String>,

@@ -98,6 +98,7 @@ fun InAppMessageContentPreview(@PreviewParameter(ThemePreviewProvider::class) is
                         type = InAppMessageCTAType.Internal
                     ).some(),
                     state = InAppMessageStatus.Unread,
+                    priority = 1,
                     range = InAppMessageRange(
                         start = Instant.DISTANT_PAST,
                         end = Some(Instant.DISTANT_FUTURE)

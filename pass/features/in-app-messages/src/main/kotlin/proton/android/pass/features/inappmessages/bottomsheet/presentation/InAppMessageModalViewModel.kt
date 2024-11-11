@@ -70,7 +70,7 @@ class InAppMessageModalViewModel @Inject constructor(
             initialValue = InAppMessageModalState.Loading
         )
 
-    fun onInAppMessageRead(userId: UserId, inAppMessageId: InAppMessageId) {
-        workerLauncher.launch(WorkerItem.MarkInAppMessageAsRead(userId, inAppMessageId))
+    fun onInAppMessageDismissed(userId: UserId, inAppMessageId: InAppMessageId) {
+        workerLauncher.launch(WorkerItem.MarkInAppMessageAsDismissed(userId, inAppMessageId))
     }
 }

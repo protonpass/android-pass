@@ -21,6 +21,7 @@ package proton.android.pass.initializer
 import android.content.Context
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.flowWithLifecycle
 import androidx.startup.Initializer
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -28,6 +29,9 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
@@ -37,6 +41,7 @@ import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountDisabled
 import me.proton.core.accountmanager.presentation.onAccountReady
 import me.proton.core.accountmanager.presentation.onAccountRemoved
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.toSyncMode
@@ -73,17 +78,34 @@ class AccountListenerInitializer : Initializer<Unit> {
             launchInAppLifecycleScope(lifecycleProvider) {
                 performCleanup(it, entryPoint)
             }
-        }.onAccountReady(false) { // this flag is set to false to listen for new accounts only
-            PassLogger.i(TAG, "New Account ready : ${it.userId}")
-            launchInAppLifecycleScope(lifecycleProvider) {
-                val itemSyncStatus = itemSyncStatusRepository.observeSyncStatus().first()
-                itemSyncStatusRepository.setMode(itemSyncStatus.toSyncMode())
-            }
         }.onAccountReady { account ->
             launchInAppLifecycleScope(lifecycleProvider) {
                 onAccountReady(account, refreshOrganizationSettings, refreshPlan)
             }
         }
+
+        accountManager.onAccountStateChanged(initialState = false)
+            .scan(mutableMapOf<UserId, Pair<Account?, Account>>()) { stateMap, currentAccount ->
+                val userId = currentAccount.userId
+                val previousAccount = stateMap[userId]?.second
+                stateMap[userId] = Pair(previousAccount, currentAccount)
+                stateMap
+            }
+            .onEach { map ->
+                val anyUserNeedsSync = map.any {
+                    val previousState = it.value.first?.state
+                    val currentState = it.value.second.state
+                    previousState == AccountState.NotReady && currentState == AccountState.Ready
+                }
+                if (anyUserNeedsSync) {
+                    launchInAppLifecycleScope(lifecycleProvider) {
+                        val itemSyncStatus = itemSyncStatusRepository.observeSyncStatus().first()
+                        itemSyncStatusRepository.setMode(itemSyncStatus.toSyncMode())
+                    }
+                }
+            }
+            .flowWithLifecycle(lifecycleProvider.lifecycle)
+            .launchIn(lifecycleProvider.lifecycle.coroutineScope)
     }
 
     private fun launchInAppLifecycleScope(lifecycleProvider: PassAppLifecycleProvider, block: suspend () -> Unit) {

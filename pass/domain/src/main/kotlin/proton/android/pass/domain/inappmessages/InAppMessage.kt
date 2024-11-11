@@ -33,6 +33,7 @@ data class InAppMessage(
     val id: InAppMessageId,
     val key: InAppMessageKey,
     val mode: InAppMessageMode,
+    val priority: Int,
     val title: String,
     val message: Option<String>,
     val imageUrl: Option<String>,

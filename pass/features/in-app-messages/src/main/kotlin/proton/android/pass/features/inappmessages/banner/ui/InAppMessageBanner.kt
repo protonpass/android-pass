@@ -195,6 +195,7 @@ fun InAppBannerPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                     imageUrl = None,
                     cta = None,
                     state = InAppMessageStatus.Unread,
+                    priority = 1,
                     range = InAppMessageRange(
                         start = Instant.DISTANT_PAST,
                         end = None

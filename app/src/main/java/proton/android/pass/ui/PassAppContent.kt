@@ -298,9 +298,10 @@ fun PassAppContent(
                     }
 
                     var isBannerVisible by remember { mutableStateOf(false) }
-                    LaunchedEffect(inAppMessageOption) {
+                    LaunchedEffect(inAppMessageOption, currentRoute) {
                         isBannerVisible = inAppMessageOption is Some &&
-                            inAppMessageOption.value.mode == InAppMessageMode.Banner
+                            inAppMessageOption.value.mode == InAppMessageMode.Banner &&
+                            currentRoute == HomeNavItem.route
                     }
                     AnimatedVisibility(
                         modifier = Modifier.align(Alignment.BottomCenter),

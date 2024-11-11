@@ -30,6 +30,8 @@ import proton.android.pass.data.impl.local.LocalDataMigrationDataSource
 import proton.android.pass.data.impl.local.LocalDataMigrationDataSourceImpl
 import proton.android.pass.data.impl.local.LocalEventDataSource
 import proton.android.pass.data.impl.local.LocalEventDataSourceImpl
+import proton.android.pass.data.impl.local.inappmessages.LocalInAppMessagesDataSource
+import proton.android.pass.data.impl.local.inappmessages.LocalInAppMessagesDataSourceImpl
 import proton.android.pass.data.impl.local.LocalInviteDataSource
 import proton.android.pass.data.impl.local.LocalInviteDataSourceImpl
 import proton.android.pass.data.impl.local.LocalItemDataSource
@@ -116,5 +118,8 @@ abstract class DataLocalDataSourceModule {
 
     @[Binds Singleton]
     abstract fun bindLocalAssetLinkDataSource(impl: LocalAssetLinkDataSourceImpl): LocalAssetLinkDataSource
+
+    @[Binds Singleton]
+    abstract fun bindLocalInAppMessagesDataSource(impl: LocalInAppMessagesDataSourceImpl): LocalInAppMessagesDataSource
 
 }

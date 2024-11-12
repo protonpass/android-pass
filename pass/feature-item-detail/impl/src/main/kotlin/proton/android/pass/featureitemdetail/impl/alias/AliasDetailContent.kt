@@ -55,6 +55,7 @@ fun AliasDetailContent(
     stats: Option<AliasStats>,
     contactsCount: Int,
     isLoading: Boolean,
+    isContactsEnabled: Boolean,
     isAliasSyncEnabled: Boolean,
     isAliasStateToggling: Boolean,
     isHistoryFeatureEnabled: Boolean,
@@ -112,16 +113,18 @@ fun AliasDetailContent(
         }
 
         if (isAliasManagementEnabled) {
-            SenderNameSection(
-                text = displayName,
-                isLoading = isLoading
-            )
+            if (isContactsEnabled) {
+                SenderNameSection(
+                    text = displayName,
+                    isLoading = isLoading
+                )
 
-            ContactsSection(
-                modifier = Modifier.padding(bottom = Spacing.small),
-                counter = contactsCount,
-                onClick = onContactsClicked
-            )
+                ContactsSection(
+                    modifier = Modifier.padding(bottom = Spacing.small),
+                    counter = contactsCount,
+                    onClick = onContactsClicked
+                )
+            }
 
             if (stats is Some) {
                 AliasStats(stats = stats.value)

@@ -59,6 +59,8 @@ import proton.android.pass.featurehome.impl.R
 fun IdentityOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
+    isFreePlan: Boolean,
+    canUpdate: Boolean,
     action: BottomSheetItemAction,
     isRecentSearch: Boolean = false,
     onCopyFullName: (String) -> Unit,
@@ -67,8 +69,7 @@ fun IdentityOptionsBottomSheetContents(
     onViewHistory: (ShareId, ItemId) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
-    onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
-    isFreePlan: Boolean
+    onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.Identity
 
@@ -94,7 +95,7 @@ fun IdentityOptionsBottomSheetContents(
 
             add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
 
-            if (itemUiModel.canModify) {
+            if (canUpdate) {
                 add(edit(itemUiModel, onEdit))
                 add(moveToTrash(itemUiModel, onMoveToTrash))
             }
@@ -153,8 +154,8 @@ internal fun IdentityOptionsBSContentsPreview(
                     isPinned = false,
                     revision = 1
                 ),
-                isRecentSearch = input.second,
                 action = BottomSheetItemAction.None,
+                isRecentSearch = input.second,
                 onCopyFullName = {},
                 onPinned = { _, _ -> },
                 onUnpinned = { _, _ -> },
@@ -162,7 +163,8 @@ internal fun IdentityOptionsBSContentsPreview(
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
-                isFreePlan = input.second
+                isFreePlan = input.second,
+                canUpdate = true
             )
         }
     }

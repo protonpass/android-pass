@@ -130,7 +130,6 @@ internal fun ProfileContent(
                     if (state.autofillStatus is AutofillSupportedStatus.Supported) {
                         AutofillProfileSection(
                             isChecked = state.autofillStatus.status is AutofillStatus.EnabledByOurService,
-                            userBrowser = state.userBrowser,
                             onClick = { onEvent(ProfileUiEvent.OnAutofillClicked(it)) }
                         )
                     }

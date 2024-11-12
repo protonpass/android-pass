@@ -24,7 +24,6 @@ import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
-import proton.android.pass.data.api.usecases.DefaultBrowser
 import proton.android.pass.featureprofile.impl.accountswitcher.AccountListItem
 import proton.android.pass.passkeys.api.PasskeySupport
 import proton.android.pass.preferences.AppLockTimePreference
@@ -69,7 +68,6 @@ internal data class ProfileUiState(
     val accountType: PlanInfo,
     val event: ProfileEvent,
     val showUpgradeButton: Boolean,
-    val userBrowser: DefaultBrowser,
     val passkeySupport: ProfilePasskeySupportSection,
     val isAccountSwitchEnabled: Boolean,
     val secureLinksCount: Int,
@@ -88,7 +86,6 @@ internal data class ProfileUiState(
             accountType = PlanInfo.Hide,
             event = ProfileEvent.Unknown,
             showUpgradeButton = false,
-            userBrowser = DefaultBrowser.Other,
             passkeySupport = ProfilePasskeySupportSection.Hide,
             isAccountSwitchEnabled = false,
             secureLinksCount = 0,

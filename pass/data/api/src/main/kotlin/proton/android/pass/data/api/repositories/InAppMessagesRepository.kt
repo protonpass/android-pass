@@ -33,4 +33,6 @@ interface InAppMessagesRepository {
         messageId: InAppMessageId,
         status: InAppMessageStatus
     )
+
+    fun observeUserMessage(userId: UserId, inAppMessageId: InAppMessageId): Flow<InAppMessage>
 }

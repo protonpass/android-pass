@@ -88,7 +88,7 @@ fun InAppMessageBanner(
                     top = Spacing.medium + Spacing.extraSmall
                 )
                 .roundedContainer(
-                    backgroundColor = PassTheme.colors.backgroundWeak,
+                    backgroundColor = PassTheme.colors.backgroundMedium,
                     borderColor = PassTheme.colors.inputBorderNorm
                 )
                 .applyIf(
@@ -166,6 +166,12 @@ fun InAppMessageBanner(
                         shape = CircleShape
                     )
                     .padding(2.dp)
+                    .border(
+                        width = 1.dp,
+                        color = PassTheme.colors.inputBorderNorm,
+                        shape = CircleShape
+                    )
+                    .padding(1.dp)
                     .background(
                         color = PassTheme.colors.backgroundMedium,
                         shape = CircleShape

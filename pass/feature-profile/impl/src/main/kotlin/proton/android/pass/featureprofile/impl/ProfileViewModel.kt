@@ -60,8 +60,6 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
-import proton.android.pass.data.api.usecases.DefaultBrowser
-import proton.android.pass.data.api.usecases.GetDefaultBrowser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
@@ -79,10 +77,6 @@ import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.FilteredBy
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.FilteredByNote
 import proton.android.pass.featureprofile.impl.accountswitcher.AccountItem
 import proton.android.pass.featureprofile.impl.accountswitcher.AccountListItem
-import proton.android.pass.searchoptions.api.FilterOption
-import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
-import proton.android.pass.searchoptions.api.SearchFilterType
-import proton.android.pass.searchoptions.api.VaultSelectionOption
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.CheckPasskeySupport
@@ -91,6 +85,10 @@ import proton.android.pass.preferences.BiometricSystemLockPreference
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.searchoptions.api.FilterOption
+import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
+import proton.android.pass.searchoptions.api.SearchFilterType
+import proton.android.pass.searchoptions.api.VaultSelectionOption
 import javax.inject.Inject
 
 @Suppress("LongParameterList")
@@ -110,7 +108,6 @@ class ProfileViewModel @Inject constructor(
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    getDefaultBrowser: GetDefaultBrowser,
     observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock,
     observeSecureLinksCount: ObserveSecureLinksCount
 ) : ViewModel() {
@@ -260,16 +257,14 @@ class ProfileViewModel @Inject constructor(
         itemSummaryUiStateFlow,
         upgradeInfoFlow,
         eventFlow,
-        oneShot { getDefaultBrowser() }.asLoadingResult(),
         passkeySupportFlow,
         ffFlow,
         observeSecureLinksCount(),
         accountsFlow
-    ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event, browser,
+    ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event,
         passkey, flags, secureLinksCount, accounts ->
 
         val (accountType, showUpgradeButton) = processUpgradeInfo(upgradeInfo)
-        val defaultBrowser = browser.getOrNull() ?: DefaultBrowser.Other
         ProfileUiState(
             appLockSectionState = appLockSectionState,
             autofillStatus = autofillStatus,
@@ -278,7 +273,6 @@ class ProfileViewModel @Inject constructor(
             accountType = accountType,
             event = event,
             showUpgradeButton = showUpgradeButton,
-            userBrowser = defaultBrowser,
             passkeySupport = passkey,
             isAccountSwitchEnabled = flags.isAccountSwitchEnabled,
             secureLinksCount = secureLinksCount,

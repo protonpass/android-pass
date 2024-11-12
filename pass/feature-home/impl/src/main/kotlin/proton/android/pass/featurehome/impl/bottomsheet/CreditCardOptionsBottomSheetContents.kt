@@ -41,6 +41,8 @@ fun CreditCardOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     isRecentSearch: Boolean = false,
+    isFreePlan: Boolean,
+    canUpdate: Boolean,
     onCopyNumber: (String) -> Unit,
     onCopyCvv: (EncryptedString) -> Unit,
     action: BottomSheetItemAction,
@@ -49,8 +51,7 @@ fun CreditCardOptionsBottomSheetContents(
     onViewHistory: (ShareId, ItemId) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
-    onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
-    isFreePlan: Boolean
+    onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.CreditCard
 
@@ -77,7 +78,7 @@ fun CreditCardOptionsBottomSheetContents(
 
             add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
 
-            if (itemUiModel.canModify) {
+            if (canUpdate) {
                 add(edit(itemUiModel, onEdit))
                 add(moveToTrash(itemUiModel, onMoveToTrash))
             }
@@ -161,7 +162,8 @@ fun CreditCardOptionsBottomSheetContentsPreview(
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
-                isFreePlan = input.second
+                isFreePlan = input.second,
+                canUpdate = true
             )
         }
     }

@@ -56,6 +56,8 @@ fun NoteOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     isRecentSearch: Boolean = false,
+    isFreePlan: Boolean,
+    canUpdate: Boolean,
     onCopyNote: (String) -> Unit,
     action: BottomSheetItemAction,
     onPinned: (ShareId, ItemId) -> Unit,
@@ -63,8 +65,7 @@ fun NoteOptionsBottomSheetContents(
     onViewHistory: (ShareId, ItemId) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
-    onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
-    isFreePlan: Boolean
+    onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.Note
 
@@ -92,7 +93,7 @@ fun NoteOptionsBottomSheetContents(
 
             add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
 
-            if (itemUiModel.canModify) {
+            if (canUpdate) {
                 add(edit(itemUiModel, onEdit))
                 add(moveToTrash(itemUiModel, onMoveToTrash))
             }
@@ -155,7 +156,8 @@ fun NoteOptionsBottomSheetContentsPreview(
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
-                isFreePlan = input.second
+                isFreePlan = input.second,
+                canUpdate = true
             )
         }
     }

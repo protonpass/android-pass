@@ -57,6 +57,7 @@ fun AliasOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     isRecentSearch: Boolean = false,
+    canUpdate: Boolean,
     onCopyAlias: (String) -> Unit,
     action: BottomSheetItemAction,
     onPinned: (ShareId, ItemId) -> Unit,
@@ -93,7 +94,7 @@ fun AliasOptionsBottomSheetContents(
 
             add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
 
-            if (itemUiModel.canModify) {
+            if (canUpdate) {
                 add(edit(itemUiModel, onEdit))
                 add(trash(action) { onMoveToTrash(itemUiModel) })
             }
@@ -149,6 +150,7 @@ fun AliasOptionsBottomSheetContentsPreview(
                     isPinned = false,
                     revision = 1
                 ),
+                canUpdate = true,
                 isRecentSearch = input.second,
                 onCopyAlias = {},
                 action = BottomSheetItemAction.None,

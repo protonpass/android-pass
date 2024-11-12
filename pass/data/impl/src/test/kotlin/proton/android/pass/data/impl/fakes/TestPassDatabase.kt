@@ -34,6 +34,7 @@ import proton.android.pass.data.impl.db.dao.TelemetryDao
 import proton.android.pass.data.impl.db.dao.UserAccessDataDao
 import proton.android.pass.data.impl.db.dao.assetlink.AssetLinkDao
 import proton.android.pass.data.impl.db.dao.assetlink.IgnoredAssetLinkDao
+import proton.android.pass.data.impl.db.dao.inappmessages.InAppMessagesDao
 import proton.android.pass.data.impl.db.dao.securelinks.SecureLinksDao
 
 internal class TestPassDatabase : PassDatabase {
@@ -95,6 +96,10 @@ internal class TestPassDatabase : PassDatabase {
     }
 
     override fun ignoredAssetLinkDao(): IgnoredAssetLinkDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun inAppMessagesDao(): InAppMessagesDao {
         throw IllegalStateException("This method should not be called")
     }
 

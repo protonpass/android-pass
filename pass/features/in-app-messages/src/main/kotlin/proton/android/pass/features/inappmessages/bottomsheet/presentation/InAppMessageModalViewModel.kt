@@ -22,17 +22,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableInAppMessages
+import proton.android.pass.data.api.usecases.inappmessages.ObserveInAppMessage
 import proton.android.pass.data.api.work.WorkerItem
 import proton.android.pass.data.api.work.WorkerLauncher
+import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
@@ -48,7 +49,7 @@ import javax.inject.Inject
 class InAppMessageModalViewModel @Inject constructor(
     private val workerLauncher: WorkerLauncher,
     private val telemetryManager: TelemetryManager,
-    observeDeliverableInAppMessages: ObserveDeliverableInAppMessages,
+    observeInAppMessage: ObserveInAppMessage,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -60,16 +61,11 @@ class InAppMessageModalViewModel @Inject constructor(
         .require<String>(InAppMessageNavArgId.key)
         .let(::InAppMessageId)
 
-    val state = observeDeliverableInAppMessages(userId)
+    val state = observeInAppMessage(userId, inAppMessageId)
         .asResultWithoutLoading()
-        .filter { it.getOrNull().orEmpty().any { message -> message.id == inAppMessageId } }
-        .map {
-            val firstElement = it.getOrNull()?.firstOrNull()
-            if (firstElement != null) {
-                InAppMessageModalState.Success(firstElement)
-            } else {
-                InAppMessageModalState.Error
-            }
+        .map { result: LoadingResult<InAppMessage> ->
+            val message = result.getOrNull() ?: return@map InAppMessageModalState.Error
+            InAppMessageModalState.Success(message)
         }
         .stateIn(
             scope = viewModelScope,

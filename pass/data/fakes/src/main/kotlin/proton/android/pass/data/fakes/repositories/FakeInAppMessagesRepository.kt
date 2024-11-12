@@ -51,6 +51,9 @@ class FakeInAppMessagesRepository @Inject constructor() : InAppMessagesRepositor
         }
     }
 
+    override fun observeUserMessage(userId: UserId, inAppMessageId: InAppMessageId): Flow<InAppMessage> =
+        messagesFlow.map { it[userId]?.find { it.id == inAppMessageId }!! }
+
     fun addMessage(userId: UserId, message: InAppMessage) {
         messagesFlow.value = messagesFlow.value.toMutableMap().apply {
             this[userId] = (this[userId] ?: emptyList()) + message

@@ -211,6 +211,7 @@ fun AliasDetail(
                         displayName = state.displayName,
                         stats = state.stats,
                         contactsCount = state.contactsCount,
+                        isContactsEnabled = state.vault?.isOwned ?: false,
                         isLoading = state.isLoadingMailboxes,
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
                         isAliasSyncEnabled = state.isSLAliasSyncEnabled,

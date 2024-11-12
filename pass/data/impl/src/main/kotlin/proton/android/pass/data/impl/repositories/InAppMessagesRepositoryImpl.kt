@@ -18,6 +18,11 @@
 
 package proton.android.pass.data.impl.repositories
 
+import android.content.Context
+import coil.ImageLoader
+import coil.request.CachePolicy
+import coil.request.ImageRequest
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
@@ -35,7 +40,8 @@ import javax.inject.Inject
 
 class InAppMessagesRepositoryImpl @Inject constructor(
     private val remote: RemoteInAppMessagesDataSource,
-    private val local: LocalInAppMessagesDataSource
+    private val local: LocalInAppMessagesDataSource,
+    @ApplicationContext private val context: Context
 ) : InAppMessagesRepository {
 
     override fun observeUserMessages(userId: UserId): Flow<List<InAppMessage>> = local.observeUserMessages(userId)
@@ -43,6 +49,7 @@ class InAppMessagesRepositoryImpl @Inject constructor(
             runCatching {
                 val remoteMessages = remote.fetchInAppMessages(userId).toDomain(userId)
                 local.storeMessages(userId, remoteMessages)
+                preloadImages(context, remoteMessages.mapNotNull { it.imageUrl.value() }.toSet())
             }.onFailure {
                 PassLogger.w(TAG, "Failed to fetch in-app messages for user $userId")
                 PassLogger.w(TAG, it)
@@ -61,6 +68,29 @@ class InAppMessagesRepositoryImpl @Inject constructor(
             .copy(state = status)
 
         local.updateMessage(userId, updatedMessage)
+    }
+
+    override fun observeUserMessage(userId: UserId, inAppMessageId: InAppMessageId): Flow<InAppMessage> =
+        local.observeUserMessage(userId, inAppMessageId)
+            .distinctUntilChanged()
+
+    private fun preloadImages(context: Context, imageUrls: Set<String>) {
+        val imageLoader = ImageLoader.Builder(context).build()
+        imageUrls.forEachIndexed { index, url ->
+            val request = ImageRequest.Builder(context)
+                .data(url)
+                .apply {
+                    if (index == 0) {
+                        memoryCachePolicy(CachePolicy.ENABLED)
+                        diskCachePolicy(CachePolicy.ENABLED)
+                    } else {
+                        memoryCachePolicy(CachePolicy.DISABLED)
+                        diskCachePolicy(CachePolicy.ENABLED)
+                    }
+                }
+                .build()
+            imageLoader.enqueue(request)
+        }
     }
 
     companion object {

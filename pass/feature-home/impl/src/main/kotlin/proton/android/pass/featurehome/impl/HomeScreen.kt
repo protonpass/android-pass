@@ -275,6 +275,7 @@ fun HomeScreen(
                     val item = selectedItem ?: return@PassModalBottomSheetLayout
                     LoginOptionsBottomSheetContents(
                         itemUiModel = item,
+                        canUpdate = homeUiState.homeListUiState.checkCanUpdate(item.shareId),
                         isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                         canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages,
                         action = homeUiState.action,
@@ -342,6 +343,7 @@ fun HomeScreen(
                     val item = selectedItem ?: return@PassModalBottomSheetLayout
                     AliasOptionsBottomSheetContents(
                         itemUiModel = item,
+                        canUpdate = homeUiState.homeListUiState.checkCanUpdate(item.shareId),
                         isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                         action = homeUiState.action,
                         onCopyAlias = remember {
@@ -411,6 +413,7 @@ fun HomeScreen(
                     val item = selectedItem ?: return@PassModalBottomSheetLayout
                     NoteOptionsBottomSheetContents(
                         itemUiModel = item,
+                        canUpdate = homeUiState.homeListUiState.checkCanUpdate(item.shareId),
                         isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                         action = homeUiState.action,
                         onCopyNote = remember {
@@ -465,6 +468,7 @@ fun HomeScreen(
                     val item = selectedItem ?: return@PassModalBottomSheetLayout
                     CreditCardOptionsBottomSheetContents(
                         itemUiModel = item,
+                        canUpdate = homeUiState.homeListUiState.checkCanUpdate(item.shareId),
                         isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                         action = homeUiState.action,
                         onCopyNumber = remember {
@@ -528,6 +532,7 @@ fun HomeScreen(
                     val item = selectedItem ?: return@PassModalBottomSheetLayout
                     IdentityOptionsBottomSheetContents(
                         itemUiModel = item,
+                        canUpdate = homeUiState.homeListUiState.checkCanUpdate(item.shareId),
                         isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                         action = homeUiState.action,
                         isFreePlan = homeUiState.isFreePlan,
@@ -812,7 +817,7 @@ fun HomeScreen(
                         }
 
                         is HomeUiEvent.SelectItem -> {
-                            if (homeUiEvent.item.canModify) {
+                            if (homeUiState.homeListUiState.checkCanUpdate(homeUiEvent.item.shareId)) {
                                 homeViewModel.onItemSelected(homeUiEvent.item)
                             } else {
                                 homeViewModel.onReadOnlyItemSelected()

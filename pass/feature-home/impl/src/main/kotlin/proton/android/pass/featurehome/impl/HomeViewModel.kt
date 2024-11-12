@@ -133,8 +133,6 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.Vault
-import proton.android.pass.domain.canUpdate
-import proton.android.pass.domain.toPermissions
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasItemsDisabledError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasItemsEnabledError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasItemsEnabledPartialSuccess
@@ -507,26 +505,12 @@ class HomeViewModel @Inject constructor(
         ::SearchUiState
     )
 
-    private val itemsFlow: Flow<LoadingResult<ImmutableList<GroupedItemList>>> = combine(
-        shareListWrapperFlow,
-        resultsFlow
-    ) { shares, items ->
-        items.map { listOfGroupedItems ->
-            listOfGroupedItems.map { groupedItemList ->
-                val mappedItems = groupedItemList.items.map { item ->
-                    item.copy(canModify = checkCanModify(shares, item.shareId))
-                }
-                groupedItemList.copy(items = mappedItems.toImmutableList())
-            }.toImmutableList()
-        }
-    }.flowOn(appDispatchers.default)
-
     private val appNeedsUpdateFlow: Flow<LoadingResult<Boolean>> = observeAppNeedsUpdate()
         .asLoadingResult()
         .distinctUntilChanged()
 
     private val homeListUiStateFlow = combineN(
-        itemsFlow,
+        resultsFlow,
         refreshingLoadingFlow,
         shouldScrollToTopFlow,
         searchOptionsFlow,
@@ -1111,9 +1095,6 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-
-    private fun checkCanModify(listWrapper: ShareListWrapper, shareId: ShareId): Boolean =
-        listWrapper.shares[shareId]?.role?.toPermissions()?.canUpdate() ?: false
 
     private fun groupItems(items: ImmutableSet<Pair<ShareId, ItemId>>): Map<ShareId, List<ItemId>> =
         items.groupBy({ it.first }, { it.second })

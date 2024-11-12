@@ -38,10 +38,12 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.canUpdate
+import proton.android.pass.domain.toPermissions
+import proton.android.pass.preferences.AliasTrashDialogStatusPreference
 import proton.android.pass.searchoptions.api.SearchFilterType
 import proton.android.pass.searchoptions.api.SearchSortingType
 import proton.android.pass.searchoptions.api.VaultSelectionOption
-import proton.android.pass.preferences.AliasTrashDialogStatusPreference
 
 internal enum class LoadingDialog {
     DisableAlias,
@@ -203,6 +205,8 @@ internal data class HomeListUiState(
     val selectionState: HomeSelectionState,
     val showNeedsUpdate: Boolean
 ) {
+
+    fun checkCanUpdate(shareId: ShareId): Boolean = shares[shareId]?.role?.toPermissions()?.canUpdate() ?: false
 
     internal companion object {
 

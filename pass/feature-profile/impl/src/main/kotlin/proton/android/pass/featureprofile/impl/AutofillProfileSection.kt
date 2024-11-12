@@ -18,18 +18,12 @@
 
 package proton.android.pass.featureprofile.impl
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -37,17 +31,14 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.setting.SettingToggle
-import proton.android.pass.data.api.usecases.DefaultBrowser
-import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun AutofillProfileSection(
     modifier: Modifier = Modifier,
     isChecked: Boolean,
-    userBrowser: DefaultBrowser,
     onClick: (Boolean) -> Unit
 ) {
     Column(
@@ -58,26 +49,6 @@ fun AutofillProfileSection(
             modifier = Modifier.roundedContainerNorm(),
             text = stringResource(R.string.profile_option_autofill),
             isChecked = isChecked,
-            belowContent = {
-                AnimatedVisibility(visible = isChecked && userBrowser == DefaultBrowser.Samsung) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            modifier = Modifier.size(16.dp),
-                            painter = painterResource(CoreR.drawable.ic_proton_exclamation_triangle_filled),
-                            contentDescription = null,
-                            tint = ProtonTheme.colors.notificationWarning
-                        )
-
-                        Text(
-                            text = stringResource(R.string.profile_option_autofill_samsung_not_supported),
-                            style = ProtonTheme.typography.captionWeak.copy(PassTheme.colors.textWeak)
-                        )
-                    }
-                }
-            },
             onClick = { onClick(isChecked) }
         )
         Text(
@@ -89,15 +60,11 @@ fun AutofillProfileSection(
 
 @Preview
 @Composable
-fun AutofillProfileSectionPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
-    val browser = if (input.second) DefaultBrowser.Other else DefaultBrowser.Samsung
-    PassTheme(isDark = input.first) {
+fun AutofillProfileSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
         Surface {
             AutofillProfileSection(
                 isChecked = true,
-                userBrowser = browser,
                 onClick = {}
             )
         }

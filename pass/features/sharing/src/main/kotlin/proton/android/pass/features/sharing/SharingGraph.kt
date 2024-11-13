@@ -126,8 +126,11 @@ object ShareFromItem : NavItem(
 }
 
 sealed interface SharingNavigation {
+
     data object Back : SharingNavigation
+
     data object BackToHome : SharingNavigation
+
     data object Upgrade : SharingNavigation
 
     @JvmInline
@@ -136,8 +139,7 @@ sealed interface SharingNavigation {
     @JvmInline
     value class CloseBottomSheet(val refresh: Boolean) : SharingNavigation
 
-    @JvmInline
-    value class Permissions(val shareId: ShareId) : SharingNavigation
+    data class Permissions(val shareId: ShareId, val itemIdOption: Option<ItemId>) : SharingNavigation
 
     @JvmInline
     value class Summary(val shareId: ShareId) : SharingNavigation

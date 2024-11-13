@@ -19,6 +19,7 @@
 package proton.android.pass.ui.navigation
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
@@ -552,7 +553,8 @@ fun NavGraphBuilder.appGraph(
                         destination = SharingWith,
                         route = SharingWith.createRoute(
                             shareId = it.shareId,
-                            showEditVault = it.showEditVault
+                            showEditVault = it.showEditVault,
+                            itemIdOption = None
                         )
                     )
                 }
@@ -1777,7 +1779,8 @@ fun NavGraphBuilder.appGraph(
                     destination = SharingWith,
                     route = SharingWith.createRoute(
                         shareId = it.shareId,
-                        showEditVault = false
+                        showEditVault = false,
+                        itemIdOption = None
                     )
                 )
             }
@@ -1910,6 +1913,17 @@ fun NavGraphBuilder.appGraph(
                 appNavigator.navigate(
                     destination = ManageVault,
                     route = ManageVault.createRoute(shareId = it.sharedVaultId)
+                )
+            }
+
+            is SharingNavigation.ShareItem -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = SharingWith,
+                    route = SharingWith.createRoute(
+                        shareId = it.shareId,
+                        showEditVault = false,
+                        itemIdOption = it.itemId.some()
+                    )
                 )
             }
         }

@@ -122,7 +122,7 @@ object Text {
     }
 
     @Composable
-    fun Body2Regular(
+    fun Body2Medium(
         text: String,
         modifier: Modifier = Modifier,
         color: Color = ProtonTheme.colors.textNorm,
@@ -130,9 +130,28 @@ object Text {
     ) {
         Text(
             text = text,
-            style = ProtonTheme.typography.defaultSmallNorm.copy(color = color),
+            style = ProtonTheme.typography.body2Medium.copy(color = color),
             modifier = modifier,
             textAlign = textAlign
+        )
+    }
+
+    @Composable
+    fun Body2Regular(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textNorm,
+        textAlign: TextAlign = TextAlign.Start,
+        maxLines: Int = Int.MAX_VALUE,
+        overflow: TextOverflow = TextOverflow.Clip
+    ) {
+        Text(
+            text = text,
+            style = ProtonTheme.typography.defaultSmallNorm.copy(color = color),
+            modifier = modifier,
+            textAlign = textAlign,
+            maxLines = maxLines,
+            overflow = overflow
         )
     }
 

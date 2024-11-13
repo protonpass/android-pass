@@ -29,38 +29,41 @@ import proton.android.pass.features.sharing.SharingNavigation
 @Composable
 fun SharingWithScreen(
     modifier: Modifier = Modifier,
-    viewModel: SharingWithViewModel = hiltViewModel(),
-    onNavigateEvent: (SharingNavigation) -> Unit
-) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    onNavigateEvent: (SharingNavigation) -> Unit,
+    viewModel: SharingWithViewModel = hiltViewModel()
+) = with(viewModel) {
+    val state by stateFlow.collectAsStateWithLifecycle()
+
     LaunchedEffect(state.event) {
         when (val event = state.event) {
-            is SharingWithEvents.NavigateToPermissions -> onNavigateEvent(
-                SharingNavigation.Permissions(
-                    shareId = event.shareId
-                )
-            )
+            SharingWithEvents.Idle -> Unit
 
-            SharingWithEvents.Unknown -> {}
+            is SharingWithEvents.NavigateToPermissions -> SharingNavigation.Permissions(
+                shareId = event.shareId,
+                itemIdOption = event.itemIdOption
+            ).also(onNavigateEvent)
         }
-        viewModel.clearEvent()
+
+        onConsumeEvent(state.event)
     }
+
     SharingWithContent(
         modifier = modifier,
         state = state,
         editingEmail = viewModel.editingEmail,
         onNavigateEvent = onNavigateEvent,
-        onEvent = {
-            when (it) {
-                SharingWithUiEvent.ContinueClick -> viewModel.onContinueClick()
-                is SharingWithUiEvent.EmailChange -> viewModel.onEmailChange(it.content)
-                is SharingWithUiEvent.EmailClick -> viewModel.onEmailClick(it.index)
-                SharingWithUiEvent.EmailSubmit -> viewModel.onEmailSubmit()
-                is SharingWithUiEvent.InviteSuggestionToggle -> viewModel.onItemToggle(
-                    email = it.email,
-                    checked = it.value
+        onEvent = { uiEvent ->
+            when (uiEvent) {
+                SharingWithUiEvent.ContinueClick -> onContinueClick()
+                is SharingWithUiEvent.EmailChange -> onEmailChange(uiEvent.content)
+                is SharingWithUiEvent.EmailClick -> onEmailClick(uiEvent.index)
+                SharingWithUiEvent.EmailSubmit -> onEmailSubmit()
+                is SharingWithUiEvent.InviteSuggestionToggle -> onItemToggle(
+                    email = uiEvent.email,
+                    checked = uiEvent.value
                 )
-                SharingWithUiEvent.OnScrolledToBottom -> viewModel.onScrolledToBottom()
+
+                SharingWithUiEvent.OnScrolledToBottom -> onScrolledToBottom()
             }
         }
     )

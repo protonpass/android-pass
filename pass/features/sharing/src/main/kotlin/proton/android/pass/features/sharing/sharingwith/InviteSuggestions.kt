@@ -60,7 +60,7 @@ import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.features.sharing.R
 
 @Composable
-fun InviteSuggestions(
+internal fun InviteSuggestions(
     modifier: Modifier = Modifier,
     state: SuggestionsUIState,
     onItemClicked: (String, Boolean) -> Unit

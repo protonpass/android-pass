@@ -32,7 +32,7 @@ class FakeInAppMessagesRepository @Inject constructor() : InAppMessagesRepositor
 
     private val messagesFlow = MutableStateFlow<Map<UserId, List<InAppMessage>>>(emptyMap())
 
-    override fun observeUserMessages(userId: UserId): Flow<List<InAppMessage>> =
+    override fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
         messagesFlow.map { it[userId] ?: emptyList() }
 
     override suspend fun changeMessageStatus(

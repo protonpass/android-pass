@@ -24,7 +24,6 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
-import proton.android.pass.common.api.Some
 import proton.android.pass.data.fakes.repositories.FakeInAppMessagesRepository
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
@@ -35,7 +34,6 @@ import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.test.domain.TestInAppMessage
 import proton.android.pass.test.domain.TestUser
 import kotlin.test.Test
-import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.minutes
 
 internal class ObserveDeliverableInAppMessagesImplTest {
@@ -79,59 +77,6 @@ internal class ObserveDeliverableInAppMessagesImplTest {
     }
 
     @Test
-    fun `test unread messages within range are returned`() = runTest {
-        val now = clock.now()
-        val messageInRange = TestInAppMessage.create(
-            state = InAppMessageStatus.Unread,
-            range = TestInAppMessage.createInAppMessageRange(
-                start = now.minus(1.days),
-                end = Some(now.plus(1.days))
-            )
-        )
-        val messageOutOfRange = TestInAppMessage.create(
-            state = InAppMessageStatus.Unread,
-            range = TestInAppMessage.createInAppMessageRange(
-                start = now.minus(2.days),
-                end = Some(now.minus(1.days))
-            )
-        )
-        inAppMessagesRepository.addMessage(userId, messageInRange)
-        inAppMessagesRepository.addMessage(userId, messageOutOfRange)
-        instance(userId).test {
-            val item = awaitItem()
-            assertThat(item).hasSize(1)
-            assertThat(item.first()).isEqualTo(messageInRange)
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
-
-    @Test
-    fun `test read messages are not returned`() = runTest {
-        val message = TestInAppMessage.create(
-            state = InAppMessageStatus.Read,
-            range = TestInAppMessage.createInAppMessageRange()
-        )
-        inAppMessagesRepository.addMessage(userId, message)
-        instance(userId).test {
-            awaitItem().isEmpty()
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
-
-    @Test
-    fun `test dismissed messages are not returned`() = runTest {
-        val message = TestInAppMessage.create(
-            state = InAppMessageStatus.Dismissed,
-            range = TestInAppMessage.createInAppMessageRange()
-        )
-        inAppMessagesRepository.addMessage(userId, message)
-        instance(userId).test {
-            awaitItem().isEmpty()
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
-
-    @Test
     fun `test messages are not returned if last time is less than 30 minutes`() = runTest {
         val now = clock.now()
         internalSettingsRepository.setLastTimeUserHasSeenIAM(
@@ -163,29 +108,6 @@ internal class ObserveDeliverableInAppMessagesImplTest {
             val item = awaitItem()
             assertThat(item).hasSize(1)
             assertThat(item.first()).isEqualTo(message)
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
-
-    @Test
-    fun `test messages are ordered by highest priority`() = runTest {
-        val message1 = TestInAppMessage.create(
-            state = InAppMessageStatus.Unread,
-            range = TestInAppMessage.createInAppMessageRange(),
-            priority = 1
-        )
-        val message2 = TestInAppMessage.create(
-            state = InAppMessageStatus.Unread,
-            range = TestInAppMessage.createInAppMessageRange(),
-            priority = 2
-        )
-        inAppMessagesRepository.addMessage(userId, message1)
-        inAppMessagesRepository.addMessage(userId, message2)
-        instance(userId).test {
-            val item = awaitItem()
-            assertThat(item).hasSize(2)
-            assertThat(item.first()).isEqualTo(message2)
-            assertThat(item.last()).isEqualTo(message1)
             cancelAndIgnoreRemainingEvents()
         }
     }

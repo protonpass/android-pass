@@ -28,7 +28,6 @@ import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableInAppMessages
 import proton.android.pass.domain.inappmessages.InAppMessage
-import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -55,13 +54,10 @@ class ObserveDeliverableInAppMessagesImpl @Inject constructor(
                                 val thirtyMinutesAgo = now.minus(30.minutes)
                                 val shouldShowInAppMessage = lastSeenTime < thirtyMinutesAgo.epochSeconds
                                 if (shouldShowInAppMessage) {
-                                    inAppMessagesRepository.observeUserMessages(resolvedUserId)
-                                        .map { list ->
-                                            list.filter { message ->
-                                                message.state == InAppMessageStatus.Unread &&
-                                                    message.range.inRange(now)
-                                            }.sortedByDescending { it.priority }
-                                        }
+                                    inAppMessagesRepository.observeDeliverableUserMessages(
+                                        userId = resolvedUserId,
+                                        currentTimestamp = now.epochSeconds
+                                    )
                                 } else {
                                     flowOf(emptyList())
                                 }

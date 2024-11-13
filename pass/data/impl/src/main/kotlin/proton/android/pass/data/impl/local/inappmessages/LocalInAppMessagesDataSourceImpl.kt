@@ -41,17 +41,20 @@ class LocalInAppMessagesDataSourceImpl @Inject constructor(
     private val database: PassDatabase
 ) : LocalInAppMessagesDataSource {
 
-    override fun observeUserMessages(userId: UserId): Flow<List<InAppMessage>> = database.inAppMessagesDao()
-        .observeUserMessages(userId.id)
-        .map { entities -> entities.map(InAppMessageEntity::toDomain) }
+    override fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
+        database.inAppMessagesDao()
+            .observeDeliverableUserMessages(userId.id, currentTimestamp)
+            .map { entities -> entities.map(InAppMessageEntity::toDomain) }
 
     override fun observeUserMessage(userId: UserId, id: InAppMessageId): Flow<InAppMessage> =
         database.inAppMessagesDao().observeUserMessage(userId.id, id.value)
             .map(InAppMessageEntity::toDomain)
 
     override suspend fun storeMessages(userId: UserId, messages: List<InAppMessage>) {
-        database.inAppMessagesDao().deleteAll(userId.id)
-        database.inAppMessagesDao().insertOrUpdate(*messages.map(InAppMessage::toEntity).toTypedArray())
+        database.inTransaction(name = "storeMessages") {
+            database.inAppMessagesDao().deleteAll(userId.id)
+            database.inAppMessagesDao().insertOrUpdate(*messages.map(InAppMessage::toEntity).toTypedArray())
+        }
     }
 
     override suspend fun updateMessage(userId: UserId, message: InAppMessage) {

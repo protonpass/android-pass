@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -39,14 +38,13 @@ import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginSyncStatus
 import proton.android.pass.domain.PlanType
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.simplelogin.SimpleLoginSyncStatus
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.Autofill
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.Invite
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.NotificationPermission
@@ -112,77 +110,56 @@ class OnBoardingTipsViewModel @Inject constructor(
         } && userPlan.planType is PlanType.Trial
     }.distinctUntilChanged()
 
-    private val simpleLoginSyncStatusOptionFlow = observeSimpleLoginSyncStatus()
-        .mapLatest(SimpleLoginSyncStatus::toOption)
+    private val simpleLoginSyncStatusResultFlow = observeSimpleLoginSyncStatus()
         .asLoadingResult()
 
     private val shouldShowSLSyncFlow = combine(
         preferencesRepository.getHasDismissedSLSyncBanner(),
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
-        simpleLoginSyncStatusOptionFlow
-    ) { hasDismissedSLSyncBanner, slSyncFFEnabled, result ->
+        simpleLoginSyncStatusResultFlow
+    ) { hasDismissedSLSyncBanner, isSLSyncEnabled, syncStatusResult ->
         when {
-            !slSyncFFEnabled -> null
-            hasDismissedSLSyncBanner is HasDismissedSLSyncBanner.Dismissed -> null
-            else -> result.getOrNull()?.value()
+            !isSLSyncEnabled -> false
+            hasDismissedSLSyncBanner is HasDismissedSLSyncBanner.Dismissed -> false
+            else -> syncStatusResult.getOrNull()?.let { syncStatus ->
+                syncStatus.isPreferenceEnabled && syncStatus.hasPendingAliases && !syncStatus.isSyncEnabled
+            } ?: false
         }
     }.distinctUntilChanged()
 
-    private data class TipVisibility(
-        val shouldShowAutofill: Boolean,
-        val shouldShowTrial: Boolean,
-        val shouldShowInvites: Boolean,
-        val shouldShowNotificationPermission: Boolean,
-        private val syncStatus: SimpleLoginSyncStatus?
-    ) {
-
-        val shouldShowSLSync: Boolean = syncStatus
-            ?.let { sync -> sync.isPreferenceEnabled && sync.hasPendingAliases && !sync.isSyncEnabled }
-            ?: false
-
-        val aliasCount: Int by lazy { syncStatus?.pendingAliasCount ?: 0 }
-
-        val shareId: ShareId? by lazy { syncStatus?.defaultVault?.shareId }
-
-    }
-
-    private val tipVisibilityFlow = combine(
-        shouldShowAutofillFlow,
-        shouldShowTrialFlow,
+    private val onboardingTipPageOptionFlow = combineN(
         hasInvitesFlow,
         shouldShowNotificationPermissionFlow,
+        shouldShowTrialFlow,
+        shouldShowAutofillFlow,
         shouldShowSLSyncFlow,
-        ::TipVisibility
-    )
-
-    val state: StateFlow<OnBoardingTipsUiState> = combine(
-        tipVisibilityFlow,
-        eventFlow
-    ) { tipVisibility, event ->
-        val tip = when {
-            tipVisibility.shouldShowInvites -> Invite
-            tipVisibility.shouldShowNotificationPermission -> NotificationPermission
-            tipVisibility.shouldShowTrial -> Trial
-            tipVisibility.shouldShowAutofill -> Autofill
-            tipVisibility.shouldShowSLSync -> SLSync(
-                aliasCount = tipVisibility.aliasCount,
-                shareId = tipVisibility.shareId
-            )
+        simpleLoginSyncStatusResultFlow
+    ) { showInvites, showNotificationPermission, showTrial, showAutofill, showSLSync, slSyncStatusResult ->
+        when {
+            showInvites -> Invite
+            showNotificationPermission -> NotificationPermission
+            showTrial -> Trial
+            showAutofill -> Autofill
+            showSLSync -> slSyncStatusResult.getOrNull()?.let { syncStatus ->
+                SLSync(
+                    aliasCount = syncStatus.pendingAliasCount,
+                    shareId = syncStatus.defaultVault.shareId
+                )
+            }
 
             else -> null
         }.toOption()
-
-        OnBoardingTipsUiState(
-            tipToShow = tip,
-            event = event
-        )
     }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = OnBoardingTipsUiState()
-        )
 
+    internal val stateFlow: StateFlow<OnBoardingTipsUiState> = combine(
+        onboardingTipPageOptionFlow,
+        eventFlow,
+        ::OnBoardingTipsUiState
+    ).stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = OnBoardingTipsUiState()
+    )
 
     private fun shouldShowAutofillBanner(
         autofillSupportedStatus: AutofillSupportedStatus,
@@ -209,7 +186,7 @@ class OnBoardingTipsViewModel @Inject constructor(
             Trial ->
                 preferencesRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.Dismissed)
 
-            Invite -> {} // Invites cannot be dismissed
+            Invite -> Unit // Invites cannot be dismissed
             NotificationPermission ->
                 preferencesRepository.setHasDismissedNotificationBanner(
                     HasDismissedNotificationBanner.Dismissed
@@ -220,13 +197,13 @@ class OnBoardingTipsViewModel @Inject constructor(
         }
     }
 
-    fun onNotificationPermissionChanged(permission: Boolean) = viewModelScope.launch {
+    internal fun onNotificationPermissionChanged(permission: Boolean) {
         notificationPermissionFlow.update { permission }
     }
 
     @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.TIRAMISU)
-    private fun needsNotificationPermissions(): Boolean = appConfig.androidVersion >= Build.VERSION_CODES.TIRAMISU
-
+    private fun needsNotificationPermissions(): Boolean =
+        appConfig.androidVersion >= Build.VERSION_CODES.TIRAMISU
 
     fun clearEvent() {
         eventFlow.update { OnBoardingTipsEvent.Unknown }

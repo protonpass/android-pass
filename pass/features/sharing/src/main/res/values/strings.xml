@@ -181,7 +181,7 @@
     <string name="sharing_from_item_vault_limit_reached">You have reached the vault limit</string>
 
     <string name="share_with_suggestions_title">Suggestions</string>
-    <string name="share_with_recents_title">Recents</string>
+    <string name="share_with_recents_title">Recent</string>
     <string name="share_with_remove_email_content_description">Remove email</string>
 
     <string name="share_with_user_title">Share with</string>

@@ -1889,7 +1889,7 @@ fun NavGraphBuilder.appGraph(
                 destination = InvitesErrorDialog
             )
 
-            is SharingNavigation.ShareItem -> dismissBottomSheet {
+            is SharingNavigation.ShareItemLink -> dismissBottomSheet {
                 appNavigator.navigate(
                     destination = SecureLinksCreateNavItem,
                     route = SecureLinksCreateNavItem.createNavRoute(

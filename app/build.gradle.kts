@@ -32,6 +32,7 @@ plugins {
     id("androidx.baselineprofile")
     alias(libs.plugins.gradlePlugin.proton.environmentConfig)
     alias(libs.plugins.gradlePlugin.dependency.guard)
+    alias(libs.plugins.gradlePlugin.compose.compiler)
 }
 
 val privateProperties = Properties().apply {
@@ -245,10 +246,6 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
 
     hilt {

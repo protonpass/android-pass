@@ -5,6 +5,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("org.jetbrains.kotlin.kapt")
     id("androidx.baselineprofile")
+    alias(libs.plugins.gradlePlugin.compose.compiler)
 }
 
 android {
@@ -27,10 +28,6 @@ android {
 
     buildFeatures {
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
 
     testOptions {

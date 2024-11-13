@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -46,6 +45,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
@@ -78,6 +78,7 @@ class UpdateAliasViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val aliasPrefixValidator: AliasPrefixValidator,
     private val getItemById: GetItemById,
+    private val getShareById: GetShareById,
     private val observeAliasDetails: ObserveAliasDetails,
     savedStateHandleProvider: SavedStateHandleProvider,
     featureFlagsRepository: FeatureFlagsPreferencesRepository
@@ -114,10 +115,10 @@ class UpdateAliasViewModel @Inject constructor(
     }
 
     internal val updateAliasUiState: StateFlow<UpdateAliasUiState> = combine(
-        flowOf(shareId),
+        oneShot { getShareById(shareId = shareId) },
         baseAliasUiState,
         selectedMailboxListState
-    ) { shareId, aliasUiState, mailboxList ->
+    ) { share, aliasUiState, mailboxList ->
         aliasItemFormMutableState = aliasItemFormState.copy(
             mailboxes = aliasItemFormState.mailboxes.map {
                 it.copy(selected = mailboxList.contains(it.model.id))
@@ -125,7 +126,7 @@ class UpdateAliasViewModel @Inject constructor(
         )
 
         UpdateAliasUiState(
-            selectedShareId = shareId,
+            share = share,
             baseAliasUiState = aliasUiState
         )
     }.stateIn(
@@ -306,7 +307,8 @@ class UpdateAliasViewModel @Inject constructor(
     }
 
     private fun canUpdateAlias(): Boolean {
-        val noChangesDetected = !itemDataChanged && !mailboxesChanged && !isSLNoteChanged && !isDisplayNameChanged
+        val noChangesDetected =
+            !itemDataChanged && !mailboxesChanged && !isSLNoteChanged && !isDisplayNameChanged
         if (noChangesDetected) {
             PassLogger.i(TAG, "No changes detected")
             return false

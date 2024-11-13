@@ -19,13 +19,13 @@
 package proton.android.pass.data.impl.remote.inappmessages
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.impl.responses.NotificationResponse
+import proton.android.pass.data.impl.responses.NotificationsResponse
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 
 interface RemoteInAppMessagesDataSource {
 
-    suspend fun fetchInAppMessages(userId: UserId, lastToken: String? = null): List<NotificationResponse>
+    suspend fun fetchInAppMessages(userId: UserId, lastToken: String? = null): NotificationsResponse
 
     suspend fun changeMessageStatus(
         userId: UserId,

@@ -26,7 +26,7 @@ import proton.android.pass.domain.inappmessages.InAppMessageStatus
 
 interface InAppMessagesRepository {
 
-    fun observeUserMessages(userId: UserId): Flow<List<InAppMessage>>
+    fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>>
 
     suspend fun changeMessageStatus(
         userId: UserId,

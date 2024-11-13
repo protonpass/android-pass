@@ -97,7 +97,7 @@ class OnBoardingTipsViewModelTest {
         setupSyncStatus()
         autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState())
         }
     }
@@ -108,7 +108,7 @@ class OnBoardingTipsViewModelTest {
         setupSyncStatus()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState())
         }
     }
@@ -119,7 +119,7 @@ class OnBoardingTipsViewModelTest {
         setupSyncStatus()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOtherService))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(Autofill.some()))
         }
     }
@@ -130,7 +130,7 @@ class OnBoardingTipsViewModelTest {
         setupSyncStatus()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(Autofill.some()))
         }
     }
@@ -141,7 +141,7 @@ class OnBoardingTipsViewModelTest {
         setupSyncStatus()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.Dismissed)
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState())
         }
     }
@@ -153,7 +153,7 @@ class OnBoardingTipsViewModelTest {
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         preferenceRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.NotDismissed)
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(Trial.some()))
         }
     }
@@ -166,7 +166,7 @@ class OnBoardingTipsViewModelTest {
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         preferenceRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.NotDismissed)
 
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(Trial.some()))
 
             viewModel.onDismiss(Trial)
@@ -184,7 +184,7 @@ class OnBoardingTipsViewModelTest {
         preferenceRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.NotDismissed)
         observeInvites.emitInvites(listOf(TestPendingInvite.create()))
 
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(Invite.some()))
         }
     }
@@ -199,7 +199,7 @@ class OnBoardingTipsViewModelTest {
             preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.NotDismissed)
             appConfig.setAndroidVersion(Build.VERSION_CODES.TIRAMISU)
 
-            viewModel.state.test {
+            viewModel.stateFlow.test {
                 assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(NotificationPermission.some()))
             }
         }
@@ -213,7 +213,7 @@ class OnBoardingTipsViewModelTest {
         preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.NotDismissed)
         appConfig.setAndroidVersion(Build.VERSION_CODES.TIRAMISU)
 
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             assertThat(awaitItem().tipToShow).isNotEqualTo(NotificationPermission)
         }
     }
@@ -227,7 +227,7 @@ class OnBoardingTipsViewModelTest {
         preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.Dismissed)
         appConfig.setAndroidVersion(Build.VERSION_CODES.TIRAMISU)
 
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             assertThat(awaitItem().tipToShow).isNotEqualTo(NotificationPermission)
         }
     }
@@ -242,7 +242,7 @@ class OnBoardingTipsViewModelTest {
             preferenceRepository.setHasDismissedNotificationBanner(HasDismissedNotificationBanner.Dismissed)
             appConfig.setAndroidVersion(Build.VERSION_CODES.BASE)
 
-            viewModel.state.test {
+            viewModel.stateFlow.test {
                 assertThat(awaitItem().tipToShow).isNotEqualTo(NotificationPermission)
             }
         }
@@ -253,7 +253,7 @@ class OnBoardingTipsViewModelTest {
         setupSyncStatus()
         preferenceRepository.setHasDismissedSLSyncBanner(HasDismissedSLSyncBanner.Dismissed)
 
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             assertThat(awaitItem().tipToShow).isNotEqualTo(NotificationPermission)
         }
     }

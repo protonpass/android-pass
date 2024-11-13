@@ -31,9 +31,13 @@ abstract class InAppMessagesDao : BaseDao<InAppMessageEntity>() {
         SELECT * 
         FROM ${InAppMessageEntity.TABLE} 
         WHERE ${InAppMessageEntity.Columns.USER_ID} = :userId
+        AND ${InAppMessageEntity.Columns.STATE} = 0
+        AND ${InAppMessageEntity.Columns.RANGE_START} <= :currentTimestamp
+        AND (${InAppMessageEntity.Columns.RANGE_END} IS NULL OR ${InAppMessageEntity.Columns.RANGE_END} >= :currentTimestamp)
+        ORDER BY ${InAppMessageEntity.Columns.PRIORITY} DESC
         """
     )
-    abstract fun observeUserMessages(userId: String): Flow<List<InAppMessageEntity>>
+    abstract fun observeDeliverableUserMessages(userId: String, currentTimestamp: Long): Flow<List<InAppMessageEntity>>
 
     @Query(
         """

@@ -26,6 +26,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
 import proton.android.pass.commonrust.fakes.TestEmailValidator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
@@ -41,6 +42,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.features.sharing.ShowEditVaultArgId
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestVault
 
@@ -68,6 +70,7 @@ class SharingWithViewModelTest {
         savedStateHandleProvider = TestSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = SHARE_ID
             get()[ShowEditVaultArgId.key] = false
+            get()[CommonOptionalNavArgId.ItemId.key] = null
         }
         viewModel = SharingWithViewModel(
             observeVaultById = observeVaultById,
@@ -153,7 +156,10 @@ class SharingWithViewModelTest {
             assertThat(currentState.vault).isEqualTo(testVault)
             assertThat(currentState.errorMessage == ErrorMessage.EmailNotValid).isFalse()
             assertThat(currentState.event).isEqualTo(
-                SharingWithEvents.NavigateToPermissions(shareId = ShareId(SHARE_ID))
+                SharingWithEvents.NavigateToPermissions(
+                    shareId = ShareId(SHARE_ID),
+                    itemIdOption = None
+                )
             )
         }
 

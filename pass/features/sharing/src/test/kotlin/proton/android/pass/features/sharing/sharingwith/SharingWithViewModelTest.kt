@@ -91,7 +91,7 @@ class SharingWithViewModelTest {
     fun `onEmailSubmit with valid email should update emailNotValidReason to null`() = runTest {
         viewModel.onEmailChange("test@example.com")
         viewModel.onEmailSubmit()
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             assertThat(awaitItem().errorMessage == ErrorMessage.EmailNotValid).isFalse()
         }
     }
@@ -103,7 +103,7 @@ class SharingWithViewModelTest {
 
         viewModel.onEmailChange(email)
         viewModel.onEmailSubmit()
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             val stateEmails = awaitItem().enteredEmails
             val expected = EnteredEmailState(email = email, isError = false)
             assertThat(stateEmails).isEqualTo(listOf(expected))
@@ -128,7 +128,7 @@ class SharingWithViewModelTest {
     fun `onEmailSubmit with invalid email should update emailNotValidReason to NotValid`() = runTest {
         viewModel.onEmailChange("invalid-email")
         emailValidator.setResult(false)
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             skipItems(1)
             viewModel.onEmailSubmit()
             assertThat(awaitItem().errorMessage == ErrorMessage.EmailNotValid).isTrue()
@@ -148,7 +148,7 @@ class SharingWithViewModelTest {
 
         viewModel.onEmailSubmit()
         viewModel.onContinueClick()
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             val currentState = awaitItem()
             assertThat(currentState.vault).isEqualTo(testVault)
             assertThat(currentState.errorMessage == ErrorMessage.EmailNotValid).isFalse()
@@ -178,7 +178,7 @@ class SharingWithViewModelTest {
 
         viewModel.onItemToggle(email1, false)
 
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             val state = awaitItem()
             val expectedEnteredEmails = listOf(EnteredEmailState(email = email1, isError = false))
             assertThat(state.enteredEmails).isEqualTo(expectedEnteredEmails)
@@ -196,7 +196,7 @@ class SharingWithViewModelTest {
         viewModel.onEmailClick(0)
         viewModel.onEmailClick(0)
 
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             val state = awaitItem()
             assertThat(state.enteredEmails).isEmpty()
 
@@ -231,7 +231,7 @@ class SharingWithViewModelTest {
 
         // Click on continue
         viewModel.onContinueClick()
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             val item = awaitItem()
             assertThat(item.errorMessage).isEqualTo(ErrorMessage.SomeAddressesCannotBeInvited)
 
@@ -255,7 +255,7 @@ class SharingWithViewModelTest {
         viewModel.onEmailChange(email)
         viewModel.onEmailSubmit()
 
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             val item = awaitItem()
             assertThat(item.errorMessage).isEqualTo(ErrorMessage.EmailAlreadyAdded)
 
@@ -272,10 +272,10 @@ class SharingWithViewModelTest {
         viewModel.onEmailChange(email)
         viewModel.onContinueClick()
 
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             val item = awaitItem()
             assertThat(item.errorMessage).isEqualTo(ErrorMessage.EmailAlreadyAdded)
-            assertThat(item.event).isInstanceOf(SharingWithEvents.Unknown::class.java)
+            assertThat(item.event).isInstanceOf(SharingWithEvents.Idle::class.java)
 
             // Assert that it does not clean the current state
             assertThat(viewModel.editingEmail).isEqualTo(email)

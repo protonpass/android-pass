@@ -116,7 +116,7 @@ fun HomeScreen(
     val routerEvent by routerViewModel.routerEventState.collectAsStateWithLifecycle(RouterEvent.None)
     val homeUiState by homeViewModel.homeUiState.collectAsStateWithLifecycle()
     val drawerUiState by vaultDrawerViewModel.drawerUiState.collectAsStateWithLifecycle()
-    val onBoardingTipsUiState by onBoardingTipsViewModel.state.collectAsStateWithLifecycle()
+    val onBoardingTipsUiState by onBoardingTipsViewModel.stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(homeUiState.navEvent) {
         when (homeUiState.navEvent) {

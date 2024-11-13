@@ -24,6 +24,7 @@ plugins {
     alias(libs.plugins.gradlePlugin.android.baselineprofile) apply false
     alias(libs.plugins.gradlePlugin.android.benchmark) apply false
     alias(libs.plugins.gradlePlugin.application) apply false
+    alias(libs.plugins.gradlePlugin.compose.compiler) apply false
     alias(libs.plugins.gradlePlugin.dependency.guard) apply false
     alias(libs.plugins.gradlePlugin.library) apply false
     alias(libs.plugins.gradlePlugin.test) apply false

@@ -86,7 +86,8 @@ fun UpdateAlias(
             aliasItemFormState = viewModel.aliasItemFormState,
             selectedVault = null,
             showVaultSelector = false,
-            selectedShareId = uiState.selectedShareId,
+            isOwner = uiState.share?.isOwner ?: false,
+            selectedShareId = uiState.share?.id,
             topBarActionName = stringResource(id = R.string.action_save),
             isCreateMode = false,
             isEditAllowed = uiState.baseAliasUiState.isLoadingState == IsLoadingState.NotLoading,
@@ -130,7 +131,7 @@ fun UpdateAlias(
     }
     ItemSavedLaunchedEffect(
         isItemSaved = uiState.baseAliasUiState.itemSavedState,
-        selectedShareId = uiState.selectedShareId,
+        selectedShareId = uiState.share?.id,
         onSuccess = { shareId, itemId, _ ->
             actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Updated(shareId, itemId)) }
         }

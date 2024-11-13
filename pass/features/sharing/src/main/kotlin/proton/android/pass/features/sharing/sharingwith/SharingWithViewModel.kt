@@ -58,12 +58,14 @@ import proton.android.pass.data.api.usecases.CheckCanAddressesBeInvited
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveVaultById
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.OrganizationShareMode
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.sharing.ShowEditVaultArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -77,9 +79,15 @@ class SharingWithViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val shareId: ShareId = ShareId(
-        id = savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key)
-    )
+    private val itemIdOption: Option<ItemId> = savedStateHandleProvider.get()
+        .get<String>(CommonOptionalNavArgId.ItemId.key)
+        .toOption()
+        .map(::ItemId)
+
+    private val shareId: ShareId = savedStateHandleProvider.get()
+        .require<String>(CommonNavArgId.ShareId.key)
+        .let(::ShareId)
+
     private val showEditVault: Boolean = savedStateHandleProvider.get()
         .require(ShowEditVaultArgId.key)
 
@@ -160,17 +168,18 @@ class SharingWithViewModel @Inject constructor(
         scrollToBottom, continueEnabled, organizationSettingsResult, errorMessage ->
         val vaultValue = vault.value()
 
-        val canOnlyPickFromSelection = organizationSettingsResult.map { organizationSettingsOption ->
-            organizationSettingsOption.map {
-                when (it) {
-                    OrganizationSettings.NotAnOrganization -> false
-                    is OrganizationSettings.Organization -> when (it.shareMode) {
-                        OrganizationShareMode.Unrestricted -> false
-                        OrganizationShareMode.OrganizationOnly -> true
+        val canOnlyPickFromSelection =
+            organizationSettingsResult.map { organizationSettingsOption ->
+                organizationSettingsOption.map {
+                    when (it) {
+                        OrganizationSettings.NotAnOrganization -> false
+                        is OrganizationSettings.Organization -> when (it.shareMode) {
+                            OrganizationShareMode.Unrestricted -> false
+                            OrganizationShareMode.OrganizationOnly -> true
+                        }
                     }
-                }
-            }.value() ?: true
-        }.getOrNull() ?: true
+                }.value() ?: true
+            }.getOrNull() ?: true
 
         SharingWithUIState(
             enteredEmails = emails.toPersistentList(),
@@ -340,10 +349,12 @@ class SharingWithViewModel @Inject constructor(
                             PassLogger.i(TAG, "Error checking if addresses can be invited")
                             ErrorMessage.NoAddressesCanBeInvited
                         }
+
                         CanAddressesBeInvitedResult.CannotInviteAddressReason.Empty -> {
                             PassLogger.i(TAG, "No addresses to invite")
                             ErrorMessage.NoAddressesCanBeInvited
                         }
+
                         CanAddressesBeInvitedResult.CannotInviteAddressReason.CannotInviteOutsideOrg -> {
                             PassLogger.i(TAG, "Cannot invite outside org")
                             ErrorMessage.CannotInviteOutsideOrg

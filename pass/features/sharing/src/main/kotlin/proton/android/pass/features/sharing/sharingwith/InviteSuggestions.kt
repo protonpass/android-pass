@@ -21,19 +21,17 @@ package proton.android.pass.features.sharing.sharingwith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Checkbox
+import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Surface
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -47,16 +45,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultNorm
-import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.applyIf
-import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
-import proton.android.pass.composecomponents.impl.loading.Loading
+import proton.android.pass.composecomponents.impl.loading.PassFullScreenLoading
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.sharing.R
 
 @Composable
@@ -69,11 +64,16 @@ internal fun InviteSuggestions(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
-        Text(
-            style = ProtonTheme.typography.defaultWeak,
-            text = stringResource(id = R.string.share_with_suggestions_title)
+        Text.Body2Medium(
+            text = stringResource(id = R.string.share_with_suggestions_title),
+            color = PassTheme.colors.textWeak
         )
+
         when (state) {
+            SuggestionsUIState.Initial -> Unit
+
+            SuggestionsUIState.Loading -> PassFullScreenLoading()
+
             is SuggestionsUIState.Content -> {
                 var selectedIndex by remember { mutableIntStateOf(0) }
                 if (state.planEmails.isNotEmpty()) {
@@ -81,8 +81,8 @@ internal fun InviteSuggestions(
                         modifier = Modifier.clip(CircleShape),
                         selectedTabIndex = selectedIndex,
                         backgroundColor = PassTheme.colors.interactionNormMinor1,
-                        indicator = { },
-                        divider = { }
+                        indicator = {},
+                        divider = {}
                     ) {
                         InviteSuggestionTabs.entries.forEachIndexed { index, tab ->
                             val selected = selectedIndex == index
@@ -95,17 +95,20 @@ internal fun InviteSuggestions(
                                         ifTrue = { background(PassTheme.colors.interactionNorm) }
                                     ),
                                 content = {
-                                    val title = when (tab) {
-                                        InviteSuggestionTabs.Recents ->
+                                    when (tab) {
+                                        InviteSuggestionTabs.Recent -> {
                                             stringResource(id = R.string.share_with_recents_title)
+                                        }
 
-                                        InviteSuggestionTabs.GroupSuggestions -> state.groupDisplayName
+                                        InviteSuggestionTabs.GroupSuggestions -> {
+                                            state.groupDisplayName
+                                        }
+                                    }.also { title ->
+                                        Text.Body3Regular(
+                                            modifier = Modifier.padding(vertical = Spacing.small),
+                                            text = title
+                                        )
                                     }
-                                    Text(
-                                        modifier = Modifier.padding(Spacing.small),
-                                        text = title,
-                                        style = PassTheme.typography.body3Norm()
-                                    )
                                 },
                                 selected = selected,
                                 onClick = { selectedIndex = index }
@@ -113,36 +116,24 @@ internal fun InviteSuggestions(
                         }
                     }
                 }
-                when (InviteSuggestionTabs.entries[selectedIndex]) {
-                    InviteSuggestionTabs.Recents -> InviteSuggestionList(
-                        modifier = Modifier.weight(1f),
-                        items = state.recentEmails,
-                        onItemClicked = onItemClicked
-                    )
 
-                    InviteSuggestionTabs.GroupSuggestions -> InviteSuggestionList(
+                when (InviteSuggestionTabs.entries[selectedIndex]) {
+                    InviteSuggestionTabs.Recent -> state.recentEmails
+                    InviteSuggestionTabs.GroupSuggestions -> state.planEmails
+                }.also { suggestionItems ->
+                    InviteSuggestionList(
                         modifier = Modifier.weight(1f),
-                        items = state.planEmails,
+                        items = suggestionItems,
                         onItemClicked = onItemClicked
                     )
                 }
-            }
-
-            SuggestionsUIState.Initial -> {
-            }
-
-            SuggestionsUIState.Loading -> Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Loading()
             }
         }
     }
 }
 
 @Composable
-fun InviteSuggestionList(
+internal fun InviteSuggestionList(
     modifier: Modifier = Modifier,
     items: List<Pair<String, Boolean>>,
     onItemClicked: (String, Boolean) -> Unit
@@ -163,15 +154,19 @@ fun InviteSuggestionList(
                         textColor = PassTheme.colors.interactionNormMajor2,
                         shape = PassTheme.shapes.squircleMediumShape
                     )
-                    Text(
+
+                    Text.Body2Regular(
                         modifier = Modifier.weight(1f),
                         text = email,
-                        style = ProtonTheme.typography.defaultNorm,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
+
                     Checkbox(
                         checked = isChecked,
+                        colors = CheckboxDefaults.colors(
+                            checkedColor = PassTheme.colors.interactionNormMajor2
+                        ),
                         onCheckedChange = { onItemClicked(email, isChecked) }
                     )
                 }
@@ -180,14 +175,13 @@ fun InviteSuggestionList(
     )
 }
 
-enum class InviteSuggestionTabs {
-    Recents,
+private enum class InviteSuggestionTabs {
+    Recent,
     GroupSuggestions
 }
 
-@Preview
-@Composable
-fun InviteSuggestionsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+@[Preview Composable]
+internal fun InviteSuggestionsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             InviteSuggestions(

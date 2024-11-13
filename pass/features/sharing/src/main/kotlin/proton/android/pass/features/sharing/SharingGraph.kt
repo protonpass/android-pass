@@ -23,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import proton.android.pass.common.api.Option
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.NewUserInviteId
@@ -41,12 +42,14 @@ import proton.android.pass.features.sharing.sharingpermissions.bottomsheet.shari
 import proton.android.pass.features.sharing.sharingsummary.SharingSummaryScreen
 import proton.android.pass.features.sharing.sharingwith.SharingWithScreen
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
+import proton.android.pass.navigation.api.toPath
 
 object ShowEditVaultArgId : NavArgId {
     override val key: String = "show_edit_vault"
@@ -55,9 +58,22 @@ object ShowEditVaultArgId : NavArgId {
 
 object SharingWith : NavItem(
     baseRoute = "sharing/with/screen",
-    navArgIds = listOf(CommonNavArgId.ShareId, ShowEditVaultArgId)
+    navArgIds = listOf(CommonNavArgId.ShareId, ShowEditVaultArgId),
+    optionalArgIds = listOf(CommonOptionalNavArgId.ItemId)
 ) {
-    fun createRoute(shareId: ShareId, showEditVault: Boolean) = "$baseRoute/${shareId.id}/$showEditVault"
+    fun createRoute(
+        shareId: ShareId,
+        showEditVault: Boolean,
+        itemIdOption: Option<ItemId>
+    ): String = buildString {
+        append("$baseRoute/${shareId.id}/$showEditVault")
+
+        itemIdOption.value()?.let { itemId ->
+            mapOf(CommonOptionalNavArgId.ItemId.key to itemId.id)
+                .toPath()
+                .also(::append)
+        }
+    }
 }
 
 object SharingPermissions : NavItem(
@@ -128,6 +144,8 @@ sealed interface SharingNavigation {
 
     @JvmInline
     value class ShareVault(val shareId: ShareId) : SharingNavigation
+
+    data class ShareItem(val shareId: ShareId, val itemId: ItemId) : SharingNavigation
 
     data class ShareItemLink(val shareId: ShareId, val itemId: ItemId) : SharingNavigation
 

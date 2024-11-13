@@ -155,7 +155,7 @@ android {
                 isRemoveUnusedResources = true
                 file("proguard").listFiles()?.forEach { proguardFile(it) }
             }
-            signingConfig = if (isCustomBuild || isApkBuild) {
+            signingConfig = if (isApkBuild) {
                 println("Using signing keystore")
                 signingConfigs["signingKeystore"]
             } else {

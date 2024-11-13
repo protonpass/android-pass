@@ -6,6 +6,7 @@ plugins {
     kotlin("plugin.serialization")
     id("com.google.devtools.ksp")
     id("org.jetbrains.kotlin.kapt")
+    alias(libs.plugins.gradlePlugin.compose.compiler)
 }
 
 android {
@@ -27,10 +28,6 @@ android {
 
     buildFeatures {
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
 
     compileOptions {

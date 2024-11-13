@@ -31,7 +31,7 @@ fun OnBoardingTips(
     state: OnBoardingTipsUiState
 ) {
     when (state.tipToShow) {
-        None -> {}
+        None -> Unit
         is Some -> {
             OnBoardingTipContent(
                 modifier = modifier,

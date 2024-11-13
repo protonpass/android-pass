@@ -18,10 +18,17 @@
 
 package proton.android.pass.features.sharing.sharingwith
 
+import proton.android.pass.common.api.Option
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
-sealed interface SharingWithEvents {
-    @JvmInline
-    value class NavigateToPermissions(val shareId: ShareId) : SharingWithEvents
-    data object Unknown : SharingWithEvents
+internal sealed interface SharingWithEvents {
+
+    data object Idle : SharingWithEvents
+
+    data class NavigateToPermissions(
+        val shareId: ShareId,
+        val itemIdOption: Option<ItemId>
+    ) : SharingWithEvents
+
 }

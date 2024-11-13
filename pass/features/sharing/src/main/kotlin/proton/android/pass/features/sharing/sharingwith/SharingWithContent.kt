@@ -77,7 +77,7 @@ import me.proton.core.presentation.R as CoreR
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun SharingWithContent(
+internal fun SharingWithContent(
     modifier: Modifier = Modifier,
     state: SharingWithUIState,
     editingEmail: String,

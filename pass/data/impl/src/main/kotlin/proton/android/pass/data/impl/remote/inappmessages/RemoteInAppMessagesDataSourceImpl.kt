@@ -22,7 +22,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.ChangeNotificationStatusRequest
-import proton.android.pass.data.impl.responses.NotificationResponse
+import proton.android.pass.data.impl.responses.NotificationsResponse
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageStatus
 import javax.inject.Inject
@@ -31,12 +31,12 @@ class RemoteInAppMessagesDataSourceImpl @Inject constructor(
     private val api: ApiProvider
 ) : RemoteInAppMessagesDataSource {
 
-    override suspend fun fetchInAppMessages(userId: UserId, lastToken: String?): List<NotificationResponse> =
+    override suspend fun fetchInAppMessages(userId: UserId, lastToken: String?): NotificationsResponse =
         api.get<PasswordManagerApi>(userId)
             .invoke { fetchUserNotifications(lastToken) }
             .valueOrThrow
             .response
-            .list
+
 
     override suspend fun changeMessageStatus(
         userId: UserId,

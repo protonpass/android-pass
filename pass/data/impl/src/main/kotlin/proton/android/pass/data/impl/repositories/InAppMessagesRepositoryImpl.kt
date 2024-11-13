@@ -44,18 +44,29 @@ class InAppMessagesRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : InAppMessagesRepository {
 
-    override fun observeUserMessages(userId: UserId): Flow<List<InAppMessage>> = local.observeUserMessages(userId)
-        .onStart {
-            runCatching {
-                val remoteMessages = remote.fetchInAppMessages(userId).toDomain(userId)
-                local.storeMessages(userId, remoteMessages)
-                preloadImages(context, remoteMessages.mapNotNull { it.imageUrl.value() }.toSet())
-            }.onFailure {
-                PassLogger.w(TAG, "Failed to fetch in-app messages for user $userId")
-                PassLogger.w(TAG, it)
+    override fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
+        local.observeDeliverableUserMessages(userId, currentTimestamp)
+            .onStart {
+                val allMessages = mutableListOf<InAppMessage>()
+                var lastID: String? = null
+                runCatching {
+                    do {
+                        val response =
+                            remote.fetchInAppMessages(userId = userId, lastToken = lastID)
+                        val newMessages = response.list.map { it.toDomain(userId) }
+                        allMessages.addAll(newMessages)
+                        lastID = if (response.list.isNotEmpty()) response.lastID else null
+                    } while (lastID != null)
+
+                    local.storeMessages(userId, allMessages)
+
+                    preloadImages(context, allMessages.mapNotNull { it.imageUrl.value() }.toSet())
+                }.onFailure {
+                    PassLogger.w(TAG, "Failed to fetch in-app messages for user $userId")
+                    PassLogger.w(TAG, it)
+                }
             }
-        }
-        .distinctUntilChanged()
+            .distinctUntilChanged()
 
     override suspend fun changeMessageStatus(
         userId: UserId,
@@ -75,19 +86,12 @@ class InAppMessagesRepositoryImpl @Inject constructor(
             .distinctUntilChanged()
 
     private fun preloadImages(context: Context, imageUrls: Set<String>) {
-        val imageLoader = ImageLoader.Builder(context).build()
-        imageUrls.forEachIndexed { index, url ->
+        val imageLoader = ImageLoader.Builder(context)
+            .diskCachePolicy(CachePolicy.ENABLED)
+            .build()
+        imageUrls.forEach { url ->
             val request = ImageRequest.Builder(context)
                 .data(url)
-                .apply {
-                    if (index == 0) {
-                        memoryCachePolicy(CachePolicy.ENABLED)
-                        diskCachePolicy(CachePolicy.ENABLED)
-                    } else {
-                        memoryCachePolicy(CachePolicy.DISABLED)
-                        diskCachePolicy(CachePolicy.ENABLED)
-                    }
-                }
                 .build()
             imageLoader.enqueue(request)
         }

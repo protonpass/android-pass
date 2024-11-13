@@ -53,6 +53,7 @@ internal fun AliasContent(
     topBarActionName: String,
     isCreateMode: Boolean,
     isEditAllowed: Boolean,
+    isOwner: Boolean,
     onEvent: (AliasContentUiEvent) -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -95,6 +96,8 @@ internal fun AliasContent(
             onTitleRequiredError = uiState.errorList.contains(BlankTitle),
             onAliasRequiredError = uiState.errorList.contains(BlankPrefix),
             onInvalidAliasError = uiState.errorList.contains(InvalidAliasContent),
+            isAliasManagementEnabled = uiState.isAliasManagementEnabled,
+            isOwner = isOwner,
             onSuffixClick = {
                 scope.launch {
                     showSuffixDialog = true
@@ -105,8 +108,7 @@ internal fun AliasContent(
                     showMailboxDialog = true
                 }
             },
-            onEvent = onEvent,
-            isAliasManagementEnabled = uiState.isAliasManagementEnabled
+            onEvent = onEvent
         )
 
         SelectSuffixDialog(

@@ -57,11 +57,6 @@ platform :android do
     gradle(task: ":app:assemblePlayBlackRelease -PapkBuild=true")
   end
 
-  desc "Creates the PlayProdRelease apk"
-  lane :assemblePlayProdRelease do
-    gradle(task: ":app:assemblePlayProdRelease -PapkBuild=true")
-  end
-
   desc "Creates the PlayProdRelease bundle"
   lane :buildPlayProdReleaseBundle do
     gradle(task: ":app:bundlePlayProdRelease")

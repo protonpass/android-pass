@@ -36,6 +36,8 @@ import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.canCreate
+import proton.android.pass.domain.toPermissions
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
@@ -106,8 +108,9 @@ fun CreateAliasScreen(
             uiState = uiState.baseAliasUiState,
             aliasItemFormState = viewModel.aliasItemFormState,
             selectedVault = selectedVault?.vault,
-            showVaultSelector = showVaultSelector,
             selectedShareId = selectedVault?.vault?.shareId,
+            isOwner = selectedVault?.vault?.role?.toPermissions()?.canCreate() ?: false,
+            showVaultSelector = showVaultSelector,
             topBarActionName = stringResource(id = R.string.title_create),
             isCreateMode = true,
             isEditAllowed = uiState.baseAliasUiState.isLoadingState == IsLoadingState.NotLoading,

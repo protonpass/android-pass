@@ -78,7 +78,7 @@ class SharingSummaryViewModel @Inject constructor(
         MutableStateFlow(IsLoadingState.NotLoading)
 
     private val eventFlow: MutableStateFlow<SharingSummaryEvent> =
-        MutableStateFlow(SharingSummaryEvent.Unknown)
+        MutableStateFlow(SharingSummaryEvent.Idle)
 
     private val addressesFlow: StateFlow<List<AddressPermission>> = bulkInviteRepository
         .observeAddresses()
@@ -89,13 +89,13 @@ class SharingSummaryViewModel @Inject constructor(
             initialValue = emptyList()
         )
 
-    internal val state: StateFlow<SharingSummaryUIState> = combine(
+    internal val stateFlow: StateFlow<SharingSummaryUIState> = combine(
         addressesFlow,
         getVaultWithItemCountById(shareId = shareId).asLoadingResult(),
         isLoadingStateFlow,
         eventFlow
     ) { addresses, vaultResult, isLoadingState, event ->
-        var uiEvent = if (event == SharingSummaryEvent.Unknown && addresses.isEmpty()) {
+        var uiEvent = if (event == SharingSummaryEvent.Idle && addresses.isEmpty()) {
             SharingSummaryEvent.BackToHome
         } else {
             event
@@ -153,8 +153,8 @@ class SharingSummaryViewModel @Inject constructor(
         }
     }
 
-    internal fun clearEvent() {
-        eventFlow.update { SharingSummaryEvent.Unknown }
+    internal fun onConsumeEvent(event: SharingSummaryEvent) {
+        eventFlow.compareAndSet(event, SharingSummaryEvent.Idle)
     }
 
     private companion object {

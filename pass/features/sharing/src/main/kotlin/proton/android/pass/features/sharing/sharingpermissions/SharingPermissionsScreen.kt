@@ -32,40 +32,47 @@ fun SharingPermissionsScreen(
     modifier: Modifier = Modifier,
     viewModel: SharingPermissionsViewModel = hiltViewModel(),
     onNavigateEvent: (SharingNavigation) -> Unit
-) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+) = with(viewModel) {
+    val state by state.collectAsStateWithLifecycle()
+
     LaunchedEffect(state.event) {
         when (val event = state.event) {
+            SharingPermissionsEvents.Unknown -> Unit
+
             is SharingPermissionsEvents.NavigateToSummary -> onNavigateEvent(
                 SharingNavigation.Summary(shareId = event.shareId)
             )
-            SharingPermissionsEvents.BackToHome -> onNavigateEvent(SharingNavigation.BackToHome)
 
-            SharingPermissionsEvents.Unknown -> {}
+            SharingPermissionsEvents.BackToHome -> onNavigateEvent(SharingNavigation.BackToHome)
         }
-        viewModel.clearEvent()
+
+        clearEvent()
     }
+
     SharingPermissionsContent(
         modifier = modifier,
         state = state,
-        onNavigateEvent = onNavigateEvent,
-        onEvent = {
-            when (it) {
-                is SharingPermissionsUiEvent.OnPermissionChangeClick -> {
-                    val event = SharingNavigation.InviteToVaultEditPermissions(
-                        email = it.address.address,
-                        permission = it.address.permission.toShareRole()
-                    )
-                    onNavigateEvent(event)
+        onEvent = { uiEvent ->
+            when (uiEvent) {
+                SharingPermissionsUiEvent.OnBackClick -> {
+                    onNavigateEvent(SharingNavigation.Back)
                 }
+
+                is SharingPermissionsUiEvent.OnPermissionChangeClick -> {
+                    SharingNavigation.InviteToVaultEditPermissions(
+                        email = uiEvent.address.address,
+                        permission = uiEvent.address.permission.toShareRole()
+                    ).also(onNavigateEvent)
+                }
+
                 SharingPermissionsUiEvent.OnSetAllPermissionsClick -> {
                     onNavigateEvent(SharingNavigation.InviteToVaultEditAllPermissions)
                 }
+
                 SharingPermissionsUiEvent.OnSubmit -> {
-                    viewModel.onPermissionsSubmit()
+                    onPermissionsSubmit()
                 }
             }
         }
     )
 }
-

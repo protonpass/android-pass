@@ -96,9 +96,18 @@ object AcceptInvite : NavItem("sharing/accept", navItemType = NavItemType.Bottom
 
 object SharingSummary : NavItem(
     baseRoute = "sharing/summary/screen",
-    navArgIds = listOf(CommonNavArgId.ShareId)
+    navArgIds = listOf(CommonNavArgId.ShareId),
+    optionalArgIds = listOf(CommonOptionalNavArgId.ItemId)
 ) {
-    fun createRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
+    fun createRoute(shareId: ShareId, itemIdOption: Option<ItemId>) = buildString {
+        append("$baseRoute/${shareId.id}")
+
+        itemIdOption.value()?.let { itemId ->
+            mapOf(CommonOptionalNavArgId.ItemId.key to itemId.id)
+                .toPath()
+                .also(::append)
+        }
+    }
 }
 
 object ManageVault : NavItem(

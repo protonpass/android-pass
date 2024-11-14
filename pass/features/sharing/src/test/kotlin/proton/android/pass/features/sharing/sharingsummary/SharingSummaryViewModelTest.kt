@@ -81,7 +81,7 @@ class SharingSummaryViewModelTest {
 
     @Test
     fun `test view model initialization`() = runTest {
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             val initialState = awaitItem()
 
             assertThat(initialState.vaultWithItemCount).isNull()
@@ -97,7 +97,7 @@ class SharingSummaryViewModelTest {
         val vaultData = createVaultWithItemCount()
         getVaultWithItemCountById.emitValue(vaultData)
 
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             val initialState = awaitItem()
 
             val addresses = listOf(AddressPermissionUiState(TEST_EMAIL, SharingType.Read))
@@ -115,7 +115,7 @@ class SharingSummaryViewModelTest {
     fun `test view model state with error in vault loading`() = runTest {
         getVaultWithItemCountById.sendException(RuntimeException("test exception"))
 
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             val initialState = awaitItem()
             val expectedState = SharingSummaryUIState(
                 addresses = persistentListOf(
@@ -161,7 +161,7 @@ class SharingSummaryViewModelTest {
     @Test
     fun `if addresses is empty send back to home`() = runTest {
         bulkInviteRepository.clear()
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             val state = awaitItem()
             assertThat(state.event).isEqualTo(SharingSummaryEvent.BackToHome)
         }

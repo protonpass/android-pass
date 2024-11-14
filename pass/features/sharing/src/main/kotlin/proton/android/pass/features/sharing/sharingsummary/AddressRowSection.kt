@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,14 +30,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultSmallNorm
-import me.proton.core.compose.theme.defaultWeak
 import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.sharing.common.AddressPermissionUiState
 import proton.android.pass.features.sharing.extensions.toStringResource
 import proton.android.pass.features.sharing.sharingpermissions.SharingType
@@ -48,7 +45,7 @@ internal fun AddressRowSection(modifier: Modifier = Modifier, address: AddressPe
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
+        horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
         BoxedIcon(
             backgroundColor = PassTheme.colors.interactionNormMinor1,
@@ -61,18 +58,18 @@ internal fun AddressRowSection(modifier: Modifier = Modifier, address: AddressPe
                 tint = PassTheme.colors.interactionNormMajor2
             )
         }
+
         Column(
             modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
         ) {
-            Text(
-                text = address.address,
-                style = ProtonTheme.typography.defaultSmallNorm()
+            Text.Body1Regular(
+                text = address.address
             )
-            Text(
+
+            Text.Body2Regular(
                 text = stringResource(address.permission.toStringResource()),
-                style = ProtonTheme.typography.defaultWeak,
-                color = PassTheme.colors.textNorm
+                color = PassTheme.colors.textWeak
             )
         }
     }

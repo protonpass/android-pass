@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,10 +34,9 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.body3Norm
-import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.sharing.common.AddressPermissionUiState
 import proton.android.pass.features.sharing.extensions.toStringResource
 
@@ -51,7 +49,7 @@ internal fun SharingPermissionItem(
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
+        horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
         CircleTextIcon(
             text = address.address,
@@ -62,16 +60,15 @@ internal fun SharingPermissionItem(
 
         Column(
             modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
         ) {
-            Text(
-                text = address.address,
-                style = PassTheme.typography.body3Norm()
+            Text.Body2Regular(
+                text = address.address
             )
 
-            Text(
+            Text.Body2Regular(
                 text = stringResource(address.permission.toStringResource()),
-                style = PassTheme.typography.body3Weak()
+                color = PassTheme.colors.textWeak
             )
         }
 
@@ -82,7 +79,7 @@ internal fun SharingPermissionItem(
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_three_dots_vertical_24),
                 contentDescription = stringResource(id = R.string.action_content_description_menu),
-                tint = PassTheme.colors.textHint
+                tint = PassTheme.colors.textWeak
             )
         }
     }

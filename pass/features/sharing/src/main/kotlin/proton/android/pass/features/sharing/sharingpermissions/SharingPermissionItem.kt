@@ -43,7 +43,7 @@ import proton.android.pass.features.sharing.common.AddressPermissionUiState
 import proton.android.pass.features.sharing.extensions.toStringResource
 
 @Composable
-fun SharingPermissionItem(
+internal fun SharingPermissionItem(
     modifier: Modifier = Modifier,
     address: AddressPermissionUiState,
     onPermissionChangeClick: () -> Unit

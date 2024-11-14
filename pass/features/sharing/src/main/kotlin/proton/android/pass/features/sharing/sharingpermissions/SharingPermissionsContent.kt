@@ -74,7 +74,7 @@ internal fun SharingPermissionsContent(
             verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
             SharingPermissionsHeader(
-                state = state.headerState,
+                memberCount = state.memberCount,
                 onSetAllClick = { onEvent(SharingPermissionsUiEvent.OnSetAllPermissionsClick) }
             )
 

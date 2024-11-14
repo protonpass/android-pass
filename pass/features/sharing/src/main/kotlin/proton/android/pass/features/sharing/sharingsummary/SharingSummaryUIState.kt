@@ -25,7 +25,7 @@ import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.sharing.common.AddressPermissionUiState
 
 @Immutable
-sealed interface SharingSummaryEvent {
+internal sealed interface SharingSummaryEvent {
 
     @Immutable
     data object Unknown : SharingSummaryEvent
@@ -42,7 +42,7 @@ sealed interface SharingSummaryEvent {
 }
 
 @Immutable
-data class SharingSummaryUIState(
+internal data class SharingSummaryUIState(
     val addresses: ImmutableList<AddressPermissionUiState> = persistentListOf(),
     val vaultWithItemCount: VaultWithItemCount? = null,
     val isLoading: Boolean = false,

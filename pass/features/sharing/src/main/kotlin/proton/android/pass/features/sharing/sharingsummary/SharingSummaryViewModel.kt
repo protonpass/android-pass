@@ -21,7 +21,6 @@ package proton.android.pass.features.sharing.sharingsummary
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -31,9 +30,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -43,12 +42,11 @@ import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.InviteToVault
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.features.sharing.SharingSnackbarMessage.InviteSentSuccess
-import proton.android.pass.features.sharing.SharingSnackbarMessage.VaultNotFound
-import proton.android.pass.features.sharing.common.toUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -62,7 +60,8 @@ class SharingSummaryViewModel @Inject constructor(
     private val bulkInviteRepository: BulkInviteRepository,
     private val getUserPlan: GetUserPlan,
     getVaultWithItemCountById: GetVaultWithItemCountById,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    observeItemById: ObserveItemById
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -89,41 +88,67 @@ class SharingSummaryViewModel @Inject constructor(
             initialValue = emptyList()
         )
 
-    internal val stateFlow: StateFlow<SharingSummaryUIState> = combine(
-        addressesFlow,
-        getVaultWithItemCountById(shareId = shareId).asLoadingResult(),
-        isLoadingStateFlow,
-        eventFlow
-    ) { addresses, vaultResult, isLoadingState, event ->
-        var uiEvent = if (event == SharingSummaryEvent.Idle && addresses.isEmpty()) {
-            SharingSummaryEvent.BackToHome
-        } else {
-            event
+    internal val stateFlow: StateFlow<SharingSummaryState> = when (itemIdOption) {
+        None -> {
+            combine(
+                eventFlow,
+                getVaultWithItemCountById(shareId = shareId),
+                addressesFlow,
+                isLoadingStateFlow,
+                SharingSummaryState::ShareVault
+            )
         }
 
-        val vaultWithItemCount = when (vaultResult) {
-            is LoadingResult.Success -> vaultResult.data
-            is LoadingResult.Error -> {
-                snackbarDispatcher(VaultNotFound)
-                uiEvent = SharingSummaryEvent.BackToHome
-                null
-            }
-
-            is LoadingResult.Loading -> null
+        is Some -> {
+            combine(
+                eventFlow,
+                addressesFlow,
+                isLoadingStateFlow,
+                observeItemById(shareId, itemIdOption.value),
+                SharingSummaryState::ShareItem
+            )
         }
-        val isLoading = vaultResult is LoadingResult.Loading ||
-            isLoadingState is IsLoadingState.Loading
-        SharingSummaryUIState(
-            addresses = addresses.map { it.toUiState() }.toPersistentList(),
-            vaultWithItemCount = vaultWithItemCount,
-            isLoading = isLoading,
-            event = uiEvent
-        )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = SharingSummaryUIState()
+        initialValue = SharingSummaryState.Initial
     )
+
+//    internal val stateFlow: StateFlow<SharingSummaryUIState> = combine(
+//        addressesFlow,
+//        getVaultWithItemCountById(shareId = shareId).asLoadingResult(),
+//        isLoadingStateFlow,
+//        eventFlow
+//    ) { addresses, vaultResult, isLoadingState, event ->
+//        var uiEvent = if (event == SharingSummaryEvent.Idle && addresses.isEmpty()) {
+//            SharingSummaryEvent.BackToHome
+//        } else {
+//            event
+//        }
+//
+//        val vaultWithItemCount = when (vaultResult) {
+//            is LoadingResult.Success -> vaultResult.data
+//            is LoadingResult.Error -> {
+//                snackbarDispatcher(VaultNotFound)
+//                uiEvent = SharingSummaryEvent.BackToHome
+//                null
+//            }
+//
+//            is LoadingResult.Loading -> null
+//        }
+//        val isLoading = vaultResult is LoadingResult.Loading ||
+//            isLoadingState is IsLoadingState.Loading
+//        SharingSummaryUIState(
+//            addresses = addresses.map { it.toUiState() }.toPersistentList(),
+//            vaultWithItemCount = vaultWithItemCount,
+//            isLoading = isLoading,
+//            event = uiEvent
+//        )
+//    }.stateIn(
+//        scope = viewModelScope,
+//        started = SharingStarted.WhileSubscribed(5_000),
+//        initialValue = SharingSummaryUIState()
+//    )
 
     internal fun onSubmit() {
         viewModelScope.launch {

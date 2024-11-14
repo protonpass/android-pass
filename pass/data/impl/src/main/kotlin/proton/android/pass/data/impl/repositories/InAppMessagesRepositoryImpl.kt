@@ -23,6 +23,8 @@ import coil.ImageLoader
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
@@ -50,24 +52,28 @@ class InAppMessagesRepositoryImpl @Inject constructor(
             .distinctUntilChanged()
 
     override suspend fun refreshUserMessages(userId: UserId) {
-        val allMessages = mutableListOf<InAppMessage>()
-        var lastID: String? = null
-        runCatching {
-            do {
-                val response =
-                    remote.fetchInAppMessages(userId = userId, lastToken = lastID)
-                val newMessages = response.list.map { it.toDomain(userId) }
-                allMessages.addAll(newMessages)
-                lastID = if (response.list.isNotEmpty()) response.lastID else null
-            } while (lastID != null)
+        coroutineScope {
+            val allMessages = mutableListOf<InAppMessage>()
+            var lastID: String? = null
+            runCatching {
+                do {
+                    ensureActive()
+                    val response =
+                        remote.fetchInAppMessages(userId = userId, lastToken = lastID)
+                    val newMessages = response.list.map { it.toDomain(userId) }
+                    allMessages.addAll(newMessages)
+                    lastID = if (response.list.isNotEmpty()) response.lastID else null
+                } while (lastID != null)
 
-            local.storeMessages(userId, allMessages)
+                local.storeMessages(userId, allMessages)
 
-            preloadImages(context, allMessages.mapNotNull { it.imageUrl.value() }.toSet())
-        }.onFailure {
-            PassLogger.w(TAG, "Failed to fetch in-app messages for user $userId")
-            PassLogger.w(TAG, it)
+                preloadImages(context, allMessages.mapNotNull { it.imageUrl.value() }.toSet())
+            }.onFailure {
+                PassLogger.w(TAG, "Failed to fetch in-app messages for user $userId")
+                PassLogger.w(TAG, it)
+            }
         }
+
     }
 
     override suspend fun changeMessageStatus(

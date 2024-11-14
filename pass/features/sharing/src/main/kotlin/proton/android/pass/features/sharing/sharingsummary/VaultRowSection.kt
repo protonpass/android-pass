@@ -21,7 +21,6 @@ package proton.android.pass.features.sharing.sharingsummary
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -31,10 +30,10 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
@@ -45,13 +44,17 @@ import proton.android.pass.features.sharing.R
 import java.util.Date
 
 @Composable
-fun VaultRowSection(modifier: Modifier = Modifier, vaultWithItemCount: VaultWithItemCount?) {
+internal fun VaultRowSection(modifier: Modifier = Modifier, vaultWithItemCount: VaultWithItemCount?) {
     vaultWithItemCount ?: return
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(Spacing.medium)) {
-        Text(
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+    ) {
+        Text.Body1Regular(
             text = stringResource(R.string.share_summary_vault_title),
-            style = PassTheme.typography.body3Weak()
+            color = PassTheme.colors.textWeak
         )
+
         VaultRow(
             name = vaultWithItemCount.vault.name,
             itemCount = vaultWithItemCount.activeItemCount + vaultWithItemCount.trashedItemCount,
@@ -66,9 +69,8 @@ fun VaultRowSection(modifier: Modifier = Modifier, vaultWithItemCount: VaultWith
     }
 }
 
-@Preview
-@Composable
-fun VaultRowSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+@[Preview Composable]
+internal fun VaultRowSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             VaultRowSection(

@@ -28,7 +28,7 @@ import proton.android.pass.features.sharing.common.AddressPermissionUiState
 internal sealed interface SharingSummaryEvent {
 
     @Immutable
-    data object Unknown : SharingSummaryEvent
+    data object Idle : SharingSummaryEvent
 
     @Immutable
     data object BackToHome : SharingSummaryEvent
@@ -46,5 +46,5 @@ internal data class SharingSummaryUIState(
     val addresses: ImmutableList<AddressPermissionUiState> = persistentListOf(),
     val vaultWithItemCount: VaultWithItemCount? = null,
     val isLoading: Boolean = false,
-    val event: SharingSummaryEvent = SharingSummaryEvent.Unknown
+    val event: SharingSummaryEvent = SharingSummaryEvent.Idle
 )

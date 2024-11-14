@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -22,46 +22,51 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.pluralStringResource
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.body3Weak
-import proton.android.pass.features.sharing.R
+import proton.android.pass.composecomponents.impl.text.Text
 
 @Composable
-fun VaultRow(
+internal fun SharingSummaryShareSection(
     modifier: Modifier = Modifier,
-    name: String,
-    itemCount: Long,
-    icon: @Composable () -> Unit
+    sectionTitle: String,
+    shareTitle: String,
+    shareSubTitle: String,
+    shareIcon: @Composable () -> Unit
 ) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
-        verticalAlignment = Alignment.CenterVertically
+    Column(
+        modifier = modifier.padding(bottom = Spacing.large),
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
-        icon()
-        Column(
-            modifier = Modifier.weight(1f)
+        Text.Body1Regular(
+            text = sectionTitle,
+            color = PassTheme.colors.textWeak
+        )
+
+        Row(
+            modifier = modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = name,
-                style = ProtonTheme.typography.defaultSmallNorm
-            )
-            Text(
-                text = pluralStringResource(
-                    R.plurals.sharing_item_count,
-                    itemCount.toInt(),
-                    itemCount.toInt()
-                ),
-                style = PassTheme.typography.body3Weak()
-            )
+            shareIcon()
+
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
+            ) {
+                Text.Body1Regular(
+                    text = shareTitle
+                )
+
+                Text.Body2Regular(
+                    text = shareSubTitle,
+                    color = PassTheme.colors.textWeak
+                )
+            }
         }
     }
 }

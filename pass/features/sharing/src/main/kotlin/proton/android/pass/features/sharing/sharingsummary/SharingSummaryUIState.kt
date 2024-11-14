@@ -21,8 +21,14 @@ package proton.android.pass.features.sharing.sharingsummary
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.repositories.AddressPermission
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.sharing.common.AddressPermissionUiState
+import proton.android.pass.features.sharing.common.toUiState
 
 @Immutable
 internal sealed interface SharingSummaryEvent {
@@ -48,3 +54,61 @@ internal data class SharingSummaryUIState(
     val isLoading: Boolean = false,
     val event: SharingSummaryEvent = SharingSummaryEvent.Idle
 )
+
+internal sealed interface SharingSummaryState {
+
+    val addresses: ImmutableList<AddressPermissionUiState>
+
+    val isLoading: Boolean
+
+    val event: SharingSummaryEvent
+
+    data object Initial : SharingSummaryState {
+
+        override val addresses: ImmutableList<AddressPermissionUiState> = persistentListOf()
+
+        override val isLoading: Boolean = false
+
+        override val event: SharingSummaryEvent = SharingSummaryEvent.Idle
+
+    }
+
+    data class ShareItem(
+        override val event: SharingSummaryEvent,
+        private val addressPermissions: List<AddressPermission>,
+        private val isLoadingState: IsLoadingState,
+        private val item: Item
+    ) : SharingSummaryState {
+
+        override val addresses: ImmutableList<AddressPermissionUiState> = addressPermissions
+            .map { addressPermission -> addressPermission.toUiState() }
+            .toPersistentList()
+
+        override val isLoading: Boolean = isLoadingState.value()
+
+        internal val itemTitle: String = item.title
+
+    }
+
+    data class ShareVault(
+        override val event: SharingSummaryEvent,
+        private val vaultWithItemCount: VaultWithItemCount,
+        private val addressPermissions: List<AddressPermission>,
+        private val isLoadingState: IsLoadingState
+    ) : SharingSummaryState {
+
+        override val addresses: ImmutableList<AddressPermissionUiState> = addressPermissions
+            .map { addressPermission -> addressPermission.toUiState() }
+            .toPersistentList()
+
+        override val isLoading: Boolean = isLoadingState.value()
+
+        internal val vault: Vault = vaultWithItemCount.vault
+
+        internal val vaultItemCount: Int = vaultWithItemCount.activeItemCount
+            .plus(vaultWithItemCount.trashedItemCount)
+            .toInt()
+
+    }
+
+}

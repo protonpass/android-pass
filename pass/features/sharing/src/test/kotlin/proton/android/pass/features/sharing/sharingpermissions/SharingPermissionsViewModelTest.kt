@@ -65,7 +65,7 @@ class SharingPermissionsViewModelTest {
             val initialState = awaitItem()
 
             assertThat(initialState.vaultName).isNull()
-            assertThat(initialState.event).isEqualTo(SharingPermissionsEvents.Unknown)
+            assertThat(initialState.event).isEqualTo(SharingPermissionsEvents.Idle)
 
             val expected = AddressPermissionUiState(
                 address = TEST_EMAIL,
@@ -88,10 +88,10 @@ class SharingPermissionsViewModelTest {
 
     @Test
     fun `test clearEvent`() = runTest {
-        viewModel.clearEvent()
+        viewModel.onConsumeEvent(SharingPermissionsEvents.Idle)
         viewModel.stateFlow.test {
             val initialState = awaitItem()
-            assertThat(initialState.event).isEqualTo(SharingPermissionsEvents.Unknown)
+            assertThat(initialState.event).isEqualTo(SharingPermissionsEvents.Idle)
         }
     }
 

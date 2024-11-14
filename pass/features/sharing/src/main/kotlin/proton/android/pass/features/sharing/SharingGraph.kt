@@ -78,9 +78,18 @@ object SharingWith : NavItem(
 
 object SharingPermissions : NavItem(
     baseRoute = "sharing/permissions/screen",
-    navArgIds = listOf(CommonNavArgId.ShareId)
+    navArgIds = listOf(CommonNavArgId.ShareId),
+    optionalArgIds = listOf(CommonOptionalNavArgId.ItemId)
 ) {
-    fun createRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
+    fun createRoute(shareId: ShareId, itemIdOption: Option<ItemId>) = buildString {
+        append("$baseRoute/${shareId.id}")
+
+        itemIdOption.value()?.let { itemId ->
+            mapOf(CommonOptionalNavArgId.ItemId.key to itemId.id)
+                .toPath()
+                .also(::append)
+        }
+    }
 }
 
 object AcceptInvite : NavItem("sharing/accept", navItemType = NavItemType.Bottomsheet)
@@ -139,10 +148,10 @@ sealed interface SharingNavigation {
     @JvmInline
     value class CloseBottomSheet(val refresh: Boolean) : SharingNavigation
 
-    data class Permissions(val shareId: ShareId, val itemIdOption: Option<ItemId>) : SharingNavigation
+    data class Permissions(val shareId: ShareId, val itemIdOption: Option<ItemId>) :
+        SharingNavigation
 
-    @JvmInline
-    value class Summary(val shareId: ShareId) : SharingNavigation
+    data class Summary(val shareId: ShareId, val itemIdOption: Option<ItemId>) : SharingNavigation
 
     @JvmInline
     value class ShareVault(val shareId: ShareId) : SharingNavigation

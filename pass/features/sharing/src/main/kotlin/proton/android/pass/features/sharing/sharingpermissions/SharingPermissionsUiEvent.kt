@@ -20,7 +20,9 @@ package proton.android.pass.features.sharing.sharingpermissions
 
 import proton.android.pass.features.sharing.common.AddressPermissionUiState
 
-sealed interface SharingPermissionsUiEvent {
+internal sealed interface SharingPermissionsUiEvent {
+
+    data object OnBackClick : SharingPermissionsUiEvent
 
     data object OnSubmit : SharingPermissionsUiEvent
 

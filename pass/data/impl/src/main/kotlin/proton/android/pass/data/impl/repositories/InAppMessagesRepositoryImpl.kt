@@ -46,27 +46,29 @@ class InAppMessagesRepositoryImpl @Inject constructor(
 
     override fun observeDeliverableUserMessages(userId: UserId, currentTimestamp: Long): Flow<List<InAppMessage>> =
         local.observeDeliverableUserMessages(userId, currentTimestamp)
-            .onStart {
-                val allMessages = mutableListOf<InAppMessage>()
-                var lastID: String? = null
-                runCatching {
-                    do {
-                        val response =
-                            remote.fetchInAppMessages(userId = userId, lastToken = lastID)
-                        val newMessages = response.list.map { it.toDomain(userId) }
-                        allMessages.addAll(newMessages)
-                        lastID = if (response.list.isNotEmpty()) response.lastID else null
-                    } while (lastID != null)
-
-                    local.storeMessages(userId, allMessages)
-
-                    preloadImages(context, allMessages.mapNotNull { it.imageUrl.value() }.toSet())
-                }.onFailure {
-                    PassLogger.w(TAG, "Failed to fetch in-app messages for user $userId")
-                    PassLogger.w(TAG, it)
-                }
-            }
+            .onStart { refreshUserMessages(userId) }
             .distinctUntilChanged()
+
+    override suspend fun refreshUserMessages(userId: UserId) {
+        val allMessages = mutableListOf<InAppMessage>()
+        var lastID: String? = null
+        runCatching {
+            do {
+                val response =
+                    remote.fetchInAppMessages(userId = userId, lastToken = lastID)
+                val newMessages = response.list.map { it.toDomain(userId) }
+                allMessages.addAll(newMessages)
+                lastID = if (response.list.isNotEmpty()) response.lastID else null
+            } while (lastID != null)
+
+            local.storeMessages(userId, allMessages)
+
+            preloadImages(context, allMessages.mapNotNull { it.imageUrl.value() }.toSet())
+        }.onFailure {
+            PassLogger.w(TAG, "Failed to fetch in-app messages for user $userId")
+            PassLogger.w(TAG, it)
+        }
+    }
 
     override suspend fun changeMessageStatus(
         userId: UserId,

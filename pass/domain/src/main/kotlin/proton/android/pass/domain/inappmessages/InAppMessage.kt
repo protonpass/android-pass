@@ -43,10 +43,14 @@ data class InAppMessage(
     val userId: UserId
 )
 
+const val STATUS_UNREAD = 0
+const val STATUS_READ = 1
+const val STATUS_DISMISSED = 2
+
 enum class InAppMessageStatus(val value: Int) {
-    Unread(0),
-    Read(1),
-    Dismissed(2),
+    Unread(STATUS_UNREAD),
+    Read(STATUS_READ),
+    Dismissed(STATUS_DISMISSED),
     Unknown(Integer.MAX_VALUE)
     ;
 

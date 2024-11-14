@@ -22,34 +22,42 @@ import androidx.compose.runtime.Immutable
 import proton.android.pass.features.sharing.sharingpermissions.SharingType
 
 @Immutable
-sealed interface SharingPermissionsBottomSheetEvent {
+internal sealed interface SharingPermissionsBottomSheetEvent {
+
     @Immutable
     data object Unknown : SharingPermissionsBottomSheetEvent
 
     @Immutable
     data object Close : SharingPermissionsBottomSheetEvent
+
 }
 
 @Immutable
-sealed interface SharingPermissionsEditMode {
+internal sealed interface SharingPermissionsEditMode {
+
     @Immutable
     data object All : SharingPermissionsEditMode
 
     @Immutable
     data class EditOne(val email: String, val sharingType: SharingType) : SharingPermissionsEditMode
+
 }
 
 @Immutable
-data class SharingPermissionsBottomSheetUiState(
+internal data class SharingPermissionsBottomSheetUiState(
     val event: SharingPermissionsBottomSheetEvent,
     val displayRemove: Boolean,
     val mode: SharingPermissionsEditMode
 ) {
-    companion object {
-        fun Initial(mode: SharingPermissionsEditMode) = SharingPermissionsBottomSheetUiState(
+
+    internal companion object {
+
+        fun initial(mode: SharingPermissionsEditMode) = SharingPermissionsBottomSheetUiState(
             event = SharingPermissionsBottomSheetEvent.Unknown,
             mode = mode,
             displayRemove = false
         )
+
     }
+
 }

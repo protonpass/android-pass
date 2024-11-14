@@ -42,7 +42,7 @@ import proton.android.pass.features.sharing.sharingpermissions.SharingType
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun SharingPermissionsBottomSheetContent(
+internal fun SharingPermissionsBottomSheetContent(
     modifier: Modifier = Modifier,
     state: SharingPermissionsBottomSheetUiState,
     onPermissionClick: (SharingType) -> Unit,

@@ -41,7 +41,7 @@ import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.SharingNavigation
 
 @Composable
-fun SharingSummaryContent(
+internal fun SharingSummaryContent(
     modifier: Modifier = Modifier,
     state: SharingSummaryUIState,
     onNavigateEvent: (SharingNavigation) -> Unit,

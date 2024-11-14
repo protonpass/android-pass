@@ -24,12 +24,12 @@ import proton.android.pass.features.sharing.extensions.toSharingType
 import proton.android.pass.features.sharing.sharingpermissions.SharingType
 
 @Immutable
-data class AddressPermissionUiState(
+internal data class AddressPermissionUiState(
     val address: String,
     val permission: SharingType
 )
 
-fun AddressPermission.toUiState() = AddressPermissionUiState(
+internal fun AddressPermission.toUiState() = AddressPermissionUiState(
     address = address,
     permission = shareRole.toSharingType()
 )

@@ -18,6 +18,7 @@
 
 package proton.android.pass.navigation.api
 
+import android.net.Uri
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.DialogProperties
@@ -28,12 +29,24 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.get
+import androidx.navigation.navDeepLink
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import proton.android.pass.common.api.SpecialCharacters
+
+fun createDeepLinkUri(path: String): Uri = Uri.Builder()
+    .scheme("pass_app")
+    .encodedPath(path.trimStart(SpecialCharacters.SLASH))
+    .build()
 
 fun NavGraphBuilder.composable(navItem: NavItem, content: @Composable (NavBackStackEntry) -> Unit) {
     composable(
         route = navItem.route,
-        arguments = navItem.args
+        arguments = navItem.args,
+        deepLinks = navItem.deepLinks.map {
+            navDeepLink {
+                uriPattern = createDeepLinkUri(it).toString()
+            }
+        }
     ) {
         content(it)
     }

@@ -27,7 +27,10 @@ import proton.android.pass.navigation.api.composable
 
 private const val SETTINGS_GRAPH = "settings_graph"
 
-object Settings : NavItem(baseRoute = "settings")
+object Settings : NavItem(
+    baseRoute = "settings",
+    deepLinks = listOf("settings")
+)
 object LogView : NavItem(baseRoute = "log/view")
 object ThemeSelector : NavItem(
     baseRoute = "theme/bottomsheet",

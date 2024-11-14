@@ -18,6 +18,8 @@
 
 package proton.android.pass.ui.navigation
 
+import android.content.Intent
+import android.net.Uri
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
@@ -251,6 +253,7 @@ import proton.android.pass.features.vault.leave.LeaveVaultDialog
 import proton.android.pass.features.vault.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.CommonNavArgKey
+import proton.android.pass.navigation.api.createDeepLinkUri
 import proton.android.pass.ui.AppNavigation
 
 @Suppress("LongMethod", "ComplexMethod", "ThrowsCount")
@@ -2125,6 +2128,19 @@ fun NavGraphBuilder.appGraph(
         when (it) {
             InAppMessageModalDestination.CloseBottomsheet -> dismissBottomSheet {
                 appNavigator.navigateBack(comesFromBottomsheet = true)
+            }
+
+            is InAppMessageModalDestination.DeepLink -> dismissBottomSheet {
+                if (it.deepLink.isBlank()) {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                } else {
+                    val uri: Uri = createDeepLinkUri(it.deepLink)
+                    val intent = Intent(Intent.ACTION_VIEW, uri)
+                    val hasNavigated = appNavigator.navController.handleDeepLink(intent)
+                    if (!hasNavigated) {
+                        appNavigator.navigateBack(comesFromBottomsheet = true)
+                    }
+                }
             }
         }
     }

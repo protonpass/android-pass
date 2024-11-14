@@ -27,7 +27,8 @@ open class NavItem(
     private val optionalArgIds: List<OptionalNavArgId> = emptyList(),
     val noHistory: Boolean = false,
     val isTopLevel: Boolean = false,
-    val navItemType: NavItemType = NavItemType.Screen
+    val navItemType: NavItemType = NavItemType.Screen,
+    val deepLinks: List<String> = emptyList()
 ) {
     val route: String = buildString {
         val argKeys = navArgIds.map { "{${it.key}}" }

@@ -22,4 +22,6 @@ sealed interface InAppMessageModalDestination {
 
     data object CloseBottomsheet : InAppMessageModalDestination
 
+    @JvmInline
+    value class DeepLink(val deepLink: String) : InAppMessageModalDestination
 }

@@ -61,7 +61,7 @@ class SharingPermissionsViewModelTest {
 
     @Test
     fun `test initial state`() = runTest {
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             val initialState = awaitItem()
 
             assertThat(initialState.vaultName).isNull()
@@ -78,7 +78,7 @@ class SharingPermissionsViewModelTest {
     @Test
     fun `test onPermissionsSubmit`() = runTest {
         viewModel.onPermissionsSubmit()
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             val initialState = awaitItem()
             assertThat(initialState.event).isInstanceOf(SharingPermissionsEvents.NavigateToSummary::class.java)
             val navigationEvent = initialState.event as SharingPermissionsEvents.NavigateToSummary
@@ -89,7 +89,7 @@ class SharingPermissionsViewModelTest {
     @Test
     fun `test clearEvent`() = runTest {
         viewModel.clearEvent()
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             val initialState = awaitItem()
             assertThat(initialState.event).isEqualTo(SharingPermissionsEvents.Unknown)
         }
@@ -98,7 +98,7 @@ class SharingPermissionsViewModelTest {
     @Test
     fun `if addresses is empty send back to home`() = runTest {
         bulkInviteRepository.clear()
-        viewModel.state.test {
+        viewModel.stateFlow.test {
             val state = awaitItem()
             assertThat(state.event).isEqualTo(SharingPermissionsEvents.BackToHome)
         }

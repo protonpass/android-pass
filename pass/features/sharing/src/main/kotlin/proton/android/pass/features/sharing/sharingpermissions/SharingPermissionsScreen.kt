@@ -30,10 +30,10 @@ import proton.android.pass.features.sharing.extensions.toShareRole
 @Composable
 fun SharingPermissionsScreen(
     modifier: Modifier = Modifier,
-    viewModel: SharingPermissionsViewModel = hiltViewModel(),
-    onNavigateEvent: (SharingNavigation) -> Unit
+    onNavigateEvent: (SharingNavigation) -> Unit,
+    viewModel: SharingPermissionsViewModel = hiltViewModel()
 ) = with(viewModel) {
-    val state by state.collectAsStateWithLifecycle()
+    val state by stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
         when (val event = state.event) {

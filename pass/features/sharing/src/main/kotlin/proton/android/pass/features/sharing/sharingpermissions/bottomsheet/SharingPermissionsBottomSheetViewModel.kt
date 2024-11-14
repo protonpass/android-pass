@@ -46,7 +46,7 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
     private val eventFlow: MutableStateFlow<SharingPermissionsBottomSheetEvent> =
         MutableStateFlow(SharingPermissionsBottomSheetEvent.Unknown)
 
-    val state: StateFlow<SharingPermissionsBottomSheetUiState> = combine(
+    internal val state: StateFlow<SharingPermissionsBottomSheetUiState> = combine(
         eventFlow,
         bulkInviteRepository.observeAddresses()
     ) { event, addresses ->
@@ -61,7 +61,7 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = SharingPermissionsBottomSheetUiState.Initial(mode = mode.toUi())
+        initialValue = SharingPermissionsBottomSheetUiState.initial(mode = mode.toUi())
     )
 
     fun onPermissionSelected(sharingType: SharingType) = viewModelScope.launch {

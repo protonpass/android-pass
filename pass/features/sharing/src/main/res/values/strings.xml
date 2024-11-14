@@ -17,7 +17,6 @@
   -->
 
 <resources>
-    <string name="share_continue">Continue</string>
     <string name="sharing_can_view">Viewer</string>
     <string name="sharing_can_edit">Editor</string>
     <string name="sharing_can_manage">Admin</string>
@@ -32,6 +31,7 @@
         <item quantity="one">%d member</item>
         <item quantity="other">%d members</item>
     </plurals>
+    <string name="sharing_member_count_header">Members</string>
 
     <string name="share_with_title">Share with</string>
     <string name="share_with_email_hint">Email address</string>

@@ -23,6 +23,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
 import proton.android.pass.data.impl.db.entities.InAppMessageEntity
+import proton.android.pass.domain.inappmessages.STATUS_UNREAD
 
 @Dao
 abstract class InAppMessagesDao : BaseDao<InAppMessageEntity>() {
@@ -31,7 +32,7 @@ abstract class InAppMessagesDao : BaseDao<InAppMessageEntity>() {
         SELECT * 
         FROM ${InAppMessageEntity.TABLE} 
         WHERE ${InAppMessageEntity.Columns.USER_ID} = :userId
-        AND ${InAppMessageEntity.Columns.STATE} = 0
+        AND ${InAppMessageEntity.Columns.STATE} = $STATUS_UNREAD
         AND ${InAppMessageEntity.Columns.RANGE_START} <= :currentTimestamp
         AND (${InAppMessageEntity.Columns.RANGE_END} IS NULL OR ${InAppMessageEntity.Columns.RANGE_END} >= :currentTimestamp)
         ORDER BY ${InAppMessageEntity.Columns.PRIORITY} DESC

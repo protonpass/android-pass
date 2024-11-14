@@ -28,15 +28,19 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.usecases.GetVaultByShareId
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.sharing.common.toUiState
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,15 +54,20 @@ class SharingPermissionsViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ShareId.key)
         .let(::ShareId)
 
+    private val itemIdOption: Option<ItemId> = savedStateHandleProvider.get()
+        .get<String>(CommonOptionalNavArgId.ItemId.key)
+        .toOption()
+        .map(::ItemId)
+
     private val eventState: MutableStateFlow<SharingPermissionsEvents> =
-        MutableStateFlow(SharingPermissionsEvents.Unknown)
+        MutableStateFlow(SharingPermissionsEvents.Idle)
 
     internal val stateFlow: StateFlow<SharingPermissionsUIState> = combine(
         bulkInviteRepository.observeAddresses(),
         getVaultByShareId(shareId = shareId).asLoadingResult(),
         eventState
     ) { addresses, vault, event ->
-        val uiEvent = if (event == SharingPermissionsEvents.Unknown && addresses.isEmpty()) {
+        val uiEvent = if (event == SharingPermissionsEvents.Idle && addresses.isEmpty()) {
             SharingPermissionsEvents.BackToHome
         } else {
             event
@@ -76,12 +85,12 @@ class SharingPermissionsViewModel @Inject constructor(
 
     internal fun onPermissionsSubmit() {
         eventState.update {
-            SharingPermissionsEvents.NavigateToSummary(shareId = shareId)
+            SharingPermissionsEvents.NavigateToSummary(shareId, itemIdOption)
         }
     }
 
-    internal fun clearEvent() {
-        eventState.update { SharingPermissionsEvents.Unknown }
+    internal fun onConsumeEvent(event: SharingPermissionsEvents) {
+        eventState.compareAndSet(event, SharingPermissionsEvents.Idle)
     }
 
 }

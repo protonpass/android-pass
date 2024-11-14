@@ -1766,7 +1766,10 @@ fun NavGraphBuilder.appGraph(
 
             is SharingNavigation.Permissions -> appNavigator.navigate(
                 destination = SharingPermissions,
-                route = SharingPermissions.createRoute(shareId = it.shareId)
+                route = SharingPermissions.createRoute(
+                    shareId = it.shareId,
+                    itemIdOption = it.itemIdOption
+                )
             )
 
             is SharingNavigation.Summary -> appNavigator.navigate(

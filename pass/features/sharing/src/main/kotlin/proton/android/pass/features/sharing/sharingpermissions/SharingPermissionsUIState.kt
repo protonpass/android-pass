@@ -33,7 +33,7 @@ enum class SharingType {
 internal data class SharingPermissionsUIState(
     internal val addresses: ImmutableList<AddressPermissionUiState> = persistentListOf(),
     internal val vaultName: String? = null,
-    internal val event: SharingPermissionsEvents = SharingPermissionsEvents.Unknown
+    internal val event: SharingPermissionsEvents = SharingPermissionsEvents.Idle
 ) {
 
     internal val memberCount: Int = addresses.size

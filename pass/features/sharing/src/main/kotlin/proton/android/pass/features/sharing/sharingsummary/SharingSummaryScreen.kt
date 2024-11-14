@@ -38,8 +38,10 @@ fun SharingSummaryScreen(
         when (state.event) {
             SharingSummaryEvent.Idle -> Unit
             SharingSummaryEvent.BackToHome -> onNavigateEvent(SharingNavigation.BackToHome)
-            SharingSummaryEvent.Shared -> state.vaultWithItemCount?.let {
-                onNavigateEvent(SharingNavigation.ManageVault(it.vault.shareId))
+            SharingSummaryEvent.Shared -> {
+//                state.vaultWithItemCount?.let {
+//                    onNavigateEvent(SharingNavigation.ManageVault(it.vault.shareId))
+//                }
             }
 
             SharingSummaryEvent.Error -> onNavigateEvent(SharingNavigation.InviteError)

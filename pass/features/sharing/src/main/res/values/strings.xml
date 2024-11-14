@@ -79,7 +79,9 @@
     <string name="share_summary_title">Review and share</string>
     <string name="share_summary_vault">%s vault</string>
     <string name="share_summary_share_vault">Share vault</string>
+    <string name="share_summary_share_item">Share item</string>
     <string name="share_summary_vault_title">Vault</string>
+    <string name="share_summary_item_title">Item</string>
 
     <string name="share_manage_vault_share_with_more_people">Share with more people</string>
     <plurals

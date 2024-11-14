@@ -26,12 +26,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTopBarBackButtonType
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
+import proton.android.pass.composecomponents.impl.extension.toColor
+import proton.android.pass.composecomponents.impl.extension.toResource
+import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.sharing.R
@@ -40,10 +45,18 @@ import proton.android.pass.features.sharing.SharingNavigation
 @Composable
 internal fun SharingSummaryContent(
     modifier: Modifier = Modifier,
-    state: SharingSummaryUIState,
+    state: SharingSummaryState,
     onNavigateEvent: (SharingNavigation) -> Unit,
     onSubmit: () -> Unit
 ) {
+    val actionTextRes = remember(state) {
+        when (state) {
+            SharingSummaryState.Initial -> null
+            is SharingSummaryState.ShareItem -> R.string.share_summary_share_item
+            is SharingSummaryState.ShareVault -> R.string.share_summary_share_vault
+        }
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -58,9 +71,9 @@ internal fun SharingSummaryContent(
                         color = PassTheme.colors.interactionNormMajor1,
                         text = {
                             Text.Body2Regular(
-                                text = stringResource(
-                                    id = proton.android.pass.composecomponents.impl.R.string.action_continue
-                                ),
+                                text = actionTextRes
+                                    ?.let { resId -> stringResource(id = resId) }
+                                    .orEmpty(),
                                 color = PassTheme.colors.textInvert
                             )
                         },
@@ -82,14 +95,45 @@ internal fun SharingSummaryContent(
                         .padding(top = Spacing.large),
                     verticalArrangement = Arrangement.spacedBy(space = Spacing.large)
                 ) {
-                    VaultRowSection(vaultWithItemCount = state.vaultWithItemCount)
+                    when (state) {
+                        SharingSummaryState.Initial -> Unit
+                        is SharingSummaryState.ShareItem -> {
+                            SharingSummaryShareSection(
+                                sectionTitle = stringResource(R.string.share_summary_item_title),
+                                shareTitle = state.itemTitle,
+                                shareSubTitle = "Ask what should be displayed here",
+                                shareIcon = {
 
-                    Text.Body1Regular(
-                        modifier = Modifier.padding(bottom = Spacing.small),
-                        text = stringResource(R.string.share_with_title),
-                        color = PassTheme.colors.textWeak
-                    )
+                                }
+                            )
+                        }
+
+                        is SharingSummaryState.ShareVault -> {
+                            SharingSummaryShareSection(
+                                sectionTitle = stringResource(R.string.share_summary_vault_title),
+                                shareTitle = state.vault.name,
+                                shareSubTitle = pluralStringResource(
+                                    R.plurals.sharing_item_count,
+                                    state.vaultItemCount,
+                                    state.vaultItemCount
+                                ),
+                                shareIcon = {
+                                    VaultIcon(
+                                        icon = state.vault.icon.toResource(),
+                                        iconColor = state.vault.color.toColor(),
+                                        backgroundColor = state.vault.color.toColor(isBackground = true)
+                                    )
+                                }
+                            )
+                        }
+                    }
                 }
+
+                Text.Body1Regular(
+                    modifier = Modifier.padding(bottom = Spacing.small),
+                    text = stringResource(R.string.share_with_title),
+                    color = PassTheme.colors.textWeak
+                )
             }
 
             items(items = state.addresses, key = { it.address }) { address ->

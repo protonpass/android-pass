@@ -32,7 +32,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -41,6 +43,7 @@ import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.InviteToVault
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.features.sharing.SharingSnackbarMessage.InviteSentSuccess
@@ -48,6 +51,7 @@ import proton.android.pass.features.sharing.SharingSnackbarMessage.VaultNotFound
 import proton.android.pass.features.sharing.common.toUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
@@ -61,9 +65,14 @@ class SharingSummaryViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val shareId: ShareId = ShareId(
-        savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key)
-    )
+    private val shareId: ShareId = savedStateHandleProvider.get()
+        .require<String>(CommonNavArgId.ShareId.key)
+        .let(::ShareId)
+
+    private val itemIdOption: Option<ItemId> = savedStateHandleProvider.get()
+        .get<String>(CommonOptionalNavArgId.ItemId.key)
+        .toOption()
+        .map(::ItemId)
 
     private val isLoadingStateFlow: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
@@ -112,40 +121,46 @@ class SharingSummaryViewModel @Inject constructor(
         )
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
+        started = SharingStarted.WhileSubscribed(5_000),
         initialValue = SharingSummaryUIState()
     )
 
-    fun onSubmit() = viewModelScope.launch {
-        isLoadingStateFlow.update { IsLoadingState.Loading }
-        inviteToVault(
-            inviteAddresses = addressesFlow.value,
-            shareId = shareId
-        ).onSuccess {
-            bulkInviteRepository.clear()
-            isLoadingStateFlow.update { IsLoadingState.NotLoading }
-            snackbarDispatcher(InviteSentSuccess)
-            PassLogger.i(TAG, "Invite sent successfully")
-            eventFlow.update { SharingSummaryEvent.Shared }
-        }.onFailure { error ->
-            isLoadingStateFlow.update { IsLoadingState.NotLoading }
+    internal fun onSubmit() {
+        viewModelScope.launch {
+            isLoadingStateFlow.update { IsLoadingState.Loading }
 
-            if (getUserPlan().first().isBusinessPlan) {
-                eventFlow.update { SharingSummaryEvent.Error }
-            } else {
-                snackbarDispatcher(SharingSnackbarMessage.InviteSentError)
+            inviteToVault(
+                inviteAddresses = addressesFlow.value,
+                shareId = shareId
+            ).onSuccess {
+                bulkInviteRepository.clear()
+                isLoadingStateFlow.update { IsLoadingState.NotLoading }
+                snackbarDispatcher(InviteSentSuccess)
+                PassLogger.i(TAG, "Invite sent successfully")
+                eventFlow.update { SharingSummaryEvent.Shared }
+            }.onFailure { error ->
+                isLoadingStateFlow.update { IsLoadingState.NotLoading }
+
+                if (getUserPlan().first().isBusinessPlan) {
+                    eventFlow.update { SharingSummaryEvent.Error }
+                } else {
+                    snackbarDispatcher(SharingSnackbarMessage.InviteSentError)
+                }
+
+                PassLogger.w(TAG, "Error sending invite")
+                PassLogger.w(TAG, error)
             }
-
-            PassLogger.w(TAG, "Error sending invite")
-            PassLogger.w(TAG, error)
         }
     }
 
-    fun clearEvent() = viewModelScope.launch {
+    internal fun clearEvent() {
         eventFlow.update { SharingSummaryEvent.Unknown }
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "SharingSummaryViewModel"
+
     }
+
 }

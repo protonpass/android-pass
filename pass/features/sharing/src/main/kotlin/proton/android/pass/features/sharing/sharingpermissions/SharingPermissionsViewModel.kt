@@ -28,7 +28,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -47,14 +46,14 @@ class SharingPermissionsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val shareId: ShareId = ShareId(
-        id = savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key)
-    )
+    private val shareId: ShareId = savedStateHandleProvider.get()
+        .require<String>(CommonNavArgId.ShareId.key)
+        .let(::ShareId)
 
     private val eventState: MutableStateFlow<SharingPermissionsEvents> =
         MutableStateFlow(SharingPermissionsEvents.Unknown)
 
-    val state: StateFlow<SharingPermissionsUIState> = combine(
+    internal val stateFlow: StateFlow<SharingPermissionsUIState> = combine(
         bulkInviteRepository.observeAddresses(),
         getVaultByShareId(shareId = shareId).asLoadingResult(),
         eventState
@@ -66,25 +65,22 @@ class SharingPermissionsViewModel @Inject constructor(
         }
         SharingPermissionsUIState(
             addresses = addresses.map { it.toUiState() }.toImmutableList(),
-            headerState = SharingPermissionsHeaderState(
-                memberCount = addresses.size
-            ),
             vaultName = vault.getOrNull()?.name,
             event = uiEvent
         )
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
+        started = SharingStarted.WhileSubscribed(5_000),
         initialValue = SharingPermissionsUIState()
     )
 
-    fun onPermissionsSubmit() = viewModelScope.launch {
+    internal fun onPermissionsSubmit() {
         eventState.update {
             SharingPermissionsEvents.NavigateToSummary(shareId = shareId)
         }
     }
 
-    fun clearEvent() {
+    internal fun clearEvent() {
         eventState.update { SharingPermissionsEvents.Unknown }
     }
 

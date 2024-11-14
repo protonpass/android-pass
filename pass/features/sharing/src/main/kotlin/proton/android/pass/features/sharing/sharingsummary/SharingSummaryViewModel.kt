@@ -80,7 +80,7 @@ class SharingSummaryViewModel @Inject constructor(
             initialValue = emptyList()
         )
 
-    val state: StateFlow<SharingSummaryUIState> = combine(
+    internal val state: StateFlow<SharingSummaryUIState> = combine(
         addressesFlow,
         getVaultWithItemCountById(shareId = shareId).asLoadingResult(),
         isLoadingStateFlow,

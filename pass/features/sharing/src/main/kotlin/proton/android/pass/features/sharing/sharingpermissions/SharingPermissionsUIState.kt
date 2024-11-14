@@ -30,20 +30,12 @@ enum class SharingType {
 }
 
 @Immutable
-data class SharingPermissionsHeaderState(
-    val memberCount: Int
+internal data class SharingPermissionsUIState(
+    internal val addresses: ImmutableList<AddressPermissionUiState> = persistentListOf(),
+    internal val vaultName: String? = null,
+    internal val event: SharingPermissionsEvents = SharingPermissionsEvents.Unknown
 ) {
-    companion object {
-        val Initial = SharingPermissionsHeaderState(
-            memberCount = 0
-        )
-    }
-}
 
-@Immutable
-data class SharingPermissionsUIState(
-    val addresses: ImmutableList<AddressPermissionUiState> = persistentListOf(),
-    val headerState: SharingPermissionsHeaderState = SharingPermissionsHeaderState.Initial,
-    val vaultName: String? = null,
-    val event: SharingPermissionsEvents = SharingPermissionsEvents.Unknown
-)
+    internal val memberCount: Int = addresses.size
+
+}

@@ -29,26 +29,25 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.sharing.R
+import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun SharingPermissionsHeader(
+internal fun SharingPermissionsHeader(
     modifier: Modifier = Modifier,
-    state: SharingPermissionsHeaderState,
+    memberCount: Int,
     onSetAllClick: () -> Unit
 ) {
     Row(
@@ -56,13 +55,9 @@ fun SharingPermissionsHeader(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
-            text = pluralStringResource(
-                id = R.plurals.sharing_member_count,
-                count = state.memberCount,
-                state.memberCount
-            ),
-            color = ProtonTheme.colors.textWeak
+        Text.Body2Medium(
+            text = "${stringResource(R.string.sharing_member_count_header)} ($memberCount)",
+            color = PassTheme.colors.textWeak
         )
 
         Row(
@@ -70,38 +65,40 @@ fun SharingPermissionsHeader(
                 .border(
                     border = BorderStroke(
                         width = ButtonDefaults.OutlinedBorderSize,
-                        color = PassTheme.colors.interactionNorm
+                        color = PassTheme.colors.interactionNormMajor2
                     ),
-                    shape = RoundedCornerShape(8.dp)
+                    shape = RoundedCornerShape(size = Radius.small)
                 )
                 .clickable { onSetAllClick() }
-                .padding(Spacing.mediumSmall),
-            horizontalArrangement = Arrangement.spacedBy(Spacing.small),
+                .padding(
+                    start = Spacing.mediumSmall,
+                    top = Spacing.extraSmall,
+                    end = Spacing.small,
+                    bottom = Spacing.extraSmall
+                ),
+            horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
+            Text.Body3Regular(
                 text = stringResource(id = R.string.share_permissions_title),
-                color = PassTheme.colors.interactionNorm
+                color = PassTheme.colors.interactionNormMajor2
             )
 
             Icon(
-                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_chevron_down),
-                tint = PassTheme.colors.interactionNorm,
+                painter = painterResource(CoreR.drawable.ic_proton_chevron_tiny_down),
+                tint = PassTheme.colors.interactionNormMajor2,
                 contentDescription = null
             )
         }
     }
 }
 
-@Preview
-@Composable
-fun SharingPermissionsHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+@[Preview Composable]
+internal fun SharingPermissionsHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SharingPermissionsHeader(
-                state = SharingPermissionsHeaderState(
-                    memberCount = 2
-                ),
+                memberCount = 2,
                 onSetAllClick = {}
             )
         }

@@ -1779,7 +1779,10 @@ fun NavGraphBuilder.appGraph(
 
             is SharingNavigation.Summary -> appNavigator.navigate(
                 destination = SharingSummary,
-                route = SharingSummary.createRoute(shareId = it.shareId)
+                route = SharingSummary.createRoute(
+                    shareId = it.shareId,
+                    itemIdOption = it.itemIdOption
+                )
             )
 
             is SharingNavigation.ShareVault -> dismissBottomSheet {

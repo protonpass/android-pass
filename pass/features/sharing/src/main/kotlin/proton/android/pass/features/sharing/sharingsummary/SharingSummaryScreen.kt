@@ -29,31 +29,29 @@ import proton.android.pass.features.sharing.SharingNavigation
 @Composable
 fun SharingSummaryScreen(
     modifier: Modifier = Modifier,
-    viewModel: SharingSummaryViewModel = hiltViewModel(),
-    onNavigateEvent: (SharingNavigation) -> Unit
-) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    onNavigateEvent: (SharingNavigation) -> Unit,
+    viewModel: SharingSummaryViewModel = hiltViewModel()
+) = with(viewModel) {
+    val state by stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
         when (state.event) {
+            SharingSummaryEvent.Idle -> Unit
             SharingSummaryEvent.BackToHome -> onNavigateEvent(SharingNavigation.BackToHome)
             SharingSummaryEvent.Shared -> state.vaultWithItemCount?.let {
                 onNavigateEvent(SharingNavigation.ManageVault(it.vault.shareId))
             }
 
             SharingSummaryEvent.Error -> onNavigateEvent(SharingNavigation.InviteError)
-            SharingSummaryEvent.Unknown -> {}
         }
 
-        viewModel.clearEvent()
+        onConsumeEvent(state.event)
     }
 
     SharingSummaryContent(
         modifier = modifier,
         state = state,
         onNavigateEvent = onNavigateEvent,
-        onSubmit = {
-            viewModel.onSubmit()
-        }
+        onSubmit = ::onSubmit
     )
 }

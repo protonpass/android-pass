@@ -20,6 +20,7 @@ package proton.android.pass.domain
 
 data class AliasDetails(
     val email: String,
+    val canModify: Boolean,
     val mailboxes: List<AliasMailbox>,
     val availableMailboxes: List<AliasMailbox>,
     val name: String?,
@@ -30,6 +31,7 @@ data class AliasDetails(
     companion object {
         val EMPTY = AliasDetails(
             email = "",
+            canModify = false,
             mailboxes = emptyList(),
             availableMailboxes = emptyList(),
             name = null,

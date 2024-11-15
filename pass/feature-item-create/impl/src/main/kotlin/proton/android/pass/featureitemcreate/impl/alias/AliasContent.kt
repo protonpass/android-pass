@@ -53,6 +53,7 @@ internal fun AliasContent(
     topBarActionName: String,
     isCreateMode: Boolean,
     isEditAllowed: Boolean,
+    isAliasCreatedByUser: Boolean,
     onEvent: (AliasContentUiEvent) -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -89,6 +90,7 @@ internal fun AliasContent(
             modifier = Modifier.padding(padding),
             aliasItemFormState = aliasItemFormState,
             isCreateMode = isCreateMode,
+            isAliasCreatedByUser = isAliasCreatedByUser,
             isEditAllowed = isEditAllowed,
             isLoading = uiState.isLoadingState.value(),
             showUpgrade = uiState.hasReachedAliasLimit,

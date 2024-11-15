@@ -196,8 +196,7 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     is DarkWebMonitorNavDestination.CustomEmailReport -> onNavigated(
                         SecurityCenterNavDestination.CustomEmailReport(
                             id = destination.id,
-                            email = destination.email,
-                            breachCount = destination.breachCount
+                            email = destination.email
                         )
                     )
 
@@ -219,16 +218,14 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     is DarkWebMonitorNavDestination.AliasEmailReport -> onNavigated(
                         SecurityCenterNavDestination.AliasEmailReport(
                             id = destination.id,
-                            email = destination.email,
-                            breachCount = destination.breachCount
+                            email = destination.email
                         )
                     )
 
                     is DarkWebMonitorNavDestination.ProtonEmailReport -> onNavigated(
                         SecurityCenterNavDestination.ProtonEmailReport(
                             id = destination.id,
-                            email = destination.email,
-                            breachCount = destination.breachCount
+                            email = destination.email
                         )
                     )
 
@@ -359,8 +356,7 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     is SecurityCenterProtonListNavDestination.OnEmailClick ->
                         SecurityCenterNavDestination.ProtonEmailReport(
                             id = destination.id,
-                            email = destination.email,
-                            breachCount = destination.breachCount
+                            email = destination.email
                         )
 
                     is SecurityCenterProtonListNavDestination.OnOptionsClick ->
@@ -382,8 +378,7 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     is SecurityCenterAliasListNavDestination.OnEmailClick ->
                         SecurityCenterNavDestination.AliasEmailReport(
                             id = destination.id,
-                            email = destination.email,
-                            breachCount = destination.breachCount
+                            email = destination.email
                         )
 
                     is SecurityCenterAliasListNavDestination.OnOptionsClick ->

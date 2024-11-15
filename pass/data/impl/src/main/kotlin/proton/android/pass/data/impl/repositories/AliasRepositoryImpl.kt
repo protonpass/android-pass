@@ -62,6 +62,7 @@ class AliasRepositoryImpl @Inject constructor(
         val response = remoteDataSource.fetchAliasDetails(userId, shareId, itemId)
         AliasDetails(
             email = response.email,
+            canModify = response.modify,
             mailboxes = mapMailboxes(response.mailboxes),
             availableMailboxes = mapMailboxes(response.availableMailboxes),
             displayName = response.displayName,

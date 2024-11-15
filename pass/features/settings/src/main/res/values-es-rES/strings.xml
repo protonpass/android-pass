@@ -32,7 +32,7 @@
   <string name="settings_share_crashes">Compartir reportes de error anónimos</string>
   <string name="settings_preference_updated">Se ha actualizado tu preferencia.</string>
   <string name="settings_display_section_title">Mostrar</string>
-  <string name="settings_preference_display_username">Campo nombre de usuario siempre visible</string>
+  <string name="settings_preference_display_username">Campo Nombre de usuario siempre visible</string>
   <string name="settings_preference_display_autofill_pinning">Relleno automático siempre visible</string>
   <string name="view_logs_title">Ver los registros</string>
   <string name="clipboard_bottomsheet_title">Portapapeles</string>

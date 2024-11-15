@@ -108,7 +108,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">アップグレードして保管庫をさらに作成します</string>
   <string name="sharing_from_item_vault_limit_reached">保管庫の制限に達しました</string>
   <string name="share_with_suggestions_title">候補</string>
-  <string name="share_with_recents_title">最近</string>
+  <string name="share_with_recents_title">Recent</string>
   <string name="share_with_remove_email_content_description">メールを削除</string>
   <string name="share_with_user_title">Share with</string>
   <string name="share_with_user_description">Share this item with other Proton users.</string>

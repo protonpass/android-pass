@@ -268,8 +268,8 @@
   <string name="verification_code_not_received">No heu rebut el codi?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
   <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
-  <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Confirmeu la vostra bústia de correu</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Si no trobeu aquest correu electrònic, podeu %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">sol·licitar un codi nou</string>
-  <string name="field_display_name_title">Display name</string>
+  <string name="field_display_name_title">Nom per a mostrar</string>
 </resources>

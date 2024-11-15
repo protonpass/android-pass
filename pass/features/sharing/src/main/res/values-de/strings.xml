@@ -113,7 +113,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade um weitere Tresore zu erstellen.</string>
   <string name="sharing_from_item_vault_limit_reached">Du hast das Tresor-Limit erreicht</string>
   <string name="share_with_suggestions_title">Vorschläge</string>
-  <string name="share_with_recents_title">Neueste</string>
+  <string name="share_with_recents_title">Kürzlich</string>
   <string name="share_with_remove_email_content_description">E-Mail entfernen</string>
   <string name="share_with_user_title">Teilen mit</string>
   <string name="share_with_user_description">Share this item with other Proton users.</string>

@@ -7,7 +7,7 @@
   <string name="settings_authentication_section_title">Autentikasi</string>
   <string name="settings_authentication_preference_title">Kunci sidik jari</string>
   <string name="settings_authentication_preference_description_enabled">Buka aplikasi secara cepat dan aman dengan sidik jari Anda.</string>
-  <string name="settings_authentication_preference_description_no_fingerprint">Anda tidak dapat meminta sidik jari Anda untuk berinteraksi dengan aplikasi karena tidak ada sidik jari yang terdaftar pada perangkat ini.</string>
+  <string name="settings_authentication_preference_description_no_fingerprint">Anda tidak dapat mempersyaratkan sidik jari Anda untuk berinteraksi dengan aplikasi karena tidak ada sidik jari yang terdaftar pada perangkat ini.</string>
   <string name="settings_appearance_preference_title">Tema</string>
   <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Samakan dengan sistem</string>
   <string name="settings_appearance_preference_subtitle_light">Mode terang</string>

@@ -113,7 +113,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Opgradér for at oprette flere bokse</string>
   <string name="sharing_from_item_vault_limit_reached">Du har nået boksens grænsen</string>
   <string name="share_with_suggestions_title">Forslag</string>
-  <string name="share_with_recents_title">Seneste</string>
+  <string name="share_with_recents_title">Recent</string>
   <string name="share_with_remove_email_content_description">Fjern e-mail</string>
   <string name="share_with_user_title">Del med</string>
   <string name="share_with_user_description">Del dette element med andre Proton-brugere.</string>

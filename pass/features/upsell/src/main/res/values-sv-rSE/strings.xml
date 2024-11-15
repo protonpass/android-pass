@@ -33,7 +33,7 @@
   <string name="upsell_paid_feature_advance_alias_management_title">Hantera dina alias</string>
   <string name="upsell_paid_feature_advance_alias_management_subtitle">Avancerad hantering av alias är tillgängligt med ett betalt paket. Uppgradera för omedelbar åtkomst.</string>
   <string name="upsell_paid_feature_item_sharing_title">Dela snabbt ett objekt</string>
-  <string name="upsell_paid_feature_item_sharing_subtitle">Upgrade today so you can share an item with any Pass user. And enjoy other premium features:</string>
+  <string name="upsell_paid_feature_item_sharing_subtitle">Uppgradera idag så att du kan dela ett objekt med vilken Pass-användare som helst. Och njut av andra premiumfunktioner:</string>
   <string name="upsell_button_upgrade">Skaffa Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Skaffa Pass Business</string>
 </resources>

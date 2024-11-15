@@ -27,13 +27,13 @@
   <string name="upsell_paid_feature_unlimited_aliases">Neobmedzený počet hide-my-email aliasov</string>
   <string name="upsell_paid_feature_vault_sharing">Zdieľanie trezora (až s 10 osobami)</string>
   <string name="upsell_paid_feature_secure_links">Bezpečné odkazy</string>
-  <string name="upsell_paid_feature_advance_alias_management">Advanced alias management</string>
+  <string name="upsell_paid_feature_advance_alias_management">Rozšírená správa aliasov</string>
   <string name="upsell_paid_feature_authenticator_essential">Vyžadovať 2FA pre organizáciu</string>
   <string name="upsell_paid_feature_sso_essential">SSO integrácia (už čoskoro)</string>
-  <string name="upsell_paid_feature_advance_alias_management_title">Manage your aliases</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">Advanced alias management is available with a paid plan. Upgrade for immediate access.</string>
-  <string name="upsell_paid_feature_item_sharing_title">Quickly share an item</string>
-  <string name="upsell_paid_feature_item_sharing_subtitle">Upgrade today so you can share an item with any Pass user. And enjoy other premium features:</string>
+  <string name="upsell_paid_feature_advance_alias_management_title">Spravujte svoje aliasy</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">Pokročilá správa aliasov je k dispozícii v rámci plateného plánu. Aktualizujte si ho pre okamžitý prístup.</string>
+  <string name="upsell_paid_feature_item_sharing_title">Rýchle zdieľanie položiek</string>
+  <string name="upsell_paid_feature_item_sharing_subtitle">Upgradujte ešte dnes, aby ste mohli zdieľať položku s ktorýmkoľvek používateľom služby Pass. A využívajte ďalšie prémiové funkcie:</string>
   <string name="upsell_button_upgrade">Získajte Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Získajte Pass Business</string>
 </resources>

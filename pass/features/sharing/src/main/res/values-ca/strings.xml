@@ -115,7 +115,7 @@
   <string name="share_with_suggestions_title">Suggeriments</string>
   <string name="share_with_recents_title">Recents</string>
   <string name="share_with_remove_email_content_description">Esborra el correu electrònic</string>
-  <string name="share_with_user_title">Share with</string>
+  <string name="share_with_user_title">Comparteix amb</string>
   <string name="share_with_user_description">Share this item with other Proton users.</string>
   <string name="share_with_secure_link_title">Mitjançant un enllaç segur</string>
   <string name="share_with_secure_link_description">Generar un enllaç segur a aquest element.</string>

@@ -113,7 +113,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Effettua l\'upgrade per creare altre casseforti</string>
   <string name="sharing_from_item_vault_limit_reached">Hai raggiunto il limite di casseforti</string>
   <string name="share_with_suggestions_title">Suggerimenti</string>
-  <string name="share_with_recents_title">Recenti</string>
+  <string name="share_with_recents_title">Recente</string>
   <string name="share_with_remove_email_content_description">Rimuovi questo indirizzo email</string>
   <string name="share_with_user_title">Condividi con</string>
   <string name="share_with_user_description">Condividi questo elemento con altri utenti Proton.</string>

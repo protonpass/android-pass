@@ -108,7 +108,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Tingkatkan untuk dapat membuat lebih banyak brankas</string>
   <string name="sharing_from_item_vault_limit_reached">Anda telah mencapai batas brankas maksimal</string>
   <string name="share_with_suggestions_title">Saran</string>
-  <string name="share_with_recents_title">Terkini</string>
+  <string name="share_with_recents_title">Recent</string>
   <string name="share_with_remove_email_content_description">Hapus email</string>
   <string name="share_with_user_title">Bagikan dengan</string>
   <string name="share_with_user_description">Bagikan item ini dengan pengguna Proton lainnya.</string>

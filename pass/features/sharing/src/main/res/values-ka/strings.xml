@@ -113,7 +113,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">ასწიეთ სატარიფო გეგმა მეტი საცავის შესაქმნელად</string>
   <string name="sharing_from_item_vault_limit_reached">მიაღწიეთ საცავების ზღვარს</string>
   <string name="share_with_suggestions_title">შეთავაზებები</string>
-  <string name="share_with_recents_title">ახლახან გამოყენებულები</string>
+  <string name="share_with_recents_title">Recent</string>
   <string name="share_with_remove_email_content_description">ელფოსტის წაშლა</string>
   <string name="share_with_user_title">გაზიარება</string>
   <string name="share_with_user_description">გააზიარეთ ეს ელემენტი სხვა Proton-ის მომხმარებლებთან.</string>

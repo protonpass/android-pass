@@ -24,10 +24,10 @@
   <string name="account_settings_list_item_extra_password_header_set">Imposta la password aggiuntiva per Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Abilitata</string>
   <string name="account_settings_list_item_extra_password_description">Imposta una password aggiuntiva necessaria per accedere a Proton Pass. Verrà aggiunta una password oltre a quella dell\'account Proton.</string>
-  <string name="account_settings_list_item_security_keys_hint_not_set">Non impostata</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Nessuna chiave associata</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
-    <item quantity="one">%d chiave di sicurezza impostata</item>
-    <item quantity="other">%d chiavi di sicurezza impostate</item>
+    <item quantity="one">%d chiave associata</item>
+    <item quantity="other">%d chiavi associate</item>
   </plurals>
 </resources>

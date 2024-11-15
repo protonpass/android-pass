@@ -60,10 +60,10 @@
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Izključeni predmeti</string>
   <!-- Dark web monitor -->
-  <string name="security_center_dark_web_monitor_top_bar_title">Spremljanje Dark Web</string>
+  <string name="security_center_dark_web_monitor_top_bar_title">Spremljanje temnega spleta</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Zadnjič preverjeno: %s</string>
-  <string name="security_center_dark_web_monitor_custom_emails_title">E-poštni naslov po meri</string>
-  <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Ni potrjen</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">E-poštni naslovi po meri</string>
+  <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Ni preverjeno</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Dodajte nov e-poštni naslov po meri</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Dodaj</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">

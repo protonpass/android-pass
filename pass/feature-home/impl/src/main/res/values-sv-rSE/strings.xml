@@ -45,7 +45,7 @@
     <item quantity="other">Du har %d alias som finns i SimpleLogin men saknas i Proton Pass. Vill du synkronisera dem?</item>
   </plurals>
   <string name="sl_sync_banner_settings">Synkronisera alias ›</string>
-  <string name="sl_sync_banner_note">Once synced, deleting aliases in Pass will also delete them in SimpleLogin.</string>
+  <string name="sl_sync_banner_note">När de väl har synkroniserats kommer borttagning av alias i Pass också att tas bort i SimpleLogin.</string>
   <string name="home_notification_permission_banner_title">Få viktiga uppdateringar</string>
   <string name="home_notification_permission_banner_text">Aktivera push-notiser för att informeras när andra delar ett valv med dig.</string>
   <string name="home_notification_permission_banner_settings">Aktivera behörighet ›</string>

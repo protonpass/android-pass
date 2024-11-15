@@ -113,7 +113,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Daha fazla kasa oluşturabilmek için tarifenizi yükseltin</string>
   <string name="sharing_from_item_vault_limit_reached">Kasa sayısı sınırına ulaştınız</string>
   <string name="share_with_suggestions_title">Öneriler</string>
-  <string name="share_with_recents_title">Son kullanılanlar</string>
+  <string name="share_with_recents_title">Recent</string>
   <string name="share_with_remove_email_content_description">E-postayı kaldır</string>
   <string name="share_with_user_title">Şu kişiyle paylaş</string>
   <string name="share_with_user_description">Bu ögeyi diğer Proton kullanıcıları ile paylaşın.</string>

@@ -108,7 +108,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">升級以創建更多保管庫</string>
   <string name="sharing_from_item_vault_limit_reached">您已達到保管庫上限</string>
   <string name="share_with_suggestions_title">建議</string>
-  <string name="share_with_recents_title">最近</string>
+  <string name="share_with_recents_title">Recent</string>
   <string name="share_with_remove_email_content_description">移除電子郵件</string>
   <string name="share_with_user_title">Share with</string>
   <string name="share_with_user_description">Share this item with other Proton users.</string>

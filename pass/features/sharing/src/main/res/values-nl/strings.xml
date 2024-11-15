@@ -113,7 +113,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade om meer kluizen aan te maken</string>
   <string name="sharing_from_item_vault_limit_reached">U heeft de kluislimiet bereikt.</string>
   <string name="share_with_suggestions_title">Suggesties</string>
-  <string name="share_with_recents_title">Recente</string>
+  <string name="share_with_recents_title">Recent</string>
   <string name="share_with_remove_email_content_description">E-mailadres verwijderen</string>
   <string name="share_with_user_title">Deel met</string>
   <string name="share_with_user_description">Deel dit item met andere Proton gebruikers.</string>

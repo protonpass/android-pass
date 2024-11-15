@@ -48,7 +48,6 @@
   <string name="profile_option_lock_with">Verrouiller avec</string>
   <string name="profile_option_unlock_with">Déverrouiller avec</string>
   <string name="profile_option_change_pin_code">Modifier le code PIN</string>
-  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Internet est le navigateur par défaut. Il ne prend pas en charge la fonctionnalité de remplissage automatique par des gestionnaires de mots de passe externes.</string>
   <string name="profile_passkey_support_section_title">Clés d\'accès</string>
   <string name="profile_passkey_support_subtitle_supported">Les clés d\'accès sont prises en charge.</string>
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Votre version Android ne prend pas en charge les clés d\'accès.</string>

@@ -10,7 +10,7 @@
   <string name="item_list_header_all_search_results">Všetko</string>
   <string name="item_list_header_pinned_search_results">Pripnuté</string>
   <string name="item_list_header_logins_type">Prihlásenia</string>
-  <string name="item_list_header_logins_totp_type">Logins with TOTP</string>
+  <string name="item_list_header_logins_totp_type">Prihlásenia pomocou TOTP</string>
   <string name="item_list_header_aliases_type">Aliasy</string>
   <string name="item_list_header_notes_type">Poznámky</string>
   <string name="item_list_header_credit_cards_type">Platobné karty</string>
@@ -288,10 +288,10 @@
   <string name="simple_login_widget_action">Synchronizovať aliasy</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">Haven\'t received the code?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
-  <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
-  <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Skontrolujte, prosím, či sa vo vašom spame nenachádza email s názvom “%s“</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Potvrďte svoju emailovú adresu pre Proton Pass, prosím</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Potvrďte, prosím, svoju poštovú schránku</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Ak takýto email nemôžete nájsť, môžete %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">požiadať o nový kód</string>
-  <string name="field_display_name_title">Display name</string>
+  <string name="field_display_name_title">Zobrazované meno</string>
 </resources>

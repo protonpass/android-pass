@@ -74,8 +74,7 @@ internal fun DarkWebScreen(
                     onNavigate(
                         DarkWebMonitorNavDestination.CustomEmailReport(
                             id = event.id,
-                            email = event.email,
-                            breachCount = event.breachCount
+                            email = event.email
                         )
                     )
 
@@ -95,8 +94,7 @@ internal fun DarkWebScreen(
                     onNavigate(
                         DarkWebMonitorNavDestination.AliasEmailReport(
                             id = event.id,
-                            email = event.email,
-                            breachCount = event.breachCount
+                            email = event.email
                         )
                     )
 
@@ -104,8 +102,7 @@ internal fun DarkWebScreen(
                     onNavigate(
                         DarkWebMonitorNavDestination.ProtonEmailReport(
                             id = event.id,
-                            email = event.email,
-                            breachCount = event.breachCount
+                            email = event.email
                         )
                     )
 

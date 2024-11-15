@@ -51,8 +51,7 @@ internal fun EmailBreachEmptyList(
                         is BreachEmailId.Alias -> onEvent(
                             DarkWebUiEvent.OnShowAliasEmailReportClick(
                                 id = it.id,
-                                email = it.email,
-                                breachCount = it.count
+                                email = it.email
                             )
                         )
 
@@ -63,8 +62,7 @@ internal fun EmailBreachEmptyList(
                         is BreachEmailId.Proton -> onEvent(
                             DarkWebUiEvent.OnShowProtonEmailReportClick(
                                 id = it.id,
-                                email = it.email,
-                                breachCount = it.count
+                                email = it.email
                             )
                         )
                     }

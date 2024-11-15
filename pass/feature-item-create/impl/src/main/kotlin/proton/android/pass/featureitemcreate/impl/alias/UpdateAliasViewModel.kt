@@ -21,6 +21,7 @@ package proton.android.pass.featureitemcreate.impl.alias
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -106,6 +107,8 @@ class UpdateAliasViewModel @Inject constructor(
     private var isSLNoteChanged = false
     private var isDisplayNameChanged = false
 
+    private val canModifyAliasStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
     init {
         viewModelScope.launch(coroutineExceptionHandler) {
             isApplyButtonEnabledState.update { IsButtonEnabled.Disabled }
@@ -116,8 +119,9 @@ class UpdateAliasViewModel @Inject constructor(
     internal val updateAliasUiState: StateFlow<UpdateAliasUiState> = combine(
         flowOf(shareId),
         baseAliasUiState,
-        selectedMailboxListState
-    ) { shareId, aliasUiState, mailboxList ->
+        selectedMailboxListState,
+        canModifyAliasStateFlow
+    ) { shareId, aliasUiState, mailboxList, canModify ->
         aliasItemFormMutableState = aliasItemFormState.copy(
             mailboxes = aliasItemFormState.mailboxes.map {
                 it.copy(selected = mailboxList.contains(it.model.id))
@@ -126,6 +130,7 @@ class UpdateAliasViewModel @Inject constructor(
 
         UpdateAliasUiState(
             selectedShareId = shareId,
+            canModify = canModify,
             baseAliasUiState = aliasUiState
         )
     }.stateIn(
@@ -212,6 +217,9 @@ class UpdateAliasViewModel @Inject constructor(
                 selectedMailboxListState.update {
                     mailboxes.filter { it.selected }.map { it.model.id }
                 }
+            }
+            if (aliasDetails.canModify) {
+                canModifyAliasStateFlow.update { true }
             }
             if (aliasItemFormState.title.isNotBlank() || aliasItemFormState.note.isNotBlank()) {
                 aliasItemFormMutableState = aliasItemFormState.copy(

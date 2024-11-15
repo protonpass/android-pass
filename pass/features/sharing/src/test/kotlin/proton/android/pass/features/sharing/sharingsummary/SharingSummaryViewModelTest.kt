@@ -33,6 +33,7 @@ import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestInviteToVault
+import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.features.sharing.SharingSnackbarMessage.InviteSentError
@@ -41,11 +42,12 @@ import proton.android.pass.features.sharing.SharingSnackbarMessage.VaultNotFound
 import proton.android.pass.features.sharing.common.AddressPermissionUiState
 import proton.android.pass.features.sharing.sharingpermissions.SharingType
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestVault
 
-class SharingSummaryViewModelTest {
+internal class SharingSummaryViewModelTest {
 
     private lateinit var viewModel: SharingSummaryViewModel
     private lateinit var getVaultWithItemCountById: TestGetVaultWithItemCountById
@@ -68,6 +70,7 @@ class SharingSummaryViewModelTest {
 
         savedStateHandleProvider = TestSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = TEST_SHARE_ID
+            get()[CommonOptionalNavArgId.ItemId.key] = null
         }
         viewModel = SharingSummaryViewModel(
             getVaultWithItemCountById = getVaultWithItemCountById,
@@ -75,7 +78,8 @@ class SharingSummaryViewModelTest {
             snackbarDispatcher = snackbarDispatcher,
             savedStateHandleProvider = savedStateHandleProvider,
             bulkInviteRepository = bulkInviteRepository,
-            getUserPlan = TestGetUserPlan()
+            getUserPlan = TestGetUserPlan(),
+            observeItemById = TestObserveItemById()
         )
     }
 
@@ -84,7 +88,6 @@ class SharingSummaryViewModelTest {
         viewModel.stateFlow.test {
             val initialState = awaitItem()
 
-            assertThat(initialState.vaultWithItemCount).isNull()
             assertThat(initialState.isLoading).isTrue()
 
             val expected = AddressPermissionUiState(TEST_EMAIL, SharingType.Read)
@@ -126,7 +129,7 @@ class SharingSummaryViewModelTest {
                 ),
                 vaultWithItemCount = null,
                 isLoading = false,
-                event = SharingSummaryEvent.BackToHome
+                event = SharingSummaryEvent.OnGoHome
             )
             assertThat(initialState).isEqualTo(expectedState)
         }
@@ -136,10 +139,10 @@ class SharingSummaryViewModelTest {
     }
 
     @Test
-    fun `test view model onSubmit success`() = runTest {
+    fun `test view model on share vault success`() = runTest {
         inviteToVault.setResult(Result.success(Unit))
 
-        viewModel.onSubmit()
+        viewModel.onShareVault()
 
         val message = snackbarDispatcher.snackbarMessage.first().value()
         assertThat(message).isNotNull()
@@ -148,10 +151,10 @@ class SharingSummaryViewModelTest {
 
 
     @Test
-    fun `test view model onSubmit failure`() = runTest {
+    fun `test view model on share vault failure`() = runTest {
         inviteToVault.setResult(Result.failure(RuntimeException("test exception")))
 
-        viewModel.onSubmit()
+        viewModel.onShareVault()
 
         val message = snackbarDispatcher.snackbarMessage.first().value()
         assertThat(message).isNotNull()
@@ -163,7 +166,7 @@ class SharingSummaryViewModelTest {
         bulkInviteRepository.clear()
         viewModel.stateFlow.test {
             val state = awaitItem()
-            assertThat(state.event).isEqualTo(SharingSummaryEvent.BackToHome)
+            assertThat(state.event).isEqualTo(SharingSummaryEvent.OnGoHome)
         }
     }
 
@@ -174,8 +177,12 @@ class SharingSummaryViewModelTest {
         activeItemCount = 5521, trashedItemCount = 6902
     )
 
-    companion object {
+    private companion object {
+
         private const val TEST_SHARE_ID = "SharingSummaryViewModelTest-ShareID"
+
         private const val TEST_EMAIL = "myemail@proton.me"
+
     }
+
 }

@@ -23,6 +23,7 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.keystore.EncryptedString
+import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.domain.entity.PackageInfo
 
 @Serializable
@@ -102,7 +103,10 @@ data class Passkey(
 sealed class ItemContents {
 
     abstract val title: String
+
     abstract val note: String
+
+    abstract val displayValue: String
 
     @Stable
     @Serializable
@@ -119,7 +123,7 @@ sealed class ItemContents {
         val passkeys: List<Passkey>
     ) : ItemContents() {
 
-        val displayUsername: String = itemUsername.ifEmpty { itemEmail }
+        override val displayValue: String = itemUsername.ifEmpty { itemEmail }
 
         val websiteUrl: String? = urls.firstOrNull()
 
@@ -153,7 +157,11 @@ sealed class ItemContents {
     data class Note(
         override val title: String,
         override val note: String
-    ) : ItemContents()
+    ) : ItemContents() {
+
+        override val displayValue: String = note
+
+    }
 
     @Stable
     @Serializable
@@ -163,6 +171,8 @@ sealed class ItemContents {
         val aliasEmail: String,
         private val isDisabled: Boolean? = null
     ) : ItemContents() {
+
+        override val displayValue: String = aliasEmail
 
         val isEnabled: Boolean = isDisabled != true
 
@@ -181,7 +191,11 @@ sealed class ItemContents {
         val pin: HiddenState,
         val expirationDate: String
     ) : ItemContents() {
+
+        override val displayValue: String = number
+
         companion object {
+
             fun default(cvv: HiddenState, pin: HiddenState) = CreditCard(
                 title = "",
                 cardHolder = "",
@@ -192,6 +206,7 @@ sealed class ItemContents {
                 expirationDate = "",
                 note = ""
             )
+
         }
     }
 
@@ -205,13 +220,26 @@ sealed class ItemContents {
         val contactDetailsContent: ContactDetailsContent,
         val workDetailsContent: WorkDetailsContent,
         val extraSectionContentList: List<ExtraSectionContent>
-    ) : ItemContents()
+    ) : ItemContents() {
+
+        override val displayValue: String = listOf(
+            personalDetailsContent.fullName,
+            personalDetailsContent.email
+        )
+            .filter(String::isNotEmpty)
+            .joinToString(separator = " ${SpecialCharacters.SLASH} ")
+
+    }
 
     @Serializable
     data class Unknown(
         override val title: String,
         override val note: String
-    ) : ItemContents()
+    ) : ItemContents() {
+
+        override val displayValue: String = ""
+
+    }
 
 }
 

@@ -53,8 +53,7 @@ fun SecurityCenterAliasListScreen(
                 onNavigated(
                     SecurityCenterAliasListNavDestination.OnEmailClick(
                         event.id,
-                        event.email,
-                        event.breachCount
+                        event.email
                     )
                 )
 

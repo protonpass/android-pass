@@ -89,20 +89,17 @@ sealed interface SecurityCenterNavDestination {
 
     data class CustomEmailReport(
         val id: CustomEmailId,
-        val email: String,
-        val breachCount: Int
+        val email: String
     ) : SecurityCenterNavDestination
 
     data class AliasEmailReport(
         val id: BreachEmailId.Alias,
-        val email: String,
-        val breachCount: Int
+        val email: String
     ) : SecurityCenterNavDestination
 
     data class ProtonEmailReport(
         val id: BreachEmailId.Proton,
-        val email: String,
-        val breachCount: Int
+        val email: String
     ) : SecurityCenterNavDestination
 
     data class CustomEmailBreachDetail(

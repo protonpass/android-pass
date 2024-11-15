@@ -20,13 +20,14 @@ package proton.android.pass.features.security.center.shared.navigation
 
 import androidx.navigation.NavType
 import proton.android.pass.navigation.api.NavArgId
+import proton.android.pass.navigation.api.OptionalNavArgId
 
 object BreachIdArgId : NavArgId {
     override val key: String = "breach_id"
     override val navType: NavType<*> = NavType.StringType
 }
 
-object EmailArgId : NavArgId {
+object EmailArgId : OptionalNavArgId {
     override val key: String = "email"
     override val navType: NavType<*> = NavType.StringType
 }

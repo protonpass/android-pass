@@ -35,16 +35,24 @@ fun SharingSummaryScreen(
     val state by stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
-        when (state.event) {
+        when (val event = state.event) {
             SharingSummaryEvent.Idle -> Unit
-            SharingSummaryEvent.BackToHome -> onNavigateEvent(SharingNavigation.BackToHome)
-            SharingSummaryEvent.Shared -> {
-//                state.vaultWithItemCount?.let {
-//                    onNavigateEvent(SharingNavigation.ManageVault(it.vault.shareId))
-//                }
-            }
 
-            SharingSummaryEvent.Error -> onNavigateEvent(SharingNavigation.InviteError)
+            SharingSummaryEvent.OnGoHome ->
+                SharingNavigation.BackToHome
+                    .also(onNavigateEvent)
+
+            is SharingSummaryEvent.OnSharingItemSuccess -> SharingNavigation.ItemDetails(
+                itemCategory = event.itemCategory
+            ).also(onNavigateEvent)
+
+            SharingSummaryEvent.OnSharingVaultError ->
+                SharingNavigation.InviteError
+                    .also(onNavigateEvent)
+
+            is SharingSummaryEvent.OnSharingVaultSuccess -> SharingNavigation.ManageVault(
+                shareId = event.shareId
+            ).also(onNavigateEvent)
         }
 
         onConsumeEvent(state.event)
@@ -53,7 +61,12 @@ fun SharingSummaryScreen(
     SharingSummaryContent(
         modifier = modifier,
         state = state,
-        onNavigateEvent = onNavigateEvent,
-        onSubmit = ::onSubmit
+        onUiEvent = { uiEvent ->
+            when (uiEvent) {
+                SharingSummaryUiEvent.OnBackClick -> onNavigateEvent(SharingNavigation.Back)
+                is SharingSummaryUiEvent.OnShareItemClick -> onShareItem(uiEvent.itemCategory)
+                SharingSummaryUiEvent.OnShareVaultClick -> onShareVault()
+            }
+        }
     )
 }

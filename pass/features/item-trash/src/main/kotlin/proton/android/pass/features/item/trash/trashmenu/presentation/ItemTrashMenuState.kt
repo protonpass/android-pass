@@ -44,7 +44,7 @@ internal data class ItemTrashMenuState(
         None -> ""
         is Some -> when (val itemContents = itemUiModelOption.value.contents) {
             is ItemContents.Alias -> itemContents.aliasEmail
-            is ItemContents.Login -> itemContents.displayUsername
+            is ItemContents.Login -> itemContents.displayValue
             is ItemContents.Note -> itemContents.note.replace("\n", " ")
             is ItemContents.CreditCard,
             is ItemContents.Identity,

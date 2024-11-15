@@ -62,7 +62,6 @@ fun PassItemIcon(
         )
 
         ItemCategory.Password,
-        ItemCategory.Unknown -> {
-        }
+        ItemCategory.Unknown -> Unit
     }
 }

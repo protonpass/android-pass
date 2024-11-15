@@ -18,6 +18,8 @@
 
 package proton.android.pass.navigation.api
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -25,6 +27,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import proton.android.pass.common.api.SpecialCharacters.COLON
 import proton.android.pass.log.api.PassLogger
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
@@ -146,6 +149,14 @@ class AppNavigator(
                 }
             }
         navController.navigateUp()
+    }
+
+    fun navigateToDeeplink(deepLink: String, comesFromBottomSheet: Boolean = false) {
+        val uri: Uri = Uri.parse("$NAV_SCHEME$COLON$deepLink")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        if (!navController.handleDeepLink(intent)) {
+            navigateBack(comesFromBottomsheet = comesFromBottomSheet)
+        }
     }
 
     private fun shouldDiscard(comesFromBottomsheet: Boolean): Boolean {

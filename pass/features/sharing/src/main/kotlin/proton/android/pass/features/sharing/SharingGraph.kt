@@ -30,6 +30,7 @@ import proton.android.pass.domain.NewUserInviteId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.features.PaidFeature
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.sharing.accept.AcceptInviteBottomSheet
 import proton.android.pass.features.sharing.confirmed.InviteConfirmedBottomSheet
 import proton.android.pass.features.sharing.invitesinfo.InvitesErrorDialog
@@ -223,6 +224,9 @@ sealed interface SharingNavigation {
 
     @JvmInline
     value class ManageSharedVault(val sharedVaultId: ShareId) : SharingNavigation
+
+    @JvmInline
+    value class ItemDetails(val itemCategory: ItemCategory) : SharingNavigation
 }
 
 fun NavGraphBuilder.sharingGraph(onNavigateEvent: (SharingNavigation) -> Unit) {

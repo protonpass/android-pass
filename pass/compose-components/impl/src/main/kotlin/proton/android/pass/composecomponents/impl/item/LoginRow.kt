@@ -73,7 +73,7 @@ fun LoginRow(
             title = content.title,
             email = content.itemEmail,
             username = content.itemUsername,
-            displayUsername = content.displayUsername,
+            displayUsername = content.displayValue,
             note = content.note,
             urls = content.urls,
             customFields = textCustomFields,

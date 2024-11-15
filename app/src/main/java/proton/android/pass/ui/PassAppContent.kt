@@ -320,6 +320,7 @@ fun PassAppContent(
                             onInternalCTAClick = { userId, id, key, value ->
                                 onInAppMessageBannerRead(userId, id, key)
                                 onInAppMessageBannerCTAClicked(key)
+                                appNavigator.navigateToDeeplink(value)
                                 isBannerVisible = false
                             },
                             onExternalCTAClick = { userId, id, key, value ->

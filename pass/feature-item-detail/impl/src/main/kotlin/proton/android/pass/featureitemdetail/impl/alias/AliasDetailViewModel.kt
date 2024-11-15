@@ -231,6 +231,7 @@ class AliasDetailViewModel @Inject constructor(
                     },
                     vault = vault,
                     mailboxes = aliasDetails?.mailboxes?.toPersistentList() ?: persistentListOf(),
+                    isAliasCreatedByUser = aliasDetails?.canModify ?: false,
                     slNote = aliasDetails?.slNote.orEmpty(),
                     displayName = aliasDetails?.name.orEmpty(),
                     stats = aliasDetails?.stats.toOption(),

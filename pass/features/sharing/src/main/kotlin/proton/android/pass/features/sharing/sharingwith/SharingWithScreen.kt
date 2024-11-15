@@ -51,7 +51,6 @@ fun SharingWithScreen(
         modifier = modifier,
         state = state,
         editingEmail = viewModel.editingEmail,
-        onNavigateEvent = onNavigateEvent,
         onEvent = { uiEvent ->
             when (uiEvent) {
                 SharingWithUiEvent.ContinueClick -> onContinueClick()
@@ -64,6 +63,10 @@ fun SharingWithScreen(
                 )
 
                 SharingWithUiEvent.OnScrolledToBottom -> onScrolledToBottom()
+                SharingWithUiEvent.OnBackClick -> onNavigateEvent(SharingNavigation.Back)
+                is SharingWithUiEvent.OnEditVaultClick -> SharingNavigation.EditVault(
+                    shareId = uiEvent.shareId
+                ).also(onNavigateEvent)
             }
         }
     )

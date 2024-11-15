@@ -74,7 +74,6 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolde
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.sharing.R
-import proton.android.pass.features.sharing.SharingNavigation
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -84,7 +83,6 @@ internal fun SharingWithContent(
     modifier: Modifier = Modifier,
     state: SharingWithUIState,
     editingEmail: String,
-    onNavigateEvent: (SharingNavigation) -> Unit,
     onEvent: (SharingWithUiEvent) -> Unit
 ) {
     val scrollState = rememberScrollState()
@@ -134,7 +132,7 @@ internal fun SharingWithContent(
             PassExtendedTopBar(
                 backButton = PassTopBarBackButtonType.BackArrow,
                 title = stringResource(R.string.share_with_title),
-                onUpClick = { onNavigateEvent(SharingNavigation.BackToHome) },
+                onUpClick = { onEvent(SharingWithUiEvent.OnBackClick) },
                 actions = {
                     LoadingCircleButton(
                         modifier = Modifier.padding(vertical = Spacing.small),
@@ -168,7 +166,7 @@ internal fun SharingWithContent(
                 CustomizeVault(
                     vault = state.vault,
                     onClick = {
-                        onNavigateEvent(SharingNavigation.EditVault(shareId = state.vault.shareId))
+                        onEvent(SharingWithUiEvent.OnEditVaultClick(shareId = state.vault.shareId))
                     }
                 )
             }

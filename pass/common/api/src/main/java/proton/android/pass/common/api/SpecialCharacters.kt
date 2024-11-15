@@ -26,6 +26,8 @@ object SpecialCharacters {
 
     const val QUESTION_MARK = '?'
 
+    const val AMPERSAND = '&'
+
     const val SLASH = '/'
 
     const val SPACE = ' '

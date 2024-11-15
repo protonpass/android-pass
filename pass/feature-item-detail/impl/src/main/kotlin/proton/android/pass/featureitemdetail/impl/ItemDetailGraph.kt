@@ -39,8 +39,10 @@ import proton.android.pass.navigation.api.CommonNavArgKey
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
+import proton.android.pass.navigation.api.OptionalNavArgId
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
+import proton.android.pass.navigation.api.toPath
 
 sealed interface ItemDetailNavigation {
 
@@ -130,20 +132,27 @@ object ItemDetailCannotPerformAction : NavItem(
     fun buildRoute(type: ItemDetailCannotPerformActionType) = "$baseRoute/${type.name}"
 }
 
-object ItemDetailScopeNavArgId : NavArgId {
+object ItemDetailScopeNavArgId : OptionalNavArgId {
     override val key: String = "itemDetailNavScope"
     override val navType: NavType<*> = NavType.EnumType(ItemDetailNavScope::class.java)
+    override val default: Any = ItemDetailNavScope.Default
 }
 
 object ViewItem : NavItem(
     baseRoute = "item/detail/view",
-    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId, ItemDetailScopeNavArgId)
+    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId),
+    optionalArgIds = listOf(ItemDetailScopeNavArgId),
+    baseDeepLinkRoute = listOf("view_item")
 ) {
     fun createNavRoute(
         shareId: ShareId,
         itemId: ItemId,
         scope: ItemDetailNavScope = ItemDetailNavScope.Default
-    ) = "$baseRoute/${shareId.id}/${itemId.id}/$scope"
+    ) = buildString {
+        append("$baseRoute/${shareId.id}/${itemId.id}")
+        val optionalPath = mapOf(ItemDetailScopeNavArgId.key to scope).toPath()
+        append(optionalPath)
+    }
 }
 
 fun NavGraphBuilder.itemDetailGraph(onNavigate: (ItemDetailNavigation) -> Unit) {

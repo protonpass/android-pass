@@ -55,13 +55,12 @@ internal fun CreateAliasForm(
     onAliasRequiredError: Boolean,
     onInvalidAliasError: Boolean,
     isEditAllowed: Boolean,
-    isOwner: Boolean,
     isLoading: Boolean,
     showUpgrade: Boolean,
-    isAliasManagementEnabled: Boolean,
     onSuffixClick: () -> Unit,
     onMailboxClick: () -> Unit,
-    onEvent: (AliasContentUiEvent) -> Unit
+    onEvent: (AliasContentUiEvent) -> Unit,
+    isAliasManagementEnabled: Boolean
 ) {
     Column(
         modifier = modifier
@@ -149,14 +148,12 @@ internal fun CreateAliasForm(
                     onChange = { onEvent(AliasContentUiEvent.OnSLNoteChange(it)) }
                 )
             }
-
-            if (isOwner) {
-                SenderNameSection(
-                    value = aliasItemFormState.senderName.orEmpty(),
-                    enabled = isEditAllowed,
-                    onChange = { onEvent(AliasContentUiEvent.OnSenderNameChange(it)) }
-                )
-            }
         }
+
+        SenderNameSection(
+            value = aliasItemFormState.senderName.orEmpty(),
+            enabled = isEditAllowed,
+            onChange = { onEvent(AliasContentUiEvent.OnSenderNameChange(it)) }
+        )
     }
 }

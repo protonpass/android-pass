@@ -89,6 +89,7 @@ fun UpdateAlias(
             selectedShareId = uiState.selectedShareId,
             topBarActionName = stringResource(id = R.string.action_save),
             isCreateMode = false,
+            isAliasCreatedByUser = uiState.canModify,
             isEditAllowed = uiState.baseAliasUiState.isLoadingState == IsLoadingState.NotLoading,
             onEvent = { event ->
                 when (event) {

@@ -26,8 +26,7 @@ sealed interface SecurityCenterProtonListNavDestination {
     data object Back : SecurityCenterProtonListNavDestination
     data class OnEmailClick(
         val id: BreachEmailId.Proton,
-        val email: String,
-        val breachCount: Int
+        val email: String
     ) : SecurityCenterProtonListNavDestination
 
     data class OnOptionsClick(

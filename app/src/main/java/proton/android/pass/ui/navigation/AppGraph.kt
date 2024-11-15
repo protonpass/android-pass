@@ -1937,6 +1937,10 @@ fun NavGraphBuilder.appGraph(
                     )
                 )
             }
+
+            is SharingNavigation.ItemDetails -> appNavigator.popUpTo(
+                destination = getItemDetailsDestination(it.itemCategory)
+            )
         }
     }
 

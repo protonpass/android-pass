@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.text.Text
@@ -35,7 +36,7 @@ internal fun SharingSummaryShareSection(
     modifier: Modifier = Modifier,
     sectionTitle: String,
     shareTitle: String,
-    shareSubTitle: String,
+    shareSubTitle: String?,
     shareIcon: @Composable () -> Unit
 ) {
     Column(
@@ -62,10 +63,14 @@ internal fun SharingSummaryShareSection(
                     text = shareTitle
                 )
 
-                Text.Body2Regular(
-                    text = shareSubTitle,
-                    color = PassTheme.colors.textWeak
-                )
+                shareSubTitle?.let { subTitle ->
+                    Text.Body2Regular(
+                        text = subTitle,
+                        color = PassTheme.colors.textWeak,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
         }
     }

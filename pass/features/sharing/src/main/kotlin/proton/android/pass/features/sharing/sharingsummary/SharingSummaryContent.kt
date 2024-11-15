@@ -36,18 +36,17 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
+import proton.android.pass.composecomponents.impl.icon.PassItemIcon
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.sharing.R
-import proton.android.pass.features.sharing.SharingNavigation
 
 @Composable
 internal fun SharingSummaryContent(
     modifier: Modifier = Modifier,
     state: SharingSummaryState,
-    onNavigateEvent: (SharingNavigation) -> Unit,
-    onSubmit: () -> Unit
+    onUiEvent: (SharingSummaryUiEvent) -> Unit
 ) {
     val actionTextRes = remember(state) {
         when (state) {
@@ -63,7 +62,7 @@ internal fun SharingSummaryContent(
             PassExtendedTopBar(
                 backButton = PassTopBarBackButtonType.BackArrow,
                 title = stringResource(R.string.share_summary_title),
-                onUpClick = { onNavigateEvent(SharingNavigation.Back) },
+                onUpClick = { onUiEvent(SharingSummaryUiEvent.OnBackClick) },
                 actions = {
                     LoadingCircleButton(
                         modifier = Modifier.padding(vertical = Spacing.small),
@@ -77,7 +76,17 @@ internal fun SharingSummaryContent(
                                 color = PassTheme.colors.textInvert
                             )
                         },
-                        onClick = onSubmit
+                        onClick = {
+                            when (state) {
+                                SharingSummaryState.Initial -> null
+
+                                is SharingSummaryState.ShareItem -> SharingSummaryUiEvent.OnShareItemClick(
+                                    itemCategory = state.itemCategory
+                                )
+
+                                is SharingSummaryState.ShareVault -> SharingSummaryUiEvent.OnShareVaultClick
+                            }?.let(onUiEvent)
+                        }
                     )
                 }
             )
@@ -101,9 +110,15 @@ internal fun SharingSummaryContent(
                             SharingSummaryShareSection(
                                 sectionTitle = stringResource(R.string.share_summary_item_title),
                                 shareTitle = state.itemTitle,
-                                shareSubTitle = "Ask what should be displayed here",
+                                shareSubTitle = state.itemSubtitle,
                                 shareIcon = {
-
+                                    PassItemIcon(
+                                        itemCategory = state.itemCategory,
+                                        text = state.itemTitle,
+                                        website = state.itemWebsite,
+                                        packageName = state.itemPackageName,
+                                        canLoadExternalImages = state.canItemLoadExternalImages
+                                    )
                                 }
                             )
                         }

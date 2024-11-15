@@ -25,12 +25,15 @@ interface NavArgId {
     val navType: NavType<*>
     val default: Any?
         get() = null
+
+    fun toPathParam(): String = "{$key}"
+    fun toQueryParam(): String = "$key={$key}"
 }
 
-private const val SHARE_ID_KEY = "shareId"
-private const val ITEM_ID_KEY = "itemId"
-private const val ADDRESS_ID_KEY = "addressId"
-private const val USER_ID_KEY = "userId"
+private const val SHARE_ID_KEY = "ShareID"
+private const val ITEM_ID_KEY = "ItemID"
+private const val ADDRESS_ID_KEY = "AddressID"
+private const val USER_ID_KEY = "UserID"
 
 enum class CommonNavArgId : NavArgId {
     ItemId {
@@ -50,7 +53,6 @@ enum class CommonNavArgId : NavArgId {
         override val navType: NavType<*> = NavType.StringType
     }
 }
-
 
 data object UserIdNavArgId : NavArgId {
     override val key = USER_ID_KEY

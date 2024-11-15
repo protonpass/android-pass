@@ -22,13 +22,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
@@ -39,7 +36,6 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun PassAliasItemDetailSections(
@@ -50,7 +46,6 @@ internal fun PassAliasItemDetailSections(
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.Alias,
     mailboxes: ImmutableList<AliasMailbox>,
-    slNote: String,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     lastAutofillOption: Option<Instant>,
     revision: Long,
@@ -75,19 +70,6 @@ internal fun PassAliasItemDetailSections(
         if (note.isNotBlank()) {
             PassSharedItemDetailNoteSection(
                 note = note,
-                itemColors = itemColors,
-                itemDiffs = itemDiffs
-            )
-        }
-
-        if (slNote.isNotBlank()) {
-            PassSharedItemDetailNoteSection(
-                title = buildString {
-                    append(stringResource(id = R.string.item_details_shared_section_note_title))
-                    append(" ${SpecialCharacters.DOT_SEPARATOR} ")
-                    append(stringResource(id = CompR.string.simple_login_brand_name))
-                },
-                note = slNote,
                 itemColors = itemColors,
                 itemDiffs = itemDiffs
             )

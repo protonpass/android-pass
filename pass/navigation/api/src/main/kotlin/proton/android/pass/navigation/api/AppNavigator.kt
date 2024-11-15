@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.navOptions
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import proton.android.pass.common.api.SpecialCharacters.COLON
 import proton.android.pass.log.api.PassLogger
@@ -115,8 +116,23 @@ class AppNavigator(
 
     fun navigateBack(comesFromBottomsheet: Boolean = false, force: Boolean = false) {
         if (!force && shouldDiscard(comesFromBottomsheet)) return
-        PassLogger.i(TAG, "Navigating back to $previousRoute")
-        navController.navigateUp()
+        if (previousRoute == null) {
+            PassLogger.i(TAG, "Navigating back to start destination")
+            val startDestinationRoute = navController.graph.findStartDestination().route
+            if (startDestinationRoute != null) {
+                val navOptions = navOptions {
+                    popUpTo(navController.graph.id) { inclusive = true }
+                }
+                navController.navigate(startDestinationRoute, navOptions)
+                PassLogger.i(TAG, "Navigated back to start destination")
+            } else {
+                PassLogger.w(TAG, "No start destination found")
+            }
+        } else {
+            PassLogger.i(TAG, "Navigating back to $previousRoute")
+            val didNavigate = navController.navigateUp()
+            PassLogger.i(TAG, "Navigated back to $previousRoute: $didNavigate")
+        }
     }
 
     fun findCloserDestination(vararg destinations: NavItem): NavItem? = navController.currentBackStack.value

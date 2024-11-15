@@ -50,12 +50,12 @@ fun AliasDetailContent(
     itemUiModel: ItemUiModel,
     vault: Vault?,
     mailboxes: PersistentList<AliasMailbox>,
+    isAliasCreatedByUser: Boolean,
     slNote: String,
     displayName: String,
     stats: Option<AliasStats>,
     contactsCount: Int,
     isLoading: Boolean,
-    isContactsEnabled: Boolean,
     isAliasSyncEnabled: Boolean,
     isAliasStateToggling: Boolean,
     isHistoryFeatureEnabled: Boolean,
@@ -113,7 +113,7 @@ fun AliasDetailContent(
         }
 
         if (isAliasManagementEnabled) {
-            if (isContactsEnabled) {
+            if (isAliasCreatedByUser) {
                 SenderNameSection(
                     text = displayName,
                     isLoading = isLoading

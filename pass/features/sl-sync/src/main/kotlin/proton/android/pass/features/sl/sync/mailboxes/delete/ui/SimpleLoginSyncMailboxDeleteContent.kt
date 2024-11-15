@@ -18,6 +18,9 @@
 
 package proton.android.pass.features.sl.sync.mailboxes.delete.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -82,9 +85,15 @@ internal fun SimpleLoginSyncMailboxDeleteContent(
             textAlign = TextAlign.Center
         )
 
-        PassInfoWarningBanner(
-            text = stringResource(id = R.string.simple_login_sync_mailbox_delete_warning)
-        )
+        AnimatedVisibility(
+            visible = !isTransferAliasesEnabled,
+            enter = expandVertically(),
+            exit = shrinkVertically()
+        ) {
+            PassInfoWarningBanner(
+                text = stringResource(id = R.string.simple_login_sync_mailbox_delete_warning)
+            )
+        }
 
         SimpleLoginSyncMailboxTransferSection(
             isTransferAliasesEnabled = isTransferAliasesEnabled,

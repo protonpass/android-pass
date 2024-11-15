@@ -103,7 +103,8 @@ object SharingSummary : NavItem(
 
 object ManageVault : NavItem(
     baseRoute = "sharing/manage/screen",
-    navArgIds = listOf(CommonNavArgId.ShareId)
+    navArgIds = listOf(CommonNavArgId.ShareId),
+    baseDeepLinkRoute = listOf("share_members")
 ) {
     fun createRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
 }

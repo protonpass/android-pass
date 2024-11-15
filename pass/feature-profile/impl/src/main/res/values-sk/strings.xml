@@ -48,7 +48,6 @@
   <string name="profile_option_lock_with">Zamknúť pomocou</string>
   <string name="profile_option_unlock_with">Odomknúť pomocou</string>
   <string name="profile_option_change_pin_code">Zmeniť PIN kód</string>
-  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Internet is set as the default browser. It does not support autofill by external password managers.</string>
   <string name="profile_passkey_support_section_title">Prístupové kľúče</string>
   <string name="profile_passkey_support_subtitle_supported">Prístupové kľúče sú podporované</string>
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
@@ -79,10 +78,10 @@
   <string name="account_switcher_switch_to">Prepnúť na</string>
   <string name="account_switcher_add_account">Pridať účet</string>
   <string name="account_switcher_remove">Odstrániť</string>
-  <string name="filtered_by_logins">Filtered by logins. Trashed items aren\'t shown</string>
-  <string name="filtered_by_logins_with_mfa">Filtered by logins with TOTP. Trashed items aren\'t shown</string>
-  <string name="filtered_by_aliases">Filtered by aliases. Trashed items aren\'t shown</string>
-  <string name="filtered_by_notes">Filtered by notes. Trashed items aren\'t shown</string>
-  <string name="filtered_by_credit_cards">Filtered by credit cards. Trashed items aren\'t shown</string>
-  <string name="filtered_by_identities">Filtered by identities. Trashed items aren\'t shown</string>
+  <string name="filtered_by_logins">Filtrované podľa prihlásenia. Položky v koši nie sú zobrazené</string>
+  <string name="filtered_by_logins_with_mfa">Filtrované podľa prihlásenia s TOTP. Položky v koši nie sú zobrazené</string>
+  <string name="filtered_by_aliases">Filtrované podľa aliasov. Položky v koši nie sú zobrazené</string>
+  <string name="filtered_by_notes">Filtrované podľa poznámok. Položky v koši nie sú zobrazené</string>
+  <string name="filtered_by_credit_cards">Filtrované podľa platobných kariet. Položky v koši nie sú zobrazené</string>
+  <string name="filtered_by_identities">Filtrované podľa identít. Položky v koši nie sú zobrazené</string>
 </resources>

@@ -123,7 +123,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Покращте, щоб створити більше сховищ</string>
   <string name="sharing_from_item_vault_limit_reached">Ви досягли ліміту на сховища</string>
   <string name="share_with_suggestions_title">Пропозиції</string>
-  <string name="share_with_recents_title">Нещодавні</string>
+  <string name="share_with_recents_title">Recent</string>
   <string name="share_with_remove_email_content_description">Видалити пошту</string>
   <string name="share_with_user_title">Share with</string>
   <string name="share_with_user_description">Share this item with other Proton users.</string>

@@ -82,11 +82,11 @@
   <string name="alias_created">Δημιουργήθηκε ψευδώνυμο</string>
   <string name="cannot_retrieve_alias_options">Δεν είναι δυνατή η ανάκτηση επιλογών ψευδωνύμου</string>
   <string name="alias_mailbox_dialog_title">Προώθηση σε</string>
-  <string name="sl_note_info_title">What is a SimpleLogin note?</string>
-  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">In Pass, an item note is encrypted with the item encryption key and only users who have access to the item can view the note.</string>
-  <string name="sl_note_info_message_part2">Not even Proton or SimpleLogin can see it.</string>
-  <string name="sl_note_info_message_part3">SimpleLogin note is stored together in the same location with alias address and while it is protected by encryption at rest, it isn\'t E2E encrypted meaning anyone who has access to SimpleLogin database can read it.</string>
-  <string name="sl_note_info_content_description">Show SL note information dialog</string>
+  <string name="sl_note_info_title">Τι είναι μια σημείωση SimpleLogin;</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">Στο Pass, μια σημείωση στοιχείου κρυπτογραφείται με το κλειδί κρυπτογράφησης στοιχείου και μόνο οι χρήστες που έχουν πρόσβαση στο στοιχείο μπορούν να δουν τη σημείωση.</string>
+  <string name="sl_note_info_message_part2">Ούτε καν το Proton ή το SimpleLogin δεν μπορούν να το δουν.</string>
+  <string name="sl_note_info_message_part3">Η σημείωση SimpleLogin αποθηκεύεται μαζί στην ίδια τοποθεσία με την ψευδώνυμη διεύθυνση και ενώ προστατεύεται από κρυπτογράφηση σε κατάσταση ηρεμίας, δεν είναι κρυπτογραφημένη E2E, πράγμα που σημαίνει ότι οποιοσδήποτε έχει πρόσβαση στη βάση δεδομένων SimpleLogin μπορεί να τη διαβάσει.</string>
+  <string name="sl_note_info_content_description">Εμφάνιση διαλόγου πληροφοριών σημείωσης SL</string>
   <!-- Create note -->
   <string name="note_hint">Σημείωση</string>
   <!-- Create Credit Card -->

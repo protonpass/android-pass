@@ -113,7 +113,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Faça upgrade para criar mais cofres</string>
   <string name="sharing_from_item_vault_limit_reached">Você atingiu o limite de cofre</string>
   <string name="share_with_suggestions_title">Sugestões</string>
-  <string name="share_with_recents_title">Recentes</string>
+  <string name="share_with_recents_title">Recent</string>
   <string name="share_with_remove_email_content_description">Remover e-mail</string>
   <string name="share_with_user_title">Compartilhar com</string>
   <string name="share_with_user_description">Share this item with other Proton users.</string>

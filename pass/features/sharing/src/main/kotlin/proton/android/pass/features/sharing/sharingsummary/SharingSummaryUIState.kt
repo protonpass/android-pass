@@ -18,56 +18,63 @@
 
 package proton.android.pass.features.sharing.sharingsummary
 
-import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
+import me.proton.core.util.kotlin.takeIfNotBlank
+import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.AddressPermission
-import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.sharing.common.AddressPermissionUiState
 import proton.android.pass.features.sharing.common.toUiState
+import proton.android.pass.preferences.UseFaviconsPreference
+import proton.android.pass.preferences.value
 
-@Immutable
 internal sealed interface SharingSummaryEvent {
 
-    @Immutable
     data object Idle : SharingSummaryEvent
 
-    @Immutable
-    data object BackToHome : SharingSummaryEvent
+    data object OnGoHome : SharingSummaryEvent
 
-    @Immutable
-    data object Shared : SharingSummaryEvent
+    @JvmInline
+    value class OnSharingItemSuccess(internal val itemCategory: ItemCategory) : SharingSummaryEvent
 
-    @Immutable
-    data object Error : SharingSummaryEvent
+    data object OnSharingVaultError : SharingSummaryEvent
+
+    @JvmInline
+    value class OnSharingVaultSuccess(internal val shareId: ShareId) : SharingSummaryEvent
 
 }
 
-@Immutable
-internal data class SharingSummaryUIState(
-    val addresses: ImmutableList<AddressPermissionUiState> = persistentListOf(),
-    val vaultWithItemCount: VaultWithItemCount? = null,
-    val isLoading: Boolean = false,
-    val event: SharingSummaryEvent = SharingSummaryEvent.Idle
-)
+@Stable
+internal sealed class SharingSummaryState {
 
-internal sealed interface SharingSummaryState {
+    internal abstract val event: SharingSummaryEvent
 
-    val addresses: ImmutableList<AddressPermissionUiState>
+    internal abstract val addressPermissions: List<AddressPermission>
 
-    val isLoading: Boolean
+    protected abstract val isLoadingState: IsLoadingState
 
-    val event: SharingSummaryEvent
+    internal val addresses: ImmutableList<AddressPermissionUiState>
+        get() = addressPermissions
+            .map(AddressPermission::toUiState)
+            .toPersistentList()
 
-    data object Initial : SharingSummaryState {
+    internal val isLoading: Boolean
+        get() = isLoadingState.value()
 
-        override val addresses: ImmutableList<AddressPermissionUiState> = persistentListOf()
 
-        override val isLoading: Boolean = false
+    data object Initial : SharingSummaryState() {
+
+        override val addressPermissions: List<AddressPermission> = emptyList()
+
+        override val isLoadingState: IsLoadingState = IsLoadingState.NotLoading
 
         override val event: SharingSummaryEvent = SharingSummaryEvent.Idle
 
@@ -75,33 +82,54 @@ internal sealed interface SharingSummaryState {
 
     data class ShareItem(
         override val event: SharingSummaryEvent,
-        private val addressPermissions: List<AddressPermission>,
-        private val isLoadingState: IsLoadingState,
-        private val item: Item
-    ) : SharingSummaryState {
+        override val addressPermissions: List<AddressPermission>,
+        override val isLoadingState: IsLoadingState,
+        private val itemUiModel: ItemUiModel,
+        private val useFaviconsPreference: UseFaviconsPreference
+    ) : SharingSummaryState() {
 
-        override val addresses: ImmutableList<AddressPermissionUiState> = addressPermissions
-            .map { addressPermission -> addressPermission.toUiState() }
-            .toPersistentList()
+        internal val itemCategory: ItemCategory = itemUiModel.category
 
-        override val isLoading: Boolean = isLoadingState.value()
+        internal val itemTitle: String = itemUiModel.contents.title
 
-        internal val itemTitle: String = item.title
+        internal val itemSubtitle: String? = when (itemCategory) {
+            ItemCategory.CreditCard -> TextMask.CardNumber(itemUiModel.contents.displayValue).masked
+            ItemCategory.Alias,
+            ItemCategory.Login,
+            ItemCategory.Note,
+            ItemCategory.Identity,
+            ItemCategory.Password,
+            ItemCategory.Unknown -> itemUiModel.contents.displayValue
+        }.takeIfNotBlank()
+
+        internal val itemPackageName: String = when (val contents = itemUiModel.contents) {
+            is ItemContents.Login -> contents.packageName.orEmpty()
+            is ItemContents.Alias,
+            is ItemContents.CreditCard,
+            is ItemContents.Identity,
+            is ItemContents.Note,
+            is ItemContents.Unknown -> ""
+        }
+
+        internal val itemWebsite: String = when (val contents = itemUiModel.contents) {
+            is ItemContents.Login -> contents.websiteUrl.orEmpty()
+            is ItemContents.Alias,
+            is ItemContents.CreditCard,
+            is ItemContents.Identity,
+            is ItemContents.Note,
+            is ItemContents.Unknown -> ""
+        }
+
+        internal val canItemLoadExternalImages: Boolean = useFaviconsPreference.value()
 
     }
 
     data class ShareVault(
         override val event: SharingSummaryEvent,
-        private val vaultWithItemCount: VaultWithItemCount,
-        private val addressPermissions: List<AddressPermission>,
-        private val isLoadingState: IsLoadingState
-    ) : SharingSummaryState {
-
-        override val addresses: ImmutableList<AddressPermissionUiState> = addressPermissions
-            .map { addressPermission -> addressPermission.toUiState() }
-            .toPersistentList()
-
-        override val isLoading: Boolean = isLoadingState.value()
+        override val addressPermissions: List<AddressPermission>,
+        override val isLoadingState: IsLoadingState,
+        private val vaultWithItemCount: VaultWithItemCount
+    ) : SharingSummaryState() {
 
         internal val vault: Vault = vaultWithItemCount.vault
 

@@ -28,7 +28,7 @@ fun ItemUiModel.toAutoFillItem(shouldLinkPackageName: Boolean = false): Autofill
     is ItemContents.Login -> AutofillItem.Login(
         shareId = shareId.id,
         itemId = id.id,
-        username = content.displayUsername,
+        username = content.displayValue,
         password = content.password.encrypted,
         totp = content.primaryTotp.encrypted,
         shouldLinkPackageName = shouldLinkPackageName

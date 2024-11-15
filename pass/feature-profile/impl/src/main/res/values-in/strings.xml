@@ -48,7 +48,6 @@
   <string name="profile_option_lock_with">Kunci dengan</string>
   <string name="profile_option_unlock_with">Buka kunci dengan</string>
   <string name="profile_option_change_pin_code">Ubah kode PIN</string>
-  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Internet is set as the default browser. It does not support autofill by external password managers.</string>
   <string name="profile_passkey_support_section_title">Passkey</string>
   <string name="profile_passkey_support_subtitle_supported">Passkey didukung</string>
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>

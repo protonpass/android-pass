@@ -31,9 +31,9 @@
   <string name="upsell_paid_feature_authenticator_essential">Krev 2FA for organisasjonen</string>
   <string name="upsell_paid_feature_sso_essential">SSO-integrasjon (kommer snart)</string>
   <string name="upsell_paid_feature_advance_alias_management_title">Administrer aliasene dine</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">Advanced alias management is available with a paid plan. Upgrade for immediate access.</string>
-  <string name="upsell_paid_feature_item_sharing_title">Quickly share an item</string>
-  <string name="upsell_paid_feature_item_sharing_subtitle">Upgrade today so you can share an item with any Pass user. And enjoy other premium features:</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">Avansert aliasadministrasjon er tilgjengelig med en betalt plan. Oppgrader for umiddelbar tilgang.</string>
+  <string name="upsell_paid_feature_item_sharing_title">Del et element raskt</string>
+  <string name="upsell_paid_feature_item_sharing_subtitle">Oppgrader i dag, slik at du kan dele et element med alle Pass-brukere. Og nyt andre premiumfunksjoner:</string>
   <string name="upsell_button_upgrade">Skaff deg Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Skaff deg Pass Business</string>
 </resources>

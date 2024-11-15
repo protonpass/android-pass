@@ -31,9 +31,9 @@
   <string name="upsell_paid_feature_authenticator_essential">2FA wajib bagi organisasi</string>
   <string name="upsell_paid_feature_sso_essential">Integrasi SSO (segera hadir)</string>
   <string name="upsell_paid_feature_advance_alias_management_title">Kelola alias Anda</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">Advanced alias management is available with a paid plan. Upgrade for immediate access.</string>
-  <string name="upsell_paid_feature_item_sharing_title">Quickly share an item</string>
-  <string name="upsell_paid_feature_item_sharing_subtitle">Upgrade today so you can share an item with any Pass user. And enjoy other premium features:</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">Pengelolaan alias tingkat lanjut tersedia dengan paket berbayar. Tingkatkan akun Anda untuk memperoleh akses ke fitur ini dengan segera.</string>
+  <string name="upsell_paid_feature_item_sharing_title">Bagikan item dengan cepat</string>
+  <string name="upsell_paid_feature_item_sharing_subtitle">Tingkatkan hari ini supaya Anda dapat membagikan item dengan pengguna Pass lain. Dan nikmati fitur premium lainnya:</string>
   <string name="upsell_button_upgrade">Dapatkan Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Dapatkan Pass Business</string>
 </resources>

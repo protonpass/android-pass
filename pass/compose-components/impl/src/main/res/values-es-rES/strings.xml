@@ -267,7 +267,7 @@
   <!-- Verification codes -->
   <string name="verification_code_not_received">¿No has recibido el código?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Comprueba tu carpeta de spam por un correo llamado «%s».</string>
-  <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Confirma tu dirección de correo electrónico para Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Confirma tu buzón</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Si no encuentras dicho correo electrónico, puedes %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">solicitar un código nuevo</string>

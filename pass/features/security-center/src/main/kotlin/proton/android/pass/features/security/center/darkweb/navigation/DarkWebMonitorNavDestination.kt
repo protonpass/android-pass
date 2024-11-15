@@ -34,20 +34,17 @@ sealed interface DarkWebMonitorNavDestination {
 
     data class CustomEmailReport(
         val id: CustomEmailId,
-        val email: String,
-        val breachCount: Int
+        val email: String
     ) : DarkWebMonitorNavDestination
 
     data class AliasEmailReport(
         val id: BreachEmailId.Alias,
-        val email: String,
-        val breachCount: Int
+        val email: String
     ) : DarkWebMonitorNavDestination
 
     data class ProtonEmailReport(
         val id: BreachEmailId.Proton,
-        val email: String,
-        val breachCount: Int
+        val email: String
     ) : DarkWebMonitorNavDestination
 
     data class UnverifiedEmailOptions(

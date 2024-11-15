@@ -42,20 +42,17 @@ sealed interface DarkWebUiEvent {
 
     data class OnCustomEmailReportClick(
         val id: CustomEmailId,
-        val email: String,
-        val breachCount: Int
+        val email: String
     ) : DarkWebUiEvent
 
     data class OnShowAliasEmailReportClick(
         val id: BreachEmailId.Alias,
-        val email: String,
-        val breachCount: Int
+        val email: String
     ) : DarkWebUiEvent
 
     data class OnShowProtonEmailReportClick(
         val id: BreachEmailId.Proton,
-        val email: String,
-        val breachCount: Int
+        val email: String
     ) : DarkWebUiEvent
 
     data class HelpClick(

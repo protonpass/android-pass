@@ -53,8 +53,7 @@ fun SecurityCenterProtonListScreen(
                 onNavigated(
                     SecurityCenterProtonListNavDestination.OnEmailClick(
                         event.id,
-                        event.email,
-                        event.breachCount
+                        event.email
                     )
                 )
 

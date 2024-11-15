@@ -110,8 +110,7 @@ internal fun SecurityCenterProtonListContent(
                                 onUiEvent(
                                     EmailBreachClick(
                                         id = itemState.id as BreachEmailId.Proton,
-                                        email = itemState.email,
-                                        breachCount = itemState.count
+                                        email = itemState.email
                                     )
                                 )
                             }
@@ -134,8 +133,7 @@ internal fun SecurityCenterProtonListContent(
                                 onUiEvent(
                                     EmailBreachClick(
                                         id = itemState.id as BreachEmailId.Proton,
-                                        email = itemState.email,
-                                        breachCount = itemState.count
+                                        email = itemState.email
                                     )
                                 )
                             }

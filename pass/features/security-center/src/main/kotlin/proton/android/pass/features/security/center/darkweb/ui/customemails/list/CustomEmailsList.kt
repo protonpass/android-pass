@@ -34,7 +34,6 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.features.security.center.R
-import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiStatus
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebCustomEmailsState
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailsError
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebUiState
@@ -87,10 +86,7 @@ internal fun CustomEmailsList(
                         onEvent(
                             DarkWebUiEvent.OnCustomEmailReportClick(
                                 id = id,
-                                email = item.email,
-                                breachCount = (item.status as? CustomEmailUiStatus.Verified)
-                                    ?.breachesDetected
-                                    ?: 0
+                                email = item.email
                             )
                         )
                     },

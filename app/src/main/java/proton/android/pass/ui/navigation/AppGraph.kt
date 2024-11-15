@@ -1619,8 +1619,7 @@ fun NavGraphBuilder.appGraph(
                     destination = SecurityCenterCustomEmailReportNavItem,
                     route = SecurityCenterCustomEmailReportNavItem.createNavRoute(
                         id = destination.id,
-                        email = destination.email,
-                        breachCount = destination.breachCount
+                        email = destination.email
                     )
                 )
 
@@ -1628,8 +1627,7 @@ fun NavGraphBuilder.appGraph(
                     destination = SecurityCenterAliasEmailReportNavItem,
                     route = SecurityCenterAliasEmailReportNavItem.createNavRoute(
                         id = destination.id,
-                        email = destination.email,
-                        breachCount = destination.breachCount
+                        email = destination.email
                     )
                 )
 
@@ -1637,8 +1635,7 @@ fun NavGraphBuilder.appGraph(
                     destination = SecurityCenterProtonEmailReportNavItem,
                     route = SecurityCenterProtonEmailReportNavItem.createNavRoute(
                         id = destination.id,
-                        email = destination.email,
-                        breachCount = destination.breachCount
+                        email = destination.email
                     )
                 )
 

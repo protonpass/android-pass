@@ -18,15 +18,27 @@
 
 package proton.android.pass.features.sharing.sharingwith
 
-sealed interface SharingWithUiEvent {
+import proton.android.pass.domain.ShareId
+
+internal sealed interface SharingWithUiEvent {
+
+    data object OnBackClick : SharingWithUiEvent
+
+    @JvmInline
+    value class OnEditVaultClick(val shareId: ShareId) : SharingWithUiEvent
+
     @JvmInline
     value class EmailChange(val content: String) : SharingWithUiEvent
 
     data class InviteSuggestionToggle(val email: String, val value: Boolean) : SharingWithUiEvent
+
     data object EmailSubmit : SharingWithUiEvent
+
     data object ContinueClick : SharingWithUiEvent
 
     @JvmInline
     value class EmailClick(val index: Int) : SharingWithUiEvent
+
     data object OnScrolledToBottom : SharingWithUiEvent
+
 }

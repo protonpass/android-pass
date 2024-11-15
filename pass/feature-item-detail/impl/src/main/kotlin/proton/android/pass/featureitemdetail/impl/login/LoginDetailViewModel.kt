@@ -160,8 +160,9 @@ class LoginDetailViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
-    private val navigationScope: ItemDetailNavScope = savedStateHandle.get()
-        .require(ItemDetailScopeNavArgId.key)
+    private val navigationScope: ItemDetailNavScope =
+        savedStateHandle.get()[ItemDetailScopeNavArgId.key]
+            ?: ItemDetailNavScope.Default
 
     init {
         when (navigationScope) {

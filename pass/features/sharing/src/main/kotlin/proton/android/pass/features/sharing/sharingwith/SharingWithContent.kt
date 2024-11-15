@@ -173,6 +173,7 @@ internal fun SharingWithContent(
 
             Box(
                 modifier = Modifier
+                    .padding(top = Spacing.small)
                     .heightIn(min = 0.dp, max = parentHeight * RATIO_HEIGHT_EMAIL_LIST)
                     .verticalScroll(scrollState)
             ) {

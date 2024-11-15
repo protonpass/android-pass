@@ -36,6 +36,7 @@ import proton.android.pass.commonui.api.body3Bold
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
+import proton.android.pass.composecomponents.impl.container.PassInfoWarningBanner
 import proton.android.pass.composecomponents.impl.text.PassTextWithInnerStyle
 import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.mailboxes.delete.presentation.SimpleLoginSyncMailboxDeleteState
@@ -79,6 +80,10 @@ internal fun SimpleLoginSyncMailboxDeleteContent(
             innerText = aliasMailboxEmail,
             innerStyle = PassTheme.typography.body3Bold(),
             textAlign = TextAlign.Center
+        )
+
+        PassInfoWarningBanner(
+            text = stringResource(id = R.string.simple_login_sync_mailbox_delete_warning)
         )
 
         SimpleLoginSyncMailboxTransferSection(

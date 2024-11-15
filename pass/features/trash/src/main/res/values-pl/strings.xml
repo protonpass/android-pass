@@ -7,17 +7,17 @@
   <string name="alias_dialog_move_to_trash_title">Przenieść do Kosza?</string>
   <string name="alias_dialog_move_to_trash_content">Jeśli przeniesiesz alias do Kosza, przekierowanie wiadomości zostanie zatrzymane.</string>
   <string name="alias_dialog_move_to_trash_confirm">Potwierdź</string>
-  <string name="delete_alias_confirm">Delete it, I will never need it</string>
+  <string name="delete_alias_confirm">Usuń go. Nigdy nie będę go potrzebować</string>
   <string name="delete_alias_title">Usuń %s</string>
-  <string name="delete_alias_enabled_subtitle">"Please note once deleted, the alias can't be restored. Maybe you want to disable the alias instead? "</string>
-  <string name="delete_alias_disabled_subtitle">Please note once deleted, the alias can\'t be restored. The alias is already disabled and won’t forward emails to your mailbox.</string>
+  <string name="delete_alias_enabled_subtitle">"Pamiętaj, że usuniętego aliasu nie można przywrócić. Czy chcesz, zamiast tego wyłączyć alias? "</string>
+  <string name="delete_alias_disabled_subtitle">Pamiętaj, że usuniętego aliasu nie można przywrócić. Alias jest wyłączony i nie przekierowuje wiadomości do skrzynki odbiorczej.</string>
   <plurals name="bulk_delete_alias_title">
-    <item quantity="one">You\'re about to permanently delete %d alias</item>
-    <item quantity="few">You\'re about to permanently delete %d aliases</item>
-    <item quantity="many">You\'re about to permanently delete %d aliases</item>
-    <item quantity="other">You\'re about to permanently delete %d aliases</item>
+    <item quantity="one">Zamierzasz trwale usunąć %d alias</item>
+    <item quantity="few">Zamierzasz trwale usunąć %d aliasy</item>
+    <item quantity="many">Zamierzasz trwale usunąć %d aliasów</item>
+    <item quantity="other">Zamierzasz trwale usunąć %d aliasów</item>
   </plurals>
-  <string name="bulk_delete_alias_subtitle">Please note once deleted, the aliases can\'t be restored</string>
-  <string name="bulk_delete_alias_confirm">Understood, I will never need them</string>
+  <string name="bulk_delete_alias_subtitle">Pamiętaj, że raz usunięte aliasy nie mogą zostać przywrócone</string>
+  <string name="bulk_delete_alias_confirm">Zrozumiałem. Nigdy nie będę ich potrzebować</string>
   <string name="delete_alias_disable">Wyłącz alias</string>
 </resources>

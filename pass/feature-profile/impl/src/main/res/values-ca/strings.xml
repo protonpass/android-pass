@@ -48,7 +48,6 @@
   <string name="profile_option_lock_with">Bloqueja amb</string>
   <string name="profile_option_unlock_with">Desbloqueja amb</string>
   <string name="profile_option_change_pin_code">Canvia el codi PIN</string>
-  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Internet is set as the default browser. It does not support autofill by external password managers.</string>
   <string name="profile_passkey_support_section_title">Claus d\'accés</string>
   <string name="profile_passkey_support_subtitle_supported">Les claus d\'accés són compatibles</string>
   <string name="profile_passkey_support_subtitle_not_supported_android_version">La vostra versió d\'Android no suporta claus de pas.</string>

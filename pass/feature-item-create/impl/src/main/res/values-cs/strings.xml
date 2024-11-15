@@ -85,8 +85,8 @@
   <string name="sl_note_info_title">Co je poznámka SimpleLogin?</string>
   <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">V aplikaci Pass je poznámka k položce zašifrována šifrovacím klíčem položky a mohou ji zobrazit pouze uživatelé, kteří mají k položce přístup.</string>
   <string name="sl_note_info_message_part2">Nevidí ji ani Proton nebo SimpleLogin.</string>
-  <string name="sl_note_info_message_part3">Poznámka SimpleLogin je uložena společně na stejném místě s adresou aliasu, a přestože je v klidu chráněna šifrováním, není šifrována E2E, což znamená, že si ji může přečíst každý, kdo má přístup k databázi SimpleLogin.</string>
-  <string name="sl_note_info_content_description">Zobrazení informací o poznámce SL v dialogovém okně</string>
+  <string name="sl_note_info_message_part3">Poznámka SimpleLogin je uložena na stejném místě jako adresa aliasu. Poznámka je ale šifrována jen v klidovém stavu, ne E2E, což znamená, že si ji může přečíst každý, kdo má přístup k databázi SimpleLogin.</string>
+  <string name="sl_note_info_content_description">Zobrazit okno se SL poznámkou</string>
   <!-- Create note -->
   <string name="note_hint">Poznámka</string>
   <!-- Create Credit Card -->

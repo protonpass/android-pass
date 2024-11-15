@@ -123,7 +123,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Nadgradite, da ustvarite več trezorjev</string>
   <string name="sharing_from_item_vault_limit_reached">Dosegli ste omejitev trezorja</string>
   <string name="share_with_suggestions_title">Predlogi</string>
-  <string name="share_with_recents_title">Nedavne</string>
+  <string name="share_with_recents_title">Recent</string>
   <string name="share_with_remove_email_content_description">Odstrani e-pošto</string>
   <string name="share_with_user_title">Share with</string>
   <string name="share_with_user_description">Share this item with other Proton users.</string>

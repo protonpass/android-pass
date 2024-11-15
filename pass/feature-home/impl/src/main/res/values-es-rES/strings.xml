@@ -45,7 +45,7 @@
     <item quantity="other">Tienes %d alias en SimpleLogin pero no aparecen en Proton Pass. ¿Quieres sincronizarlos?</item>
   </plurals>
   <string name="sl_sync_banner_settings">Sincronizar los alias ›</string>
-  <string name="sl_sync_banner_note">Once synced, deleting aliases in Pass will also delete them in SimpleLogin.</string>
+  <string name="sl_sync_banner_note">Una vez sincronizado, al eliminar los alias en Pass también se eliminarán en SimpleLogin.</string>
   <string name="home_notification_permission_banner_title">Obtén actualizaciones importantes</string>
   <string name="home_notification_permission_banner_text">Habilite las notificaciones automáticas para recibir información cuando otros compartan una bóveda con usted.</string>
   <string name="home_notification_permission_banner_settings">Activar el permiso ›</string>

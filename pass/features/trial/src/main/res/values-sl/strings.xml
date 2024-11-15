@@ -2,7 +2,7 @@
 <resources>
   <string name="trial_title">Vaš bonus za dobrodošlico</string>
   <string name="trial_subtitle">Uživajte v upravljanju gesel naslednje stopnje</string>
-  <string name="trial_feature_1">20 trezorji</string>
+  <string name="trial_feature_1">20 trezorjev</string>
   <string name="trial_feature_3">Vgrajen modul za preverjanje pristnosti 2FA</string>
   <string name="trial_feature_4">Polja po meri</string>
   <string name="trial_button_text">Nadgradi zdaj</string>

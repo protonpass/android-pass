@@ -18,60 +18,60 @@
   -->
 <resources>
   <!-- Management screen -->
-  <string name="simple_login_sync_management_title">Alias management</string>
-  <string name="simple_login_sync_management_domain_label">Domain</string>
-  <string name="simple_login_sync_management_domain_title">Default domain for aliases</string>
-  <string name="simple_login_sync_management_domain_option_blank">Not selected</string>
-  <string name="simple_login_sync_management_mailboxes_label">Mailboxes</string>
-  <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
-  <string name="simple_login_sync_management_mailbox_default">Default</string>
-  <string name="simple_login_sync_management_mailbox_unverified">Unverified mailbox</string>
-  <string name="simple_login_sync_management_vault_title">SimpleLogin sync</string>
-  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
-  <string name="simple_login_sync_management_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_domains">Default domain for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_mailboxes">Default mailbox for aliases</string>
+  <string name="simple_login_sync_management_title">Správa aliasov</string>
+  <string name="simple_login_sync_management_domain_label">Doména</string>
+  <string name="simple_login_sync_management_domain_title">Predvolená doména pre aliasy</string>
+  <string name="simple_login_sync_management_domain_option_blank">Nevybraté</string>
+  <string name="simple_login_sync_management_mailboxes_label">Poštové schránky</string>
+  <string name="simple_login_sync_management_mailboxes_description">Do poštovej schránky sa preposielajú emaily odoslané na alias. Je to vaša bežná poštová schránka, napr. Gmail, Outlook, Proton Mail atď.</string>
+  <string name="simple_login_sync_management_mailbox_default">Predvolené</string>
+  <string name="simple_login_sync_management_mailbox_unverified">Neoverená poštová schránka</string>
+  <string name="simple_login_sync_management_vault_title">SimpleLogin synchronizácia</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Pri získavaní detailov o SL aliase došlo k chybe</string>
+  <string name="simple_login_sync_management_mailboxes_title">Predvolená poštová schránka pre aliasy</string>
+  <string name="simple_login_sync_management_dialog_title_domains">Predvolená doména pre aliasy</string>
+  <string name="simple_login_sync_management_dialog_title_mailboxes">Predvolená poštová schránka pre aliasy</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Synchronizovať aliasy</string>
   <string name="simple_login_sync_enable_snackbar_error">Pri povoľovaní synchonizácie SimpleLogin aliasov došlo k chybe</string>
   <string name="simple_login_sync_enable_snackbar_success">Synchronizácia SimpleLogin aliasov bola úspešne povolená</string>
   <!-- Mailbox create screen -->
-  <string name="simple_login_sync_mailbox_create_title">Add mailbox</string>
-  <string name="simple_login_sync_mailbox_create_message_error">There was an error adding the mailbox</string>
+  <string name="simple_login_sync_mailbox_create_title">Pridať poštovú schránku</string>
+  <string name="simple_login_sync_mailbox_create_message_error">Pri pridávaní poštovej schránky došlo k chybe</string>
   <!-- Mailbox verify screen -->
-  <string name="simple_login_sync_mailbox_verify_title">Confirm your mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">We sent a verification code to %s. Enter it below:</string>
-  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">your email address</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Invalid mailbox verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Invalid mailbox verification code limit reached, mailbox was deleted</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_error">There was an error verifying the mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_success">Mailbox successfully verified</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">There was an error sending verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verification code successfully sent</string>
+  <string name="simple_login_sync_mailbox_verify_title">Potvrďte svoju emailovú schránku</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Odoslali sme overovací kód na %s. Zadajte ho nižšie:</string>
+  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">Vaša emailová adresa</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Neplatný overovací kód poštovej schránky</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Dosiahli ste limit neplatných overovacích kódov poštovej schránky, poštová schránka bola vymazaná</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_error">Pri overovaní poštovej schránky došlo k chybe</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_success">Poštová schránka bola úspešne overená</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Pri odosielaní overovacieho kódu došlo k chybe</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Overovací kód bol úspešne odoslaný</string>
   <!-- Mailbox delete screen -->
-  <string name="simple_login_sync_mailbox_delete_title">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">All aliases using the mailbox %s will be also deleted. To keep receiving emails transfer these aliases to a different mailbox:</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfer aliases</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">To mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transfer and delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_error">There was an error deleting mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_success">Mailbox successfully deleted</string>
-  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transfer aliases to</string>
+  <string name="simple_login_sync_mailbox_delete_title">Vymazať poštovú schránku</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">Všetky aliasy používajúce poštovú schránku %s budú tiež vymazané. Ak chcete naďalej prijímať emaily, presuňte tieto aliasy do inej schránky:</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Presunúť aliasy</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Do poštovej schránky</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete">Vymazať schránku</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Presunúť a vymazať poštovú schránku</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">Pri odstraňovaní poštovej schránky došlo k chybe</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_success">Poštová schránka bola úspešne odstránená</string>
+  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Presunúť aliasy do</string>
   <!-- Domain select screen -->
-  <string name="simple_login_sync_domain_select_title">Default domain</string>
-  <string name="simple_login_sync_domain_select_title_none">none</string>
-  <string name="simple_login_sync_domain_select_description_none">No domain</string>
-  <string name="simple_login_sync_domain_select_description_custom">Your domain</string>
-  <string name="simple_login_sync_domain_select_description_free">Public domain</string>
-  <string name="simple_login_sync_domain_select_description_premium">Premium domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">There was an error fetching SL alias domains</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
+  <string name="simple_login_sync_domain_select_title">Predvolená doména</string>
+  <string name="simple_login_sync_domain_select_title_none">žiadna</string>
+  <string name="simple_login_sync_domain_select_description_none">Žiadna doména</string>
+  <string name="simple_login_sync_domain_select_description_custom">Vaša doména</string>
+  <string name="simple_login_sync_domain_select_description_free">Verejná doména</string>
+  <string name="simple_login_sync_domain_select_description_premium">Prémiová doména</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">Pri načítaní domén SL aliasov došlo k chybe</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Pri aktualizácii domény SL aliasu došlo k chybe</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Doména SL aliasu bola úspešne aktualizovaná</string>
   <!-- Mailbox options screen -->
-  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Cannot display mailbox options</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_error">There was an error updating default mailbox</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Default mailbox successfully updated</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Nie je možné zobraziť nastavenia poštovej schránky</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_error">Pri aktualizácii predvolenej poštovej schránky došlo k chybe</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Predvolená poštová schránka bola úspešne aktualizovaná</string>
   <!-- Shared -->
   <string name="simple_login_sync_shared_default_vault_title">Predvolený SL trezor</string>
   <string name="simple_login_sync_shared_default_vault_description">Aliasy SimpleLogin budú importované do tohto trezora.</string>

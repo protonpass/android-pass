@@ -12,8 +12,8 @@
   <string name="delete_alias_enabled_subtitle">"Λάβετε υπόψη ότι μετά τη διαγραφή, δεν είναι δυνατή η επαναφορά του ψευδωνύμου. Ίσως θέλετε να απενεργοποιήσετε το ψευδώνυμο; "</string>
   <string name="delete_alias_disabled_subtitle">Λάβετε υπόψη ότι μετά τη διαγραφή, δεν είναι δυνατή η επαναφορά του ψευδωνύμου. Το ψευδώνυμο είναι ήδη απενεργοποιημένο και δεν προωθεί μηνύματα ηλεκτρονικού ταχυδρομείου στο γραμματοκιβώτιό σας.</string>
   <plurals name="bulk_delete_alias_title">
-    <item quantity="one">You\'re about to permanently delete %d alias</item>
-    <item quantity="other">You\'re about to permanently delete %d aliases</item>
+    <item quantity="one">Πρόκειται να διαγράψετε οριστικά %d ψευδώνυμο</item>
+    <item quantity="other">Πρόκειται να διαγράψετε οριστικά %d ψευδώνυμα</item>
   </plurals>
   <string name="bulk_delete_alias_subtitle">Λάβετε υπόψη ότι μετά τη διαγραφή, δεν είναι δυνατή η επαναφορά των ψευδωνύμων</string>
   <string name="bulk_delete_alias_confirm">Κατανοητό, δεν θα τα χρειαστώ ποτέ</string>

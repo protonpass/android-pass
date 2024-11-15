@@ -137,8 +137,7 @@ internal fun SecurityCenterAliasListContent(
                                 onUiEvent(
                                     EmailBreachClick(
                                         id = itemState.id as BreachEmailId.Alias,
-                                        email = itemState.email,
-                                        breachCount = itemState.count
+                                        email = itemState.email
                                     )
                                 )
                             }
@@ -170,8 +169,7 @@ internal fun SecurityCenterAliasListContent(
                                 onUiEvent(
                                     EmailBreachClick(
                                         id = itemState.id as BreachEmailId.Alias,
-                                        email = itemState.email,
-                                        breachCount = itemState.count
+                                        email = itemState.email
                                     )
                                 )
                             }
@@ -203,8 +201,7 @@ internal fun SecurityCenterAliasListContent(
                                 onUiEvent(
                                     EmailBreachClick(
                                         id = itemState.id as BreachEmailId.Alias,
-                                        email = itemState.email,
-                                        breachCount = itemState.count
+                                        email = itemState.email
                                     )
                                 )
                             }

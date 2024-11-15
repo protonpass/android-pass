@@ -26,8 +26,7 @@ internal sealed interface SecurityCenterAliasListUiEvent {
 
     data class EmailBreachClick(
         val id: BreachEmailId.Alias,
-        val email: String,
-        val breachCount: Int
+        val email: String
     ) : SecurityCenterAliasListUiEvent
 
     data object OptionsClick : SecurityCenterAliasListUiEvent

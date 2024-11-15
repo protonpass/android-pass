@@ -26,8 +26,7 @@ sealed interface SecurityCenterAliasListNavDestination {
     data object Back : SecurityCenterAliasListNavDestination
     data class OnEmailClick(
         val id: BreachEmailId.Alias,
-        val email: String,
-        val breachCount: Int
+        val email: String
     ) : SecurityCenterAliasListNavDestination
 
     data class OnOptionsClick(

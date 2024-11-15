@@ -29,7 +29,7 @@ private const val SETTINGS_GRAPH = "settings_graph"
 
 object Settings : NavItem(
     baseRoute = "settings",
-    deepLinks = listOf("settings")
+    baseDeepLinkRoute = listOf("settings")
 )
 object LogView : NavItem(baseRoute = "log/view")
 object ThemeSelector : NavItem(

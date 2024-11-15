@@ -18,26 +18,32 @@
 
 package proton.android.pass.navigation.api
 
+import android.net.Uri
 import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavDeepLink
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
+import proton.android.pass.common.api.SpecialCharacters.AMPERSAND
+import proton.android.pass.common.api.SpecialCharacters.QUESTION_MARK
+import proton.android.pass.common.api.SpecialCharacters.SLASH
 
 open class NavItem(
     val baseRoute: String,
+    baseDeepLinkRoute: List<String> = emptyList(),
     private val navArgIds: List<NavArgId> = emptyList(),
     private val optionalArgIds: List<OptionalNavArgId> = emptyList(),
     val noHistory: Boolean = false,
     val isTopLevel: Boolean = false,
-    val navItemType: NavItemType = NavItemType.Screen,
-    val deepLinks: List<String> = emptyList()
+    val navItemType: NavItemType = NavItemType.Screen
 ) {
     val route: String = buildString {
-        val argKeys = navArgIds.map { "{${it.key}}" }
-        append(listOf(baseRoute).plus(argKeys).joinToString("/"))
+        val argKeys = navArgIds.map(NavArgId::toPathParam)
+        append(listOf(baseRoute).plus(argKeys).joinToString("$SLASH"))
         if (optionalArgIds.isNotEmpty()) {
             val optionalArgKeys = optionalArgIds.joinToString(
-                prefix = "?",
-                separator = "&",
-                transform = { "${it.key}={${it.key}}" }
+                prefix = "$QUESTION_MARK",
+                separator = "$AMPERSAND",
+                transform = OptionalNavArgId::toQueryParam
             )
             append(optionalArgKeys)
         }
@@ -65,7 +71,23 @@ open class NavItem(
                     }
                 }
             )
+
+    val deepLinkRoutes: List<NavDeepLink> = baseDeepLinkRoute.map {
+        val uri = Uri.Builder()
+            .scheme(NAV_SCHEME)
+            .encodedPath("/internal/$it")
+            .encodedQuery(
+                navArgIds.joinToString(
+                    separator = "$AMPERSAND"
+                ) { argId -> argId.toQueryParam() }
+            )
+        navDeepLink {
+            uriPattern = "$uri"
+        }
+    }
 }
+
+const val NAV_SCHEME = "pass_app"
 
 enum class NavItemType {
     Screen, Bottomsheet, Dialog

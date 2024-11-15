@@ -78,8 +78,8 @@ fun LoginOptionsBottomSheetContents(
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = contents.title) },
             subtitle = {
-                BottomSheetItemSubtitle(text = contents.displayUsername)
-                    .takeIf { contents.displayUsername.isNotEmpty() }
+                BottomSheetItemSubtitle(text = contents.displayValue)
+                    .takeIf { contents.displayValue.isNotEmpty() }
             },
             leftIcon = {
                 val sortedPackages = contents.packageInfoSet.sortedBy { it.packageName.value }

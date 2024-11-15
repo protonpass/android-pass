@@ -61,8 +61,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             itemRevision = item.revision,
             itemState = ItemState.from(item.state),
             itemDiffs = ItemDiffs.Alias(),
-            mailboxes = aliasDetails.mailboxes,
-            slNote = aliasDetails.slNote
+            mailboxes = aliasDetails.mailboxes
         )
     }
 

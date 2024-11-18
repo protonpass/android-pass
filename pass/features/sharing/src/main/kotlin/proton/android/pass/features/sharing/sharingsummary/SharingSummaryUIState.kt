@@ -69,7 +69,6 @@ internal sealed class SharingSummaryState {
     internal val isLoading: Boolean
         get() = isLoadingState.value()
 
-
     data object Initial : SharingSummaryState() {
 
         override val addressPermissions: List<AddressPermission> = emptyList()

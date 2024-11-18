@@ -147,6 +147,7 @@ import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPasswo
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
+import proton.android.pass.data.api.usecases.invites.InviteToItem
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.GetItemOptions
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
@@ -202,6 +203,7 @@ import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
 import proton.android.pass.data.fakes.usecases.FakeChangeAliasStatus
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
+import proton.android.pass.data.fakes.usecases.FakeInviteToItem
 import proton.android.pass.data.fakes.usecases.FakeObserveAddressesByUserId
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
@@ -911,5 +913,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindInAppMessagesRepository(impl: FakeInAppMessagesRepository): InAppMessagesRepository
+
+    @Binds
+    abstract fun bindInviteToItem(impl: FakeInviteToItem): InviteToItem
 
 }

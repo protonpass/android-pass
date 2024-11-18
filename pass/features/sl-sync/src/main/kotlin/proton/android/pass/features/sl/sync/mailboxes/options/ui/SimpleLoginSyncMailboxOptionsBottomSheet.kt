@@ -43,7 +43,7 @@ fun SimpleLoginSyncMailboxOptionsBottomSheet(
                 ).also(onNavigated)
             }
 
-            is SimpleLoginSyncMailboxOptionsEvent.OnMailboxVerifySuccess -> {
+            is SimpleLoginSyncMailboxOptionsEvent.OnVerifyMailbox -> {
                 SimpleLoginSyncNavDestination.VerifyMailbox(
                     mailboxId = event.mailboxId
                 ).also(onNavigated)
@@ -53,8 +53,7 @@ fun SimpleLoginSyncMailboxOptionsBottomSheet(
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxDeleteSuccess,
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxOptionsError,
             SimpleLoginSyncMailboxOptionsEvent.OnMailboxSetAsDefaultError,
-            SimpleLoginSyncMailboxOptionsEvent.OnMailboxSetAsDefaultSuccess,
-            SimpleLoginSyncMailboxOptionsEvent.OnMailboxVerifyError -> {
+            SimpleLoginSyncMailboxOptionsEvent.OnMailboxSetAsDefaultSuccess -> {
                 onNavigated(SimpleLoginSyncNavDestination.DismissBottomSheet)
             }
         }

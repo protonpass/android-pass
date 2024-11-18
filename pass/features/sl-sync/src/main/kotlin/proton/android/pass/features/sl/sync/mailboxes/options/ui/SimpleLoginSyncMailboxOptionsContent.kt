@@ -43,7 +43,6 @@ internal fun SimpleLoginSyncMailboxOptionsContent(
 
         if (canVerify) {
             verify(
-                action = action,
                 onClick = {
                     onUiEvent(SimpleLoginSyncMailboxOptionsUiEvent.OnVerifyClicked)
                 }

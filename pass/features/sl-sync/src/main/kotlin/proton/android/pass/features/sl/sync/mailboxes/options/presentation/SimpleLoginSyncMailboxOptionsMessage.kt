@@ -45,11 +45,6 @@ internal enum class SimpleLoginSyncMailboxOptionsMessage(
         type = SnackbarType.SUCCESS
     ),
 
-    VerifyMailboxError(
-        id = R.string.simple_login_sync_mailbox_verify_message_verification_error,
-        type = SnackbarType.ERROR
-    ),
-
     DeleteMailboxError(
         id = R.string.simple_login_sync_mailbox_delete_message_delete_error,
         type = SnackbarType.ERROR

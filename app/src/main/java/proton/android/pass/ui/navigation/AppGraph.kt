@@ -252,6 +252,7 @@ import proton.android.pass.features.vault.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.CommonNavArgKey
 import proton.android.pass.ui.AppNavigation
+import proton.android.pass.ui.navigation.account.coreAccountGraph
 
 @Suppress("LongMethod", "ComplexMethod", "ThrowsCount")
 fun NavGraphBuilder.appGraph(
@@ -2133,6 +2134,8 @@ fun NavGraphBuilder.appGraph(
             }
         }
     }
+
+    coreAccountGraph(onNavigate = onNavigate)
 }
 
 // This fun should be removed once all categories are migrated to new item-details feature

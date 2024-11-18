@@ -103,7 +103,7 @@ class AcceptInviteImplTest {
         val res = instance.invoke(
             inviterAddressKey = inviterAddressKey.privateKey,
             targetAddressKey = invitedUserAddressKey.privateKey.publicKey(cryptoContext),
-            shareKeys = shareKeys
+            inviteKeys = shareKeys
         )
         return res.keys
     }

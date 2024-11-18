@@ -21,7 +21,7 @@ package proton.android.pass.domain.key
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 
 data class ItemKey(
-    val rotation: Long,
-    val key: EncryptedByteArray,
-    val responseKey: String
-)
+    override val rotation: Long,
+    override val key: EncryptedByteArray,
+    override val responseKey: String
+) : InviteKey

@@ -139,13 +139,14 @@ class SharingSummaryViewModel @Inject constructor(
         eventFlow.compareAndSet(event, SharingSummaryEvent.Idle)
     }
 
-    internal fun onShareItem(itemCategory: ItemCategory) {
+    internal fun onShareItem(itemId: ItemId, itemCategory: ItemCategory) {
         viewModelScope.launch {
             isLoadingStateFlow.update { IsLoadingState.Loading }
 
             runCatching {
                 inviteToItem(
                     shareId = shareId,
+                    itemId = itemId,
                     inviteAddresses = stateFlow.value.addressPermissions
                 )
             }.onFailure { error ->

@@ -20,7 +20,7 @@ package proton.android.pass.crypto.api.usecases
 
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
-import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.InviteKey
 
 @JvmInline
 value class EncryptedInviteShareKeyList(val keys: List<EncryptedInviteKey>)
@@ -34,7 +34,7 @@ interface EncryptInviteKeys {
 
     operator fun invoke(
         inviterAddressKey: PrivateKey,
-        shareKeys: List<ShareKey>,
+        inviteKeys: List<InviteKey>,
         targetAddressKey: PublicKey
     ): EncryptedInviteShareKeyList
 

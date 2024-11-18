@@ -18,14 +18,17 @@
 
 package proton.android.pass.features.sharing.sharingsummary
 
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.items.ItemCategory
 
 internal sealed interface SharingSummaryUiEvent {
 
     data object OnBackClick : SharingSummaryUiEvent
 
-    @JvmInline
-    value class OnShareItemClick(internal val itemCategory: ItemCategory) : SharingSummaryUiEvent
+    data class OnShareItemClick(
+        internal val itemId: ItemId,
+        internal val itemCategory: ItemCategory
+    ) : SharingSummaryUiEvent
 
     data object OnShareVaultClick : SharingSummaryUiEvent
 

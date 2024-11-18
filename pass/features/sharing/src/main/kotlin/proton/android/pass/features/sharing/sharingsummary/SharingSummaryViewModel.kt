@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -92,6 +93,11 @@ class SharingSummaryViewModel @Inject constructor(
 
     private val addressesFlow: Flow<List<AddressPermission>> = bulkInviteRepository
         .observeAddresses()
+        .onEach { addressPermissions ->
+            if (addressPermissions.isEmpty()) {
+                eventFlow.update { SharingSummaryEvent.OnGoHome }
+            }
+        }
         .distinctUntilChanged()
 
     internal val stateFlow: StateFlow<SharingSummaryState> = when (itemIdOption) {
@@ -167,7 +173,7 @@ class SharingSummaryViewModel @Inject constructor(
                 bulkInviteRepository.clear()
                 isLoadingStateFlow.update { IsLoadingState.NotLoading }
                 snackbarDispatcher(SharingSnackbarMessage.InviteSentSuccess)
-                PassLogger.i(TAG, "Invite sent successfully")
+                PassLogger.i(TAG, "Vault invite successfully sent")
                 eventFlow.update { SharingSummaryEvent.OnSharingVaultSuccess(shareId) }
             }.onFailure { error ->
                 isLoadingStateFlow.update { IsLoadingState.NotLoading }
@@ -178,7 +184,7 @@ class SharingSummaryViewModel @Inject constructor(
                     snackbarDispatcher(SharingSnackbarMessage.InviteSentError)
                 }
 
-                PassLogger.w(TAG, "Error sending invite")
+                PassLogger.w(TAG, "Error sending vault invite")
                 PassLogger.w(TAG, error)
             }
         }

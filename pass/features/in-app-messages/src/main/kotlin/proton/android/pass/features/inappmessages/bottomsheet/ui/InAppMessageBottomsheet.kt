@@ -47,7 +47,7 @@ fun InAppMessageBottomsheet(
             LaunchedEffect(Unit) {
                 viewModel.onInAppMessageDisplayed(successState.inAppMessage.key)
             }
-            DisposableEffect(successState) {
+            DisposableEffect(Unit) {
                 with(successState.inAppMessage) {
                     onDispose {
                         viewModel.onInAppMessageDismissed(userId, id, key)

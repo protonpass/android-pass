@@ -94,7 +94,7 @@ internal fun setAsDefault(action: SimpleLoginSyncMailboxOptionsAction, onClick: 
 
 }
 
-internal fun verify(action: SimpleLoginSyncMailboxOptionsAction, onClick: () -> Unit) = object : BottomSheetItem {
+internal fun verify(onClick: () -> Unit) = object : BottomSheetItem {
 
     override val title: @Composable () -> Unit = {
         BottomSheetItemTitle(
@@ -109,17 +109,9 @@ internal fun verify(action: SimpleLoginSyncMailboxOptionsAction, onClick: () -> 
         BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_checkmark_circle)
     }
 
-    override val endIcon: @Composable (() -> Unit) = {
-        if (action == SimpleLoginSyncMailboxOptionsAction.Verify) {
-            CircularProgressIndicator(modifier = Modifier.size(20.dp))
-        }
-    }
+    override val endIcon: @Composable (() -> Unit)? = null
 
-    override val onClick: (() -> Unit) = {
-        if (action == SimpleLoginSyncMailboxOptionsAction.None) {
-            onClick()
-        }
-    }
+    override val onClick: (() -> Unit) = onClick
 
     override val isDivider: Boolean = false
 

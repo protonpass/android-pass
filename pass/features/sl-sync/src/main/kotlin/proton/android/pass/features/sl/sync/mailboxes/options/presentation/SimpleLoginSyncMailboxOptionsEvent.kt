@@ -28,10 +28,8 @@ internal sealed interface SimpleLoginSyncMailboxOptionsEvent {
 
     data object OnMailboxSetAsDefaultSuccess : SimpleLoginSyncMailboxOptionsEvent
 
-    data object OnMailboxVerifyError : SimpleLoginSyncMailboxOptionsEvent
-
     @JvmInline
-    value class OnMailboxVerifySuccess(val mailboxId: Long) : SimpleLoginSyncMailboxOptionsEvent
+    value class OnVerifyMailbox(val mailboxId: Long) : SimpleLoginSyncMailboxOptionsEvent
 
     @JvmInline
     value class OnDeleteMailbox(val mailboxId: Long) : SimpleLoginSyncMailboxOptionsEvent

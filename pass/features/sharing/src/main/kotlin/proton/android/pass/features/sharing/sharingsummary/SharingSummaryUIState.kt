@@ -27,6 +27,7 @@ import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
@@ -86,6 +87,8 @@ internal sealed class SharingSummaryState {
         private val itemUiModel: ItemUiModel,
         private val useFaviconsPreference: UseFaviconsPreference
     ) : SharingSummaryState() {
+
+        internal val itemId: ItemId = itemUiModel.id
 
         internal val itemCategory: ItemCategory = itemUiModel.category
 

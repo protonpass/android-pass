@@ -54,7 +54,7 @@ class EncryptInviteKeysImplTest {
         val shareKeyList = listOf(shareKey)
         val res = instance.invoke(
             inviterAddressKey = inviterAddressKey.privateKey,
-            shareKeys = shareKeyList,
+            inviteKeys = shareKeyList,
             targetAddressKey = PublicKey(
                 key = targetAddressPublicKey,
                 isPrimary = true,

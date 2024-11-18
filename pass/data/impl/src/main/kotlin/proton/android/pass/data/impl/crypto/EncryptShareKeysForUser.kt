@@ -93,7 +93,7 @@ class EncryptShareKeysForUserImpl @Inject constructor(
         return runCatching {
             encryptInviteKeys(
                 inviterAddressKey = inviterAddressKey,
-                shareKeys = shareKeys,
+                inviteKeys = shareKeys,
                 targetAddressKey = targetAddressKey
             )
         }.fold(
@@ -106,7 +106,10 @@ class EncryptShareKeysForUserImpl @Inject constructor(
         )
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "EncryptShareKeysForUserImpl"
+
     }
+
 }

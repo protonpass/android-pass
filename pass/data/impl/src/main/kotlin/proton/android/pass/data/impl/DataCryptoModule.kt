@@ -26,6 +26,8 @@ import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
 import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManagerImpl
 import proton.android.pass.data.impl.crypto.EncryptInviteKeys
 import proton.android.pass.data.impl.crypto.EncryptInviteKeysImpl
+import proton.android.pass.data.impl.crypto.EncryptItemsKeysForUser
+import proton.android.pass.data.impl.crypto.EncryptItemsKeysForUserImpl
 import proton.android.pass.data.impl.crypto.EncryptShareKeysForUser
 import proton.android.pass.data.impl.crypto.EncryptShareKeysForUserImpl
 import proton.android.pass.data.impl.crypto.ReencryptInviteContents
@@ -34,6 +36,7 @@ import proton.android.pass.data.impl.crypto.ReencryptShareContents
 import proton.android.pass.data.impl.crypto.ReencryptShareContentsImpl
 import proton.android.pass.data.impl.crypto.ReencryptShareKey
 import proton.android.pass.data.impl.crypto.ReencryptShareKeyImpl
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -58,4 +61,8 @@ abstract class DataCryptoModule {
 
     @Binds
     abstract fun bindEncryptShareKeysForUser(impl: EncryptShareKeysForUserImpl): EncryptShareKeysForUser
+
+    @[Binds Singleton]
+    abstract fun bindEncryptItemsKeysForUser(impl: EncryptItemsKeysForUserImpl): EncryptItemsKeysForUser
+
 }

@@ -18,6 +18,7 @@
 
 package proton.android.pass.navigation.api
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.runtime.Composable
@@ -44,8 +45,12 @@ class AppNavigator(
     val navController: NavHostController,
     val passBottomSheetNavigator: PassBottomSheetNavigator
 ) {
+    private val currentRoute: String?
+        get() = navController.currentBackStackEntry?.destination?.route
     private val previousRoute: String?
         get() = navController.previousBackStackEntry?.destination?.route
+    private val startRoute: String?
+        get() = navController.graph.findStartDestination().route
 
     fun navigate(
         destination: NavItem,
@@ -114,24 +119,43 @@ class AppNavigator(
         navController.popBackStack(route = destination.route, inclusive = false, saveState = false)
     }
 
+    fun navigateBackToStartDestination(comesFromBottomsheet: Boolean = false, force: Boolean = false) {
+        if (!force && shouldDiscard(comesFromBottomsheet)) return
+        val navOptions = navOptions {
+            popUpTo(navController.graph.id) { inclusive = true }
+        }
+        val startDestinationRoute = startRoute ?: return run {
+            PassLogger.e(TAG, "No start destination found")
+        }
+        navController.navigate(startDestinationRoute, navOptions)
+    }
+
     fun navigateBack(comesFromBottomsheet: Boolean = false, force: Boolean = false) {
         if (!force && shouldDiscard(comesFromBottomsheet)) return
-        if (previousRoute == null) {
-            PassLogger.i(TAG, "Navigating back to start destination")
-            val startDestinationRoute = navController.graph.findStartDestination().route
-            if (startDestinationRoute != null) {
+        when {
+            previousRoute == null && startRoute != null && currentRoute != startRoute -> {
+                PassLogger.i(TAG, "Navigating back to start destination: $startRoute")
                 val navOptions = navOptions {
                     popUpTo(navController.graph.id) { inclusive = true }
                 }
+                val startDestinationRoute = startRoute ?: return run {
+                    PassLogger.e(TAG, "No start destination found")
+                }
                 navController.navigate(startDestinationRoute, navOptions)
                 PassLogger.i(TAG, "Navigated back to start destination")
-            } else {
-                PassLogger.w(TAG, "No start destination found")
             }
-        } else {
-            PassLogger.i(TAG, "Navigating back to $previousRoute")
-            val didNavigate = navController.navigateUp()
-            PassLogger.i(TAG, "Navigated back to $previousRoute: $didNavigate")
+
+            previousRoute != null -> {
+                PassLogger.i(TAG, "Navigating back to $previousRoute")
+                navController.navigateUp()
+                PassLogger.i(TAG, "Navigated back to $previousRoute")
+            }
+
+            else -> {
+                PassLogger.i(TAG, "No previous route found")
+                (navController.context as? Activity)?.finishAffinity()
+                    ?: throw IllegalStateException("No previous route found and no activity found")
+            }
         }
     }
 

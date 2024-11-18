@@ -252,7 +252,8 @@ import proton.android.pass.features.vault.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.CommonNavArgKey
 import proton.android.pass.ui.AppNavigation
-import proton.android.pass.ui.navigation.account.coreAccountGraph
+import proton.android.pass.ui.navigation.account.AccountRedirectsDestination
+import proton.android.pass.ui.navigation.account.accountRedirectsGraph
 
 @Suppress("LongMethod", "ComplexMethod", "ThrowsCount")
 fun NavGraphBuilder.appGraph(
@@ -2135,7 +2136,14 @@ fun NavGraphBuilder.appGraph(
         }
     }
 
-    coreAccountGraph(onNavigate = onNavigate)
+    accountRedirectsGraph {
+        when (it) {
+            AccountRedirectsDestination.Upgrade -> {
+                onNavigate(AppNavigation.Upgrade)
+                appNavigator.navigateBackToStartDestination(force = true)
+            }
+        }
+    }
 }
 
 // This fun should be removed once all categories are migrated to new item-details feature

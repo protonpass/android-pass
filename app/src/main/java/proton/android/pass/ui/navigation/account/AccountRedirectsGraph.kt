@@ -20,14 +20,20 @@ package proton.android.pass.ui.navigation.account
 
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.composecomponents.impl.text.Text.Hero
 import proton.android.pass.navigation.api.composable
-import proton.android.pass.ui.AppNavigation
 
-fun NavGraphBuilder.coreAccountGraph(onNavigate: (AppNavigation) -> Unit) {
+sealed interface AccountRedirectsDestination {
+    data object Upgrade : AccountRedirectsDestination
+}
+
+fun NavGraphBuilder.accountRedirectsGraph(onNavigate: (AccountRedirectsDestination) -> Unit) {
     composable(UpgradeNavItem) {
         LaunchedEffect(Unit) {
-            onNavigate(AppNavigation.Upgrade)
+            onNavigate(AccountRedirectsDestination.Upgrade)
         }
+
+        Hero("Upgrade")
     }
 }
 

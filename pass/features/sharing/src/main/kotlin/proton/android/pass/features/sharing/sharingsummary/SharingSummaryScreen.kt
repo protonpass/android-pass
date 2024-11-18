@@ -63,9 +63,20 @@ fun SharingSummaryScreen(
         state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
-                SharingSummaryUiEvent.OnBackClick -> onNavigateEvent(SharingNavigation.Back)
-                is SharingSummaryUiEvent.OnShareItemClick -> onShareItem(uiEvent.itemCategory)
-                SharingSummaryUiEvent.OnShareVaultClick -> onShareVault()
+                SharingSummaryUiEvent.OnBackClick -> {
+                    onNavigateEvent(SharingNavigation.Back)
+                }
+
+                is SharingSummaryUiEvent.OnShareItemClick -> {
+                    onShareItem(
+                        itemId = uiEvent.itemId,
+                        itemCategory = uiEvent.itemCategory
+                    )
+                }
+
+                SharingSummaryUiEvent.OnShareVaultClick -> {
+                    onShareVault()
+                }
             }
         }
     )

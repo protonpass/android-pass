@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,26 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.crypto.api.usecases
+package proton.android.pass.domain.key
 
-import me.proton.core.key.domain.entity.key.PrivateKey
-import me.proton.core.key.domain.entity.key.PublicKey
-import proton.android.pass.domain.key.InviteKey
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 
-@JvmInline
-value class EncryptedInviteShareKeyList(val keys: List<EncryptedInviteKey>)
+interface InviteKey {
 
-data class EncryptedInviteKey(
-    val keyRotation: Long,
-    val key: String
-)
+    val rotation: Long
 
-interface EncryptInviteKeys {
+    val key: EncryptedByteArray
 
-    operator fun invoke(
-        inviterAddressKey: PrivateKey,
-        inviteKeys: List<InviteKey>,
-        targetAddressKey: PublicKey
-    ): EncryptedInviteShareKeyList
+    val responseKey: String
 
 }

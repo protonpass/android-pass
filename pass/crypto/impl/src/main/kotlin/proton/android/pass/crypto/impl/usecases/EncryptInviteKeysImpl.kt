@@ -33,7 +33,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.EncryptedInviteKey
 import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
-import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.InviteKey
 import javax.inject.Inject
 
 class EncryptInviteKeysImpl @Inject constructor(
@@ -43,7 +43,7 @@ class EncryptInviteKeysImpl @Inject constructor(
 
     override fun invoke(
         inviterAddressKey: PrivateKey,
-        shareKeys: List<ShareKey>,
+        inviteKeys: List<InviteKey>,
         targetAddressKey: PublicKey
     ): EncryptedInviteShareKeyList {
         // Set up targetAddressKey
@@ -60,7 +60,7 @@ class EncryptInviteKeysImpl @Inject constructor(
 
         // Decrypt share keys so we have the actual value
         val decryptedShareKeys: List<EncryptionKeyWithRotation> = encryptionContextProvider.withEncryptionContext {
-            shareKeys.map {
+            inviteKeys.map {
                 EncryptionKeyWithRotation(
                     key = decrypt(it.key),
                     rotation = it.rotation

@@ -20,41 +20,50 @@ package proton.android.pass.features.sharing.sharingsummary
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
+import proton.android.pass.data.fakes.usecases.FakeInviteToItem
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestInviteToVault
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
+import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.sharing.SharingSnackbarMessage.InviteSentError
 import proton.android.pass.features.sharing.SharingSnackbarMessage.InviteSentSuccess
-import proton.android.pass.features.sharing.SharingSnackbarMessage.VaultNotFound
-import proton.android.pass.features.sharing.common.AddressPermissionUiState
-import proton.android.pass.features.sharing.sharingpermissions.SharingType
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestPreferenceRepository
+import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestVault
 
 internal class SharingSummaryViewModelTest {
 
-    private lateinit var viewModel: SharingSummaryViewModel
     private lateinit var getVaultWithItemCountById: TestGetVaultWithItemCountById
     private lateinit var inviteToVault: TestInviteToVault
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
     private lateinit var bulkInviteRepository: TestBulkInviteRepository
+    private lateinit var observeItemById: TestObserveItemById
+    private lateinit var encryptionContextProvider: TestEncryptionContextProvider
+    private lateinit var userPreferencesRepository: TestPreferenceRepository
+    private lateinit var inviteToItem: FakeInviteToItem
 
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
@@ -70,114 +79,214 @@ internal class SharingSummaryViewModelTest {
 
         savedStateHandleProvider = TestSavedStateHandleProvider().apply {
             get()[CommonNavArgId.ShareId.key] = TEST_SHARE_ID
-            get()[CommonOptionalNavArgId.ItemId.key] = null
         }
-        viewModel = SharingSummaryViewModel(
+        observeItemById = TestObserveItemById()
+        encryptionContextProvider = TestEncryptionContextProvider()
+        userPreferencesRepository = TestPreferenceRepository()
+        inviteToItem = FakeInviteToItem()
+    }
+
+    @Test
+    fun `GIVEN vault is sharing WHEN view model is initialized THEN initial state is emitted`() = runTest {
+        val viewModel = createViewModel(isItemSharing = false)
+        val expectedState = SharingSummaryState.Initial
+
+        viewModel.stateFlow.test {
+            val state = awaitItem()
+
+            assertThat(state).isEqualTo(expectedState)
+        }
+    }
+
+    @Test
+    fun `GIVEN vault is sharing WHEN required data is loaded THEN ShareVault state is emitted`() = runTest {
+        val viewModel = createViewModel(isItemSharing = false)
+        val vaultData = createVaultWithItemCount()
+        val expectedState = SharingSummaryState.ShareVault(
+            event = SharingSummaryEvent.Idle,
+            addressPermissions = listOf(
+                AddressPermission(
+                    address = TEST_EMAIL,
+                    shareRole = ShareRole.Read
+                )
+            ),
+            isLoadingState = IsLoadingState.NotLoading,
+            vaultWithItemCount = vaultData
+        )
+
+        getVaultWithItemCountById.emitValue(vaultData)
+
+        viewModel.stateFlow.test {
+            val state = awaitItem()
+
+            assertThat(state).isEqualTo(expectedState)
+        }
+    }
+
+    @Test
+    fun `GIVEN vault is sharing WHEN there are no addresses to share with THEN navigate home`() = runTest {
+        val viewModel = createViewModel(isItemSharing = false)
+        val expectedEvent = SharingSummaryEvent.OnGoHome
+
+        getVaultWithItemCountById.emitValue(createVaultWithItemCount())
+        bulkInviteRepository.clear()
+
+        viewModel.stateFlow.test {
+            val state = awaitItem()
+
+            assertThat(state.event).isEqualTo(expectedEvent)
+        }
+    }
+
+    @Test
+    fun `GIVEN vault is sharing WHEN error occurs while inviting THEN error message is shown`() = runTest {
+        val viewModel = createViewModel(isItemSharing = false)
+        val expectedMessage = InviteSentError
+        inviteToVault.setResult(Result.failure(RuntimeException("test exception")))
+
+        viewModel.onShareVault()
+
+        val message = snackbarDispatcher.snackbarMessage.first().value()
+        assertThat(message).isEqualTo(expectedMessage)
+    }
+
+    @Test
+    fun `GIVEN vault is sharing WHEN no errors occur while inviting THEN success message is shown`() = runTest {
+        val viewModel = createViewModel(isItemSharing = false)
+        val expectedMessage = InviteSentSuccess
+        inviteToVault.setResult(Result.success(Unit))
+
+        viewModel.onShareVault()
+
+        val message = snackbarDispatcher.snackbarMessage.first().value()
+        assertThat(message).isEqualTo(expectedMessage)
+    }
+
+    @Test
+    fun `GIVEN item is sharing WHEN view model is initialized THEN initial state is emitted`() = runTest {
+        val viewModel = createViewModel(isItemSharing = true)
+        val expectedState = SharingSummaryState.Initial
+
+        viewModel.stateFlow.test {
+            val state = awaitItem()
+
+            assertThat(state).isEqualTo(expectedState)
+        }
+    }
+
+    @Test
+    fun `GIVEN item is sharing WHEN there are no addresses to share with THEN navigate home`() = runTest {
+        val viewModel = createViewModel(isItemSharing = true)
+        val item = TestObserveItems.createItem(
+            itemContents = ItemContents.Note(
+                title = "item",
+                note = "note"
+            )
+        )
+        val expectedEvent = SharingSummaryEvent.OnGoHome
+
+        observeItemById.emitValue(Result.success(item))
+        userPreferencesRepository.setUseFaviconsPreference(UseFaviconsPreference.Enabled)
+        bulkInviteRepository.clear()
+
+        viewModel.stateFlow.test {
+            val state = awaitItem()
+
+            assertThat(state.event).isEqualTo(expectedEvent)
+        }
+    }
+
+    @Test
+    fun `GIVEN item is sharing WHEN error occurs while inviting THEN error message is shown`() = runTest {
+        val viewModel = createViewModel(isItemSharing = true)
+        val expectedMessage = InviteSentError
+        inviteToItem.setResult(shouldFail = true)
+
+        viewModel.onShareItem(ItemCategory.Note)
+
+        val message = snackbarDispatcher.snackbarMessage.first().value()
+        assertThat(message).isEqualTo(expectedMessage)
+    }
+
+    @Test
+    fun `GIVEN item is sharing WHEN required data is loaded THEN ShareItem state is emitted`() = runTest {
+        val viewModel = createViewModel(isItemSharing = true)
+        savedStateHandleProvider.apply {
+            get()[CommonOptionalNavArgId.ItemId.key] = TEST_ITEM_ID
+        }
+        val item = TestObserveItems.createItem(
+            itemContents = ItemContents.Note(
+                title = "item",
+                note = "note"
+            )
+        )
+        val useFaviconsPreference = UseFaviconsPreference.Enabled
+
+        val expectedState = SharingSummaryState.ShareItem(
+            event = SharingSummaryEvent.Idle,
+            addressPermissions = listOf(
+                AddressPermission(
+                    address = TEST_EMAIL,
+                    shareRole = ShareRole.Read
+                )
+            ),
+            isLoadingState = IsLoadingState.NotLoading,
+            itemUiModel = encryptionContextProvider.withEncryptionContext {
+                item.toUiModel(this@withEncryptionContext)
+            },
+            useFaviconsPreference = useFaviconsPreference
+        )
+        userPreferencesRepository.setUseFaviconsPreference(useFaviconsPreference)
+        observeItemById.emitValue(Result.success(item))
+
+        viewModel.stateFlow.test {
+            val state = awaitItem()
+
+            assertThat(state).isEqualTo(expectedState)
+        }
+    }
+
+    @Test
+    fun `GIVEN item is sharing WHEN no errors occur while inviting THEN success message is shown`() = runTest {
+        val viewModel = createViewModel(isItemSharing = false)
+        val expectedMessage = InviteSentSuccess
+
+        viewModel.onShareItem(ItemCategory.Note)
+
+        val message = snackbarDispatcher.snackbarMessage.first().value()
+        assertThat(message).isEqualTo(expectedMessage)
+    }
+
+    private fun createViewModel(isItemSharing: Boolean): SharingSummaryViewModel {
+        savedStateHandleProvider.apply {
+            get()[CommonOptionalNavArgId.ItemId.key] = TEST_ITEM_ID.takeIf { isItemSharing }
+        }
+
+        return SharingSummaryViewModel(
             getVaultWithItemCountById = getVaultWithItemCountById,
             inviteToVault = inviteToVault,
             snackbarDispatcher = snackbarDispatcher,
             savedStateHandleProvider = savedStateHandleProvider,
             bulkInviteRepository = bulkInviteRepository,
             getUserPlan = TestGetUserPlan(),
-            observeItemById = TestObserveItemById()
+            observeItemById = observeItemById,
+            inviteToItem = inviteToItem,
+            encryptionContextProvider = encryptionContextProvider,
+            userPreferencesRepository = userPreferencesRepository
         )
-    }
-
-    @Test
-    fun `test view model initialization`() = runTest {
-        viewModel.stateFlow.test {
-            val initialState = awaitItem()
-
-            assertThat(initialState.isLoading).isTrue()
-
-            val expected = AddressPermissionUiState(TEST_EMAIL, SharingType.Read)
-            assertThat(initialState.addresses).isEqualTo(listOf(expected))
-        }
-    }
-
-    @Test
-    fun `test view model state with successful vault loading`() = runTest {
-        val vaultData = createVaultWithItemCount()
-        getVaultWithItemCountById.emitValue(vaultData)
-
-        viewModel.stateFlow.test {
-            val initialState = awaitItem()
-
-            val addresses = listOf(AddressPermissionUiState(TEST_EMAIL, SharingType.Read))
-            val expectedState = SharingSummaryUIState(
-                addresses = addresses.toPersistentList(),
-                vaultWithItemCount = vaultData,
-                isLoading = false
-            )
-            assertThat(initialState).isEqualTo(expectedState)
-        }
-    }
-
-
-    @Test
-    fun `test view model state with error in vault loading`() = runTest {
-        getVaultWithItemCountById.sendException(RuntimeException("test exception"))
-
-        viewModel.stateFlow.test {
-            val initialState = awaitItem()
-            val expectedState = SharingSummaryUIState(
-                addresses = persistentListOf(
-                    AddressPermissionUiState(
-                        TEST_EMAIL,
-                        SharingType.Read
-                    )
-                ),
-                vaultWithItemCount = null,
-                isLoading = false,
-                event = SharingSummaryEvent.OnGoHome
-            )
-            assertThat(initialState).isEqualTo(expectedState)
-        }
-        val message = snackbarDispatcher.snackbarMessage.first().value()
-        assertThat(message).isNotNull()
-        assertThat(message).isEqualTo(VaultNotFound)
-    }
-
-    @Test
-    fun `test view model on share vault success`() = runTest {
-        inviteToVault.setResult(Result.success(Unit))
-
-        viewModel.onShareVault()
-
-        val message = snackbarDispatcher.snackbarMessage.first().value()
-        assertThat(message).isNotNull()
-        assertThat(message).isEqualTo(InviteSentSuccess)
-    }
-
-
-    @Test
-    fun `test view model on share vault failure`() = runTest {
-        inviteToVault.setResult(Result.failure(RuntimeException("test exception")))
-
-        viewModel.onShareVault()
-
-        val message = snackbarDispatcher.snackbarMessage.first().value()
-        assertThat(message).isNotNull()
-        assertThat(message).isEqualTo(InviteSentError)
-    }
-
-    @Test
-    fun `if addresses is empty send back to home`() = runTest {
-        bulkInviteRepository.clear()
-        viewModel.stateFlow.test {
-            val state = awaitItem()
-            assertThat(state.event).isEqualTo(SharingSummaryEvent.OnGoHome)
-        }
     }
 
     private fun createVaultWithItemCount() = VaultWithItemCount(
         vault = TestVault.create(
             shareId = ShareId(id = TEST_SHARE_ID)
         ),
-        activeItemCount = 5521, trashedItemCount = 6902
+        activeItemCount = 5521,
+        trashedItemCount = 6902
     )
 
     private companion object {
+
+        private const val TEST_ITEM_ID = "SharingSummaryViewModelTest-ItemID"
 
         private const val TEST_SHARE_ID = "SharingSummaryViewModelTest-ShareID"
 

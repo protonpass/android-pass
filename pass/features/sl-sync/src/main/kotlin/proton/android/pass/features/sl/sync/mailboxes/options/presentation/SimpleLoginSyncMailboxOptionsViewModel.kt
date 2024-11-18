@@ -38,7 +38,6 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.simplelogin.DeleteSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.ObserveSimpleLoginAliasMailbox
-import proton.android.pass.data.api.usecases.simplelogin.ResendSimpleLoginAliasMailboxVerificationCode
 import proton.android.pass.data.api.usecases.simplelogin.UpdateSimpleLoginAliasMailbox
 import proton.android.pass.features.sl.sync.shared.navigation.mailboxes.SimpleLoginSyncMailboxIdNavArgId
 import proton.android.pass.log.api.PassLogger
@@ -51,27 +50,27 @@ class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
     observeSimpleLoginAliasMailbox: ObserveSimpleLoginAliasMailbox,
     private val updateSimpleLoginAliasMailbox: UpdateSimpleLoginAliasMailbox,
     private val deleteSimpleLoginAliasMailbox: DeleteSimpleLoginAliasMailbox,
-    private val resendAliasMailboxVerificationCode: ResendSimpleLoginAliasMailboxVerificationCode,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val mailboxId = savedStateHandleProvider.get()
         .require<Long>(SimpleLoginSyncMailboxIdNavArgId.key)
 
-    private val aliasMailboxOptionFlow = oneShot { observeSimpleLoginAliasMailbox(mailboxId).first() }
-        .mapLatest { aliasMailbox ->
-            if (aliasMailbox == null) {
-                throw IllegalStateException("Alias mailbox is null")
+    private val aliasMailboxOptionFlow =
+        oneShot { observeSimpleLoginAliasMailbox(mailboxId).first() }
+            .mapLatest { aliasMailbox ->
+                if (aliasMailbox == null) {
+                    throw IllegalStateException("Alias mailbox is null")
+                }
+                aliasMailbox.toOption()
             }
-            aliasMailbox.toOption()
-        }
-        .catch { error ->
-            PassLogger.w(TAG, "There was an error observing alias mailbox")
-            PassLogger.w(TAG, error)
-            eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnMailboxOptionsError }
-            snackbarDispatcher(SimpleLoginSyncMailboxOptionsMessage.MailboxOptionsError)
-            emit(None)
-        }
+            .catch { error ->
+                PassLogger.w(TAG, "There was an error observing alias mailbox")
+                PassLogger.w(TAG, error)
+                eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnMailboxOptionsError }
+                snackbarDispatcher(SimpleLoginSyncMailboxOptionsMessage.MailboxOptionsError)
+                emit(None)
+            }
 
     private val eventFlow = MutableStateFlow<SimpleLoginSyncMailboxOptionsEvent>(
         value = SimpleLoginSyncMailboxOptionsEvent.Idle
@@ -103,7 +102,7 @@ class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
                 .onFailure { error ->
                     PassLogger.w(TAG, "There was an error updating default mailbox")
                     PassLogger.w(TAG, error)
-                    eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnMailboxVerifyError }
+                    eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnMailboxSetAsDefaultError }
                     snackbarDispatcher(SimpleLoginSyncMailboxOptionsMessage.DefaultMailboxError)
                 }
                 .onSuccess {
@@ -116,24 +115,7 @@ class SimpleLoginSyncMailboxOptionsViewModel @Inject constructor(
     }
 
     internal fun onVerifyMailbox() {
-        viewModelScope.launch {
-            actionFlow.update { SimpleLoginSyncMailboxOptionsAction.Verify }
-
-            runCatching { resendAliasMailboxVerificationCode(mailboxId) }
-                .onFailure { error ->
-                    PassLogger.w(TAG, "There was an error resending mailbox verification code")
-                    PassLogger.w(TAG, error)
-                    eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnMailboxVerifyError }
-                    snackbarDispatcher(SimpleLoginSyncMailboxOptionsMessage.VerifyMailboxError)
-                }
-                .onSuccess {
-                    eventFlow.update {
-                        SimpleLoginSyncMailboxOptionsEvent.OnMailboxVerifySuccess(mailboxId)
-                    }
-                }
-
-            actionFlow.update { SimpleLoginSyncMailboxOptionsAction.None }
-        }
+        eventFlow.update { SimpleLoginSyncMailboxOptionsEvent.OnVerifyMailbox(mailboxId) }
     }
 
     internal fun onDeleteMailbox() {

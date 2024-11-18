@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -24,62 +24,44 @@ import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
-import proton.android.pass.data.impl.repositories.ShareKeyRepository
+import proton.android.pass.data.impl.repositories.ItemKeyRepository
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
-import javax.inject.Singleton
 
-interface EncryptShareKeysForUser {
+interface EncryptItemsKeysForUser {
+
     suspend operator fun invoke(
-        userAddress: UserAddress,
         shareId: ShareId,
+        itemId: ItemId,
+        userAddress: UserAddress,
         targetEmail: String
     ): Result<EncryptedInviteShareKeyList>
 
-    suspend operator fun invoke(
-        userAddress: UserAddress,
-        shareId: ShareId,
-        targetEmail: String,
-        shareKeys: List<ShareKey>
-    ): Result<EncryptedInviteShareKeyList>
 }
 
-@Singleton
-class EncryptShareKeysForUserImpl @Inject constructor(
-    private val shareKeyRepository: ShareKeyRepository,
+class EncryptItemsKeysForUserImpl @Inject constructor(
+    private val itemKeyRepository: ItemKeyRepository,
     private val getAllKeysByAddress: GetAllKeysByAddress,
     private val encryptInviteKeys: EncryptInviteKeys
-) : EncryptShareKeysForUser {
+) : EncryptItemsKeysForUser {
 
     @Suppress("ReturnCount")
     override suspend fun invoke(
-        userAddress: UserAddress,
         shareId: ShareId,
+        itemId: ItemId,
+        userAddress: UserAddress,
         targetEmail: String
     ): Result<EncryptedInviteShareKeyList> {
-        val shareKeys = shareKeyRepository.getShareKeys(
+
+        val (_, itemKey) = itemKeyRepository.getLatestItemKey(
             userId = userAddress.userId,
             addressId = userAddress.addressId,
             shareId = shareId,
-            forceRefresh = true
+            itemId = itemId
         ).first()
 
-        return invoke(
-            userAddress = userAddress,
-            shareId = shareId,
-            targetEmail = targetEmail,
-            shareKeys = shareKeys
-        )
-    }
-
-    override suspend fun invoke(
-        userAddress: UserAddress,
-        shareId: ShareId,
-        targetEmail: String,
-        shareKeys: List<ShareKey>
-    ): Result<EncryptedInviteShareKeyList> {
         val inviterAddressKey = userAddress.keys.primary()?.privateKey
             ?: return Result.failure(IllegalStateException("No primary address key for inviter user"))
 
@@ -93,7 +75,7 @@ class EncryptShareKeysForUserImpl @Inject constructor(
         return runCatching {
             encryptInviteKeys(
                 inviterAddressKey = inviterAddressKey,
-                inviteKeys = shareKeys,
+                inviteKeys = listOf(itemKey),
                 targetAddressKey = targetAddressKey
             )
         }.fold(
@@ -104,11 +86,12 @@ class EncryptShareKeysForUserImpl @Inject constructor(
                 Result.failure(it)
             }
         )
+
     }
 
     private companion object {
 
-        private const val TAG = "EncryptShareKeysForUserImpl"
+        private const val TAG = "EncryptItemsKeysForUserImpl"
 
     }
 

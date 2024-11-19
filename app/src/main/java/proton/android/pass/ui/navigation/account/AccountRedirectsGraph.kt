@@ -20,7 +20,6 @@ package proton.android.pass.ui.navigation.account
 
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.composecomponents.impl.text.Text.Hero
 import proton.android.pass.navigation.api.composable
 
 sealed interface AccountRedirectsDestination {
@@ -32,8 +31,6 @@ fun NavGraphBuilder.accountRedirectsGraph(onNavigate: (AccountRedirectsDestinati
         LaunchedEffect(Unit) {
             onNavigate(AccountRedirectsDestination.Upgrade)
         }
-
-        Hero("Upgrade")
     }
 }
 

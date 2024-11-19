@@ -109,6 +109,7 @@ internal fun SharingSummaryContent(
                         SharingSummaryState.Initial -> Unit
                         is SharingSummaryState.ShareItem -> {
                             SharingSummaryShareSection(
+                                modifier = Modifier.padding(bottom = Spacing.medium),
                                 sectionTitle = stringResource(R.string.share_summary_item_title),
                                 shareTitle = state.itemTitle,
                                 shareSubTitle = state.itemSubtitle,
@@ -126,6 +127,7 @@ internal fun SharingSummaryContent(
 
                         is SharingSummaryState.ShareVault -> {
                             SharingSummaryShareSection(
+                                modifier = Modifier.padding(bottom = Spacing.medium),
                                 sectionTitle = stringResource(R.string.share_summary_vault_title),
                                 shareTitle = state.vault.name,
                                 shareSubTitle = pluralStringResource(

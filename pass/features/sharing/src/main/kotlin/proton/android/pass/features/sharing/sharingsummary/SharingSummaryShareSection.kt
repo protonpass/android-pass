@@ -22,14 +22,19 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.icon.PassItemIcon
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.domain.items.ItemCategory
 
 @Composable
 internal fun SharingSummaryShareSection(
@@ -40,7 +45,7 @@ internal fun SharingSummaryShareSection(
     shareIcon: @Composable () -> Unit
 ) {
     Column(
-        modifier = modifier.padding(bottom = Spacing.large),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
         Text.Body1Regular(
@@ -72,6 +77,24 @@ internal fun SharingSummaryShareSection(
                     )
                 }
             }
+        }
+    }
+}
+
+@[Preview Composable]
+internal fun SharingSummaryShareSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            SharingSummaryShareSection(
+                sectionTitle = "Section title",
+                shareTitle = "Share title",
+                shareSubTitle = "Share subtitle",
+                shareIcon = {
+                    PassItemIcon(
+                        itemCategory = ItemCategory.Note
+                    )
+                }
+            )
         }
     }
 }

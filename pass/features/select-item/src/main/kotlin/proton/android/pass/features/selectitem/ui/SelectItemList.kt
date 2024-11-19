@@ -39,10 +39,10 @@ import proton.android.pass.composecomponents.impl.item.ItemsList
 import proton.android.pass.composecomponents.impl.item.header.ItemCount
 import proton.android.pass.composecomponents.impl.item.header.ItemListHeader
 import proton.android.pass.composecomponents.impl.item.header.SortingButton
-import proton.android.pass.searchoptions.api.SearchFilterType
 import proton.android.pass.features.selectitem.R
 import proton.android.pass.features.selectitem.navigation.SelectItemNavigation
 import proton.android.pass.features.selectitem.previewproviders.SelectItemUiStatePreviewProvider
+import proton.android.pass.searchoptions.api.SearchFilterType
 
 @Composable
 fun SelectItemList(
@@ -99,6 +99,7 @@ fun SelectItemList(
             } else {
                 EmptyList(
                     emptyListMessage = stringResource(id = R.string.error_credentials_not_found),
+                    canCreate = listUiState.displayCreateButton,
                     onCreateItemClick = {
                         if (listUiState.accountSwitchState.accountList.size > 1) {
                             onNavigate(SelectItemNavigation.SelectAccount)

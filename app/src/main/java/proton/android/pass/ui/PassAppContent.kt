@@ -59,6 +59,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.R
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.BottomBarSelection
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
@@ -146,16 +147,21 @@ fun PassAppContent(
         label = "BannerBottomPadding"
     )
 
-    val inAppMessageOption = appUiState.inAppMessage
-    LaunchedEffect(inAppMessageOption) {
-        if (inAppMessageOption is Some && inAppMessageOption.value.mode == InAppMessageMode.Modal) {
-            appNavigator.navigate(
-                InAppMessageModalNavItem,
-                InAppMessageModalNavItem.createNavRoute(
-                    inAppMessageOption.value.userId,
-                    inAppMessageOption.value.id
-                )
-            )
+    LaunchedEffect(appUiState.inAppMessage, appNavigator.currentRoute) {
+        when (val option = appUiState.inAppMessage) {
+            is Some -> {
+                val message = option.value
+                val shouldNavigate = message.mode == InAppMessageMode.Modal &&
+                    appNavigator.currentRoute == HomeNavItem.route
+                if (shouldNavigate) {
+                    appNavigator.navigate(
+                        InAppMessageModalNavItem,
+                        InAppMessageModalNavItem.createNavRoute(message.userId, message.id)
+                    )
+                }
+            }
+
+            is None -> Unit
         }
     }
 
@@ -184,8 +190,9 @@ fun PassAppContent(
 
     val internalDrawerState: InternalDrawerState =
         rememberInternalDrawerState(InternalDrawerValue.Closed)
-    val currentRoute = appNavigator.navController.currentDestination?.route
-    val bottomBarSelected = remember(currentRoute) { determineBottomBarSelection(currentRoute) }
+    val bottomBarSelected = remember(appNavigator.currentRoute) {
+        determineBottomBarSelection(appNavigator.currentRoute)
+    }
     val shouldShowBottomBar = !needsAuth && bottomBarSelected != BottomBarSelection.None
     Scaffold(
         modifier = modifier,
@@ -205,7 +212,7 @@ fun PassAppContent(
                             appNavigator = appNavigator,
                             coroutineScope = coroutineScope,
                             bottomSheetState = bottomSheetState,
-                            currentRoute = currentRoute
+                            currentRoute = appNavigator.currentRoute
                         )
                     }
                 )
@@ -301,10 +308,10 @@ fun PassAppContent(
                     }
 
                     var isBannerVisible by remember { mutableStateOf(false) }
-                    LaunchedEffect(inAppMessageOption, currentRoute) {
-                        isBannerVisible = inAppMessageOption is Some &&
-                            inAppMessageOption.value.mode == InAppMessageMode.Banner &&
-                            currentRoute == HomeNavItem.route
+                    LaunchedEffect(appUiState.inAppMessage, appNavigator.currentRoute) {
+                        isBannerVisible = appUiState.inAppMessage is Some &&
+                            appUiState.inAppMessage.value.mode == InAppMessageMode.Banner &&
+                            appNavigator.currentRoute == HomeNavItem.route
                     }
                     AnimatedVisibility(
                         modifier = Modifier.align(Alignment.BottomCenter),
@@ -312,10 +319,10 @@ fun PassAppContent(
                         enter = slideInVertically { it } + fadeIn(),
                         exit = slideOutVertically { it } + fadeOut()
                     ) {
-                        if (inAppMessageOption !is Some) return@AnimatedVisibility
+                        if (appUiState.inAppMessage !is Some) return@AnimatedVisibility
                         InAppMessageBanner(
                             modifier = Modifier.padding(bottom = bannerBottomPadding),
-                            inAppMessage = inAppMessageOption.value,
+                            inAppMessage = appUiState.inAppMessage.value,
                             onDismiss = { userId, id, key ->
                                 onInAppMessageBannerRead(userId, id, key)
                                 isBannerVisible = false

@@ -18,17 +18,11 @@
 
 package proton.android.pass.features.sharing.accept
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.bottomSheet
@@ -39,39 +33,33 @@ fun AcceptInviteBottomSheet(
     modifier: Modifier = Modifier,
     onNavigateEvent: (SharingNavigation) -> Unit,
     viewModel: AcceptInviteViewModel = hiltViewModel()
-) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+) = with(viewModel) {
+    val state by stateFlow.collectAsStateWithLifecycle()
+
     LaunchedEffect(state.event) {
-        if (state.event == AcceptInviteEvent.Close) {
-            onNavigateEvent(SharingNavigation.BackToHome)
-            viewModel.clearEvent()
+        when (state.event) {
+            AcceptInviteEvent.Idle -> Unit
+            AcceptInviteEvent.Close -> onNavigateEvent(SharingNavigation.BackToHome)
         }
+
+        onConsumeEvent(state.event)
     }
 
-    when (val content = state.content) {
-        is AcceptInviteUiContent.Loading -> {
-            Box(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(120.dp)
-                    .bottomSheet()
-            ) {
-                CircularProgressIndicator(modifier = Modifier.size(48.dp).align(Alignment.Center))
+    AcceptInviteContent(
+        modifier = modifier
+            .fillMaxWidth()
+            .bottomSheet(),
+        state = state,
+        onUiEvent = { uiEvent ->
+            when (uiEvent) {
+                is AcceptInviteUiEvent.OnAcceptInvitationClick -> {
+                    onAcceptInvite(inviteToken = uiEvent.inviteToken)
+                }
+
+                is AcceptInviteUiEvent.OnRejectInvitationClick -> {
+                    onRejectInvite(inviteToken = uiEvent.inviteToken)
+                }
             }
         }
-        is AcceptInviteUiContent.Content -> {
-            AcceptInviteContent(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .bottomSheet(),
-                state = content,
-                onConfirm = {
-                    viewModel.onConfirm(content.invite)
-                },
-                onReject = {
-                    viewModel.onReject(content.invite)
-                }
-            )
-        }
-    }
+    )
 }

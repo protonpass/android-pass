@@ -22,6 +22,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -31,15 +32,35 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.PendingInvite
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
 import proton.android.pass.featurehome.impl.R
 
 @Composable
-fun InviteCard(modifier: Modifier = Modifier, onClick: () -> Unit) {
+internal fun InviteCard(
+    modifier: Modifier = Modifier,
+    pendingInvite: PendingInvite,
+    onClick: () -> Unit
+) {
+    val (titleResId, bodyResId) = remember(pendingInvite) {
+        when (pendingInvite) {
+            is PendingInvite.Item -> {
+                R.string.home_item_invite_banner_title to R.string.home_item_invite_banner_subtitle
+            }
+
+            is PendingInvite.Vault -> {
+                R.string.home_invite_banner_title to R.string.home_invite_banner_subtitle
+            }
+        }
+    }
+
     SpotlightCard(
         modifier = modifier,
         backgroundColor = PassTheme.colors.backgroundMedium,
-        title = stringResource(id = R.string.home_invite_banner_title),
-        body = stringResource(id = R.string.home_invite_banner_subtitle),
+        title = stringResource(id = titleResId, pendingInvite.inviterEmail),
+        body = stringResource(id = bodyResId),
         titleColor = PassTheme.colors.textNorm,
         image = {
             Image(
@@ -55,12 +76,24 @@ fun InviteCard(modifier: Modifier = Modifier, onClick: () -> Unit) {
     )
 }
 
-@Preview
-@Composable
-fun InviteCardPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+@[Preview Composable]
+internal fun InviteCardPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            InviteCard(onClick = {})
+            InviteCard(
+                pendingInvite = PendingInvite.Vault(
+                    inviteToken = InviteToken(""),
+                    inviterEmail = "inviter@email.com",
+                    invitedAddressId = "invitedAddressId",
+                    isFromNewUser = false,
+                    memberCount = 0,
+                    itemCount = 0,
+                    name = "Vault name",
+                    icon = ShareIcon.Icon1,
+                    color = ShareColor.Color1
+                ),
+                onClick = {}
+            )
         }
     }
 }

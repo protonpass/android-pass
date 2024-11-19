@@ -27,14 +27,33 @@ value class InviteId(val value: String)
 @JvmInline
 value class NewUserInviteId(val value: String)
 
-data class PendingInvite(
-    val inviteToken: InviteToken,
-    val inviterEmail: String,
-    val invitedAddressId: String,
-    val memberCount: Int,
-    val itemCount: Int,
-    val name: String,
-    val icon: ShareIcon,
-    val color: ShareColor,
-    val fromNewUser: Boolean
-)
+sealed interface PendingInvite {
+
+    val inviteToken: InviteToken
+
+    val inviterEmail: String
+
+    val invitedAddressId: String
+
+    val isFromNewUser: Boolean
+
+    data class Item(
+        override val inviteToken: InviteToken,
+        override val inviterEmail: String,
+        override val invitedAddressId: String,
+        override val isFromNewUser: Boolean
+    ) : PendingInvite
+
+    data class Vault(
+        override val inviteToken: InviteToken,
+        override val inviterEmail: String,
+        override val invitedAddressId: String,
+        override val isFromNewUser: Boolean,
+        val memberCount: Int,
+        val itemCount: Int,
+        val name: String,
+        val icon: ShareIcon,
+        val color: ShareColor
+    ) : PendingInvite
+
+}

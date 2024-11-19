@@ -27,20 +27,17 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.RejectInvite
+import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.log.api.PassLogger
@@ -61,53 +58,71 @@ class AcceptInviteViewModel @Inject constructor(
     private val progressFlow: MutableStateFlow<AcceptInviteProgressState> =
         MutableStateFlow(AcceptInviteProgressState.Hide)
 
-    private val eventFlow: MutableStateFlow<AcceptInviteEvent> =
-        MutableStateFlow(AcceptInviteEvent.Unknown)
+    private val eventFlow: MutableStateFlow<AcceptInviteEvent> = MutableStateFlow(
+        value = AcceptInviteEvent.Idle
+    )
 
-    private val inviteFlow: Flow<LoadingResult<PendingInvite?>> = observeInvites()
-        .map { invites -> invites.firstOrNull() }
-        .take(1) // So when we accept the invite it doesn't re-emit
-        .asLoadingResult()
-        .onEach {
-            if (it is LoadingResult.Error) {
-                PassLogger.w(TAG, "Error loading invite")
-                PassLogger.w(TAG, it.exception)
-                eventFlow.update { AcceptInviteEvent.Close }
-            }
-        }
-        .distinctUntilChanged()
+    private val pendingInviteFlow: Flow<PendingInvite?> = oneShot {
+        observeInvites()
+            .first()
+            .firstOrNull()
+    }
 
-    val state: StateFlow<AcceptInviteUiState> = combine(
-        buttonsFlow,
-        inviteFlow,
-        progressFlow,
-        eventFlow
-    ) { buttons, invite, progress, event ->
-        val content = when (invite) {
-            LoadingResult.Loading -> AcceptInviteUiContent.Loading
-            is LoadingResult.Error -> {
-                PassLogger.w(TAG, "Error loading invite")
-                PassLogger.w(TAG, invite.exception)
-                snackbarDispatcher(SharingSnackbarMessage.GetInviteError)
-                AcceptInviteUiContent.Loading
+    internal val stateFlow: StateFlow<AcceptInviteState> = combine(
+        eventFlow,
+        pendingInviteFlow
+    ) { event, pendingInvite ->
+        when (pendingInvite) {
+            is PendingInvite.Item -> {
+                AcceptInviteState.ItemInvite(
+                    event = event,
+                    pendingItemInvite = pendingInvite
+                )
             }
 
-            is LoadingResult.Success -> AcceptInviteUiContent.Content(
-                invite = invite.data,
-                buttonsState = buttons,
-                progressState = progress
-            )
-        }
-        AcceptInviteUiState(
-            event = event,
-            content = content
-        )
+            is PendingInvite.Vault -> {
+                AcceptInviteState.VaultInvite(
+                    event = event,
+                    pendingVaultInvite = pendingInvite
+                )
+            }
 
+            else -> {
+                AcceptInviteState.Initial
+            }
+        }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = AcceptInviteUiState.Initial
+        initialValue = AcceptInviteState.Initial
     )
+
+    internal fun onConsumeEvent(event: AcceptInviteEvent) {
+        eventFlow.compareAndSet(event, AcceptInviteEvent.Idle)
+    }
+
+    internal fun onAcceptInvite(inviteToken: InviteToken) {
+        viewModelScope.launch {
+
+        }
+    }
+
+    internal fun onRejectInvite(inviteToken: InviteToken) {
+        viewModelScope.launch {
+            runCatching { rejectInvite(inviteToken) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "There was an error rejecting invite")
+                    PassLogger.w(TAG, error)
+                    eventFlow.update { AcceptInviteEvent.Close }
+                    snackbarDispatcher(SharingSnackbarMessage.InviteRejectError)
+                }
+                .onSuccess {
+                    PassLogger.i(TAG, "Invite successfully rejected")
+                    eventFlow.update { AcceptInviteEvent.Close }
+                    snackbarDispatcher(SharingSnackbarMessage.InviteRejected)
+                }
+        }
+    }
 
     @Suppress("LongMethod")
     fun onConfirm(invite: PendingInvite?) = viewModelScope.launch {
@@ -224,11 +239,10 @@ class AcceptInviteViewModel @Inject constructor(
         }
     }
 
-    fun clearEvent() {
-        eventFlow.update { AcceptInviteEvent.Unknown }
+    private companion object {
+
+        private const val TAG = "AcceptInviteViewModel"
+
     }
 
-    companion object {
-        private const val TAG = "AcceptInviteViewModel"
-    }
 }

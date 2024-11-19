@@ -67,7 +67,10 @@ data class InviteEntity(
     @ColumnInfo(name = Columns.INVITED_ADDRESS_ID, defaultValue = "")
     val invitedAddressId: String,
     @ColumnInfo(name = Columns.FROM_NEW_USER, defaultValue = "0")
-    val fromNewUser: Boolean
+    val fromNewUser: Boolean,
+    // default value = 1 because users can only have vault type invites before this migration
+    @ColumnInfo(name = Columns.SHARE_TYPE, defaultValue = "1")
+    val shareType: Int
 ) {
     object Columns {
         const val TOKEN = "token"
@@ -84,9 +87,13 @@ data class InviteEntity(
         const val CREATE_TIME = "create_time"
         const val ENCRYPTED_CONTENT = "encrypted_content"
         const val FROM_NEW_USER = "from_new_user"
+        const val SHARE_TYPE = "share_type"
     }
 
-    companion object {
+    internal companion object {
+
         const val TABLE = "InviteEntity"
+
     }
+
 }

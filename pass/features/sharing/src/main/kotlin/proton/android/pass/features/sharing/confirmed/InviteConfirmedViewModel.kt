@@ -64,7 +64,7 @@ class InviteConfirmedViewModel @Inject constructor(
         MutableStateFlow(InviteConfirmedEvent.Unknown)
 
     private val inviteFlow: Flow<LoadingResult<PendingInvite?>> = observeInvites()
-        .map { invites -> invites.firstOrNull { invite -> invite.fromNewUser } }
+        .map { invites -> invites.firstOrNull { invite -> invite.isFromNewUser } }
         .take(1) // So when we accept the invite it doesn't re-emit
         .asLoadingResult()
         .onEach {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,22 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featurehome.impl.onboardingtips
+package proton.android.pass.features.sharing.accept
 
-import proton.android.pass.domain.PendingInvite
-import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.InviteToken
 
-sealed interface OnBoardingTipPage {
-
-    data object Autofill : OnBoardingTipPage
-
-    data object Trial : OnBoardingTipPage
+internal interface AcceptInviteUiEvent {
 
     @JvmInline
-    value class Invite(val pendingInvite: PendingInvite) : OnBoardingTipPage
+    value class OnAcceptInvitationClick(internal val inviteToken: InviteToken) : AcceptInviteUiEvent
 
-    data object NotificationPermission : OnBoardingTipPage
 
-    data class SLSync(val aliasCount: Int, val shareId: ShareId?) : OnBoardingTipPage
+    @JvmInline
+    value class OnRejectInvitationClick(internal val inviteToken: InviteToken) : AcceptInviteUiEvent
 
 }

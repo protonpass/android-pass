@@ -48,6 +48,7 @@ import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 import proton.android.pass.log.api.PassLogger
 import proton_pass_vault_v1.VaultV1
 import javax.inject.Inject
@@ -60,6 +61,7 @@ class InviteRepositoryImpl @Inject constructor(
     private val encryptInviteKeys: EncryptInviteKeys,
     private val observeHasConfirmedInvite: ObserveHasConfirmedInvite
 ) : InviteRepository {
+
     override fun observeInvites(userId: UserId): Flow<List<PendingInvite>> = localDatasource
         .observeAllInvites(userId)
         .map { entities ->
@@ -134,15 +136,16 @@ class InviteRepositoryImpl @Inject constructor(
             inviterEmail = invite.inviterEmail,
             invitedEmail = invite.invitedEmail,
             invitedAddressId = invite.invitedAddressId,
-            memberCount = vaultData.memberCount,
-            itemCount = vaultData.itemCount,
+            memberCount = vaultData?.memberCount ?: 0,
+            itemCount = vaultData?.itemCount ?: 0,
             reminderCount = invite.remindersSent,
-            shareContent = vaultData.content,
-            shareContentKeyRotation = vaultData.contentKeyRotation,
-            shareContentFormatVersion = vaultData.contentFormatVersion,
+            shareContent = vaultData?.content.orEmpty(),
+            shareContentKeyRotation = vaultData?.contentKeyRotation ?: -1L,
+            shareContentFormatVersion = vaultData?.contentFormatVersion ?: -1,
             createTime = invite.createTime,
             encryptedContent = reencryptedInviteContent,
-            fromNewUser = invite.fromNewUser
+            fromNewUser = invite.fromNewUser,
+            shareType = invite.targetType
         )
 
         val inviteKeys = invite.keys.map { key ->
@@ -228,23 +231,40 @@ class InviteRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun InviteEntity.toDomain(encryptionContext: EncryptionContext): PendingInvite {
-        val content = encryptionContext.decrypt(encryptedContent)
-        val decoded = VaultV1.Vault.parseFrom(content)
-        return PendingInvite(
-            inviteToken = InviteToken(token),
-            inviterEmail = inviterEmail,
-            invitedAddressId = invitedAddressId,
-            memberCount = memberCount,
-            itemCount = itemCount,
-            name = decoded.name,
-            icon = decoded.display.icon.toDomain(),
-            color = decoded.display.color.toDomain(),
-            fromNewUser = fromNewUser
-        )
+    private fun InviteEntity.toDomain(encryptionContext: EncryptionContext): PendingInvite =
+        when (ShareType.from(shareType)) {
+            ShareType.Item -> {
+                PendingInvite.Item(
+                    inviteToken = InviteToken(token),
+                    inviterEmail = inviterEmail,
+                    invitedAddressId = invitedAddressId,
+                    isFromNewUser = fromNewUser
+                )
+            }
+
+            ShareType.Vault -> {
+                val content = encryptionContext.decrypt(encryptedContent)
+                val decoded = VaultV1.Vault.parseFrom(content)
+
+                PendingInvite.Vault(
+                    inviteToken = InviteToken(token),
+                    inviterEmail = inviterEmail,
+                    invitedAddressId = invitedAddressId,
+                    memberCount = memberCount,
+                    itemCount = itemCount,
+                    name = decoded.name,
+                    icon = decoded.display.icon.toDomain(),
+                    color = decoded.display.color.toDomain(),
+                    isFromNewUser = fromNewUser
+                )
+            }
+        }
+
+
+    private companion object {
+
+        private const val TAG = "InviteRepositoryImpl"
+
     }
 
-    companion object {
-        private const val TAG = "InviteRepositoryImpl"
-    }
 }

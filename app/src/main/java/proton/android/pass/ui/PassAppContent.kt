@@ -147,21 +147,24 @@ fun PassAppContent(
         label = "BannerBottomPadding"
     )
 
+    val shouldNavigateToIAMModal = remember(appUiState.inAppMessage) {
+        appUiState.inAppMessage is Some &&
+            appUiState.inAppMessage.value.mode == InAppMessageMode.Modal &&
+            appNavigator.currentRoute == HomeNavItem.route
+    }
+    val hasNavigatedToIAMModal = remember { mutableStateOf(false) }
     LaunchedEffect(appUiState.inAppMessage, appNavigator.currentRoute) {
         when (val option = appUiState.inAppMessage) {
-            is Some -> {
+            is Some -> if (shouldNavigateToIAMModal && !hasNavigatedToIAMModal.value) {
                 val message = option.value
-                val shouldNavigate = message.mode == InAppMessageMode.Modal &&
-                    appNavigator.currentRoute == HomeNavItem.route
-                if (shouldNavigate) {
-                    appNavigator.navigate(
-                        InAppMessageModalNavItem,
-                        InAppMessageModalNavItem.createNavRoute(message.userId, message.id)
-                    )
-                }
+                appNavigator.navigate(
+                    InAppMessageModalNavItem,
+                    InAppMessageModalNavItem.createNavRoute(message.userId, message.id)
+                )
+                hasNavigatedToIAMModal.value = true
             }
 
-            is None -> Unit
+            is None -> hasNavigatedToIAMModal.value = false
         }
     }
 

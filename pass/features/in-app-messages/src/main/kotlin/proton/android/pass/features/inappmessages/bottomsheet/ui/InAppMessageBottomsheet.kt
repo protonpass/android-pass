@@ -19,7 +19,6 @@
 package proton.android.pass.features.inappmessages.bottomsheet.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -46,13 +45,6 @@ fun InAppMessageBottomsheet(
             val successState = state as InAppMessageModalState.Success
             LaunchedEffect(Unit) {
                 viewModel.onInAppMessageDisplayed(successState.inAppMessage.key)
-            }
-            DisposableEffect(Unit) {
-                with(successState.inAppMessage) {
-                    onDispose {
-                        viewModel.onInAppMessageDismissed(userId, id, key)
-                    }
-                }
             }
 
             InAppMessageContent(

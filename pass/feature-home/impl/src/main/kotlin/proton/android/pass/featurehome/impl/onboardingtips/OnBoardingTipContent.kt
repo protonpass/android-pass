@@ -135,12 +135,13 @@ fun OnBoardingTipContent(
         }
 
         AnimatedVisibility(
-            visible = tipPage == Invite,
+            visible = tipPage is Invite,
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
-            Box(modifier = Modifier.padding(Spacing.medium)) {
+            Box(modifier = Modifier.padding(all = Spacing.medium)) {
                 InviteCard(
+                    pendingInvite = (tipPage as Invite).pendingInvite,
                     onClick = { onClick(tipPage) }
                 )
             }

@@ -18,6 +18,7 @@
 
 package proton.android.pass.featurehome.impl.onboardingtips
 
+import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareId
 
 sealed interface OnBoardingTipPage {
@@ -26,7 +27,8 @@ sealed interface OnBoardingTipPage {
 
     data object Trial : OnBoardingTipPage
 
-    data object Invite : OnBoardingTipPage
+    @JvmInline
+    value class Invite(val pendingInvite: PendingInvite) : OnBoardingTipPage
 
     data object NotificationPermission : OnBoardingTipPage
 

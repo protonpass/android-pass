@@ -65,10 +65,10 @@ class AcceptInviteViewModelTest {
 
     @Test
     fun `sends right values`() = runTest {
-        instance.state.test {
+        instance.stateFlow.test {
             assertThat(awaitItem()).isEqualTo(
                 AcceptInviteUiState(
-                    event = AcceptInviteEvent.Unknown,
+                    event = AcceptInviteEvent.Idle,
                     content = AcceptInviteUiContent.Content(
                         invite = TEST_INVITE,
                         buttonsState = AcceptInviteButtonsState(
@@ -91,7 +91,7 @@ class AcceptInviteViewModelTest {
         acceptInvite.emitValue(Result.success(res))
 
         instance.onConfirm(TEST_INVITE)
-        instance.state.test {
+        instance.stateFlow.test {
             assertThat(awaitItem()).isEqualTo(
                 AcceptInviteUiState(
                     event = AcceptInviteEvent.Close,
@@ -119,10 +119,10 @@ class AcceptInviteViewModelTest {
     fun `accept error sends snackbar message`() = runTest {
         acceptInvite.emitValue(Result.failure(IllegalStateException("test")))
         instance.onConfirm(TEST_INVITE)
-        instance.state.test {
+        instance.stateFlow.test {
             assertThat(awaitItem()).isEqualTo(
                 AcceptInviteUiState(
-                    event = AcceptInviteEvent.Unknown,
+                    event = AcceptInviteEvent.Idle,
                     content = AcceptInviteUiContent.Content(
                         invite = TEST_INVITE,
                         buttonsState = AcceptInviteButtonsState(
@@ -143,7 +143,7 @@ class AcceptInviteViewModelTest {
     @Test
     fun `reject success sends close event and snackbar message`() = runTest {
         instance.onReject(TEST_INVITE)
-        instance.state.test {
+        instance.stateFlow.test {
             assertThat(awaitItem()).isEqualTo(
                 AcceptInviteUiState(
                     event = AcceptInviteEvent.Close,
@@ -168,7 +168,7 @@ class AcceptInviteViewModelTest {
     fun `reject error sends close and snackbar message`() = runTest {
         rejectInvite.setResult(Result.failure(IllegalStateException("test")))
         instance.onReject(TEST_INVITE)
-        instance.state.test {
+        instance.stateFlow.test {
             assertThat(awaitItem()).isEqualTo(
                 AcceptInviteUiState(
                     event = AcceptInviteEvent.Close,

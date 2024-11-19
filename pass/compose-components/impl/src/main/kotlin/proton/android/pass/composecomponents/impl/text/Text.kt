@@ -57,12 +57,14 @@ object Text {
     fun Headline(
         text: String,
         modifier: Modifier = Modifier,
-        color: Color = ProtonTheme.colors.textNorm
+        color: Color = ProtonTheme.colors.textNorm,
+        textAlign: TextAlign = TextAlign.Start
     ) {
         Text(
             text = text,
             style = ProtonTheme.typography.headlineNorm.copy(color = color),
-            modifier = modifier
+            modifier = modifier,
+            textAlign = textAlign
         )
     }
 
@@ -85,14 +87,16 @@ object Text {
         modifier: Modifier = Modifier,
         color: Color = ProtonTheme.colors.textNorm,
         maxLines: Int = Int.MAX_VALUE,
-        overflow: TextOverflow = TextOverflow.Clip
+        overflow: TextOverflow = TextOverflow.Clip,
+        textAlign: TextAlign = TextAlign.Start
     ) {
         Text(
             text = text,
             style = ProtonTheme.typography.defaultNorm.copy(color = color),
             modifier = modifier,
             maxLines = maxLines,
-            overflow = overflow
+            overflow = overflow,
+            textAlign = textAlign
         )
     }
 

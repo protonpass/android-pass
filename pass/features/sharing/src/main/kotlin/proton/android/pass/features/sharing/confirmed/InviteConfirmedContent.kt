@@ -18,30 +18,8 @@
 
 package proton.android.pass.features.sharing.confirmed
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.pluralStringResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultNorm
-import me.proton.core.compose.theme.headlineNorm
-import proton.android.pass.common.api.SpecialCharacters
-import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.extension.toColor
-import proton.android.pass.composecomponents.impl.extension.toResource
-import proton.android.pass.composecomponents.impl.icon.VaultIcon
-import proton.android.pass.features.sharing.R
-import proton.android.pass.features.sharing.accept.AcceptInviteButtons
-import proton.android.pass.features.sharing.accept.AcceptInviteItemSyncStatus
 
 @Composable
 fun InviteConfirmedContent(
@@ -51,69 +29,69 @@ fun InviteConfirmedContent(
     onReject: () -> Unit
 ) {
     val invite = state.invite ?: return
-    Column(
-        modifier = modifier.padding(horizontal = Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(Spacing.medium),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = stringResource(R.string.sharing_invitation_access_confirmed_title),
-            style = ProtonTheme.typography.headlineNorm,
-            color = PassTheme.colors.textNorm,
-            textAlign = TextAlign.Center
-        )
-
-        VaultIcon(
-            backgroundColor = invite.color.toColor(isBackground = true),
-            iconColor = invite.color.toColor(isBackground = false),
-            icon = invite.icon.toResource(),
-            size = 64,
-            iconSize = 32
-        )
-
-        Text(
-            text = invite.name,
-            style = ProtonTheme.typography.headlineNorm,
-            color = PassTheme.colors.textNorm
-        )
-
-        val itemCount = pluralStringResource(
-            R.plurals.sharing_item_count,
-            invite.itemCount,
-            invite.itemCount
-        )
-        val memberCount = pluralStringResource(
-            R.plurals.sharing_member_count,
-            invite.memberCount,
-            invite.memberCount
-        )
-        val subtitle = remember(invite.itemCount, invite.memberCount) {
-            "$itemCount ${SpecialCharacters.DOT_SEPARATOR} $memberCount"
-        }
-        Text(
-            text = subtitle,
-            style = ProtonTheme.typography.defaultNorm,
-            color = PassTheme.colors.textWeak
-        )
-
-        AcceptInviteButtons(
-            isConfirmLoading = state.buttonsState.confirmLoading,
-            isRejectLoading = state.buttonsState.rejectLoading,
-            areButtonsEnabled = state.buttonsState.enabled,
-            showReject = !state.buttonsState.hideReject,
-            confirmText = stringResource(R.string.sharing_invitation_access_confirmed_accept),
-            rejectText = stringResource(R.string.sharing_invitation_access_confirmed_close),
-            onConfirm = onConfirm,
-            onReject = onReject
-        )
-
-        AnimatedVisibility(visible = state.progressState is InviteConfirmedProgressState.Show) {
-            if (state.progressState is InviteConfirmedProgressState.Show) {
-                AcceptInviteItemSyncStatus(
-                    downloaded = state.progressState.downloaded,
-                    total = state.progressState.total
-                )
-            }
-        }
-    }
+//    Column(
+//        modifier = modifier.padding(horizontal = Spacing.medium),
+//        verticalArrangement = Arrangement.spacedBy(Spacing.medium),
+//        horizontalAlignment = Alignment.CenterHorizontally
+//    ) {
+//        Text(
+//            text = stringResource(R.string.sharing_invitation_access_confirmed_title),
+//            style = ProtonTheme.typography.headlineNorm,
+//            color = PassTheme.colors.textNorm,
+//            textAlign = TextAlign.Center
+//        )
+//
+//        VaultIcon(
+//            backgroundColor = invite.color.toColor(isBackground = true),
+//            iconColor = invite.color.toColor(isBackground = false),
+//            icon = invite.icon.toResource(),
+//            size = 64,
+//            iconSize = 32
+//        )
+//
+//        Text(
+//            text = invite.name,
+//            style = ProtonTheme.typography.headlineNorm,
+//            color = PassTheme.colors.textNorm
+//        )
+//
+//        val itemCount = pluralStringResource(
+//            R.plurals.sharing_item_count,
+//            invite.itemCount,
+//            invite.itemCount
+//        )
+//        val memberCount = pluralStringResource(
+//            R.plurals.sharing_member_count,
+//            invite.memberCount,
+//            invite.memberCount
+//        )
+//        val subtitle = remember(invite.itemCount, invite.memberCount) {
+//            "$itemCount ${SpecialCharacters.DOT_SEPARATOR} $memberCount"
+//        }
+//        Text(
+//            text = subtitle,
+//            style = ProtonTheme.typography.defaultNorm,
+//            color = PassTheme.colors.textWeak
+//        )
+//
+//        AcceptInviteButtons(
+//            isConfirmLoading = state.buttonsState.confirmLoading,
+//            isRejectLoading = state.buttonsState.rejectLoading,
+//            areButtonsEnabled = state.buttonsState.enabled,
+//            showReject = !state.buttonsState.hideReject,
+//            confirmText = stringResource(R.string.sharing_invitation_access_confirmed_accept),
+//            rejectText = stringResource(R.string.sharing_invitation_access_confirmed_close),
+//            onConfirm = onConfirm,
+//            onReject = onReject
+//        )
+//
+//        AnimatedVisibility(visible = state.progressState is InviteConfirmedProgressState.Show) {
+//            if (state.progressState is InviteConfirmedProgressState.Show) {
+//                AcceptInviteItemSyncStatus(
+//                    downloaded = state.progressState.downloaded,
+//                    total = state.progressState.total
+//                )
+//            }
+//        }
+//    }
 }

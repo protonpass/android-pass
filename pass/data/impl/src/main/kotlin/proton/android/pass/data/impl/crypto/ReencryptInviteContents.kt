@@ -46,9 +46,11 @@ class ReencryptInviteContentsImpl @Inject constructor(
     private val getAllKeysByAddress: GetAllKeysByAddress,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ReencryptInviteContents {
+
     override suspend fun invoke(userId: UserId, invite: PendingInviteResponse): EncryptedByteArray {
         val key = invite.keys.firstOrNull {
-            it.keyRotation == invite.vaultData.contentKeyRotation
+            if (invite.vaultData == null) true
+            else it.keyRotation == invite.vaultData.contentKeyRotation
         } ?: throw IllegalStateException("No key found for invite")
 
         val user = userRepository.getUser(userId)
@@ -84,9 +86,13 @@ class ReencryptInviteContentsImpl @Inject constructor(
             EncryptionKey(decrypted)
         }
 
-        val decodedContent = Base64.decodeBase64(invite.vaultData.content)
-        val decrypted = encryptionContextProvider.withEncryptionContext(asEncryptionKey) {
-            decrypt(EncryptedByteArray(decodedContent), EncryptionTag.VaultContent)
+        val decodedContent = Base64.decodeBase64(invite.vaultData?.content.orEmpty())
+        val decrypted = if (decodedContent.isEmpty()) {
+            decodedContent
+        } else {
+            encryptionContextProvider.withEncryptionContext(asEncryptionKey) {
+                decrypt(EncryptedByteArray(decodedContent), EncryptionTag.VaultContent)
+            }
         }
 
         val reencrypted = encryptionContextProvider.withEncryptionContext {

@@ -45,7 +45,7 @@ class AppNavigator(
     val navController: NavHostController,
     val passBottomSheetNavigator: PassBottomSheetNavigator
 ) {
-    private val currentRoute: String?
+    val currentRoute: String?
         get() = navController.currentBackStackEntry?.destination?.route
     private val previousRoute: String?
         get() = navController.previousBackStackEntry?.destination?.route

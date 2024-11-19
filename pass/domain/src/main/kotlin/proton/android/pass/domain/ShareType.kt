@@ -23,6 +23,15 @@ enum class ShareType(val value: Int) {
     Item(2);
 
     companion object {
+
         val map = entries.associateBy { it.value }
+
+        fun from(value: Int): ShareType = when (value) {
+            Vault.value -> Vault
+            Item.value -> Item
+            else -> throw IllegalArgumentException("Invalid share type value: $value")
+        }
+
     }
+
 }

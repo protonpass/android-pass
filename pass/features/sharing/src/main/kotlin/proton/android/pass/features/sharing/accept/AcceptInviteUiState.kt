@@ -21,24 +21,6 @@ package proton.android.pass.features.sharing.accept
 import androidx.compose.runtime.Stable
 import proton.android.pass.domain.PendingInvite
 
-sealed interface AcceptInviteEvent {
-    data object Unknown : AcceptInviteEvent
-    data object Close : AcceptInviteEvent
-}
-
-@Stable
-data class AcceptInviteUiState(
-    val event: AcceptInviteEvent,
-    val content: AcceptInviteUiContent
-) {
-    companion object {
-        val Initial = AcceptInviteUiState(
-            event = AcceptInviteEvent.Unknown,
-            content = AcceptInviteUiContent.Loading
-        )
-    }
-}
-
 @Stable
 data class AcceptInviteButtonsState(
     val confirmLoading: Boolean,

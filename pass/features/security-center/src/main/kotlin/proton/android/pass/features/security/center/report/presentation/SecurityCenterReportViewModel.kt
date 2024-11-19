@@ -39,6 +39,7 @@ import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -110,9 +111,9 @@ class SecurityCenterReportViewModel @Inject constructor(
         else -> throw IllegalStateException("Invalid state")
     }
 
-    private val email: String? = savedStateHandleProvider.get()
-        .get<String?>(EmailArgId.key)
-        ?.let(NavParamEncoder::decode)
+    private val email: String = savedStateHandleProvider.get()
+        .require<String>(EmailArgId.key)
+        .let(NavParamEncoder::decode)
 
     private val eventFlow: MutableStateFlow<SecurityCenterReportEvent> =
         MutableStateFlow(SecurityCenterReportEvent.Idle)

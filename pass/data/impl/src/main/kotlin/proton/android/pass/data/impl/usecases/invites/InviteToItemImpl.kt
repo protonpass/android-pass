@@ -89,6 +89,7 @@ class InviteToItemImpl @Inject constructor(
                 invites = createNewUserInvites(
                     userId = userId,
                     shareId = shareId,
+                    itemId = itemId,
                     newUserInvitesAddresses = newUserInvitesAddresses,
                     inviterUserAddress = inviterUserAddress
                 ).awaitAll()
@@ -141,7 +142,8 @@ class InviteToItemImpl @Inject constructor(
                             },
                             email = existingUserInviteAddress.address,
                             targetType = ShareType.Item.value,
-                            shareRoleId = existingUserInviteAddress.shareRole.value
+                            shareRoleId = existingUserInviteAddress.shareRole.value,
+                            itemId = itemId.id
                         )
                     }
             }
@@ -151,6 +153,7 @@ class InviteToItemImpl @Inject constructor(
     private suspend fun createNewUserInvites(
         userId: UserId,
         shareId: ShareId,
+        itemId: ItemId,
         newUserInvitesAddresses: List<AddressPermission>,
         inviterUserAddress: UserAddress
     ): List<Deferred<CreateNewUserInviteRequest>> = coroutineScope {
@@ -178,7 +181,8 @@ class InviteToItemImpl @Inject constructor(
                             email = newUserInviteAddress.address,
                             targetType = ShareType.Item.value,
                             shareRoleId = newUserInviteAddress.shareRole.value,
-                            signature = signature
+                            signature = signature,
+                            itemId = itemId.id
                         )
                     }
             }

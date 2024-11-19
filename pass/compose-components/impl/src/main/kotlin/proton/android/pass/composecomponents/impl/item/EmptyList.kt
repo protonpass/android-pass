@@ -18,7 +18,6 @@
 
 package proton.android.pass.composecomponents.impl.item
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -48,8 +47,7 @@ import proton.android.pass.composecomponents.impl.buttons.CircleButton
 fun EmptyList(
     modifier: Modifier = Modifier,
     emptyListMessage: String,
-    emptyListTitle: String = stringResource(R.string.empty_list_title),
-    @DrawableRes emptyListImage: Int = R.drawable.placeholder_bound_box,
+    canCreate: Boolean,
     onCreateItemClick: (() -> Unit)? = null,
     onOpenWebsiteClick: (() -> Unit)? = null
 ) {
@@ -61,15 +59,17 @@ fun EmptyList(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = emptyListImage),
+            painter = painterResource(id = R.drawable.placeholder_bound_box),
             contentDescription = null
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = emptyListTitle,
-            style = ProtonTheme.typography.headlineNorm,
-            textAlign = TextAlign.Center
-        )
+        if (canCreate) {
+            Text(
+                text = stringResource(R.string.empty_list_title),
+                style = ProtonTheme.typography.headlineNorm,
+                textAlign = TextAlign.Center
+            )
+        }
         Text(
             text = emptyListMessage,
             style = ProtonTheme.typography.defaultWeak,
@@ -79,7 +79,7 @@ fun EmptyList(
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            if (onCreateItemClick != null) {
+            if (canCreate && onCreateItemClick != null) {
                 CircleButton(
                     contentPadding = ButtonDefaults.ContentPadding,
                     color = PassTheme.colors.interactionNormMajor1,

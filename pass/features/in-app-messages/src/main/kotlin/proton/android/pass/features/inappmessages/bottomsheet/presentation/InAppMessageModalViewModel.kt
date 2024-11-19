@@ -73,22 +73,21 @@ class InAppMessageModalViewModel @Inject constructor(
             initialValue = InAppMessageModalState.Loading
         )
 
-    fun onInAppMessageDismissed(
-        userId: UserId,
-        inAppMessageId: InAppMessageId,
-        inAppMessageKey: InAppMessageKey
-    ) {
-        workerLauncher.launch(WorkerItem.MarkInAppMessageAsDismissed(userId, inAppMessageId))
-        telemetryManager.sendEvent(
-            InAppMessagesChange(inAppMessageKey, InAppMessageStatus.Dismissed)
-        )
-    }
-
     fun onInAppMessageDisplayed(key: InAppMessageKey) {
         telemetryManager.sendEvent(InAppMessagesDisplay(key))
     }
 
     fun onCTAClicked(key: InAppMessageKey) {
         telemetryManager.sendEvent(InAppMessagesClick(key))
+    }
+
+    override fun onCleared() {
+        workerLauncher.launch(WorkerItem.MarkInAppMessageAsDismissed(userId, inAppMessageId))
+        val key = (state.value as? InAppMessageModalState.Success)?.inAppMessage?.key
+        if (key != null) {
+            telemetryManager.sendEvent(InAppMessagesChange(key, InAppMessageStatus.Dismissed))
+        }
+
+        super.onCleared()
     }
 }

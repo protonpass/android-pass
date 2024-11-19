@@ -19,7 +19,9 @@
 package proton.android.pass.features.sharing.accept
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -27,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.common.api.SpecialCharacters
@@ -50,41 +53,48 @@ internal fun AcceptInviteVaultInfo(
     vaultIcon: ShareIcon,
     vaultColor: ShareColor
 ) {
-    Column(
-        modifier = modifier.padding(horizontal = Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium),
-        horizontalAlignment = Alignment.CenterHorizontally
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = Spacing.medium)
     ) {
-        VaultIcon(
-            backgroundColor = vaultColor.toColor(isBackground = true),
-            iconColor = vaultColor.toColor(isBackground = false),
-            icon = vaultIcon.toResource(),
-            size = 64,
-            iconSize = 32
-        )
+        Column(
+            modifier = Modifier.align(alignment = Alignment.Center),
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.medium),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            VaultIcon(
+                backgroundColor = vaultColor.toColor(isBackground = true),
+                iconColor = vaultColor.toColor(isBackground = false),
+                icon = vaultIcon.toResource(),
+                size = 64,
+                iconSize = 32
+            )
 
-        Text.Headline(
-            text = vaultName
-        )
+            Text.Headline(
+                modifier = Modifier.fillMaxWidth(),
+                text = vaultName,
+                textAlign = TextAlign.Center
+            )
 
-        val itemCount = pluralStringResource(
-            R.plurals.sharing_item_count,
-            vaultItemCount,
-            vaultItemCount
-        )
-        val memberCount = pluralStringResource(
-            R.plurals.sharing_member_count,
-            vaultMemberCount,
-            vaultMemberCount
-        )
-        val subtitle = remember(itemCount, memberCount) {
-            "$itemCount ${SpecialCharacters.DOT_SEPARATOR} $memberCount"
-        }
+            val itemCount = pluralStringResource(
+                R.plurals.sharing_item_count,
+                vaultItemCount,
+                vaultItemCount
+            )
+            val memberCount = pluralStringResource(
+                R.plurals.sharing_member_count,
+                vaultMemberCount,
+                vaultMemberCount
+            )
+            val subtitle = remember(itemCount, memberCount) {
+                "$itemCount ${SpecialCharacters.DOT_SEPARATOR} $memberCount"
+            }
 
-        Text.Body1Regular(
-            text = subtitle,
-            color = PassTheme.colors.textWeak
-        )
+            Text.Body1Regular(
+                text = subtitle,
+                color = PassTheme.colors.textWeak
+            )
 
 //        AcceptInviteButtons(
 //            isConfirmLoading = state.buttonsState.confirmLoading,
@@ -103,6 +113,7 @@ internal fun AcceptInviteVaultInfo(
 //                )
 //            }
 //        }
+        }
     }
 }
 

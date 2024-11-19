@@ -25,43 +25,30 @@ import proton.android.pass.features.security.center.shared.navigation.EmailArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavParamEncoder
-import proton.android.pass.navigation.api.toPath
 
 object SecurityCenterCustomEmailReportNavItem : NavItem(
     baseRoute = "security/center/customemailreport",
-    navArgIds = listOf(BreachIdArgId),
-    optionalArgIds = listOf(EmailArgId),
+    navArgIds = listOf(BreachIdArgId, EmailArgId),
     baseDeepLinkRoute = listOf("custom_email_breach")
 ) {
-    fun createNavRoute(id: CustomEmailId, email: String): String = buildString {
-        append("$baseRoute/${id.id}")
-        val optionalPath = mapOf(EmailArgId.key to NavParamEncoder.encode(email)).toPath()
-        append(optionalPath)
-    }
+    fun createNavRoute(id: CustomEmailId, email: String): String =
+        "$baseRoute/${id.id}/${NavParamEncoder.encode(email)}"
 }
 
 object SecurityCenterAliasEmailReportNavItem : NavItem(
     baseRoute = "security/center/aliasemailreport",
-    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId),
-    optionalArgIds = listOf(EmailArgId),
+    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId, EmailArgId),
     baseDeepLinkRoute = listOf("alias_breach")
 ) {
-    fun createNavRoute(id: BreachEmailId.Alias, email: String): String = buildString {
-        append("$baseRoute/${id.shareId.id}/${id.itemId.id}")
-        val optionalPath = mapOf(EmailArgId.key to NavParamEncoder.encode(email)).toPath()
-        append(optionalPath)
-    }
+    fun createNavRoute(id: BreachEmailId.Alias, email: String): String =
+        "$baseRoute/${id.shareId.id}/${id.itemId.id}/${NavParamEncoder.encode(email)}"
 }
 
 object SecurityCenterProtonEmailReportNavItem : NavItem(
     baseRoute = "security/center/protonemailreport",
-    navArgIds = listOf(CommonNavArgId.AddressId),
-    optionalArgIds = listOf(EmailArgId),
+    navArgIds = listOf(CommonNavArgId.AddressId, EmailArgId),
     baseDeepLinkRoute = listOf("address_breach")
 ) {
-    fun createNavRoute(id: BreachEmailId.Proton, email: String): String = buildString {
-        append("$baseRoute/${id.addressId.id}")
-        val optionalPath = mapOf(EmailArgId.key to NavParamEncoder.encode(email)).toPath()
-        append(optionalPath)
-    }
+    fun createNavRoute(id: BreachEmailId.Proton, email: String): String =
+        "$baseRoute/${id.addressId.id}/${NavParamEncoder.encode(email)}"
 }

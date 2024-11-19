@@ -22,7 +22,7 @@ import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
 import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
-import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.InviteKey
 import javax.inject.Inject
 
 class TestEncryptInviteKeys @Inject constructor() : EncryptInviteKeys {
@@ -37,7 +37,7 @@ class TestEncryptInviteKeys @Inject constructor() : EncryptInviteKeys {
 
     override fun invoke(
         inviterAddressKey: PrivateKey,
-        inviteKeys: List<ShareKey>,
+        inviteKeys: List<InviteKey>,
         targetAddressKey: PublicKey
     ): EncryptedInviteShareKeyList = response
 }

@@ -93,7 +93,7 @@ internal fun ProfileContent(
                     .background(PassTheme.colors.backgroundStrong)
                     .padding(padding)
             ) {
-                if (state.isAccountSwitchEnabled && state.accounts.isNotEmpty()) {
+                if (state.accounts.isNotEmpty()) {
                     Text(
                         modifier = Modifier.padding(Spacing.medium),
                         text = stringResource(R.string.profile_option_account),
@@ -154,8 +154,6 @@ internal fun ProfileContent(
 
                     AccountProfileSection(
                         planInfo = state.accountType,
-                        isAccountSwitchEnabled = state.isAccountSwitchEnabled,
-                        onAccountClick = { onEvent(ProfileUiEvent.OnAccountClick) },
                         onSettingsClick = { onEvent(ProfileUiEvent.OnSettingsClick) }
                     )
 

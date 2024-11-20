@@ -80,10 +80,7 @@ data class AuthStateContent(
             remainingPasswordAttempts = None,
             passwordError = None,
             authMethod = None,
-            accountSwitcherState = AccountSwitcherState(
-                isAccountSwitchV1Enabled = false,
-                accounts = persistentMapOf()
-            ),
+            accountSwitcherState = AccountSwitcherState(persistentMapOf()),
             showExtraPassword = LoadingResult.Loading,
             showPinOrBiometry = false,
             showLogout = true,

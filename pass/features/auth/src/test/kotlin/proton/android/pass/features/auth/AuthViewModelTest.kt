@@ -53,7 +53,6 @@ import proton.android.pass.features.auth.AuthViewModel.Companion.MAX_WRONG_PASSW
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
@@ -95,7 +94,6 @@ internal class AuthViewModelTest {
             snackbarDispatcher = TestSnackbarDispatcher(),
             hasExtraPassword = FakeHasExtraPassword(),
             checkLocalExtraPassword = FakeCheckLocalExtraPassword(),
-            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository(),
             userManager = userManager,
             accountManager = accountManager,
             appDispatchers = TestAppDispatchers()
@@ -111,11 +109,10 @@ internal class AuthViewModelTest {
                 authMethod = Some(AuthMethod.Fingerprint),
                 showExtraPassword = LoadingResult.Success(false),
                 showPinOrBiometry = true,
-                accountSwitcherState = proton.android.pass.features.auth.AccountSwitcherState(
-                    isAccountSwitchV1Enabled = false,
+                accountSwitcherState = AccountSwitcherState(
                     accounts = persistentMapOf(
                         UserId(TestAccountManager.USER_ID) to
-                            proton.android.pass.features.auth.AccountItem(
+                            AccountItem(
                                 FakeUserManager.EMAIL,
                                 true
                             )
@@ -209,11 +206,10 @@ internal class AuthViewModelTest {
                         authMethod = Some(AuthMethod.Fingerprint),
                         showExtraPassword = LoadingResult.Success(false),
                         showPinOrBiometry = true,
-                        accountSwitcherState = proton.android.pass.features.auth.AccountSwitcherState(
-                            isAccountSwitchV1Enabled = false,
+                        accountSwitcherState = AccountSwitcherState(
                             accounts = persistentMapOf(
                                 UserId(TestAccountManager.USER_ID) to
-                                    proton.android.pass.features.auth.AccountItem(
+                                    AccountItem(
                                         FakeUserManager.EMAIL,
                                         true
                                     )

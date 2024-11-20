@@ -71,5 +71,11 @@ enum class FeatureFlag(
         description = "Enable extra logging",
         key = "PassAndroidExtraLogging",
         isEnabledDefault = false
+    ),
+    FILE_ATTACHMENTS_V1(
+        title = "File attachments (v1)",
+        description = "Enable file attachments",
+        key = "PassFileAttachmentsV1",
+        isEnabledDefault = false
     )
 }

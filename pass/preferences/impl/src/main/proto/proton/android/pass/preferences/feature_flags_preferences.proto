@@ -27,4 +27,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto item_sharing_v1_enabled = 19;
   BoolFlagPrefProto extra_logging_enabled = 20;
   BoolFlagPrefProto in_app_messages_v1_enabled = 21;
+  BoolFlagPrefProto file_attachments_v1_enabled = 22;
 }

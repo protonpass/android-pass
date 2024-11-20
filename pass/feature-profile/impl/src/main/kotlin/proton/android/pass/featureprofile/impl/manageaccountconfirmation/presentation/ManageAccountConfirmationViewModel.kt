@@ -68,8 +68,6 @@ class ManageAccountConfirmationViewModel @Inject constructor(
     }
 
     fun consumeEvent(event: ManageAccountConfirmationEvent) {
-        viewModelScope.launch {
-            eventFlow.compareAndSet(event, ManageAccountConfirmationEvent.Idle)
-        }
+        eventFlow.compareAndSet(event, ManageAccountConfirmationEvent.Idle)
     }
 }

@@ -119,10 +119,7 @@ fun AuthScreenMasterPasswordForm(
         )
         Spacer(modifier = Modifier.height(12.dp))
 
-        if (
-            state.accountSwitcherState.isAccountSwitchV1Enabled &&
-            state.accountSwitcherState.hasMultipleAccounts
-        ) {
+        if (state.accountSwitcherState.hasMultipleAccounts) {
             val text = when (state.showExtraPassword) {
                 is LoadingResult.Error,
                 LoadingResult.Loading -> ""
@@ -143,7 +140,7 @@ fun AuthScreenMasterPasswordForm(
                 Box {
                     TransparentTextButton(
                         text = state.accountSwitcherState.accounts.values
-                            .firstOrNull(proton.android.pass.features.auth.AccountItem::isPrimary)
+                            .firstOrNull(AccountItem::isPrimary)
                             ?.email
                             .orEmpty(),
                         color = PassTheme.colors.textNorm,
@@ -319,8 +316,7 @@ fun AuthScreenMasterPasswordFormPreview(
                     showPinOrBiometry = true,
                     showLogout = true,
                     showBackNavigation = false,
-                    accountSwitcherState = proton.android.pass.features.auth.AccountSwitcherState(
-                        isAccountSwitchV1Enabled = false,
+                    accountSwitcherState = AccountSwitcherState(
                         accounts = persistentMapOf()
                     )
                 ),

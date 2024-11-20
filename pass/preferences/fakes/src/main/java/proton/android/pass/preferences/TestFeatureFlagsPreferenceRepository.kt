@@ -27,8 +27,9 @@ import proton.android.pass.preferences.FeatureFlag.ACCOUNT_SWITCH_V1
 import proton.android.pass.preferences.FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.DIGITAL_ASSET_LINKS
-import proton.android.pass.preferences.FeatureFlag.IN_APP_MESSAGES_V1
 import proton.android.pass.preferences.FeatureFlag.EXTRA_LOGGING
+import proton.android.pass.preferences.FeatureFlag.FILE_ATTACHMENTS_V1
+import proton.android.pass.preferences.FeatureFlag.IN_APP_MESSAGES_V1
 import proton.android.pass.preferences.FeatureFlag.ITEM_SHARING_V1
 import proton.android.pass.preferences.FeatureFlag.SL_ALIASES_SYNC
 import javax.inject.Inject
@@ -52,6 +53,7 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
             ITEM_SHARING_V1 -> it.getOrDefault(ITEM_SHARING_V1, false) as T
             IN_APP_MESSAGES_V1 -> it.getOrDefault(IN_APP_MESSAGES_V1, false) as T
             EXTRA_LOGGING -> it.getOrDefault(EXTRA_LOGGING, false) as T
+            FILE_ATTACHMENTS_V1 -> it.getOrDefault(FILE_ATTACHMENTS_V1, false) as T
         }
     }
 

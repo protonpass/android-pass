@@ -16,25 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureprofile.impl
+package proton.android.pass.featureprofile.impl.manageaccountconfirmation.navigation
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
+import proton.android.pass.navigation.api.NavParamEncoder
 
-sealed interface AccountSwitchEvent : ProfileUiEvent {
-
-    @JvmInline
-    value class OnAccountSelected(val userId: UserId) : AccountSwitchEvent
-
-    data class OnManageAccount(val userId: UserId, val email: String, val isPrimary: Boolean) : AccountSwitchEvent
-
-    @JvmInline
-    value class OnSignOut(val userId: UserId) : AccountSwitchEvent
-
-    @JvmInline
-    value class OnSignIn(val userId: UserId) : AccountSwitchEvent
-
-    @JvmInline
-    value class OnRemoveAccount(val userId: UserId) : AccountSwitchEvent
-
-    data object OnAddAccount : AccountSwitchEvent
+data object ManageAccountConfirmationNavItem : NavItem(
+    baseRoute = "manageaccountconfirmation/dialog",
+    noHistory = true,
+    navItemType = NavItemType.Dialog,
+    navArgIds = listOf(CommonNavArgId.UserId, CommonNavArgId.Email)
+) {
+    fun createNavRoute(userId: UserId, email: String) = "$baseRoute/${userId.id}/${NavParamEncoder.encode(email)}"
 }

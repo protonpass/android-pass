@@ -38,17 +38,13 @@ fun SharingSummaryScreen(
         when (val event = state.event) {
             SharingSummaryEvent.Idle -> Unit
 
-            SharingSummaryEvent.OnGoHome ->
-                SharingNavigation.BackToHome
-                    .also(onNavigateEvent)
+            SharingSummaryEvent.OnGoHome -> onNavigateEvent(SharingNavigation.BackToHome)
 
             is SharingSummaryEvent.OnSharingItemSuccess -> SharingNavigation.ItemDetails(
                 itemCategory = event.itemCategory
             ).also(onNavigateEvent)
 
-            SharingSummaryEvent.OnSharingVaultError ->
-                SharingNavigation.InviteError
-                    .also(onNavigateEvent)
+            SharingSummaryEvent.OnSharingVaultError -> onNavigateEvent(SharingNavigation.InviteError)
 
             is SharingSummaryEvent.OnSharingVaultSuccess -> SharingNavigation.ManageVault(
                 shareId = event.shareId

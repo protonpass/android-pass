@@ -43,6 +43,7 @@ internal fun AcceptInviteContent(
                 inviterEmail = inviterEmail,
                 inviteToken = inviteToken,
                 acceptInviteText = stringResource(id = R.string.sharing_item_invitation_accept),
+                progress = progress,
                 onUiEvent = onUiEvent
             )
         }
@@ -59,6 +60,7 @@ internal fun AcceptInviteContent(
                 inviteToken = inviteToken,
                 acceptInviteText = stringResource(id = R.string.sharing_vault_invitation_accept),
                 onUiEvent = onUiEvent,
+                progress = progress,
                 infoContent = {
                     AcceptInviteVaultInfo(
                         vaultName = name,

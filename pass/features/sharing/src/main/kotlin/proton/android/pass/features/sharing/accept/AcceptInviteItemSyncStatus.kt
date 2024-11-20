@@ -18,55 +18,72 @@
 
 package proton.android.pass.features.sharing.accept
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.text.Text
+
+private const val INVITE_PROGRESS_LABEL = "Invite progress"
 
 @Composable
-fun AcceptInviteItemSyncStatus(
+internal fun AcceptInviteItemSyncStatus(
     modifier: Modifier = Modifier,
     downloaded: Int,
     total: Int
 ) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        val progress = if (total == 0) {
+    val progress = remember(downloaded) {
+        if (total == 0) {
             0f
         } else {
             downloaded.toFloat() / total.toFloat()
         }
+    }
+
+    val inviteProgress by animateFloatAsState(
+        targetValue = progress,
+        label = INVITE_PROGRESS_LABEL
+    )
+
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         LinearProgressIndicator(
-            modifier = Modifier.weight(1f).height(8.dp),
-            progress = progress,
+            modifier = Modifier
+                .weight(1f)
+                .height(8.dp),
+            progress = inviteProgress,
             color = PassTheme.colors.interactionNormMajor2,
             backgroundColor = PassTheme.colors.interactionNormMinor1,
             strokeCap = StrokeCap.Round
         )
 
-        Text(text = "$downloaded / $total")
+        Text.Body1Regular(
+            text = "$downloaded ${SpecialCharacters.SLASH} $total"
+        )
     }
 }
 
-@Preview
-@Composable
-fun AcceptInviteItemSyncStatusPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+@[Preview Composable]
+internal fun AcceptInviteItemSyncStatusPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AcceptInviteItemSyncStatus(downloaded = 3, total = 10)

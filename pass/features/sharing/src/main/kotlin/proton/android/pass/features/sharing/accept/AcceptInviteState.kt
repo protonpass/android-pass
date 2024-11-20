@@ -27,10 +27,14 @@ import proton.android.pass.domain.ShareIcon
 @Stable
 internal sealed interface AcceptInviteState {
 
+    val progress: AcceptInviteProgress
+
     val event: AcceptInviteEvent
 
     @Stable
     data object Initial : AcceptInviteState {
+
+        override val progress: AcceptInviteProgress = AcceptInviteProgress.Pending
 
         override val event: AcceptInviteEvent = AcceptInviteEvent.Idle
 
@@ -38,6 +42,7 @@ internal sealed interface AcceptInviteState {
 
     @Stable
     data class ItemInvite(
+        override val progress: AcceptInviteProgress,
         override val event: AcceptInviteEvent,
         private val pendingItemInvite: PendingInvite.Item
     ) : AcceptInviteState {
@@ -49,6 +54,7 @@ internal sealed interface AcceptInviteState {
 
     @Stable
     data class VaultInvite(
+        override val progress: AcceptInviteProgress,
         override val event: AcceptInviteEvent,
         private val pendingVaultInvite: PendingInvite.Vault
     ) : AcceptInviteState {

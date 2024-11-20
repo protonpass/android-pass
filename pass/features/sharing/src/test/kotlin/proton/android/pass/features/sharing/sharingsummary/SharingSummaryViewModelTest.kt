@@ -39,6 +39,7 @@ import proton.android.pass.data.fakes.usecases.TestInviteToVault
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.VaultWithItemCount
@@ -202,7 +203,7 @@ internal class SharingSummaryViewModelTest {
         val expectedMessage = InviteSentError
         inviteToItem.setResult(shouldFail = true)
 
-        viewModel.onShareItem(ItemCategory.Note)
+        viewModel.onShareItem(ItemId("testId"), ItemCategory.Note)
 
         val message = snackbarDispatcher.snackbarMessage.first().value()
         assertThat(message).isEqualTo(expectedMessage)
@@ -251,7 +252,7 @@ internal class SharingSummaryViewModelTest {
         val viewModel = createViewModel(isItemSharing = false)
         val expectedMessage = InviteSentSuccess
 
-        viewModel.onShareItem(ItemCategory.Note)
+        viewModel.onShareItem(ItemId("testId"), ItemCategory.Note)
 
         val message = snackbarDispatcher.snackbarMessage.first().value()
         assertThat(message).isEqualTo(expectedMessage)

@@ -52,11 +52,9 @@ class AcceptInviteViewModel @Inject constructor(
     observeInvites: ObserveInvites
 ) : ViewModel() {
 
-    private val buttonsFlow: MutableStateFlow<AcceptInviteButtonsState> =
-        MutableStateFlow(AcceptInviteButtonsState.Initial)
-
-    private val progressFlow: MutableStateFlow<AcceptInviteProgressState> =
-        MutableStateFlow(AcceptInviteProgressState.Hide)
+    private val progressFlow: MutableStateFlow<AcceptInviteProgress> = MutableStateFlow(
+        value = AcceptInviteProgress.Pending
+    )
 
     private val eventFlow: MutableStateFlow<AcceptInviteEvent> = MutableStateFlow(
         value = AcceptInviteEvent.Idle
@@ -69,12 +67,14 @@ class AcceptInviteViewModel @Inject constructor(
     }
 
     internal val stateFlow: StateFlow<AcceptInviteState> = combine(
-        eventFlow,
-        pendingInviteFlow
-    ) { event, pendingInvite ->
+        pendingInviteFlow,
+        progressFlow,
+        eventFlow
+    ) { pendingInvite, progress, event ->
         when (pendingInvite) {
             is PendingInvite.Item -> {
                 AcceptInviteState.ItemInvite(
+                    progress = progress,
                     event = event,
                     pendingItemInvite = pendingInvite
                 )
@@ -82,6 +82,7 @@ class AcceptInviteViewModel @Inject constructor(
 
             is PendingInvite.Vault -> {
                 AcceptInviteState.VaultInvite(
+                    progress = progress,
                     event = event,
                     pendingVaultInvite = pendingInvite
                 )
@@ -103,139 +104,63 @@ class AcceptInviteViewModel @Inject constructor(
 
     internal fun onAcceptInvite(inviteToken: InviteToken) {
         viewModelScope.launch {
+            acceptInvite(inviteToken)
+                .catch { error ->
+                    PassLogger.w(TAG, "There was an error accepting invite")
+                    PassLogger.w(TAG, error)
+                    eventFlow.update { AcceptInviteEvent.Close }
 
+                    if (error is CannotCreateMoreVaultsError) {
+                        SharingSnackbarMessage.InviteAcceptErrorCannotCreateMoreVaults
+                    } else {
+                        SharingSnackbarMessage.InviteAcceptError
+                    }.also { errorMessage ->
+                        snackbarDispatcher(errorMessage)
+                    }
+                }
+                .collect { acceptInviteStatus ->
+                    when (acceptInviteStatus) {
+                        AcceptInviteStatus.AcceptingInvite -> {
+                            PassLogger.d(TAG, "Accepting invite")
+                            progressFlow.update { AcceptInviteProgress.Accepting }
+                        }
+
+                        is AcceptInviteStatus.DownloadingItems -> {
+                            PassLogger.d(TAG, "Downloading invite items")
+                            progressFlow.update {
+                                AcceptInviteProgress.Downloading(
+                                    downloaded = acceptInviteStatus.downloaded,
+                                    total = acceptInviteStatus.total
+                                )
+                            }
+                        }
+
+                        is AcceptInviteStatus.Done -> {
+                            PassLogger.i(TAG, "Invite successfully accepted")
+                            eventFlow.update { AcceptInviteEvent.Close }
+                            snackbarDispatcher(SharingSnackbarMessage.InviteAccepted)
+                        }
+                    }
+                }
         }
     }
 
     internal fun onRejectInvite(inviteToken: InviteToken) {
         viewModelScope.launch {
+            progressFlow.update { AcceptInviteProgress.Rejecting }
+
             runCatching { rejectInvite(inviteToken) }
                 .onFailure { error ->
                     PassLogger.w(TAG, "There was an error rejecting invite")
                     PassLogger.w(TAG, error)
-                    eventFlow.update { AcceptInviteEvent.Close }
                     snackbarDispatcher(SharingSnackbarMessage.InviteRejectError)
                 }
                 .onSuccess {
                     PassLogger.i(TAG, "Invite successfully rejected")
-                    eventFlow.update { AcceptInviteEvent.Close }
                     snackbarDispatcher(SharingSnackbarMessage.InviteRejected)
                 }
-        }
-    }
 
-    @Suppress("LongMethod")
-    fun onConfirm(invite: PendingInvite?) = viewModelScope.launch {
-        if (invite == null) return@launch
-        acceptInvite(invite.inviteToken)
-            .catch {
-                PassLogger.w(TAG, "Error accepting invite")
-                PassLogger.w(TAG, it)
-
-                val message = if (it is CannotCreateMoreVaultsError) {
-                    SharingSnackbarMessage.InviteAcceptErrorCannotCreateMoreVaults
-                } else {
-                    SharingSnackbarMessage.InviteAcceptError
-                }
-                snackbarDispatcher(message)
-
-                buttonsFlow.update {
-                    AcceptInviteButtonsState(
-                        confirmLoading = false,
-                        rejectLoading = false,
-                        hideReject = false,
-                        enabled = true
-                    )
-                }
-            }
-            .collect { status ->
-                when (status) {
-                    AcceptInviteStatus.AcceptingInvite -> {
-                        buttonsFlow.update {
-                            AcceptInviteButtonsState(
-                                confirmLoading = true,
-                                rejectLoading = false,
-                                hideReject = true,
-                                enabled = false
-                            )
-                        }
-                    }
-
-                    is AcceptInviteStatus.DownloadingItems -> {
-                        PassLogger.d(TAG, "Downloading items")
-
-                        buttonsFlow.update {
-                            AcceptInviteButtonsState(
-                                confirmLoading = true,
-                                rejectLoading = false,
-                                hideReject = true,
-                                enabled = false
-                            )
-                        }
-                        progressFlow.update {
-                            AcceptInviteProgressState.Show(
-                                downloaded = status.downloaded,
-                                total = status.total
-                            )
-                        }
-                    }
-
-                    is AcceptInviteStatus.Done -> {
-                        PassLogger.d(TAG, "Items downloaded")
-
-                        buttonsFlow.update {
-                            AcceptInviteButtonsState(
-                                confirmLoading = true,
-                                rejectLoading = false,
-                                hideReject = true,
-                                enabled = false
-                            )
-                        }
-                        progressFlow.update {
-                            AcceptInviteProgressState.Show(
-                                downloaded = status.items,
-                                total = status.items
-                            )
-                        }
-                        eventFlow.update { AcceptInviteEvent.Close }
-                        snackbarDispatcher(SharingSnackbarMessage.InviteAccepted)
-                    }
-                }
-            }
-    }
-
-    fun onReject(invite: PendingInvite?) = viewModelScope.launch {
-        if (invite == null) return@launch
-
-        buttonsFlow.update {
-            AcceptInviteButtonsState(
-                confirmLoading = false,
-                rejectLoading = true,
-                enabled = false,
-                hideReject = false
-            )
-        }
-
-        runCatching { rejectInvite(invite.inviteToken) }
-            .onSuccess {
-                PassLogger.i(TAG, "Invite rejected")
-                eventFlow.update { AcceptInviteEvent.Close }
-                snackbarDispatcher(SharingSnackbarMessage.InviteRejected)
-            }
-            .onFailure {
-                PassLogger.w(TAG, "Error rejected invite")
-                PassLogger.w(TAG, it)
-                eventFlow.update { AcceptInviteEvent.Close }
-                snackbarDispatcher(SharingSnackbarMessage.InviteRejectError)
-            }
-
-        buttonsFlow.update {
-            AcceptInviteButtonsState(
-                confirmLoading = false,
-                rejectLoading = false,
-                enabled = false,
-                hideReject = false
-            )
+            eventFlow.update { AcceptInviteEvent.Close }
         }
     }
 

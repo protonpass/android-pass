@@ -22,6 +22,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.navigation
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
@@ -42,10 +43,8 @@ data class AuthOriginWithDefaultNavArgId(override val default: AuthOrigin) : Nav
     override val navType: NavType<*> = NavType.EnumType(AuthOrigin::class.java)
 }
 
-private const val USER_ID_ARG = "userId"
-
 data class UserIdWithDefaultNavArgId(override val default: String) : NavArgId {
-    override val key: String = USER_ID_ARG
+    override val key: String = CommonNavArgId.UserId.key
     override val navType: NavType<*> = NavType.StringType
 }
 

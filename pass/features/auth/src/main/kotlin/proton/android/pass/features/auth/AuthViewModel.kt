@@ -81,7 +81,7 @@ import proton.android.pass.features.auth.AuthSnackbarMessage.AuthExtraPasswordEr
 import proton.android.pass.features.auth.AuthSnackbarMessage.AuthTooManyAttemptsError
 import proton.android.pass.features.auth.PinConstants.MAX_PIN_ATTEMPTS
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.navigation.api.UserIdNavArgId
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
@@ -117,7 +117,7 @@ class AuthViewModel @Inject constructor(
         .get<AuthOrigin>(AuthOriginNavArgId.key)
         ?: AuthOrigin.AUTO_LOCK
     internal val userId: Option<UserId> = savedStateHandleProvider.get()
-        .get<String>(UserIdNavArgId.key)
+        .get<String>(CommonNavArgId.UserId.key)
         ?.let(::UserId)
         .let(UserId?::toOption)
 

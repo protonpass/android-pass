@@ -29,11 +29,14 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.featureprofile.impl.applocktime.AppLockTimeBottomsheet
 import proton.android.pass.featureprofile.impl.applocktype.AppLockTypeBottomsheet
+import proton.android.pass.featureprofile.impl.manageaccountconfirmation.navigation.ManageAccountConfirmationNavItem
+import proton.android.pass.featureprofile.impl.manageaccountconfirmation.ui.ManageAccountConfirmationDialog
 import proton.android.pass.featureprofile.impl.pinconfig.PinConfigScreen
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
+import proton.android.pass.navigation.api.dialog
 
 const val ENTER_PIN_PARAMETER_KEY = "enterPin"
 private const val PROFILE_GRAPH = "profile_graph"
@@ -60,6 +63,8 @@ object PinConfig : NavItem(baseRoute = "pin/config")
 sealed interface ProfileNavigation {
 
     data object Account : ProfileNavigation
+
+    data class ManageAccountConfirmation(val userId: UserId, val email: String) : ProfileNavigation
 
     data object AppLockTime : ProfileNavigation
 
@@ -144,6 +149,9 @@ fun NavGraphBuilder.profileGraph(onNavigateEvent: (ProfileNavigation) -> Unit) {
         }
         composable(PinConfig) {
             PinConfigScreen(onNavigateEvent = onNavigateEvent)
+        }
+        dialog(ManageAccountConfirmationNavItem) {
+            ManageAccountConfirmationDialog(onNavigateEvent = onNavigateEvent)
         }
     }
 }

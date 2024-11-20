@@ -28,6 +28,7 @@ import proton.android.pass.crypto.api.extensions.toVault
 import proton.android.pass.data.api.errors.ShareContentNotAvailableError
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.sorted
 import javax.inject.Inject
@@ -39,13 +40,18 @@ class ObserveVaultsImpl @Inject constructor(
 
     override fun invoke(userId: UserId?): Flow<List<Vault>> = observeAllShares(userId)
         .map { shares ->
-            encryptionContextProvider.withEncryptionContext {
-                shares.map { share ->
-                    when (val res = share.toVault(this@withEncryptionContext)) {
-                        None -> throw ShareContentNotAvailableError()
-                        is Some -> res.value
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                shares
+                    .filter { share ->
+                        share.shareType == ShareType.Vault
                     }
-                }.sorted()
+                    .map { vaultShare ->
+                        when (val vaultOption = vaultShare.toVault(this@withEncryptionContextSuspendable)) {
+                            None -> throw ShareContentNotAvailableError()
+                            is Some -> vaultOption.value
+                        }
+                    }
+                    .sorted()
             }
         }
 }

@@ -173,7 +173,7 @@ class InviteToItemImpl @Inject constructor(
                         newUserInviteSignatureManager.create(
                             inviterUserAddress = inviterUserAddress,
                             email = newUserInviteAddress.address,
-                            vaultKey = shareKey
+                            inviteKey = shareKey
                         ).getOrThrow()
                     }
                     .let { signature ->

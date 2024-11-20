@@ -123,7 +123,7 @@ class ConfirmNewUserInviteImpl @Inject constructor(
             inviterUserAddress = inviterUserAddress,
             signature = invite.signature,
             email = invite.email,
-            vaultKey = vaultKey
+            inviteKey = vaultKey
         ).getOrElse {
             PassLogger.w(TAG, "Error validating invite signature")
             PassLogger.w(TAG, it)

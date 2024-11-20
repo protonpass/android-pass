@@ -25,7 +25,7 @@ import javax.inject.Singleton
 
 @Singleton
 class NewUserInviteSignatureBodyCreatorImpl @Inject constructor() : NewUserInviteSignatureBodyCreator {
-    override fun create(email: String, vaultKey: ByteArray): ByteArray =
-        NewUserInviteCreator().createSignatureBody(email, vaultKey)
+    override fun create(email: String, inviteKey: ByteArray): ByteArray =
+        NewUserInviteCreator().createSignatureBody(email, inviteKey)
 
 }

@@ -31,5 +31,5 @@ class TestNewUserInviteSignatureBodyCreator @Inject constructor() : NewUserInvit
         result = value
     }
 
-    override fun create(email: String, vaultKey: ByteArray): ByteArray = result
+    override fun create(email: String, inviteKey: ByteArray): ByteArray = result
 }

@@ -30,12 +30,6 @@ enum class FeatureFlag(
         key = null, // Cannot be activated server-side,
         isEnabledDefault = false
     ),
-    ACCOUNT_SWITCH_V1(
-        title = "Account switch (v1)",
-        description = "Enable account switch",
-        key = "PassAccountSwitchV1",
-        isEnabledDefault = false
-    ),
     SL_ALIASES_SYNC(
         title = "SL aliases sync",
         description = "Enable SL aliases sync",

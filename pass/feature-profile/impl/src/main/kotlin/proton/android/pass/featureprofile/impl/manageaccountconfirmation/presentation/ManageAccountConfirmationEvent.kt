@@ -16,25 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureprofile.impl
+package proton.android.pass.featureprofile.impl.manageaccountconfirmation.presentation
 
-import me.proton.core.domain.entity.UserId
-
-sealed interface AccountSwitchEvent : ProfileUiEvent {
-
-    @JvmInline
-    value class OnAccountSelected(val userId: UserId) : AccountSwitchEvent
-
-    data class OnManageAccount(val userId: UserId, val email: String, val isPrimary: Boolean) : AccountSwitchEvent
-
-    @JvmInline
-    value class OnSignOut(val userId: UserId) : AccountSwitchEvent
-
-    @JvmInline
-    value class OnSignIn(val userId: UserId) : AccountSwitchEvent
-
-    @JvmInline
-    value class OnRemoveAccount(val userId: UserId) : AccountSwitchEvent
-
-    data object OnAddAccount : AccountSwitchEvent
+sealed interface ManageAccountConfirmationEvent {
+    data object Idle : ManageAccountConfirmationEvent
+    data object ToAccount : ManageAccountConfirmationEvent
 }

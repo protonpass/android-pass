@@ -57,7 +57,7 @@ class ManageAccountConfirmationViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = ManageAccountConfirmationState.Initial
+        initialValue = ManageAccountConfirmationState.default(email)
     )
 
     fun switchAccount() {

@@ -23,8 +23,8 @@ data class ManageAccountConfirmationState(
     val event: ManageAccountConfirmationEvent
 ) {
     companion object {
-        val Initial = ManageAccountConfirmationState(
-            email = "",
+        fun default(email: String) = ManageAccountConfirmationState(
+            email = email,
             event = ManageAccountConfirmationEvent.Idle
         )
     }

@@ -216,7 +216,7 @@ class InviteToVaultImpl @Inject constructor(
         val signature = newUserInviteSignatureManager.create(
             inviterUserAddress = address,
             email = targetEmail,
-            vaultKey = vaultKey
+            inviteKey = vaultKey
         ).getOrElse {
             PassLogger.w(TAG, "Failed to create new user invite signature")
             PassLogger.w(TAG, it)

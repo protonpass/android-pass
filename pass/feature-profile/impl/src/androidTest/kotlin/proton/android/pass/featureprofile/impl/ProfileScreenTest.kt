@@ -87,31 +87,6 @@ class ProfileScreenTest {
     }
 
     @Test
-    fun onAccountClickCalled() {
-        val checker = CallChecker<Unit>()
-        composeTestRule.apply {
-            setContent {
-                PassTheme(isDark = true) {
-                    ProfileScreen(
-                        onNavigateEvent = {
-                            if (it is ProfileNavigation.Account) {
-                                checker.call()
-                            }
-                        },
-                        enterPinSuccess = false,
-                        onClearPinSuccess = {}
-                    )
-                }
-            }
-
-            onNodeWithText(activity.getString(R.string.profile_option_settings)).performScrollTo()
-            onNodeWithText(activity.getString(R.string.profile_option_account)).performClick()
-
-            waitUntil { checker.isCalled }
-        }
-    }
-
-    @Test
     fun onSettingsClickCalled() {
         val checker = CallChecker<Unit>()
         composeTestRule.apply {

@@ -68,7 +68,7 @@ data class AuthStateContent(
     val showPinOrBiometry: Boolean,
     val showLogout: Boolean,
     val showBackNavigation: Boolean,
-    val accountSwitcherState: proton.android.pass.features.auth.AccountSwitcherState
+    val accountSwitcherState: AccountSwitcherState
 ) {
     companion object {
         fun default(address: Option<String>) = AuthStateContent(
@@ -80,7 +80,7 @@ data class AuthStateContent(
             remainingPasswordAttempts = None,
             passwordError = None,
             authMethod = None,
-            accountSwitcherState = proton.android.pass.features.auth.AccountSwitcherState(
+            accountSwitcherState = AccountSwitcherState(
                 isAccountSwitchV1Enabled = false,
                 accounts = persistentMapOf()
             ),

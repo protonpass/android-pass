@@ -34,6 +34,7 @@ private const val SHARE_ID_KEY = "ShareID"
 private const val ITEM_ID_KEY = "ItemID"
 private const val ADDRESS_ID_KEY = "AddressID"
 private const val USER_ID_KEY = "UserID"
+private const val EMAIL_KEY = "Email"
 
 enum class CommonNavArgId : NavArgId {
     ItemId {
@@ -50,6 +51,10 @@ enum class CommonNavArgId : NavArgId {
     },
     AddressId {
         override val key: String = ADDRESS_ID_KEY
+        override val navType: NavType<*> = NavType.StringType
+    },
+    Email {
+        override val key: String = EMAIL_KEY
         override val navType: NavType<*> = NavType.StringType
     }
 }

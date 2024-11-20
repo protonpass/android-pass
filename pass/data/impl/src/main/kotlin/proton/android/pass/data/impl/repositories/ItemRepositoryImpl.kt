@@ -865,7 +865,7 @@ class ItemRepositoryImpl @Inject constructor(
         items.forEach {
             localItemDataSource.updateLastUsedTime(ShareId(it.shareId), ItemId(it.id), now)
             remoteItemDataSource.updateLastUsedTime(UserId(it.userId), ShareId(it.shareId), ItemId(it.id), now)
-            PassLogger.i(TAG, "Updated last used time [shareId=$it.shareId][itemId=$itemId]")
+            PassLogger.i(TAG, "Updated last used time [shareId=${it.shareId}][itemId=$itemId]")
         }
     }
 

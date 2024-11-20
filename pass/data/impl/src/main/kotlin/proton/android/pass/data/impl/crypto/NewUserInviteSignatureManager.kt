@@ -32,23 +32,25 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.Constants
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.impl.extensions.tryUseKeys
-import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.domain.key.InviteKey
 import javax.inject.Inject
 import javax.inject.Singleton
 
 interface NewUserInviteSignatureManager {
+
     fun create(
         inviterUserAddress: UserAddress,
         email: String,
-        vaultKey: ShareKey
+        inviteKey: InviteKey
     ): Result<String>
 
     fun validate(
         inviterUserAddress: UserAddress,
         signature: String,
         email: String,
-        vaultKey: ShareKey
+        inviteKey: InviteKey
     ): Result<Unit>
+
 }
 
 @Singleton
@@ -57,16 +59,17 @@ class NewUserInviteSignatureManagerImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val context: CryptoContext
 ) : NewUserInviteSignatureManager {
+
     override fun create(
         inviterUserAddress: UserAddress,
         email: String,
-        vaultKey: ShareKey
+        inviteKey: InviteKey
     ): Result<String> {
         val signatureBody = encryptionContextProvider.withEncryptionContext {
-            val vaultKeyContents = decrypt(vaultKey.key)
+            val inviteKeyContents = decrypt(inviteKey.key)
             newUserInviteSignatureBodyCreator.create(
                 email = email,
-                vaultKey = vaultKeyContents
+                inviteKey = inviteKeyContents
             )
         }
 
@@ -89,13 +92,13 @@ class NewUserInviteSignatureManagerImpl @Inject constructor(
         inviterUserAddress: UserAddress,
         signature: String,
         email: String,
-        vaultKey: ShareKey
+        inviteKey: InviteKey
     ): Result<Unit> {
         val signatureBody = encryptionContextProvider.withEncryptionContext {
-            val vaultKeyContents = decrypt(vaultKey.key)
+            val inviteKeyContents = decrypt(inviteKey.key)
             newUserInviteSignatureBodyCreator.create(
                 email = email,
-                vaultKey = vaultKeyContents
+                inviteKey = inviteKeyContents
             )
         }
 

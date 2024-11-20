@@ -18,88 +18,96 @@
 
 package proton.android.pass.features.sharing.accept
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
+import proton.android.pass.domain.InviteToken
 import proton.android.pass.features.sharing.R
 
 @Composable
-fun AcceptInviteButtons(
+internal fun AcceptInviteButtons(
     modifier: Modifier = Modifier,
-    isConfirmLoading: Boolean,
-    isRejectLoading: Boolean,
-    areButtonsEnabled: Boolean,
-    showReject: Boolean,
-    confirmText: String = stringResource(R.string.sharing_join_shared_vault),
-    rejectText: String = stringResource(R.string.sharing_reject_invitation),
-    onConfirm: () -> Unit,
-    onReject: () -> Unit
+    inviteToken: InviteToken,
+    acceptInviteText: String,
+    progress: AcceptInviteProgress,
+    onUiEvent: (AcceptInviteUiEvent) -> Unit
 ) {
+    val isAcceptButtonLoading = remember(progress) {
+        when (progress) {
+            AcceptInviteProgress.Pending,
+            AcceptInviteProgress.Rejecting -> false
+
+            AcceptInviteProgress.Accepting,
+            is AcceptInviteProgress.Downloading -> true
+        }
+    }
+
+    val isRejectButtonLoading = remember(progress) {
+        when (progress) {
+            AcceptInviteProgress.Rejecting -> true
+
+            AcceptInviteProgress.Pending,
+            AcceptInviteProgress.Accepting,
+            is AcceptInviteProgress.Downloading -> false
+        }
+    }
+
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
-        LoadingCircleButton(
-            modifier = Modifier.fillMaxWidth(),
-            color = PassTheme.colors.interactionNormMajor1,
-            isLoading = isConfirmLoading,
-            buttonEnabled = areButtonsEnabled,
-            text = {
-                Text(
-                    text = confirmText,
-                    style = ProtonTheme.typography.defaultSmallNorm,
-                    color = PassTheme.colors.interactionNormContrast
-                )
-            },
-            onClick = onConfirm
+        PassCircleButton(
+            backgroundColor = PassTheme.colors.interactionNormMajor2,
+            text = acceptInviteText,
+            textColor = PassTheme.colors.interactionNormContrast,
+            isLoading = isAcceptButtonLoading,
+            onClick = {
+                AcceptInviteUiEvent.OnAcceptInvitationClick(
+                    inviteToken = inviteToken
+                ).also(onUiEvent)
+            }
         )
 
-        AnimatedVisibility(visible = showReject) {
-            LoadingCircleButton(
-                modifier = Modifier.fillMaxWidth(),
-                color = PassTheme.colors.interactionNormMinor1,
-                isLoading = isRejectLoading,
-                buttonEnabled = areButtonsEnabled,
-                text = {
-                    Text(
-                        text = rejectText,
-                        style = ProtonTheme.typography.defaultSmallNorm,
-                        color = PassTheme.colors.interactionNormMajor1
-                    )
-                },
-                onClick = onReject
+        if (progress is AcceptInviteProgress.Downloading) {
+            AcceptInviteItemSyncStatus(
+                downloaded = progress.downloaded,
+                total = progress.total
+            )
+        } else {
+            PassCircleButton(
+                backgroundColor = PassTheme.colors.interactionNormMinor1,
+                text = stringResource(id = R.string.sharing_reject_invitation),
+                textColor = PassTheme.colors.interactionNormMajor1,
+                isLoading = isRejectButtonLoading,
+                onClick = {
+                    AcceptInviteUiEvent.OnRejectInvitationClick(
+                        inviteToken = inviteToken
+                    ).also(onUiEvent)
+                }
             )
         }
     }
 }
 
-@Preview
-@Composable
-fun AcceptInviteButtonsPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
-    val (confirm, reject) = input.second to !input.second
-    PassTheme(isDark = input.first) {
+@[Preview Composable]
+internal fun AcceptInviteButtonsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
         Surface {
             AcceptInviteButtons(
-                isConfirmLoading = confirm,
-                isRejectLoading = reject,
-                areButtonsEnabled = true,
-                showReject = true,
-                onConfirm = {},
-                onReject = {}
+                inviteToken = InviteToken(value = "invite token"),
+                acceptInviteText = "Accept invitation",
+                progress = AcceptInviteProgress.Pending,
+                onUiEvent = {}
             )
         }
     }

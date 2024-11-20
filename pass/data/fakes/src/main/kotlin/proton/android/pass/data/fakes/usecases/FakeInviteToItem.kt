@@ -20,6 +20,7 @@ package proton.android.pass.data.fakes.usecases
 
 import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.data.api.usecases.invites.InviteToItem
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -33,7 +34,11 @@ class FakeInviteToItem @Inject constructor() : InviteToItem {
         this.shouldFail = shouldFail
     }
 
-    override suspend fun invoke(shareId: ShareId, inviteAddresses: List<AddressPermission>) {
+    override suspend fun invoke(
+        shareId: ShareId,
+        itemId: ItemId,
+        inviteAddresses: List<AddressPermission>
+    ) {
         if (shouldFail) {
             throw IllegalStateException("test exception")
         }

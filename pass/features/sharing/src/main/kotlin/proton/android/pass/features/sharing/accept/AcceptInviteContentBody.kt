@@ -24,18 +24,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultStrongNorm
-import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.text.PassTextWithInnerStyle
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.InviteToken
-import proton.android.pass.features.sharing.R
 
 @Composable
 internal fun AcceptInviteContentBody(
@@ -45,6 +41,7 @@ internal fun AcceptInviteContentBody(
     inviteToken: InviteToken,
     inviterEmail: String,
     acceptInviteText: String,
+    progress: AcceptInviteProgress,
     onUiEvent: (AcceptInviteUiEvent) -> Unit,
     infoContent: (@Composable () -> Unit)? = null
 ) {
@@ -69,42 +66,11 @@ internal fun AcceptInviteContentBody(
 
         infoContent?.invoke()
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
-        ) {
-            LoadingCircleButton(
-                modifier = Modifier.fillMaxWidth(),
-                color = PassTheme.colors.interactionNormMajor2,
-                text = {
-                    Text.Body1Regular(
-                        text = acceptInviteText,
-                        color = PassTheme.colors.interactionNormContrast
-                    )
-                },
-                isLoading = false,
-                onClick = {
-                    AcceptInviteUiEvent.OnAcceptInvitationClick(
-                        inviteToken = inviteToken
-                    ).also(onUiEvent)
-                }
-            )
-
-            LoadingCircleButton(
-                modifier = Modifier.fillMaxWidth(),
-                color = PassTheme.colors.interactionNormMinor1,
-                text = {
-                    Text.Body1Regular(
-                        text = stringResource(id = R.string.sharing_reject_invitation),
-                        color = PassTheme.colors.interactionNormMajor1
-                    )
-                },
-                isLoading = false,
-                onClick = {
-                    AcceptInviteUiEvent.OnRejectInvitationClick(
-                        inviteToken = inviteToken
-                    ).also(onUiEvent)
-                }
-            )
-        }
+        AcceptInviteButtons(
+            inviteToken = inviteToken,
+            acceptInviteText = acceptInviteText,
+            progress = progress,
+            onUiEvent = onUiEvent
+        )
     }
 }

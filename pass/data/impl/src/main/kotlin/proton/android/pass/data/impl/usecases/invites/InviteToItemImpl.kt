@@ -37,7 +37,7 @@ import proton.android.pass.data.api.usecases.invites.InviteToItem
 import proton.android.pass.data.impl.crypto.EncryptItemsKeysForUser
 import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
-import proton.android.pass.data.impl.repositories.ShareKeyRepository
+import proton.android.pass.data.impl.repositories.ItemKeyRepository
 import proton.android.pass.data.impl.requests.CreateInviteKey
 import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.data.impl.requests.CreateInvitesRequest
@@ -52,7 +52,7 @@ class InviteToItemImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val shareRepository: ShareRepository,
     private val getInviteUserMode: GetInviteUserMode,
-    private val shareKeyRepository: ShareKeyRepository,
+    private val itemKeyRepository: ItemKeyRepository,
     private val encryptItemsKeysForUser: EncryptItemsKeysForUser,
     private val newUserInviteSignatureManager: NewUserInviteSignatureManager,
     private val remoteInviteDataSource: RemoteInviteDataSource
@@ -157,25 +157,21 @@ class InviteToItemImpl @Inject constructor(
         newUserInvitesAddresses: List<AddressPermission>,
         inviterUserAddress: UserAddress
     ): List<Deferred<CreateNewUserInviteRequest>> = coroutineScope {
+        val (_, itemKey) = itemKeyRepository.getLatestItemKey(
+            userId = userId,
+            addressId = inviterUserAddress.addressId,
+            shareId = shareId,
+            itemId = itemId
+        ).first()
+
         newUserInvitesAddresses.map { newUserInviteAddress ->
             async {
-                shareKeyRepository.getShareKeys(
-                    userId = userId,
-                    addressId = inviterUserAddress.addressId,
-                    shareId = shareId,
-                    forceRefresh = false
+                newUserInviteSignatureManager.create(
+                    inviterUserAddress = inviterUserAddress,
+                    email = newUserInviteAddress.address,
+                    inviteKey = itemKey
                 )
-                    .first()
-                    .let { shareKeys ->
-                        shareKeys.maxBy { shareKey -> shareKey.rotation }
-                    }
-                    .let { shareKey ->
-                        newUserInviteSignatureManager.create(
-                            inviterUserAddress = inviterUserAddress,
-                            email = newUserInviteAddress.address,
-                            inviteKey = shareKey
-                        ).getOrThrow()
-                    }
+                    .getOrThrow()
                     .let { signature ->
                         CreateNewUserInviteRequest(
                             email = newUserInviteAddress.address,

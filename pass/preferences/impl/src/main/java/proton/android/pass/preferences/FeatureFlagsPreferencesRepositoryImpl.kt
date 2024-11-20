@@ -33,7 +33,6 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.FeatureFlag.ACCOUNT_SWITCH_V1
 import proton.android.pass.preferences.FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.DIGITAL_ASSET_LINKS
@@ -59,11 +58,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { autofillDebugModeEnabled.value }
-
-        ACCOUNT_SWITCH_V1 -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { accountSwitchV1Enabled.value }
 
         SL_ALIASES_SYNC -> getFeatureFlag(
             key = featureFlag.key,
@@ -104,10 +98,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
         AUTOFILL_DEBUG_MODE -> setFeatureFlag {
             autofillDebugModeEnabled = boolFlagPrefProto(value)
-        }
-
-        ACCOUNT_SWITCH_V1 -> setFeatureFlag {
-            accountSwitchV1Enabled = boolFlagPrefProto(value)
         }
 
         SL_ALIASES_SYNC -> setFeatureFlag {
@@ -228,7 +218,6 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
     private fun getPrefProto(featureFlag: FeatureFlag, preferences: FeatureFlagsPreferences) = with(preferences) {
         when (featureFlag) {
             AUTOFILL_DEBUG_MODE -> autofillDebugModeEnabled
-            ACCOUNT_SWITCH_V1 -> accountSwitchV1Enabled
             SL_ALIASES_SYNC -> simpleLoginAliasesSyncEnabled
             DIGITAL_ASSET_LINKS -> digitalAssetLinkEnabled
             ADVANCED_ALIAS_MANAGEMENT_V1 -> advanceAliasManagementV1Enabled

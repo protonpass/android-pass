@@ -19,11 +19,9 @@
 package proton.android.pass.featureprofile.impl
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -36,21 +34,11 @@ import proton.android.pass.composecomponents.impl.setting.SettingOption
 internal fun AccountProfileSection(
     modifier: Modifier = Modifier,
     planInfo: PlanInfo,
-    isAccountSwitchEnabled: Boolean,
-    onAccountClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
     ) {
-        if (!isAccountSwitchEnabled) {
-            AccountSetting(
-                modifier = Modifier.testTag(AccountProfileSectionTestTag.ACCOUNT_SETTINGS),
-                planInfo = planInfo,
-                onClick = onAccountClick
-            )
-            Divider(color = PassTheme.colors.inputBorderNorm)
-        }
         SettingOption(
             text = stringResource(R.string.profile_option_settings),
             onClick = onSettingsClick
@@ -71,8 +59,6 @@ internal fun AccountSettingsSectionPreview(@PreviewParameter(ThemePreviewProvide
         Surface {
             AccountProfileSection(
                 planInfo = PlanInfo.Hide,
-                isAccountSwitchEnabled = false,
-                onAccountClick = {},
                 onSettingsClick = {}
             )
         }

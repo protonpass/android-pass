@@ -23,6 +23,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -85,8 +86,6 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -107,7 +106,6 @@ class AuthViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val userManager: UserManager,
     private val appDispatchers: AppDispatchers,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     hasExtraPassword: HasExtraPassword,
     observeUserEmail: ObserveUserEmail,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -135,18 +133,18 @@ class AuthViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    private val accountSwitcherFlow = combine(
-        featureFlagsPreferencesRepository.observeForAllUsers(FeatureFlag.ACCOUNT_SWITCH_V1)
-            .map { it && origin == AuthOrigin.AUTO_LOCK },
-        combine(
-            accountManager.getAccounts(AccountState.Ready),
-            accountManager.getPrimaryAccount()
-        ) { accounts: List<Account>, primaryAccount: Account? ->
-            val orderedAccounts = orderAccountsByPrimary(accounts, primaryAccount)
-            orderedAccounts.toPersistentMap()
-        },
-        ::AccountSwitcherState
-    )
+    private val accountSwitcherFlow: Flow<AccountSwitcherState> =
+        if (origin == AuthOrigin.AUTO_LOCK) {
+            combine(
+                accountManager.getAccounts(AccountState.Ready),
+                accountManager.getPrimaryAccount()
+            ) { accounts: List<Account>, primaryAccount: Account? ->
+                val orderedAccounts = orderAccountsByPrimary(accounts, primaryAccount)
+                AccountSwitcherState(orderedAccounts.toPersistentMap())
+            }
+        } else {
+            flowOf(AccountSwitcherState(persistentMapOf()))
+        }
 
     private val currentUserId = combine(
         flowOf(userId.value()),

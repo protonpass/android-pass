@@ -19,5 +19,7 @@
 package proton.android.pass.commonrust.api
 
 interface NewUserInviteSignatureBodyCreator {
-    fun create(email: String, vaultKey: ByteArray): ByteArray
+
+    fun create(email: String, inviteKey: ByteArray): ByteArray
+
 }

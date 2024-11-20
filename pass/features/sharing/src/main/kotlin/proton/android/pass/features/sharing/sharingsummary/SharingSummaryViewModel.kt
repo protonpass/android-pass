@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -179,7 +179,7 @@ class SharingSummaryViewModel @Inject constructor(
             }.onFailure { error ->
                 isLoadingStateFlow.update { IsLoadingState.NotLoading }
 
-                if (getUserPlan().first().isBusinessPlan) {
+                if (getUserPlan().firstOrNull()?.isBusinessPlan == true) {
                     eventFlow.update { SharingSummaryEvent.OnSharingVaultError }
                 } else {
                     snackbarDispatcher(SharingSnackbarMessage.InviteSentError)

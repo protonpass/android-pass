@@ -152,9 +152,10 @@ fun AccountSwitcherRow(
                     onDismissRequest = { expanded = false }
                 ) {
                     val list = when (accountListItem) {
-                        is AccountListItem.Primary -> listOf(ManageAccount, SignOut, Remove)
+                        is AccountListItem.Primary,
+                        is AccountListItem.Ready -> listOf(ManageAccount, SignOut, Remove)
+
                         is AccountListItem.Disabled -> listOf(SignIn, Remove)
-                        is AccountListItem.Ready -> listOf(SignOut, Remove)
                     }
                     list.forEach {
                         when (it) {
@@ -162,7 +163,13 @@ fun AccountSwitcherRow(
                                 DropdownMenuItem(
                                     onClick = {
                                         expanded = false
-                                        onEvent(AccountSwitchEvent.OnManageAccount(accountListItem.accountItem.userId))
+                                        onEvent(
+                                            AccountSwitchEvent.OnManageAccount(
+                                                userId = accountListItem.accountItem.userId,
+                                                email = accountListItem.accountItem.email.orEmpty(),
+                                                isPrimary = accountListItem is AccountListItem.Primary
+                                            )
+                                        )
                                     }
                                 ) {
                                     Icon.Default(id = CoreR.drawable.ic_proton_cog_wheel)

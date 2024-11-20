@@ -107,6 +107,7 @@ import proton.android.pass.featureprofile.impl.FeedbackBottomsheet
 import proton.android.pass.featureprofile.impl.PinConfig
 import proton.android.pass.featureprofile.impl.ProfileNavItem
 import proton.android.pass.featureprofile.impl.ProfileNavigation
+import proton.android.pass.featureprofile.impl.manageaccountconfirmation.navigation.ManageAccountConfirmationNavItem
 import proton.android.pass.featureprofile.impl.profileGraph
 import proton.android.pass.features.account.Account
 import proton.android.pass.features.account.AccountNavigation
@@ -647,6 +648,11 @@ fun NavGraphBuilder.appGraph(
         onNavigateEvent = {
             when (it) {
                 ProfileNavigation.Account -> appNavigator.navigate(Account)
+                is ProfileNavigation.ManageAccountConfirmation ->
+                    appNavigator.navigate(
+                        ManageAccountConfirmationNavItem,
+                        ManageAccountConfirmationNavItem.createNavRoute(it.userId, it.email)
+                    )
                 ProfileNavigation.Settings -> appNavigator.navigate(Settings)
                 ProfileNavigation.Home -> appNavigator.popUpTo(HomeNavItem)
                 ProfileNavigation.Feedback -> appNavigator.navigate(FeedbackBottomsheet)

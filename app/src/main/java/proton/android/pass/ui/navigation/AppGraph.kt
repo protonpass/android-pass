@@ -388,7 +388,6 @@ fun NavGraphBuilder.appGraph(
                 is HomeNavigation.ConfirmedInvite -> appNavigator.navigate(
                     destination = AcceptInvite,
                     route = AcceptInvite.createRoute(it.inviteToken),
-                    force = true
                 )
 
                 is HomeNavigation.SearchOptions -> appNavigator.navigate(

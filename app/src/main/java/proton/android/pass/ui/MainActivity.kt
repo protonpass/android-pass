@@ -18,6 +18,8 @@
 
 package proton.android.pass.ui
 
+import android.content.ComponentName
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResult
@@ -30,6 +32,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.core.content.IntentSanitizer
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
@@ -145,9 +148,16 @@ class MainActivity : FragmentActivity() {
     }
 
     private fun restartApp() {
-        val intent = intent
+        val sanitizedIntent = IntentSanitizer.Builder()
+            .allowComponent(ComponentName(this, MainActivity::class.java))
+            .allowReceiverFlags()
+            .allowAction(Intent.ACTION_MAIN)
+            .allowCategory(Intent.CATEGORY_LAUNCHER)
+            .build()
+            .sanitizeByThrowing(intent)
+
         finish()
-        startActivity(intent)
+        startActivity(sanitizedIntent)
     }
 
     private fun setSecureMode() {

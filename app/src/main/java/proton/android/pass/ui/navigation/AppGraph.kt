@@ -205,7 +205,6 @@ import proton.android.pass.features.settings.SettingsNavigation
 import proton.android.pass.features.settings.ThemeSelector
 import proton.android.pass.features.settings.settingsGraph
 import proton.android.pass.features.sharing.AcceptInvite
-import proton.android.pass.features.sharing.InviteConfirmed
 import proton.android.pass.features.sharing.InvitesErrorDialog
 import proton.android.pass.features.sharing.InvitesInfoDialog
 import proton.android.pass.features.sharing.ManageVault
@@ -376,7 +375,7 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 HomeNavigation.ConfirmedInvite -> appNavigator.navigate(
-                    destination = InviteConfirmed,
+                    destination = AcceptInvite,
                     force = true
                 )
 
@@ -653,6 +652,7 @@ fun NavGraphBuilder.appGraph(
                         ManageAccountConfirmationNavItem,
                         ManageAccountConfirmationNavItem.createNavRoute(it.userId, it.email)
                     )
+
                 ProfileNavigation.Settings -> appNavigator.navigate(Settings)
                 ProfileNavigation.Home -> appNavigator.popUpTo(HomeNavItem)
                 ProfileNavigation.Feedback -> appNavigator.navigate(FeedbackBottomsheet)

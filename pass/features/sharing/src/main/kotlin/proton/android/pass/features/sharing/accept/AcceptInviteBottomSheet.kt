@@ -52,12 +52,12 @@ fun AcceptInviteBottomSheet(
         state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
-                is AcceptInviteUiEvent.OnAcceptInvitationClick -> {
-                    onAcceptInvite(inviteToken = uiEvent.inviteToken)
+                AcceptInviteUiEvent.OnAcceptInvitationClick -> {
+                    onAcceptInvite()
                 }
 
-                is AcceptInviteUiEvent.OnRejectInvitationClick -> {
-                    onRejectInvite(inviteToken = uiEvent.inviteToken)
+                AcceptInviteUiEvent.OnRejectInvitationClick -> {
+                    onRejectInvite()
                 }
             }
         }

@@ -70,11 +70,11 @@ import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
+import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
-import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemById
@@ -155,6 +155,7 @@ import proton.android.pass.data.api.usecases.inappmessages.ChangeInAppMessageSta
 import proton.android.pass.data.api.usecases.inappmessages.ObserveDeliverableInAppMessages
 import proton.android.pass.data.api.usecases.inappmessages.ObserveInAppMessage
 import proton.android.pass.data.api.usecases.invites.InviteToItem
+import proton.android.pass.data.api.usecases.invites.ObserveInvite
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.GetItemOptions
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
@@ -256,12 +257,12 @@ import proton.android.pass.data.impl.usecases.ObserveAliasDetailsImpl
 import proton.android.pass.data.impl.usecases.ObserveAliasOptionsImpl
 import proton.android.pass.data.impl.usecases.ObserveAllSharesImpl
 import proton.android.pass.data.impl.usecases.ObserveAppNeedsUpdateImpl
+import proton.android.pass.data.impl.usecases.ObserveConfirmedInviteTokenImpl
 import proton.android.pass.data.impl.usecases.ObserveCurrentUserImpl
 import proton.android.pass.data.impl.usecases.ObserveCurrentUserSettingsImpl
 import proton.android.pass.data.impl.usecases.ObserveDefaultVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveEncryptedItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveGlobalMonitorStateImpl
-import proton.android.pass.data.impl.usecases.ObserveConfirmedInviteTokenImpl
 import proton.android.pass.data.impl.usecases.ObserveInviteRecommendationsImpl
 import proton.android.pass.data.impl.usecases.ObserveInvitesImpl
 import proton.android.pass.data.impl.usecases.ObserveItemByIdImpl
@@ -345,6 +346,7 @@ import proton.android.pass.data.impl.usecases.inappmessages.ChangeInAppMessageSt
 import proton.android.pass.data.impl.usecases.inappmessages.ObserveDeliverableInAppMessagesImpl
 import proton.android.pass.data.impl.usecases.inappmessages.ObserveInAppMessageImpl
 import proton.android.pass.data.impl.usecases.invites.InviteToItemImpl
+import proton.android.pass.data.impl.usecases.invites.ObserveInviteImpl
 import proton.android.pass.data.impl.usecases.items.GetItemCategoryImpl
 import proton.android.pass.data.impl.usecases.items.GetItemOptionsImpl
 import proton.android.pass.data.impl.usecases.items.ObserveItemRevisionsImpl
@@ -1006,5 +1008,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindInviteToItem(impl: InviteToItemImpl): InviteToItem
+
+    @[Binds Singleton]
+    abstract fun bindObserveInvite(impl: ObserveInviteImpl): ObserveInvite
 
 }

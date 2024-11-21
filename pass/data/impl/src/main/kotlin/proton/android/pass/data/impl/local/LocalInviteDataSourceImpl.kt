@@ -31,6 +31,12 @@ import javax.inject.Inject
 class LocalInviteDataSourceImpl @Inject constructor(
     private val database: PassDatabase
 ) : LocalInviteDataSource {
+
+    override suspend fun getInvite(userId: UserId, inviteToken: InviteToken): Option<InviteEntity> =
+        database.inviteDao()
+            .getByToken(userId = userId.id, token = inviteToken.value)
+            .toOption()
+
     override fun observeAllInvites(userId: UserId): Flow<List<InviteEntity>> =
         database.inviteDao().observeAllForUser(userId.id)
 
@@ -62,4 +68,5 @@ class LocalInviteDataSourceImpl @Inject constructor(
     override suspend fun removeInvite(userId: UserId, invite: InviteToken) {
         database.inviteDao().removeByToken(userId.id, invite.value)
     }
+
 }

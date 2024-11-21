@@ -358,8 +358,9 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 HomeNavigation.TrialInfo -> appNavigator.navigate(TrialScreen)
-                HomeNavigation.OpenInvite -> appNavigator.navigate(
+                is HomeNavigation.OpenInvite -> appNavigator.navigate(
                     destination = AcceptInvite,
+                    route = AcceptInvite.createRoute(it.inviteToken),
                     backDestination = HomeNavItem
                 )
 
@@ -374,8 +375,9 @@ fun NavGraphBuilder.appGraph(
                     force = true
                 )
 
-                HomeNavigation.ConfirmedInvite -> appNavigator.navigate(
+                is HomeNavigation.ConfirmedInvite -> appNavigator.navigate(
                     destination = AcceptInvite,
+                    route = AcceptInvite.createRoute(it.inviteToken),
                     force = true
                 )
 

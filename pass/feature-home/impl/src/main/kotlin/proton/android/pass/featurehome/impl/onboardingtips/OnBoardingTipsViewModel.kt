@@ -173,9 +173,15 @@ class OnBoardingTipsViewModel @Inject constructor(
         when (onBoardingTipPage) {
             Autofill -> autofillManager.openAutofillSelector()
             Trial -> eventFlow.update { OnBoardingTipsEvent.OpenTrialScreen }
-            is Invite -> eventFlow.update { OnBoardingTipsEvent.OpenInviteScreen }
+            is Invite -> eventFlow.update {
+                OnBoardingTipsEvent.OpenInviteScreen(onBoardingTipPage.pendingInvite.inviteToken)
+            }
             NotificationPermission -> eventFlow.update { OnBoardingTipsEvent.RequestNotificationPermission }
-            is SLSync -> eventFlow.update { OnBoardingTipsEvent.OpenSLSyncSettingsScreen(onBoardingTipPage.shareId) }
+            is SLSync -> eventFlow.update {
+                OnBoardingTipsEvent.OpenSLSyncSettingsScreen(
+                    onBoardingTipPage.shareId
+                )
+            }
         }
     }
 

@@ -16,34 +16,36 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases
+package proton.android.pass.data.fakes.usecases
 
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.onStart
-import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.some
+import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
+import proton.android.pass.domain.InviteToken
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ObserveHasConfirmedInviteImpl @Inject constructor() : ObserveHasConfirmedInvite {
+class TestObserveConfirmedInviteToken @Inject constructor() : ObserveConfirmedInviteToken {
 
-    private val flow: MutableSharedFlow<Boolean> = MutableSharedFlow(
-        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
+    private val flow: MutableStateFlow<Option<InviteToken>> = MutableStateFlow(None)
 
-    override fun invoke(): Flow<Boolean> = flow.onStart { emit(false) }
+    override fun invoke(): Flow<Option<InviteToken>> = flow
 
-    override suspend fun send(value: Boolean) {
-        flow.emit(value)
+    override suspend fun send(inviteToken: InviteToken) {
+        flow.update { inviteToken.some() }
     }
 
     override suspend fun clear() {
-        flow.emit(false)
+        flow.update { None }
     }
 
     override fun tryClear() {
-        flow.tryEmit(false)
+        flow.update { None }
     }
+
 }

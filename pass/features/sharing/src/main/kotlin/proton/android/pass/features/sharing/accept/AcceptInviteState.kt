@@ -19,7 +19,6 @@
 package proton.android.pass.features.sharing.accept
 
 import androidx.compose.runtime.Stable
-import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
@@ -47,9 +46,8 @@ internal sealed interface AcceptInviteState {
         private val pendingItemInvite: PendingInvite.Item
     ) : AcceptInviteState {
 
-        internal val inviteToken: InviteToken = pendingItemInvite.inviteToken
-
         internal val inviterEmail: String = pendingItemInvite.inviterEmail
+
     }
 
     @Stable
@@ -58,8 +56,6 @@ internal sealed interface AcceptInviteState {
         override val event: AcceptInviteEvent,
         private val pendingVaultInvite: PendingInvite.Vault
     ) : AcceptInviteState {
-
-        internal val inviteToken: InviteToken = pendingVaultInvite.inviteToken
 
         internal val inviterEmail: String = pendingVaultInvite.inviterEmail
 

@@ -21,19 +21,18 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.InviteRepository
-import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
+import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
 import proton.android.pass.data.impl.crypto.EncryptInviteKeys
 import proton.android.pass.data.impl.crypto.ReencryptInviteContents
 import proton.android.pass.data.impl.db.entities.InviteEntity
@@ -59,7 +58,7 @@ class InviteRepositoryImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val reencryptInviteContents: ReencryptInviteContents,
     private val encryptInviteKeys: EncryptInviteKeys,
-    private val observeHasConfirmedInvite: ObserveHasConfirmedInvite
+    private val observeConfirmedInviteToken: ObserveConfirmedInviteToken
 ) : InviteRepository {
 
     override fun observeInvites(userId: UserId): Flow<List<PendingInvite>> = localDatasource
@@ -70,7 +69,7 @@ class InviteRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun refreshInvites(userId: UserId): Boolean = withContext(Dispatchers.IO) {
+    override suspend fun refreshInvites(userId: UserId): Boolean = coroutineScope {
         PassLogger.i(TAG, "Refresh invites started")
         val deferredRemoteInvites: Deferred<List<PendingInviteResponse>> =
             async { remoteDataSource.fetchInvites(userId) }
@@ -90,11 +89,11 @@ class InviteRepositoryImpl @Inject constructor(
                 PassLogger.i(TAG, "Retrieved local invites")
             }
         }
-        val sources = awaitAll(deferredRemoteInvites, deferredLocalInvites)
-        val remoteInvites = sources[0].filterIsInstance<PendingInviteResponse>()
+
+        val remoteInvites = deferredRemoteInvites.await()
         PassLogger.i(TAG, "Fetched ${remoteInvites.size} remote invites")
 
-        val localInvites = sources[1].filterIsInstance<InviteEntity>()
+        val localInvites = deferredLocalInvites.await()
         PassLogger.i(TAG, "Retrieved ${localInvites.size} local invites")
 
         // Remove deleted invites
@@ -113,9 +112,9 @@ class InviteRepositoryImpl @Inject constructor(
         val hasNewInvites = newInvites.isNotEmpty()
 
         // Detect if we have a new confirmed invite
-        if (newInvites.any { it.fromNewUser }) {
-            observeHasConfirmedInvite.send(true)
-        }
+        newInvites.firstOrNull { newInvite -> newInvite.fromNewUser }
+            ?.let { newUserInvite -> InviteToken(newUserInvite.inviteToken) }
+            ?.also { newUserInviteToken -> observeConfirmedInviteToken.send(inviteToken = newUserInviteToken) }
 
         val invitesWithKeys: List<InviteAndKeysEntity> = newInvites
             .map { invite -> inviteAndKeysEntity(invite, userId) }

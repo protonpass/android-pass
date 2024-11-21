@@ -29,6 +29,10 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.InviteRepository
@@ -60,6 +64,19 @@ class InviteRepositoryImpl @Inject constructor(
     private val encryptInviteKeys: EncryptInviteKeys,
     private val observeConfirmedInviteToken: ObserveConfirmedInviteToken
 ) : InviteRepository {
+
+    override suspend fun getInvite(userId: UserId, inviteToken: InviteToken): Option<PendingInvite> =
+        localDatasource.getInvite(userId, inviteToken)
+            .let { inviteEntityOption ->
+                when (inviteEntityOption) {
+                    None -> None
+                    is Some -> encryptionContextProvider.withEncryptionContextSuspendable {
+                        inviteEntityOption.value
+                            .toDomain(this)
+                            .some()
+                    }
+                }
+            }
 
     override fun observeInvites(userId: UserId): Flow<List<PendingInvite>> = localDatasource
         .observeAllInvites(userId)

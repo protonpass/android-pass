@@ -20,6 +20,7 @@ package proton.android.pass.autofill
 
 import android.app.assist.AssistStructure
 import android.content.Context
+import android.service.autofill.FillContext
 import android.service.autofill.SaveCallback
 import android.service.autofill.SaveRequest
 import me.proton.core.util.kotlin.orEmpty
@@ -59,6 +60,8 @@ object AutoSaveHandler {
 
         val usernameField = getField(usernameFromState, request)
         val passwordField = getField(passwordFromState, request)
+
+        logAutosavePackageNames(request.fillContexts)
 
         val windowNode = getWindowNodes(request.fillContexts).lastOrNull()
         if (windowNode?.rootViewNode == null) {
@@ -125,6 +128,7 @@ object AutoSaveHandler {
         val infoUrl = assistInfo.mainUrl()
 
         val packageName = getApplicationPackageName(windowNode)
+
         val itemTitle = getItemTitle(context, packageName, infoUrl)
 
         val usernameValue: String = usernameField?.autofillValue?.textValue.orEmpty()
@@ -200,5 +204,11 @@ object AutoSaveHandler {
             linkedAppInfo = linkedAppInfo
         )
         context.startActivity(intent)
+    }
+
+    private fun logAutosavePackageNames(fillContexts: List<FillContext>) {
+        val windowNodes = getWindowNodes(fillContexts)
+        val packageNames = windowNodes.joinToString(", ") { getApplicationPackageName(it) }
+        PassLogger.i(TAG, "Received autosave request for packageNames [$packageNames]")
     }
 }

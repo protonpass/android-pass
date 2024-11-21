@@ -42,9 +42,9 @@ import me.proton.core.compose.component.ProtonCenteredProgress
 import me.proton.core.notification.presentation.deeplink.DeeplinkManager
 import me.proton.core.notification.presentation.deeplink.onActivityCreate
 import me.proton.core.usersettings.presentation.compose.view.SecurityKeysActivity
+import proton.android.pass.PassActivityOrchestrator
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.commonui.api.setSecureMode
-import proton.android.pass.PassActivityOrchestrator
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.ui.launcher.AccountState.AccountNeeded
@@ -97,6 +97,7 @@ class MainActivity : FragmentActivity() {
                 PassLogger.w(TAG, it)
             }
             DisposableEffect(loginState) {
+                PassLogger.i(TAG, "Account state: $loginState")
                 when (loginState) {
                     AccountNeeded -> launcherViewModel.onAccountNeeded()
                     PrimaryExist -> launcherViewModel.onPrimaryExist(updateResultLauncher)

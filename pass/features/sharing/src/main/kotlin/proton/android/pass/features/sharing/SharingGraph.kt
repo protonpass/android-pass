@@ -32,7 +32,6 @@ import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.sharing.accept.AcceptInviteBottomSheet
-import proton.android.pass.features.sharing.confirmed.InviteConfirmedBottomSheet
 import proton.android.pass.features.sharing.invitesinfo.InvitesErrorDialog
 import proton.android.pass.features.sharing.invitesinfo.InvitesInfoDialog
 import proton.android.pass.features.sharing.manage.ManageVaultScreen
@@ -118,11 +117,6 @@ object ManageVault : NavItem(
 ) {
     fun createRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
 }
-
-object InviteConfirmed : NavItem(
-    baseRoute = "sharing/confirmed/bottomsheet",
-    navItemType = NavItemType.Bottomsheet
-)
 
 object InvitesInfoDialog : NavItem(
     baseRoute = "sharing/manage/invites/dialog",
@@ -256,11 +250,6 @@ fun NavGraphBuilder.sharingGraph(onNavigateEvent: (SharingNavigation) -> Unit) {
             onNavigateEvent = onNavigateEvent,
             clearRefreshFlag = { it.savedStateHandle.remove<String>(REFRESH_MEMBER_LIST_FLAG) }
         )
-    }
-
-    bottomSheet(InviteConfirmed) {
-        BackHandler { onNavigateEvent(SharingNavigation.BackToHome) }
-        InviteConfirmedBottomSheet(onNavigateEvent = onNavigateEvent)
     }
 
     dialog(InvitesInfoDialog) {

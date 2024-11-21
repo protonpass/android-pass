@@ -25,177 +25,161 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.data.api.usecases.AcceptInviteStatus
+import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.TestAcceptInvite
-import proton.android.pass.data.fakes.usecases.TestObserveInvites
 import proton.android.pass.data.fakes.usecases.TestRejectInvite
+import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
 import proton.android.pass.features.sharing.SharingSnackbarMessage
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestPendingInvite
-import proton.android.pass.domain.ShareId
 
-class AcceptInviteViewModelTest {
+internal class AcceptInviteViewModelTest {
 
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
 
-    private lateinit var instance: AcceptInviteViewModel
-
-    private lateinit var observeInvites: TestObserveInvites
+    private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
+    private lateinit var observeInvite: FakeObserveInvite
     private lateinit var acceptInvite: TestAcceptInvite
     private lateinit var rejectInvite: TestRejectInvite
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
 
+    private lateinit var viewModel: AcceptInviteViewModel
+
     @Before
     fun setup() {
-        observeInvites = TestObserveInvites().apply {
-            emitInvites(listOf(TEST_INVITE))
+        savedStateHandleProvider = TestSavedStateHandleProvider().apply {
+            get()[CommonNavArgId.InviteToken.key] = INVITE_TOKEN
         }
+        observeInvite = FakeObserveInvite()
         acceptInvite = TestAcceptInvite()
         rejectInvite = TestRejectInvite()
         snackbarDispatcher = TestSnackbarDispatcher()
-        instance = AcceptInviteViewModel(
+
+        viewModel = AcceptInviteViewModel(
+            savedStateHandleProvider = savedStateHandleProvider,
+            observeInvite = observeInvite,
             acceptInvite = acceptInvite,
             rejectInvite = rejectInvite,
-            snackbarDispatcher = snackbarDispatcher,
-            observeInvites = observeInvites
+            snackbarDispatcher = snackbarDispatcher
         )
     }
 
     @Test
-    fun `sends right values`() = runTest {
-        instance.stateFlow.test {
-            assertThat(awaitItem()).isEqualTo(
-                AcceptInviteUiState(
-                    event = AcceptInviteEvent.Idle,
-                    content = AcceptInviteUiContent.Content(
-                        invite = TEST_INVITE,
-                        buttonsState = AcceptInviteButtonsState(
-                            confirmLoading = false,
-                            rejectLoading = false,
-                            enabled = true,
-                            hideReject = false
-                        ),
-                        progressState = AcceptInviteProgressState.Hide
-                    )
-                )
-            )
+    fun `WHEN view model is created THEN emits initial state`() = runTest {
+        val expectedState = AcceptInviteState.Initial
+
+        viewModel.stateFlow.test {
+            val state = awaitItem()
+
+            assertThat(state).isEqualTo(expectedState)
         }
     }
 
     @Test
-    fun `accept success sends close event and snackbar message`() = runTest {
-        val items = 10
-        val res = AcceptInviteStatus.Done(items = items, shareId = ShareId("SHARE_ID"))
-        acceptInvite.emitValue(Result.success(res))
+    fun `GIVEN item pending invite WHEN invite is shown THEN emits item invite state`() = runTest {
+        val pendingItemInvite = TestPendingInvite.Item.create()
+        val expectedState = AcceptInviteStateMother.Item.create(pendingItemInvite = pendingItemInvite)
+        observeInvite.emit(pendingItemInvite.toOption())
 
-        instance.onConfirm(TEST_INVITE)
-        instance.stateFlow.test {
-            assertThat(awaitItem()).isEqualTo(
-                AcceptInviteUiState(
-                    event = AcceptInviteEvent.Close,
-                    content = AcceptInviteUiContent.Content(
-                        invite = TEST_INVITE,
-                        buttonsState = AcceptInviteButtonsState(
-                            confirmLoading = true,
-                            rejectLoading = false,
-                            enabled = false,
-                            hideReject = true
-                        ),
-                        progressState = AcceptInviteProgressState.Show(
-                            downloaded = items,
-                            total = items
-                        )
-                    )
-                )
-            )
+        viewModel.stateFlow.test {
+            val state = awaitItem()
+
+            assertThat(state).isEqualTo(expectedState)
         }
-        val message = snackbarDispatcher.snackbarMessage.first().value()
-        assertThat(message).isInstanceOf(SharingSnackbarMessage.InviteAccepted::class.java)
     }
 
     @Test
-    fun `accept error sends snackbar message`() = runTest {
-        acceptInvite.emitValue(Result.failure(IllegalStateException("test")))
-        instance.onConfirm(TEST_INVITE)
-        instance.stateFlow.test {
-            assertThat(awaitItem()).isEqualTo(
-                AcceptInviteUiState(
-                    event = AcceptInviteEvent.Idle,
-                    content = AcceptInviteUiContent.Content(
-                        invite = TEST_INVITE,
-                        buttonsState = AcceptInviteButtonsState(
-                            confirmLoading = false,
-                            rejectLoading = false,
-                            enabled = true,
-                            hideReject = false
-                        ),
-                        progressState = AcceptInviteProgressState.Hide
-                    )
-                )
-            )
-        }
+    fun `GIVEN item pending invite WHEN invite rejection fails THEN shows error message`() = runTest {
+        val pendingItemInvite = TestPendingInvite.Item.create()
+        val rejectionResult: Result<Unit> = Result.failure(IllegalStateException("test"))
+        val expectedMessage = SharingSnackbarMessage.InviteRejectError
+        observeInvite.emit(pendingItemInvite.toOption())
+        rejectInvite.setResult(rejectionResult)
+
+        viewModel.onRejectInvite()
+
         val message = snackbarDispatcher.snackbarMessage.first().value()
-        assertThat(message).isInstanceOf(SharingSnackbarMessage.InviteAcceptError::class.java)
+        assertThat(message).isEqualTo(expectedMessage)
     }
 
     @Test
-    fun `reject success sends close event and snackbar message`() = runTest {
-        instance.onReject(TEST_INVITE)
-        instance.stateFlow.test {
-            assertThat(awaitItem()).isEqualTo(
-                AcceptInviteUiState(
-                    event = AcceptInviteEvent.Close,
-                    content = AcceptInviteUiContent.Content(
-                        invite = TEST_INVITE,
-                        buttonsState = AcceptInviteButtonsState(
-                            confirmLoading = false,
-                            rejectLoading = false,
-                            enabled = false,
-                            hideReject = false
-                        ),
-                        progressState = AcceptInviteProgressState.Hide
-                    )
-                )
-            )
+    fun `GIVEN item pending invite WHEN invite rejection fails THEN emits rejecting close event`() = runTest {
+        val pendingItemInvite = TestPendingInvite.Item.create()
+        val rejectionResult: Result<Unit> = Result.failure(IllegalStateException("test"))
+        val expectedState = AcceptInviteStateMother.Item.create(
+            pendingItemInvite = pendingItemInvite,
+            progress = AcceptInviteProgress.Rejecting,
+            event = AcceptInviteEvent.Close
+        )
+        observeInvite.emit(pendingItemInvite.toOption())
+        rejectInvite.setResult(rejectionResult)
+
+        viewModel.onRejectInvite()
+
+        viewModel.stateFlow.test {
+            val state = awaitItem()
+
+            assertThat(state).isEqualTo(expectedState)
         }
-        val message = snackbarDispatcher.snackbarMessage.first().value()
-        assertThat(message).isInstanceOf(SharingSnackbarMessage.InviteRejected::class.java)
     }
 
     @Test
-    fun `reject error sends close and snackbar message`() = runTest {
-        rejectInvite.setResult(Result.failure(IllegalStateException("test")))
-        instance.onReject(TEST_INVITE)
-        instance.stateFlow.test {
-            assertThat(awaitItem()).isEqualTo(
-                AcceptInviteUiState(
-                    event = AcceptInviteEvent.Close,
-                    content = AcceptInviteUiContent.Content(
-                        invite = TEST_INVITE,
-                        buttonsState = AcceptInviteButtonsState(
-                            confirmLoading = false,
-                            rejectLoading = false,
-                            enabled = false,
-                            hideReject = false
-                        ),
-                        progressState = AcceptInviteProgressState.Hide
-                    )
-                )
-            )
+    fun `GIVEN vault pending invite WHEN invite is shown THEN emits vault invite state`() = runTest {
+        val vaultInvite = TestPendingInvite.Vault.create()
+        val expectedState = AcceptInviteStateMother.Vault.create(pendingVaultInvite = vaultInvite)
+
+        observeInvite.emit(vaultInvite.toOption())
+
+        viewModel.stateFlow.test {
+            val state = awaitItem()
+
+            assertThat(state).isEqualTo(expectedState)
         }
-        val message = snackbarDispatcher.snackbarMessage.first().value()
-        assertThat(message).isInstanceOf(SharingSnackbarMessage.InviteAcceptError::class.java)
     }
 
-    companion object {
+    @Test
+    fun `GIVEN vault pending invite WHEN invite rejection fails THEN shows error message`() = runTest {
+        val pendingVaultInvite = TestPendingInvite.Vault.create()
+        val rejectionResult: Result<Unit> = Result.failure(IllegalStateException("test"))
+        val expectedMessage = SharingSnackbarMessage.InviteRejectError
+        observeInvite.emit(pendingVaultInvite.toOption())
+        rejectInvite.setResult(rejectionResult)
+
+        viewModel.onRejectInvite()
+
+        val message = snackbarDispatcher.snackbarMessage.first().value()
+        assertThat(message).isEqualTo(expectedMessage)
+    }
+
+    @Test
+    fun `GIVEN vault pending invite WHEN invite rejection fails THEN emits rejecting close event`() = runTest {
+        val pendingVaultInvite = TestPendingInvite.Vault.create()
+        val rejectionResult: Result<Unit> = Result.failure(IllegalStateException("test"))
+        val expectedState = AcceptInviteStateMother.Vault.create(
+            pendingVaultInvite = pendingVaultInvite,
+            progress = AcceptInviteProgress.Rejecting,
+            event = AcceptInviteEvent.Close
+        )
+        observeInvite.emit(pendingVaultInvite.toOption())
+        rejectInvite.setResult(rejectionResult)
+
+        viewModel.onRejectInvite()
+
+        viewModel.stateFlow.test {
+            val state = awaitItem()
+
+            assertThat(state).isEqualTo(expectedState)
+        }
+    }
+
+    private companion object {
+
         private const val INVITE_TOKEN = "AcceptInviteViewModelTest.INVITE_TOKEN"
-        private const val INVITE_NAME = "AcceptInviteViewModelTest.INVITE_NAME"
-        private val TEST_INVITE = TestPendingInvite.create(
-            token = INVITE_TOKEN,
-            name = INVITE_NAME
-        )
+
     }
 
 }

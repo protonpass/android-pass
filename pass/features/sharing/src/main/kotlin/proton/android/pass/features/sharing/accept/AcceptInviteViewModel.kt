@@ -32,6 +32,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
@@ -41,16 +43,22 @@ import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
 class AcceptInviteViewModel @Inject constructor(
+    savedStateHandleProvider: SavedStateHandleProvider,
     private val acceptInvite: AcceptInvite,
     private val rejectInvite: RejectInvite,
     private val snackbarDispatcher: SnackbarDispatcher,
     observeInvites: ObserveInvites
 ) : ViewModel() {
+
+    private val inviteToken = savedStateHandleProvider.get()
+        .require<String>(CommonNavArgId.InviteToken.key)
+        .let(::InviteToken)
 
     private val progressFlow: MutableStateFlow<AcceptInviteProgress> = MutableStateFlow(
         value = AcceptInviteProgress.Pending
@@ -102,7 +110,7 @@ class AcceptInviteViewModel @Inject constructor(
         eventFlow.compareAndSet(event, AcceptInviteEvent.Idle)
     }
 
-    internal fun onAcceptInvite(inviteToken: InviteToken) {
+    internal fun onAcceptInvite() {
         viewModelScope.launch {
             acceptInvite(inviteToken)
                 .catch { error ->
@@ -145,7 +153,7 @@ class AcceptInviteViewModel @Inject constructor(
         }
     }
 
-    internal fun onRejectInvite(inviteToken: InviteToken) {
+    internal fun onRejectInvite() {
         viewModelScope.launch {
             progressFlow.update { AcceptInviteProgress.Rejecting }
 

@@ -25,6 +25,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.NewUserInviteId
 import proton.android.pass.domain.ShareId
@@ -92,7 +93,15 @@ object SharingPermissions : NavItem(
     }
 }
 
-object AcceptInvite : NavItem("sharing/accept", navItemType = NavItemType.Bottomsheet)
+object AcceptInvite : NavItem(
+    baseRoute = "sharing/accept",
+    navArgIds = listOf(CommonNavArgId.InviteToken),
+    navItemType = NavItemType.Bottomsheet
+) {
+
+    fun createRoute(inviteToken: InviteToken) = "$baseRoute/${inviteToken.value}"
+
+}
 
 object SharingSummary : NavItem(
     baseRoute = "sharing/summary/screen",

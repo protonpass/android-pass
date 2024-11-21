@@ -22,17 +22,41 @@ import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
+import proton.android.pass.test.TestUtils
+import kotlin.random.Random
 
 object TestPendingInvite {
-    fun create(token: String = "some-token", name: String = "invite-name") = PendingInvite(
-        inviteToken = InviteToken(token),
-        inviterEmail = "inviter@email",
-        invitedAddressId = "invitedAddressId",
-        memberCount = 1,
-        itemCount = 1,
-        name = name,
-        icon = ShareIcon.Icon1,
-        color = ShareColor.Color1,
-        fromNewUser = false
-    )
+
+    object Item {
+
+        fun create(
+            inviteToken: String = TestUtils.randomString(),
+            inviterEmail: String = TestUtils.randomString(),
+            invitedAddressId: String = TestUtils.randomString(),
+            isFromNewUser: Boolean = Random.nextBoolean()
+        ) = PendingInvite.Item(
+            inviteToken = InviteToken(inviteToken),
+            inviterEmail = inviterEmail,
+            invitedAddressId = invitedAddressId,
+            isFromNewUser = isFromNewUser
+        )
+
+    }
+
+    object Vault {
+
+        fun create(token: String = "some-token", name: String = "invite-name") = PendingInvite.Vault(
+            inviteToken = InviteToken(token),
+            inviterEmail = "inviter@email",
+            invitedAddressId = "invitedAddressId",
+            memberCount = 1,
+            itemCount = 1,
+            name = name,
+            icon = ShareIcon.Icon1,
+            color = ShareColor.Color1,
+            isFromNewUser = false
+        )
+
+    }
+
 }

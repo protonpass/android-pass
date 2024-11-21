@@ -53,10 +53,10 @@ import javax.inject.Inject
 @HiltViewModel
 class AcceptInviteViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
+    observeInvite: ObserveInvite,
     private val acceptInvite: AcceptInvite,
     private val rejectInvite: RejectInvite,
-    private val snackbarDispatcher: SnackbarDispatcher,
-    observeInvite: ObserveInvite
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val inviteToken = savedStateHandleProvider.get()

@@ -22,6 +22,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.InviteToken
@@ -61,6 +63,8 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
     fun setRejectResult(value: Result<Unit>) {
         rejectResult = value
     }
+
+    override suspend fun getInvite(userId: UserId, inviteToken: InviteToken): Option<PendingInvite> = None
 
     override fun observeInvites(userId: UserId): Flow<List<PendingInvite>> = invitesFlow
 

@@ -133,7 +133,7 @@ class AcceptBottomSheetTest {
     companion object {
         private const val INVITE_TOKEN = "AcceptBottomSheetTest.INVITE_TOKEN"
         private const val INVITE_NAME = "AcceptBottomSheetTest.INVITE_NAME"
-        private val TEST_INVITE = TestPendingInvite.create(
+        private val TEST_INVITE = TestPendingInvite.Vault.create(
             token = INVITE_TOKEN,
             name = INVITE_NAME
         )

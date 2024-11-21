@@ -16,31 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases
+package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
-import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
-import javax.inject.Inject
-import javax.inject.Singleton
+import proton.android.pass.common.api.Option
+import proton.android.pass.domain.InviteToken
 
-@Singleton
-class TestObserveHasConfirmedInvite @Inject constructor() : ObserveHasConfirmedInvite {
+interface ObserveConfirmedInviteToken {
 
-    private val flow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    operator fun invoke(): Flow<Option<InviteToken>>
 
-    override fun invoke(): Flow<Boolean> = flow
+    suspend fun send(inviteToken: InviteToken)
 
-    override suspend fun send(value: Boolean) {
-        flow.update { value }
-    }
+    suspend fun clear()
 
-    override suspend fun clear() {
-        flow.update { false }
-    }
+    fun tryClear()
 
-    override fun tryClear() {
-        flow.update { false }
-    }
 }

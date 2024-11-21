@@ -194,11 +194,14 @@ fun HomeScreen(
     }
 
     DisposableEffect(routerEvent) {
-        when (routerEvent) {
+        when (val event = routerEvent) {
             RouterEvent.OnBoarding -> onNavigateEvent(HomeNavigation.OnBoarding)
-            RouterEvent.ConfirmedInvite -> onNavigateEvent(HomeNavigation.ConfirmedInvite)
+            is RouterEvent.ConfirmedInvite -> HomeNavigation.ConfirmedInvite(
+                inviteToken = event.inviteToken
+            ).also(onNavigateEvent)
+
             RouterEvent.SyncDialog -> onNavigateEvent(HomeNavigation.SyncDialog)
-            RouterEvent.None -> {}
+            RouterEvent.None -> Unit
         }
         onDispose { routerViewModel.clearEvent() }
     }
@@ -212,7 +215,7 @@ fun HomeScreen(
     LaunchedEffect(onBoardingTipsUiState.event) {
         val homeNavigationEvent = when (val event = onBoardingTipsUiState.event) {
             OnBoardingTipsEvent.OpenTrialScreen -> HomeNavigation.TrialInfo
-            OnBoardingTipsEvent.OpenInviteScreen -> HomeNavigation.OpenInvite
+            is OnBoardingTipsEvent.OpenInviteScreen -> HomeNavigation.OpenInvite(event.inviteToken)
             is OnBoardingTipsEvent.OpenSLSyncSettingsScreen -> HomeNavigation.SLSyncSettings(event.shareId)
             OnBoardingTipsEvent.RequestNotificationPermission,
             OnBoardingTipsEvent.Unknown -> return@LaunchedEffect
@@ -833,8 +836,9 @@ fun HomeScreen(
                         }
 
                         HomeUiEvent.PermanentlyDeleteItemsActionClick -> {
-                            val containsAlias = homeUiState.homeListUiState.selectionState.selectedItems
-                                .any { it.contents is ItemContents.Alias }
+                            val containsAlias =
+                                homeUiState.homeListUiState.selectionState.selectedItems
+                                    .any { it.contents is ItemContents.Alias }
                             if (containsAlias) {
                                 shouldShowBulkDeleteAliasDialog = true
                             } else {

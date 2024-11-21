@@ -31,14 +31,12 @@ import me.proton.core.compose.theme.defaultStrongNorm
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.text.PassTextWithInnerStyle
 import proton.android.pass.composecomponents.impl.text.Text
-import proton.android.pass.domain.InviteToken
 
 @Composable
 internal fun AcceptInviteContentBody(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String,
-    inviteToken: InviteToken,
     inviterEmail: String,
     acceptInviteText: String,
     progress: AcceptInviteProgress,
@@ -67,7 +65,6 @@ internal fun AcceptInviteContentBody(
         infoContent?.invoke()
 
         AcceptInviteButtons(
-            inviteToken = inviteToken,
             acceptInviteText = acceptInviteText,
             progress = progress,
             onUiEvent = onUiEvent

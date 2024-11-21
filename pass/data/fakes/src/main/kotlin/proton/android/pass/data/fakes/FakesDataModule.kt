@@ -78,7 +78,7 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
-import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
+import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemById
@@ -262,7 +262,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUserSettings
 import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
-import proton.android.pass.data.fakes.usecases.TestObserveHasConfirmedInvite
+import proton.android.pass.data.fakes.usecases.TestObserveConfirmedInviteToken
 import proton.android.pass.data.fakes.usecases.TestObserveInvites
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
@@ -615,7 +615,7 @@ abstract class FakesDataModule {
     abstract fun bindGetAllKeysByAddress(impl: TestGetAllKeysByAddress): GetAllKeysByAddress
 
     @Binds
-    abstract fun bindObserveHasConfirmedInvite(impl: TestObserveHasConfirmedInvite): ObserveHasConfirmedInvite
+    abstract fun bindObserveHasConfirmedInvite(impl: TestObserveConfirmedInviteToken): ObserveConfirmedInviteToken
 
     @Binds
     abstract fun bindObserveVaultById(impl: TestObserveVaultById): ObserveVaultById

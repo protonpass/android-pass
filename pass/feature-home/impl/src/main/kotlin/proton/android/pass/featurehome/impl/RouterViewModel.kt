@@ -25,12 +25,14 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
-import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
+import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
+import proton.android.pass.domain.InviteToken
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -38,7 +40,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RouterViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
-    observeHasConfirmedInvite: ObserveHasConfirmedInvite,
+    observeConfirmedInviteToken: ObserveConfirmedInviteToken,
     itemSyncStatusRepository: ItemSyncStatusRepository
 ) : ViewModel() {
 
@@ -47,12 +49,11 @@ class RouterViewModel @Inject constructor(
     init {
         combine(
             userPreferencesRepository.getHasCompletedOnBoarding(),
-            observeHasConfirmedInvite()
-                .map { hasConfirmedInvite ->
-                    if (hasConfirmedInvite) {
-                        observeHasConfirmedInvite.clear()
+            observeConfirmedInviteToken()
+                .onEach { inviteTokenOption ->
+                    if (inviteTokenOption is Some) {
+                        observeConfirmedInviteToken.clear()
                     }
-                    hasConfirmedInvite
                 }
                 .distinctUntilChanged(),
             itemSyncStatusRepository.observeMode().distinctUntilChanged(),
@@ -71,20 +72,25 @@ class RouterViewModel @Inject constructor(
 
     private fun routerEvent(
         hasCompletedOnBoarding: HasCompletedOnBoarding,
-        hasConfirmedInvite: Boolean,
+        inviteTokenOption: Option<InviteToken>,
         syncMode: SyncMode
     ): RouterEvent = when {
-        hasConfirmedInvite -> RouterEvent.ConfirmedInvite
+        inviteTokenOption is Some -> RouterEvent.ConfirmedInvite(inviteTokenOption.value)
         hasCompletedOnBoarding == HasCompletedOnBoarding.NotCompleted -> RouterEvent.OnBoarding
         syncMode == SyncMode.ShownToUser -> RouterEvent.SyncDialog
         else -> RouterEvent.None
     }
 }
 
-enum class RouterEvent {
-    OnBoarding,
-    SyncDialog,
-    ConfirmedInvite,
-    None
-}
+sealed interface RouterEvent {
 
+    data object OnBoarding : RouterEvent
+
+    data object SyncDialog : RouterEvent
+
+    @JvmInline
+    value class ConfirmedInvite(val inviteToken: InviteToken) : RouterEvent
+
+    data object None : RouterEvent
+
+}

@@ -37,6 +37,7 @@ private const val ITEM_ID_KEY = "ItemID"
 private const val ADDRESS_ID_KEY = "AddressID"
 private const val USER_ID_KEY = "UserID"
 private const val EMAIL_KEY = "Email"
+private const val INVITE_TOKEN_KEY = "InviteToken"
 
 enum class CommonNavArgId : NavArgId {
     ItemId {
@@ -60,6 +61,10 @@ enum class CommonNavArgId : NavArgId {
         override val navType: NavType<*> = NavType.StringType
         override val requireEncoding: Boolean
             get() = true
+    },
+    InviteToken {
+        override val key: String = INVITE_TOKEN_KEY
+        override val navType: NavType<*> = NavType.StringType
     }
 }
 object DestinationShareNavArgId : NavArgId {

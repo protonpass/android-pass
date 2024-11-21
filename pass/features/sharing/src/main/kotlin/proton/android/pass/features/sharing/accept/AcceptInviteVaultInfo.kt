@@ -95,24 +95,6 @@ internal fun AcceptInviteVaultInfo(
                 text = subtitle,
                 color = PassTheme.colors.textWeak
             )
-
-//        AcceptInviteButtons(
-//            isConfirmLoading = state.buttonsState.confirmLoading,
-//            isRejectLoading = state.buttonsState.rejectLoading,
-//            areButtonsEnabled = state.buttonsState.enabled,
-//            showReject = !state.buttonsState.hideReject,
-//            onConfirm = onConfirm,
-//            onReject = onReject
-//        )
-//
-//        AnimatedVisibility(visible = state.progressState is AcceptInviteProgressState.Show) {
-//            if (state.progressState is AcceptInviteProgressState.Show) {
-//                AcceptInviteItemSyncStatus(
-//                    downloaded = state.progressState.downloaded,
-//                    total = state.progressState.total
-//                )
-//            }
-//        }
         }
     }
 }

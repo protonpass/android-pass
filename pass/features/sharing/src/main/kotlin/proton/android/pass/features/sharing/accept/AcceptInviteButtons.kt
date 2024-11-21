@@ -31,13 +31,11 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
-import proton.android.pass.domain.InviteToken
 import proton.android.pass.features.sharing.R
 
 @Composable
 internal fun AcceptInviteButtons(
     modifier: Modifier = Modifier,
-    inviteToken: InviteToken,
     acceptInviteText: String,
     progress: AcceptInviteProgress,
     onUiEvent: (AcceptInviteUiEvent) -> Unit
@@ -71,11 +69,7 @@ internal fun AcceptInviteButtons(
             text = acceptInviteText,
             textColor = PassTheme.colors.interactionNormContrast,
             isLoading = isAcceptButtonLoading,
-            onClick = {
-                AcceptInviteUiEvent.OnAcceptInvitationClick(
-                    inviteToken = inviteToken
-                ).also(onUiEvent)
-            }
+            onClick = { onUiEvent(AcceptInviteUiEvent.OnAcceptInvitationClick) }
         )
 
         if (progress is AcceptInviteProgress.Downloading) {
@@ -89,11 +83,7 @@ internal fun AcceptInviteButtons(
                 text = stringResource(id = R.string.sharing_reject_invitation),
                 textColor = PassTheme.colors.interactionNormMajor1,
                 isLoading = isRejectButtonLoading,
-                onClick = {
-                    AcceptInviteUiEvent.OnRejectInvitationClick(
-                        inviteToken = inviteToken
-                    ).also(onUiEvent)
-                }
+                onClick = { onUiEvent(AcceptInviteUiEvent.OnRejectInvitationClick) }
             )
         }
     }
@@ -104,7 +94,6 @@ internal fun AcceptInviteButtonsPreview(@PreviewParameter(ThemePreviewProvider::
     PassTheme(isDark = isDark) {
         Surface {
             AcceptInviteButtons(
-                inviteToken = InviteToken(value = "invite token"),
                 acceptInviteText = "Accept invitation",
                 progress = AcceptInviteProgress.Pending,
                 onUiEvent = {}

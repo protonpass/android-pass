@@ -28,6 +28,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.composecomponents.impl.dialogs.PassUpgradePlanDialog
+import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
@@ -132,7 +133,8 @@ sealed interface HomeNavigation {
 
     data object TrialInfo : HomeNavigation
 
-    data object OpenInvite : HomeNavigation
+    @JvmInline
+    value class OpenInvite(val inviteToken: InviteToken) : HomeNavigation
 
     data object Finish : HomeNavigation
 
@@ -140,7 +142,8 @@ sealed interface HomeNavigation {
 
     data object SyncDialog : HomeNavigation
 
-    data object ConfirmedInvite : HomeNavigation
+    @JvmInline
+    value class ConfirmedInvite(val inviteToken: InviteToken) : HomeNavigation
 
     @JvmInline
     value class SearchOptions(val bulkActionsEnabled: Boolean) : HomeNavigation

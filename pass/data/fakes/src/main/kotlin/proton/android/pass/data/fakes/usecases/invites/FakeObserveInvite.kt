@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,33 +16,27 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.data.fakes.usecases.invites
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
+import kotlinx.coroutines.flow.MutableSharedFlow
+import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.Option
-import proton.android.pass.domain.InviteRecommendations
+import proton.android.pass.data.api.usecases.invites.ObserveInvite
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
-import proton.android.pass.domain.ShareId
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface InviteRepository {
+@Singleton
+class FakeObserveInvite @Inject constructor() : ObserveInvite {
 
-    suspend fun getInvite(userId: UserId, inviteToken: InviteToken): Option<PendingInvite>
+    private val inviteFlow: MutableSharedFlow<Option<PendingInvite>> = testFlow()
 
-    fun observeInvites(userId: UserId): Flow<List<PendingInvite>>
+    fun emit(invite: Option<PendingInvite>) {
+        inviteFlow.tryEmit(invite)
+    }
 
-    suspend fun refreshInvites(userId: UserId): Boolean
-
-    suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken): ShareId
-
-    suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken)
-
-    fun observeInviteRecommendations(
-        userId: UserId,
-        shareId: ShareId,
-        lastToken: String? = null,
-        startsWith: String? = null
-    ): Flow<InviteRecommendations>
+    override fun invoke(inviteToken: InviteToken): Flow<Option<PendingInvite>> = inviteFlow
 
 }

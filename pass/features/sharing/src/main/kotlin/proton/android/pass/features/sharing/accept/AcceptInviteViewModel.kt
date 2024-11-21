@@ -32,13 +32,16 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
-import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.RejectInvite
+import proton.android.pass.data.api.usecases.invites.ObserveInvite
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.features.sharing.SharingSnackbarMessage
@@ -53,7 +56,7 @@ class AcceptInviteViewModel @Inject constructor(
     private val acceptInvite: AcceptInvite,
     private val rejectInvite: RejectInvite,
     private val snackbarDispatcher: SnackbarDispatcher,
-    observeInvites: ObserveInvites
+    observeInvite: ObserveInvite
 ) : ViewModel() {
 
     private val inviteToken = savedStateHandleProvider.get()
@@ -68,36 +71,29 @@ class AcceptInviteViewModel @Inject constructor(
         value = AcceptInviteEvent.Idle
     )
 
-    private val pendingInviteFlow: Flow<PendingInvite?> = oneShot {
-        observeInvites()
-            .first()
-            .firstOrNull()
+    private val pendingInviteOptionFlow: Flow<Option<PendingInvite>> = oneShot {
+        observeInvite(inviteToken).first()
     }
 
     internal val stateFlow: StateFlow<AcceptInviteState> = combine(
-        pendingInviteFlow,
+        pendingInviteOptionFlow,
         progressFlow,
         eventFlow
-    ) { pendingInvite, progress, event ->
-        when (pendingInvite) {
-            is PendingInvite.Item -> {
-                AcceptInviteState.ItemInvite(
+    ) { pendingInviteOption, progress, event ->
+        when (pendingInviteOption) {
+            None -> AcceptInviteState.Initial
+            is Some -> when (val pendingInvite = pendingInviteOption.value) {
+                is PendingInvite.Item -> AcceptInviteState.ItemInvite(
                     progress = progress,
                     event = event,
                     pendingItemInvite = pendingInvite
                 )
-            }
 
-            is PendingInvite.Vault -> {
-                AcceptInviteState.VaultInvite(
+                is PendingInvite.Vault -> AcceptInviteState.VaultInvite(
                     progress = progress,
                     event = event,
                     pendingVaultInvite = pendingInvite
                 )
-            }
-
-            else -> {
-                AcceptInviteState.Initial
             }
         }
     }.stateIn(

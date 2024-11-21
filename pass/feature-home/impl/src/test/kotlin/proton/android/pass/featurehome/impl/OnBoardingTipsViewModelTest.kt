@@ -177,15 +177,16 @@ class OnBoardingTipsViewModelTest {
 
     @Test
     fun `Should display invite banner regardless of the state of the other conditions`() = runTest {
+        val pendingInvite = TestPendingInvite.Vault.create()
         setupPlan(PlanType.Trial("", "", 1))
         setupSyncStatus()
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         preferenceRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.NotDismissed)
         preferenceRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.NotDismissed)
-        observeInvites.emitInvites(listOf(TestPendingInvite.create()))
+        observeInvites.emitInvites(listOf(pendingInvite))
 
         viewModel.stateFlow.test {
-            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(Invite.some()))
+            assertThat(awaitItem()).isEqualTo(OnBoardingTipsUiState(Invite(pendingInvite).some()))
         }
     }
 

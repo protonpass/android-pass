@@ -836,8 +836,9 @@ fun HomeScreen(
                         }
 
                         HomeUiEvent.PermanentlyDeleteItemsActionClick -> {
-                            val containsAlias = homeUiState.homeListUiState.selectionState.selectedItems
-                                .any { it.contents is ItemContents.Alias }
+                            val containsAlias =
+                                homeUiState.homeListUiState.selectionState.selectedItems
+                                    .any { it.contents is ItemContents.Alias }
                             if (containsAlias) {
                                 shouldShowBulkDeleteAliasDialog = true
                             } else {

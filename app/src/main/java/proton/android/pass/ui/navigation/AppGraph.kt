@@ -375,14 +375,9 @@ fun NavGraphBuilder.appGraph(
                     force = true
                 )
 
-<<<<<<< HEAD
                 is HomeNavigation.ConfirmedInvite -> appNavigator.navigate(
                     destination = AcceptInvite,
                     route = AcceptInvite.createRoute(it.inviteToken),
-=======
-                HomeNavigation.ConfirmedInvite -> appNavigator.navigate(
-                    destination = AcceptInvite,
->>>>>>> be3785bf5 (chore: removed duplicated feature)
                     force = true
                 )
 

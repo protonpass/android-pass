@@ -32,7 +32,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
-import proton.android.pass.data.fakes.usecases.FakeInviteToItem
+import proton.android.pass.data.fakes.usecases.invites.FakeInviteToItem
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestInviteToVault

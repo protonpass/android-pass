@@ -74,11 +74,11 @@ import proton.android.pass.data.api.usecases.ObserveAddressesByUserId
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
+import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
 import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
-import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemById
@@ -148,6 +148,7 @@ import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
 import proton.android.pass.data.api.usecases.invites.InviteToItem
+import proton.android.pass.data.api.usecases.invites.ObserveInvite
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.GetItemOptions
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
@@ -203,7 +204,6 @@ import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
 import proton.android.pass.data.fakes.usecases.FakeChangeAliasStatus
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.FakeInviteToItem
 import proton.android.pass.data.fakes.usecases.FakeObserveAddressesByUserId
 import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
@@ -259,10 +259,10 @@ import proton.android.pass.data.fakes.usecases.TestObserveAliasDetails
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveAnyAccountHasEnforcedLock
 import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
+import proton.android.pass.data.fakes.usecases.TestObserveConfirmedInviteToken
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUserSettings
 import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
-import proton.android.pass.data.fakes.usecases.TestObserveConfirmedInviteToken
 import proton.android.pass.data.fakes.usecases.TestObserveInvites
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
@@ -325,6 +325,8 @@ import proton.android.pass.data.fakes.usecases.breach.FakeUpdateGlobalAliasAddre
 import proton.android.pass.data.fakes.usecases.breach.FakeUpdateGlobalProtonAddressesMonitorState
 import proton.android.pass.data.fakes.usecases.breach.FakeUpdateProtonAddressMonitorState
 import proton.android.pass.data.fakes.usecases.breach.FakeVerifyBreachCustomEmail
+import proton.android.pass.data.fakes.usecases.invites.FakeInviteToItem
+import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
 import proton.android.pass.data.fakes.usecases.items.FakeGetItemCategory
 import proton.android.pass.data.fakes.usecases.items.FakeGetItemOptions
 import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
@@ -916,5 +918,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindInviteToItem(impl: FakeInviteToItem): InviteToItem
+
+    @Binds
+    abstract fun bindObserveInvite(impl: FakeObserveInvite): ObserveInvite
 
 }

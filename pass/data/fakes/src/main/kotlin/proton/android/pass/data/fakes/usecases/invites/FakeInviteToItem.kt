@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases
+package proton.android.pass.data.fakes.usecases.invites
 
 import proton.android.pass.data.api.repositories.AddressPermission
 import proton.android.pass.data.api.usecases.invites.InviteToItem

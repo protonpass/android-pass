@@ -20,6 +20,7 @@ package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.Option
 import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
@@ -27,14 +28,21 @@ import proton.android.pass.domain.ShareId
 
 interface InviteRepository {
 
+    suspend fun getInvite(userId: UserId, inviteToken: InviteToken): Option<PendingInvite>
+
     fun observeInvites(userId: UserId): Flow<List<PendingInvite>>
+
     suspend fun refreshInvites(userId: UserId): Boolean
+
     suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken): ShareId
+
     suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken)
+
     fun observeInviteRecommendations(
         userId: UserId,
         shareId: ShareId,
         lastToken: String? = null,
         startsWith: String? = null
     ): Flow<InviteRecommendations>
+
 }

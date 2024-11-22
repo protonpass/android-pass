@@ -70,8 +70,6 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
-import proton.android.pass.domain.canUpdate
-import proton.android.pass.domain.toPermissions
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.ItemDelete
 import proton.android.pass.featureitemdetail.impl.common.CreditCardItemFeatures
@@ -80,7 +78,6 @@ import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -102,7 +99,6 @@ class CreditCardDetailViewModel @Inject constructor(
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider,
     getItemActions: GetItemActions,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     getUserPlan: GetUserPlan
 ) : ViewModel() {
 
@@ -147,8 +143,9 @@ class CreditCardDetailViewModel @Inject constructor(
     private data class CreditCardItemInfo(
         val itemUiModel: ItemUiModel,
         val cardNumberState: CardNumberState,
-        val vault: Vault,
-        val hasMoreThanOneVault: Boolean
+        val vault: Vault?,
+        val hasMoreThanOneVault: Boolean,
+        val canPerformItemActions: Boolean
     )
 
     private var hasItemBeenFetchedAtLeastOnce = false
@@ -186,7 +183,8 @@ class CreditCardDetailViewModel @Inject constructor(
                 itemUiModel = itemUiModel,
                 vault = details.vault,
                 cardNumberState = cardNumber,
-                hasMoreThanOneVault = details.hasMoreThanOneVault
+                hasMoreThanOneVault = details.hasMoreThanOneVault,
+                canPerformItemActions = details.canPerformItemActions
             )
         }
 
@@ -238,8 +236,6 @@ class CreditCardDetailViewModel @Inject constructor(
 
                 val isPaid = canPerformPaidActionResult.getOrNull() == true
 
-                val permissions = details.vault.role.toPermissions()
-                val canPerformItemActions = permissions.canUpdate()
                 val actions = itemActions.getOrNull() ?: ItemActions.Disabled
 
                 CreditCardDetailUiState.Success(
@@ -253,7 +249,7 @@ class CreditCardDetailViewModel @Inject constructor(
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),
                     isDowngradedMode = !isPaid,
-                    canPerformActions = canPerformItemActions,
+                    canPerformActions = details.canPerformItemActions,
                     shareClickAction = shareAction,
                     itemActions = actions,
                     event = event,

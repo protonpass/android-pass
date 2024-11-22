@@ -21,9 +21,9 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -41,9 +41,7 @@ class GetItemByIdWithVaultImpl @Inject constructor(
             observeVaults().map { vaults ->
                 ItemWithVaultInfo(
                     item = item,
-                    hasMoreThanOneVault = vaults.size > 1,
-                    vault = vaults.firstOrNull { it.shareId == item.shareId }
-                        ?: throw IllegalStateException("Vault not found")
+                    vaults = vaults
                 )
             }
         }

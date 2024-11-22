@@ -87,8 +87,6 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
-import proton.android.pass.domain.canUpdate
-import proton.android.pass.domain.toPermissions
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.FieldCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
@@ -268,7 +266,10 @@ class LoginDetailViewModel @Inject constructor(
                 }
                 startObservingTotpCustomFields(isPaid, itemUiModel)
 
-                val canShareVault = canShareVault(details.vault).value()
+                val canShareVault = details.vault
+                    ?.let { vault -> canShareVault(vault).value() }
+                    ?: false
+
                 val shareClickAction = when {
                     isPaid && canShareVault -> ShareClickAction.Share
                     else -> ShareClickAction.Upgrade
@@ -279,6 +280,7 @@ class LoginDetailViewModel @Inject constructor(
                     itemContents = itemUiModel.contents as ItemContents.Login,
                     vault = details.vault,
                     hasMoreThanOneVault = details.hasMoreThanOneVault,
+                    canPerformItemActions = details.canPerformItemActions,
                     linkedAlias = alias,
                     shareClickAction = shareClickAction,
                     passwordScore = passwordScore,
@@ -354,8 +356,9 @@ class LoginDetailViewModel @Inject constructor(
     private data class LoginItemInfo(
         val itemUiModel: ItemUiModel,
         val itemContents: ItemContents.Login,
-        val vault: Vault,
+        val vault: Vault?,
         val hasMoreThanOneVault: Boolean,
+        val canPerformItemActions: Boolean,
         val linkedAlias: Option<LinkedAliasItem>,
         val shareClickAction: ShareClickAction,
         val passwordScore: PasswordScore?,
@@ -409,8 +412,6 @@ class LoginDetailViewModel @Inject constructor(
 
                 val customFieldsList = if (!isPaid) emptyList() else customFields
 
-                val permissions = details.vault.role.toPermissions()
-                val canPerformItemActions = permissions.canUpdate()
                 val passkeys = details.itemContents.passkeys.map { UIPasskeyContent.from(it) }
 
                 LoginDetailUiState.Success(
@@ -423,7 +424,7 @@ class LoginDetailViewModel @Inject constructor(
                     isItemSentToTrash = isItemSentToTrash.value(),
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),
-                    canPerformItemActions = canPerformItemActions,
+                    canPerformItemActions = details.canPerformItemActions,
                     customFields = customFieldsList.toPersistentList(),
                     passkeys = passkeys.toPersistentList(),
                     shareClickAction = details.shareClickAction,

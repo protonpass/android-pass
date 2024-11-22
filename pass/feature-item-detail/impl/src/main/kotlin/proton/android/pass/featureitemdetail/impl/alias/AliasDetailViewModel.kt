@@ -69,8 +69,6 @@ import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.canUpdate
-import proton.android.pass.domain.toPermissions
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.AliasChangeStatusError
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.AliasCopiedToClipboard
@@ -220,8 +218,6 @@ class AliasDetailViewModel @Inject constructor(
                 val details = itemLoadingResult.data
                 val vault = details.vault.takeIf { details.hasMoreThanOneVault }
 
-                val permissions = details.vault.role.toPermissions()
-                val canPerformItemActions = permissions.canUpdate()
                 val actions = itemActions.getOrNull() ?: ItemActions.Disabled
                 val aliasDetails = aliasDetailsResult.getOrNull()
                 val isAliasDetailsLoading = aliasDetailsResult is LoadingResult.Loading
@@ -241,7 +237,7 @@ class AliasDetailViewModel @Inject constructor(
                     isItemSentToTrash = isItemSentToTrash.value(),
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),
-                    canPerformActions = canPerformItemActions,
+                    canPerformActions = details.canPerformItemActions,
                     shareClickAction = shareAction,
                     itemActions = actions,
                     event = event,

@@ -27,10 +27,9 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import proton.android.pass.commonui.api.Gradients
 import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -43,16 +42,7 @@ fun ContactOnboardingHeader(modifier: Modifier = Modifier, onClose: () -> Unit) 
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(
-                Brush.radialGradient(
-                    center = Offset(Float.POSITIVE_INFINITY, 0.0f),
-                    radius = 800f,
-                    colors = listOf(
-                        PassPalette.VividViolet,
-                        PassPalette.IndigoViolet
-                    )
-                )
-            )
+            .background(Gradients.RadialPurple)
     ) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
             IconButton(onClick = onClose) {

@@ -153,7 +153,7 @@ data class PassColors(
             textDisabled = PassPalette.MidnightSlate,
             textInvert = PassPalette.EerieBlack,
 
-            inputBackgroundNorm = PassPalette.StormyNight,
+            inputBackgroundNorm = PassPalette.StormyNight100,
             inputBackgroundStrong = PassPalette.MysticNightFall,
             inputBorderNorm = PassPalette.NightHorizon,
             inputBorderStrong = PassPalette.DarkSlateGray,

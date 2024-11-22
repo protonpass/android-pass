@@ -22,6 +22,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import me.proton.core.compose.theme.ProtonTheme
@@ -109,6 +110,19 @@ object Text {
     }
 
     @Composable
+    fun Body1Bold(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textNorm
+    ) {
+        Text(
+            text = text,
+            style = ProtonTheme.typography.body1Bold.copy(color = color),
+            modifier = modifier
+        )
+    }
+
+    @Composable
     fun Body1Weak(
         text: String,
         modifier: Modifier = Modifier,
@@ -131,6 +145,24 @@ object Text {
         Text(
             text = text,
             style = ProtonTheme.typography.body2Medium.copy(color = color),
+            modifier = modifier,
+            textAlign = textAlign
+        )
+    }
+
+    @Composable
+    fun Body2Bold(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textNorm,
+        textAlign: TextAlign = TextAlign.Start
+    ) {
+        Text(
+            text = text,
+            style = ProtonTheme.typography.body2Regular.copy(
+                color = color,
+                fontWeight = FontWeight.W700
+            ),
             modifier = modifier,
             textAlign = textAlign
         )

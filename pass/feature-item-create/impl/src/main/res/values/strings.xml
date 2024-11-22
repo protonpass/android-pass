@@ -218,4 +218,6 @@
     <string name="remove_passkey_dialog_title">Remove this passkey?</string>
     <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">You are about to remove the passkey for user \'%1$s\' for \'%2$s\'. Are you sure?</string>
     <string name="add_a_custom_section">Add a custom section</string>
+    <string name="banner_title_attachments">Attachments</string>
+    <string name="banner_body_attachments">You can attach files to items for a better organization</string>
 </resources>

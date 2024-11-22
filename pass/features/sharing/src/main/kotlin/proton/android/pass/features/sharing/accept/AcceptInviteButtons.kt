@@ -31,12 +31,14 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
+import proton.android.pass.domain.ShareType
 import proton.android.pass.features.sharing.R
 
 @Composable
 internal fun AcceptInviteButtons(
     modifier: Modifier = Modifier,
     acceptInviteText: String,
+    shareType: ShareType,
     progress: AcceptInviteProgress,
     onUiEvent: (AcceptInviteUiEvent) -> Unit
 ) {
@@ -69,7 +71,11 @@ internal fun AcceptInviteButtons(
             text = acceptInviteText,
             textColor = PassTheme.colors.interactionNormContrast,
             isLoading = isAcceptButtonLoading,
-            onClick = { onUiEvent(AcceptInviteUiEvent.OnAcceptInvitationClick) }
+            onClick = {
+                AcceptInviteUiEvent.OnAcceptInvitationClick(
+                    shareType = shareType
+                ).also(onUiEvent)
+            }
         )
 
         if (progress is AcceptInviteProgress.Downloading) {
@@ -96,6 +102,7 @@ internal fun AcceptInviteButtonsPreview(@PreviewParameter(ThemePreviewProvider::
             AcceptInviteButtons(
                 acceptInviteText = "Accept invitation",
                 progress = AcceptInviteProgress.Pending,
+                shareType = ShareType.Vault,
                 onUiEvent = {}
             )
         }

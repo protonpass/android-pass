@@ -1943,6 +1943,17 @@ fun NavGraphBuilder.appGraph(
             is SharingNavigation.ItemDetails -> appNavigator.popUpTo(
                 destination = getItemDetailsDestination(it.itemCategory)
             )
+
+            is SharingNavigation.SharedItemDetails -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = ViewItem,
+                    route = ViewItem.createNavRoute(
+                        shareId = it.shareId,
+                        itemId = it.itemId
+                    ),
+                    backDestination = HomeNavItem
+                )
+            }
         }
     }
 

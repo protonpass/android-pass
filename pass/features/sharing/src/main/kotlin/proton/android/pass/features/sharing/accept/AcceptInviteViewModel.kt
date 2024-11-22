@@ -44,6 +44,7 @@ import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.invites.ObserveInvite
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
+import proton.android.pass.domain.ShareType
 import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -106,7 +107,7 @@ class AcceptInviteViewModel @Inject constructor(
         eventFlow.compareAndSet(event, AcceptInviteEvent.Idle)
     }
 
-    internal fun onAcceptInvite() {
+    internal fun onAcceptInvite(shareType: ShareType) {
         viewModelScope.launch {
             acceptInvite(inviteToken)
                 .catch { error ->
@@ -141,7 +142,19 @@ class AcceptInviteViewModel @Inject constructor(
 
                         is AcceptInviteStatus.Done -> {
                             PassLogger.i(TAG, "Invite successfully accepted")
-                            eventFlow.update { AcceptInviteEvent.Close }
+                            when (shareType) {
+                                ShareType.Item -> AcceptInviteEvent.OnItemInviteAcceptSuccess(
+                                    shareId = acceptInviteStatus.shareId,
+                                    itemId = acceptInviteStatus.itemId
+                                )
+
+                                ShareType.Vault -> AcceptInviteEvent.OnVaultInviteAcceptSuccess(
+                                    shareId = acceptInviteStatus.shareId
+                                )
+                            }.also { acceptInviteEvent ->
+                                eventFlow.update { acceptInviteEvent }
+                            }
+
                             snackbarDispatcher(SharingSnackbarMessage.InviteAccepted)
                         }
                     }

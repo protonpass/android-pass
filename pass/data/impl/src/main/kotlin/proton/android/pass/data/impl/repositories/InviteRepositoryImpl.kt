@@ -49,8 +49,10 @@ import proton.android.pass.data.impl.requests.AcceptInviteRequest
 import proton.android.pass.data.impl.responses.PendingInviteResponse
 import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareInvite
 import proton.android.pass.domain.ShareType
 import proton.android.pass.log.api.PassLogger
 import proton_pass_vault_v1.VaultV1
@@ -179,7 +181,7 @@ class InviteRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken): ShareId {
+    override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken): ShareInvite {
         val invite = localDatasource.getInviteWithKeys(userId, inviteToken).value()
             ?: throw IllegalStateException("Could not find the invite: ${inviteToken.value}")
 
@@ -190,7 +192,11 @@ class InviteRepositoryImpl @Inject constructor(
         val request = AcceptInviteRequest(keys)
         val responseShare = remoteDataSource.acceptInvite(userId, inviteToken, request)
         localDatasource.removeInvite(userId, inviteToken)
-        return ShareId(responseShare.shareId)
+
+        return ShareInvite(
+            shareId = ShareId(responseShare.shareId),
+            itemId = ItemId(responseShare.targetId)
+        )
     }
 
     override suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken) {

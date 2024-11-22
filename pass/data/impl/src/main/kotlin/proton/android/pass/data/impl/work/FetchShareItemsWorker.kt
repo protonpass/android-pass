@@ -35,9 +35,7 @@ import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatus
@@ -50,8 +48,7 @@ open class FetchShareItemsWorker @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val fetchShareItemsStatusRepository: FetchShareItemsStatusRepository,
-    private val itemRepository: ItemRepository,
-    private val appDispatchers: AppDispatchers
+    private val itemRepository: ItemRepository
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
@@ -65,31 +62,41 @@ open class FetchShareItemsWorker @AssistedInject constructor(
             ?.let(::ShareId)
             ?: return Result.failure()
 
-        val result = withContext(appDispatchers.io) {
-            runCatching {
-                itemRepository.downloadItemsAndObserveProgress(
+        fetchShareItemsStatusRepository.emit(shareId, FetchShareItemsStatus.NotStarted)
+
+        return runCatching {
+            itemRepository.downloadItemsAndObserveProgress(
+                userId = userId,
+                shareId = shareId,
+                onProgress = {}
+            ).let { itemRevisions ->
+                itemRepository.setShareItems(
                     userId = userId,
-                    shareId = shareId,
+                    items = mapOf(shareId to itemRevisions),
                     onProgress = { progress ->
-                        val event = when {
-                            progress.total == 0 -> FetchShareItemsStatus.Done(0)
-                            progress.current == progress.total ->
+                        when {
+                            progress.total == 0 -> {
+                                FetchShareItemsStatus.Done(0)
+                            }
+
+                            progress.current == progress.total -> {
                                 FetchShareItemsStatus.Done(progress.total)
+                            }
 
-                            else -> FetchShareItemsStatus.Syncing(
-                                current = progress.current,
-                                total = progress.total
-                            )
+                            else -> {
+                                FetchShareItemsStatus.Syncing(
+                                    current = progress.current,
+                                    total = progress.total
+                                )
+                            }
+                        }.also { fetchShareItemsStatus ->
+                            fetchShareItemsStatusRepository.emit(shareId, fetchShareItemsStatus)
+                            PassLogger.d(TAG, "ShareId $shareId progress: $fetchShareItemsStatus")
                         }
-                        fetchShareItemsStatusRepository.emit(shareId, event)
-
-                        PassLogger.d(TAG, "ShareId $shareId progress: $event")
                     }
                 )
             }
-        }
-
-        return result.fold(
+        }.fold(
             onSuccess = {
                 PassLogger.i(TAG, "$TAG finished successfully")
                 Result.success()

@@ -18,10 +18,21 @@
 
 package proton.android.pass.features.sharing.accept
 
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+
 internal sealed interface AcceptInviteEvent {
 
     data object Idle : AcceptInviteEvent
 
     data object Close : AcceptInviteEvent
+
+    data class OnItemInviteAcceptSuccess(
+        internal val shareId: ShareId,
+        internal val itemId: ItemId
+    ) : AcceptInviteEvent
+
+    @JvmInline
+    value class OnVaultInviteAcceptSuccess(internal val shareId: ShareId) : AcceptInviteEvent
 
 }

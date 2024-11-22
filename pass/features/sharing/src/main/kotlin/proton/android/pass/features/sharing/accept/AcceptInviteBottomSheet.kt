@@ -37,9 +37,25 @@ fun AcceptInviteBottomSheet(
     val state by stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
-        when (state.event) {
+        when (val event = state.event) {
             AcceptInviteEvent.Idle -> Unit
-            AcceptInviteEvent.Close -> onNavigateEvent(SharingNavigation.BackToHome)
+
+            AcceptInviteEvent.Close -> {
+                onNavigateEvent(SharingNavigation.BackToHome)
+            }
+
+            is AcceptInviteEvent.OnItemInviteAcceptSuccess -> {
+                SharingNavigation.SharedItemDetails(
+                    shareId = event.shareId,
+                    itemId = event.itemId
+                ).also(onNavigateEvent)
+            }
+
+            is AcceptInviteEvent.OnVaultInviteAcceptSuccess -> {
+                SharingNavigation.ManageSharedVault(
+                    sharedVaultId = event.shareId
+                ).also(onNavigateEvent)
+            }
         }
 
         onConsumeEvent(state.event)
@@ -52,8 +68,8 @@ fun AcceptInviteBottomSheet(
         state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
-                AcceptInviteUiEvent.OnAcceptInvitationClick -> {
-                    onAcceptInvite()
+                is AcceptInviteUiEvent.OnAcceptInvitationClick -> {
+                    onAcceptInvite(shareType = uiEvent.shareType)
                 }
 
                 AcceptInviteUiEvent.OnRejectInvitationClick -> {

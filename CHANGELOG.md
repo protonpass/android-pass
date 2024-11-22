@@ -6,6 +6,18 @@
 
 ### Other
 
+## 1.28.0 (2024-11-22)
+
+### Features :tada:
+
+- Advanced alias management.
+- Support not primary accounts management.
+
+### Other
+
+- UI tweaks to improve internationalization support.
+- Updated translations.
+
 ## 1.27.1 (2024-11-11)
 
 ### Fixes :bug:

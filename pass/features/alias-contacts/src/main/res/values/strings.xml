@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (c) 2024 Proton AG
   ~ This file is part of Proton AG and Proton Pass.
   ~
@@ -15,7 +16,6 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
-
 <resources>
     <string name="create_contact_button">Create contact</string>
     <string name="save_contact_alias">Save</string>
@@ -31,7 +31,7 @@
     <string name="unblock_button">Unblock contact</string>
     <string name="block_button">Block contact</string>
     <string name="contact_created_date" comment="date of creation">Created %1$s ago</string>
-    <string name="no_activity_contact">No Activity in the last 14 days.</string>
+    <string name="no_activity_contact">No activity in the last 14 days.</string>
     <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">in the last 14 days.</string>
     <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
         <item quantity="one">%1$d forwarded</item>

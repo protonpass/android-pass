@@ -63,8 +63,6 @@ import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.canUpdate
-import proton.android.pass.domain.toPermissions
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMovedToTrash
@@ -80,7 +78,6 @@ import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -102,7 +99,6 @@ class NoteDetailViewModel @Inject constructor(
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle,
     getItemActions: GetItemActions,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     getUserPlan: GetUserPlan
 ) : ViewModel() {
 
@@ -178,8 +174,6 @@ class NoteDetailViewModel @Inject constructor(
                 val details = itemLoadingResult.data
                 val vault = details.vault.takeIf { details.hasMoreThanOneVault }
 
-                val permissions = details.vault.role.toPermissions()
-                val canPerformItemActions = permissions.canUpdate()
                 val actions = itemActions.getOrNull() ?: ItemActions.Disabled
 
                 NoteDetailUiState.Success(
@@ -191,7 +185,7 @@ class NoteDetailViewModel @Inject constructor(
                     isItemSentToTrash = isItemSentToTrash.value(),
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),
-                    canPerformActions = canPerformItemActions,
+                    canPerformActions = details.canPerformItemActions,
                     shareClickAction = shareAction,
                     itemActions = actions,
                     event = event,

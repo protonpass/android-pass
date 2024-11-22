@@ -25,6 +25,8 @@ interface NavArgId {
     val navType: NavType<*>
     val default: Any?
         get() = null
+    val requireEncoding: Boolean
+        get() = false
 
     fun toPathParam(): String = "{$key}"
     fun toQueryParam(): String = "$key={$key}"
@@ -56,6 +58,8 @@ enum class CommonNavArgId : NavArgId {
     Email {
         override val key: String = EMAIL_KEY
         override val navType: NavType<*> = NavType.StringType
+        override val requireEncoding: Boolean
+            get() = true
     }
 }
 object DestinationShareNavArgId : NavArgId {

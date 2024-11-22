@@ -21,6 +21,7 @@ package proton.android.pass.features.sharing.accept
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import proton.android.pass.domain.ShareType
 import proton.android.pass.features.sharing.R
 
 @Composable
@@ -41,6 +42,7 @@ internal fun AcceptInviteContent(
                     inviterEmail
                 ),
                 inviterEmail = inviterEmail,
+                shareType = ShareType.Item,
                 acceptInviteText = stringResource(id = R.string.sharing_item_invitation_accept),
                 progress = progress,
                 onUiEvent = onUiEvent
@@ -56,6 +58,7 @@ internal fun AcceptInviteContent(
                     inviterEmail
                 ),
                 inviterEmail = inviterEmail,
+                shareType = ShareType.Vault,
                 acceptInviteText = stringResource(id = R.string.sharing_vault_invitation_accept),
                 onUiEvent = onUiEvent,
                 progress = progress,

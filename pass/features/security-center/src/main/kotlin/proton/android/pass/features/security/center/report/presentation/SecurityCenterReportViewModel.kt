@@ -59,8 +59,7 @@ import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportSnackbarMessage.BreachResolvedError
 import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportSnackbarMessage.BreachResolvedSuccessfully
-import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
-import proton.android.pass.features.security.center.shared.navigation.EmailArgId
+import proton.android.pass.features.security.center.shared.navigation.CustomEmailIdArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
@@ -83,7 +82,7 @@ class SecurityCenterReportViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val customEmailId: BreachEmailId.Custom? = savedStateHandleProvider.get()
-        .get<String>(BreachIdArgId.key)
+        .get<String>(CustomEmailIdArgId.key)
         ?.let { BreachEmailId.Custom(BreachId(""), CustomEmailId(it)) }
 
     private val aliasEmailId: BreachEmailId.Alias? = run {
@@ -112,7 +111,7 @@ class SecurityCenterReportViewModel @Inject constructor(
     }
 
     private val email: String = savedStateHandleProvider.get()
-        .require<String>(EmailArgId.key)
+        .require<String>(CommonNavArgId.Email.key)
         .let(NavParamEncoder::decode)
 
     private val eventFlow: MutableStateFlow<SecurityCenterReportEvent> =

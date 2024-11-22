@@ -25,6 +25,7 @@ import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareInvite
 
 interface InviteRepository {
 
@@ -34,7 +35,7 @@ interface InviteRepository {
 
     suspend fun refreshInvites(userId: UserId): Boolean
 
-    suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken): ShareId
+    suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken): ShareInvite
 
     suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken)
 

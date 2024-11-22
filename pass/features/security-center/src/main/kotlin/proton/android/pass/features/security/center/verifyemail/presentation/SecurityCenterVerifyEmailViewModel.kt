@@ -40,10 +40,10 @@ import proton.android.pass.data.api.usecases.breach.ResendVerificationCode
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
 import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
-import proton.android.pass.features.security.center.shared.navigation.EmailArgId
 import proton.android.pass.features.security.center.verifyemail.presentation.SecurityCenterVerifyEmailSnackbarMessage.ResendCodeError
 import proton.android.pass.features.security.center.verifyemail.presentation.SecurityCenterVerifyEmailSnackbarMessage.ResendCodeSuccess
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
@@ -61,7 +61,7 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
         .let(::CustomEmailId)
 
     private val email: String = savedStateHandleProvider.get()
-        .require<String>(EmailArgId.key)
+        .require<String>(CommonNavArgId.Email.key)
         .let(NavParamEncoder::decode)
 
     @OptIn(SavedStateHandleSaveableApi::class)

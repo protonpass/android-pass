@@ -31,6 +31,7 @@ import me.proton.core.compose.theme.defaultStrongNorm
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.text.PassTextWithInnerStyle
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.domain.ShareType
 
 @Composable
 internal fun AcceptInviteContentBody(
@@ -38,6 +39,7 @@ internal fun AcceptInviteContentBody(
     title: String,
     subtitle: String,
     inviterEmail: String,
+    shareType: ShareType,
     acceptInviteText: String,
     progress: AcceptInviteProgress,
     onUiEvent: (AcceptInviteUiEvent) -> Unit,
@@ -66,6 +68,7 @@ internal fun AcceptInviteContentBody(
 
         AcceptInviteButtons(
             acceptInviteText = acceptInviteText,
+            shareType = shareType,
             progress = progress,
             onUiEvent = onUiEvent
         )

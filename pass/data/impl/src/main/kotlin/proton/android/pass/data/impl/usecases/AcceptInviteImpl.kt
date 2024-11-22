@@ -33,7 +33,7 @@ import proton.android.pass.data.impl.repositories.FetchShareItemsStatus
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepository
 import proton.android.pass.data.impl.work.FetchShareItemsWorker
 import proton.android.pass.domain.InviteToken
-import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareInvite
 import javax.inject.Inject
 
 class AcceptInviteImpl @Inject constructor(
@@ -47,27 +47,30 @@ class AcceptInviteImpl @Inject constructor(
         .getPrimaryUserId()
         .filterNotNull()
         .flatMapLatest { userId ->
-            val shareId = inviteRepository.acceptInvite(userId, invite)
-            downloadItems(userId, shareId)
+            val shareInvite = inviteRepository.acceptInvite(userId, invite)
+            downloadItems(userId, shareInvite)
         }
         .onStart { emit(AcceptInviteStatus.AcceptingInvite) }
 
-    private fun downloadItems(userId: UserId, shareId: ShareId): Flow<AcceptInviteStatus> {
+    private fun downloadItems(userId: UserId, shareInvite: ShareInvite): Flow<AcceptInviteStatus> {
+        val (shareId, itemId) = shareInvite
         val request = FetchShareItemsWorker.getRequestFor(userId, shareId)
         workManager.enqueue(request)
         return fetchShareItemsStatusRepository.observe(shareId)
-            .map {
-                when (it) {
+            .map { fetchShareItemsStatus ->
+                when (fetchShareItemsStatus) {
                     is FetchShareItemsStatus.NotStarted -> AcceptInviteStatus.AcceptingInvite
                     is FetchShareItemsStatus.Syncing -> AcceptInviteStatus.DownloadingItems(
-                        downloaded = it.current,
-                        total = it.total
+                        downloaded = fetchShareItemsStatus.current,
+                        total = fetchShareItemsStatus.total
                     )
+
                     is FetchShareItemsStatus.Done -> {
                         fetchShareItemsStatusRepository.clear(shareId)
                         AcceptInviteStatus.Done(
-                            items = it.items,
-                            shareId = shareId
+                            items = fetchShareItemsStatus.items,
+                            shareId = shareId,
+                            itemId = itemId
                         )
                     }
                 }

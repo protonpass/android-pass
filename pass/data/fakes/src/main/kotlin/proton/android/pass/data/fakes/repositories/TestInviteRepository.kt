@@ -27,8 +27,10 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareInvite
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -37,7 +39,12 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
 
     private val invitesFlow: MutableStateFlow<List<PendingInvite>> = MutableStateFlow(emptyList())
     private var refreshResult: Result<Boolean> = Result.success(false)
-    private var acceptResult: Result<ShareId> = Result.success(DEFAULT_SHARE_ID)
+    private var acceptResult: Result<ShareInvite> = Result.success(
+        ShareInvite(
+            shareId = DEFAULT_SHARE_ID,
+            itemId = DEFAULT_ITEM_ID
+        )
+    )
     private var rejectResult: Result<Unit> = Result.success(Unit)
     private var inviteRecommendationsResult: Result<InviteRecommendations> = Result.success(
         InviteRecommendations(
@@ -56,7 +63,7 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
         refreshResult = value
     }
 
-    fun setAcceptResult(value: Result<ShareId>) {
+    fun setAcceptResult(value: Result<ShareInvite>) {
         acceptResult = value
     }
 
@@ -70,7 +77,7 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
 
     override suspend fun refreshInvites(userId: UserId) = refreshResult.getOrThrow()
 
-    override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken): ShareId = acceptResult.getOrThrow()
+    override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken): ShareInvite = acceptResult.getOrThrow()
 
     override suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken) {
         rejectResult.getOrThrow()
@@ -83,7 +90,12 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
         startsWith: String?
     ): Flow<InviteRecommendations> = flowOf(inviteRecommendationsResult.getOrThrow())
 
-    companion object {
-        val DEFAULT_SHARE_ID = ShareId("TestInviteRepository-ShareId")
+    private companion object {
+
+        private val DEFAULT_SHARE_ID = ShareId("TestInviteRepository-ShareId")
+
+        private val DEFAULT_ITEM_ID = ItemId("TestInviteRepository-ItemId")
+
     }
+
 }

@@ -18,9 +18,12 @@
 
 package proton.android.pass.features.sharing.accept
 
+import proton.android.pass.domain.ShareType
+
 internal interface AcceptInviteUiEvent {
 
-    data object OnAcceptInvitationClick : AcceptInviteUiEvent
+    @JvmInline
+    value class OnAcceptInvitationClick(internal val shareType: ShareType) : AcceptInviteUiEvent
 
     data object OnRejectInvitationClick : AcceptInviteUiEvent
 

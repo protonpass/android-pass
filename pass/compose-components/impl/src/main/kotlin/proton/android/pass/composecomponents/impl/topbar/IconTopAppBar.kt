@@ -23,8 +23,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -43,9 +49,24 @@ fun IconTopAppBar(
         backgroundColor = backgroundColor,
         title = {
             title?.let {
+                val textStyleHero = PassTheme.typography.heroNorm()
+                var adaptiveTextStyle by remember(textStyleHero) { mutableStateOf(textStyleHero) }
+                var readyToDraw by remember(textStyleHero) { mutableStateOf(false) }
+
                 Text(
                     text = title,
-                    style = PassTheme.typography.heroNorm()
+                    style = adaptiveTextStyle,
+                    overflow = TextOverflow.Clip,
+                    modifier = modifier.drawWithContent {
+                        if (readyToDraw) drawContent()
+                    },
+                    onTextLayout = { textLayoutResult ->
+                        if (textLayoutResult.didOverflowHeight) {
+                            adaptiveTextStyle = adaptiveTextStyle.copy(fontSize = adaptiveTextStyle.fontSize * 0.9)
+                        } else {
+                            readyToDraw = true
+                        }
+                    }
                 )
             }
         },

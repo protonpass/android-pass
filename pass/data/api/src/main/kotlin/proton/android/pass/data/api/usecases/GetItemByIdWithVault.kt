@@ -23,12 +23,24 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.canUpdate
+import proton.android.pass.domain.toPermissions
 
 data class ItemWithVaultInfo(
     val item: Item,
-    val vault: Vault,
-    val hasMoreThanOneVault: Boolean
-)
+    private val vaults: List<Vault>
+) {
+    val vault: Vault? = vaults.firstOrNull { vault ->
+        vault.shareId == item.shareId
+    }
+
+    val hasMoreThanOneVault: Boolean = vaults.size > 1
+
+    val canPerformItemActions: Boolean = vault?.role
+        ?.toPermissions()
+        ?.canUpdate()
+        ?: false
+}
 
 interface GetItemByIdWithVault {
     operator fun invoke(shareId: ShareId, itemId: ItemId): Flow<ItemWithVaultInfo>

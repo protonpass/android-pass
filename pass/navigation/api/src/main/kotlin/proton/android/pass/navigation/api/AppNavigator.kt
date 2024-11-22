@@ -31,6 +31,8 @@ import androidx.navigation.navOptions
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import proton.android.pass.common.api.SpecialCharacters.COLON
 import proton.android.pass.log.api.PassLogger
+import java.net.URLDecoder
+import java.nio.charset.StandardCharsets
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
@@ -191,11 +193,28 @@ class AppNavigator(
         navController.navigateUp()
     }
 
-    fun navigateToDeeplink(deepLink: String, comesFromBottomSheet: Boolean = false) {
-        val uri: Uri = Uri.parse("$NAV_SCHEME$COLON$deepLink")
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        if (!navController.handleDeepLink(intent)) {
-            navigateBack(comesFromBottomsheet = comesFromBottomSheet)
+    fun navigateToDeeplink(deepLink: String) {
+        val urlDecodedDeeplink = URLDecoder.decode(deepLink, StandardCharsets.UTF_8.name())
+        val uri: Uri = Uri.parse("$NAV_SCHEME$COLON$urlDecodedDeeplink")
+        val encodingParameters = CommonNavArgId.entries.filter { it.requireEncoding }.map { it.key }
+        val (requiresEncoding, regularQuery) = uri.queryParameterNames.partition { it in encodingParameters }
+        val queryString = buildString {
+            regularQuery.forEach { key ->
+                append("$key=${uri.getQueryParameter(key)}&")
+            }
+            requiresEncoding.forEach { key ->
+                val encodedValue = NavParamEncoder.encode(uri.getQueryParameter(key) ?: "")
+                append("$key=$encodedValue&")
+            }
+            if (isNotEmpty()) deleteCharAt(lastIndex)
+        }
+        val newUri = uri.buildUpon().clearQuery().encodedQuery(queryString).build()
+        val intent = Intent(Intent.ACTION_VIEW, newUri)
+        val didNavigate = navController.handleDeepLink(intent)
+        if (didNavigate) {
+            PassLogger.i(TAG, "Navigated to deeplink: $newUri")
+        } else {
+            PassLogger.i(TAG, "Could not navigate to deeplink: $newUri")
         }
     }
 

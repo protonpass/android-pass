@@ -20,15 +20,14 @@ package proton.android.pass.features.security.center.report.navigation
 
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.CustomEmailId
-import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
-import proton.android.pass.features.security.center.shared.navigation.EmailArgId
+import proton.android.pass.features.security.center.shared.navigation.CustomEmailIdArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavParamEncoder
 
 object SecurityCenterCustomEmailReportNavItem : NavItem(
     baseRoute = "security/center/customemailreport",
-    navArgIds = listOf(BreachIdArgId, EmailArgId),
+    navArgIds = listOf(CustomEmailIdArgId, CommonNavArgId.Email),
     baseDeepLinkRoute = listOf("custom_email_breach")
 ) {
     fun createNavRoute(id: CustomEmailId, email: String): String =
@@ -37,7 +36,7 @@ object SecurityCenterCustomEmailReportNavItem : NavItem(
 
 object SecurityCenterAliasEmailReportNavItem : NavItem(
     baseRoute = "security/center/aliasemailreport",
-    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId, EmailArgId),
+    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId, CommonNavArgId.Email),
     baseDeepLinkRoute = listOf("alias_breach")
 ) {
     fun createNavRoute(id: BreachEmailId.Alias, email: String): String =
@@ -46,7 +45,7 @@ object SecurityCenterAliasEmailReportNavItem : NavItem(
 
 object SecurityCenterProtonEmailReportNavItem : NavItem(
     baseRoute = "security/center/protonemailreport",
-    navArgIds = listOf(CommonNavArgId.AddressId, EmailArgId),
+    navArgIds = listOf(CommonNavArgId.AddressId, CommonNavArgId.Email),
     baseDeepLinkRoute = listOf("address_breach")
 ) {
     fun createNavRoute(id: BreachEmailId.Proton, email: String): String =

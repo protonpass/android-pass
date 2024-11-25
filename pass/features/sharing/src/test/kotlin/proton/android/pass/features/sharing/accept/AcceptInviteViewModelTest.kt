@@ -32,7 +32,9 @@ import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.android.pass.data.fakes.usecases.TestAcceptInvite
 import proton.android.pass.data.fakes.usecases.TestRejectInvite
 import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -133,13 +135,17 @@ internal class AcceptInviteViewModelTest {
     @Test
     fun `GIVEN item pending invite WHEN invite accept is done THEN shows success message`() = runTest {
         val pendingItemInvite = TestPendingInvite.Item.create()
-        val acceptInviteStatus = AcceptInviteStatus.Done(shareId = ShareId(""), items = 1)
+        val acceptInviteStatus = AcceptInviteStatus.Done(
+            shareId = ShareId(""),
+            itemId = ItemId(""),
+            items = 1
+        )
         val acceptationResult: Result<AcceptInviteStatus> = Result.success(acceptInviteStatus)
         val expectedMessage = SharingSnackbarMessage.InviteAccepted
         observeInvite.emit(pendingItemInvite.toOption())
         acceptInvite.emitValue(acceptationResult)
 
-        viewModel.onAcceptInvite()
+        viewModel.onAcceptInvite(shareType = ShareType.Item)
 
         val message = snackbarDispatcher.snackbarMessage.first().value()
         assertThat(message).isEqualTo(expectedMessage)
@@ -197,16 +203,23 @@ internal class AcceptInviteViewModelTest {
     @Test
     fun `GIVEN item pending invite WHEN invite accept is done THEN emits done state`() = runTest {
         val pendingItemInvite = TestPendingInvite.Item.create()
-        val acceptInviteStatus = AcceptInviteStatus.Done(shareId = ShareId(""), items = 1)
+        val acceptInviteStatus = AcceptInviteStatus.Done(
+            shareId = ShareId(""),
+            itemId = ItemId(""),
+            items = 1
+        )
         val acceptationResult: Result<AcceptInviteStatus> = Result.success(acceptInviteStatus)
         val expectedState = AcceptInviteStateMother.Item.create(
             pendingItemInvite = pendingItemInvite,
-            event = AcceptInviteEvent.Close
+            event = AcceptInviteEvent.OnItemInviteAcceptSuccess(
+                shareId = acceptInviteStatus.shareId,
+                itemId = acceptInviteStatus.itemId
+            )
         )
         observeInvite.emit(pendingItemInvite.toOption())
         acceptInvite.emitValue(acceptationResult)
 
-        viewModel.onAcceptInvite()
+        viewModel.onAcceptInvite(shareType = ShareType.Item)
 
         viewModel.stateFlow.test {
             val state = awaitItem()
@@ -223,7 +236,7 @@ internal class AcceptInviteViewModelTest {
         observeInvite.emit(pendingVaultInvite.toOption())
         acceptInvite.emitValue(acceptationResult)
 
-        viewModel.onAcceptInvite()
+        viewModel.onAcceptInvite(shareType = ShareType.Vault)
 
         val message = snackbarDispatcher.snackbarMessage.first().value()
         assertThat(message).isEqualTo(expectedMessage)
@@ -237,7 +250,7 @@ internal class AcceptInviteViewModelTest {
         observeInvite.emit(pendingVaultInvite.toOption())
         acceptInvite.emitValue(acceptationResult)
 
-        viewModel.onAcceptInvite()
+        viewModel.onAcceptInvite(shareType = ShareType.Vault)
 
         val message = snackbarDispatcher.snackbarMessage.first().value()
         assertThat(message).isEqualTo(expectedMessage)
@@ -246,13 +259,17 @@ internal class AcceptInviteViewModelTest {
     @Test
     fun `GIVEN vault pending invite WHEN invite accept is done THEN shows success message`() = runTest {
         val pendingVaultInvite = TestPendingInvite.Vault.create()
-        val acceptInviteStatus = AcceptInviteStatus.Done(shareId = ShareId(""), items = 1)
+        val acceptInviteStatus = AcceptInviteStatus.Done(
+            shareId = ShareId(""),
+            itemId = ItemId(""),
+            items = 1
+        )
         val acceptationResult: Result<AcceptInviteStatus> = Result.success(acceptInviteStatus)
         val expectedMessage = SharingSnackbarMessage.InviteAccepted
         observeInvite.emit(pendingVaultInvite.toOption())
         acceptInvite.emitValue(acceptationResult)
 
-        viewModel.onAcceptInvite()
+        viewModel.onAcceptInvite(shareType = ShareType.Vault)
 
         val message = snackbarDispatcher.snackbarMessage.first().value()
         assertThat(message).isEqualTo(expectedMessage)
@@ -261,16 +278,22 @@ internal class AcceptInviteViewModelTest {
     @Test
     fun `GIVEN vault pending invite WHEN invite accept is done THEN emits done state`() = runTest {
         val pendingVaultInvite = TestPendingInvite.Vault.create()
-        val acceptInviteStatus = AcceptInviteStatus.Done(shareId = ShareId(""), items = 1)
+        val acceptInviteStatus = AcceptInviteStatus.Done(
+            shareId = ShareId(""),
+            itemId = ItemId(""),
+            items = 1
+        )
         val acceptationResult: Result<AcceptInviteStatus> = Result.success(acceptInviteStatus)
         val expectedState = AcceptInviteStateMother.Vault.create(
             pendingVaultInvite = pendingVaultInvite,
-            event = AcceptInviteEvent.Close
+            event = AcceptInviteEvent.OnVaultInviteAcceptSuccess(
+                shareId = acceptInviteStatus.shareId
+            )
         )
         observeInvite.emit(pendingVaultInvite.toOption())
         acceptInvite.emitValue(acceptationResult)
 
-        viewModel.onAcceptInvite()
+        viewModel.onAcceptInvite(shareType = ShareType.Vault)
 
         viewModel.stateFlow.test {
             val state = awaitItem()

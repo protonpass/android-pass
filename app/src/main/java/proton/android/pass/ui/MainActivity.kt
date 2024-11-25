@@ -152,6 +152,7 @@ class MainActivity : FragmentActivity() {
             .allowComponent(ComponentName(this, MainActivity::class.java))
             .allowReceiverFlags()
             .allowAction(Intent.ACTION_MAIN)
+            .allowPackage(this.packageName)
             .allowCategory(Intent.CATEGORY_LAUNCHER)
             .build()
             .sanitizeByThrowing(intent)

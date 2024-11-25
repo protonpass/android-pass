@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.28.1 (2024-11-25)
+
+### Other
+
+- Improve autofill.
+
 ## 1.28.0 (2024-11-22)
 
 ### Features :tada:

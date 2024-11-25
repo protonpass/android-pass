@@ -103,8 +103,10 @@ private val ALLOWED_LAST_NAME_KEYWORDS = mapOf(
 private val DEFAULT_DENIED_KEYWORDS = setOf(
     "composer",
     "message",
-    "chatinputedittext", // Discord app message box
     MOZILLA_BROWSER_PREFIX
+)
+internal val DENIED_USERNAME_KEYWORDS = setOf(
+    "connectionsroletag" // discord specific
 )
 
 internal val fieldKeywordsList = setOf(
@@ -116,7 +118,8 @@ internal val fieldKeywordsList = setOf(
             "identifier",
             "accountname",
             "userid"
-        )
+        ),
+        deniedKeywords = DENIED_USERNAME_KEYWORDS
     ),
     kw(
         fieldType = FieldType.Email,

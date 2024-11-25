@@ -1,0 +1,5 @@
+## 1.28.1 (2024-11-25)
+
+### Other
+
+- Improve autofill.

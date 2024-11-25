@@ -618,7 +618,8 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
         val sanitizedHint = sanitizeHint(hint)
 
-        if (USERNAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Username
+        val userNameSanitised = sanitizedHint.takeIf { !DENIED_USERNAME_KEYWORDS.contains(sanitizedHint) }.orEmpty()
+        if (USERNAME_REGEX.containsMatchIn(userNameSanitised)) return FieldType.Username
         if (EMAIL_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Email
         val (fieldTypeKw, match) = fieldKeywordsList.match(sanitizedHint)
         if (fieldTypeKw != FieldType.Unknown) {

@@ -46,12 +46,12 @@ class ObserveBreachesForEmailImpl @Inject constructor(
 
                 is BreachEmailId.Custom -> breachRepository.observeBreachesForCustomEmail(
                     userId = user.userId,
-                    id = breachEmailId.customEmailId
+                    customEmailId = breachEmailId.customEmailId
                 )
 
                 is BreachEmailId.Proton -> breachRepository.observeBreachesForProtonEmail(
                     userId = user.userId,
-                    id = breachEmailId.addressId
+                    addressId = breachEmailId.addressId
                 )
             }
         }

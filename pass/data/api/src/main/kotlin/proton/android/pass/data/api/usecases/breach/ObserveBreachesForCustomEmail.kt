@@ -25,10 +25,6 @@ import proton.android.pass.domain.breach.CustomEmailId
 
 interface ObserveBreachesForCustomEmail {
 
-    operator fun invoke(
-        userId: UserId? = null,
-        id: CustomEmailId,
-        refresh: Boolean = true
-    ): Flow<List<BreachEmail>>
+    operator fun invoke(userId: UserId? = null, id: CustomEmailId): Flow<List<BreachEmail>>
 
 }

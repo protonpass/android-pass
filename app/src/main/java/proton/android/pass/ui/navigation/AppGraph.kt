@@ -2143,7 +2143,8 @@ fun NavGraphBuilder.appGraph(
                 if (it.deepLink.isBlank()) {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
                 } else {
-                    appNavigator.navigateToDeeplink(deepLink = it.deepLink, comesFromBottomSheet = true)
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                    appNavigator.navigateToDeeplink(deepLink = it.deepLink)
                 }
             }
         }

@@ -18,154 +18,130 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
+import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemActions
-import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
-import proton.android.pass.domain.Item
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.canCreate
 import proton.android.pass.domain.canDelete
 import proton.android.pass.domain.canTrash
 import proton.android.pass.domain.canUpdate
-import proton.android.pass.domain.toPermissions
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class GetItemActionsImpl @Inject constructor(
     private val getItemById: GetItemById,
+    private val observeShare: ObserveShare,
     private val observeUserPlan: GetUserPlan,
-    private val canShareVault: CanShareVault,
-    private val observeVaults: ObserveVaults
+    private val observeAllShares: ObserveAllShares,
+    private val canShareVault: CanShareVault
 ) : GetItemActions {
 
-    override suspend fun invoke(shareId: ShareId, itemId: ItemId): ItemActions {
-        val item = getItemById(shareId, itemId)
+    override suspend fun invoke(shareId: ShareId, itemId: ItemId): ItemActions = combine(
+        observeShare(shareId),
+        oneShot { getItemById(shareId, itemId) },
+        observeUserPlan(),
+        observeAllShares()
+    ) { shareOption, item, userPlan, shares ->
+        when (shareOption) {
+            None -> throw IllegalStateException("Share not found")
+            is Some -> shareOption.value.let { share ->
+                val isItemTrashed = item.state == ItemState.Trashed.value
 
-        val vaults = observeVaults().firstOrNull()
-            ?: throw IllegalStateException("Could not fetch vaults")
-
-        val vault = vaults.firstOrNull { it.shareId == shareId }
-            ?: throw IllegalStateException("Could not find vault")
-
-        val userPlan = observeUserPlan().firstOrNull()
-            ?: throw IllegalStateException("Could not get user plan")
-
-        return getItemActions(
-            item = item,
-            vault = vault,
-            vaults = vaults,
-            userPlan = userPlan
-        )
-    }
-
-    private suspend fun getItemActions(
-        item: Item,
-        vault: Vault,
-        vaults: List<Vault>,
-        userPlan: Plan
-    ): ItemActions {
-        val permissions = vault.role.toPermissions()
-
-        val isTrashed = item.state == ItemState.Trashed.value
-        val canShare = if (isTrashed) {
-            CanShareVaultStatus.CannotShare(reason = CanShareVaultStatus.CannotShareReason.ItemInTrash)
-        } else {
-            canShareVault(vault)
-        }
-        val canMoveToTrash = !isTrashed && permissions.canTrash()
-        val canDelete = isTrashed && permissions.canDelete()
-
-        val canEdit = getCanEdit(item, userPlan, vault)
-        val canMoveToOtherVault = getCanMoveToOtherVault(
-            item = item,
-            vault = vault,
-            vaults = vaults
-        )
-
-        return ItemActions(
-            canShare = canShare,
-            canMoveToTrash = canMoveToTrash,
-            canDelete = canDelete,
-            canEdit = canEdit,
-            canMoveToOtherVault = canMoveToOtherVault,
-            canRestoreFromTrash = false
-        )
-    }
-
-    private fun getCanEdit(
-        item: Item,
-        userPlan: Plan,
-        vault: Vault
-    ): ItemActions.CanEditActionState {
-        val permissions = vault.role.toPermissions()
-        val isTrashed = item.state == ItemState.Trashed.value
-        if (isTrashed) {
-            return ItemActions.CanEditActionState.Disabled(
-                ItemActions.CanEditActionState.CanEditDisabledReason.ItemInTrash
-            )
-        }
-
-        val canUpdate = permissions.canUpdate()
-        return if (!canUpdate) {
-            if (userPlan.planType is PlanType.Free && vault.isOwned) {
-                // User is in downgraded mode
-                ItemActions.CanEditActionState.Disabled(ItemActions.CanEditActionState.CanEditDisabledReason.Downgraded)
-            } else {
-                ItemActions.CanEditActionState.Disabled(
-                    ItemActions.CanEditActionState.CanEditDisabledReason.NotEnoughPermission
+                ItemActions(
+                    canShare = canShare(isItemTrashed, share),
+                    canEdit = canEdit(isItemTrashed, share, userPlan),
+                    canMoveToOtherVault = canMigrate(isItemTrashed, share, shares),
+                    canMoveToTrash = !isItemTrashed && share.permission.canTrash(),
+                    canDelete = isItemTrashed && share.permission.canDelete(),
+                    canRestoreFromTrash = false
                 )
             }
-        } else {
+        }
+    }.first()
+
+    private suspend fun canShare(isItemTrashed: Boolean, share: Share) = if (isItemTrashed) {
+        CanShareVaultStatus.CannotShare(
+            reason = CanShareVaultStatus.CannotShareReason.ItemInTrash
+        )
+    } else {
+        canShareVault(share.id)
+    }
+
+    private fun canEdit(
+        isItemTrashed: Boolean,
+        share: Share,
+        userPlan: Plan
+    ) = when {
+        isItemTrashed -> {
+            ItemActions.CanEditActionState.Disabled(
+                reason = ItemActions.CanEditActionState.CanEditDisabledReason.ItemInTrash
+            )
+        }
+
+        share.permission.canUpdate() -> {
             ItemActions.CanEditActionState.Enabled
         }
+
+        share.isOwner && userPlan.planType is PlanType.Free -> {
+            ItemActions.CanEditActionState.Disabled(
+                reason = ItemActions.CanEditActionState.CanEditDisabledReason.Downgraded
+            )
+        }
+
+        else -> {
+            ItemActions.CanEditActionState.Disabled(
+                reason = ItemActions.CanEditActionState.CanEditDisabledReason.NotEnoughPermission
+            )
+        }
     }
 
-    @Suppress("ReturnCount")
-    private fun getCanMoveToOtherVault(
-        item: Item,
-        vault: Vault,
-        vaults: List<Vault>
-    ): ItemActions.CanMoveToOtherVaultState {
-        val isTrashed = item.state == ItemState.Trashed.value
-        if (isTrashed) {
-            return ItemActions.CanMoveToOtherVaultState.Disabled(
-                ItemActions.CanMoveToOtherVaultState.CanMoveToOtherVaultDisabledReason.ItemInTrash
-            )
-        }
-
-        val isThereAnotherVault = vaults.any { other ->
-            other.shareId != vault.shareId && other.role.toPermissions().canCreate()
-        }
-        if (!isThereAnotherVault) {
-            return ItemActions.CanMoveToOtherVaultState.Disabled(
-                ItemActions.CanMoveToOtherVaultState.CanMoveToOtherVaultDisabledReason.NoVaultToMoveToAvailable
-            )
-        }
-
-        if (vault.isOwned) {
-            return ItemActions.CanMoveToOtherVaultState.Enabled
-        }
-
-        val permissions = vault.role.toPermissions()
-        val canDelete = permissions.canDelete()
-
-        return if (canDelete) {
-            ItemActions.CanMoveToOtherVaultState.Enabled
-        } else {
+    private fun canMigrate(
+        isItemTrashed: Boolean,
+        share: Share,
+        shares: List<Share>
+    ) = when {
+        isItemTrashed -> {
             ItemActions.CanMoveToOtherVaultState.Disabled(
-                ItemActions.CanMoveToOtherVaultState.CanMoveToOtherVaultDisabledReason.NotEnoughPermission
+                reason = ItemActions.CanMoveToOtherVaultState.CanMoveToOtherVaultDisabledReason.ItemInTrash
+            )
+        }
+
+        shares.none { it.permission.canCreate() && it.id != share.id } -> {
+            ItemActions.CanMoveToOtherVaultState.Disabled(
+                reason = ItemActions.CanMoveToOtherVaultState.CanMoveToOtherVaultDisabledReason.NoVaultToMoveToAvailable
+            )
+        }
+
+        share.isOwner -> {
+            ItemActions.CanMoveToOtherVaultState.Enabled
+        }
+
+        share.permission.canDelete() -> {
+            ItemActions.CanMoveToOtherVaultState.Enabled
+        }
+
+        else -> {
+            ItemActions.CanMoveToOtherVaultState.Disabled(
+                reason = ItemActions.CanMoveToOtherVaultState.CanMoveToOtherVaultDisabledReason.NotEnoughPermission
             )
         }
     }
+
 }

@@ -41,25 +41,8 @@
 
     <string name="share_permissions_title">Set access level</string>
 
-    <string
-        name="sharing_invitation_from"
-        comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details"
-    >%s invites you to access items in</string>
     <string name="sharing_join_shared_vault">Join and sync</string>
     <string name="sharing_reject_invitation">Reject invitation</string>
-
-    <string
-        name="sharing_invitation_access_confirmed_title"
-        comment="Title for the access confirmed bottomsheet"
-    >Congratulations, your access has been confirmed</string>
-    <string
-        name="sharing_invitation_access_confirmed_accept"
-        comment="Button that will appear in the access confirmed bottomsheet"
-    >See the shared vault</string>
-    <string
-        name="sharing_invitation_access_confirmed_close"
-        comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet"
-    >Close</string>
 
     <string name="sharing_vault_invitation_title">Shared vault invitation</string>
     <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>

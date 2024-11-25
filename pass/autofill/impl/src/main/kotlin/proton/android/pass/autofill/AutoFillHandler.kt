@@ -96,7 +96,6 @@ object AutoFillHandler {
         }
 
         cancellationSignal.setOnCancelListener {
-            callback.onSuccess(null)
             job.cancel()
         }
     }

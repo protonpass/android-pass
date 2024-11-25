@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
 import proton.android.pass.domain.InviteToken
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -37,9 +38,8 @@ class TestAcceptInvite @Inject constructor() : AcceptInvite {
             Result.success(
                 AcceptInviteStatus.Done(
                     items = 0,
-                    shareId = ShareId(
-                        DEFAULT_SHARE_ID
-                    )
+                    shareId = ShareId(DEFAULT_SHARE_ID),
+                    itemId = ItemId(DEFAULT_ITEM_ID)
                 )
             )
         )
@@ -56,7 +56,12 @@ class TestAcceptInvite @Inject constructor() : AcceptInvite {
         return result.map { it.getOrThrow() }
     }
 
-    companion object {
-        const val DEFAULT_SHARE_ID = "TestAcceptInvite-ShareID"
+    private companion object {
+
+        private const val DEFAULT_SHARE_ID = "TestAcceptInvite-ShareID"
+
+        private const val DEFAULT_ITEM_ID = "TestAcceptInvite-ShareID"
+
     }
+
 }

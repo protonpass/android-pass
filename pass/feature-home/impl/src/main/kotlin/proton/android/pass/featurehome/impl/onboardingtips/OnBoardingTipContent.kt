@@ -139,11 +139,13 @@ fun OnBoardingTipContent(
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
-            Box(modifier = Modifier.padding(all = Spacing.medium)) {
-                InviteCard(
-                    pendingInvite = (tipPage as Invite).pendingInvite,
-                    onClick = { onClick(tipPage) }
-                )
+            (tipPage as? Invite)?.let { invite ->
+                Box(modifier = Modifier.padding(all = Spacing.medium)) {
+                    InviteCard(
+                        pendingInvite = invite.pendingInvite,
+                        onClick = { onClick(tipPage) }
+                    )
+                }
             }
         }
 

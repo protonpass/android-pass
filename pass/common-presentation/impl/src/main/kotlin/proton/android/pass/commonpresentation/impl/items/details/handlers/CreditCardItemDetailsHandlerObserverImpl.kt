@@ -19,45 +19,42 @@
 package proton.android.pass.commonpresentation.impl.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.mapLatest
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.Vault
 import javax.inject.Inject
 
 class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
-    private val getVaultByShareId: GetVaultByShareId,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemDetailsHandlerObserver<ItemContents.CreditCard>() {
 
-    override fun observe(item: Item): Flow<ItemDetailState> = combine(
-        observeCreditCardItemContents(item),
-        getVaultByShareId(shareId = item.shareId)
-    ) { creditCardItemContents, vault ->
-        ItemDetailState.CreditCard(
-            itemContents = creditCardItemContents,
-            itemId = item.id,
-            shareId = item.shareId,
-            isItemPinned = item.isPinned,
-            itemVault = vault,
-            itemCreatedAt = item.createTime,
-            itemModifiedAt = item.modificationTime,
-            itemLastAutofillAtOption = item.lastAutofillTime,
-            itemRevision = item.revision,
-            itemState = ItemState.from(item.state),
-            itemDiffs = ItemDiffs.CreditCard()
-        )
-    }
+    override fun observe(item: Item, vault: Vault?): Flow<ItemDetailState> = observeCreditCardItemContents(item)
+        .mapLatest { creditCardItemContents ->
+            ItemDetailState.CreditCard(
+                itemContents = creditCardItemContents,
+                itemId = item.id,
+                shareId = item.shareId,
+                isItemPinned = item.isPinned,
+                itemVault = vault,
+                itemCreatedAt = item.createTime,
+                itemModifiedAt = item.modificationTime,
+                itemLastAutofillAtOption = item.lastAutofillTime,
+                itemRevision = item.revision,
+                itemState = ItemState.from(item.state),
+                itemDiffs = ItemDiffs.CreditCard()
+            )
+        }
 
     private fun observeCreditCardItemContents(item: Item): Flow<ItemContents.CreditCard> = flow {
         encryptionContextProvider.withEncryptionContext {

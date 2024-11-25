@@ -81,6 +81,12 @@ interface LocalBreachesDataSource {
         aliasEmailBreaches: List<BreachEmail>
     )
 
+    fun getAliasEmailBreaches(userId: UserId, aliasEmailId: AliasEmailId): List<BreachEmail>
+
+    fun getCustomEmailBreaches(userId: UserId, customEmailId: CustomEmailId): List<BreachEmail>
+
+    fun getProtonEmailBreaches(userId: UserId, id: AddressId): List<BreachEmail>
+
 }
 
 class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSource {
@@ -256,6 +262,18 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
         aliasEmailBreachesCache.put(Pair(userId, aliasEmailId), aliasEmailBreaches)
             .also { emitAliasEmailBreachesChanges() }
     }
+
+    override fun getAliasEmailBreaches(userId: UserId, aliasEmailId: AliasEmailId): List<BreachEmail> =
+        aliasEmailBreachesCache[Pair(userId, aliasEmailId)]
+            ?: throw IllegalArgumentException("There's no alias email with id: ${aliasEmailId.itemId}")
+
+    override fun getCustomEmailBreaches(userId: UserId, customEmailId: CustomEmailId): List<BreachEmail> =
+        customEmailBreachesCache[Pair(userId, customEmailId)]
+            ?: throw IllegalArgumentException("There's no custom email with id: ${customEmailId.id}")
+
+    override fun getProtonEmailBreaches(userId: UserId, id: AddressId): List<BreachEmail> =
+        protonEmailBreachesCache[Pair(userId, id)]
+            ?: throw IllegalArgumentException("There's no proton email with id: ${id.id}")
 
     private fun emitAliasEmailBreachesChanges() {
         aliasEmailBreachesFlow.tryEmit(aliasEmailBreachesCache)

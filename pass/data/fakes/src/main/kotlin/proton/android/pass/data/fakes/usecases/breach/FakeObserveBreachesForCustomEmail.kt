@@ -30,10 +30,6 @@ import javax.inject.Singleton
 @Singleton
 class FakeObserveBreachesForCustomEmail @Inject constructor() : ObserveBreachesForCustomEmail {
 
-    override fun invoke(
-        userId: UserId?,
-        id: CustomEmailId,
-        refresh: Boolean
-    ): Flow<List<BreachEmail>> = emptyFlow()
+    override fun invoke(userId: UserId?, id: CustomEmailId): Flow<List<BreachEmail>> = emptyFlow()
 
 }

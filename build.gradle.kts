@@ -74,6 +74,7 @@ subprojects {
 }
 
 doctor {
+    warnWhenNotUsingParallelGC.set(false)
     javaHome {
         ensureJavaHomeIsSet.set(!isCI)
         ensureJavaHomeMatches.set(!isCI)

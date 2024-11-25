@@ -33,7 +33,6 @@ import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedBy
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterReportDestination
 import proton.android.pass.features.security.center.report.ui.SecurityCenterReportScreen
-import proton.android.pass.features.security.center.shared.navigation.EmailArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.test.CallChecker
@@ -63,7 +62,7 @@ class SecurityCenterReportScreenTest {
     fun setup() {
         hiltRule.inject()
         savedStateHandle.get().apply {
-            set(EmailArgId.key, NavParamEncoder.encode("email"))
+            set(CommonNavArgId.Email.key, NavParamEncoder.encode("email"))
             set(CommonNavArgId.AddressId.key, "addressId")
         }
         observeBreachesForEmail.emitDefault()

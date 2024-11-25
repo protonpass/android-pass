@@ -32,7 +32,6 @@ import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
@@ -43,6 +42,7 @@ import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Totp
+import proton.android.pass.domain.Vault
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -50,20 +50,18 @@ import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
 class LoginItemDetailsHandlerObserverImpl @Inject constructor(
-    private val getVaultByShareId: GetVaultByShareId,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
     private val totpManager: TotpManager
 ) : ItemDetailsHandlerObserver<ItemContents.Login>() {
 
-    override fun observe(item: Item): Flow<ItemDetailState> = combine(
+    override fun observe(item: Item, vault: Vault?): Flow<ItemDetailState> = combine(
         observeLoginItemContents(item),
         observePrimaryTotp(item),
         observeSecondaryTotps(item),
-        getVaultByShareId(shareId = item.shareId),
         userPreferencesRepository.getUseFaviconsPreference()
-    ) { loginItemContents, primaryTotp, secondaryTotps, vault, useFaviconsPreference ->
+    ) { loginItemContents, primaryTotp, secondaryTotps, useFaviconsPreference ->
         ItemDetailState.Login(
             itemContents = loginItemContents,
             itemId = item.id,

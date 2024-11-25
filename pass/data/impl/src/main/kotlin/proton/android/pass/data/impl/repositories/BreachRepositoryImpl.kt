@@ -63,6 +63,7 @@ import proton.android.pass.preferences.IsDarkWebAliasMessageDismissedPreference.
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@Suppress("TooManyFunctions")
 @Singleton
 class BreachRepositoryImpl @Inject constructor(
     private val localUserAccessDataDataSource: LocalUserAccessDataDataSource,
@@ -95,28 +96,12 @@ class BreachRepositoryImpl @Inject constructor(
     override fun observeCustomEmail(userId: UserId, customEmailId: CustomEmailId): Flow<BreachEmailReport.Custom> =
         localBreachesDataSource
             .observeCustomEmail(userId, customEmailId)
-            .map { breachCustomEmail ->
-                BreachEmailReport.Custom(
-                    id = breachCustomEmail.id,
-                    isVerified = breachCustomEmail.verified,
-                    email = breachCustomEmail.email,
-                    breachCount = breachCustomEmail.breachCount,
-                    flags = breachCustomEmail.flags,
-                    lastBreachTime = breachCustomEmail.lastBreachTime
-                )
-            }
+            .onStart { refreshCustomEmailsIfNeeded(userId, customEmailId) }
+            .map { it.toCustomReport() }
 
     override fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>> =
         localBreachesDataSource.observeCustomEmails()
-            .onStart {
-                remote.getCustomEmails(userId)
-                    .emails
-                    .customEmails
-                    .map { customEmailDto -> customEmailDto.toDomain() }
-                    .also { customEmails ->
-                        localBreachesDataSource.upsertCustomEmails(userId, customEmails)
-                    }
-            }
+            .onStart { refreshCustomEmails(userId) }
 
     override suspend fun addCustomEmail(userId: UserId, email: String): BreachCustomEmail =
         remote.addCustomEmail(userId, email)
@@ -157,6 +142,7 @@ class BreachRepositoryImpl @Inject constructor(
     override fun observeAliasEmail(userId: UserId, aliasEmailId: AliasEmailId): Flow<BreachEmailReport.Alias> = combine(
         observeItemById(aliasEmailId.shareId, aliasEmailId.itemId),
         localBreachesDataSource.observeAliasEmailBreaches(userId, aliasEmailId)
+            .onStart { refreshAliasEmailBreachesIfNeeded(userId, aliasEmailId) }
     ) { aliasItem, aliasEmailBreaches ->
         BreachEmailReport.Alias(
             id = aliasEmailId,
@@ -174,84 +160,24 @@ class BreachRepositoryImpl @Inject constructor(
 
     override fun observeProtonEmail(userId: UserId, addressId: AddressId): Flow<BreachEmailReport.Proton> =
         localBreachesDataSource.observeProtonEmail(userId, addressId)
-            .map { breachProtonEmail ->
-                BreachEmailReport.Proton(
-                    addressId = breachProtonEmail.addressId,
-                    email = breachProtonEmail.email,
-                    breachCount = breachProtonEmail.breachCounter,
-                    flags = breachProtonEmail.flags,
-                    lastBreachTime = breachProtonEmail.lastBreachTime
-                )
-            }
+            .map { it.toProtonReport() }
+            .onStart { refreshProtonEmailsIfNeeded(userId, addressId) }
 
     override fun observeProtonEmails(userId: UserId): Flow<List<BreachProtonEmail>> =
         localBreachesDataSource.observeProtonEmails(userId)
-            .onStart {
-                observeAllBreaches(userId)
-                    .first()
-                    .breachedProtonEmails
-                    .also { protonEmails ->
-                        localBreachesDataSource.upsertProtonEmails(userId, protonEmails)
-                    }
-            }
+            .onStart { refreshProtonEmails(userId) }
 
-    override fun observeBreachesForCustomEmail(
-        userId: UserId,
-        id: CustomEmailId,
-        refresh: Boolean
-    ): Flow<List<BreachEmail>> = localBreachesDataSource.observeCustomEmailBreaches(userId, id)
-        .onStart {
-            if (refresh) {
-                remote.getBreachesForCustomEmail(userId, id)
-                    .toDomain { breachDto ->
-                        BreachEmailId.Custom(
-                            id = BreachId(breachDto.id),
-                            customEmailId = id
-                        )
-                    }
-                    .also { customEmailBreaches ->
-                        localBreachesDataSource.upsertCustomEmailBreaches(
-                            userId = userId,
-                            customEmailId = id,
-                            customEmailBreaches = customEmailBreaches
-                        )
-                    }
-            }
-        }
+    override fun observeBreachesForCustomEmail(userId: UserId, customEmailId: CustomEmailId): Flow<List<BreachEmail>> =
+        localBreachesDataSource.observeCustomEmailBreaches(userId, customEmailId)
+            .onStart { refreshCustomEmailBreachesIfNeeded(userId, customEmailId) }
 
-    override fun observeBreachesForProtonEmail(userId: UserId, id: AddressId): Flow<List<BreachEmail>> =
-        localBreachesDataSource.observeProtonEmailBreaches(userId, id)
-            .onStart {
-                remote.getBreachesForProtonEmail(userId, id)
-                    .toDomain { breachDto -> BreachEmailId.Proton(BreachId(breachDto.id), id) }
-                    .also { protonEmailBreaches ->
-                        localBreachesDataSource.upsertProtonEmailBreaches(
-                            userId = userId,
-                            addressId = id,
-                            protonEmailBreaches = protonEmailBreaches
-                        )
-                    }
-            }
+    override fun observeBreachesForProtonEmail(userId: UserId, addressId: AddressId): Flow<List<BreachEmail>> =
+        localBreachesDataSource.observeProtonEmailBreaches(userId, addressId)
+            .onStart { refreshProtonEmailBreachesIfNeeded(userId, addressId) }
 
     override fun observeBreachesForAliasEmail(userId: UserId, aliasEmailId: AliasEmailId): Flow<List<BreachEmail>> =
         localBreachesDataSource.observeAliasEmailBreaches(userId, aliasEmailId)
-            .onStart {
-                remote.getBreachesForAliasEmail(userId, aliasEmailId.shareId, aliasEmailId.itemId)
-                    .toDomain { breach ->
-                        BreachEmailId.Alias(
-                            BreachId(breach.id),
-                            aliasEmailId.shareId,
-                            aliasEmailId.itemId
-                        )
-                    }
-                    .also { aliasEmailBreaches ->
-                        localBreachesDataSource.upsertAliasEmailBreaches(
-                            userId = userId,
-                            aliasEmailId = aliasEmailId,
-                            aliasEmailBreaches = aliasEmailBreaches
-                        )
-                    }
-            }
+            .onStart { refreshAliasEmailBreachesIfNeeded(userId, aliasEmailId) }
 
     override suspend fun markProtonEmailAsResolved(userId: UserId, id: AddressId) {
         remote.markProtonEmailAsResolved(userId, id)
@@ -349,6 +275,97 @@ class BreachRepositoryImpl @Inject constructor(
             }
     }
 
+    private suspend fun refreshProtonEmailBreachesIfNeeded(userId: UserId, id: AddressId) {
+        runCatching { localBreachesDataSource.getProtonEmailBreaches(userId, id) }
+            .onFailure { refreshProtonEmailBreaches(userId, id) }
+    }
+
+    private suspend fun refreshProtonEmailBreaches(userId: UserId, id: AddressId) {
+        remote.getBreachesForProtonEmail(userId, id)
+            .toDomain { breachDto -> BreachEmailId.Proton(BreachId(breachDto.id), id) }
+            .also { protonEmailBreaches ->
+                localBreachesDataSource.upsertProtonEmailBreaches(
+                    userId = userId,
+                    addressId = id,
+                    protonEmailBreaches = protonEmailBreaches
+                )
+            }
+    }
+
+    private suspend fun refreshProtonEmails(userId: UserId) {
+        observeAllBreaches(userId)
+            .first()
+            .breachedProtonEmails
+            .also { protonEmails ->
+                localBreachesDataSource.upsertProtonEmails(userId, protonEmails)
+            }
+    }
+
+    private suspend fun refreshCustomEmailsIfNeeded(userId: UserId, customEmailId: CustomEmailId) {
+        runCatching { localBreachesDataSource.getCustomEmail(userId, customEmailId) }
+            .onFailure { refreshCustomEmails(userId) }
+    }
+
+    private suspend fun refreshCustomEmails(userId: UserId) {
+        remote.getCustomEmails(userId)
+            .emails
+            .customEmails
+            .map { customEmailDto -> customEmailDto.toDomain() }
+            .also { customEmails ->
+                localBreachesDataSource.upsertCustomEmails(userId, customEmails)
+            }
+    }
+
+    private suspend fun refreshCustomEmailBreachesIfNeeded(userId: UserId, customEmailId: CustomEmailId) {
+        runCatching { localBreachesDataSource.getCustomEmailBreaches(userId, customEmailId) }
+            .onFailure { refreshCustomEmailBreaches(userId, customEmailId) }
+    }
+
+    private suspend fun refreshCustomEmailBreaches(userId: UserId, customEmailId: CustomEmailId) {
+        remote.getBreachesForCustomEmail(userId, customEmailId)
+            .toDomain { breachDto ->
+                BreachEmailId.Custom(
+                    id = BreachId(breachDto.id),
+                    customEmailId = customEmailId
+                )
+            }
+            .also { customEmailBreaches ->
+                localBreachesDataSource.upsertCustomEmailBreaches(
+                    userId = userId,
+                    customEmailId = customEmailId,
+                    customEmailBreaches = customEmailBreaches
+                )
+            }
+    }
+
+    private suspend fun refreshProtonEmailsIfNeeded(userId: UserId, addressId: AddressId) {
+        runCatching { localBreachesDataSource.getProtonEmail(userId, addressId) }
+            .onFailure { refreshProtonEmails(userId) }
+    }
+
+    private suspend fun refreshAliasEmailBreachesIfNeeded(userId: UserId, aliasEmailId: AliasEmailId) {
+        runCatching { localBreachesDataSource.getAliasEmailBreaches(userId, aliasEmailId) }
+            .onFailure { refreshAliasEmailBreaches(userId, aliasEmailId) }
+    }
+
+    private suspend fun refreshAliasEmailBreaches(userId: UserId, aliasEmailId: AliasEmailId) {
+        remote.getBreachesForAliasEmail(userId, aliasEmailId.shareId, aliasEmailId.itemId)
+            .toDomain { breach ->
+                BreachEmailId.Alias(
+                    BreachId(breach.id),
+                    aliasEmailId.shareId,
+                    aliasEmailId.itemId
+                )
+            }
+            .also { aliasEmailBreaches ->
+                localBreachesDataSource.upsertAliasEmailBreaches(
+                    userId = userId,
+                    aliasEmailId = aliasEmailId,
+                    aliasEmailBreaches = aliasEmailBreaches
+                )
+            }
+    }
+
     fun proton.android.pass.data.impl.responses.BreachCustomEmail.toDomain() = BreachCustomEmail(
         id = CustomEmailId(customEmailId),
         email = email,
@@ -404,6 +421,23 @@ class BreachRepositoryImpl @Inject constructor(
             )
         }
     }
+
+    private fun BreachCustomEmail.toCustomReport(): BreachEmailReport.Custom = BreachEmailReport.Custom(
+        id = this.id,
+        isVerified = this.verified,
+        email = this.email,
+        breachCount = this.breachCount,
+        flags = this.flags,
+        lastBreachTime = this.lastBreachTime
+    )
+
+    private fun BreachProtonEmail.toProtonReport(): BreachEmailReport.Proton = BreachEmailReport.Proton(
+        addressId = this.addressId,
+        email = this.email,
+        breachCount = this.breachCounter,
+        flags = this.flags,
+        lastBreachTime = this.lastBreachTime
+    )
 
     private companion object {
         private const val TAG = "BreachRepositoryImpl"

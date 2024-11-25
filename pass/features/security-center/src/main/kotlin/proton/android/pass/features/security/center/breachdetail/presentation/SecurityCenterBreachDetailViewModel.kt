@@ -109,8 +109,7 @@ class SecurityCenterBreachDetailViewModel @Inject constructor(
         )
 
         is BreachEmailId.Custom -> observeBreachesForCustomEmail(
-            id = type.customEmailId,
-            refresh = false
+            id = type.customEmailId
         )
         is BreachEmailId.Proton -> observeBreachesForProtonEmail(addressId = type.addressId)
         else -> throw IllegalStateException("Invalid state")

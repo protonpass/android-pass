@@ -27,7 +27,6 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDet
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.HiddenState
@@ -36,19 +35,18 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.Vault
 import javax.inject.Inject
 
 class AliasItemDetailsHandlerObserverImpl @Inject constructor(
-    private val getVaultByShareId: GetVaultByShareId,
     private val observeAliasDetails: ObserveAliasDetails,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemDetailsHandlerObserver<ItemContents.Alias>() {
 
-    override fun observe(item: Item): Flow<ItemDetailState> = combine(
+    override fun observe(item: Item, vault: Vault?): Flow<ItemDetailState> = combine(
         observeAliasItemContents(item),
-        observeAliasDetails(item.shareId, item.id).onStart { emit(AliasDetails.EMPTY) },
-        getVaultByShareId(shareId = item.shareId)
-    ) { aliasItemContents, aliasDetails, vault ->
+        observeAliasDetails(item.shareId, item.id).onStart { emit(AliasDetails.EMPTY) }
+    ) { aliasItemContents, aliasDetails ->
         ItemDetailState.Alias(
             itemContents = aliasItemContents,
             itemId = item.id,

@@ -31,22 +31,21 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.commonui.api.body3Weak
-import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
+import proton.android.pass.composecomponents.impl.text.Text
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -56,14 +55,19 @@ internal fun ShareItemSecureLinkRow(
     title: String,
     description: String,
     shouldShowPlusIcon: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    backgroundColor: Color = PassTheme.colors.inputBackgroundNorm,
+    iconBackgroundColor: Color = PassTheme.colors.interactionNormMinor1
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .roundedContainerNorm()
+            .roundedContainer(
+                backgroundColor = backgroundColor,
+                borderColor = PassTheme.colors.inputBorderNorm
+            )
             .clickable(onClick = onClick)
-            .padding(Spacing.medium),
+            .padding(all = Spacing.medium),
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -71,7 +75,7 @@ internal fun ShareItemSecureLinkRow(
             modifier = Modifier
                 .size(42.dp)
                 .clip(CircleShape)
-                .background(PassTheme.colors.interactionNormMinor1)
+                .background(color = iconBackgroundColor)
                 .padding(all = Spacing.small),
             contentAlignment = Alignment.Center
         ) {
@@ -87,16 +91,12 @@ internal fun ShareItemSecureLinkRow(
             modifier = Modifier.weight(1f, fill = true),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
         ) {
-            Text(
-                text = title,
-                style = ProtonTheme.typography.body2Regular,
-                color = PassTheme.colors.textNorm
+            Text.Body1Regular(
+                text = title
             )
 
-            Text(
-                text = description,
-                style = PassTheme.typography.body3Weak(),
-                color = PassTheme.colors.textWeak
+            Text.CaptionWeak(
+                text = description
             )
         }
 

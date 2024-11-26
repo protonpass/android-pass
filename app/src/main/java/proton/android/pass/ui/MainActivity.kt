@@ -155,7 +155,7 @@ class MainActivity : FragmentActivity() {
             .allowPackage(this.packageName)
             .allowCategory(Intent.CATEGORY_LAUNCHER)
             .build()
-            .sanitizeByThrowing(intent)
+            .sanitizeByFiltering(intent)
 
         finish()
         startActivity(sanitizedIntent)

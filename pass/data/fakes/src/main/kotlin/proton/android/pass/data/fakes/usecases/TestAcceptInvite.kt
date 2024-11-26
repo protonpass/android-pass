@@ -56,11 +56,11 @@ class TestAcceptInvite @Inject constructor() : AcceptInvite {
         return result.map { it.getOrThrow() }
     }
 
-    private companion object {
+    companion object {
 
-        private const val DEFAULT_SHARE_ID = "TestAcceptInvite-ShareID"
+        const val DEFAULT_SHARE_ID = "TestAcceptInvite-ShareID"
 
-        private const val DEFAULT_ITEM_ID = "TestAcceptInvite-ShareID"
+        const val DEFAULT_ITEM_ID = "TestAcceptInvite-ShareID"
 
     }
 

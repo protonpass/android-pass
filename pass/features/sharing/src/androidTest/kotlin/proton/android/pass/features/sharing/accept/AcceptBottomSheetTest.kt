@@ -21,22 +21,24 @@ package proton.android.pass.features.sharing.accept
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.TestAcceptInvite
-import proton.android.pass.data.fakes.usecases.TestObserveInvites
 import proton.android.pass.data.fakes.usecases.TestRejectInvite
+import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
+import proton.android.pass.domain.ShareId
 import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.SharingNavigation
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.domain.TestPendingInvite
-import proton.android.pass.domain.InviteToken
 import javax.inject.Inject
 
 @HiltAndroidTest
@@ -49,7 +51,7 @@ class AcceptBottomSheetTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var observeInvites: TestObserveInvites
+    lateinit var observeInvite: FakeObserveInvite
 
     @Inject
     lateinit var acceptInvite: TestAcceptInvite
@@ -57,15 +59,33 @@ class AcceptBottomSheetTest {
     @Inject
     lateinit var rejectInvite: TestRejectInvite
 
+    @Inject
+    lateinit var savedStateHandle: TestSavedStateHandleProvider
+
     @Before
     fun setup() {
         hiltRule.inject()
-        observeInvites.emitInvites(listOf(TEST_INVITE))
+
+        savedStateHandle.get().apply {
+            set(CommonNavArgId.InviteToken.key, INVITE_TOKEN)
+        }
     }
 
     @Test
-    fun showsTheRightData() {
+    fun displaysVaultInvite() {
+        observeInvite.emit(vaultInvite.some())
+
         composeTestRule.apply {
+            val expectedTitle = activity.getString(R.string.sharing_vault_invitation_title)
+            val expectedSubtitle = activity.getString(
+                R.string.sharing_vault_invitation_subtitle,
+                vaultInvite.inviterEmail
+            )
+            val expectedVaultName = vaultInvite.name
+            val expectedAcceptButtonText =
+                activity.getString(R.string.sharing_vault_invitation_accept)
+            val expectedRejectButtonText = activity.getString(R.string.sharing_reject_invitation)
+
             setContent {
                 PassTheme {
                     AcceptInviteBottomSheet(
@@ -74,20 +94,30 @@ class AcceptBottomSheetTest {
                 }
             }
 
-            onNodeWithText(TEST_INVITE.name).assertExists()
-            onNodeWithText(TEST_INVITE.inviterEmail, substring = true).assertExists()
+            onNodeWithText(expectedTitle).assertExists()
+            onNodeWithText(expectedSubtitle).assertExists()
+            onNodeWithText(expectedVaultName).assertExists()
+            onNodeWithText(expectedAcceptButtonText).assertExists()
+            onNodeWithText(expectedRejectButtonText).assertExists()
         }
     }
 
     @Test
-    fun acceptCallsAcceptAndCloses() {
-        val checker = CallChecker<Unit>()
+    fun acceptsVaultInvite() {
+        observeInvite.emit(vaultInvite.some())
+
         composeTestRule.apply {
+            val checker = CallChecker<Unit>()
+            val acceptButtonText = activity.getString(R.string.sharing_vault_invitation_accept)
+            val expectedNavigation = SharingNavigation.ManageSharedVault(
+                sharedVaultId = ShareId(TestAcceptInvite.DEFAULT_SHARE_ID)
+            )
+
             setContent {
                 PassTheme {
                     AcceptInviteBottomSheet(
-                        onNavigateEvent = {
-                            if (it == SharingNavigation.BackToHome) {
+                        onNavigateEvent = { sharingNavigation ->
+                            if (sharingNavigation == expectedNavigation) {
                                 checker.call()
                             }
                         }
@@ -95,24 +125,25 @@ class AcceptBottomSheetTest {
                 }
             }
 
-            val acceptText = activity.getString(R.string.sharing_join_shared_vault)
-            onNodeWithText(acceptText).performClick()
+            onNodeWithText(acceptButtonText).performClick()
             waitUntil { checker.isCalled }
         }
-
-        val memory = acceptInvite.getMemory()
-        assertThat(memory).isEqualTo(listOf(InviteToken(INVITE_TOKEN)))
     }
 
     @Test
-    fun rejectCallsRejectAndCloses() {
-        val checker = CallChecker<Unit>()
+    fun rejectsVaultInvite() {
+        observeInvite.emit(vaultInvite.some())
+
         composeTestRule.apply {
+            val checker = CallChecker<Unit>()
+            val rejectButtonText = activity.getString(R.string.sharing_reject_invitation)
+            val expectedNavigation = SharingNavigation.BackToHome
+
             setContent {
                 PassTheme {
                     AcceptInviteBottomSheet(
-                        onNavigateEvent = {
-                            if (it == SharingNavigation.BackToHome) {
+                        onNavigateEvent = { sharingNavigation ->
+                            if (sharingNavigation == expectedNavigation) {
                                 checker.call()
                             }
                         }
@@ -120,22 +151,21 @@ class AcceptBottomSheetTest {
                 }
             }
 
-            val rejectText = activity.getString(R.string.sharing_reject_invitation)
-            onNodeWithText(rejectText).performClick()
+            onNodeWithText(rejectButtonText).performClick()
             waitUntil { checker.isCalled }
         }
-
-        val memory = rejectInvite.getMemory()
-        assertThat(memory).isEqualTo(listOf(InviteToken(INVITE_TOKEN)))
     }
 
+    private companion object {
 
-    companion object {
         private const val INVITE_TOKEN = "AcceptBottomSheetTest.INVITE_TOKEN"
+
         private const val INVITE_NAME = "AcceptBottomSheetTest.INVITE_NAME"
-        private val TEST_INVITE = TestPendingInvite.Vault.create(
+
+        private val vaultInvite = TestPendingInvite.Vault.create(
             token = INVITE_TOKEN,
             name = INVITE_NAME
         )
     }
+
 }

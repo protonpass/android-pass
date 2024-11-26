@@ -217,6 +217,7 @@ android {
         create("prod") {
             dimension = "env"
             protonEnvironment {
+                host = customEnvUrl ?: host
                 // If we are creating a custom build (prod build that points to scientist env)
                 // do not use the default pins
                 useDefaultPins = !isCustomBuild

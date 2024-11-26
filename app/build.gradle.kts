@@ -221,7 +221,7 @@ android {
                 // If we are creating a custom build (prod build that points to scientist env)
                 // do not use the default pins
                 useDefaultPins = !isCustomBuild
-                apiPrefix = "pass-api"
+                apiPrefix = customEnvUrl?.let { "api" } ?: "pass-api"
 
                 printInfo(name)
             }

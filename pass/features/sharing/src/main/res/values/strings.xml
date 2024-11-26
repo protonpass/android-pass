@@ -41,7 +41,6 @@
 
     <string name="share_permissions_title">Set access level</string>
 
-    <string name="sharing_join_shared_vault">Join and sync</string>
     <string name="sharing_reject_invitation">Reject invitation</string>
 
     <string name="sharing_vault_invitation_title">Shared vault invitation</string>

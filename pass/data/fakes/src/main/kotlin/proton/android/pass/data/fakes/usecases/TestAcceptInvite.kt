@@ -60,7 +60,7 @@ class TestAcceptInvite @Inject constructor() : AcceptInvite {
 
         const val DEFAULT_SHARE_ID = "TestAcceptInvite-ShareID"
 
-        const val DEFAULT_ITEM_ID = "TestAcceptInvite-ShareID"
+        const val DEFAULT_ITEM_ID = "TestAcceptInvite-ItemID"
 
     }
 

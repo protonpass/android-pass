@@ -37,6 +37,7 @@ import me.proton.core.compose.theme.subheadlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.body3Medium
 import proton.android.pass.commonui.api.body3Norm
+import proton.android.pass.commonui.api.body3Weak
 
 object Text {
 
@@ -216,6 +217,21 @@ object Text {
         Text(
             text = text,
             style = PassTheme.typography.body3Norm().copy(color = color),
+            modifier = modifier,
+            textAlign = textAlign
+        )
+    }
+
+    @Composable
+    fun Body3Weak(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textNorm,
+        textAlign: TextAlign = TextAlign.Start
+    ) {
+        Text(
+            text = text,
+            style = PassTheme.typography.body3Weak().copy(color = color),
             modifier = modifier,
             textAlign = textAlign
         )

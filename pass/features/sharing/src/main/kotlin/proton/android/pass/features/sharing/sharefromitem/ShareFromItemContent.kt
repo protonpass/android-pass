@@ -65,6 +65,7 @@ internal fun ShareFromItemContent(
                     title = stringResource(id = R.string.share_with_user_title),
                     description = stringResource(id = R.string.share_with_user_description),
                     shouldShowPlusIcon = !state.canUsePaidFeatures,
+                    backgroundColor = PassTheme.colors.interactionNormMinor1,
                     onClick = {
                         if (state.canUsePaidFeatures) {
                             ShareFromItemEvent.ShareItem
@@ -73,44 +74,72 @@ internal fun ShareFromItemContent(
                         }.also(onEvent)
                     }
                 )
-            }
 
-            ShareItemSecureLinkRow(
-                iconResId = CoreR.drawable.ic_proton_link,
-                title = stringResource(id = R.string.share_with_secure_link_title),
-                description = stringResource(id = R.string.share_with_secure_link_description),
-                shouldShowPlusIcon = !state.canUsePaidFeatures,
-                onClick = {
-                    if (state.canUsePaidFeatures) {
-                        ShareFromItemEvent.ShareSecureLink
-                    } else {
-                        ShareFromItemEvent.UpsellSecureLink
-                    }.also(onEvent)
-                }
-            )
-
-            if (state.canManageSharedVault || state.canViewSharedVaultMembers) {
                 ShareItemSecureLinkRow(
-                    iconResId = CoreR.drawable.ic_proton_users,
-                    title = if (state.canManageSharedVault) {
-                        R.string.share_with_manage_shared_vault_title
-                    } else {
-                        R.string.share_with_view_shared_vault_members_title
-                    }.let { titleResId -> stringResource(id = titleResId) },
-                    description = pluralStringResource(
-                        id = R.plurals.share_with_manage_shared_vault_description,
-                        count = state.sharedVaultMembersCount,
-                        state.sharedVaultMembersCount
-                    ),
-                    shouldShowPlusIcon = false,
+                    iconResId = CoreR.drawable.ic_proton_link,
+                    title = stringResource(id = R.string.share_with_secure_link_title),
+                    description = stringResource(id = R.string.share_with_secure_link_description),
+                    shouldShowPlusIcon = !state.canUsePaidFeatures,
+                    backgroundColor = PassTheme.colors.interactionNormMinor1,
                     onClick = {
-                        ShareFromItemEvent.ManageSharedVault
-                            .also(onEvent)
+                        if (state.canUsePaidFeatures) {
+                            ShareFromItemEvent.ShareSecureLink
+                        } else {
+                            ShareFromItemEvent.UpsellSecureLink
+                        }.also(onEvent)
                     }
                 )
 
-                // Under this conditions we don't need to show the rest of possible options nor divider
+                if (state.vault is Some) {
+                    ShareItemSecureLinkRow(
+                        iconResId = CoreR.drawable.ic_proton_folder_plus,
+                        title = stringResource(id = R.string.share_with_vault_title),
+                        description = stringResource(id = R.string.share_with_vault_description),
+                        iconBackgroundColor = PassTheme.colors.inputBackgroundNorm,
+                        shouldShowPlusIcon = false,
+                        onClick = { onEvent(ShareFromItemEvent.ShareVault) }
+                    )
+                }
+
                 return
+            } else {
+                ShareItemSecureLinkRow(
+                    iconResId = CoreR.drawable.ic_proton_link,
+                    title = stringResource(id = R.string.share_with_secure_link_title),
+                    description = stringResource(id = R.string.share_with_secure_link_description),
+                    shouldShowPlusIcon = !state.canUsePaidFeatures,
+                    onClick = {
+                        if (state.canUsePaidFeatures) {
+                            ShareFromItemEvent.ShareSecureLink
+                        } else {
+                            ShareFromItemEvent.UpsellSecureLink
+                        }.also(onEvent)
+                    }
+                )
+
+                if (state.canManageSharedVault || state.canViewSharedVaultMembers) {
+                    ShareItemSecureLinkRow(
+                        iconResId = CoreR.drawable.ic_proton_users,
+                        title = if (state.canManageSharedVault) {
+                            R.string.share_with_manage_shared_vault_title
+                        } else {
+                            R.string.share_with_view_shared_vault_members_title
+                        }.let { titleResId -> stringResource(id = titleResId) },
+                        description = pluralStringResource(
+                            id = R.plurals.share_with_manage_shared_vault_description,
+                            count = state.sharedVaultMembersCount,
+                            state.sharedVaultMembersCount
+                        ),
+                        shouldShowPlusIcon = false,
+                        onClick = {
+                            ShareFromItemEvent.ManageSharedVault
+                                .also(onEvent)
+                        }
+                    )
+
+                    // Under this conditions we don't need to show the rest of possible options nor divider
+                    return
+                }
             }
 
             PassDivider(

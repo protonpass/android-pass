@@ -154,6 +154,17 @@ class ShareRepositoryImpl @Inject constructor(
                 }
             }
 
+    override fun observeSharesByType(
+        userId: UserId,
+        shareType: ShareType,
+        isActive: Boolean?
+    ): Flow<List<Share>> = localShareDataSource.observeByType(userId, shareType, isActive)
+        .map { shares ->
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                shares.map { share -> shareEntityToShare(share, this) }
+            }
+        }
+
     @Suppress("LongMethod")
     override suspend fun refreshShares(userId: UserId): RefreshSharesResult = coroutineScope {
         PassLogger.i(TAG, "Refreshing shares")

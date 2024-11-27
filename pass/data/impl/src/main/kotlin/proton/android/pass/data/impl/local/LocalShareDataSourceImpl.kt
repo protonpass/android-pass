@@ -25,6 +25,7 @@ import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -75,11 +76,24 @@ class LocalShareDataSourceImpl @Inject constructor(
     ) = database.sharesDao().updateOwnership(
         userId = userId.id,
         shareId = shareId.id,
-        isOwner =
-        isOwner
+        isOwner = isOwner
     )
 
-    companion object {
+    override fun observeByType(
+        userId: UserId,
+        shareType: ShareType,
+        isActive: Boolean?
+    ): Flow<List<ShareEntity>> = database.sharesDao()
+        .observeByType(
+            userId = userId.id,
+            shareType = shareType.value,
+            isActive = isActive
+        )
+
+    private companion object {
+
         private const val TAG = "LocalShareDataSourceImpl"
+
     }
+
 }

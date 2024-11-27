@@ -20,6 +20,7 @@ package proton.android.pass.commonui.api
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 
 object Gradients {
     val RadialPurple = Brush.radialGradient(
@@ -29,5 +30,12 @@ object Gradients {
             PassPalette.VividViolet,
             PassPalette.IndigoViolet
         )
+    )
+    val VerticalApricot = Brush.verticalGradient(
+        colors = listOf(
+            PassPalette.PaleApricot,
+            Color.Transparent
+        ),
+        endY = Float.POSITIVE_INFINITY / 2
     )
 }

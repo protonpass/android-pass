@@ -28,9 +28,9 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Totp
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.items.ItemCategory
 
 @Stable
@@ -44,7 +44,7 @@ sealed interface ItemDetailState {
 
     val isItemPinned: Boolean
 
-    val itemVault: Vault?
+    val itemShare: Share
 
     val itemCategory: ItemCategory
 
@@ -68,7 +68,7 @@ sealed interface ItemDetailState {
         override val itemId: ItemId,
         override val shareId: ShareId,
         override val isItemPinned: Boolean,
-        override val itemVault: Vault?,
+        override val itemShare: Share,
         override val itemCreatedAt: Instant,
         override val itemModifiedAt: Instant,
         override val itemLastAutofillAtOption: Option<Instant>,
@@ -105,7 +105,7 @@ sealed interface ItemDetailState {
         override val itemId: ItemId,
         override val shareId: ShareId,
         override val isItemPinned: Boolean,
-        override val itemVault: Vault?,
+        override val itemShare: Share,
         override val itemCreatedAt: Instant,
         override val itemModifiedAt: Instant,
         override val itemLastAutofillAtOption: Option<Instant>,
@@ -141,7 +141,7 @@ sealed interface ItemDetailState {
         override val itemId: ItemId,
         override val shareId: ShareId,
         override val isItemPinned: Boolean,
-        override val itemVault: Vault?,
+        override val itemShare: Share,
         override val itemCreatedAt: Instant,
         override val itemModifiedAt: Instant,
         override val itemLastAutofillAtOption: Option<Instant>,
@@ -177,7 +177,7 @@ sealed interface ItemDetailState {
         override val itemId: ItemId,
         override val shareId: ShareId,
         override val isItemPinned: Boolean,
-        override val itemVault: Vault?,
+        override val itemShare: Share,
         override val itemCreatedAt: Instant,
         override val itemModifiedAt: Instant,
         override val itemLastAutofillAtOption: Option<Instant>,
@@ -218,7 +218,7 @@ sealed interface ItemDetailState {
         override val itemId: ItemId,
         override val shareId: ShareId,
         override val isItemPinned: Boolean,
-        override val itemVault: Vault?,
+        override val itemShare: Share,
         override val itemCreatedAt: Instant,
         override val itemModifiedAt: Instant,
         override val itemLastAutofillAtOption: Option<Instant>,
@@ -254,7 +254,7 @@ sealed interface ItemDetailState {
         override val itemId: ItemId,
         override val shareId: ShareId,
         override val isItemPinned: Boolean,
-        override val itemVault: Vault?,
+        override val itemShare: Share,
         override val itemCreatedAt: Instant,
         override val itemModifiedAt: Instant,
         override val itemLastAutofillAtOption: Option<Instant>,

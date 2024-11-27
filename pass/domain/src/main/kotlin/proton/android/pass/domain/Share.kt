@@ -18,48 +18,111 @@
 
 package proton.android.pass.domain
 
-import androidx.compose.runtime.Stable
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Option
 import java.util.Date
 
-@Stable
 @JvmInline
 value class ShareId(val id: String)
 
-@Stable
 @JvmInline
 value class VaultId(val id: String)
 
-data class Share(
-    val id: ShareId,
-    val userId: UserId,
-    val shareType: ShareType,
-    val targetId: String,
-    val permission: SharePermission,
-    val vaultId: VaultId,
-    val content: Option<EncryptedByteArray>, // Can be None if targetType is Item
-    val expirationTime: Date?,
-    val createTime: Date,
-    val color: ShareColor,
-    val icon: ShareIcon,
-    val shareRole: ShareRole,
-    val isOwner: Boolean,
-    val memberCount: Int = 1,
-    val shared: Boolean = false,
-    val maxMembers: Int = 10,
-    val pendingInvites: Int = 0,
-    val newUserInvitesReady: Int = 0,
-    val canAutofill: Boolean = true
-) {
+sealed class Share {
 
-    private val totalMembers: Int = memberCount
-        .plus(pendingInvites)
-        .plus(newUserInvitesReady)
+    abstract val id: ShareId
 
-    val remainingInvites: Int = maxMembers.minus(totalMembers)
+    abstract val userId: UserId
 
-    val hasRemainingInvites: Boolean = remainingInvites > 0
+    abstract val shareType: ShareType
+
+    abstract val targetId: String
+
+    abstract val vaultId: VaultId
+
+    abstract val expirationTime: Date?
+
+    abstract val createTime: Date
+
+    abstract val shareRole: ShareRole
+
+    abstract val isOwner: Boolean
+
+    abstract val memberCount: Int
+
+    abstract val shared: Boolean
+
+    abstract val maxMembers: Int
+
+    abstract val pendingInvites: Int
+
+    abstract val newUserInvitesReady: Int
+
+    abstract val canAutofill: Boolean
+
+    protected abstract val permission: SharePermission
+
+    data class Item(
+        override val id: ShareId,
+        override val userId: UserId,
+        override val shareType: ShareType,
+        override val targetId: String,
+        override val permission: SharePermission,
+        override val vaultId: VaultId,
+        override val expirationTime: Date?,
+        override val createTime: Date,
+        override val shareRole: ShareRole,
+        override val isOwner: Boolean,
+        override val memberCount: Int,
+        override val shared: Boolean,
+        override val maxMembers: Int,
+        override val pendingInvites: Int,
+        override val newUserInvitesReady: Int,
+        override val canAutofill: Boolean
+    ) : Share()
+
+    data class Vault(
+        override val id: ShareId,
+        override val userId: UserId,
+        override val shareType: ShareType,
+        override val targetId: String,
+        override val permission: SharePermission,
+        override val vaultId: VaultId,
+        override val expirationTime: Date?,
+        override val createTime: Date,
+        override val shareRole: ShareRole,
+        override val isOwner: Boolean,
+        override val memberCount: Int,
+        override val shared: Boolean,
+        override val maxMembers: Int,
+        override val pendingInvites: Int,
+        override val newUserInvitesReady: Int,
+        override val canAutofill: Boolean,
+        val name: String,
+        val color: ShareColor,
+        val icon: ShareIcon
+    ) : Share()
+
+    private val totalMembers: Int
+        get() = memberCount
+            .plus(pendingInvites)
+            .plus(newUserInvitesReady)
+
+    val remainingInvites: Int
+        get() = maxMembers.minus(totalMembers)
+
+    val hasRemainingInvites: Boolean
+        get() = remainingInvites > 0
+
+    val canBeCreated: Boolean
+        get() = permission.canCreate()
+
+    val canBeDeleted: Boolean
+        get() = permission.canDelete()
+
+    val canBeTrashed: Boolean
+        get() = permission.canTrash()
+
+    val canBeUpdated: Boolean
+        get() = permission.canUpdate()
 
 }

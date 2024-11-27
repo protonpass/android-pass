@@ -32,21 +32,21 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.Vault
+import proton.android.pass.domain.Share
 import javax.inject.Inject
 
 class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemDetailsHandlerObserver<ItemContents.CreditCard>() {
 
-    override fun observe(item: Item, vault: Vault?): Flow<ItemDetailState> = observeCreditCardItemContents(item)
+    override fun observe(item: Item, share: Share): Flow<ItemDetailState> = observeCreditCardItemContents(item)
         .mapLatest { creditCardItemContents ->
             ItemDetailState.CreditCard(
                 itemContents = creditCardItemContents,
                 itemId = item.id,
                 shareId = item.shareId,
                 isItemPinned = item.isPinned,
-                itemVault = vault,
+                itemShare = share,
                 itemCreatedAt = item.createTime,
                 itemModifiedAt = item.modificationTime,
                 itemLastAutofillAtOption = item.lastAutofillTime,

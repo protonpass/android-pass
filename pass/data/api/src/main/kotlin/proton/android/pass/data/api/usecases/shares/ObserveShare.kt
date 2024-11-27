@@ -19,12 +19,11 @@
 package proton.android.pass.data.api.usecases.shares
 
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 
 interface ObserveShare {
 
-    operator fun invoke(shareId: ShareId): Flow<Option<Share>>
+    operator fun invoke(shareId: ShareId): Flow<Share>
 
 }

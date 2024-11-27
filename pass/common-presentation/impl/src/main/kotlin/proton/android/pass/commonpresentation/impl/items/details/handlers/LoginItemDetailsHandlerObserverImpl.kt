@@ -41,8 +41,8 @@ import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Passkey
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.Totp
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -56,7 +56,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val totpManager: TotpManager
 ) : ItemDetailsHandlerObserver<ItemContents.Login>() {
 
-    override fun observe(item: Item, vault: Vault?): Flow<ItemDetailState> = combine(
+    override fun observe(item: Item, share: Share): Flow<ItemDetailState> = combine(
         observeLoginItemContents(item),
         observePrimaryTotp(item),
         observeSecondaryTotps(item),
@@ -67,7 +67,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             itemId = item.id,
             shareId = item.shareId,
             isItemPinned = item.isPinned,
-            itemVault = vault,
+            itemShare = share,
             itemCreatedAt = item.createTime,
             itemModifiedAt = item.modificationTime,
             itemLastAutofillAtOption = item.lastAutofillTime,

@@ -42,8 +42,8 @@ import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ItemDiffType
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 
 @Composable
 internal fun PassItemDetailTitleRow(
@@ -59,7 +59,7 @@ internal fun PassItemDetailTitleRow(
                 title = itemContents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
-                vault = itemVault,
+                share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
@@ -81,7 +81,7 @@ internal fun PassItemDetailTitleRow(
                 title = itemContents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
-                vault = itemVault,
+                share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
@@ -102,7 +102,7 @@ internal fun PassItemDetailTitleRow(
                 title = itemContents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
-                vault = itemVault,
+                share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
@@ -123,7 +123,7 @@ internal fun PassItemDetailTitleRow(
                 title = itemContents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
-                vault = itemVault,
+                share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
@@ -169,16 +169,14 @@ internal fun PassItemDetailTitleRow(
                         )
                     }
 
-                    itemVault?.let { vault ->
-                        PassItemDetailSubtitle(
-                            vault = vault,
-                            onClick = {
-                                PassItemDetailsUiEvent.OnSharedVaultClick(
-                                    sharedVaultId = vault.shareId
-                                ).also(onEvent)
-                            }
-                        )
-                    }
+                    PassItemDetailSubtitle(
+                        share = itemShare,
+                        onClick = {
+                            PassItemDetailsUiEvent.OnSharedVaultClick(
+                                sharedVaultId = itemShare.id
+                            ).also(onEvent)
+                        }
+                    )
                 }
             }
         }
@@ -189,7 +187,7 @@ internal fun PassItemDetailTitleRow(
                 title = itemContents.title,
                 isPinned = false,
                 itemColors = itemColors,
-                vault = itemVault,
+                share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
                 onSharedVaultClick = {},
                 iconContent = {}
@@ -204,7 +202,7 @@ private fun ItemDetailTitleRow(
     title: String,
     isPinned: Boolean,
     itemColors: PassItemColors,
-    vault: Vault?,
+    share: Share,
     itemDiffType: ItemDiffType,
     onSharedVaultClick: (ShareId) -> Unit,
     iconContent: @Composable RowScope.() -> Unit
@@ -233,12 +231,10 @@ private fun ItemDetailTitleRow(
                 itemDiffType = itemDiffType
             )
 
-            vault?.let { itemVault ->
-                PassItemDetailSubtitle(
-                    vault = itemVault,
-                    onClick = { onSharedVaultClick(itemVault.shareId) }
-                )
-            }
+            PassItemDetailSubtitle(
+                share = share,
+                onClick = { onSharedVaultClick(share.id) }
+            )
         }
     }
 }

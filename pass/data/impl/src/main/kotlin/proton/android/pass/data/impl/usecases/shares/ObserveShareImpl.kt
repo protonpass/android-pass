@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.usecases.shares
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.shares.ObserveShare
@@ -33,7 +32,7 @@ class ObserveShareImpl @Inject constructor(
     private val shareRepository: ShareRepository
 ) : ObserveShare {
 
-    override fun invoke(shareId: ShareId): Flow<Option<Share>> = observeCurrentUser()
+    override fun invoke(shareId: ShareId): Flow<Share> = observeCurrentUser()
         .flatMapLatest { user ->
             shareRepository.observeById(user.userId, shareId)
         }

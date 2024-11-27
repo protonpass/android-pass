@@ -21,9 +21,7 @@ package proton.android.pass.commonpresentation.impl.items.details.handlers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
@@ -33,29 +31,28 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.errors.ItemNotFoundError
-import proton.android.pass.data.api.usecases.GetVaultByShareId
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 class ItemDetailsHandlerImpl @Inject constructor(
-    private val getVaultByShareId: GetVaultByShareId,
+    private val observeShare: ObserveShare,
     private val observers: Map<ItemCategory, @JvmSuppressWildcards ItemDetailsHandlerObserver<*>>,
     private val clipboardManager: ClipboardManager,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ItemDetailsHandler {
 
-    override fun observeItemDetails(item: Item): Flow<ItemDetailState> = observeItemVault(item)
-        .flatMapLatest { vault ->
-            getItemDetailsObserver(item.itemType.category).observe(item, vault)
+    override fun observeItemDetails(item: Item): Flow<ItemDetailState> = observeShare(item.shareId)
+        .flatMapLatest { share ->
+            getItemDetailsObserver(item.itemType.category).observe(item, share)
         }
         .catch { error ->
             if (error !is ItemNotFoundError) {
@@ -65,18 +62,6 @@ class ItemDetailsHandlerImpl @Inject constructor(
         }
         .distinctUntilChanged()
 
-    private fun observeItemVault(item: Item): Flow<Vault?> = flow {
-        runCatching { getVaultByShareId(shareId = item.shareId).first() }
-            .onFailure { error ->
-                PassLogger.w(TAG, "There was an error retrieving item vault")
-                PassLogger.w(TAG, error)
-
-                emit(null)
-            }
-            .onSuccess { vault ->
-                emit(vault)
-            }
-    }
 
     override suspend fun onItemDetailsFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain) {
         clipboardManager.copyToClipboard(text = text, isSecure = false)

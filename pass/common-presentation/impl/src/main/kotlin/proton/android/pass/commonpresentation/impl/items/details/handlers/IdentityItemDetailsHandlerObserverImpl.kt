@@ -32,14 +32,14 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.Vault
+import proton.android.pass.domain.Share
 import javax.inject.Inject
 
 class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemDetailsHandlerObserver<ItemContents.Identity>() {
 
-    override fun observe(item: Item, vault: Vault?): Flow<ItemDetailState> = observeIdentityItemContents(item)
+    override fun observe(item: Item, share: Share): Flow<ItemDetailState> = observeIdentityItemContents(item)
         .mapLatest { identityItemContents ->
             ItemDetailState.Identity(
                 itemContents = identityItemContents,
@@ -52,7 +52,7 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                 itemRevision = item.revision,
                 itemState = ItemState.from(item.state),
                 itemDiffs = ItemDiffs.Identity(),
-                itemVault = vault
+                itemShare = share
             )
         }
 

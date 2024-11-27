@@ -39,7 +39,6 @@ import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -64,8 +63,6 @@ import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.data.impl.util.TimeUtil.toDate
 import proton.android.pass.domain.Share
-import proton.android.pass.domain.ShareColor
-import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SharePermission
 import proton.android.pass.domain.ShareRole
@@ -136,7 +133,7 @@ class ShareRepositoryImpl @Inject constructor(
         }
 
         return encryptionContextProvider.withEncryptionContextSuspendable {
-            shareEntityToShare(responseAsEntity, this)
+            responseAsEntity.toDomain(this@withEncryptionContextSuspendable)
         }
     }
 
@@ -150,7 +147,9 @@ class ShareRepositoryImpl @Inject constructor(
         localShareDataSource.observeAllActiveSharesForUser(userId)
             .map { shares ->
                 encryptionContextProvider.withEncryptionContextSuspendable {
-                    shares.map { share -> shareEntityToShare(share, this) }
+                    shares.map { share ->
+                        share.toDomain(this@withEncryptionContextSuspendable)
+                    }
                 }
             }
 
@@ -161,7 +160,9 @@ class ShareRepositoryImpl @Inject constructor(
     ): Flow<List<Share>> = localShareDataSource.observeByType(userId, shareType, isActive)
         .map { shares ->
             encryptionContextProvider.withEncryptionContextSuspendable {
-                shares.map { share -> shareEntityToShare(share, this) }
+                shares.map { share ->
+                    share.toDomain(this@withEncryptionContextSuspendable)
+                }
             }
         }
 
@@ -266,8 +267,8 @@ class ShareRepositoryImpl @Inject constructor(
     @Suppress("ReturnCount")
     override suspend fun getById(userId: UserId, shareId: ShareId): Share {
         // Check local
-        var share: ShareEntity? = localShareDataSource.getById(userId, shareId)
-        if (share == null) {
+        var shareEntity: ShareEntity? = localShareDataSource.getById(userId, shareId)
+        if (shareEntity == null) {
             // Check remote
             val fetchedShare = remoteShareDataSource.fetchShareById(userId, shareId)
             val shareResponse = fetchedShare ?: run {
@@ -278,21 +279,23 @@ class ShareRepositoryImpl @Inject constructor(
                 userId = userId,
                 shares = listOf(shareResponse)
             )
-            share = storedShares.first()
+            shareEntity = storedShares.first()
         }
 
         return encryptionContextProvider.withEncryptionContextSuspendable {
-            shareEntityToShare(share, this)
+            shareEntity.toDomain(this@withEncryptionContextSuspendable)
         }
     }
 
-    override fun observeById(userId: UserId, shareId: ShareId): Flow<Option<Share>> =
+    override fun observeById(userId: UserId, shareId: ShareId): Flow<Share> =
         localShareDataSource.observeById(userId, shareId)
-            .map { entity ->
+            .map { shareEntity ->
+                if (shareEntity == null) {
+                    throw ShareNotAvailableError()
+                }
+
                 encryptionContextProvider.withEncryptionContextSuspendable {
-                    entity.toOption().map {
-                        shareEntityToShare(it, this)
-                    }
+                    shareEntity.toDomain(this@withEncryptionContextSuspendable)
                 }
             }
 
@@ -320,15 +323,15 @@ class ShareRepositoryImpl @Inject constructor(
         val shareKeyAsEncryptionkey = encryptionContextProvider.withEncryptionContextSuspendable {
             EncryptionKey(decrypt(shareKey.key))
         }
-        val responseAsEntity = shareResponseToEntity(
+        val shareEntity = shareResponseToEntity(
             userAddress = userAddress,
             shareResponse = response,
             key = EncryptionKeyStatus.Found(shareKeyAsEncryptionkey)
         )
-        localShareDataSource.upsertShares(listOf(responseAsEntity))
+        localShareDataSource.upsertShares(listOf(shareEntity))
 
         return encryptionContextProvider.withEncryptionContextSuspendable {
-            shareEntityToShare(responseAsEntity, this)
+            shareEntity.toDomain(this@withEncryptionContextSuspendable)
         }
     }
 
@@ -510,45 +513,57 @@ class ShareRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun shareEntityToShare(entity: ShareEntity, encryptionContext: EncryptionContext): Share {
-        val shareType = ShareType.map[entity.targetType]
-        if (shareType == null) {
-            val e = IllegalStateException("Unknown ShareType")
-            PassLogger.w(TAG, "Unknown ShareType [shareType=${entity.targetType}]")
-            PassLogger.w(TAG, e)
-            throw e
-        }
+    private fun ShareEntity.toDomain(encryptionContext: EncryptionContext): Share =
+        when (val shareType = ShareType.from(targetType)) {
+            ShareType.Item -> {
+                Share.Item(
+                    id = ShareId(id),
+                    userId = UserId(userId),
+                    shareType = shareType,
+                    targetId = targetId,
+                    permission = SharePermission(permission),
+                    vaultId = VaultId(vaultId),
+                    expirationTime = expirationTime?.let { Date(it) },
+                    createTime = createTime.toDate(),
+                    shareRole = ShareRole.fromValue(shareRoleId),
+                    isOwner = owner,
+                    memberCount = targetMembers,
+                    shared = shared,
+                    pendingInvites = pendingInvites,
+                    newUserInvitesReady = newUserInvitesReady,
+                    maxMembers = targetMaxMembers,
+                    canAutofill = canAutofill
+                )
+            }
 
-        val (color, icon) = if (entity.encryptedContent == null) {
-            ShareColor.Color1 to ShareIcon.Icon1
-        } else {
-            val decrypted = encryptionContext.decrypt(entity.encryptedContent)
-            val asProto = VaultV1.Vault.parseFrom(decrypted)
-            asProto.display.color.toDomain() to asProto.display.icon.toDomain()
+            ShareType.Vault -> {
+                encryptionContext.decrypt(encryptedContent!!)
+                    .let(VaultV1.Vault::parseFrom)
+                    .let { vault ->
+                        Share.Vault(
+                            id = ShareId(id),
+                            userId = UserId(userId),
+                            shareType = shareType,
+                            targetId = targetId,
+                            permission = SharePermission(permission),
+                            vaultId = VaultId(vaultId),
+                            expirationTime = expirationTime?.let { Date(it) },
+                            createTime = createTime.toDate(),
+                            shareRole = ShareRole.fromValue(shareRoleId),
+                            isOwner = owner,
+                            memberCount = targetMembers,
+                            shared = shared,
+                            pendingInvites = pendingInvites,
+                            newUserInvitesReady = newUserInvitesReady,
+                            maxMembers = targetMaxMembers,
+                            canAutofill = canAutofill,
+                            name = vault.name,
+                            color = vault.display.color.toDomain(),
+                            icon = vault.display.icon.toDomain()
+                        )
+                    }
+            }
         }
-
-        return Share(
-            id = ShareId(entity.id),
-            userId = UserId(entity.userId),
-            shareType = shareType,
-            targetId = entity.targetId,
-            permission = SharePermission(entity.permission),
-            vaultId = VaultId(entity.vaultId),
-            content = entity.encryptedContent.toOption(),
-            expirationTime = entity.expirationTime?.let { Date(it) },
-            createTime = entity.createTime.toDate(),
-            color = color,
-            icon = icon,
-            shareRole = ShareRole.fromValue(entity.shareRoleId),
-            isOwner = entity.owner,
-            memberCount = entity.targetMembers,
-            shared = entity.shared,
-            pendingInvites = entity.pendingInvites,
-            newUserInvitesReady = entity.newUserInvitesReady,
-            maxMembers = entity.targetMaxMembers,
-            canAutofill = entity.canAutofill
-        )
-    }
 
     private suspend fun createVaultRequest(
         user: User,
@@ -621,7 +636,6 @@ class ShareRepositoryImpl @Inject constructor(
             else -> ShareId(userData.simpleLoginSyncDefaultShareId).some()
         }
     }
-
 
     internal data class ShareResponseEntity(
         val response: ShareResponse,

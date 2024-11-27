@@ -85,7 +85,7 @@ internal fun AccountContent(
             }
             ManageAccount(onManageAccountClick = { onEvent(AccountContentEvent.ManageAccount) })
 
-            if (state.userId != null) {
+            if (state.userId != null && state.showExtraPasswordButton) {
                 ExtraPassword(
                     userId = state.userId,
                     isExtraPasswordEnabled = state.isExtraPasswordEnabled,

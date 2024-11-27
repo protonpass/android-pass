@@ -25,6 +25,7 @@ import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.NewVault
 
 interface ShareRepository {
@@ -40,6 +41,12 @@ interface ShareRepository {
 
     suspend fun getById(userId: UserId, shareId: ShareId): Share
     fun observeById(userId: UserId, shareId: ShareId): Flow<Option<Share>>
+
+    fun observeSharesByType(
+        userId: UserId,
+        shareType: ShareType,
+        isActive: Boolean?
+    ): Flow<List<Share>>
 
     suspend fun updateVault(
         userId: UserId,

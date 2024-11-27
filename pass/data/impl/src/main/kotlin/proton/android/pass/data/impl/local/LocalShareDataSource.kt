@@ -23,6 +23,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 
 interface LocalShareDataSource {
     suspend fun upsertShares(shares: List<ShareEntity>)
@@ -40,4 +41,10 @@ interface LocalShareDataSource {
         shareId: ShareId,
         isOwner: Boolean
     )
+
+    fun observeByType(
+        userId: UserId,
+        shareType: ShareType,
+        isActive: Boolean?
+    ): Flow<List<ShareEntity>>
 }

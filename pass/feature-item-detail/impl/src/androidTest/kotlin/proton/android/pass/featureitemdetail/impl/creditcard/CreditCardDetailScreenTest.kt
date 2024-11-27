@@ -358,8 +358,7 @@ class CreditCardDetailScreenTest {
         pin: String = "1234",
         verificationNumber: String = "123",
         expirationDate: String = "2060-01",
-        vaultName: String = "vault",
-        hasManyVaults: Boolean = false
+        vaultName: String = "vault"
     ): String {
         val item = TestObserveItems.createCreditCard(
             shareId = ShareId(SHARE_ID),
@@ -375,14 +374,15 @@ class CreditCardDetailScreenTest {
 
         val withVault = ItemWithVaultInfo(
             item = item,
-            vault = Vault(
-                userId = UserId(""),
-                shareId = ShareId(SHARE_ID),
-                vaultId = VaultId("vault-id"),
-                name = vaultName,
-                createTime = Date()
-            ),
-            hasMoreThanOneVault = hasManyVaults
+            vaults = listOf(
+                Vault(
+                    userId = UserId(""),
+                    shareId = ShareId(SHARE_ID),
+                    vaultId = VaultId("vault-id"),
+                    name = vaultName,
+                    createTime = Date()
+                )
+            )
         )
         observeItemById.emitValue(Result.success(item))
         getItemByIdWithVault.emitValue(Result.success(withVault))

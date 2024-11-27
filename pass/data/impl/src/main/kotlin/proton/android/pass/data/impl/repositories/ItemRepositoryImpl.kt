@@ -709,7 +709,6 @@ class ItemRepositoryImpl @Inject constructor(
                 throw error
             }
             .collect { itemTotal ->
-                println("JIBIRI: downloadItemsAndObserveProgress: $itemTotal")
                 items.addAll(itemTotal.items)
                 onProgress(
                     VaultProgress(
@@ -719,7 +718,6 @@ class ItemRepositoryImpl @Inject constructor(
                 )
             }
 
-        println("JIBIRI: download: $items")
         return items
     }
 

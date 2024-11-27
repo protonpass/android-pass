@@ -123,6 +123,20 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
         isOwner: Boolean
     )
 
+    @Query(
+        """
+        SELECT * FROM ${ShareEntity.TABLE} 
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND ${ShareEntity.Columns.SHARE_TYPE} = :shareType
+          AND CASE WHEN :isActive IS NULL THEN 1 ELSE ${ShareEntity.Columns.IS_ACTIVE} END = :isActive 
+        """
+    )
+    abstract fun observeByType(
+        userId: String,
+        shareType: Int,
+        isActive: Boolean?
+    ): Flow<List<ShareEntity>>
+
     @Transaction
     open suspend fun evictAndUpsertShares(userId: UserId, vararg entities: ShareEntity) {
         val insertOrUpdateShares = entities.asList().map { it.id }

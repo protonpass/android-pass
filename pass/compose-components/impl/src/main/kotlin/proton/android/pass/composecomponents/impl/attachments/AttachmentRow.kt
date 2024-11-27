@@ -28,14 +28,13 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import proton.android.pass.commonui.api.FileTypeMapper
+import proton.android.pass.commonrust.api.FileType
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -48,6 +47,7 @@ import me.proton.core.presentation.R as CoreR
 fun AttachmentRow(
     modifier: Modifier = Modifier,
     filename: String,
+    fileType: FileType,
     size: String,
     isLoading: Boolean = false,
     onOptionsClick: () -> Unit,
@@ -58,7 +58,6 @@ fun AttachmentRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
-        val fileType = remember(filename) { FileTypeMapper.getFileType(filename) }
         AttachmentImage(
             modifier = Modifier.padding(start = Spacing.medium),
             fileType = fileType
@@ -87,6 +86,7 @@ fun AttachmentRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: 
         Surface {
             AttachmentRow(
                 filename = "image.jpg",
+                fileType = FileType.RasterImage,
                 size = "1.2 MB",
                 onAttachmentClick = {},
                 onOptionsClick = {}

@@ -18,6 +18,8 @@
 
 package proton.android.pass.commonrust.impl
 
+import proton.android.pass.commonrust.FileDecoder
+import proton.android.pass.commonrust.FileGroup
 import proton.android.pass.commonrust.api.FileType
 import proton.android.pass.commonrust.api.FileTypeDetector
 import proton.android.pass.commonrust.api.MimeType
@@ -26,7 +28,30 @@ import javax.inject.Singleton
 
 @Singleton
 class FileTypeDetectorImpl @Inject constructor() : FileTypeDetector {
-    override fun getMimeTypeFromBytes(bytes: ByteArray): MimeType = MimeType("application/octet-stream")
 
-    override fun getFileTypeFromMimeType(mimeType: MimeType): FileType = FileType.Unknown
+    private val fileDecoder by lazy { FileDecoder() }
+
+    override fun getMimeTypeFromBytes(bytes: ByteArray): MimeType =
+        fileDecoder.getMimetypeFromContent(bytes).let(::MimeType)
+
+    override fun getFileTypeFromMimeType(mimeType: MimeType): FileType =
+        fileDecoder.getFilegroupFromMimetype(mimeType.value)
+            .let {
+                when (it) {
+                    FileGroup.IMAGE -> FileType.RasterImage
+                    FileGroup.PHOTO -> FileType.Photo
+                    FileGroup.VECTOR_IMAGE -> FileType.VectorImage
+                    FileGroup.VIDEO -> FileType.Video
+                    FileGroup.AUDIO -> FileType.Audio
+                    FileGroup.KEY -> FileType.Key
+                    FileGroup.TEXT -> FileType.Text
+                    FileGroup.CALENDAR -> FileType.Calendar
+                    FileGroup.PDF -> FileType.Pdf
+                    FileGroup.WORD -> FileType.Word
+                    FileGroup.POWER_POINT -> FileType.PowerPoint
+                    FileGroup.EXCEL -> FileType.Excel
+                    FileGroup.DOCUMENT -> FileType.Document
+                    FileGroup.UNKNOWN -> FileType.Unknown
+                }
+            }
 }

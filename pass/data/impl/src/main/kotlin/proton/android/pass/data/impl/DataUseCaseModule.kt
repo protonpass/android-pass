@@ -674,7 +674,7 @@ abstract class DataUseCaseModule {
     @Binds
     abstract fun bindObserveHasConfirmedInvite(impl: ObserveConfirmedInviteTokenImpl): ObserveConfirmedInviteToken
 
-    @Binds
+    @[Binds Singleton]
     abstract fun bindObserveVaultById(impl: ObserveVaultByIdImpl): ObserveVaultById
 
     @Binds

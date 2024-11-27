@@ -60,6 +60,7 @@ dependencies {
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonPresentation.impl)
     implementation(projects.pass.commonUi.api)
+    implementation(projects.pass.commonRust.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.searchOptions.api)

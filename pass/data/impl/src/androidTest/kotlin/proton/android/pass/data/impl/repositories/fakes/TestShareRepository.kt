@@ -30,6 +30,7 @@ import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.UpdateShareEvent
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.NewVault
 
 class TestShareRepository : ShareRepository {
@@ -54,6 +55,8 @@ class TestShareRepository : ShareRepository {
     private var deleteSharesResult: Result<Unit> = Result.success(Unit)
 
     private val observeShareByIdFlow = testFlow<Result<Option<Share>>>()
+
+    private val observeSharesByTypeFlow = testFlow<Result<List<Share>>>()
 
     private var getAddressForShareIdResult: Result<UserAddress> =
         Result.failure(IllegalStateException("UserAddress not set"))
@@ -143,6 +146,12 @@ class TestShareRepository : ShareRepository {
 
     override fun observeById(userId: UserId, shareId: ShareId): Flow<Option<Share>> =
         observeShareByIdFlow.map { it.getOrThrow() }
+
+    override fun observeSharesByType(
+        userId: UserId,
+        shareType: ShareType,
+        isActive: Boolean?
+    ): Flow<List<Share>> = observeSharesByTypeFlow.map { it.getOrThrow() }
 
     override suspend fun applyUpdateShareEvent(
         userId: UserId,

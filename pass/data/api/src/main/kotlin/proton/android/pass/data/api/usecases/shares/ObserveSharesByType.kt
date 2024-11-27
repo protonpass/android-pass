@@ -19,11 +19,16 @@
 package proton.android.pass.data.api.usecases.shares
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareType
 
 interface ObserveSharesByType {
 
-    operator fun invoke(shareType: ShareType, isActive: Boolean? = null): Flow<List<Share>>
+    operator fun invoke(
+        shareType: ShareType,
+        userId: UserId? = null,
+        isActive: Boolean? = null
+    ): Flow<List<Share>>
 
 }

@@ -19,6 +19,8 @@
 package proton.android.pass.features.settings
 
 import android.content.Context
+import android.net.Uri
+import androidx.core.net.toFile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,28 +29,26 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.commonui.api.FileHandler
+import proton.android.pass.log.api.LogFileUri
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.log.api.ShareLogs
-import java.io.File
+import proton.android.pass.log.api.ShareLogsConstants
 import java.io.FileNotFoundException
 import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class LogViewViewModel @Inject constructor(
-    private val shareLogs: ShareLogs
+    @LogFileUri private val logFileUri: Uri,
+    private val fileHandler: FileHandler
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<String> = MutableStateFlow("")
     val state: StateFlow<String> = _state
 
-    fun loadLogFile(context: Context) = viewModelScope.launch(Dispatchers.IO) {
+    fun loadLogFile() = viewModelScope.launch(Dispatchers.IO) {
         try {
-            val cacheDir = File(context.cacheDir, "logs")
-            if (!cacheDir.exists()) {
-                cacheDir.mkdirs()
-            }
-            val cacheFile = File(cacheDir, "pass.log")
+            val cacheFile = logFileUri.toFile()
             if (cacheFile.exists()) {
                 cacheFile.bufferedReader().use { br ->
                     _state.update {
@@ -67,10 +67,14 @@ class LogViewViewModel @Inject constructor(
     }
 
     fun startShareIntent(context: Context) = viewModelScope.launch {
-        val intent = shareLogs.createIntent()
-        if (intent != null) {
-            context.startActivity(intent)
-        }
+        fileHandler.shareFileWithEmail(
+            context = context,
+            file = logFileUri.toFile(),
+            mimeType = "text/plain",
+            chooserTitle = ShareLogsConstants.CHOOSER_TITLE,
+            email = ShareLogsConstants.EMAIL,
+            subject = ShareLogsConstants.SUBJECT
+        )
     }
 
     companion object {

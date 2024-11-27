@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.collections)
 
+    implementation(projects.pass.appConfig.api)
     implementation(projects.pass.clipboard.api)
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.crypto.api)

@@ -70,7 +70,6 @@ open class FetchShareItemsWorker @AssistedInject constructor(
                 shareId = shareId,
                 onProgress = {}
             ).let { itemRevisions ->
-                println("JIBIRI: itemRevisions: $itemRevisions")
                 itemRepository.setShareItems(
                     userId = userId,
                     items = mapOf(shareId to itemRevisions),

@@ -21,8 +21,6 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import proton.android.pass.common.api.FlowUtils.oneShot
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -37,10 +35,6 @@ import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.canCreate
-import proton.android.pass.domain.canDelete
-import proton.android.pass.domain.canTrash
-import proton.android.pass.domain.canUpdate
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -58,30 +52,29 @@ class GetItemActionsImpl @Inject constructor(
         oneShot { getItemById(shareId, itemId) },
         observeUserPlan(),
         observeAllShares()
-    ) { shareOption, item, userPlan, shares ->
-        when (shareOption) {
-            None -> throw IllegalStateException("Share not found")
-            is Some -> shareOption.value.let { share ->
-                val isItemTrashed = item.state == ItemState.Trashed.value
+    ) { share, item, userPlan, shares ->
+        val isItemTrashed = item.state == ItemState.Trashed.value
 
-                ItemActions(
-                    canShare = canShare(isItemTrashed, share),
-                    canEdit = canEdit(isItemTrashed, share, userPlan),
-                    canMoveToOtherVault = canMigrate(isItemTrashed, share, shares),
-                    canMoveToTrash = !isItemTrashed && share.permission.canTrash(),
-                    canDelete = isItemTrashed && share.permission.canDelete(),
-                    canRestoreFromTrash = false
-                )
-            }
-        }
+        ItemActions(
+            canShare = canShare(isItemTrashed, share),
+            canEdit = canEdit(isItemTrashed, share, userPlan),
+            canMoveToOtherVault = canMigrate(isItemTrashed, share, shares),
+            canMoveToTrash = !isItemTrashed && share.canBeTrashed,
+            canDelete = isItemTrashed && share.canBeDeleted,
+            canRestoreFromTrash = isItemTrashed
+        )
     }.first()
 
-    private suspend fun canShare(isItemTrashed: Boolean, share: Share) = if (isItemTrashed) {
-        CanShareVaultStatus.CannotShare(
-            reason = CanShareVaultStatus.CannotShareReason.ItemInTrash
-        )
-    } else {
-        canShareVault(share.id)
+    private suspend fun canShare(isItemTrashed: Boolean, share: Share) = when {
+        isItemTrashed -> {
+            CanShareVaultStatus.CannotShare(
+                reason = CanShareVaultStatus.CannotShareReason.ItemInTrash
+            )
+        }
+
+        else -> {
+            canShareVault(share.id)
+        }
     }
 
     private fun canEdit(
@@ -95,7 +88,7 @@ class GetItemActionsImpl @Inject constructor(
             )
         }
 
-        share.permission.canUpdate() -> {
+        share.canBeUpdated -> {
             ItemActions.CanEditActionState.Enabled
         }
 
@@ -123,7 +116,7 @@ class GetItemActionsImpl @Inject constructor(
             )
         }
 
-        shares.none { it.permission.canCreate() && it.id != share.id } -> {
+        shares.none { it.canBeCreated && it.id != share.id } -> {
             ItemActions.CanMoveToOtherVaultState.Disabled(
                 reason = ItemActions.CanMoveToOtherVaultState.CanMoveToOtherVaultDisabledReason.NoVaultToMoveToAvailable
             )
@@ -133,7 +126,7 @@ class GetItemActionsImpl @Inject constructor(
             ItemActions.CanMoveToOtherVaultState.Enabled
         }
 
-        share.permission.canDelete() -> {
+        share.canBeDeleted -> {
             ItemActions.CanMoveToOtherVaultState.Enabled
         }
 
@@ -143,5 +136,4 @@ class GetItemActionsImpl @Inject constructor(
             )
         }
     }
-
 }

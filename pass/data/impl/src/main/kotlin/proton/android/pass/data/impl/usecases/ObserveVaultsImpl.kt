@@ -21,11 +21,7 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Some
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.extensions.toVault
-import proton.android.pass.data.api.errors.ShareContentNotAvailableError
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.shares.ObserveSharesByType
 import proton.android.pass.domain.ShareType
@@ -34,8 +30,7 @@ import proton.android.pass.domain.sorted
 import javax.inject.Inject
 
 class ObserveVaultsImpl @Inject constructor(
-    private val observeSharesByType: ObserveSharesByType,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val observeSharesByType: ObserveSharesByType
 ) : ObserveVaults {
 
     override fun invoke(userId: UserId?): Flow<List<Vault>> = observeSharesByType(
@@ -43,19 +38,12 @@ class ObserveVaultsImpl @Inject constructor(
         shareType = ShareType.Vault,
         isActive = true
     ).mapLatest { vaultShares ->
-        encryptionContextProvider.withEncryptionContextSuspendable {
-            vaultShares
-                .map { vaultShare ->
-                    when (
-                        val vaultOption =
-                            vaultShare.toVault(this@withEncryptionContextSuspendable)
-                    ) {
-                        None -> throw ShareContentNotAvailableError()
-                        is Some -> vaultOption.value
-                    }
-                }
-                .sorted()
-        }
+        vaultShares
+            .mapNotNull { vaultShare ->
+                vaultShare.toVault().value()
+            }
+            .sorted()
+
     }
 
 }

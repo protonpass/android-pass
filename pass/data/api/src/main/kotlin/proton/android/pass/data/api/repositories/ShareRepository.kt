@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserAddress
-import proton.android.pass.common.api.Option
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
@@ -40,7 +39,7 @@ interface ShareRepository {
     fun observeVaultCount(userId: UserId): Flow<Int>
 
     suspend fun getById(userId: UserId, shareId: ShareId): Share
-    fun observeById(userId: UserId, shareId: ShareId): Flow<Option<Share>>
+    fun observeById(userId: UserId, shareId: ShareId): Flow<Share>
 
     fun observeSharesByType(
         userId: UserId,

@@ -47,63 +47,68 @@ import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toSmallResource
-import proton.android.pass.domain.Vault
+import proton.android.pass.domain.Share
 
 @Composable
 internal fun PassItemDetailSubtitle(
     modifier: Modifier = Modifier,
-    vault: Vault,
+    share: Share,
     onClick: () -> Unit
 ) {
-    val vaultText = remember(vault.shared, vault.members) {
-        if (vault.shared) {
-            buildAnnotatedString {
-                append(vault.name)
-                append(" ${SpecialCharacters.DOT_SEPARATOR} ")
-                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append(vault.members.toString())
+    when (share) {
+        is Share.Item -> Unit
+        is Share.Vault -> {
+            val vaultText = remember(share.shared, share.memberCount) {
+                if (share.shared) {
+                    buildAnnotatedString {
+                        append(share.name)
+                        append(" ${SpecialCharacters.DOT_SEPARATOR} ")
+                        withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                            append(share.memberCount.toString())
+                        }
+                    }
+                } else {
+                    AnnotatedString(share.name)
                 }
             }
-        } else {
-            AnnotatedString(vault.name)
-        }
-    }
-    Row(
-        modifier = modifier
-            .border(
-                width = 1.dp,
-                color = vault.color.toColor(isBackground = true),
-                shape = RoundedCornerShape(24.dp)
-            )
-            .applyIf(
-                condition = vault.shared,
-                ifTrue = {
-                    background(
-                        color = vault.color.toColor(isBackground = true),
+            Row(
+                modifier = modifier
+                    .border(
+                        width = 1.dp,
+                        color = share.color.toColor(isBackground = true),
                         shape = RoundedCornerShape(24.dp)
                     )
-                        .clip(RoundedCornerShape(24.dp))
-                        .clickable(onClick = onClick)
-                }
-            )
-            .padding(
-                horizontal = Spacing.small,
-                vertical = Spacing.extraSmall
-            ),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
-    ) {
-        Icon(
-            modifier = Modifier.height(12.dp),
-            painter = painterResource(vault.icon.toSmallResource()),
-            contentDescription = null,
-            tint = vault.color.toColor()
-        )
+                    .applyIf(
+                        condition = share.shared,
+                        ifTrue = {
+                            background(
+                                color = share.color.toColor(isBackground = true),
+                                shape = RoundedCornerShape(24.dp)
+                            )
+                                .clip(RoundedCornerShape(24.dp))
+                                .clickable(onClick = onClick)
+                        }
+                    )
+                    .padding(
+                        horizontal = Spacing.small,
+                        vertical = Spacing.extraSmall
+                    ),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
+            ) {
+                Icon(
+                    modifier = Modifier.height(12.dp),
+                    painter = painterResource(share.icon.toSmallResource()),
+                    contentDescription = null,
+                    tint = share.color.toColor()
+                )
 
-        Text(
-            text = vaultText,
-            style = PassTheme.typography.body3Norm(),
-            color = vault.color.toColor()
-        )
+                Text(
+                    text = vaultText,
+                    style = PassTheme.typography.body3Norm(),
+                    color = share.color.toColor()
+                )
+            }
+        }
     }
 }

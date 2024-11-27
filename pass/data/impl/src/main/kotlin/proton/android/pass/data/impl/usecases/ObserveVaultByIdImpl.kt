@@ -19,46 +19,30 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
-import me.proton.core.accountmanager.domain.AccountManager
+import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.some
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.extensions.toVault
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaultById
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class ObserveVaultByIdImpl @Inject constructor(
-    private val shareRepository: ShareRepository,
-    private val accountManager: AccountManager,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val observeCurrentUser: ObserveCurrentUser,
+    private val shareRepository: ShareRepository
 ) : ObserveVaultById {
-    override fun invoke(userId: UserId?, shareId: ShareId): Flow<Option<Vault>> {
-        val userIdFlow = if (userId == null) {
-            accountManager.getPrimaryUserId().filterNotNull()
-        } else {
-            flowOf(userId)
+
+    override fun invoke(userId: UserId?, shareId: ShareId): Flow<Option<Vault>> = if (userId == null) {
+        observeCurrentUser().flatMapLatest { user ->
+            shareRepository.observeById(user.userId, shareId)
         }
-        return userIdFlow.flatMapLatest { id ->
-            shareRepository.observeById(id, shareId)
-        }.map { share ->
-            share.flatMap {
-                when (val asVault = it.toVault(encryptionContextProvider)) {
-                    None -> None
-                    is Some -> asVault.value.some()
-                }
-            }
-        }
-    }
+    } else {
+        shareRepository.observeById(userId, shareId)
+    }.mapLatest(Share::toVault)
+
 }

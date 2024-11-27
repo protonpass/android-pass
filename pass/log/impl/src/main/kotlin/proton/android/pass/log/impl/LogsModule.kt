@@ -21,23 +21,13 @@ package proton.android.pass.log.impl
 import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.log.api.LogFileUri
-import proton.android.pass.log.api.ShareLogs
 import java.io.File
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class LogsModule {
-
-    @Binds
-    abstract fun bindShareLogs(impl: ShareLogsImpl): ShareLogs
-}
 
 @Module
 @InstallIn(SingletonComponent::class)

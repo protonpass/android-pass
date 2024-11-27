@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,18 +18,18 @@
 
 package proton.android.pass.log.fakes
 
-import dagger.Binds
+import android.net.Uri
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.log.api.ShareLogs
+import proton.android.pass.log.api.LogFileUri
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class FakesLogModule {
+object FakesLogModule {
 
-    @Binds
-    abstract fun bindShareLogs(impl: TestShareLogs): ShareLogs
+    @LogFileUri
+    @Provides
+    fun provideLogFile(): Uri = Uri.EMPTY
 }
-
-

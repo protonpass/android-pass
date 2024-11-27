@@ -22,6 +22,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 
 @Module
@@ -30,5 +31,8 @@ abstract class FakesCommonUiModule {
 
     @Binds
     abstract fun bindSavedStateHandleProvider(impl: TestSavedStateHandleProvider): SavedStateHandleProvider
+
+    @Binds
+    abstract fun bindFileHandler(impl: FakeFileHandler): FileHandler
 
 }

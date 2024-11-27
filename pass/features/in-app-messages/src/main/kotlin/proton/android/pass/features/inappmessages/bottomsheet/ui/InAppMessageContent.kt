@@ -20,7 +20,9 @@ package proton.android.pass.features.inappmessages.bottomsheet.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -28,13 +30,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
+import proton.android.pass.commonui.api.Gradients
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.domain.inappmessages.InAppMessage
 import proton.android.pass.domain.inappmessages.InAppMessageCTA
 import proton.android.pass.domain.inappmessages.InAppMessageCTAType
@@ -53,27 +58,38 @@ fun InAppMessageContent(
     onClose: () -> Unit
 ) {
     Column(
-        modifier = modifier.background(PassTheme.colors.bottomSheetBackground),
-        verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall),
+        modifier = modifier
+            .background(PassTheme.colors.bottomSheetBackground),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        InAppMessageHeader(
-            imageUrl = inAppMessage.imageUrl.value(),
-            onClose = onClose
-        )
-        InAppMessageBody(
-            modifier = Modifier.padding(Spacing.medium),
-            title = inAppMessage.title,
-            message = inAppMessage.message.value()
-        )
-        val cta = inAppMessage.cta
-        if (cta is Some) {
-            InAppMessageFooter(
-                modifier = Modifier.padding(Spacing.medium),
-                cta = cta.value,
-                onInternalCTAClick = onInternalCTAClick,
-                onExternalCTAClick = onExternalCTAClick
+        Box(
+            modifier = Modifier
+                .applyIf(
+                    condition = inAppMessage.imageUrl is Some,
+                    ifTrue = { heightIn(min = 100.dp, max = 200.dp) }
+                )
+                .background(Gradients.VerticalApricot)
+        ) {
+            InAppMessageHeader(
+                imageUrl = inAppMessage.imageUrl.value(),
+                onClose = onClose
             )
+        }
+        Column(verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)) {
+            InAppMessageBody(
+                modifier = Modifier.padding(Spacing.medium),
+                title = inAppMessage.title,
+                message = inAppMessage.message.value()
+            )
+            val cta = inAppMessage.cta
+            if (cta is Some) {
+                InAppMessageFooter(
+                    modifier = Modifier.padding(Spacing.medium),
+                    cta = cta.value,
+                    onInternalCTAClick = onInternalCTAClick,
+                    onExternalCTAClick = onExternalCTAClick
+                )
+            }
         }
     }
 }

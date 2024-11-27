@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,14 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.log.fakes
+package proton.android.pass.log.api
 
-import android.content.Intent
-import proton.android.pass.log.api.ShareLogs
-import javax.inject.Inject
-import javax.inject.Singleton
-
-@Singleton
-class TestShareLogs @Inject constructor() : ShareLogs {
-    override fun createIntent(): Intent? = null
+object ShareLogsConstants {
+    const val CHOOSER_TITLE: String = "Share log"
+    const val EMAIL: String = "pass@protonme.zendesk.com"
+    const val SUBJECT: String = "Proton Pass: Share Logs"
 }

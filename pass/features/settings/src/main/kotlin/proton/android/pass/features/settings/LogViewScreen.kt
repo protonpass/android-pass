@@ -35,7 +35,7 @@ fun LogViewScreen(
 ) {
     val context = LocalContext.current
     LaunchedEffect(Unit) {
-        viewModel.loadLogFile(context)
+        viewModel.loadLogFile()
     }
     val state by viewModel.state.collectAsStateWithLifecycle()
     LogViewContent(

@@ -26,6 +26,7 @@ import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareType
 
 class TestLocalShareDataSource : LocalShareDataSource {
 
@@ -44,6 +45,8 @@ class TestLocalShareDataSource : LocalShareDataSource {
     private val getAllSharesForAddressFlow = testFlow<List<ShareEntity>>()
     private val getShareCountFlow = testFlow<Result<Int>>()
     private val observeByIdFlow = testFlow<Result<ShareEntity?>>()
+
+    private val observeSharesByTypeFlow = testFlow<Result<List<ShareEntity>>>()
 
     private var deleteMemory: MutableList<Set<ShareId>> = mutableListOf()
     private var upsertMemory: MutableList<List<ShareEntity>> = mutableListOf()
@@ -117,4 +120,11 @@ class TestLocalShareDataSource : LocalShareDataSource {
 
     override fun observeById(userId: UserId, shareId: ShareId): Flow<ShareEntity?> =
         observeByIdFlow.map { it.getOrThrow() }
+
+    override fun observeByType(
+        userId: UserId,
+        shareType: ShareType,
+        isActive: Boolean?
+    ): Flow<List<ShareEntity>> = observeSharesByTypeFlow.map { it.getOrThrow() }
+
 }

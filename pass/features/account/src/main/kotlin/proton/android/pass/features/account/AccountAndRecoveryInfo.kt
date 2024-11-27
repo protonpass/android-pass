@@ -152,6 +152,7 @@ fun AccountInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
         Surface {
             AccountAndRecoveryInfo(
                 state = AccountUiState(
+                    userId = UserId(""),
                     email = "myemail@proton.me",
                     recoveryEmail = "myrecoveryemail@proton.me",
                     recoveryState = UserRecovery.State.Grace,
@@ -162,8 +163,8 @@ fun AccountInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                     showSecurityKeys = true,
                     showUpgradeButton = true,
                     showSubscriptionButton = true,
+                    showExtraPasswordButton = false,
                     isExtraPasswordEnabled = false,
-                    userId = UserId(""),
                     registeredSecurityKeys = emptyList()
                 ),
                 onEvent = {}

@@ -53,18 +53,19 @@ fun SubscriptionInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDar
         Surface {
             SubscriptionInfo(
                 state = AccountUiState(
+                    userId = null,
                     email = "myemail@proton.me",
-                    plan = PlanSection.Data("Free"),
                     recoveryEmail = "myrecoveryemail@proton.me",
                     recoveryState = null,
+                    plan = PlanSection.Data("Free"),
                     isLoadingState = IsLoadingState.NotLoading,
                     showChangePassword = false,
                     showRecoveryEmail = false,
                     showSecurityKeys = false,
                     showUpgradeButton = true,
                     showSubscriptionButton = true,
+                    showExtraPasswordButton = false,
                     isExtraPasswordEnabled = false,
-                    userId = null,
                     registeredSecurityKeys = emptyList()
                 )
             )

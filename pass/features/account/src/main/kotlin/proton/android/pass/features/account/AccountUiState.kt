@@ -56,6 +56,7 @@ data class AccountUiState(
     val showSecurityKeys: Boolean,
     val showUpgradeButton: Boolean,
     val showSubscriptionButton: Boolean,
+    val showExtraPasswordButton: Boolean,
     val isExtraPasswordEnabled: Boolean,
     val registeredSecurityKeys: List<Fido2RegisteredKey>?
 ) {
@@ -72,6 +73,7 @@ data class AccountUiState(
             showSecurityKeys = false,
             showUpgradeButton = false,
             showSubscriptionButton = false,
+            showExtraPasswordButton = false,
             isExtraPasswordEnabled = false,
             registeredSecurityKeys = emptyList()
         )

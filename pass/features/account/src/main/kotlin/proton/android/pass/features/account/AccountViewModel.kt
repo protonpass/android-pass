@@ -111,6 +111,7 @@ class AccountViewModel @Inject constructor(
         when (userResult) {
             LoadingResult.Loading -> AccountUiState.Initial
             is LoadingResult.Error -> AccountUiState(
+                userId = null,
                 email = null,
                 recoveryEmail = currentUserSettingsSuccess?.email?.value,
                 recoveryState = null,
@@ -121,8 +122,8 @@ class AccountViewModel @Inject constructor(
                 showSecurityKeys = false,
                 showUpgradeButton = isUpgradeAvailable,
                 showSubscriptionButton = isSubscriptionAvailable,
+                showExtraPasswordButton = false,
                 isExtraPasswordEnabled = hasExtraPassword.getOrNull() ?: false,
-                userId = null,
                 registeredSecurityKeys = emptyList()
             )
 
@@ -138,6 +139,7 @@ class AccountViewModel @Inject constructor(
                     showSecurityKeys = !userResult.data.isSso() && isFido2Enabled(userResult.data.userId),
                     showUpgradeButton = !userResult.data.isSso() && isUpgradeAvailable,
                     showSubscriptionButton = isSubscriptionAvailable,
+                    showExtraPasswordButton = !userResult.data.isSso(),
                     isExtraPasswordEnabled = hasExtraPassword.getOrNull() ?: false,
                     userId = userResult.data.userId,
                     registeredSecurityKeys = securityKeys.firstOrNull() ?: emptyList()

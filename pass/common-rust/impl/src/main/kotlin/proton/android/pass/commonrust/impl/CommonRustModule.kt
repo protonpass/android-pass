@@ -29,6 +29,7 @@ import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.commonrust.api.DomainManager
 import proton.android.pass.commonrust.api.EmailValidator
+import proton.android.pass.commonrust.api.FileTypeDetector
 import proton.android.pass.commonrust.api.NewUserInviteSignatureBodyCreator
 import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonrust.api.passwords.PasswordGenerator
@@ -62,10 +63,13 @@ abstract class CommonRustModule {
     abstract fun bindPasswordScorer(impl: PasswordScorerImpl): PasswordScorer
 
     @[Binds Singleton]
-    abstract fun bindPasswordStrengthCalculator(calculator: RustPasswordStrengthCalculator): PasswordStrengthCalculator
+    abstract fun bindPasswordStrengthCalculator(impl: RustPasswordStrengthCalculator): PasswordStrengthCalculator
 
     @[Binds Singleton]
-    abstract fun bindDomainManager(calculator: DomainManagerImpl): DomainManager
+    abstract fun bindDomainManager(impl: DomainManagerImpl): DomainManager
+
+    @[Binds Singleton]
+    abstract fun bindFileTypeDetector(impl: FileTypeDetectorImpl): FileTypeDetector
 
     companion object {
 

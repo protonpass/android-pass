@@ -272,8 +272,7 @@ class LoginDetailScreenTest {
         note: String = "a note",
         urls: List<String> = emptyList(),
         primaryTotp: String = "",
-        vaultName: String = "vault",
-        hasManyVaults: Boolean = false
+        vaultName: String = "vault"
     ): String {
         val item = TestObserveItems.createItem(
             shareId = ShareId(SHARE_ID),
@@ -297,14 +296,15 @@ class LoginDetailScreenTest {
 
         val withVault = ItemWithVaultInfo(
             item = item,
-            vault = Vault(
-                userId = UserId(""),
-                shareId = ShareId(SHARE_ID),
-                vaultId = VaultId("vault-id"),
-                name = vaultName,
-                createTime = Date()
-            ),
-            hasMoreThanOneVault = hasManyVaults
+            vaults = listOf(
+                Vault(
+                    userId = UserId(""),
+                    shareId = ShareId(SHARE_ID),
+                    vaultId = VaultId("vault-id"),
+                    name = vaultName,
+                    createTime = Date()
+                )
+            )
         )
         getItemByIdWithVault.emitValue(Result.success(withVault))
         observeItemById.emitValue(Result.success(item))

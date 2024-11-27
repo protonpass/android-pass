@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 
@@ -32,9 +33,7 @@ abstract class CommonUiModule {
 
     @Binds
     abstract fun bindSavedStateHandleProvider(impl: SavedStateHandleProviderImpl): SavedStateHandleProvider
-
 }
-
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -42,4 +41,7 @@ abstract class SingletonCommonUiModule {
 
     @Binds
     abstract fun bindAppLifecycleProvider(impl: PassAppLifecycleObserverImpl): PassAppLifecycleProvider
+
+    @Binds
+    abstract fun bindFileHandler(impl: FileHandlerImpl): FileHandler
 }

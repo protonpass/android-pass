@@ -19,6 +19,7 @@
 package proton.android.pass.composecomponents.impl.attachments
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import kotlinx.datetime.Instant
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
@@ -64,12 +65,14 @@ class AttachmentSectionPreviewProvider : PreviewParameterProvider<AttachmentSect
         }
 
 
+    @Suppress("MagicNumber")
     private fun createFile(
         id: AttachmentId,
         name: String,
         type: AttachmentType,
-        size: String = "1.2 MB"
-    ) = Attachment(id = id, name = name, type = type, size = size)
+        size: Long = 1_572_864L, // 1.5 MB
+        createTime: Instant = Instant.fromEpochSeconds(1_640_000_000L)
+    ) = Attachment(id = id, name = name, type = type, size = size, createTime = createTime)
 
     private fun createAttachmentSectionInput(
         files: List<Attachment>,

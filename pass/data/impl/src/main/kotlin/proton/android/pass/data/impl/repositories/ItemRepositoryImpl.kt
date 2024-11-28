@@ -1497,7 +1497,8 @@ class ItemRepositoryImpl @Inject constructor(
             hasTotp = hasTotp,
             isPinned = itemRevision.isPinned,
             hasPasskeys = output.item.hasPasskeys,
-            flags = itemRevision.flags
+            flags = itemRevision.flags,
+            shareCount = itemRevision.shareCount
         )
     }
 

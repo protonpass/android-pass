@@ -18,10 +18,8 @@
 
 package proton.android.pass.crypto.impl.usecases
 
-import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.common.api.None
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -29,17 +27,8 @@ import proton.android.pass.crypto.api.usecases.EncryptedItemRevision
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.impl.context.TestEncryptionContextProvider
 import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.Share
-import proton.android.pass.domain.ShareColor
-import proton.android.pass.domain.ShareIcon
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.SharePermission
-import proton.android.pass.domain.SharePermissionFlag
-import proton.android.pass.domain.ShareRole
-import proton.android.pass.domain.ShareType
-import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.key.ShareKey
-import java.sql.Date
+import proton.android.pass.test.domain.TestShare
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -57,9 +46,10 @@ class OpenItemImplTest {
 
     @Test
     fun canOpenItem() {
+        val share = TestShare.Vault.create()
         val output = instance.open(
             response = REVISION,
-            share = getShare(),
+            share = share,
             shareKeys = listOf(getShareKey())
         )
         val item = output.item
@@ -77,24 +67,6 @@ class OpenItemImplTest {
         }
     }
 
-    private fun getShare(): Share {
-        return Share(
-            id = ShareId(SHARE_ID),
-            userId = UserId(""),
-            shareType = ShareType.Vault,
-            targetId = VAULT_ID,
-            permission = SharePermission(SharePermissionFlag.Admin.value),
-            vaultId = VaultId(VAULT_ID),
-            content = None,
-            expirationTime = null,
-            createTime = Date(1664195804),
-            color = ShareColor.Color1,
-            icon = ShareIcon.Icon1,
-            shareRole = ShareRole.Admin,
-            isOwner = true
-        )
-    }
-
     private fun getShareKey(): ShareKey {
         val decodedShareKey = Base64.decodeBase64(shareKeyBase64)
         return ShareKey(
@@ -107,21 +79,14 @@ class OpenItemImplTest {
         )
     }
 
-
     companion object {
-        const val VAULT_ID =
-            "pIfdC0UNjR4rrdaTtEE_I92fjMgkXKMhujmz-VlvQUh5bG2V2vKdqnpLJXr_wMiC4HlNziQpo61_NCOqJKEsug=="
         const val KEY_ROTATION = 1L
-        const val SHARE_ID =
-            "jUjNWfdzq7X-CMrR3LyX2y7o_D6y4FIGmsuTkfdNOI4QtPyaed-kVyFcOw9XLiRpwRDKnyKtHxhrIBW7nPVZdQ=="
         const val ITEM_TITLE = "12BZDfW4zF"
         const val ITEM_NOTE = "DQl59cDg4o"
-        const val ITEM_UUID = "08s4oG42nq"
         const val ITEM_LOGIN_USERNAME = "4GyGLG7YRK"
         const val ITEM_LOGIN_PASSWORD = "RFiCUSS2Sh"
 
         const val shareKeyBase64 = "L+J7Yyhhgvyd2+0cJidXOontWJzUa9Akz5w2flHF7W8="
-
 
         @Suppress("MaxLineLength", "UnderscoresInNumericLiterals")
         val REVISION = EncryptedItemRevision(
@@ -142,5 +107,3 @@ class OpenItemImplTest {
         )
     }
 }
-
-

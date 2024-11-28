@@ -122,30 +122,34 @@ fun InAppMessageBanner(
             horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            when (val url = inAppMessage.imageUrl) {
+            when (val imageUrl = inAppMessage.imageUrl) {
                 None -> {}
-                is Some -> AsyncImage(
-                    modifier = Modifier
-                        .height(48.dp)
-                        .aspectRatio(1f, true),
-                    contentScale = ContentScale.Fit,
-                    model = url.value,
-                    placeholder = if (LocalInspectionMode.current) {
-                        ColorPainter(Color.Red)
-                    } else {
-                        null
-                    },
-                    contentDescription = null
-                )
+                is Some -> if (imageUrl.value.isNotBlank()) {
+                    AsyncImage(
+                        modifier = Modifier
+                            .height(48.dp)
+                            .aspectRatio(1f, true),
+                        contentScale = ContentScale.Fit,
+                        model = inAppMessage.imageUrl.value(),
+                        placeholder = if (LocalInspectionMode.current) {
+                            ColorPainter(Color.Red)
+                        } else {
+                            null
+                        },
+                        contentDescription = null
+                    )
+                }
             }
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(Spacing.small)
             ) {
                 Text.CaptionMedium(inAppMessage.title)
-                when (val cta = inAppMessage.cta) {
+                when (val message = inAppMessage.message) {
                     None -> {}
-                    is Some -> Text.CaptionRegular(cta.value.text)
+                    is Some -> if (message.value.isNotBlank()) {
+                        Text.CaptionRegular(message.value)
+                    }
                 }
             }
             Icon.Default(

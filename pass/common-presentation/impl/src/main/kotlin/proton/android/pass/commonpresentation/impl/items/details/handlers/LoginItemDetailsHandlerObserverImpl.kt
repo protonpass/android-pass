@@ -79,6 +79,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             itemRevision = item.revision,
             itemState = ItemState.from(item.state),
             itemDiffs = ItemDiffs.Login(),
+            itemShareCount = item.shareCount,
             canLoadExternalImages = useFaviconsPreference.value(),
             passwordStrength = encryptionContextProvider.withEncryptionContext {
                 decrypt(loginItemContents.password.encrypted)

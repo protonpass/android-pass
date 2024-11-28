@@ -58,6 +58,7 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
                 itemRevision = item.revision,
                 itemState = ItemState.from(item.state),
                 itemDiffs = ItemDiffs.Note(),
+                itemShareCount = item.shareCount,
                 attachments = attachments
             )
         }

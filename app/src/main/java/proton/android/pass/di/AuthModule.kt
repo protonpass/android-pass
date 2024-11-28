@@ -47,7 +47,6 @@ import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.DefaultHelpOptionHandler
 import me.proton.core.auth.presentation.HelpOptionHandler
-import me.proton.core.auth.presentation.ui.LoginActivity
 import me.proton.core.user.domain.UserManager
 import proton.android.pass.PassActivityOrchestrator
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
@@ -79,10 +78,6 @@ object AuthModule {
     @Provides
     @Singleton
     fun providePassActivityOrchestrator(): PassActivityOrchestrator = PassActivityOrchestrator()
-
-    @Provides
-    @Singleton
-    fun provideLoginBlockingHelp(): LoginActivity.BlockingHelp? = null
 
     @Provides
     @Singleton

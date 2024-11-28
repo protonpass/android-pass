@@ -54,7 +54,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState.Ready
-import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.isDisabled
 import me.proton.core.account.domain.entity.isReady
 import me.proton.core.account.domain.entity.isStepNeeded
@@ -69,7 +68,6 @@ import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
 import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.onAddAccountResult
-import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.plan.presentation.onUpgradeResult
@@ -86,8 +84,6 @@ import javax.inject.Inject
 @HiltViewModel
 @Suppress("LongParameterList")
 class LauncherViewModel @Inject constructor(
-    private val product: Product,
-    private val requiredAccountType: AccountType,
     private val accountManager: AccountManager,
     private val authOrchestrator: AuthOrchestrator,
     private val plansOrchestrator: PlansOrchestrator,
@@ -152,17 +148,13 @@ class LauncherViewModel @Inject constructor(
     }
 
     internal fun addAccount() = viewModelScope.launch {
-        authOrchestrator.startAddAccountWorkflow(
-            requiredAccountType = requiredAccountType,
-            creatableAccountType = requiredAccountType,
-            product = product
-        )
+        authOrchestrator.startAddAccountWorkflow()
     }
 
-    internal fun signIn(userId: UserId) = viewModelScope.launch {
-        val account = getAccountOrNull(userId)
+    internal fun signIn(userId: UserId? = null) = viewModelScope.launch {
+        val account = userId?.let { getAccountOrNull(it) }
         PassLogger.i(TAG, "Signing in: $userId")
-        authOrchestrator.startLoginWorkflow(requiredAccountType, username = account?.username)
+        authOrchestrator.startLoginWorkflow(account?.username)
     }
 
     internal fun disable(userId: UserId) = viewModelScope.launch {

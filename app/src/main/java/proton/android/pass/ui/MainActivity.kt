@@ -135,7 +135,7 @@ class MainActivity : FragmentActivity() {
                             is AppNavigation.Restart -> restartApp()
                             is AppNavigation.PasswordManagement -> launcherViewModel.passwordManagement()
                             is AppNavigation.RecoveryEmail -> launcherViewModel.recoveryEmail()
-                            is AppNavigation.AddAccount -> launcherViewModel.addAccount()
+                            is AppNavigation.AddAccount -> launcherViewModel.signIn()
                             is AppNavigation.RemoveAccount -> launcherViewModel.remove(it.userId)
                             is AppNavigation.SwitchAccount -> launcherViewModel.switch(it.userId)
                             is AppNavigation.SecurityKeys -> SecurityKeysActivity.start(this@MainActivity)

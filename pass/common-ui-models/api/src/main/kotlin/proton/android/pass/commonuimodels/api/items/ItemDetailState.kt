@@ -61,7 +61,12 @@ sealed interface ItemDetailState {
 
     val itemDiffs: ItemDiffs
 
+    val itemShareCount: Int
+
     val attachments: List<Attachment>
+
+    val isSharedItem: Boolean
+        get() = itemShareCount > 0
 
     fun update(itemContents: ItemContents, itemDiffs: ItemDiffs = ItemDiffs.None): ItemDetailState
 
@@ -78,6 +83,7 @@ sealed interface ItemDetailState {
         override val itemRevision: Long,
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.Alias,
+        override val itemShareCount: Int,
         override val attachments: List<Attachment>,
         val mailboxes: List<AliasMailbox>
     ) : ItemDetailState {
@@ -116,6 +122,7 @@ sealed interface ItemDetailState {
         override val itemRevision: Long,
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.CreditCard,
+        override val itemShareCount: Int,
         override val attachments: List<Attachment>
     ) : ItemDetailState {
 
@@ -153,6 +160,7 @@ sealed interface ItemDetailState {
         override val itemRevision: Long,
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.Identity,
+        override val itemShareCount: Int,
         override val attachments: List<Attachment>
     ) : ItemDetailState {
 
@@ -190,6 +198,7 @@ sealed interface ItemDetailState {
         override val itemRevision: Long,
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.Login,
+        override val itemShareCount: Int,
         val canLoadExternalImages: Boolean,
         val passwordStrength: PasswordStrength,
         val primaryTotp: Totp?,
@@ -232,6 +241,7 @@ sealed interface ItemDetailState {
         override val itemRevision: Long,
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.Note,
+        override val itemShareCount: Int,
         override val attachments: List<Attachment>
     ) : ItemDetailState {
 
@@ -269,6 +279,7 @@ sealed interface ItemDetailState {
         override val itemRevision: Long,
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.Unknown,
+        override val itemShareCount: Int,
         override val attachments: List<Attachment>
     ) : ItemDetailState {
 

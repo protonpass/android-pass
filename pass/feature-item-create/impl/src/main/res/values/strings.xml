@@ -227,4 +227,11 @@
     <string name="attachment_options_delete">Delete</string>
     <string name="banner_title_attachments">Attachments</string>
     <string name="banner_body_attachments">You can attach files to items for a better organization</string>
+    <string name="attachment_title">Attachments</string>
+    <string name="attachment_no_files">Upload files from your device</string>
+    <string name="attachment_add_file">Attach a file</string>
+    <plurals name="attachment_file_amount">
+        <item quantity="one">%1$s file</item>
+        <item quantity="other">%1$s files</item>
+    </plurals>
 </resources>

@@ -22,7 +22,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.IconButton
@@ -34,33 +33,36 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import proton.android.pass.commonrust.api.FileType
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.domain.attachments.AttachmentType
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun AttachmentRow(
     modifier: Modifier = Modifier,
     filename: String,
-    fileType: FileType,
+    attachmentType: AttachmentType,
     size: String,
     isLoading: Boolean = false,
+    isEnabled: Boolean = true,
     onOptionsClick: () -> Unit,
     onAttachmentClick: () -> Unit
 ) {
     Row(
-        modifier = modifier.applyIf(!isLoading, ifTrue = { clickable(onClick = onAttachmentClick) }),
+        modifier = modifier.applyIf(
+            !isLoading,
+            ifTrue = { clickable(onClick = onAttachmentClick) }
+        ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
         AttachmentImage(
-            modifier = Modifier.padding(start = Spacing.medium),
-            fileType = fileType
+            attachmentType = attachmentType
         )
         Column(
             modifier = Modifier.weight(1f),
@@ -69,11 +71,13 @@ fun AttachmentRow(
             Text.Body1Regular(text = filename, maxLines = 1, overflow = TextOverflow.Ellipsis)
             Text.Body3Weak(size)
         }
-        if (isLoading) {
-            CircularProgressIndicator(modifier = Modifier.size(24.dp))
-        } else {
-            IconButton(onOptionsClick) {
-                Icon.Default(CoreR.drawable.ic_proton_three_dots_vertical)
+        when {
+            isLoading -> CircularProgressIndicator(modifier = Modifier.size(24.dp))
+            isEnabled -> IconButton(onOptionsClick) {
+                Icon.Default(
+                    id = CoreR.drawable.ic_proton_three_dots_vertical,
+                    tint = PassTheme.colors.textWeak
+                )
             }
         }
     }
@@ -86,7 +90,7 @@ fun AttachmentRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: 
         Surface {
             AttachmentRow(
                 filename = "image.jpg",
-                fileType = FileType.RasterImage,
+                attachmentType = AttachmentType.RasterImage,
                 size = "1.2 MB",
                 onAttachmentClick = {},
                 onOptionsClick = {}

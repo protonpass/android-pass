@@ -226,7 +226,7 @@ object Text {
     fun Body3Weak(
         text: String,
         modifier: Modifier = Modifier,
-        color: Color = ProtonTheme.colors.textNorm,
+        color: Color = ProtonTheme.colors.textWeak,
         textAlign: TextAlign = TextAlign.Start
     ) {
         Text(

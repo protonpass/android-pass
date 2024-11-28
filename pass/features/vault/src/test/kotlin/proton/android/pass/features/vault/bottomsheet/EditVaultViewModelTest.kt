@@ -94,8 +94,9 @@ class EditVaultViewModelTest {
     fun `onEditClick sends the proper values`() = runTest {
         // Given
         val vault = TestVault.create(shareId = ShareId(SHARE_ID))
+        val vaultShare = TestShare.Vault.create(id = vault.shareId.id)
         getVaultById.emitValue(vault)
-        updateVault.setResult(Result.success(TestShare.create().copy(id = vault.shareId)))
+        updateVault.setResult(Result.success(vaultShare))
 
         // When
         instance.onStart()

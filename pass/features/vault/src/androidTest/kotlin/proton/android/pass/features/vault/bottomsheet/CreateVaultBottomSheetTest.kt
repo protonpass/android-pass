@@ -79,7 +79,7 @@ class CreateVaultBottomSheetTest {
 
     @Test
     fun canCreateVault() {
-        createVault.setResult(Result.success(TestShare.create()))
+        createVault.setResult(Result.success(TestShare.Vault.create()))
         val vaultName = "Some vault with trailing space "
 
         val checker = CallChecker<Unit>()
@@ -116,12 +116,12 @@ class CreateVaultBottomSheetTest {
 
     @Test
     fun canCreateVaultWhenModeIsSetToCreateAndShare() {
-        val newVault = TestShare.create()
+        val newVault = TestShare.Vault.create()
         createVault.setResult(Result.success(newVault))
         migrateItem.setResult(Result.success(MigrateItemsResult.AllMigrated(listOf(TestItem.create()))))
         savedStateHandleProvider.get().apply {
             set(CreateVaultNextActionNavArgId.key, CreateVaultNextAction.NEXT_ACTION_SHARE)
-            set(CommonOptionalNavArgId.ShareId.key, TestShare.create().id.id)
+            set(CommonOptionalNavArgId.ShareId.key, TestShare.Vault.create().id.id)
             set(CommonOptionalNavArgId.ItemId.key, TestItem.create().id.id)
         }
 

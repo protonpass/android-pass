@@ -24,7 +24,6 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.common.api.FlowUtils.testFlow
-import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.UpdateShareEvent
@@ -53,7 +52,7 @@ class TestShareRepository : ShareRepository {
 
     private var deleteSharesResult: Result<Unit> = Result.success(Unit)
 
-    private val observeShareByIdFlow = testFlow<Result<Option<Share>>>()
+    private val observeShareByIdFlow = testFlow<Result<Share>>()
 
     private val observeSharesByTypeFlow = testFlow<Result<List<Share>>>()
 
@@ -138,7 +137,7 @@ class TestShareRepository : ShareRepository {
 
     }
 
-    override fun observeById(userId: UserId, shareId: ShareId): Flow<Option<Share>> =
+    override fun observeById(userId: UserId, shareId: ShareId): Flow<Share> =
         observeShareByIdFlow.map { it.getOrThrow() }
 
     override fun observeSharesByType(

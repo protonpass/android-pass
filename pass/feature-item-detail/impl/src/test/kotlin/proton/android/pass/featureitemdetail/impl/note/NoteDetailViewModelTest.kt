@@ -55,7 +55,6 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.ItemDelete
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -109,7 +108,6 @@ class NoteDetailViewModelTest {
             bulkMoveToVaultRepository = TestBulkMoveToVaultRepository(),
             pinItem = FakePinItem(),
             unpinItem = FakeUnpinItem(),
-            featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
             getUserPlan = TestGetUserPlan()
         )
     }
@@ -250,7 +248,7 @@ class NoteDetailViewModelTest {
 
     @Test
     fun `does not display vault if there is only one vault`() = runTest {
-        initialSetup(hasMoreThanOneVault = false)
+        initialSetup()
         instance.state.test {
             val value = awaitItem() as NoteDetailUiState.Success
             assertThat(value.vault).isNull()
@@ -292,16 +290,11 @@ class NoteDetailViewModelTest {
         assertThat(clipboardManager.getContents()).isEqualTo(noteContents)
     }
 
-    private fun initialSetup(
-        note: String = "note",
-        hasMoreThanOneVault: Boolean = true,
-        shareRole: ShareRole = ShareRole.Admin
-    ): Item {
+    private fun initialSetup(note: String = "note", shareRole: ShareRole = ShareRole.Admin): Item {
         val item = createEncryptedItem(note = note)
         val value = ItemWithVaultInfo(
             item = item,
-            vault = TEST_VAULT.copy(role = shareRole),
-            hasMoreThanOneVault = hasMoreThanOneVault
+            vaults = listOf(TEST_VAULT.copy(role = shareRole))
         )
         getItemByIdWithVault.emitValue(Result.success(value))
         return item

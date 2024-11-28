@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
+import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
@@ -69,7 +70,7 @@ private fun InAppMessageEntity.toDomain(): InAppMessage = InAppMessage(
     priority = priority,
     title = title,
     message = message.toOption(),
-    imageUrl = imageUrl.toOption(),
+    imageUrl = imageUrl?.takeIfNotBlank().toOption(),
     cta = if (ctaText != null && ctaRoute != null && ctaType != null) {
         Some(InAppMessageCTA(ctaText, ctaRoute, InAppMessageCTAType.fromValue(ctaType)))
     } else {

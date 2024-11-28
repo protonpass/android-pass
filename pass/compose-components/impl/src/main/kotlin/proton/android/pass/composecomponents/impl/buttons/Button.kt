@@ -18,16 +18,23 @@
 
 package proton.android.pass.composecomponents.impl.buttons
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ButtonElevation
+import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import proton.android.pass.composecomponents.impl.icon.Icon
 
 object Button {
     @Composable
@@ -45,13 +52,44 @@ object Button {
             modifier = modifier,
             contentPadding = contentPadding,
             enabled = enabled,
-            colors = ButtonDefaults.buttonColors(backgroundColor = color),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = color,
+                disabledBackgroundColor = color.copy(alpha = 0.3f)
+            ),
             shape = CircleShape,
             border = borderStroke,
             elevation = elevation,
             onClick = onClick
         ) {
             content()
+        }
+    }
+
+    @Composable
+    fun CircleIcon(
+        modifier: Modifier = Modifier,
+        backgroundColor: Color,
+        size: Dp = Dp.Unspecified,
+        onClick: () -> Unit,
+        enabled: Boolean = true,
+        @DrawableRes iconId: Int,
+        iconTint: Color
+    ) {
+        val adjustedBackgroundColor =
+            if (enabled) backgroundColor else backgroundColor.copy(alpha = 0.3f)
+        val adjustedIconTint = if (enabled) iconTint else iconTint.copy(alpha = 0.3f)
+        IconButton(
+            onClick = onClick,
+            enabled = enabled,
+            modifier = modifier
+                .clip(CircleShape)
+                .size(size)
+                .background(adjustedBackgroundColor)
+        ) {
+            Icon.Default(
+                id = iconId,
+                tint = adjustedIconTint
+            )
         }
     }
 }

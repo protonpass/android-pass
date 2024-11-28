@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
+import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.domain.ItemDiffType
 
@@ -46,7 +47,7 @@ internal fun PassItemDetailTitle(
         color = if (itemDiffType == ItemDiffType.Content) {
             PassTheme.colors.signalWarning
         } else {
-            PassTheme.colors.textNorm
+            ProtonTheme.colors.textNorm
         }
     )
 }

@@ -70,7 +70,8 @@ fun ItemRevision.toCrypto(): EncryptedItemRevision = EncryptedItemRevision(
     revisionTime = revisionTime,
     key = itemKey,
     isPinned = isPinned,
-    flags = flags
+    flags = flags,
+    shareCount = shareCount
 )
 
 fun ItemLatestKeyResponse.toCrypto(): EncryptedItemKey = EncryptedItemKey(

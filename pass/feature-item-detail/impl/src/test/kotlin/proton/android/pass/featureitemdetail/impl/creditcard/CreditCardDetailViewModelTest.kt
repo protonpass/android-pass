@@ -47,7 +47,6 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestVault
@@ -96,7 +95,6 @@ class CreditCardDetailViewModelTest {
             bulkMoveToVaultRepository = TestBulkMoveToVaultRepository(),
             pinItem = FakePinItem(),
             unpinItem = FakeUnpinItem(),
-            featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
             getUserPlan = TestGetUserPlan()
         )
     }
@@ -128,8 +126,10 @@ class CreditCardDetailViewModelTest {
                 pin = pin,
                 expirationDate = expirationDate
             ),
-            vault = TEST_VAULT,
-            hasMoreThanOneVault = true
+            vaults = listOf(
+                TEST_VAULT,
+                TestVault.create()
+            )
         )
         getItem.emitValue(Result.success(itemWithVaultInfo))
 
@@ -180,8 +180,7 @@ class CreditCardDetailViewModelTest {
                 shareId = ShareId(SHARE_ID),
                 number = number
             ),
-            vault = TEST_VAULT,
-            hasMoreThanOneVault = false
+            vaults = listOf(TEST_VAULT)
         )
         getItem.emitValue(Result.success(itemWithVaultInfo))
 
@@ -207,8 +206,7 @@ class CreditCardDetailViewModelTest {
                 shareId = ShareId(SHARE_ID),
                 pin = pin
             ),
-            vault = TEST_VAULT,
-            hasMoreThanOneVault = false
+            vaults = listOf(TEST_VAULT)
         )
         getItem.emitValue(Result.success(itemWithVaultInfo))
 
@@ -234,8 +232,7 @@ class CreditCardDetailViewModelTest {
                 shareId = ShareId(SHARE_ID),
                 verificationNumber = cvv
             ),
-            vault = TEST_VAULT,
-            hasMoreThanOneVault = false
+            vaults = listOf(TEST_VAULT)
         )
         getItem.emitValue(Result.success(itemWithVaultInfo))
 
@@ -261,8 +258,7 @@ class CreditCardDetailViewModelTest {
                 shareId = ShareId(SHARE_ID),
                 number = number
             ),
-            vault = TEST_VAULT,
-            hasMoreThanOneVault = false
+            vaults = listOf(TEST_VAULT)
         )
         getItem.emitValue(Result.success(itemWithVaultInfo))
 
@@ -282,8 +278,7 @@ class CreditCardDetailViewModelTest {
                 shareId = ShareId(SHARE_ID),
                 number = number
             ),
-            vault = TEST_VAULT,
-            hasMoreThanOneVault = false
+            vaults = listOf(TEST_VAULT)
         )
         getItem.emitValue(Result.success(itemWithVaultInfo))
         instance.toggleNumber()
@@ -304,8 +299,7 @@ class CreditCardDetailViewModelTest {
                 shareId = ShareId(SHARE_ID),
                 verificationNumber = cvv
             ),
-            vault = TEST_VAULT,
-            hasMoreThanOneVault = false
+            vaults = listOf(TEST_VAULT)
         )
         getItem.emitValue(Result.success(itemWithVaultInfo))
 
@@ -325,8 +319,7 @@ class CreditCardDetailViewModelTest {
                 shareId = ShareId(SHARE_ID),
                 verificationNumber = cvv
             ),
-            vault = TEST_VAULT,
-            hasMoreThanOneVault = false
+            vaults = listOf(TEST_VAULT)
         )
         getItem.emitValue(Result.success(itemWithVaultInfo))
         instance.toggleCvv()
@@ -345,8 +338,7 @@ class CreditCardDetailViewModelTest {
                 itemId = ItemId(ITEM_ID),
                 shareId = ShareId(SHARE_ID)
             ),
-            vault = TEST_VAULT,
-            hasMoreThanOneVault = false
+            vaults = listOf(TEST_VAULT)
         )
         getItem.emitValue(Result.success(itemWithVaultInfo))
         trashItem.setResult(Result.success(Unit))
@@ -370,8 +362,7 @@ class CreditCardDetailViewModelTest {
                 itemId = ItemId(ITEM_ID),
                 shareId = ShareId(SHARE_ID)
             ),
-            vault = TEST_VAULT,
-            hasMoreThanOneVault = false
+            vaults = listOf(TEST_VAULT)
         )
         getItem.emitValue(Result.success(itemWithVaultInfo))
         restoreItem.setResult(Result.success(Unit))
@@ -396,8 +387,7 @@ class CreditCardDetailViewModelTest {
                 itemId = ItemId(ITEM_ID),
                 shareId = ShareId(SHARE_ID)
             ),
-            vault = TEST_VAULT,
-            hasMoreThanOneVault = false
+            vaults = listOf(TEST_VAULT)
         )
         getItem.emitValue(Result.success(itemWithVaultInfo))
 

@@ -18,6 +18,8 @@
 
 package proton.android.pass.domain.attachments
 
+import kotlinx.datetime.Instant
+
 @JvmInline
 value class AttachmentId(val id: String)
 
@@ -42,6 +44,7 @@ data class Attachment(
     val id: AttachmentId,
     val name: String,
     val type: AttachmentType,
-    val size: String
+    val size: Long,
+    val createTime: Instant
 )
 

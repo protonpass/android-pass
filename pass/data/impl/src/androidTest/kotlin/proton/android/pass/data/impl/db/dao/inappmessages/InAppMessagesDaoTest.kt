@@ -79,16 +79,20 @@ class AssetLinkDaoTest {
     }
 
     @Test
-    fun shouldReturnInPriorityOrder() = runTest {
+    fun shouldReturnInPriorityAndStartTimeOrder() = runTest {
         val now = Clock.System.now()
         val userId = "userId"
-        val message1 = createEntity("1", userId, 0, now.minus(1.days).epochSeconds, priority = 1)
-        val message2 = createEntity("2", userId, 0, now.minus(1.days).epochSeconds, priority = 2)
-        inAppMessagesDao.insertOrIgnore(message1, message2)
+        val message1 = createEntity("1", userId, 0, now.minus(2.days).epochSeconds, priority = 1)
+        val message2 = createEntity("2", userId, 0, now.minus(1.days).epochSeconds, priority = 1)
+        val message3 = createEntity("3", userId, 0, now.minus(1.days).epochSeconds, priority = 2)
+        val message4 = createEntity("4", userId, 0, now.minus(3.days).epochSeconds, priority = 2)
+        inAppMessagesDao.insertOrIgnore(message1, message2, message3, message4)
         val messages = inAppMessagesDao.observeDeliverableUserMessages(userId, now.epochSeconds).first()
-        assertEquals(2, messages.size)
-        assertEquals("2", messages[0].id)
-        assertEquals("1", messages[1].id)
+        assertEquals(4, messages.size)
+        assertEquals("4", messages[0].id)
+        assertEquals("3", messages[1].id)
+        assertEquals("1", messages[2].id)
+        assertEquals("2", messages[3].id)
     }
 
     @Test

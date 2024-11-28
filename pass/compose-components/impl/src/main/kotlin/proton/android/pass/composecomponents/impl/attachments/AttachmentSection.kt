@@ -40,7 +40,10 @@ import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.items.ItemCategory
 
 @Composable
 fun AttachmentSection(
@@ -48,6 +51,7 @@ fun AttachmentSection(
     files: List<Attachment>,
     loadingFile: Option<Attachment>,
     isDetail: Boolean,
+    colors: PassItemColors,
     onAttachmentOptions: (Attachment) -> Unit,
     onAttachmentClick: (Attachment) -> Unit,
     onAddAttachment: () -> Unit,
@@ -66,6 +70,7 @@ fun AttachmentSection(
         verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         AttachmentHeader(
+            colors = colors,
             isEnabled = loadingFile is None,
             fileAmount = files.size,
             onTrashAll = onTrashAll.takeIf { !isDetail }
@@ -88,7 +93,11 @@ fun AttachmentSection(
             }
         }
         if (!isDetail) {
-            AddAttachmentButton(isEnabled = loadingFile is None, onClick = onAddAttachment)
+            AddAttachmentButton(
+                colors = colors,
+                isEnabled = loadingFile is None,
+                onClick = onAddAttachment
+            )
         }
     }
 }
@@ -104,6 +113,7 @@ fun AttachmentSectionPreview(
     PassTheme(isDark = input.first) {
         Surface {
             AttachmentSection(
+                colors = passItemColors(itemCategory = ItemCategory.Login),
                 files = input.second.files,
                 loadingFile = input.second.loadingFile,
                 isDetail = input.second.isDetail,

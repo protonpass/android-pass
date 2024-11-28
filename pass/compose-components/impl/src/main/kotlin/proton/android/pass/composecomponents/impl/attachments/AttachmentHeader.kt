@@ -22,22 +22,29 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.buttons.Button
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.items.ItemCategory
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun AttachmentHeader(
     modifier: Modifier = Modifier,
+    colors: PassItemColors,
     fileAmount: Int,
     isEnabled: Boolean,
     onTrashAll: (() -> Unit)? = null
@@ -69,11 +76,28 @@ fun AttachmentHeader(
         }
         if (fileAmount > 0 && onTrashAll != null) {
             Button.CircleIcon(
-                backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
+                backgroundColor = colors.minorPrimary,
                 enabled = isEnabled,
                 iconId = CoreR.drawable.ic_proton_trash,
-                iconTint = PassTheme.colors.loginInteractionNormMajor2,
+                iconTint = colors.majorSecondary,
                 onClick = onTrashAll
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun AttachmentHeaderPreview(
+    @PreviewParameter(ThemeCreateVaultTopBarPreviewProvider::class) input: Pair<Boolean, ItemCategory>
+) {
+    PassTheme(isDark = input.first) {
+        Surface {
+            AttachmentHeader(
+                colors = passItemColors(input.second),
+                fileAmount = 3,
+                isEnabled = true,
+                onTrashAll = {}
             )
         }
     }

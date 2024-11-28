@@ -82,6 +82,7 @@ fun AttachmentSection(
                     filename = file.name,
                     attachmentType = file.type,
                     size = file.size,
+                    createTime = file.createTime,
                     isEnabled = loadingFile is None,
                     isLoading = loadingFile.value()?.id == file.id,
                     onOptionsClick = { onAttachmentOptions(file) },

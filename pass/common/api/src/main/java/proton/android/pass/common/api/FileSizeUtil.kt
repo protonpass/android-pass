@@ -16,35 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain.attachments
+package proton.android.pass.common.api
 
-import kotlinx.datetime.Instant
+import java.util.Locale
+import kotlin.math.log10
+import kotlin.math.pow
 
-@JvmInline
-value class AttachmentId(val id: String)
-
-enum class AttachmentType {
-    RasterImage,
-    VectorImage,
-    Photo,
-    Video,
-    Audio,
-    Key,
-    Text,
-    Calendar,
-    Pdf,
-    Word,
-    PowerPoint,
-    Excel,
-    Document,
-    Unknown
+object FileSizeUtil {
+    fun toHumanReadableSize(sizeInBytes: Long): String {
+        if (sizeInBytes <= 0) return "0 B"
+        val units = arrayOf("B", "KB", "MB", "GB", "TB")
+        val digitGroups = (log10(sizeInBytes.toDouble()) / log10(1024.0)).toInt()
+        return String.format(
+            Locale.getDefault(),
+            "%.1f %s",
+            sizeInBytes / 1024.0.pow(digitGroups.toDouble()),
+            units[digitGroups]
+        )
+    }
 }
-
-data class Attachment(
-    val id: AttachmentId,
-    val name: String,
-    val type: AttachmentType,
-    val size: Long,
-    val createTime: Instant
-)
-

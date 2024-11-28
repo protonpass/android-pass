@@ -58,6 +58,7 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
                 itemRevision = item.revision,
                 itemState = ItemState.from(item.state),
                 itemDiffs = ItemDiffs.CreditCard(),
+                itemShareCount = item.shareCount,
                 attachments = attachments
             )
         }

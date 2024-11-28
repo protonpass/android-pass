@@ -58,6 +58,7 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                 itemState = ItemState.from(item.state),
                 itemDiffs = ItemDiffs.Identity(),
                 itemShare = share,
+                itemShareCount = item.shareCount,
                 attachments = attachments
             )
         }

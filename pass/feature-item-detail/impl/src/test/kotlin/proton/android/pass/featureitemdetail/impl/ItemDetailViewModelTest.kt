@@ -120,9 +120,6 @@ internal class ItemDetailViewModelTest {
     }
 
     companion object {
-        @Suppress("UnderscoresInNumericLiterals")
-        private const val TEST_TIMESTAMP = 1681476769L
-
         private const val SHARE_ID = "share_id"
         private const val ITEM_ID = "item_id"
     }

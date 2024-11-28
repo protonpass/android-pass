@@ -161,7 +161,7 @@ class CreateVaultViewModelTest {
     fun `displays success snackbar on createVault success`() = runTest {
         instance.onNameChange("name")
 
-        createVault.setResult(Result.success(TestShare.create()))
+        createVault.setResult(Result.success(TestShare.Vault.create()))
         instance.onCreateClick()
         instance.state.test {
             val item = awaitItem()
@@ -245,7 +245,7 @@ class CreateVaultViewModelTest {
         setNextShareVault()
         createViewModel()
 
-        createVault.setResult(Result.success(TestShare.create(shareId = ShareId(NEW_SHARE_ID))))
+        createVault.setResult(Result.success(TestShare.Vault.create(id = NEW_SHARE_ID)))
         migrateItem.setResult(Result.success(MigrateItemsResult.AllMigrated(listOf(TestItem.create()))))
 
         instance.onNameChange("name")
@@ -303,7 +303,7 @@ class CreateVaultViewModelTest {
         setNextShareVault()
         createViewModel()
 
-        createVault.setResult(Result.success(TestShare.create(shareId = ShareId(NEW_SHARE_ID))))
+        createVault.setResult(Result.success(TestShare.Vault.create(id = NEW_SHARE_ID)))
         migrateItem.setResult(Result.failure(IllegalStateException("test")))
         deleteVault.setResult(Result.success(Unit))
 
@@ -333,7 +333,7 @@ class CreateVaultViewModelTest {
         setNextShareVault()
         createViewModel()
 
-        createVault.setResult(Result.success(TestShare.create(shareId = ShareId(NEW_SHARE_ID))))
+        createVault.setResult(Result.success(TestShare.Vault.create(id = NEW_SHARE_ID)))
         migrateItem.setResult(Result.failure(IllegalStateException("test")))
         deleteVault.setResult(Result.failure(IllegalStateException("test")))
 

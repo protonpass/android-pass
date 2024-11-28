@@ -19,7 +19,6 @@
 package proton.android.pass.test.domain
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.None
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
@@ -27,28 +26,97 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SharePermission
 import proton.android.pass.domain.SharePermissionFlag
 import proton.android.pass.domain.ShareRole
-import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.VaultId
+import proton.android.pass.test.TestUtils
 import java.util.Date
+import kotlin.random.Random
 
 object TestShare {
-    fun create(
-        shareId: ShareId = ShareId("123"),
-        shareRole: ShareRole = ShareRole.Admin,
-        isOwner: Boolean = true
-    ): Share = Share(
-        id = shareId,
-        userId = UserId(""),
-        shareType = ShareType.Vault,
-        targetId = "456",
-        permission = SharePermission(SharePermissionFlag.Admin.value),
-        vaultId = VaultId("456"),
-        content = None,
-        expirationTime = null,
-        createTime = Date(),
-        color = ShareColor.Color1,
-        icon = ShareIcon.Icon1,
-        shareRole = shareRole,
-        isOwner = isOwner
-    )
+
+    fun random(): Share = if (Random.nextBoolean()) {
+        Vault.create()
+    } else {
+        Item.create()
+    }
+
+    object Item {
+
+        fun create(
+            id: String = TestUtils.randomString(),
+            userId: String = TestUtils.randomString(),
+            targetId: String = TestUtils.randomString(),
+            permission: SharePermission = SharePermission(SharePermissionFlag.entries.random().value),
+            vaultId: String = TestUtils.randomString(),
+            expirationTime: Date? = Date(),
+            createTime: Date = Date(),
+            shareRole: ShareRole = ShareRole.Admin,
+            isOwner: Boolean = Random.nextBoolean(),
+            memberCount: Int = Random.nextInt(),
+            shared: Boolean = Random.nextBoolean(),
+            maxMembers: Int = Random.nextInt(),
+            pendingInvites: Int = Random.nextInt(),
+            newUserInvitesReady: Int = Random.nextInt(),
+            canAutofill: Boolean = Random.nextBoolean()
+        ): Share.Item = Share.Item(
+            id = ShareId(id),
+            userId = UserId(userId),
+            targetId = targetId,
+            permission = permission,
+            vaultId = VaultId(vaultId),
+            expirationTime = expirationTime,
+            createTime = createTime,
+            shareRole = shareRole,
+            isOwner = isOwner,
+            memberCount = memberCount,
+            shared = shared,
+            maxMembers = maxMembers,
+            pendingInvites = pendingInvites,
+            newUserInvitesReady = newUserInvitesReady,
+            canAutofill = canAutofill
+        )
+    }
+
+    object Vault {
+
+        fun create(
+            id: String = TestUtils.randomString(),
+            userId: String = TestUtils.randomString(),
+            targetId: String = TestUtils.randomString(),
+            permission: SharePermission = SharePermission(SharePermissionFlag.Admin.value),
+            vaultId: String = TestUtils.randomString(),
+            expirationTime: Date? = Date(),
+            createTime: Date = Date(),
+            shareRole: ShareRole = ShareRole.Admin,
+            isOwner: Boolean = Random.nextBoolean(),
+            memberCount: Int = Random.nextInt(),
+            shared: Boolean = Random.nextBoolean(),
+            maxMembers: Int = Random.nextInt(),
+            pendingInvites: Int = Random.nextInt(),
+            newUserInvitesReady: Int = Random.nextInt(),
+            canAutofill: Boolean = Random.nextBoolean(),
+            name: String = TestUtils.randomString(),
+            color: ShareColor = ShareColor.entries.random(),
+            icon: ShareIcon = ShareIcon.entries.random()
+        ): Share.Vault = Share.Vault(
+            id = ShareId(id),
+            userId = UserId(userId),
+            targetId = targetId,
+            permission = permission,
+            vaultId = VaultId(vaultId),
+            expirationTime = expirationTime,
+            createTime = createTime,
+            shareRole = shareRole,
+            isOwner = isOwner,
+            memberCount = memberCount,
+            shared = shared,
+            maxMembers = maxMembers,
+            pendingInvites = pendingInvites,
+            newUserInvitesReady = newUserInvitesReady,
+            canAutofill = canAutofill,
+            name = name,
+            color = color,
+            icon = icon
+        )
+    }
+
 }

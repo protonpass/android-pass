@@ -73,7 +73,7 @@ class ItemRepositoryImplTest {
         shareKeyRepository = TestShareKeyRepository()
         itemKeyRepository = TestItemKeyRepository()
 
-        share = TestShare.create()
+        share = TestShare.random()
 
         repository = ItemRepositoryImpl(
             database = TestPassDatabase(),

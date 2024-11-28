@@ -64,7 +64,6 @@ sealed class Share {
     data class Item(
         override val id: ShareId,
         override val userId: UserId,
-        override val shareType: ShareType,
         override val targetId: String,
         override val permission: SharePermission,
         override val vaultId: VaultId,
@@ -78,12 +77,15 @@ sealed class Share {
         override val pendingInvites: Int,
         override val newUserInvitesReady: Int,
         override val canAutofill: Boolean
-    ) : Share()
+    ) : Share() {
+
+        override val shareType: ShareType = ShareType.Item
+
+    }
 
     data class Vault(
         override val id: ShareId,
         override val userId: UserId,
-        override val shareType: ShareType,
         override val targetId: String,
         override val permission: SharePermission,
         override val vaultId: VaultId,
@@ -100,7 +102,11 @@ sealed class Share {
         val name: String,
         val color: ShareColor,
         val icon: ShareIcon
-    ) : Share()
+    ) : Share() {
+
+        override val shareType: ShareType = ShareType.Vault
+
+    }
 
     private val totalMembers: Int
         get() = memberCount
@@ -114,15 +120,15 @@ sealed class Share {
         get() = remainingInvites > 0
 
     val canBeCreated: Boolean
-        get() = permission.canCreate()
+        get() = shareRole.toPermissions().canCreate()
 
     val canBeDeleted: Boolean
-        get() = permission.canDelete()
+        get() = shareRole.toPermissions().canDelete()
 
     val canBeTrashed: Boolean
-        get() = permission.canTrash()
+        get() = shareRole.toPermissions().canTrash()
 
     val canBeUpdated: Boolean
-        get() = permission.canUpdate()
+        get() = shareRole.toPermissions().canUpdate()
 
 }

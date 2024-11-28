@@ -89,6 +89,8 @@ data class ItemEntity(
     val hasPasskeys: Boolean?,
     @ColumnInfo(name = Columns.FLAGS)
     val flags: Int,
+    @ColumnInfo(name = Columns.SHARE_COUNT, defaultValue = "0")
+    val shareCount: Int,
 
     // Keystore Encrypted contents
     @ColumnInfo(name = Columns.ENCRYPTED_TITLE)
@@ -124,6 +126,7 @@ data class ItemEntity(
         const val IS_PINNED = "is_pinned"
         const val HAS_PASSKEYS = "has_passkeys"
         const val FLAGS = "flags"
+        const val SHARE_COUNT = "share_count"
     }
 
     companion object {

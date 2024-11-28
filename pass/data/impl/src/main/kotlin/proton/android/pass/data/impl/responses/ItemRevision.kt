@@ -74,5 +74,7 @@ data class ItemRevision(
     @SerialName("Pinned")
     val isPinned: Boolean,
     @SerialName("Flags")
-    val flags: Int
+    val flags: Int,
+    @SerialName("ShareCount")
+    val shareCount: Int
 )

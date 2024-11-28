@@ -71,7 +71,8 @@ fun ItemEntity.toDomain(context: EncryptionContext): Item {
         createTime = Instant.fromEpochSeconds(createTime),
         lastAutofillTime = lastUsedTime.toOption().map(Instant::fromEpochSeconds),
         isPinned = isPinned,
-        flags = Flags(flags)
+        flags = Flags(flags),
+        shareCount = shareCount
     )
 }
 
@@ -89,5 +90,6 @@ fun ItemEntity.toEncryptedDomain(): ItemEncrypted = ItemEncrypted(
     modificationTime = Instant.fromEpochSeconds(modifyTime),
     lastAutofillTime = lastUsedTime?.let { Some(Instant.fromEpochSeconds(it)) } ?: None,
     isPinned = isPinned,
-    flags = Flags(flags)
+    flags = Flags(flags),
+    shareCount = shareCount
 )

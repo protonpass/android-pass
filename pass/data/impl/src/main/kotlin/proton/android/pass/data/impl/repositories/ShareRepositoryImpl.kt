@@ -513,57 +513,54 @@ class ShareRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun ShareEntity.toDomain(encryptionContext: EncryptionContext): Share =
-        when (val shareType = ShareType.from(targetType)) {
-            ShareType.Item -> {
-                Share.Item(
-                    id = ShareId(id),
-                    userId = UserId(userId),
-                    shareType = shareType,
-                    targetId = targetId,
-                    permission = SharePermission(permission),
-                    vaultId = VaultId(vaultId),
-                    expirationTime = expirationTime?.let { Date(it) },
-                    createTime = createTime.toDate(),
-                    shareRole = ShareRole.fromValue(shareRoleId),
-                    isOwner = owner,
-                    memberCount = targetMembers,
-                    shared = shared,
-                    pendingInvites = pendingInvites,
-                    newUserInvitesReady = newUserInvitesReady,
-                    maxMembers = targetMaxMembers,
-                    canAutofill = canAutofill
-                )
-            }
-
-            ShareType.Vault -> {
-                encryptionContext.decrypt(encryptedContent!!)
-                    .let(VaultV1.Vault::parseFrom)
-                    .let { vault ->
-                        Share.Vault(
-                            id = ShareId(id),
-                            userId = UserId(userId),
-                            shareType = shareType,
-                            targetId = targetId,
-                            permission = SharePermission(permission),
-                            vaultId = VaultId(vaultId),
-                            expirationTime = expirationTime?.let { Date(it) },
-                            createTime = createTime.toDate(),
-                            shareRole = ShareRole.fromValue(shareRoleId),
-                            isOwner = owner,
-                            memberCount = targetMembers,
-                            shared = shared,
-                            pendingInvites = pendingInvites,
-                            newUserInvitesReady = newUserInvitesReady,
-                            maxMembers = targetMaxMembers,
-                            canAutofill = canAutofill,
-                            name = vault.name,
-                            color = vault.display.color.toDomain(),
-                            icon = vault.display.icon.toDomain()
-                        )
-                    }
-            }
+    private fun ShareEntity.toDomain(encryptionContext: EncryptionContext): Share = when (ShareType.from(targetType)) {
+        ShareType.Item -> {
+            Share.Item(
+                id = ShareId(id),
+                userId = UserId(userId),
+                targetId = targetId,
+                permission = SharePermission(permission),
+                vaultId = VaultId(vaultId),
+                expirationTime = expirationTime?.let { Date(it) },
+                createTime = createTime.toDate(),
+                shareRole = ShareRole.fromValue(shareRoleId),
+                isOwner = owner,
+                memberCount = targetMembers,
+                shared = shared,
+                pendingInvites = pendingInvites,
+                newUserInvitesReady = newUserInvitesReady,
+                maxMembers = targetMaxMembers,
+                canAutofill = canAutofill
+            )
         }
+
+        ShareType.Vault -> {
+            encryptionContext.decrypt(encryptedContent!!)
+                .let(VaultV1.Vault::parseFrom)
+                .let { vault ->
+                    Share.Vault(
+                        id = ShareId(id),
+                        userId = UserId(userId),
+                        targetId = targetId,
+                        permission = SharePermission(permission),
+                        vaultId = VaultId(vaultId),
+                        expirationTime = expirationTime?.let { Date(it) },
+                        createTime = createTime.toDate(),
+                        shareRole = ShareRole.fromValue(shareRoleId),
+                        isOwner = owner,
+                        memberCount = targetMembers,
+                        shared = shared,
+                        pendingInvites = pendingInvites,
+                        newUserInvitesReady = newUserInvitesReady,
+                        maxMembers = targetMaxMembers,
+                        canAutofill = canAutofill,
+                        name = vault.name,
+                        color = vault.display.color.toDomain(),
+                        icon = vault.display.icon.toDomain()
+                    )
+                }
+        }
+    }
 
     private suspend fun createVaultRequest(
         user: User,

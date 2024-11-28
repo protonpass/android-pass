@@ -142,7 +142,7 @@ class CreateAliasViewModelTest {
         createAlias.setResult(Result.failure(CannotCreateMoreAliasesError()))
         setupContentsForCreation()
         viewModel.createAliasUiState.test { awaitItem() }
-        viewModel.createAlias(TestShare.create().id)
+        viewModel.createAlias(TestShare.random().id)
 
         snackbarRepository.snackbarMessage.test {
             val message = awaitItem()
@@ -161,7 +161,7 @@ class CreateAliasViewModelTest {
         setupContentsForCreation()
 
         viewModel.createAliasUiState.test { awaitItem() }
-        viewModel.createAlias(TestShare.create().id)
+        viewModel.createAlias(TestShare.random().id)
         viewModel.createAliasUiState.test {
             val item = awaitItem()
 
@@ -182,7 +182,7 @@ class CreateAliasViewModelTest {
         setupContentsForCreation()
 
         viewModel.createAliasUiState.test { awaitItem() }
-        viewModel.createAlias(TestShare.create().id)
+        viewModel.createAlias(TestShare.random().id)
         viewModel.createAliasUiState.test {
             val item = awaitItem()
 

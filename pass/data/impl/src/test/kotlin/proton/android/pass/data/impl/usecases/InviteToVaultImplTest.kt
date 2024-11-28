@@ -61,8 +61,8 @@ class InviteToVaultImplTest {
         encryptShareKeysForUser = TestEncryptShareKeysForUser()
         getInviteUserMode = TestGetInviteUserMode()
         shareRepository = TestShareRepository().apply {
-            val share = TestShare.create(
-                shareId = ShareId(SHARE_ID),
+            val share = TestShare.Vault.create(
+                id = SHARE_ID,
                 shareRole = ShareRole.Admin
             )
             setGetByIdResult(Result.success(share))

@@ -275,7 +275,7 @@ class ItemRepositoryImplTest {
             )
         )
         val id = ShareId(shareId)
-        shareRepository.setGetByIdResult(id, Result.success(TestShare.create(id)))
+        shareRepository.setGetByIdResult(id, Result.success(TestShare.Vault.create(id = shareId)))
 
         val items = mutableListOf<ItemRevision>()
         for (i in 0 until itemCount) {

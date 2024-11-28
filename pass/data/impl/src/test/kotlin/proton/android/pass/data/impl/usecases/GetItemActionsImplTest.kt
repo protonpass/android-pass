@@ -27,7 +27,8 @@ import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
-import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.data.fakes.usecases.TestObserveAllShares
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Plan
@@ -36,7 +37,7 @@ import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestVault
+import proton.android.pass.test.domain.TestShare
 
 internal class GetItemActionsImplTest {
 
@@ -44,14 +45,16 @@ internal class GetItemActionsImplTest {
     private lateinit var getItemById: FakeGetItemById
     private lateinit var observeUserPlan: TestGetUserPlan
     private lateinit var canShareVault: TestCanShareVault
-    private lateinit var observeVaults: TestObserveVaults
+    private lateinit var observeShare: FakeObserveShare
+    private lateinit var observeAllShares: TestObserveAllShares
 
     @Before
     fun setup() {
         getItemById = FakeGetItemById()
         observeUserPlan = TestGetUserPlan()
         canShareVault = TestCanShareVault()
-        observeVaults = TestObserveVaults()
+        observeShare = FakeObserveShare()
+        observeAllShares = TestObserveAllShares()
 
         setDefaultState()
 
@@ -59,12 +62,16 @@ internal class GetItemActionsImplTest {
             getItemById = getItemById,
             observeUserPlan = observeUserPlan,
             canShareVault = canShareVault,
-            observeVaults = observeVaults
+            observeShare = observeShare,
+            observeAllShares = observeAllShares
         )
     }
 
     @Test
     fun `can perform all actions if vault is owned and plan is paid`() = runTest {
+        val share = TestShare.Vault.create(id = SHARE_ID.id)
+        observeShare.emitValue(share)
+
         val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
         val expected = ItemActions(
             canShare = CanShareVaultStatus.CanShare(1),
@@ -94,45 +101,66 @@ internal class GetItemActionsImplTest {
 
     @Test
     fun `can edit if downgraded but vault owned and enough permissions`() = runTest {
-        val vaults = listOf(
-            generateVault(shareId = SHARE_ID, owned = true, role = ShareRole.Admin),
-            generateVault(owned = false, role = ShareRole.Read),
-            generateVault(owned = false, role = ShareRole.Read)
+        val vaultShare = TestShare.Vault.create(
+            id = SHARE_ID.id,
+            isOwner = true,
+            shareRole = ShareRole.Admin
         )
-        observeVaults.sendResult(Result.success(vaults))
+        val vaultShares = listOf(
+            vaultShare,
+            TestShare.Vault.create(isOwner = false, shareRole = ShareRole.Read),
+            TestShare.Vault.create(isOwner = false, shareRole = ShareRole.Read)
+        )
+        observeShare.emitValue(vaultShare)
+        observeAllShares.sendResult(Result.success(vaultShares))
 
         val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
+
         assertThat(res.canEdit).isEqualTo(ItemActions.CanEditActionState.Enabled)
     }
 
     @Test
     fun `cannot edit if not enough permissions`() = runTest {
-        val vaults = listOf(
-            generateVault(shareId = SHARE_ID, owned = false, role = ShareRole.Read),
-            generateVault(owned = true, role = ShareRole.Admin)
+        val vaultShare = TestShare.Vault.create(
+            id = SHARE_ID.id,
+            isOwner = false,
+            shareRole = ShareRole.Read
         )
-        observeVaults.sendResult(Result.success(vaults))
-
-        val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
+        val vaultShares = listOf(
+            vaultShare,
+            TestShare.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
+        )
         val expected = ItemActions.CanEditActionState.Disabled(
             ItemActions.CanEditActionState.CanEditDisabledReason.NotEnoughPermission
         )
+        observeShare.emitValue(vaultShare)
+        observeAllShares.sendResult(Result.success(vaultShares))
+
+        val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
+
         assertThat(res.canEdit).isEqualTo(expected)
     }
 
     @Test
     fun `cannot edit if downgraded`() = runTest {
-        setPlan(planType = PlanType.Free("", ""))
-        val vaults = listOf(
-            generateVault(shareId = SHARE_ID, owned = true, role = ShareRole.Read),
-            generateVault(owned = true, role = ShareRole.Admin)
+        val vaultShare = TestShare.Vault.create(
+            id = SHARE_ID.id,
+            isOwner = true,
+            shareRole = ShareRole.Read
         )
-        observeVaults.sendResult(Result.success(vaults))
-
-        val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
+        val vaultShares = listOf(
+            vaultShare,
+            TestShare.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
+        )
         val expected = ItemActions.CanEditActionState.Disabled(
             ItemActions.CanEditActionState.CanEditDisabledReason.Downgraded
         )
+        setPlan(planType = PlanType.Free("", ""))
+        observeShare.emitValue(vaultShare)
+        observeAllShares.sendResult(Result.success(vaultShares))
+
+        val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
+
         assertThat(res.canEdit).isEqualTo(expected)
     }
 
@@ -148,30 +176,42 @@ internal class GetItemActionsImplTest {
 
     @Test
     fun `cannot move to another vault if there is only 1 vault`() = runTest {
-        val vaults = listOf(
-            generateVault(shareId = SHARE_ID, owned = true, role = ShareRole.Admin)
+        val vaultShare = TestShare.Vault.create(
+            id = SHARE_ID.id,
+            isOwner = true,
+            shareRole = ShareRole.Admin
         )
-        observeVaults.sendResult(Result.success(vaults))
-
-        val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
+        val vaultShares = listOf(vaultShare)
         val expected = ItemActions.CanMoveToOtherVaultState.Disabled(
             ItemActions.CanMoveToOtherVaultState.CanMoveToOtherVaultDisabledReason.NoVaultToMoveToAvailable
         )
+        observeShare.emitValue(vaultShare)
+        observeAllShares.sendResult(Result.success(vaultShares))
+
+        val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
+
         assertThat(res.canMoveToOtherVault).isEqualTo(expected)
     }
 
     @Test
     fun `cannot move to another vault if there is only 1 vault where can create`() = runTest {
-        val vaults = listOf(
-            generateVault(shareId = SHARE_ID, owned = true, role = ShareRole.Admin),
-            generateVault(owned = true, role = ShareRole.Read)
+        val vaultShare = TestShare.Vault.create(
+            id = SHARE_ID.id,
+            isOwner = true,
+            shareRole = ShareRole.Admin
         )
-        observeVaults.sendResult(Result.success(vaults))
-
-        val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
+        val vaultShares = listOf(
+            vaultShare,
+            TestShare.Vault.create(isOwner = true, shareRole = ShareRole.Read)
+        )
         val expected = ItemActions.CanMoveToOtherVaultState.Disabled(
             ItemActions.CanMoveToOtherVaultState.CanMoveToOtherVaultDisabledReason.NoVaultToMoveToAvailable
         )
+        observeShare.emitValue(vaultShare)
+        observeAllShares.sendResult(Result.success(vaultShares))
+
+        val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
+
         assertThat(res.canMoveToOtherVault).isEqualTo(expected)
     }
 
@@ -187,13 +227,20 @@ internal class GetItemActionsImplTest {
 
     @Test
     fun `can move to another vault if vault is read only but owned (downgraded)`() = runTest {
-        val vaults = listOf(
-            generateVault(shareId = SHARE_ID, owned = true, role = ShareRole.Read),
-            generateVault(owned = true, role = ShareRole.Admin)
+        val vaultShare = TestShare.Vault.create(
+            id = SHARE_ID.id,
+            isOwner = true,
+            shareRole = ShareRole.Read
         )
-        observeVaults.sendResult(Result.success(vaults))
+        val vaultShares = listOf(
+            vaultShare,
+            TestShare.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
+        )
+        observeShare.emitValue(vaultShare)
+        observeAllShares.sendResult(Result.success(vaultShares))
 
         val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
+
         assertThat(res.canMoveToOtherVault).isEqualTo(ItemActions.CanMoveToOtherVaultState.Enabled)
     }
 
@@ -206,26 +253,40 @@ internal class GetItemActionsImplTest {
 
     @Test
     fun `cannot move to trash if is read only`() = runTest {
-        val vaults = listOf(
-            generateVault(shareId = SHARE_ID, owned = true, role = ShareRole.Read),
-            generateVault(owned = true, role = ShareRole.Admin)
+        val vaultShare = TestShare.Vault.create(
+            id = SHARE_ID.id,
+            isOwner = true,
+            shareRole = ShareRole.Read
         )
-        observeVaults.sendResult(Result.success(vaults))
+        val vaultShares = listOf(
+            vaultShare,
+            TestShare.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
+        )
+        observeShare.emitValue(vaultShare)
+        observeAllShares.sendResult(Result.success(vaultShares))
 
         val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
+
         assertThat(res.canMoveToTrash).isFalse()
     }
 
     @Test
     fun `cannot restore from trash if is read only`() = runTest {
-        val vaults = listOf(
-            generateVault(shareId = SHARE_ID, owned = true, role = ShareRole.Read),
-            generateVault(owned = true, role = ShareRole.Admin)
+        val vaultShare = TestShare.Vault.create(
+            id = SHARE_ID.id,
+            isOwner = true,
+            shareRole = ShareRole.Read
         )
-        observeVaults.sendResult(Result.success(vaults))
+        val vaultShares = listOf(
+            vaultShare,
+            TestShare.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
+        )
+        observeShare.emitValue(vaultShare)
+        observeAllShares.sendResult(Result.success(vaultShares))
 
         val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
-        assertThat(res.canMoveToTrash).isFalse()
+
+        assertThat(res.canRestoreFromTrash).isFalse()
     }
 
     @Test
@@ -237,14 +298,21 @@ internal class GetItemActionsImplTest {
 
     @Test
     fun `cannot delete if item is trashed but is read only`() = runTest {
-        setItem(state = ItemState.Trashed)
-        val vaults = listOf(
-            generateVault(shareId = SHARE_ID, owned = true, role = ShareRole.Read),
-            generateVault(owned = true, role = ShareRole.Admin)
+        val vaultShare = TestShare.Vault.create(
+            id = SHARE_ID.id,
+            isOwner = true,
+            shareRole = ShareRole.Read
         )
-        observeVaults.sendResult(Result.success(vaults))
+        val vaultShares = listOf(
+            vaultShare,
+            TestShare.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
+        )
+        observeShare.emitValue(vaultShare)
+        observeAllShares.sendResult(Result.success(vaultShares))
+        setItem(state = ItemState.Trashed)
 
         val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
+
         assertThat(res.canDelete).isFalse()
     }
 
@@ -253,18 +321,18 @@ internal class GetItemActionsImplTest {
         setPlan(planType = PlanType.Paid.Plus("", ""))
         canShareVault.setResult(CanShareVaultStatus.CanShare(1))
 
-        val vaults = listOf(
-            generateVault(shareId = SHARE_ID, owned = true, role = ShareRole.Admin),
-            generateVault(owned = true, role = ShareRole.Admin)
+        val vaultShare = TestShare.Vault.create(
+            id = SHARE_ID.id,
+            isOwner = true,
+            shareRole = ShareRole.Admin
         )
-        observeVaults.sendResult(Result.success(vaults))
+        val vaultShares = listOf(
+            vaultShare,
+            TestShare.Vault.create(isOwner = true, shareRole = ShareRole.Admin)
+        )
+        observeShare.emitValue(vaultShare)
+        observeAllShares.sendResult(Result.success(vaultShares))
     }
-
-    private fun generateVault(
-        shareId: ShareId = ShareId("ShareId123"),
-        owned: Boolean,
-        role: ShareRole
-    ) = TestVault.create(shareId, isOwned = owned, role = role)
 
     private fun setItem(state: ItemState = ItemState.Active) {
         getItemById.emit(Result.success(TestItem.create().copy(state = state.value)))
@@ -285,7 +353,10 @@ internal class GetItemActionsImplTest {
         )
     }
 
-    companion object {
+    private companion object {
+
         private val SHARE_ID = ShareId("TestShareId")
+
     }
+
 }

@@ -198,13 +198,15 @@ class OpenItemImpl @Inject constructor(
             modificationTime = Instant.fromEpochSeconds(response.modifyTime),
             lastAutofillTime = response.lastUseTime.toOption().map(Instant::fromEpochSeconds),
             isPinned = response.isPinned,
-            flags = Flags(response.flags)
+            flags = Flags(response.flags),
+            shareCount = response.shareCount
         )
     }
 
+    private companion object {
 
-    companion object {
         private const val TAG = "OpenItemImpl"
-    }
-}
 
+    }
+
+}

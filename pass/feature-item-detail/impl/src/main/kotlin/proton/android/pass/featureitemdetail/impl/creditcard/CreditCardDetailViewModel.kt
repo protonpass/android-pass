@@ -68,11 +68,12 @@ import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.ItemDelete
@@ -107,7 +108,8 @@ class CreditCardDetailViewModel @Inject constructor(
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider,
     getItemActions: GetItemActions,
-    getUserPlan: GetUserPlan
+    getUserPlan: GetUserPlan,
+    observeShare: ObserveShare
 ) : ViewModel() {
 
     private val shareId: ShareId =
@@ -151,7 +153,7 @@ class CreditCardDetailViewModel @Inject constructor(
     private data class CreditCardItemInfo(
         val itemUiModel: ItemUiModel,
         val cardNumberState: CardNumberState,
-        val vault: Vault?,
+        val share: Share,
         val hasMoreThanOneVault: Boolean,
         val canPerformItemActions: Boolean,
         val attachments: List<Attachment>
@@ -178,8 +180,9 @@ class CreditCardDetailViewModel @Inject constructor(
 
     private val itemInfoFlow: Flow<LoadingResult<CreditCardItemInfo>> = combine(
         creditCardItemDetailsResultFlow,
-        fieldVisibilityFlow
-    ) { detailsResult, fieldVisibility ->
+        fieldVisibilityFlow,
+        observeShare(shareId)
+    ) { detailsResult, fieldVisibility, share ->
         detailsResult.map { (details, attachments) ->
             val (itemUiModel, cardNumber) = encryptionContextProvider.withEncryptionContext {
                 val model = details.item.toUiModel(this)
@@ -203,7 +206,7 @@ class CreditCardDetailViewModel @Inject constructor(
 
             CreditCardItemInfo(
                 itemUiModel = itemUiModel,
-                vault = details.vault,
+                share = share,
                 cardNumberState = cardNumber,
                 hasMoreThanOneVault = details.hasMoreThanOneVault,
                 canPerformItemActions = details.canPerformItemActions,
@@ -257,14 +260,7 @@ class CreditCardDetailViewModel @Inject constructor(
             LoadingResult.Loading -> CreditCardDetailUiState.NotInitialised
             is LoadingResult.Success -> {
                 val details = itemDetails.data
-                val vault = if (details.hasMoreThanOneVault) {
-                    details.vault
-                } else {
-                    null
-                }
-
                 val isPaid = canPerformPaidActionResult.getOrNull() == true
-
                 val actions = itemActions.getOrNull() ?: ItemActions.Disabled
 
                 CreditCardDetailUiState.Success(
@@ -272,7 +268,7 @@ class CreditCardDetailViewModel @Inject constructor(
                         model = details.itemUiModel,
                         cardNumber = details.cardNumberState
                     ),
-                    vault = vault,
+                    share = details.share,
                     isLoading = isLoading.value(),
                     isItemSentToTrash = isItemSentToTrash.value(),
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
@@ -284,7 +280,8 @@ class CreditCardDetailViewModel @Inject constructor(
                     event = event,
                     isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
                     isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled,
-                    attachments = details.attachments
+                    attachments = details.attachments,
+                    hasMoreThanOneVault = details.hasMoreThanOneVault
                 )
             }
         }

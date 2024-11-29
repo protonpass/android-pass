@@ -18,12 +18,12 @@
   -->
 <resources>
   <string name="item_options_alias_trash_dialog_title">Mou a la paperera</string>
-  <string name="item_options_alias_trash_dialog_message">Aliases in Trash will continue forwarding emails. If you want to stop receiving emails on this address, disable it instead.</string>
+  <string name="item_options_alias_trash_dialog_message">Els àlies a la paperera continuaran reenviant correus electrònics. Si voleu deixar de rebre correus electrònics en aquesta adreça, desactiveu-la.</string>
   <string name="item_options_alias_trash_dialog_checkbox_text">No m\'ho tornis a recordar</string>
   <string name="item_options_alias_trash_dialog_button_text_disable">Desactiva en lloc</string>
   <string name="item_options_alias_trash_dialog_button_text_trash">Mou a la paperera</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">S\'ha produït un error en desactivar l\'àlies.</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">S\'ha desactivat l\'àlies.</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">There was an error moving the alias to trash</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">S\'ha produït un error en moure l\'àlies a la paperera.</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">L\'àlies s\'ha mogut a la paperera.</string>
 </resources>

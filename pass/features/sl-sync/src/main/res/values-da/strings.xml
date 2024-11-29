@@ -58,6 +58,7 @@
   <string name="simple_login_sync_mailbox_delete_message_delete_error">Der opstod en fejl ved sletning af postkassen</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">Postkasse blev slettet</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Overfør aliasser til</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Please note that once deleted, aliases can\'t be restored</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Standarddomæne</string>
   <string name="simple_login_sync_domain_select_title_none">ingen</string>

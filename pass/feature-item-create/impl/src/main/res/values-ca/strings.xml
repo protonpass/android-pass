@@ -82,11 +82,11 @@
   <string name="alias_created">S\'ha creat l\'àlies</string>
   <string name="cannot_retrieve_alias_options">No es poden recuperar les opcions d\'àlies</string>
   <string name="alias_mailbox_dialog_title">Envia a</string>
-  <string name="sl_note_info_title">What is a SimpleLogin note?</string>
-  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">In Pass, an item note is encrypted with the item encryption key and only users who have access to the item can view the note.</string>
-  <string name="sl_note_info_message_part2">Not even Proton or SimpleLogin can see it.</string>
-  <string name="sl_note_info_message_part3">SimpleLogin note is stored together in the same location with alias address and while it is protected by encryption at rest, it isn\'t E2E encrypted meaning anyone who has access to SimpleLogin database can read it.</string>
-  <string name="sl_note_info_content_description">Show SL note information dialog</string>
+  <string name="sl_note_info_title">Què és una nota SimpleLogin?</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">A Pass, una nota d\'element es xifra amb la clau de xifratge de l\'element i només els usuaris que tenen accés a l\'element poden veure la nota.</string>
+  <string name="sl_note_info_message_part2">Ni Proton ni SimpleLogin hi poden accedir.</string>
+  <string name="sl_note_info_message_part3">Les notes de SimpleLogin s\'emmagatzemen al mateix lloc que les adreces d\'àlies i, tot i que estan protegides per xifratge en repòs, no estan xifrades d\'extrem a extrem, és a dir, qualsevol persona amb accés a la base de dades SimpleLogin pot llegir-les.</string>
+  <string name="sl_note_info_content_description">Mostra el diàleg d\'informació de la nota SL</string>
   <!-- Create note -->
   <string name="note_hint">Nota</string>
   <!-- Create Credit Card -->
@@ -187,4 +187,13 @@
   <string name="remove_passkey_dialog_title">Voleu suprimir aquesta clau d\'accés?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Esteu a punt d\'eliminar la clau d\'accés per a l\'usuari «%1$s» per a «%2$s». Segur?</string>
   <string name="add_a_custom_section">Afegeix una secció personalitzada</string>
+  <string name="add_attachment_take_a_photo">Fes una foto</string>
+  <string name="add_attachment_choose_a_photo_or_video">Escolliu una foto o un vídeo</string>
+  <string name="add_attachment_choose_a_file">Trieu un fitxer</string>
+  <string name="attachment_options_open">Obre</string>
+  <string name="attachment_options_save">Desa</string>
+  <string name="attachment_options_rename">Canvia el nom</string>
+  <string name="attachment_options_delete">Elimina</string>
+  <string name="banner_title_attachments">Fitxers adjunts</string>
+  <string name="banner_body_attachments">Podeu adjuntar fitxers als elements per a una millor organització</string>
 </resources>

@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Συνέχεια</string>
   <string name="sharing_can_view">Θεατής</string>
   <string name="sharing_can_edit">Επεξεργαστής</string>
   <string name="sharing_can_manage">Διαχειριστής</string>
@@ -32,25 +31,27 @@
     <item quantity="one">%d μέλος</item>
     <item quantity="other">%d μέλη</item>
   </plurals>
+  <string name="sharing_member_count_header">Μέλη</string>
   <string name="share_with_title">Κοινοποίηση με</string>
   <string name="share_with_email_hint">Διεύθυνση ηλεκτρονικού ταχυδρομείου</string>
   <string name="share_with_email_error">Μη έγκυρη διεύθυνση email</string>
   <string name="share_with_email_cannot_invite_outside_org">Δεν μπορείτε να προσκαλέσετε άτομα εκτός του οργανισμού σας, επικοινωνήστε με το διαχειριστή για περισσότερες πληροφορίες</string>
   <string name="share_with_email_email_already_added">Έχετε ήδη προσθέσει αυτήν τη διεύθυνση ηλεκτρονικού ταχυδρομείου</string>
   <string name="share_permissions_title">Ορισμός επιπέδου πρόσβασης</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s σας προσκαλεί να αποκτήσετε πρόσβαση σε στοιχεία στη</string>
-  <string name="sharing_join_shared_vault">Συμμετάσχετε και συγχρονίστε</string>
   <string name="sharing_reject_invitation">Απόρριψη πρόσκλησης</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Συγχαρητήρια, η πρόσβασή σας επιβεβαιώθηκε</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Προβολή της κοινόχρηστης κρύπτης</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Κλείσιμο</string>
+  <string name="sharing_vault_invitation_title">Πρόσκληση για κοινόχρηστη κρύπτη</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">Ο %s θέλει να μοιραστεί μαζί σας μια κοινόχρηστη κρύπτη.</string>
+  <string name="sharing_vault_invitation_accept">Συμμετοχή σε κοινόχρηστη κρύπτη</string>
+  <string name="sharing_item_invitation_title">Πρόσκληση για κοινόχρηστο αντικείμενο</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">Ο %s θέλει να μοιραστεί μαζί σας ένα αντικείμενο.</string>
+  <string name="sharing_item_invitation_accept">Αποδοχή και προβολή αντικειμένου</string>
   <string name="sharing_snackbar_get_invite_error">Δεν ήταν δυνατή η λήψη πρόσκλησης</string>
   <string name="sharing_snackbar_invite_accepted">Η πρόσκληση έγινε αποδεκτή</string>
   <string name="sharing_snackbar_invite_accept_error">Σφάλμα κατά την αποδοχή της πρόσκλησης</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Δεν ήταν δυνατή η αποδοχή της πρόσκλησης καθώς έχετε συμπληρώσει το όριο κρυπτών</string>
   <string name="sharing_snackbar_invite_rejected">Η πρόσκληση απορρίφθηκε</string>
   <string name="sharing_snackbar_invite_reject_error">Σφάλμα κατά την απόρριψη της πρόσκλησης</string>
-  <string name="sharing_snackbar_vault_not_found">Η κρύπτη δε βρέθηκε</string>
+  <string name="sharing_snackbar_vault_not_found">Η κρύπτη δεν βρέθηκε</string>
   <string name="sharing_snackbar_invite_sent_success">Η πρόσκληση στάλθηκε</string>
   <string name="sharing_snackbar_invite_sent_error">Δεν ήταν δυνατή η αποστολή πρόσκλησης</string>
   <string name="sharing_snackbar_get_vault_members_error">Δεν ήταν δυνατή η λήψη μελών της κρύπτης</string>
@@ -61,7 +62,9 @@
   <string name="share_summary_title">Επανεξέταση και κοινή χρήση</string>
   <string name="share_summary_vault">%s κρύπτη</string>
   <string name="share_summary_share_vault">Κοινή χρήση κρύπτης</string>
+  <string name="share_summary_share_item">Κοινοποίηση στοιχείου</string>
   <string name="share_summary_vault_title">Κρύπτη</string>
+  <string name="share_summary_item_title">Στοιχείο</string>
   <string name="share_manage_vault_share_with_more_people">Κοινοποίηση με περισσότερα άτομα</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d πρόσκληση απομένει</item>

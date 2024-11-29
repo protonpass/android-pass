@@ -7,15 +7,15 @@
   <string name="alias_dialog_move_to_trash_title">Mover para a lixeira?</string>
   <string name="alias_dialog_move_to_trash_content">Se você mover um alias para a lixeira, deixará de encaminhar os e-mails para a sua caixa de correio.</string>
   <string name="alias_dialog_move_to_trash_confirm">Confirmar</string>
-  <string name="delete_alias_confirm">Delete it, I will never need it</string>
+  <string name="delete_alias_confirm">Apague-o, nunca mais precisarei dele</string>
   <string name="delete_alias_title">Excluir %s</string>
-  <string name="delete_alias_enabled_subtitle">"Please note once deleted, the alias can't be restored. Maybe you want to disable the alias instead? "</string>
-  <string name="delete_alias_disabled_subtitle">Please note once deleted, the alias can\'t be restored. The alias is already disabled and won’t forward emails to your mailbox.</string>
+  <string name="delete_alias_enabled_subtitle">"Por favor, note que, uma vez excluído, o alias não pode ser restaurado. Talvez você queira desabilitar o alias em vez disso? "</string>
+  <string name="delete_alias_disabled_subtitle">Por favor, note que, uma vez excluído, o alias não pode ser restaurado. O alias já está desativado e não encaminhará e-mails para sua caixa de entrada.</string>
   <plurals name="bulk_delete_alias_title">
-    <item quantity="one">You\'re about to permanently delete %d alias</item>
-    <item quantity="other">You\'re about to permanently delete %d aliases</item>
+    <item quantity="one">Você está prestes a excluir permanentemente %d alias</item>
+    <item quantity="other">Você está prestes a excluir permanentemente %d aliases</item>
   </plurals>
-  <string name="bulk_delete_alias_subtitle">Please note once deleted, the aliases can\'t be restored</string>
-  <string name="bulk_delete_alias_confirm">Understood, I will never need them</string>
+  <string name="bulk_delete_alias_subtitle">Por favor, note que, uma vez excluído, o alias não pode ser restaurado</string>
+  <string name="bulk_delete_alias_confirm">Entendido, eu nunca vou precisar deles</string>
   <string name="delete_alias_disable">Desativar alias</string>
 </resources>

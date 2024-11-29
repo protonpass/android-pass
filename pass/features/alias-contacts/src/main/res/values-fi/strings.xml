@@ -24,14 +24,14 @@
   <string name="create_contact_title">Luo yhteystieto</string>
   <string name="detail_contact_title">Yhteystiedot</string>
   <string name="email_input_error">Virheellinen sähköpostiosoite</string>
-  <string name="detail_contact_display_name" comment="sender email address">A contact is created for every email address that sends emails to or receives emails from %1$s</string>
+  <string name="detail_contact_display_name" comment="sender email address">Yhteystieto luodaan jokaiselle sähköpostiosoitteelle, joka lähettää tai vastaanottaa sähköposteja osoitteelta %1$s</string>
   <string name="empty_alias_contacts_title">Aliasyhteystiedot</string>
   <string name="empty_alias_contacts_body">Pitääksesi henkilökohtaisen sähköpostiosoitteesi piilossa voit luoda aliasyhteystiedon, joka naamioi osoitteesi.</string>
   <string name="empty_alias_contacts_learn_more">Lue lisää</string>
   <string name="unblock_button">Estä yhteystieto</string>
   <string name="block_button">Salli yhteystieto</string>
   <string name="contact_created_date" comment="date of creation">Luotiin %1$s sitten</string>
-  <string name="no_activity_contact">Ei toimintaa viimeisten 14 päivän aikana.</string>
+  <string name="no_activity_contact">No activity in the last 14 days.</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">viimeisen 14 päivän aikana.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d välitetty</item>

@@ -31,9 +31,9 @@
   <string name="settings_share_telemetry">匿名の利用状況を共有する</string>
   <string name="settings_share_crashes">匿名のクラッシュレポートを共有する</string>
   <string name="settings_preference_updated">設定が更新されました</string>
-  <string name="settings_display_section_title">Display</string>
-  <string name="settings_preference_display_username">Username field always visible</string>
-  <string name="settings_preference_display_autofill_pinning">Autofill pinning always visible</string>
+  <string name="settings_display_section_title">画面</string>
+  <string name="settings_preference_display_username">ユーザーネームフィールドは常に表示されます</string>
+  <string name="settings_preference_display_autofill_pinning">自動入力ピンは常に表示されます</string>
   <string name="view_logs_title">ログを見る</string>
   <string name="clipboard_bottomsheet_title">クリップボード</string>
   <string name="clipboard_option_clear_clipboard_label">クリップボードをクリア</string>

@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">Изменить PIN-код</string>
   <string name="profile_passkey_support_section_title">Ключи доступа</string>
   <string name="profile_passkey_support_subtitle_supported">Ключи доступа поддерживаются</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Ваша версия Android не поддерживает ключи доступа.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Ваше устройство не поддерживает ключи доступа</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Не удалось проверить поддержку ключей доступа</string>
   <plurals name="profile_after_days">
@@ -84,4 +84,7 @@
   <string name="filtered_by_notes">Фильтруется по заметкам. Удаленные элементы не отображаются</string>
   <string name="filtered_by_credit_cards">Фильтруется по кредитным картам. Удаленные элементы не отображаются</string>
   <string name="filtered_by_identities">Фильтруется по личным данным. Удаленные элементы не отображаются</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">You need to switch to %1$s in order to manage it</string>
+  <string name="account_switch_confirmation_title">Manage account</string>
+  <string name="account_switch_confirmation_confirm">Switch and manage</string>
 </resources>

@@ -50,6 +50,8 @@
   <string name="home_notification_permission_banner_settings">권한 허용 ›</string>
   <string name="home_invite_banner_title">나와 공유된 금고</string>
   <string name="home_invite_banner_subtitle">공유 금고에 초대되었습니다. 상세 정보를 확인하려면 탭하세요.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s님이 나와 항목을 공유하고자 합니다.</string>
+  <string name="home_item_invite_banner_subtitle">세부정보를 보려면 탭하세요.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">암호 복사</string>
   <string name="bottomsheet_copy_username">사용자 이름 복사</string>

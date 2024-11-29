@@ -10,13 +10,13 @@
   <string name="field_alias_disabled_title">Διεύθυνση ψευδωνύμου (απενεργοποιημένη)</string>
   <string name="alias_copied_to_clipboard">Το ψευδώνυμο αντιγράφηκε</string>
   <string name="alias_detail_field_mailboxes_title">Προώθηση σε</string>
-  <string name="alias_create_login_from_alias">Δημιουργία σύνδεσης</string>
+  <string name="alias_create_login_from_alias">Δημιουργία στοιχείων σύνδεσης</string>
   <!-- Note details -->
   <string name="field_detail_note_title">Σημείωση</string>
   <string name="note_detail_copy_note_to_clipboard">Αντιγραφή σημείωσης</string>
   <string name="note_copied_to_clipboard">Η σημείωση αντιγράφηκε στο πρόχειρο</string>
   <!-- Login details -->
-  <string name="email_copied_to_clipboard">Έγινε αντιγραφή διεύθυνσης ηλεκτρονικού ταχυδρομείου</string>
+  <string name="email_copied_to_clipboard">Η διεύθυνση ηλεκτρονικού ταχυδρομείου αντιγράφηκε</string>
   <string name="username_copied_to_clipboard">Το όνομα χρήστη αντιγράφηκε</string>
   <string name="password_copied_to_clipboard">Ο κωδικός πρόσβασης αντιγράφηκε</string>
   <string name="website_copied_to_clipboard">Web address copied</string>
@@ -98,7 +98,7 @@
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Δεν μπορείτε να κοινοποιήσετε αυτό το στοιχείο επειδή βρίσκεται στα διαγραμμένα. Παρακαλούμε μετακινήστε το από τα διαγραμμένα πριν το κοινοποιήσετε.</string>
   <string name="password_score_vulnerable">Ευάλωτο</string>
   <string name="password_score_weak">Αδύναμο</string>
-  <string name="password_score_strong">Δυνατό</string>
+  <string name="password_score_strong">Ισχυρός</string>
   <string name="passkey_detail_bottomsheet_title">Κλειδί πρόσβασης</string>
   <string name="passkey_detail_bottomsheet_username">Όνομα Χρήστη</string>
   <string name="passkey_detail_bottomsheet_domain">Τομέας</string>

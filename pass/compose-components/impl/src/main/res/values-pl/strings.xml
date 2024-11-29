@@ -289,7 +289,7 @@
   <!-- Verification codes -->
   <string name="verification_code_not_received">Haven\'t received the code?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Sprawdź folder Spam w poszukiwaniu wiadomości \"%s\"</string>
-  <string name="verification_code_suggestion_subject_new_email_address">Potwierdź swój adres e-mail Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Potwierdź adres e-mail Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Potwierdź skrzynkę pocztową</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Jeśli nie możesz znaleźć wiadomości, %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">poproś o nowy kod</string>

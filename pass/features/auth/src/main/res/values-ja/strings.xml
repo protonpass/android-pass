@@ -24,9 +24,9 @@
   </plurals>
   <string name="auth_unlock_app_title">Proton Pass をロック解除</string>
   <string name="auth_unlock_app_subtitle">%s 用のマスターパスワードを入力</string>
-  <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
-  <string name="auth_unlock_app_subtitle_account_switch">Enter the master password for:</string>
-  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Enter the extra password for:</string>
+  <string name="auth_unlock_app_extra_password_subtitle">%sに追加のパスワードを入力してください</string>
+  <string name="auth_unlock_app_subtitle_account_switch">マスターパスワードを入力してください：</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">追加のパスワードを入力してください：</string>
   <string name="auth_master_password_label">マスターパスワード</string>
   <string name="auth_action_reveal_password">マスターパスワードを表示</string>
   <string name="auth_action_conceal_password">マスターパスワードを非表示</string>
@@ -35,16 +35,16 @@
   <string name="auth_unlock_button">ロック解除</string>
   <string name="auth_error_empty_password">パスワードは空にできません</string>
   <string name="auth_error_pin_cannot_be_empty">PIN コードを空にすることはできません</string>
-  <string name="auth_extra_password_label">Enter your extra password</string>
-  <string name="auth_extra_password_error">Error on authenticating with extra password</string>
-  <string name="auth_extra_password_too_many_attempts">Too many failed login attempts. You have been logged out.</string>
+  <string name="auth_extra_password_label">追加のパスワードを入力</string>
+  <string name="auth_extra_password_error">追加のパスワードの有効化にエラーが発生しています</string>
+  <string name="auth_extra_password_too_many_attempts">ログインの試行回数が多すぎます。ログアウトされます。</string>
   <string name="auth_error_wrong_password_no_attempts">パスワードが正しくありません</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="other">パスワードが正しくありません。あと %d 回試行できます。</item>
   </plurals>
   <plurals name="auth_attempts_remaining">
-    <item quantity="other">%d attempts remaining</item>
+    <item quantity="other">残りの試行回数%d</item>
   </plurals>
-  <string name="auth_pin_too_many_attempts">Too many failed pin attempts. All your users are being logged out.</string>
+  <string name="auth_pin_too_many_attempts">試行回数が多すぎます。すべてのユーザーがログアウトされます。</string>
   <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
 </resources>

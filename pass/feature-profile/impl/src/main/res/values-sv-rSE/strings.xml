@@ -78,4 +78,7 @@
   <string name="filtered_by_notes">Filtered by notes. Trashed items aren\'t shown</string>
   <string name="filtered_by_credit_cards">Filtered by credit cards. Trashed items aren\'t shown</string>
   <string name="filtered_by_identities">Filtered by identities. Trashed items aren\'t shown</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Du måste byta till %1$s för att hantera det</string>
+  <string name="account_switch_confirmation_title">Hantera konto</string>
+  <string name="account_switch_confirmation_confirm">Byt och hantera</string>
 </resources>

@@ -23,7 +23,7 @@
   <string name="simple_login_sync_management_domain_title">Aliasten oletusverkkotunnus</string>
   <string name="simple_login_sync_management_domain_option_blank">Ei valittuna</string>
   <string name="simple_login_sync_management_mailboxes_label">Postilaatikot</string>
-  <string name="simple_login_sync_management_mailboxes_description">Postilaatikko on paikka, johon aliakselle lähetetyt sähköpostit ohjataan. Se on tuttu postilaatikkosi, esim. Gmail, Outlook, Proton Mail jne.</string>
+  <string name="simple_login_sync_management_mailboxes_description">Postilaatikko on paikka, johon aliakselle lähetetyt sähköpostit välitetään. Se on tuttu postilaatikkosi, esim. Gmail, Outlook, Proton Mail jne.</string>
   <string name="simple_login_sync_management_mailbox_default">Oletus</string>
   <string name="simple_login_sync_management_mailbox_unverified">Vahvistamaton postilaatikko</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin-synkronointi</string>
@@ -43,7 +43,7 @@
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Vahvistuskoodi lähetettiin osoitteeseen %s. Syötä se alle:</string>
   <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">, jonka olet antanut</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Virheellinen postilaatikon vahvistuskoodi</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Invalid mailbox verification code limit reached, mailbox was deleted</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Virheellisten postilaatikon vahvistuskoodien raja saavutettu, postilaatikko poistettiin</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_error">Virhe vahvistettaessa postilaatikkoa</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_success">Postilaatikko vahvistettiin</string>
   <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Virhe lähetettäessä vahvistuskoodia</string>
@@ -58,6 +58,7 @@
   <string name="simple_login_sync_mailbox_delete_message_delete_error">Virhe poistettaessa postilaatikkoa</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">Postilaatikko poistettiin</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Siirrä aliakset</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Huomaa, että poistettuja aliaksia ei voi palauttaa</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Oletusverkkotunnus</string>
   <string name="simple_login_sync_domain_select_title_none">ei mitään</string>

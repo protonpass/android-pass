@@ -51,6 +51,8 @@
   <string name="home_notification_permission_banner_settings">Activer l\'autorisation ›</string>
   <string name="home_invite_banner_title">Coffre-fort partagé avec vous</string>
   <string name="home_invite_banner_subtitle">Vous avez une invitation pour un coffre-fort partagé. Appuyez pour avoir plus d\'informations.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s souhaite partager un élément avec vous.</string>
+  <string name="home_item_invite_banner_subtitle">Appuyez pour en savoir plus.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copier le mot de passe</string>
   <string name="bottomsheet_copy_username">Copier le nom d\'utilisateur</string>

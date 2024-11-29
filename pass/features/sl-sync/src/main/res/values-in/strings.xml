@@ -58,6 +58,7 @@
   <string name="simple_login_sync_mailbox_delete_message_delete_error">Terdapat kesalahan dalam menghapus kotak surat</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">Kotak surat berhasil dihapus</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transfer alias ke</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Mohon diperhatikan bahwa setelah dihapus, alias tidak akan lagi dapat dipulihkan</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Domain bawaan</string>
   <string name="simple_login_sync_domain_select_title_none">tidak ada</string>

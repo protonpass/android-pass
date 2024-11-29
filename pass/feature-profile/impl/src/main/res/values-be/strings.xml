@@ -84,4 +84,7 @@
   <string name="filtered_by_notes">Адфільтравана па нататках. Не паказаны элементы, якія знаходзяцца ў сметніцы</string>
   <string name="filtered_by_credit_cards">Адфільтравана па крэдытных картках. Не паказаны элементы, якія знаходзяцца ў сметніцы</string>
   <string name="filtered_by_identities">Адфільтравана па ідэнтычнасцях. Не паказаны элементы, якія знаходзяцца ў сметніцы</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Пераключыцеся на %1$s, каб кіраваць гэтым уліковым запісам</string>
+  <string name="account_switch_confirmation_title">Кіраванне ўліковым запісам</string>
+  <string name="account_switch_confirmation_confirm">Пераключыць і кіраваць</string>
 </resources>

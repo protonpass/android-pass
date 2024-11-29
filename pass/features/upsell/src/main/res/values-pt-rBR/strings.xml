@@ -31,9 +31,9 @@
   <string name="upsell_paid_feature_authenticator_essential">Requer A2F para a organização</string>
   <string name="upsell_paid_feature_sso_essential">Integração SSO (em breve)</string>
   <string name="upsell_paid_feature_advance_alias_management_title">Gerencie seus aliases</string>
-  <string name="upsell_paid_feature_advance_alias_management_subtitle">Advanced alias management is available with a paid plan. Upgrade for immediate access.</string>
-  <string name="upsell_paid_feature_item_sharing_title">Quickly share an item</string>
-  <string name="upsell_paid_feature_item_sharing_subtitle">Upgrade today so you can share an item with any Pass user. And enjoy other premium features:</string>
+  <string name="upsell_paid_feature_advance_alias_management_subtitle">O gerenciamento avançado de alias está disponível com um plano pago. Faça o upgrade para obter acesso imediato.</string>
+  <string name="upsell_paid_feature_item_sharing_title">Compartilhe rapidamente um item</string>
+  <string name="upsell_paid_feature_item_sharing_subtitle">Atualize hoje para poder compartilhar um item com qualquer usuário do Pass. E aproveite outros recursos premium:</string>
   <string name="upsell_button_upgrade">Obter Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Obtenha o Pass Business</string>
 </resources>

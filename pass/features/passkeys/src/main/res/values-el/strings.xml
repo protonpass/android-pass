@@ -21,6 +21,6 @@
   <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Επιλέξτε ένα κλειδί πρόσβασης από το Proton Pass</string>
   <string name="passkeys_user_logged_out">Έχετε αποσυνδεθεί. Παρακαλούμε συνδεθείτε ξανά ανοίγοντας την εφαρμογή.</string>
   <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Δημιουργία κλειδιού πρόσβασης</string>
-  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Είστε βέβαιοι ότι θέλετε να δημιουργήσετε ένα κλειδί πρόσβασης για το στοιχείο \'%s\';</string>
+  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Θέλετε σίγουρα να δημιουργήσετε ένα κλειδί πρόσβασης για το στοιχείο \'%s\';</string>
   <string name="passkey_error_generating_passkey">Δεν ήταν δυνατή η δημιουργία κλειδιού πρόσβασης</string>
 </resources>

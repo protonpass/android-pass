@@ -50,6 +50,8 @@
   <string name="home_notification_permission_banner_settings">Mở màn hình cấp quyền ›</string>
   <string name="home_invite_banner_title">Kho lưu trữ được chia sẽ với bạn</string>
   <string name="home_invite_banner_subtitle">Bạn được mời vào một kho lưu trữ. Chạm vào để biết thêm thông tin.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="home_item_invite_banner_subtitle">Tap for details.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Sao chép mật khẩu</string>
   <string name="bottomsheet_copy_username">Sao chép tên đăng nhập</string>

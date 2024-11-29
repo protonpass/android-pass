@@ -51,6 +51,8 @@
   <string name="home_notification_permission_banner_settings">Aktivera behörighet ›</string>
   <string name="home_invite_banner_title">Valv delade med dig</string>
   <string name="home_invite_banner_subtitle">Du är inbjuden till ett delat valv. Tryck för detaljer.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s vill dela ett objekt med dig.</string>
+  <string name="home_item_invite_banner_subtitle">Tryck för detaljer.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopiera lösenord</string>
   <string name="bottomsheet_copy_username">Kopiera användarnamn</string>

@@ -67,7 +67,8 @@ class CreditCardRowPreviewProvider : PreviewParameterProvider<CreditCardRowParam
                 modificationTime = Clock.System.now(),
                 lastAutofillTime = Clock.System.now(),
                 isPinned = false,
-                revision = 1
+                revision = 1,
+                shareCount = 0
             ),
             highlight = highlight
         )

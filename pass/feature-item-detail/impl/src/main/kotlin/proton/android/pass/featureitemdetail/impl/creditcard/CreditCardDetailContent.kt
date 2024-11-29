@@ -60,7 +60,7 @@ fun CreditCardDetailContent(
             modifier = Modifier.padding(Spacing.none, Spacing.mediumSmall),
             title = model.title,
             share = share,
-            onVaultClick = { onEvent(CreditCardDetailEvent.OnVaultClick) },
+            onShareClick = { onEvent(CreditCardDetailEvent.OnShareClick) },
             isPinned = isPinned,
             isShared = contents.model.isShared,
             shareCount = contents.model.shareCount,

@@ -34,7 +34,7 @@ sealed interface CreditCardDetailEvent {
 
     data object OnUpgradeClick : CreditCardDetailEvent
 
-    data object OnVaultClick : CreditCardDetailEvent
+    data object OnShareClick : CreditCardDetailEvent
 
     data object OnViewItemHistoryClicked : CreditCardDetailEvent
 

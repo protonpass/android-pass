@@ -26,8 +26,8 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasStats
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.Share
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 
@@ -45,7 +45,7 @@ sealed interface AliasDetailUiState {
     @Stable
     data class Success(
         val itemUiModel: ItemUiModel,
-        val vault: Vault?,
+        val share: Share,
         val mailboxes: PersistentList<AliasMailbox>,
         val isAliasCreatedByUser: Boolean,
         val slNote: String,
@@ -66,6 +66,7 @@ sealed interface AliasDetailUiState {
         val isSLAliasSyncEnabled: Boolean,
         val isAliasTrashDialogChecked: Boolean,
         val isAliasManagementEnabled: Boolean,
+        val hasMoreThanOneVault: Boolean,
         val attachments: List<Attachment>
     ) : AliasDetailUiState {
 

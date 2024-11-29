@@ -27,10 +27,19 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.PersistentSet
+import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAddAttachment
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOpen
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOptions
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnDeleteAllAttachments
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnCVVChange
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnCVVFocusChange
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnExpirationDateChange
@@ -40,6 +49,7 @@ import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEv
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnPinChange
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnPinFocusChange
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnTitleChange
+import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnAttachmentEvent
 
 @Composable
 fun CreditCardItemForm(
@@ -47,6 +57,8 @@ fun CreditCardItemForm(
     creditCardItemFormState: CreditCardItemFormState,
     enabled: Boolean,
     validationErrors: PersistentSet<CreditCardValidationErrors>,
+    isFileAttachmentsEnabled: Boolean,
+    attachmentList: List<Attachment>,
     onEvent: (CreditCardContentEvent) -> Unit
 ) {
     Column(
@@ -89,5 +101,17 @@ fun CreditCardItemForm(
             enabled = enabled,
             onChange = { onEvent(OnNoteChange(it)) }
         )
+        if (isFileAttachmentsEnabled) {
+            AttachmentSection(
+                files = attachmentList,
+                loadingFile = None,
+                isDetail = false,
+                colors = passItemColors(ItemCategory.Login),
+                onAttachmentOptions = { onEvent(OnAttachmentEvent(OnAttachmentOptions(it.id))) },
+                onAttachmentOpen = { onEvent(OnAttachmentEvent(OnAttachmentOpen(it.id))) },
+                onAddAttachment = { onEvent(OnAttachmentEvent(OnAddAttachment)) },
+                onTrashAll = { onEvent(OnAttachmentEvent(OnDeleteAllAttachments)) }
+            )
+        }
     }
 }

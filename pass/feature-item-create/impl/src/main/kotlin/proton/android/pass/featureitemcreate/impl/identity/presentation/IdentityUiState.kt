@@ -147,4 +147,10 @@ sealed interface IdentityUiState {
         is UpdateIdentity -> sharedState.showAddWorkDetailsButton
         else -> false
     }
+
+    fun showFileAttachments(): Boolean = when (this) {
+        is CreateIdentity -> sharedState.showFileAttachments
+        is UpdateIdentity -> sharedState.showFileAttachments
+        else -> false
+    }
 }

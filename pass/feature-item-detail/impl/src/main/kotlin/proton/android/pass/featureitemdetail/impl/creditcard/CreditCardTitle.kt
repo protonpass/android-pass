@@ -47,7 +47,7 @@ fun CreditCardTitle(
     isShared: Boolean,
     shareCount: Int,
     share: Share,
-    onVaultClick: () -> Unit,
+    onShareClick: () -> Unit,
     isPinned: Boolean,
     hasMoreThanOneVaultShare: Boolean
 ) {
@@ -79,7 +79,7 @@ fun CreditCardTitle(
                 shareCount = shareCount,
                 share = share,
                 itemCategory = ItemCategory.CreditCard,
-                onClick = onVaultClick,
+                onClick = onShareClick,
                 hasMoreThanOneVaultShare = hasMoreThanOneVaultShare
             )
         }
@@ -96,7 +96,7 @@ fun AliasTitlePreview(@PreviewParameter(ThemeItemTitleProvider::class) input: Pa
             CreditCardTitle(
                 title = params.itemUiModel.contents.title,
                 share = params.share,
-                onVaultClick = {},
+                onShareClick = {},
                 isPinned = params.itemUiModel.isPinned,
                 isShared = params.itemUiModel.isShared,
                 shareCount = params.itemUiModel.shareCount,

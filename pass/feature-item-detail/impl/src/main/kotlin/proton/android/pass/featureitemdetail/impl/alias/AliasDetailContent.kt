@@ -69,7 +69,7 @@ fun AliasDetailContent(
     onCopyAlias: (String) -> Unit,
     onCreateLoginFromAlias: (String) -> Unit,
     onToggleAliasState: (Boolean) -> Unit,
-    onVaultClick: () -> Unit,
+    onShareClick: () -> Unit,
     onViewItemHistoryClicked: () -> Unit,
     onContactsClicked: () -> Unit
 ) {
@@ -83,7 +83,7 @@ fun AliasDetailContent(
             title = contents.title,
             isActive = contents.isEnabled,
             share = share,
-            onVaultClick = onVaultClick,
+            onShareClick = onShareClick,
             isPinned = itemUiModel.isPinned,
             isShared = itemUiModel.isShared,
             shareCount = itemUiModel.shareCount,

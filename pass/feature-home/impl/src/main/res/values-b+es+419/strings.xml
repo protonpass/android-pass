@@ -51,6 +51,8 @@
   <string name="home_notification_permission_banner_settings">Activar permiso ›</string>
   <string name="home_invite_banner_title">Bóveda compartida con usted</string>
   <string name="home_invite_banner_subtitle">Se le invitó a una bóveda compartida. Pulse para ver los datos.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s desea compartir un elemento con usted.</string>
+  <string name="home_item_invite_banner_subtitle">Pulse para ver los detalles.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copiar contraseña</string>
   <string name="bottomsheet_copy_username">Copiar nombre de usuario</string>

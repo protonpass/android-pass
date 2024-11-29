@@ -50,6 +50,8 @@
   <string name="home_notification_permission_banner_settings">啟用權限 ›</string>
   <string name="home_invite_banner_title">與您分享的保管庫</string>
   <string name="home_invite_banner_subtitle">您被邀請加入共享的保管庫。點擊以取得詳細資料。</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="home_item_invite_banner_subtitle">Tap for details.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">複製密碼</string>
   <string name="bottomsheet_copy_username">複製使用者名稱</string>

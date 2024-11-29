@@ -53,6 +53,8 @@
   <string name="home_notification_permission_banner_settings">Povoľte oprávnenie ›</string>
   <string name="home_invite_banner_title">Trezor zdieľaný s vami</string>
   <string name="home_invite_banner_subtitle">Ste pozvaní do zdieľaného trezoru. Kliknite pre podrobnosti.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="home_item_invite_banner_subtitle">Tap for details.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopírovať heslo</string>
   <string name="bottomsheet_copy_username">Kopírovať meno používateľa</string>

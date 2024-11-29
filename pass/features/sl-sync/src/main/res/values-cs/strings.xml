@@ -58,6 +58,7 @@
   <string name="simple_login_sync_mailbox_delete_message_delete_error">Došlo k chybě při smazání této e-mailové schránky</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">E-mailová schránka byla úspěšně smazána</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Přenos aliasů do</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Upozorňujeme, že jednou smazané aliasy nelze obnovit</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Výchozí doména</string>
   <string name="simple_login_sync_domain_select_title_none">žádná</string>

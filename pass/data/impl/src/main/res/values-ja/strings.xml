@@ -20,5 +20,5 @@
   <string name="sync_channel">同期</string>
   <string name="sync_channel_description">アイテム同期用の通知チャネル</string>
   <string name="syncing_vaults">保管庫とアイテムの同期</string>
-  <string name="logging_out_free_users">Logging out extra free users</string>
+  <string name="logging_out_free_users">余分な無料ユーザーをログアウト</string>
 </resources>

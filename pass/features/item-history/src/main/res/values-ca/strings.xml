@@ -21,7 +21,7 @@
   <string name="item_history_restore_confirmation_dialog_title">Voleu restaurar aquesta versió?</string>
   <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">L\'element actual tornarà a la versió del dia %1$s</string>
   <string name="item_history_restore_snackbar_message_error">S\'ha produït un error en restaurar la revisió de l\'element</string>
-  <string name="item_history_restore_snackbar_message_success">La revisió de l\'element s\'ha restaurat correctament</string>
+  <string name="item_history_restore_snackbar_message_success">S\'ha restaurat la revisió de l\'element.</string>
   <string name="item_history_restore_tab_title_current">Actual</string>
   <string name="item_history_timeline_title">Història</string>
   <string name="item_history_timeline_node_child_title">Modificat</string>

@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Pokračovat</string>
   <string name="sharing_can_view">Prohlížející</string>
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Správce</string>
@@ -36,18 +35,20 @@
     <item quantity="many">%d členů</item>
     <item quantity="other">%d členů</item>
   </plurals>
+  <string name="sharing_member_count_header">Členové</string>
   <string name="share_with_title">Sdílet s</string>
   <string name="share_with_email_hint">E-mailová adresa</string>
   <string name="share_with_email_error">Neplatná e-mailová adresa</string>
   <string name="share_with_email_cannot_invite_outside_org">Nemůžete pozvat lidi mimo vaši organizaci. Pro více informací kontaktujte správce.</string>
   <string name="share_with_email_email_already_added">Tuto e-mailovou adresu jste již přidali</string>
   <string name="share_permissions_title">Nastavit úroveň přístupu</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vás zve k přístupu k položkám v</string>
-  <string name="sharing_join_shared_vault">Připojit a synchronizovat</string>
   <string name="sharing_reject_invitation">Odmítnout pozvánku</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Blahopřejeme, váš přístup byl potvrzen</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Prohlédnout sdílený trezor</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Zavřít</string>
+  <string name="sharing_vault_invitation_title">Pozvánka ke sdílenému trezoru</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s chce s vámi sdílet trezor.</string>
+  <string name="sharing_vault_invitation_accept">Připojit ke sdílenému trezoru</string>
+  <string name="sharing_item_invitation_title">Pozvánka ke sdílené položce</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s chce s vámi sdílet položku.</string>
+  <string name="sharing_item_invitation_accept">Přijmout a zobrazit položku</string>
   <string name="sharing_snackbar_get_invite_error">Nepodařilo se získat pozvánku</string>
   <string name="sharing_snackbar_invite_accepted">Pozvánka přijata</string>
   <string name="sharing_snackbar_invite_accept_error">Chyba při přijetí pozvánky</string>
@@ -65,7 +66,9 @@
   <string name="share_summary_title">Prohlédnout a sdílet</string>
   <string name="share_summary_vault">%s trezor</string>
   <string name="share_summary_share_vault">Sdílet trezor</string>
+  <string name="share_summary_share_item">Sdílet položku</string>
   <string name="share_summary_vault_title">Trezor</string>
+  <string name="share_summary_item_title">Položka</string>
   <string name="share_manage_vault_share_with_more_people">Sdílet s více lidmi</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Zbývá %d pozvánka</item>

@@ -58,6 +58,7 @@
   <string name="simple_login_sync_mailbox_delete_message_delete_error">A apărut o eroare la ștergerea contului de e-mail.</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">Contul de e-mail a fost șters.</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transferare aliasuri în</string>
+  <string name="simple_login_sync_mailbox_delete_warning">După ștergere, aliasurile nu mai pot fi restaurate.</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Domeniu implicit</string>
   <string name="simple_login_sync_domain_select_title_none">niciunul</string>

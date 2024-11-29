@@ -17,41 +17,41 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="description_field_label">What is your issue?</string>
+  <string name="description_field_label">問題はなんですか？</string>
   <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
-  <string name="email_field_label">Email</string>
-  <string name="email_field_hint">email</string>
-  <string name="attach_image_button">Attach image</string>
-  <string name="categories_title">What is your issue?</string>
-  <string name="report_toolbar_title">Report an issue</string>
-  <string name="send_report_button">Send report</string>
-  <string name="cancel_tips_button">Cancel</string>
-  <string name="contact_us_button">Contact us</string>
-  <string name="hint_tips_screen">Didn\'t work?</string>
-  <string name="report_reason_autofill">Autofill</string>
-  <string name="report_reason_sharing">Sharing</string>
-  <string name="report_reason_sync">Sync</string>
-  <string name="report_reason_passkeys">Passkeys</string>
-  <string name="report_reason_other">Other</string>
-  <string name="tips_title">Quick fixes for %1$s</string>
-  <string name="tips_subtitle">These tips could help you solve your issue faster.</string>
-  <string name="autofill_tip_restart">Try disabling and enabling the autofill service.</string>
-  <string name="autofill_tip_browser">Try another browser.</string>
-  <string name="sharing_tip_vault_sharing_guide">Having issues with vault sharing? Check our guide.</string>
-  <string name="sharing_tip_secure_links_guide">Having issues with secure links? Check our guide.</string>
-  <string name="sync_tip_force_refresh">Is your screen empty? Try doing a force sync.</string>
-  <string name="send_logs_label">Send logs</string>
-  <string name="report_sending_success">Report sent successfully.</string>
-  <string name="report_sending_error">Could not send the report.</string>
-  <string name="tips_passkey_check_guide">If you have any issues check our guide.</string>
+  <string name="email_field_label">メール</string>
+  <string name="email_field_hint">メール</string>
+  <string name="attach_image_button">画像を添付</string>
+  <string name="categories_title">問題はなんですか？</string>
+  <string name="report_toolbar_title">問題を報告</string>
+  <string name="send_report_button">報告を送信しました</string>
+  <string name="cancel_tips_button">キャンセル</string>
+  <string name="contact_us_button">私たちにご連絡ください</string>
+  <string name="hint_tips_screen">動作しませんか？</string>
+  <string name="report_reason_autofill">自動入力</string>
+  <string name="report_reason_sharing">共有</string>
+  <string name="report_reason_sync">同期</string>
+  <string name="report_reason_passkeys">パスキー</string>
+  <string name="report_reason_other">その他</string>
+  <string name="tips_title">%1$sを簡易修正</string>
+  <string name="tips_subtitle">ヒントはあなたの問題をより迅速に解決するために役立ちます。</string>
+  <string name="autofill_tip_restart">自動入力サービスを無効にしてから再度有効にしてみてください。</string>
+  <string name="autofill_tip_browser">他のブラウザをお試しください。</string>
+  <string name="sharing_tip_vault_sharing_guide">保管庫の共有に問題がありますか？ガイドを参照してください。</string>
+  <string name="sharing_tip_secure_links_guide">セキュアリンクに問題がありますか？ガイドを参照してください。</string>
+  <string name="sync_tip_force_refresh">画面に何もありませんか？強制同期を試してみてください。</string>
+  <string name="send_logs_label">ログを送信</string>
+  <string name="report_sending_success">報告は正しく送信されました</string>
+  <string name="report_sending_error">報告が送信できませんでした</string>
+  <string name="tips_passkey_check_guide">問題がある場合は、ガイドを参照してください。</string>
   <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
-  <string name="tips_passkeys_credential_manager_not_supported">The manufacturer of the device doesn\'t provide a credential manager.</string>
-  <string name="tips_passkey_supported">Passkeys supported</string>
-  <string name="tips_passkey_not_supported">Passkeys not supported</string>
-  <string name="report_steps" comment="Indicator showing report progress">Step %1$d of %2$d</string>
-  <string name="description_cannot_be_blank">Description cannot be blank</string>
-  <string name="description_is_too_short">Description is too short</string>
-  <string name="description_is_too_long">Description is too long</string>
-  <string name="email_cannot_be_blank">Email cannot be blank</string>
-  <string name="email_invalid">Invalid email address</string>
+  <string name="tips_passkeys_credential_manager_not_supported">デバイスの製造元は、資格情報マネージャーを提供していません。</string>
+  <string name="tips_passkey_supported">パスキーがサポートされています</string>
+  <string name="tips_passkey_not_supported">パスキーがサポートされていません</string>
+  <string name="report_steps" comment="Indicator showing report progress">ステップ %1$d / %2$d</string>
+  <string name="description_cannot_be_blank">詳細は空白にできません</string>
+  <string name="description_is_too_short">詳細が短すぎます</string>
+  <string name="description_is_too_long">詳細が長すぎます</string>
+  <string name="email_cannot_be_blank">メールは空白にできません</string>
+  <string name="email_invalid">無効なメールアドレス</string>
 </resources>

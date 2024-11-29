@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Nadaljuj</string>
   <string name="sharing_can_view">Preglednik</string>
   <string name="sharing_can_edit">Urejevalnik</string>
   <string name="sharing_can_manage">Administrator</string>
@@ -36,18 +35,20 @@
     <item quantity="few">%d člani</item>
     <item quantity="other">%d članov</item>
   </plurals>
+  <string name="sharing_member_count_header">Člani</string>
   <string name="share_with_title">Deli z</string>
   <string name="share_with_email_hint">E-poštni naslov</string>
   <string name="share_with_email_error">Neveljaven e-poštni naslov</string>
   <string name="share_with_email_cannot_invite_outside_org">Ne morete povabiti ljudi izven vaše organizacije, za več informacij se obrnite na skrbnika.</string>
   <string name="share_with_email_email_already_added">You have already added this email address</string>
   <string name="share_permissions_title">Nastavite raven dostopa</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vas vabi k dostopu do predmetov v</string>
-  <string name="sharing_join_shared_vault">Pridružite se in sinhronizirajte</string>
   <string name="sharing_reject_invitation">Zavrni povabilo</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Čestitamo, vaš dostop je potrjen</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Oglejte si skupni trezor</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Zapri</string>
+  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="sharing_vault_invitation_accept">Join shared vault</string>
+  <string name="sharing_item_invitation_title">Shared item invitation</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="sharing_item_invitation_accept">Accept and view the item</string>
   <string name="sharing_snackbar_get_invite_error">Povabila ni bilo mogoče dobiti</string>
   <string name="sharing_snackbar_invite_accepted">Povabilo sprejeto</string>
   <string name="sharing_snackbar_invite_accept_error">Napaka pri sprejemanju povabila</string>
@@ -65,7 +66,9 @@
   <string name="share_summary_title">Preglejte in delite</string>
   <string name="share_summary_vault">%s trezor</string>
   <string name="share_summary_share_vault">Skupni trezor</string>
+  <string name="share_summary_share_item">Share item</string>
   <string name="share_summary_vault_title">Trezor</string>
+  <string name="share_summary_item_title">Item</string>
   <string name="share_manage_vault_share_with_more_people">Delite z več ljudmi</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d ostane povabilo</item>

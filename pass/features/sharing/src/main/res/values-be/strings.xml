@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Працягнуць</string>
   <string name="sharing_can_view">Праглядальнік</string>
   <string name="sharing_can_edit">Рэдактар​​</string>
   <string name="sharing_can_manage">Адміністратар</string>
@@ -36,18 +35,20 @@
     <item quantity="many">%d удзельнікаў</item>
     <item quantity="other">%d удзельнікаў</item>
   </plurals>
+  <string name="sharing_member_count_header">Удзельнікі</string>
   <string name="share_with_title">Абагуліць з</string>
   <string name="share_with_email_hint">Адрас электроннай пошты</string>
   <string name="share_with_email_error">Памылковы адрас электроннай пошты</string>
   <string name="share_with_email_cannot_invite_outside_org">У вас няма магчымасці запрашаць карыстальнікаў па-за межамі вашай арганізацыі. Звяжыцеся з адміністратарам, каб атрымаць дадатковыя звесткі</string>
   <string name="share_with_email_email_already_added">Вы ўжо дадавалі гэты адрас электроннай пошты</string>
   <string name="share_permissions_title">Задаць узровень доступу</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s запрасіў(-ла) вас атрымаць доступ да элементаў у</string>
-  <string name="sharing_join_shared_vault">Далучыцца і сінхранізаваць</string>
   <string name="sharing_reject_invitation">Адхіліць запрашэнне</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Віншуем! Ваш доступ пацверджаны</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Паглядзець абагуленае сховішча</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Закрыць</string>
+  <string name="sharing_vault_invitation_title">Запрашэнне да абагуленага сховішча</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s хоча абагуліць сховішча з вамі.</string>
+  <string name="sharing_vault_invitation_accept">Далучыцца да абагуленага сховішча</string>
+  <string name="sharing_item_invitation_title">Запрашэнне да абагуленага элемента</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s хоча абагуліць элемент з вамі.</string>
+  <string name="sharing_item_invitation_accept">Прыняць і паглядзець элемент</string>
   <string name="sharing_snackbar_get_invite_error">Немагчыма атрымаць запрашэнне</string>
   <string name="sharing_snackbar_invite_accepted">Запрашэнне прынята</string>
   <string name="sharing_snackbar_invite_accept_error">Памылка прымання запрашэння</string>
@@ -65,7 +66,9 @@
   <string name="share_summary_title">Прагляд і абагульненне</string>
   <string name="share_summary_vault">%s сховішча</string>
   <string name="share_summary_share_vault">Абагуліць сховішча</string>
+  <string name="share_summary_share_item">Абагуліць элемент</string>
   <string name="share_summary_vault_title">Сховішча</string>
+  <string name="share_summary_item_title">Элемент</string>
   <string name="share_manage_vault_share_with_more_people">Абагуліць з большай колькасцю карыстальнікаў</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Засталося %d запрашэнне</item>

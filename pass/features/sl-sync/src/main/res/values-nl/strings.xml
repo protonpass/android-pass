@@ -58,6 +58,7 @@
   <string name="simple_login_sync_mailbox_delete_message_delete_error">Er is een fout opgetreden bij het verwijderen van de mailbox</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">Mailbox succesvol verwijderd</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Verplaats aliassen naar</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Houd er rekening mee dat aliassen die verwijderd zijn niet meer hersteld kunnen worden</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Standaard domein</string>
   <string name="simple_login_sync_domain_select_title_none">geen</string>

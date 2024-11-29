@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Fortsett</string>
   <string name="sharing_can_view">Leser</string>
   <string name="sharing_can_edit">Redaktør</string>
   <string name="sharing_can_manage">Administrator</string>
@@ -32,18 +31,20 @@
     <item quantity="one">%d medlem</item>
     <item quantity="other">%d medlemmer</item>
   </plurals>
+  <string name="sharing_member_count_header">Medlemmer</string>
   <string name="share_with_title">Del med</string>
   <string name="share_with_email_hint">E-postadresse</string>
   <string name="share_with_email_error">Ugyldig e-postadresse</string>
   <string name="share_with_email_cannot_invite_outside_org">Du kan ikke invitere personer utenfor organisasjonen, kontakt administrator for mer informasjon.</string>
   <string name="share_with_email_email_already_added">Du har allerede lagt til denne e-postadressen</string>
   <string name="share_permissions_title">Sett tilgangsnivå</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s inviterer deg til å få tilgang til elementer i</string>
-  <string name="sharing_join_shared_vault">Bli med og synkroniser</string>
   <string name="sharing_reject_invitation">Avslå invitasjonen</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Gratulerer, tilgangen din er bekreftet</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Se delt hvelv</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Lukk</string>
+  <string name="sharing_vault_invitation_title">Delt hvelvinvitasjon</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s ønsker å dele et hvelv med deg.</string>
+  <string name="sharing_vault_invitation_accept">Bli med delt hvelv</string>
+  <string name="sharing_item_invitation_title">Delt elementinvitasjon</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s ønsker å dele et element med deg.</string>
+  <string name="sharing_item_invitation_accept">Aksepter og se elementet</string>
   <string name="sharing_snackbar_get_invite_error">Kunne ikke få invitasjon</string>
   <string name="sharing_snackbar_invite_accepted">Invitasjon godtatt</string>
   <string name="sharing_snackbar_invite_accept_error">Feil under godkjenning av invitasjonen</string>
@@ -61,7 +62,9 @@
   <string name="share_summary_title">Se over og del</string>
   <string name="share_summary_vault">%s hvelv</string>
   <string name="share_summary_share_vault">Del hvelv</string>
+  <string name="share_summary_share_item">Del element</string>
   <string name="share_summary_vault_title">Hvelv</string>
+  <string name="share_summary_item_title">Element</string>
   <string name="share_manage_vault_share_with_more_people">Del med flere</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d invitasjon igjen</item>

@@ -17,8 +17,8 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="item_details_toolbar_content_description_menu_button">Button for displaying menu options</string>
-  <string name="item_details_toolbar_content_description_share_button">Button for sharing an item</string>
+  <string name="item_details_toolbar_content_description_menu_button">メニューオプション表示ボタン</string>
+  <string name="item_details_toolbar_content_description_share_button">アイテム共有ボタン</string>
   <!-- Item details forbidden actions -->
   <string name="item_details_forbidden_actions_edit_title">編集できません</string>
   <string name="item_details_forbidden_actions_edit_permission">十分な権限がないため、このアイテムを編集できません。</string>
@@ -27,5 +27,5 @@
   <string name="item_details_forbidden_actions_share_title">共有できません</string>
   <string name="item_details_forbidden_actions_share_limit">保管庫の共有制限に達しました。さらに多くのボールトを共有するには、現在のプランをアップグレードしてください。</string>
   <string name="item_details_forbidden_actions_share_permission">この保管庫を共有するための十分な権限がありません。</string>
-  <string name="item_details_forbidden_actions_share_trash">You cannot share this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
+  <string name="item_details_forbidden_actions_share_trash">このアイテムはゴミ箱にあるため共有できません。編集する前にゴミ箱から移動してください。</string>
 </resources>

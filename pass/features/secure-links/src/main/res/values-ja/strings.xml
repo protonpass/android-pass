@@ -19,45 +19,45 @@
 <resources>
   <!--Create screen-->
   <string name="secure_links_create_title">セキュアリンクを共有</string>
-  <string name="secure_links_create_row_expiration_title">Link expires after</string>
+  <string name="secure_links_create_row_expiration_title">リンクの有効期限が切れるまで</string>
   <string name="secure_links_create_row_expiration_options_one_hour">1 時間</string>
   <string name="secure_links_create_row_expiration_options_one_day">1 日</string>
   <string name="secure_links_create_row_expiration_options_seven_days">7日間</string>
   <string name="secure_links_create_row_expiration_options_fourteen_days">14日間</string>
   <string name="secure_links_create_row_expiration_options_thirty_days">30日間</string>
-  <string name="secure_links_create_row_max_views_title">Restrict number of views</string>
-  <string name="secure_links_create_row_max_views_subtitle">Maximum views: %d</string>
+  <string name="secure_links_create_row_max_views_title">表示回数を制限する</string>
+  <string name="secure_links_create_row_max_views_subtitle">最大表示回数：%d</string>
   <string name="secure_links_create_button_generate">セキュアリンクを生成</string>
-  <string name="secure_links_create_snackbar_message_error">There was an error generating secure link</string>
+  <string name="secure_links_create_snackbar_message_error">セキュアリンクの生成にエラーが発生しました</string>
   <!--Overview screen-->
-  <string name="secure_links_overview_widget_expiration_title">Expires in:</string>
-  <string name="secure_links_overview_widget_max_views_title">Can be viewed:</string>
-  <string name="secure_links_overview_widget_open_times_title">Opened:</string>
+  <string name="secure_links_overview_widget_expiration_title">有効期限：</string>
+  <string name="secure_links_overview_widget_max_views_title">表示できる：</string>
+  <string name="secure_links_overview_widget_open_times_title">開いた：</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="other">%d 回</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">無制限</string>
-  <string name="secure_links_overview_button_view_all_links">View all your secure links</string>
+  <string name="secure_links_overview_button_view_all_links">全てのセキュアリンクを表示</string>
   <!--List screen-->
   <string name="secure_links_list_title">セキュアリンク</string>
-  <string name="secure_links_list_empty_title">No secure links</string>
-  <string name="secure_links_list_empty_subtitle">You can start creating secure links from an item details sharing options</string>
-  <string name="secure_links_list_expiration_description">Expires in %s</string>
+  <string name="secure_links_list_empty_title">セキュアリンクがありません</string>
+  <string name="secure_links_list_empty_subtitle">アイテムの詳細の共有オプションからセキュアリンクを作成して始めることができます</string>
+  <string name="secure_links_list_expiration_description">有効期限%s</string>
   <string name="secure_links_list_expired_description">有効期限切れ</string>
   <plurals name="secure_links_list_viewed_times_description">
-    <item quantity="other">%d views</item>
+    <item quantity="other">%d件の表示</item>
   </plurals>
-  <string name="secure_links_list_snackbar_message_links_fetch_error">There was an error fetching secure links</string>
-  <string name="secure_links_list_header_title_inactive">Inactive links</string>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">セキュアリンクの取得にエラーが発生しました</string>
+  <string name="secure_links_list_header_title_inactive">非アクティブなリンク</string>
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">リンクをコピー</string>
   <string name="secure_links_shared_action_share_link">共有リンク</string>
   <string name="secure_links_shared_action_delete_link">リンクを削除</string>
-  <string name="secure_links_shared_action_delete_link_inactive">Remove inactive link</string>
-  <string name="secure_links_shared_action_delete_links_inactive">Remove all inactive links</string>
-  <string name="secure_links_shared_snackbar_message_link_copied">Secure link copied</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Secure link deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_error">There was an error deleting secure link</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Inactive secure links deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">There was an error deleting inactive secure links</string>
+  <string name="secure_links_shared_action_delete_link_inactive">非アクティブなリンクを削除</string>
+  <string name="secure_links_shared_action_delete_links_inactive">全ての非アクティブなリンクを削除</string>
+  <string name="secure_links_shared_snackbar_message_link_copied">セキュアリンクがコピーされました</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">セキュアリンクの削除がキャンセルされました</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">セキュアリンクの削除にエラーが発生しました</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">非アクティブなセキュアリンクの削除がキャンセルされました</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">非アクティブなセキュアリンクの削除にエラーが発生しました</string>
 </resources>

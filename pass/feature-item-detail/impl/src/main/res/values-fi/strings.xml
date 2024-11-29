@@ -41,7 +41,7 @@
     <item quantity="one">%d muu kirjautumistieto käyttää samaa salasanaa</item>
     <item quantity="other">%d muuta kirjautumistietoa käyttää samaa salasanaa</item>
   </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Tehosta suojausta määrittämällä kaksivaiheinen tunnistautuminen</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Vahvista suojausta määrittämällä 2FA</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Palvelu mahdollistaa kaksivaiheisen tunnistautumisen. Paranna tilin suojausta ottamalla se käyttöön.</string>
   <string name="login_item_reused_passwords_subtitle">Holviesi tätä salasanaa käyttävät kohteet.</string>
   <string name="field_email">Sähköpostiosoite</string>

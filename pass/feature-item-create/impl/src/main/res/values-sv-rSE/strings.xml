@@ -187,4 +187,13 @@
   <string name="remove_passkey_dialog_title">Ta bort denna passkey?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Du håller på att ta bort passkey för användare \'%1$s\' för \'%2$s\'. Är du säker?</string>
   <string name="add_a_custom_section">Lägg till en anpassad sektion</string>
+  <string name="add_attachment_take_a_photo">Ta ett foto</string>
+  <string name="add_attachment_choose_a_photo_or_video">Välj ett foto eller video</string>
+  <string name="add_attachment_choose_a_file">Välj en fil</string>
+  <string name="attachment_options_open">Öppna</string>
+  <string name="attachment_options_save">Spara</string>
+  <string name="attachment_options_rename">Byt namn</string>
+  <string name="attachment_options_delete">Ta bort</string>
+  <string name="banner_title_attachments">Bilagor</string>
+  <string name="banner_body_attachments">Du kan bifoga filer till objekt för en bättre organisering</string>
 </resources>

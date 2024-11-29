@@ -26,12 +26,12 @@
   <string name="configure_extra_password_mismatch">パスワードが一致しません</string>
   <string name="extra_password_options_remove">削除</string>
   <string name="info_extra_password_title">追加パスワード</string>
-  <string name="info_extra_password_body">Protect Proton Pass with an extra password.</string>
+  <string name="info_extra_password_body">追加のパスワードでProton Passを保護</string>
   <string name="info_extra_password_button">追加のパスワードを設定する</string>
-  <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>
-  <string name="configure_extra_password_password_too_short">Extra password must have at least 8 characters</string>
+  <string name="configure_extra_password_cannot_be_blank">パスワードは空白にできません</string>
+  <string name="configure_extra_password_password_too_short">追加のパスワードは最低 8 文字必要です</string>
   <string name="confirm_extra_password_title">追加のパスワードを設定する</string>
-  <string name="confirm_extra_password_body">You will be logged out and will have to log in again on all of your other devices.</string>
-  <string name="confirm_extra_password_error">Could not set extra password</string>
-  <string name="confirm_extra_password_success">Extra password set</string>
+  <string name="confirm_extra_password_body">ログアウトされ、他の全てのデバイスで再度ログインする必要があります</string>
+  <string name="confirm_extra_password_error">追加のパスワードを設定できませんでした</string>
+  <string name="confirm_extra_password_success">追加のパスワードが設定されました</string>
 </resources>

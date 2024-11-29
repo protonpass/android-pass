@@ -204,7 +204,8 @@ fun CreateAliasBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider:
                     hasUserEditedContent = false,
                     hasReachedAliasLimit = false,
                     canUpgrade = false,
-                    isAliasManagementEnabled = false
+                    isAliasManagementEnabled = false,
+                    isFileAttachmentEnabled = false
                 ),
                 aliasItemFormState = AliasItemFormState(
                     title = "some title",

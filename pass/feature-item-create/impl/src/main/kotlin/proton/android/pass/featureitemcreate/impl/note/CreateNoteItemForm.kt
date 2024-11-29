@@ -33,6 +33,9 @@ import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.attachments.AttachmentRow
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOpen
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOptions
+import proton.android.pass.featureitemcreate.impl.note.NoteContentUiEvent.OnAttachmentEvent
 
 @Composable
 internal fun CreateNoteItemForm(
@@ -90,10 +93,10 @@ internal fun CreateNoteItemForm(
                         isLoading = false,
                         isEnabled = true,
                         onOptionsClick = {
-                            onEvent(NoteContentUiEvent.OnAttachmentOptions(attachment.id))
+                            onEvent(OnAttachmentEvent(OnAttachmentOptions(attachment.id)))
                         },
                         onAttachmentOpen = {
-                            onEvent(NoteContentUiEvent.OnAttachmentOpen(attachment.id))
+                            onEvent(OnAttachmentEvent(OnAttachmentOpen(attachment.id)))
                         }
                     )
                 }

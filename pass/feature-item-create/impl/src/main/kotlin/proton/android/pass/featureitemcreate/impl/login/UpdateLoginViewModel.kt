@@ -102,18 +102,18 @@ class UpdateLoginViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val createAlias: CreateAlias,
     private val workerLauncher: WorkerLauncher,
+    private val totpManager: TotpManager,
+    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
-    private val totpManager: TotpManager,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    savedStateHandleProvider: SavedStateHandleProvider,
     draftRepository: DraftRepository,
-    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     emailValidator: EmailValidator,
     observeTooltipEnabled: ObserveTooltipEnabled,
     disableTooltip: DisableTooltip,
-    userPreferencesRepository: UserPreferencesRepository
+    userPreferencesRepository: UserPreferencesRepository,
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -124,11 +124,12 @@ class UpdateLoginViewModel @Inject constructor(
     draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider,
     passwordStrengthCalculator = passwordStrengthCalculator,
-    savedStateHandleProvider = savedStateHandleProvider,
     emailValidator = emailValidator,
     observeTooltipEnabled = observeTooltipEnabled,
     disableTooltip = disableTooltip,
-    userPreferencesRepository = userPreferencesRepository
+    userPreferencesRepository = userPreferencesRepository,
+    featureFlagsRepository = featureFlagsRepository,
+    savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: ShareId = savedStateHandleProvider.get()
         .require<String>(CommonNavArgId.ShareId.key)

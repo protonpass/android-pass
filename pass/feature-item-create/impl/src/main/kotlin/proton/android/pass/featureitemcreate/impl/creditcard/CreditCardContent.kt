@@ -9,6 +9,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.Submit
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.Up
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.Upgrade
@@ -55,6 +56,8 @@ fun CreditCardContent(
             creditCardItemFormState = creditCardItemFormState,
             enabled = !state.isLoading,
             validationErrors = state.validationErrors,
+            isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
+            attachmentList = emptyList(),
             onEvent = onEvent
         )
     }
@@ -96,6 +99,9 @@ sealed interface CreditCardContentEvent {
 
     @JvmInline
     value class OnVaultSelect(val shareId: ShareId) : CreditCardContentEvent
+
+    @JvmInline
+    value class OnAttachmentEvent(val event: AttachmentContentEvent) : CreditCardContentEvent
 }
 
 

@@ -125,6 +125,9 @@ fun CreateCreditCardScreen(
                                 actionAfterKeyboardHide =
                                     { onNavigate(CreateCreditCardNavigation.SelectVault(event.shareId)) }
 
+                            is CreditCardContentEvent.OnAttachmentEvent -> {
+                                // handle attachment events
+                            }
                         }
                     }
                 )

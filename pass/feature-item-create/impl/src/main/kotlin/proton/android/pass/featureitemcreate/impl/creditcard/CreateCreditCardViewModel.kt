@@ -45,6 +45,7 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -58,12 +59,14 @@ class CreateCreditCardViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     observeVaults: ObserveVaultsWithItemCount,
-    savedStateHandleProvider: SavedStateHandleProvider,
     canPerformPaidAction: CanPerformPaidAction,
-    observeDefaultVault: ObserveDefaultVault
+    observeDefaultVault: ObserveDefaultVault,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCreditCardViewModel(
     encryptionContextProvider = encryptionContextProvider,
     canPerformPaidAction = canPerformPaidAction,
+    featureFlagsRepository = featureFlagsRepository,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: Option<ShareId> =

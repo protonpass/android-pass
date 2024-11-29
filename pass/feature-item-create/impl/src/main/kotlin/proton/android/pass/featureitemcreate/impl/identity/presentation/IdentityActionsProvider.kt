@@ -80,7 +80,8 @@ data class IdentitySharedUiState(
     val isItemSaved: ItemSavedState,
     val extraFields: PersistentSet<ExtraField>,
     val focusedField: Option<FocusedField>,
-    val canUseCustomFields: Boolean
+    val canUseCustomFields: Boolean,
+    val isFileAttachmentsEnabled: Boolean
 ) {
 
     val showAddPersonalDetailsButton: Boolean = if (canUseCustomFields) {
@@ -107,6 +108,8 @@ data class IdentitySharedUiState(
         !extraFields.containsAll(setOf(PersonalWebsite, WorkPhoneNumber, WorkEmail))
     }
 
+    val showFileAttachments = isFileAttachmentsEnabled
+
     companion object {
         val Initial = IdentitySharedUiState(
             isLoadingState = IsLoadingState.NotLoading,
@@ -115,7 +118,8 @@ data class IdentitySharedUiState(
             isItemSaved = ItemSavedState.Unknown,
             extraFields = persistentSetOf(),
             focusedField = None,
-            canUseCustomFields = false
+            canUseCustomFields = false,
+            isFileAttachmentsEnabled = false
         )
     }
 }

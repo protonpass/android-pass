@@ -84,6 +84,8 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsh
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkPhoneNumber
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Yahoo
 import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @Suppress("TooManyFunctions", "LargeClass")
@@ -93,6 +95,7 @@ class IdentityActionsProviderImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val identityFieldDraftRepository: IdentityFieldDraftRepository,
     private val observeUpgradeInfo: ObserveUpgradeInfo,
+    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : IdentityActionsProvider {
 
@@ -611,6 +614,7 @@ class IdentityActionsProviderImpl @Inject constructor(
         identityFieldDraftRepository.observeExtraFields().map(Set<ExtraField>::toPersistentSet),
         identityFieldDraftRepository.observeLastAddedExtraField(),
         observeUpgradeInfo().distinctUntilChanged().asLoadingResult().map(::canUseCustomFields),
+        featureFlagsRepository[FeatureFlag.FILE_ATTACHMENTS_V1],
         ::IdentitySharedUiState
     )
 

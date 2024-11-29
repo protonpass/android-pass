@@ -136,6 +136,10 @@ fun CreateIdentityScreen(
 
                     is IdentityContentEvent.OnCustomFieldFocused ->
                         viewModel.onCustomFieldFocusChange(event.index, event.isFocused, event.customExtraField)
+
+                    is IdentityContentEvent.OnAttachmentEvent -> {
+                        // handle attachment event
+                    }
                 }
             }
         )

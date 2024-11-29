@@ -53,6 +53,8 @@
   <string name="home_notification_permission_banner_settings">Надати дозвіл ›</string>
   <string name="home_invite_banner_title">Вам надано спільний доступ до сховища</string>
   <string name="home_invite_banner_subtitle">Вас запрошено до спільного сховища. Торкніться для перегляду подробиць.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="home_item_invite_banner_subtitle">Tap for details.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Копіювати пароль</string>
   <string name="bottomsheet_copy_username">Копіювати ім\'я користувача</string>

@@ -78,4 +78,7 @@
   <string name="filtered_by_notes">Filtreret efter noter. Elementer i papirkurven vises ikke</string>
   <string name="filtered_by_credit_cards">Filtreret efter betalingskort. Elementer i papirkurven vises ikke</string>
   <string name="filtered_by_identities">Filtreret efter identiteter. Elementer i papirkurven vises ikke</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">You need to switch to %1$s in order to manage it</string>
+  <string name="account_switch_confirmation_title">Manage account</string>
+  <string name="account_switch_confirmation_confirm">Switch and manage</string>
 </resources>

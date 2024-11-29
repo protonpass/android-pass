@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">계속하기</string>
   <string name="sharing_can_view">보기</string>
   <string name="sharing_can_edit">편집자</string>
   <string name="sharing_can_manage">관리자</string>
@@ -30,18 +29,20 @@
   <plurals name="sharing_member_count">
     <item quantity="other">%d명 회원</item>
   </plurals>
+  <string name="sharing_member_count_header">구성원</string>
   <string name="share_with_title">공유 대상:</string>
   <string name="share_with_email_hint">이메일 주소</string>
   <string name="share_with_email_error">유효하지 않은 이메일 주소입니다.</string>
   <string name="share_with_email_cannot_invite_outside_org">조직으로 사용자를 초대할 수 없습니다. 더 자세한 내용은 관리자에게 문의하십시오.</string>
   <string name="share_with_email_email_already_added">이미 이 이메일 주소를 추가했습니다.</string>
   <string name="share_permissions_title">접근 수준 설정</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s님이 항목 공유를 초대합니다:</string>
-  <string name="sharing_join_shared_vault">참가 및 동기화</string>
   <string name="sharing_reject_invitation">초대 거절</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">축하합니다! 접근이 수락되었습니다.</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">공유된 금고 보기</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">닫기</string>
+  <string name="sharing_vault_invitation_title">공유된 금고 초대</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s님이 나와 금고를 공유하고자 합니다.</string>
+  <string name="sharing_vault_invitation_accept">공유 금고 참가</string>
+  <string name="sharing_item_invitation_title">공유된 금고 초대</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s님이 나와 항목을 공유하고자 합니다.</string>
+  <string name="sharing_item_invitation_accept">항목 공유 수락 및 확인</string>
   <string name="sharing_snackbar_get_invite_error">초대할 수 없습니다</string>
   <string name="sharing_snackbar_invite_accepted">초대가 수락됨</string>
   <string name="sharing_snackbar_invite_accept_error">초대 수락 중 오류</string>
@@ -59,7 +60,9 @@
   <string name="share_summary_title">검토 및 공유</string>
   <string name="share_summary_vault">%s개 금고</string>
   <string name="share_summary_share_vault">금고 공유</string>
+  <string name="share_summary_share_item">공유된 금고</string>
   <string name="share_summary_vault_title">금고</string>
+  <string name="share_summary_item_title">항목</string>
   <string name="share_manage_vault_share_with_more_people">더 많은 사람과 공유</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d개 초대 남음</item>

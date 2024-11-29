@@ -31,7 +31,7 @@
   <string name="unblock_button">Разблокировать контакт</string>
   <string name="block_button">Заблокировать контакт</string>
   <string name="contact_created_date" comment="date of creation">Создан %1$s назад</string>
-  <string name="no_activity_contact">Нет активности за последние 14 дней.</string>
+  <string name="no_activity_contact">No activity in the last 14 days.</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">за последние 14 дней.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$dпереслано</item>
@@ -57,14 +57,14 @@
   <string name="snackbar_contact_block_error">Не удалось заблокировать контакт</string>
   <string name="snackbar_contact_unblock_success">Контакт разблокирован</string>
   <string name="snackbar_contact_unblock_error">Не удалось разблокировать контакт</string>
-  <string name="snackbar_delete_contact_success">Contact deleted</string>
+  <string name="snackbar_delete_contact_success">Контакт удален</string>
   <string name="snackbar_delete_contact_error">Could not delete contact</string>
-  <string name="snackbar_email_copied_success">Email copied to clipboard</string>
-  <string name="contact_option_send_email">Send email</string>
-  <string name="contact_option_copy_address">Copy address</string>
-  <string name="contact_option_block_contact">Block contact</string>
-  <string name="contact_option_unblock_contact">Unblock contact</string>
-  <string name="contact_option_delete">Delete</string>
+  <string name="snackbar_email_copied_success">Эл. почта скопирована в буфер обмена</string>
+  <string name="contact_option_send_email">Отправить электронное письмо</string>
+  <string name="contact_option_copy_address">Копировать адрес</string>
+  <string name="contact_option_block_contact">Заблокировать контакт</string>
+  <string name="contact_option_unblock_contact">Разблокировать контакт</string>
+  <string name="contact_option_delete">Удалить</string>
   <string name="alias_contacts_bottomsheet_title">Контакты 
 Псевдонима</string>
   <string name="alias_contacts_bottomsheet_subtitle">Чтобы скрыть свой личный адрес электронной почты, вы можете создать контакт с псевдонимом, который будет маскировать ваш адрес.</string>

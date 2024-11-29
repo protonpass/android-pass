@@ -37,7 +37,7 @@
   <string name="simple_login_sync_enable_snackbar_success">Synkronisering av SimpleLogin-alias aktiverat</string>
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Lägg till brevlåda</string>
-  <string name="simple_login_sync_mailbox_create_message_error">There was an error adding the mailbox</string>
+  <string name="simple_login_sync_mailbox_create_message_error">Det gick inte lägga till brevlådan</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Bekräfta din brevlåda</string>
   <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Vi skickade en verifieringskod till %s. Ange den nedan:</string>
@@ -46,7 +46,7 @@
   <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Invalid mailbox verification code limit reached, mailbox was deleted</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_error">Det uppstod ett fel vid verifiering av brevlådan</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_success">Brevlåda verifierad</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">There was an error sending verification code</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Det gick inte skicka verifieringskod</string>
   <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verifieringskod skickad</string>
   <!-- Mailbox delete screen -->
   <string name="simple_login_sync_mailbox_delete_title">Ta bort brevlåda</string>
@@ -58,6 +58,7 @@
   <string name="simple_login_sync_mailbox_delete_message_delete_error">Det uppstod ett fel vid borttagning av brevlåda</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">Brevlåda borttagen</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Överför alias till</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Please note that once deleted, aliases can\'t be restored</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Standarddomän</string>
   <string name="simple_login_sync_domain_select_title_none">ingen</string>

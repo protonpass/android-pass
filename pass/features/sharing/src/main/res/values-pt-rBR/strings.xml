@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Continuar</string>
   <string name="sharing_can_view">Visualizador</string>
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Administrador</string>
@@ -32,18 +31,20 @@
     <item quantity="one">%d membro</item>
     <item quantity="other">%d membros</item>
   </plurals>
+  <string name="sharing_member_count_header">Membros</string>
   <string name="share_with_title">Compartilhar com</string>
   <string name="share_with_email_hint">Endereço de e-mail</string>
   <string name="share_with_email_error">O endereço de e-mail não é válido.</string>
   <string name="share_with_email_cannot_invite_outside_org">Você não pode convidar pessoas fora da sua organização, entre em contato com o administrador para mais informações</string>
   <string name="share_with_email_email_already_added">Você já adicionou esse endereço de e-mail</string>
   <string name="share_permissions_title">Definir nível de acesso</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s convida você a acessar itens em</string>
-  <string name="sharing_join_shared_vault">Juntar e sincronizar</string>
   <string name="sharing_reject_invitation">Recusar convite</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Parabéns, seu acesso foi confirmado.</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Ver cofre compartilhado</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Fechar</string>
+  <string name="sharing_vault_invitation_title">Convite de cofre compartilhado</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="sharing_vault_invitation_accept">Juntar ao cofre compartilhado</string>
+  <string name="sharing_item_invitation_title">Convite de item compartilhado</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="sharing_item_invitation_accept">Aceitar e ver esse item</string>
   <string name="sharing_snackbar_get_invite_error">Não foi possível receber o convite</string>
   <string name="sharing_snackbar_invite_accepted">Convite aceito</string>
   <string name="sharing_snackbar_invite_accept_error">Erro ao aceitar o convite.</string>
@@ -61,7 +62,9 @@
   <string name="share_summary_title">Revisar e compartilhar</string>
   <string name="share_summary_vault">o cofre %s</string>
   <string name="share_summary_share_vault">Compartilhar cofre</string>
+  <string name="share_summary_share_item">Compartilhar item</string>
   <string name="share_summary_vault_title">Cofre</string>
+  <string name="share_summary_item_title">Item</string>
   <string name="share_manage_vault_share_with_more_people">Compartilhar com mais pessoas</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d convite restante</item>
@@ -113,10 +116,10 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Faça upgrade para criar mais cofres</string>
   <string name="sharing_from_item_vault_limit_reached">Você atingiu o limite de cofre</string>
   <string name="share_with_suggestions_title">Sugestões</string>
-  <string name="share_with_recents_title">Recent</string>
+  <string name="share_with_recents_title">Recente</string>
   <string name="share_with_remove_email_content_description">Remover e-mail</string>
   <string name="share_with_user_title">Compartilhar com</string>
-  <string name="share_with_user_description">Share this item with other Proton users.</string>
+  <string name="share_with_user_description">Compartilhe este item com outros usuários do Proton.</string>
   <string name="share_with_secure_link_title">Via link seguro</string>
   <string name="share_with_secure_link_description">Gerar um link seguro para este item.</string>
   <string name="share_with_manage_shared_vault_title">Gerenciar acesso ao cofre</string>

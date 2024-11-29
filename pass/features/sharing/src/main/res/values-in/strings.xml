@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Lanjutkan</string>
   <string name="sharing_can_view">Pengamat</string>
   <string name="sharing_can_edit">Penyunting</string>
   <string name="sharing_can_manage">Admin</string>
@@ -30,18 +29,20 @@
   <plurals name="sharing_member_count">
     <item quantity="other">%d anggota</item>
   </plurals>
+  <string name="sharing_member_count_header">Anggota</string>
   <string name="share_with_title">Bagikan dengan</string>
   <string name="share_with_email_hint">Alamat email</string>
   <string name="share_with_email_error">Alamat email tidak valid</string>
   <string name="share_with_email_cannot_invite_outside_org">Anda tidak dapat mengundang pengguna yang berada di luar organisasi Anda. Hubungi admin untuk informasi lebih lanjut</string>
   <string name="share_with_email_email_already_added">Anda telah menambahkan alamat email ini</string>
   <string name="share_permissions_title">Tentukan tingkat akses</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s mengundang Anda untuk mengakses item pada</string>
-  <string name="sharing_join_shared_vault">Gabung dan sinkronkan</string>
   <string name="sharing_reject_invitation">Tolak undangan</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Selamat, akses Anda telah dikonfirmasi</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Lihat brankas yang dibagikan</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Tutup</string>
+  <string name="sharing_vault_invitation_title">Undangan brankas terbagi</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s ingin membagikan brankas dengan Anda.</string>
+  <string name="sharing_vault_invitation_accept">Bergabung ke brankas terbagi</string>
+  <string name="sharing_item_invitation_title">Undangan brankas terbagi</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s ingin membagikan item dengan Anda.</string>
+  <string name="sharing_item_invitation_accept">Terima dan lihat item</string>
   <string name="sharing_snackbar_get_invite_error">Undangan tidak dapat diperoleh</string>
   <string name="sharing_snackbar_invite_accepted">Undangan diterima</string>
   <string name="sharing_snackbar_invite_accept_error">Terjadi kesalahan menerima undangan</string>
@@ -59,7 +60,9 @@
   <string name="share_summary_title">Kaji dan bagikan</string>
   <string name="share_summary_vault">%s brankas</string>
   <string name="share_summary_share_vault">Bagikan brankas</string>
+  <string name="share_summary_share_item">Bagikan item</string>
   <string name="share_summary_vault_title">Brankas</string>
+  <string name="share_summary_item_title">Item</string>
   <string name="share_manage_vault_share_with_more_people">Bagikan dengan lebih banyak orang</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d undangan tersisa</item>
@@ -108,7 +111,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Tingkatkan untuk dapat membuat lebih banyak brankas</string>
   <string name="sharing_from_item_vault_limit_reached">Anda telah mencapai batas brankas maksimal</string>
   <string name="share_with_suggestions_title">Saran</string>
-  <string name="share_with_recents_title">Recent</string>
+  <string name="share_with_recents_title">Terkini</string>
   <string name="share_with_remove_email_content_description">Hapus email</string>
   <string name="share_with_user_title">Bagikan dengan</string>
   <string name="share_with_user_description">Bagikan item ini dengan pengguna Proton lainnya.</string>

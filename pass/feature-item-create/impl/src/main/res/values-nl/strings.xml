@@ -187,4 +187,13 @@
   <string name="remove_passkey_dialog_title">Verwijder deze toegangssleutel?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">U staat op het punt om de toegangssleutel te verwijderen van gebruiker \'%1$s\' voor \'%2$s\'. Weet u het zeker?</string>
   <string name="add_a_custom_section">Voeg een aangepaste sectie toe</string>
+  <string name="add_attachment_take_a_photo">Foto maken</string>
+  <string name="add_attachment_choose_a_photo_or_video">Kies een foto of video</string>
+  <string name="add_attachment_choose_a_file">Kies een bestand</string>
+  <string name="attachment_options_open">Open</string>
+  <string name="attachment_options_save">Opslaan</string>
+  <string name="attachment_options_rename">Hernoem</string>
+  <string name="attachment_options_delete">Verwijderen</string>
+  <string name="banner_title_attachments">Bijlagen</string>
+  <string name="banner_body_attachments">U kunt bestanden bijvoegen aan items voor een betere organisatie</string>
 </resources>

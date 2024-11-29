@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="on_boarding_autofill_content">Proton Passがあなたの代わりにログイン情報を入力します。入力やコピーペーストは必要ありません。</string>
+  <string name="on_boarding_autofill_content">Proton Pass があなたの代わりにログイン情報を入力します。入力やコピー＆ペーストは必要ありません。</string>
   <string name="on_boarding_autofill_title">アプリに即座にログイン</string>
   <string name="on_boarding_autofill_button">Proton Passによる自動入力</string>
   <string name="on_boarding_fingerprint_content">Proton Passを指紋でロック解除するように設定すると、あなただけがアクセスできるようになります。</string>

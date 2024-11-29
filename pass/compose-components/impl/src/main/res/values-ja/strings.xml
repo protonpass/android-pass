@@ -10,7 +10,7 @@
   <string name="item_list_header_all_search_results">すべて</string>
   <string name="item_list_header_pinned_search_results">ピン留めしました</string>
   <string name="item_list_header_logins_type">ログイン</string>
-  <string name="item_list_header_logins_totp_type">Logins with TOTP</string>
+  <string name="item_list_header_logins_totp_type">TOTPログイン</string>
   <string name="item_list_header_aliases_type">エイリアス</string>
   <string name="item_list_header_notes_type">メモ</string>
   <string name="item_list_header_credit_cards_type">クレジットカード</string>
@@ -46,10 +46,10 @@
   <string name="action_edit">編集</string>
   <string name="action_add">追加</string>
   <string name="action_delete">削除</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
-  <string name="action_close">Close</string>
-  <string name="action_update">Update</string>
+  <string name="action_make_default">デフォルトにする</string>
+  <string name="action_verify">確認</string>
+  <string name="action_close">閉じる</string>
+  <string name="action_update">更新</string>
   <!-- Empty list -->
   <string name="empty_list_title">最初の項目を追加</string>
   <string name="empty_search_results_title">結果が見つかりません</string>
@@ -146,49 +146,49 @@
   <string name="item_details_login_section_password_title">パスワード</string>
   <string name="item_details_login_section_primary_totp_title">2 要素認証トークン (TOTP)</string>
   <string name="item_details_login_section_websites_title">ウェブサイト</string>
-  <string name="item_details_identity_section_personal_title">Personal details</string>
+  <string name="item_details_identity_section_personal_title">個人情報の詳細</string>
   <string name="item_details_identity_section_personal_first_name_title">名</string>
-  <string name="item_details_identity_section_personal_middle_name_title">Middle name</string>
+  <string name="item_details_identity_section_personal_middle_name_title">中間名</string>
   <string name="item_details_identity_section_personal_last_name_title">姓</string>
   <string name="item_details_identity_section_personal_full_name_title">フルネーム</string>
   <string name="item_details_identity_section_personal_email_title">メールアドレス</string>
   <string name="item_details_identity_section_personal_gender_title">性別</string>
   <string name="item_details_identity_section_personal_phone_title">電話番号</string>
   <string name="item_details_identity_section_personal_birthday_title">誕生日</string>
-  <string name="item_details_identity_section_address_title">Address details</string>
+  <string name="item_details_identity_section_address_title">アドレスの詳細</string>
   <string name="item_details_identity_section_address_organization_title">組織</string>
-  <string name="item_details_identity_section_address_street_address_title">Street address, P.O. box</string>
-  <string name="item_details_identity_section_address_floor_title">Floor</string>
+  <string name="item_details_identity_section_address_street_address_title">番地住所、宅配ボックス</string>
+  <string name="item_details_identity_section_address_floor_title">フロア</string>
   <string name="item_details_identity_section_address_city_title">市</string>
-  <string name="item_details_identity_section_address_zip_or_postal_code_title">ZIP or postal code</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">郵便番号</string>
   <string name="item_details_identity_section_address_state_or_province_title">都道府県</string>
-  <string name="item_details_identity_section_address_county_title">County</string>
-  <string name="item_details_identity_section_address_country_or_region_title">Country or region</string>
+  <string name="item_details_identity_section_address_county_title">国名</string>
+  <string name="item_details_identity_section_address_country_or_region_title">国・地域・都道府県</string>
   <string name="item_details_identity_section_contact_title">連絡先の詳細</string>
   <string name="item_details_identity_section_contact_social_security_number_title">社会保障番号</string>
   <string name="item_details_identity_section_contact_passport_number_title">パスポート番号</string>
-  <string name="item_details_identity_section_contact_license_number_title">License number</string>
+  <string name="item_details_identity_section_contact_license_number_title">免許証番号</string>
   <string name="item_details_identity_section_contact_website_title">ウェブサイト</string>
   <string name="item_details_identity_section_contact_x_handle_title">X-Handle</string>
-  <string name="item_details_identity_section_contact_secondary_phone_number_title">Secondary phone number</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">二次の電話番号</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
   <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
   <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
   <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
   <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
-  <string name="item_details_identity_section_work_title">Work details</string>
+  <string name="item_details_identity_section_work_title">仕事の詳細</string>
   <string name="item_details_identity_section_work_company_title">会社</string>
-  <string name="item_details_identity_section_work_occupation_title">Occupation</string>
+  <string name="item_details_identity_section_work_occupation_title">職業</string>
   <string name="item_details_identity_section_work_email_title">仕事用メールアドレス</string>
-  <string name="item_details_identity_section_work_phone_number_title">Work phone number</string>
-  <string name="item_details_identity_section_work_personal_website_title">Personal website</string>
+  <string name="item_details_identity_section_work_phone_number_title">職場の電話番号</string>
+  <string name="item_details_identity_section_work_personal_website_title">個人サイト</string>
   <string name="item_details_shared_section_note_title">メモ</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">最後の自動入力</string>
   <string name="item_details_shared_section_item_history_created_title">作成した</string>
-  <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">%dが変更されました</string>
   <string name="item_details_shared_section_item_history_button_view">アイテムの履歴を表示</string>
   <string name="item_details_shared_section_more_info_header_title">詳細はこちら</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">アイテム情報アイコン</string>
   <string name="item_details_shared_section_more_info_item_id">アイテム ID</string>
   <string name="item_details_shared_section_more_info_share_id">保管庫 ID</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">アプリのバージョンはサポートされなくなりました。アプリを更新してください。</string>
@@ -201,19 +201,19 @@
   <string name="dialog_upgrade_plan_action_cancel">後で</string>
   <!-- Words -->
   <string name="email_address">メールアドレス</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">メールアドレスが無効です</string>
   <string name="password">パスワード</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">このツールヒントを閉じて再度表示しないようにするボタン</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="other">%d years</item>
+    <item quantity="other">%d年</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="other">%d months</item>
+    <item quantity="other">%dか月</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="other">%d weeks</item>
+    <item quantity="other">%d週間</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="other">%d 日</item>
@@ -228,25 +228,25 @@
     <item quantity="other">%d 秒</item>
   </plurals>
   <plurals name="aliases_count">
-    <item quantity="other">%d aliases</item>
+    <item quantity="other">%d個のエイリアス</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">メモをコピーしました</string>
-  <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
-  <string name="snack_bar_message_item_monitor_excluded_success">アイテムは監視から正常に除外されました</string>
+  <string name="snack_bar_message_item_migration_error">アイテムを移行できませんでした</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">アイテムを監視から除外しました</string>
   <string name="snack_bar_message_item_monitor_excluded_error">監視からアイテムを除外する際にエラーが発生しました</string>
-  <string name="snack_bar_message_item_monitor_included_success">アイテムが監視対象に正常に追加されました</string>
+  <string name="snack_bar_message_item_monitor_included_success">アイテムを監視対象にしました</string>
   <string name="snack_bar_message_item_monitor_included_error">監視中のアイテムにエラーが発生しました</string>
   <string name="snack_bar_message_item_pinned_success">アイテムが正常にピン留めされました</string>
   <string name="snack_bar_message_item_pinned_error">このアイテムをピン留めする際にエラーが発生しました</string>
   <string name="snack_bar_message_item_unpinned_success">アイテムのピン留めが解除されました</string>
   <string name="snack_bar_message_item_unpinned_error">このアイテムのピン留めを解除する際にエラーが発生しました</string>
-  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
-  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
-  <string name="snack_bar_message_item_restore_success">Item successfully restored</string>
-  <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
-  <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
-  <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
+  <string name="snack_bar_message_item_trashed_success">ゴミ箱に移動しました</string>
+  <string name="snack_bar_message_item_trashed_error">アイテムをゴミ箱へ移動できませんでした</string>
+  <string name="snack_bar_message_item_restore_success">アイテムを復元しました</string>
+  <string name="snack_bar_message_item_restore_error">アイテムを復元できませんでした</string>
+  <string name="snack_bar_message_item_delete_success">削除しました</string>
+  <string name="snack_bar_message_item_delete_error">アイテムを削除できませんでした</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">SimpleLogin 同期を有効にする</string>
   <plurals name="simple_login_widget_pending_aliases_message">
@@ -255,10 +255,10 @@
   <string name="simple_login_widget_action">エイリアスを同期する</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">Haven\'t received the code?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
-  <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
-  <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
-  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">If you can\'t find such email, you can %s.</string>
-  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code</string>
-  <string name="field_display_name_title">Display name</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">スパムフォルダに\"%s\"という件名のメールがないか確認してください</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Proton Passのメールアドレスを確認してください</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">受信箱を確認してください</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">メールが見つからない場合、%sできます。</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">新しいコードを要求</string>
+  <string name="field_display_name_title">表示名</string>
 </resources>

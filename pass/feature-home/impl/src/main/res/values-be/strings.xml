@@ -53,6 +53,8 @@
   <string name="home_notification_permission_banner_settings">Уключыць дазволы ›</string>
   <string name="home_invite_banner_title">З вамі абагулілі сховішча</string>
   <string name="home_invite_banner_subtitle">Вас запрасілі ў абагуленае сховішча. Націсніце для падрабязнасцяў.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s хоча абагуліць элемент з вамі.</string>
+  <string name="home_item_invite_banner_subtitle">Націсніце для падрабязнасцяў.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Скапіяваць пароль</string>
   <string name="bottomsheet_copy_username">Скапіяваць імя карыстальніка</string>

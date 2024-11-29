@@ -187,4 +187,13 @@
   <string name="remove_passkey_dialog_title">Выдаліць гэты ключ доступу?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Вы збіраецеся выдаліць ключ доступу карыстальніка \'%1$s\' для дамена \'%2$s\'. Вы ўпэўнены?</string>
   <string name="add_a_custom_section">Дадаць карыстальніцкі раздзел</string>
+  <string name="add_attachment_take_a_photo">Зрабіць фота</string>
+  <string name="add_attachment_choose_a_photo_or_video">Выберыце фатаграфію або файл з відэа</string>
+  <string name="add_attachment_choose_a_file">Выберыце файл</string>
+  <string name="attachment_options_open">Адкрыць</string>
+  <string name="attachment_options_save">Захаваць</string>
+  <string name="attachment_options_rename">Перайменаваць</string>
+  <string name="attachment_options_delete">Выдаліць</string>
+  <string name="banner_title_attachments">Далучэнні</string>
+  <string name="banner_body_attachments">Вы можаце далучыць файлы да элементаў для лепшай арганізацыі</string>
 </resources>

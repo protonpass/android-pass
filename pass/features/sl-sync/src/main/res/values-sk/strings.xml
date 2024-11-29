@@ -58,6 +58,7 @@
   <string name="simple_login_sync_mailbox_delete_message_delete_error">Pri odstraňovaní poštovej schránky došlo k chybe</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">Poštová schránka bola úspešne odstránená</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Presunúť aliasy do</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Upozorňujeme, že po vymazaní nie je možné aliasy obnoviť.</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Predvolená doména</string>
   <string name="simple_login_sync_domain_select_title_none">žiadna</string>

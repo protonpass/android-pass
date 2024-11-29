@@ -7,15 +7,15 @@
   <string name="alias_dialog_move_to_trash_title">Voleu moure a la paperera?</string>
   <string name="alias_dialog_move_to_trash_content">Si moveu un àlies a la paperera, deixarà de reenviar correus electrònics a la vostra bústia.</string>
   <string name="alias_dialog_move_to_trash_confirm">Confirma</string>
-  <string name="delete_alias_confirm">Delete it, I will never need it</string>
+  <string name="delete_alias_confirm">Suprimeix-lo. No ho necessitaré mai.</string>
   <string name="delete_alias_title">Elimina %s</string>
-  <string name="delete_alias_enabled_subtitle">"Please note once deleted, the alias can't be restored. Maybe you want to disable the alias instead? "</string>
-  <string name="delete_alias_disabled_subtitle">Please note once deleted, the alias can\'t be restored. The alias is already disabled and won’t forward emails to your mailbox.</string>
+  <string name="delete_alias_enabled_subtitle">"Tingueu en compte que, un cop suprimit, l'àlies no es pot restaurar. Potser voleu desactivar l'àlies? "</string>
+  <string name="delete_alias_disabled_subtitle">Un cop suprimit, l\'àlies no es pot restaurar. L\'àlies ja està desactivat i no reenviarà correus electrònics a la vostra bústia de correu.</string>
   <plurals name="bulk_delete_alias_title">
-    <item quantity="one">You\'re about to permanently delete %d alias</item>
-    <item quantity="other">You\'re about to permanently delete %d aliases</item>
+    <item quantity="one">Esteu a punt de suprimir permanentment %d àlies.</item>
+    <item quantity="other">Esteu a punt de suprimir permanentment %d àlies.</item>
   </plurals>
-  <string name="bulk_delete_alias_subtitle">Please note once deleted, the aliases can\'t be restored</string>
-  <string name="bulk_delete_alias_confirm">Understood, I will never need them</string>
+  <string name="bulk_delete_alias_subtitle">Recordeu que un cop eliminats, els àlies no es poden recuperar.</string>
+  <string name="bulk_delete_alias_confirm">Ho entenc i mai els necessitaré.</string>
   <string name="delete_alias_disable">Desactiva l\'àlies</string>
 </resources>

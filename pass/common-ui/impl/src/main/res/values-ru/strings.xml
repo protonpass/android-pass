@@ -17,13 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="bottomsheet_copy_email">Copy email</string>
+  <string name="bottomsheet_copy_email">Скопировать эл. почту</string>
   <string name="bottomsheet_copy_password">Скопировать пароль</string>
   <string name="bottomsheet_copy_username">Скопировать имя пользователя</string>
   <string name="bottomsheet_no_actions">No actions available</string>
   <string name="snackbar_item_move_to_trash_success">Элемент перемещён в Корзину</string>
   <string name="snackbar_item_move_to_trash_error">Не могу переместить в корзину</string>
-  <string name="snackbar_item_copy_email_success">Email copied to clipboard</string>
+  <string name="snackbar_item_copy_email_success">Эл. почта скопирована в буфер обмена</string>
   <string name="snackbar_item_copy_username_success">Имя пользователя скопировано в буфер обмена</string>
   <string name="snackbar_item_copy_password_success">Пароль скопирован в буфер обмена</string>
 </resources>

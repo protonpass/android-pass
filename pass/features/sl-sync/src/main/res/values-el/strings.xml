@@ -58,6 +58,7 @@
   <string name="simple_login_sync_mailbox_delete_message_delete_error">Παρουσιάστηκε σφάλμα κατά το διαγραφή του γραμματοκιβωτίου</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">Το γραμματοκιβώτιο διαγράφηκε με επιτυχία</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Μεταφορά ψευδωνύμων στο</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Παρακαλούμε σημειώστε ότι μετά τη διαγραφή, τα ψευδώνυμα δεν είναι δυνατό να επαναφερθούν</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Προκαθορισμένος τομέας</string>
   <string name="simple_login_sync_domain_select_title_none">κανένα</string>

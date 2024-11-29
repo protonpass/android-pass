@@ -3,15 +3,15 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Η κρύπτη σας είναι άδεια</string>
   <string name="home_empty_vault_subtitle">Ξεκινήστε δημιουργώντας το πρώτο σας στοιχείο.</string>
-  <string name="home_empty_vault_login_title">Δε βρέθηκαν συνδέσεις</string>
+  <string name="home_empty_vault_login_title">Δεν βρέθηκαν συνδέσεις</string>
   <string name="home_empty_vault_login_subtitle">Ξεκινήστε δημιουργώντας το πρώτο στοιχείο σύνδεσης σας.</string>
-  <string name="home_empty_vault_aliases_title">Δε βρέθηκαν ψευδώνυμα</string>
+  <string name="home_empty_vault_aliases_title">Δεν βρέθηκαν ψευδώνυμα</string>
   <string name="home_empty_vault_aliases_subtitle">Ξεκινήστε δημιουργώντας το πρώτο στοιχείο ψευδώνυμου σας.</string>
   <string name="home_empty_vault_notes_title">Δεν βρέθηκαν σημειώσεις</string>
   <string name="home_empty_vault_notes_subtitle">Ξεκινήστε δημιουργώντας το πρώτο στοιχείο σημείωσης σας.</string>
   <string name="home_empty_vault_logins_mfa_title">Δεν βρέθηκαν συνδέσεις με TOTP</string>
   <string name="home_empty_vault_logins_mfa_subtitle">Ξεκινήστε δημιουργώντας την πρώτη σας σύνδεση με το TOTP.</string>
-  <string name="home_empty_vault_identity_title">Δε βρέθηκε ταυτότητα</string>
+  <string name="home_empty_vault_identity_title">Δεν βρέθηκε ταυτότητα</string>
   <string name="home_empty_vault_identity_subtitle">Ξεκινήστε δημιουργώντας το πρώτο στοιχείο ταυτότητας σας.</string>
   <string name="home_empty_vault_cc_title">Δεν βρέθηκε πιστωτική κάρτα</string>
   <string name="home_empty_vault_cc_subtitle">Ξεκινήστε δημιουργώντας το πρώτο στοιχείο πιστωτικής κάρτας σας.</string>
@@ -51,6 +51,8 @@
   <string name="home_notification_permission_banner_settings">Ενεργοποίηση δικαιώματος ›</string>
   <string name="home_invite_banner_title">Η κρύπτη που έχει κοινοποιηθεί σε εσάς</string>
   <string name="home_invite_banner_subtitle">Έχετε προσκληθεί σε κοινόχρηστη κρύπτη. Πατήστε για λεπτομέρειες.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">Ο %s θέλει να μοιραστεί μαζί σας ένα αντικείμενο.</string>
+  <string name="home_item_invite_banner_subtitle">Πατήστε για λεπτομέρειες.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Αντιγραφή συνθηματικού</string>
   <string name="bottomsheet_copy_username">Αντιγραφή ονόματος χρήστη</string>
@@ -64,7 +66,7 @@
   <string name="alias_copied_to_clipboard">Το ψευδώνυμο αντιγράφηκε</string>
   <string name="note_copied_to_clipboard">Η σημείωση αντιγράφηκε</string>
   <string name="full_name_copied_to_clipboard">Το πλήρες όνομα αντιγράφηκε</string>
-  <string name="email_copied_to_clipboard">Έγινε αντιγραφή διεύθυνσης ηλεκτρονικού ταχυδρομείου</string>
+  <string name="email_copied_to_clipboard">Η διεύθυνση ηλεκτρονικού ταχυδρομείου αντιγράφηκε</string>
   <string name="username_copied_to_clipboard">Το όνομα χρήστη αντιγράφηκε</string>
   <string name="password_copied_to_clipboard">Ο κωδικός πρόσβασης αντιγράφηκε</string>
   <string name="credit_card_number_copied_to_clipboard">Ο αριθμός της πιστωτικής κάρτας αντιγράφηκε</string>
@@ -114,24 +116,24 @@
   <string name="trash_deleting_items_success">Τα στοιχεία διαγράφηκαν</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">Εκκαθάριση διαγραμμένων;</string>
-  <string name="alert_confirm_clear_trash_message">Είστε βέβαιοι ότι θέλετε να καθαρίσετε τον κάδο απορριμμάτων; Όλα τα απορριφθέντα στοιχεία σας θα διαγραφούν οριστικά</string>
+  <string name="alert_confirm_clear_trash_message">Θέλετε σίγουρα να καθαρίσετε τον κάδο απορριμμάτων; Όλα τα απορριφθέντα στοιχεία σας θα διαγραφούν οριστικά</string>
   <string name="alert_confirm_restore_all_title">Επαναφορά όλων των αντικειμένων;</string>
-  <string name="alert_confirm_restore_all_message">Είστε βέβαιοι ότι θέλετε να επαναφέρετε όλα τα απορριφθέντα στοιχεία;</string>
+  <string name="alert_confirm_restore_all_message">Θέλετε σίγουρα να επαναφέρετε όλα τα απορριφθέντα στοιχεία;</string>
   <plurals name="alert_confirm_restore_items_title">
     <item quantity="one">Επαναφορά %d στοιχείου;</item>
     <item quantity="other">Επαναφορά %d στοιχείων;</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
-    <item quantity="one">Είστε βέβαιοι ότι θέλετε να επαναφέρετε το απορριφθέντο στοιχείο;</item>
-    <item quantity="other">Είστε βέβαιοι ότι θέλετε να επαναφέρετε τα %d απορριφθέντα στοιχεία;</item>
+    <item quantity="one">Θέλετε σίγουρα να επαναφέρετε το απορριφθέντο στοιχείο;</item>
+    <item quantity="other">Θέλετε σίγουρα να επαναφέρετε τα %d απορριφθέντα στοιχεία;</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
     <item quantity="one">Μετακίνηση στον κάδο απορριμμάτων %d στοιχείο;</item>
     <item quantity="other">Μετακίνηση στον κάδο απορριμμάτων %d στοιχεία;</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Είστε βέβαιοι ότι θέλετε να μετακινήσετε το στοιχείο στον κάδο απορριμμάτων;</item>
-    <item quantity="other">Είστε βέβαιοι ότι θέλετε να μετακινήσετε %d στοιχεία στον κάδο απορριμμάτων;</item>
+    <item quantity="one">Θέλετε σίγουρα να μετακινήσετε το στοιχείο στον κάδο απορριμμάτων;</item>
+    <item quantity="other">Θέλετε σίγουρα να μετακινήσετε %d στοιχεία στον κάδο απορριμμάτων;</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Οριστική διαγραφή %d στοιχείου;</item>

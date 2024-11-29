@@ -78,4 +78,7 @@
   <string name="filtered_by_notes">Filtrert etter notater. Elementer som er slettet, vises ikke</string>
   <string name="filtered_by_credit_cards">Filtrert etter kredittkort. Elementer som er slettet, vises ikke</string>
   <string name="filtered_by_identities">Filtrert etter identiteter. Elementer som er slettet, vises ikke</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Du må bytte til %1$s for å administrere det</string>
+  <string name="account_switch_confirmation_title">Administrer konto</string>
+  <string name="account_switch_confirmation_confirm">Bytt og administrer</string>
 </resources>

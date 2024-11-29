@@ -33,7 +33,7 @@
   <string name="security_center_home_row_reused_passwords_title">Toistuvat salasanat</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Luo ainutlaatuisia salasanoja</string>
   <string name="security_center_home_row_missing_tfa_title">2FA ei ole käytössä</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Tehosta suojausta määrittämällä kaksivaiheinen tunnistautuminen</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Vahvista suojausta määrittämällä kaksivaiheinen tunnistautuminen</string>
   <string name="security_center_home_row_excludes_items_title">Poissuljettu valvonnasta</string>
   <string name="security_center_home_row_excludes_items_subtitle">Nämä kohteet pysyvät vaarassa</string>
   <string name="security_center_get_breaches_error">Tietomurtoja ei voitu ladata</string>
@@ -142,14 +142,14 @@
   <string name="security_center_proton_list_options_menu">Proton-näytön valitavalikko</string>
   <string name="security_center_proton_list_not_monitored">Ei valvottu</string>
   <!-- Address Bottomsheet options -->
-  <string name="security_center_address_bottomsheet_disable_monitoring">Keskeytä valvonta</string>
+  <string name="security_center_address_bottomsheet_disable_monitoring">Pysäytä valvonta</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Palauta valvonta</string>
   <string name="security_center_address_bottomsheet_remove_custom_email">Poista ulkoinen sähköpostiosoite</string>
   <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Virhe keskeytettäessä valvontaa</string>
   <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Virhe palautettaessa valvontaa</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Ulkoista sähköpostiosoitetta ei voitu poistaa</string>
   <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Valvonta palautettiin</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Valvonta keskeytettiin</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Valvonta pysäytettiin</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Ulkoinen sähköpostiosoite poistettiin</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Hide-my-email-aliakset</string>

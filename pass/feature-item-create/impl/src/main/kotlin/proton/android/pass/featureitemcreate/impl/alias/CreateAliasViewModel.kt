@@ -94,14 +94,14 @@ open class CreateAliasViewModel @Inject constructor(
     private val aliasPrefixValidator: AliasPrefixValidator,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
-    savedStateHandleProvider: SavedStateHandleProvider,
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeDefaultVault: ObserveDefaultVault,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseAliasViewModel(
-    snackbarDispatcher,
-    savedStateHandleProvider,
-    featureFlagsRepository
+    snackbarDispatcher = snackbarDispatcher,
+    featureFlagsRepository = featureFlagsRepository,
+    savedStateHandleProvider = savedStateHandleProvider
 ) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->

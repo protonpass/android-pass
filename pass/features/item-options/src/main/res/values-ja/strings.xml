@@ -17,13 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="item_options_alias_trash_dialog_title">Move to Trash</string>
-  <string name="item_options_alias_trash_dialog_message">Aliases in Trash will continue forwarding emails. If you want to stop receiving emails on this address, disable it instead.</string>
-  <string name="item_options_alias_trash_dialog_checkbox_text">Don\'t remind me again</string>
-  <string name="item_options_alias_trash_dialog_button_text_disable">Disable instead</string>
-  <string name="item_options_alias_trash_dialog_button_text_trash">Move to trash</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">There was an error disabling the alias</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Alias disabled</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">There was an error moving the alias to trash</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Alias moved to trash</string>
+  <string name="item_options_alias_trash_dialog_title">ゴミ箱に移動</string>
+  <string name="item_options_alias_trash_dialog_message">ゴミ箱にあるエイリアスは引き続きメールを転送します。このアドレスでメールの受信を停止したい場合は、代わりに無効にしてください。</string>
+  <string name="item_options_alias_trash_dialog_checkbox_text">再度リマインドしない</string>
+  <string name="item_options_alias_trash_dialog_button_text_disable">代わりに無効化</string>
+  <string name="item_options_alias_trash_dialog_button_text_trash">ゴミ箱に移動</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">エイリアスの無効化にエラーが発生しました</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">エイリアスは無効化されました</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">エイリアスをゴミ箱に移動する際にエラーが発生しました</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">エイリアスはゴミ箱に移動されました</string>
 </resources>

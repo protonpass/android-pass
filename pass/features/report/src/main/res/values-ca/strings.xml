@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Quin és el vostre problema?</string>
-  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
+  <string name="description_field_hint">Descriu el problema amb el màxim de detall possible. Si apareix un missatge d\'error, digueu-nos el contingut.</string>
   <string name="email_field_label">Corrreu electrònic</string>
   <string name="email_field_hint">corrreu electrònic</string>
   <string name="attach_image_button">Adjunta una imatge</string>
@@ -34,18 +34,18 @@
   <string name="report_reason_passkeys">Claus d\'accés</string>
   <string name="report_reason_other">Altre</string>
   <string name="tips_title">Solucions ràpides per %1$s</string>
-  <string name="tips_subtitle">These tips could help you solve your issue faster.</string>
-  <string name="autofill_tip_restart">Try disabling and enabling the autofill service.</string>
+  <string name="tips_subtitle">Aquests consells podrien ajudar-us a resoldre el vostre problema més ràpid.</string>
+  <string name="autofill_tip_restart">Proveu de desactivar i activar la funció d\'emplenament automàtic.</string>
   <string name="autofill_tip_browser">Proveu un altre navegador.</string>
-  <string name="sharing_tip_vault_sharing_guide">Having issues with vault sharing? Check our guide.</string>
-  <string name="sharing_tip_secure_links_guide">Having issues with secure links? Check our guide.</string>
-  <string name="sync_tip_force_refresh">Is your screen empty? Try doing a force sync.</string>
+  <string name="sharing_tip_vault_sharing_guide">Teniu problemes amb la compartició de la caixa forta? Consulteu la nostra guia.</string>
+  <string name="sharing_tip_secure_links_guide">Teniu problemes amb els enllaços segurs? Consulteu la nostra guia.</string>
+  <string name="sync_tip_force_refresh">La vostra pantalla està buida? Intenteu fer una sincronització forçada.</string>
   <string name="send_logs_label">Envia els registres</string>
   <string name="report_sending_success">S\'ha enviat l\'informe.</string>
   <string name="report_sending_error">No s\'ha pogut enviar l\'informe.</string>
-  <string name="tips_passkey_check_guide">If you have any issues check our guide.</string>
-  <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
-  <string name="tips_passkeys_credential_manager_not_supported">The manufacturer of the device doesn\'t provide a credential manager.</string>
+  <string name="tips_passkey_check_guide">Si teniu problemes, consulteu la nostra guia.</string>
+  <string name="tips_passkey_android_not_supported">La vostra versió d\'Android és massa baixa. Proveu d\'actualitzar el vostre dispositiu.</string>
+  <string name="tips_passkeys_credential_manager_not_supported">El fabricant del dispositiu no proporciona un gestor de credencials.</string>
   <string name="tips_passkey_supported">S\'admeten claus d\'accés.</string>
   <string name="tips_passkey_not_supported">Les claus d\'accés no són compatibles.</string>
   <string name="report_steps" comment="Indicator showing report progress">Pas %1$d de %2$d</string>

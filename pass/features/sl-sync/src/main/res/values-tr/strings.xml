@@ -58,6 +58,7 @@
   <string name="simple_login_sync_mailbox_delete_message_delete_error">E-posta kutusu silinirken bir sorun çıktı</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">E-posta kutusu silindi</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Takma adları şuraya aktar</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Takma adların silindikten sonra geri alınamayacağını unutmayın</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Varsayılan etki alanı</string>
   <string name="simple_login_sync_domain_select_title_none">yok</string>

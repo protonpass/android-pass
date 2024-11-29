@@ -27,5 +27,5 @@
   <string name="item_details_forbidden_actions_share_title">No es pot compartir.</string>
   <string name="item_details_forbidden_actions_share_limit">Heu assolit el límit de compartició de la caixa forta. Per compartir més caixes fortes, milloreu el vostre pla actual.</string>
   <string name="item_details_forbidden_actions_share_permission">No teniu prou permisos per compartir aquesta caixa forta.</string>
-  <string name="item_details_forbidden_actions_share_trash">You cannot share this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
+  <string name="item_details_forbidden_actions_share_trash">No podeu compartir aquest element perquè és a la paperera. Traieu-lo de la paperera abans d\'editar-lo.</string>
 </resources>

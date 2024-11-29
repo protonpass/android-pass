@@ -51,6 +51,8 @@
   <string name="home_notification_permission_banner_settings">Aktiver rettighet ›</string>
   <string name="home_invite_banner_title">Hvelv delt med deg</string>
   <string name="home_invite_banner_subtitle">Du er invitert til et delt hvelv. Trykk for detaljer.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s ønsker å dele et element med deg.</string>
+  <string name="home_item_invite_banner_subtitle">Trykk for detaljer.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopier passord</string>
   <string name="bottomsheet_copy_username">Kopier brukernavn</string>

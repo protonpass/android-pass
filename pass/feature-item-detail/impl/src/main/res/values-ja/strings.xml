@@ -32,7 +32,7 @@
   <string name="item_monitor_exclude_message_error">監視からアイテムを除外する際にエラーが発生しました</string>
   <string name="item_monitor_include_message">アイテムが監視対象に正常に追加されました</string>
   <string name="item_monitor_include_message_error">監視中のアイテムにエラーが発生しました</string>
-  <string name="alias_change_status_error">There was an error changing the alias status</string>
+  <string name="alias_change_status_error">エイリアスのステータスを変更する際にエラーが見つかりました</string>
   <string name="login_item_generate_totp_error">2要素認証コードの生成中エラー</string>
   <string name="login_item_view_alias_button">エイリアスを表示</string>
   <string name="login_item_monitor_widget_weak_pass_title">弱いパスワード</string>
@@ -94,7 +94,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">共有できません</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">この保管庫を共有するための十分な権限がありません。</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">保管庫の共有制限に達しました。さらに多くのボールトを共有するには、現在のプランをアップグレードしてください。</string>
-  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">このアイテムはゴミ箱にあるため共有できません。共有する前にゴミ箱から移動してください。</string>
   <string name="password_score_vulnerable">脆弱</string>
   <string name="password_score_weak">弱い</string>
   <string name="password_score_strong">強い</string>
@@ -103,18 +103,18 @@
   <string name="passkey_detail_bottomsheet_domain">ドメイン</string>
   <string name="passkey_detail_bottomsheet_key">鍵</string>
   <string name="passkey_detail_bottomsheet_created">作成した</string>
-  <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
-  <string name="contacts">Contacts</string>
-  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
-  <string name="field_detail_display_name_title">Display name</string>
-  <string name="display_name_section_description">The display name when sending an email from this alias.</string>
+  <string name="activity_in_last_two_weeks">過去14日間のアクティビティ</string>
+  <string name="contacts">連絡先</string>
+  <string name="contacts_section_description">個人のメールアドレスを隠すために、アドレスをマスクするエイリアス連絡先を作成することができます。</string>
+  <string name="field_detail_display_name_title">表示名</string>
+  <string name="display_name_section_description">このエイリアスからメールを送る際の表示名</string>
   <plurals name="alias_forwards_count">
-    <item quantity="other">%1$s forwards</item>
+    <item quantity="other">%1$s個の転送</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="other">%1$s replies</item>
+    <item quantity="other">%1$s個の返信</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="other">%1$s blocks</item>
+    <item quantity="other">%1$s個のブロック</item>
   </plurals>
 </resources>

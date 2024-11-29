@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">Адрес электронной почты скопирован</string>
   <string name="username_copied_to_clipboard">Имя пользователя скопировано</string>
   <string name="password_copied_to_clipboard">Пароль скопирован</string>
-  <string name="website_copied_to_clipboard">Web address copied</string>
+  <string name="website_copied_to_clipboard">Веб-сайт скопирован</string>
   <string name="totp_copied_to_clipboard">TOTP скопирован</string>
   <string name="field_copied_to_clipboard">Поле скопировано</string>
   <string name="move_item_to_trash_message">Элемент перемещен в корзину</string>
@@ -106,10 +106,10 @@
   <string name="passkey_detail_bottomsheet_domain">Домен</string>
   <string name="passkey_detail_bottomsheet_key">Ключ</string>
   <string name="passkey_detail_bottomsheet_created">Создано</string>
-  <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
+  <string name="activity_in_last_two_weeks">Активности за последние 14 дней</string>
   <string name="contacts">Контакты</string>
   <string name="contacts_section_description">Чтобы скрыть свой личный адрес электронной почты, вы можете создать контакт псевдонима, который будет маскировать ваш адрес.</string>
-  <string name="field_detail_display_name_title">Display name</string>
+  <string name="field_detail_display_name_title">Отображаемое имя</string>
   <string name="display_name_section_description">The display name when sending an email from this alias.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s forward</item>

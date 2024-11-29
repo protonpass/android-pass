@@ -17,13 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="bottomsheet_copy_email">Copy email</string>
+  <string name="bottomsheet_copy_email">メールをコピー</string>
   <string name="bottomsheet_copy_password">パスワードをコピー</string>
   <string name="bottomsheet_copy_username">ユーザー名をコピー</string>
-  <string name="bottomsheet_no_actions">No actions available</string>
+  <string name="bottomsheet_no_actions">操作は利用できません</string>
   <string name="snackbar_item_move_to_trash_success">項目をごみ箱に移動されました</string>
   <string name="snackbar_item_move_to_trash_error">ごみ箱に移動できませんでした</string>
-  <string name="snackbar_item_copy_email_success">Email copied to clipboard</string>
+  <string name="snackbar_item_copy_email_success">メールはクリップボードにコピーされました</string>
   <string name="snackbar_item_copy_username_success">クリップボードにコピーされたユーザー名</string>
   <string name="snackbar_item_copy_password_success">クリップボードにコピーされたパスワード</string>
 </resources>

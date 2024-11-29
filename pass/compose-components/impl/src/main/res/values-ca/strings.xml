@@ -26,8 +26,8 @@
   <string name="bottomsheet_pin_item">Ancora</string>
   <string name="bottomsheet_unpin_item">No fixis</string>
   <string name="bottomsheet_view_item_history">Visualitza l\'historial</string>
-  <string name="bottomsheet_monitor_exclude">Exclou de la supervisió</string>
-  <string name="bottomsheet_monitor_include">Incloure en la supervisió</string>
+  <string name="bottomsheet_monitor_exclude">Exclou del monitoratge</string>
+  <string name="bottomsheet_monitor_include">Incloure en el monitoratge</string>
   <string name="bottomsheet_migrate_item">Mou a una altra caixa forta</string>
   <string name="bottomsheet_copy_item_note">Copia la nota</string>
   <string name="bottomsheet_delete_permanently">Elimina de manera permanent</string>
@@ -243,9 +243,9 @@
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">S\'ha copiat la nota.</string>
   <string name="snack_bar_message_item_migration_error">S\'ha produït un error en migrar aquest element</string>
-  <string name="snack_bar_message_item_monitor_excluded_success">S\'ha exclòs l\'element de la supervisió.</string>
-  <string name="snack_bar_message_item_monitor_excluded_error">S\'ha produït un error en excloure l\'element de la supervisió.</string>
-  <string name="snack_bar_message_item_monitor_included_success">Element inclòs correctament al seguiment</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">S\'ha exclòs l\'element del monitoratge.</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">S\'ha produït un error en excloure l\'element del monitoratge.</string>
+  <string name="snack_bar_message_item_monitor_included_success">S\'ha afegit l\'element al monitoratge.</string>
   <string name="snack_bar_message_item_monitor_included_error">S\'ha produït un error en incloure l\'element al seguiment.</string>
   <string name="snack_bar_message_item_pinned_success">S\'ha fixat l\'element.</string>
   <string name="snack_bar_message_item_pinned_error">S\'ha produït un error en ancorar aquest element.</string>
@@ -253,21 +253,21 @@
   <string name="snack_bar_message_item_unpinned_error">S\'ha produït un error en desancorar aquest element.</string>
   <string name="snack_bar_message_item_trashed_success">S\'ha enviat l\'element.</string>
   <string name="snack_bar_message_item_trashed_error">S\'ha produït un error en enviar a la paperera aquest element</string>
-  <string name="snack_bar_message_item_restore_success">L\'element s\'ha restaurat correctament.</string>
+  <string name="snack_bar_message_item_restore_success">S\'ha restaurat l\'element.</string>
   <string name="snack_bar_message_item_restore_error">S\'ha produït un error en restaurar a la paperera aquest element.</string>
-  <string name="snack_bar_message_item_delete_success">L\'element s\'ha eliminat correctament.</string>
+  <string name="snack_bar_message_item_delete_success">S\'ha eliminat l\'element.</string>
   <string name="snack_bar_message_item_delete_error">S\'ha produït un error en eliminar a la paperera aquest element.</string>
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Activa la sincronització amb SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">We detected that you have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to import it?</item>
-    <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
+    <item quantity="one">Hem detectat que teniu %d àlies en SimpleLogin però no apareix en Proton Pass. Voleu importar-lo?</item>
+    <item quantity="other">Hem detectat que teniu %d àlies en SimpleLogin però no apareixen en Proton Pass. Voleu importar-los?</item>
   </plurals>
   <string name="simple_login_widget_action">Sincronitza els àlies</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">No heu rebut el codi?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
-  <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Comproveu el correu brossa per trobar un correu electrònic anomenat «%s».</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Confirmeu la vostra adreça de correu electrònic per a Proton Pass.</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Confirmeu la vostra bústia de correu</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Si no trobeu aquest correu electrònic, podeu %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">sol·licitar un codi nou</string>

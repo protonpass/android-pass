@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Fortfahren</string>
   <string name="sharing_can_view">Betrachter</string>
   <string name="sharing_can_edit">Bearbeiter</string>
   <string name="sharing_can_manage">Administrator</string>
@@ -32,18 +31,20 @@
     <item quantity="one">%d Mitglied</item>
     <item quantity="other">%d Mitglieder</item>
   </plurals>
+  <string name="sharing_member_count_header">Mitglieder</string>
   <string name="share_with_title">Teilen mit</string>
   <string name="share_with_email_hint">E‐Mail‐Adresse</string>
   <string name="share_with_email_error">Ungültige E-Mail-Adresse</string>
   <string name="share_with_email_cannot_invite_outside_org">Du kannst keine Personen außerhalb deiner Organisation einladen, kontaktiere den Administrator für weitere Informationen</string>
   <string name="share_with_email_email_already_added">Du hast diese E-Mail-Adresse bereits hinzugefügt.</string>
   <string name="share_permissions_title">Zugriffsstufe festlegen</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s lädt dich zum Zugriff auf Elemente ein im Tresor</string>
-  <string name="sharing_join_shared_vault">Beitreten und synchronisieren</string>
   <string name="sharing_reject_invitation">Einladung ablehnen</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Gratulation, dein Zugriff wurde bestätigt</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Geteilten Tresor anzeigen</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Schließen</string>
+  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="sharing_vault_invitation_accept">Join shared vault</string>
+  <string name="sharing_item_invitation_title">Shared item invitation</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="sharing_item_invitation_accept">Accept and view the item</string>
   <string name="sharing_snackbar_get_invite_error">Fehler beim Abrufen der Einladung.</string>
   <string name="sharing_snackbar_invite_accepted">Einladung angenommen</string>
   <string name="sharing_snackbar_invite_accept_error">Fehler beim Annehmen der Einladung.</string>
@@ -61,7 +62,9 @@
   <string name="share_summary_title">Überprüfen und teilen</string>
   <string name="share_summary_vault">%s Tresor</string>
   <string name="share_summary_share_vault">Tresor teilen</string>
+  <string name="share_summary_share_item">Share item</string>
   <string name="share_summary_vault_title">Tresor</string>
+  <string name="share_summary_item_title">Item</string>
   <string name="share_manage_vault_share_with_more_people">Mit weiteren Personen teilen</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d Einladung verbleibend</item>

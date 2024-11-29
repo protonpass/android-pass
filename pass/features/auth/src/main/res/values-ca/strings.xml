@@ -48,6 +48,6 @@
     <item quantity="one">Queda %d intent.</item>
     <item quantity="other">Queden %d intents.</item>
   </plurals>
-  <string name="auth_pin_too_many_attempts">Too many failed pin attempts. All your users are being logged out.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
+  <string name="auth_pin_too_many_attempts">Hi ha massa intents incorrectes del codi PIN. S\'han desconnectat tots els usuaris.</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Massa errors d\'inici de sessió amb codi PIN</string>
 </resources>

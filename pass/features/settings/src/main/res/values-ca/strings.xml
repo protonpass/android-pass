@@ -32,8 +32,8 @@
   <string name="settings_share_crashes">Comparteix informes d\'error anònims</string>
   <string name="settings_preference_updated">S\'ha actualitzat la vostra preferència</string>
   <string name="settings_display_section_title">Mostra</string>
-  <string name="settings_preference_display_username">Username field always visible</string>
-  <string name="settings_preference_display_autofill_pinning">Autofill pinning always visible</string>
+  <string name="settings_preference_display_username">Camp Nom d\'usuari sempre visible</string>
+  <string name="settings_preference_display_autofill_pinning">Emplenament automàtic sempre visible</string>
   <string name="view_logs_title">Mostra els registres</string>
   <string name="clipboard_bottomsheet_title">Porta-retalls</string>
   <string name="clipboard_option_clear_clipboard_label">Neteja el porta-retalls</string>

@@ -83,10 +83,10 @@
   <string name="cannot_retrieve_alias_options">Não foi possível recuperar as opções de alias</string>
   <string name="alias_mailbox_dialog_title">Encaminhar para</string>
   <string name="sl_note_info_title">O que é uma nota do SimpleLogin?</string>
-  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">In Pass, an item note is encrypted with the item encryption key and only users who have access to the item can view the note.</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">No Pass, uma nota de item é criptografada com a chave de criptografia do item e somente usuários com acesso ao item podem visualizar a nota.</string>
   <string name="sl_note_info_message_part2">Nem mesmo o Proton ou o SimpleLogin podem vê-lo.</string>
   <string name="sl_note_info_message_part3">Uma nota no SimpleLogin é armazenada no mesmo local com o endereço alias e, embora seja protegida por criptografia em repouso, não é criptografada de ponta a ponta, o que significa que qualquer pessoa que tenha acesso ao banco de dados do SimpleLogin pode lê-la.</string>
-  <string name="sl_note_info_content_description">Show SL note information dialog</string>
+  <string name="sl_note_info_content_description">Mostrar caixa de diálogo de informações da nota SimpleLogin</string>
   <!-- Create note -->
   <string name="note_hint">Nota</string>
   <!-- Create Credit Card -->
@@ -187,4 +187,13 @@
   <string name="remove_passkey_dialog_title">Remover essa chave de acesso?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Você está prestes a remover a chave de acesso para o usuário \'%1$s\' em \'%2$s\'. Tem certeza?</string>
   <string name="add_a_custom_section">Adicionar um campo personalizado</string>
+  <string name="add_attachment_take_a_photo">Tirar uma foto</string>
+  <string name="add_attachment_choose_a_photo_or_video">Escolha uma foto ou vídeo</string>
+  <string name="add_attachment_choose_a_file">Escolha um arquivo</string>
+  <string name="attachment_options_open">Abrir</string>
+  <string name="attachment_options_save">Salvar</string>
+  <string name="attachment_options_rename">Renomear</string>
+  <string name="attachment_options_delete">Excluir</string>
+  <string name="banner_title_attachments">Anexos</string>
+  <string name="banner_body_attachments">You can attach files to items for a better organization</string>
 </resources>

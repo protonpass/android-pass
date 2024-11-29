@@ -26,15 +26,15 @@
     <item quantity="one">%d element sincronitzat</item>
     <item quantity="other">%d elements sincronitzats</item>
   </plurals>
-  <string name="sync_progress_item_count">Downloading %1$d of %2$d items</string>
+  <string name="sync_progress_item_count">S\'està descarregant %1$d de %2$d elements</string>
   <string name="sync_dialog_title">S\'estan sincronitzant elements…</string>
   <string name="sync_dialog_title_error">Error de sincronització</string>
   <string name="sync_dialog_title_success">Sincronització completada</string>
   <string name="sync_dialog_subtitle">S\'estan descarregant i desxifrant els elements. Això podria durar uns minuts.</string>
   <string name="sync_dialog_subtitle_error">S\'ha produït un error en descarregar i desxifrar els vostres elements. Torneu-ho a provar.</string>
-  <string name="sync_dialog_subtitle_success">Els vostres elements s\'han descarregat i desxifrat correctament.</string>
+  <string name="sync_dialog_subtitle_success">Els vostres elements s\'han descarregat i desxifrat.</string>
   <string name="sync_item_not_started">No s\'ha iniciat.</string>
   <string name="sync_item_failed">Error de sincronització</string>
   <string name="sync_dialog_title_inserting">Inserint elements…</string>
-  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
+  <string name="sync_dialog_subtitle_inserting">S\'està acabant el darrer pas. Falta poc.</string>
 </resources>

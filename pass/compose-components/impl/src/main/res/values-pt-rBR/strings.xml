@@ -266,8 +266,8 @@
   <string name="simple_login_widget_action">Sincronizar alias</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">Haven\'t received the code?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
-  <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Por favor, verifique na sua pasta de Spam um e-mail chamado “%s“</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Por favor, confirme seu endereço de e-mail para o Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Confirme sua caixa de correio</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Se você não encontrar o e-mail, você pode %s</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">solicitar um novo código</string>

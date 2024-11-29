@@ -9,7 +9,7 @@
   <string name="migrate_item_error_snackbar">アイテムの移動エラー</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">一部のアイテムの移動中にエラーが発生</string>
   <string name="migrate_item_warning_history">保管庫間でアイテムを移動する場合、各アイテムの直近50回以内の変更のみ保持します。</string>
-  <string name="migrate_item_warning_secure_link">The item\'s secure links will be removed when it\'s moved to another vault</string>
+  <string name="migrate_item_warning_secure_link">アイテムが別の保管庫に移動されると、そのアイテムのセキュアリンクは削除されます。</string>
   <string name="migrate_all_items_success_snackbar">すべてのアイテムが移動</string>
   <string name="migrate_all_items_error_snackbar">すべての保管庫アイテムの移動エラー</string>
   <string name="migrate_init_error_snackbar">移行画面を準備できませんでした</string>

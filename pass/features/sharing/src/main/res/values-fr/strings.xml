@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Continuer</string>
   <string name="sharing_can_view">Lecteur</string>
   <string name="sharing_can_edit">Éditeur</string>
   <string name="sharing_can_manage">Administrateur</string>
@@ -32,18 +31,20 @@
     <item quantity="one">%d membre</item>
     <item quantity="other">%d membres</item>
   </plurals>
+  <string name="sharing_member_count_header">Membres</string>
   <string name="share_with_title">Partager avec</string>
   <string name="share_with_email_hint">Adresse e-mail</string>
   <string name="share_with_email_error">L\'adresse e-mail n\'est pas valide.</string>
   <string name="share_with_email_cannot_invite_outside_org">Vous ne pouvez pas inviter des personnes extérieures à votre organisation. Contactez l\'administrateur pour plus d\'informations.</string>
   <string name="share_with_email_email_already_added">Vous avez déjà ajouté cette adresse e-mail.</string>
   <string name="share_permissions_title">Définir le niveau d\'accès</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vous invite à accéder à des éléments dans</string>
-  <string name="sharing_join_shared_vault">Rejoindre et synchroniser</string>
   <string name="sharing_reject_invitation">Refuser l\'invitation</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Votre accès a été confirmé.</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Voir le coffre-fort partagé</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Fermer</string>
+  <string name="sharing_vault_invitation_title">Invitation à un coffre-fort partagé</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s souhaite partager un coffre-fort avec vous.</string>
+  <string name="sharing_vault_invitation_accept">Rejoindre le coffre-fort partagé</string>
+  <string name="sharing_item_invitation_title">Invitation à un élément partagé</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s souhaite partager un élément avec vous.</string>
+  <string name="sharing_item_invitation_accept">Accepter et afficher l\'élément</string>
   <string name="sharing_snackbar_get_invite_error">Impossible d\'obtenir l\'invitation</string>
   <string name="sharing_snackbar_invite_accepted">Invitation acceptée</string>
   <string name="sharing_snackbar_invite_accept_error">Une erreur s\'est produite lors de l\'acceptation de l\'invitation.</string>
@@ -61,7 +62,9 @@
   <string name="share_summary_title">Vérifier et partager</string>
   <string name="share_summary_vault">coffre-fort %s</string>
   <string name="share_summary_share_vault">Partager le coffre-fort</string>
+  <string name="share_summary_share_item">Partager l\'élément</string>
   <string name="share_summary_vault_title">Coffre-fort</string>
+  <string name="share_summary_item_title">Élément</string>
   <string name="share_manage_vault_share_with_more_people">Partager avec d\'autres personnes</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Il reste %d invitation.</item>
@@ -116,7 +119,7 @@
   <string name="share_with_recents_title">Récents</string>
   <string name="share_with_remove_email_content_description">Retirer cette adresse e-mail</string>
   <string name="share_with_user_title">Partager avec</string>
-  <string name="share_with_user_description">Partager cet élément avec d\'autres utilisateurs Proton.</string>
+  <string name="share_with_user_description">Partagez cet élément avec d\'autres utilisateurs Proton.</string>
   <string name="share_with_secure_link_title">Par lien sécurisé</string>
   <string name="share_with_secure_link_description">Générez un lien sécurisé vers cet élément.</string>
   <string name="share_with_manage_shared_vault_title">Gérer l\'accès au coffre-fort</string>

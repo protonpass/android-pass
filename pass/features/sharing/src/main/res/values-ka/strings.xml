@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">გაგრძელება</string>
   <string name="sharing_can_view">მთვალიერებელი</string>
   <string name="sharing_can_edit">რედაქტორი</string>
   <string name="sharing_can_manage">ადმინისტრატორი</string>
@@ -32,18 +31,20 @@
     <item quantity="one">%d წევრი</item>
     <item quantity="other">%d წევრი</item>
   </plurals>
+  <string name="sharing_member_count_header">წევრები</string>
   <string name="share_with_title">გაზიარება</string>
   <string name="share_with_email_hint">ელფოსტის მისამართი</string>
   <string name="share_with_email_error">არასწორი ელფოსტის მისამართი</string>
   <string name="share_with_email_cannot_invite_outside_org">თქვენი ორგანიზაციის გარედან ხალხს ვერ მოიწვევთ. მეტი დეტალებისთვის დაუკავშირდით ადმინისტრატორს</string>
   <string name="share_with_email_email_already_added">ეს ელფოსტის მისამართი უკვე დაამატეთ</string>
   <string name="share_permissions_title">წვდომის დონის დაყენება</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s გიწვევთ ელემენტებზე წვდომსთვის</string>
-  <string name="sharing_join_shared_vault">შემოგვიერთდით და დასინქრონდით</string>
   <string name="sharing_reject_invitation">მოსაწვევის უარყოფა</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">გილოცავთ, თქვენი წვდომა დადასტურებულია</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">გაზიარებული საცავის ნახვა</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">დახურვა</string>
+  <string name="sharing_vault_invitation_title">გაზიარებული საცავის მოსაწვევი</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s-ის უნდა, საცავი გაგიზიაროთ.</string>
+  <string name="sharing_vault_invitation_accept">გაზიარებულ საცავთან მიერთება</string>
+  <string name="sharing_item_invitation_title">გაზიარებული ელემენტის მოსაწვევი</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s უნდა, ელემენტი გაგიზიაროთ.</string>
+  <string name="sharing_item_invitation_accept">მიღება და ელემენტის ნახვა</string>
   <string name="sharing_snackbar_get_invite_error">მოსაწვევის მიღება შეუძლებელია</string>
   <string name="sharing_snackbar_invite_accepted">მოწვევა მიღებულია</string>
   <string name="sharing_snackbar_invite_accept_error">მოსაწვევის დათანხმების შეცდომა</string>
@@ -61,7 +62,9 @@
   <string name="share_summary_title">მიმოხილვა და გაზიარება</string>
   <string name="share_summary_vault">%s საცავი</string>
   <string name="share_summary_share_vault">საცავის გაზიარება</string>
+  <string name="share_summary_share_item">ელემენტის გაზიარება</string>
   <string name="share_summary_vault_title">საცავი</string>
+  <string name="share_summary_item_title">ელემენტი</string>
   <string name="share_manage_vault_share_with_more_people">გაუზიარეთ მეტს</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">დარჩენილია %d მოწვევა</item>
@@ -113,7 +116,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">ასწიეთ სატარიფო გეგმა მეტი საცავის შესაქმნელად</string>
   <string name="sharing_from_item_vault_limit_reached">მიაღწიეთ საცავების ზღვარს</string>
   <string name="share_with_suggestions_title">შეთავაზებები</string>
-  <string name="share_with_recents_title">Recent</string>
+  <string name="share_with_recents_title">უახლესი</string>
   <string name="share_with_remove_email_content_description">ელფოსტის წაშლა</string>
   <string name="share_with_user_title">გაზიარება</string>
   <string name="share_with_user_description">გააზიარეთ ეს ელემენტი სხვა Proton-ის მომხმარებლებთან.</string>

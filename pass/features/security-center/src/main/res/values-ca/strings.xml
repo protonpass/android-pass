@@ -19,7 +19,7 @@
 <resources>
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
-  <string name="security_center_home_dark_web_monitoring_title">Monitoratge de la web fosca</string>
+  <string name="security_center_home_dark_web_monitoring_title">Monitoratge del web fosc</string>
   <string name="security_center_home_widget_breaches_title">S\'ha detectat una violació de les dades</string>
   <string name="security_center_home_widget_breaches_subtitle">La vostra adreça de correu electrònic s\'ha filtrat en almenys 1 infracció de dades.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">Rebeu una notificació si s\'han filtrat el vostre correu electrònic, contrasenya o altres dades personals.</string>
@@ -34,7 +34,7 @@
   <string name="security_center_home_row_reused_passwords_subtitle">Generi contrasenyes úniques</string>
   <string name="security_center_home_row_missing_tfa_title">A2F inactiva</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Configureu A2F per a més seguretat</string>
-  <string name="security_center_home_row_excludes_items_title">Exclòs de la supervisió</string>
+  <string name="security_center_home_row_excludes_items_title">Exclòs del monitoratge</string>
   <string name="security_center_home_row_excludes_items_subtitle">Aquests elements continuen en risc</string>
   <string name="security_center_get_breaches_error">No s\'han pogut carregar les infraccions</string>
   <string name="security_center_home_section_password_health">Salut de les contrasenyes</string>
@@ -107,7 +107,7 @@
   <string name="security_center_verify_email_snackbar_message_resend_code_error">S\'ha produït un error en enviar el codi de verificació. Torneu-ho a intentar més tard.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Massa verificacions no vàlides. Eliminació del correu electrònic personalitzat.</string>
   <string name="security_center_verify_email_snackbar_message_invalid_verification_error">El codi de verificació no és vàlid.</string>
-  <string name="security_center_verify_email_snackbar_message_verification_error">There was an error verifying the email. Please try again later.</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">S\'ha produït un error en verificar el correu electrònic. Torneu-ho a intentar més tard.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Infraccions detectades per a</string>
   <string name="security_center_verify_report_title_none">No s\'han detectat infraccions per a</string>
@@ -130,32 +130,32 @@
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">La informació exposada es va filtrar de %s. La informació del vostre compte de Proton roman segura i xifrada.</string>
   <string name="security_center_report_detail_learn_more">Saber-ne més</string>
   <string name="security_center_report_detail_snackbar_error">No s\'han pogut carregar els detalls de la infracció</string>
-  <string name="security_center_report_detail_excluded_from_monitoring">Exclòs de la supervisió</string>
+  <string name="security_center_report_detail_excluded_from_monitoring">Exclòs del monitoratge</string>
   <string name="security_center_report_resolve_confirmation_dialog_title">Resoldre totes les infraccions?</string>
   <string name="security_center_report_resolve_confirmation_dialog_message">Totes les infraccions actuals es marcaran com a resoltes. En cas de futures infraccions de dades, rebreu una notificació.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Adreces de Proton</string>
   <string name="security_center_proton_list_no_breaches_detected">No s\'han detectat infraccions</string>
-  <string name="security_center_proton_list_excluded_from_monitoring">Exclòs de la supervisió</string>
+  <string name="security_center_proton_list_excluded_from_monitoring">Exclòs del monitoratge</string>
   <string name="security_center_proton_list_error">No s\'han pogut carregar les adreces</string>
-  <string name="security_center_proton_list_included_in_monitoring">Activeu la supervisió per rebre notificacions si es filtren les seves adreces de Proton.</string>
+  <string name="security_center_proton_list_included_in_monitoring">Activeu el monitoratge per rebre notificacions si es filtren les seves adreces de Proton.</string>
   <string name="security_center_proton_list_options_menu">Menú d\'opcions de la pantalla de Proton</string>
   <string name="security_center_proton_list_not_monitored">No supervisat</string>
   <!-- Address Bottomsheet options -->
-  <string name="security_center_address_bottomsheet_disable_monitoring">Posar en pausa la supervisió</string>
-  <string name="security_center_address_bottomsheet_enable_monitoring">Reprendre la supervisió</string>
+  <string name="security_center_address_bottomsheet_disable_monitoring">Posa en pausa el monitoratge</string>
+  <string name="security_center_address_bottomsheet_enable_monitoring">Reprèn el monitoratge</string>
   <string name="security_center_address_bottomsheet_remove_custom_email">Esborra el correu electrònic personalitzat</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">S\'ha produït un error en posar en pausa la supervisió</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">S\'ha produït un error en reprendre la supervisió</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">S\'ha produït un error en posar en pausa el monitoratge</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">S\'ha produït un error en reprendre el monitoratge</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">No s\'ha pogut esborrar el correu electrònic personalitzat</string>
   <string name="security_center_address_bottomsheet_snackbar_message_enable_success">El seguiment s\'ha reprès amb èxit</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">La supervisió s\'ha pausat en pausa correctament</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">S\'ha pausat el monitoratge.</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">S\'ha esborrat el correu electrònic personalitzat</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Àlies hide-my-email</string>
-  <string name="security_center_alias_list_excluded_from_monitoring">Exclòs de la supervisió</string>
+  <string name="security_center_alias_list_excluded_from_monitoring">Exclòs del monitoratge</string>
   <string name="security_center_alias_list_error">No s\'han pogut carregar les adreces</string>
-  <string name="security_center_alias_list_included_in_monitoring">Activeu la supervisió per rebre notificacions si els vostres àlies de hide-my-email es van filtrar.</string>
+  <string name="security_center_alias_list_included_in_monitoring">Activeu el monitoratge per rebre notificacions si els vostres àlies de hide-my-email es van filtrar.</string>
   <string name="security_center_alias_list_monitored">Supervisat</string>
   <string name="security_center_alias_list_custom_email_message">Els àlies amb dominis personalitzats no se supervisen; afegiu-los com a correu electrònic personalitzat per al seguiment.</string>
   <string name="security_center_alias_list_options_menu">Menú d\'opcions de pantalla d\'àlies</string>

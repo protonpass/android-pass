@@ -58,6 +58,7 @@
   <string name="simple_login_sync_mailbox_delete_message_delete_error">Si è verificato un errore nell\'eliminazione della casella</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">Casella email eliminata correttamente</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Trasferisci alias a</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Tieni presente che una volta eliminati, gli alias non possono essere ripristinati</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Dominio predefinito</string>
   <string name="simple_login_sync_domain_select_title_none">nessuno</string>

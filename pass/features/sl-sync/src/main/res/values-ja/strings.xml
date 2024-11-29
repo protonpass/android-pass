@@ -19,60 +19,61 @@
 <resources>
   <!-- Management screen -->
   <string name="simple_login_sync_management_title">エイリアス管理</string>
-  <string name="simple_login_sync_management_domain_label">Domain</string>
+  <string name="simple_login_sync_management_domain_label">ドメイン</string>
   <string name="simple_login_sync_management_domain_title">エイリアスのデフォルトドメイン</string>
-  <string name="simple_login_sync_management_domain_option_blank">Not selected</string>
-  <string name="simple_login_sync_management_mailboxes_label">Mailboxes</string>
-  <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
-  <string name="simple_login_sync_management_mailbox_default">Default</string>
-  <string name="simple_login_sync_management_mailbox_unverified">Unverified mailbox</string>
+  <string name="simple_login_sync_management_domain_option_blank">選択されていません</string>
+  <string name="simple_login_sync_management_mailboxes_label">メールボックス</string>
+  <string name="simple_login_sync_management_mailboxes_description">メールボックスは、エイリアスに送信されたメールが転送される場所です。通常のメールボックス、例えばGmail、Outlook、Proton Mailなどです。</string>
+  <string name="simple_login_sync_management_mailbox_default">デフォルト</string>
+  <string name="simple_login_sync_management_mailbox_unverified">認証されていないメールボックス</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin 同期</string>
-  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
-  <string name="simple_login_sync_management_mailboxes_title">Default mailbox for aliases</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">SLエイリアスの詳細を取得中にエラーが発生しました</string>
+  <string name="simple_login_sync_management_mailboxes_title">エイリアスのデフォルトメールボックス</string>
   <string name="simple_login_sync_management_dialog_title_domains">エイリアスのデフォルトドメイン</string>
-  <string name="simple_login_sync_management_dialog_title_mailboxes">Default mailbox for aliases</string>
+  <string name="simple_login_sync_management_dialog_title_mailboxes">エイリアスのデフォルトメールボックス</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">エイリアスを同期する</string>
   <string name="simple_login_sync_enable_snackbar_error">SimpleLogin エイリアスの同期を有効にする際にエラーが発生しました</string>
   <string name="simple_login_sync_enable_snackbar_success">SimpleLogin エイリアスの同期が正常に有効になりました</string>
   <!-- Mailbox create screen -->
-  <string name="simple_login_sync_mailbox_create_title">Add mailbox</string>
-  <string name="simple_login_sync_mailbox_create_message_error">There was an error adding the mailbox</string>
+  <string name="simple_login_sync_mailbox_create_title">メールボックスを追加</string>
+  <string name="simple_login_sync_mailbox_create_message_error">メールボックスの追加中にエラーが発生しました</string>
   <!-- Mailbox verify screen -->
-  <string name="simple_login_sync_mailbox_verify_title">Confirm your mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">We sent a verification code to %s. Enter it below:</string>
-  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">your email address</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Invalid mailbox verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Invalid mailbox verification code limit reached, mailbox was deleted</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_error">There was an error verifying the mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_success">Mailbox successfully verified</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">There was an error sending verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verification code successfully sent</string>
+  <string name="simple_login_sync_mailbox_verify_title">メールボックスを確認する</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">%sに認証コードを送りました。以下に入力してください：</string>
+  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">あなたのメールアドレス</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">無効なメールボックス認証コードです</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">無効なメールボックス認証コードが制限に達しました、メールボックスは削除されました</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_error">メールボックスの認証中にエラーが発生しました</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_success">メールボックスは正しく認証されました</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">認証コードの送信中にエラーが発生しました</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">認証コードは正しく送信されました</string>
   <!-- Mailbox delete screen -->
-  <string name="simple_login_sync_mailbox_delete_title">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">All aliases using the mailbox %s will be also deleted. To keep receiving emails transfer these aliases to a different mailbox:</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfer aliases</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">To mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transfer and delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_error">There was an error deleting mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_success">Mailbox successfully deleted</string>
-  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transfer aliases to</string>
+  <string name="simple_login_sync_mailbox_delete_title">メールボックスを削除</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">メールボックス %s を使用しているすべてのエイリアスは削除されます。メールを受信し続けるには、これらのエイリアスを別のメールボックスに移動してください。</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">エイリアスを転送</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">メールボックスへ</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete">メールボックスを削除</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">メールボックスの転送と削除</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">メールボックスの削除中にエラーが発生しました</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_success">メールボックスは正常に削除されました</string>
+  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">にエイリアスを転送</string>
+  <string name="simple_login_sync_mailbox_delete_warning">一度削除すると、エイリアスを復元することはできないことにご注意ください。</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">デフォルトドメイン</string>
-  <string name="simple_login_sync_domain_select_title_none">none</string>
-  <string name="simple_login_sync_domain_select_description_none">No domain</string>
-  <string name="simple_login_sync_domain_select_description_custom">Your domain</string>
-  <string name="simple_login_sync_domain_select_description_free">Public domain</string>
-  <string name="simple_login_sync_domain_select_description_premium">Premium domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">There was an error fetching SL alias domains</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
+  <string name="simple_login_sync_domain_select_title_none">ノート</string>
+  <string name="simple_login_sync_domain_select_description_none">ドメインがありません</string>
+  <string name="simple_login_sync_domain_select_description_custom">あなたのドメイン</string>
+  <string name="simple_login_sync_domain_select_description_free">公開ドメイン</string>
+  <string name="simple_login_sync_domain_select_description_premium">プレミアムドメイン</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">SLエイリアスドメインの取得中にエラーが発生しました</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">SLエイリアスドメインの更新中にエラーが発生しました</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SLエイリアスドメインは正常に更新されました</string>
   <!-- Mailbox options screen -->
-  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Cannot display mailbox options</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_error">There was an error updating default mailbox</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Default mailbox successfully updated</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_options_error">メールボックスのオプションを表示することができません</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_error">デフォルトのメールボックスの更新中にエラーが発生しました</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_success">デフォルトのメールボックスは正しく更新されました</string>
   <!-- Shared -->
-  <string name="simple_login_sync_shared_default_vault_title">Default SL vault</string>
+  <string name="simple_login_sync_shared_default_vault_title">デフォルトSL保管庫</string>
   <string name="simple_login_sync_shared_default_vault_description">SimpleLogin エイリアスは、この保管庫にインポートされます。</string>
 </resources>

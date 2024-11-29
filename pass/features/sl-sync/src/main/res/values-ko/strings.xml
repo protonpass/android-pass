@@ -58,6 +58,7 @@
   <string name="simple_login_sync_mailbox_delete_message_delete_error">메일함 삭제 중 오류가 발생했습니다.</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">메일함을 성공적으로 삭제했습니다.</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">다음으로 별칭 이동:</string>
+  <string name="simple_login_sync_mailbox_delete_warning">한 번 삭제한 별칭은 복구할 수 없습니다.</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">기본 도메인</string>
   <string name="simple_login_sync_domain_select_title_none">없음</string>

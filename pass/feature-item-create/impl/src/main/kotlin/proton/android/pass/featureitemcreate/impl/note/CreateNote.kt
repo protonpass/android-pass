@@ -115,15 +115,8 @@ fun CreateNoteScreen(
 
                     is NoteContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
                     is NoteContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
-                    NoteContentUiEvent.OnAddAttachment -> {
-                        // open attachment picker
-                    }
-
-                    is NoteContentUiEvent.OnAttachmentOpen -> {
-                        // open attachment
-                    }
-                    is NoteContentUiEvent.OnAttachmentOptions -> {
-                        // show attachment options
+                    is NoteContentUiEvent.OnAttachmentEvent -> {
+                        // handle attachment event
                     }
                 }
             }

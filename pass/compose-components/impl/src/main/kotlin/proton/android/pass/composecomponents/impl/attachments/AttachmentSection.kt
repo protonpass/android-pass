@@ -21,8 +21,6 @@ package proton.android.pass.composecomponents.impl.attachments
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -53,7 +51,7 @@ fun AttachmentSection(
     isDetail: Boolean,
     colors: PassItemColors,
     onAttachmentOptions: (Attachment) -> Unit,
-    onAttachmentClick: (Attachment) -> Unit,
+    onAttachmentOpen: (Attachment) -> Unit,
     onAddAttachment: () -> Unit,
     onTrashAll: () -> Unit
 ) {
@@ -61,7 +59,7 @@ fun AttachmentSection(
     Column(
         modifier = modifier
             .applyIf(
-                condition = isDetail,
+                condition = !isDetail,
                 ifTrue = { roundedContainerNorm() },
                 ifFalse = { roundedContainer(Color.Transparent, ProtonTheme.colors.separatorNorm) }
             )
@@ -75,8 +73,8 @@ fun AttachmentSection(
             fileAmount = files.size,
             onTrashAll = onTrashAll.takeIf { !isDetail }
         )
-        LazyColumn {
-            itemsIndexed(files) { index, file ->
+        Column {
+            files.forEachIndexed { index, file ->
                 AttachmentRow(
                     modifier = Modifier.padding(top = Spacing.small),
                     filename = file.name,
@@ -86,7 +84,7 @@ fun AttachmentSection(
                     isEnabled = loadingFile is None,
                     isLoading = loadingFile.value()?.id == file.id,
                     onOptionsClick = { onAttachmentOptions(file) },
-                    onAttachmentOpen = { onAttachmentClick(file) }
+                    onAttachmentOpen = { onAttachmentOpen(file) }
                 )
                 if (index < files.lastIndex) {
                     PassDivider(modifier = Modifier.padding(top = Spacing.small))
@@ -119,7 +117,7 @@ fun AttachmentSectionPreview(
                 loadingFile = input.second.loadingFile,
                 isDetail = input.second.isDetail,
                 onAttachmentOptions = {},
-                onAttachmentClick = {},
+                onAttachmentOpen = {},
                 onAddAttachment = {},
                 onTrashAll = {}
             )

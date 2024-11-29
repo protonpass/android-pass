@@ -122,12 +122,12 @@ class CreateLoginViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeVaults: ObserveVaultsWithItemCount,
-    savedStateHandleProvider: SavedStateHandleProvider,
     observeDefaultVault: ObserveDefaultVault,
     emailValidator: EmailValidator,
     observeTooltipEnabled: ObserveTooltipEnabled,
     disableTooltip: DisableTooltip,
-    userPreferencesRepository: UserPreferencesRepository
+    userPreferencesRepository: UserPreferencesRepository,
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -138,11 +138,12 @@ class CreateLoginViewModel @Inject constructor(
     draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider,
     passwordStrengthCalculator = passwordStrengthCalculator,
-    savedStateHandleProvider = savedStateHandleProvider,
     emailValidator = emailValidator,
     observeTooltipEnabled = observeTooltipEnabled,
     disableTooltip = disableTooltip,
-    userPreferencesRepository = userPreferencesRepository
+    userPreferencesRepository = userPreferencesRepository,
+    featureFlagsRepository = featureFlagsRepository,
+    savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: Option<ShareId> = savedStateHandleProvider.get()
         .get<String>(CommonOptionalNavArgId.ShareId.key)

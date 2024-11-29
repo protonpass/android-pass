@@ -44,6 +44,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomShe
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareType
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
@@ -228,10 +229,16 @@ fun AliasDetail(
                             )
                             onNavigate(event)
                         },
-                        onVaultClick = {
-                            ItemDetailNavigation.ManageVault(
-                                shareId = state.share.id
-                            ).also(onNavigate)
+                        onShareClick = {
+                            when (state.share.shareType) {
+                                ShareType.Vault -> ItemDetailNavigation.ManageVault(
+                                    shareId = state.share.id
+                                )
+
+                                ShareType.Item -> ItemDetailNavigation.ManageItem(
+                                    shareId = state.share.id
+                                )
+                            }.also(onNavigate)
                         },
                         onViewItemHistoryClicked = {
                             onNavigate(

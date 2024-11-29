@@ -81,7 +81,7 @@ fun VaultNameSubtitle(
                 PassSharingItemChip(
                     shareCount = shareCount,
                     itemColors = passItemColors(itemCategory),
-                    onClick = {}
+                    onClick = onClick
                 )
             }
         }

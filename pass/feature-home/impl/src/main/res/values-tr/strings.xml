@@ -51,6 +51,8 @@
   <string name="home_notification_permission_banner_settings">İzin ver ›</string>
   <string name="home_invite_banner_title">Sizinle bir kasa paylaşıldı</string>
   <string name="home_invite_banner_subtitle">Paylaşılmış bir kasaya davet edildiniz. Ayrıntılı bilgi almak için dokunun.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s sizinle bir öge paylaşmak istiyor.</string>
+  <string name="home_item_invite_banner_subtitle">Ayrıntılar için dokunun.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Parolayı kopyala</string>
   <string name="bottomsheet_copy_username">Kullanıcı adını kopyala</string>

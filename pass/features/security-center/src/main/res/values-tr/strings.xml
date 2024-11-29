@@ -91,7 +91,7 @@
   <string name="security_center_dark_web_monitor_see_all">Tümünü görüntüle</string>
   <string name="security_center_dark_web_monitor_no_proton_addresses">Herhangi bir Proton adresi yok</string>
   <string name="security_center_dark_web_monitor_no_aliases">Herhangi bir takma ad yok</string>
-  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Doğrulama kodu gönderilirken sorun çıktı. Lütfen bir süre sonra yeniden deneyin.</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Doğrulama kodu gönderilirken bir sorun çıktı. Lütfen bir süre sonra yeniden deneyin.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">E-posta silinirken bir sorun çıktı. Lütfen bir süre sonra yeniden deneyin.</string>
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">Özel e-posta adresi izleme</string>
@@ -104,7 +104,7 @@
   <string name="security_center_verify_email_title">E-posta adresinizi onaylayın</string>
   <string name="security_center_verify_email_subtitle">%s adresine gönderdiğimiz doğrulama kodunu lütfen aşağıya yazın:</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">Yeni bir doğrulama kodu gönderildi. Lütfen gelen kutunuza bakın.</string>
-  <string name="security_center_verify_email_snackbar_message_resend_code_error">Doğrulama kodu gönderilirken sorun çıktı. Lütfen bir süre sonra yeniden deneyin.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_error">Doğrulama kodu gönderilirken bir sorun çıktı. Lütfen bir süre sonra yeniden deneyin.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Çok fazla geçersiz doğrulama yapıldı. Özel e-posta kaldırılıyor.</string>
   <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Doğrulama kodu geçersiz</string>
   <string name="security_center_verify_email_snackbar_message_verification_error">E-posta doğrulanırken bir sorun çıktı. Lütfen bir süre sonra yeniden deneyin.</string>

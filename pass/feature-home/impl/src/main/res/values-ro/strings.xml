@@ -52,6 +52,8 @@
   <string name="home_notification_permission_banner_settings">Activare permisiune</string>
   <string name="home_invite_banner_title">Seif partajat cu dvs.</string>
   <string name="home_invite_banner_subtitle">Ați primit o invitație la un seif partajat. Atingeți pentru detalii.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s doreşte să vă partajeze un articol.</string>
+  <string name="home_item_invite_banner_subtitle">Apăsați pentru detalii.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copiere parolă</string>
   <string name="bottomsheet_copy_username">Copiere nume utilizator</string>

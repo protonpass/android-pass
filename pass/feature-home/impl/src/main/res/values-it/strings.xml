@@ -51,6 +51,8 @@
   <string name="home_notification_permission_banner_settings">Abilita l\'autorizzazione ›</string>
   <string name="home_invite_banner_title">Cassaforte condivisa con te</string>
   <string name="home_invite_banner_subtitle">Sei stato invitato in una cassaforte condivisa. Tocca per i dettagli.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s vuole condividere un elemento con te.</string>
+  <string name="home_item_invite_banner_subtitle">Premi per informazioni.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copia la password</string>
   <string name="bottomsheet_copy_username">Copia il nome utente</string>

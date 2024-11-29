@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Продолжить</string>
   <string name="sharing_can_view">Читатель</string>
   <string name="sharing_can_edit">Редактор</string>
   <string name="sharing_can_manage">Администратор</string>
@@ -36,18 +35,20 @@
     <item quantity="many">%d участников</item>
     <item quantity="other">%d участников</item>
   </plurals>
+  <string name="sharing_member_count_header">Участники</string>
   <string name="share_with_title">Поделиться с</string>
   <string name="share_with_email_hint">Адрес эл. почты</string>
   <string name="share_with_email_error">Недействительный адрес эл. почты</string>
   <string name="share_with_email_cannot_invite_outside_org">Вы не можете приглашать людей за пределами вашей организации, свяжитесь с администратором для получения дополнительной информации</string>
   <string name="share_with_email_email_already_added">Вы уже добавили этот адрес электронной почты</string>
   <string name="share_permissions_title">Установить уровень доступа</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s приглашает вас получить доступ к элементам в</string>
-  <string name="sharing_join_shared_vault">Присоединиться и синхронизировать</string>
   <string name="sharing_reject_invitation">Отклонить приглашение</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Поздравляем, ваш доступ подтверждён</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Просмотр общего хранилища</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Закрыть</string>
+  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="sharing_vault_invitation_accept">Join shared vault</string>
+  <string name="sharing_item_invitation_title">Shared item invitation</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="sharing_item_invitation_accept">Accept and view the item</string>
   <string name="sharing_snackbar_get_invite_error">Не могу получить приглашение</string>
   <string name="sharing_snackbar_invite_accepted">Приглашение принято</string>
   <string name="sharing_snackbar_invite_accept_error">Ошибка при принятии приглашения</string>
@@ -65,7 +66,9 @@
   <string name="share_summary_title">Проверить и поделиться</string>
   <string name="share_summary_vault">%s хранилище</string>
   <string name="share_summary_share_vault">Поделиться хранилищем</string>
+  <string name="share_summary_share_item">Share item</string>
   <string name="share_summary_vault_title">Хранилище</string>
+  <string name="share_summary_item_title">Item</string>
   <string name="share_manage_vault_share_with_more_people">Делитесь с большим числом людей</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Осталось %d приглашение</item>
@@ -123,9 +126,9 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Улучшите для создания дополнительных хранилищ</string>
   <string name="sharing_from_item_vault_limit_reached">You have reached the vault limit</string>
   <string name="share_with_suggestions_title">Рекомендации</string>
-  <string name="share_with_recents_title">Recent</string>
+  <string name="share_with_recents_title">Недавние</string>
   <string name="share_with_remove_email_content_description">Удалить адрес эл. почты</string>
-  <string name="share_with_user_title">Share with</string>
+  <string name="share_with_user_title">Поделиться с</string>
   <string name="share_with_user_description">Share this item with other Proton users.</string>
   <string name="share_with_secure_link_title">Через защищенную ссылку</string>
   <string name="share_with_secure_link_description">Сгенерировать защищенную ссылку на этот элемент.</string>

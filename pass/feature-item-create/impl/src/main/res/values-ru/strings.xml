@@ -83,9 +83,9 @@
   <string name="cannot_retrieve_alias_options">Не могу получить варианты псевдонима</string>
   <string name="alias_mailbox_dialog_title">Переслать на</string>
   <string name="sl_note_info_title">What is a SimpleLogin note?</string>
-  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">In Pass, an item note is encrypted with the item encryption key and only users who have access to the item can view the note.</string>
-  <string name="sl_note_info_message_part2">Not even Proton or SimpleLogin can see it.</string>
-  <string name="sl_note_info_message_part3">SimpleLogin note is stored together in the same location with alias address and while it is protected by encryption at rest, it isn\'t E2E encrypted meaning anyone who has access to SimpleLogin database can read it.</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">В Pass заметка элемента зашифрована ключом шифрования элемента, и просмотреть ее могут только пользователи, имеющие доступ к элементу.</string>
+  <string name="sl_note_info_message_part2">Даже Proton или SimpleLogin не могут ее увидеть.</string>
+  <string name="sl_note_info_message_part3">Заметки SimpleLogin хранятся в одном месте с адресом псевдонима, и хотя они защищены шифрованием в состоянии покоя, они не зашифрованы E2E, то есть любой, кто имеет доступ к базе данных SimpleLogin, может их прочитать.</string>
   <string name="sl_note_info_content_description">Show SL note information dialog</string>
   <!-- Create note -->
   <string name="note_hint">Заметка</string>
@@ -99,7 +99,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Срок действия</string>
-  <string name="field_card_expiration_date_hint">MM/YY</string>
+  <string name="field_card_expiration_date_hint">ММ/ГГ</string>
   <string name="field_card_expiration_date_error">Введите действительную дату в формате ММ/ГГ</string>
   <string name="create_credit_card_item_creation_error">Не могу создать кредитную карту</string>
   <string name="create_credit_card_item_creation_success">Кредитная карта создана</string>
@@ -133,7 +133,7 @@
   <string name="identity_field_reddit_title">Имя пользователя Reddit</string>
   <string name="identity_field_facebook_title">URL Facebook</string>
   <string name="identity_field_yahoo_title">Имя пользователя Yahoo</string>
-  <string name="identity_field_instagram_title">Instagram username</string>
+  <string name="identity_field_instagram_title">Ссылка на Instagram</string>
   <string name="identity_field_personal_website_title">URL личного веб-сайта</string>
   <string name="identity_field_work_phone_number_title">Рабочий номер телефона</string>
   <string name="identity_field_work_email_title">Рабочий адрес электронной почты</string>
@@ -148,7 +148,7 @@
   <string name="identity_add_field_reddit">Имя пользователя Reddit</string>
   <string name="identity_add_field_facebook">URL Facebook</string>
   <string name="identity_add_field_yahoo">Имя пользователя Yahoo</string>
-  <string name="identity_add_field_instagram">Instagram username</string>
+  <string name="identity_add_field_instagram">Ссылка на Instagram</string>
   <string name="identity_add_field_personal_website">URL личного веб-сайта</string>
   <string name="identity_add_field_work_phone_number">Рабочий номер телефона</string>
   <string name="identity_add_field_work_email_address">Рабочий адрес электронной почты</string>
@@ -187,4 +187,13 @@
   <string name="remove_passkey_dialog_title">Удалить этот ключ доступа?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Вы собираетесь удалить ключ доступа для пользователя \'%1$s\' для \'%2$s\'. Вы уверены?</string>
   <string name="add_a_custom_section">Добавить пользовательский раздел</string>
+  <string name="add_attachment_take_a_photo">Take a photo</string>
+  <string name="add_attachment_choose_a_photo_or_video">Choose a photo or video</string>
+  <string name="add_attachment_choose_a_file">Choose a file</string>
+  <string name="attachment_options_open">Open</string>
+  <string name="attachment_options_save">Save</string>
+  <string name="attachment_options_rename">Rename</string>
+  <string name="attachment_options_delete">Delete</string>
+  <string name="banner_title_attachments">Attachments</string>
+  <string name="banner_body_attachments">You can attach files to items for a better organization</string>
 </resources>

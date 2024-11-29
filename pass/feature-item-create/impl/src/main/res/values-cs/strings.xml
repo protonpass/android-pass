@@ -187,4 +187,13 @@
   <string name="remove_passkey_dialog_title">Odebrat tento přístupový klíč?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Chystáte se odebrat přístupový klíč uživatele \'%1$s\' pro \'%2$s\'. Jste si jisti?</string>
   <string name="add_a_custom_section">Přidejte vlastní sekci</string>
+  <string name="add_attachment_take_a_photo">Vyfotit</string>
+  <string name="add_attachment_choose_a_photo_or_video">Vybrat fotku nebo video</string>
+  <string name="add_attachment_choose_a_file">Vybrat soubor</string>
+  <string name="attachment_options_open">Otevřít</string>
+  <string name="attachment_options_save">Uložit</string>
+  <string name="attachment_options_rename">Přejmenovat</string>
+  <string name="attachment_options_delete">Smazat</string>
+  <string name="banner_title_attachments">Přílohy</string>
+  <string name="banner_body_attachments">Pro lepší organizaci můžete k položkám přiložit soubory</string>
 </resources>

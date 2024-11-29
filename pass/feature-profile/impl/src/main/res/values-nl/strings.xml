@@ -78,4 +78,7 @@
   <string name="filtered_by_notes">Gefilterd door notities. Items die verplaatst worden, worden niet weergegeven</string>
   <string name="filtered_by_credit_cards">Gefilterd met creditcards. Verwijderde items worden niet weergegeven</string>
   <string name="filtered_by_identities">Gefilterd op identiteiten. Verwijderde items worden niet weergegeven</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">U moet overschakelen naar %1$s om het te beheren</string>
+  <string name="account_switch_confirmation_title">Account beheren</string>
+  <string name="account_switch_confirmation_confirm">Wisselen en beheren</string>
 </resources>

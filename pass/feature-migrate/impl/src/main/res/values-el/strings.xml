@@ -12,7 +12,7 @@
   <string name="migrate_item_warning_history">Κατά τη μετακίνηση αντικειμένων μεταξύ κρυπτών, θα διατηρήσουμε έως και τις τελευταίες 50 τροποποιήσεις που πραγματοποιήθηκαν σε κάθε αντικείμενο</string>
   <string name="migrate_item_warning_secure_link">Οι ασφαλείς συνδέσεις του στοιχείου θα καταργηθούν όταν μετακινηθεί σε άλλη κρύπτη</string>
   <string name="migrate_all_items_success_snackbar">Όλα τα στοιχεία που μετακινήθηκαν</string>
-  <string name="migrate_all_items_error_snackbar">Σφάλμα κατά τη μετακίνηση όλων των στοιχείων θυρίδας αποθήκευσης</string>
+  <string name="migrate_all_items_error_snackbar">Σφάλμα κατά τη μετακίνηση όλων των στοιχείων κρύπτης</string>
   <string name="migrate_init_error_snackbar">Δεν ήταν δυνατή η προετοιμασία της οθόνης μετεγκατάστασης</string>
   <string name="migrate_disabled_vault_reason_no_permission">Δεν μπορείτε να δημιουργήσετε στοιχεία σε αυτήν την κρύπτη</string>
   <string name="migrate_disabled_vault_reason_same_vault">Δεν μπορείτε να μετακινήσετε ένα στοιχείο στην ίδια κρύπτη</string>

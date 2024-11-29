@@ -21,7 +21,7 @@
   <string name="home_empty_vault_create_alias">Создать псевдоним hide-my-email</string>
   <string name="home_empty_vault_create_note">Создать заметку</string>
   <string name="home_empty_vault_create_credit_card">Создать кредитную карту</string>
-  <string name="home_empty_vault_create_identity">Create an identity</string>
+  <string name="home_empty_vault_create_identity">Создать личные данные</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Ошибка загрузки событий</string>
   <string name="error_refreshing">Ошибка выполнения обновления</string>
   <string name="home_snackbar_login_moved_to_trash">Логин перемещён в корзину</string>
@@ -46,13 +46,15 @@
     <item quantity="many">You have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to sync them?</item>
     <item quantity="other">You have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to sync them?</item>
   </plurals>
-  <string name="sl_sync_banner_settings">Sync aliases ›</string>
+  <string name="sl_sync_banner_settings">Синхронизировать псевдонимы ›</string>
   <string name="sl_sync_banner_note">Once synced, deleting aliases in Pass will also delete them in SimpleLogin.</string>
   <string name="home_notification_permission_banner_title">Получайте важные обновления</string>
   <string name="home_notification_permission_banner_text">Включите push-уведомления, чтобы получать информацию о том, что другие пользователи разделяют с вами хранилище.</string>
   <string name="home_notification_permission_banner_settings">Включить разрешение ›</string>
   <string name="home_invite_banner_title">Хранилище, предоставленное вам</string>
   <string name="home_invite_banner_subtitle">Вы приглашены в общее хранилище. Нажмите, чтобы узнать подробности.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="home_item_invite_banner_subtitle">Tap for details.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Скопировать пароль</string>
   <string name="bottomsheet_copy_username">Скопировать имя пользователя</string>
@@ -174,8 +176,8 @@
   <string name="home_snackbar_items_alias_disabled_success">Alias disabled successfully</string>
   <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
   <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
-  <string name="bulk_action_unpin">Unpin</string>
-  <string name="bulk_action_pin">Pin</string>
-  <string name="bulk_action_enable_alias">Enable alias</string>
-  <string name="bulk_action_disable_alias">Disable alias</string>
+  <string name="bulk_action_unpin">Открепить</string>
+  <string name="bulk_action_pin">Закрепить</string>
+  <string name="bulk_action_enable_alias">Включить псевдоним</string>
+  <string name="bulk_action_disable_alias">Отключить псевдоним</string>
 </resources>

@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">続く</string>
   <string name="sharing_can_view">ビューアー</string>
   <string name="sharing_can_edit">エディター</string>
   <string name="sharing_can_manage">管理者</string>
@@ -30,18 +29,20 @@
   <plurals name="sharing_member_count">
     <item quantity="other">%d メンバー</item>
   </plurals>
+  <string name="sharing_member_count_header">メンバー</string>
   <string name="share_with_title">と共有する</string>
   <string name="share_with_email_hint">メールアドレス</string>
   <string name="share_with_email_error">無効なメールアドレスです</string>
   <string name="share_with_email_cannot_invite_outside_org">組織外の人を招待することはできません。詳細については管理者にお問い合わせください。</string>
-  <string name="share_with_email_email_already_added">You have already added this email address</string>
+  <string name="share_with_email_email_already_added">このメールアドレスはすでに追加されています</string>
   <string name="share_permissions_title">アクセスレベルの設定</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%sがあなたにアイテムへのアクセスを招待しています。</string>
-  <string name="sharing_join_shared_vault">参加と同期</string>
   <string name="sharing_reject_invitation">招待を拒否する</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">おめでとうございます。アクセスが確認されました。</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">共有保管庫を参照してください</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">閉じる</string>
+  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="sharing_vault_invitation_accept">Join shared vault</string>
+  <string name="sharing_item_invitation_title">Shared item invitation</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="sharing_item_invitation_accept">Accept and view the item</string>
   <string name="sharing_snackbar_get_invite_error">招待状が届かない</string>
   <string name="sharing_snackbar_invite_accepted">招待を受ける</string>
   <string name="sharing_snackbar_invite_accept_error">招待の受け入れエラー</string>
@@ -59,7 +60,9 @@
   <string name="share_summary_title">レビューして共有</string>
   <string name="share_summary_vault">%s 保管庫</string>
   <string name="share_summary_share_vault">保管庫を共有する</string>
+  <string name="share_summary_share_item">アイテムを共有</string>
   <string name="share_summary_vault_title">保管庫</string>
+  <string name="share_summary_item_title">項目</string>
   <string name="share_manage_vault_share_with_more_people">より多くの人たちと共有する</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d 件の招待が残っています</item>
@@ -108,17 +111,17 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">アップグレードして保管庫をさらに作成します</string>
   <string name="sharing_from_item_vault_limit_reached">保管庫の制限に達しました</string>
   <string name="share_with_suggestions_title">候補</string>
-  <string name="share_with_recents_title">Recent</string>
+  <string name="share_with_recents_title">最近</string>
   <string name="share_with_remove_email_content_description">メールを削除</string>
-  <string name="share_with_user_title">Share with</string>
-  <string name="share_with_user_description">Share this item with other Proton users.</string>
-  <string name="share_with_secure_link_title">Via secure link</string>
-  <string name="share_with_secure_link_description">Generate a secure link to this item.</string>
-  <string name="share_with_manage_shared_vault_title">Manage vault access</string>
+  <string name="share_with_user_title">で共有</string>
+  <string name="share_with_user_description">他のProtonユーザーにこのアイテムを共有</string>
+  <string name="share_with_secure_link_title">セキュアリンク経由</string>
+  <string name="share_with_secure_link_description">このアイテムへのセキュアリンクを生成</string>
+  <string name="share_with_manage_shared_vault_title">保管庫のアクセス権を管理</string>
   <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="other">The item\'s vault is currently shared with %d users.</item>
+    <item quantity="other">このアイテムの保管庫は現在%d人のユーザーに共有されています。</item>
   </plurals>
-  <string name="share_with_view_shared_vault_members_title">View vault members</string>
+  <string name="share_with_view_shared_vault_members_title">保管庫のメンバーを閲覧</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">すべてのメンバーのアクセス レベルを設定する</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">%s のアクセス レベルを設定します</string>
   <string name="sharing_edit_permissions_remove_user">ユーザーを削除する</string>

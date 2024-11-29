@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Jatka</string>
   <string name="sharing_can_view">Tarkastelu</string>
   <string name="sharing_can_edit">Muokkaus</string>
   <string name="sharing_can_manage">Ylläpito</string>
@@ -32,18 +31,20 @@
     <item quantity="one">%d jäsen</item>
     <item quantity="other">%d jäsentä</item>
   </plurals>
+  <string name="sharing_member_count_header">Jäsentä</string>
   <string name="share_with_title">Jaa henkilöille</string>
   <string name="share_with_email_hint">Sähköpostiosoite</string>
   <string name="share_with_email_error">Virheellinen sähköpostiosoite</string>
   <string name="share_with_email_cannot_invite_outside_org">Et voi kutsua henkilöitä organisaatiosi ulkopuolelta. Saat lisätietoja organisaatiosi ylläpidolta.</string>
   <string name="share_with_email_email_already_added">Olet jo lisännyt tämän sähköpostiosoitteen</string>
   <string name="share_permissions_title">Aseta käyttöoikeustaso</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s kutsui sinut käyttämään sisältöä holvista</string>
-  <string name="sharing_join_shared_vault">Liity ja synkronoi</string>
   <string name="sharing_reject_invitation">Kieltäydy kutsusta</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Onnittelut, käyttöoikeutesi on vahvistettu</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Näytä jaettu holvi</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Sulje</string>
+  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s haluaa jakaa holvin kanssasi.</string>
+  <string name="sharing_vault_invitation_accept">Liity jaettuun holviin</string>
+  <string name="sharing_item_invitation_title">Shared item invitation</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s haluaa jakaa kohteen kanssasi.</string>
+  <string name="sharing_item_invitation_accept">Hyväksy ja tarkastele kohdetta</string>
   <string name="sharing_snackbar_get_invite_error">Kutsua ei saatu</string>
   <string name="sharing_snackbar_invite_accepted">Kutsu hyväksytty</string>
   <string name="sharing_snackbar_invite_accept_error">Virhe hyväksyttäessä kutsua</string>
@@ -61,7 +62,9 @@
   <string name="share_summary_title">Tarkista ja jaa</string>
   <string name="share_summary_vault">Holvi \"%s\"</string>
   <string name="share_summary_share_vault">Jaa holvi</string>
+  <string name="share_summary_share_item">Jaa kohde</string>
   <string name="share_summary_vault_title">Holvi</string>
+  <string name="share_summary_item_title">Kohde</string>
   <string name="share_manage_vault_share_with_more_people">Jaa useammalle henkilölle</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d kutsu jäljellä</item>
@@ -113,9 +116,9 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Luo lisää holveja päivittämällä tilauksesi</string>
   <string name="sharing_from_item_vault_limit_reached">Holvien enimmäismäärä on saavutettu</string>
   <string name="share_with_suggestions_title">Ehdotukset</string>
-  <string name="share_with_recents_title">Recent</string>
+  <string name="share_with_recents_title">Viimeisin</string>
   <string name="share_with_remove_email_content_description">Poista sähköpostiosoite</string>
-  <string name="share_with_user_title">Share with</string>
+  <string name="share_with_user_title">Jaa:</string>
   <string name="share_with_user_description">Jaa tämä kohde muille Protonin käyttäjille.</string>
   <string name="share_with_secure_link_title">Suojatun linkin välityksellä</string>
   <string name="share_with_secure_link_description">Luo suojattu linkki tähän kohteeseen.</string>
@@ -129,7 +132,7 @@
   <string name="sharing_edit_permissions_set_access_level_single_member">Aseta käyttöoikeustaso jäsenelle %s</string>
   <string name="sharing_edit_permissions_remove_user">Poista käyttäjä</string>
   <string name="sharing_error_dialog_title">Tuntematon virhe</string>
-  <string name="sharing_error_dialog_message">Virhe tämän holvin kutsun lähettämisessä. Jos ongelma jatkuu, ota yhteyttä asiakaspalveluun.</string>
+  <string name="sharing_error_dialog_message">Virhe tämän holvin kutsun lähettämisessä. Jos ongelma jatkuu, ota yhteyttä asiakastukeen.</string>
   <string name="sharing_with_no_addresses_can_be_invited">Osoitteita ei voida kutsua</string>
   <string name="sharing_with_some_addresses_cannot_be_invited">Joitakin osoitteita ei voida kutsua</string>
 </resources>

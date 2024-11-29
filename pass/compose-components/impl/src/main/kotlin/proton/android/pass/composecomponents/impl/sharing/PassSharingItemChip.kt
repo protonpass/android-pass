@@ -44,7 +44,7 @@ import proton.android.pass.domain.items.ItemCategory
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-internal fun PassSharingItemChip(
+fun PassSharingItemChip(
     modifier: Modifier = Modifier,
     shareCount: Int,
     itemColors: PassItemColors,

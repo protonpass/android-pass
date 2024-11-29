@@ -357,7 +357,6 @@ private fun determineBottomBarSelection(route: String?): BottomBarSelection = wh
     HomeNavItem.route,
     SortingBottomsheetNavItem.route,
     SearchOptionsBottomsheetNavItem.route,
-    InAppMessageModalNavItem.route,
     FilterBottomsheetNavItem.route -> BottomBarSelection.Home
 
     ProfileNavItem.route -> BottomBarSelection.Profile

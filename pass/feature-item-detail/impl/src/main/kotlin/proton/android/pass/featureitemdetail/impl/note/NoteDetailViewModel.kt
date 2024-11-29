@@ -58,17 +58,16 @@ import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemActions
-import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMovedToTrash
@@ -109,7 +108,8 @@ class NoteDetailViewModel @Inject constructor(
     observeItemAttachments: ObserveItemAttachments,
     savedStateHandle: SavedStateHandle,
     getItemActions: GetItemActions,
-    getUserPlan: GetUserPlan
+    getUserPlan: GetUserPlan,
+    observeShare: ObserveShare
 ) : ViewModel() {
 
     private val shareId: ShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
@@ -141,24 +141,32 @@ class NoteDetailViewModel @Inject constructor(
         .distinctUntilChanged()
 
     private var hasItemBeenFetchedAtLeastOnce = false
-    private val noteItemDetailsResultFlow: Flow<LoadingResult<Pair<ItemWithVaultInfo, List<Attachment>>>> =
-        getItemByIdWithVault(shareId, itemId)
-            .flatMapLatest { itemByIdWithVault ->
-                if (itemByIdWithVault.item.hasAttachments) {
-                    observeItemAttachments(shareId, itemId)
-                        .map { attachments -> itemByIdWithVault to attachments }
-                        .catch { error ->
-                            PassLogger.w(TAG, "Error fetching attachments")
-                            PassLogger.w(TAG, error)
-                            throw error
-                        }
-                } else {
-                    flowOf(itemByIdWithVault to emptyList())
-                }
+
+    private val itemWithVaultFlow = getItemByIdWithVault(shareId, itemId)
+
+    private val itemAttachmentsFlow = itemWithVaultFlow
+        .flatMapLatest { itemWithVault ->
+            if (itemWithVault.item.hasAttachments) {
+                observeItemAttachments(shareId, itemId)
+                    .catch { error ->
+                        PassLogger.w(TAG, "Error fetching attachments")
+                        PassLogger.w(TAG, error)
+                        throw error
+                    }
+            } else {
+                flowOf(emptyList())
             }
-            .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is ItemNotFoundError)) throw it }
-            .onEach { hasItemBeenFetchedAtLeastOnce = true }
-            .asLoadingResult()
+        }
+
+    private val noteItemDetailsResultFlow = combine(
+        itemWithVaultFlow,
+        itemAttachmentsFlow,
+        observeShare(shareId),
+        ::Triple
+    )
+        .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is ItemNotFoundError)) throw it }
+        .onEach { hasItemBeenFetchedAtLeastOnce = true }
+        .asLoadingResult()
 
     private val itemFeaturesFlow: Flow<NoteItemFeatures> = combine(
         getUserPlan(),
@@ -201,16 +209,14 @@ class NoteDetailViewModel @Inject constructor(
 
             LoadingResult.Loading -> NoteDetailUiState.NotInitialised
             is LoadingResult.Success -> {
-                val (details, attachments) = itemLoadingResult.data
-                val vault = details.vault.takeIf { details.hasMoreThanOneVault }
-
+                val (details, attachments, share) = itemLoadingResult.data
                 val actions = itemActions.getOrNull() ?: ItemActions.Disabled
 
                 NoteDetailUiState.Success(
                     itemUiModel = encryptionContextProvider.withEncryptionContext {
                         details.item.toUiModel(this)
                     },
-                    vault = vault,
+                    share = share,
                     isLoading = isLoading.value(),
                     isItemSentToTrash = isItemSentToTrash.value(),
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
@@ -221,7 +227,8 @@ class NoteDetailViewModel @Inject constructor(
                     itemActions = actions,
                     event = event,
                     isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
-                    isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled
+                    isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled,
+                    hasMoreThanOneVault = details.hasMoreThanOneVault
                 )
             }
         }

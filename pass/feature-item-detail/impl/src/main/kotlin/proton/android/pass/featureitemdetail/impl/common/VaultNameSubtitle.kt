@@ -171,7 +171,8 @@ fun VaultNameSubtitlePreview(@PreviewParameter(ThemedBooleanPreviewProvider::cla
                 onClick = {},
                 isShared = input.second,
                 shareCount = 0,
-                itemCategory = ItemCategory.Login
+                itemCategory = ItemCategory.Login,
+                hasMoreThanOneVaultShare = true
             )
         }
     }

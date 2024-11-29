@@ -205,7 +205,7 @@ fun AliasDetail(
                             .padding(padding)
                             .verticalScroll(rememberScrollState()),
                         itemUiModel = state.itemUiModel,
-                        vault = state.vault,
+                        share = state.share,
                         mailboxes = state.mailboxes,
                         isAliasCreatedByUser = state.isAliasCreatedByUser,
                         slNote = state.slNote,
@@ -219,6 +219,7 @@ fun AliasDetail(
                         isAliasManagementEnabled = state.isAliasManagementEnabled,
                         isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
                         attachments = state.attachments,
+                        hasMoreThanOneVaultShare = state.hasMoreThanOneVault,
                         onCopyAlias = { viewModel.onCopyAlias(it) },
                         onCreateLoginFromAlias = { alias ->
                             val event = ItemDetailNavigation.OnCreateLoginFromAlias(
@@ -228,9 +229,9 @@ fun AliasDetail(
                             onNavigate(event)
                         },
                         onVaultClick = {
-                            state.vault?.shareId?.let {
-                                onNavigate(ItemDetailNavigation.ManageVault(it))
-                            }
+                            ItemDetailNavigation.ManageVault(
+                                shareId = state.share.id
+                            ).also(onNavigate)
                         },
                         onViewItemHistoryClicked = {
                             onNavigate(

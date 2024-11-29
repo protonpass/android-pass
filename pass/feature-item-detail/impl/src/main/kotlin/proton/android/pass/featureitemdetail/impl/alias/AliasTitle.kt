@@ -47,6 +47,7 @@ fun AliasTitle(
     isShared: Boolean,
     shareCount: Int,
     share: Share,
+    hasMoreThanOneVaultShare: Boolean,
     onVaultClick: () -> Unit,
     isPinned: Boolean,
     isActive: Boolean
@@ -82,7 +83,8 @@ fun AliasTitle(
                 isShared = isShared,
                 shareCount = shareCount,
                 share = share,
-                itemCategory = ItemCategory.Login,
+                hasMoreThanOneVaultShare = hasMoreThanOneVaultShare,
+                itemCategory = ItemCategory.Alias,
                 onClick = onVaultClick
             )
         }
@@ -103,7 +105,8 @@ fun AliasTitlePreview(@PreviewParameter(ThemeItemTitleProvider::class) input: Pa
                 isPinned = params.itemUiModel.isPinned,
                 isActive = true,
                 isShared = params.itemUiModel.isShared,
-                shareCount = params.itemUiModel.shareCount
+                shareCount = params.itemUiModel.shareCount,
+                hasMoreThanOneVaultShare = true
             )
         }
     }

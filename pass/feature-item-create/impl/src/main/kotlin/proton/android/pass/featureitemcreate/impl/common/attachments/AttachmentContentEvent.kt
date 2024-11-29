@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,26 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.note
+package proton.android.pass.featureitemcreate.impl.common.attachments
 
-import proton.android.pass.domain.ShareId
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
+import proton.android.pass.domain.attachments.AttachmentId
 
-sealed interface NoteContentUiEvent {
-    data object Back : NoteContentUiEvent
+interface AttachmentContentEvent {
+    data object OnAddAttachment : AttachmentContentEvent
 
-    @JvmInline
-    value class Submit(val shareId: ShareId) : NoteContentUiEvent
+    data object OnDeleteAllAttachments : AttachmentContentEvent
 
     @JvmInline
-    value class OnNoteChange(val note: String) : NoteContentUiEvent
+    value class OnAttachmentOptions(val attachmentId: AttachmentId) : AttachmentContentEvent
 
     @JvmInline
-    value class OnTitleChange(val title: String) : NoteContentUiEvent
-
-    @JvmInline
-    value class OnVaultSelect(val shareId: ShareId) : NoteContentUiEvent
-
-    @JvmInline
-    value class OnAttachmentEvent(val event: AttachmentContentEvent) : NoteContentUiEvent
+    value class OnAttachmentOpen(val attachmentId: AttachmentId) : AttachmentContentEvent
 }

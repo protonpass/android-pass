@@ -83,6 +83,8 @@ import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors.CustomFieldValidationError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.totp.api.TotpManager
 
@@ -100,8 +102,9 @@ abstract class BaseLoginViewModel(
     private val userPreferencesRepository: UserPreferencesRepository,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    savedStateHandleProvider: SavedStateHandleProvider,
-    observeTooltipEnabled: ObserveTooltipEnabled
+    observeTooltipEnabled: ObserveTooltipEnabled,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -212,15 +215,11 @@ abstract class BaseLoginViewModel(
         totpUiStateFlow,
         upgradeInfoFlow.asLoadingResult(),
         userInteractionFlow,
-        observeTooltipEnabled(Tooltip.UsernameSplit)
-    ) { loginItemValidationErrors,
-        primaryEmail,
-        aliasItemFormState,
-        isLoading,
-        totpUiState,
-        upgradeInfoResult,
-        userInteraction,
-        isUsernameSplitTooltipEnabled ->
+        observeTooltipEnabled(Tooltip.UsernameSplit),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+    ) { loginItemValidationErrors, primaryEmail, aliasItemFormState, isLoading, totpUiState,
+        upgradeInfoResult, userInteraction, isUsernameSplitTooltipEnabled,
+        isFileAttachmentsEnabled ->
         val userPlan = upgradeInfoResult.getOrNull()?.plan
         BaseLoginUiState(
             validationErrors = loginItemValidationErrors.toPersistentSet(),
@@ -236,7 +235,8 @@ abstract class BaseLoginViewModel(
             hasReachedAliasLimit = upgradeInfoResult.getOrNull()?.hasReachedAliasLimit() ?: false,
             totpUiState = totpUiState,
             focusedField = userInteraction.focusedField.value(),
-            isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled
+            isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled,
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled
         )
     }
         .stateIn(

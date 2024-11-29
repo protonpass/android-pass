@@ -48,6 +48,7 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -65,6 +66,7 @@ class CreateCreditCardViewModelTest {
     private lateinit var observeVaults: TestObserveVaultsWithItemCount
     private lateinit var telemetryManager: TestTelemetryManager
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var featureFlagsRepository: TestFeatureFlagsPreferenceRepository
 
     @Before
     fun setUp() {
@@ -73,6 +75,7 @@ class CreateCreditCardViewModelTest {
         observeVaults = TestObserveVaultsWithItemCount()
         telemetryManager = TestTelemetryManager()
         snackbarDispatcher = TestSnackbarDispatcher()
+        featureFlagsRepository = TestFeatureFlagsPreferenceRepository()
         instance = CreateCreditCardViewModel(
             accountManager = TestAccountManager().apply {
                 sendPrimaryUserId(UserId("user-id"))
@@ -85,7 +88,8 @@ class CreateCreditCardViewModelTest {
             telemetryManager = telemetryManager,
             canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) },
             inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
-            observeDefaultVault = TestObserveDefaultVault()
+            observeDefaultVault = TestObserveDefaultVault(),
+            featureFlagsRepository = featureFlagsRepository
         )
     }
 

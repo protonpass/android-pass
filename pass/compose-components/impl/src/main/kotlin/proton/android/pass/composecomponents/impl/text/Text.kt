@@ -131,12 +131,14 @@ object Text {
     fun Body1Weak(
         text: String,
         modifier: Modifier = Modifier,
-        color: Color = ProtonTheme.colors.textWeak
+        color: Color = ProtonTheme.colors.textWeak,
+        textAlign: TextAlign = TextAlign.Start
     ) {
         Text(
             text = text,
             style = ProtonTheme.typography.defaultWeak.copy(color = color),
-            modifier = modifier
+            modifier = modifier,
+            textAlign = textAlign
         )
     }
 

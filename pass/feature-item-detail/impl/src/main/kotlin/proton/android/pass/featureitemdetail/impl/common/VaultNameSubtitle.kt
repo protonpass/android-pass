@@ -52,68 +52,92 @@ import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toSmallResource
+import proton.android.pass.composecomponents.impl.sharing.PassSharingItemChip
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
+import proton.android.pass.domain.SharePermission
+import proton.android.pass.domain.SharePermissionFlag
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.VaultId
+import proton.android.pass.domain.items.ItemCategory
 import java.util.Date
 
 @Composable
 fun VaultNameSubtitle(
     modifier: Modifier = Modifier,
-    vault: Vault?,
+    isShared: Boolean,
+    shareCount: Int,
+    share: Share,
+    hasMoreThanOneVaultShare: Boolean,
+    itemCategory: ItemCategory,
     onClick: () -> Unit
 ) {
-    if (vault == null) return
+    when (share) {
+        is Share.Item -> {
+            if (isShared) {
+                PassSharingItemChip(
+                    shareCount = shareCount,
+                    itemColors = passItemColors(itemCategory),
+                    onClick = {}
+                )
+            }
+        }
 
-    val vaultText = remember(vault.shared, vault.members) {
-        if (vault.shared) {
-            buildAnnotatedString {
-                append(vault.name)
-                append(" ${SpecialCharacters.DOT_SEPARATOR} ")
-                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append(vault.members.toString())
+        is Share.Vault -> {
+            if (hasMoreThanOneVaultShare) {
+                val vaultText = remember(share.shared, share.memberCount) {
+                    if (share.shared) {
+                        buildAnnotatedString {
+                            append(share.name)
+                            append(" ${SpecialCharacters.DOT_SEPARATOR} ")
+                            withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                                append(share.memberCount.toString())
+                            }
+                        }
+                    } else {
+                        AnnotatedString(share.name)
+                    }
+                }
+                Row(
+                    modifier = modifier
+                        .border(
+                            width = 1.dp,
+                            color = share.color.toColor(isBackground = true),
+                            shape = RoundedCornerShape(24.dp)
+                        )
+                        .applyIf(
+                            condition = share.shared,
+                            ifTrue = {
+                                background(
+                                    color = share.color.toColor(isBackground = true),
+                                    shape = RoundedCornerShape(24.dp)
+                                )
+                                    .clip(RoundedCornerShape(24.dp))
+                                    .clickable(onClick = onClick)
+                            }
+                        )
+                        .padding(horizontal = Spacing.small, vertical = Spacing.extraSmall),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
+                ) {
+                    Icon(
+                        modifier = Modifier.height(12.dp),
+                        painter = painterResource(share.icon.toSmallResource()),
+                        contentDescription = null,
+                        tint = share.color.toColor()
+                    )
+
+                    Text(
+                        text = vaultText,
+                        style = PassTheme.typography.body3Norm(),
+                        color = share.color.toColor()
+                    )
                 }
             }
-        } else {
-            AnnotatedString(vault.name)
         }
-    }
-    Row(
-        modifier = modifier
-            .border(
-                width = 1.dp,
-                color = vault.color.toColor(isBackground = true),
-                shape = RoundedCornerShape(24.dp)
-            )
-            .applyIf(
-                condition = vault.shared,
-                ifTrue = {
-                    background(
-                        color = vault.color.toColor(isBackground = true),
-                        shape = RoundedCornerShape(24.dp)
-                    )
-                        .clip(RoundedCornerShape(24.dp))
-                        .clickable(onClick = onClick)
-                }
-            )
-            .padding(horizontal = Spacing.small, vertical = Spacing.extraSmall),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
-    ) {
-        Icon(
-            modifier = Modifier.height(12.dp),
-            painter = painterResource(vault.icon.toSmallResource()),
-            contentDescription = null,
-            tint = vault.color.toColor()
-        )
-
-        Text(
-            text = vaultText,
-            style = PassTheme.typography.body3Norm(),
-            color = vault.color.toColor()
-        )
     }
 }
 
@@ -124,18 +148,30 @@ fun VaultNameSubtitlePreview(@PreviewParameter(ThemedBooleanPreviewProvider::cla
     PassTheme(isDark = input.first) {
         Surface {
             VaultNameSubtitle(
-                vault = Vault(
+                share = Share.Vault(
                     userId = UserId(id = ""),
-                    shareId = ShareId("123"),
+                    id = ShareId("123"),
                     vaultId = VaultId("123"),
                     name = "Vault Name",
                     color = ShareColor.Color1,
                     icon = ShareIcon.Icon1,
-                    members = members,
-                    shared = input.second,
-                    createTime = Date()
+                    memberCount = members,
+                    shared = false,
+                    createTime = Date(),
+                    targetId = "target-id",
+                    permission = SharePermission.fromFlags(listOf(SharePermissionFlag.Admin)),
+                    expirationTime = null,
+                    shareRole = ShareRole.Admin,
+                    isOwner = true,
+                    maxMembers = 11,
+                    pendingInvites = 0,
+                    newUserInvitesReady = 0,
+                    canAutofill = true
                 ),
-                onClick = {}
+                onClick = {},
+                isShared = input.second,
+                shareCount = 0,
+                itemCategory = ItemCategory.Login
             )
         }
     }

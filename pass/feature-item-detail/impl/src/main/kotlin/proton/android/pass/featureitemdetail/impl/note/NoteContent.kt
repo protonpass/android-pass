@@ -46,7 +46,7 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.Vault
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
@@ -58,7 +58,9 @@ import proton.android.pass.featureitemdetail.impl.common.VaultNameSubtitle
 fun NoteContent(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
-    vault: Vault?,
+    isShared: Boolean,
+    shareCount: Int,
+    share: Share,
     isPinned: Boolean,
     isHistoryFeatureEnabled: Boolean,
     isFileAttachmentsEnabled: Boolean,
@@ -90,7 +92,15 @@ fun NoteContent(
                 ItemTitleText(text = contents.title, maxLines = Int.MAX_VALUE)
             }
 
-            VaultNameSubtitle(vault = vault, onClick = onVaultClick)
+            VaultNameSubtitle(
+                isShared = isShared,
+                shareCount = shareCount,
+                share = share,
+                itemCategory = ItemCategory.Login,
+                onClick = onVaultClick,
+                modifier = TODO(),
+                hasMoreThanOneVaultShare = TODO()
+            )
         }
 
         SelectionContainer(modifier = Modifier.fillMaxWidth()) {
@@ -140,13 +150,15 @@ fun NoteContentPreview(@PreviewParameter(ThemeItemTitleProvider::class) input: P
         Surface {
             NoteContent(
                 itemUiModel = params.itemUiModel,
-                vault = params.vault,
+                share = params.share,
+                onVaultClick = {},
                 isPinned = params.isPinned,
-                isHistoryFeatureEnabled = false,
+                onViewItemHistoryClicked = {},
+                isHistoryFeatureEnabled = params.isHistoryFeatureEnabled,
+                isShared = params.itemUiModel.isShared,
+                shareCount = params.itemUiModel.shareCount,
                 isFileAttachmentsEnabled = false,
                 attachments = emptyList(),
-                onVaultClick = {},
-                onViewItemHistoryClicked = {}
             )
         }
     }

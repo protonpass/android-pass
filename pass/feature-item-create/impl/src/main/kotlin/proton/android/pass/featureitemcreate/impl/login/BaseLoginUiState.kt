@@ -46,7 +46,8 @@ internal data class BaseLoginUiState(
     val hasReachedAliasLimit: Boolean,
     val totpUiState: TotpUiState,
     val focusedField: LoginField?,
-    val isUsernameSplitTooltipEnabled: Boolean
+    val isUsernameSplitTooltipEnabled: Boolean,
+    val isFileAttachmentsEnabled: Boolean
 ) {
     internal companion object {
 
@@ -64,7 +65,8 @@ internal data class BaseLoginUiState(
             hasReachedAliasLimit = false,
             totpUiState = TotpUiState.NotInitialised,
             focusedField = null,
-            isUsernameSplitTooltipEnabled = false
+            isUsernameSplitTooltipEnabled = false,
+            isFileAttachmentsEnabled = false
         )
 
     }

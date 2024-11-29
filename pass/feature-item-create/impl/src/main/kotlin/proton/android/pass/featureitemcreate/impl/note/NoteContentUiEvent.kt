@@ -19,7 +19,7 @@
 package proton.android.pass.featureitemcreate.impl.note
 
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
 
 sealed interface NoteContentUiEvent {
     data object Back : NoteContentUiEvent
@@ -36,11 +36,6 @@ sealed interface NoteContentUiEvent {
     @JvmInline
     value class OnVaultSelect(val shareId: ShareId) : NoteContentUiEvent
 
-    data object OnAddAttachment : NoteContentUiEvent
-
     @JvmInline
-    value class OnAttachmentOptions(val attachmentId: AttachmentId) : NoteContentUiEvent
-
-    @JvmInline
-    value class OnAttachmentOpen(val attachmentId: AttachmentId) : NoteContentUiEvent
+    value class OnAttachmentEvent(val event: AttachmentContentEvent) : NoteContentUiEvent
 }

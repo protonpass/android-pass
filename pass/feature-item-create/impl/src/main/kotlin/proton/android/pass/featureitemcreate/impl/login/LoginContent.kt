@@ -97,8 +97,10 @@ internal fun LoginContent(
                 .toPersistentList(),
             selectedShareId = selectedShareId,
             hasReachedAliasLimit = uiState.hasReachedAliasLimit,
-            onEvent = onEvent,
-            isUsernameSplitTooltipEnabled = uiState.isUsernameSplitTooltipEnabled
+            isUsernameSplitTooltipEnabled = uiState.isUsernameSplitTooltipEnabled,
+            isFileAttachmentsEnabled = uiState.isFileAttachmentsEnabled,
+            attachmentList = emptyList(),
+            onEvent = onEvent
         )
     }
 }

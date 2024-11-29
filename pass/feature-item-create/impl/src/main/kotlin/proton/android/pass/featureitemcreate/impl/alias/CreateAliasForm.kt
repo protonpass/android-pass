@@ -34,15 +34,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SenderNameSection
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.alias.AliasContentUiEvent.OnAttachmentEvent
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAddAttachment
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOpen
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOptions
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnDeleteAllAttachments
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -59,6 +69,8 @@ internal fun CreateAliasForm(
     isAliasManagementEnabled: Boolean,
     isAliasCreatedByUser: Boolean,
     showUpgrade: Boolean,
+    isFileAttachmentsEnabled: Boolean,
+    attachmentList: List<Attachment>,
     onSuffixClick: () -> Unit,
     onMailboxClick: () -> Unit,
     onEvent: (AliasContentUiEvent) -> Unit
@@ -156,6 +168,19 @@ internal fun CreateAliasForm(
                     onChange = { onEvent(AliasContentUiEvent.OnSenderNameChange(it)) }
                 )
             }
+        }
+
+        if (isFileAttachmentsEnabled) {
+            AttachmentSection(
+                files = attachmentList,
+                loadingFile = None,
+                isDetail = false,
+                colors = passItemColors(ItemCategory.Alias),
+                onAttachmentOptions = { onEvent(OnAttachmentEvent(OnAttachmentOptions(it.id))) },
+                onAttachmentOpen = { onEvent(OnAttachmentEvent(OnAttachmentOpen(it.id))) },
+                onAddAttachment = { onEvent(OnAttachmentEvent(OnAddAttachment)) },
+                onTrashAll = { onEvent(OnAttachmentEvent(OnDeleteAllAttachments)) }
+            )
         }
     }
 }

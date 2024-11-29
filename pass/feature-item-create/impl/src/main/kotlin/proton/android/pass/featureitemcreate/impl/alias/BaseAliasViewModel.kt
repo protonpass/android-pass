@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
@@ -44,8 +45,8 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 
 abstract class BaseAliasViewModel(
     private val snackbarDispatcher: SnackbarDispatcher,
-    savedStateHandleProvider: SavedStateHandleProvider,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val title: Option<String> = savedStateHandleProvider.get()
@@ -90,13 +91,15 @@ abstract class BaseAliasViewModel(
     )
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    val baseAliasUiState: StateFlow<BaseAliasUiState> = combine(
+    val baseAliasUiState: StateFlow<BaseAliasUiState> = combineN(
         aliasItemValidationErrorsState,
         isLoadingState,
         eventWrapperState,
         hasUserEditedContentFlow,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1)
-    ) { aliasItemValidationErrors, isLoading, eventWrapper, hasUserEditedContent, isAliasManagementEnabled ->
+        featureFlagsRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+    ) { aliasItemValidationErrors, isLoading, eventWrapper, hasUserEditedContent,
+        isAliasManagementEnabled, isFileAttachmentEnabled ->
         BaseAliasUiState(
             isDraft = isDraft,
             errorList = aliasItemValidationErrors,
@@ -108,7 +111,8 @@ abstract class BaseAliasViewModel(
             hasUserEditedContent = hasUserEditedContent,
             hasReachedAliasLimit = false,
             canUpgrade = false,
-            isAliasManagementEnabled = isAliasManagementEnabled
+            isAliasManagementEnabled = isAliasManagementEnabled,
+            isFileAttachmentEnabled = isFileAttachmentEnabled
         )
     }
         .stateIn(

@@ -221,7 +221,7 @@ fun LoginDetail(
                             .verticalScroll(rememberScrollState()),
                         itemUiModel = state.itemUiModel,
                         passwordScore = state.passwordScore,
-                        vault = state.vault,
+                        share = state.share,
                         showViewAlias = state.linkedAlias.isNotEmpty(),
                         totpUiState = state.totpUiState,
                         canLoadExternalImages = canLoadExternalImages,
@@ -297,9 +297,9 @@ fun LoginDetail(
                                 }
 
                                 LoginDetailEvent.OnVaultClick -> {
-                                    state.vault?.shareId?.let { shareId ->
-                                        onNavigate(ItemDetailNavigation.ManageVault(shareId))
-                                    }
+                                    ItemDetailNavigation.ManageVault(
+                                        shareId = state.share.id
+                                    ).also(onNavigate)
                                 }
 
                                 LoginDetailEvent.OnViewItemHistoryClicked -> onNavigate(
@@ -328,7 +328,8 @@ fun LoginDetail(
                             }
                         },
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
-                        isFileAttachmentsEnabled = state.isFileAttachmentsEnabled
+                        isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
+                        hasMoreThanOneVaultShare = state.hasMoreThanOneVault
                     )
                 }
                 ConfirmDeleteItemDialog(
@@ -344,4 +345,3 @@ fun LoginDetail(
         }
     }
 }
-

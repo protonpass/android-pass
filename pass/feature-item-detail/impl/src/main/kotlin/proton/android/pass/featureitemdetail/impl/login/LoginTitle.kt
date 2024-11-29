@@ -28,12 +28,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
-import proton.android.pass.domain.Vault
+import proton.android.pass.domain.Share
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
 import proton.android.pass.featureitemdetail.impl.common.ThemeItemTitleProvider
@@ -45,7 +46,10 @@ fun LoginTitle(
     title: String,
     website: String?,
     packageName: String?,
-    vault: Vault?,
+    isShared: Boolean,
+    shareCount: Int,
+    share: Share,
+    hasMoreThanOneVaultShare: Boolean,
     canLoadExternalImages: Boolean,
     onVaultClick: () -> Unit,
     isPinned: Boolean
@@ -53,9 +57,8 @@ fun LoginTitle(
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
-
         OverlayBadge(
             isShown = isPinned,
             badge = {
@@ -77,10 +80,18 @@ fun LoginTitle(
 
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
         ) {
             ItemTitleText(text = title)
-            VaultNameSubtitle(vault = vault, onClick = onVaultClick)
+
+            VaultNameSubtitle(
+                isShared = isShared,
+                shareCount = shareCount,
+                share = share,
+                itemCategory = ItemCategory.Login,
+                hasMoreThanOneVaultShare = hasMoreThanOneVaultShare,
+                onClick = onVaultClick
+            )
         }
     }
 }
@@ -96,10 +107,13 @@ fun LoginTitlePreview(@PreviewParameter(ThemeItemTitleProvider::class) input: Pa
                 title = params.itemUiModel.contents.title,
                 website = null,
                 packageName = null,
-                vault = params.vault,
+                share = params.share,
                 canLoadExternalImages = false,
                 onVaultClick = {},
-                isPinned = params.itemUiModel.isPinned
+                isPinned = params.itemUiModel.isPinned,
+                isShared = params.itemUiModel.isShared,
+                shareCount = params.itemUiModel.shareCount,
+                hasMoreThanOneVaultShare = true
             )
         }
     }

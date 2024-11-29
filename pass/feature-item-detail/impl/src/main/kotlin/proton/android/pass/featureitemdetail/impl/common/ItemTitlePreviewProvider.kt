@@ -25,10 +25,13 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
+import proton.android.pass.domain.SharePermission
+import proton.android.pass.domain.SharePermissionFlag
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.VaultId
 import java.util.Date
 
@@ -39,42 +42,100 @@ class ItemTitlePreviewProvider : PreviewParameterProvider<ItemTitleInput> {
         get() = sequence {
             yield(
                 ItemTitleInput(
-                    vault = null,
-                    isPinned = false
+                    share = Share.Item(
+                        userId = UserId(id = ""),
+                        id = ShareId("123"),
+                        vaultId = VaultId("123"),
+                        createTime = Date(),
+                        targetId = "target-id",
+                        permission = SharePermission.fromFlags(listOf(SharePermissionFlag.Admin)),
+                        expirationTime = null,
+                        shareRole = ShareRole.Admin,
+                        isOwner = true,
+                        memberCount = 1,
+                        shared = false,
+                        maxMembers = 11,
+                        pendingInvites = 0,
+                        newUserInvitesReady = 0,
+                        canAutofill = true
+                    ),
+                    isPinned = false,
+                    isHistoryFeatureEnabled = false
                 )
             )
             yield(
                 ItemTitleInput(
-                    vault = Vault(
+                    share = Share.Vault(
                         userId = UserId(id = ""),
-                        shareId = ShareId("123"),
+                        id = ShareId("123"),
                         vaultId = VaultId("123"),
                         name = "A vault",
                         color = ShareColor.Color1,
                         icon = ShareIcon.Icon1,
-                        createTime = Date()
+                        createTime = Date(),
+                        targetId = "target-id",
+                        permission = SharePermission.fromFlags(listOf(SharePermissionFlag.Admin)),
+                        expirationTime = null,
+                        shareRole = ShareRole.Admin,
+                        isOwner = true,
+                        memberCount = 1,
+                        shared = false,
+                        maxMembers = 11,
+                        pendingInvites = 0,
+                        newUserInvitesReady = 0,
+                        canAutofill = true
                     ),
-                    isPinned = false
+                    isPinned = false,
+                    isHistoryFeatureEnabled = false
                 )
             )
             yield(
                 ItemTitleInput(
-                    vault = null,
-                    isPinned = true
-                )
-            )
-            yield(
-                ItemTitleInput(
-                    vault = Vault(
+                    share = Share.Item(
                         userId = UserId(id = ""),
-                        shareId = ShareId("123"),
+                        id = ShareId("123"),
+                        vaultId = VaultId("123"),
+                        createTime = Date(),
+                        targetId = "target-id",
+                        permission = SharePermission.fromFlags(listOf(SharePermissionFlag.Admin)),
+                        expirationTime = null,
+                        shareRole = ShareRole.Admin,
+                        isOwner = true,
+                        memberCount = 1,
+                        shared = false,
+                        maxMembers = 11,
+                        pendingInvites = 0,
+                        newUserInvitesReady = 0,
+                        canAutofill = true
+                    ),
+                    isPinned = true,
+                    isHistoryFeatureEnabled = false
+                )
+            )
+            yield(
+                ItemTitleInput(
+                    share = Share.Vault(
+                        userId = UserId(id = ""),
+                        id = ShareId("123"),
                         vaultId = VaultId("123"),
                         name = "A vault",
                         color = ShareColor.Color1,
                         icon = ShareIcon.Icon1,
-                        createTime = Date()
+                        createTime = Date(),
+                        targetId = "target-id",
+                        permission = SharePermission.fromFlags(listOf(SharePermissionFlag.Admin)),
+                        expirationTime = null,
+                        shareRole = ShareRole.Admin,
+                        isOwner = true,
+                        memberCount = 1,
+                        shared = false,
+                        maxMembers = 11,
+                        pendingInvites = 0,
+                        newUserInvitesReady = 0,
+                        canAutofill = true
                     ),
-                    isPinned = true
+                    isPinned = true,
+                    isHistoryFeatureEnabled = false
                 )
             )
         }
@@ -95,8 +156,10 @@ data class ItemTitleInput(
         modificationTime = Instant.fromEpochMilliseconds(1_707_213_366_026),
         lastAutofillTime = null,
         isPinned = false,
-        revision = 1
+        revision = 1,
+        shareCount = 0
     ),
-    val vault: Vault?,
-    val isPinned: Boolean
+    val share: Share,
+    val isPinned: Boolean,
+    val isHistoryFeatureEnabled: Boolean
 )

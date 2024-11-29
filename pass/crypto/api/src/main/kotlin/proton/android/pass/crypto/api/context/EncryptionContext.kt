@@ -27,12 +27,14 @@ private const val VAULT_CONTENT_TAG = "vaultcontent"
 private const val ITEM_KEY_TAG = "itemkey"
 private const val ITEM_CONTENT_TAG = "itemcontent"
 private const val LINK_KEY_TAG = "linkkey"
+private const val FILE_KEY_TAG = "filekey"
 
 enum class EncryptionTag(val value: ByteArray) {
     VaultContent(VAULT_CONTENT_TAG.encodeToByteArray()),
     ItemKey(ITEM_KEY_TAG.encodeToByteArray()),
     ItemContent(ITEM_CONTENT_TAG.encodeToByteArray()),
-    LinkKey(LINK_KEY_TAG.encodeToByteArray())
+    LinkKey(LINK_KEY_TAG.encodeToByteArray()),
+    FileKey(FILE_KEY_TAG.encodeToByteArray())
 }
 
 interface EncryptionContext {

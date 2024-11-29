@@ -43,6 +43,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareType
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
@@ -175,10 +176,16 @@ fun NoteDetail(
                             .verticalScroll(rememberScrollState()),
                         itemUiModel = state.itemUiModel,
                         share = state.share,
-                        onVaultClick = {
-                            ItemDetailNavigation.ManageVault(
-                                shareId = state.itemUiModel.shareId
-                            ).let(onNavigate)
+                        onShareClick = {
+                            when (state.share.shareType) {
+                                ShareType.Vault -> ItemDetailNavigation.ManageVault(
+                                    shareId = state.share.id
+                                )
+
+                                ShareType.Item -> ItemDetailNavigation.ManageItem(
+                                    shareId = state.share.id
+                                )
+                            }.also(onNavigate)
                         },
                         isPinned = state.itemUiModel.isPinned,
                         onViewItemHistoryClicked = {

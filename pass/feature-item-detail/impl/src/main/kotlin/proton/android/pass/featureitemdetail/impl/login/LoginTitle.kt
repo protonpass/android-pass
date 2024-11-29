@@ -51,7 +51,7 @@ fun LoginTitle(
     share: Share,
     hasMoreThanOneVaultShare: Boolean,
     canLoadExternalImages: Boolean,
-    onVaultClick: () -> Unit,
+    onShareClick: () -> Unit,
     isPinned: Boolean
 ) {
     Row(
@@ -90,7 +90,7 @@ fun LoginTitle(
                 share = share,
                 itemCategory = ItemCategory.Login,
                 hasMoreThanOneVaultShare = hasMoreThanOneVaultShare,
-                onClick = onVaultClick
+                onClick = onShareClick
             )
         }
     }
@@ -109,7 +109,7 @@ fun LoginTitlePreview(@PreviewParameter(ThemeItemTitleProvider::class) input: Pa
                 packageName = null,
                 share = params.share,
                 canLoadExternalImages = false,
-                onVaultClick = {},
+                onShareClick = {},
                 isPinned = params.itemUiModel.isPinned,
                 isShared = params.itemUiModel.isShared,
                 shareCount = params.itemUiModel.shareCount,

@@ -37,6 +37,8 @@ import proton.android.pass.features.sharing.invitesinfo.InvitesErrorDialog
 import proton.android.pass.features.sharing.invitesinfo.InvitesInfoDialog
 import proton.android.pass.features.sharing.manage.ManageVaultScreen
 import proton.android.pass.features.sharing.manage.bottomsheet.memberOptionsBottomSheetGraph
+import proton.android.pass.features.sharing.manage.item.navigation.ManageItemNavItem
+import proton.android.pass.features.sharing.manage.item.ui.ManageItemScreen
 import proton.android.pass.features.sharing.sharefromitem.ShareFromItemBottomSheet
 import proton.android.pass.features.sharing.sharingpermissions.SharingPermissionsScreen
 import proton.android.pass.features.sharing.sharingpermissions.bottomsheet.sharingPermissionsBottomsheetGraph
@@ -175,6 +177,9 @@ sealed interface SharingNavigation {
     data class ShareItemLink(val shareId: ShareId, val itemId: ItemId) : SharingNavigation
 
     @JvmInline
+    value class ManageItem(val shareId: ShareId) : SharingNavigation
+
+    @JvmInline
     value class ManageVault(val shareId: ShareId) : SharingNavigation
 
     data class MemberOptions(
@@ -261,6 +266,10 @@ fun NavGraphBuilder.sharingGraph(onNavigateEvent: (SharingNavigation) -> Unit) {
             onNavigateEvent = onNavigateEvent,
             clearRefreshFlag = { it.savedStateHandle.remove<String>(REFRESH_MEMBER_LIST_FLAG) }
         )
+    }
+
+    composable(navItem = ManageItemNavItem) {
+        ManageItemScreen(onNavigateEvent = onNavigateEvent)
     }
 
     dialog(InvitesInfoDialog) {

@@ -130,6 +130,9 @@ fun CreateAliasScreen(
                     is AliasContentUiEvent.OnSLNoteChange -> viewModel.onSLNoteChange(event.newSLNote)
                     is AliasContentUiEvent.OnSenderNameChange -> viewModel.onSenderNameChange(event.value)
                     AliasContentUiEvent.OnSlNoteInfoClick -> Unit
+                    is AliasContentUiEvent.OnAttachmentEvent -> {
+                        // handle attachment event
+                    }
                 }
             }
         )

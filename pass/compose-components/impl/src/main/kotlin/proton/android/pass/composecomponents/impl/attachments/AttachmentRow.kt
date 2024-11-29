@@ -59,12 +59,12 @@ fun AttachmentRow(
     isLoading: Boolean = false,
     isEnabled: Boolean = true,
     onOptionsClick: () -> Unit,
-    onAttachmentClick: () -> Unit
+    onAttachmentOpen: () -> Unit
 ) {
     Row(
         modifier = modifier.applyIf(
             !isLoading,
-            ifTrue = { clickable(onClick = onAttachmentClick) }
+            ifTrue = { clickable(onClick = onAttachmentOpen) }
         ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
@@ -116,7 +116,7 @@ fun AttachmentRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: 
                 attachmentType = AttachmentType.RasterImage,
                 size = 1_572_864L,
                 createTime = Instant.fromEpochSeconds(seconds),
-                onAttachmentClick = {},
+                onAttachmentOpen = {},
                 onOptionsClick = {}
             )
         }

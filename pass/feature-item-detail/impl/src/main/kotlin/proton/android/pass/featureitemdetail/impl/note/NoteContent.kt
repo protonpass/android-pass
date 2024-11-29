@@ -66,6 +66,7 @@ fun NoteContent(
     isFileAttachmentsEnabled: Boolean,
     attachments: List<Attachment>,
     onVaultClick: () -> Unit,
+    hasMoreThanOneVaultShare: Boolean,
     onViewItemHistoryClicked: () -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.Note
@@ -96,10 +97,9 @@ fun NoteContent(
                 isShared = isShared,
                 shareCount = shareCount,
                 share = share,
-                itemCategory = ItemCategory.Login,
                 onClick = onVaultClick,
-                modifier = TODO(),
-                hasMoreThanOneVaultShare = TODO()
+                itemCategory = ItemCategory.Note,
+                hasMoreThanOneVaultShare = hasMoreThanOneVaultShare
             )
         }
 
@@ -159,6 +159,7 @@ fun NoteContentPreview(@PreviewParameter(ThemeItemTitleProvider::class) input: P
                 shareCount = params.itemUiModel.shareCount,
                 isFileAttachmentsEnabled = false,
                 attachments = emptyList(),
+                hasMoreThanOneVaultShare = true
             )
         }
     }

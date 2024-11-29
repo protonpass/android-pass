@@ -25,6 +25,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.attachments.AttachmentKey
 import proton.android.pass.domain.attachments.AttachmentType
 
 class AttachmentSectionPreviewProvider : PreviewParameterProvider<AttachmentSectionInput> {
@@ -64,7 +65,6 @@ class AttachmentSectionPreviewProvider : PreviewParameterProvider<AttachmentSect
             }
         }
 
-
     @Suppress("MagicNumber")
     private fun createFile(
         id: AttachmentId,
@@ -72,7 +72,17 @@ class AttachmentSectionPreviewProvider : PreviewParameterProvider<AttachmentSect
         type: AttachmentType,
         size: Long = 1_572_864L, // 1.5 MB
         createTime: Instant = Instant.fromEpochSeconds(1_640_000_000L)
-    ) = Attachment(id = id, name = name, type = type, size = size, createTime = createTime)
+    ) = Attachment(
+        id = id,
+        name = name,
+        type = type,
+        size = size,
+        createTime = createTime,
+        mimeType = "",
+        fileKey = AttachmentKey(""),
+        itemKeyRotation = "",
+        chunks = listOf()
+    )
 
     private fun createAttachmentSectionInput(
         files: List<Attachment>,

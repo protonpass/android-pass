@@ -26,6 +26,7 @@ import proton.android.pass.data.api.core.repositories.SentinelRepository
 import proton.android.pass.data.api.repositories.AliasContactsRepository
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.AssetLinkRepository
+import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
@@ -48,6 +49,7 @@ import proton.android.pass.data.impl.core.repositories.SentinelRepositoryImpl
 import proton.android.pass.data.impl.repositories.AliasContactsRepositoryImpl
 import proton.android.pass.data.impl.repositories.AliasRepositoryImpl
 import proton.android.pass.data.impl.repositories.AssetLinkRepositoryImpl
+import proton.android.pass.data.impl.repositories.AttachmentRepositoryImpl
 import proton.android.pass.data.impl.repositories.BreachRepositoryImpl
 import proton.android.pass.data.impl.repositories.BulkInviteRepositoryImpl
 import proton.android.pass.data.impl.repositories.BulkMoveToVaultRepositoryImpl
@@ -171,6 +173,9 @@ abstract class DataRepositoryModule {
 
     @[Binds Singleton]
     abstract fun bindInAppMessagesRepository(impl: InAppMessagesRepositoryImpl): InAppMessagesRepository
+
+    @[Binds Singleton]
+    abstract fun bindAttachmentRepository(impl: AttachmentRepositoryImpl): AttachmentRepository
 
     @[Binds Singleton]
     abstract fun bindDraftAttachmentRepository(impl: DraftAttachmentRepositoryImpl): DraftAttachmentRepository

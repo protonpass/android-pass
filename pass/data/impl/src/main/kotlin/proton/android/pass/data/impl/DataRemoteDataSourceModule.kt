@@ -36,8 +36,6 @@ import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteImageFetcher
 import proton.android.pass.data.impl.remote.RemoteImageFetcherImpl
-import proton.android.pass.data.impl.remote.inappmessages.RemoteInAppMessagesDataSource
-import proton.android.pass.data.impl.remote.inappmessages.RemoteInAppMessagesDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
 import proton.android.pass.data.impl.remote.RemoteInviteDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
@@ -62,6 +60,10 @@ import proton.android.pass.data.impl.remote.accessdata.RemoteUserAccessDataDataS
 import proton.android.pass.data.impl.remote.accessdata.RemoteUserAccessDataDataSourceImpl
 import proton.android.pass.data.impl.remote.assetlink.RemoteAssetLinkDataSource
 import proton.android.pass.data.impl.remote.assetlink.RemoteAssetLinkDataSourceImpl
+import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSource
+import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSourceImpl
+import proton.android.pass.data.impl.remote.inappmessages.RemoteInAppMessagesDataSource
+import proton.android.pass.data.impl.remote.inappmessages.RemoteInAppMessagesDataSourceImpl
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSourceImpl
 import javax.inject.Singleton
@@ -142,6 +144,9 @@ abstract class DataRemoteDataSourceModule {
     abstract fun bindRemoteInAppMessagesDataSource(
         impl: RemoteInAppMessagesDataSourceImpl
     ): RemoteInAppMessagesDataSource
+
+    @[Binds Singleton]
+    abstract fun bindRemoteAttachmentsDataSource(impl: RemoteAttachmentsDataSourceImpl): RemoteAttachmentsDataSource
 
 }
 

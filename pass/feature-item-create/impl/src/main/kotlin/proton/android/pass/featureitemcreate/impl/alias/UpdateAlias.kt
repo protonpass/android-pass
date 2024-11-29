@@ -114,6 +114,10 @@ fun UpdateAlias(
                     AliasContentUiEvent.OnSlNoteInfoClick -> {
                         showSLNoteInfoDialog = true
                     }
+
+                    is AliasContentUiEvent.OnAttachmentEvent -> {
+                        // handle attachment event
+                    }
                 }
             }
         )

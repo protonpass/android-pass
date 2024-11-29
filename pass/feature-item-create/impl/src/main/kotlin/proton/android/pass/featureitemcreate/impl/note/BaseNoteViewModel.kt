@@ -35,9 +35,12 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 
 abstract class BaseNoteViewModel(
     private val snackbarDispatcher: SnackbarDispatcher,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -59,13 +62,15 @@ abstract class BaseNoteViewModel(
         noteItemValidationErrorsState,
         isLoadingState,
         isItemSavedState,
-        hasUserEditedContentFlow
-    ) { noteItemValidationErrors, isLoading, isItemSaved, hasUserEditedContent ->
+        hasUserEditedContentFlow,
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+    ) { noteItemValidationErrors, isLoading, isItemSaved, hasUserEditedContent, isFileAttachmentsEnabled ->
         BaseNoteUiState(
             errorList = noteItemValidationErrors,
             isLoadingState = isLoading,
             itemSavedState = isItemSaved,
-            hasUserEditedContent = hasUserEditedContent
+            hasUserEditedContent = hasUserEditedContent,
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled
         )
     }
         .stateIn(

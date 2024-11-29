@@ -86,7 +86,7 @@ fun AttachmentSection(
                     isEnabled = loadingFile is None,
                     isLoading = loadingFile.value()?.id == file.id,
                     onOptionsClick = { onAttachmentOptions(file) },
-                    onAttachmentClick = { onAttachmentClick(file) }
+                    onAttachmentOpen = { onAttachmentClick(file) }
                 )
                 if (index < files.lastIndex) {
                     PassDivider(modifier = Modifier.padding(top = Spacing.small))

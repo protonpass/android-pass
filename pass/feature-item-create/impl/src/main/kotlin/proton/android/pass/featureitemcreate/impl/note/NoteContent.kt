@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.buttons.Button
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
@@ -62,6 +63,17 @@ internal fun NoteContent(
                 onVaultSelectorClick = {
                     selectedShareId ?: return@CreateUpdateTopBar
                     onEvent(NoteContentUiEvent.OnVaultSelect(selectedShareId))
+                },
+                extraActions = {
+                    if (uiState.isFileAttachmentsEnabled) {
+                        Button.CircleIcon(
+                            size = PassTheme.dimens.topBarButtonHeight,
+                            backgroundColor = PassTheme.colors.noteInteractionNormMinor1,
+                            iconId = me.proton.core.presentation.R.drawable.ic_proton_paper_clip,
+                            iconTint = PassTheme.colors.noteInteractionNormMajor2,
+                            onClick = { onEvent(NoteContentUiEvent.OnAddAttachment) }
+                        )
+                    }
                 }
             )
         }
@@ -69,6 +81,8 @@ internal fun NoteContent(
         CreateNoteItemForm(
             modifier = Modifier.padding(padding),
             noteItemFormState = noteItemFormState,
+            attachmentList = emptyList(),
+            isFileAttachmentsEnabled = uiState.isFileAttachmentsEnabled,
             onTitleRequiredError = uiState.errorList.contains(BlankTitle),
             enabled = uiState.isLoadingState != IsLoadingState.Loading,
             onEvent = onEvent

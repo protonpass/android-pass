@@ -107,7 +107,7 @@ fun CreateNoteScreen(
             topBarActionName = stringResource(R.string.title_create),
             onEvent = { event ->
                 when (event) {
-                    is NoteContentUiEvent.Back -> onExit()
+                    NoteContentUiEvent.Back -> onExit()
                     is NoteContentUiEvent.Submit -> viewModel.createNote(event.shareId)
                     is NoteContentUiEvent.OnVaultSelect ->
                         actionAfterKeyboardHide =
@@ -115,6 +115,16 @@ fun CreateNoteScreen(
 
                     is NoteContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
                     is NoteContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
+                    NoteContentUiEvent.OnAddAttachment -> {
+                        // open attachment picker
+                    }
+
+                    is NoteContentUiEvent.OnAttachmentOpen -> {
+                        // open attachment
+                    }
+                    is NoteContentUiEvent.OnAttachmentOptions -> {
+                        // show attachment options
+                    }
                 }
             }
         )

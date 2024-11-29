@@ -23,6 +23,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
@@ -83,7 +84,8 @@ object Button {
             enabled = enabled,
             modifier = modifier
                 .clip(CircleShape)
-                .size(size)
+                .then(if (size != Dp.Unspecified) Modifier.size(size) else Modifier)
+                .aspectRatio(1f)
                 .background(adjustedBackgroundColor)
         ) {
             Icon.Default(

@@ -34,14 +34,23 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.toPersistentSet
+import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.isCollapsedSaver
+import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.labels.CollapsibleSectionHeader
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAddAttachment
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOpen
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOptions
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnDeleteAllAttachments
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
+import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnAttachmentEvent
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnExtraSectionOptions
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnFieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
@@ -195,6 +204,21 @@ fun IdentityItemForm(
                 onEvent = onEvent
             )
         }
+
+        if (identityUiState.showFileAttachments()) {
+            AttachmentSection(
+                modifier = Modifier.padding(horizontal = Spacing.medium),
+                files = emptyList(),
+                loadingFile = None,
+                isDetail = false,
+                colors = passItemColors(ItemCategory.Identity),
+                onAttachmentOptions = { onEvent(OnAttachmentEvent(OnAttachmentOptions(it.id))) },
+                onAttachmentOpen = { onEvent(OnAttachmentEvent(OnAttachmentOpen(it.id))) },
+                onAddAttachment = { onEvent(OnAttachmentEvent(OnAddAttachment)) },
+                onTrashAll = { onEvent(OnAttachmentEvent(OnDeleteAllAttachments)) }
+            )
+        }
+
         identityItemFormState.uiExtraSections.forEachIndexed { sectionIndex, section ->
             CollapsibleSectionHeader(
                 sectionTitle = section.title,

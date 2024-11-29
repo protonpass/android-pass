@@ -40,6 +40,7 @@ import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentC
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOpen
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOptions
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnDeleteAllAttachments
+import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnAttachmentEvent
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnCVVChange
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnCVVFocusChange
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnExpirationDateChange
@@ -49,7 +50,6 @@ import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEv
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnPinChange
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnPinFocusChange
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnTitleChange
-import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnAttachmentEvent
 
 @Composable
 fun CreditCardItemForm(
@@ -106,7 +106,7 @@ fun CreditCardItemForm(
                 files = attachmentList,
                 loadingFile = None,
                 isDetail = false,
-                colors = passItemColors(ItemCategory.Login),
+                colors = passItemColors(ItemCategory.CreditCard),
                 onAttachmentOptions = { onEvent(OnAttachmentEvent(OnAttachmentOptions(it.id))) },
                 onAttachmentOpen = { onEvent(OnAttachmentEvent(OnAttachmentOpen(it.id))) },
                 onAddAttachment = { onEvent(OnAttachmentEvent(OnAddAttachment)) },

@@ -19,6 +19,7 @@
 package proton.android.pass.featureitemcreate.impl.alias
 
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
 
 sealed interface AliasContentUiEvent {
 
@@ -55,4 +56,6 @@ sealed interface AliasContentUiEvent {
 
     data object OnSlNoteInfoClick : AliasContentUiEvent
 
+    @JvmInline
+    value class OnAttachmentEvent(val event: AttachmentContentEvent) : AliasContentUiEvent
 }

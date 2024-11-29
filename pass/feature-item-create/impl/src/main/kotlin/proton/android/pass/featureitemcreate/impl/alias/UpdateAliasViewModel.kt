@@ -80,12 +80,12 @@ class UpdateAliasViewModel @Inject constructor(
     private val aliasPrefixValidator: AliasPrefixValidator,
     private val getItemById: GetItemById,
     private val observeAliasDetails: ObserveAliasDetails,
-    savedStateHandleProvider: SavedStateHandleProvider,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseAliasViewModel(
-    snackbarDispatcher,
-    savedStateHandleProvider,
-    featureFlagsRepository
+    snackbarDispatcher = snackbarDispatcher,
+    featureFlagsRepository = featureFlagsRepository,
+    savedStateHandleProvider = savedStateHandleProvider
 ) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -314,7 +314,8 @@ class UpdateAliasViewModel @Inject constructor(
     }
 
     private fun canUpdateAlias(): Boolean {
-        val noChangesDetected = !itemDataChanged && !mailboxesChanged && !isSLNoteChanged && !isDisplayNameChanged
+        val noChangesDetected =
+            !itemDataChanged && !mailboxesChanged && !isSLNoteChanged && !isDisplayNameChanged
         if (noChangesDetected) {
             PassLogger.i(TAG, "No changes detected")
             return false

@@ -37,7 +37,8 @@ data class BaseAliasUiState(
     val hasUserEditedContent: Boolean,
     val hasReachedAliasLimit: Boolean,
     val canUpgrade: Boolean,
-    val isAliasManagementEnabled: Boolean
+    val isAliasManagementEnabled: Boolean,
+    val isFileAttachmentEnabled: Boolean
 ) {
     companion object {
         val Initial = BaseAliasUiState(
@@ -51,7 +52,8 @@ data class BaseAliasUiState(
             hasUserEditedContent = false,
             hasReachedAliasLimit = false,
             canUpgrade = false,
-            isAliasManagementEnabled = false
+            isAliasManagementEnabled = false,
+            isFileAttachmentEnabled = false
         )
     }
 }

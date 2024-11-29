@@ -19,6 +19,8 @@
 package proton.android.pass.data.impl.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
 import proton.android.pass.data.impl.requests.BreachAddEmailRequest
 import proton.android.pass.data.impl.requests.BreachVerifyEmailRequest
@@ -60,6 +62,8 @@ import proton.android.pass.data.impl.requests.alias.UpdateAliasNameRequest
 import proton.android.pass.data.impl.requests.alias.UpdateAliasNoteRequest
 import proton.android.pass.data.impl.requests.aliascontacts.CreateAliasContactRequest
 import proton.android.pass.data.impl.requests.aliascontacts.UpdateBlockedAliasContactRequest
+import proton.android.pass.data.impl.requests.attachments.CreatePendingFileRequest
+import proton.android.pass.data.impl.requests.attachments.LinkPendingFilesRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
@@ -108,12 +112,16 @@ import proton.android.pass.data.impl.responses.aliascontacts.CreateAliasContactR
 import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactResponse
 import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactsResponse
 import proton.android.pass.data.impl.responses.aliascontacts.UpdateBlockedAliasContactResponse
+import proton.android.pass.data.impl.responses.attachments.CreatePendingFileResponse
+import proton.android.pass.data.impl.responses.attachments.GetAllFilesResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.HTTP
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -314,7 +322,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Query("Size") size: Int = 32,
         @Query("Mode") mode: String = "light",
         @Query("MaxScaleUpFactor") maxUpscaleFactor: Int = 4
-    ): retrofit2.Response<okhttp3.ResponseBody>
+    ): retrofit2.Response<ResponseBody>
 
     // User access
     @GET("$PREFIX/user/access")
@@ -322,7 +330,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     // Telemetry
     @POST("/data/v1/stats/multiple")
-    suspend fun sendTelemetry(@Body request: TelemetryRequest): retrofit2.Response<okhttp3.ResponseBody>
+    suspend fun sendTelemetry(@Body request: TelemetryRequest): retrofit2.Response<ResponseBody>
 
     @PUT("$PREFIX/share/{shareId}/item/read")
     suspend fun sendItemReadEvent(@Path("shareId") shareId: String, @Body request: ItemReadRequest): CodeOnlyResponse
@@ -572,6 +580,36 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("notificationId") notificationId: String,
         @Body request: ChangeNotificationStatusRequest
     ): ChangeNotificationStateResponse
+
+    // Attachments
+    @Multipart
+    @POST("$PREFIX/file/{fileId}/chunk")
+    suspend fun uploadChunk(
+        @Path("fileId") fileId: String,
+        @Part("ChunkIndex") chunkIndex: RequestBody,
+        @Part("ChunkData") chunkData: RequestBody
+    ): CodeOnlyResponse
+
+    @POST("$PREFIX/file")
+    suspend fun createPendingFile(@Body request: CreatePendingFileRequest): CreatePendingFileResponse
+
+    @POST("$PREFIX/share/{shareId}/item/{itemId}/link_files")
+    suspend fun linkPendingFiles(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Body request: LinkPendingFilesRequest
+    ): CodeOnlyResponse
+
+    @GET("$PREFIX/share/{shareId}/item/{itemId}/files")
+    suspend fun retrieveAllFiles(@Path("shareId") shareId: String, @Path("itemId") itemId: String): GetAllFilesResponse
+
+    @GET("$PREFIX/share/{shareId}/item/{itemId}/file/{fileId}/chunk/{chunkId}")
+    suspend fun downloadChunk(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Path("fileId") fileId: String,
+        @Path("chunkId") chunkId: String
+    ): retrofit2.Response<ResponseBody>
 
     // Core
     @GET("core/v4/keys/all")

@@ -216,6 +216,10 @@ internal fun UpdateLogin(
                     LoginContentEvent.OnUsernameOrEmailManuallyExpanded -> {
                         viewModel.onUsernameOrEmailManuallyExpanded()
                     }
+
+                    is LoginContentEvent.OnAttachmentEvent -> {
+                        // handle attachment event
+                    }
                 }
             }
         )

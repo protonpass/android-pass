@@ -22,5 +22,5 @@ enum class LoginStickyFormOptionsContentType {
     GeneratePassword,
     AliasOptions,
     AddTotp,
-    None
+    NoOption
 }

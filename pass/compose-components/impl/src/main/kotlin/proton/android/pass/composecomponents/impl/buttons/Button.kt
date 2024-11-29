@@ -23,7 +23,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
@@ -71,10 +70,10 @@ object Button {
         modifier: Modifier = Modifier,
         backgroundColor: Color,
         size: Dp = Dp.Unspecified,
-        onClick: () -> Unit,
         enabled: Boolean = true,
         @DrawableRes iconId: Int,
-        iconTint: Color
+        iconTint: Color,
+        onClick: () -> Unit
     ) {
         val adjustedBackgroundColor =
             if (enabled) backgroundColor else backgroundColor.copy(alpha = 0.3f)
@@ -84,8 +83,7 @@ object Button {
             enabled = enabled,
             modifier = modifier
                 .clip(CircleShape)
-                .then(if (size != Dp.Unspecified) Modifier.size(size) else Modifier)
-                .aspectRatio(1f)
+                .size(size)
                 .background(adjustedBackgroundColor)
         ) {
             Icon.Default(

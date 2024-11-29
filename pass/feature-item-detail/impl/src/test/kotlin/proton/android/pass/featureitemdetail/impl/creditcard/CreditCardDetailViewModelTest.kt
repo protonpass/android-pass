@@ -143,7 +143,7 @@ class CreditCardDetailViewModelTest {
 
             val itemSuccess = item as CreditCardDetailUiState.Success
             assertThat(itemSuccess.isLoading).isFalse()
-            assertThat(itemSuccess.vault).isEqualTo(TEST_VAULT)
+            assertThat(itemSuccess.share).isEqualTo(TEST_VAULT)
             assertThat(itemSuccess.itemActions).isEqualTo(TestGetItemActions.DEFAULT)
             assertThat(itemSuccess.isItemSentToTrash).isFalse()
             assertThat(itemSuccess.isPermanentlyDeleted).isFalse()

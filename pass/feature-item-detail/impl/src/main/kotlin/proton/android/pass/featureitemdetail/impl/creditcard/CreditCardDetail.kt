@@ -172,7 +172,7 @@ fun CreditCardDetail(
                             .padding(padding)
                             .verticalScroll(rememberScrollState()),
                         contents = state.itemContent,
-                        vault = state.vault,
+                        share = state.share,
                         isDowngradedMode = state.isDowngradedMode,
                         isPinned = itemUiModel.isPinned,
                         onEvent = {
@@ -206,9 +206,9 @@ fun CreditCardDetail(
                                 }
 
                                 CreditCardDetailEvent.OnVaultClick -> {
-                                    state.vault?.shareId?.let { shareId ->
-                                        onNavigate(ItemDetailNavigation.ManageVault(shareId))
-                                    }
+                                    ItemDetailNavigation.ManageVault(
+                                        shareId = state.share.id
+                                    ).also(onNavigate)
                                 }
 
                                 CreditCardDetailEvent.OnViewItemHistoryClicked -> onNavigate(
@@ -221,7 +221,8 @@ fun CreditCardDetail(
                         },
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
                         isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
-                        attachments = state.attachments
+                        attachments = state.attachments,
+                        hasMoreThanOneVaultShare = state.hasMoreThanOneVault
                     )
                 }
                 ConfirmDeleteItemDialog(

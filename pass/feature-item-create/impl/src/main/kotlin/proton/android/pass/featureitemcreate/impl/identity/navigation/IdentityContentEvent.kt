@@ -19,6 +19,7 @@
 package proton.android.pass.featureitemcreate.impl.identity.navigation
 
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
 import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.CustomExtraField
 
@@ -58,4 +59,7 @@ sealed interface IdentityContentEvent {
     data class OnExtraSectionOptions(val index: Int, val label: String) : IdentityContentEvent
 
     data object ClearLastAddedFieldFocus : IdentityContentEvent
+
+    @JvmInline
+    value class OnAttachmentEvent(val event: AttachmentContentEvent) : IdentityContentEvent
 }

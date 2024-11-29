@@ -21,9 +21,9 @@ package proton.android.pass.featureitemcreate.impl.creditcard
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
-import proton.android.pass.domain.ShareId
 
 @Immutable
 data class BaseCreditCardUiState(
@@ -31,7 +31,8 @@ data class BaseCreditCardUiState(
     val hasUserEditedContent: Boolean,
     val validationErrors: PersistentSet<CreditCardValidationErrors>,
     val isItemSaved: ItemSavedState,
-    val isDowngradedMode: Boolean
+    val isDowngradedMode: Boolean,
+    val isFileAttachmentsEnabled: Boolean
 ) {
     companion object {
         val Initial = BaseCreditCardUiState(
@@ -39,7 +40,8 @@ data class BaseCreditCardUiState(
             hasUserEditedContent = false,
             validationErrors = persistentSetOf(),
             isItemSaved = ItemSavedState.Unknown,
-            isDowngradedMode = false
+            isDowngradedMode = false,
+            isFileAttachmentsEnabled = false
         )
     }
 }

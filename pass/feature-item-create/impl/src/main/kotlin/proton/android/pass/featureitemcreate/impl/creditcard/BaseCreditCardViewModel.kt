@@ -10,10 +10,10 @@ import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.CommonRegex.NON_DIGIT_REGEX
+import proton.android.pass.common.api.combineN
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState.NotLoading
@@ -22,10 +22,13 @@ import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 
 abstract class BaseCreditCardViewModel(
     private val encryptionContextProvider: EncryptionContextProvider,
     canPerformPaidAction: CanPerformPaidAction,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -47,19 +50,22 @@ abstract class BaseCreditCardViewModel(
         }
     val creditCardItemFormState: CreditCardItemFormState get() = creditCardItemFormMutableState
 
-    val baseState: StateFlow<BaseCreditCardUiState> = combine(
+    val baseState: StateFlow<BaseCreditCardUiState> = combineN(
         isLoadingState,
         hasUserEditedContentState,
         validationErrorsState,
         isItemSavedState,
-        canPerformPaidAction()
-    ) { isLoading, hasUserEditedContent, validationErrors, isItemSaved, canPerformPaidAction ->
+        canPerformPaidAction(),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+    ) { isLoading, hasUserEditedContent, validationErrors, isItemSaved, canPerformPaidAction,
+        isFileAttachmentsEnabled ->
         BaseCreditCardUiState(
             isLoading = isLoading.value(),
             hasUserEditedContent = hasUserEditedContent,
             validationErrors = validationErrors.toPersistentSet(),
             isItemSaved = isItemSaved,
-            isDowngradedMode = !canPerformPaidAction
+            isDowngradedMode = !canPerformPaidAction,
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled
         )
     }
         .stateIn(

@@ -101,6 +101,9 @@ fun UpdateCreditCardScreen(
                                 viewModel.onTitleChange(event.value)
 
                             is CreditCardContentEvent.OnVaultSelect -> {}
+                            is CreditCardContentEvent.OnAttachmentEvent -> {
+                                // handle attachment events
+                            }
                         }
                     }
                 )

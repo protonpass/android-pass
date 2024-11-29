@@ -39,7 +39,7 @@ internal fun ManageItemContent(
     modifier: Modifier,
     state: ManageItemState,
     onUiEvent: (ManageItemUiEvent) -> Unit
-) {
+) = with(state) {
     Scaffold(
         modifier = modifier,
         topBar = {

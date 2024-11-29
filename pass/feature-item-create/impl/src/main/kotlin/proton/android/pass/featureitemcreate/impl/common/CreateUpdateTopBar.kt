@@ -21,30 +21,22 @@ package proton.android.pass.featureitemcreate.impl.common
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallInverted
@@ -54,12 +46,9 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 import proton.android.pass.composecomponents.impl.container.Circle
-import proton.android.pass.composecomponents.impl.extension.toColor
-import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemcreate.impl.R
 import me.proton.core.presentation.R as CoreR
-import proton.android.pass.composecomponents.impl.R as CompR
 
 @ExperimentalComposeUiApi
 @Composable
@@ -76,7 +65,8 @@ internal fun CreateUpdateTopBar(
     onCloseClick: () -> Unit,
     onActionClick: () -> Unit,
     onUpgrade: () -> Unit,
-    onVaultSelectorClick: () -> Unit
+    onVaultSelectorClick: () -> Unit,
+    extraActions: @Composable RowScope.() -> Unit = {}
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     ProtonTopAppBar(
@@ -99,9 +89,12 @@ internal fun CreateUpdateTopBar(
             }
         },
         actions = {
+
+            extraActions()
+
             if (showUpgrade) {
                 UpgradeButton(
-                    modifier = Modifier.padding(Spacing.mediumSmall, 0.dp),
+                    modifier = Modifier.padding(horizontal = Spacing.mediumSmall),
                     backgroundColor = actionColor,
                     contentColor = PassTheme.colors.textInvert,
                     onUpgradeClick = onUpgrade
@@ -145,44 +138,6 @@ internal fun CreateUpdateTopBar(
         }
     )
 }
-
-@Composable
-private fun RowScope.VaultSwitcher(
-    modifier: Modifier = Modifier,
-    selectedVault: Vault,
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = modifier
-            .weight(weight = 1f, fill = false)
-            .clip(CircleShape)
-            .background(selectedVault.color.toColor(isBackground = true))
-            .clickable { onClick() }
-            .padding(horizontal = Spacing.medium, vertical = 10.dp),
-        horizontalArrangement = Arrangement.spacedBy(5.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            modifier = Modifier.size(20.dp),
-            painter = painterResource(id = selectedVault.icon.toResource()),
-            contentDescription = null,
-            tint = selectedVault.color.toColor()
-        )
-        Text(
-            modifier = Modifier.weight(weight = 1f, fill = false),
-            text = selectedVault.name,
-            style = ProtonTheme.typography.defaultSmallInverted,
-            color = selectedVault.color.toColor(),
-            overflow = TextOverflow.Ellipsis
-        )
-        Icon(
-            painter = painterResource(CompR.drawable.ic_chevron_tiny_down),
-            contentDescription = null,
-            tint = selectedVault.color.toColor()
-        )
-    }
-}
-
 
 class ThemeAndCreateUpdateTopBarProvider :
     ThemePairPreviewProvider<CreateUpdateTopBarPreview>(CreateUpdateTopBarPreviewProvider())

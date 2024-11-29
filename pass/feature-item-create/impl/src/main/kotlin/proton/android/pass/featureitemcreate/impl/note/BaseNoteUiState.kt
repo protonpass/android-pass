@@ -20,23 +20,25 @@ package proton.android.pass.featureitemcreate.impl.note
 
 import androidx.compose.runtime.Immutable
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
-import proton.android.pass.domain.ShareId
 
 @Immutable
 data class BaseNoteUiState(
     val errorList: Set<NoteItemValidationErrors>,
     val isLoadingState: IsLoadingState,
     val itemSavedState: ItemSavedState,
-    val hasUserEditedContent: Boolean
+    val hasUserEditedContent: Boolean,
+    val isFileAttachmentsEnabled: Boolean
 ) {
     companion object {
         val Initial = BaseNoteUiState(
             isLoadingState = IsLoadingState.NotLoading,
             errorList = emptySet(),
             itemSavedState = ItemSavedState.Unknown,
-            hasUserEditedContent = false
+            hasUserEditedContent = false,
+            isFileAttachmentsEnabled = false
         )
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,26 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemdetail.impl.creditcard
+package proton.android.pass.features.sharing.manage.item.navigation
 
-sealed interface CreditCardDetailEvent {
+import proton.android.pass.domain.ShareId
+import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.NavItem
 
-    data object OnCardHolderClick : CreditCardDetailEvent
+object ManageItemNavItem : NavItem(
+    baseRoute = "sharing/manage/item",
+    navArgIds = listOf(CommonNavArgId.ShareId)
+) {
 
-    data object OnToggleNumberClick : CreditCardDetailEvent
-
-    data object OnNumberClick : CreditCardDetailEvent
-
-    data object OnToggleCvvClick : CreditCardDetailEvent
-
-    data object OnCvvClick : CreditCardDetailEvent
-
-    data object OnTogglePinClick : CreditCardDetailEvent
-
-    data object OnUpgradeClick : CreditCardDetailEvent
-
-    data object OnShareClick : CreditCardDetailEvent
-
-    data object OnViewItemHistoryClicked : CreditCardDetailEvent
+    fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
 
 }

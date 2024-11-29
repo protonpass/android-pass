@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,26 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemdetail.impl.creditcard
+package proton.android.pass.features.sharing.manage.item.ui
 
-sealed interface CreditCardDetailEvent {
+internal sealed interface ManageItemUiEvent {
 
-    data object OnCardHolderClick : CreditCardDetailEvent
-
-    data object OnToggleNumberClick : CreditCardDetailEvent
-
-    data object OnNumberClick : CreditCardDetailEvent
-
-    data object OnToggleCvvClick : CreditCardDetailEvent
-
-    data object OnCvvClick : CreditCardDetailEvent
-
-    data object OnTogglePinClick : CreditCardDetailEvent
-
-    data object OnUpgradeClick : CreditCardDetailEvent
-
-    data object OnShareClick : CreditCardDetailEvent
-
-    data object OnViewItemHistoryClicked : CreditCardDetailEvent
+    data object OnBackClick : ManageItemUiEvent
 
 }

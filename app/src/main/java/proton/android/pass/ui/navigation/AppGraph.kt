@@ -225,6 +225,7 @@ import proton.android.pass.features.sharing.manage.bottomsheet.ConfirmTransferOw
 import proton.android.pass.features.sharing.manage.bottomsheet.InviteOptionsBottomSheet
 import proton.android.pass.features.sharing.manage.bottomsheet.InviteTypeValue
 import proton.android.pass.features.sharing.manage.bottomsheet.MemberOptionsBottomSheet
+import proton.android.pass.features.sharing.manage.item.navigation.ManageItemNavItem
 import proton.android.pass.features.sharing.sharingGraph
 import proton.android.pass.features.sharing.sharingpermissions.bottomsheet.SharingEditPermissions
 import proton.android.pass.features.sl.sync.details.navigation.SimpleLoginSyncDetailsNavItem
@@ -1183,6 +1184,15 @@ fun NavGraphBuilder.appGraph(
                     onNavigate(AppNavigation.Upgrade)
                 }
 
+                is ItemDetailNavigation.ManageItem -> {
+                    println("JIBIRI: ManageItem")
+                    appNavigator.navigate(
+                        destination = ManageItemNavItem,
+                        route = ManageItemNavItem.createNavRoute(it.shareId),
+                        backDestination = ViewItem
+                    )
+                }
+
                 is ItemDetailNavigation.ManageVault -> {
                     appNavigator.navigate(
                         destination = ManageVault,
@@ -1817,6 +1827,12 @@ fun NavGraphBuilder.appGraph(
                     )
                 )
             }
+
+            is SharingNavigation.ManageItem -> appNavigator.navigate(
+                destination = ManageItemNavItem,
+                route = ManageItemNavItem.createNavRoute(it.shareId),
+                backDestination = HomeNavItem
+            )
 
             is SharingNavigation.ManageVault -> appNavigator.navigate(
                 destination = ManageVault,

@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.text.Text
 
@@ -38,7 +39,7 @@ fun InAppMessageBody(
         verticalArrangement = Arrangement.spacedBy(Spacing.small),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text.Headline(title)
-        message?.let { Text.Body1Weak(it) }
+        Text.Headline(title, textAlign = TextAlign.Center)
+        message?.let { Text.Body1Weak(it, textAlign = TextAlign.Center) }
     }
 }

@@ -80,14 +80,15 @@ import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.FieldCopiedToClipboard
@@ -153,7 +154,8 @@ class LoginDetailViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     insecurePasswordChecker: InsecurePasswordChecker,
     duplicatedPasswordChecker: DuplicatedPasswordChecker,
-    missingTfaChecker: MissingTfaChecker
+    missingTfaChecker: MissingTfaChecker,
+    observeShare: ObserveShare
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandle.get()
@@ -241,8 +243,9 @@ class LoginDetailViewModel @Inject constructor(
 
     private val loginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> = combine(
         loginItemDetailsResultFlow,
-        canPerformPaidActionFlow
-    ) { detailsResult, paidActionResult ->
+        canPerformPaidActionFlow,
+        observeShare(shareId)
+    ) { detailsResult, paidActionResult, share ->
         paidActionResult.flatMap { isPaid ->
             detailsResult.map { (details, attachments) ->
                 val itemType = details.item.itemType as ItemType.Login
@@ -304,7 +307,7 @@ class LoginDetailViewModel @Inject constructor(
                 LoginItemInfo(
                     itemUiModel = itemUiModel,
                     itemContents = itemUiModel.contents as ItemContents.Login,
-                    vault = details.vault,
+                    share = share,
                     hasMoreThanOneVault = details.hasMoreThanOneVault,
                     canPerformItemActions = details.canPerformItemActions,
                     linkedAlias = alias,
@@ -383,7 +386,7 @@ class LoginDetailViewModel @Inject constructor(
     private data class LoginItemInfo(
         val itemUiModel: ItemUiModel,
         val itemContents: ItemContents.Login,
-        val vault: Vault?,
+        val share: Share,
         val hasMoreThanOneVault: Boolean,
         val canPerformItemActions: Boolean,
         val linkedAlias: Option<LinkedAliasItem>,
@@ -429,12 +432,6 @@ class LoginDetailViewModel @Inject constructor(
             LoadingResult.Loading -> LoginDetailUiState.NotInitialised
             is LoadingResult.Success -> {
                 val details = itemDetails.data
-                val vault = if (details.hasMoreThanOneVault) {
-                    details.vault
-                } else {
-                    null
-                }
-
                 val actions = itemActions.getOrNull() ?: ItemActions.Disabled
                 val isPaid = canPerformPaidActionResult.getOrNull() == true
 
@@ -445,7 +442,7 @@ class LoginDetailViewModel @Inject constructor(
                 LoginDetailUiState.Success(
                     itemUiModel = details.itemUiModel,
                     passwordScore = details.passwordScore,
-                    vault = vault,
+                    share = details.share,
                     linkedAlias = details.linkedAlias,
                     totpUiState = totpUiState,
                     isLoading = isLoading.value(),
@@ -461,7 +458,8 @@ class LoginDetailViewModel @Inject constructor(
                     isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
                     isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled,
                     monitorState = details.securityState,
-                    attachments = details.attachments
+                    attachments = details.attachments,
+                    hasMoreThanOneVault = details.hasMoreThanOneVault
                 )
             }
         }

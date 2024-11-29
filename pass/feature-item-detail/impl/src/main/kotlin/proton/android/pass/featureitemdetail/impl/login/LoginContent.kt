@@ -88,7 +88,7 @@ internal fun LoginContent(
             website = contents.urls.firstOrNull(),
             packageName = contents.packageInfoSet.minByOrNull { it.packageName.value }?.packageName?.value,
             canLoadExternalImages = canLoadExternalImages,
-            onVaultClick = { onEvent(LoginDetailEvent.OnVaultClick) },
+            onShareClick = { onEvent(LoginDetailEvent.OnShareClick) },
             isPinned = itemUiModel.isPinned,
             isShared = itemUiModel.isShared,
             shareCount = itemUiModel.shareCount,

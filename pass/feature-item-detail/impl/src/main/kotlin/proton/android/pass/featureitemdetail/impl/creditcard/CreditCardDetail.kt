@@ -43,6 +43,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareType
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
@@ -205,10 +206,16 @@ fun CreditCardDetail(
                                     onNavigate(ItemDetailNavigation.Upgrade())
                                 }
 
-                                CreditCardDetailEvent.OnVaultClick -> {
-                                    ItemDetailNavigation.ManageVault(
-                                        shareId = state.share.id
-                                    ).also(onNavigate)
+                                CreditCardDetailEvent.OnShareClick -> {
+                                    when (state.share.shareType) {
+                                        ShareType.Vault -> ItemDetailNavigation.ManageVault(
+                                            shareId = state.share.id
+                                        )
+
+                                        ShareType.Item -> ItemDetailNavigation.ManageItem(
+                                            shareId = state.share.id
+                                        )
+                                    }.also(onNavigate)
                                 }
 
                                 CreditCardDetailEvent.OnViewItemHistoryClicked -> onNavigate(

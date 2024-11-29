@@ -45,7 +45,7 @@ internal sealed interface LoginDetailEvent {
 
     data object OnUpgradeClick : LoginDetailEvent
 
-    data object OnVaultClick : LoginDetailEvent
+    data object OnShareClick : LoginDetailEvent
 
     @JvmInline
     value class OnCustomFieldEvent(val event: CustomFieldEvent) : LoginDetailEvent

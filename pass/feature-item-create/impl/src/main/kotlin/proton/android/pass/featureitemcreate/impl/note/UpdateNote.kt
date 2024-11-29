@@ -81,15 +81,8 @@ fun UpdateNote(
                     is NoteContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
                     is NoteContentUiEvent.OnVaultSelect -> {}
                     is NoteContentUiEvent.Submit -> viewModel.updateItem(event.shareId)
-                    NoteContentUiEvent.OnAddAttachment -> {
-                        // open attachment picker
-                    }
-
-                    is NoteContentUiEvent.OnAttachmentOpen -> {
-                        // open attachment
-                    }
-                    is NoteContentUiEvent.OnAttachmentOptions -> {
-                        // show attachment options
+                    is NoteContentUiEvent.OnAttachmentEvent -> {
+                        // handle attachment event
                     }
                 }
             }

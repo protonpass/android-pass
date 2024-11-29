@@ -174,11 +174,11 @@ fun NoteDetail(
                             .padding(padding)
                             .verticalScroll(rememberScrollState()),
                         itemUiModel = state.itemUiModel,
-                        vault = state.vault,
+                        share = state.share,
                         onVaultClick = {
-                            state.vault?.shareId?.let {
-                                onNavigate(ItemDetailNavigation.ManageVault(it))
-                            }
+                            ItemDetailNavigation.ManageVault(
+                                shareId = state.itemUiModel.shareId
+                            ).let(onNavigate)
                         },
                         isPinned = state.itemUiModel.isPinned,
                         onViewItemHistoryClicked = {
@@ -191,9 +191,13 @@ fun NoteDetail(
                         },
                         attachments = state.attachments,
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
-                        isFileAttachmentsEnabled = state.isFileAttachmentsEnabled
+                        isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
+                        isShared = state.itemUiModel.isShared,
+                        shareCount = state.itemUiModel.shareCount,
+                        hasMoreThanOneVaultShare = state.hasMoreThanOneVault
                     )
                 }
+
                 ConfirmDeleteItemDialog(
                     isLoading = state.isLoading,
                     show = shouldShowDeleteItemDialog,

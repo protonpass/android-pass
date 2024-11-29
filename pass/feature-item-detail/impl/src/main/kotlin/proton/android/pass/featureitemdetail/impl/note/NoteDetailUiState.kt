@@ -21,8 +21,8 @@ package proton.android.pass.featureitemdetail.impl.note
 import androidx.compose.runtime.Stable
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.data.api.usecases.ItemActions
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.Share
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 
@@ -40,7 +40,7 @@ sealed interface NoteDetailUiState {
     @Stable
     data class Success(
         val itemUiModel: ItemUiModel,
-        val vault: Vault?,
+        val share: Share,
         val isLoading: Boolean,
         val isItemSentToTrash: Boolean,
         val isPermanentlyDeleted: Boolean,
@@ -51,7 +51,8 @@ sealed interface NoteDetailUiState {
         val event: ItemDetailEvent,
         val isHistoryFeatureEnabled: Boolean,
         val isFileAttachmentsEnabled: Boolean,
-        val attachments: List<Attachment>
+        val attachments: List<Attachment>,
+        val hasMoreThanOneVault: Boolean
     ) : NoteDetailUiState
 
 }

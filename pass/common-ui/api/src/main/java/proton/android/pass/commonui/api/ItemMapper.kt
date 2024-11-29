@@ -58,7 +58,8 @@ fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     lastAutofillTime = lastAutofillTime.value(),
     isPinned = isPinned,
     category = itemType.category,
-    revision = revision
+    revision = revision,
+    shareCount = shareCount
 )
 
 fun ItemEncrypted.toUiModel(context: EncryptionContext): ItemUiModel {
@@ -82,7 +83,8 @@ fun ItemEncrypted.toUiModel(context: EncryptionContext): ItemUiModel {
         lastAutofillTime = lastAutofillTime.value(),
         isPinned = isPinned,
         category = itemType.category,
-        revision = revision
+        revision = revision,
+        shareCount = shareCount
     )
 }
 
@@ -95,7 +97,14 @@ fun toItemContents(
     note: String,
     flags: Flags
 ): ItemContents = when (itemType) {
-    is ItemType.Alias -> createAlias(encryptionContext, title, note, itemType, flags.isAliasDisabled())
+    is ItemType.Alias -> createAlias(
+        encryptionContext,
+        title,
+        note,
+        itemType,
+        flags.isAliasDisabled()
+    )
+
     is ItemType.Login -> createLogin(encryptionContext, title, note, itemType)
     is ItemType.Note -> createNote(encryptionContext, title, note)
     is ItemType.CreditCard -> createCreditCard(encryptionContext, title, note, itemType)

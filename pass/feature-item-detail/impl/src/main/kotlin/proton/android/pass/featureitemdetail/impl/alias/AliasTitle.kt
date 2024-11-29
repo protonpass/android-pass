@@ -28,12 +28,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
-import proton.android.pass.domain.Vault
+import proton.android.pass.domain.Share
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
 import proton.android.pass.featureitemdetail.impl.common.ThemeItemTitleProvider
@@ -43,7 +44,9 @@ import proton.android.pass.featureitemdetail.impl.common.VaultNameSubtitle
 fun AliasTitle(
     modifier: Modifier = Modifier,
     title: String,
-    vault: Vault?,
+    isShared: Boolean,
+    shareCount: Int,
+    share: Share,
     onVaultClick: () -> Unit,
     isPinned: Boolean,
     isActive: Boolean
@@ -51,7 +54,7 @@ fun AliasTitle(
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
         OverlayBadge(
             isShown = isPinned,
@@ -71,10 +74,17 @@ fun AliasTitle(
 
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
         ) {
             ItemTitleText(text = title)
-            VaultNameSubtitle(vault = vault, onClick = onVaultClick)
+
+            VaultNameSubtitle(
+                isShared = isShared,
+                shareCount = shareCount,
+                share = share,
+                itemCategory = ItemCategory.Login,
+                onClick = onVaultClick
+            )
         }
     }
 }
@@ -88,10 +98,12 @@ fun AliasTitlePreview(@PreviewParameter(ThemeItemTitleProvider::class) input: Pa
         Surface {
             AliasTitle(
                 title = params.itemUiModel.contents.title,
-                vault = params.vault,
+                share = params.share,
                 onVaultClick = {},
                 isPinned = params.itemUiModel.isPinned,
-                isActive = true
+                isActive = true,
+                isShared = params.itemUiModel.isShared,
+                shareCount = params.itemUiModel.shareCount
             )
         }
     }

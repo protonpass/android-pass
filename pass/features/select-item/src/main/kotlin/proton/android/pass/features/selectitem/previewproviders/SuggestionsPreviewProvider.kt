@@ -75,7 +75,8 @@ internal class SuggestionsPreviewProvider : PreviewParameterProvider<Suggestions
         modificationTime = Clock.System.now(),
         lastAutofillTime = Clock.System.now(),
         isPinned = false,
-        revision = 1
+        revision = 1,
+        shareCount = 0
     )
 }
 

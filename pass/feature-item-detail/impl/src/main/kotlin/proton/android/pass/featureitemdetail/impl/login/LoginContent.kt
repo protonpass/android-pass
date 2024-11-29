@@ -42,8 +42,8 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 import proton.android.pass.featureitemdetail.impl.login.customfield.CustomFieldDetails
@@ -53,7 +53,7 @@ internal fun LoginContent(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     passwordScore: PasswordScore?,
-    vault: Vault?,
+    share: Share,
     totpUiState: TotpUiState?,
     showViewAlias: Boolean,
     canLoadExternalImages: Boolean,
@@ -63,6 +63,7 @@ internal fun LoginContent(
     passkeys: ImmutableList<UIPasskeyContent>,
     monitorState: LoginMonitorState,
     attachments: List<Attachment>,
+    hasMoreThanOneVaultShare: Boolean,
     onEvent: (LoginDetailEvent) -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
@@ -83,12 +84,15 @@ internal fun LoginContent(
         LoginTitle(
             modifier = Modifier.padding(Spacing.none, Spacing.mediumSmall),
             title = itemUiModel.contents.title,
-            vault = vault,
+            share = share,
             website = contents.urls.firstOrNull(),
             packageName = contents.packageInfoSet.minByOrNull { it.packageName.value }?.packageName?.value,
             canLoadExternalImages = canLoadExternalImages,
             onVaultClick = { onEvent(LoginDetailEvent.OnVaultClick) },
-            isPinned = itemUiModel.isPinned
+            isPinned = itemUiModel.isPinned,
+            isShared = itemUiModel.isShared,
+            shareCount = itemUiModel.shareCount,
+            hasMoreThanOneVaultShare = hasMoreThanOneVaultShare
         )
 
         if (passkeys.isNotEmpty()) {

@@ -70,6 +70,7 @@ import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
@@ -117,7 +118,8 @@ class AliasDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     getItemActions: GetItemActions,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
-    getUserPlan: GetUserPlan
+    getUserPlan: GetUserPlan,
+    observeShare: ObserveShare
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandle
@@ -167,20 +169,29 @@ class AliasDetailViewModel @Inject constructor(
         .distinctUntilChanged()
 
     private var hasItemBeenFetchedAtLeastOnce = false
-    private val aliasItemDetailsResultFlow = getItemByIdWithVault(shareId, itemId)
-        .flatMapLatest { itemByIdWithVault ->
-            if (itemByIdWithVault.item.hasAttachments) {
+
+    private val itemWithVaultFlow = getItemByIdWithVault(shareId, itemId)
+
+    private val itemAttachmentsFlow = itemWithVaultFlow
+        .flatMapLatest { itemWithVault ->
+            if (itemWithVault.item.hasAttachments) {
                 observeItemAttachments(shareId, itemId)
-                    .map { attachments -> itemByIdWithVault to attachments }
                     .catch { error ->
                         PassLogger.w(TAG, "Error fetching attachments")
                         PassLogger.w(TAG, error)
                         throw error
                     }
             } else {
-                flowOf(itemByIdWithVault to emptyList())
+                flowOf(emptyList())
             }
         }
+
+    private val aliasItemDetailsResultFlow = combine(
+        itemWithVaultFlow,
+        itemAttachmentsFlow,
+        observeShare(shareId),
+        ::Triple
+    )
         .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is ItemNotFoundError)) throw it }
         .onEach { hasItemBeenFetchedAtLeastOnce = true }
         .asLoadingResult()
@@ -241,9 +252,7 @@ class AliasDetailViewModel @Inject constructor(
 
             LoadingResult.Loading -> AliasDetailUiState.NotInitialised
             is LoadingResult.Success -> {
-                val (details, attachments) = itemLoadingResult.data
-                val vault = details.vault.takeIf { details.hasMoreThanOneVault }
-
+                val (details, attachments, share) = itemLoadingResult.data
                 val actions = itemActions.getOrNull() ?: ItemActions.Disabled
                 val aliasDetails = aliasDetailsResult.getOrNull()
                 val isAliasDetailsLoading = aliasDetailsResult is LoadingResult.Loading
@@ -251,7 +260,7 @@ class AliasDetailViewModel @Inject constructor(
                     itemUiModel = encryptionContextProvider.withEncryptionContext {
                         details.item.toUiModel(this)
                     },
-                    vault = vault,
+                    share = share,
                     mailboxes = aliasDetails?.mailboxes?.toPersistentList() ?: persistentListOf(),
                     isAliasCreatedByUser = aliasDetails?.canModify ?: false,
                     slNote = aliasDetails?.slNote.orEmpty(),
@@ -272,7 +281,8 @@ class AliasDetailViewModel @Inject constructor(
                     isAliasManagementEnabled = itemFeatures.isAliasManagementEnabled,
                     isAliasTrashDialogChecked = itemFeatures.isAliasTrashDialogChecked,
                     isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled,
-                    attachments = attachments
+                    attachments = attachments,
+                    hasMoreThanOneVault = details.hasMoreThanOneVault
                 )
             }
         }

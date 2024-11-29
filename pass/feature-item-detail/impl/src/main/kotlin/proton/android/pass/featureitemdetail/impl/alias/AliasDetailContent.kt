@@ -41,8 +41,8 @@ import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasStats
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 import proton.android.pass.featureitemdetail.impl.common.SenderNameSection
@@ -51,7 +51,7 @@ import proton.android.pass.featureitemdetail.impl.common.SenderNameSection
 fun AliasDetailContent(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
-    vault: Vault?,
+    share: Share,
     mailboxes: PersistentList<AliasMailbox>,
     isAliasCreatedByUser: Boolean,
     slNote: String,
@@ -65,6 +65,7 @@ fun AliasDetailContent(
     isAliasManagementEnabled: Boolean,
     isFileAttachmentsEnabled: Boolean,
     attachments: List<Attachment>,
+    hasMoreThanOneVaultShare: Boolean,
     onCopyAlias: (String) -> Unit,
     onCreateLoginFromAlias: (String) -> Unit,
     onToggleAliasState: (Boolean) -> Unit,
@@ -81,9 +82,12 @@ fun AliasDetailContent(
             modifier = Modifier.padding(Spacing.none, Spacing.mediumSmall),
             title = contents.title,
             isActive = contents.isEnabled,
-            vault = vault,
+            share = share,
             onVaultClick = onVaultClick,
-            isPinned = itemUiModel.isPinned
+            isPinned = itemUiModel.isPinned,
+            isShared = itemUiModel.isShared,
+            shareCount = itemUiModel.shareCount,
+            hasMoreThanOneVaultShare = hasMoreThanOneVaultShare
         )
 
         AliasSection(

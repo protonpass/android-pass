@@ -40,7 +40,7 @@
   <string name="secure_links_overview_widget_max_views_unlimited">Απεριόριστο</string>
   <string name="secure_links_overview_button_view_all_links">Προβολή όλων των ασφαλών συνδέσμων σας</string>
   <!--List screen-->
-  <string name="secure_links_list_title">Ασφαλής σύνδεσμοι</string>
+  <string name="secure_links_list_title">Ασφαλείς σύνδεσμοι</string>
   <string name="secure_links_list_empty_title">Δεν υπάρχουν ασφαλείς σύνδεσμοι</string>
   <string name="secure_links_list_empty_subtitle">Μπορείτε να ξεκινήσετε τη δημιουργία ασφαλών συνδέσεων από τις επιλογές κοινής χρήσης λεπτομερειών ενός στοιχείου</string>
   <string name="secure_links_list_expiration_description">Λήγει σε %s</string>

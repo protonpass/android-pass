@@ -78,4 +78,7 @@
   <string name="filtered_by_notes">Nach Notizen gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
   <string name="filtered_by_credit_cards">Nach Kreditkarten gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
   <string name="filtered_by_identities">Nach Identitäten gefiltert. Einträge im Papierkorb werden nicht angezeigt.</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">You need to switch to %1$s in order to manage it</string>
+  <string name="account_switch_confirmation_title">Manage account</string>
+  <string name="account_switch_confirmation_confirm">Switch and manage</string>
 </resources>

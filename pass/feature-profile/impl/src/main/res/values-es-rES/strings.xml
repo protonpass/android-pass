@@ -78,4 +78,7 @@
   <string name="filtered_by_notes">Se ha filtrado la lista por notas. No se muestran los elementos en la papelera.</string>
   <string name="filtered_by_credit_cards">Se ha filtrado la lista por tarjetas de crédito. No se muestran los elementos en la papelera.</string>
   <string name="filtered_by_identities">Se ha filtrado la lista por identidades. No se muestran los elementos en la papelera.</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Necesitas cambiar a %1$s para poder administrarlo.</string>
+  <string name="account_switch_confirmation_title">Administrar la cuenta</string>
+  <string name="account_switch_confirmation_confirm">Cambiar de cuenta y administrarla</string>
 </resources>

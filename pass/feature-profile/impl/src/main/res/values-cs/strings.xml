@@ -84,4 +84,7 @@
   <string name="filtered_by_notes">Filtrováno podle poznámek. Položky z koše nejsou zobrazeny</string>
   <string name="filtered_by_credit_cards">Filtrováno podle platebních karet. Položky z koše nejsou zobrazeny</string>
   <string name="filtered_by_identities">Filtrováno podle identit. Položky z koše nejsou zobrazeny</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Pro správu přepněte na %1$s</string>
+  <string name="account_switch_confirmation_title">Spravovat účet</string>
+  <string name="account_switch_confirmation_confirm">Přepnout a spravovat</string>
 </resources>

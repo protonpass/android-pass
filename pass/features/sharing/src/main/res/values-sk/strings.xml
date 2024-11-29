@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Pokračovať</string>
   <string name="sharing_can_view">Čitateľ</string>
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Správca</string>
@@ -36,18 +35,20 @@
     <item quantity="many">%d členov</item>
     <item quantity="other">%d členov</item>
   </plurals>
+  <string name="sharing_member_count_header">Členovia</string>
   <string name="share_with_title">Zdieľať s</string>
   <string name="share_with_email_hint">Emailová adresa</string>
   <string name="share_with_email_error">Neplatná emailová adresa</string>
   <string name="share_with_email_cannot_invite_outside_org">Nemôžete pozvať ľudí mimo vašej organizácie, ďalšie informácie získate od správcu</string>
   <string name="share_with_email_email_already_added">Túto emailovú adresu už ste pridali</string>
   <string name="share_permissions_title">Nastavte úroveň prístupu</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vás pozýva na prístup k položkám v</string>
-  <string name="sharing_join_shared_vault">Pripojiť a synchronizovať</string>
   <string name="sharing_reject_invitation">Odmietnuť pozvánku</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Blahoželáme, váš prístup bol potvrdený</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Pozrite si zdieľaný trezor</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Zavrieť</string>
+  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="sharing_vault_invitation_accept">Join shared vault</string>
+  <string name="sharing_item_invitation_title">Shared item invitation</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="sharing_item_invitation_accept">Accept and view the item</string>
   <string name="sharing_snackbar_get_invite_error">Nepodarilo sa získať pozvánku</string>
   <string name="sharing_snackbar_invite_accepted">Pozvánka prijatá</string>
   <string name="sharing_snackbar_invite_accept_error">Chyba pri prijatí pozvánky</string>
@@ -65,7 +66,9 @@
   <string name="share_summary_title">Skontrolovať a zdieľať</string>
   <string name="share_summary_vault">%s trezor</string>
   <string name="share_summary_share_vault">Zdielať trezor</string>
+  <string name="share_summary_share_item">Zdieľať položku</string>
   <string name="share_summary_vault_title">Trezor</string>
+  <string name="share_summary_item_title">Položka</string>
   <string name="share_manage_vault_share_with_more_people">Zdieľať s viacerými ľudmi</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d zostávajúca pozvánka</item>
@@ -123,7 +126,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Upgradujte, aby ste mohli vytvárať ďalšie trezory</string>
   <string name="sharing_from_item_vault_limit_reached">Dosiahli ste limit trezora</string>
   <string name="share_with_suggestions_title">Návrhy</string>
-  <string name="share_with_recents_title">Recent</string>
+  <string name="share_with_recents_title">Nedávne</string>
   <string name="share_with_remove_email_content_description">Odstrániť email</string>
   <string name="share_with_user_title">Zdieľať s</string>
   <string name="share_with_user_description">Zdieľajte túto položku s ostatnými používateľmi Protonu.</string>

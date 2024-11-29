@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Продовжити</string>
   <string name="sharing_can_view">Користувач</string>
   <string name="sharing_can_edit">Редактор</string>
   <string name="sharing_can_manage">Адміністратор</string>
@@ -36,18 +35,20 @@
     <item quantity="many">%d учасників</item>
     <item quantity="other">%d учасників</item>
   </plurals>
+  <string name="sharing_member_count_header">Members</string>
   <string name="share_with_title">Поділитися з</string>
   <string name="share_with_email_hint">Адреса електронної пошти</string>
   <string name="share_with_email_error">Недійсна адреса електронної пошти</string>
   <string name="share_with_email_cannot_invite_outside_org">Ви не можете запрошувати людей поза вашою організацією, зв\'яжіться з адміністратором для отримання додаткової інформації</string>
   <string name="share_with_email_email_already_added">Ви вже додали цю поштову адресу</string>
   <string name="share_permissions_title">Задати рівень доступу</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s запрошує вас отримати доступ до елементів у</string>
-  <string name="sharing_join_shared_vault">Приєднатися та синхронізувати</string>
   <string name="sharing_reject_invitation">Відхилити запрошення</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Вітаємо, ваш доступ підтверджено</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Переглянути спільне сховище</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Закрити</string>
+  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="sharing_vault_invitation_accept">Join shared vault</string>
+  <string name="sharing_item_invitation_title">Shared item invitation</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="sharing_item_invitation_accept">Accept and view the item</string>
   <string name="sharing_snackbar_get_invite_error">Не вдалося отримати запрошення</string>
   <string name="sharing_snackbar_invite_accepted">Запрошення прийнято</string>
   <string name="sharing_snackbar_invite_accept_error">Помилка приймання запрошення</string>
@@ -65,7 +66,9 @@
   <string name="share_summary_title">Перегляд і спільний доступ</string>
   <string name="share_summary_vault">Сховище %s</string>
   <string name="share_summary_share_vault">Поділитися сховищем</string>
+  <string name="share_summary_share_item">Share item</string>
   <string name="share_summary_vault_title">Сховище</string>
+  <string name="share_summary_item_title">Item</string>
   <string name="share_manage_vault_share_with_more_people">Поділитися з іншими людьми</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Залишилось %d запрошення</item>

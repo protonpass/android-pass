@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Continuare</string>
   <string name="sharing_can_view">Utilizator</string>
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Administrator</string>
@@ -34,18 +33,20 @@
     <item quantity="few">%d membri</item>
     <item quantity="other">%d de membri</item>
   </plurals>
+  <string name="sharing_member_count_header">Membri</string>
   <string name="share_with_title">Partajare cu</string>
   <string name="share_with_email_hint">Adresa de e-mail</string>
   <string name="share_with_email_error">Adresă de e-mail nevalidă.</string>
   <string name="share_with_email_cannot_invite_outside_org">Nu puteți invita persoane din afara organizației proprii. Contactați administratorul pentru mai multe informații.</string>
   <string name="share_with_email_email_already_added">Deja ați adăugat această adresă de e-mail.</string>
   <string name="share_permissions_title">Setare nivel de acces</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vă invită să accesați articolele din</string>
-  <string name="sharing_join_shared_vault">Alăturare și sincronizare</string>
   <string name="sharing_reject_invitation">Refuzare invitație</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Accesul v-a fost confirmat.</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Vedeți seiful partajat</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Închidere</string>
+  <string name="sharing_vault_invitation_title">Invitație seif partajat</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s doreşte să vă partajeze un seif.</string>
+  <string name="sharing_vault_invitation_accept">Alăturare la seif partajat</string>
+  <string name="sharing_item_invitation_title">Invitație articol partajat</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s doreşte să vă partajeze un articol.</string>
+  <string name="sharing_item_invitation_accept">Acceptare și vizualizare articol</string>
   <string name="sharing_snackbar_get_invite_error">Nu s-a putut primi invitația.</string>
   <string name="sharing_snackbar_invite_accepted">Invitație acceptată</string>
   <string name="sharing_snackbar_invite_accept_error">Eroare la acceptarea invitației.</string>
@@ -63,7 +64,9 @@
   <string name="share_summary_title">Revizuire și partajare</string>
   <string name="share_summary_vault">seiful %s</string>
   <string name="share_summary_share_vault">Partajare seif</string>
+  <string name="share_summary_share_item">Partajare articol</string>
   <string name="share_summary_vault_title">Seif</string>
+  <string name="share_summary_item_title">Articol</string>
   <string name="share_manage_vault_share_with_more_people">Partajați cu mai mulți</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d invitație rămasă</item>

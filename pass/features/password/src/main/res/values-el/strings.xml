@@ -21,7 +21,7 @@
   <string name="bottomsheet_option_word_separator_spaces">Διαστήματα</string>
   <string name="bottomsheet_option_word_separator_periods">Τελείες ( . )</string>
   <string name="bottomsheet_option_word_separator_commas">Κόμματα ( , )</string>
-  <string name="bottomsheet_option_word_separator_underscores">Υπογραμμίσεις ( _ )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Κάτω παύλες ( _ )</string>
   <string name="bottomsheet_option_word_separator_numbers">Αριθμοί</string>
   <string name="bottomsheet_option_word_separator_numbers_and_symbols">Αριθμοί και σύμβολα</string>
   <string name="regenerate_password_icon_content_description">Κουμπί αναδημιουργίας κωδικού πρόσβασης</string>

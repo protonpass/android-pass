@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="select_item_only_searching_in_oldest_vaults">Το πλάνο σας επιτρέπει μόνο τη χρήση στοιχείων στις παλαιότερες κρύπτες σας.</string>
-  <string name="error_credentials_not_found">Δε βρέθηκαν διαπιστευτήρια που να ταιριάζουν</string>
+  <string name="error_credentials_not_found">Δεν βρέθηκαν διαπιστευτήρια που να ταιριάζουν</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Υποδείξεις για %s</string>
   <string name="error_loading_items">Αδυναμία φόρτωσης των στοιχείων</string>

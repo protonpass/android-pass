@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Doorgaan</string>
   <string name="sharing_can_view">Kijker</string>
   <string name="sharing_can_edit">Bewerker</string>
   <string name="sharing_can_manage">Beheerder</string>
@@ -32,18 +31,20 @@
     <item quantity="one">%d lid</item>
     <item quantity="other">%d leden</item>
   </plurals>
+  <string name="sharing_member_count_header">Leden</string>
   <string name="share_with_title">Deel met</string>
   <string name="share_with_email_hint">E-mailadres</string>
   <string name="share_with_email_error">Ongeldig e-mailadres</string>
   <string name="share_with_email_cannot_invite_outside_org">U kunt geen mensen buiten uw organisatie uitnodigen, neem contact op met de beheerder voor meer informatie</string>
   <string name="share_with_email_email_already_added">U hebt dit e-mailadres al toegevoegd</string>
   <string name="share_permissions_title">Stel toegangsniveau in</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s nodigt u uit met toegang tot items in</string>
-  <string name="sharing_join_shared_vault">Samenvoegen en synchroniseren.</string>
   <string name="sharing_reject_invitation">Uitnodiging afwijzen</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Gefeliciteerd, uw toegang werd bevestigd</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Gedeelde kluis bekijken</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Sluiten</string>
+  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="sharing_vault_invitation_accept">Join shared vault</string>
+  <string name="sharing_item_invitation_title">Shared item invitation</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="sharing_item_invitation_accept">Accept and view the item</string>
   <string name="sharing_snackbar_get_invite_error">Kan geen uitnodiging krijgen</string>
   <string name="sharing_snackbar_invite_accepted">Uitnodiging geaccepteerd</string>
   <string name="sharing_snackbar_invite_accept_error">Fout bij het accepteren van de uitnodiging</string>
@@ -61,7 +62,9 @@
   <string name="share_summary_title">Beoordelen en delen</string>
   <string name="share_summary_vault">%s kluis</string>
   <string name="share_summary_share_vault">Kluis delen</string>
+  <string name="share_summary_share_item">Deel item</string>
   <string name="share_summary_vault_title">Kluis</string>
+  <string name="share_summary_item_title">Item</string>
   <string name="share_manage_vault_share_with_more_people">Deel met meer mensen</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d uitnodiging over</item>

@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Continua</string>
   <string name="sharing_can_view">Visualitzador</string>
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Administrador</string>
@@ -32,18 +31,20 @@
     <item quantity="one">%d membre</item>
     <item quantity="other">%d membres</item>
   </plurals>
+  <string name="sharing_member_count_header">Membres</string>
   <string name="share_with_title">Comparteix amb</string>
   <string name="share_with_email_hint">Adreça de correu electrònic</string>
   <string name="share_with_email_error">L\'adreça de correu electrònic no és vàlida.</string>
   <string name="share_with_email_cannot_invite_outside_org">No podeu convidar persones fora de la vostra organització, contacteu amb l\'administrador per obtenir més informació</string>
   <string name="share_with_email_email_already_added">Ja heu afegit aquesta adreça de correu electrònic</string>
   <string name="share_permissions_title">Estableix el nivell d`accés</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s us convida a accedir a elements a</string>
-  <string name="sharing_join_shared_vault">Uniu-vos i sincronitzeu</string>
   <string name="sharing_reject_invitation">Rebutja la invitació</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Enhorabona, el vostre accés s\'ha confirmat</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Mostra la caixa forta compartida</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Tanca</string>
+  <string name="sharing_vault_invitation_title">Invitació a una caixa forta compartida</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s vol compartir una caixa forta amb vosaltres.</string>
+  <string name="sharing_vault_invitation_accept">Uniu-vos a la caixa forta compartida</string>
+  <string name="sharing_item_invitation_title">Invitació a un element compartit</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s vol compartir un element amb vosaltres.</string>
+  <string name="sharing_item_invitation_accept">Accepta i mostra l\'element</string>
   <string name="sharing_snackbar_get_invite_error">No s’ha pogut obtenir la invitació.</string>
   <string name="sharing_snackbar_invite_accepted">Invitació acceptada</string>
   <string name="sharing_snackbar_invite_accept_error">S\'ha produït un error en acceptar la invitació</string>
@@ -61,7 +62,9 @@
   <string name="share_summary_title">Reviseu i comparteu</string>
   <string name="share_summary_vault">a caixa forta %s</string>
   <string name="share_summary_share_vault">Comparteix la caixa forta</string>
+  <string name="share_summary_share_item">Comparteix l\'element</string>
   <string name="share_summary_vault_title">Caixa forta</string>
+  <string name="share_summary_item_title">Element</string>
   <string name="share_manage_vault_share_with_more_people">Comparteix amb més gent</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Queda %d invitació</item>
@@ -116,7 +119,7 @@
   <string name="share_with_recents_title">Recents</string>
   <string name="share_with_remove_email_content_description">Esborra el correu electrònic</string>
   <string name="share_with_user_title">Comparteix amb</string>
-  <string name="share_with_user_description">Share this item with other Proton users.</string>
+  <string name="share_with_user_description">Compartiu aquest article amb altres usuaris de Proton.</string>
   <string name="share_with_secure_link_title">Mitjançant un enllaç segur</string>
   <string name="share_with_secure_link_description">Generar un enllaç segur a aquest element.</string>
   <string name="share_with_manage_shared_vault_title">Gestiona l\'accés a la caixa forta</string>

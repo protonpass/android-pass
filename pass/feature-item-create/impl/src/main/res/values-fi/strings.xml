@@ -83,10 +83,10 @@
   <string name="cannot_retrieve_alias_options">Aliasvaihtoehtojen nouto ei onnistu</string>
   <string name="alias_mailbox_dialog_title">Ohjaa osoitteeseen</string>
   <string name="sl_note_info_title">Mikä on SimpleLogin-muistiinpano?</string>
-  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">In Pass, an item note is encrypted with the item encryption key and only users who have access to the item can view the note.</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">Passin kohteen muistiinpano salataan kohteen salausavaimella, ja vain kohteen käyttöoikeudet omaavat käyttäjät voivat tarkastella muistiinpanoa.</string>
   <string name="sl_note_info_message_part2">Edes Proton tai SimpleLogin eivät näe sitä.</string>
-  <string name="sl_note_info_message_part3">SimpleLogin note is stored together in the same location with alias address and while it is protected by encryption at rest, it isn\'t E2E encrypted meaning anyone who has access to SimpleLogin database can read it.</string>
-  <string name="sl_note_info_content_description">Show SL note information dialog</string>
+  <string name="sl_note_info_message_part3">SimpleLogin-muistiinpano tallennetaan samaan paikkaan alias-osoitteen kanssa. Vaikka se on suojattu salauksella levossa, sitä ei ole päästä päähän -salattu, joten kuka tahansa SimpleLogin-tietokantaan pääsevä voi lukea sen.</string>
+  <string name="sl_note_info_content_description">Näytä SL-muistiipanon tietoikkuna</string>
   <!-- Create note -->
   <string name="note_hint">Muistiinpano</string>
   <!-- Create Credit Card -->
@@ -187,4 +187,13 @@
   <string name="remove_passkey_dialog_title">Poistetaanko tämä pääsyavain?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Haluatko varmasti poistaa pääsyavaimen osoitteen \"%2$s\" käyttäjältä \"%1$s\"?</string>
   <string name="add_a_custom_section">Lisää mukautettu osio</string>
+  <string name="add_attachment_take_a_photo">Ota kuva</string>
+  <string name="add_attachment_choose_a_photo_or_video">Valitse kuva tai video</string>
+  <string name="add_attachment_choose_a_file">Valitse tiedosto</string>
+  <string name="attachment_options_open">Avaa</string>
+  <string name="attachment_options_save">Tallenna</string>
+  <string name="attachment_options_rename">Nimeä uudelleen</string>
+  <string name="attachment_options_delete">Poista</string>
+  <string name="banner_title_attachments">Liitteet</string>
+  <string name="banner_body_attachments">You can attach files to items for a better organization</string>
 </resources>

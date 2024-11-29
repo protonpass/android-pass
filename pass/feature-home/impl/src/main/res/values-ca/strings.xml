@@ -4,17 +4,17 @@
   <string name="home_empty_vault_title">La vostra caixa forta està buida</string>
   <string name="home_empty_vault_subtitle">Comenceu creant el primer element.</string>
   <string name="home_empty_vault_login_title">No s\'ha trobat cap inici de sessió.</string>
-  <string name="home_empty_vault_login_subtitle">Get started by creating your first login item.</string>
+  <string name="home_empty_vault_login_subtitle">Comenceu creant el primer inici de sessió.</string>
   <string name="home_empty_vault_aliases_title">No s\'ha trobat cap àlies.</string>
-  <string name="home_empty_vault_aliases_subtitle">Get started by creating your first alias item.</string>
+  <string name="home_empty_vault_aliases_subtitle">Comenceu creant el primer àlies.</string>
   <string name="home_empty_vault_notes_title">No s\'ha trobat cap nota.</string>
-  <string name="home_empty_vault_notes_subtitle">Get started by creating your first note item.</string>
+  <string name="home_empty_vault_notes_subtitle">Comenceu creant la primera nota.</string>
   <string name="home_empty_vault_logins_mfa_title">No s\'ha trobat cap inici de sessió amb TOTP.</string>
-  <string name="home_empty_vault_logins_mfa_subtitle">Get started by creating your first login with TOTP.</string>
+  <string name="home_empty_vault_logins_mfa_subtitle">Comenceu creant el primer inici de sessió amb TOTP.</string>
   <string name="home_empty_vault_identity_title">No s\'ha trobat cap identitat.</string>
   <string name="home_empty_vault_identity_subtitle">Comenceu creant el primer element d\'identitat.</string>
   <string name="home_empty_vault_cc_title">No s\'ha trobat cap targeta de crèdit.</string>
-  <string name="home_empty_vault_cc_subtitle">Get started by creating your first credit card item.</string>
+  <string name="home_empty_vault_cc_subtitle">Comenceu creant la primera targeta de crèdit.</string>
   <string name="home_empty_read_only_vault_title">Aquesta caixa forta està buida.</string>
   <string name="home_empty_read_only_vault_subtitle">No podeu afegir elements a una caixa forta només de lectura.</string>
   <string name="home_empty_vault_create_login">Crea un inici de sessió</string>
@@ -41,16 +41,18 @@
   <string name="home_trial_banner_settings">Més informació ›</string>
   <string name="sl_sync_banner_title">Sincronitzeu els vostres àlies de SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
-    <item quantity="one">You have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to sync it?</item>
-    <item quantity="other">You have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to sync them?</item>
+    <item quantity="one">Teniu %d àlies en SimpleLogin però no apareix en Proton Pass. Voleu sincronitzar-lo?</item>
+    <item quantity="other">Teniu %d àlies en SimpleLogin però no apareix en Proton Pass. Voleu sincronitzar-los?</item>
   </plurals>
   <string name="sl_sync_banner_settings">Sincronitza els àlies ›</string>
-  <string name="sl_sync_banner_note">Once synced, deleting aliases in Pass will also delete them in SimpleLogin.</string>
+  <string name="sl_sync_banner_note">Un cop sincronitzats, suprimir els àlies a Pass també els suprimirà a SimpleLogin.</string>
   <string name="home_notification_permission_banner_title">Obteniu actualitzacions importants</string>
   <string name="home_notification_permission_banner_text">Habiliteu les notificacions automàtiques per a rebre una notificació quan altres persones comparteixin una caixa forta.</string>
   <string name="home_notification_permission_banner_settings">Activar permisos ›</string>
   <string name="home_invite_banner_title">Caixa forta compartida amb vós</string>
   <string name="home_invite_banner_subtitle">Esteu convidat a una caixa forta compartida. Toqueu per obtenir més informació.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s vol compartir un element amb vosaltres.</string>
+  <string name="home_item_invite_banner_subtitle">Toqueu per obtenir més informació.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copia la contrasenya</string>
   <string name="bottomsheet_copy_username">Copia el nom d\'usuari</string>
@@ -149,14 +151,14 @@
   <string name="home_snackbar_items_pinned_success">S\'ha ancorat l\'element.</string>
   <string name="home_snackbar_items_pinned_partial_success">S\'ha produït un error en fixar alguns elements</string>
   <string name="home_snackbar_items_pinned_error">S\'ha produït un error en ancorar els elements.</string>
-  <string name="home_snackbar_items_unpinned_success">Items unpinned successfully</string>
+  <string name="home_snackbar_items_unpinned_success">Els elements s\'han desancorat.</string>
   <string name="home_snackbar_items_unpinned_partial_success">S\'ha produït un error en desancorar alguns dels elements.</string>
   <string name="home_snackbar_items_unpinned_error">S\'ha produït un error en desancorar els elements.</string>
   <string name="home_snackbar_items_alias_enabled_success">S\'ha activat l\'àlies.</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">S\'ha produït un error en activar alguns àlies.</string>
   <string name="home_snackbar_items_alias_enabled_error">S\'ha produït un error en activar els àlies.</string>
   <string name="home_snackbar_items_alias_disabled_success">S\'ha desactivat l\'àlies.</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">S\'ha produït un error en desactivar alguns àlies.</string>
   <string name="home_snackbar_items_alias_disabled_error">S\'ha produït un error en desactivar els àlies.</string>
   <string name="bulk_action_unpin">No fixis</string>
   <string name="bulk_action_pin">Fixa</string>

@@ -48,6 +48,6 @@
     <item quantity="one">%d intento restante</item>
     <item quantity="other">%d intentos restantes</item>
   </plurals>
-  <string name="auth_pin_too_many_attempts">Hay demasiados intentos fallidos del código Pin. Se han desconectado todos tus usuarios.</string>
+  <string name="auth_pin_too_many_attempts">Hay demasiados intentos incorrectos del código PIN. Se han desconectado todos tus usuarios.</string>
   <string name="auth_pin_too_many_attempts_dismiss">Demasiados errores de inicio de sesión con código PIN</string>
 </resources>

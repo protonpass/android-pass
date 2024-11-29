@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Fortsæt</string>
   <string name="sharing_can_view">Seer</string>
   <string name="sharing_can_edit">Redaktør</string>
   <string name="sharing_can_manage">Admin</string>
@@ -32,18 +31,20 @@
     <item quantity="one">%d medlem</item>
     <item quantity="other">%d medlemmer</item>
   </plurals>
+  <string name="sharing_member_count_header">Members</string>
   <string name="share_with_title">Del med</string>
   <string name="share_with_email_hint">E-mailadresse</string>
   <string name="share_with_email_error">Ugyldig e-mailadresse</string>
   <string name="share_with_email_cannot_invite_outside_org">Du kan ikke invitere folk uden for din organisation, kontakt administrator for mere info.</string>
   <string name="share_with_email_email_already_added">Du har allerede tilføjet denne e-mailadresse</string>
   <string name="share_permissions_title">Angiv adgangsniveau</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s inviterer dig til at tilgå elementer i</string>
-  <string name="sharing_join_shared_vault">Tilmeld og synkronisér</string>
   <string name="sharing_reject_invitation">Afvis invitation</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Tillykke, din adgang er blevet bekræftet</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Se den delte boks</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Luk</string>
+  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="sharing_vault_invitation_accept">Join shared vault</string>
+  <string name="sharing_item_invitation_title">Shared item invitation</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="sharing_item_invitation_accept">Accept and view the item</string>
   <string name="sharing_snackbar_get_invite_error">Kunne ikke hente invitation</string>
   <string name="sharing_snackbar_invite_accepted">Invitation accepteret</string>
   <string name="sharing_snackbar_invite_accept_error">Fejl ved accept af invitationen</string>
@@ -61,7 +62,9 @@
   <string name="share_summary_title">Gennemgå og del</string>
   <string name="share_summary_vault">%s boks</string>
   <string name="share_summary_share_vault">Del boks</string>
+  <string name="share_summary_share_item">Share item</string>
   <string name="share_summary_vault_title">Boks</string>
+  <string name="share_summary_item_title">Item</string>
   <string name="share_manage_vault_share_with_more_people">Del med flere personer</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d invitation tilbage</item>

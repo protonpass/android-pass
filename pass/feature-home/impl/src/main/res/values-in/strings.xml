@@ -50,6 +50,8 @@
   <string name="home_notification_permission_banner_settings">Aktifkan izin ›</string>
   <string name="home_invite_banner_title">Brankas yang dibagikan dengan Anda</string>
   <string name="home_invite_banner_subtitle">Anda telah diundang ke brankas bersama. Klik di sini untuk rincian lebih lanjut.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s ingin membagikan item dengan Anda.</string>
+  <string name="home_item_invite_banner_subtitle">Ketuk untuk perincian.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Salin kata sandi</string>
   <string name="bottomsheet_copy_username">Salin nama pengguna</string>

@@ -260,13 +260,13 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Käytä SimpleLogin-synkronointia</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">Havaitsimme, että sinulla on SimpleLoginissa %d Proton Passista puuttuva alias. Haluaisitko tuoda sen?</item>
-    <item quantity="other">Havaitsimme, että sinulla on SimpleLoginissa %d Proton Passista puuttuvaa aliasta. Haluaisitko tuoda ne?</item>
+    <item quantity="one">Havaitsimme, että sinulla on SimpleLoginissa %d Proton Passista puuttuva alias. Haluatko tuoda sen?</item>
+    <item quantity="other">Havaitsimme, että sinulla on SimpleLoginissa %d Proton Passista puuttuvaa aliasta. Haluatko tuoda ne?</item>
   </plurals>
   <string name="simple_login_widget_action">Synkronoi aliakset</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">Haven\'t received the code?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Tarkista, onko roskapostissasi sähköpostia \"%s\"</string>
   <string name="verification_code_suggestion_subject_new_email_address">Vahvista sähköpostiosoitteesi Proton Passille</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Vahvista postilaatikkosi</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Jos et löydä sellaista sähköpostia, voit %s.</string>

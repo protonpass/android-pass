@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Fortsätt</string>
   <string name="sharing_can_view">Läsare</string>
   <string name="sharing_can_edit">Redaktör</string>
   <string name="sharing_can_manage">Admin</string>
@@ -32,18 +31,20 @@
     <item quantity="one">%d medlem</item>
     <item quantity="other">%d medlemmar</item>
   </plurals>
+  <string name="sharing_member_count_header">Medlemmar</string>
   <string name="share_with_title">Dela med</string>
   <string name="share_with_email_hint">E-postadress</string>
   <string name="share_with_email_error">Ogiltig e-postadress</string>
   <string name="share_with_email_cannot_invite_outside_org">Du kan inte bjuda in personer utanför din organisation, kontakta administratören för mer information</string>
   <string name="share_with_email_email_already_added">Du har redan lagt till denna e-postadress</string>
   <string name="share_permissions_title">Ställ in åtkomstnivå</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s bjöd in dig för att komma åt objekt i</string>
-  <string name="sharing_join_shared_vault">Gå med och synkronisera</string>
   <string name="sharing_reject_invitation">Avböj inbjudan</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Grattis, din åtkomst har bekräftats</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Se det delade valvet</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Stäng</string>
+  <string name="sharing_vault_invitation_title">Delad valvinbjudan</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s vill dela ett objekt med dig.</string>
+  <string name="sharing_vault_invitation_accept">Gå med delat valv</string>
+  <string name="sharing_item_invitation_title">Delad valvinbjudan</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s vill dela ett objekt med dig.</string>
+  <string name="sharing_item_invitation_accept">Acceptera och visa objektet</string>
   <string name="sharing_snackbar_get_invite_error">Kunde inte få inbjudan</string>
   <string name="sharing_snackbar_invite_accepted">Inbjudan accepterad</string>
   <string name="sharing_snackbar_invite_accept_error">Det gick inte acceptera inbjudan</string>
@@ -61,7 +62,9 @@
   <string name="share_summary_title">Granska och dela</string>
   <string name="share_summary_vault">%s valv</string>
   <string name="share_summary_share_vault">Dela valv</string>
+  <string name="share_summary_share_item">Dela objekt</string>
   <string name="share_summary_vault_title">Valv</string>
+  <string name="share_summary_item_title">objekt</string>
   <string name="share_manage_vault_share_with_more_people">Dela med fler personer</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d inbjudan kvar</item>

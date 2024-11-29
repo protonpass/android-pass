@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">İlerle</string>
   <string name="sharing_can_view">Görüntüleyici</string>
   <string name="sharing_can_edit">Düzenleyici</string>
   <string name="sharing_can_manage">Yönetici</string>
@@ -32,18 +31,20 @@
     <item quantity="one">%d üye</item>
     <item quantity="other">%d üye</item>
   </plurals>
+  <string name="sharing_member_count_header">Üyeler</string>
   <string name="share_with_title">Şununla paylaş</string>
   <string name="share_with_email_hint">E-posta adresi</string>
   <string name="share_with_email_error">E-posta adresi geçersiz</string>
   <string name="share_with_email_cannot_invite_outside_org">Kuruluşunuz dışındaki kişileri davet edemezsiniz. Ayrıntılı bilgi almak için yönetici ile görüşün</string>
   <string name="share_with_email_email_already_added">Bu e-posta adresini zaten eklemişsiniz</string>
   <string name="share_permissions_title">Erişim düzeyini ayarla</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s sizi şu kasadaki ögelere erişmeye davet ediyor:</string>
-  <string name="sharing_join_shared_vault">Katıl ve eşitle</string>
   <string name="sharing_reject_invitation">Daveti reddet</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Tebrikler erişiminiz onaylandı</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Paylaşılan kasaya bakın</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Kapat</string>
+  <string name="sharing_vault_invitation_title">Kasa paylaşma daveti</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s sizinle bir kasa paylaşmak istiyor.</string>
+  <string name="sharing_vault_invitation_accept">Paylaşılan kasaya eriş</string>
+  <string name="sharing_item_invitation_title">Öge paylaşma daveti</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s sizinle bir öge paylaşmak istiyor.</string>
+  <string name="sharing_item_invitation_accept">Kabul et ve ögeyi görüntüle</string>
   <string name="sharing_snackbar_get_invite_error">Davet alınamadı</string>
   <string name="sharing_snackbar_invite_accepted">Davet kabul edildi</string>
   <string name="sharing_snackbar_invite_accept_error">Davet kabul edilirken sorun çıktı</string>
@@ -61,7 +62,9 @@
   <string name="share_summary_title">Gözden geçirip paylaş</string>
   <string name="share_summary_vault">%s kasa</string>
   <string name="share_summary_share_vault">Kasayı paylaş</string>
+  <string name="share_summary_share_item">Ögeyi paylaş</string>
   <string name="share_summary_vault_title">Kasa</string>
+  <string name="share_summary_item_title">Öge</string>
   <string name="share_manage_vault_share_with_more_people">Başkalarıyla paylaş</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d davet kaldı</item>
@@ -113,7 +116,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Daha fazla kasa oluşturabilmek için tarifenizi yükseltin</string>
   <string name="sharing_from_item_vault_limit_reached">Kasa sayısı sınırına ulaştınız</string>
   <string name="share_with_suggestions_title">Öneriler</string>
-  <string name="share_with_recents_title">Recent</string>
+  <string name="share_with_recents_title">Son kullanılan</string>
   <string name="share_with_remove_email_content_description">E-postayı kaldır</string>
   <string name="share_with_user_title">Şu kişiyle paylaş</string>
   <string name="share_with_user_description">Bu ögeyi diğer Proton kullanıcıları ile paylaşın.</string>

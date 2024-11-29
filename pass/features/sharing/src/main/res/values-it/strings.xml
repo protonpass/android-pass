@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Continua</string>
   <string name="sharing_can_view">Visualizzatore</string>
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Amministratore</string>
@@ -32,18 +31,20 @@
     <item quantity="one">%d membro</item>
     <item quantity="other">%d membri</item>
   </plurals>
+  <string name="sharing_member_count_header">Membri</string>
   <string name="share_with_title">Membri della condivisione</string>
   <string name="share_with_email_hint">Indirizzo email</string>
   <string name="share_with_email_error">Indirizzo email non valido</string>
   <string name="share_with_email_cannot_invite_outside_org">Non puoi invitare persone esterne all\'organizzazione. Contatta l\'amministratore per maggiori informazioni.</string>
   <string name="share_with_email_email_already_added">Indirizzo email già aggiunto</string>
   <string name="share_permissions_title">Imposta il livello di accesso</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s ti ha invitato ad accedere agli elementi della cassaforte:</string>
-  <string name="sharing_join_shared_vault">Accetta e sincronizza</string>
   <string name="sharing_reject_invitation">Rifiuta l\'invito</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">L\'accesso è stato confermato</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Visualizza la cassaforte condivisa</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Chiudi</string>
+  <string name="sharing_vault_invitation_title">Invito alla cassaforte condivisa</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s vuole condividere una cassaforte con te.</string>
+  <string name="sharing_vault_invitation_accept">Unisciti alla cassaforte condivisa</string>
+  <string name="sharing_item_invitation_title">Invito a un elemento condiviso</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s vuole condividere un elemento con te.</string>
+  <string name="sharing_item_invitation_accept">Accetta e visualizza l\'elemento</string>
   <string name="sharing_snackbar_get_invite_error">Caricamento dell\'invito non riuscito</string>
   <string name="sharing_snackbar_invite_accepted">Invito accettato</string>
   <string name="sharing_snackbar_invite_accept_error">Accettazione dell\'invito non riuscita</string>
@@ -61,7 +62,9 @@
   <string name="share_summary_title">Controlla e condividi</string>
   <string name="share_summary_vault">%s</string>
   <string name="share_summary_share_vault">Condividi la cassaforte</string>
+  <string name="share_summary_share_item">Condividi elemento</string>
   <string name="share_summary_vault_title">Cassaforte</string>
+  <string name="share_summary_item_title">Elemento</string>
   <string name="share_manage_vault_share_with_more_people">Condividi con altre persone</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d invito rimasto</item>

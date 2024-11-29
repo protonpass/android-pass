@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Tiếp tục</string>
   <string name="sharing_can_view">Người xem</string>
   <string name="sharing_can_edit">Chỉnh sửa</string>
   <string name="sharing_can_manage">Quản trị viên</string>
@@ -30,18 +29,20 @@
   <plurals name="sharing_member_count">
     <item quantity="other">%d thành viên</item>
   </plurals>
+  <string name="sharing_member_count_header">Members</string>
   <string name="share_with_title">Chia sẻ với</string>
   <string name="share_with_email_hint">Địa chỉ email</string>
   <string name="share_with_email_error">Địa chỉ email không hợp lệ</string>
   <string name="share_with_email_cannot_invite_outside_org">Không thể mời người dùng bên ngoài tổ chức, liên hệ quản lí để tìm hiểu thêm</string>
   <string name="share_with_email_email_already_added">Bạn đã thêm email này rồi</string>
   <string name="share_permissions_title">Thiết lập cấp độ truy cập</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s mời bạn truy cập nội dung trong</string>
-  <string name="sharing_join_shared_vault">Tham gia và đồng bộ</string>
   <string name="sharing_reject_invitation">Từ chối lời mời</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Chúc mừng, truy cập của bạn đã được xác nhận</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Xem kho lưu trữ được chia sẻ</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Đóng</string>
+  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="sharing_vault_invitation_accept">Join shared vault</string>
+  <string name="sharing_item_invitation_title">Shared item invitation</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="sharing_item_invitation_accept">Accept and view the item</string>
   <string name="sharing_snackbar_get_invite_error">Không thể lấy lời mời</string>
   <string name="sharing_snackbar_invite_accepted">Đã chấp nhận lời mời</string>
   <string name="sharing_snackbar_invite_accept_error">Lỗi khi chấp nhận lời mời</string>
@@ -59,7 +60,9 @@
   <string name="share_summary_title">Xem lại và chia sẻ</string>
   <string name="share_summary_vault">kho lưu trữ %s</string>
   <string name="share_summary_share_vault">Chia sẽ kho lưu trữ</string>
+  <string name="share_summary_share_item">Share item</string>
   <string name="share_summary_vault_title">Kho lưu trữ</string>
+  <string name="share_summary_item_title">Item</string>
   <string name="share_manage_vault_share_with_more_people">Chia sẽ với nhiều người hơn</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="other">%d lời mời còn lại</item>

@@ -17,7 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="share_continue">Kontynuuj</string>
   <string name="sharing_can_view">Odczyt</string>
   <string name="sharing_can_edit">Edycja</string>
   <string name="sharing_can_manage">Administrator</string>
@@ -36,18 +35,20 @@
     <item quantity="many">%d użytkowników</item>
     <item quantity="other">%d użytkowników</item>
   </plurals>
+  <string name="sharing_member_count_header">Użytkownicy</string>
   <string name="share_with_title">Udostępnij</string>
   <string name="share_with_email_hint">Adres e-mail</string>
   <string name="share_with_email_error">Adres e-mail jest nieprawidłowy</string>
   <string name="share_with_email_cannot_invite_outside_org">Nie możesz zapraszać użytkowników spoza swojej organizacji. Skontaktuj się z administratorem, aby uzyskać więcej informacji</string>
   <string name="share_with_email_email_already_added">Ten adres e-mail został już dodany</string>
   <string name="share_permissions_title">Ustaw uprawnienia</string>
-  <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s udostępnia Ci sejf</string>
-  <string name="sharing_join_shared_vault">Dołącz i synchronizuj</string>
   <string name="sharing_reject_invitation">Odrzuć zaproszenie</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Gratulacje. Dostęp został potwierdzony</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Zobacz udostępniony sejf</string>
-  <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Zamknij</string>
+  <string name="sharing_vault_invitation_title">Zaproszenie do udostępnionego sejfu</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="sharing_vault_invitation_accept">Dołącz do udostępnionego sejfu</string>
+  <string name="sharing_item_invitation_title">Zaproszenie do udostępnionego elementu</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="sharing_item_invitation_accept">Accept and view the item</string>
   <string name="sharing_snackbar_get_invite_error">Nie można pobrać zaproszenia</string>
   <string name="sharing_snackbar_invite_accepted">Zaproszenie zostało zaakceptowane</string>
   <string name="sharing_snackbar_invite_accept_error">Wystąpił błąd podczas akceptowania zaproszenia</string>
@@ -65,7 +66,9 @@
   <string name="share_summary_title">Przejrzyj i udostępnij</string>
   <string name="share_summary_vault">sejfu %s</string>
   <string name="share_summary_share_vault">Udostępnij sejf</string>
+  <string name="share_summary_share_item">Udostępnij element</string>
   <string name="share_summary_vault_title">Sejf</string>
+  <string name="share_summary_item_title">Element</string>
   <string name="share_manage_vault_share_with_more_people">Udostępnij innym</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Pozostało %d zaproszenie</item>

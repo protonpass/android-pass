@@ -26,12 +26,14 @@ import androidx.compose.ui.unit.dp
 @Immutable
 data class PassDimens(
     val bottomsheetHorizontalPadding: Dp,
-    val bottomsheetVerticalPadding: Dp
+    val bottomsheetVerticalPadding: Dp,
+    val topBarButtonHeight: Dp
 ) {
     companion object {
         val Phone: PassDimens = PassDimens(
             bottomsheetHorizontalPadding = Spacing.medium,
-            bottomsheetVerticalPadding = Spacing.large
+            bottomsheetVerticalPadding = Spacing.large,
+            topBarButtonHeight = 40.dp
         )
     }
 }
@@ -39,7 +41,8 @@ data class PassDimens(
 val LocalPassDimens = staticCompositionLocalOf {
     PassDimens(
         bottomsheetHorizontalPadding = Spacing.none,
-        bottomsheetVerticalPadding = Spacing.none
+        bottomsheetVerticalPadding = Spacing.none,
+        topBarButtonHeight = Spacing.none
     )
 }
 

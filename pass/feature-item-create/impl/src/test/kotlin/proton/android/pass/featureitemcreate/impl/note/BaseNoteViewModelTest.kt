@@ -27,6 +27,7 @@ import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.featureitemcreate.impl.note.BaseNoteUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 
 internal class BaseNoteViewModelTest {
@@ -35,6 +36,7 @@ internal class BaseNoteViewModelTest {
     val dispatcherRule = MainDispatcherRule()
 
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var featureFlagsPreferenceRepository: TestFeatureFlagsPreferenceRepository
     private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
     private lateinit var baseNoteViewModel: BaseNoteViewModel
 
@@ -42,9 +44,11 @@ internal class BaseNoteViewModelTest {
     fun setUp() {
         snackbarDispatcher = TestSnackbarDispatcher()
         savedStateHandleProvider = TestSavedStateHandleProvider()
+        featureFlagsPreferenceRepository = TestFeatureFlagsPreferenceRepository()
         baseNoteViewModel = object : BaseNoteViewModel(
-            snackbarDispatcher,
-            savedStateHandleProvider
+            snackbarDispatcher = snackbarDispatcher,
+            featureFlagsRepository = featureFlagsPreferenceRepository,
+            savedStateHandleProvider = savedStateHandleProvider
         ) {}
     }
 

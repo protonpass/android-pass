@@ -41,6 +41,7 @@ import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -57,6 +58,7 @@ class UpdateCreditCardViewModelTest {
     private lateinit var getItemById: TestObserveItemById
     private lateinit var updateItem: TestUpdateItem
     private lateinit var accountManager: TestAccountManager
+    private lateinit var featureFlagsRepository: TestFeatureFlagsPreferenceRepository
 
     @Before
     fun setup() {
@@ -64,6 +66,7 @@ class UpdateCreditCardViewModelTest {
         snackbarDispatcher = TestSnackbarDispatcher()
         getItemById = TestObserveItemById()
         updateItem = TestUpdateItem()
+        featureFlagsRepository = TestFeatureFlagsPreferenceRepository()
         accountManager = TestAccountManager()
         accountManager.sendPrimaryUserId(UserId("user-id"))
         instance = UpdateCreditCardViewModel(
@@ -77,7 +80,8 @@ class UpdateCreditCardViewModelTest {
             telemetryManager = telemetryManager,
             getItemById = getItemById,
             updateItem = updateItem,
-            canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) }
+            canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) },
+            featureFlagsRepository = featureFlagsRepository
         )
     }
 

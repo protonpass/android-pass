@@ -32,8 +32,8 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.Vault
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 
@@ -41,12 +41,13 @@ import proton.android.pass.featureitemdetail.impl.common.NoteSection
 fun CreditCardDetailContent(
     modifier: Modifier = Modifier,
     contents: CreditCardDetailUiState.ItemContent,
-    vault: Vault?,
+    share: Share,
     isDowngradedMode: Boolean,
     isPinned: Boolean,
     isHistoryFeatureEnabled: Boolean,
     isFileAttachmentsEnabled: Boolean,
     attachments: List<Attachment>,
+    hasMoreThanOneVaultShare: Boolean,
     onEvent: (CreditCardDetailEvent) -> Unit
 ) {
     val model = contents.model.contents as ItemContents.CreditCard
@@ -58,9 +59,12 @@ fun CreditCardDetailContent(
         CreditCardTitle(
             modifier = Modifier.padding(Spacing.none, Spacing.mediumSmall),
             title = model.title,
-            vault = vault,
+            share = share,
             onVaultClick = { onEvent(CreditCardDetailEvent.OnVaultClick) },
-            isPinned = isPinned
+            isPinned = isPinned,
+            isShared = contents.model.isShared,
+            shareCount = contents.model.shareCount,
+            hasMoreThanOneVaultShare = hasMoreThanOneVaultShare
         )
 
         MainCreditCardSection(

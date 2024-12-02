@@ -81,4 +81,6 @@ sealed interface BaseLoginNavigation {
 
     @JvmInline
     value class OpenImagePicker(val index: Option<Int>) : BaseLoginNavigation
+
+    data object AddAttachment : BaseLoginNavigation
 }

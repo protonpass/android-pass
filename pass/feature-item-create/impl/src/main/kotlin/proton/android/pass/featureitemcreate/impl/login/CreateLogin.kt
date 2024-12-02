@@ -41,6 +41,7 @@ import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareList
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation.OnCreateLoginEvent
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
@@ -226,7 +227,19 @@ fun CreateLoginScreen(
                     }
 
                     is LoginContentEvent.OnAttachmentEvent -> {
-                        // handle attachment event
+                        when (it.event) {
+                            AttachmentContentEvent.OnAddAttachment ->
+                                onNavigate(BaseLoginNavigation.AddAttachment)
+                            is AttachmentContentEvent.OnAttachmentOpen -> {
+                                // open attachment
+                            }
+                            is AttachmentContentEvent.OnAttachmentOptions -> {
+                                // show attachment options
+                            }
+                            AttachmentContentEvent.OnDeleteAllAttachments -> {
+                                // delete all attachments
+                            }
+                        }
                     }
                 }
             }

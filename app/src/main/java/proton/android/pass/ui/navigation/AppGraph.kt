@@ -879,6 +879,8 @@ fun NavGraphBuilder.appGraph(
 
                 BaseLoginNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseLoginNavigation.TotpSuccess -> appNavigator.navigateBackWithResult(it.results)
+                BaseLoginNavigation.AddAttachment ->
+                    appNavigator.navigate(AddAttachmentNavItem)
             }
         }
     )
@@ -906,6 +908,8 @@ fun NavGraphBuilder.appGraph(
                     route = ViewItem.createNavRoute(it.shareId, it.itemId),
                     backDestination = HomeNavItem
                 )
+
+                UpdateNoteNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
             }
         }
     )
@@ -922,6 +926,7 @@ fun NavGraphBuilder.appGraph(
 
             BaseCreditCardNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
             is UpdateCreditCardNavigation -> {}
+            BaseCreditCardNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
         }
     }
     updateCreditCardGraph {
@@ -939,6 +944,7 @@ fun NavGraphBuilder.appGraph(
             }
 
             BaseCreditCardNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+            BaseCreditCardNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
         }
     }
     createAliasGraph(
@@ -965,6 +971,9 @@ fun NavGraphBuilder.appGraph(
                         route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                     )
                 }
+
+                CreateAliasNavigation.AddAttachment ->
+                    appNavigator.navigate(AddAttachmentNavItem)
             }
         }
     )
@@ -979,6 +988,7 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 UpdateAliasNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+                UpdateAliasNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
             }
         }
     )
@@ -1074,6 +1084,8 @@ fun NavGraphBuilder.appGraph(
                     ),
                     backDestination = HomeNavItem
                 )
+
+                BaseIdentityNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
             }
         }
     )

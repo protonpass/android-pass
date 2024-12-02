@@ -20,7 +20,7 @@ package proton.android.pass.featureitemcreate.impl.common.attachments
 
 import proton.android.pass.domain.attachments.AttachmentId
 
-interface AttachmentContentEvent {
+sealed interface AttachmentContentEvent {
     data object OnAddAttachment : AttachmentContentEvent
 
     data object OnDeleteAllAttachments : AttachmentContentEvent

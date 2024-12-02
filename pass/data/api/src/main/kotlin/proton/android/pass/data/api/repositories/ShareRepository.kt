@@ -26,6 +26,7 @@ import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.NewVault
+import proton.android.pass.domain.shares.ShareMember
 
 interface ShareRepository {
     suspend fun createVault(userId: SessionUserId, vault: NewVault): Share
@@ -66,6 +67,7 @@ interface ShareRepository {
     suspend fun applyPendingShareEventKeys(userId: UserId, event: UpdateShareEvent)
     suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress
 
+    fun observeShareMembers(userId: UserId, shareId: ShareId): Flow<List<ShareMember>>
 }
 
 data class UpdateShareEvent(

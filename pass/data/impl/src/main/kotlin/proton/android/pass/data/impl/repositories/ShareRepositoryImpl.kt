@@ -25,6 +25,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.SessionUserId
@@ -70,6 +71,7 @@ import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.domain.key.ShareKey
+import proton.android.pass.domain.shares.ShareMember
 import proton.android.pass.log.api.PassLogger
 import proton_pass_vault_v1.VaultV1
 import java.sql.Date
@@ -374,6 +376,25 @@ class ShareRepositoryImpl @Inject constructor(
         val address = userAddressRepository.getAddress(userId, AddressId(entity.addressId))
             ?: throw IllegalStateException("Could not find address for share")
         return address
+    }
+
+    override fun observeShareMembers(userId: UserId, shareId: ShareId): Flow<List<ShareMember>> = flow {
+        remoteShareDataSource.getShareMembers(userId, shareId)
+            .map { shareMemberResponse ->
+                ShareMember(
+                    email = shareMemberResponse.userEmail,
+                    shareId = ShareId(shareMemberResponse.shareId),
+                    username = shareMemberResponse.userName,
+                    isCurrentUser = shareMemberResponse.userEmail.isNotEmpty(),
+                    isOwner = shareMemberResponse.owner ?: false,
+                    role = shareMemberResponse.shareRoleId?.let { shareRoleValue ->
+                        ShareRole.fromValue(shareRoleValue)
+                    }
+                )
+            }
+            .also { shareMembers ->
+                emit(shareMembers)
+            }
     }
 
     private suspend fun onShareResponseEntity(

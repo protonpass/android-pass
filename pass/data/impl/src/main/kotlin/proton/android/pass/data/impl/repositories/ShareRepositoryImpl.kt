@@ -535,30 +535,32 @@ class ShareRepositoryImpl @Inject constructor(
         }
 
         ShareType.Vault -> {
-            encryptionContext.decrypt(encryptedContent!!)
-                .let(VaultV1.Vault::parseFrom)
-                .let { vault ->
-                    Share.Vault(
-                        id = ShareId(id),
-                        userId = UserId(userId),
-                        targetId = targetId,
-                        permission = SharePermission(permission),
-                        vaultId = VaultId(vaultId),
-                        expirationTime = expirationTime?.let { Date(it) },
-                        createTime = createTime.toDate(),
-                        shareRole = ShareRole.fromValue(shareRoleId),
-                        isOwner = owner,
-                        memberCount = targetMembers,
-                        shared = shared,
-                        pendingInvites = pendingInvites,
-                        newUserInvitesReady = newUserInvitesReady,
-                        maxMembers = targetMaxMembers,
-                        canAutofill = canAutofill,
-                        name = vault.name,
-                        color = vault.display.color.toDomain(),
-                        icon = vault.display.icon.toDomain()
-                    )
-                }
+            encryptedContent?.let { vaultEncryptedContent ->
+                encryptionContext.decrypt(vaultEncryptedContent)
+                    .let(VaultV1.Vault::parseFrom)
+                    .let { vault ->
+                        Share.Vault(
+                            id = ShareId(id),
+                            userId = UserId(userId),
+                            targetId = targetId,
+                            permission = SharePermission(permission),
+                            vaultId = VaultId(vaultId),
+                            expirationTime = expirationTime?.let { Date(it) },
+                            createTime = createTime.toDate(),
+                            shareRole = ShareRole.fromValue(shareRoleId),
+                            isOwner = owner,
+                            memberCount = targetMembers,
+                            shared = shared,
+                            pendingInvites = pendingInvites,
+                            newUserInvitesReady = newUserInvitesReady,
+                            maxMembers = targetMaxMembers,
+                            canAutofill = canAutofill,
+                            name = vault.name,
+                            color = vault.display.color.toDomain(),
+                            icon = vault.display.icon.toDomain()
+                        )
+                    }
+            } ?: throw IllegalStateException("Vault share without encrypted content")
         }
     }
 

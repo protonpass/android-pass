@@ -30,9 +30,15 @@ import proton.android.pass.autofill.extensions.MultiStepUtils.getUsernameFromSta
 import proton.android.pass.autofill.heuristics.NodeCluster
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
+import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.log.api.PassLogger
 
 const val TAG = "FillResponseExt"
+
+// List of apps which we don't want to offer autosave
+val FORBIDDEN_AUTOSAVE_PACKAGE_NAMES = setOf(
+    "com.android.settings"
+)
 
 sealed interface SaveSessionType {
     @JvmInline
@@ -55,9 +61,9 @@ internal fun FillResponse.Builder.addSaveInfo(
     autofillSessionId: Int,
     cluster: NodeCluster,
     currentClientState: Bundle,
-    isBrowser: Boolean
+    packageName: PackageName
 ) {
-    val saveSessionType = getSaveSessionType(cluster, currentClientState, isBrowser)
+    val saveSessionType = getSaveSessionType(cluster, currentClientState, packageName)
     val saveInfo = when (saveSessionType) {
         SaveSessionType.NotAutoSaveable -> return
         is SaveSessionType.UsernameAndPassword -> {
@@ -128,43 +134,50 @@ internal fun FillResponse.Builder.addSaveInfo(
 private fun getSaveSessionType(
     cluster: NodeCluster,
     currentClientState: Bundle,
-    isBrowser: Boolean
-): SaveSessionType = when (cluster) {
-    NodeCluster.Empty -> SaveSessionType.NotAutoSaveable
-    is NodeCluster.CreditCard -> SaveSessionType.NotAutoSaveable
-    is NodeCluster.SignUp -> {
-        SaveSessionType.UsernameAndPassword(
-            usernameField = cluster.username,
-            passwordField = cluster.password
-        )
+    packageName: PackageName
+): SaveSessionType {
+    if (FORBIDDEN_AUTOSAVE_PACKAGE_NAMES.contains(packageName.value)) {
+        return SaveSessionType.NotAutoSaveable
     }
 
-    is NodeCluster.Login -> when (cluster) {
-        is NodeCluster.Login.OnlyPassword -> if (isBrowser) {
-            PassLogger.d(TAG, "Not adding saveInfo because is only password and is browser")
-            SaveSessionType.NotAutoSaveable
-        } else {
-            val usernameField = currentClientState.getUsernameFromState().toOption()
-            SaveSessionType.Password(
-                storedUsername = usernameField,
-                passwordField = cluster.password
-            )
-        }
-
-        is NodeCluster.Login.OnlyUsername -> if (isBrowser) {
-            PassLogger.d(TAG, "Not adding saveInfo because is only username and is browser")
-            SaveSessionType.NotAutoSaveable
-        } else {
-            SaveSessionType.Username(cluster.username)
-        }
-
-        is NodeCluster.Login.UsernameAndPassword -> {
+    val isBrowser = packageName.isBrowser()
+    return when (cluster) {
+        NodeCluster.Empty -> SaveSessionType.NotAutoSaveable
+        is NodeCluster.CreditCard -> SaveSessionType.NotAutoSaveable
+        is NodeCluster.SignUp -> {
             SaveSessionType.UsernameAndPassword(
                 usernameField = cluster.username,
                 passwordField = cluster.password
             )
         }
-    }
 
-    is NodeCluster.Identity -> SaveSessionType.NotAutoSaveable
+        is NodeCluster.Login -> when (cluster) {
+            is NodeCluster.Login.OnlyPassword -> if (isBrowser) {
+                PassLogger.d(TAG, "Not adding saveInfo because is only password and is browser")
+                SaveSessionType.NotAutoSaveable
+            } else {
+                val usernameField = currentClientState.getUsernameFromState().toOption()
+                SaveSessionType.Password(
+                    storedUsername = usernameField,
+                    passwordField = cluster.password
+                )
+            }
+
+            is NodeCluster.Login.OnlyUsername -> if (isBrowser) {
+                PassLogger.d(TAG, "Not adding saveInfo because is only username and is browser")
+                SaveSessionType.NotAutoSaveable
+            } else {
+                SaveSessionType.Username(cluster.username)
+            }
+
+            is NodeCluster.Login.UsernameAndPassword -> {
+                SaveSessionType.UsernameAndPassword(
+                    usernameField = cluster.username,
+                    passwordField = cluster.password
+                )
+            }
+        }
+
+        is NodeCluster.Identity -> SaveSessionType.NotAutoSaveable
+    }
 }

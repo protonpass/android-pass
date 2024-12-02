@@ -62,5 +62,6 @@ fun NavGraphBuilder.createNoteGraph(onNavigate: (CreateNoteNavigation) -> Unit) 
 sealed interface CreateNoteNavigation {
     data class SelectVault(val shareId: ShareId) : CreateNoteNavigation
     data object NoteCreated : CreateNoteNavigation
+    data object AddAttachment : CreateNoteNavigation
     data object Back : CreateNoteNavigation
 }

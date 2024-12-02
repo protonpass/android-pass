@@ -16,18 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.common.attachments
+package proton.android.pass.features.attachments.attachmentoptions.ui
 
-import proton.android.pass.domain.attachments.AttachmentId
-
-sealed interface AttachmentContentEvent {
-    data object OnAddAttachment : AttachmentContentEvent
-
-    data object OnDeleteAllAttachments : AttachmentContentEvent
-
-    @JvmInline
-    value class OnAttachmentOptions(val attachmentId: AttachmentId) : AttachmentContentEvent
-
-    @JvmInline
-    value class OnAttachmentOpen(val attachmentId: AttachmentId) : AttachmentContentEvent
+sealed interface AttachmentOptionsEvent {
+    data object Open : AttachmentOptionsEvent
+    data object Save : AttachmentOptionsEvent
+    data object Rename : AttachmentOptionsEvent
+    data object Delete : AttachmentOptionsEvent
 }

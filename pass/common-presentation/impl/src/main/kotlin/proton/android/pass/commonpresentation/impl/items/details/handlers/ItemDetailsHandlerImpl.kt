@@ -52,7 +52,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
 
     override fun observeItemDetails(item: Item): Flow<ItemDetailState> = observeShare(item.shareId)
         .flatMapLatest { share ->
-            getItemDetailsObserver(item.itemType.category).observe(item, share)
+            getItemDetailsObserver(item.itemType.category).observe(share, item)
         }
         .catch { error ->
             if (error !is ItemNotFoundError) {

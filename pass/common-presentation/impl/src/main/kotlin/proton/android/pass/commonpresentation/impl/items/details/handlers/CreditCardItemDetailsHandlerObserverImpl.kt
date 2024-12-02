@@ -39,7 +39,7 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemDetailsHandlerObserver<ItemContents.CreditCard>() {
 
-    override fun observe(item: Item, share: Share): Flow<ItemDetailState> = observeCreditCardItemContents(item)
+    override fun observe(share: Share, item: Item): Flow<ItemDetailState> = observeCreditCardItemContents(item)
         .mapLatest { creditCardItemContents ->
             ItemDetailState.CreditCard(
                 itemContents = creditCardItemContents,

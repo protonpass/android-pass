@@ -33,7 +33,7 @@ import proton.android.pass.domain.Share
 
 abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
 
-    abstract fun observe(item: Item, share: Share): Flow<ItemDetailState>
+    abstract fun observe(share: Share, item: Item): Flow<ItemDetailState>
 
     abstract fun updateItemContents(
         itemContents: ITEM_CONTENTS,

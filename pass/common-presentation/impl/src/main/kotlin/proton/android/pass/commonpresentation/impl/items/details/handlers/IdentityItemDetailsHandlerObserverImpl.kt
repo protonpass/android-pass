@@ -39,7 +39,7 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemDetailsHandlerObserver<ItemContents.Identity>() {
 
-    override fun observe(item: Item, share: Share): Flow<ItemDetailState> = observeIdentityItemContents(item)
+    override fun observe(share: Share, item: Item): Flow<ItemDetailState> = observeIdentityItemContents(item)
         .mapLatest { identityItemContents ->
             ItemDetailState.Identity(
                 itemContents = identityItemContents,

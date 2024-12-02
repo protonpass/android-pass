@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,10 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.attachments.addattachment.navigation
+package proton.android.pass.features.attachments.filepicker.presentation
 
-sealed interface AddAttachmentNavigation {
-    data object CloseBottomsheet : AddAttachmentNavigation
-    data object OpenFilePicker : AddAttachmentNavigation
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import proton.android.pass.notifications.api.SnackbarDispatcher
+import javax.inject.Inject
+
+@HiltViewModel
+class FilePickerViewModel @Inject constructor(
+    private val snackbarDispatcher: SnackbarDispatcher
+) : ViewModel() {
+
+    fun onFilePickerError(message: FilePickerSnackbarMessage) = viewModelScope.launch {
+        snackbarDispatcher(message)
+    }
 }
-

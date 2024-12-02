@@ -336,6 +336,10 @@ fun NavGraphBuilder.autofillActivityGraph(
                 BaseLoginNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseLoginNavigation.TotpSuccess ->
                     appNavigator.navigateBackWithResult(it.results)
+
+                BaseLoginNavigation.AddAttachment -> {
+                    throw IllegalStateException("Cannot add attachment from autofill")
+                }
             }
         }
     )
@@ -383,6 +387,10 @@ fun NavGraphBuilder.autofillActivityGraph(
                         route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                     )
                 }
+
+                CreateAliasNavigation.AddAttachment -> {
+                    throw IllegalStateException("Cannot add attachment from autofill")
+                }
             }
         }
     )
@@ -401,6 +409,9 @@ fun NavGraphBuilder.autofillActivityGraph(
 
             BaseCreditCardNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
             is UpdateCreditCardNavigation -> {}
+            BaseCreditCardNavigation.AddAttachment -> {
+                throw IllegalStateException("Cannot add attachment from autofill")
+            }
         }
     }
     createIdentityGraph(
@@ -480,6 +491,10 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 is UpdateIdentityNavigation.IdentityUpdated -> {
                     // Updates cannot happen
+                }
+
+                BaseIdentityNavigation.AddAttachment -> {
+                    throw IllegalStateException("Cannot add attachment from autofill")
                 }
             }
         }

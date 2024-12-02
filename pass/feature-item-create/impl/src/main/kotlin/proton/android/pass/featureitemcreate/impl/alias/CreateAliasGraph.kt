@@ -100,6 +100,7 @@ sealed interface CreateAliasNavigation {
     data object Upgrade : CreateAliasNavigation
     data object Close : CreateAliasNavigation
     data object CloseBottomsheet : CreateAliasNavigation
+    data object AddAttachment : CreateAliasNavigation
 
     data class SelectVault(val shareId: ShareId) : CreateAliasNavigation
 }

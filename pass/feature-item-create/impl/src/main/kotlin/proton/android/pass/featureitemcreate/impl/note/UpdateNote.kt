@@ -36,6 +36,7 @@ import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.PerformActionAfterKeyboardHide
 
@@ -81,9 +82,24 @@ fun UpdateNote(
                     is NoteContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
                     is NoteContentUiEvent.OnVaultSelect -> {}
                     is NoteContentUiEvent.Submit -> viewModel.updateItem(event.shareId)
-                    is NoteContentUiEvent.OnAttachmentEvent -> {
-                        // handle attachment event
-                    }
+                    is NoteContentUiEvent.OnAttachmentEvent ->
+                        actionAfterKeyboardHide =
+                            {
+                                when (event.event) {
+                                    AttachmentContentEvent.OnAddAttachment ->
+                                        onNavigate(UpdateNoteNavigation.AddAttachment)
+
+                                    is AttachmentContentEvent.OnAttachmentOpen -> {
+
+                                    }
+                                    is AttachmentContentEvent.OnAttachmentOptions -> {
+
+                                    }
+                                    AttachmentContentEvent.OnDeleteAllAttachments -> {
+                                        // cannot delete all attachments in notes
+                                    }
+                                }
+                            }
                 }
             }
         )

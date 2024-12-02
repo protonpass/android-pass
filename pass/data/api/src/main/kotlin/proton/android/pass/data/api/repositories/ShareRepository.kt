@@ -28,7 +28,10 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.domain.shares.ShareMember
+<<<<<<< HEAD
 import proton.android.pass.domain.shares.SharePendingInvite
+=======
+>>>>>>> 6a5b7aa89e (feat: support shared item members visualization)
 
 interface ShareRepository {
     suspend fun createVault(userId: SessionUserId, vault: NewVault): Share
@@ -77,6 +80,7 @@ interface ShareRepository {
     ): Flow<List<ShareMember>>
 
     fun observeSharePendingInvites(userId: UserId, shareId: ShareId): Flow<List<SharePendingInvite>>
+
 }
 
 data class UpdateShareEvent(

@@ -379,7 +379,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     ): InviteRecommendationsResponse
 
     @GET("$PREFIX/share/{shareId}/user")
-    suspend fun getVaultMembers(@Path("shareId") shareId: String): GetShareMembersResponse
+    suspend fun getShareMembers(@Path("shareId") shareId: String): GetShareMembersResponse
 
     @GET("$PREFIX/share/{shareId}/invite")
     suspend fun getPendingInvitesForShare(@Path("shareId") shareId: String): GetSharePendingInvitesResponse

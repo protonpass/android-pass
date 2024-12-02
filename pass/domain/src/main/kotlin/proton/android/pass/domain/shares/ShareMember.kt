@@ -16,29 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sharing.manage.item.presentation
+package proton.android.pass.domain.shares
 
-import androidx.compose.runtime.Stable
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.domain.shares.ShareMember
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 
-@Stable
-internal data class ManageItemState(
-    internal val members: List<ShareMember>,
-    private val isLoadingState: IsLoadingState
-) {
-
-    internal val hasMembers = members.isNotEmpty()
-
-    internal val membersCount = members.size
-
-    internal companion object {
-
-        internal val Initial = ManageItemState(
-            members = emptyList(),
-            isLoadingState = IsLoadingState.NotLoading
-        )
-
-    }
-
-}
+data class ShareMember(
+    val email: String,
+    val shareId: ShareId,
+    val username: String,
+    val role: ShareRole?,
+    val isCurrentUser: Boolean,
+    val isOwner: Boolean
+)

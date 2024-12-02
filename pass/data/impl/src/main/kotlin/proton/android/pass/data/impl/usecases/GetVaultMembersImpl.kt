@@ -73,7 +73,7 @@ class GetVaultMembersImpl @Inject constructor(
         userEmail: String?
     ): List<VaultMember.Member> {
         val members = apiProvider.get<PasswordManagerApi>(userId)
-            .invoke { getVaultMembers(shareId.id) }
+            .invoke { getShareMembers(shareId.id) }
             .valueOrThrow
         return members.members.map { it.toDomain(userEmail) }
     }

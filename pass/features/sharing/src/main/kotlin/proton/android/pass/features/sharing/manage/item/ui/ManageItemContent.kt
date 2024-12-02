@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTopBarBackButtonType
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.manage.item.presentation.ManageItemState
@@ -48,8 +49,13 @@ internal fun ManageItemContent(
         Column(
             modifier = Modifier
                 .padding(paddingValues = innerPaddingValues)
+                .padding(horizontal = Spacing.medium)
         ) {
-
+            if (hasMembers) {
+                ManageItemMembersSection(
+                    members = members
+                )
+            }
         }
     }
 }

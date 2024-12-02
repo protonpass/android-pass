@@ -16,29 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sharing.manage.item.presentation
+package proton.android.pass.data.api.usecases.shares
 
-import androidx.compose.runtime.Stable
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import kotlinx.coroutines.flow.Flow
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.shares.ShareMember
 
-@Stable
-internal data class ManageItemState(
-    internal val members: List<ShareMember>,
-    private val isLoadingState: IsLoadingState
-) {
+interface ObserveShareMembers {
 
-    internal val hasMembers = members.isNotEmpty()
-
-    internal val membersCount = members.size
-
-    internal companion object {
-
-        internal val Initial = ManageItemState(
-            members = emptyList(),
-            isLoadingState = IsLoadingState.NotLoading
-        )
-
-    }
+    operator fun invoke(shareId: ShareId): Flow<List<ShareMember>>
 
 }

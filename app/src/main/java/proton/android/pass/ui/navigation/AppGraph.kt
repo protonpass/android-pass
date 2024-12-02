@@ -121,6 +121,7 @@ import proton.android.pass.features.alias.contacts.options.navigation.OptionsAli
 import proton.android.pass.features.attachments.AttachmentsNavigation
 import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavItem
 import proton.android.pass.features.attachments.attachmentsGraph
+import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavItem
 import proton.android.pass.features.auth.Auth
 import proton.android.pass.features.auth.AuthNavigation
 import proton.android.pass.features.auth.AuthOrigin
@@ -2194,6 +2195,9 @@ fun NavGraphBuilder.appGraph(
             AttachmentsNavigation.CloseBottomsheet -> dismissBottomSheet {
                 appNavigator.navigateBack(comesFromBottomsheet = true)
             }
+
+            AttachmentsNavigation.CloseScreen -> appNavigator.navigateBack()
+            AttachmentsNavigation.OpenFilePicker -> appNavigator.navigate(FilePickerNavItem)
         }
     }
 }

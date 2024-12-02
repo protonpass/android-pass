@@ -20,5 +20,6 @@ package proton.android.pass.features.attachments.addattachment.navigation
 
 sealed interface AddAttachmentNavigation {
     data object CloseBottomsheet : AddAttachmentNavigation
+    data object OpenFilePicker : AddAttachmentNavigation
 }
 

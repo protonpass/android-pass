@@ -39,7 +39,7 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemDetailsHandlerObserver<ItemContents.Note>() {
 
-    override fun observe(item: Item, share: Share): Flow<ItemDetailState> = observeNoteItemContents(item)
+    override fun observe(share: Share, item: Item): Flow<ItemDetailState> = observeNoteItemContents(item)
         .mapLatest { noteItemContents ->
             ItemDetailState.Note(
                 itemContents = noteItemContents,

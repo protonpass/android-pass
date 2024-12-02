@@ -49,4 +49,6 @@ sealed interface BaseIdentityNavigation {
     data object RemoveCustomSection : BaseIdentityNavigation
 
     data object AddExtraSection : BaseIdentityNavigation
+
+    data object AddAttachment : BaseIdentityNavigation
 }

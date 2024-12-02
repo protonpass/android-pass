@@ -35,6 +35,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.AddExtraSection
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.CustomFieldOptions
@@ -126,8 +127,18 @@ fun UpdateIdentityScreen(
                     is IdentityContentEvent.OnCustomFieldFocused ->
                         viewModel.onCustomFieldFocusChange(event.index, event.isFocused, event.customExtraField)
 
-                    is IdentityContentEvent.OnAttachmentEvent -> {
-                        // handle attachment event
+                    is IdentityContentEvent.OnAttachmentEvent -> when (event.event) {
+                        AttachmentContentEvent.OnAddAttachment ->
+                            onNavigate(BaseIdentityNavigation.AddAttachment)
+                        is AttachmentContentEvent.OnAttachmentOpen -> {
+                            // open attachment
+                        }
+                        is AttachmentContentEvent.OnAttachmentOptions -> {
+                            // show attachment options
+                        }
+                        AttachmentContentEvent.OnDeleteAllAttachments -> {
+                            // delete all attachments
+                        }
                     }
                 }
             }

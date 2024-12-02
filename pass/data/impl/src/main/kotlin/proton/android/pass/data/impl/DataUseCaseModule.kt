@@ -393,6 +393,7 @@ import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveShareImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveShareItemMembersImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveSharePendingInvitesImpl
+import proton.android.pass.data.impl.usecases.shares.ObserveShareMembersImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveSharesByTypeImpl
 import proton.android.pass.data.impl.usecases.simplelogin.CreateSimpleLoginAliasMailboxImpl
 import proton.android.pass.data.impl.usecases.simplelogin.DeleteSimpleLoginAliasMailboxImpl

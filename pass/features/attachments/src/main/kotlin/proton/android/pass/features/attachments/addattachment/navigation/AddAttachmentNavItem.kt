@@ -16,10 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.attachments.addattachment.ui
+package proton.android.pass.features.attachments.addattachment.navigation
 
-sealed interface AddAttachmentEvent {
-    data object TakeAPhoto : AddAttachmentEvent
-    data object ChooseAPhotoOrVideo : AddAttachmentEvent
-    data object ChooseAFile : AddAttachmentEvent
-}
+import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
+
+object AddAttachmentNavItem : NavItem(
+    baseRoute = "addattachment/bottomsheet",
+    navItemType = NavItemType.Bottomsheet
+)

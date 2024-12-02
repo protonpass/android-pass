@@ -16,8 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.attachments.attachmentoptions.navigation
+package proton.android.pass.features.attachments.addattachment.ui
 
-sealed interface AttachmentOptionsNavigation {
-    data object CloseBottomsheet : AttachmentOptionsNavigation
+sealed interface AddAttachmentEvent {
+    data object TakeAPhoto : AddAttachmentEvent
+    data object ChooseAPhotoOrVideo : AddAttachmentEvent
+    data object ChooseAFile : AddAttachmentEvent
 }

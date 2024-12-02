@@ -18,6 +18,7 @@ import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Close
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Upgrade
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
@@ -101,9 +102,20 @@ fun UpdateCreditCardScreen(
                                 viewModel.onTitleChange(event.value)
 
                             is CreditCardContentEvent.OnVaultSelect -> {}
-                            is CreditCardContentEvent.OnAttachmentEvent -> {
-                                // handle attachment events
-                            }
+                            is CreditCardContentEvent.OnAttachmentEvent ->
+                                when (event.event) {
+                                    AttachmentContentEvent.OnAddAttachment ->
+                                        onNavigate(BaseCreditCardNavigation.AddAttachment)
+                                    is AttachmentContentEvent.OnAttachmentOpen -> {
+                                        // open attachment
+                                    }
+                                    is AttachmentContentEvent.OnAttachmentOptions -> {
+                                        // show attachment options
+                                    }
+                                    AttachmentContentEvent.OnDeleteAllAttachments -> {
+                                        // delete all attachments
+                                    }
+                                }
                         }
                     }
                 )

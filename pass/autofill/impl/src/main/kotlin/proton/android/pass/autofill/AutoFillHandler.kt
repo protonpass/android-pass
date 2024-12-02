@@ -176,11 +176,10 @@ object AutoFillHandler {
         val responseBuilder = FillResponse.Builder()
         datasetList.forEach { responseBuilder.addDataset(it) }
 
-        val isBrowser = packageName.isBrowser()
         responseBuilder.addSaveInfo(
             cluster = assistInfo.cluster,
             currentClientState = request.clientState ?: Bundle(),
-            isBrowser = isBrowser,
+            packageName = packageName,
             autofillSessionId = request.id
         )
 

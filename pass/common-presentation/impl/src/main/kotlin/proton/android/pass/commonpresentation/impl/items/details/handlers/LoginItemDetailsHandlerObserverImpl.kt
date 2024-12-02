@@ -56,7 +56,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val totpManager: TotpManager
 ) : ItemDetailsHandlerObserver<ItemContents.Login>() {
 
-    override fun observe(item: Item, share: Share): Flow<ItemDetailState> = combine(
+    override fun observe(share: Share, item: Item): Flow<ItemDetailState> = combine(
         observeLoginItemContents(item),
         observePrimaryTotp(item),
         observeSecondaryTotps(item),

@@ -43,7 +43,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemDetailsHandlerObserver<ItemContents.Alias>() {
 
-    override fun observe(item: Item, share: Share): Flow<ItemDetailState> = combine(
+    override fun observe(share: Share, item: Item): Flow<ItemDetailState> = combine(
         observeAliasItemContents(item),
         observeAliasDetails(item.shareId, item.id).onStart { emit(AliasDetails.EMPTY) }
     ) { aliasItemContents, aliasDetails ->

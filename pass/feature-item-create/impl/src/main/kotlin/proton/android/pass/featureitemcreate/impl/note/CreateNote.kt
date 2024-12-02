@@ -41,6 +41,7 @@ import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareList
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.PerformActionAfterKeyboardHide
 
@@ -115,9 +116,24 @@ fun CreateNoteScreen(
 
                     is NoteContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
                     is NoteContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
-                    is NoteContentUiEvent.OnAttachmentEvent -> {
-                        // handle attachment event
-                    }
+                    is NoteContentUiEvent.OnAttachmentEvent ->
+                        actionAfterKeyboardHide =
+                            {
+                                when (event.event) {
+                                    AttachmentContentEvent.OnAddAttachment ->
+                                        onNavigate(CreateNoteNavigation.AddAttachment)
+
+                                    is AttachmentContentEvent.OnAttachmentOpen -> {
+
+                                    }
+                                    is AttachmentContentEvent.OnAttachmentOptions -> {
+
+                                    }
+                                    AttachmentContentEvent.OnDeleteAllAttachments -> {
+                                        // cannot delete all attachments in notes
+                                    }
+                                }
+                            }
                 }
             }
         )

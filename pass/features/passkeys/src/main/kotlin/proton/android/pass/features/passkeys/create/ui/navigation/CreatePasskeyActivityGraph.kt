@@ -259,6 +259,10 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 BaseLoginNavigation.TotpCancel -> appNavigator.navigateBack()
                 is BaseLoginNavigation.TotpSuccess ->
                     appNavigator.navigateBackWithResult(it.results)
+
+                BaseLoginNavigation.AddAttachment -> {
+                    throw IllegalStateException("Cannot add attachment from CreatePasskey")
+                }
             }
         }
     )
@@ -305,6 +309,10 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                         destination = SelectVaultBottomsheet,
                         route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                     )
+                }
+
+                CreateAliasNavigation.AddAttachment -> {
+                    throw IllegalStateException("Cannot add attachment from CreatePasskey")
                 }
             }
         }

@@ -41,6 +41,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.PerformActionAfterKeyboardHide
 
@@ -115,9 +116,20 @@ fun UpdateAlias(
                         showSLNoteInfoDialog = true
                     }
 
-                    is AliasContentUiEvent.OnAttachmentEvent -> {
-                        // handle attachment event
-                    }
+                    is AliasContentUiEvent.OnAttachmentEvent ->
+                        when (event.event) {
+                            AttachmentContentEvent.OnAddAttachment ->
+                                onNavigate(UpdateAliasNavigation.AddAttachment)
+                            is AttachmentContentEvent.OnAttachmentOpen -> {
+                                // open attachment
+                            }
+                            is AttachmentContentEvent.OnAttachmentOptions -> {
+                                // show attachment options
+                            }
+                            AttachmentContentEvent.OnDeleteAllAttachments -> {
+                                // delete all attachments
+                            }
+                        }
                 }
             }
         )

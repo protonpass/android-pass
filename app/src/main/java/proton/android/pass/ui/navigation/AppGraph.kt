@@ -1185,7 +1185,6 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 is ItemDetailNavigation.ManageItem -> {
-                    println("JIBIRI: ManageItem")
                     appNavigator.navigate(
                         destination = ManageItemNavItem,
                         route = ManageItemNavItem.createNavRoute(it.shareId),

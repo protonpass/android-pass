@@ -16,18 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.common.attachments
+package proton.android.pass.features.attachments.attachmentoptions.navigation
 
-import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 
-sealed interface AttachmentContentEvent {
-    data object OnAddAttachment : AttachmentContentEvent
-
-    data object OnDeleteAllAttachments : AttachmentContentEvent
-
-    @JvmInline
-    value class OnAttachmentOptions(val attachmentId: AttachmentId) : AttachmentContentEvent
-
-    @JvmInline
-    value class OnAttachmentOpen(val attachmentId: AttachmentId) : AttachmentContentEvent
-}
+data object AttachmentOptionsNavItem : NavItem(
+    baseRoute = "attachmentoptions/bottomsheet",
+    navItemType = NavItemType.Bottomsheet
+)

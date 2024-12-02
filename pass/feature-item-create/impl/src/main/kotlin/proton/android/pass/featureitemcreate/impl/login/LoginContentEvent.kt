@@ -26,7 +26,7 @@ import proton.android.pass.domain.tooltips.Tooltip
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
 
-internal sealed interface LoginContentEvent : AttachmentContentEvent {
+internal sealed interface LoginContentEvent {
 
     data object Up : LoginContentEvent
 

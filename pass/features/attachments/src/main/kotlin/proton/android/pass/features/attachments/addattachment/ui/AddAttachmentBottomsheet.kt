@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.attachments.addattachment.ui
+package proton.android.pass.features.attachments.addattachment.ui
 
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -26,11 +26,11 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
-import proton.android.pass.featureitemcreate.impl.attachments.addattachment.navigation.AddAttachmentNavigation
+import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavigation
 
 @Composable
-fun AttachmentOptionsBottomsheet(modifier: Modifier = Modifier, onNavigate: (AddAttachmentNavigation) -> Unit) {
-    AttachmentOptionsContent(
+fun AddAttachmentBottomsheet(modifier: Modifier = Modifier, onNavigate: (AddAttachmentNavigation) -> Unit) {
+    AddAttachmentContent(
         modifier = modifier.bottomSheet(),
         onEvent = {
             when (it) {
@@ -48,7 +48,7 @@ fun AttachmentOptionsBottomsheet(modifier: Modifier = Modifier, onNavigate: (Add
 fun AttachmentOptionsBottomsheetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            AttachmentOptionsBottomsheet(
+            AddAttachmentBottomsheet(
                 onNavigate = {}
             )
         }

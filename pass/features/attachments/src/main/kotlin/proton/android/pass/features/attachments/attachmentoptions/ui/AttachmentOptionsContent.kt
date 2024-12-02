@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.attachments.addattachment.ui
+package proton.android.pass.features.attachments.attachmentoptions.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,15 +27,17 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIco
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
-import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.features.attachments.R
 import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-fun AttachmentOptionsContent(modifier: Modifier = Modifier, onEvent: (AddAttachmentEvent) -> Unit) {
+fun AttachmentOptionsContent(modifier: Modifier = Modifier, onEvent: (AttachmentOptionsEvent) -> Unit) {
     val list = listOf(
-        takeAPhoto { AddAttachmentEvent.TakeAPhoto },
-        chooseAPhotoOrVideo { AddAttachmentEvent.ChooseAPhotoOrVideo },
-        chooseAFile { AddAttachmentEvent.ChooseAFile }
+        openFile { onEvent(AttachmentOptionsEvent.Open) },
+        saveFile { onEvent(AttachmentOptionsEvent.Save) },
+        renameFile { onEvent(AttachmentOptionsEvent.Rename) },
+        deleteFile { onEvent(AttachmentOptionsEvent.Delete) }
     ).withDividers().toPersistentList()
     BottomSheetItemList(
         modifier = modifier,
@@ -43,11 +45,11 @@ fun AttachmentOptionsContent(modifier: Modifier = Modifier, onEvent: (AddAttachm
     )
 }
 
-private fun takeAPhoto(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+private fun openFile(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = {
             BottomSheetItemTitle(
-                text = stringResource(R.string.add_attachment_take_a_photo)
+                text = stringResource(R.string.attachment_options_open)
             )
         }
     override val subtitle: (@Composable () -> Unit)?
@@ -55,7 +57,7 @@ private fun takeAPhoto(onClick: () -> Unit): BottomSheetItem = object : BottomSh
     override val leftIcon: @Composable () -> Unit
         get() = {
             BottomSheetItemIcon(
-                iconId = CoreR.drawable.ic_proton_camera
+                iconId = CoreR.drawable.ic_proton_eye
             )
         }
     override val endIcon: (@Composable () -> Unit)?
@@ -65,11 +67,11 @@ private fun takeAPhoto(onClick: () -> Unit): BottomSheetItem = object : BottomSh
     override val isDivider = false
 }
 
-private fun chooseAPhotoOrVideo(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+private fun saveFile(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = {
             BottomSheetItemTitle(
-                text = stringResource(R.string.add_attachment_choose_a_photo_or_video)
+                text = stringResource(R.string.attachment_options_save)
             )
         }
     override val subtitle: (@Composable () -> Unit)?
@@ -77,7 +79,7 @@ private fun chooseAPhotoOrVideo(onClick: () -> Unit): BottomSheetItem = object :
     override val leftIcon: @Composable () -> Unit
         get() = {
             BottomSheetItemIcon(
-                iconId = CoreR.drawable.ic_proton_image
+                iconId = CoreR.drawable.ic_proton_arrow_down_to_square
             )
         }
     override val endIcon: (@Composable () -> Unit)?
@@ -87,11 +89,11 @@ private fun chooseAPhotoOrVideo(onClick: () -> Unit): BottomSheetItem = object :
     override val isDivider = false
 }
 
-private fun chooseAFile(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+private fun renameFile(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = {
             BottomSheetItemTitle(
-                text = stringResource(R.string.add_attachment_choose_a_file)
+                text = stringResource(R.string.attachment_options_rename)
             )
         }
     override val subtitle: (@Composable () -> Unit)?
@@ -99,7 +101,29 @@ private fun chooseAFile(onClick: () -> Unit): BottomSheetItem = object : BottomS
     override val leftIcon: @Composable () -> Unit
         get() = {
             BottomSheetItemIcon(
-                iconId = CoreR.drawable.ic_proton_file
+                iconId = CompR.drawable.ic_text_style
+            )
+        }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = onClick
+    override val isDivider = false
+}
+
+private fun deleteFile(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            BottomSheetItemTitle(
+                text = stringResource(R.string.attachment_options_delete)
+            )
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: @Composable () -> Unit
+        get() = {
+            BottomSheetItemIcon(
+                iconId = CoreR.drawable.ic_proton_trash
             )
         }
     override val endIcon: (@Composable () -> Unit)?

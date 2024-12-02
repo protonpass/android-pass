@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.attachments.attachmentoptions.ui
+package proton.android.pass.features.attachments.attachmentoptions.ui
 
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -26,7 +26,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
-import proton.android.pass.featureitemcreate.impl.attachments.attachmentoptions.navigation.AttachmentOptionsNavigation
+import proton.android.pass.features.attachments.attachmentoptions.navigation.AttachmentOptionsNavigation
 
 @Composable
 fun AttachmentOptionsBottomsheet(modifier: Modifier = Modifier, onNavigate: (AttachmentOptionsNavigation) -> Unit) {

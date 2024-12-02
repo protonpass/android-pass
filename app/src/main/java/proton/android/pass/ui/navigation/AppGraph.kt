@@ -118,6 +118,9 @@ import proton.android.pass.features.alias.contacts.create.navigation.CreateAlias
 import proton.android.pass.features.alias.contacts.detail.navigation.DetailAliasContactNavItem
 import proton.android.pass.features.alias.contacts.onboarding.navigation.OnBoardingAliasContactNavItem
 import proton.android.pass.features.alias.contacts.options.navigation.OptionsAliasContactNavItem
+import proton.android.pass.features.attachments.AttachmentsNavigation
+import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavItem
+import proton.android.pass.features.attachments.attachmentsGraph
 import proton.android.pass.features.auth.Auth
 import proton.android.pass.features.auth.AuthNavigation
 import proton.android.pass.features.auth.AuthOrigin
@@ -889,6 +892,8 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 CreateNoteNavigation.NoteCreated -> appNavigator.navigateBack()
+                CreateNoteNavigation.AddAttachment ->
+                    appNavigator.navigate(AddAttachmentNavItem)
             }
         }
     )
@@ -2168,6 +2173,14 @@ fun NavGraphBuilder.appGraph(
             AccountRedirectsDestination.Upgrade -> {
                 onNavigate(AppNavigation.Upgrade)
                 appNavigator.navigateBackToStartDestination(force = true)
+            }
+        }
+    }
+
+    attachmentsGraph {
+        when (it) {
+            AttachmentsNavigation.CloseBottomsheet -> dismissBottomSheet {
+                appNavigator.navigateBack(comesFromBottomsheet = true)
             }
         }
     }

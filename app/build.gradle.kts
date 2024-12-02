@@ -456,6 +456,7 @@ dependencies {
     implementation(projects.pass.featureProfile.impl)
     implementation(projects.pass.features.settings)
     implementation(projects.pass.searchOptions.api)
+    implementation(projects.pass.features.attachments)
     implementation(projects.pass.features.searchOptions)
     implementation(projects.pass.features.password)
     implementation(projects.pass.features.selectItem)

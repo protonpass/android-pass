@@ -18,6 +18,8 @@
 
 package proton.android.pass.domain.shares
 
+import proton.android.pass.domain.ShareRole
+
 sealed interface SharePendingInvite {
 
     val email: String
@@ -27,7 +29,25 @@ sealed interface SharePendingInvite {
     ) : SharePendingInvite
 
     data class NewUser(
-        override val email: String
-    ) : SharePendingInvite
+        override val email: String,
+        val inviteState: InviteState,
+        val role: ShareRole
+    ) : SharePendingInvite {
+
+        enum class InviteState(val value: Int) {
+            PendingAccountCreation(value = 1),
+            PendingAcceptance(value = 2);
+
+            companion object {
+
+                fun fromValue(value: Int): InviteState = when (value) {
+                    PendingAccountCreation.value -> PendingAccountCreation
+                    PendingAcceptance.value -> PendingAcceptance
+                    else -> throw IllegalArgumentException("Unknown InviteState value: $value")
+                }
+
+            }
+        }
+    }
 
 }

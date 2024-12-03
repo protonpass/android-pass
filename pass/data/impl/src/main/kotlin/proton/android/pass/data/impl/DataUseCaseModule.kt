@@ -192,6 +192,7 @@ import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShareMembers
+import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
 import proton.android.pass.data.api.usecases.shares.ObserveSharesByType
 import proton.android.pass.data.api.usecases.simplelogin.CreateSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.DeleteSimpleLoginAliasMailbox
@@ -389,6 +390,7 @@ import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveShareImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveShareMembersImpl
+import proton.android.pass.data.impl.usecases.shares.ObserveSharePendingInvitesImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveSharesByTypeImpl
 import proton.android.pass.data.impl.usecases.simplelogin.CreateSimpleLoginAliasMailboxImpl
 import proton.android.pass.data.impl.usecases.simplelogin.DeleteSimpleLoginAliasMailboxImpl
@@ -1041,5 +1043,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindObserveShareMembers(impl: ObserveShareMembersImpl): ObserveShareMembers
+
+    @[Binds Singleton]
+    abstract fun bindObserveSharePendingMembers(impl: ObserveSharePendingInvitesImpl): ObserveSharePendingInvites
 
 }

@@ -20,24 +20,36 @@ package proton.android.pass.features.sharing.manage.item.presentation
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.shares.ShareMember
+import proton.android.pass.domain.shares.SharePendingInvite
 
 @Stable
-internal data class ManageItemState(
-    internal val members: List<ShareMember>,
-    private val isLoadingState: IsLoadingState
-) {
+internal sealed interface ManageItemState {
 
-    internal val hasMembers = members.isNotEmpty()
+    val event: ManageItemEvent
 
-    internal val membersCount = members.size
+    @Stable
+    data object Loading : ManageItemState {
 
-    internal companion object {
+        override val event: ManageItemEvent = ManageItemEvent.Idle
 
-        internal val Initial = ManageItemState(
-            members = emptyList(),
-            isLoadingState = IsLoadingState.NotLoading
-        )
+    }
+
+    @Stable
+    data class Success(
+        override val event: ManageItemEvent = ManageItemEvent.Idle,
+        internal val share: Share,
+        internal val members: List<ShareMember>,
+        internal val pendingInvites: List<SharePendingInvite>,
+        private val isLoadingState: IsLoadingState
+    ) : ManageItemState {
+
+        internal val hasMembers = members.isNotEmpty()
+
+        internal val hasPendingInvites = pendingInvites.isNotEmpty()
+
+        internal val isLoading = isLoadingState.value()
 
     }
 

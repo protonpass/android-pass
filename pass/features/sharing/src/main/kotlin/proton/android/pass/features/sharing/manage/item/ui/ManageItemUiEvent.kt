@@ -19,6 +19,7 @@
 package proton.android.pass.features.sharing.manage.item.ui
 
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.shares.SharePendingInvite
 
 internal sealed interface ManageItemUiEvent {
 
@@ -30,5 +31,10 @@ internal sealed interface ManageItemUiEvent {
     ) : ManageItemUiEvent
 
     data object OnLeaveShareClick : ManageItemUiEvent
+
+    data class OnPendingInviteOptionsClick(
+        internal val shareId: ShareId,
+        internal val pendingInvite: SharePendingInvite
+    ) : ManageItemUiEvent
 
 }

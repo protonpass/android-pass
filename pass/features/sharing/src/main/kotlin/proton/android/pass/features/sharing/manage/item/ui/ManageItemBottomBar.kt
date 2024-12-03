@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.sharing.manage.item.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -41,6 +42,7 @@ internal fun ManageItemBottomBar(
     Column(
         modifier = modifier
             .fillMaxWidth()
+            .background(color = PassTheme.colors.backgroundNorm)
             .padding(all = Spacing.medium),
         verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {

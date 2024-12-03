@@ -40,6 +40,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
+import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
@@ -70,12 +71,14 @@ class UpdateNoteViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
     metadataResolver: MetadataResolver,
+    attachmentRepository: AttachmentRepository,
     draftAttachmentRepository: DraftAttachmentRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseNoteViewModel(
     snackbarDispatcher = snackbarDispatcher,
     metadataResolver = metadataResolver,
+    attachmentRepository = attachmentRepository,
     draftAttachmentRepository = draftAttachmentRepository,
     featureFlagsRepository = featureFlagsRepository,
     savedStateHandleProvider = savedStateHandleProvider

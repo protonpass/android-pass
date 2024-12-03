@@ -34,6 +34,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.combineN
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
@@ -43,6 +44,7 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 
 abstract class BaseNoteViewModel(
     private val snackbarDispatcher: SnackbarDispatcher,
+    private val attachmentRepository: AttachmentRepository,
     private val draftAttachmentRepository: DraftAttachmentRepository,
     metadataResolver: MetadataResolver,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,

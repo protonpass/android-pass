@@ -37,12 +37,14 @@ interface RemoteAttachmentsDataSource {
         byteArray: ByteArray
     )
 
+    @Suppress("LongParameterList")
     suspend fun linkPendingFiles(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
         revision: Int,
-        files: Map<AttachmentId, AttachmentKey>
+        filesToAdd: Map<AttachmentId, AttachmentKey>,
+        filesToRemove: Set<AttachmentId>
     )
 
     suspend fun retrieveAllFiles(

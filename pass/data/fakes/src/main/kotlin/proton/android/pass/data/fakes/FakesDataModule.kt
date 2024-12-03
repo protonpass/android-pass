@@ -183,6 +183,7 @@ import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
+import proton.android.pass.data.api.usecases.shares.ObserveShareMembers
 import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
 import proton.android.pass.data.api.usecases.shares.ObserveSharesByType
 import proton.android.pass.data.api.usecases.simplelogin.CreateSimpleLoginAliasMailbox
@@ -363,7 +364,11 @@ import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinksCount
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
+<<<<<<< HEAD
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShareItemMembers
+=======
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveShareMembers
+>>>>>>> cf9320d276 (test: added missing fakes)
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveSharePendingInvites
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveSharesByType
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeCreateSimpleLoginAliasMailbox

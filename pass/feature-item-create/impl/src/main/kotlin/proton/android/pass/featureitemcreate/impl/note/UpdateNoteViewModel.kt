@@ -40,7 +40,9 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
+import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
@@ -67,9 +69,17 @@ class UpdateNoteViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
+    metadataResolver: MetadataResolver,
+    draftAttachmentRepository: DraftAttachmentRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
-) : BaseNoteViewModel(snackbarDispatcher, featureFlagsRepository, savedStateHandleProvider) {
+) : BaseNoteViewModel(
+    snackbarDispatcher = snackbarDispatcher,
+    metadataResolver = metadataResolver,
+    draftAttachmentRepository = draftAttachmentRepository,
+    featureFlagsRepository = featureFlagsRepository,
+    savedStateHandleProvider = savedStateHandleProvider
+) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.w(TAG, throwable)

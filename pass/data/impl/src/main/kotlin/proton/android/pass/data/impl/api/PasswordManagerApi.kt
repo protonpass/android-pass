@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
@@ -587,7 +588,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun uploadChunk(
         @Path("fileId") fileId: String,
         @Part("ChunkIndex") chunkIndex: RequestBody,
-        @Part("ChunkData") chunkData: RequestBody
+        @Part chunkData: MultipartBody.Part
     ): CodeOnlyResponse
 
     @POST("$PREFIX/file")

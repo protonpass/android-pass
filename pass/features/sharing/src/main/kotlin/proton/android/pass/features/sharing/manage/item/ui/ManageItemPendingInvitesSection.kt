@@ -18,44 +18,34 @@
 
 package proton.android.pass.features.sharing.manage.item.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.text.Text
-import proton.android.pass.domain.Share
-import proton.android.pass.domain.shares.ShareMember
+import proton.android.pass.domain.shares.SharePendingInvite
 import proton.android.pass.features.sharing.R
-import proton.android.pass.features.sharing.common.toShortSummary
 
 @Composable
-internal fun ManageItemMembersSection(
-    modifier: Modifier = Modifier,
-    share: Share,
-    members: List<ShareMember>
-) {
+internal fun ManageItemPendingInvitesSection(modifier: Modifier = Modifier, pendingInvites: List<SharePendingInvite>) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
         Text.Body2Medium(
             modifier = Modifier.padding(bottom = Spacing.small),
-            text = "${stringResource(R.string.sharing_member_count_header)} (${members.size})",
+            text = "${stringResource(R.string.share_manage_vault_invitations_title)} (${pendingInvites.size})",
             color = PassTheme.colors.textWeak
         )
 
@@ -65,14 +55,14 @@ internal fun ManageItemMembersSection(
                 .padding(vertical = Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
-            members.forEachIndexed { index, member ->
+            pendingInvites.forEachIndexed { index, pendingInvite ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     CircleTextIcon(
                         modifier = Modifier.padding(start = Spacing.medium),
-                        text = member.email,
+                        text = pendingInvite.email,
                         backgroundColor = PassTheme.colors.interactionNormMinor1,
                         textColor = PassTheme.colors.interactionNormMajor2,
                         shape = PassTheme.shapes.squircleMediumShape
@@ -85,48 +75,23 @@ internal fun ManageItemMembersSection(
                         verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
                     ) {
                         Text.Body2Regular(
-                            text = member.email
+                            text = pendingInvite.email
                         )
 
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
-                        ) {
-                            if (member.isCurrentUser) {
-                                Text.OverlineRegular(
-                                    modifier = Modifier
-                                        .clip(shape = RoundedCornerShape(size = Radius.medium))
-                                        .background(color = PassTheme.colors.interactionNormMajor2)
-                                        .padding(
-                                            horizontal = Spacing.small,
-                                            vertical = Spacing.extraSmall
-                                        ),
-                                    text = stringResource(id = R.string.share_manage_vault_current_user_indicator),
-                                    color = PassTheme.colors.textInvert
-                                )
-                            }
+                        Text.Body2Regular(
+                            text = stringResource(R.string.share_manage_vault_invite_pending),
+                            color = PassTheme.colors.textWeak
+                        )
+                    }
 
-                            Text.Body2Regular(
-                                text = if (member.isOwner) {
-                                    stringResource(id = R.string.share_role_owner)
-                                } else {
-                                    member.role.toShortSummary()
-                                },
-                                color = PassTheme.colors.textWeak
-                            )
+                    ThreeDotsMenuButton(
+                        onClick = {
+
                         }
-                    }
-
-                    if (share.isAdmin && !member.isOwner && !member.isCurrentUser) {
-                        ThreeDotsMenuButton(
-                            onClick = {
-
-                            }
-                        )
-                    }
+                    )
                 }
 
-                if (index < members.lastIndex) {
+                if (index < pendingInvites.lastIndex) {
                     PassDivider()
                 }
             }

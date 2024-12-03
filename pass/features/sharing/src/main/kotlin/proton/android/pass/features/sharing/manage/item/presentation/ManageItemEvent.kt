@@ -16,16 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain.shares
+package proton.android.pass.features.sharing.manage.item.presentation
 
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareRole
+internal sealed interface ManageItemEvent {
 
-data class ShareMember(
-    val email: String,
-    val shareId: ShareId,
-    val username: String,
-    val role: ShareRole,
-    val isCurrentUser: Boolean,
-    val isOwner: Boolean
-)
+    data object Idle : ManageItemEvent
+
+    data object OnShareLeaveSuccess : ManageItemEvent
+
+}

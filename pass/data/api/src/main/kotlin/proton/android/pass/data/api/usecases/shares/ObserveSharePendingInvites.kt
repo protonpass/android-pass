@@ -16,16 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain.shares
+package proton.android.pass.data.api.usecases.shares
 
+import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.shares.SharePendingInvite
 
-data class ShareMember(
-    val email: String,
-    val shareId: ShareId,
-    val username: String,
-    val role: ShareRole,
-    val isCurrentUser: Boolean,
-    val isOwner: Boolean
-)
+interface ObserveSharePendingInvites {
+
+    operator fun invoke(shareId: ShareId): Flow<List<SharePendingInvite>>
+
+}

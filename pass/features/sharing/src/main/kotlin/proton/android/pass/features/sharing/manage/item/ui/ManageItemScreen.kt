@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.shares.SharePendingInvite
 import proton.android.pass.features.sharing.SharingNavigation
 import proton.android.pass.features.sharing.manage.item.presentation.ManageItemEvent
 import proton.android.pass.features.sharing.manage.item.presentation.ManageItemViewModel
@@ -64,6 +65,24 @@ internal fun ManageItemScreen(
 
                 ManageItemUiEvent.OnLeaveShareClick -> {
                     onLeaveShare()
+                }
+
+                is ManageItemUiEvent.OnPendingInviteOptionsClick -> {
+                    when (uiEvent.pendingInvite) {
+                        is SharePendingInvite.ExistingUser -> {
+                            SharingNavigation.ExistingUserInviteOptions(
+                                shareId = uiEvent.shareId,
+                                inviteId = uiEvent.pendingInvite.inviteId
+                            )
+                        }
+
+                        is SharePendingInvite.NewUser -> {
+                            SharingNavigation.NewUserInviteOptions(
+                                shareId = uiEvent.shareId,
+                                inviteId = uiEvent.pendingInvite.inviteId
+                            )
+                        }
+                    }.also(onNavigateEvent)
                 }
             }
         }

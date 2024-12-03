@@ -63,7 +63,7 @@ abstract class BaseNoteViewModel(
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val draftAttachments = draftAttachmentRepository.observeAll()
-        .map { uris -> uris.mapNotNull(metadataResolver::extractMetadata) }
+        .map { uris -> uris.mapNotNull { metadataResolver.extractMetadata(it) } }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     val baseNoteUiState: StateFlow<BaseNoteUiState> = combineN(

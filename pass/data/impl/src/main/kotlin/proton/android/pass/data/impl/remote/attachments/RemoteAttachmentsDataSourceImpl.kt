@@ -32,6 +32,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.AttachmentKey
+import proton.android.pass.domain.attachments.PendingAttachmentId
 import javax.inject.Inject
 
 class RemoteAttachmentsDataSourceImpl @Inject constructor(
@@ -47,13 +48,13 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
 
     override suspend fun uploadPendingFile(
         userId: UserId,
-        attachmentId: AttachmentId,
+        pendingAttachmentId: PendingAttachmentId,
         byteArray: ByteArray
     ) {
         val chunkIndex = "0".toRequestBody("text/plain".toMediaTypeOrNull())
         val chunkData = byteArray.toRequestBody("application/octet-stream".toMediaTypeOrNull())
         api.get<PasswordManagerApi>(userId)
-            .invoke { uploadChunk(attachmentId.id, chunkIndex, chunkData) }
+            .invoke { uploadChunk(pendingAttachmentId.id, chunkIndex, chunkData) }
             .valueOrThrow
     }
 
@@ -62,13 +63,15 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         revision: Int,
-        files: Map<AttachmentId, AttachmentKey>
+        filesToAdd: Map<AttachmentId, AttachmentKey>,
+        filesToRemove: Set<AttachmentId>
     ) {
         val pendingFilesRequest = LinkPendingFilesRequest(
             revision = revision,
-            files = files.map { (id, key) ->
+            filesToAdd = filesToAdd.map { (id, key) ->
                 LinkPendingFileRequest(fileID = id.id, fileKey = key.value)
-            }
+            },
+            filesToRemove = filesToRemove.map { it.id }
         )
         api.get<PasswordManagerApi>(userId)
             .invoke { linkPendingFiles(shareId.id, itemId.id, pendingFilesRequest) }

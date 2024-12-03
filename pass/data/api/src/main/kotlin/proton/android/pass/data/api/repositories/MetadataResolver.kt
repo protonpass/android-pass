@@ -23,7 +23,7 @@ import proton.android.pass.domain.attachments.AttachmentType
 import java.net.URI
 
 interface MetadataResolver {
-    fun extractMetadata(uri: URI): FileMetadata?
+    suspend fun extractMetadata(uri: URI): FileMetadata?
 }
 
 data class FileMetadata(

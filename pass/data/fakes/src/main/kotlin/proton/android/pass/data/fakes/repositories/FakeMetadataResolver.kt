@@ -24,5 +24,5 @@ import java.net.URI
 import javax.inject.Inject
 
 class FakeMetadataResolver @Inject constructor() : MetadataResolver {
-    override fun extractMetadata(uri: URI): FileMetadata? = null
+    override suspend fun extractMetadata(uri: URI): FileMetadata? = null
 }

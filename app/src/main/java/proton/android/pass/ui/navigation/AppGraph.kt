@@ -2196,7 +2196,7 @@ fun NavGraphBuilder.appGraph(
                 appNavigator.navigateBack(comesFromBottomsheet = true)
             }
 
-            AttachmentsNavigation.CloseScreen -> appNavigator.navigateBack()
+            AttachmentsNavigation.CloseScreen -> appNavigator.navigateBack(force = true)
             AttachmentsNavigation.OpenFilePicker -> appNavigator.navigate(FilePickerNavItem)
         }
     }

@@ -18,17 +18,25 @@
 
 package proton.android.pass.features.attachments.filepicker.presentation
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import java.net.URI
 import javax.inject.Inject
 
 @HiltViewModel
 class FilePickerViewModel @Inject constructor(
+    private val draftAttachmentRepository: DraftAttachmentRepository,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
+
+    fun onFilePicked(uri: Uri) = viewModelScope.launch {
+        draftAttachmentRepository.add(URI.create(uri.toString()))
+    }
 
     fun onFilePickerError(message: FilePickerSnackbarMessage) = viewModelScope.launch {
         snackbarDispatcher(message)

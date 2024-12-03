@@ -22,8 +22,10 @@ import androidx.compose.runtime.Immutable
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.FileMetadata
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
+import java.net.URI
 
 @Immutable
 data class BaseNoteUiState(
@@ -32,7 +34,7 @@ data class BaseNoteUiState(
     val itemSavedState: ItemSavedState,
     val hasUserEditedContent: Boolean,
     val isFileAttachmentsEnabled: Boolean,
-    val draftAttachmentsList: List<FileMetadata>
+    val attachmentsUiState: AttachmentsUiState
 ) {
     companion object {
         val Initial = BaseNoteUiState(
@@ -41,7 +43,26 @@ data class BaseNoteUiState(
             itemSavedState = ItemSavedState.Unknown,
             hasUserEditedContent = false,
             isFileAttachmentsEnabled = false,
-            draftAttachmentsList = emptyList()
+            attachmentsUiState = AttachmentsUiState.Initial
+        )
+    }
+}
+
+@Immutable
+data class AttachmentsUiState(
+    val loadingAttachments: Set<URI>,
+    val draftAttachmentsList: List<FileMetadata>,
+    val attachmentsList: List<Attachment>
+) {
+
+    val hasAnyAttachment: Boolean
+        get() = draftAttachmentsList.isNotEmpty() || attachmentsList.isNotEmpty()
+
+    companion object {
+        val Initial = AttachmentsUiState(
+            loadingAttachments = emptySet(),
+            draftAttachmentsList = emptyList(),
+            attachmentsList = emptyList()
         )
     }
 }

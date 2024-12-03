@@ -16,42 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain.attachments
+package proton.android.pass.data.fakes.usecases.attachments
 
-import kotlinx.datetime.Instant
+import proton.android.pass.data.api.usecases.attachments.UploadAttachment
+import java.net.URI
+import javax.inject.Inject
+import javax.inject.Singleton
 
-@JvmInline
-value class AttachmentId(val id: String)
-
-@JvmInline
-value class AttachmentKey(val value: String)
-
-enum class AttachmentType {
-    RasterImage,
-    VectorImage,
-    Photo,
-    Video,
-    Audio,
-    Key,
-    Text,
-    Calendar,
-    Pdf,
-    Word,
-    PowerPoint,
-    Excel,
-    Document,
-    Unknown
+@Singleton
+class FakeUploadAttachment @Inject constructor() : UploadAttachment {
+    override suspend fun invoke(uri: URI) {
+        // no-op
+    }
 }
-
-data class Attachment(
-    val id: AttachmentId,
-    val name: String,
-    val mimeType: String,
-    val type: AttachmentType,
-    val size: Long,
-    val createTime: Instant,
-    val fileKey: AttachmentKey,
-    val itemKeyRotation: String,
-    val chunks: List<String>
-)
-

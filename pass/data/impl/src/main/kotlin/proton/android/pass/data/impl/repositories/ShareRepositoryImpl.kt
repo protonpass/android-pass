@@ -411,14 +411,17 @@ class ShareRepositoryImpl @Inject constructor(
                             SharePendingInvite.ActualUser(
                                 email = actualUserPendingInvite.invitedEmail
                             )
-
                         }
                         .also(::addAll)
 
                     sharePendingInviteResponse.newUserInvites
                         .map { newUserPendingInvite ->
                             SharePendingInvite.NewUser(
-                                email = newUserPendingInvite.invitedEmail
+                                email = newUserPendingInvite.invitedEmail,
+                                role = ShareRole.fromValue(newUserPendingInvite.shareRoleId),
+                                inviteState = SharePendingInvite.NewUser.InviteState.fromValue(
+                                    value = newUserPendingInvite.state
+                                )
                             )
                         }
                         .also(::addAll)

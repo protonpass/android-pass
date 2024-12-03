@@ -27,29 +27,58 @@ import androidx.lifecycle.viewmodel.compose.saveable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.runCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
+import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import java.net.URI
 
 abstract class BaseNoteViewModel(
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val attachmentRepository: AttachmentRepository,
+    private val uploadAttachment: UploadAttachment,
     private val draftAttachmentRepository: DraftAttachmentRepository,
     metadataResolver: MetadataResolver,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
+
+    init {
+        draftAttachmentRepository.observeAll()
+            .scan<Set<URI>, Set<URI>>(emptySet()) { previousUris, currentUris ->
+                currentUris - previousUris
+            }
+            .onEach { newUris: Set<URI> ->
+                newUris.forEach { uri ->
+                    viewModelScope.launch {
+                        isUploadingAttachment.update { it + uri }
+                        runCatching { uploadAttachment(uri) }
+                            .onError {
+                                PassLogger.w(TAG, "Could not upload attachment: $uri")
+                                PassLogger.w(TAG, it)
+                            }
+                        isUploadingAttachment.update { it - uri }
+                    }
+                }
+            }
+            .launchIn(viewModelScope)
+    }
 
     @OptIn(SavedStateHandleSaveableApi::class)
     protected var noteItemFormMutableState: NoteItemFormState by savedStateHandleProvider.get()
@@ -58,6 +87,7 @@ abstract class BaseNoteViewModel(
 
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
+    private val isUploadingAttachment: MutableStateFlow<Set<URI>> = MutableStateFlow(emptySet())
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
         MutableStateFlow(ItemSavedState.Unknown)
     protected val noteItemValidationErrorsState: MutableStateFlow<Set<NoteItemValidationErrors>> =
@@ -67,22 +97,33 @@ abstract class BaseNoteViewModel(
     private val draftAttachments = draftAttachmentRepository.observeAll()
         .map { uris -> uris.mapNotNull { metadataResolver.extractMetadata(it) } }
 
+    private val attachmentsFlow = combine(
+        isUploadingAttachment,
+        draftAttachments
+    ) { loadingAttachments, draftAttachmentsList ->
+        AttachmentsUiState(
+            loadingAttachments = loadingAttachments,
+            draftAttachmentsList = draftAttachmentsList,
+            attachmentsList = emptyList()
+        )
+    }
+
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     val baseNoteUiState: StateFlow<BaseNoteUiState> = combineN(
         noteItemValidationErrorsState,
         isLoadingState,
         isItemSavedState,
         hasUserEditedContentFlow,
-        draftAttachments,
+        attachmentsFlow,
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
-    ) { noteItemValidationErrors, isLoading, isItemSaved, hasUserEditedContent, draftAttachments,
+    ) { noteItemValidationErrors, isLoading, isItemSaved, hasUserEditedContent, attachmentsState,
         isFileAttachmentsEnabled ->
         BaseNoteUiState(
             errorList = noteItemValidationErrors,
             isLoadingState = isLoading,
             itemSavedState = isItemSaved,
             hasUserEditedContent = hasUserEditedContent,
-            draftAttachmentsList = draftAttachments,
+            attachmentsUiState = attachmentsState,
             isFileAttachmentsEnabled = isFileAttachmentsEnabled
         )
     }
@@ -117,5 +158,9 @@ abstract class BaseNoteViewModel(
     override fun onCleared() {
         super.onCleared()
         draftAttachmentRepository.clear()
+    }
+
+    companion object {
+        private const val TAG = "BaseNoteViewModel"
     }
 }

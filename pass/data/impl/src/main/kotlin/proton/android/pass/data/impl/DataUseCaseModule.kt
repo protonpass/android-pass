@@ -119,6 +119,7 @@ import proton.android.pass.data.api.usecases.aliascontact.DeleteAliasContact
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContact
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.data.api.usecases.aliascontact.UpdateBlockedAliasContact
+import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
@@ -313,6 +314,7 @@ import proton.android.pass.data.impl.usecases.aliascontact.ObserveAliasContactsI
 import proton.android.pass.data.impl.usecases.aliascontact.UpdateBlockedAliasContactImpl
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLink
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLinkImpl
+import proton.android.pass.data.impl.usecases.attachments.UploadAttachmentImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.MarkEmailBreachAsResolvedImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveAllBreachByUserIdImpl
@@ -1021,5 +1023,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindObserveSharesByType(impl: ObserveSharesByTypeImpl): ObserveSharesByType
+
+    @[Binds Singleton]
+    abstract fun bindUploadAttachment(impl: UploadAttachmentImpl): UploadAttachment
 
 }

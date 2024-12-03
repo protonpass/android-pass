@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.sharing.manage.item.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -26,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTopBarBackButtonType
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.loading.PassFullScreenLoading
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.manage.item.presentation.ManageItemState
@@ -34,27 +36,59 @@ import proton.android.pass.features.sharing.manage.item.presentation.ManageItemS
 internal fun ManageItemContent(
     modifier: Modifier,
     state: ManageItemState,
-    onEvent: (ManageItemUiEvent) -> Unit
-) = with(state) {
+    onUiEvent: (ManageItemUiEvent) -> Unit
+) {
     Scaffold(
         modifier = modifier,
         topBar = {
             PassExtendedTopBar(
                 backButton = PassTopBarBackButtonType.BackArrow,
                 title = stringResource(R.string.share_with_title),
-                onUpClick = { onEvent(ManageItemUiEvent.OnBackClick) }
+                onUpClick = { onUiEvent(ManageItemUiEvent.OnBackClick) }
             )
+        },
+        bottomBar = {
+            when (state) {
+                ManageItemState.Loading -> Unit
+                is ManageItemState.Success -> {
+                    ManageItemBottomBar(
+                        share = state.share,
+                        isLoading = state.isLoading,
+                        onUiEvent = onUiEvent
+                    )
+                }
+            }
         }
     ) { innerPaddingValues ->
-        Column(
-            modifier = Modifier
-                .padding(paddingValues = innerPaddingValues)
-                .padding(horizontal = Spacing.medium)
-        ) {
-            if (hasMembers) {
-                ManageItemMembersSection(
-                    members = members
-                )
+        when (state) {
+            ManageItemState.Loading -> {
+                PassFullScreenLoading()
+            }
+
+            is ManageItemState.Success -> {
+                Column(
+                    modifier = Modifier
+                        .padding(paddingValues = innerPaddingValues)
+                        .padding(
+                            start = Spacing.medium,
+                            top = Spacing.large,
+                            end = Spacing.medium
+                        ),
+                    verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+                ) {
+                    if (state.hasPendingInvites) {
+                        ManageItemPendingInvitesSection(
+                            pendingInvites = state.pendingInvites
+                        )
+                    }
+
+                    if (state.hasMembers) {
+                        ManageItemMembersSection(
+                            share = state.share,
+                            members = state.members
+                        )
+                    }
+                }
             }
         }
     }

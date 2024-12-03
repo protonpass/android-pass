@@ -72,12 +72,13 @@ import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.domain.key.ShareKey
 import proton.android.pass.domain.shares.ShareMember
+import proton.android.pass.domain.shares.SharePendingInvite
 import proton.android.pass.log.api.PassLogger
 import proton_pass_vault_v1.VaultV1
 import java.sql.Date
 import javax.inject.Inject
 
-@Suppress("TooManyFunctions")
+@Suppress("TooManyFunctions", "LargeClass")
 class ShareRepositoryImpl @Inject constructor(
     private val database: PassDatabase,
     private val userRepository: UserRepository,
@@ -378,23 +379,54 @@ class ShareRepositoryImpl @Inject constructor(
         return address
     }
 
-    override fun observeShareMembers(userId: UserId, shareId: ShareId): Flow<List<ShareMember>> = flow {
+    override fun observeShareMembers(
+        userId: UserId,
+        shareId: ShareId,
+        userEmail: String?
+    ): Flow<List<ShareMember>> = flow {
         remoteShareDataSource.getShareMembers(userId, shareId)
             .map { shareMemberResponse ->
                 ShareMember(
                     email = shareMemberResponse.userEmail,
                     shareId = ShareId(shareMemberResponse.shareId),
                     username = shareMemberResponse.userName,
-                    isCurrentUser = shareMemberResponse.userEmail.isNotEmpty(),
+                    isCurrentUser = shareMemberResponse.userEmail == userEmail,
                     isOwner = shareMemberResponse.owner ?: false,
-                    role = shareMemberResponse.shareRoleId?.let { shareRoleValue ->
-                        ShareRole.fromValue(shareRoleValue)
-                    }
+                    role = shareMemberResponse.shareRoleId
+                        ?.let(ShareRole::fromValue)
+                        ?: ShareRole.fromValue(ShareRole.SHARE_ROLE_READ)
                 )
             }
             .also { shareMembers ->
                 emit(shareMembers)
             }
+    }
+
+    override fun observeSharePendingMembers(userId: UserId, shareId: ShareId): Flow<List<SharePendingInvite>> = flow {
+        remoteShareDataSource.getSharePendingInvites(userId, shareId)
+            .let { sharePendingInviteResponse ->
+                buildList {
+                    sharePendingInviteResponse.invites
+                        .map { actualUserPendingInvite ->
+                            SharePendingInvite.ActualUser(
+                                email = actualUserPendingInvite.invitedEmail
+                            )
+
+                        }
+                        .also(::addAll)
+
+                    sharePendingInviteResponse.newUserInvites
+                        .map { newUserPendingInvite ->
+                            SharePendingInvite.NewUser(
+                                email = newUserPendingInvite.invitedEmail
+                            )
+                        }
+                        .also(::addAll)
+                }.also { sharePendingInvites ->
+                    emit(sharePendingInvites)
+                }
+            }
+
     }
 
     private suspend fun onShareResponseEntity(

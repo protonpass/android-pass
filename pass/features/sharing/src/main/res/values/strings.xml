@@ -51,13 +51,11 @@
     <string name="sharing_item_invitation_accept">Accept and view the item</string>
     <string name="sharing_item_leave">Leave</string>
 
-    <string name="sharing_snackbar_get_invite_error">Could not get invite</string>
     <string name="sharing_snackbar_invite_accepted">Invite accepted</string>
     <string name="sharing_snackbar_invite_accept_error">Error accepting the invite</string>
     <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
     <string name="sharing_snackbar_invite_rejected">Invite rejected</string>
     <string name="sharing_snackbar_invite_reject_error">Error rejecting the invite</string>
-    <string name="sharing_snackbar_vault_not_found">Vault could not be found</string>
     <string name="sharing_snackbar_invite_sent_success">Invitation sent</string>
     <string name="sharing_snackbar_invite_sent_error">Could not send invite</string>
     <string name="sharing_snackbar_get_vault_members_error">Could not get vault members</string>
@@ -65,6 +63,8 @@
     <string name="sharing_snackbar_change_permission_error">Could not change the permissions</string>
     <string name="sharing_snackbar_remove_member_success">Member removed from the vault</string>
     <string name="sharing_snackbar_remove_member_error">Could not remove from the vault</string>
+    <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
+    <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
 
     <string name="share_summary_title">Review and share</string>
     <string name="share_summary_vault">%s vault</string>

@@ -105,7 +105,8 @@ class TestObservePinnedItems @Inject constructor() : ObservePinnedItems {
                     createTime = now,
                     lastAutofillTime = None,
                     isPinned = false,
-                    flags = Flags(0)
+                    flags = Flags(0),
+                    shareCount = 0
                 )
             }
         }

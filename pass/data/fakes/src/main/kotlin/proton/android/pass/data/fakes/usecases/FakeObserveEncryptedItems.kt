@@ -127,7 +127,8 @@ class FakeObserveEncryptedItems @Inject constructor() : ObserveEncryptedItems {
                     createTime = now,
                     lastAutofillTime = None,
                     isPinned = false,
-                    flags = Flags(flags)
+                    flags = Flags(flags),
+                    shareCount = 0
                 )
             }
         }

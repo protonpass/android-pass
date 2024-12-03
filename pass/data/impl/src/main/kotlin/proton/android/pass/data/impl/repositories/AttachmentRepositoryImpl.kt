@@ -38,20 +38,24 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.AttachmentKey
-import proton.android.pass.domain.attachments.PendingAttachmentId
 import javax.inject.Inject
 
 class AttachmentRepositoryImpl @Inject constructor(
     private val remote: RemoteAttachmentsDataSource,
     private val fileTypeDetector: FileTypeDetector,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val fileEncryptionKeyRepository: FileKeyRepository
 ) : AttachmentRepository {
 
-    override suspend fun createPendingAttachment(userId: UserId, attachment: Attachment): PendingAttachmentId {
+    override suspend fun createPendingAttachment(
+        userId: UserId,
+        name: String,
+        mimeType: String
+    ): AttachmentId {
         val fileKey = EncryptionKey.generate()
         val fileMeta = fileMetadata {
-            name = attachment.name
-            mimeType = attachment.mimeType
+            this.name = name
+            this.mimeType = mimeType
         }
         val fileContents = fileMeta.toByteArray()
         val encryptedMetadata =
@@ -59,16 +63,22 @@ class AttachmentRepositoryImpl @Inject constructor(
                 encrypt(fileContents, EncryptionTag.FileKey)
             }
         val encodedMetadata = Base64.encodeBase64String(encryptedMetadata.array)
-        val id = remote.createPendingFile(userId, encodedMetadata)
-        return PendingAttachmentId(id)
+        val id = remote.createPendingFile(userId, encodedMetadata).let(::AttachmentId)
+        fileEncryptionKeyRepository.addMapping(id, fileKey)
+        return id
     }
 
     override suspend fun uploadPendingAttachment(
         userId: UserId,
-        pendingAttachmentId: PendingAttachmentId,
+        attachmentId: AttachmentId,
         byteArray: ByteArray
     ) {
-        remote.uploadPendingFile(userId, pendingAttachmentId, byteArray)
+        val fileKey = fileEncryptionKeyRepository.getEncryptionKey(attachmentId)
+            ?: throw IllegalStateException("No encryption key found for attachment $attachmentId")
+        val encryptedByteArray = encryptionContextProvider.withEncryptionContextSuspendable(fileKey) {
+            encrypt(byteArray, EncryptionTag.FileKey)
+        }
+        remote.uploadPendingFile(userId, attachmentId, encryptedByteArray)
     }
 
     override suspend fun linkPendingAttachments(

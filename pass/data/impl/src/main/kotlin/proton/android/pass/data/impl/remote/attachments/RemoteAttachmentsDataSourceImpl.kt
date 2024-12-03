@@ -18,10 +18,12 @@
 
 package proton.android.pass.data.impl.remote.attachments
 
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.attachments.CreatePendingFileRequest
@@ -32,7 +34,6 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.AttachmentKey
-import proton.android.pass.domain.attachments.PendingAttachmentId
 import javax.inject.Inject
 
 class RemoteAttachmentsDataSourceImpl @Inject constructor(
@@ -48,13 +49,17 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
 
     override suspend fun uploadPendingFile(
         userId: UserId,
-        pendingAttachmentId: PendingAttachmentId,
-        byteArray: ByteArray
+        attachmentId: AttachmentId,
+        encryptedByteArray: EncryptedByteArray
     ) {
         val chunkIndex = "0".toRequestBody("text/plain".toMediaTypeOrNull())
-        val chunkData = byteArray.toRequestBody("application/octet-stream".toMediaTypeOrNull())
+        val chunkDataPart = MultipartBody.Part.createFormData(
+            name = "ChunkData",
+            filename = "", // not used by the backend
+            body = encryptedByteArray.array.toRequestBody("application/octet-stream".toMediaTypeOrNull())
+        )
         api.get<PasswordManagerApi>(userId)
-            .invoke { uploadChunk(pendingAttachmentId.id, chunkIndex, chunkData) }
+            .invoke { uploadChunk(attachmentId.id, chunkIndex, chunkDataPart) }
             .valueOrThrow
     }
 

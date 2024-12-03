@@ -30,16 +30,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
-import proton.android.pass.data.api.repositories.FileMetadata
-import proton.android.pass.domain.attachments.Attachment
 
 @Composable
 internal fun CreateNoteItemForm(
     modifier: Modifier = Modifier,
     noteItemFormState: NoteItemFormState,
     isFileAttachmentsEnabled: Boolean,
-    attachmentList: List<Attachment>,
-    draftAttachmentsList: List<FileMetadata>,
+    attachmentsUiState: AttachmentsUiState,
     enabled: Boolean,
     onTitleRequiredError: Boolean,
     onEvent: (NoteContentUiEvent) -> Unit
@@ -58,8 +55,8 @@ internal fun CreateNoteItemForm(
             enabled = enabled,
             onValueChanged = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
         )
-        val shouldApplyWeight = remember(isFileAttachmentsEnabled, attachmentList) {
-            !isFileAttachmentsEnabled || attachmentList.isEmpty()
+        val shouldApplyWeight = remember(isFileAttachmentsEnabled, attachmentsUiState) {
+            !isFileAttachmentsEnabled || !attachmentsUiState.hasAnyAttachment
         }
         FullNoteSection(
             modifier = Modifier
@@ -73,8 +70,7 @@ internal fun CreateNoteItemForm(
         )
         if (isFileAttachmentsEnabled) {
             AttachmentList(
-                attachmentList = attachmentList,
-                draftAttachmentsList = draftAttachmentsList,
+                attachmentsUiState = attachmentsUiState,
                 onEvent = onEvent
             )
         }

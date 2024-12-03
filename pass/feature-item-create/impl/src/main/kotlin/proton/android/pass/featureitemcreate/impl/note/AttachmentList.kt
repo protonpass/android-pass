@@ -26,22 +26,19 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.attachments.AttachmentRow
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
-import proton.android.pass.data.api.repositories.FileMetadata
-import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
 
 @Composable
 fun AttachmentList(
     modifier: Modifier = Modifier,
-    attachmentList: List<Attachment>,
-    onEvent: (NoteContentUiEvent) -> Unit,
-    draftAttachmentsList: List<FileMetadata>
+    attachmentsUiState: AttachmentsUiState,
+    onEvent: (NoteContentUiEvent) -> Unit
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
-        attachmentList.forEach { attachment ->
+        attachmentsUiState.attachmentsList.forEach { attachment ->
             AttachmentRow(
                 modifier = Modifier
                     .roundedContainerNorm()
@@ -77,7 +74,7 @@ fun AttachmentList(
                 }
             )
         }
-        draftAttachmentsList.forEach { draftAttachment ->
+        attachmentsUiState.draftAttachmentsList.forEach { draftAttachment ->
             AttachmentRow(
                 modifier = Modifier
                     .roundedContainerNorm()

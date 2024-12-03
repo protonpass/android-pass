@@ -76,9 +76,10 @@ class AttachmentRepositoryImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         revision: Int,
-        attachments: Map<AttachmentId, AttachmentKey>
+        toLink: Map<AttachmentId, AttachmentKey>,
+        toUnlink: Set<AttachmentId>
     ) {
-        remote.linkPendingFiles(userId, shareId, itemId, revision, attachments)
+        remote.linkPendingFiles(userId, shareId, itemId, revision, toLink, toUnlink)
     }
 
     override fun observeAllAttachments(

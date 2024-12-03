@@ -34,7 +34,7 @@ import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.LeaveVault
+import proton.android.pass.data.api.usecases.LeaveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShareMembers
 import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
@@ -49,7 +49,7 @@ class ManageItemViewModel @Inject constructor(
     observeShare: ObserveShare,
     observeShareMembers: ObserveShareMembers,
     observeSharePendingInvites: ObserveSharePendingInvites,
-    private val leaveVault: LeaveVault
+    private val leaveShare: LeaveShare
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -91,7 +91,7 @@ class ManageItemViewModel @Inject constructor(
         viewModelScope.launch {
             isLoadingStateFlow.update { IsLoadingState.Loading }
 
-            runCatching { leaveVault(shareId) }
+            runCatching { leaveShare(shareId) }
                 .onFailure { error ->
                     PassLogger.w(TAG, "There was an error leaving item share")
                     PassLogger.w(TAG, error)

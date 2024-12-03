@@ -23,7 +23,9 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.OpenableColumns
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.commonrust.api.FileType
 import proton.android.pass.commonrust.api.FileTypeDetector
 import proton.android.pass.commonrust.api.MimeType
@@ -36,32 +38,35 @@ import javax.inject.Inject
 
 class MetadataResolverImpl @Inject constructor(
     @ApplicationContext private val context: Context,
+    private val appDispatchers: AppDispatchers,
     private val fileTypeDetector: FileTypeDetector
 ) : MetadataResolver {
 
-    override fun extractMetadata(uri: URI): FileMetadata? {
+    override suspend fun extractMetadata(uri: URI): FileMetadata? {
         if (!isValidUri(uri)) {
             PassLogger.w(TAG, "Invalid URI: $uri")
             return null
         }
 
         val contentUri = Uri.parse(uri.toString())
-        return runCatching {
-            context.contentResolver.query(contentUri, null, null, null, null)?.use { cursor ->
-                if (cursor.moveToFirst()) {
-                    extractMetadataFromCursor(cursor, contentUri)
-                } else {
-                    PassLogger.w(TAG, "Cursor is empty for URI: $uri")
-                    null
+        return withContext(appDispatchers.io) {
+            runCatching {
+                context.contentResolver.query(contentUri, null, null, null, null)?.use { cursor ->
+                    if (cursor.moveToFirst()) {
+                        extractMetadataFromCursor(cursor, contentUri)
+                    } else {
+                        PassLogger.w(TAG, "Cursor is empty for URI: $uri")
+                        null
+                    }
                 }
-            }
-        }.onFailure { e ->
-            PassLogger.w(TAG, "Failed to extract metadata for URI: $uri")
-            PassLogger.w(TAG, e)
-        }.getOrNull()
+            }.onFailure { e ->
+                PassLogger.w(TAG, "Failed to extract metadata for URI: $uri")
+                PassLogger.w(TAG, e)
+            }.getOrNull()
+        }
     }
 
-    private fun extractMetadataFromCursor(cursor: Cursor, contentUri: Uri): FileMetadata {
+    private suspend fun extractMetadataFromCursor(cursor: Cursor, contentUri: Uri): FileMetadata {
         val name = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME))
         val size = cursor.getLong(cursor.getColumnIndexOrThrow(OpenableColumns.SIZE))
         val mimeType = detectMimeType(contentUri) ?: throw IllegalStateException("MIME type is null")
@@ -94,25 +99,27 @@ class MetadataResolverImpl @Inject constructor(
         FileType.Unknown -> AttachmentType.Unknown
     }
 
-    private fun detectMimeType(contentUri: Uri): String? = runCatching {
-        context.contentResolver.openInputStream(contentUri)?.use { inputStream ->
-            val availableBytes = inputStream.available().coerceAtMost(200)
-            if (availableBytes > 0) {
-                val buffer = ByteArray(availableBytes)
-                val bytesRead = inputStream.read(buffer, 0, buffer.size)
-                if (bytesRead > 0) {
-                    fileTypeDetector.getMimeTypeFromBytes(buffer.copyOf(bytesRead)).value
+    private suspend fun detectMimeType(contentUri: Uri): String? = withContext(appDispatchers.io) {
+        runCatching {
+            context.contentResolver.openInputStream(contentUri)?.use { inputStream ->
+                val availableBytes = inputStream.available().coerceAtMost(200)
+                if (availableBytes > 0) {
+                    val buffer = ByteArray(availableBytes)
+                    val bytesRead = inputStream.read(buffer, 0, buffer.size)
+                    if (bytesRead > 0) {
+                        fileTypeDetector.getMimeTypeFromBytes(buffer.copyOf(bytesRead)).value
+                    } else {
+                        null
+                    }
                 } else {
                     null
                 }
-            } else {
-                null
             }
-        }
-    }.onFailure { e ->
-        PassLogger.w(TAG, "Failed to read bytes for MIME type detection")
-        PassLogger.w(TAG, e)
-    }.getOrNull()
+        }.onFailure { e ->
+            PassLogger.w(TAG, "Failed to read bytes for MIME type detection")
+            PassLogger.w(TAG, e)
+        }.getOrNull()
+    }
 
     private fun isValidUri(uri: URI): Boolean = runCatching {
         Uri.parse(uri.toString())

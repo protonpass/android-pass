@@ -21,9 +21,6 @@ package proton.android.pass.domain.attachments
 import kotlinx.datetime.Instant
 
 @JvmInline
-value class PendingAttachmentId(val id: String)
-
-@JvmInline
 value class AttachmentId(val id: String)
 
 @JvmInline

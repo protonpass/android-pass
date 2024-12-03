@@ -60,6 +60,8 @@ import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepositoryImpl
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepository
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepositoryImpl
+import proton.android.pass.data.impl.repositories.FileKeyRepository
+import proton.android.pass.data.impl.repositories.FileKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.InAppMessagesRepositoryImpl
 import proton.android.pass.data.impl.repositories.InviteRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemKeyRepository
@@ -182,5 +184,8 @@ abstract class DataRepositoryModule {
 
     @[Binds Singleton]
     abstract fun bindMetadataResolver(impl: MetadataResolverImpl): MetadataResolver
+
+    @[Binds Singleton]
+    abstract fun bindFileKeyRepository(impl: FileKeyRepositoryImpl): FileKeyRepository
 
 }

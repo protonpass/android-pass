@@ -37,12 +37,14 @@ interface AttachmentRepository {
         byteArray: ByteArray
     )
 
+    @Suppress("LongParameterList")
     suspend fun linkPendingAttachments(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
         revision: Int,
-        attachments: Map<AttachmentId, AttachmentKey>
+        toLink: Map<AttachmentId, AttachmentKey>,
+        toUnlink: Set<AttachmentId>
     )
 
     fun observeAllAttachments(

@@ -39,7 +39,11 @@ import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.common.toShortSummary
 
 @Composable
-internal fun ManageItemPendingInvitesSection(modifier: Modifier = Modifier, pendingInvites: List<SharePendingInvite>) {
+internal fun ManageItemPendingInvitesSection(
+    modifier: Modifier = Modifier,
+    pendingInvites: List<SharePendingInvite>,
+    onMenuOptionsClick: (SharePendingInvite) -> Unit
+) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
@@ -58,7 +62,7 @@ internal fun ManageItemPendingInvitesSection(modifier: Modifier = Modifier, pend
         ) {
             pendingInvites.forEachIndexed { index, pendingInvite ->
                 val subtitleText = when (pendingInvite) {
-                    is SharePendingInvite.ActualUser -> {
+                    is SharePendingInvite.ExistingUser -> {
                         stringResource(R.string.share_manage_vault_invite_pending)
                     }
 
@@ -104,9 +108,7 @@ internal fun ManageItemPendingInvitesSection(modifier: Modifier = Modifier, pend
                     }
 
                     ThreeDotsMenuButton(
-                        onClick = {
-
-                        }
+                        onClick = { onMenuOptionsClick(pendingInvite) }
                     )
                 }
 

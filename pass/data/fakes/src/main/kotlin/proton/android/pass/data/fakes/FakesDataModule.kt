@@ -180,6 +180,8 @@ import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.data.api.usecases.shares.ObserveShare
+import proton.android.pass.data.api.usecases.shares.ObserveShareMembers
+import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
 import proton.android.pass.data.api.usecases.shares.ObserveSharesByType
 import proton.android.pass.data.api.usecases.simplelogin.CreateSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.DeleteSimpleLoginAliasMailbox
@@ -357,6 +359,8 @@ import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinksCount
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveShareMembers
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveSharePendingInvites
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveSharesByType
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeCreateSimpleLoginAliasMailbox
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeDeleteSimpleLoginAliasMailbox
@@ -956,5 +960,11 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveItemAttachments(impl: FakeObserveItemAttachments): ObserveItemAttachments
+
+    @Binds
+    abstract fun bindObserveShareMembers(impl: FakeObserveShareMembers): ObserveShareMembers
+
+    @Binds
+    abstract fun bindObserveSharePendingInvites(impl: FakeObserveSharePendingInvites): ObserveSharePendingInvites
 
 }

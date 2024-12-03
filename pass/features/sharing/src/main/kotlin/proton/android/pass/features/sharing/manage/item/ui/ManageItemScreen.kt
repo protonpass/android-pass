@@ -84,6 +84,15 @@ internal fun ManageItemScreen(
                         }
                     }.also(onNavigateEvent)
                 }
+
+                is ManageItemUiEvent.OnMemberOptionsClick -> {
+                    SharingNavigation.MemberOptions(
+                        shareId = uiEvent.shareId,
+                        destShareId = uiEvent.member.shareId,
+                        memberRole = uiEvent.member.role,
+                        destEmail = uiEvent.member.email
+                    ).also(onNavigateEvent)
+                }
             }
         }
     )

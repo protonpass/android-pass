@@ -23,7 +23,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.domain.Vault
+import proton.android.pass.domain.Share
 
 @Stable
 internal data class EnteredEmailState(
@@ -45,7 +45,7 @@ internal enum class ErrorMessage {
 internal data class SharingWithUIState(
     val enteredEmails: ImmutableList<EnteredEmailState> = persistentListOf(),
     val selectedEmailIndex: Option<Int> = None,
-    val vault: Vault? = null,
+    val share: Share? = null,
     val event: SharingWithEvents = SharingWithEvents.Idle,
     val isLoading: Boolean = false,
     val showEditVault: Boolean = false,

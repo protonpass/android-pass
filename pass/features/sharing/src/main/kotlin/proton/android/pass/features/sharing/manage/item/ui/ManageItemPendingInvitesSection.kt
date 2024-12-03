@@ -36,6 +36,7 @@ import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.shares.SharePendingInvite
 import proton.android.pass.features.sharing.R
+import proton.android.pass.features.sharing.common.toShortSummary
 
 @Composable
 internal fun ManageItemPendingInvitesSection(modifier: Modifier = Modifier, pendingInvites: List<SharePendingInvite>) {
@@ -56,6 +57,24 @@ internal fun ManageItemPendingInvitesSection(modifier: Modifier = Modifier, pend
             verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
             pendingInvites.forEachIndexed { index, pendingInvite ->
+                val subtitleText = when (pendingInvite) {
+                    is SharePendingInvite.ActualUser -> {
+                        stringResource(R.string.share_manage_vault_invite_pending)
+                    }
+
+                    is SharePendingInvite.NewUser -> {
+                        when (pendingInvite.inviteState) {
+                            SharePendingInvite.NewUser.InviteState.PendingAccountCreation -> {
+                                stringResource(R.string.share_manage_vault_invite_pending_user_creation)
+                            }
+
+                            SharePendingInvite.NewUser.InviteState.PendingAcceptance -> {
+                                pendingInvite.role.toShortSummary()
+                            }
+                        }
+                    }
+                }
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -79,7 +98,7 @@ internal fun ManageItemPendingInvitesSection(modifier: Modifier = Modifier, pend
                         )
 
                         Text.Body2Regular(
-                            text = stringResource(R.string.share_manage_vault_invite_pending),
+                            text = subtitleText,
                             color = PassTheme.colors.textWeak
                         )
                     }

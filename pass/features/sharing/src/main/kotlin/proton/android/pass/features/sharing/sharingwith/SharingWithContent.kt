@@ -73,6 +73,7 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
+import proton.android.pass.domain.Share
 import proton.android.pass.features.sharing.R
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -162,11 +163,11 @@ internal fun SharingWithContent(
                 .onSizeChanged { parentHeight = with(density) { it.height.toDp() } },
             verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
-            if (state.showEditVault && state.vault != null) {
+            if (state.showEditVault && state.share is Share.Vault) {
                 CustomizeVault(
-                    vault = state.vault,
+                    vaultShare = state.share,
                     onClick = {
-                        onEvent(SharingWithUiEvent.OnEditVaultClick(shareId = state.vault.shareId))
+                        onEvent(SharingWithUiEvent.OnEditVaultClick(shareId = state.share.id))
                     }
                 )
             }

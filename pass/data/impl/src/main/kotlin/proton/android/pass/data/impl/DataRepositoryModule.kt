@@ -29,12 +29,14 @@ import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
+import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.LiveTelemetryRepository
+import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
 import proton.android.pass.data.api.repositories.ReportRepository
 import proton.android.pass.data.api.repositories.SearchEntryRepository
@@ -49,6 +51,7 @@ import proton.android.pass.data.impl.repositories.AssetLinkRepositoryImpl
 import proton.android.pass.data.impl.repositories.BreachRepositoryImpl
 import proton.android.pass.data.impl.repositories.BulkInviteRepositoryImpl
 import proton.android.pass.data.impl.repositories.BulkMoveToVaultRepositoryImpl
+import proton.android.pass.data.impl.repositories.DraftAttachmentRepositoryImpl
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.repositories.EventRepositoryImpl
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
@@ -62,6 +65,7 @@ import proton.android.pass.data.impl.repositories.ItemKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemSyncStatusRepositoryImpl
 import proton.android.pass.data.impl.repositories.LiveTelemetryRepositoryImpl
+import proton.android.pass.data.impl.repositories.MetadataResolverImpl
 import proton.android.pass.data.impl.repositories.OnMemoryDraftRepository
 import proton.android.pass.data.impl.repositories.OrganizationSettingsRepositoryImpl
 import proton.android.pass.data.impl.repositories.PlanRepository
@@ -167,5 +171,11 @@ abstract class DataRepositoryModule {
 
     @[Binds Singleton]
     abstract fun bindInAppMessagesRepository(impl: InAppMessagesRepositoryImpl): InAppMessagesRepository
+
+    @[Binds Singleton]
+    abstract fun bindDraftAttachmentRepository(impl: DraftAttachmentRepositoryImpl): DraftAttachmentRepository
+
+    @[Binds Singleton]
+    abstract fun bindMetadataResolver(impl: MetadataResolverImpl): MetadataResolver
 
 }

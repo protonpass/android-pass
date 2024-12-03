@@ -49,6 +49,7 @@
     <string name="sharing_item_invitation_title">Shared item invitation</string>
     <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
     <string name="sharing_item_invitation_accept">Accept and view the item</string>
+    <string name="sharing_item_leave">Leave</string>
 
     <string name="sharing_snackbar_get_invite_error">Could not get invite</string>
     <string name="sharing_snackbar_invite_accepted">Invite accepted</string>

@@ -18,8 +18,17 @@
 
 package proton.android.pass.features.sharing.manage.item.ui
 
+import proton.android.pass.domain.ShareId
+
 internal sealed interface ManageItemUiEvent {
 
     data object OnBackClick : ManageItemUiEvent
+
+    data class OnInviteShareClick(
+        internal val shareId: ShareId,
+        internal val targetId: String
+    ) : ManageItemUiEvent
+
+    data object OnLeaveShareClick : ManageItemUiEvent
 
 }

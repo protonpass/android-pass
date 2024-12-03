@@ -24,13 +24,22 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.LeaveVault
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShareMembers
+import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import javax.inject.Inject
 
@@ -38,23 +47,67 @@ import javax.inject.Inject
 class ManageItemViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeShare: ObserveShare,
-    observeShareMembers: ObserveShareMembers
+    observeShareMembers: ObserveShareMembers,
+    observeSharePendingInvites: ObserveSharePendingInvites,
+    private val leaveVault: LeaveVault
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
         .require<String>(CommonNavArgId.ShareId.key)
         .let(::ShareId)
 
+    private val eventFlow = MutableStateFlow<ManageItemEvent>(ManageItemEvent.Idle)
+
+    private val shareFlow = oneShot { observeShare(shareId).first() }
+
+    private val sharePendingInvitesFlow = shareFlow.flatMapLatest { share ->
+        if (share.isAdmin) {
+            observeSharePendingInvites(shareId)
+        } else {
+            flowOf(emptyList())
+        }
+    }
+
     private val isLoadingStateFlow = MutableStateFlow<IsLoadingState>(IsLoadingState.NotLoading)
 
     internal val stateFlow = combine(
+        eventFlow,
+        shareFlow,
         observeShareMembers(shareId),
+        sharePendingInvitesFlow,
         isLoadingStateFlow,
-        ::ManageItemState
+        ManageItemState::Success
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = ManageItemState.Initial
+        initialValue = ManageItemState.Loading
     )
+
+    internal fun onConsumeEvent(event: ManageItemEvent) {
+        eventFlow.compareAndSet(event, ManageItemEvent.Idle)
+    }
+
+    internal fun onLeaveShare() {
+        viewModelScope.launch {
+            isLoadingStateFlow.update { IsLoadingState.Loading }
+
+            runCatching { leaveVault(shareId) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "There was an error leaving item share")
+                    PassLogger.w(TAG, error)
+                }
+                .onSuccess {
+                    eventFlow.update { ManageItemEvent.OnShareLeaveSuccess }
+                }
+
+            isLoadingStateFlow.update { IsLoadingState.NotLoading }
+        }
+    }
+
+    private companion object {
+
+        private const val TAG = "ManageItemViewModel"
+
+    }
 
 }

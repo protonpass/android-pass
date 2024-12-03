@@ -45,16 +45,21 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
+import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
+import proton.android.pass.domain.SharePermission
+import proton.android.pass.domain.SharePermissionFlag
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.VaultId
 import java.util.Date
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun CustomizeVault(
+internal fun CustomizeVault(
     modifier: Modifier = Modifier,
-    vault: Vault,
+    vaultShare: Share.Vault,
     onClick: () -> Unit
 ) {
     Row(
@@ -65,13 +70,13 @@ fun CustomizeVault(
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
         VaultIcon(
-            backgroundColor = vault.color.toColor(isBackground = true),
-            iconColor = vault.color.toColor(isBackground = false),
-            icon = vault.icon.toResource()
+            backgroundColor = vaultShare.color.toColor(isBackground = true),
+            iconColor = vaultShare.color.toColor(isBackground = false),
+            icon = vaultShare.icon.toResource()
         )
 
         Text(
-            text = vault.name,
+            text = vaultShare.name,
             style = ProtonTheme.typography.defaultSmallNorm,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
@@ -92,18 +97,30 @@ fun CustomizeVault(
     }
 }
 
-@Preview
-@Composable
-fun CustomizeVaultPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+@[Preview Composable]
+internal fun CustomizeVaultPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             CustomizeVault(
-                vault = Vault(
+                vaultShare = Share.Vault(
                     userId = UserId(id = ""),
-                    shareId = ShareId("1234"),
+                    id = ShareId("1234"),
                     vaultId = VaultId("123"),
                     name = "Vault name",
-                    createTime = Date()
+                    createTime = Date(),
+                    targetId = "target-id",
+                    permission = SharePermission.fromFlags(listOf(SharePermissionFlag.Admin)),
+                    expirationTime = null,
+                    shareRole = ShareRole.Admin,
+                    color = ShareColor.Color1,
+                    icon = ShareIcon.Icon1,
+                    isOwner = true,
+                    memberCount = 1,
+                    shared = false,
+                    maxMembers = 11,
+                    pendingInvites = 0,
+                    newUserInvitesReady = 0,
+                    canAutofill = true
                 ),
                 onClick = {}
             )

@@ -56,8 +56,8 @@ import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.usecases.CanAddressesBeInvitedResult
 import proton.android.pass.data.api.usecases.CheckCanAddressesBeInvited
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
-import proton.android.pass.data.api.usecases.ObserveVaultById
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.OrganizationShareMode
@@ -73,7 +73,7 @@ class SharingWithViewModel @Inject constructor(
     private val emailValidator: EmailValidator,
     private val bulkInviteRepository: BulkInviteRepository,
     private val checkCanAddressesBeInvited: CheckCanAddressesBeInvited,
-    observeVaultById: ObserveVaultById,
+    observeShare: ObserveShare,
     observeInviteRecommendations: ObserveInviteRecommendations,
     observeOrganizationSettings: ObserveOrganizationSettings,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -156,7 +156,7 @@ class SharingWithViewModel @Inject constructor(
 
     internal val stateFlow: StateFlow<SharingWithUIState> = combineN(
         enteredEmailsState,
-        observeVaultById(shareId = shareId),
+        observeShare(shareId = shareId),
         isLoadingState,
         eventState,
         suggestionsUIStateFlow,
@@ -165,9 +165,8 @@ class SharingWithViewModel @Inject constructor(
         continueEnabledFlow,
         organizationSettingsFlow,
         errorMessageFlow
-    ) { emails, vault, isLoading, event, suggestionsUiState, selectedEmailIndex,
+    ) { emails, share, isLoading, event, suggestionsUiState, selectedEmailIndex,
         scrollToBottom, continueEnabled, organizationSettingsResult, errorMessage ->
-        val vaultValue = vault.value()
 
         val canOnlyPickFromSelection =
             organizationSettingsResult.map { organizationSettingsOption ->
@@ -185,8 +184,8 @@ class SharingWithViewModel @Inject constructor(
         SharingWithUIState(
             enteredEmails = emails.toPersistentList(),
             selectedEmailIndex = selectedEmailIndex,
-            vault = vaultValue,
-            isLoading = isLoading.value() || vaultValue == null,
+            share = share,
+            isLoading = isLoading.value(),
             event = event,
             showEditVault = showEditVault,
             suggestionsUIState = suggestionsUiState,

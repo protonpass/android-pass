@@ -131,7 +131,8 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                     createTime = now,
                     lastAutofillTime = None,
                     isPinned = false,
-                    flags = Flags(flags)
+                    flags = Flags(flags),
+                    shareCount = 0
                 )
             }
         }

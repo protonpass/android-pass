@@ -46,8 +46,8 @@ fun NotificationResponse.toDomain(userId: UserId): InAppMessage = InAppMessage(
     state = InAppMessageStatus.fromValue(this.state),
     priority = this.priority,
     range = InAppMessageRange(
-        start = Instant.fromEpochMilliseconds(this.startTime),
-        end = this.endTime?.let(Instant.Companion::fromEpochMilliseconds).toOption()
+        start = Instant.fromEpochSeconds(this.startTime),
+        end = this.endTime?.let(Instant.Companion::fromEpochSeconds).toOption()
     )
 )
 

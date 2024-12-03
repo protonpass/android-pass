@@ -78,7 +78,13 @@ internal fun ManageItemContent(
                 ) {
                     if (state.hasPendingInvites) {
                         ManageItemPendingInvitesSection(
-                            pendingInvites = state.pendingInvites
+                            pendingInvites = state.pendingInvites,
+                            onMenuOptionsClick = { pendingInvite ->
+                                ManageItemUiEvent.OnPendingInviteOptionsClick(
+                                    shareId = state.share.id,
+                                    pendingInvite = pendingInvite
+                                ).also(onUiEvent)
+                            }
                         )
                     }
 

@@ -63,6 +63,8 @@ import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.data.impl.util.TimeUtil.toDate
+import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.NewUserInviteId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SharePermission
@@ -408,8 +410,9 @@ class ShareRepositoryImpl @Inject constructor(
                 buildList {
                     sharePendingInviteResponse.invites
                         .map { actualUserPendingInvite ->
-                            SharePendingInvite.ActualUser(
-                                email = actualUserPendingInvite.invitedEmail
+                            SharePendingInvite.ExistingUser(
+                                email = actualUserPendingInvite.invitedEmail,
+                                inviteId = InviteId(actualUserPendingInvite.inviteId)
                             )
                         }
                         .also(::addAll)
@@ -418,6 +421,7 @@ class ShareRepositoryImpl @Inject constructor(
                         .map { newUserPendingInvite ->
                             SharePendingInvite.NewUser(
                                 email = newUserPendingInvite.invitedEmail,
+                                inviteId = NewUserInviteId(newUserPendingInvite.newUserInviteId),
                                 role = ShareRole.fromValue(newUserPendingInvite.shareRoleId),
                                 inviteState = SharePendingInvite.NewUser.InviteState.fromValue(
                                     value = newUserPendingInvite.state

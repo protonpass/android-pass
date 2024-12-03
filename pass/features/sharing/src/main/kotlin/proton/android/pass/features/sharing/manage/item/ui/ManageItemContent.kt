@@ -91,7 +91,13 @@ internal fun ManageItemContent(
                     if (state.hasMembers) {
                         ManageItemMembersSection(
                             share = state.share,
-                            members = state.members
+                            members = state.members,
+                            onMenuOptionsClick = { member ->
+                                ManageItemUiEvent.OnMemberOptionsClick(
+                                    shareId = state.share.id,
+                                    member = member
+                                ).also(onUiEvent)
+                            }
                         )
                     }
                 }

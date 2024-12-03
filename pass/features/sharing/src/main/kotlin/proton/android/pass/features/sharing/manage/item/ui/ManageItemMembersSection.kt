@@ -47,7 +47,8 @@ import proton.android.pass.features.sharing.common.toShortSummary
 internal fun ManageItemMembersSection(
     modifier: Modifier = Modifier,
     share: Share,
-    members: List<ShareMember>
+    members: List<ShareMember>,
+    onMenuOptionsClick: (ShareMember) -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -119,9 +120,7 @@ internal fun ManageItemMembersSection(
 
                     if (share.isAdmin && !member.isOwner && !member.isCurrentUser) {
                         ThreeDotsMenuButton(
-                            onClick = {
-
-                            }
+                            onClick = { onMenuOptionsClick(member) }
                         )
                     }
                 }

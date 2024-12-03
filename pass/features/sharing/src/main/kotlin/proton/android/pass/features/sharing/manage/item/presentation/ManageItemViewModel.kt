@@ -23,6 +23,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
@@ -39,8 +41,10 @@ import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShareMembers
 import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
 import proton.android.pass.domain.ShareId
+import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
@@ -49,6 +53,7 @@ class ManageItemViewModel @Inject constructor(
     observeShare: ObserveShare,
     observeShareMembers: ObserveShareMembers,
     observeSharePendingInvites: ObserveSharePendingInvites,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val leaveShare: LeaveShare
 ) : ViewModel() {
 
@@ -60,20 +65,39 @@ class ManageItemViewModel @Inject constructor(
 
     private val shareFlow = oneShot { observeShare(shareId).first() }
 
-    private val sharePendingInvitesFlow = shareFlow.flatMapLatest { share ->
-        if (share.isAdmin) {
-            observeSharePendingInvites(shareId)
-        } else {
-            flowOf(emptyList())
+    private val shareMembersFlow = observeShareMembers(shareId)
+        .catch { error ->
+            PassLogger.w(TAG, "There was an error observing share members")
+            PassLogger.w(TAG, error)
+
+            snackbarDispatcher(SharingSnackbarMessage.FetchMembersError)
+            eventFlow.update { ManageItemEvent.OnShareManagementError }
+            emit(emptyList())
         }
-    }
+
+    private val sharePendingInvitesFlow = shareFlow
+        .flatMapLatest { share ->
+            if (share.isAdmin) {
+                observeSharePendingInvites(shareId)
+            } else {
+                flowOf(emptyList())
+            }
+        }
+        .catch { error ->
+            PassLogger.w(TAG, "There was an error observing share pending invites")
+            PassLogger.w(TAG, error)
+
+            snackbarDispatcher(SharingSnackbarMessage.FetchPendingInvitesError)
+            eventFlow.update { ManageItemEvent.OnShareManagementError }
+            emit(emptyList())
+        }
 
     private val isLoadingStateFlow = MutableStateFlow<IsLoadingState>(IsLoadingState.NotLoading)
 
-    internal val stateFlow = combine(
+    internal val stateFlow: StateFlow<ManageItemState> = combine(
         eventFlow,
         shareFlow,
-        observeShareMembers(shareId),
+        shareMembersFlow,
         sharePendingInvitesFlow,
         isLoadingStateFlow,
         ManageItemState::Success

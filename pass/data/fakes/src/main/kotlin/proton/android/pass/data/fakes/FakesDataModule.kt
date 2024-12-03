@@ -27,11 +27,13 @@ import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
+import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.InAppMessagesRepository
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
@@ -196,7 +198,9 @@ import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareI
 import proton.android.pass.data.api.work.WorkerLauncher
 import proton.android.pass.data.fakes.repositories.FakeAliasRepository
 import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
+import proton.android.pass.data.fakes.repositories.FakeDraftAttachmentRepository
 import proton.android.pass.data.fakes.repositories.FakeInAppMessagesRepository
+import proton.android.pass.data.fakes.repositories.FakeMetadataResolver
 import proton.android.pass.data.fakes.repositories.FakeSentinelRepository
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
@@ -925,6 +929,12 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveInvite(impl: FakeObserveInvite): ObserveInvite
+
+    @Binds
+    abstract fun bindDraftAttachmentRepository(impl: FakeDraftAttachmentRepository): DraftAttachmentRepository
+
+    @Binds
+    abstract fun bindMetadataResolver(impl: FakeMetadataResolver): MetadataResolver
 
     @Binds
     abstract fun bindObserveShare(impl: FakeObserveShare): ObserveShare

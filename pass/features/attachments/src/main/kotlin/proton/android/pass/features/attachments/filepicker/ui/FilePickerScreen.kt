@@ -37,6 +37,8 @@ fun FilePickerScreen(onNavigate: (FilePickerNavigation) -> Unit, viewmodel: File
             viewmodel.onFilePickerError(CouldNotSelectFile)
             onNavigate(FilePickerNavigation.Close)
         }
+        viewmodel.onFilePicked(uri)
+        onNavigate(FilePickerNavigation.Close)
     }
     LaunchedEffect(Unit) {
         runCatching {

@@ -69,7 +69,7 @@ import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.GetVaultMembers
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.InviteToVault
-import proton.android.pass.data.api.usecases.LeaveVault
+import proton.android.pass.data.api.usecases.LeaveShare
 import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveAddressesByUserId
@@ -261,7 +261,7 @@ import proton.android.pass.data.fakes.usecases.TestGetVaultMembers
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestInviteToVault
 import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
-import proton.android.pass.data.fakes.usecases.TestLeaveVault
+import proton.android.pass.data.fakes.usecases.TestLeaveShare
 import proton.android.pass.data.fakes.usecases.TestMigrateItems
 import proton.android.pass.data.fakes.usecases.TestMigrateVault
 import proton.android.pass.data.fakes.usecases.TestObserveAliasDetails
@@ -580,7 +580,7 @@ abstract class FakesDataModule {
     abstract fun bindRejectInvite(impl: TestRejectInvite): RejectInvite
 
     @Binds
-    abstract fun bindLeaveVault(impl: TestLeaveVault): LeaveVault
+    abstract fun bindLeaveVault(impl: TestLeaveShare): LeaveShare
 
     @Binds
     abstract fun bindCanShareVault(impl: TestCanShareVault): CanShareVault

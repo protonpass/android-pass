@@ -16,29 +16,24 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases
+package proton.android.pass.data.impl.usecases
 
-import proton.android.pass.data.api.usecases.LeaveVault
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.LeaveShare
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class TestLeaveVault @Inject constructor() : LeaveVault {
-
-    private var result: Result<Unit> = Result.success(Unit)
-
-    private val memory: MutableList<ShareId> = mutableListOf()
-
-    fun getMemory(): List<ShareId> = memory
-
-    fun setResult(value: Result<Unit>) {
-        result = value
-    }
+class LeaveShareImpl @Inject constructor(
+    private val accountManager: AccountManager,
+    private val shareRepository: ShareRepository
+) : LeaveShare {
 
     override suspend fun invoke(shareId: ShareId) {
-        memory.add(shareId)
-        result.getOrThrow()
+        val userId = accountManager.getPrimaryUserId().filterNotNull().first()
+        shareRepository.leaveVault(userId, shareId)
     }
 
 }

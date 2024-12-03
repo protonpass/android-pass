@@ -30,12 +30,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
-import proton.android.pass.composecomponents.impl.attachments.AttachmentRow
-import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.data.api.repositories.FileMetadata
 import proton.android.pass.domain.attachments.Attachment
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOpen
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOptions
-import proton.android.pass.featureitemcreate.impl.note.NoteContentUiEvent.OnAttachmentEvent
 
 @Composable
 internal fun CreateNoteItemForm(
@@ -43,6 +39,7 @@ internal fun CreateNoteItemForm(
     noteItemFormState: NoteItemFormState,
     isFileAttachmentsEnabled: Boolean,
     attachmentList: List<Attachment>,
+    draftAttachmentsList: List<FileMetadata>,
     enabled: Boolean,
     onTitleRequiredError: Boolean,
     onEvent: (NoteContentUiEvent) -> Unit
@@ -75,32 +72,11 @@ internal fun CreateNoteItemForm(
             onChange = { onEvent(NoteContentUiEvent.OnNoteChange(it)) }
         )
         if (isFileAttachmentsEnabled) {
-            Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
-                attachmentList.forEach { attachment ->
-                    AttachmentRow(
-                        modifier = Modifier
-                            .roundedContainerNorm()
-                            .padding(
-                                start = Spacing.medium,
-                                top = Spacing.small,
-                                end = Spacing.none,
-                                bottom = Spacing.small
-                            ),
-                        filename = attachment.name,
-                        attachmentType = attachment.type,
-                        size = attachment.size,
-                        createTime = attachment.createTime,
-                        isLoading = false,
-                        isEnabled = true,
-                        onOptionsClick = {
-                            onEvent(OnAttachmentEvent(OnAttachmentOptions(attachment.id)))
-                        },
-                        onAttachmentOpen = {
-                            onEvent(OnAttachmentEvent(OnAttachmentOpen(attachment.id)))
-                        }
-                    )
-                }
-            }
+            AttachmentList(
+                attachmentList = attachmentList,
+                draftAttachmentsList = draftAttachmentsList,
+                onEvent = onEvent
+            )
         }
     }
 }

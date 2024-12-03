@@ -46,7 +46,9 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
@@ -79,9 +81,17 @@ class CreateNoteViewModel @Inject constructor(
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
+    metadataResolver: MetadataResolver,
+    draftAttachmentRepository: DraftAttachmentRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
-) : BaseNoteViewModel(snackbarDispatcher, featureFlagsRepository, savedStateHandleProvider) {
+) : BaseNoteViewModel(
+    snackbarDispatcher = snackbarDispatcher,
+    metadataResolver = metadataResolver,
+    draftAttachmentRepository = draftAttachmentRepository,
+    featureFlagsRepository = featureFlagsRepository,
+    savedStateHandleProvider = savedStateHandleProvider
+) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.w(TAG, throwable)

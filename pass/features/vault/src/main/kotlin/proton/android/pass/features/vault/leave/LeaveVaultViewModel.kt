@@ -36,7 +36,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.GetVaultByShareId
-import proton.android.pass.data.api.usecases.LeaveVault
+import proton.android.pass.data.api.usecases.LeaveShare
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.vault.VaultSnackbarMessage
@@ -47,7 +47,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LeaveVaultViewModel @Inject constructor(
-    private val leaveVault: LeaveVault,
+    private val leaveShare: LeaveShare,
     private val snackbarDispatcher: SnackbarDispatcher,
     getVaultByShareId: GetVaultByShareId,
     savedStateHandle: SavedStateHandleProvider
@@ -94,7 +94,7 @@ class LeaveVaultViewModel @Inject constructor(
 
     fun onLeave() = viewModelScope.launch {
         isLoadingState.update { IsLoadingState.Loading }
-        runCatching { leaveVault.invoke(shareId) }
+        runCatching { leaveShare.invoke(shareId) }
             .onSuccess {
                 snackbarDispatcher(VaultSnackbarMessage.LeaveVaultSuccess)
                 eventFlow.update { LeaveVaultEvent.Left }

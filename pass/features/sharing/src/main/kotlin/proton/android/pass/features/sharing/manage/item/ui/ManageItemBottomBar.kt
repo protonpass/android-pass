@@ -49,7 +49,6 @@ internal fun ManageItemBottomBar(
                 backgroundColor = PassTheme.colors.interactionNormMajor2,
                 text = stringResource(id = R.string.share_manage_vault_share_with_more_people),
                 textColor = PassTheme.colors.interactionNormContrast,
-                isLoading = isLoading,
                 onClick = {
                     ManageItemUiEvent.OnInviteShareClick(
                         shareId = share.id,

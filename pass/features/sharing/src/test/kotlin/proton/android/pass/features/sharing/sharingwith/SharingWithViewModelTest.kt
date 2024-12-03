@@ -27,7 +27,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.some
 import proton.android.pass.commonrust.fakes.TestEmailValidator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.repositories.AddressPermission
@@ -36,7 +35,7 @@ import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.TestCheckAddressesCanBeInvited
 import proton.android.pass.data.fakes.usecases.TestObserveOrganizationSettings
-import proton.android.pass.data.fakes.usecases.TestObserveVaultById
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.InviteRecommendations
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
@@ -44,12 +43,12 @@ import proton.android.pass.features.sharing.ShowEditVaultArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.TestVault
+import proton.android.pass.test.domain.TestShare
 
 class SharingWithViewModelTest {
 
     private lateinit var viewModel: SharingWithViewModel
-    private lateinit var observeVaultById: TestObserveVaultById
+    private lateinit var observeShare: FakeObserveShare
     private lateinit var emailValidator: TestEmailValidator
     private lateinit var observeInviteRecommendations: FakeObserveInviteRecommendations
     private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
@@ -59,10 +58,9 @@ class SharingWithViewModelTest {
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
 
-
     @Before
     fun setUp() {
-        observeVaultById = TestObserveVaultById()
+        observeShare = FakeObserveShare()
         emailValidator = TestEmailValidator()
         observeInviteRecommendations = FakeObserveInviteRecommendations()
         bulkInviteRepository = TestBulkInviteRepository()
@@ -73,7 +71,7 @@ class SharingWithViewModelTest {
             get()[CommonOptionalNavArgId.ItemId.key] = null
         }
         viewModel = SharingWithViewModel(
-            observeVaultById = observeVaultById,
+            observeShare = observeShare,
             savedStateHandleProvider = savedStateHandleProvider,
             emailValidator = emailValidator,
             observeInviteRecommendations = observeInviteRecommendations,
@@ -81,6 +79,8 @@ class SharingWithViewModelTest {
             observeOrganizationSettings = TestObserveOrganizationSettings(),
             checkCanAddressesBeInvited = checkAddressesCanBeInvited
         )
+
+        observeShare.emitValue(TestShare.random())
     }
 
     @Test
@@ -143,17 +143,15 @@ class SharingWithViewModelTest {
         val invitedEmail = "myemail@proton.me"
         checkAddressesCanBeInvited.setAddressCanBeInvited(invitedEmail)
 
-        val testVault = TestVault.create(
-            shareId = ShareId(id = SHARE_ID)
-        )
-        observeVaultById.emitValue(testVault.some())
+        val vaultShare = TestShare.Vault.create(id = SHARE_ID)
+        observeShare.emitValue(vaultShare)
         viewModel.onEmailChange(invitedEmail)
 
         viewModel.onEmailSubmit()
         viewModel.onContinueClick()
         viewModel.stateFlow.test {
             val currentState = awaitItem()
-            assertThat(currentState.vault).isEqualTo(testVault)
+            assertThat(currentState.share).isEqualTo(vaultShare)
             assertThat(currentState.errorMessage == ErrorMessage.EmailNotValid).isFalse()
             assertThat(currentState.event).isEqualTo(
                 SharingWithEvents.NavigateToPermissions(

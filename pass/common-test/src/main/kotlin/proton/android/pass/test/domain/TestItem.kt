@@ -66,7 +66,8 @@ object TestItem {
             createTime = now,
             lastAutofillTime = None,
             isPinned = false,
-            flags = Flags(0)
+            flags = Flags(0),
+            shareCount = 0
         )
     }
 
@@ -113,7 +114,8 @@ object TestItem {
             lastAutofillTime = lastAutofillTime?.let { Instant.fromEpochMilliseconds(it) }
                 .toOption(),
             isPinned = Random.nextBoolean(),
-            flags = Flags(Random.nextInt())
+            flags = Flags(Random.nextInt()),
+            shareCount = Random.nextInt()
         )
     }
 }

@@ -19,11 +19,14 @@
 package proton.android.pass.features.sharing.manage.item.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.domain.ItemId
 import proton.android.pass.features.sharing.SharingNavigation
+import proton.android.pass.features.sharing.manage.item.presentation.ManageItemEvent
 import proton.android.pass.features.sharing.manage.item.presentation.ManageItemViewModel
 
 @Composable
@@ -34,13 +37,33 @@ internal fun ManageItemScreen(
 ) = with(viewModel) {
     val state by stateFlow.collectAsStateWithLifecycle()
 
+    LaunchedEffect(state.event) {
+        when (state.event) {
+            ManageItemEvent.Idle -> Unit
+            ManageItemEvent.OnShareLeaveSuccess -> onNavigateEvent(SharingNavigation.BackToHome)
+        }
+
+        onConsumeEvent(state.event)
+    }
+
     ManageItemContent(
         modifier = modifier,
         state = state,
-        onEvent = { uiEvent ->
+        onUiEvent = { uiEvent ->
             when (uiEvent) {
                 ManageItemUiEvent.OnBackClick -> {
                     onNavigateEvent(SharingNavigation.Back)
+                }
+
+                is ManageItemUiEvent.OnInviteShareClick -> {
+                    SharingNavigation.ShareItem(
+                        shareId = uiEvent.shareId,
+                        itemId = ItemId(id = uiEvent.targetId)
+                    ).also(onNavigateEvent)
+                }
+
+                ManageItemUiEvent.OnLeaveShareClick -> {
+                    onLeaveShare()
                 }
             }
         }

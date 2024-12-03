@@ -131,4 +131,7 @@ sealed class Share {
     val canBeUpdated: Boolean
         get() = shareRole.toPermissions().canUpdate()
 
+    val isAdmin: Boolean
+        get() = permission.hasFlag(SharePermissionFlag.Admin)
+
 }

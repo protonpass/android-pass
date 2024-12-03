@@ -34,7 +34,11 @@ class ObserveShareMembersImpl @Inject constructor(
 
     override fun invoke(shareId: ShareId): Flow<List<ShareMember>> = observeCurrentUser()
         .flatMapLatest { user ->
-            shareRepository.observeShareMembers(user.userId, shareId)
+            shareRepository.observeShareMembers(
+                userId = user.userId,
+                shareId = shareId,
+                userEmail = user.email
+            )
         }
 
 }

@@ -25,8 +25,10 @@ import kotlinx.serialization.Serializable
 data class LinkPendingFilesRequest(
     @SerialName("ItemRevision")
     val revision: Int,
-    @SerialName("Files")
-    val files: List<LinkPendingFileRequest>
+    @SerialName("FilesToAdd")
+    val filesToAdd: List<LinkPendingFileRequest>,
+    @SerialName("FilesToRemove")
+    val filesToRemove: List<String>
 )
 
 @Serializable

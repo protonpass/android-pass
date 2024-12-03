@@ -16,10 +16,29 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.fakes.usecases
 
+import proton.android.pass.data.api.usecases.LeaveShare
 import proton.android.pass.domain.ShareId
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface LeaveVault {
-    suspend operator fun invoke(shareId: ShareId)
+@Singleton
+class TestLeaveShare @Inject constructor() : LeaveShare {
+
+    private var result: Result<Unit> = Result.success(Unit)
+
+    private val memory: MutableList<ShareId> = mutableListOf()
+
+    fun getMemory(): List<ShareId> = memory
+
+    fun setResult(value: Result<Unit>) {
+        result = value
+    }
+
+    override suspend fun invoke(shareId: ShareId) {
+        memory.add(shareId)
+        result.getOrThrow()
+    }
+
 }

@@ -41,6 +41,7 @@ internal fun ManageItemScreen(
     LaunchedEffect(state.event) {
         when (state.event) {
             ManageItemEvent.Idle -> Unit
+            ManageItemEvent.OnShareManagementError -> onNavigateEvent(SharingNavigation.Back)
             ManageItemEvent.OnShareLeaveSuccess -> onNavigateEvent(SharingNavigation.BackToHome)
         }
 

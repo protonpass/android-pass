@@ -27,7 +27,6 @@ enum class SharingSnackbarMessage(
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
-    GetInviteError(R.string.sharing_snackbar_get_invite_error, SnackbarType.SUCCESS),
     InviteAccepted(R.string.sharing_snackbar_invite_accepted, SnackbarType.SUCCESS),
     InviteAcceptError(R.string.sharing_snackbar_invite_accept_error, SnackbarType.ERROR),
     InviteAcceptErrorCannotCreateMoreVaults(
@@ -36,7 +35,6 @@ enum class SharingSnackbarMessage(
     ),
     InviteRejected(R.string.sharing_snackbar_invite_rejected, SnackbarType.SUCCESS),
     InviteRejectError(R.string.sharing_snackbar_invite_reject_error, SnackbarType.ERROR),
-    VaultNotFound(R.string.sharing_snackbar_vault_not_found, SnackbarType.ERROR),
     InviteSentSuccess(R.string.sharing_snackbar_invite_sent_success, SnackbarType.SUCCESS),
     InviteSentError(R.string.sharing_snackbar_invite_sent_error, SnackbarType.ERROR),
     GetMembersInfoError(R.string.sharing_snackbar_get_vault_members_error, SnackbarType.ERROR),
@@ -54,7 +52,15 @@ enum class SharingSnackbarMessage(
     ConfirmInviteSuccess(R.string.sharing_snackbar_confirm_invite_success, SnackbarType.NORM),
     ConfirmInviteError(R.string.sharing_snackbar_confirm_invite_error, SnackbarType.ERROR),
 
-
     TransferOwnershipSuccess(R.string.sharing_snackbar_transfer_ownership_success, SnackbarType.NORM),
-    TransferOwnershipError(R.string.sharing_snackbar_transfer_ownership_error, SnackbarType.ERROR)
+    TransferOwnershipError(R.string.sharing_snackbar_transfer_ownership_error, SnackbarType.ERROR),
+
+    FetchMembersError(
+        id = R.string.sharing_snackbar_fetch_member_error,
+        type = SnackbarType.ERROR
+    ),
+    FetchPendingInvitesError(
+        id = R.string.sharing_snackbar_fetch_pending_invites_error,
+        type = SnackbarType.ERROR
+    )
 }

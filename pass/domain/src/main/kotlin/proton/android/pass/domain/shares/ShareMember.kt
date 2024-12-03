@@ -25,7 +25,7 @@ data class ShareMember(
     val email: String,
     val shareId: ShareId,
     val username: String,
-    val role: ShareRole?,
+    val role: ShareRole,
     val isCurrentUser: Boolean,
     val isOwner: Boolean
 )

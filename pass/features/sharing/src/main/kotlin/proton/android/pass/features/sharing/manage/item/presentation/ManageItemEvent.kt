@@ -22,6 +22,8 @@ internal sealed interface ManageItemEvent {
 
     data object Idle : ManageItemEvent
 
+    data object OnShareManagementError : ManageItemEvent
+
     data object OnShareLeaveSuccess : ManageItemEvent
 
 }

@@ -49,7 +49,8 @@ internal fun ItemDetailsContent(
                 itemDetailState = itemDetailState,
                 itemColors = itemColors,
                 shouldDisplayItemHistorySection = true,
-                shouldDisplayItemHistoryButton = hasPaidPlan,
+                shouldDisplayItemHistoryButton = isHistoryEnabled,
+                shouldDisplayFileAttachments = isFileAttachmentsEnabled,
                 topBar = {
                     ItemDetailsTopBar(
                         isLoading = false,

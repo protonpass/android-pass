@@ -35,10 +35,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
@@ -56,10 +58,11 @@ fun NoteContent(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     vault: Vault?,
-    onVaultClick: () -> Unit,
     isPinned: Boolean,
-    onViewItemHistoryClicked: () -> Unit,
-    isHistoryFeatureEnabled: Boolean
+    isHistoryFeatureEnabled: Boolean,
+    isFileAttachmentsEnabled: Boolean,
+    onVaultClick: () -> Unit,
+    onViewItemHistoryClicked: () -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.Note
 
@@ -96,6 +99,19 @@ fun NoteContent(
             )
         }
 
+        if (isFileAttachmentsEnabled) {
+            AttachmentSection(
+                files = emptyList(),
+                isDetail = true,
+                colors = passItemColors(ItemCategory.Note),
+                loadingFile = None,
+                onAttachmentOptions = {},
+                onAttachmentOpen = {},
+                onAddAttachment = {},
+                onTrashAll = {}
+            )
+        }
+
         PassItemDetailsHistorySection(
             lastAutofillAtOption = itemUiModel.lastAutofillTime.toOption(),
             revision = itemUiModel.revision,
@@ -126,7 +142,8 @@ fun NoteContentPreview(@PreviewParameter(ThemeItemTitleProvider::class) input: P
                 onVaultClick = {},
                 isPinned = params.isPinned,
                 onViewItemHistoryClicked = {},
-                isHistoryFeatureEnabled = params.isHistoryFeatureEnabled
+                isHistoryFeatureEnabled = false,
+                isFileAttachmentsEnabled = false
             )
         }
     }

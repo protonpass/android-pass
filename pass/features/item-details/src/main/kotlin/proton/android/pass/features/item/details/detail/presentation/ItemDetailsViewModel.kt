@@ -21,6 +21,7 @@ package proton.android.pass.features.item.details.detail.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -35,7 +36,6 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -46,18 +46,22 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class ItemDetailsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     getItemActions: GetItemActions,
-    observeUserPlan: GetUserPlan,
+    getUserPlan: GetUserPlan,
     observeItemById: ObserveItemById,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val itemDetailsHandler: ItemDetailsHandler
 ) : ViewModel() {
 
@@ -96,18 +100,28 @@ class ItemDetailsViewModel @Inject constructor(
 
     private val eventFlow = MutableStateFlow<ItemDetailsEvent>(ItemDetailsEvent.Idle)
 
+    private val itemFeaturesFlow: Flow<IdentityItemFeatures> = combine(
+        getUserPlan(),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+    ) { userPlan, isFileAttachmentsEnabled ->
+        IdentityItemFeatures(
+            isHistoryEnabled = userPlan.isPaidPlan,
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled
+        )
+    }
+
     internal val state: StateFlow<ItemDetailsState> = combine(
         itemDetailsStateFlow,
         oneShot { getItemActions(shareId, itemId) },
-        observeUserPlan(),
+        itemFeaturesFlow,
         eventFlow
-    ) { itemDetailsState, itemActions, userPlan, event ->
+    ) { itemDetailsState, itemActions, itemFeatures, event ->
         ItemDetailsState.Success(
             shareId = shareId,
             itemId = itemId,
             itemDetailState = itemDetailsState,
             itemActions = itemActions,
-            userPlan = userPlan,
+            itemFeatures = itemFeatures,
             event = event
         )
     }.stateIn(

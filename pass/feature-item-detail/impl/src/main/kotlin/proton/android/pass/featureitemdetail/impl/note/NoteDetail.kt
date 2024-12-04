@@ -189,6 +189,7 @@ fun NoteDetail(
                                 )
                             )
                         },
+                        attachments = state.attachments,
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
                         isFileAttachmentsEnabled = state.isFileAttachmentsEnabled
                     )

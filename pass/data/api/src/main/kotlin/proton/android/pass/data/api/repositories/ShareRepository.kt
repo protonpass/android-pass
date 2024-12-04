@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserAddress
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
@@ -68,9 +69,10 @@ interface ShareRepository {
     suspend fun applyPendingShareEventKeys(userId: UserId, event: UpdateShareEvent)
     suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress
 
-    fun observeShareMembers(
+    fun observeShareItemMembers(
         userId: UserId,
         shareId: ShareId,
+        itemId: ItemId,
         userEmail: String?
     ): Flow<List<ShareMember>>
 

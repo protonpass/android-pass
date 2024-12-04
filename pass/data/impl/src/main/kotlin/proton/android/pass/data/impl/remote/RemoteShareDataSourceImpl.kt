@@ -28,6 +28,7 @@ import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.GetSharePendingInvitesResponse
 import proton.android.pass.data.impl.responses.ShareMemberResponse
 import proton.android.pass.data.impl.responses.ShareResponse
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
@@ -96,6 +97,15 @@ class RemoteShareDataSourceImpl @Inject constructor(
             .invoke { getShareMembers(shareId.id) }
             .valueOrThrow
             .members
+
+    override suspend fun getShareItemMembers(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): List<ShareMemberResponse> = api.get<PasswordManagerApi>(userId)
+        .invoke { getShareItemMembers(shareId.id, itemId.id) }
+        .valueOrThrow
+        .members
 
     override suspend fun getSharePendingInvites(userId: UserId, shareId: ShareId): GetSharePendingInvitesResponse =
         api.get<PasswordManagerApi>(userId)

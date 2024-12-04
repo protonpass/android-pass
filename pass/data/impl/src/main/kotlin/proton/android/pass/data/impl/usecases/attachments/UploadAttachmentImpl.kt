@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
-import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import java.net.URI
 import javax.inject.Inject
@@ -31,19 +30,15 @@ import javax.inject.Singleton
 @Singleton
 class UploadAttachmentImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val metadataResolver: MetadataResolver,
     private val attachmentRepository: AttachmentRepository
 ) : UploadAttachment {
 
     override suspend fun invoke(uri: URI) {
         val userId = accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
-        val metadata = metadataResolver.extractMetadata(uri)
-            ?: throw IllegalStateException("Metadata not available for URI: $uri")
         val attachmentId = attachmentRepository.createPendingAttachment(
             userId = userId,
-            name = metadata.name,
-            mimeType = metadata.mimeType
+            uri = uri
         )
         attachmentRepository.uploadPendingAttachment(
             userId = userId,

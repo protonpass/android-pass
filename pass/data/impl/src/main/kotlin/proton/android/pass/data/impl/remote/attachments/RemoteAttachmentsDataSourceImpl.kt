@@ -54,7 +54,7 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
         val chunkIndex = "0".toRequestBody("text/plain".toMediaTypeOrNull())
         val chunkDataPart = MultipartBody.Part.createFormData(
             name = "ChunkData",
-            filename = "", // not used by the backend
+            filename = "no-op", // not used by the backend
             body = encryptedByteArray.array.toRequestBody("application/octet-stream".toMediaTypeOrNull())
         )
         api.get<PasswordManagerApi>(userId)

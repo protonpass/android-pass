@@ -119,6 +119,7 @@ import proton.android.pass.data.api.usecases.aliascontact.DeleteAliasContact
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContact
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.data.api.usecases.aliascontact.UpdateBlockedAliasContact
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentToItem
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
@@ -314,6 +315,7 @@ import proton.android.pass.data.impl.usecases.aliascontact.ObserveAliasContactsI
 import proton.android.pass.data.impl.usecases.aliascontact.UpdateBlockedAliasContactImpl
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLink
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLinkImpl
+import proton.android.pass.data.impl.usecases.attachments.LinkAttachmentToItemImpl
 import proton.android.pass.data.impl.usecases.attachments.UploadAttachmentImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.MarkEmailBreachAsResolvedImpl
@@ -1026,5 +1028,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindUploadAttachment(impl: UploadAttachmentImpl): UploadAttachment
+
+    @[Binds Singleton]
+    abstract fun bindLinkAttachmentToItem(impl: LinkAttachmentToItemImpl): LinkAttachmentToItem
 
 }

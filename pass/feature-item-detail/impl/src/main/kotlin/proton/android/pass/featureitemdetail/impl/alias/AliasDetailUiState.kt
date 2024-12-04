@@ -27,6 +27,7 @@ import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasStats
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 
@@ -64,7 +65,8 @@ sealed interface AliasDetailUiState {
         val isFileAttachmentsEnabled: Boolean,
         val isSLAliasSyncEnabled: Boolean,
         val isAliasTrashDialogChecked: Boolean,
-        val isAliasManagementEnabled: Boolean
+        val isAliasManagementEnabled: Boolean,
+        val attachments: List<Attachment>
     ) : AliasDetailUiState {
 
         internal val requiresBackNavigation: Boolean = isItemSentToTrash ||

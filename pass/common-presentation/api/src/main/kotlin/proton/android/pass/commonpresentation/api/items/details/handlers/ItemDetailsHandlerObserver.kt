@@ -30,10 +30,15 @@ import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.attachments.Attachment
 
 abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
 
-    abstract fun observe(share: Share, item: Item): Flow<ItemDetailState>
+    abstract fun observe(
+        share: Share,
+        item: Item,
+        attachments: List<Attachment>
+    ): Flow<ItemDetailState>
 
     abstract fun updateItemContents(
         itemContents: ITEM_CONTENTS,

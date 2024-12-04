@@ -25,8 +25,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Instant
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
@@ -50,7 +52,8 @@ internal fun PassIdentityItemDetailsSections(
     createdAt: Instant,
     modifiedAt: Instant,
     shouldDisplayItemHistorySection: Boolean,
-    shouldDisplayItemHistoryButton: Boolean
+    shouldDisplayItemHistoryButton: Boolean,
+    shouldDisplayFileAttachments: Boolean
 ) = with(contents) {
     Column(
         modifier = modifier,
@@ -98,6 +101,19 @@ internal fun PassIdentityItemDetailsSections(
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent
+            )
+        }
+
+        if (shouldDisplayFileAttachments) {
+            AttachmentSection(
+                files = emptyList(),
+                isDetail = true,
+                colors = itemColors,
+                loadingFile = None,
+                onAttachmentOptions = {},
+                onAttachmentOpen = {},
+                onAddAttachment = {},
+                onTrashAll = {}
             )
         }
 

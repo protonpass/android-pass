@@ -112,6 +112,8 @@ import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordChecker
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
 import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
@@ -140,6 +142,7 @@ class LoginDetailViewModel @Inject constructor(
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
     private val updateItemFlag: UpdateItemFlag,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider,
@@ -210,8 +213,15 @@ class LoginDetailViewModel @Inject constructor(
         .onEach { hasItemBeenFetchedAtLeastOnce = true }
         .asLoadingResult()
 
-    private val itemFeaturesFlow: Flow<LoginItemFeatures> = getUserPlan().map { it.isPaidPlan }
-        .map(::LoginItemFeatures)
+    private val itemFeaturesFlow: Flow<LoginItemFeatures> = combine(
+        getUserPlan(),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+    ) { userPlan, isFileAttachmentsEnabled ->
+        LoginItemFeatures(
+            isHistoryEnabled = userPlan.isPaidPlan,
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled
+        )
+    }
 
     private val loginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> = combine(
         loginItemDetailsResultFlow,
@@ -431,6 +441,7 @@ class LoginDetailViewModel @Inject constructor(
                     itemActions = actions,
                     event = event,
                     isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
+                    isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled,
                     monitorState = details.securityState
                 )
             }

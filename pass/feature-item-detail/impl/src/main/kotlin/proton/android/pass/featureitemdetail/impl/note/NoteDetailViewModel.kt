@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -78,6 +79,8 @@ import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -95,6 +98,7 @@ class NoteDetailViewModel @Inject constructor(
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle,
@@ -136,8 +140,14 @@ class NoteDetailViewModel @Inject constructor(
         .onEach { hasItemBeenFetchedAtLeastOnce = true }
         .asLoadingResult()
 
-    private val itemFeaturesFlow: Flow<NoteItemFeatures> = getUserPlan().map {
-        NoteItemFeatures(isHistoryEnabled = it.isPaidPlan)
+    private val itemFeaturesFlow: Flow<NoteItemFeatures> = combine(
+        getUserPlan(),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+    ) { userPlan, isFileAttachmentsEnabled ->
+        NoteItemFeatures(
+            isHistoryEnabled = userPlan.isPaidPlan,
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled
+        )
     }
 
     val state: StateFlow<NoteDetailUiState> = combineN(
@@ -189,7 +199,8 @@ class NoteDetailViewModel @Inject constructor(
                     shareClickAction = shareAction,
                     itemActions = actions,
                     event = event,
-                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled
+                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
+                    isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled
                 )
             }
         }

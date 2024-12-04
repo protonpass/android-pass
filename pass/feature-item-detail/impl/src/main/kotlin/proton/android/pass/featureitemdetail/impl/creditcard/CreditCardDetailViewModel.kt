@@ -28,6 +28,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -64,12 +66,14 @@ import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
+import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.ItemDelete
 import proton.android.pass.featureitemdetail.impl.common.CreditCardItemFeatures
@@ -98,6 +102,7 @@ class CreditCardDetailViewModel @Inject constructor(
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    observeItemAttachments: ObserveItemAttachments,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider,
@@ -148,11 +153,25 @@ class CreditCardDetailViewModel @Inject constructor(
         val cardNumberState: CardNumberState,
         val vault: Vault?,
         val hasMoreThanOneVault: Boolean,
-        val canPerformItemActions: Boolean
+        val canPerformItemActions: Boolean,
+        val attachments: List<Attachment>
     )
 
     private var hasItemBeenFetchedAtLeastOnce = false
     private val creditCardItemDetailsResultFlow = getItemByIdWithVault(shareId, itemId)
+        .flatMapLatest { itemByIdWithVault ->
+            if (itemByIdWithVault.item.hasAttachments) {
+                observeItemAttachments(shareId, itemId)
+                    .map { attachments -> itemByIdWithVault to attachments }
+                    .catch { error ->
+                        PassLogger.w(TAG, "Error fetching attachments")
+                        PassLogger.w(TAG, error)
+                        throw error
+                    }
+            } else {
+                flowOf(itemByIdWithVault to emptyList())
+            }
+        }
         .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is ItemNotFoundError)) throw it }
         .onEach { hasItemBeenFetchedAtLeastOnce = true }
         .asLoadingResult()
@@ -161,7 +180,7 @@ class CreditCardDetailViewModel @Inject constructor(
         creditCardItemDetailsResultFlow,
         fieldVisibilityFlow
     ) { detailsResult, fieldVisibility ->
-        detailsResult.map { details ->
+        detailsResult.map { (details, attachments) ->
             val (itemUiModel, cardNumber) = encryptionContextProvider.withEncryptionContext {
                 val model = details.item.toUiModel(this)
                 var contents = model.contents as ItemContents.CreditCard
@@ -187,7 +206,8 @@ class CreditCardDetailViewModel @Inject constructor(
                 vault = details.vault,
                 cardNumberState = cardNumber,
                 hasMoreThanOneVault = details.hasMoreThanOneVault,
-                canPerformItemActions = details.canPerformItemActions
+                canPerformItemActions = details.canPerformItemActions,
+                attachments = attachments
             )
         }
 
@@ -263,7 +283,8 @@ class CreditCardDetailViewModel @Inject constructor(
                     itemActions = actions,
                     event = event,
                     isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
-                    isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled
+                    isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled,
+                    attachments = details.attachments
                 )
             }
         }

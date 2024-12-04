@@ -28,6 +28,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -44,6 +46,7 @@ import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveItemById
+import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
@@ -61,6 +64,7 @@ class ItemDetailsViewModel @Inject constructor(
     getItemActions: GetItemActions,
     getUserPlan: GetUserPlan,
     observeItemById: ObserveItemById,
+    observeItemAttachments: ObserveItemAttachments,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val itemDetailsHandler: ItemDetailsHandler
 ) : ViewModel() {
@@ -74,6 +78,19 @@ class ItemDetailsViewModel @Inject constructor(
         .let(::ItemId)
 
     private val itemFlow = observeItemById(shareId, itemId)
+        .flatMapLatest { item ->
+            if (item.hasAttachments) {
+                observeItemAttachments(shareId, itemId)
+                    .map { attachments -> item to attachments }
+                    .catch { error ->
+                        PassLogger.w(TAG, "Error fetching attachments")
+                        PassLogger.w(TAG, error)
+                        throw error
+                    }
+            } else {
+                flowOf(item to emptyList())
+            }
+        }
         .catch { error ->
             if (error is ItemNotFoundError) {
                 eventFlow.update { ItemDetailsEvent.OnItemNotFound }
@@ -86,10 +103,10 @@ class ItemDetailsViewModel @Inject constructor(
 
     private val itemContentsUpdateOptionFlow = MutableStateFlow<Option<ItemContents>>(None)
 
-    private val itemDetailsStateFlow = itemFlow.flatMapLatest { item ->
+    private val itemDetailsStateFlow = itemFlow.flatMapLatest { (item, attachments) ->
         combine(
             itemContentsUpdateOptionFlow,
-            itemDetailsHandler.observeItemDetails(item)
+            itemDetailsHandler.observeItemDetails(item, attachments)
         ) { itemContentsUpdateOption, itemDetailState ->
             when (itemContentsUpdateOption) {
                 None -> itemDetailState

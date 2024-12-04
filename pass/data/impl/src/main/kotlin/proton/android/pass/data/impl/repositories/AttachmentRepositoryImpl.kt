@@ -42,6 +42,7 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.data.api.errors.AddressIdNotAvailableError
 import proton.android.pass.data.api.errors.ItemKeyNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
+import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSource
 import proton.android.pass.domain.ItemId
@@ -54,6 +55,7 @@ import javax.inject.Inject
 class AttachmentRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val appDispatchers: AppDispatchers,
+    private val metadataResolver: MetadataResolver,
     private val remote: RemoteAttachmentsDataSource,
     private val fileTypeDetector: FileTypeDetector,
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -62,19 +64,17 @@ class AttachmentRepositoryImpl @Inject constructor(
     private val itemKeyRepository: ItemKeyRepository
 ) : AttachmentRepository {
 
-    override suspend fun createPendingAttachment(
-        userId: UserId,
-        name: String,
-        mimeType: String
-    ): AttachmentId {
-        val fileKey = EncryptionKey.generate()
-        val metadata = fileMetadata {
-            this.name = name
-            this.mimeType = mimeType
+    override suspend fun createPendingAttachment(userId: UserId, uri: URI): AttachmentId {
+        val metadata = metadataResolver.extractMetadata(uri)
+            ?: throw IllegalStateException("Metadata not available for URI: $uri")
+        val fileMetadata = fileMetadata {
+            this.name = metadata.name
+            this.mimeType = metadata.mimeType
         }
+        val fileKey = EncryptionKey.generate()
         val encryptedMetadata =
             encryptionContextProvider.withEncryptionContextSuspendable(fileKey.clone()) {
-                encrypt(metadata.toByteArray())
+                encrypt(fileMetadata.toByteArray())
             }
         val encodedMetadata = Base64.encodeBase64String(encryptedMetadata.array)
         val id = remote.createPendingFile(userId, encodedMetadata).let(::AttachmentId)

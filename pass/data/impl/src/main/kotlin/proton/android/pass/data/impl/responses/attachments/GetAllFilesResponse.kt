@@ -53,7 +53,17 @@ data class FileDetailsResponse(
     @SerialName("ItemKeyRotation")
     val itemKeyRotation: String,
     @SerialName("Chunks")
-    val chunks: List<String>,
+    val chunks: List<ChunkResponse>,
     @SerialName("CreateTime")
     val createTime: Long
+)
+
+@Serializable
+data class ChunkResponse(
+    @SerialName("ChunkID")
+    val chunkId: String,
+    @SerialName("Index")
+    val index: Int,
+    @SerialName("Size")
+    val size: Long
 )

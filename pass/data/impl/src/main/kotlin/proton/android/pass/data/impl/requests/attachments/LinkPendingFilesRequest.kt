@@ -20,11 +20,12 @@ package proton.android.pass.data.impl.requests.attachments
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.crypto.common.keystore.EncryptedString
 
 @Serializable
 data class LinkPendingFilesRequest(
     @SerialName("ItemRevision")
-    val revision: Int,
+    val revision: Long,
     @SerialName("FilesToAdd")
     val filesToAdd: List<LinkPendingFileRequest>,
     @SerialName("FilesToRemove")
@@ -36,5 +37,5 @@ data class LinkPendingFileRequest(
     @SerialName("FileID")
     val fileID: String,
     @SerialName("FileKey")
-    val fileKey: String
+    val fileKey: EncryptedString
 )

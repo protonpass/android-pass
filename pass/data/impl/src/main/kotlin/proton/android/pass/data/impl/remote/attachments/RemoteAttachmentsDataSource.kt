@@ -25,7 +25,6 @@ import proton.android.pass.data.impl.responses.attachments.FilesDataResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
-import proton.android.pass.domain.attachments.AttachmentKey
 
 interface RemoteAttachmentsDataSource {
 
@@ -42,8 +41,8 @@ interface RemoteAttachmentsDataSource {
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
-        revision: Int,
-        filesToAdd: Map<AttachmentId, AttachmentKey>,
+        revision: Long,
+        filesToAdd: Map<AttachmentId, EncryptedString>,
         filesToRemove: Set<AttachmentId>
     )
 

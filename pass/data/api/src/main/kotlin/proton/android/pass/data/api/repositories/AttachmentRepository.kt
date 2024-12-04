@@ -20,11 +20,12 @@ package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
-import proton.android.pass.domain.attachments.AttachmentKey
+import java.net.URI
 
 interface AttachmentRepository {
 
@@ -37,7 +38,7 @@ interface AttachmentRepository {
     suspend fun uploadPendingAttachment(
         userId: UserId,
         attachmentId: AttachmentId,
-        byteArray: ByteArray
+        uri: URI
     )
 
     @Suppress("LongParameterList")
@@ -45,8 +46,8 @@ interface AttachmentRepository {
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
-        revision: Int,
-        toLink: Map<AttachmentId, AttachmentKey>,
+        revision: Long,
+        toLink: Map<AttachmentId, EncryptionKey>,
         toUnlink: Set<AttachmentId>
     )
 

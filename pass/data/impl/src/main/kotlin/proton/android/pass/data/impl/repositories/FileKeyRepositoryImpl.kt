@@ -26,6 +26,7 @@ import javax.inject.Inject
 interface FileKeyRepository {
     fun addMapping(attachmentId: AttachmentId, encryptionKey: EncryptionKey)
     fun getEncryptionKey(attachmentId: AttachmentId): EncryptionKey?
+    fun getAllMappings(): Map<AttachmentId, EncryptionKey>
     fun removeMapping(attachmentId: AttachmentId): Boolean
     fun clearAllMappings()
 }
@@ -38,6 +39,8 @@ class FileKeyRepositoryImpl @Inject constructor() : FileKeyRepository {
     }
 
     override fun getEncryptionKey(attachmentId: AttachmentId): EncryptionKey? = storage[attachmentId]
+
+    override fun getAllMappings(): Map<AttachmentId, EncryptionKey> = storage.toMap()
 
     override fun removeMapping(attachmentId: AttachmentId): Boolean = storage.remove(attachmentId) != null
 

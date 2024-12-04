@@ -24,9 +24,10 @@ import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
-import proton.android.pass.data.impl.repositories.ItemKeyRepository
+import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -42,7 +43,7 @@ interface EncryptItemsKeysForUser {
 }
 
 class EncryptItemsKeysForUserImpl @Inject constructor(
-    private val itemKeyRepository: ItemKeyRepository,
+    private val shareKeyRepository: ShareKeyRepository,
     private val getAllKeysByAddress: GetAllKeysByAddress,
     private val encryptInviteKeys: EncryptInviteKeys
 ) : EncryptItemsKeysForUser {
@@ -54,13 +55,15 @@ class EncryptItemsKeysForUserImpl @Inject constructor(
         userAddress: UserAddress,
         targetEmail: String
     ): Result<EncryptedInviteShareKeyList> {
-
-        val (_, itemKey) = itemKeyRepository.getLatestItemKey(
-            userId = userAddress.userId,
-            addressId = userAddress.addressId,
-            shareId = shareId,
-            itemId = itemId
-        ).first()
+        val itemKey = shareKeyRepository.getLatestKeyForShare(shareId)
+            .first()
+            .let { shareKey ->
+                ItemKey(
+                    rotation = shareKey.rotation,
+                    key = shareKey.key,
+                    responseKey = shareKey.responseKey
+                )
+            }
 
         val inviterAddressKey = userAddress.keys.primary()?.privateKey
             ?: return Result.failure(IllegalStateException("No primary address key for inviter user"))

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,26 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.requests.attachments
+package proton.android.pass.data.api.usecases.attachments
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import me.proton.core.crypto.common.keystore.EncryptedString
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
-@Serializable
-data class LinkPendingFilesRequest(
-    @SerialName("ItemRevision")
-    val revision: Long,
-    @SerialName("FilesToAdd")
-    val filesToAdd: List<LinkPendingFileRequest>,
-    @SerialName("FilesToRemove")
-    val filesToRemove: List<String>
-)
-
-@Serializable
-data class LinkPendingFileRequest(
-    @SerialName("FileID")
-    val fileID: String,
-    @SerialName("FileKey")
-    val fileKey: EncryptedString
-)
+interface LinkAttachmentToItem {
+    suspend operator fun invoke(
+        itemId: ItemId,
+        shareId: ShareId,
+        revision: Long = 0
+    )
+}

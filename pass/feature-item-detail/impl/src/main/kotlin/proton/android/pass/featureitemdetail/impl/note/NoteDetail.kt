@@ -189,7 +189,8 @@ fun NoteDetail(
                                 )
                             )
                         },
-                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled
+                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
+                        isFileAttachmentsEnabled = state.isFileAttachmentsEnabled
                     )
                 }
                 ConfirmDeleteItemDialog(

@@ -24,8 +24,6 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.Plan
-import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 
 @Stable
@@ -51,16 +49,12 @@ internal sealed interface ItemDetailsState {
         internal val itemDetailState: ItemDetailState,
         override val event: ItemDetailsEvent,
         private val itemActions: ItemActions,
-        private val userPlan: Plan
+        private val itemFeatures: ItemFeatures
     ) : ItemDetailsState {
 
-        internal val hasPaidPlan: Boolean = when (userPlan.planType) {
-            is PlanType.Paid,
-            is PlanType.Trial -> true
+        internal val isHistoryEnabled: Boolean = itemFeatures.isHistoryEnabled
 
-            is PlanType.Free,
-            is PlanType.Unknown -> false
-        }
+        internal val isFileAttachmentsEnabled: Boolean = itemFeatures.isFileAttachmentsEnabled
 
         internal val isEditEnabled: Boolean =
             itemActions.canEdit is ItemActions.CanEditActionState.Enabled

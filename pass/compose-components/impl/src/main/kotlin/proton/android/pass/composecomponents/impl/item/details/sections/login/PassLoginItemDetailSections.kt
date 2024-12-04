@@ -28,11 +28,13 @@ import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.datetime.Instant
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys.PasskeysSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
@@ -63,7 +65,8 @@ internal fun PassLoginItemDetailSections(
     createdAt: Instant,
     modifiedAt: Instant,
     shouldDisplayItemHistorySection: Boolean,
-    shouldDisplayItemHistoryButton: Boolean
+    shouldDisplayItemHistoryButton: Boolean,
+    shouldDisplayFileAttachments: Boolean
 ) = with(contents) {
     Column(
         modifier = modifier,
@@ -115,6 +118,19 @@ internal fun PassLoginItemDetailSections(
                 itemColors = itemColors,
                 itemDiffs = itemDiffs,
                 onEvent = onEvent
+            )
+        }
+
+        if (shouldDisplayFileAttachments) {
+            AttachmentSection(
+                files = emptyList(),
+                isDetail = true,
+                colors = itemColors,
+                loadingFile = None,
+                onAttachmentOptions = {},
+                onAttachmentOpen = {},
+                onAddAttachment = {},
+                onTrashAll = {}
             )
         }
 

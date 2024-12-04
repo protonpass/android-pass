@@ -23,9 +23,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
@@ -40,9 +42,10 @@ fun CreditCardDetailContent(
     contents: CreditCardDetailUiState.ItemContent,
     vault: Vault?,
     isDowngradedMode: Boolean,
-    onEvent: (CreditCardDetailEvent) -> Unit,
     isPinned: Boolean,
-    isHistoryFeatureEnabled: Boolean
+    isHistoryFeatureEnabled: Boolean,
+    isFileAttachmentsEnabled: Boolean,
+    onEvent: (CreditCardDetailEvent) -> Unit
 ) {
     val model = contents.model.contents as ItemContents.CreditCard
 
@@ -72,6 +75,19 @@ fun CreditCardDetailContent(
             NoteSection(
                 text = model.note,
                 accentColor = PassTheme.colors.cardInteractionNorm
+            )
+        }
+
+        if (isFileAttachmentsEnabled) {
+            AttachmentSection(
+                files = emptyList(),
+                isDetail = true,
+                colors = passItemColors(ItemCategory.CreditCard),
+                loadingFile = None,
+                onAttachmentOptions = {},
+                onAttachmentOpen = {},
+                onAddAttachment = {},
+                onTrashAll = {}
             )
         }
 

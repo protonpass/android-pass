@@ -37,7 +37,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveVaults
-import proton.android.pass.data.api.usecases.RemoveMemberFromVault
+import proton.android.pass.data.api.usecases.RemoveShareMember
 import proton.android.pass.data.api.usecases.SetVaultMemberPermission
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SharePermission
@@ -59,7 +59,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MemberOptionsViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val removeMemberFromVault: RemoveMemberFromVault,
+    private val removeShareMember: RemoveShareMember,
     private val setVaultMemberPermission: SetVaultMemberPermission,
     savedState: SavedStateHandleProvider,
     observeVaults: ObserveVaults
@@ -158,7 +158,7 @@ class MemberOptionsViewModel @Inject constructor(
         isLoadingFlow.update { IsLoadingState.Loading }
         loadingOptionFlow.update { LoadingOption.RemoveMember }
         runCatching {
-            removeMemberFromVault(
+            removeShareMember(
                 shareId = vaultShareId,
                 memberShareId = memberShareId
             )

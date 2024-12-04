@@ -79,6 +79,12 @@ interface ShareRepository {
         userEmail: String?
     ): Flow<List<ShareMember>>
 
+    suspend fun deleteShareMember(
+        userId: UserId,
+        shareId: ShareId,
+        memberShareId: ShareId
+    )
+
     fun observeSharePendingInvites(userId: UserId, shareId: ShareId): Flow<List<SharePendingInvite>>
 
 }

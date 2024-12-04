@@ -25,6 +25,7 @@ import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
+import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.GetSharePendingInvitesResponse
 import proton.android.pass.data.impl.responses.ShareMemberResponse
 import proton.android.pass.data.impl.responses.ShareResponse
@@ -111,6 +112,19 @@ class RemoteShareDataSourceImpl @Inject constructor(
         api.get<PasswordManagerApi>(userId)
             .invoke { getPendingInvitesForShare(shareId.id) }
             .valueOrThrow
+
+    override suspend fun removeShareMember(
+        userId: UserId,
+        shareId: ShareId,
+        memberShareId: ShareId
+    ): CodeOnlyResponse = api.get<PasswordManagerApi>(userId)
+        .invoke {
+            removeMemberFromVault(
+                shareId = shareId.id,
+                memberShareId = memberShareId.id
+            )
+        }
+        .valueOrThrow
 
     private companion object {
 

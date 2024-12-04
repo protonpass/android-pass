@@ -62,12 +62,16 @@ fun AttachmentSection(
                 condition = !isDetail,
                 ifTrue = { roundedContainerNorm() },
                 ifFalse = { roundedContainer(Color.Transparent, ProtonTheme.colors.separatorNorm) }
-            )
-            .padding(Spacing.medium),
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         AttachmentHeader(
+            modifier = Modifier.padding(
+                start = Spacing.medium,
+                top = Spacing.medium,
+                end = Spacing.medium
+            ),
             colors = colors,
             isEnabled = loadingFile is None,
             fileAmount = files.size,
@@ -75,19 +79,22 @@ fun AttachmentSection(
         )
         Column {
             files.forEachIndexed { index, file ->
+                val isLoading = loadingFile.value()?.id == file.id
                 AttachmentRow(
-                    modifier = Modifier.padding(top = Spacing.small),
+                    innerModifier = Modifier
+                        .padding(horizontal = Spacing.medium)
+                        .padding(vertical = Spacing.small),
                     filename = file.name,
                     attachmentType = file.type,
                     size = file.size,
                     createTime = file.createTime,
                     isEnabled = loadingFile is None,
-                    isLoading = loadingFile.value()?.id == file.id,
+                    isLoading = isLoading,
                     onOptionsClick = { onAttachmentOptions(file) },
                     onAttachmentOpen = { onAttachmentOpen(file) }
                 )
                 if (index < files.lastIndex) {
-                    PassDivider(modifier = Modifier.padding(top = Spacing.small))
+                    PassDivider()
                 }
             }
         }

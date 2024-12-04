@@ -22,7 +22,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
@@ -52,6 +54,7 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 fun AttachmentRow(
     modifier: Modifier = Modifier,
+    innerModifier: Modifier = Modifier,
     filename: String,
     attachmentType: AttachmentType,
     size: Long,
@@ -62,10 +65,12 @@ fun AttachmentRow(
     onAttachmentOpen: () -> Unit
 ) {
     Row(
-        modifier = modifier.applyIf(
-            !isLoading,
-            ifTrue = { clickable(onClick = onAttachmentOpen) }
-        ),
+        modifier = modifier
+            .applyIf(
+                isEnabled,
+                ifTrue = { clickable(onClick = onAttachmentOpen) }
+            )
+            .then(innerModifier),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
@@ -94,7 +99,13 @@ fun AttachmentRow(
             Text.Body3Weak("$sizeFormatted ${SpecialCharacters.DOT_SEPARATOR} $dateFormatted")
         }
         when {
-            isLoading -> CircularProgressIndicator(modifier = Modifier.size(24.dp))
+            isLoading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(Modifier.width(Spacing.medium))
+            }
+
             isEnabled -> IconButton(onOptionsClick) {
                 Icon.Default(
                     id = CoreR.drawable.ic_proton_three_dots_vertical,

@@ -39,8 +39,6 @@ internal fun ItemHistoryRestoreTab(
 ) {
     PassItemDetailsContent(
         modifier = modifier,
-        itemDetailState = itemDetailState,
-        itemColors = itemColors,
         topBar = {
             ItemHistoryRestoreTopBar(
                 colors = itemColors,
@@ -48,9 +46,8 @@ internal fun ItemHistoryRestoreTab(
                 onRestoreClick = { onEvent(ItemHistoryRestoreUiEvent.OnRestoreClick) }
             )
         },
-        shouldDisplayItemHistorySection = false,
-        shouldDisplayItemHistoryButton = false,
-        extraBottomSpacing = Spacing.extraLarge,
+        itemDetailState = itemDetailState,
+        itemColors = itemColors,
         onEvent = { uiEvent ->
             when (uiEvent) {
                 is PassItemDetailsUiEvent.OnSectionClick -> ItemHistoryRestoreUiEvent.OnSectionClick(
@@ -87,6 +84,10 @@ internal fun ItemHistoryRestoreTab(
                     // We do nothing since we don't allow shared vault management from restore screen
                 }
             }
-        }
+        },
+        shouldDisplayItemHistorySection = false,
+        shouldDisplayItemHistoryButton = false,
+        shouldDisplayFileAttachments = false,
+        extraBottomSpacing = Spacing.extraLarge
     )
 }

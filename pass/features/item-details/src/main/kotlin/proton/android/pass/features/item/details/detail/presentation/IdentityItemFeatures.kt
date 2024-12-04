@@ -16,11 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain
+package proton.android.pass.features.item.details.detail.presentation
 
-enum class ItemFlag(val value: Int) {
-    SkipHealthCheck(value = 1 shl 0),
-    EmailBreached(value = 1 shl 1),
-    AliasDisabled(value = 1 shl 2),
-    HasAttachments(value = 1 shl 3)
+sealed interface ItemFeatures {
+    val isHistoryEnabled: Boolean
+    val isFileAttachmentsEnabled: Boolean
 }
+
+internal data class IdentityItemFeatures(
+    override val isHistoryEnabled: Boolean,
+    override val isFileAttachmentsEnabled: Boolean
+) : ItemFeatures

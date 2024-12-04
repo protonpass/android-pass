@@ -27,6 +27,7 @@ import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.UpdateShareEvent
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
@@ -176,6 +177,7 @@ class TestShareRepository : ShareRepository {
     override fun observeShareItemMembers(
         userId: UserId,
         shareId: ShareId,
+        itemId: ItemId,
         userEmail: String?
     ): Flow<List<ShareMember>> = shareMembersFlow
 

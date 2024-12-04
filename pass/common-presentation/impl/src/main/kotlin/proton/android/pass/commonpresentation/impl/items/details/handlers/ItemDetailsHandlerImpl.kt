@@ -20,6 +20,7 @@ package proton.android.pass.commonpresentation.impl.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import proton.android.pass.clipboard.api.ClipboardManager
@@ -31,13 +32,13 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.errors.ItemNotFoundError
+import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
-import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -45,24 +46,28 @@ import javax.inject.Inject
 
 class ItemDetailsHandlerImpl @Inject constructor(
     private val observeShare: ObserveShare,
+    private val observeItemAttachments: ObserveItemAttachments,
     private val observers: Map<ItemCategory, @JvmSuppressWildcards ItemDetailsHandlerObserver<*>>,
     private val clipboardManager: ClipboardManager,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ItemDetailsHandler {
 
-    override fun observeItemDetails(item: Item, attachments: List<Attachment>): Flow<ItemDetailState> =
-        observeShare(item.shareId)
-            .flatMapLatest { share ->
-                getItemDetailsObserver(item.itemType.category).observe(share, item, attachments)
+    override fun observeItemDetails(item: Item): Flow<ItemDetailState> = combine(
+        observeShare(item.shareId),
+        observeItemAttachments(item.shareId, item.id),
+        ::Pair
+    )
+        .flatMapLatest { (share, attachments) ->
+            getItemDetailsObserver(item.itemType.category).observe(share, item, attachments)
+        }
+        .catch { error ->
+            if (error !is ItemNotFoundError) {
+                PassLogger.w(TAG, "There was an error observing item details")
+                PassLogger.w(TAG, error)
             }
-            .catch { error ->
-                if (error !is ItemNotFoundError) {
-                    PassLogger.w(TAG, "There was an error observing item details")
-                    PassLogger.w(TAG, error)
-                }
-            }
-            .distinctUntilChanged()
+        }
+        .distinctUntilChanged()
 
 
     override suspend fun onItemDetailsFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain) {

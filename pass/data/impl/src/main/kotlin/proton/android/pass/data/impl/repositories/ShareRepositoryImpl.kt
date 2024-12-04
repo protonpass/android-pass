@@ -404,7 +404,7 @@ class ShareRepositoryImpl @Inject constructor(
             }
     }
 
-    override fun observeSharePendingMembers(userId: UserId, shareId: ShareId): Flow<List<SharePendingInvite>> = flow {
+    override fun observeSharePendingInvites(userId: UserId, shareId: ShareId): Flow<List<SharePendingInvite>> = flow {
         remoteShareDataSource.getSharePendingInvites(userId, shareId)
             .let { sharePendingInviteResponse ->
                 buildList {

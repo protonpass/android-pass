@@ -294,7 +294,8 @@ class ItemRepositoryImplTest {
                     lastUseTime = null,
                     revisionTime = 1,
                     isPinned = true,
-                    flags = 1
+                    flags = 1,
+                    shareCount = 0
                 )
             )
         }

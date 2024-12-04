@@ -29,11 +29,7 @@ import java.net.URI
 
 interface AttachmentRepository {
 
-    suspend fun createPendingAttachment(
-        userId: UserId,
-        name: String,
-        mimeType: String
-    ): AttachmentId
+    suspend fun createPendingAttachment(userId: UserId, uri: URI): AttachmentId
 
     suspend fun uploadPendingAttachment(
         userId: UserId,

@@ -78,6 +78,8 @@ import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -95,6 +97,7 @@ class CreditCardDetailViewModel @Inject constructor(
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider,
@@ -190,8 +193,14 @@ class CreditCardDetailViewModel @Inject constructor(
 
     }.distinctUntilChanged()
 
-    private val itemFeaturesFlow: Flow<CreditCardItemFeatures> = getUserPlan().map {
-        CreditCardItemFeatures(isHistoryEnabled = it.isPaidPlan)
+    private val itemFeaturesFlow: Flow<CreditCardItemFeatures> = combine(
+        getUserPlan(),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+    ) { userPlan, isFileAttachmentsEnabled ->
+        CreditCardItemFeatures(
+            isHistoryEnabled = userPlan.isPaidPlan,
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled
+        )
     }
 
     val uiState: StateFlow<CreditCardDetailUiState> = combineN(
@@ -253,7 +262,8 @@ class CreditCardDetailViewModel @Inject constructor(
                     shareClickAction = shareAction,
                     itemActions = actions,
                     event = event,
-                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled
+                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
+                    isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled
                 )
             }
         }

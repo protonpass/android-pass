@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonui.api.PassTheme
@@ -34,6 +35,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys.PasskeysSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
@@ -56,6 +58,7 @@ internal fun LoginContent(
     canLoadExternalImages: Boolean,
     customFields: ImmutableList<CustomFieldUiContent>,
     isHistoryFeatureEnabled: Boolean,
+    isFileAttachmentsEnabled: Boolean,
     passkeys: ImmutableList<UIPasskeyContent>,
     monitorState: LoginMonitorState,
     onEvent: (LoginDetailEvent) -> Unit
@@ -124,6 +127,19 @@ internal fun LoginContent(
             CustomFieldDetails(
                 fields = customFields,
                 onEvent = { onEvent(LoginDetailEvent.OnCustomFieldEvent(it)) }
+            )
+        }
+
+        if (isFileAttachmentsEnabled) {
+            AttachmentSection(
+                files = emptyList(),
+                isDetail = true,
+                colors = passItemColors(ItemCategory.Login),
+                loadingFile = None,
+                onAttachmentOptions = {},
+                onAttachmentOpen = {},
+                onAddAttachment = {},
+                onTrashAll = {}
             )
         }
 

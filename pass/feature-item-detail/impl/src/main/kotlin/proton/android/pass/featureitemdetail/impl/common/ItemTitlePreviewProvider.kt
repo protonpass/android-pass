@@ -40,8 +40,7 @@ class ItemTitlePreviewProvider : PreviewParameterProvider<ItemTitleInput> {
             yield(
                 ItemTitleInput(
                     vault = null,
-                    isPinned = false,
-                    isHistoryFeatureEnabled = false
+                    isPinned = false
                 )
             )
             yield(
@@ -55,15 +54,13 @@ class ItemTitlePreviewProvider : PreviewParameterProvider<ItemTitleInput> {
                         icon = ShareIcon.Icon1,
                         createTime = Date()
                     ),
-                    isPinned = false,
-                    isHistoryFeatureEnabled = false
+                    isPinned = false
                 )
             )
             yield(
                 ItemTitleInput(
                     vault = null,
-                    isPinned = true,
-                    isHistoryFeatureEnabled = false
+                    isPinned = true
                 )
             )
             yield(
@@ -77,8 +74,7 @@ class ItemTitlePreviewProvider : PreviewParameterProvider<ItemTitleInput> {
                         icon = ShareIcon.Icon1,
                         createTime = Date()
                     ),
-                    isPinned = true,
-                    isHistoryFeatureEnabled = false
+                    isPinned = true
                 )
             )
         }
@@ -102,6 +98,5 @@ data class ItemTitleInput(
         revision = 1
     ),
     val vault: Vault?,
-    val isPinned: Boolean,
-    val isHistoryFeatureEnabled: Boolean
+    val isPinned: Boolean
 )

@@ -48,7 +48,8 @@ sealed interface NoteDetailUiState {
         val shareClickAction: ShareClickAction,
         val itemActions: ItemActions,
         val event: ItemDetailEvent,
-        val isHistoryFeatureEnabled: Boolean
+        val isHistoryFeatureEnabled: Boolean,
+        val isFileAttachmentsEnabled: Boolean
     ) : NoteDetailUiState
 
 }

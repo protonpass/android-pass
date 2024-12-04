@@ -16,30 +16,32 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases
+package proton.android.pass.data.fakes.usecases
 
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.network.data.ApiProvider
-import proton.android.pass.data.api.usecases.RemoveMemberFromVault
-import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.api.usecases.RemoveShareMember
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class RemoveMemberFromVaultImpl @Inject constructor(
-    private val accountManager: AccountManager,
-    private val apiProvider: ApiProvider
-) : RemoveMemberFromVault {
-    override suspend fun invoke(shareId: ShareId, memberShareId: ShareId) {
-        val userId = accountManager.getPrimaryUserId().filterNotNull().first()
-        apiProvider.get<PasswordManagerApi>(userId)
-            .invoke {
-                removeMemberFromVault(
-                    shareId = shareId.id,
-                    memberShareId = memberShareId.id
-                )
-            }
-            .valueOrThrow
+@Singleton
+class TestRemoveShareMember @Inject constructor() : RemoveShareMember {
+
+    private var result: Result<Unit> = Result.success(Unit)
+    private val memory: MutableList<Payload> = mutableListOf()
+
+    fun getMemory(): List<Payload> = memory
+
+    fun setResult(value: Result<Unit>) {
+        result = value
     }
+
+    override suspend fun invoke(shareId: ShareId, memberShareId: ShareId) {
+        memory.add(Payload(shareId, memberShareId))
+        result.getOrThrow()
+    }
+
+    data class Payload(
+        val shareId: ShareId,
+        val memberShareId: ShareId
+    )
 }

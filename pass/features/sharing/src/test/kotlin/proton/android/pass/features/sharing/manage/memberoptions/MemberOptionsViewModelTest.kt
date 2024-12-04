@@ -27,7 +27,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
-import proton.android.pass.data.fakes.usecases.TestRemoveMemberFromVault
+import proton.android.pass.data.fakes.usecases.TestRemoveShareMember
 import proton.android.pass.data.fakes.usecases.TestSetVaultMemberPermission
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
@@ -54,7 +54,7 @@ class MemberOptionsViewModelTest {
     private lateinit var instance: MemberOptionsViewModel
 
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var removeMemberFromVault: TestRemoveMemberFromVault
+    private lateinit var removeMemberFromVault: TestRemoveShareMember
     private lateinit var setVaultMemberPermission: TestSetVaultMemberPermission
     private lateinit var observeVaults: TestObserveVaults
 
@@ -62,7 +62,7 @@ class MemberOptionsViewModelTest {
     @Before
     fun setup() {
         snackbarDispatcher = TestSnackbarDispatcher()
-        removeMemberFromVault = TestRemoveMemberFromVault()
+        removeMemberFromVault = TestRemoveShareMember()
         setVaultMemberPermission = TestSetVaultMemberPermission()
         observeVaults = TestObserveVaults()
     }
@@ -108,7 +108,7 @@ class MemberOptionsViewModelTest {
         }
 
         val memory = removeMemberFromVault.getMemory()
-        val expected = TestRemoveMemberFromVault.Payload(
+        val expected = TestRemoveShareMember.Payload(
             shareId = ShareId(USER_SHARE_ID),
             memberShareId = ShareId(MEMBER_SHARE_ID)
         )
@@ -254,7 +254,7 @@ class MemberOptionsViewModelTest {
 
         instance = MemberOptionsViewModel(
             snackbarDispatcher = snackbarDispatcher,
-            removeMemberFromVault = removeMemberFromVault,
+            removeShareMember = removeMemberFromVault,
             setVaultMemberPermission = setVaultMemberPermission,
             savedState = savedStateHandle,
             observeVaults = observeVaults

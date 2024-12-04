@@ -23,6 +23,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
@@ -402,8 +403,26 @@ class ShareRepositoryImpl @Inject constructor(
                 )
             }
             .also { shareMembers ->
-                emit(shareMembers)
+                localShareDataSource.upsertShareMembers(userId, shareId, shareMembers)
             }
+
+        emitAll(localShareDataSource.observeShareMembers(userId, shareId))
+    }
+
+    override suspend fun deleteShareMember(
+        userId: UserId,
+        shareId: ShareId,
+        memberShareId: ShareId
+    ) {
+        runCatching {
+            remoteShareDataSource.removeShareMember(userId, shareId, memberShareId)
+        }.onFailure { error ->
+            PassLogger.w(TAG, "There was an error removing a share member")
+            PassLogger.w(TAG, error)
+            throw error
+        }.onSuccess {
+            localShareDataSource.deleteShareMember(userId, shareId, memberShareId)
+        }
     }
 
     override fun observeSharePendingInvites(userId: UserId, shareId: ShareId): Flow<List<SharePendingInvite>> = flow {
@@ -435,7 +454,6 @@ class ShareRepositoryImpl @Inject constructor(
                     emit(sharePendingInvites)
                 }
             }
-
     }
 
     private suspend fun onShareResponseEntity(

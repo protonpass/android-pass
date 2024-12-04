@@ -52,6 +52,14 @@ data class Attachment(
     val createTime: Instant,
     val fileKey: AttachmentKey,
     val itemKeyRotation: String,
-    val chunks: List<String>
+    val chunks: List<Chunk>
 )
 
+@JvmInline
+value class ChunkId(val id: String)
+
+data class Chunk(
+    val id: ChunkId,
+    val size: Long,
+    val index: Int
+)

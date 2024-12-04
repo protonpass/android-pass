@@ -47,6 +47,7 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
@@ -61,6 +62,7 @@ fun NoteContent(
     isPinned: Boolean,
     isHistoryFeatureEnabled: Boolean,
     isFileAttachmentsEnabled: Boolean,
+    attachments: List<Attachment>,
     onVaultClick: () -> Unit,
     onViewItemHistoryClicked: () -> Unit
 ) {
@@ -101,7 +103,7 @@ fun NoteContent(
 
         if (isFileAttachmentsEnabled) {
             AttachmentSection(
-                files = emptyList(),
+                files = attachments,
                 isDetail = true,
                 colors = passItemColors(ItemCategory.Note),
                 loadingFile = None,
@@ -139,11 +141,12 @@ fun NoteContentPreview(@PreviewParameter(ThemeItemTitleProvider::class) input: P
             NoteContent(
                 itemUiModel = params.itemUiModel,
                 vault = params.vault,
-                onVaultClick = {},
                 isPinned = params.isPinned,
-                onViewItemHistoryClicked = {},
                 isHistoryFeatureEnabled = false,
-                isFileAttachmentsEnabled = false
+                isFileAttachmentsEnabled = false,
+                attachments = emptyList(),
+                onVaultClick = {},
+                onViewItemHistoryClicked = {}
             )
         }
     }

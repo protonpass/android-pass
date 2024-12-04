@@ -26,11 +26,12 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 
 interface ItemDetailsHandler {
 
-    fun observeItemDetails(item: Item): Flow<ItemDetailState>
+    fun observeItemDetails(item: Item, attachments: List<Attachment>): Flow<ItemDetailState>
 
     suspend fun onItemDetailsFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain)
 

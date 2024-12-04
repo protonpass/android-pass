@@ -220,7 +220,8 @@ fun CreditCardDetail(
                             }
                         },
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
-                        isFileAttachmentsEnabled = state.isFileAttachmentsEnabled
+                        isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
+                        attachments = state.attachments
                     )
                 }
                 ConfirmDeleteItemDialog(

@@ -38,7 +38,7 @@ class FileKeyRepositoryImpl @Inject constructor() : FileKeyRepository {
         storage[attachmentId] = encryptionKey
     }
 
-    override fun getEncryptionKey(attachmentId: AttachmentId): EncryptionKey? = storage[attachmentId]
+    override fun getEncryptionKey(attachmentId: AttachmentId): EncryptionKey? = storage[attachmentId]?.clone()
 
     override fun getAllMappings(): Map<AttachmentId, EncryptionKey> = storage.toMap()
 

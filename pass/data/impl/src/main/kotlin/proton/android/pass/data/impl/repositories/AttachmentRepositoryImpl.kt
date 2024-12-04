@@ -18,32 +18,24 @@
 
 package proton.android.pass.data.impl.repositories
 
-import FileV1
 import android.content.Context
 import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
 import fileMetadata
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.withContext
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.extension.primary
-import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.AppDispatchers
-import proton.android.pass.common.api.FlowUtils.oneShot
-import proton.android.pass.commonrust.api.FileTypeDetector
-import proton.android.pass.commonrust.api.MimeType
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
-import proton.android.pass.data.api.errors.AddressIdNotAvailableError
 import proton.android.pass.data.api.errors.ItemKeyNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
-import proton.android.pass.data.impl.extensions.toDomain
+import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSource
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -57,11 +49,9 @@ class AttachmentRepositoryImpl @Inject constructor(
     private val appDispatchers: AppDispatchers,
     private val metadataResolver: MetadataResolver,
     private val remote: RemoteAttachmentsDataSource,
-    private val fileTypeDetector: FileTypeDetector,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val fileKeyRepository: FileKeyRepository,
-    private val userAddressRepository: UserAddressRepository,
-    private val itemKeyRepository: ItemKeyRepository
+    private val localItemDataSource: LocalItemDataSource
 ) : AttachmentRepository {
 
     override suspend fun createPendingAttachment(userId: UserId, uri: URI): AttachmentId {
@@ -74,7 +64,7 @@ class AttachmentRepositoryImpl @Inject constructor(
         val fileKey = EncryptionKey.generate()
         val encryptedMetadata =
             encryptionContextProvider.withEncryptionContextSuspendable(fileKey.clone()) {
-                encrypt(fileMetadata.toByteArray())
+                encrypt(fileMetadata.toByteArray(), EncryptionTag.FileData)
             }
         val encodedMetadata = Base64.encodeBase64String(encryptedMetadata.array)
         val id = remote.createPendingFile(userId, encodedMetadata).let(::AttachmentId)
@@ -89,13 +79,10 @@ class AttachmentRepositoryImpl @Inject constructor(
     ) {
         val fileKey: EncryptionKey = fileKeyRepository.getEncryptionKey(attachmentId)
             ?: throw IllegalStateException("No encryption key found for attachment $attachmentId")
-        if (fileKey.isEmpty()) {
-            throw IllegalStateException("Key has been cleared")
-        }
         val contentUri: Uri = Uri.parse(uri.toString())
         val encryptedByteArray = withContext(appDispatchers.io) {
             context.contentResolver.openInputStream(contentUri)?.use { inputSteam ->
-                encryptionContextProvider.withEncryptionContextSuspendable(fileKey.clone()) {
+                encryptionContextProvider.withEncryptionContextSuspendable(fileKey) {
                     encrypt(inputSteam.readBytes(), EncryptionTag.FileData)
                 }
             } ?: throw IllegalStateException("Unable to open input stream for URI: $contentUri")
@@ -111,21 +98,14 @@ class AttachmentRepositoryImpl @Inject constructor(
         toLink: Map<AttachmentId, EncryptionKey>,
         toUnlink: Set<AttachmentId>
     ) {
-        val addressId = userAddressRepository.getAddresses(userId).primary()?.addressId
-            ?: throw AddressIdNotAvailableError()
-        val (_, itemKey) = itemKeyRepository.getLatestItemKey(
-            userId = userId,
-            addressId = addressId,
-            itemId = itemId,
-            shareId = shareId
-        ).firstOrNull() // get from item entity
+        val encryptedItemKey = localItemDataSource.getById(shareId, itemId)?.encryptedKey
             ?: throw ItemKeyNotAvailableError()
-        val decryptedItemKey = encryptionContextProvider.withEncryptionContext {
-            EncryptionKey(decrypt(itemKey.key))
+        val itemKey = encryptionContextProvider.withEncryptionContextSuspendable {
+            EncryptionKey(decrypt(encryptedItemKey))
         }
         val mappings: Map<AttachmentId, EncryptionKey> = fileKeyRepository.getAllMappings()
         val encryptedContents: Map<AttachmentId, EncryptedString> =
-            encryptionContextProvider.withEncryptionContext(decryptedItemKey.clone()) {
+            encryptionContextProvider.withEncryptionContextSuspendable(itemKey) {
                 mappings.mapValues { (_, fileKey) ->
                     val encryptedKey = encrypt(fileKey.value(), EncryptionTag.FileKey)
                     Base64.encodeBase64String(encryptedKey.array)
@@ -138,19 +118,5 @@ class AttachmentRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<List<Attachment>> = oneShot {
-        val files = remote.retrieveAllFiles(userId, shareId, itemId).files
-        return@oneShot encryptionContextProvider.withEncryptionContextSuspendable {
-            files.map {
-                val decodedMetadata = Base64.decodeBase64(it.metadata)
-                val decryptedMetadata =
-                    decrypt(EncryptedByteArray(decodedMetadata), EncryptionTag.FileKey)
-                val metadata = FileV1.File.parseFrom(decryptedMetadata).metadata
-                val fileType = fileTypeDetector.getFileTypeFromMimeType(
-                    MimeType(metadata.mimeType)
-                )
-                it.toDomain(metadata.name, metadata.mimeType, fileType.toDomain())
-            }
-        }
-    }
+    ): Flow<List<Attachment>> = emptyFlow() // to be implemented
 }

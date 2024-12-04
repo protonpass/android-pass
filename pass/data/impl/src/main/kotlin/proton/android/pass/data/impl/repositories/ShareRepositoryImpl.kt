@@ -64,6 +64,7 @@ import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.data.impl.util.TimeUtil.toDate
 import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.NewUserInviteId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
@@ -381,12 +382,13 @@ class ShareRepositoryImpl @Inject constructor(
         return address
     }
 
-    override fun observeShareMembers(
+    override fun observeShareItemMembers(
         userId: UserId,
         shareId: ShareId,
+        itemId: ItemId,
         userEmail: String?
     ): Flow<List<ShareMember>> = flow {
-        remoteShareDataSource.getShareMembers(userId, shareId)
+        remoteShareDataSource.getShareItemMembers(userId, shareId, itemId)
             .map { shareMemberResponse ->
                 ShareMember(
                     email = shareMemberResponse.userEmail,

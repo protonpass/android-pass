@@ -16,14 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.shares
+package proton.android.pass.data.fakes.usecases.shares
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import proton.android.pass.common.api.FlowUtils.testFlow
+import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.shares.ShareMember
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface ObserveShareMembers {
+@Singleton
+class FakeObserveShareItemMembers @Inject constructor() : ObserveShareItemMembers {
 
-    operator fun invoke(shareId: ShareId): Flow<List<ShareMember>>
+    private val shareMembersFlow: MutableSharedFlow<List<ShareMember>> = testFlow()
+
+    fun emitValue(value: List<ShareMember>) {
+        shareMembersFlow.tryEmit(value)
+    }
+
+    override fun invoke(shareId: ShareId): Flow<List<ShareMember>> = shareMembersFlow
 
 }

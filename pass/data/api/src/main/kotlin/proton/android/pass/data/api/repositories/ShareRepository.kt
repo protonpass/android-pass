@@ -74,7 +74,7 @@ interface ShareRepository {
         userEmail: String?
     ): Flow<List<ShareMember>>
 
-    fun observeSharePendingMembers(userId: UserId, shareId: ShareId): Flow<List<SharePendingInvite>>
+    fun observeSharePendingInvites(userId: UserId, shareId: ShareId): Flow<List<SharePendingInvite>>
 }
 
 data class UpdateShareEvent(

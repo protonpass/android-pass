@@ -34,7 +34,7 @@ class ObserveSharePendingInvitesImpl @Inject constructor(
 
     override fun invoke(shareId: ShareId): Flow<List<SharePendingInvite>> = observeCurrentUser()
         .flatMapLatest { user ->
-            shareRepository.observeSharePendingMembers(user.userId, shareId)
+            shareRepository.observeSharePendingInvites(user.userId, shareId)
         }
 
 }

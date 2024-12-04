@@ -16,26 +16,31 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases.shares
+package proton.android.pass.data.impl.usecases.shares
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import proton.android.pass.common.api.FlowUtils.testFlow
-import proton.android.pass.data.api.usecases.shares.ObserveShareMembers
+import kotlinx.coroutines.flow.flatMapLatest
+import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.shares.ShareMember
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class FakeObserveShareMembers @Inject constructor() : ObserveShareMembers {
+class ObserveShareItemMembersImpl @Inject constructor(
+    private val observeCurrentUser: ObserveCurrentUser,
+    private val shareRepository: ShareRepository
+) : ObserveShareItemMembers {
 
-    private val shareMembersFlow: MutableSharedFlow<List<ShareMember>> = testFlow()
-
-    fun emitValue(value: List<ShareMember>) {
-        shareMembersFlow.tryEmit(value)
-    }
-
-    override fun invoke(shareId: ShareId): Flow<List<ShareMember>> = shareMembersFlow
+    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<ShareMember>> = observeCurrentUser()
+        .flatMapLatest { user ->
+            shareRepository.observeShareItemMembers(
+                userId = user.userId,
+                shareId = shareId,
+                itemId = itemId,
+                userEmail = user.email
+            )
+        }
 
 }

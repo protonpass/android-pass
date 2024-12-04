@@ -47,7 +47,7 @@ data class EncryptionKey(private val key: ByteArray) {
 
     override fun hashCode(): Int = key.contentHashCode()
 
-    private fun isEmpty(): Boolean = key.all { it == 0x00.toByte() }
+    fun isEmpty(): Boolean = key.all { it == 0x00.toByte() }
 
     companion object {
         private const val keySize = 32

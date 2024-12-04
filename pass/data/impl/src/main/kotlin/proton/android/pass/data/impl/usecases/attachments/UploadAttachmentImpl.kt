@@ -18,9 +18,6 @@
 
 package proton.android.pass.data.impl.usecases.attachments
 
-import android.content.Context
-import android.net.Uri
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
@@ -33,7 +30,6 @@ import javax.inject.Singleton
 
 @Singleton
 class UploadAttachmentImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
     private val accountManager: AccountManager,
     private val metadataResolver: MetadataResolver,
     private val attachmentRepository: AttachmentRepository
@@ -49,13 +45,10 @@ class UploadAttachmentImpl @Inject constructor(
             name = metadata.name,
             mimeType = metadata.mimeType
         )
-        val contentUri: Uri = Uri.parse(uri.toString())
-        context.contentResolver.openInputStream(contentUri)?.use { inputSteam ->
-            attachmentRepository.uploadPendingAttachment(
-                userId = userId,
-                attachmentId = attachmentId,
-                byteArray = inputSteam.readBytes()
-            )
-        } ?: throw IllegalStateException("Unable to open input stream for URI: $contentUri")
+        attachmentRepository.uploadPendingAttachment(
+            userId = userId,
+            attachmentId = attachmentId,
+            uri = uri
+        )
     }
 }

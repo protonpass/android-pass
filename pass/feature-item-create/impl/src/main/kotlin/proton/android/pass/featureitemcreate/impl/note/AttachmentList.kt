@@ -40,14 +40,13 @@ fun AttachmentList(
     ) {
         attachmentsUiState.attachmentsList.forEach { attachment ->
             AttachmentRow(
-                modifier = Modifier
-                    .roundedContainerNorm()
-                    .padding(
-                        start = Spacing.medium,
-                        top = Spacing.small,
-                        end = Spacing.none,
-                        bottom = Spacing.small
-                    ),
+                modifier = Modifier.roundedContainerNorm(),
+                innerModifier = Modifier.padding(
+                    start = Spacing.medium,
+                    top = Spacing.small,
+                    end = Spacing.none,
+                    bottom = Spacing.small
+                ),
                 filename = attachment.name,
                 attachmentType = attachment.type,
                 size = attachment.size,
@@ -76,14 +75,13 @@ fun AttachmentList(
         }
         attachmentsUiState.draftAttachmentsList.forEach { draftAttachment ->
             AttachmentRow(
-                modifier = Modifier
-                    .roundedContainerNorm()
-                    .padding(
-                        start = Spacing.medium,
-                        top = Spacing.small,
-                        end = Spacing.none,
-                        bottom = Spacing.small
-                    ),
+                modifier = Modifier.roundedContainerNorm(),
+                innerModifier = Modifier.padding(
+                    start = Spacing.medium,
+                    top = Spacing.small,
+                    end = Spacing.none,
+                    bottom = Spacing.small
+                ),
                 filename = draftAttachment.name,
                 attachmentType = draftAttachment.attachmentType,
                 size = draftAttachment.size,

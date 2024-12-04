@@ -22,7 +22,6 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
@@ -35,18 +34,14 @@ import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.InviteUserMode
 import proton.android.pass.data.api.usecases.invites.InviteToItem
 import proton.android.pass.data.impl.crypto.EncryptItemsKeysForUser
-import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
-import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.requests.CreateInviteKey
 import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.data.impl.requests.CreateInvitesRequest
-import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
-import proton.android.pass.domain.key.ItemKey
 import javax.inject.Inject
 
 class InviteToItemImpl @Inject constructor(
@@ -54,9 +49,7 @@ class InviteToItemImpl @Inject constructor(
     private val shareRepository: ShareRepository,
     private val getInviteUserMode: GetInviteUserMode,
     private val encryptItemsKeysForUser: EncryptItemsKeysForUser,
-    private val newUserInviteSignatureManager: NewUserInviteSignatureManager,
-    private val remoteInviteDataSource: RemoteInviteDataSource,
-    private val shareKeyRepository: ShareKeyRepository
+    private val remoteInviteDataSource: RemoteInviteDataSource
 ) : InviteToItem {
 
     override suspend fun invoke(
@@ -68,10 +61,7 @@ class InviteToItemImpl @Inject constructor(
             .firstOrNull()
             ?: throw UserIdNotAvailableError()
 
-        val (
-            newUserInvitesAddresses,
-            existingUserInvitesAddresses
-        ) = getUserInviteAddresses(userId, inviteAddresses)
+        val existingUserInvitesAddresses = getUserInviteAddresses(userId, inviteAddresses)
 
         val inviterUserAddress = shareRepository.getAddressForShareId(userId, shareId)
 
@@ -86,35 +76,27 @@ class InviteToItemImpl @Inject constructor(
                     inviterUserAddress = inviterUserAddress
                 ).awaitAll()
             ),
-            newUserRequests = CreateNewUserInvitesRequest(
-                invites = createNewUserInvites(
-                    shareId = shareId,
-                    itemId = itemId,
-                    newUserInvitesAddresses = newUserInvitesAddresses,
-                    inviterUserAddress = inviterUserAddress
-                ).awaitAll()
-            )
+            newUserRequests = CreateNewUserInvitesRequest(invites = emptyList())
         )
     }
 
     private suspend fun getUserInviteAddresses(
         userId: UserId,
         inviteAddresses: List<AddressPermission>
-    ): Pair<List<AddressPermission>, List<AddressPermission>> = coroutineScope {
-        inviteAddresses.map { addressPermission ->
-            async {
-                getInviteUserMode(userId, addressPermission.address)
-                    .map { inviteUserMode -> addressPermission.address to inviteUserMode }
-            }
-        }.awaitAll()
-            .transpose()
-            .getOrThrow()
-            .toMap()
-            .let { inviteUserModes ->
-                inviteAddresses.partition { addressPermission ->
-                    inviteUserModes[addressPermission.address] == InviteUserMode.NewUser
+    ): List<AddressPermission> = coroutineScope {
+        val addressPermissionToInviteMode: List<Pair<AddressPermission, InviteUserMode>> =
+            inviteAddresses.map { addressPermission ->
+                async {
+                    getInviteUserMode(userId, addressPermission.address).map { inviteUserMode ->
+                        addressPermission to inviteUserMode
+                    }
                 }
-            }
+            }.awaitAll().transpose().getOrThrow()
+
+        // NewUserInvites are not allowed for item invites
+        addressPermissionToInviteMode.mapNotNull { (addressPermission, inviteUserMode) ->
+            addressPermission.takeIf { inviteUserMode == InviteUserMode.ExistingUser }
+        }
     }
 
     private suspend fun createExistingUserInvites(
@@ -125,66 +107,25 @@ class InviteToItemImpl @Inject constructor(
     ): List<Deferred<CreateInviteRequest>> = coroutineScope {
         existingUserInvitesAddresses.map { existingUserInviteAddress ->
             async {
-                encryptItemsKeysForUser(
+                val encryptedShareKeys = encryptItemsKeysForUser(
                     shareId = shareId,
                     itemId = itemId,
                     userAddress = inviterUserAddress,
                     targetEmail = existingUserInviteAddress.address
-                )
-                    .getOrThrow()
-                    .let { encryptedShareKeys ->
-                        CreateInviteRequest(
-                            keys = encryptedShareKeys.keys.map { encryptedInviteKey ->
-                                CreateInviteKey(
-                                    key = encryptedInviteKey.key,
-                                    keyRotation = encryptedInviteKey.keyRotation
-                                )
-                            },
-                            email = existingUserInviteAddress.address,
-                            targetType = ShareType.Item.value,
-                            shareRoleId = existingUserInviteAddress.shareRole.value,
-                            itemId = itemId.id
+                ).getOrThrow()
+                CreateInviteRequest(
+                    keys = encryptedShareKeys.keys.map { encryptedInviteKey ->
+                        CreateInviteKey(
+                            key = encryptedInviteKey.key,
+                            keyRotation = encryptedInviteKey.keyRotation
                         )
-                    }
+                    },
+                    email = existingUserInviteAddress.address,
+                    targetType = ShareType.Item.value,
+                    shareRoleId = existingUserInviteAddress.shareRole.value,
+                    itemId = itemId.id
+                )
             }
         }
     }
-
-    private suspend fun createNewUserInvites(
-        shareId: ShareId,
-        itemId: ItemId,
-        newUserInvitesAddresses: List<AddressPermission>,
-        inviterUserAddress: UserAddress
-    ): List<Deferred<CreateNewUserInviteRequest>> = coroutineScope {
-        val itemKey = shareKeyRepository.getLatestKeyForShare(shareId)
-            .first()
-            .let { shareKey ->
-                ItemKey(
-                    rotation = shareKey.rotation,
-                    key = shareKey.key,
-                    responseKey = shareKey.responseKey
-                )
-            }
-
-        newUserInvitesAddresses.map { newUserInviteAddress ->
-            async {
-                newUserInviteSignatureManager.create(
-                    inviterUserAddress = inviterUserAddress,
-                    email = newUserInviteAddress.address,
-                    inviteKey = itemKey
-                )
-                    .getOrThrow()
-                    .let { signature ->
-                        CreateNewUserInviteRequest(
-                            email = newUserInviteAddress.address,
-                            targetType = ShareType.Item.value,
-                            shareRoleId = newUserInviteAddress.shareRole.value,
-                            signature = signature,
-                            itemId = itemId.id
-                        )
-                    }
-            }
-        }
-    }
-
 }

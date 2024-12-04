@@ -29,6 +29,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -56,14 +58,17 @@ import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemActions
+import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
+import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMovedToTrash
@@ -101,6 +106,7 @@ class NoteDetailViewModel @Inject constructor(
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
+    observeItemAttachments: ObserveItemAttachments,
     savedStateHandle: SavedStateHandle,
     getItemActions: GetItemActions,
     getUserPlan: GetUserPlan
@@ -135,10 +141,24 @@ class NoteDetailViewModel @Inject constructor(
         .distinctUntilChanged()
 
     private var hasItemBeenFetchedAtLeastOnce = false
-    private val noteItemDetailsResultFlow = getItemByIdWithVault(shareId, itemId)
-        .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is ItemNotFoundError)) throw it }
-        .onEach { hasItemBeenFetchedAtLeastOnce = true }
-        .asLoadingResult()
+    private val noteItemDetailsResultFlow: Flow<LoadingResult<Pair<ItemWithVaultInfo, List<Attachment>>>> =
+        getItemByIdWithVault(shareId, itemId)
+            .flatMapLatest { itemByIdWithVault ->
+                if (itemByIdWithVault.item.hasAttachments) {
+                    observeItemAttachments(shareId, itemId)
+                        .map { attachments -> itemByIdWithVault to attachments }
+                        .catch { error ->
+                            PassLogger.w(TAG, "Error fetching attachments")
+                            PassLogger.w(TAG, error)
+                            throw error
+                        }
+                } else {
+                    flowOf(itemByIdWithVault to emptyList())
+                }
+            }
+            .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is ItemNotFoundError)) throw it }
+            .onEach { hasItemBeenFetchedAtLeastOnce = true }
+            .asLoadingResult()
 
     private val itemFeaturesFlow: Flow<NoteItemFeatures> = combine(
         getUserPlan(),
@@ -181,7 +201,7 @@ class NoteDetailViewModel @Inject constructor(
 
             LoadingResult.Loading -> NoteDetailUiState.NotInitialised
             is LoadingResult.Success -> {
-                val details = itemLoadingResult.data
+                val (details, attachments) = itemLoadingResult.data
                 val vault = details.vault.takeIf { details.hasMoreThanOneVault }
 
                 val actions = itemActions.getOrNull() ?: ItemActions.Disabled
@@ -197,6 +217,7 @@ class NoteDetailViewModel @Inject constructor(
                     isRestoredFromTrash = isRestoredFromTrash.value(),
                     canPerformActions = details.canPerformItemActions,
                     shareClickAction = shareAction,
+                    attachments = attachments,
                     itemActions = actions,
                     event = event,
                     isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,

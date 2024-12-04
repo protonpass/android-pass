@@ -18,16 +18,20 @@
 
 package proton.android.pass.data.impl.repositories
 
+import FileV1
 import android.content.Context
 import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
 import fileMetadata
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.withContext
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.commonrust.api.FileTypeDetector
+import proton.android.pass.commonrust.api.MimeType
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -35,6 +39,7 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.data.api.errors.ItemKeyNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
+import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSource
 import proton.android.pass.domain.ItemId
@@ -51,13 +56,14 @@ class AttachmentRepositoryImpl @Inject constructor(
     private val remote: RemoteAttachmentsDataSource,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val fileKeyRepository: FileKeyRepository,
+    private val fileTypeDetector: FileTypeDetector,
     private val localItemDataSource: LocalItemDataSource
 ) : AttachmentRepository {
 
     override suspend fun createPendingAttachment(userId: UserId, uri: URI): AttachmentId {
         val metadata = metadataResolver.extractMetadata(uri)
             ?: throw IllegalStateException("Metadata not available for URI: $uri")
-        val fileMetadata = fileMetadata {
+        val fileMetadata: FileV1.FileMetadata = fileMetadata {
             this.name = metadata.name
             this.mimeType = metadata.mimeType
         }
@@ -118,5 +124,36 @@ class AttachmentRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<List<Attachment>> = emptyFlow() // to be implemented
+    ): Flow<List<Attachment>> = oneShot {
+        val files = remote.retrieveAllFiles(userId, shareId, itemId).files
+            .associateBy { it.fileId }
+        val encryptedItemKey = localItemDataSource.getById(shareId, itemId)?.encryptedKey
+            ?: throw ItemKeyNotAvailableError()
+        val itemKey = encryptionContextProvider.withEncryptionContextSuspendable {
+            EncryptionKey(decrypt(encryptedItemKey))
+        }
+        val keyMap = encryptionContextProvider.withEncryptionContextSuspendable(itemKey) {
+            files.mapValues { file ->
+                val decodedFileKey = Base64.decodeBase64(file.value.fileKey)
+                val decryptedKey =
+                    decrypt(EncryptedByteArray(decodedFileKey), EncryptionTag.FileKey)
+                EncryptionKey(decryptedKey)
+            }
+        }
+        files.map {
+            val fileEncryptionKey = keyMap[it.key] ?: throw IllegalStateException("No key found")
+            encryptionContextProvider.withEncryptionContextSuspendable(fileEncryptionKey) {
+                val decodedMetadata = Base64.decodeBase64(it.value.metadata)
+                val decryptedMetadata = decrypt(
+                    content = EncryptedByteArray(decodedMetadata),
+                    tag = EncryptionTag.FileData
+                )
+                val metadata = FileV1.FileMetadata.parseFrom(decryptedMetadata)
+                val fileType = fileTypeDetector.getFileTypeFromMimeType(
+                    MimeType(metadata.mimeType)
+                )
+                it.value.toDomain(metadata.name, metadata.mimeType, fileType.toDomain())
+            }
+        }
+    }
 }

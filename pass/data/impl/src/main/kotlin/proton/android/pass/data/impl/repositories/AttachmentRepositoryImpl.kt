@@ -19,10 +19,19 @@
 package proton.android.pass.data.impl.repositories
 
 import FileV1
+import android.content.Context
+import android.net.Uri
+import dagger.hilt.android.qualifiers.ApplicationContext
 import fileMetadata
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.withContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.extension.primary
+import me.proton.core.user.domain.repository.UserAddressRepository
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.commonrust.api.FileTypeDetector
 import proton.android.pass.commonrust.api.MimeType
@@ -30,6 +39,8 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
+import proton.android.pass.data.api.errors.AddressIdNotAvailableError
+import proton.android.pass.data.api.errors.ItemKeyNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSource
@@ -37,14 +48,18 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
-import proton.android.pass.domain.attachments.AttachmentKey
+import java.net.URI
 import javax.inject.Inject
 
 class AttachmentRepositoryImpl @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val appDispatchers: AppDispatchers,
     private val remote: RemoteAttachmentsDataSource,
     private val fileTypeDetector: FileTypeDetector,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val fileEncryptionKeyRepository: FileKeyRepository
+    private val fileKeyRepository: FileKeyRepository,
+    private val userAddressRepository: UserAddressRepository,
+    private val itemKeyRepository: ItemKeyRepository
 ) : AttachmentRepository {
 
     override suspend fun createPendingAttachment(
@@ -53,30 +68,37 @@ class AttachmentRepositoryImpl @Inject constructor(
         mimeType: String
     ): AttachmentId {
         val fileKey = EncryptionKey.generate()
-        val fileMeta = fileMetadata {
+        val metadata = fileMetadata {
             this.name = name
             this.mimeType = mimeType
         }
-        val fileContents = fileMeta.toByteArray()
         val encryptedMetadata =
-            encryptionContextProvider.withEncryptionContextSuspendable(fileKey) {
-                encrypt(fileContents, EncryptionTag.FileKey)
+            encryptionContextProvider.withEncryptionContextSuspendable(fileKey.clone()) {
+                encrypt(metadata.toByteArray())
             }
         val encodedMetadata = Base64.encodeBase64String(encryptedMetadata.array)
         val id = remote.createPendingFile(userId, encodedMetadata).let(::AttachmentId)
-        fileEncryptionKeyRepository.addMapping(id, fileKey)
+        fileKeyRepository.addMapping(id, fileKey)
         return id
     }
 
     override suspend fun uploadPendingAttachment(
         userId: UserId,
         attachmentId: AttachmentId,
-        byteArray: ByteArray
+        uri: URI
     ) {
-        val fileKey = fileEncryptionKeyRepository.getEncryptionKey(attachmentId)
+        val fileKey: EncryptionKey = fileKeyRepository.getEncryptionKey(attachmentId)
             ?: throw IllegalStateException("No encryption key found for attachment $attachmentId")
-        val encryptedByteArray = encryptionContextProvider.withEncryptionContextSuspendable(fileKey) {
-            encrypt(byteArray, EncryptionTag.FileKey)
+        if (fileKey.isEmpty()) {
+            throw IllegalStateException("Key has been cleared")
+        }
+        val contentUri: Uri = Uri.parse(uri.toString())
+        val encryptedByteArray = withContext(appDispatchers.io) {
+            context.contentResolver.openInputStream(contentUri)?.use { inputSteam ->
+                encryptionContextProvider.withEncryptionContextSuspendable(fileKey.clone()) {
+                    encrypt(inputSteam.readBytes(), EncryptionTag.FileData)
+                }
+            } ?: throw IllegalStateException("Unable to open input stream for URI: $contentUri")
         }
         remote.uploadPendingFile(userId, attachmentId, encryptedByteArray)
     }
@@ -85,11 +107,31 @@ class AttachmentRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
-        revision: Int,
-        toLink: Map<AttachmentId, AttachmentKey>,
+        revision: Long,
+        toLink: Map<AttachmentId, EncryptionKey>,
         toUnlink: Set<AttachmentId>
     ) {
-        remote.linkPendingFiles(userId, shareId, itemId, revision, toLink, toUnlink)
+        val addressId = userAddressRepository.getAddresses(userId).primary()?.addressId
+            ?: throw AddressIdNotAvailableError()
+        val (_, itemKey) = itemKeyRepository.getLatestItemKey(
+            userId = userId,
+            addressId = addressId,
+            itemId = itemId,
+            shareId = shareId
+        ).firstOrNull() // get from item entity
+            ?: throw ItemKeyNotAvailableError()
+        val decryptedItemKey = encryptionContextProvider.withEncryptionContext {
+            EncryptionKey(decrypt(itemKey.key))
+        }
+        val mappings: Map<AttachmentId, EncryptionKey> = fileKeyRepository.getAllMappings()
+        val encryptedContents: Map<AttachmentId, EncryptedString> =
+            encryptionContextProvider.withEncryptionContext(decryptedItemKey.clone()) {
+                mappings.mapValues { (_, fileKey) ->
+                    val encryptedKey = encrypt(fileKey.value(), EncryptionTag.FileKey)
+                    Base64.encodeBase64String(encryptedKey.array)
+                }
+            }
+        remote.linkPendingFiles(userId, shareId, itemId, revision, encryptedContents, toUnlink)
     }
 
     override fun observeAllAttachments(

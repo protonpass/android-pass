@@ -33,7 +33,6 @@ import proton.android.pass.data.impl.responses.attachments.FilesDataResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
-import proton.android.pass.domain.attachments.AttachmentKey
 import javax.inject.Inject
 
 class RemoteAttachmentsDataSourceImpl @Inject constructor(
@@ -67,14 +66,14 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
-        revision: Int,
-        filesToAdd: Map<AttachmentId, AttachmentKey>,
+        revision: Long,
+        filesToAdd: Map<AttachmentId, EncryptedString>,
         filesToRemove: Set<AttachmentId>
     ) {
         val pendingFilesRequest = LinkPendingFilesRequest(
             revision = revision,
             filesToAdd = filesToAdd.map { (id, key) ->
-                LinkPendingFileRequest(fileID = id.id, fileKey = key.value)
+                LinkPendingFileRequest(fileID = id.id, fileKey = key)
             },
             filesToRemove = filesToRemove.map { it.id }
         )

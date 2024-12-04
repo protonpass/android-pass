@@ -22,33 +22,35 @@ import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
-import proton.android.pass.data.api.repositories.MetadataResolver
-import proton.android.pass.data.api.usecases.attachments.UploadAttachment
-import java.net.URI
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentToItem
+import proton.android.pass.data.impl.repositories.FileKeyRepository
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UploadAttachmentImpl @Inject constructor(
+class LinkAttachmentToItemImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val metadataResolver: MetadataResolver,
-    private val attachmentRepository: AttachmentRepository
-) : UploadAttachment {
+    private val attachmentRepository: AttachmentRepository,
+    private val fileKeyRepository: FileKeyRepository
+) : LinkAttachmentToItem {
 
-    override suspend fun invoke(uri: URI) {
+    override suspend fun invoke(
+        itemId: ItemId,
+        shareId: ShareId,
+        revision: Long
+    ) {
         val userId = accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
-        val metadata = metadataResolver.extractMetadata(uri)
-            ?: throw IllegalStateException("Metadata not available for URI: $uri")
-        val attachmentId = attachmentRepository.createPendingAttachment(
+
+        attachmentRepository.linkPendingAttachments(
             userId = userId,
-            name = metadata.name,
-            mimeType = metadata.mimeType
-        )
-        attachmentRepository.uploadPendingAttachment(
-            userId = userId,
-            attachmentId = attachmentId,
-            uri = uri
+            itemId = itemId,
+            shareId = shareId,
+            revision = revision,
+            toLink = fileKeyRepository.getAllMappings(),
+            toUnlink = emptySet()
         )
     }
 }

@@ -51,6 +51,7 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentToItem
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.ShareId
@@ -80,6 +81,7 @@ class CreateNoteViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
+    private val linkAttachmentToItem: LinkAttachmentToItem,
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
     metadataResolver: MetadataResolver,
@@ -159,6 +161,14 @@ class CreateNoteViewModel @Inject constructor(
                         PassLogger.w(TAG, "Create item error")
                         PassLogger.w(TAG, it)
                         snackbarDispatcher(ItemCreationError)
+                    }
+                    .mapCatching { item ->
+                        linkAttachmentToItem(item.id, shareId, item.revision)
+                        item
+                    }
+                    .onFailure {
+                        PassLogger.w(TAG, "Link attachment error")
+                        PassLogger.w(TAG, it)
                     }
                     .map { item ->
                         inAppReviewTriggerMetrics.incrementItemCreatedCount()

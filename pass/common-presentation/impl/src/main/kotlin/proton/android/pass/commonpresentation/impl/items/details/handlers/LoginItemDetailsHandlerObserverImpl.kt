@@ -43,6 +43,7 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.Totp
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -56,7 +57,11 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val totpManager: TotpManager
 ) : ItemDetailsHandlerObserver<ItemContents.Login>() {
 
-    override fun observe(share: Share, item: Item): Flow<ItemDetailState> = combine(
+    override fun observe(
+        share: Share,
+        item: Item,
+        attachments: List<Attachment>
+    ): Flow<ItemDetailState> = combine(
         observeLoginItemContents(item),
         observePrimaryTotp(item),
         observeSecondaryTotps(item),
@@ -81,7 +86,8 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             },
             primaryTotp = primaryTotp,
             secondaryTotps = secondaryTotps,
-            passkeys = loginItemContents.passkeys.map { passkey -> UIPasskeyContent.from(passkey) }
+            passkeys = loginItemContents.passkeys.map { passkey -> UIPasskeyContent.from(passkey) },
+            attachments = attachments
         )
     }
 

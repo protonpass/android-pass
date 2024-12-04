@@ -36,6 +36,7 @@ import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.attachments.Attachment
 import javax.inject.Inject
 
 class AliasItemDetailsHandlerObserverImpl @Inject constructor(
@@ -43,7 +44,11 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemDetailsHandlerObserver<ItemContents.Alias>() {
 
-    override fun observe(share: Share, item: Item): Flow<ItemDetailState> = combine(
+    override fun observe(
+        share: Share,
+        item: Item,
+        attachments: List<Attachment>
+    ): Flow<ItemDetailState> = combine(
         observeAliasItemContents(item),
         observeAliasDetails(item.shareId, item.id).onStart { emit(AliasDetails.EMPTY) }
     ) { aliasItemContents, aliasDetails ->
@@ -59,7 +64,8 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             itemRevision = item.revision,
             itemState = ItemState.from(item.state),
             itemDiffs = ItemDiffs.Alias(),
-            mailboxes = aliasDetails.mailboxes
+            mailboxes = aliasDetails.mailboxes,
+            attachments = attachments
         )
     }
 

@@ -77,6 +77,7 @@ import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
+import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.domain.CustomFieldContent
@@ -87,6 +88,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.FieldCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
@@ -143,6 +145,7 @@ class LoginDetailViewModel @Inject constructor(
     private val unpinItem: UnpinItem,
     private val updateItemFlag: UpdateItemFlag,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    observeItemAttachments: ObserveItemAttachments,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider,
@@ -209,6 +212,19 @@ class LoginDetailViewModel @Inject constructor(
 
     private var hasItemBeenFetchedAtLeastOnce = false
     private val loginItemDetailsResultFlow = getItemByIdWithVault(shareId, itemId)
+        .flatMapLatest { itemByIdWithVault ->
+            if (itemByIdWithVault.item.hasAttachments) {
+                observeItemAttachments(shareId, itemId)
+                    .map { attachments -> itemByIdWithVault to attachments }
+                    .catch { error ->
+                        PassLogger.w(TAG, "Error fetching attachments")
+                        PassLogger.w(TAG, error)
+                        throw error
+                    }
+            } else {
+                flowOf(itemByIdWithVault to emptyList())
+            }
+        }
         .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is ItemNotFoundError)) throw it }
         .onEach { hasItemBeenFetchedAtLeastOnce = true }
         .asLoadingResult()
@@ -228,7 +244,7 @@ class LoginDetailViewModel @Inject constructor(
         canPerformPaidActionFlow
     ) { detailsResult, paidActionResult ->
         paidActionResult.flatMap { isPaid ->
-            detailsResult.map { details ->
+            detailsResult.map { (details, attachments) ->
                 val itemType = details.item.itemType as ItemType.Login
                 val alias = getAliasForItem(itemType)
 
@@ -294,6 +310,7 @@ class LoginDetailViewModel @Inject constructor(
                     linkedAlias = alias,
                     shareClickAction = shareClickAction,
                     passwordScore = passwordScore,
+                    attachments = attachments,
                     securityState = LoginMonitorState(
                         isExcludedFromMonitor = details.item.hasSkippedHealthCheck,
                         navigationScope = navigationScope,
@@ -372,7 +389,8 @@ class LoginDetailViewModel @Inject constructor(
         val linkedAlias: Option<LinkedAliasItem>,
         val shareClickAction: ShareClickAction,
         val passwordScore: PasswordScore?,
-        val securityState: LoginMonitorState
+        val securityState: LoginMonitorState,
+        val attachments: List<Attachment>
     )
 
     internal val uiState: StateFlow<LoginDetailUiState> = combineN(
@@ -442,7 +460,8 @@ class LoginDetailViewModel @Inject constructor(
                     event = event,
                     isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
                     isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled,
-                    monitorState = details.securityState
+                    monitorState = details.securityState,
+                    attachments = details.attachments
                 )
             }
         }

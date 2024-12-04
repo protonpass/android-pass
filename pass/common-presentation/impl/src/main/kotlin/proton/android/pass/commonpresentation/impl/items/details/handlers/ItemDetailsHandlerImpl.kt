@@ -37,6 +37,7 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -50,17 +51,18 @@ class ItemDetailsHandlerImpl @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ItemDetailsHandler {
 
-    override fun observeItemDetails(item: Item): Flow<ItemDetailState> = observeShare(item.shareId)
-        .flatMapLatest { share ->
-            getItemDetailsObserver(item.itemType.category).observe(share, item)
-        }
-        .catch { error ->
-            if (error !is ItemNotFoundError) {
-                PassLogger.w(TAG, "There was an error observing item details")
-                PassLogger.w(TAG, error)
+    override fun observeItemDetails(item: Item, attachments: List<Attachment>): Flow<ItemDetailState> =
+        observeShare(item.shareId)
+            .flatMapLatest { share ->
+                getItemDetailsObserver(item.itemType.category).observe(share, item, attachments)
             }
-        }
-        .distinctUntilChanged()
+            .catch { error ->
+                if (error !is ItemNotFoundError) {
+                    PassLogger.w(TAG, "There was an error observing item details")
+                    PassLogger.w(TAG, error)
+                }
+            }
+            .distinctUntilChanged()
 
 
     override suspend fun onItemDetailsFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain) {

@@ -28,6 +28,7 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.fakes.repositories.FakeDraftAttachmentRepository
 import proton.android.pass.data.fakes.repositories.FakeMetadataResolver
+import proton.android.pass.data.fakes.usecases.attachments.FakeUploadAttachment
 import proton.android.pass.featureitemcreate.impl.note.BaseNoteUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
@@ -43,6 +44,7 @@ internal class BaseNoteViewModelTest {
     private lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
     private lateinit var metadataResolver: MetadataResolver
     private lateinit var draftAttachmentRepository: FakeDraftAttachmentRepository
+    private lateinit var uploadAttachment: FakeUploadAttachment
     private lateinit var baseNoteViewModel: BaseNoteViewModel
 
     @Before
@@ -52,11 +54,13 @@ internal class BaseNoteViewModelTest {
         featureFlagsPreferenceRepository = TestFeatureFlagsPreferenceRepository()
         draftAttachmentRepository = FakeDraftAttachmentRepository()
         metadataResolver = FakeMetadataResolver()
+        uploadAttachment = FakeUploadAttachment()
         baseNoteViewModel = object : BaseNoteViewModel(
             snackbarDispatcher = snackbarDispatcher,
             featureFlagsRepository = featureFlagsPreferenceRepository,
             draftAttachmentRepository = draftAttachmentRepository,
             metadataResolver = metadataResolver,
+            uploadAttachment = uploadAttachment,
             savedStateHandleProvider = savedStateHandleProvider
         ) {}
     }

@@ -37,7 +37,7 @@ import proton.android.pass.data.api.usecases.invites.InviteToItem
 import proton.android.pass.data.impl.crypto.EncryptItemsKeysForUser
 import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
-import proton.android.pass.data.impl.repositories.ItemKeyRepository
+import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.requests.CreateInviteKey
 import proton.android.pass.data.impl.requests.CreateInviteRequest
 import proton.android.pass.data.impl.requests.CreateInvitesRequest
@@ -46,16 +46,17 @@ import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.key.ItemKey
 import javax.inject.Inject
 
 class InviteToItemImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val shareRepository: ShareRepository,
     private val getInviteUserMode: GetInviteUserMode,
-    private val itemKeyRepository: ItemKeyRepository,
     private val encryptItemsKeysForUser: EncryptItemsKeysForUser,
     private val newUserInviteSignatureManager: NewUserInviteSignatureManager,
-    private val remoteInviteDataSource: RemoteInviteDataSource
+    private val remoteInviteDataSource: RemoteInviteDataSource,
+    private val shareKeyRepository: ShareKeyRepository
 ) : InviteToItem {
 
     override suspend fun invoke(
@@ -87,7 +88,6 @@ class InviteToItemImpl @Inject constructor(
             ),
             newUserRequests = CreateNewUserInvitesRequest(
                 invites = createNewUserInvites(
-                    userId = userId,
                     shareId = shareId,
                     itemId = itemId,
                     newUserInvitesAddresses = newUserInvitesAddresses,
@@ -151,18 +151,20 @@ class InviteToItemImpl @Inject constructor(
     }
 
     private suspend fun createNewUserInvites(
-        userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
         newUserInvitesAddresses: List<AddressPermission>,
         inviterUserAddress: UserAddress
     ): List<Deferred<CreateNewUserInviteRequest>> = coroutineScope {
-        val (_, itemKey) = itemKeyRepository.getLatestItemKey(
-            userId = userId,
-            addressId = inviterUserAddress.addressId,
-            shareId = shareId,
-            itemId = itemId
-        ).first()
+        val itemKey = shareKeyRepository.getLatestKeyForShare(shareId)
+            .first()
+            .let { shareKey ->
+                ItemKey(
+                    rotation = shareKey.rotation,
+                    key = shareKey.key,
+                    responseKey = shareKey.responseKey
+                )
+            }
 
         newUserInvitesAddresses.map { newUserInviteAddress ->
             async {

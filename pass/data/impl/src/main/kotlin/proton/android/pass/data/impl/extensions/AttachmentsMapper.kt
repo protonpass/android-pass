@@ -20,11 +20,14 @@ package proton.android.pass.data.impl.extensions
 
 import kotlinx.datetime.Instant
 import proton.android.pass.commonrust.api.FileType
+import proton.android.pass.data.impl.responses.attachments.ChunkResponse
 import proton.android.pass.data.impl.responses.attachments.FileDetailsResponse
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.AttachmentKey
 import proton.android.pass.domain.attachments.AttachmentType
+import proton.android.pass.domain.attachments.Chunk
+import proton.android.pass.domain.attachments.ChunkId
 
 fun FileType.toDomain(): AttachmentType = when (this) {
     FileType.RasterImage -> AttachmentType.RasterImage
@@ -43,6 +46,12 @@ fun FileType.toDomain(): AttachmentType = when (this) {
     FileType.Unknown -> AttachmentType.Unknown
 }
 
+fun ChunkResponse.toDomain(): Chunk = Chunk(
+    id = ChunkId(chunkId),
+    index = index,
+    size = size
+)
+
 fun FileDetailsResponse.toDomain(
     name: String,
     mimeType: String,
@@ -56,5 +65,5 @@ fun FileDetailsResponse.toDomain(
     createTime = Instant.fromEpochSeconds(createTime),
     fileKey = AttachmentKey(fileKey),
     itemKeyRotation = itemKeyRotation,
-    chunks = chunks
+    chunks = chunks.map(ChunkResponse::toDomain)
 )

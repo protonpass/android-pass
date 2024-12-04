@@ -163,7 +163,9 @@ class CreateNoteViewModel @Inject constructor(
                         snackbarDispatcher(ItemCreationError)
                     }
                     .mapCatching { item ->
-                        linkAttachmentToItem(item.id, shareId, item.revision)
+                        if (baseNoteUiState.value.isFileAttachmentsEnabled) {
+                            linkAttachmentToItem(item.id, shareId, item.revision)
+                        }
                         item
                     }
                     .onFailure {

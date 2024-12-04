@@ -43,6 +43,7 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 import proton.android.pass.featureitemdetail.impl.login.customfield.CustomFieldDetails
@@ -61,6 +62,7 @@ internal fun LoginContent(
     isFileAttachmentsEnabled: Boolean,
     passkeys: ImmutableList<UIPasskeyContent>,
     monitorState: LoginMonitorState,
+    attachments: List<Attachment>,
     onEvent: (LoginDetailEvent) -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
@@ -132,7 +134,7 @@ internal fun LoginContent(
 
         if (isFileAttachmentsEnabled) {
             AttachmentSection(
-                files = emptyList(),
+                files = attachments,
                 isDetail = true,
                 colors = passItemColors(ItemCategory.Login),
                 loadingFile = None,

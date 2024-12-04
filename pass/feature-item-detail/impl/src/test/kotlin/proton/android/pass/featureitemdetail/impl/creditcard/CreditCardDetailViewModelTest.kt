@@ -41,6 +41,7 @@ import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItems
+import proton.android.pass.data.fakes.usecases.attachments.FakeObserveItemAttachments
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -97,7 +98,8 @@ class CreditCardDetailViewModelTest {
             pinItem = FakePinItem(),
             unpinItem = FakeUnpinItem(),
             getUserPlan = TestGetUserPlan(),
-            featureFlagsRepository = TestFeatureFlagsPreferenceRepository()
+            featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
+            observeItemAttachments = FakeObserveItemAttachments()
         )
     }
 

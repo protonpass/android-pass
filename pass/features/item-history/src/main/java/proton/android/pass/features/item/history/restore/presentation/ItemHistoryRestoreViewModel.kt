@@ -131,7 +131,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     private val revisionItemDetailsStateFlow = revisionItemFlow.flatMapLatest { item ->
         createItemDetailsStateFlow(
             itemContentsUpdateOptionFlow = revisionItemContentsUpdateOptionFlow,
-            itemDetailStateFlow = itemDetailsHandler.observeItemDetails(item),
+            itemDetailStateFlow = itemDetailsHandler.observeItemDetails(item, emptyList()), // add attachments
             itemDiffsFlow = revisionItemDiffsFlow
         )
     }
@@ -148,7 +148,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     private val currentItemDetailsStateFlow = currentItemFlow.flatMapLatest { item ->
         createItemDetailsStateFlow(
             itemContentsUpdateOptionFlow = currentItemContentsUpdateOptionFlow,
-            itemDetailStateFlow = itemDetailsHandler.observeItemDetails(item),
+            itemDetailStateFlow = itemDetailsHandler.observeItemDetails(item, emptyList()), // add attachments
             itemDiffsFlow = currentItemDiffsFlow
         )
     }

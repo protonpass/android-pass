@@ -16,32 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases
+package proton.android.pass.data.api.usecases
 
-import proton.android.pass.data.api.usecases.RemoveMemberFromVault
 import proton.android.pass.domain.ShareId
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class TestRemoveMemberFromVault @Inject constructor() : RemoveMemberFromVault {
+interface RemoveShareMember {
 
-    private var result: Result<Unit> = Result.success(Unit)
-    private val memory: MutableList<Payload> = mutableListOf()
+    suspend operator fun invoke(shareId: ShareId, memberShareId: ShareId)
 
-    fun getMemory(): List<Payload> = memory
-
-    fun setResult(value: Result<Unit>) {
-        result = value
-    }
-
-    override suspend fun invoke(shareId: ShareId, memberShareId: ShareId) {
-        memory.add(Payload(shareId, memberShareId))
-        result.getOrThrow()
-    }
-
-    data class Payload(
-        val shareId: ShareId,
-        val memberShareId: ShareId
-    )
 }

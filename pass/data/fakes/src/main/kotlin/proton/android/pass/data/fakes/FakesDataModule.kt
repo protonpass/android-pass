@@ -103,7 +103,7 @@ import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.RejectInvite
-import proton.android.pass.data.api.usecases.RemoveMemberFromVault
+import proton.android.pass.data.api.usecases.RemoveShareMember
 import proton.android.pass.data.api.usecases.ResendInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.RestoreAllItems
@@ -298,7 +298,7 @@ import proton.android.pass.data.fakes.usecases.TestRefreshContent
 import proton.android.pass.data.fakes.usecases.TestRefreshInvites
 import proton.android.pass.data.fakes.usecases.TestRefreshPlan
 import proton.android.pass.data.fakes.usecases.TestRejectInvite
-import proton.android.pass.data.fakes.usecases.TestRemoveMemberFromVault
+import proton.android.pass.data.fakes.usecases.TestRemoveShareMember
 import proton.android.pass.data.fakes.usecases.TestResendInvite
 import proton.android.pass.data.fakes.usecases.TestResetAppToDefaults
 import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
@@ -601,7 +601,7 @@ abstract class FakesDataModule {
     abstract fun bindGetVaultMembers(impl: TestGetVaultMembers): GetVaultMembers
 
     @Binds
-    abstract fun bindRemoveMemberFromVault(impl: TestRemoveMemberFromVault): RemoveMemberFromVault
+    abstract fun bindRemoveMemberFromVault(impl: TestRemoveShareMember): RemoveShareMember
 
     @Binds
     abstract fun bindSetVaultMemberPermission(impl: TestSetVaultMemberPermission): SetVaultMemberPermission

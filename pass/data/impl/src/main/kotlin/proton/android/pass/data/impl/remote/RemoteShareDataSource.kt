@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.remote
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
+import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.GetSharePendingInvitesResponse
 import proton.android.pass.data.impl.responses.ShareMemberResponse
 import proton.android.pass.data.impl.responses.ShareResponse
@@ -56,5 +57,11 @@ interface RemoteShareDataSource {
     ): List<ShareMemberResponse>
 
     suspend fun getSharePendingInvites(userId: UserId, shareId: ShareId): GetSharePendingInvitesResponse
+
+    suspend fun removeShareMember(
+        userId: UserId,
+        shareId: ShareId,
+        memberShareId: ShareId
+    ): CodeOnlyResponse
 
 }

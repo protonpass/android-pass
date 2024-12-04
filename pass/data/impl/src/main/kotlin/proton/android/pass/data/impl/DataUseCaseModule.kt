@@ -98,7 +98,7 @@ import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.RejectInvite
-import proton.android.pass.data.api.usecases.RemoveMemberFromVault
+import proton.android.pass.data.api.usecases.RemoveShareMember
 import proton.android.pass.data.api.usecases.RequestImage
 import proton.android.pass.data.api.usecases.ResendInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
@@ -294,7 +294,7 @@ import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RefreshInvitesImpl
 import proton.android.pass.data.impl.usecases.RefreshPlanImpl
 import proton.android.pass.data.impl.usecases.RejectInviteImpl
-import proton.android.pass.data.impl.usecases.RemoveMemberFromVaultImpl
+import proton.android.pass.data.impl.usecases.RemoveShareMemberImpl
 import proton.android.pass.data.impl.usecases.RequestImageImpl
 import proton.android.pass.data.impl.usecases.ResendInviteImpl
 import proton.android.pass.data.impl.usecases.ResetAppToDefaultsImpl
@@ -651,7 +651,7 @@ abstract class DataUseCaseModule {
     abstract fun bindGetVaultMembers(impl: GetVaultMembersImpl): GetVaultMembers
 
     @Binds
-    abstract fun bindRemoveMemberFromVault(impl: RemoveMemberFromVaultImpl): RemoveMemberFromVault
+    abstract fun bindRemoveMemberFromVault(impl: RemoveShareMemberImpl): RemoveShareMember
 
     @Binds
     abstract fun bindSetVaultMemberPermission(impl: SetVaultMemberPermissionImpl): SetVaultMemberPermission

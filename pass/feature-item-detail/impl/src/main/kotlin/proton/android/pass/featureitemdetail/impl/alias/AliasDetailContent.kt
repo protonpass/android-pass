@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.PersistentList
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.SpecialCharacters
@@ -33,6 +34,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
@@ -60,6 +62,7 @@ fun AliasDetailContent(
     isAliasStateToggling: Boolean,
     isHistoryFeatureEnabled: Boolean,
     isAliasManagementEnabled: Boolean,
+    isFileAttachmentsEnabled: Boolean,
     onCopyAlias: (String) -> Unit,
     onCreateLoginFromAlias: (String) -> Unit,
     onToggleAliasState: (Boolean) -> Unit,
@@ -129,6 +132,19 @@ fun AliasDetailContent(
             if (stats is Some) {
                 AliasStats(stats = stats.value)
             }
+        }
+
+        if (isFileAttachmentsEnabled) {
+            AttachmentSection(
+                files = emptyList(),
+                isDetail = true,
+                colors = passItemColors(ItemCategory.Alias),
+                loadingFile = None,
+                onAttachmentOptions = {},
+                onAttachmentOpen = {},
+                onAddAttachment = {},
+                onTrashAll = {}
+            )
         }
 
         PassItemDetailsHistorySection(

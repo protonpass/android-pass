@@ -170,11 +170,20 @@ class AliasDetailViewModel @Inject constructor(
 
     private val itemFeaturesFlow: Flow<AliasItemFeatures> = combine(
         getUserPlan().map { it.isPaidPlan },
-        featureFlagsRepository[FeatureFlag.SL_ALIASES_SYNC],
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
         userPreferencesRepository.observeAliasTrashDialogStatusPreference().map { it.value },
-        featureFlagsRepository[FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1],
-        ::AliasItemFeatures
-    )
+        featureFlagsRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1)
+    ) { isHistoryEnabled, isFileAttachmentsEnabled, slAliasSyncEnabled, isAliasTrashDialogChecked,
+        aliasManagementV1 ->
+        AliasItemFeatures(
+            isHistoryEnabled = isHistoryEnabled,
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled,
+            slAliasSyncEnabled = slAliasSyncEnabled,
+            isAliasTrashDialogChecked = isAliasTrashDialogChecked,
+            isAliasManagementEnabled = aliasManagementV1
+        )
+    }
 
     private val aliasDetailsAndContactsFlow = combine(
         observeAliasDetails(shareId, itemId).asLoadingResult(),
@@ -244,7 +253,8 @@ class AliasDetailViewModel @Inject constructor(
                     isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
                     isSLAliasSyncEnabled = itemFeatures.slAliasSyncEnabled,
                     isAliasManagementEnabled = itemFeatures.isAliasManagementEnabled,
-                    isAliasTrashDialogChecked = itemFeatures.isAliasTrashDialogChecked
+                    isAliasTrashDialogChecked = itemFeatures.isAliasTrashDialogChecked,
+                    isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled
                 )
             }
         }

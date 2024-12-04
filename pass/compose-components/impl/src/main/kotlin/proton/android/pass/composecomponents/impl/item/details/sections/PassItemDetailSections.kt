@@ -39,7 +39,8 @@ internal fun PassItemDetailSections(
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     shouldDisplayItemHistorySection: Boolean,
-    shouldDisplayItemHistoryButton: Boolean
+    shouldDisplayItemHistoryButton: Boolean,
+    shouldDisplayFileAttachments: Boolean
 ) = with(itemDetailState) {
     when (this) {
         is ItemDetailState.Alias -> PassAliasItemDetailSections(
@@ -56,7 +57,8 @@ internal fun PassItemDetailSections(
             createdAt = itemCreatedAt,
             modifiedAt = itemModifiedAt,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
-            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
+            shouldDisplayFileAttachments = shouldDisplayFileAttachments
         )
 
         is ItemDetailState.CreditCard -> PassCreditCardItemDetailsSections(
@@ -72,7 +74,8 @@ internal fun PassItemDetailSections(
             createdAt = itemCreatedAt,
             modifiedAt = itemModifiedAt,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
-            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
+            shouldDisplayFileAttachments = shouldDisplayFileAttachments
         )
 
         is ItemDetailState.Identity -> PassIdentityItemDetailsSections(
@@ -88,7 +91,8 @@ internal fun PassItemDetailSections(
             createdAt = itemCreatedAt,
             modifiedAt = itemModifiedAt,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
-            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
+            shouldDisplayFileAttachments = shouldDisplayFileAttachments
         )
 
         is ItemDetailState.Login -> PassLoginItemDetailSections(
@@ -108,7 +112,8 @@ internal fun PassItemDetailSections(
             createdAt = itemCreatedAt,
             modifiedAt = itemModifiedAt,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
-            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
+            shouldDisplayFileAttachments = shouldDisplayFileAttachments
         )
 
         is ItemDetailState.Note -> PassNoteItemDetailSections(
@@ -124,7 +129,8 @@ internal fun PassItemDetailSections(
             createdAt = itemCreatedAt,
             modifiedAt = itemModifiedAt,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
-            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
+            shouldDisplayFileAttachments = shouldDisplayFileAttachments
         )
 
         is ItemDetailState.Unknown -> itemContents.note.let { note ->

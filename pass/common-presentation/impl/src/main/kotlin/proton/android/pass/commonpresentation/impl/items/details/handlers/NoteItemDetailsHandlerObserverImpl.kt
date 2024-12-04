@@ -33,13 +33,18 @@ import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.attachments.Attachment
 import javax.inject.Inject
 
 class NoteItemDetailsHandlerObserverImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemDetailsHandlerObserver<ItemContents.Note>() {
 
-    override fun observe(share: Share, item: Item): Flow<ItemDetailState> = observeNoteItemContents(item)
+    override fun observe(
+        share: Share,
+        item: Item,
+        attachments: List<Attachment>
+    ): Flow<ItemDetailState> = observeNoteItemContents(item)
         .mapLatest { noteItemContents ->
             ItemDetailState.Note(
                 itemContents = noteItemContents,
@@ -52,7 +57,8 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
                 itemLastAutofillAtOption = item.lastAutofillTime,
                 itemRevision = item.revision,
                 itemState = ItemState.from(item.state),
-                itemDiffs = ItemDiffs.Note()
+                itemDiffs = ItemDiffs.Note(),
+                attachments = attachments
             )
         }
 

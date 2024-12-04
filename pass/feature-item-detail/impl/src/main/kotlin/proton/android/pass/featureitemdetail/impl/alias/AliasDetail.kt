@@ -218,6 +218,7 @@ fun AliasDetail(
                         isAliasStateToggling = state.isLoading(LoadingStateKey.AliasStateToggling),
                         isAliasManagementEnabled = state.isAliasManagementEnabled,
                         isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
+                        attachments = state.attachments,
                         onCopyAlias = { viewModel.onCopyAlias(it) },
                         onCreateLoginFromAlias = { alias ->
                             val event = ItemDetailNavigation.OnCreateLoginFromAlias(

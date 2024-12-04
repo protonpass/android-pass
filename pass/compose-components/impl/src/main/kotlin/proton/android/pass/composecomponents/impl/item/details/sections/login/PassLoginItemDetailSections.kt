@@ -46,6 +46,7 @@ import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Totp
+import proton.android.pass.domain.attachments.Attachment
 
 @Composable
 internal fun PassLoginItemDetailSections(
@@ -66,7 +67,8 @@ internal fun PassLoginItemDetailSections(
     modifiedAt: Instant,
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
-    shouldDisplayFileAttachments: Boolean
+    shouldDisplayFileAttachments: Boolean,
+    attachments: List<Attachment>
 ) = with(contents) {
     Column(
         modifier = modifier,
@@ -123,7 +125,7 @@ internal fun PassLoginItemDetailSections(
 
         if (shouldDisplayFileAttachments) {
             AttachmentSection(
-                files = emptyList(),
+                files = attachments,
                 isDetail = true,
                 colors = itemColors,
                 loadingFile = None,

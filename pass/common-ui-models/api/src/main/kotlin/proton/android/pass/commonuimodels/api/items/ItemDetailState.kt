@@ -31,6 +31,7 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Totp
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 
 @Stable
@@ -60,6 +61,8 @@ sealed interface ItemDetailState {
 
     val itemDiffs: ItemDiffs
 
+    val attachments: List<Attachment>
+
     fun update(itemContents: ItemContents, itemDiffs: ItemDiffs = ItemDiffs.None): ItemDetailState
 
     @Stable
@@ -75,6 +78,7 @@ sealed interface ItemDetailState {
         override val itemRevision: Long,
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.Alias,
+        override val attachments: List<Attachment>,
         val mailboxes: List<AliasMailbox>
     ) : ItemDetailState {
 
@@ -111,7 +115,8 @@ sealed interface ItemDetailState {
         override val itemLastAutofillAtOption: Option<Instant>,
         override val itemRevision: Long,
         override val itemState: ItemState,
-        override val itemDiffs: ItemDiffs.CreditCard
+        override val itemDiffs: ItemDiffs.CreditCard,
+        override val attachments: List<Attachment>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.CreditCard
@@ -147,7 +152,8 @@ sealed interface ItemDetailState {
         override val itemLastAutofillAtOption: Option<Instant>,
         override val itemRevision: Long,
         override val itemState: ItemState,
-        override val itemDiffs: ItemDiffs.Identity
+        override val itemDiffs: ItemDiffs.Identity,
+        override val attachments: List<Attachment>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Identity
@@ -188,7 +194,8 @@ sealed interface ItemDetailState {
         val passwordStrength: PasswordStrength,
         val primaryTotp: Totp?,
         val secondaryTotps: Map<String, Totp?>,
-        val passkeys: List<UIPasskeyContent>
+        val passkeys: List<UIPasskeyContent>,
+        override val attachments: List<Attachment>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Login
@@ -224,7 +231,8 @@ sealed interface ItemDetailState {
         override val itemLastAutofillAtOption: Option<Instant>,
         override val itemRevision: Long,
         override val itemState: ItemState,
-        override val itemDiffs: ItemDiffs.Note
+        override val itemDiffs: ItemDiffs.Note,
+        override val attachments: List<Attachment>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Note
@@ -260,7 +268,8 @@ sealed interface ItemDetailState {
         override val itemLastAutofillAtOption: Option<Instant>,
         override val itemRevision: Long,
         override val itemState: ItemState,
-        override val itemDiffs: ItemDiffs.Unknown
+        override val itemDiffs: ItemDiffs.Unknown,
+        override val attachments: List<Attachment>
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Unknown

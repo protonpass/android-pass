@@ -42,6 +42,7 @@ import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasStats
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 import proton.android.pass.featureitemdetail.impl.common.SenderNameSection
@@ -63,6 +64,7 @@ fun AliasDetailContent(
     isHistoryFeatureEnabled: Boolean,
     isAliasManagementEnabled: Boolean,
     isFileAttachmentsEnabled: Boolean,
+    attachments: List<Attachment>,
     onCopyAlias: (String) -> Unit,
     onCreateLoginFromAlias: (String) -> Unit,
     onToggleAliasState: (Boolean) -> Unit,
@@ -136,7 +138,7 @@ fun AliasDetailContent(
 
         if (isFileAttachmentsEnabled) {
             AttachmentSection(
-                files = emptyList(),
+                files = attachments,
                 isDetail = true,
                 colors = passItemColors(ItemCategory.Alias),
                 loadingFile = None,

@@ -173,7 +173,7 @@ class TestShareRepository : ShareRepository {
     override suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress =
         getAddressForShareIdResult.getOrThrow()
 
-    override fun observeShareMembers(
+    override fun observeShareItemMembers(
         userId: UserId,
         shareId: ShareId,
         userEmail: String?

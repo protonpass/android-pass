@@ -108,7 +108,7 @@ import proton.android.pass.data.api.usecases.ResendInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.RestoreAllItems
 import proton.android.pass.data.api.usecases.RestoreItems
-import proton.android.pass.data.api.usecases.SetVaultMemberPermission
+import proton.android.pass.data.api.usecases.shares.UpdateShareMemberRole
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
@@ -304,7 +304,7 @@ import proton.android.pass.data.fakes.usecases.TestResetAppToDefaults
 import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestSetDefaultVault
-import proton.android.pass.data.fakes.usecases.TestSetVaultMemberPermission
+import proton.android.pass.data.fakes.usecases.TestUpdateShareMemberRole
 import proton.android.pass.data.fakes.usecases.TestTransferVaultOwnership
 import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.data.fakes.usecases.TestUnpinItems
@@ -604,7 +604,7 @@ abstract class FakesDataModule {
     abstract fun bindRemoveMemberFromVault(impl: TestRemoveShareMember): RemoveShareMember
 
     @Binds
-    abstract fun bindSetVaultMemberPermission(impl: TestSetVaultMemberPermission): SetVaultMemberPermission
+    abstract fun bindSetVaultMemberPermission(impl: TestUpdateShareMemberRole): UpdateShareMemberRole
 
     @Binds
     abstract fun bindResendInvite(impl: TestResendInvite): ResendInvite

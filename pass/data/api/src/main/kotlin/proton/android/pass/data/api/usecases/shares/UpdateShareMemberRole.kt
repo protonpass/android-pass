@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,37 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases
+package proton.android.pass.data.api.usecases.shares
 
-import proton.android.pass.data.api.usecases.SetVaultMemberPermission
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class TestSetVaultMemberPermission @Inject constructor() : SetVaultMemberPermission {
-    private var result: Result<Unit> = Result.success(Unit)
-    private val memory: MutableList<Payload> = mutableListOf()
+interface UpdateShareMemberRole {
 
-    fun getMemory(): List<Payload> = memory
-
-    fun setResult(value: Result<Unit>) {
-        result = value
-    }
-
-    override suspend fun invoke(
+    suspend operator fun invoke(
         shareId: ShareId,
         memberShareId: ShareId,
-        role: ShareRole
-    ) {
-        memory.add(Payload(shareId, memberShareId, role))
-        result.getOrThrow()
-    }
-
-    data class Payload(
-        val shareId: ShareId,
-        val memberShareId: ShareId,
-        val role: ShareRole
+        memberShareRole: ShareRole
     )
+
 }

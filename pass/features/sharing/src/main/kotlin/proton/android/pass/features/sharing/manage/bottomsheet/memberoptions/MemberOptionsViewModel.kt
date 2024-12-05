@@ -38,7 +38,7 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.RemoveShareMember
-import proton.android.pass.data.api.usecases.SetVaultMemberPermission
+import proton.android.pass.data.api.usecases.shares.UpdateShareMemberRole
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SharePermission
 import proton.android.pass.domain.SharePermissionFlag
@@ -60,7 +60,7 @@ import javax.inject.Inject
 class MemberOptionsViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val removeShareMember: RemoveShareMember,
-    private val setVaultMemberPermission: SetVaultMemberPermission,
+    private val updateShareMemberRole: UpdateShareMemberRole,
     savedState: SavedStateHandleProvider,
     observeVaults: ObserveVaults
 ) : ViewModel() {
@@ -136,10 +136,10 @@ class MemberOptionsViewModel @Inject constructor(
         isLoadingFlow.update { IsLoadingState.Loading }
         loadingOptionFlow.update { permissionLevel.toLoadingOption() }
         runCatching {
-            setVaultMemberPermission(
+            updateShareMemberRole(
                 shareId = vaultShareId,
                 memberShareId = memberShareId,
-                role = permissionLevel.toShareRole()
+                memberShareRole = permissionLevel.toShareRole()
             )
         }.onSuccess {
             PassLogger.i(TAG, "Member permissions changed")

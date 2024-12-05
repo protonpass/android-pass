@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.RemoveShareMember
-import proton.android.pass.data.api.usecases.SetVaultMemberPermission
+import proton.android.pass.data.api.usecases.shares.UpdateShareMemberRole
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.features.sharing.manage.bottomsheet.MemberShareIdArg
@@ -44,7 +44,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ManageItemMemberOptionsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
-    private val setVaultMemberPermission: SetVaultMemberPermission,
+    private val updateShareMemberRole: UpdateShareMemberRole,
     private val removeShareMember: RemoveShareMember
 ) : ViewModel() {
 
@@ -99,7 +99,7 @@ class ManageItemMemberOptionsViewModel @Inject constructor(
                 }
             }
 
-            runCatching { setVaultMemberPermission(shareId, memberShareId, newMemberRole) }
+            runCatching { updateShareMemberRole(shareId, memberShareId, newMemberRole) }
                 .onFailure { error ->
                     PassLogger.w(TAG, "There was an error updating member role")
                     PassLogger.w(TAG, error)

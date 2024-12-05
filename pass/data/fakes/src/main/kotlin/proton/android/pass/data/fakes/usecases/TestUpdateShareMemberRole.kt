@@ -16,15 +16,37 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.fakes.usecases
 
+import proton.android.pass.data.api.usecases.shares.UpdateShareMemberRole
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface SetVaultMemberPermission {
-    suspend operator fun invoke(
+@Singleton
+class TestUpdateShareMemberRole @Inject constructor() : UpdateShareMemberRole {
+    private var result: Result<Unit> = Result.success(Unit)
+    private val memory: MutableList<Payload> = mutableListOf()
+
+    fun getMemory(): List<Payload> = memory
+
+    fun setResult(value: Result<Unit>) {
+        result = value
+    }
+
+    override suspend fun invoke(
         shareId: ShareId,
         memberShareId: ShareId,
-        role: ShareRole
+        memberShareRole: ShareRole
+    ) {
+        memory.add(Payload(shareId, memberShareId, memberShareRole))
+        result.getOrThrow()
+    }
+
+    data class Payload(
+        val shareId: ShareId,
+        val memberShareId: ShareId,
+        val role: ShareRole
     )
 }

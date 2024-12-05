@@ -28,7 +28,7 @@ import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestRemoveShareMember
-import proton.android.pass.data.fakes.usecases.TestSetVaultMemberPermission
+import proton.android.pass.data.fakes.usecases.TestUpdateShareMemberRole
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.features.sharing.SharingSnackbarMessage
@@ -55,7 +55,7 @@ class MemberOptionsViewModelTest {
 
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var removeMemberFromVault: TestRemoveShareMember
-    private lateinit var setVaultMemberPermission: TestSetVaultMemberPermission
+    private lateinit var setVaultMemberPermission: TestUpdateShareMemberRole
     private lateinit var observeVaults: TestObserveVaults
 
 
@@ -63,7 +63,7 @@ class MemberOptionsViewModelTest {
     fun setup() {
         snackbarDispatcher = TestSnackbarDispatcher()
         removeMemberFromVault = TestRemoveShareMember()
-        setVaultMemberPermission = TestSetVaultMemberPermission()
+        setVaultMemberPermission = TestUpdateShareMemberRole()
         observeVaults = TestObserveVaults()
     }
 
@@ -142,7 +142,7 @@ class MemberOptionsViewModelTest {
         }
 
         val memory = setVaultMemberPermission.getMemory()
-        val expected = TestSetVaultMemberPermission.Payload(
+        val expected = TestUpdateShareMemberRole.Payload(
             shareId = ShareId(USER_SHARE_ID),
             memberShareId = ShareId(MEMBER_SHARE_ID),
             role = ShareRole.Admin
@@ -162,7 +162,7 @@ class MemberOptionsViewModelTest {
         instance.setPermissions(MemberPermissionLevel.Admin)
 
         val memory = setVaultMemberPermission.getMemory()
-        val expected = TestSetVaultMemberPermission.Payload(
+        val expected = TestUpdateShareMemberRole.Payload(
             shareId = ShareId(USER_SHARE_ID),
             memberShareId = ShareId(MEMBER_SHARE_ID),
             role = ShareRole.Admin
@@ -255,7 +255,7 @@ class MemberOptionsViewModelTest {
         instance = MemberOptionsViewModel(
             snackbarDispatcher = snackbarDispatcher,
             removeShareMember = removeMemberFromVault,
-            setVaultMemberPermission = setVaultMemberPermission,
+            updateShareMemberRole = setVaultMemberPermission,
             savedState = savedStateHandle,
             observeVaults = observeVaults
         )

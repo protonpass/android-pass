@@ -118,6 +118,10 @@
     >You cannot transfer your last owned vault.</string>
     <string name="sharing_bottomsheet_remove_access">Revoke access</string>
 
+    <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
+    <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
+    <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
+
     <string name="sharing_bottomsheet_resend_invite">Resend invitation</string>
     <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>
 

@@ -128,6 +128,33 @@ class LocalShareDataSourceImpl @Inject constructor(
             }
     }
 
+    override fun getShareMember(
+        userId: UserId,
+        shareId: ShareId,
+        memberShareId: ShareId
+    ): ShareMember? = shareMembersFlow.value[userId]
+        ?.get(shareId)
+        ?.first { it.shareId == memberShareId }
+
+    override fun upsertShareMember(
+        userId: UserId,
+        shareId: ShareId,
+        shareMember: ShareMember
+    ) {
+        shareMembersFlow.value[userId]
+            ?.get(shareId)
+            ?.map { currentShareMember ->
+                if (currentShareMember.shareId == shareMember.shareId) {
+                    shareMember
+                } else {
+                    currentShareMember
+                }
+            }
+            ?.also { newShareMembers ->
+                upsertShareMembers(userId, shareId, newShareMembers)
+            }
+    }
+
     private companion object {
 
         private const val TAG = "LocalShareDataSourceImpl"

@@ -87,11 +87,11 @@ internal fun ManageItemScreen(
                 }
 
                 is ManageItemUiEvent.OnMemberOptionsClick -> {
-                    SharingNavigation.MemberOptions(
+                    SharingNavigation.ManageItemMemberOptions(
                         shareId = uiEvent.shareId,
-                        destShareId = uiEvent.member.shareId,
+                        memberShareId = uiEvent.member.shareId,
                         memberRole = uiEvent.member.role,
-                        destEmail = uiEvent.member.email
+                        memberEmail = uiEvent.member.email
                     ).also(onNavigateEvent)
                 }
             }

@@ -104,7 +104,7 @@ import proton.android.pass.data.api.usecases.ResendInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.RestoreAllItems
 import proton.android.pass.data.api.usecases.RestoreItems
-import proton.android.pass.data.api.usecases.SetVaultMemberPermission
+import proton.android.pass.data.api.usecases.shares.UpdateShareMemberRole
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
@@ -302,7 +302,7 @@ import proton.android.pass.data.impl.usecases.RestoreAllItemsImpl
 import proton.android.pass.data.impl.usecases.RestoreItemImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessRequest
 import proton.android.pass.data.impl.usecases.SendUserAccessRequestImpl
-import proton.android.pass.data.impl.usecases.SetVaultMemberPermissionImpl
+import proton.android.pass.data.impl.usecases.shares.UpdateShareMemberRoleImpl
 import proton.android.pass.data.impl.usecases.TransferVaultOwnershipImpl
 import proton.android.pass.data.impl.usecases.TrashItemImpl
 import proton.android.pass.data.impl.usecases.UnpinItemImpl
@@ -654,7 +654,7 @@ abstract class DataUseCaseModule {
     abstract fun bindRemoveMemberFromVault(impl: RemoveShareMemberImpl): RemoveShareMember
 
     @Binds
-    abstract fun bindSetVaultMemberPermission(impl: SetVaultMemberPermissionImpl): SetVaultMemberPermission
+    abstract fun bindSetVaultMemberPermission(impl: UpdateShareMemberRoleImpl): UpdateShareMemberRole
 
     @Binds
     abstract fun bindCancelInvite(impl: CancelInviteImpl): CancelInvite

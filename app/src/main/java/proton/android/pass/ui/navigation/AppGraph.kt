@@ -226,6 +226,7 @@ import proton.android.pass.features.sharing.manage.bottomsheet.InviteOptionsBott
 import proton.android.pass.features.sharing.manage.bottomsheet.InviteTypeValue
 import proton.android.pass.features.sharing.manage.bottomsheet.MemberOptionsBottomSheet
 import proton.android.pass.features.sharing.manage.item.navigation.ManageItemNavItem
+import proton.android.pass.features.sharing.manage.itemmemberoptions.navigation.ManageItemMemberOptionsNavItem
 import proton.android.pass.features.sharing.sharingGraph
 import proton.android.pass.features.sharing.sharingpermissions.bottomsheet.SharingEditPermissions
 import proton.android.pass.features.sl.sync.details.navigation.SimpleLoginSyncDetailsNavItem
@@ -1831,6 +1832,16 @@ fun NavGraphBuilder.appGraph(
                 destination = ManageItemNavItem,
                 route = ManageItemNavItem.createNavRoute(it.shareId),
                 backDestination = HomeNavItem
+            )
+
+            is SharingNavigation.ManageItemMemberOptions -> appNavigator.navigate(
+                destination = ManageItemMemberOptionsNavItem,
+                route = ManageItemMemberOptionsNavItem.createNavRoute(
+                    shareId = it.shareId,
+                    memberShareId = it.memberShareId,
+                    memberShareRole = it.memberRole,
+                    memberEmail = it.memberEmail
+                )
             )
 
             is SharingNavigation.ManageVault -> appNavigator.navigate(

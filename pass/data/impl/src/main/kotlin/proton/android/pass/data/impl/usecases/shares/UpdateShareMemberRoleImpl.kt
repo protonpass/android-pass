@@ -16,39 +16,37 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases
+package proton.android.pass.data.impl.usecases.shares
 
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.network.data.ApiProvider
-import proton.android.pass.data.api.usecases.SetVaultMemberPermission
-import proton.android.pass.data.impl.api.PasswordManagerApi
-import proton.android.pass.data.impl.requests.UpdateMemberShareRequest
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
+import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.shares.UpdateShareMemberRole
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import javax.inject.Inject
 
-class SetVaultMemberPermissionImpl @Inject constructor(
+class UpdateShareMemberRoleImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val apiProvider: ApiProvider
-) : SetVaultMemberPermission {
+    private val shareRepository: ShareRepository
+) : UpdateShareMemberRole {
+
     override suspend fun invoke(
         shareId: ShareId,
         memberShareId: ShareId,
-        role: ShareRole
+        memberShareRole: ShareRole
     ) {
-        val userId = accountManager.getPrimaryUserId().filterNotNull().first()
-        apiProvider.get<PasswordManagerApi>(userId)
-            .invoke {
-                updateShareMember(
-                    shareId = shareId.id,
-                    memberShareId = memberShareId.id,
-                    request = UpdateMemberShareRequest(
-                        shareRoleId = role.value
-                    )
+        accountManager.getPrimaryUserId()
+            .firstOrNull()
+            ?.also { userId ->
+                shareRepository.updateShareMember(
+                    userId = userId,
+                    shareId = shareId,
+                    memberShareId = memberShareId,
+                    memberShareRole = memberShareRole
                 )
             }
-            .valueOrThrow
+            ?: throw UserIdNotAvailableError()
     }
 }

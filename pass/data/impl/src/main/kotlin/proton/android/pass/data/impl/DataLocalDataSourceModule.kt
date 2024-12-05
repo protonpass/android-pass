@@ -67,7 +67,7 @@ abstract class DataLocalDataSourceModule {
     @Binds
     abstract fun bindLocalItemDataSource(impl: LocalItemDataSourceImpl): LocalItemDataSource
 
-    @Binds
+    @[Binds Singleton]
     abstract fun bindLocalShareDataSource(impl: LocalShareDataSourceImpl): LocalShareDataSource
 
     @Binds

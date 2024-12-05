@@ -43,6 +43,7 @@ import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -58,6 +59,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.totp.api.TotpManager
 import proton.android.pass.totp.fakes.TestObserveTotpFromUri
@@ -94,6 +96,9 @@ class LoginDetailScreenTest {
 
     @Inject
     lateinit var ffRepo: TestFeatureFlagsPreferenceRepository
+
+    @Inject
+    lateinit var observeShare: FakeObserveShare
 
     @Before
     fun setup() {
@@ -306,9 +311,12 @@ class LoginDetailScreenTest {
                 )
             )
         )
+        val share = TestShare.Vault.create(id = SHARE_ID)
+
         getItemByIdWithVault.emitValue(Result.success(withVault))
         observeItemById.emitValue(Result.success(item))
         getItemById.emit(Result.success(item))
+        observeShare.emitValue(share)
 
         return title
     }

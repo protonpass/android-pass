@@ -456,6 +456,30 @@ class ShareRepositoryImpl @Inject constructor(
             }
     }
 
+    override suspend fun updateShareMember(
+        userId: UserId,
+        shareId: ShareId,
+        memberShareId: ShareId,
+        memberShareRole: ShareRole
+    ) {
+        runCatching {
+            remoteShareDataSource.updateShareMember(userId, shareId, memberShareId, memberShareRole)
+        }.onFailure { error ->
+            PassLogger.w(TAG, "There was an error removing a share member")
+            PassLogger.w(TAG, error)
+            throw error
+        }.onSuccess {
+            localShareDataSource.getShareMember(userId, shareId, memberShareId)
+                ?.also { currentShareMember ->
+                    localShareDataSource.upsertShareMember(
+                        userId = userId,
+                        shareId = shareId,
+                        shareMember = currentShareMember.copy(role = memberShareRole)
+                    )
+                }
+        }
+    }
+
     private suspend fun onShareResponseEntity(
         userId: UserId,
         event: UpdateShareEvent,

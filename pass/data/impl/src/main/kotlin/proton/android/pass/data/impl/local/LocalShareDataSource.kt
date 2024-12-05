@@ -63,4 +63,16 @@ interface LocalShareDataSource {
         memberShareId: ShareId
     )
 
+    fun getShareMember(
+        userId: UserId,
+        shareId: ShareId,
+        memberShareId: ShareId
+    ): ShareMember?
+
+    fun upsertShareMember(
+        userId: UserId,
+        shareId: ShareId,
+        shareMember: ShareMember
+    )
+
 }

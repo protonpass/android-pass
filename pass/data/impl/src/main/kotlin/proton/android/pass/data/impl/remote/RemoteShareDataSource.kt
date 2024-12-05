@@ -27,6 +27,7 @@ import proton.android.pass.data.impl.responses.ShareMemberResponse
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 
 interface RemoteShareDataSource {
 
@@ -62,6 +63,13 @@ interface RemoteShareDataSource {
         userId: UserId,
         shareId: ShareId,
         memberShareId: ShareId
+    ): CodeOnlyResponse
+
+    suspend fun updateShareMember(
+        userId: UserId,
+        shareId: ShareId,
+        memberShareId: ShareId,
+        memberShareRole: ShareRole
     ): CodeOnlyResponse
 
 }

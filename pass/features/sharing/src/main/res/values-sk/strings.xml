@@ -43,12 +43,12 @@
   <string name="share_with_email_email_already_added">Túto emailovú adresu už ste pridali</string>
   <string name="share_permissions_title">Nastavte úroveň prístupu</string>
   <string name="sharing_reject_invitation">Odmietnuť pozvánku</string>
-  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
-  <string name="sharing_vault_invitation_accept">Join shared vault</string>
-  <string name="sharing_item_invitation_title">Shared item invitation</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
-  <string name="sharing_item_invitation_accept">Accept and view the item</string>
+  <string name="sharing_vault_invitation_title">Pozvánka do zdieľaného trezora</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s s vami chce zdieľať trezor.</string>
+  <string name="sharing_vault_invitation_accept">Pripojiť sa k zdieľanému trezoru</string>
+  <string name="sharing_item_invitation_title">Pozvánka ku zdieľanej položke</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s s vami chce zdieľať položku.</string>
+  <string name="sharing_item_invitation_accept">Prijať a zobraziť novú položku</string>
   <string name="sharing_snackbar_get_invite_error">Nepodarilo sa získať pozvánku</string>
   <string name="sharing_snackbar_invite_accepted">Pozvánka prijatá</string>
   <string name="sharing_snackbar_invite_accept_error">Chyba pri prijatí pozvánky</string>

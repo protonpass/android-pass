@@ -187,13 +187,7 @@
   <string name="remove_passkey_dialog_title">要移除這個密碼金鑰嗎?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">You are about to remove the passkey for user \'%1$s\' for \'%2$s\'. Are you sure?</string>
   <string name="add_a_custom_section">Add a custom section</string>
-  <string name="add_attachment_take_a_photo">Take a photo</string>
-  <string name="add_attachment_choose_a_photo_or_video">Choose a photo or video</string>
-  <string name="add_attachment_choose_a_file">Choose a file</string>
-  <string name="attachment_options_open">Open</string>
-  <string name="attachment_options_save">Save</string>
-  <string name="attachment_options_rename">Rename</string>
-  <string name="attachment_options_delete">Delete</string>
+  <!-- Attachments -->
   <string name="banner_title_attachments">Attachments</string>
   <string name="banner_body_attachments">You can attach files to items for a better organization</string>
 </resources>

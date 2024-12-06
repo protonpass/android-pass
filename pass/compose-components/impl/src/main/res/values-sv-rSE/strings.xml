@@ -166,7 +166,7 @@
   <string name="item_details_identity_section_address_state_or_province_title">Delstat eller provins</string>
   <string name="item_details_identity_section_address_county_title">Län</string>
   <string name="item_details_identity_section_address_country_or_region_title">Land eller region</string>
-  <string name="item_details_identity_section_contact_title">Kontaktdetaljer</string>
+  <string name="item_details_identity_section_contact_title">Kontaktuppgifter</string>
   <string name="item_details_identity_section_contact_social_security_number_title">Personnummer</string>
   <string name="item_details_identity_section_contact_passport_number_title">Passnummer</string>
   <string name="item_details_identity_section_contact_license_number_title">Körkortsnummer</string>
@@ -251,7 +251,7 @@
   <string name="snack_bar_message_item_pinned_error">Det gick inte att fästa detta objekt</string>
   <string name="snack_bar_message_item_unpinned_success">Objekt lossat</string>
   <string name="snack_bar_message_item_unpinned_error">Det gick inte att lossa detta objekt</string>
-  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
+  <string name="snack_bar_message_item_trashed_success">Objektet har kastats</string>
   <string name="snack_bar_message_item_trashed_error">Det gick inte kasta detta objekt</string>
   <string name="snack_bar_message_item_restore_success">Objekt återställt</string>
   <string name="snack_bar_message_item_restore_error">Det gick inte återställa detta objekt</string>
@@ -272,4 +272,12 @@
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Om du inte kan hitta sådan e-post kan du %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">begär en ny kod</string>
   <string name="field_display_name_title">Visningsnamn</string>
+  <!-- Attachments -->
+  <plurals name="attachment_file_amount">
+    <item quantity="one">%1$s fil</item>
+    <item quantity="other">%1$s filer</item>
+  </plurals>
+  <string name="attachment_title">Bilagor</string>
+  <string name="attachment_no_files">Ladda upp filer från din enhet</string>
+  <string name="attachment_add_file">Bifoga en fil</string>
 </resources>

@@ -272,4 +272,12 @@
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">If you can\'t find such email, you can %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code</string>
   <string name="field_display_name_title">Anzeigename</string>
+  <!-- Attachments -->
+  <plurals name="attachment_file_amount">
+    <item quantity="one">%1$s file</item>
+    <item quantity="other">%1$s files</item>
+  </plurals>
+  <string name="attachment_title">Attachments</string>
+  <string name="attachment_no_files">Upload files from your device</string>
+  <string name="attachment_add_file">Attach a file</string>
 </resources>

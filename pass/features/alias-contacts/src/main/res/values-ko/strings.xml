@@ -57,7 +57,7 @@
   <string name="contact_option_unblock_contact">연락처 차단 해제</string>
   <string name="contact_option_delete">삭제</string>
   <string name="alias_contacts_bottomsheet_title">별칭 연락처</string>
-  <string name="alias_contacts_bottomsheet_subtitle">개인 이메일을 비공개로 유지하려면 별칭 연락처를 만드세요.</string>
+  <string name="alias_contacts_bottomsheet_subtitle">개인 이메일을 비공개로 유지하려면 별칭 연락처를 만들어 보세요.</string>
   <string name="alias_contacts_explanation">이것이 작동하는 원리입니다:</string>
   <string name="alias_contacts_bottomsheet_section_1">받을 사람의 이메일 주소를 입력하세요.</string>
   <string name="alias_contacts_bottomsheet_section_2">Proton Pass가 (역 별칭으로도 불리는) 포워딩 주소를 만들어줍니다.</string>

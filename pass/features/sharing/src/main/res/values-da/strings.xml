@@ -31,7 +31,7 @@
     <item quantity="one">%d medlem</item>
     <item quantity="other">%d medlemmer</item>
   </plurals>
-  <string name="sharing_member_count_header">Members</string>
+  <string name="sharing_member_count_header">Medlemmer</string>
   <string name="share_with_title">Del med</string>
   <string name="share_with_email_hint">E-mailadresse</string>
   <string name="share_with_email_error">Ugyldig e-mailadresse</string>
@@ -39,12 +39,12 @@
   <string name="share_with_email_email_already_added">Du har allerede tilføjet denne e-mailadresse</string>
   <string name="share_permissions_title">Angiv adgangsniveau</string>
   <string name="sharing_reject_invitation">Afvis invitation</string>
-  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
-  <string name="sharing_vault_invitation_accept">Join shared vault</string>
-  <string name="sharing_item_invitation_title">Shared item invitation</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
-  <string name="sharing_item_invitation_accept">Accept and view the item</string>
+  <string name="sharing_vault_invitation_title">Delte boks-invitation</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s ønsker at dele en boks med dig.</string>
+  <string name="sharing_vault_invitation_accept">Deltag i delt boks</string>
+  <string name="sharing_item_invitation_title">Delte element-invitation</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s ønsker at dele et element med dig.</string>
+  <string name="sharing_item_invitation_accept">Accepter og se elementet</string>
   <string name="sharing_snackbar_get_invite_error">Kunne ikke hente invitation</string>
   <string name="sharing_snackbar_invite_accepted">Invitation accepteret</string>
   <string name="sharing_snackbar_invite_accept_error">Fejl ved accept af invitationen</string>
@@ -62,9 +62,9 @@
   <string name="share_summary_title">Gennemgå og del</string>
   <string name="share_summary_vault">%s boks</string>
   <string name="share_summary_share_vault">Del boks</string>
-  <string name="share_summary_share_item">Share item</string>
+  <string name="share_summary_share_item">Del element</string>
   <string name="share_summary_vault_title">Boks</string>
-  <string name="share_summary_item_title">Item</string>
+  <string name="share_summary_item_title">Element</string>
   <string name="share_manage_vault_share_with_more_people">Del med flere personer</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d invitation tilbage</item>
@@ -116,7 +116,7 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">Opgradér for at oprette flere bokse</string>
   <string name="sharing_from_item_vault_limit_reached">Du har nået boksens grænsen</string>
   <string name="share_with_suggestions_title">Forslag</string>
-  <string name="share_with_recents_title">Recent</string>
+  <string name="share_with_recents_title">Seneste</string>
   <string name="share_with_remove_email_content_description">Fjern e-mail</string>
   <string name="share_with_user_title">Del med</string>
   <string name="share_with_user_description">Del dette element med andre Proton-brugere.</string>

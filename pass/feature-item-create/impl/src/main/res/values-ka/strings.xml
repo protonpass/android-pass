@@ -187,13 +187,7 @@
   <string name="remove_passkey_dialog_title">წავშალო ეს წვდომის გასაღები?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">მართლა გნებავთ, წაშალოთ მომხმარებლის \'%1$s\' წვდომის გასაღები ელემენტისთვის \'%2$s\'?</string>
   <string name="add_a_custom_section">მორგებული განყოფილების დამატება</string>
-  <string name="add_attachment_take_a_photo">ფოტოს გადაღება</string>
-  <string name="add_attachment_choose_a_photo_or_video">აირჩიეთ ფოტო ან ვიდეო</string>
-  <string name="add_attachment_choose_a_file">ფაილის არჩევა</string>
-  <string name="attachment_options_open">გახსნა</string>
-  <string name="attachment_options_save">შენახვა</string>
-  <string name="attachment_options_rename">გადარქმევა</string>
-  <string name="attachment_options_delete">წაშლა</string>
+  <!-- Attachments -->
   <string name="banner_title_attachments">მიმაგრებული ფაილები</string>
   <string name="banner_body_attachments">უკეთესად ორგანიზმებისთვის ელემენტებს, შეგიძლიათ, ფაილები მიამაგროთ</string>
 </resources>

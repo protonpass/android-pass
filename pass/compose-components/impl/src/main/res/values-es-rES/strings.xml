@@ -272,4 +272,12 @@
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Si no encuentras dicho correo electrónico, puedes %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">solicitar un código nuevo</string>
   <string name="field_display_name_title">Nombre a mostrar</string>
+  <!-- Attachments -->
+  <plurals name="attachment_file_amount">
+    <item quantity="one">%1$s archivo</item>
+    <item quantity="other">%1$s archivos</item>
+  </plurals>
+  <string name="attachment_title">Archivos adjuntos</string>
+  <string name="attachment_no_files">Cargar archivos desde el dispositivo</string>
+  <string name="attachment_add_file">Adjuntar un archivo</string>
 </resources>

@@ -187,13 +187,7 @@
   <string name="remove_passkey_dialog_title">Bu geçiş anahtarı silinsin mi?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">%1$s kullanıcısının %2$s geçiş anahtarını silmek üzeresiniz. Emin misiniz?</string>
   <string name="add_a_custom_section">Özel bir bölüm ekle</string>
-  <string name="add_attachment_take_a_photo">Bir fotoğraf çekin</string>
-  <string name="add_attachment_choose_a_photo_or_video">Bir fotoğraf ya da video seçin</string>
-  <string name="add_attachment_choose_a_file">Bir dosya seçin</string>
-  <string name="attachment_options_open">Aç</string>
-  <string name="attachment_options_save">Kaydet</string>
-  <string name="attachment_options_rename">Yeniden adlandır</string>
-  <string name="attachment_options_delete">Sil</string>
+  <!-- Attachments -->
   <string name="banner_title_attachments">Ek dosyalar</string>
   <string name="banner_body_attachments">Daha iyi bir düzen için ögelere dosyalar ekleyebilirsiniz</string>
 </resources>

@@ -294,4 +294,14 @@
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Калі вы не можаце знайсці ліст з такой назвай, вы можаце %s</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">запытаць новы код</string>
   <string name="field_display_name_title">Бачнае імя</string>
+  <!-- Attachments -->
+  <plurals name="attachment_file_amount">
+    <item quantity="one">%1$s файл</item>
+    <item quantity="few">%1$s файлы</item>
+    <item quantity="many">%1$s файлаў</item>
+    <item quantity="other">%1$s файлаў</item>
+  </plurals>
+  <string name="attachment_title">Далучэнні</string>
+  <string name="attachment_no_files">Запампаваць файлы з вашай прылады</string>
+  <string name="attachment_add_file">Далучыць файл</string>
 </resources>

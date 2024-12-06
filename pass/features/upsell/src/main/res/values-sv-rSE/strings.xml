@@ -21,7 +21,7 @@
   <string name="upsell_dark_web_monitoring_subtitle">Övervakning av mörka webben är tillgängligt med ett betalt paket. Uppgradera för omedelbar åtkomst.</string>
   <string name="upsell_missing_2fa_subtitle">Visa en lista över webbplatser där du kan lägga till en andra autentiseringsfaktor för att skydda din närvaro online. Uppgradera för omedelbar åtkomst.</string>
   <string name="upsell_sentinel_subtitle">Lås upp avancerade säkerhetsfunktioner och detaljerade loggar för att skydda din närvaro online.</string>
-  <string name="upsell_paid_feature_dark_web_monitoring">Övervakning mörka webben</string>
+  <string name="upsell_paid_feature_dark_web_monitoring">Övervakning av mörka webben</string>
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
   <string name="upsell_paid_feature_authenticator">Integrerad 2FA-autentisering</string>
   <string name="upsell_paid_feature_unlimited_aliases">Obegränsat antal hide-my-email-alias</string>

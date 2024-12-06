@@ -187,13 +187,7 @@
   <string name="remove_passkey_dialog_title">Eliminați această cheie de acces?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Sunteți pe cale să eliminați cheia de acces pentru utilizatorul „%1$s” pentru „%2$s”. Confirmați?</string>
   <string name="add_a_custom_section">Adăugare secțiune proprie</string>
-  <string name="add_attachment_take_a_photo">Fotografiere</string>
-  <string name="add_attachment_choose_a_photo_or_video">Alegeți o fotografie sau un videoclip</string>
-  <string name="add_attachment_choose_a_file">Alegeți un fișier</string>
-  <string name="attachment_options_open">Deschidere</string>
-  <string name="attachment_options_save">Salvare</string>
-  <string name="attachment_options_rename">Redenumire</string>
-  <string name="attachment_options_delete">Ștergere</string>
+  <!-- Attachments -->
   <string name="banner_title_attachments">Atașamente</string>
   <string name="banner_body_attachments">Puteți atașa fișiere la articole pentru o organizare mai bună.</string>
 </resources>

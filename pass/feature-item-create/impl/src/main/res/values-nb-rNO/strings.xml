@@ -187,13 +187,7 @@
   <string name="remove_passkey_dialog_title">Fjerne denne tilgangsnøkkelen?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Du er i ferd med å fjerne tilgangsnøkkelen for brukeren \'%1$s\' for \'%2$s\'. Er du sikker?</string>
   <string name="add_a_custom_section">Legg til en tilpasset seksjon</string>
-  <string name="add_attachment_take_a_photo">Ta et bilde</string>
-  <string name="add_attachment_choose_a_photo_or_video">Velg et bilde eller en video</string>
-  <string name="add_attachment_choose_a_file">Velg en fil</string>
-  <string name="attachment_options_open">Åpne</string>
-  <string name="attachment_options_save">Lagre</string>
-  <string name="attachment_options_rename">Gi nytt navn</string>
-  <string name="attachment_options_delete">Slett</string>
+  <!-- Attachments -->
   <string name="banner_title_attachments">Vedlegg</string>
   <string name="banner_body_attachments">Du kan legge ved filer til elementer for en bedre organisering</string>
 </resources>

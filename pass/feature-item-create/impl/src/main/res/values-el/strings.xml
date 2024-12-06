@@ -187,13 +187,7 @@
   <string name="remove_passkey_dialog_title">Αφαίρεση αυτού του κλειδιού πρόσβασης;</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Πρόκειται να καταργήσετε το κλειδί πρόσβασης για το χρήστη \'%1$s\' για \'%2$s\'. Είστε σίγουροι;</string>
   <string name="add_a_custom_section">Προσθήκη προσαρμοσμένης ενότητας</string>
-  <string name="add_attachment_take_a_photo">Λήψη φωτογραφίας</string>
-  <string name="add_attachment_choose_a_photo_or_video">Επιλέξτε φωτογραφία ή βίντεο</string>
-  <string name="add_attachment_choose_a_file">Επιλέξτε αρχείο</string>
-  <string name="attachment_options_open">Άνοιγμα</string>
-  <string name="attachment_options_save">Αποθήκευση</string>
-  <string name="attachment_options_rename">Μετονομασία</string>
-  <string name="attachment_options_delete">Διαγραφή</string>
+  <!-- Attachments -->
   <string name="banner_title_attachments">Συνημμένα</string>
   <string name="banner_body_attachments">Μπορείτε να επισυνάψετε αρχεία στα στοιχεία για καλύτερη οργάνωση</string>
 </resources>

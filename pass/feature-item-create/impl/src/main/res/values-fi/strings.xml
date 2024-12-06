@@ -187,13 +187,7 @@
   <string name="remove_passkey_dialog_title">Poistetaanko tämä pääsyavain?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Haluatko varmasti poistaa pääsyavaimen osoitteen \"%2$s\" käyttäjältä \"%1$s\"?</string>
   <string name="add_a_custom_section">Lisää mukautettu osio</string>
-  <string name="add_attachment_take_a_photo">Ota kuva</string>
-  <string name="add_attachment_choose_a_photo_or_video">Valitse kuva tai video</string>
-  <string name="add_attachment_choose_a_file">Valitse tiedosto</string>
-  <string name="attachment_options_open">Avaa</string>
-  <string name="attachment_options_save">Tallenna</string>
-  <string name="attachment_options_rename">Nimeä uudelleen</string>
-  <string name="attachment_options_delete">Poista</string>
+  <!-- Attachments -->
   <string name="banner_title_attachments">Liitteet</string>
   <string name="banner_body_attachments">You can attach files to items for a better organization</string>
 </resources>

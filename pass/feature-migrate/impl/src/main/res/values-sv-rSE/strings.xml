@@ -7,11 +7,11 @@
   <string name="migrate_all_items_confirm_title_bottom_sheet">Flytta alla objekt till följande valv?</string>
   <string name="migrate_item_confirm_confirm_button">Flytta</string>
   <string name="migrate_item_success_snackbar">Objekt flyttades</string>
-  <string name="migrate_item_error_snackbar">Gick inte flytta objektet</string>
+  <string name="migrate_item_error_snackbar">Det gick inte flytta objekten</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Gick inte flytta några av objekten</string>
   <string name="migrate_item_warning_history">Vid flyttning av objekt mellan valv kommer vi att bevara upp till de senaste 50 ändringarna som gjorts av varje objekt</string>
   <string name="migrate_item_warning_secure_link">Objektets säkra länkar kommer att tas bort när det flyttas till ett annat valv</string>
-  <string name="migrate_all_items_success_snackbar">Alla alias flyttade</string>
+  <string name="migrate_all_items_success_snackbar">Alla objekt flyttade</string>
   <string name="migrate_all_items_error_snackbar">Gick inte flytta alla valvobjekt</string>
   <string name="migrate_init_error_snackbar">Kunde inte förbereda migreringsskärmen</string>
   <string name="migrate_disabled_vault_reason_no_permission">Du kan inte skapa objekt i detta valv</string>

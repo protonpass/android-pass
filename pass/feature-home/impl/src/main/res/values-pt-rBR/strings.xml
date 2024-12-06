@@ -51,7 +51,7 @@
   <string name="home_notification_permission_banner_settings">Ativar permissão ›</string>
   <string name="home_invite_banner_title">Cofre compartilhado com você</string>
   <string name="home_invite_banner_subtitle">Você foi convidado para um cofre compartilhado. Toque para obter detalhes.</string>
-  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s deseja compartilhar um item com você.</string>
   <string name="home_item_invite_banner_subtitle">Toque para detalhes.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copiar senha</string>

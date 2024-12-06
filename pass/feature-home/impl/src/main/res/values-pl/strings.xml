@@ -53,8 +53,8 @@
   <string name="home_notification_permission_banner_settings">Włącz uprawnienie ›</string>
   <string name="home_invite_banner_title">Udostępniony sejf</string>
   <string name="home_invite_banner_subtitle">Otrzymano zaproszenie do sejfu. Kliknij, aby zobaczyć szczegóły.</string>
-  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
-  <string name="home_item_invite_banner_subtitle">Tap for details.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">Użytkownik %s udostępnia Ci element.</string>
+  <string name="home_item_invite_banner_subtitle">Kliknij, aby uzyskać szczegóły.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopiuj hasło</string>
   <string name="bottomsheet_copy_username">Kopiuj nazwę użytkownika</string>

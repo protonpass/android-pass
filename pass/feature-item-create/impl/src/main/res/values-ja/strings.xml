@@ -187,13 +187,7 @@
   <string name="remove_passkey_dialog_title">このパスキーを削除しますか?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">ユーザー \'%1$s\' の \'%2$s\' のパスキーを削除しようとしています。よろしいですか?</string>
   <string name="add_a_custom_section">カスタムセクションを追加する</string>
-  <string name="add_attachment_take_a_photo">写真撮影</string>
-  <string name="add_attachment_choose_a_photo_or_video">写真・動画を選択</string>
-  <string name="add_attachment_choose_a_file">ファイルを選択</string>
-  <string name="attachment_options_open">開く</string>
-  <string name="attachment_options_save">保存</string>
-  <string name="attachment_options_rename">名前を変更</string>
-  <string name="attachment_options_delete">削除</string>
+  <!-- Attachments -->
   <string name="banner_title_attachments">添付ファイル</string>
   <string name="banner_body_attachments">アイテムにファイルを添付して整理できます</string>
 </resources>

@@ -44,11 +44,11 @@
   <string name="share_permissions_title">Ustaw uprawnienia</string>
   <string name="sharing_reject_invitation">Odrzuć zaproszenie</string>
   <string name="sharing_vault_invitation_title">Zaproszenie do udostępnionego sejfu</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">Użytkownik %s udostępnia Ci sejf.</string>
   <string name="sharing_vault_invitation_accept">Dołącz do udostępnionego sejfu</string>
   <string name="sharing_item_invitation_title">Zaproszenie do udostępnionego elementu</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
-  <string name="sharing_item_invitation_accept">Accept and view the item</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">Użytkownik %s udostępnia Ci element.</string>
+  <string name="sharing_item_invitation_accept">Zaakceptuj i zobacz element</string>
   <string name="sharing_snackbar_get_invite_error">Nie można pobrać zaproszenia</string>
   <string name="sharing_snackbar_invite_accepted">Zaproszenie zostało zaakceptowane</string>
   <string name="sharing_snackbar_invite_accept_error">Wystąpił błąd podczas akceptowania zaproszenia</string>

@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="select_item_only_searching_in_oldest_vaults">Din paket tillåter endast att använda objekt i dina äldsta valv.</string>
+  <string name="select_item_only_searching_in_oldest_vaults">Din paket tillåter endast användning av objekt i dina äldsta valv.</string>
   <string name="error_credentials_not_found">Inga matchande inloggningsuppgifter hittades</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Förslag för %s</string>

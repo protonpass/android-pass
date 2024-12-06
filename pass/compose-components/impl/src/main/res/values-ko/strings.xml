@@ -261,4 +261,11 @@
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">이메일을 찾지 못하셨다면, %s 가능합니다.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">새 코드 요청</string>
   <string name="field_display_name_title">표시되는 이름</string>
+  <!-- Attachments -->
+  <plurals name="attachment_file_amount">
+    <item quantity="other">%1$s개 파일</item>
+  </plurals>
+  <string name="attachment_title">첨부파일</string>
+  <string name="attachment_no_files">회원님의 장치에서 파일을 업로드하세요</string>
+  <string name="attachment_add_file">파일 첨부</string>
 </resources>

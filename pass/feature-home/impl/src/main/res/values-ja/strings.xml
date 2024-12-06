@@ -50,8 +50,8 @@
   <string name="home_notification_permission_banner_settings">権限を有効にする ›</string>
   <string name="home_invite_banner_title">あなたと共有しているフォルダー</string>
   <string name="home_invite_banner_subtitle">共有フォルダーへの招待があります。詳細はタップしてください。</string>
-  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
-  <string name="home_item_invite_banner_subtitle">Tap for details.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%sがあなたにアイテムを共有したいようです。</string>
+  <string name="home_item_invite_banner_subtitle">詳細はタップ。</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">パスワードをコピー</string>
   <string name="bottomsheet_copy_username">ユーザー名をコピー</string>

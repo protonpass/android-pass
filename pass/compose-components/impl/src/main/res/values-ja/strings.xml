@@ -261,4 +261,11 @@
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">メールが見つからない場合、%sできます。</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">新しいコードを要求</string>
   <string name="field_display_name_title">表示名</string>
+  <!-- Attachments -->
+  <plurals name="attachment_file_amount">
+    <item quantity="other">%1$s個のファイル</item>
+  </plurals>
+  <string name="attachment_title">添付ファイル</string>
+  <string name="attachment_no_files">デバイスからファイルをアップロード</string>
+  <string name="attachment_add_file">ファイルを添付</string>
 </resources>

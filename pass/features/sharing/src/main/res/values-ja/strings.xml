@@ -37,12 +37,12 @@
   <string name="share_with_email_email_already_added">このメールアドレスはすでに追加されています</string>
   <string name="share_permissions_title">アクセスレベルの設定</string>
   <string name="sharing_reject_invitation">招待を拒否する</string>
-  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
-  <string name="sharing_vault_invitation_accept">Join shared vault</string>
-  <string name="sharing_item_invitation_title">Shared item invitation</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
-  <string name="sharing_item_invitation_accept">Accept and view the item</string>
+  <string name="sharing_vault_invitation_title">共有済み保管庫の招待</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%sがあなたに保管庫を共有したいようです。</string>
+  <string name="sharing_vault_invitation_accept">共有された保管庫に参加</string>
+  <string name="sharing_item_invitation_title">共有済みのアイテム招待</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%sがあなたにアイテムを共有したいようです。</string>
+  <string name="sharing_item_invitation_accept">承諾してアイテムを閲覧</string>
   <string name="sharing_snackbar_get_invite_error">招待状が届かない</string>
   <string name="sharing_snackbar_invite_accepted">招待を受ける</string>
   <string name="sharing_snackbar_invite_accept_error">招待の受け入れエラー</string>

@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="sharing_can_view">Läsare</string>
-  <string name="sharing_can_edit">Redaktör</string>
+  <string name="sharing_can_edit">Redigerare</string>
   <string name="sharing_can_manage">Admin</string>
   <string name="sharing_can_view_description">Kan visa objekt i detta valv</string>
   <string name="sharing_can_edit_description">Kan skapa, redigera, ta bort och exportera objekt i detta valv.</string>
@@ -64,7 +64,7 @@
   <string name="share_summary_share_vault">Dela valv</string>
   <string name="share_summary_share_item">Dela objekt</string>
   <string name="share_summary_vault_title">Valv</string>
-  <string name="share_summary_item_title">objekt</string>
+  <string name="share_summary_item_title">Objekt</string>
   <string name="share_manage_vault_share_with_more_people">Dela med fler personer</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d inbjudan kvar</item>

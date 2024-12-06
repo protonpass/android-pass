@@ -34,8 +34,8 @@
   <string name="no_activity_contact">No activity in the last 14 days.</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">under de senaste 14 dagarna.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d forwarded</item>
-    <item quantity="other">%1$d forwarded</item>
+    <item quantity="one">%1$d vidarebefordrad</item>
+    <item quantity="other">%1$d vidarebefordrade</item>
   </plurals>
   <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d skickat</item>
@@ -64,5 +64,5 @@
   <string name="alias_contacts_explanation">Här är hur det fungerar:</string>
   <string name="alias_contacts_bottomsheet_section_1">Ange adressen du vill skicka e-post till</string>
   <string name="alias_contacts_bottomsheet_section_2">Proton Pass kommer generera en vidarebefordrande adress (även kallad omvänd alias).</string>
-  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Email this address and it will appear to be sent from</string>
+  <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">E-posta denna adress och det kommer att se ut att ha skickats från</string>
 </resources>

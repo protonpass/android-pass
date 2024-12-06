@@ -19,7 +19,7 @@
 <resources>
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
-  <string name="security_center_home_dark_web_monitoring_title">Övervakning mörka webben</string>
+  <string name="security_center_home_dark_web_monitoring_title">Övervakning av mörka webben</string>
   <string name="security_center_home_widget_breaches_title">Intrång upptäckt</string>
   <string name="security_center_home_widget_breaches_subtitle">Din e-postadress läckte vid minst 1 dataintrång.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">Bli aviserad om din e-post, lösenord eller annan personlig data har läckt.</string>
@@ -60,7 +60,7 @@
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Exkluderade objekt</string>
   <!-- Dark web monitor -->
-  <string name="security_center_dark_web_monitor_top_bar_title">Övervakning mörka webben</string>
+  <string name="security_center_dark_web_monitor_top_bar_title">Övervakning av mörka webben</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Senaste kontroll: %s</string>
   <string name="security_center_dark_web_monitor_custom_emails_title">Anpassade e-postadresser</string>
   <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Inte verifierad</string>
@@ -139,7 +139,7 @@
   <string name="security_center_proton_list_excluded_from_monitoring">Exkluderad från övervakning</string>
   <string name="security_center_proton_list_error">Kunde inte ladda adresser</string>
   <string name="security_center_proton_list_included_in_monitoring">Aktivera övervakning för att bli aviserad om dina Proton-adresser läckt.</string>
-  <string name="security_center_proton_list_options_menu">Proton screen options menu</string>
+  <string name="security_center_proton_list_options_menu">Alternativmeny för Proton-skärm</string>
   <string name="security_center_proton_list_not_monitored">Inte övervakad</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Pausa övervakning</string>
@@ -158,7 +158,7 @@
   <string name="security_center_alias_list_included_in_monitoring">Aktivera övervakning för att bli aviserad om dina hide-my-email-alias läckt.</string>
   <string name="security_center_alias_list_monitored">Övervakad</string>
   <string name="security_center_alias_list_custom_email_message">Alias med anpassade domäner övervakas inte, lägg till dem som en anpassad e-post för övervakning.</string>
-  <string name="security_center_alias_list_options_menu">Alias screen options menu</string>
+  <string name="security_center_alias_list_options_menu">Alternativmeny för aliasskärm</string>
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Datasäkerhet</string>
   <string name="dark_web_help_dialog_subtitle">Proton delar aldrig din information med tredje part. All data kommer från sökningar efter förekomsten av Proton-domäner på mörka webben.</string>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="add_attachment_take_a_photo">Tag et foto</string>
+  <string name="add_attachment_choose_a_photo_or_video">Vælg et foto eller en video</string>
+  <string name="add_attachment_choose_a_file">Vælg en fil</string>
+  <string name="attachment_options_open">Åbn</string>
+  <string name="attachment_options_save">Gem</string>
+  <string name="attachment_options_rename">Omdøb</string>
+  <string name="attachment_options_delete">Slet</string>
+  <string name="file_picker_open_error">Kunne ikke åbne filvælgeren</string>
+  <string name="file_picker_select_error">Kunne ikke vælge fil</string>
+</resources>

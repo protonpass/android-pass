@@ -9,7 +9,7 @@
   <string name="alias_dialog_move_to_trash_confirm">Confirmer</string>
   <string name="delete_alias_confirm">Supprimez-le, je n\'en aurai jamais besoin</string>
   <string name="delete_alias_title">Supprimer %s</string>
-  <string name="delete_alias_enabled_subtitle">"Veuillez noter qu'une fois supprimé, l'alias ne pourra pas être restauré. Voudriez-vous plutôt la désactiver ? "</string>
+  <string name="delete_alias_enabled_subtitle">"Veuillez noter qu'une fois supprimé, l'alias ne pourra pas être restauré. Voudriez-vous plutôt le désactiver ? "</string>
   <string name="delete_alias_disabled_subtitle">Veuillez noter qu\'une fois supprimé, l\'alias ne pourra pas être restauré. Cet alias est déjà désactivé et ne transfèrera plus d\'e-mails dans votre messagerie.</string>
   <plurals name="bulk_delete_alias_title">
     <item quantity="one">Vous êtes sur le point de supprimer définitivement %d alias.</item>

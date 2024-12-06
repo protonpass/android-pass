@@ -42,7 +42,7 @@
   <!--List screen-->
   <string name="secure_links_list_title">Säkra länkar</string>
   <string name="secure_links_list_empty_title">Inga säkra länkar</string>
-  <string name="secure_links_list_empty_subtitle">You can start creating secure links from an item details sharing options</string>
+  <string name="secure_links_list_empty_subtitle">Du kan börja skapa säkra länkar från objektdetaljers delningsalternativ</string>
   <string name="secure_links_list_expiration_description">Löper ut om %s</string>
   <string name="secure_links_list_expired_description">Löpt ut</string>
   <plurals name="secure_links_list_viewed_times_description">

@@ -18,20 +18,20 @@
   -->
 <resources>
   <string name="configure_extra_password_continue">Fortsätt</string>
-  <string name="configure_extra_password_title">Ställ in extra lösenord</string>
-  <string name="configure_extra_password_enter_extra_password">Extra lösenord</string>
+  <string name="configure_extra_password_title">Ställ in extralösenord</string>
+  <string name="configure_extra_password_enter_extra_password">Extralösenord</string>
   <string name="configure_extra_password_repeat_extra_password">Upprepa lösenord</string>
   <string name="configure_extra_password_description">Du kommer att bli tillfrågad om detta lösenord vid inloggning och när du byter från en annan Proton-app till Proton Pass på webben.</string>
   <string name="configure_extra_password_warning">Varning: Du kommer inte att kunna komma åt ditt Pass-konto om du tappar bort detta lösenord.</string>
   <string name="configure_extra_password_mismatch">Lösenorden matchar inte</string>
   <string name="extra_password_options_remove">Ta bort</string>
-  <string name="info_extra_password_title">Extra lösenord</string>
-  <string name="info_extra_password_body">Skydda Proton Pass med ett extra lösenord.</string>
-  <string name="info_extra_password_button">Ställ in extra lösenord</string>
+  <string name="info_extra_password_title">Extralösenord</string>
+  <string name="info_extra_password_body">Skydda Proton Pass med ett extralösenord.</string>
+  <string name="info_extra_password_button">Ställ in extralösenord</string>
   <string name="configure_extra_password_cannot_be_blank">Lösenord kan inte vara tomt</string>
-  <string name="configure_extra_password_password_too_short">Extra lösenord måste ha minst 8 tecken</string>
-  <string name="confirm_extra_password_title">Ställ in extra lösenord</string>
+  <string name="configure_extra_password_password_too_short">Extralösenord måste ha minst 8 tecken</string>
+  <string name="confirm_extra_password_title">Ställ in extralösenord</string>
   <string name="confirm_extra_password_body">Du kommer bli utloggad och måste logga in igen på alla dina andra enheter.</string>
-  <string name="confirm_extra_password_error">Kan inte ställa in extra lösenord</string>
-  <string name="confirm_extra_password_success">Extra lösenord inställt</string>
+  <string name="confirm_extra_password_error">Kan inte ställa in extralösenord</string>
+  <string name="confirm_extra_password_success">Extralösenord inställt</string>
 </resources>

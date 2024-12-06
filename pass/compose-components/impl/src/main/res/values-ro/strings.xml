@@ -283,4 +283,13 @@
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Dacă nu găsiți un astfel de e-mail, puteți să %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">solicitați un cod nou</string>
   <string name="field_display_name_title">Nume afișat</string>
+  <!-- Attachments -->
+  <plurals name="attachment_file_amount">
+    <item quantity="one">%1$s fișier</item>
+    <item quantity="few">%1$s fișiere</item>
+    <item quantity="other">%1$s de fișiere</item>
+  </plurals>
+  <string name="attachment_title">Atașamente</string>
+  <string name="attachment_no_files">Încărcare fișiere din dispozitiv</string>
+  <string name="attachment_add_file">Atașare fișier</string>
 </resources>

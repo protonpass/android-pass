@@ -53,8 +53,8 @@
   <string name="home_notification_permission_banner_settings">Включить разрешение ›</string>
   <string name="home_invite_banner_title">Хранилище, предоставленное вам</string>
   <string name="home_invite_banner_subtitle">Вы приглашены в общее хранилище. Нажмите, чтобы узнать подробности.</string>
-  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
-  <string name="home_item_invite_banner_subtitle">Tap for details.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s хочет поделиться с вами элементом.</string>
+  <string name="home_item_invite_banner_subtitle">Нажмите, чтобы узнать подробности.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Скопировать пароль</string>
   <string name="bottomsheet_copy_username">Скопировать имя пользователя</string>

@@ -40,10 +40,10 @@
   <string name="share_permissions_title">Definir nível de acesso</string>
   <string name="sharing_reject_invitation">Recusar convite</string>
   <string name="sharing_vault_invitation_title">Convite de cofre compartilhado</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s deseja compartilhar um cofre com você.</string>
   <string name="sharing_vault_invitation_accept">Juntar ao cofre compartilhado</string>
   <string name="sharing_item_invitation_title">Convite de item compartilhado</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s deseja compartilhar um item com você.</string>
   <string name="sharing_item_invitation_accept">Aceitar e ver esse item</string>
   <string name="sharing_snackbar_get_invite_error">Não foi possível receber o convite</string>
   <string name="sharing_snackbar_invite_accepted">Convite aceito</string>

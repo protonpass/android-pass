@@ -272,4 +272,12 @@
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Εάν δεν μπορείτε να βρείτε τέτοια μηνύματα ηλεκτρονικού ταχυδρομείου, μπορείτε να %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">ζητήστε ένα νέο κωδικό</string>
   <string name="field_display_name_title">Εμφανιζόμενο Όνομα</string>
+  <!-- Attachments -->
+  <plurals name="attachment_file_amount">
+    <item quantity="one">%1$s αρχείο</item>
+    <item quantity="other">%1$s αρχεία</item>
+  </plurals>
+  <string name="attachment_title">Συνημμένα</string>
+  <string name="attachment_no_files">Ανεβάστε αρχεία από τη συσκευή σας.</string>
+  <string name="attachment_add_file">Επισύναψη αρχείου</string>
 </resources>

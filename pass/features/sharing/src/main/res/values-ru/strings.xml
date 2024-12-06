@@ -43,12 +43,12 @@
   <string name="share_with_email_email_already_added">Вы уже добавили этот адрес электронной почты</string>
   <string name="share_permissions_title">Установить уровень доступа</string>
   <string name="sharing_reject_invitation">Отклонить приглашение</string>
-  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
-  <string name="sharing_vault_invitation_accept">Join shared vault</string>
-  <string name="sharing_item_invitation_title">Shared item invitation</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
-  <string name="sharing_item_invitation_accept">Accept and view the item</string>
+  <string name="sharing_vault_invitation_title">Приглашение в общее хранилище</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s хочет поделиться с вами хранилищем.</string>
+  <string name="sharing_vault_invitation_accept">Присоединиться к общему хранилищу</string>
+  <string name="sharing_item_invitation_title">Приглашение для общего предмета</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s хочет поделиться с вами элементом.</string>
+  <string name="sharing_item_invitation_accept">Принять и просмотреть элемент</string>
   <string name="sharing_snackbar_get_invite_error">Не могу получить приглашение</string>
   <string name="sharing_snackbar_invite_accepted">Приглашение принято</string>
   <string name="sharing_snackbar_invite_accept_error">Ошибка при принятии приглашения</string>

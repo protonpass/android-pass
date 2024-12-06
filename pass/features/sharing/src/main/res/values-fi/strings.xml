@@ -39,10 +39,10 @@
   <string name="share_with_email_email_already_added">Olet jo lisännyt tämän sähköpostiosoitteen</string>
   <string name="share_permissions_title">Aseta käyttöoikeustaso</string>
   <string name="sharing_reject_invitation">Kieltäydy kutsusta</string>
-  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
+  <string name="sharing_vault_invitation_title">Kutsu jaettuun holviin</string>
   <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s haluaa jakaa holvin kanssasi.</string>
   <string name="sharing_vault_invitation_accept">Liity jaettuun holviin</string>
-  <string name="sharing_item_invitation_title">Shared item invitation</string>
+  <string name="sharing_item_invitation_title">Kutsu jaettuun kohteeseen</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s haluaa jakaa kohteen kanssasi.</string>
   <string name="sharing_item_invitation_accept">Hyväksy ja tarkastele kohdetta</string>
   <string name="sharing_snackbar_get_invite_error">Kutsua ei saatu</string>

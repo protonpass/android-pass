@@ -294,4 +294,14 @@
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Pokud takový e-mail nelze najít, tak můžete %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">požádat o nový kód</string>
   <string name="field_display_name_title">Zobrazované jméno</string>
+  <!-- Attachments -->
+  <plurals name="attachment_file_amount">
+    <item quantity="one">%1$s soubor</item>
+    <item quantity="few">%1$s soubory</item>
+    <item quantity="many">%1$s souborů</item>
+    <item quantity="other">%1$s souborů</item>
+  </plurals>
+  <string name="attachment_title">Přílohy</string>
+  <string name="attachment_no_files">Nahrajte soubory z vašeho zařízení</string>
+  <string name="attachment_add_file">Připojit soubor</string>
 </resources>

@@ -25,9 +25,9 @@
   </plurals>
   <string name="auth_unlock_app_title">Lås upp Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Ange huvudlösenordet för %s</string>
-  <string name="auth_unlock_app_extra_password_subtitle">Ange det extra lösenordet för %s</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Ange extralösenordet för %s</string>
   <string name="auth_unlock_app_subtitle_account_switch">Ange huvudlösenordet för:</string>
-  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Ange det extra lösenordet för:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Ange extralösenordet för:</string>
   <string name="auth_master_password_label">Huvudlösenord</string>
   <string name="auth_action_reveal_password">Visa huvudlösenord</string>
   <string name="auth_action_conceal_password">Dölj huvudlösenord</string>
@@ -36,8 +36,8 @@
   <string name="auth_unlock_button">Lås upp</string>
   <string name="auth_error_empty_password">Lösenord kan inte vara tomt</string>
   <string name="auth_error_pin_cannot_be_empty">PIN kan inte vara tom</string>
-  <string name="auth_extra_password_label">Ange ditt extra lösenord</string>
-  <string name="auth_extra_password_error">Fel vid autentisering med extra lösenord</string>
+  <string name="auth_extra_password_label">Ange ditt extralösenord</string>
+  <string name="auth_extra_password_error">Fel vid autentisering med extralösenord</string>
   <string name="auth_extra_password_too_many_attempts">För många misslyckade inloggningsförsök. Du har loggats ut.</string>
   <string name="auth_error_wrong_password_no_attempts">Felaktigt lösenord</string>
   <plurals name="auth_error_wrong_password">

@@ -187,13 +187,7 @@
   <string name="remove_passkey_dialog_title">Remover essa chave de acesso?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Você está prestes a remover a chave de acesso para o usuário \'%1$s\' em \'%2$s\'. Tem certeza?</string>
   <string name="add_a_custom_section">Adicionar um campo personalizado</string>
-  <string name="add_attachment_take_a_photo">Tirar uma foto</string>
-  <string name="add_attachment_choose_a_photo_or_video">Escolha uma foto ou vídeo</string>
-  <string name="add_attachment_choose_a_file">Escolha um arquivo</string>
-  <string name="attachment_options_open">Abrir</string>
-  <string name="attachment_options_save">Salvar</string>
-  <string name="attachment_options_rename">Renomear</string>
-  <string name="attachment_options_delete">Excluir</string>
+  <!-- Attachments -->
   <string name="banner_title_attachments">Anexos</string>
-  <string name="banner_body_attachments">You can attach files to items for a better organization</string>
+  <string name="banner_body_attachments">Você pode anexar arquivos para itens para melhor organização</string>
 </resources>

@@ -187,13 +187,7 @@
   <string name="remove_passkey_dialog_title">Voleu suprimir aquesta clau d\'accés?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Esteu a punt d\'eliminar la clau d\'accés per a l\'usuari «%1$s» per a «%2$s». Segur?</string>
   <string name="add_a_custom_section">Afegeix una secció personalitzada</string>
-  <string name="add_attachment_take_a_photo">Fes una foto</string>
-  <string name="add_attachment_choose_a_photo_or_video">Escolliu una foto o un vídeo</string>
-  <string name="add_attachment_choose_a_file">Trieu un fitxer</string>
-  <string name="attachment_options_open">Obre</string>
-  <string name="attachment_options_save">Desa</string>
-  <string name="attachment_options_rename">Canvia el nom</string>
-  <string name="attachment_options_delete">Elimina</string>
+  <!-- Attachments -->
   <string name="banner_title_attachments">Fitxers adjunts</string>
   <string name="banner_body_attachments">Podeu adjuntar fitxers als elements per a una millor organització</string>
 </resources>

@@ -67,7 +67,7 @@
   <string name="note_copied_to_clipboard">Anteckning kopierad</string>
   <string name="full_name_copied_to_clipboard">Fullständigt namn kopierat</string>
   <string name="email_copied_to_clipboard">E-postadress kopierad</string>
-  <string name="username_copied_to_clipboard">Användarnamn kopierad</string>
+  <string name="username_copied_to_clipboard">Användarnamn kopierat</string>
   <string name="password_copied_to_clipboard">Lösenord kopierat</string>
   <string name="credit_card_number_copied_to_clipboard">Kreditkortsnummer kopierat</string>
   <string name="credit_card_cvv_copied_to_clipboard">Säkerhetskod kopierad</string>
@@ -148,7 +148,7 @@
   <string name="recent_search_clear">Rensa</string>
   <string name="recent_search_remove_item">Ta bort från senaste sökningar</string>
   <!-- Pinning -->
-  <string name="home_snackbar_items_pinned_success">Items pinned successfully</string>
+  <string name="home_snackbar_items_pinned_success">Objekten har fästs</string>
   <string name="home_snackbar_items_pinned_partial_success">Det gick inte fästa några av objekten</string>
   <string name="home_snackbar_items_pinned_error">Det gick inte fästa objekten</string>
   <string name="home_snackbar_items_unpinned_success">Objekt lossat</string>

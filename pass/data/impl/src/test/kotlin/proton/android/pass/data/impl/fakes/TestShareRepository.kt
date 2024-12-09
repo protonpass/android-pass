@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
@@ -27,10 +28,13 @@ import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.UpdateShareEvent
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.NewVault
+import proton.android.pass.domain.shares.ShareMember
+import proton.android.pass.domain.shares.SharePendingInvite
 
 class TestShareRepository : ShareRepository {
 
@@ -61,6 +65,10 @@ class TestShareRepository : ShareRepository {
 
     private val deleteVaultMemory: MutableList<ShareId> = mutableListOf()
     private val refreshShareMemory: MutableList<RefreshSharePayload> = mutableListOf()
+
+    private val shareMembersFlow: MutableSharedFlow<List<ShareMember>> = testFlow()
+
+    private val sharePendingInvitesFlow: MutableSharedFlow<List<SharePendingInvite>> = testFlow()
 
     fun deleteVaultMemory(): List<ShareId> = deleteVaultMemory
     fun refreshShareMemory(): List<RefreshSharePayload> = refreshShareMemory
@@ -105,7 +113,8 @@ class TestShareRepository : ShareRepository {
         getAddressForShareIdResult = value
     }
 
-    override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share = createVaultResult.getOrThrow()
+    override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share =
+        createVaultResult.getOrThrow()
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId) {
         deleteVaultMemory.add(shareId)
@@ -119,11 +128,14 @@ class TestShareRepository : ShareRepository {
         refreshShareResult.getOrThrow()
     }
 
-    override fun observeAllShares(userId: SessionUserId): Flow<List<Share>> = observeSharesFlow.map { it.getOrThrow() }
+    override fun observeAllShares(userId: SessionUserId): Flow<List<Share>> =
+        observeSharesFlow.map { it.getOrThrow() }
 
-    override fun observeVaultCount(userId: UserId): Flow<Int> = observeVaultCountFlow.map { it.getOrThrow() }
+    override fun observeVaultCount(userId: UserId): Flow<Int> =
+        observeVaultCountFlow.map { it.getOrThrow() }
 
-    override suspend fun getById(userId: UserId, shareId: ShareId): Share = getByIdResult.getOrThrow()
+    override suspend fun getById(userId: UserId, shareId: ShareId): Share =
+        getByIdResult.getOrThrow()
 
     override suspend fun updateVault(
         userId: UserId,
@@ -161,6 +173,17 @@ class TestShareRepository : ShareRepository {
     override suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress =
         getAddressForShareIdResult.getOrThrow()
 
+    override fun observeShareItemMembers(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        userEmail: String?
+    ): Flow<List<ShareMember>> = shareMembersFlow
+
+    override fun observeSharePendingInvites(
+        userId: UserId,
+        shareId: ShareId
+    ): Flow<List<SharePendingInvite>> = sharePendingInvitesFlow
 
     data class RefreshSharePayload(
         val userId: UserId,

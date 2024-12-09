@@ -121,6 +121,7 @@ import proton.android.pass.features.alias.contacts.options.navigation.OptionsAli
 import proton.android.pass.features.attachments.AttachmentsNavigation
 import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavItem
 import proton.android.pass.features.attachments.attachmentsGraph
+import proton.android.pass.features.attachments.camera.navigation.CameraNavItem
 import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavItem
 import proton.android.pass.features.attachments.mediapicker.navigation.MediaPickerNavItem
 import proton.android.pass.features.auth.Auth
@@ -2198,8 +2199,15 @@ fun NavGraphBuilder.appGraph(
             }
 
             AttachmentsNavigation.CloseScreen -> appNavigator.navigateBack(force = true)
-            AttachmentsNavigation.OpenFilePicker -> appNavigator.navigate(FilePickerNavItem)
-            AttachmentsNavigation.OpenMediaPicker -> appNavigator.navigate(MediaPickerNavItem)
+            AttachmentsNavigation.OpenFilePicker -> dismissBottomSheet {
+                appNavigator.navigate(FilePickerNavItem)
+            }
+            AttachmentsNavigation.OpenMediaPicker -> dismissBottomSheet {
+                appNavigator.navigate(MediaPickerNavItem)
+            }
+            AttachmentsNavigation.OpenCamera -> dismissBottomSheet {
+                appNavigator.navigate(CameraNavItem)
+            }
         }
     }
 }

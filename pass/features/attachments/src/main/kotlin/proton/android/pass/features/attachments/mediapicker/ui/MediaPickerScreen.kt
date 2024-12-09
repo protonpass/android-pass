@@ -30,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import proton.android.pass.features.attachments.mediapicker.navigation.MediaPickerNavigation
 import proton.android.pass.features.attachments.mediapicker.presentation.MediaPickerSnackbarMessage.CouldNotOpenMediaPicker
-import proton.android.pass.features.attachments.mediapicker.presentation.MediaPickerSnackbarMessage.CouldNotSelectFile
 import proton.android.pass.features.attachments.mediapicker.presentation.MediaPickerViewModel
 import proton.android.pass.log.api.PassLogger
 
@@ -42,10 +41,9 @@ fun MediaPickerScreen(
 ) {
     val pickMedia = rememberLauncherForActivityResult(PickVisualMedia()) {
         val uri: Uri = it ?: return@rememberLauncherForActivityResult run {
-            viewmodel.onMediaPickerError(CouldNotSelectFile)
             onNavigate(MediaPickerNavigation.Close)
         }
-        viewmodel.onFilePicked(uri)
+        viewmodel.onMediaPicked(uri)
         onNavigate(MediaPickerNavigation.Close)
     }
     LaunchedEffect(Unit) {
@@ -58,7 +56,7 @@ fun MediaPickerScreen(
             onNavigate(MediaPickerNavigation.Close)
         }
     }
-    Box(modifier.fillMaxSize())
+    Box(modifier.fillMaxSize()) // workaround to avoid size animation
 }
 
 private const val TAG = "MediaPickerScreen"

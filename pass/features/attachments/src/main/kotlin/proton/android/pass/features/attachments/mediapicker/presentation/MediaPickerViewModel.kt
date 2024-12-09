@@ -34,7 +34,7 @@ class MediaPickerViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
-    fun onFilePicked(uri: Uri) = viewModelScope.launch {
+    fun onMediaPicked(uri: Uri) = viewModelScope.launch {
         draftAttachmentRepository.add(URI.create(uri.toString()))
     }
 

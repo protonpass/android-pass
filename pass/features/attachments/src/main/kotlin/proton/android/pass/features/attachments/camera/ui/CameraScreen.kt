@@ -98,7 +98,7 @@ fun CameraScreen(
             }
         }
     }
-    Box(modifier.fillMaxSize())
+    Box(modifier.fillMaxSize()) // workaround to avoid size animation
 }
 
 private const val TAG = "CameraScreen"

@@ -28,6 +28,5 @@ enum class FilePickerSnackbarMessage(
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
-    CouldNotOpenFilePicker(R.string.file_picker_open_error, SnackbarType.ERROR),
-    CouldNotSelectFile(R.string.file_picker_select_error, SnackbarType.ERROR)
+    CouldNotOpenFilePicker(R.string.file_picker_open_error, SnackbarType.ERROR)
 }

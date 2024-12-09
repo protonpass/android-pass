@@ -177,7 +177,8 @@ class CreateCreditCardViewModelTest {
                             lastAutofillTime = item.lastAutofillTime.value(),
                             isPinned = false,
                             category = ItemCategory.CreditCard,
-                            revision = item.revision
+                            revision = item.revision,
+                            shareCount = item.shareCount
                         )
                     )
                 )

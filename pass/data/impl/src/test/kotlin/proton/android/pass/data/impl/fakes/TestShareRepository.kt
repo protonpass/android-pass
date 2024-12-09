@@ -113,8 +113,7 @@ class TestShareRepository : ShareRepository {
         getAddressForShareIdResult = value
     }
 
-    override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share =
-        createVaultResult.getOrThrow()
+    override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share = createVaultResult.getOrThrow()
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId) {
         deleteVaultMemory.add(shareId)
@@ -128,14 +127,11 @@ class TestShareRepository : ShareRepository {
         refreshShareResult.getOrThrow()
     }
 
-    override fun observeAllShares(userId: SessionUserId): Flow<List<Share>> =
-        observeSharesFlow.map { it.getOrThrow() }
+    override fun observeAllShares(userId: SessionUserId): Flow<List<Share>> = observeSharesFlow.map { it.getOrThrow() }
 
-    override fun observeVaultCount(userId: UserId): Flow<Int> =
-        observeVaultCountFlow.map { it.getOrThrow() }
+    override fun observeVaultCount(userId: UserId): Flow<Int> = observeVaultCountFlow.map { it.getOrThrow() }
 
-    override suspend fun getById(userId: UserId, shareId: ShareId): Share =
-        getByIdResult.getOrThrow()
+    override suspend fun getById(userId: UserId, shareId: ShareId): Share = getByIdResult.getOrThrow()
 
     override suspend fun updateVault(
         userId: UserId,
@@ -180,10 +176,8 @@ class TestShareRepository : ShareRepository {
         userEmail: String?
     ): Flow<List<ShareMember>> = shareMembersFlow
 
-    override fun observeSharePendingInvites(
-        userId: UserId,
-        shareId: ShareId
-    ): Flow<List<SharePendingInvite>> = sharePendingInvitesFlow
+    override fun observeSharePendingInvites(userId: UserId, shareId: ShareId): Flow<List<SharePendingInvite>> =
+        sharePendingInvitesFlow
 
     data class RefreshSharePayload(
         val userId: UserId,

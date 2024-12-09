@@ -22,5 +22,6 @@ sealed interface AddAttachmentNavigation {
     data object CloseBottomsheet : AddAttachmentNavigation
     data object OpenFilePicker : AddAttachmentNavigation
     data object OpenMediaPicker : AddAttachmentNavigation
+    data object OpenCamera : AddAttachmentNavigation
 }
 

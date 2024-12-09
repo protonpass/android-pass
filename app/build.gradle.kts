@@ -491,6 +491,8 @@ dependencies {
     implementation(projects.pass.securityCenter.impl)
     implementation(projects.pass.telemetry.impl)
     implementation(projects.pass.totp.impl)
+    implementation(projects.pass.files.api)
+    implementation(projects.pass.files.impl)
 
     addFdroidSpecialLib(
         default = projects.pass.tracing.impl,

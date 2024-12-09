@@ -16,11 +16,8 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.attachments.addattachment.navigation
+package proton.android.pass.features.attachments.mediapicker.navigation
 
-sealed interface AddAttachmentNavigation {
-    data object CloseBottomsheet : AddAttachmentNavigation
-    data object OpenFilePicker : AddAttachmentNavigation
-    data object OpenMediaPicker : AddAttachmentNavigation
-}
+import proton.android.pass.navigation.api.NavItem
 
+data object MediaPickerNavItem : NavItem(baseRoute = "mediapicker/screen")

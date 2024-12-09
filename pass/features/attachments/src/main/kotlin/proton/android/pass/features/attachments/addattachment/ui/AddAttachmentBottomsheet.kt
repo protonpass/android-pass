@@ -34,8 +34,10 @@ fun AddAttachmentBottomsheet(modifier: Modifier = Modifier, onNavigate: (AddAtta
         modifier = modifier.bottomSheet(),
         onEvent = {
             when (it) {
-                AddAttachmentEvent.ChooseAFile -> onNavigate(AddAttachmentNavigation.OpenFilePicker)
-                AddAttachmentEvent.ChooseAPhotoOrVideo -> Unit
+                AddAttachmentEvent.ChooseAFile ->
+                    onNavigate(AddAttachmentNavigation.OpenFilePicker)
+                AddAttachmentEvent.ChooseAPhotoOrVideo ->
+                    onNavigate(AddAttachmentNavigation.OpenMediaPicker)
                 AddAttachmentEvent.TakeAPhoto -> Unit
             }
         }

@@ -46,6 +46,7 @@ import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.data.fakes.usecases.attachments.FakeObserveItemAttachments
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.Flags
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
@@ -61,6 +62,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
+import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.domain.TestVault
 
 class NoteDetailViewModelTest {
@@ -79,6 +81,7 @@ class NoteDetailViewModelTest {
     private lateinit var encryptionContextProvider: TestEncryptionContextProvider
     private lateinit var canPerformPaidAction: TestCanPerformPaidAction
     private lateinit var clipboardManager: TestClipboardManager
+    private lateinit var observeShare: FakeObserveShare
 
     @Before
     fun setup() {
@@ -91,6 +94,8 @@ class NoteDetailViewModelTest {
         encryptionContextProvider = TestEncryptionContextProvider()
         canPerformPaidAction = TestCanPerformPaidAction()
         clipboardManager = TestClipboardManager()
+        observeShare = FakeObserveShare()
+
         instance = NoteDetailViewModel(
             snackbarDispatcher = snackbarDispatcher,
             telemetryManager = telemetryManager,
@@ -112,8 +117,11 @@ class NoteDetailViewModelTest {
             unpinItem = FakeUnpinItem(),
             getUserPlan = TestGetUserPlan(),
             featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
-            observeItemAttachments = FakeObserveItemAttachments()
+            observeItemAttachments = FakeObserveItemAttachments(),
+            observeShare = observeShare
         )
+
+        observeShare.emitValue(TestShare.Vault.create())
     }
 
     @Test
@@ -255,7 +263,7 @@ class NoteDetailViewModelTest {
         initialSetup()
         instance.state.test {
             val value = awaitItem() as NoteDetailUiState.Success
-            assertThat(value.share).isNull()
+            assertThat(value.hasMoreThanOneVault).isFalse()
         }
     }
 
@@ -323,7 +331,8 @@ class NoteDetailViewModelTest {
                 createTime = now,
                 lastAutofillTime = None,
                 isPinned = false,
-                flags = Flags(0)
+                flags = Flags(0),
+                shareCount = 0
             )
         }
     }

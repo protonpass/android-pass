@@ -35,17 +35,20 @@ import proton.android.pass.data.api.usecases.RemoveShareMember
 import proton.android.pass.data.api.usecases.shares.UpdateShareMemberRole
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.features.sharing.manage.bottomsheet.MemberShareIdArg
 import proton.android.pass.features.sharing.manage.bottomsheet.ShareRoleArg
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
 class ManageItemMemberOptionsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     private val updateShareMemberRole: UpdateShareMemberRole,
-    private val removeShareMember: RemoveShareMember
+    private val removeShareMember: RemoveShareMember,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -105,6 +108,7 @@ class ManageItemMemberOptionsViewModel @Inject constructor(
                     PassLogger.w(TAG, error)
 
                     eventFlow.update { ManageItemMemberOptionsEvent.OnUpdateMemberRoleFailure }
+                    snackbarDispatcher(SharingSnackbarMessage.ChangeMemberPermissionError)
                 }
                 .onSuccess {
                     eventFlow.update { ManageItemMemberOptionsEvent.OnUpdateMemberRoleSuccess }
@@ -124,6 +128,7 @@ class ManageItemMemberOptionsViewModel @Inject constructor(
                     PassLogger.w(TAG, error)
 
                     eventFlow.update { ManageItemMemberOptionsEvent.OnRevokeMemberAccessFailure }
+                    snackbarDispatcher(SharingSnackbarMessage.RemoveMemberError)
                 }
                 .onSuccess {
                     eventFlow.update { ManageItemMemberOptionsEvent.OnRevokeMemberAccessSuccess }

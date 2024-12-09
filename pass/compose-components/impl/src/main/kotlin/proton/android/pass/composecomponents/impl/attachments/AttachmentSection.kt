@@ -83,7 +83,12 @@ fun AttachmentSection(
                 AttachmentRow(
                     innerModifier = Modifier
                         .padding(horizontal = Spacing.medium)
-                        .padding(vertical = Spacing.small),
+                        .padding(top = Spacing.small)
+                        .applyIf(
+                            condition = files.lastIndex == index && isDetail,
+                            ifTrue = { padding(bottom = Spacing.medium) },
+                            ifFalse = { padding(bottom = Spacing.small) }
+                        ),
                     filename = file.name,
                     attachmentType = file.type,
                     size = file.size,
@@ -100,6 +105,11 @@ fun AttachmentSection(
         }
         if (!isDetail) {
             AddAttachmentButton(
+                modifier = Modifier.padding(
+                    start = Spacing.medium,
+                    end = Spacing.medium,
+                    bottom = Spacing.medium
+                ),
                 colors = colors,
                 isEnabled = loadingFile is None,
                 onClick = onAddAttachment

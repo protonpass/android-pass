@@ -39,6 +39,8 @@ import proton.android.pass.features.sharing.manage.ManageVaultScreen
 import proton.android.pass.features.sharing.manage.bottomsheet.memberOptionsBottomSheetGraph
 import proton.android.pass.features.sharing.manage.item.navigation.ManageItemNavItem
 import proton.android.pass.features.sharing.manage.item.ui.ManageItemScreen
+import proton.android.pass.features.sharing.manage.iteminviteoptions.navigation.ManageItemInviteOptionsNavItem
+import proton.android.pass.features.sharing.manage.iteminviteoptions.ui.ManageItemInviteOptionsBottomSheet
 import proton.android.pass.features.sharing.manage.itemmemberoptions.navigation.ManageItemMemberOptionsNavItem
 import proton.android.pass.features.sharing.manage.itemmemberoptions.ui.ManageItemMemberOptionsBottomSheet
 import proton.android.pass.features.sharing.sharefromitem.ShareFromItemBottomSheet
@@ -188,6 +190,10 @@ sealed interface SharingNavigation {
         val memberEmail: String
     ) : SharingNavigation
 
+    data class ManageItemInviteOptions(
+        val shareId: ShareId
+    ) : SharingNavigation
+
     @JvmInline
     value class ManageVault(val shareId: ShareId) : SharingNavigation
 
@@ -283,6 +289,10 @@ fun NavGraphBuilder.sharingGraph(onNavigateEvent: (SharingNavigation) -> Unit) {
 
     bottomSheet(navItem = ManageItemMemberOptionsNavItem) {
         ManageItemMemberOptionsBottomSheet(onNavigateEvent = onNavigateEvent)
+    }
+
+    bottomSheet(navItem = ManageItemInviteOptionsNavItem) {
+        ManageItemInviteOptionsBottomSheet(onNavigateEvent = onNavigateEvent)
     }
 
     dialog(InvitesInfoDialog) {

@@ -90,7 +90,7 @@ internal fun ManageItemMemberOptionsContent(
                 onUiEvent(ManageItemMemberOptionsUiEvent.OnRevokeMemberAccessClick)
             }
         ).also(::add)
-    }.also { items ->
+    }.let { items ->
         BottomSheetItemList(
             modifier = modifier.bottomSheet(),
             items = items

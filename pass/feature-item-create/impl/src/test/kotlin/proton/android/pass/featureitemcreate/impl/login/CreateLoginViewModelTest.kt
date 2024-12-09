@@ -205,7 +205,8 @@ internal class CreateLoginViewModelTest {
                             lastAutofillTime = item.lastAutofillTime.value(),
                             isPinned = false,
                             category = ItemCategory.Login,
-                            revision = item.revision
+                            revision = item.revision,
+                            shareCount = item.shareCount
                         )
                     )
                 )

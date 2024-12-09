@@ -31,6 +31,7 @@ import proton.android.pass.data.api.repositories.UpdateShareEvent
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.domain.shares.ShareMember
@@ -176,8 +177,23 @@ class TestShareRepository : ShareRepository {
         userEmail: String?
     ): Flow<List<ShareMember>> = shareMembersFlow
 
-    override fun observeSharePendingInvites(userId: UserId, shareId: ShareId): Flow<List<SharePendingInvite>> =
-        sharePendingInvitesFlow
+    override suspend fun deleteShareMember(
+        userId: UserId,
+        shareId: ShareId,
+        memberShareId: ShareId
+    ) = Unit
+
+    override fun observeSharePendingInvites(
+        userId: UserId,
+        shareId: ShareId
+    ): Flow<List<SharePendingInvite>> = sharePendingInvitesFlow
+
+    override suspend fun updateShareMember(
+        userId: UserId,
+        shareId: ShareId,
+        memberShareId: ShareId,
+        memberShareRole: ShareRole
+    ) = Unit
 
     data class RefreshSharePayload(
         val userId: UserId,

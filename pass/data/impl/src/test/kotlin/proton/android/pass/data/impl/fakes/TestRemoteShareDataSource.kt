@@ -22,7 +22,10 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
+import proton.android.pass.data.impl.responses.GetSharePendingInvitesResponse
+import proton.android.pass.data.impl.responses.ShareMemberResponse
 import proton.android.pass.data.impl.responses.ShareResponse
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 class TestRemoteShareDataSource : RemoteShareDataSource {
@@ -92,4 +95,24 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
     override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
         leaveVaultResponse.getOrThrow()
     }
+
+    override suspend fun getShareMembers(
+        userId: UserId,
+        shareId: ShareId
+    ): List<ShareMemberResponse> = emptyList()
+
+    override suspend fun getShareItemMembers(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): List<ShareMemberResponse> = emptyList()
+
+    override suspend fun getSharePendingInvites(
+        userId: UserId,
+        shareId: ShareId
+    ): GetSharePendingInvitesResponse = GetSharePendingInvitesResponse(
+        code = 1000,
+        invites = emptyList(),
+        newUserInvites = emptyList()
+    )
 }

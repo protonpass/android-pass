@@ -42,6 +42,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.data.fakes.usecases.attachments.FakeObserveItemAttachments
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -51,6 +52,7 @@ import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.domain.TestVault
 
 class CreditCardDetailViewModelTest {
@@ -65,6 +67,7 @@ class CreditCardDetailViewModelTest {
     private lateinit var trashItem: TestTrashItems
     private lateinit var restoreItem: TestRestoreItems
     private lateinit var canPerformPaidAction: TestCanPerformPaidAction
+    private lateinit var observeShare: FakeObserveShare
 
     @Before
     fun setup() {
@@ -73,6 +76,7 @@ class CreditCardDetailViewModelTest {
         trashItem = TestTrashItems()
         restoreItem = TestRestoreItems()
         canPerformPaidAction = TestCanPerformPaidAction()
+        observeShare = FakeObserveShare()
 
         instance = CreditCardDetailViewModel(
             snackbarDispatcher = TestSnackbarDispatcher(),
@@ -99,8 +103,11 @@ class CreditCardDetailViewModelTest {
             unpinItem = FakeUnpinItem(),
             getUserPlan = TestGetUserPlan(),
             featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
-            observeItemAttachments = FakeObserveItemAttachments()
+            observeItemAttachments = FakeObserveItemAttachments(),
+            observeShare = observeShare
         )
+
+        observeShare.emitValue(TestShare.Vault.create(id = SHARE_ID))
     }
 
     @Test
@@ -119,6 +126,7 @@ class CreditCardDetailViewModelTest {
         val expirationDateYear = "2050"
         val expirationDateMonth = "05"
         val expirationDate = "$expirationDateYear-$expirationDateMonth"
+        val vaultShare = TestShare.Vault.create()
 
         val itemWithVaultInfo = ItemWithVaultInfo(
             item = TestObserveItems.createCreditCard(
@@ -136,6 +144,7 @@ class CreditCardDetailViewModelTest {
             )
         )
         getItem.emitValue(Result.success(itemWithVaultInfo))
+        observeShare.emitValue(vaultShare)
 
         instance.uiState.test {
             val item = awaitItem()
@@ -143,7 +152,7 @@ class CreditCardDetailViewModelTest {
 
             val itemSuccess = item as CreditCardDetailUiState.Success
             assertThat(itemSuccess.isLoading).isFalse()
-            assertThat(itemSuccess.share).isEqualTo(TEST_VAULT)
+            assertThat(itemSuccess.share).isEqualTo(vaultShare)
             assertThat(itemSuccess.itemActions).isEqualTo(TestGetItemActions.DEFAULT)
             assertThat(itemSuccess.isItemSentToTrash).isFalse()
             assertThat(itemSuccess.isPermanentlyDeleted).isFalse()

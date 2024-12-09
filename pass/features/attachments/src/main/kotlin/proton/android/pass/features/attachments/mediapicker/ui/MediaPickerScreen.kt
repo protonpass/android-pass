@@ -22,8 +22,11 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import proton.android.pass.features.attachments.mediapicker.navigation.MediaPickerNavigation
 import proton.android.pass.features.attachments.mediapicker.presentation.MediaPickerSnackbarMessage.CouldNotOpenMediaPicker
@@ -32,7 +35,11 @@ import proton.android.pass.features.attachments.mediapicker.presentation.MediaPi
 import proton.android.pass.log.api.PassLogger
 
 @Composable
-fun MediaPickerScreen(onNavigate: (MediaPickerNavigation) -> Unit, viewmodel: MediaPickerViewModel = hiltViewModel()) {
+fun MediaPickerScreen(
+    modifier: Modifier = Modifier,
+    onNavigate: (MediaPickerNavigation) -> Unit,
+    viewmodel: MediaPickerViewModel = hiltViewModel()
+) {
     val pickMedia = rememberLauncherForActivityResult(PickVisualMedia()) {
         val uri: Uri = it ?: return@rememberLauncherForActivityResult run {
             viewmodel.onMediaPickerError(CouldNotSelectFile)
@@ -51,6 +58,7 @@ fun MediaPickerScreen(onNavigate: (MediaPickerNavigation) -> Unit, viewmodel: Me
             onNavigate(MediaPickerNavigation.Close)
         }
     }
+    Box(modifier.fillMaxSize())
 }
 
 private const val TAG = "MediaPickerScreen"

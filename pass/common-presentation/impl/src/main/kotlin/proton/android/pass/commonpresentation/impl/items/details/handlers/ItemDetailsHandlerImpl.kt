@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
@@ -39,6 +40,7 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -55,7 +57,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
 
     override fun observeItemDetails(item: Item): Flow<ItemDetailState> = combine(
         observeShare(item.shareId),
-        observeItemAttachments(item.shareId, item.id),
+        attachmentsFlow(item),
         ::Pair
     )
         .flatMapLatest { (share, attachments) ->
@@ -68,7 +70,6 @@ class ItemDetailsHandlerImpl @Inject constructor(
             }
         }
         .distinctUntilChanged()
-
 
     override suspend fun onItemDetailsFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain) {
         clipboardManager.copyToClipboard(text = text, isSecure = false)
@@ -89,6 +90,12 @@ class ItemDetailsHandlerImpl @Inject constructor(
 
         clipboardManager.copyToClipboard(text = text, isSecure = true)
         displayFieldCopiedSnackbarMessage(hiddenFieldType)
+    }
+
+    private fun attachmentsFlow(item: Item): Flow<List<Attachment>> = if (item.hasAttachments) {
+        observeItemAttachments(item.shareId, item.id)
+    } else {
+        flowOf(emptyList())
     }
 
     private suspend fun displayFieldCopiedSnackbarMessage(fieldType: ItemDetailsFieldType) = when (fieldType) {

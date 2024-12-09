@@ -96,10 +96,7 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
         leaveVaultResponse.getOrThrow()
     }
 
-    override suspend fun getShareMembers(
-        userId: UserId,
-        shareId: ShareId
-    ): List<ShareMemberResponse> = emptyList()
+    override suspend fun getShareMembers(userId: UserId, shareId: ShareId): List<ShareMemberResponse> = emptyList()
 
     override suspend fun getShareItemMembers(
         userId: UserId,
@@ -107,12 +104,10 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
         itemId: ItemId
     ): List<ShareMemberResponse> = emptyList()
 
-    override suspend fun getSharePendingInvites(
-        userId: UserId,
-        shareId: ShareId
-    ): GetSharePendingInvitesResponse = GetSharePendingInvitesResponse(
-        code = 1000,
-        invites = emptyList(),
-        newUserInvites = emptyList()
-    )
+    override suspend fun getSharePendingInvites(userId: UserId, shareId: ShareId): GetSharePendingInvitesResponse =
+        GetSharePendingInvitesResponse(
+            code = 1000,
+            invites = emptyList(),
+            newUserInvites = emptyList()
+        )
 }

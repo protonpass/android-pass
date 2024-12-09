@@ -38,7 +38,8 @@ fun AddAttachmentBottomsheet(modifier: Modifier = Modifier, onNavigate: (AddAtta
                     onNavigate(AddAttachmentNavigation.OpenFilePicker)
                 AddAttachmentEvent.ChooseAPhotoOrVideo ->
                     onNavigate(AddAttachmentNavigation.OpenMediaPicker)
-                AddAttachmentEvent.TakeAPhoto -> Unit
+                AddAttachmentEvent.TakeAPhoto ->
+                    onNavigate(AddAttachmentNavigation.OpenCamera)
             }
         }
     )

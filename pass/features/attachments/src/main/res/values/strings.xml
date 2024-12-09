@@ -25,6 +25,6 @@
     <string name="attachment_options_rename">Rename</string>
     <string name="attachment_options_delete">Delete</string>
     <string name="file_picker_open_error">Could not open file picker</string>
-    <string name="file_picker_select_error">Could not select file</string>
+    <string name="media_picker_open_error">Could not open media picker</string>
     <string name="camera_open_error">Could not open camera</string>
 </resources>

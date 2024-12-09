@@ -21,8 +21,11 @@ package proton.android.pass.features.attachments.filepicker.ui
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavigation
 import proton.android.pass.features.attachments.filepicker.presentation.FilePickerSnackbarMessage.CouldNotOpenFilePicker
@@ -31,7 +34,11 @@ import proton.android.pass.features.attachments.filepicker.presentation.FilePick
 import proton.android.pass.log.api.PassLogger
 
 @Composable
-fun FilePickerScreen(onNavigate: (FilePickerNavigation) -> Unit, viewmodel: FilePickerViewModel = hiltViewModel()) {
+fun FilePickerScreen(
+    modifier: Modifier = Modifier,
+    onNavigate: (FilePickerNavigation) -> Unit,
+    viewmodel: FilePickerViewModel = hiltViewModel()
+) {
     val pickFile = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) {
         val uri: Uri = it ?: return@rememberLauncherForActivityResult run {
             viewmodel.onFilePickerError(CouldNotSelectFile)
@@ -50,6 +57,7 @@ fun FilePickerScreen(onNavigate: (FilePickerNavigation) -> Unit, viewmodel: File
             onNavigate(FilePickerNavigation.Close)
         }
     }
+    Box(modifier.fillMaxSize())
 }
 
 private const val TAG = "FilePickerScreen"

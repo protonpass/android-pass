@@ -24,17 +24,27 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
+import proton.android.pass.files.api.FileType
+import proton.android.pass.files.api.FileUriGenerator
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import java.net.URI
 import javax.inject.Inject
 
 @HiltViewModel
 class CameraViewModel @Inject constructor(
+    private val fileUriGenerator: FileUriGenerator,
     private val draftAttachmentRepository: DraftAttachmentRepository,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
-    fun onFilePicked(uri: Uri) = viewModelScope.launch {
+    fun createTempUri(onUriGenerated: (Uri) -> Unit) {
+        viewModelScope.launch {
+            val uri = fileUriGenerator.generate(FileType.CameraTemp)
+            onUriGenerated(Uri.parse(uri.toString()))
+        }
+    }
+
+    fun onPhotoTaken(uri: Uri) = viewModelScope.launch {
         draftAttachmentRepository.add(URI.create(uri.toString()))
     }
 

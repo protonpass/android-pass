@@ -100,10 +100,12 @@ fun AttachmentRow(
         }
         when {
             isLoading -> {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(24.dp)
-                )
-                Spacer(Modifier.width(Spacing.medium))
+                Row {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp)
+                    )
+                    Spacer(Modifier.width(Spacing.small))
+                }
             }
 
             isEnabled -> IconButton(onOptionsClick) {

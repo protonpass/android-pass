@@ -27,4 +27,7 @@
     <string name="file_picker_open_error">Could not open file picker</string>
     <string name="media_picker_open_error">Could not open media picker</string>
     <string name="camera_open_error">Could not open camera</string>
+
+    <string name="camera_permission_explanation">Camera permission required for this feature to be available.</string>
+    <string name="camera_permission_open_settings">Open settings</string>
 </resources>

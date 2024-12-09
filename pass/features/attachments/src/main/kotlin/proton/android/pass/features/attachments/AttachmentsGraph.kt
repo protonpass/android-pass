@@ -28,6 +28,9 @@ import proton.android.pass.features.attachments.attachmentoptions.ui.AttachmentO
 import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavItem
 import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavigation
 import proton.android.pass.features.attachments.filepicker.ui.FilePickerScreen
+import proton.android.pass.features.attachments.mediapicker.navigation.MediaPickerNavItem
+import proton.android.pass.features.attachments.mediapicker.navigation.MediaPickerNavigation
+import proton.android.pass.features.attachments.mediapicker.ui.MediaPickerScreen
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
@@ -41,6 +44,9 @@ fun NavGraphBuilder.attachmentsGraph(onNavigate: (AttachmentsNavigation) -> Unit
 
                     AddAttachmentNavigation.OpenFilePicker ->
                         onNavigate(AttachmentsNavigation.OpenFilePicker)
+
+                    AddAttachmentNavigation.OpenMediaPicker ->
+                        onNavigate(AttachmentsNavigation.OpenMediaPicker)
                 }
             }
         )
@@ -64,10 +70,20 @@ fun NavGraphBuilder.attachmentsGraph(onNavigate: (AttachmentsNavigation) -> Unit
             }
         )
     }
+    composable(MediaPickerNavItem) {
+        MediaPickerScreen(
+            onNavigate = {
+                when (it) {
+                    MediaPickerNavigation.Close -> onNavigate(AttachmentsNavigation.CloseScreen)
+                }
+            }
+        )
+    }
 }
 
 sealed interface AttachmentsNavigation {
     data object CloseBottomsheet : AttachmentsNavigation
     data object CloseScreen : AttachmentsNavigation
     data object OpenFilePicker : AttachmentsNavigation
+    data object OpenMediaPicker : AttachmentsNavigation
 }

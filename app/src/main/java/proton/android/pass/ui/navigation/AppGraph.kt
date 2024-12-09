@@ -122,6 +122,7 @@ import proton.android.pass.features.attachments.AttachmentsNavigation
 import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavItem
 import proton.android.pass.features.attachments.attachmentsGraph
 import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavItem
+import proton.android.pass.features.attachments.mediapicker.navigation.MediaPickerNavItem
 import proton.android.pass.features.auth.Auth
 import proton.android.pass.features.auth.AuthNavigation
 import proton.android.pass.features.auth.AuthOrigin
@@ -2198,6 +2199,7 @@ fun NavGraphBuilder.appGraph(
 
             AttachmentsNavigation.CloseScreen -> appNavigator.navigateBack(force = true)
             AttachmentsNavigation.OpenFilePicker -> appNavigator.navigate(FilePickerNavItem)
+            AttachmentsNavigation.OpenMediaPicker -> appNavigator.navigate(MediaPickerNavItem)
         }
     }
 }

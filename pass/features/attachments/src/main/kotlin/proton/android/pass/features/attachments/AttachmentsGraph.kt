@@ -25,6 +25,9 @@ import proton.android.pass.features.attachments.addattachment.ui.AddAttachmentBo
 import proton.android.pass.features.attachments.attachmentoptions.navigation.AttachmentOptionsNavItem
 import proton.android.pass.features.attachments.attachmentoptions.navigation.AttachmentOptionsNavigation
 import proton.android.pass.features.attachments.attachmentoptions.ui.AttachmentOptionsBottomsheet
+import proton.android.pass.features.attachments.camera.navigation.CameraNavItem
+import proton.android.pass.features.attachments.camera.navigation.CameraNavigation
+import proton.android.pass.features.attachments.camera.ui.CameraScreen
 import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavItem
 import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavigation
 import proton.android.pass.features.attachments.filepicker.ui.FilePickerScreen
@@ -47,6 +50,9 @@ fun NavGraphBuilder.attachmentsGraph(onNavigate: (AttachmentsNavigation) -> Unit
 
                     AddAttachmentNavigation.OpenMediaPicker ->
                         onNavigate(AttachmentsNavigation.OpenMediaPicker)
+
+                    AddAttachmentNavigation.OpenCamera ->
+                        onNavigate(AttachmentsNavigation.OpenCamera)
                 }
             }
         )
@@ -79,6 +85,15 @@ fun NavGraphBuilder.attachmentsGraph(onNavigate: (AttachmentsNavigation) -> Unit
             }
         )
     }
+    composable(CameraNavItem) {
+        CameraScreen(
+            onNavigate = {
+                when (it) {
+                    CameraNavigation.Close -> onNavigate(AttachmentsNavigation.CloseScreen)
+                }
+            }
+        )
+    }
 }
 
 sealed interface AttachmentsNavigation {
@@ -86,4 +101,5 @@ sealed interface AttachmentsNavigation {
     data object CloseScreen : AttachmentsNavigation
     data object OpenFilePicker : AttachmentsNavigation
     data object OpenMediaPicker : AttachmentsNavigation
+    data object OpenCamera : AttachmentsNavigation
 }

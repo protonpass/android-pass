@@ -391,7 +391,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun getPendingInvitesForShare(@Path("shareId") shareId: String): GetSharePendingInvitesResponse
 
     @DELETE("$PREFIX/share/{shareId}/user/{memberShareId}")
-    suspend fun removeMemberFromVault(
+    suspend fun deleteShareMember(
         @Path("shareId") shareId: String,
         @Path("memberShareId") memberShareId: String
     ): CodeOnlyResponse

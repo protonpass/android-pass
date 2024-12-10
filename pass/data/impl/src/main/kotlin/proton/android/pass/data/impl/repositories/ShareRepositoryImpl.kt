@@ -23,7 +23,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
@@ -65,7 +64,6 @@ import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.data.impl.util.TimeUtil.toDate
 import proton.android.pass.domain.InviteId
-import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.NewUserInviteId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
@@ -75,7 +73,6 @@ import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.domain.key.ShareKey
-import proton.android.pass.domain.shares.ShareMember
 import proton.android.pass.domain.shares.SharePendingInvite
 import proton.android.pass.log.api.PassLogger
 import proton_pass_vault_v1.VaultV1
@@ -383,47 +380,6 @@ class ShareRepositoryImpl @Inject constructor(
         return address
     }
 
-    override fun observeShareItemMembers(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        userEmail: String?
-    ): Flow<List<ShareMember>> = flow {
-        remoteShareDataSource.getShareItemMembers(userId, shareId, itemId)
-            .map { shareMemberResponse ->
-                ShareMember(
-                    email = shareMemberResponse.userEmail,
-                    shareId = ShareId(shareMemberResponse.shareId),
-                    username = shareMemberResponse.userName,
-                    isCurrentUser = shareMemberResponse.userEmail == userEmail,
-                    isOwner = shareMemberResponse.owner ?: false,
-                    role = shareMemberResponse.shareRoleId
-                        ?.let(ShareRole::fromValue)
-                        ?: ShareRole.fromValue(ShareRole.SHARE_ROLE_READ)
-                )
-            }
-            .also { shareMembers ->
-                localShareDataSource.upsertShareMembers(userId, shareId, shareMembers)
-            }
-
-        emitAll(localShareDataSource.observeShareMembers(userId, shareId))
-    }
-
-    override suspend fun deleteShareMember(
-        userId: UserId,
-        shareId: ShareId,
-        memberShareId: ShareId
-    ) {
-        runCatching {
-            remoteShareDataSource.removeShareMember(userId, shareId, memberShareId)
-        }.onFailure { error ->
-            PassLogger.w(TAG, "There was an error removing a share member")
-            PassLogger.w(TAG, error)
-            throw error
-        }.onSuccess {
-            localShareDataSource.deleteShareMember(userId, shareId, memberShareId)
-        }
-    }
 
     override fun observeSharePendingInvites(userId: UserId, shareId: ShareId): Flow<List<SharePendingInvite>> = flow {
         remoteShareDataSource.getSharePendingInvites(userId, shareId)
@@ -454,30 +410,6 @@ class ShareRepositoryImpl @Inject constructor(
                     emit(sharePendingInvites)
                 }
             }
-    }
-
-    override suspend fun updateShareMember(
-        userId: UserId,
-        shareId: ShareId,
-        memberShareId: ShareId,
-        memberShareRole: ShareRole
-    ) {
-        runCatching {
-            remoteShareDataSource.updateShareMember(userId, shareId, memberShareId, memberShareRole)
-        }.onFailure { error ->
-            PassLogger.w(TAG, "There was an error removing a share member")
-            PassLogger.w(TAG, error)
-            throw error
-        }.onSuccess {
-            localShareDataSource.getShareMember(userId, shareId, memberShareId)
-                ?.also { currentShareMember ->
-                    localShareDataSource.upsertShareMember(
-                        userId = userId,
-                        shareId = shareId,
-                        shareMember = currentShareMember.copy(role = memberShareRole)
-                    )
-                }
-        }
     }
 
     private suspend fun onShareResponseEntity(

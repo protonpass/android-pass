@@ -44,6 +44,7 @@ import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.GetShareById
+import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
@@ -72,6 +73,7 @@ class UpdateNoteViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     metadataResolver: MetadataResolver,
     uploadAttachment: UploadAttachment,
+    clearAttachments: ClearAttachments,
     draftAttachmentRepository: DraftAttachmentRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -79,6 +81,7 @@ class UpdateNoteViewModel @Inject constructor(
     snackbarDispatcher = snackbarDispatcher,
     metadataResolver = metadataResolver,
     uploadAttachment = uploadAttachment,
+    clearAttachments = clearAttachments,
     draftAttachmentRepository = draftAttachmentRepository,
     featureFlagsRepository = featureFlagsRepository,
     savedStateHandleProvider = savedStateHandleProvider

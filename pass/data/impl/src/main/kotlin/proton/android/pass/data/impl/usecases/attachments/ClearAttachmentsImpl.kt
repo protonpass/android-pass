@@ -21,20 +21,16 @@ package proton.android.pass.data.impl.usecases.attachments
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.impl.repositories.FileKeyRepository
-import proton.android.pass.files.api.CacheCleaner
-import proton.android.pass.files.api.DirectoryType
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ClearAttachmentsImpl @Inject constructor(
     private val fileKeyRepository: FileKeyRepository,
-    private val draftAttachmentRepository: DraftAttachmentRepository,
-    private val cacheCleaner: CacheCleaner
+    private val draftAttachmentRepository: DraftAttachmentRepository
 ) : ClearAttachments {
     override fun invoke() {
         draftAttachmentRepository.clear()
-        cacheCleaner.deleteDir(DirectoryType.CameraTemp)
         fileKeyRepository.clearAllMappings()
     }
 }

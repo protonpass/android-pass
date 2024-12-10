@@ -59,7 +59,8 @@ fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     isPinned = isPinned,
     category = itemType.category,
     revision = revision,
-    shareCount = shareCount
+    shareCount = shareCount,
+    isOwner = isOwner
 )
 
 fun ItemEncrypted.toUiModel(context: EncryptionContext): ItemUiModel {
@@ -84,7 +85,8 @@ fun ItemEncrypted.toUiModel(context: EncryptionContext): ItemUiModel {
         isPinned = isPinned,
         category = itemType.category,
         revision = revision,
-        shareCount = shareCount
+        shareCount = shareCount,
+        isOwner = isOwner
     )
 }
 

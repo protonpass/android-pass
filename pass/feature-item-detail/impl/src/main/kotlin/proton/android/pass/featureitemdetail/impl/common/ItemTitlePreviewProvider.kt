@@ -157,7 +157,8 @@ data class ItemTitleInput(
         lastAutofillTime = null,
         isPinned = false,
         revision = 1,
-        shareCount = 0
+        shareCount = 0,
+        isOwner = true
     ),
     val share: Share,
     val isPinned: Boolean,

@@ -27,14 +27,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.PersistentSet
-import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
-import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAddAttachment
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOpen
@@ -58,7 +57,7 @@ fun CreditCardItemForm(
     enabled: Boolean,
     validationErrors: PersistentSet<CreditCardValidationErrors>,
     isFileAttachmentsEnabled: Boolean,
-    attachmentList: List<Attachment>,
+    attachmentsState: AttachmentsState,
     onEvent: (CreditCardContentEvent) -> Unit
 ) {
     Column(
@@ -103,8 +102,7 @@ fun CreditCardItemForm(
         )
         if (isFileAttachmentsEnabled) {
             AttachmentSection(
-                files = attachmentList,
-                loadingFile = None,
+                attachmentsState = attachmentsState,
                 isDetail = false,
                 colors = passItemColors(ItemCategory.CreditCard),
                 onAttachmentOptions = { onEvent(OnAttachmentEvent(OnAttachmentOptions(it.id))) },

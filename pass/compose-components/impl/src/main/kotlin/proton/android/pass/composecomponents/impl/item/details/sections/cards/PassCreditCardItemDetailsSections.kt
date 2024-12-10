@@ -23,9 +23,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.datetime.Instant
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
@@ -36,7 +36,6 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.attachments.Attachment
 
 @Composable
 internal fun PassCreditCardItemDetailsSections(
@@ -54,7 +53,7 @@ internal fun PassCreditCardItemDetailsSections(
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
     shouldDisplayFileAttachments: Boolean,
-    attachments: List<Attachment>
+    attachmentsState: AttachmentsState
 ) = with(contents) {
     Column(
         modifier = modifier,
@@ -80,10 +79,9 @@ internal fun PassCreditCardItemDetailsSections(
         }
         if (shouldDisplayFileAttachments) {
             AttachmentSection(
-                files = attachments,
+                attachmentsState = attachmentsState,
                 isDetail = true,
                 colors = itemColors,
-                loadingFile = None,
                 onAttachmentOptions = {},
                 onAttachmentOpen = {},
                 onAddAttachment = {},

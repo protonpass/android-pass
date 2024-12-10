@@ -49,6 +49,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
@@ -287,7 +288,12 @@ class AliasDetailViewModel @Inject constructor(
                     isAliasManagementEnabled = itemFeatures.isAliasManagementEnabled,
                     isAliasTrashDialogChecked = itemFeatures.isAliasTrashDialogChecked,
                     isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled,
-                    attachments = attachments,
+                    attachmentsState = AttachmentsState(
+                        draftAttachmentsList = listOf(),
+                        attachmentsList = attachments,
+                        loadingDraftAttachments = setOf(),
+                        loadingAttachments = setOf()
+                    ),
                     hasMoreThanOneVault = details.hasMoreThanOneVault
                 )
             }

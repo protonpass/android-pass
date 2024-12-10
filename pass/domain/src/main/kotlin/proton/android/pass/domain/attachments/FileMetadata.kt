@@ -16,11 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.domain.attachments
 
-import proton.android.pass.domain.attachments.FileMetadata
+import kotlinx.datetime.Instant
 import java.net.URI
 
-interface MetadataResolver {
-    suspend fun extractMetadata(uri: URI): FileMetadata?
-}
+data class FileMetadata(
+    val uri: URI,
+    val name: String,
+    val size: Long,
+    val mimeType: String,
+    val attachmentType: AttachmentType,
+    val createTime: Instant
+)

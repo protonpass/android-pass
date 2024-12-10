@@ -57,11 +57,15 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
+import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.attachments.ClearAttachments
+import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -82,6 +86,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 open class CreateAliasViewModel @Inject constructor(
     private val accountManager: AccountManager,
@@ -96,9 +101,17 @@ open class CreateAliasViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeDefaultVault: ObserveDefaultVault,
+    clearAttachments: ClearAttachments,
+    uploadAttachment: UploadAttachment,
+    draftAttachmentRepository: DraftAttachmentRepository,
+    metadataResolver: MetadataResolver,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseAliasViewModel(
+    clearAttachments = clearAttachments,
+    uploadAttachment = uploadAttachment,
+    draftAttachmentRepository = draftAttachmentRepository,
+    metadataResolver = metadataResolver,
     snackbarDispatcher = snackbarDispatcher,
     featureFlagsRepository = featureFlagsRepository,
     savedStateHandleProvider = savedStateHandleProvider

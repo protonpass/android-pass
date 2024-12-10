@@ -219,7 +219,7 @@ fun AliasDetail(
                         isAliasStateToggling = state.isLoading(LoadingStateKey.AliasStateToggling),
                         isAliasManagementEnabled = state.isAliasManagementEnabled,
                         isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
-                        attachments = state.attachments,
+                        attachmentsState = state.attachmentsState,
                         hasMoreThanOneVaultShare = state.hasMoreThanOneVault,
                         onCopyAlias = { viewModel.onCopyAlias(it) },
                         onCreateLoginFromAlias = { alias ->

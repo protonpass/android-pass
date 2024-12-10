@@ -229,7 +229,7 @@ fun LoginDetail(
                         customFields = state.customFields,
                         passkeys = state.passkeys,
                         monitorState = state.monitorState,
-                        attachments = state.attachments,
+                        attachmentsState = state.attachmentsState,
                         onEvent = {
                             when (it) {
                                 LoginDetailEvent.OnCopyPasswordClick -> {

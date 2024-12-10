@@ -34,10 +34,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentList
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
@@ -45,7 +45,6 @@ import proton.android.pass.composecomponents.impl.form.SenderNameSection
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
-import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.AliasContentUiEvent.OnAttachmentEvent
@@ -70,7 +69,7 @@ internal fun CreateAliasForm(
     isAliasCreatedByUser: Boolean,
     showUpgrade: Boolean,
     isFileAttachmentsEnabled: Boolean,
-    attachmentList: List<Attachment>,
+    attachmentsState: AttachmentsState,
     onSuffixClick: () -> Unit,
     onMailboxClick: () -> Unit,
     onEvent: (AliasContentUiEvent) -> Unit
@@ -172,8 +171,7 @@ internal fun CreateAliasForm(
 
         if (isFileAttachmentsEnabled) {
             AttachmentSection(
-                files = attachmentList,
-                loadingFile = None,
+                attachmentsState = attachmentsState,
                 isDetail = false,
                 colors = passItemColors(ItemCategory.Alias),
                 onAttachmentOptions = { onEvent(OnAttachmentEvent(OnAttachmentOptions(it.id))) },

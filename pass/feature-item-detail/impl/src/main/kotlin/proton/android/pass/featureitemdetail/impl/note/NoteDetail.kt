@@ -196,7 +196,7 @@ fun NoteDetail(
                                 )
                             )
                         },
-                        attachments = state.attachments,
+                        attachmentsState = state.attachmentsState,
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
                         isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
                         isShared = state.itemUiModel.isShared,

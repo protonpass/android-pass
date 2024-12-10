@@ -25,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.PersistentList
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.SpecialCharacters
@@ -35,13 +34,13 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasStats
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
@@ -64,7 +63,7 @@ fun AliasDetailContent(
     isHistoryFeatureEnabled: Boolean,
     isAliasManagementEnabled: Boolean,
     isFileAttachmentsEnabled: Boolean,
-    attachments: List<Attachment>,
+    attachmentsState: AttachmentsState,
     hasMoreThanOneVaultShare: Boolean,
     onCopyAlias: (String) -> Unit,
     onCreateLoginFromAlias: (String) -> Unit,
@@ -142,10 +141,9 @@ fun AliasDetailContent(
 
         if (isFileAttachmentsEnabled) {
             AttachmentSection(
-                files = attachments,
+                attachmentsState = attachmentsState,
                 isDetail = true,
                 colors = passItemColors(ItemCategory.Alias),
-                loadingFile = None,
                 onAttachmentOptions = {},
                 onAttachmentOpen = {},
                 onAddAttachment = {},

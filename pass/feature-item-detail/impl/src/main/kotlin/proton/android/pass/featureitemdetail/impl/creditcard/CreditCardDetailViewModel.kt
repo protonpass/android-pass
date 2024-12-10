@@ -47,6 +47,7 @@ import proton.android.pass.commonui.api.StringUtils.maskCreditCardNumber
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
@@ -280,7 +281,12 @@ class CreditCardDetailViewModel @Inject constructor(
                     event = event,
                     isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
                     isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled,
-                    attachments = details.attachments,
+                    attachmentsState = AttachmentsState(
+                        draftAttachmentsList = listOf(),
+                        attachmentsList = details.attachments,
+                        loadingDraftAttachments = setOf(),
+                        loadingAttachments = setOf()
+                    ),
                     hasMoreThanOneVault = details.hasMoreThanOneVault
                 )
             }

@@ -22,11 +22,11 @@ import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.PersistentList
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasStats
-import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.Share
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
@@ -67,7 +67,7 @@ sealed interface AliasDetailUiState {
         val isAliasTrashDialogChecked: Boolean,
         val isAliasManagementEnabled: Boolean,
         val hasMoreThanOneVault: Boolean,
-        val attachments: List<Attachment>
+        val attachmentsState: AttachmentsState
     ) : AliasDetailUiState {
 
         internal val requiresBackNavigation: Boolean = isItemSentToTrash ||

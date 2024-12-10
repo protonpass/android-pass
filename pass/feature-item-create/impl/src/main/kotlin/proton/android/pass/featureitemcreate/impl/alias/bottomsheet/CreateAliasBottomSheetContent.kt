@@ -44,6 +44,7 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetCancelConfirm
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.buttons.ShowAdvancedOptionsButton
@@ -205,7 +206,8 @@ fun CreateAliasBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider:
                     hasReachedAliasLimit = false,
                     canUpgrade = false,
                     isAliasManagementEnabled = false,
-                    isFileAttachmentEnabled = false
+                    isFileAttachmentEnabled = false,
+                    attachmentsState = AttachmentsState.Initial
                 ),
                 aliasItemFormState = AliasItemFormState(
                     title = "some title",

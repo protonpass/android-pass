@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.mapLatest
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.HiddenState
@@ -59,7 +60,12 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
                 itemState = ItemState.from(item.state),
                 itemDiffs = ItemDiffs.CreditCard(),
                 itemShareCount = item.shareCount,
-                attachments = attachments
+                attachmentsState = AttachmentsState(
+                    draftAttachmentsList = listOf(),
+                    attachmentsList = attachments,
+                    loadingDraftAttachments = setOf(),
+                    loadingAttachments = setOf()
+                )
             )
         }
 

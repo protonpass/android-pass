@@ -83,7 +83,7 @@ internal fun NoteContent(
         CreateNoteItemForm(
             modifier = Modifier.padding(padding),
             noteItemFormState = noteItemFormState,
-            attachmentsUiState = uiState.attachmentsUiState,
+            attachmentsState = uiState.attachmentsState,
             isFileAttachmentsEnabled = uiState.isFileAttachmentsEnabled,
             onTitleRequiredError = uiState.errorList.contains(BlankTitle),
             enabled = uiState.isLoadingState != IsLoadingState.Loading,

@@ -18,19 +18,9 @@
 
 package proton.android.pass.data.api.repositories
 
-import kotlinx.datetime.Instant
-import proton.android.pass.domain.attachments.AttachmentType
+import proton.android.pass.domain.attachments.FileMetadata
 import java.net.URI
 
 interface MetadataResolver {
     suspend fun extractMetadata(uri: URI): FileMetadata?
 }
-
-data class FileMetadata(
-    val uri: URI,
-    val name: String,
-    val size: Long,
-    val mimeType: String,
-    val attachmentType: AttachmentType,
-    val createTime: Instant
-)

@@ -28,19 +28,20 @@ import proton.android.pass.composecomponents.impl.attachments.AttachmentRow
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOpen
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOptions
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.featureitemcreate.impl.note.NoteContentUiEvent.OnAttachmentEvent
 
 @Composable
 fun AttachmentList(
     modifier: Modifier = Modifier,
-    attachmentsUiState: AttachmentsUiState,
+    attachmentsState: AttachmentsState,
     onEvent: (NoteContentUiEvent) -> Unit
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
-        attachmentsUiState.attachmentsList.forEach { attachment ->
+        attachmentsState.attachmentsList.forEach { attachment ->
             AttachmentRow(
                 modifier = Modifier.roundedContainerNorm(),
                 innerModifier = Modifier.padding(
@@ -63,7 +64,7 @@ fun AttachmentList(
                 }
             )
         }
-        attachmentsUiState.draftAttachmentsList.forEach { draftAttachment ->
+        attachmentsState.draftAttachmentsList.forEach { draftAttachment ->
             AttachmentRow(
                 modifier = Modifier.roundedContainerNorm(),
                 innerModifier = Modifier.padding(
@@ -76,7 +77,7 @@ fun AttachmentList(
                 attachmentType = draftAttachment.attachmentType,
                 size = draftAttachment.size,
                 createTime = draftAttachment.createTime,
-                isLoading = attachmentsUiState.loadingAttachments.contains(draftAttachment.uri),
+                isLoading = attachmentsState.loadingDraftAttachments.contains(draftAttachment.uri),
                 isEnabled = true,
                 onOptionsClick = {},
                 onAttachmentOpen = {}

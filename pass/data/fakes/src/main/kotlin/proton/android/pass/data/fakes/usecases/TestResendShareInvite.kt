@@ -16,11 +16,33 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.fakes.usecases
 
+import proton.android.pass.data.api.usecases.ResendShareInvite
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.ShareId
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface ResendInvite {
-    suspend operator fun invoke(shareId: ShareId, inviteId: InviteId)
+@Singleton
+class TestResendShareInvite @Inject constructor() : ResendShareInvite {
+    private var result: Result<Unit> = Result.success(Unit)
+    private val memory = mutableListOf<Payload>()
+
+    fun getMemory(): List<Payload> = memory
+
+    fun setResult(value: Result<Unit>) {
+        result = value
+    }
+
+    override suspend fun invoke(shareId: ShareId, inviteId: InviteId) {
+        memory.add(Payload(shareId, inviteId))
+        result.getOrThrow()
+    }
+
+    data class Payload(
+        val shareId: ShareId,
+        val inviteId: InviteId
+    )
 }
+

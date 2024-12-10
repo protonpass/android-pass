@@ -16,33 +16,29 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases
+package proton.android.pass.data.impl.usecases
 
-import proton.android.pass.data.api.usecases.ResendInvite
+import kotlinx.coroutines.flow.firstOrNull
+import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
+import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.usecases.ResendShareInvite
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class TestResendInvite @Inject constructor() : ResendInvite {
-    private var result: Result<Unit> = Result.success(Unit)
-    private val memory = mutableListOf<Payload>()
-
-    fun getMemory(): List<Payload> = memory
-
-    fun setResult(value: Result<Unit>) {
-        result = value
-    }
+class ResendShareInviteImpl @Inject constructor(
+    private val accountManager: AccountManager,
+    private val shareRepository: ShareRepository
+) : ResendShareInvite {
 
     override suspend fun invoke(shareId: ShareId, inviteId: InviteId) {
-        memory.add(Payload(shareId, inviteId))
-        result.getOrThrow()
+        accountManager.getPrimaryUserId()
+            .firstOrNull()
+            ?.also { userId ->
+                shareRepository.resendShareInvite(userId, shareId, inviteId)
+            }
+            ?: throw UserIdNotAvailableError()
     }
 
-    data class Payload(
-        val shareId: ShareId,
-        val inviteId: InviteId
-    )
 }
-

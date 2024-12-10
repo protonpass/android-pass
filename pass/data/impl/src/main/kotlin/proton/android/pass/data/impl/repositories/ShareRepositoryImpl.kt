@@ -406,9 +406,15 @@ class ShareRepositoryImpl @Inject constructor(
                         }
                         .also(::addAll)
                 }.also { sharePendingInvites ->
-                    emit(sharePendingInvites)
+                    localShareDataSource.upsertSharePendingInvites(
+                        userId,
+                        shareId,
+                        sharePendingInvites
+                    )
                 }
             }
+
+        emitAll(localShareDataSource.observeSharePendingInvites(userId, shareId))
     }
 
     private suspend fun onShareResponseEntity(

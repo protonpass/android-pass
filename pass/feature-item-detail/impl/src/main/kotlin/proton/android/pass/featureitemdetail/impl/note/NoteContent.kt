@@ -35,19 +35,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Share
-import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
@@ -65,7 +64,7 @@ fun NoteContent(
     isPinned: Boolean,
     isHistoryFeatureEnabled: Boolean,
     isFileAttachmentsEnabled: Boolean,
-    attachments: List<Attachment>,
+    attachmentsState: AttachmentsState,
     hasMoreThanOneVaultShare: Boolean,
     onViewItemHistoryClicked: () -> Unit
 ) {
@@ -113,10 +112,9 @@ fun NoteContent(
 
         if (isFileAttachmentsEnabled) {
             AttachmentSection(
-                files = attachments,
+                attachmentsState = attachmentsState,
                 isDetail = true,
                 colors = passItemColors(ItemCategory.Note),
-                loadingFile = None,
                 onAttachmentOptions = {},
                 onAttachmentOpen = {},
                 onAddAttachment = {},
@@ -158,7 +156,7 @@ fun NoteContentPreview(@PreviewParameter(ThemeItemTitleProvider::class) input: P
                 isShared = params.itemUiModel.isShared,
                 shareCount = params.itemUiModel.shareCount,
                 isFileAttachmentsEnabled = false,
-                attachments = emptyList(),
+                attachmentsState = AttachmentsState.Initial,
                 hasMoreThanOneVaultShare = true
             )
         }

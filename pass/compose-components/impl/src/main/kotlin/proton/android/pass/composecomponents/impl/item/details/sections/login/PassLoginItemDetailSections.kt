@@ -28,13 +28,13 @@ import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.datetime.Instant
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys.PasskeysSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
@@ -46,7 +46,6 @@ import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Totp
-import proton.android.pass.domain.attachments.Attachment
 
 @Composable
 internal fun PassLoginItemDetailSections(
@@ -68,7 +67,7 @@ internal fun PassLoginItemDetailSections(
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
     shouldDisplayFileAttachments: Boolean,
-    attachments: List<Attachment>
+    attachmentsState: AttachmentsState
 ) = with(contents) {
     Column(
         modifier = modifier,
@@ -125,10 +124,9 @@ internal fun PassLoginItemDetailSections(
 
         if (shouldDisplayFileAttachments) {
             AttachmentSection(
-                files = attachments,
+                attachmentsState = attachmentsState,
                 isDetail = true,
                 colors = itemColors,
-                loadingFile = None,
                 onAttachmentOptions = {},
                 onAttachmentOpen = {},
                 onAddAttachment = {},

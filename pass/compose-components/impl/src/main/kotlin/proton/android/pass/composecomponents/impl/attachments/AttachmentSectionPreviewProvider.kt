@@ -20,46 +20,40 @@ package proton.android.pass.composecomponents.impl.attachments
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Instant
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.some
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.AttachmentKey
 import proton.android.pass.domain.attachments.AttachmentType
+import proton.android.pass.domain.attachments.FileMetadata
+import java.net.URI
 
-class AttachmentSectionPreviewProvider : PreviewParameterProvider<AttachmentSectionInput> {
+class AttachmentSectionPreviewProvider :
+    PreviewParameterProvider<Pair<Boolean, AttachmentsState>> {
 
-    override val values: Sequence<AttachmentSectionInput>
+    override val values: Sequence<Pair<Boolean, AttachmentsState>>
         get() = sequence {
             for (isDetail in listOf(true, false)) {
                 yield(
-                    createAttachmentSectionInput(
-                        files = listOf(
+                    isDetail to createAttachmentsUiState(
+                        attachments = listOf(
                             createFile(AttachmentId("1"), "file1", AttachmentType.Pdf),
                             createFile(AttachmentId("2"), "file2", AttachmentType.RasterImage)
-                        ),
-                        isDetail = isDetail
+                        )
                     )
                 )
                 yield(
-                    createAttachmentSectionInput(
-                        files = listOf(
+                    isDetail to createAttachmentsUiState(
+                        attachments = listOf(
                             createFile(AttachmentId("1"), "file1", AttachmentType.Calendar),
                             createFile(AttachmentId("2"), "file2", AttachmentType.Audio)
                         ),
-                        loadingFile = createFile(
-                            AttachmentId("1"),
-                            "file1",
-                            AttachmentType.Calendar
-                        ).some(),
-                        isDetail = isDetail
+                        loadingAttachments = setOf(AttachmentId("1"))
                     )
                 )
                 yield(
-                    createAttachmentSectionInput(
-                        files = emptyList(),
-                        isDetail = isDetail
+                    isDetail to createAttachmentsUiState(
+                        attachments = emptyList()
                     )
                 )
             }
@@ -84,15 +78,15 @@ class AttachmentSectionPreviewProvider : PreviewParameterProvider<AttachmentSect
         chunks = listOf()
     )
 
-    private fun createAttachmentSectionInput(
-        files: List<Attachment>,
-        loadingFile: Option<Attachment> = None,
-        isDetail: Boolean
-    ) = AttachmentSectionInput(files = files, loadingFile = loadingFile, isDetail = isDetail)
+    private fun createAttachmentsUiState(
+        attachments: List<Attachment>,
+        draftAttachments: List<FileMetadata> = emptyList(),
+        loadingAttachments: Set<AttachmentId> = emptySet(),
+        loadingDraftAttachments: Set<URI> = emptySet()
+    ) = AttachmentsState(
+        draftAttachmentsList = draftAttachments,
+        attachmentsList = attachments,
+        loadingDraftAttachments = loadingDraftAttachments,
+        loadingAttachments = loadingAttachments
+    )
 }
-
-data class AttachmentSectionInput(
-    val files: List<Attachment>,
-    val loadingFile: Option<Attachment>,
-    val isDetail: Boolean
-)

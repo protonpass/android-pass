@@ -66,7 +66,9 @@ internal fun PassItemDetailSubtitle(
                 PassSharingItemChip(
                     shareCount = shareCount,
                     itemColors = itemColors,
-                    onClick = {}
+                    onClick = {
+                        // Shared item management not supported from item history
+                    }
                 )
             }
         }

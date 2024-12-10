@@ -32,7 +32,7 @@ class ClearAttachmentsImpl @Inject constructor(
     private val draftAttachmentRepository: DraftAttachmentRepository,
     private val cacheCleaner: CacheCleaner
 ) : ClearAttachments {
-    override suspend fun invoke() {
+    override fun invoke() {
         draftAttachmentRepository.clear()
         cacheCleaner.deleteDir(DirectoryType.CameraTemp)
         fileKeyRepository.clearAllMappings()

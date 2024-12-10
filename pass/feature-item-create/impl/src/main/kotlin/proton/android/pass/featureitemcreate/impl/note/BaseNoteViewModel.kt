@@ -24,10 +24,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -38,7 +34,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.runCatching
@@ -64,9 +59,6 @@ abstract class BaseNoteViewModel(
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
-    private val customScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-
-    private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     init {
         draftAttachmentRepository.observeNew()
@@ -90,6 +82,7 @@ abstract class BaseNoteViewModel(
         MutableStateFlow(ItemSavedState.Unknown)
     protected val noteItemValidationErrorsState: MutableStateFlow<Set<NoteItemValidationErrors>> =
         MutableStateFlow(emptySet())
+    private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val draftAttachments = draftAttachmentRepository.observeAll()
         .map { uris -> uris.mapNotNull { metadataResolver.extractMetadata(it) } }
@@ -165,12 +158,7 @@ abstract class BaseNoteViewModel(
     }
 
     override fun onCleared() {
-        runBlocking {
-            customScope.launch {
-                clearAttachments()
-            }.join()
-        }
-        customScope.cancel()
+        clearAttachments()
         super.onCleared()
     }
 

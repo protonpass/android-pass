@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,14 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.errors
+package proton.android.pass.data.api.usecases
 
-object ErrorCodes {
+import proton.android.pass.domain.InviteId
+import proton.android.pass.domain.ShareId
 
-    const val INVALID_VERIFICATION_CODE = 2001
+interface ResendShareInvite {
 
-    const val INVALID_VERIFICATION_CODE_LIMIT = 2011
-
-    const val RESEND_SHARE_INVITE_LIMIT = 2001
+    suspend operator fun invoke(shareId: ShareId, inviteId: InviteId)
 
 }

@@ -105,7 +105,7 @@ import proton.android.pass.data.api.usecases.RefreshInvites
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.RemoveShareMember
-import proton.android.pass.data.api.usecases.ResendInvite
+import proton.android.pass.data.api.usecases.ResendShareInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.RestoreAllItems
 import proton.android.pass.data.api.usecases.RestoreItems
@@ -301,7 +301,7 @@ import proton.android.pass.data.fakes.usecases.TestRefreshInvites
 import proton.android.pass.data.fakes.usecases.TestRefreshPlan
 import proton.android.pass.data.fakes.usecases.TestRejectInvite
 import proton.android.pass.data.fakes.usecases.TestRemoveShareMember
-import proton.android.pass.data.fakes.usecases.TestResendInvite
+import proton.android.pass.data.fakes.usecases.TestResendShareInvite
 import proton.android.pass.data.fakes.usecases.TestResetAppToDefaults
 import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
@@ -609,7 +609,7 @@ abstract class FakesDataModule {
     abstract fun bindSetVaultMemberPermission(impl: TestUpdateShareMemberRole): UpdateShareMemberRole
 
     @Binds
-    abstract fun bindResendInvite(impl: TestResendInvite): ResendInvite
+    abstract fun bindResendInvite(impl: TestResendShareInvite): ResendShareInvite
 
     @Binds
     abstract fun bindCancelInvite(impl: TestCancelInvite): CancelInvite

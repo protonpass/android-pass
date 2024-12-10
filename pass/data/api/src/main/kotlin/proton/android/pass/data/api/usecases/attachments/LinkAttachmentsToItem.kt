@@ -25,6 +25,6 @@ interface LinkAttachmentsToItem {
     suspend operator fun invoke(
         itemId: ItemId,
         shareId: ShareId,
-        revision: Long = 0
+        revision: Long
     )
 }

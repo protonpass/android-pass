@@ -28,6 +28,7 @@ import proton.android.pass.data.impl.repositories.FileKeyRepository
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -46,6 +47,9 @@ class LinkAttachmentsToItemImpl @Inject constructor(
     ) {
         val toLink = fileKeyRepository.getAllMappings()
         if (toLink.isEmpty()) return
+
+        PassLogger.i(TAG, "${toLink.size} attachments to link")
+
         val userId = accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
         attachmentRepository.linkPendingAttachments(
@@ -62,5 +66,9 @@ class LinkAttachmentsToItemImpl @Inject constructor(
             flag = ItemFlag.HasAttachments,
             isFlagEnabled = true
         )
+    }
+
+    companion object {
+        private const val TAG = "LinkAttachmentsToItemImpl"
     }
 }

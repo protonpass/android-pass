@@ -34,6 +34,7 @@ import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.ShareId
@@ -54,6 +55,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 class CreateCreditCardViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -62,6 +64,7 @@ class CreateCreditCardViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
+    private val linkAttachmentsToItem: LinkAttachmentsToItem,
     clearAttachments: ClearAttachments,
     uploadAttachment: UploadAttachment,
     draftAttachmentRepository: DraftAttachmentRepository,
@@ -150,23 +153,35 @@ class CreateCreditCardViewModel @Inject constructor(
                     shareId = vault.vault.shareId,
                     itemContents = sanitisedItemFormState.toItemContents()
                 )
-            }.onSuccess { item ->
-                inAppReviewTriggerMetrics.incrementItemCreatedCount()
-                isItemSavedState.update {
-                    encryptionContextProvider.withEncryptionContext {
-                        ItemSavedState.Success(
-                            item.id,
-                            item.toUiModel(this@withEncryptionContext)
-                        )
-                    }
-                }
-                telemetryManager.sendEvent(ItemCreate(EventItemType.CreditCard))
-                snackbarDispatcher(ItemCreated)
-            }.onFailure {
-                PassLogger.w(TAG, "Could not create item")
-                PassLogger.w(TAG, it)
-                snackbarDispatcher(ItemCreationError)
             }
+                .onFailure {
+                    PassLogger.w(TAG, "Could not create item")
+                    PassLogger.w(TAG, it)
+                    snackbarDispatcher(ItemCreationError)
+                }
+                .mapCatching { item ->
+                    if (baseState.value.isFileAttachmentsEnabled) {
+                        linkAttachmentsToItem(item.id, vault.vault.shareId, item.revision)
+                    }
+                    item
+                }
+                .onFailure {
+                    PassLogger.w(TAG, "Link attachment error")
+                    PassLogger.w(TAG, it)
+                }
+                .onSuccess { item ->
+                    inAppReviewTriggerMetrics.incrementItemCreatedCount()
+                    isItemSavedState.update {
+                        encryptionContextProvider.withEncryptionContext {
+                            ItemSavedState.Success(
+                                item.id,
+                                item.toUiModel(this@withEncryptionContext)
+                            )
+                        }
+                    }
+                    telemetryManager.sendEvent(ItemCreate(EventItemType.CreditCard))
+                    snackbarDispatcher(ItemCreated)
+                }
         } else {
             snackbarDispatcher(ItemCreationError)
         }

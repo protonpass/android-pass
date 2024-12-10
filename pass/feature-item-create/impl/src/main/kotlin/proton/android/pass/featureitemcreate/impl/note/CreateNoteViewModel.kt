@@ -176,7 +176,7 @@ class CreateNoteViewModel @Inject constructor(
                         PassLogger.w(TAG, "Link attachment error")
                         PassLogger.w(TAG, it)
                     }
-                    .map { item ->
+                    .onSuccess { item ->
                         inAppReviewTriggerMetrics.incrementItemCreatedCount()
                         isItemSavedState.update {
                             encryptionContextProvider.withEncryptionContext {

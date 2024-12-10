@@ -980,6 +980,7 @@ abstract class BaseLoginViewModel(
         isUploadingAttachment.update { it + uri }
         viewModelScope.launch {
             runCatching { uploadAttachment(uri) }
+                .onSuccess { PassLogger.i(TAG, "Attachment uploaded: $uri") }
                 .onFailure {
                     PassLogger.w(TAG, "Could not upload attachment: $uri")
                     PassLogger.w(TAG, it)

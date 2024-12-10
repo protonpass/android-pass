@@ -19,7 +19,7 @@
 package proton.android.pass.files.api
 
 interface CacheCleaner {
-    fun deleteDir(type: DirectoryType)
+    suspend fun deleteDir(type: DirectoryType)
 }
 
 sealed interface DirectoryType {

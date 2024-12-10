@@ -19,5 +19,5 @@
 package proton.android.pass.data.api.usecases.attachments
 
 interface ClearAttachments {
-    operator fun invoke()
+    suspend operator fun invoke()
 }

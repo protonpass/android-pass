@@ -19,21 +19,22 @@
 package proton.android.pass.domain.shares
 
 import proton.android.pass.domain.InviteId
-import proton.android.pass.domain.NewUserInviteId
 import proton.android.pass.domain.ShareRole
 
 sealed interface SharePendingInvite {
 
     val email: String
 
+    val inviteId: InviteId
+
     data class ExistingUser(
         override val email: String,
-        val inviteId: InviteId
+        override val inviteId: InviteId
     ) : SharePendingInvite
 
     data class NewUser(
         override val email: String,
-        val inviteId: NewUserInviteId,
+        override val inviteId: InviteId,
         val inviteState: InviteState,
         val role: ShareRole
     ) : SharePendingInvite {

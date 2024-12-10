@@ -32,6 +32,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.domain.shares.SharePendingInvite
 import proton.android.pass.features.sharing.accept.AcceptInviteBottomSheet
 import proton.android.pass.features.sharing.invitesinfo.InvitesErrorDialog
 import proton.android.pass.features.sharing.invitesinfo.InvitesInfoDialog
@@ -192,7 +193,7 @@ sealed interface SharingNavigation {
 
     data class ManageItemInviteOptions(
         val shareId: ShareId,
-        val inviteId: InviteId
+        val pendingInvite: SharePendingInvite
     ) : SharingNavigation
 
     @JvmInline

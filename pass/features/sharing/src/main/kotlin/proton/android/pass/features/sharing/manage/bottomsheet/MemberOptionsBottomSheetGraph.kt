@@ -47,6 +47,14 @@ object InviteTypeArg : NavArgId {
     override val navType = NavType.StringType
 }
 
+object IsNewUserInviteArg : NavArgId {
+
+    override val key = "isNewUserInviteKey"
+
+    override val navType = NavType.BoolType
+
+}
+
 sealed interface InviteTypeValue {
 
     fun type(): String

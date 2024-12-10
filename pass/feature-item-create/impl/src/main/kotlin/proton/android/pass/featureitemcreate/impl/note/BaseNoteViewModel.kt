@@ -35,9 +35,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.combineN
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.runCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
@@ -92,10 +91,11 @@ abstract class BaseNoteViewModel(
         isUploadingAttachment,
         draftAttachments
     ) { loadingAttachments, draftAttachmentsList ->
-        AttachmentsUiState(
-            loadingAttachments = loadingAttachments,
+        AttachmentsState(
+            loadingDraftAttachments = loadingAttachments,
             draftAttachmentsList = draftAttachmentsList,
-            attachmentsList = emptyList()
+            attachmentsList = emptyList(),
+            loadingAttachments = emptySet()
         )
     }
 
@@ -114,7 +114,7 @@ abstract class BaseNoteViewModel(
             isLoadingState = isLoading,
             itemSavedState = isItemSaved,
             hasUserEditedContent = hasUserEditedContent,
-            attachmentsUiState = attachmentsState,
+            attachmentsState = attachmentsState,
             isFileAttachmentsEnabled = isFileAttachmentsEnabled
         )
     }
@@ -150,7 +150,7 @@ abstract class BaseNoteViewModel(
         isUploadingAttachment.update { it + uri }
         viewModelScope.launch {
             runCatching { uploadAttachment(uri) }
-                .onError {
+                .onFailure {
                     PassLogger.w(TAG, "Could not upload attachment: $uri")
                     PassLogger.w(TAG, it)
                 }

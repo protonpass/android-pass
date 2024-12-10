@@ -24,12 +24,12 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 
@@ -63,7 +63,7 @@ internal sealed interface LoginDetailUiState {
         val event: ItemDetailEvent,
         val isHistoryFeatureEnabled: Boolean,
         val isFileAttachmentsEnabled: Boolean,
-        val attachments: List<Attachment>,
+        val attachmentsState: AttachmentsState,
         val monitorState: LoginMonitorState,
         val hasMoreThanOneVault: Boolean
     ) : LoginDetailUiState

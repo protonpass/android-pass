@@ -46,11 +46,15 @@ import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
+import proton.android.pass.data.api.repositories.DraftAttachmentRepository
+import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateAliasItemContent
+import proton.android.pass.data.api.usecases.attachments.ClearAttachments
+import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
@@ -80,9 +84,17 @@ class UpdateAliasViewModel @Inject constructor(
     private val aliasPrefixValidator: AliasPrefixValidator,
     private val getItemById: GetItemById,
     private val observeAliasDetails: ObserveAliasDetails,
+    clearAttachments: ClearAttachments,
+    uploadAttachment: UploadAttachment,
+    draftAttachmentRepository: DraftAttachmentRepository,
+    metadataResolver: MetadataResolver,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseAliasViewModel(
+    clearAttachments = clearAttachments,
+    uploadAttachment = uploadAttachment,
+    draftAttachmentRepository = draftAttachmentRepository,
+    metadataResolver = metadataResolver,
     snackbarDispatcher = snackbarDispatcher,
     featureFlagsRepository = featureFlagsRepository,
     savedStateHandleProvider = savedStateHandleProvider

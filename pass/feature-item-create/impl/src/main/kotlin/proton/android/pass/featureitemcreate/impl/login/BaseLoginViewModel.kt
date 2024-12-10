@@ -34,7 +34,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -55,6 +57,7 @@ import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
@@ -62,11 +65,15 @@ import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_TITLE_KEY
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
 import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_FIELD_KEY
+import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpgradeInfo
+import proton.android.pass.data.api.usecases.attachments.ClearAttachments
+import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.domain.CustomFieldContent
@@ -87,8 +94,9 @@ import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.totp.api.TotpManager
+import java.net.URI
 
-@Suppress("TooManyFunctions", "LargeClass")
+@Suppress("TooManyFunctions", "LargeClass", "LongParameterList")
 abstract class BaseLoginViewModel(
     protected val accountManager: AccountManager,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -100,6 +108,10 @@ abstract class BaseLoginViewModel(
     protected val emailValidator: EmailValidator,
     private val disableTooltip: DisableTooltip,
     private val userPreferencesRepository: UserPreferencesRepository,
+    private val uploadAttachment: UploadAttachment,
+    private val clearAttachments: ClearAttachments,
+    draftAttachmentRepository: DraftAttachmentRepository,
+    metadataResolver: MetadataResolver,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeTooltipEnabled: ObserveTooltipEnabled,
@@ -108,6 +120,16 @@ abstract class BaseLoginViewModel(
 ) : ViewModel() {
 
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
+    init {
+        draftAttachmentRepository.observeNew()
+            .onEach { newUris: Set<URI> ->
+                if (newUris.isEmpty()) return@onEach
+                onUserEditedContent()
+                newUris.forEach(::uploadNewAttachment)
+            }
+            .launchIn(viewModelScope)
+    }
 
     @OptIn(SavedStateHandleSaveableApi::class)
     protected var loginItemFormMutableState: LoginItemFormState by savedStateHandleProvider.get()
@@ -127,6 +149,7 @@ abstract class BaseLoginViewModel(
     private val aliasDraftState: Flow<Option<AliasItemFormState>> = draftRepository
         .get(CreateAliasViewModel.KEY_DRAFT_ALIAS)
     private val focusedFieldFlow: MutableStateFlow<Option<LoginField>> = MutableStateFlow(None)
+    private val isUploadingAttachment: MutableStateFlow<Set<URI>> = MutableStateFlow(emptySet())
 
     init {
         viewModelScope.launch {
@@ -206,6 +229,21 @@ abstract class BaseLoginViewModel(
         val events: Events
     )
 
+    private val draftAttachments = draftAttachmentRepository.observeAll()
+        .map { uris -> uris.mapNotNull { metadataResolver.extractMetadata(it) } }
+
+    private val attachmentsFlow = combine(
+        isUploadingAttachment,
+        draftAttachments
+    ) { loadingAttachments, draftAttachmentsList ->
+        AttachmentsState(
+            loadingDraftAttachments = loadingAttachments,
+            draftAttachmentsList = draftAttachmentsList,
+            attachmentsList = emptyList(),
+            loadingAttachments = emptySet()
+        )
+    }
+
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     internal val baseLoginUiState: StateFlow<BaseLoginUiState> = combineN(
         loginItemValidationErrorsState,
@@ -216,10 +254,11 @@ abstract class BaseLoginViewModel(
         upgradeInfoFlow.asLoadingResult(),
         userInteractionFlow,
         observeTooltipEnabled(Tooltip.UsernameSplit),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
+        attachmentsFlow
     ) { loginItemValidationErrors, primaryEmail, aliasItemFormState, isLoading, totpUiState,
         upgradeInfoResult, userInteraction, isUsernameSplitTooltipEnabled,
-        isFileAttachmentsEnabled ->
+        isFileAttachmentsEnabled, attachmentsState ->
         val userPlan = upgradeInfoResult.getOrNull()?.plan
         BaseLoginUiState(
             validationErrors = loginItemValidationErrors.toPersistentSet(),
@@ -236,7 +275,8 @@ abstract class BaseLoginViewModel(
             totpUiState = totpUiState,
             focusedField = userInteraction.focusedField.value(),
             isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled,
-            isFileAttachmentsEnabled = isFileAttachmentsEnabled
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled,
+            attachmentsState = attachmentsState
         )
     }
         .stateIn(
@@ -934,6 +974,23 @@ abstract class BaseLoginViewModel(
             ?: currentValue.customFields
     } else {
         currentValue.customFields
+    }
+
+    private fun uploadNewAttachment(uri: URI) {
+        isUploadingAttachment.update { it + uri }
+        viewModelScope.launch {
+            runCatching { uploadAttachment(uri) }
+                .onFailure {
+                    PassLogger.w(TAG, "Could not upload attachment: $uri")
+                    PassLogger.w(TAG, it)
+                }
+        }
+        isUploadingAttachment.update { it - uri }
+    }
+
+    override fun onCleared() {
+        clearAttachments()
+        super.onCleared()
     }
 
     private companion object {

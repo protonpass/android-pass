@@ -110,7 +110,7 @@ internal fun AliasContent(
             onEvent = onEvent,
             isAliasManagementEnabled = uiState.isAliasManagementEnabled,
             isFileAttachmentsEnabled = uiState.isFileAttachmentEnabled,
-            attachmentList = emptyList()
+            attachmentsState = uiState.attachmentsState
         )
 
         SelectSuffixDialog(

@@ -183,10 +183,8 @@ class TestShareRepository : ShareRepository {
         memberShareId: ShareId
     ) = Unit
 
-    override fun observeSharePendingInvites(
-        userId: UserId,
-        shareId: ShareId
-    ): Flow<List<SharePendingInvite>> = sharePendingInvitesFlow
+    override fun observeSharePendingInvites(userId: UserId, shareId: ShareId): Flow<List<SharePendingInvite>> =
+        sharePendingInvitesFlow
 
     override suspend fun updateShareMember(
         userId: UserId,

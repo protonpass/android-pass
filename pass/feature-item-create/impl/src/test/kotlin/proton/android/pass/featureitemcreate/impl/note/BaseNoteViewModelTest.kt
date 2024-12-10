@@ -28,6 +28,7 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.fakes.repositories.FakeDraftAttachmentRepository
 import proton.android.pass.data.fakes.repositories.FakeMetadataResolver
+import proton.android.pass.data.fakes.usecases.attachments.FakeClearAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeUploadAttachment
 import proton.android.pass.featureitemcreate.impl.note.BaseNoteUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -61,6 +62,7 @@ internal class BaseNoteViewModelTest {
             draftAttachmentRepository = draftAttachmentRepository,
             metadataResolver = metadataResolver,
             uploadAttachment = uploadAttachment,
+            clearAttachments = FakeClearAttachments(),
             savedStateHandleProvider = savedStateHandleProvider
         ) {}
     }

@@ -31,7 +31,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -42,6 +41,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
+import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.log.api.PassLogger
@@ -53,29 +53,19 @@ import java.net.URI
 abstract class BaseNoteViewModel(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val uploadAttachment: UploadAttachment,
-    private val draftAttachmentRepository: DraftAttachmentRepository,
+    private val clearAttachments: ClearAttachments,
+    draftAttachmentRepository: DraftAttachmentRepository,
     metadataResolver: MetadataResolver,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
     init {
-        draftAttachmentRepository.observeAll()
-            .scan<Set<URI>, Set<URI>>(emptySet()) { previousUris, currentUris ->
-                currentUris - previousUris
-            }
+        draftAttachmentRepository.observeNew()
             .onEach { newUris: Set<URI> ->
-                newUris.forEach { uri ->
-                    viewModelScope.launch {
-                        isUploadingAttachment.update { it + uri }
-                        runCatching { uploadAttachment(uri) }
-                            .onError {
-                                PassLogger.w(TAG, "Could not upload attachment: $uri")
-                                PassLogger.w(TAG, it)
-                            }
-                        isUploadingAttachment.update { it - uri }
-                    }
-                }
+                if (newUris.isEmpty()) return@onEach
+                onUserEditedContent()
+                newUris.forEach(::uploadNewAttachment)
             }
             .launchIn(viewModelScope)
     }
@@ -155,9 +145,21 @@ abstract class BaseNoteViewModel(
         snackbarDispatcher(snackbarMessage)
     }
 
+    private fun uploadNewAttachment(uri: URI) {
+        isUploadingAttachment.update { it + uri }
+        viewModelScope.launch {
+            runCatching { uploadAttachment(uri) }
+                .onError {
+                    PassLogger.w(TAG, "Could not upload attachment: $uri")
+                    PassLogger.w(TAG, it)
+                }
+        }
+        isUploadingAttachment.update { it - uri }
+    }
+
     override fun onCleared() {
+        clearAttachments()
         super.onCleared()
-        draftAttachmentRepository.clear()
     }
 
     companion object {

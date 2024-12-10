@@ -119,7 +119,8 @@ import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
-import proton.android.pass.data.api.usecases.attachments.LinkAttachmentToItem
+import proton.android.pass.data.api.usecases.attachments.ClearAttachments
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
@@ -317,7 +318,8 @@ import proton.android.pass.data.fakes.usecases.accesskey.FakeHasExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeRemoveExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeSetupExtraPassword
 import proton.android.pass.data.fakes.usecases.aliascontact.FakeObserveAliasContacts
-import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentToItem
+import proton.android.pass.data.fakes.usecases.attachments.FakeClearAttachments
+import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeObserveItemAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeUploadAttachment
 import proton.android.pass.data.fakes.usecases.breach.FakeAddBreachCustomEmail
@@ -956,7 +958,7 @@ abstract class FakesDataModule {
     abstract fun bindUploadAttachment(impl: FakeUploadAttachment): UploadAttachment
 
     @Binds
-    abstract fun bindLinkAttachmentToItem(impl: FakeLinkAttachmentToItem): LinkAttachmentToItem
+    abstract fun bindLinkAttachmentToItem(impl: FakeLinkAttachmentsToItem): LinkAttachmentsToItem
 
     @Binds
     abstract fun bindObserveItemAttachments(impl: FakeObserveItemAttachments): ObserveItemAttachments
@@ -966,5 +968,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveSharePendingInvites(impl: FakeObserveSharePendingInvites): ObserveSharePendingInvites
+
+    @Binds
+    abstract fun bindClearAttachments(impl: FakeClearAttachments): ClearAttachments
 
 }

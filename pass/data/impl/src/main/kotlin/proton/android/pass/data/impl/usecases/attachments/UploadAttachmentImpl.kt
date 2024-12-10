@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
+import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import java.net.URI
 import javax.inject.Inject
@@ -30,20 +31,27 @@ import javax.inject.Singleton
 @Singleton
 class UploadAttachmentImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val attachmentRepository: AttachmentRepository
+    private val attachmentRepository: AttachmentRepository,
+    private val draftAttachmentRepository: DraftAttachmentRepository
 ) : UploadAttachment {
 
     override suspend fun invoke(uri: URI) {
-        val userId = accountManager.getPrimaryUserId().firstOrNull()
-            ?: throw UserIdNotAvailableError()
-        val attachmentId = attachmentRepository.createPendingAttachment(
-            userId = userId,
-            uri = uri
-        )
-        attachmentRepository.uploadPendingAttachment(
-            userId = userId,
-            attachmentId = attachmentId,
-            uri = uri
-        )
+        runCatching {
+            val userId = accountManager.getPrimaryUserId().firstOrNull()
+                ?: throw UserIdNotAvailableError()
+            val attachmentId = attachmentRepository.createPendingAttachment(
+                userId = userId,
+                uri = uri
+            )
+            attachmentRepository.uploadPendingAttachment(
+                userId = userId,
+                attachmentId = attachmentId,
+                uri = uri
+            )
+        }
+            .onFailure {
+                draftAttachmentRepository.remove(uri)
+                throw it
+            }
     }
 }

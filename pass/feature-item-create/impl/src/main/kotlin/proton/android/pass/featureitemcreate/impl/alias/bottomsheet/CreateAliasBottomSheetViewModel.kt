@@ -28,11 +28,15 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.commonrust.api.AliasPrefixValidator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.attachments.ClearAttachments
+import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.featureitemcreate.impl.alias.AliasDraftSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
@@ -44,6 +48,7 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 class CreateAliasBottomSheetViewModel @Inject constructor(
     accountManager: AccountManager,
@@ -59,6 +64,10 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     encryptionContextProvider: EncryptionContextProvider,
     aliasPrefixValidator: AliasPrefixValidator,
     observeDefaultVault: ObserveDefaultVault,
+    clearAttachments: ClearAttachments,
+    uploadAttachment: UploadAttachment,
+    draftAttachmentRepository: DraftAttachmentRepository,
+    metadataResolver: MetadataResolver,
     featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : CreateAliasViewModel(
     accountManager = accountManager,
@@ -74,6 +83,10 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     encryptionContextProvider = encryptionContextProvider,
     aliasPrefixValidator = aliasPrefixValidator,
     observeDefaultVault = observeDefaultVault,
+    clearAttachments = clearAttachments,
+    uploadAttachment = uploadAttachment,
+    draftAttachmentRepository = draftAttachmentRepository,
+    metadataResolver = metadataResolver,
     featureFlagsRepository = featureFlagsRepository
 ) {
 

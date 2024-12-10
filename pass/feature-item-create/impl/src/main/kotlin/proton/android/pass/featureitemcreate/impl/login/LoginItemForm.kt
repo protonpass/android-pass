@@ -40,12 +40,12 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
@@ -53,7 +53,6 @@ import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAddAttachment
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOpen
@@ -90,7 +89,7 @@ internal fun LoginItemForm(
     hasReachedAliasLimit: Boolean,
     isUsernameSplitTooltipEnabled: Boolean,
     isFileAttachmentsEnabled: Boolean,
-    attachmentList: List<Attachment>,
+    attachmentsState: AttachmentsState,
     onEvent: (LoginContentEvent) -> Unit
 ) {
     Box(modifier = modifier) {
@@ -182,8 +181,7 @@ internal fun LoginItemForm(
 
             if (isFileAttachmentsEnabled) {
                 AttachmentSection(
-                    files = attachmentList,
-                    loadingFile = None,
+                    attachmentsState = attachmentsState,
                     isDetail = false,
                     colors = passItemColors(ItemCategory.Login),
                     onAttachmentOptions = { onEvent(OnAttachmentEvent(OnAttachmentOptions(it.id))) },

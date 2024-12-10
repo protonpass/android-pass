@@ -29,12 +29,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.applyIf
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
@@ -46,8 +45,7 @@ import proton.android.pass.domain.items.ItemCategory
 @Composable
 fun AttachmentSection(
     modifier: Modifier = Modifier,
-    files: List<Attachment>,
-    loadingFile: Option<Attachment>,
+    attachmentsState: AttachmentsState,
     isDetail: Boolean,
     colors: PassItemColors,
     onAttachmentOptions: (Attachment) -> Unit,
@@ -55,7 +53,7 @@ fun AttachmentSection(
     onAddAttachment: () -> Unit,
     onTrashAll: () -> Unit
 ) {
-    if (files.isEmpty() && isDetail) return
+    if (attachmentsState.hasAnyAttachment && isDetail) return
     Column(
         modifier = modifier
             .applyIf(
@@ -73,19 +71,18 @@ fun AttachmentSection(
                 end = Spacing.medium
             ),
             colors = colors,
-            isEnabled = loadingFile is None,
-            fileAmount = files.size,
+            isEnabled = attachmentsState.isEnabled,
+            fileAmount = attachmentsState.size,
             onTrashAll = onTrashAll.takeIf { !isDetail }
         )
         Column {
-            files.forEachIndexed { index, file ->
-                val isLoading = loadingFile.value()?.id == file.id
+            attachmentsState.attachmentsList.forEachIndexed { index, file ->
                 AttachmentRow(
                     innerModifier = Modifier
                         .padding(horizontal = Spacing.medium)
                         .padding(top = Spacing.small)
                         .applyIf(
-                            condition = files.lastIndex == index && isDetail,
+                            condition = attachmentsState.attachmentsList.lastIndex == index && isDetail,
                             ifTrue = { padding(bottom = Spacing.medium) },
                             ifFalse = { padding(bottom = Spacing.small) }
                         ),
@@ -93,12 +90,39 @@ fun AttachmentSection(
                     attachmentType = file.type,
                     size = file.size,
                     createTime = file.createTime,
-                    isEnabled = loadingFile is None,
-                    isLoading = isLoading,
+                    isEnabled = attachmentsState.isEnabled,
+                    isLoading = attachmentsState.loadingAttachments.contains(file.id),
                     onOptionsClick = { onAttachmentOptions(file) },
                     onAttachmentOpen = { onAttachmentOpen(file) }
                 )
-                if (index < files.lastIndex) {
+                if (index < attachmentsState.attachmentsList.lastIndex || attachmentsState.draftAttachmentsList.isNotEmpty()) {
+                    PassDivider()
+                }
+            }
+            attachmentsState.draftAttachmentsList.forEachIndexed { index, fileMetadata ->
+                AttachmentRow(
+                    innerModifier = Modifier
+                        .padding(horizontal = Spacing.medium)
+                        .padding(top = Spacing.small)
+                        .applyIf(
+                            condition = attachmentsState.draftAttachmentsList.lastIndex == index,
+                            ifTrue = { padding(bottom = Spacing.medium) },
+                            ifFalse = { padding(bottom = Spacing.small) }
+                        ),
+                    filename = fileMetadata.name,
+                    isEnabled = attachmentsState.isEnabled,
+                    isLoading = attachmentsState.loadingDraftAttachments.contains(fileMetadata.uri),
+                    attachmentType = fileMetadata.attachmentType,
+                    size = fileMetadata.size,
+                    createTime = fileMetadata.createTime,
+                    onOptionsClick = {
+                        // TODO: Implement onOptionsClick
+                    },
+                    onAttachmentOpen = {
+                        // TODO: Implement onAttachmentOpen
+                    }
+                )
+                if (index < attachmentsState.draftAttachmentsList.lastIndex) {
                     PassDivider()
                 }
             }
@@ -111,7 +135,7 @@ fun AttachmentSection(
                     bottom = Spacing.medium
                 ),
                 colors = colors,
-                isEnabled = loadingFile is None,
+                isEnabled = attachmentsState.isEnabled,
                 onClick = onAddAttachment
             )
         }
@@ -119,20 +143,19 @@ fun AttachmentSection(
 }
 
 class ThemeAttachmentSectionPreviewProvider :
-    ThemePairPreviewProvider<AttachmentSectionInput>(AttachmentSectionPreviewProvider())
+    ThemePairPreviewProvider<Pair<Boolean, AttachmentsState>>(AttachmentSectionPreviewProvider())
 
 @Preview
 @Composable
 fun AttachmentSectionPreview(
-    @PreviewParameter(ThemeAttachmentSectionPreviewProvider::class) input: Pair<Boolean, AttachmentSectionInput>
+    @PreviewParameter(ThemeAttachmentSectionPreviewProvider::class) input: Pair<Boolean, Pair<Boolean, AttachmentsState>>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
             AttachmentSection(
                 colors = passItemColors(itemCategory = ItemCategory.Login),
-                files = input.second.files,
-                loadingFile = input.second.loadingFile,
-                isDetail = input.second.isDetail,
+                attachmentsState = input.second.second,
+                isDetail = input.second.first,
                 onAttachmentOptions = {},
                 onAttachmentOpen = {},
                 onAddAttachment = {},

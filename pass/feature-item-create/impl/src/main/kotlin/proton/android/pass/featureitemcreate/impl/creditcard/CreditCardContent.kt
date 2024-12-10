@@ -57,7 +57,7 @@ fun CreditCardContent(
             enabled = !state.isLoading,
             validationErrors = state.validationErrors,
             isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
-            attachmentList = emptyList(),
+            attachmentsState = state.attachmentsState,
             onEvent = onEvent
         )
     }

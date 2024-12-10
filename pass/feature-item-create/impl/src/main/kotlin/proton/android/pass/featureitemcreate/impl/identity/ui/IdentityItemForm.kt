@@ -34,9 +34,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.toPersistentSet
-import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.isCollapsedSaver
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
@@ -208,8 +208,7 @@ fun IdentityItemForm(
         if (identityUiState.showFileAttachments()) {
             AttachmentSection(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
-                files = emptyList(),
-                loadingFile = None,
+                attachmentsState = AttachmentsState.Initial, // TODO: Implement
                 isDetail = false,
                 colors = passItemColors(ItemCategory.Identity),
                 onAttachmentOptions = { onEvent(OnAttachmentEvent(OnAttachmentOptions(it.id))) },

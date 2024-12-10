@@ -51,12 +51,16 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
+import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpdateItem
+import proton.android.pass.data.api.usecases.attachments.ClearAttachments
+import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.work.WorkerItem
@@ -112,6 +116,10 @@ class UpdateLoginViewModel @Inject constructor(
     emailValidator: EmailValidator,
     observeTooltipEnabled: ObserveTooltipEnabled,
     disableTooltip: DisableTooltip,
+    clearAttachments: ClearAttachments,
+    uploadAttachment: UploadAttachment,
+    draftAttachmentRepository: DraftAttachmentRepository,
+    metadataResolver: MetadataResolver,
     userPreferencesRepository: UserPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseLoginViewModel(
@@ -127,6 +135,10 @@ class UpdateLoginViewModel @Inject constructor(
     emailValidator = emailValidator,
     observeTooltipEnabled = observeTooltipEnabled,
     disableTooltip = disableTooltip,
+    clearAttachments = clearAttachments,
+    uploadAttachment = uploadAttachment,
+    draftAttachmentRepository = draftAttachmentRepository,
+    metadataResolver = metadataResolver,
     userPreferencesRepository = userPreferencesRepository,
     featureFlagsRepository = featureFlagsRepository,
     savedStateHandleProvider = savedStateHandleProvider

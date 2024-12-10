@@ -28,9 +28,13 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState.NotLoading
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.DraftAttachmentRepository
+import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.attachments.ClearAttachments
+import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -58,12 +62,20 @@ class CreateCreditCardViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
+    clearAttachments: ClearAttachments,
+    uploadAttachment: UploadAttachment,
+    draftAttachmentRepository: DraftAttachmentRepository,
+    metadataResolver: MetadataResolver,
     observeVaults: ObserveVaultsWithItemCount,
     canPerformPaidAction: CanPerformPaidAction,
     observeDefaultVault: ObserveDefaultVault,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCreditCardViewModel(
+    clearAttachments = clearAttachments,
+    uploadAttachment = uploadAttachment,
+    draftAttachmentRepository = draftAttachmentRepository,
+    metadataResolver = metadataResolver,
     encryptionContextProvider = encryptionContextProvider,
     canPerformPaidAction = canPerformPaidAction,
     featureFlagsRepository = featureFlagsRepository,

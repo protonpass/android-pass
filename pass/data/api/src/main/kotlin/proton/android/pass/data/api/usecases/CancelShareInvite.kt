@@ -19,10 +19,10 @@
 package proton.android.pass.data.api.usecases
 
 import proton.android.pass.domain.InviteId
-import proton.android.pass.domain.NewUserInviteId
 import proton.android.pass.domain.ShareId
 
-interface CancelInvite {
+interface CancelShareInvite {
+
     suspend operator fun invoke(shareId: ShareId, inviteId: InviteId)
-    suspend operator fun invoke(shareId: ShareId, inviteId: NewUserInviteId)
+
 }

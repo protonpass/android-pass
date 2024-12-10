@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,16 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.data.fakes.usecases.attachments
 
-import kotlinx.coroutines.flow.Flow
-import java.net.URI
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface DraftAttachmentRepository {
-    fun add(uri: URI)
-    fun observeAll(): Flow<Set<URI>>
-    fun observeNew(): Flow<Set<URI>>
-    fun remove(uri: URI): Boolean
-    fun clear(): Boolean
-    fun contains(uri: URI): Flow<Boolean>
+@Singleton
+class FakeLinkAttachmentsToItem @Inject constructor() : LinkAttachmentsToItem {
+    override suspend fun invoke(
+        itemId: ItemId,
+        shareId: ShareId,
+        revision: Long
+    ) {
+        // no-op
+    }
 }

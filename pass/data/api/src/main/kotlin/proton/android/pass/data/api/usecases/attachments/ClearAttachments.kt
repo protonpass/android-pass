@@ -18,13 +18,6 @@
 
 package proton.android.pass.data.api.usecases.attachments
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-
-interface LinkAttachmentToItem {
-    suspend operator fun invoke(
-        itemId: ItemId,
-        shareId: ShareId,
-        revision: Long = 0
-    )
+interface ClearAttachments {
+    operator fun invoke()
 }

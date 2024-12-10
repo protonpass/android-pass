@@ -96,6 +96,7 @@ dependencies {
     implementation(projects.pass.commonRust.api)
     implementation(projects.pass.dataModels.api)
     implementation(projects.pass.domain)
+    implementation(projects.pass.files.api)
     implementation(projects.pass.log.api)
     implementation(projects.pass.network.api)
     implementation(projects.pass.notifications.api)

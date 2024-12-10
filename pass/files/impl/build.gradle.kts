@@ -32,6 +32,8 @@ dependencies {
     api(projects.pass.files.api)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.log.api)
+    implementation(libs.core.utilKotlin)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

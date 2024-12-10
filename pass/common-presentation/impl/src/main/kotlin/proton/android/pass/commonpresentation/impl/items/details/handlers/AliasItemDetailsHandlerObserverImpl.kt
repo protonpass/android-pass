@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.onStart
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
@@ -66,7 +67,12 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             itemDiffs = ItemDiffs.Alias(),
             itemShareCount = item.shareCount,
             mailboxes = aliasDetails.mailboxes,
-            attachments = attachments
+            attachmentsState = AttachmentsState(
+                draftAttachmentsList = listOf(),
+                attachmentsList = attachments,
+                loadingDraftAttachments = setOf(),
+                loadingAttachments = setOf()
+            )
         )
     }
 

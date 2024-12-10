@@ -56,7 +56,7 @@ internal fun PassItemDetailSections(
             revision = itemRevision,
             createdAt = itemCreatedAt,
             modifiedAt = itemModifiedAt,
-            attachments = attachments,
+            attachmentsState = attachmentsState,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
             shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
             shouldDisplayFileAttachments = shouldDisplayFileAttachments
@@ -74,7 +74,7 @@ internal fun PassItemDetailSections(
             revision = itemRevision,
             createdAt = itemCreatedAt,
             modifiedAt = itemModifiedAt,
-            attachments = attachments,
+            attachmentsState = attachmentsState,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
             shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
             shouldDisplayFileAttachments = shouldDisplayFileAttachments
@@ -92,7 +92,7 @@ internal fun PassItemDetailSections(
             revision = itemRevision,
             createdAt = itemCreatedAt,
             modifiedAt = itemModifiedAt,
-            attachments = attachments,
+            attachmentsState = attachmentsState,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
             shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
             shouldDisplayFileAttachments = shouldDisplayFileAttachments
@@ -114,7 +114,7 @@ internal fun PassItemDetailSections(
             revision = itemRevision,
             createdAt = itemCreatedAt,
             modifiedAt = itemModifiedAt,
-            attachments = attachments,
+            attachmentsState = attachmentsState,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
             shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
             shouldDisplayFileAttachments = shouldDisplayFileAttachments
@@ -132,7 +132,7 @@ internal fun PassItemDetailSections(
             revision = itemRevision,
             createdAt = itemCreatedAt,
             modifiedAt = itemModifiedAt,
-            attachments = attachments,
+            attachmentsState = attachmentsState,
             shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
             shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton,
             shouldDisplayFileAttachments = shouldDisplayFileAttachments

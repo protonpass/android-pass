@@ -23,6 +23,7 @@ import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemDiffs
@@ -31,7 +32,6 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Totp
-import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 
 @Stable
@@ -63,7 +63,7 @@ sealed interface ItemDetailState {
 
     val itemShareCount: Int
 
-    val attachments: List<Attachment>
+    val attachmentsState: AttachmentsState
 
     val isSharedItem: Boolean
         get() = itemShareCount > 0
@@ -84,7 +84,7 @@ sealed interface ItemDetailState {
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.Alias,
         override val itemShareCount: Int,
-        override val attachments: List<Attachment>,
+        override val attachmentsState: AttachmentsState,
         val mailboxes: List<AliasMailbox>
     ) : ItemDetailState {
 
@@ -123,7 +123,7 @@ sealed interface ItemDetailState {
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.CreditCard,
         override val itemShareCount: Int,
-        override val attachments: List<Attachment>
+        override val attachmentsState: AttachmentsState
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.CreditCard
@@ -161,7 +161,7 @@ sealed interface ItemDetailState {
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.Identity,
         override val itemShareCount: Int,
-        override val attachments: List<Attachment>
+        override val attachmentsState: AttachmentsState
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Identity
@@ -204,7 +204,7 @@ sealed interface ItemDetailState {
         val primaryTotp: Totp?,
         val secondaryTotps: Map<String, Totp?>,
         val passkeys: List<UIPasskeyContent>,
-        override val attachments: List<Attachment>
+        override val attachmentsState: AttachmentsState
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Login
@@ -242,7 +242,7 @@ sealed interface ItemDetailState {
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.Note,
         override val itemShareCount: Int,
-        override val attachments: List<Attachment>
+        override val attachmentsState: AttachmentsState
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Note
@@ -280,7 +280,7 @@ sealed interface ItemDetailState {
         override val itemState: ItemState,
         override val itemDiffs: ItemDiffs.Unknown,
         override val itemShareCount: Int,
-        override val attachments: List<Attachment>
+        override val attachmentsState: AttachmentsState
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Unknown

@@ -29,7 +29,7 @@ import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.commonrust.api.FileType
 import proton.android.pass.commonrust.api.FileTypeDetector
 import proton.android.pass.commonrust.api.MimeType
-import proton.android.pass.data.api.repositories.FileMetadata
+import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.domain.attachments.AttachmentType
 import proton.android.pass.log.api.PassLogger

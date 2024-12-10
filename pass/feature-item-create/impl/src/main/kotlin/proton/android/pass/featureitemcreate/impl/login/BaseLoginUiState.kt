@@ -30,6 +30,7 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 
 @Immutable
 internal data class BaseLoginUiState(
@@ -47,7 +48,8 @@ internal data class BaseLoginUiState(
     val totpUiState: TotpUiState,
     val focusedField: LoginField?,
     val isUsernameSplitTooltipEnabled: Boolean,
-    val isFileAttachmentsEnabled: Boolean
+    val isFileAttachmentsEnabled: Boolean,
+    val attachmentsState: AttachmentsState
 ) {
     internal companion object {
 
@@ -58,15 +60,16 @@ internal data class BaseLoginUiState(
             isItemSaved = ItemSavedState.Unknown,
             openScanState = OpenScanState.Unknown,
             focusLastWebsite = false,
-            canUseCustomFields = false,
             canUpdateUsername = true,
+            canUseCustomFields = false,
             primaryEmail = null,
             hasUserEditedContent = false,
             hasReachedAliasLimit = false,
             totpUiState = TotpUiState.NotInitialised,
             focusedField = null,
             isUsernameSplitTooltipEnabled = false,
-            isFileAttachmentsEnabled = false
+            isFileAttachmentsEnabled = false,
+            attachmentsState = AttachmentsState.Initial
         )
 
     }

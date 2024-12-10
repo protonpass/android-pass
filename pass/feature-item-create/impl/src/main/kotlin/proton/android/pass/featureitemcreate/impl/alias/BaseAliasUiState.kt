@@ -24,6 +24,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 
 @Immutable
 data class BaseAliasUiState(
@@ -38,7 +39,8 @@ data class BaseAliasUiState(
     val hasReachedAliasLimit: Boolean,
     val canUpgrade: Boolean,
     val isAliasManagementEnabled: Boolean,
-    val isFileAttachmentEnabled: Boolean
+    val isFileAttachmentEnabled: Boolean,
+    val attachmentsState: AttachmentsState
 ) {
     companion object {
         val Initial = BaseAliasUiState(
@@ -53,7 +55,8 @@ data class BaseAliasUiState(
             hasReachedAliasLimit = false,
             canUpgrade = false,
             isAliasManagementEnabled = false,
-            isFileAttachmentEnabled = false
+            isFileAttachmentEnabled = false,
+            attachmentsState = AttachmentsState.Initial
         )
     }
 }

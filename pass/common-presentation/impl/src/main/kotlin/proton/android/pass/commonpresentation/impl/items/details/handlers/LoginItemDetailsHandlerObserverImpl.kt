@@ -30,6 +30,7 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDet
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.CustomFieldContent
@@ -88,7 +89,12 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             primaryTotp = primaryTotp,
             secondaryTotps = secondaryTotps,
             passkeys = loginItemContents.passkeys.map { passkey -> UIPasskeyContent.from(passkey) },
-            attachments = attachments
+            attachmentsState = AttachmentsState(
+                draftAttachmentsList = listOf(),
+                attachmentsList = attachments,
+                loadingDraftAttachments = setOf(),
+                loadingAttachments = setOf()
+            )
         )
     }
 

@@ -228,7 +228,7 @@ fun CreditCardDetail(
                         },
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
                         isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
-                        attachments = state.attachments,
+                        attachmentsState = state.attachmentsState,
                         hasMoreThanOneVaultShare = state.hasMoreThanOneVault
                     )
                 }

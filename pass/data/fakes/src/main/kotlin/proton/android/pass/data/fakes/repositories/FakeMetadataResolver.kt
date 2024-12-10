@@ -18,7 +18,7 @@
 
 package proton.android.pass.data.fakes.repositories
 
-import proton.android.pass.data.api.repositories.FileMetadata
+import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.data.api.repositories.MetadataResolver
 import java.net.URI
 import javax.inject.Inject

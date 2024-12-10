@@ -30,6 +30,7 @@ import kotlinx.coroutines.runBlocking
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import proton.android.pass.data.api.usecases.InitialWorkerLauncher
 import proton.android.pass.data.impl.work.PeriodicAssetLinkWorker
+import proton.android.pass.data.impl.work.PeriodicCacheCleanupWorker
 import proton.android.pass.data.impl.work.PeriodicIgnoredAssetLinkWorker
 import proton.android.pass.data.impl.work.UserAccessWorker
 import proton.android.pass.log.api.PassLogger
@@ -46,6 +47,7 @@ class InitialWorkerLauncherImpl @Inject constructor(
 
     override fun start() {
         launchUserAccessWorker()
+        launchCacheCleanupWorker()
         val isDAL = runBlocking {
             featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.DIGITAL_ASSET_LINKS).first()
         }
@@ -91,9 +93,18 @@ class InitialWorkerLauncherImpl @Inject constructor(
         )
     }
 
+    private fun launchCacheCleanupWorker() {
+        workManager.enqueueUniquePeriodicWork(
+            PeriodicCacheCleanupWorker.WORKER_UNIQUE_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            PeriodicCacheCleanupWorker.getRequestFor()
+        )
+    }
+
     override fun cancel() {
         PassLogger.i(TAG, "Cancelling periodic workers")
         workManager.cancelUniqueWork(UserAccessWorker.WORKER_UNIQUE_NAME)
+        workManager.cancelUniqueWork(PeriodicCacheCleanupWorker.WORKER_UNIQUE_NAME)
         workManager.cancelUniqueWork(PeriodicAssetLinkWorker.WORKER_UNIQUE_NAME)
         workManager.cancelUniqueWork(PeriodicIgnoredAssetLinkWorker.WORKER_UNIQUE_NAME)
     }

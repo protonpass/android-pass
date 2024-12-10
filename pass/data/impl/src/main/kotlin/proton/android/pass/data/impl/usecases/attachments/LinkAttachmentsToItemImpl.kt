@@ -22,8 +22,10 @@ import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
+import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.impl.repositories.FileKeyRepository
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
@@ -33,6 +35,7 @@ import javax.inject.Singleton
 class LinkAttachmentsToItemImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val attachmentRepository: AttachmentRepository,
+    private val itemRepository: ItemRepository,
     private val fileKeyRepository: FileKeyRepository
 ) : LinkAttachmentsToItem {
 
@@ -52,6 +55,12 @@ class LinkAttachmentsToItemImpl @Inject constructor(
             revision = revision,
             toLink = toLink,
             toUnlink = emptySet()
+        )
+        itemRepository.updateLocalItemFlags(
+            shareId = shareId,
+            itemId = itemId,
+            flag = ItemFlag.HasAttachments,
+            isFlagEnabled = true
         )
     }
 }

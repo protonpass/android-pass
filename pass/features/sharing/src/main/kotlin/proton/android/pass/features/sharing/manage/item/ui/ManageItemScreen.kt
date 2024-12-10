@@ -70,7 +70,7 @@ internal fun ManageItemScreen(
                 is ManageItemUiEvent.OnPendingInviteOptionsClick -> {
                     SharingNavigation.ManageItemInviteOptions(
                         shareId = uiEvent.shareId,
-                        inviteId = uiEvent.pendingInvite.inviteId
+                        pendingInvite = uiEvent.pendingInvite
                     ).also(onNavigateEvent)
                 }
 

@@ -19,11 +19,13 @@
 package proton.android.pass.features.sharing.manage.iteminviteoptions.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.sharing.SharingNavigation
+import proton.android.pass.features.sharing.manage.iteminviteoptions.presentation.ManageItemInviteOptionsEvent
 import proton.android.pass.features.sharing.manage.iteminviteoptions.presentation.ManageItemInviteOptionsViewModel
 
 @Composable
@@ -33,6 +35,21 @@ fun ManageItemInviteOptionsBottomSheet(
     viewModel: ManageItemInviteOptionsViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by stateFlow.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state.event) {
+        when (state.event) {
+            ManageItemInviteOptionsEvent.Idle -> Unit
+
+            ManageItemInviteOptionsEvent.OnCancelInviteFailure,
+            ManageItemInviteOptionsEvent.OnCancelInviteSuccess,
+            ManageItemInviteOptionsEvent.OnResendInviteFailure,
+            ManageItemInviteOptionsEvent.OnResendInviteSuccess -> {
+                onNavigateEvent(SharingNavigation.CloseBottomSheet(refresh = false))
+            }
+        }
+
+        onConsumeEvent(state.event)
+    }
 
     ManageItemInviteOptionsContent(
         modifier = modifier,

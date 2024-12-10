@@ -22,12 +22,14 @@ import androidx.compose.runtime.Stable
 
 @Stable
 internal data class ManageItemInviteOptionsState(
+    internal val event: ManageItemInviteOptionsEvent,
     internal val action: ManageItemInviteOptionsAction
 ) {
 
     internal companion object {
 
         internal val Initial = ManageItemInviteOptionsState(
+            event = ManageItemInviteOptionsEvent.Idle,
             action = ManageItemInviteOptionsAction.None
         )
 

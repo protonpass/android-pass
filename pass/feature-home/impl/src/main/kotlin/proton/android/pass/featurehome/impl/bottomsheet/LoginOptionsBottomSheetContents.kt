@@ -204,7 +204,8 @@ internal fun LoginOptionsBottomSheetContentsPreview(
                     lastAutofillTime = Clock.System.now(),
                     isPinned = false,
                     revision = 1,
-                    shareCount = 0
+                    shareCount = 0,
+                    isOwner = true
                 ),
                 action = BottomSheetItemAction.None,
                 isRecentSearch = input.second,

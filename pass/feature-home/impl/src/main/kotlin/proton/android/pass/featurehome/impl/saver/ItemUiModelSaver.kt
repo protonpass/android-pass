@@ -39,6 +39,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
     val isPinned = "is_pinned"
     val revision = "revision"
     val shareCount = "share_count"
+    val isOwner = "is_owner"
     mapSaver(
         save = {
             it?.let { itemUiModel ->
@@ -52,7 +53,8 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                     lastAutofillTime to itemUiModel.lastAutofillTime?.toString(),
                     isPinned to itemUiModel.isPinned,
                     revision to itemUiModel.revision,
-                    shareCount to itemUiModel.shareCount
+                    shareCount to itemUiModel.shareCount,
+                    isOwner to itemUiModel.isOwner
                 )
             } ?: emptyMap()
         },
@@ -69,7 +71,8 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                     lastAutofillTime = (values[modificationTime] as? String)?.let { Instant.parse(it) },
                     isPinned = values[isPinned] as Boolean,
                     revision = values[revision] as Long,
-                    shareCount = values[shareCount] as Int
+                    shareCount = values[shareCount] as Int,
+                    isOwner = values[isOwner] as Boolean
                 )
             } else {
                 null

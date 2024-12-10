@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
-import proton.android.pass.data.api.usecases.attachments.LinkAttachmentToItem
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.impl.repositories.FileKeyRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -30,26 +30,27 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LinkAttachmentToItemImpl @Inject constructor(
+class LinkAttachmentsToItemImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val attachmentRepository: AttachmentRepository,
     private val fileKeyRepository: FileKeyRepository
-) : LinkAttachmentToItem {
+) : LinkAttachmentsToItem {
 
     override suspend fun invoke(
         itemId: ItemId,
         shareId: ShareId,
         revision: Long
     ) {
+        val toLink = fileKeyRepository.getAllMappings()
+        if (toLink.isEmpty()) return
         val userId = accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
-
         attachmentRepository.linkPendingAttachments(
             userId = userId,
             itemId = itemId,
             shareId = shareId,
             revision = revision,
-            toLink = fileKeyRepository.getAllMappings(),
+            toLink = toLink,
             toUnlink = emptySet()
         )
     }

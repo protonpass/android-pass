@@ -16,21 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases.attachments
+package proton.android.pass.data.api.usecases.attachments
 
-import proton.android.pass.data.api.usecases.attachments.LinkAttachmentToItem
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class FakeLinkAttachmentToItem @Inject constructor() : LinkAttachmentToItem {
-    override suspend fun invoke(
+interface LinkAttachmentsToItem {
+    suspend operator fun invoke(
         itemId: ItemId,
         shareId: ShareId,
-        revision: Long
-    ) {
-        // no-op
-    }
+        revision: Long = 0
+    )
 }

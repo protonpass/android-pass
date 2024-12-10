@@ -124,7 +124,8 @@ fun AssociateAutofillItemDialogPreview(@PreviewParameter(ThemePreviewProvider::c
                     lastAutofillTime = null,
                     isPinned = false,
                     revision = 1,
-                    shareCount = 0
+                    shareCount = 0,
+                    isOwner = true
                 ),
                 onAssociateAndAutofill = {},
                 onAutofill = {},

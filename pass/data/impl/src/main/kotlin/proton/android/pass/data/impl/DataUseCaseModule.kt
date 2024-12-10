@@ -27,7 +27,7 @@ import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
-import proton.android.pass.data.api.usecases.CancelInvite
+import proton.android.pass.data.api.usecases.CancelShareInvite
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.CheckCanAddressesBeInvited
 import proton.android.pass.data.api.usecases.CheckMasterPassword
@@ -222,7 +222,7 @@ import proton.android.pass.data.impl.usecases.AcceptInviteImpl
 import proton.android.pass.data.impl.usecases.ApplyPendingEventsImpl
 import proton.android.pass.data.impl.usecases.CanDisplayTotpImpl
 import proton.android.pass.data.impl.usecases.CanPerformPaidActionImpl
-import proton.android.pass.data.impl.usecases.CancelInviteImpl
+import proton.android.pass.data.impl.usecases.CancelShareInviteImpl
 import proton.android.pass.data.impl.usecases.ChangeAliasStatusImpl
 import proton.android.pass.data.impl.usecases.CheckCanAddressesBeInvitedImpl
 import proton.android.pass.data.impl.usecases.CheckMasterPasswordImpl
@@ -657,7 +657,7 @@ abstract class DataUseCaseModule {
     abstract fun bindSetVaultMemberPermission(impl: UpdateShareMemberRoleImpl): UpdateShareMemberRole
 
     @Binds
-    abstract fun bindCancelInvite(impl: CancelInviteImpl): CancelInvite
+    abstract fun bindCancelInvite(impl: CancelShareInviteImpl): CancelShareInvite
 
     @Binds
     abstract fun bindResendInvite(impl: ResendShareInviteImpl): ResendShareInvite

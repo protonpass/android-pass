@@ -40,7 +40,7 @@ import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
-import proton.android.pass.data.api.usecases.CancelInvite
+import proton.android.pass.data.api.usecases.CancelShareInvite
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.CheckCanAddressesBeInvited
 import proton.android.pass.data.api.usecases.CheckMasterPassword
@@ -234,7 +234,7 @@ import proton.android.pass.data.fakes.usecases.TestCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
-import proton.android.pass.data.fakes.usecases.TestCancelInvite
+import proton.android.pass.data.fakes.usecases.TestCancelShareInvite
 import proton.android.pass.data.fakes.usecases.TestCheckAddressesCanBeInvited
 import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
 import proton.android.pass.data.fakes.usecases.TestCheckPin
@@ -612,7 +612,7 @@ abstract class FakesDataModule {
     abstract fun bindResendInvite(impl: TestResendShareInvite): ResendShareInvite
 
     @Binds
-    abstract fun bindCancelInvite(impl: TestCancelInvite): CancelInvite
+    abstract fun bindCancelInvite(impl: TestCancelShareInvite): CancelShareInvite
 
     @Binds
     abstract fun bindTransferOwnership(impl: TestTransferVaultOwnership): TransferVaultOwnership

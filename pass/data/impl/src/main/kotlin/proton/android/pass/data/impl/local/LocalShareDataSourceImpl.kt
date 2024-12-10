@@ -24,6 +24,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
+import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 import proton.android.pass.log.api.PassLogger
@@ -90,6 +91,27 @@ class LocalShareDataSourceImpl @Inject constructor(
             isActive = isActive
         )
 
+
+    override fun getSharePendingInvite(
+        userId: UserId,
+        shareId: ShareId,
+        inviteId: InviteId
+    ): SharePendingInvite? = sharePendingInvitesFlow.value[userId]
+        ?.get(shareId)
+        ?.first { it.inviteId == inviteId }
+
+    override fun deleteSharePendingInvite(
+        userId: UserId,
+        shareId: ShareId,
+        inviteId: InviteId
+    ) {
+        sharePendingInvitesFlow.value[userId]
+            ?.get(shareId)
+            ?.filter { it.inviteId != inviteId }
+            ?.also { sharePendingInvites ->
+                upsertSharePendingInvites(userId, shareId, sharePendingInvites)
+            }
+    }
 
     private companion object {
 

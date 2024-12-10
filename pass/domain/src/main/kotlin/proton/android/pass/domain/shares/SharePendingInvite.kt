@@ -27,10 +27,16 @@ sealed interface SharePendingInvite {
 
     val inviteId: InviteId
 
+    val isForNewUser: Boolean
+
     data class ExistingUser(
         override val email: String,
         override val inviteId: InviteId
-    ) : SharePendingInvite
+    ) : SharePendingInvite {
+
+        override val isForNewUser: Boolean = false
+
+    }
 
     data class NewUser(
         override val email: String,
@@ -38,6 +44,8 @@ sealed interface SharePendingInvite {
         val inviteState: InviteState,
         val role: ShareRole
     ) : SharePendingInvite {
+
+        override val isForNewUser: Boolean = true
 
         enum class InviteState(val value: Int) {
             PendingAccountCreation(value = 1),

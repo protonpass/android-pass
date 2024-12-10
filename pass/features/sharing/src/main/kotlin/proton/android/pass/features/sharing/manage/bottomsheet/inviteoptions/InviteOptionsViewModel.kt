@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.errors.CannotSendMoreInvitesError
-import proton.android.pass.data.api.usecases.CancelInvite
+import proton.android.pass.data.api.usecases.CancelShareInvite
 import proton.android.pass.data.api.usecases.ResendShareInvite
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.NewUserInviteId
@@ -50,18 +50,24 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InviteOptionsViewModel @Inject constructor(
+    savedStateHandleProvider: SavedStateHandleProvider,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val resendShareInvite: ResendShareInvite,
-    private val cancelInvite: CancelInvite,
-    savedState: SavedStateHandleProvider
+    private val cancelShareInvite: CancelShareInvite
 ) : ViewModel() {
 
-    private val shareId = ShareId(savedState.get().require(CommonNavArgId.ShareId.key))
+    private val shareId: ShareId = savedStateHandleProvider.get()
+        .require<String>(CommonNavArgId.ShareId.key)
+        .let(::ShareId)
+
+    private val inviteId: InviteId = savedStateHandleProvider.get()
+        .require<String>(InviteIdArg.key)
+        .let(::InviteId)
+
     private val inviteType: InviteTypeValue = run {
-        val inviteId: String = savedState.get().require(InviteIdArg.key)
-        when (val type: String = savedState.get().require(InviteTypeArg.key)) {
-            INVITE_TYPE_EXISTING_USER -> InviteTypeValue.ExistingUserInvite(InviteId(inviteId))
-            INVITE_TYPE_NEW_USER -> InviteTypeValue.NewUserInvite(NewUserInviteId(inviteId))
+        when (val type: String = savedStateHandleProvider.get().require(InviteTypeArg.key)) {
+            INVITE_TYPE_EXISTING_USER -> InviteTypeValue.ExistingUserInvite(inviteId)
+            INVITE_TYPE_NEW_USER -> InviteTypeValue.NewUserInvite(NewUserInviteId(inviteId.value))
             else -> throw IllegalArgumentException("Unknown invite type: $type")
         }
     }
@@ -81,29 +87,24 @@ class InviteOptionsViewModel @Inject constructor(
         initialValue = InviteOptionsUiState.Initial(showResendInvite())
     )
 
-    fun cancelInvite() = viewModelScope.launch {
-        loadingOptionFlow.update { LoadingOption.CancelInvite }
-        runCatching {
-            when (inviteType) {
-                is InviteTypeValue.ExistingUserInvite -> {
-                    cancelInvite.invoke(shareId, inviteType.inviteId)
-                }
-                is InviteTypeValue.NewUserInvite -> {
-                    cancelInvite.invoke(shareId, inviteType.inviteId)
-                }
+    internal fun cancelInvite() {
+        viewModelScope.launch {
+            loadingOptionFlow.update { LoadingOption.CancelInvite }
+
+            runCatching {
+                cancelShareInvite.invoke(shareId, inviteId)
+            }.onSuccess {
+                PassLogger.i(TAG, "Invite canceled")
+                eventFlow.update { InviteOptionsEvent.Close(refresh = true) }
+                snackbarDispatcher(SharingSnackbarMessage.CancelInviteSuccess)
+            }.onFailure {
+                PassLogger.w(TAG, "Error canceling invite")
+                PassLogger.w(TAG, it)
+                snackbarDispatcher(SharingSnackbarMessage.CancelInviteError)
             }
 
-        }.onSuccess {
-            PassLogger.i(TAG, "Invite canceled")
-            eventFlow.update { InviteOptionsEvent.Close(refresh = true) }
-            snackbarDispatcher(SharingSnackbarMessage.CancelInviteSuccess)
-        }.onFailure {
-            PassLogger.w(TAG, "Error canceling invite")
-            PassLogger.w(TAG, it)
-            snackbarDispatcher(SharingSnackbarMessage.CancelInviteError)
+            loadingOptionFlow.update { null }
         }
-
-        loadingOptionFlow.update { null }
     }
 
     fun resendInvite() = viewModelScope.launch {

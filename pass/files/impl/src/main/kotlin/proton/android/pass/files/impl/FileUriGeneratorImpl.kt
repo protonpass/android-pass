@@ -25,6 +25,7 @@ import kotlinx.coroutines.withContext
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.files.api.FileType
 import proton.android.pass.files.api.FileUriGenerator
+import proton.android.pass.files.impl.CacheDirectories.CameraTemp
 import java.io.File
 import java.net.URI
 import java.util.concurrent.atomic.AtomicInteger
@@ -46,7 +47,7 @@ class FileUriGeneratorImpl @Inject constructor(
 
     private fun createFileForType(fileType: FileType): File {
         val (directoryName, prefix, suffix) = when (fileType) {
-            FileType.CameraTemp -> Triple("camera", "photo_", ".jpg")
+            FileType.CameraTemp -> Triple(CameraTemp.directoryName, "photo_", ".jpg")
         }
 
         val cacheDir = File(context.cacheDir, directoryName).apply {

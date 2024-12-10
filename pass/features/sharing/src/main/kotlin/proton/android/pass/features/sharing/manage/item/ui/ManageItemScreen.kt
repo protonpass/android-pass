@@ -69,23 +69,9 @@ internal fun ManageItemScreen(
 
                 is ManageItemUiEvent.OnPendingInviteOptionsClick -> {
                     SharingNavigation.ManageItemInviteOptions(
-                        shareId = uiEvent.shareId
+                        shareId = uiEvent.shareId,
+                        inviteId = uiEvent.pendingInvite.inviteId
                     ).also(onNavigateEvent)
-//                    when (uiEvent.pendingInvite) {
-//                        is SharePendingInvite.ExistingUser -> {
-//                            SharingNavigation.ExistingUserInviteOptions(
-//                                shareId = uiEvent.shareId,
-//                                inviteId = uiEvent.pendingInvite.inviteId
-//                            )
-//                        }
-//
-//                        is SharePendingInvite.NewUser -> {
-//                            SharingNavigation.NewUserInviteOptions(
-//                                shareId = uiEvent.shareId,
-//                                inviteId = uiEvent.pendingInvite.inviteId
-//                            )
-//                        }
-//                    }.also(onNavigateEvent)
                 }
 
                 is ManageItemUiEvent.OnMemberOptionsClick -> {

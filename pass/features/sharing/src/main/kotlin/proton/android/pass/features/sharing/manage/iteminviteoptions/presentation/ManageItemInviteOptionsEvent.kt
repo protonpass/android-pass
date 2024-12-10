@@ -18,21 +18,16 @@
 
 package proton.android.pass.features.sharing.manage.iteminviteoptions.presentation
 
-import androidx.compose.runtime.Stable
+internal sealed interface ManageItemInviteOptionsEvent {
 
-@Stable
-internal data class ManageItemInviteOptionsState(
-    internal val event: ManageItemInviteOptionsEvent,
-    internal val action: ManageItemInviteOptionsAction
-) {
+    data object Idle : ManageItemInviteOptionsEvent
 
-    internal companion object {
+    data object OnResendInviteFailure : ManageItemInviteOptionsEvent
 
-        internal val Initial = ManageItemInviteOptionsState(
-            event = ManageItemInviteOptionsEvent.Idle,
-            action = ManageItemInviteOptionsAction.None
-        )
+    data object OnResendInviteSuccess : ManageItemInviteOptionsEvent
 
-    }
+    data object OnCancelInviteFailure : ManageItemInviteOptionsEvent
+
+    data object OnCancelInviteSuccess : ManageItemInviteOptionsEvent
 
 }

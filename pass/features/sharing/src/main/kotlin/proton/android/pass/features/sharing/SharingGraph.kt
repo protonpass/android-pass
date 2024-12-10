@@ -191,7 +191,8 @@ sealed interface SharingNavigation {
     ) : SharingNavigation
 
     data class ManageItemInviteOptions(
-        val shareId: ShareId
+        val shareId: ShareId,
+        val inviteId: InviteId
     ) : SharingNavigation
 
     @JvmInline

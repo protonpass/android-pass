@@ -1923,7 +1923,8 @@ fun NavGraphBuilder.appGraph(
                 destination = ManageItemInviteOptionsNavItem,
                 route = ManageItemInviteOptionsNavItem.createNavRoute(
                     shareId = it.shareId,
-                    inviteId = it.inviteId
+                    inviteId = it.pendingInvite.inviteId,
+                    isForNewUser = it.pendingInvite.isForNewUser
                 )
             )
 

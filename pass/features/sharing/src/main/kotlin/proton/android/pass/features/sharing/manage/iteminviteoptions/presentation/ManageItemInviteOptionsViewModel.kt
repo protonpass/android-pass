@@ -25,18 +25,20 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.errors.CannotSendMoreInvitesError
-import proton.android.pass.data.api.usecases.CancelInvite
+import proton.android.pass.data.api.usecases.CancelShareInvite
 import proton.android.pass.data.api.usecases.ResendShareInvite
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.features.sharing.manage.bottomsheet.InviteIdArg
+import proton.android.pass.features.sharing.manage.bottomsheet.IsNewUserInviteArg
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -46,7 +48,7 @@ import javax.inject.Inject
 class ManageItemInviteOptionsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     private val resendShareInvite: ResendShareInvite,
-    private val cancelInvite: CancelInvite,
+    private val cancelShareInvite: CancelShareInvite,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -57,6 +59,9 @@ class ManageItemInviteOptionsViewModel @Inject constructor(
     private val inviteId: InviteId = savedStateHandleProvider.get()
         .require<String>(InviteIdArg.key)
         .let(::InviteId)
+
+    private val isInviteForNewUser: Boolean = savedStateHandleProvider.get()
+        .require(IsNewUserInviteArg.key)
 
     private val eventFlow = MutableStateFlow<ManageItemInviteOptionsEvent>(
         value = ManageItemInviteOptionsEvent.Idle
@@ -69,6 +74,7 @@ class ManageItemInviteOptionsViewModel @Inject constructor(
     internal val stateFlow: StateFlow<ManageItemInviteOptionsState> = combine(
         eventFlow,
         actionFlow,
+        flowOf(isInviteForNewUser),
         ::ManageItemInviteOptionsState
     ).stateIn(
         scope = viewModelScope,
@@ -81,6 +87,11 @@ class ManageItemInviteOptionsViewModel @Inject constructor(
     }
 
     internal fun onResendInvite() {
+        if (isInviteForNewUser) {
+            eventFlow.update { ManageItemInviteOptionsEvent.OnResendInviteSuccess }
+            return
+        }
+
         viewModelScope.launch {
             actionFlow.update { ManageItemInviteOptionsAction.ResendInvite }
 
@@ -109,7 +120,7 @@ class ManageItemInviteOptionsViewModel @Inject constructor(
         viewModelScope.launch {
             actionFlow.update { ManageItemInviteOptionsAction.CancelInvite }
 
-            runCatching { cancelInvite(shareId, inviteId) }
+            runCatching { cancelShareInvite(shareId, inviteId) }
                 .onFailure { error ->
                     PassLogger.w(TAG, "There was an error canceling the invite")
                     PassLogger.w(TAG, error)

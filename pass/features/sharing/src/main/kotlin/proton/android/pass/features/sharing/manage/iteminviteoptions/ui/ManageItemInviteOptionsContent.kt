@@ -36,13 +36,15 @@ internal fun ManageItemInviteOptionsContent(
     onUiEvent: (ManageItemInviteOptionsUiEvent) -> Unit
 ) = with(state) {
     buildList {
-        manageItemInviteOptionRow(
-            titleRes = R.string.sharing_bottomsheet_resend_invite,
-            iconRes = CoreR.drawable.ic_proton_paper_plane,
-            isEnabled = action is ManageItemInviteOptionsAction.None,
-            isLoading = action is ManageItemInviteOptionsAction.ResendInvite,
-            onClick = { onUiEvent(ManageItemInviteOptionsUiEvent.OnResendInviteClick) }
-        ).also(::add)
+        if (canResendInvites) {
+            manageItemInviteOptionRow(
+                titleRes = R.string.sharing_bottomsheet_resend_invite,
+                iconRes = CoreR.drawable.ic_proton_paper_plane,
+                isEnabled = action is ManageItemInviteOptionsAction.None,
+                isLoading = action is ManageItemInviteOptionsAction.ResendInvite,
+                onClick = { onUiEvent(ManageItemInviteOptionsUiEvent.OnResendInviteClick) }
+            ).also(::add)
+        }
 
         manageItemInviteOptionRow(
             titleRes = R.string.sharing_bottomsheet_cancel_invite,

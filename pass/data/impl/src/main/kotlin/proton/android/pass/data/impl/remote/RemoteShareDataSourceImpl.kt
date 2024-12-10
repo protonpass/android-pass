@@ -24,15 +24,10 @@ import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.CreateVaultRequest
-import proton.android.pass.data.impl.requests.UpdateMemberShareRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
-import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.GetSharePendingInvitesResponse
-import proton.android.pass.data.impl.responses.ShareMemberResponse
 import proton.android.pass.data.impl.responses.ShareResponse
-import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareRole
 import javax.inject.Inject
 
 class RemoteShareDataSourceImpl @Inject constructor(
@@ -95,55 +90,10 @@ class RemoteShareDataSourceImpl @Inject constructor(
             .valueOrThrow
     }
 
-    override suspend fun getShareMembers(userId: UserId, shareId: ShareId): List<ShareMemberResponse> =
-        api.get<PasswordManagerApi>(userId)
-            .invoke { getShareMembers(shareId.id) }
-            .valueOrThrow
-            .members
-
-    override suspend fun getShareItemMembers(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId
-    ): List<ShareMemberResponse> = api.get<PasswordManagerApi>(userId)
-        .invoke { getShareItemMembers(shareId.id, itemId.id) }
-        .valueOrThrow
-        .members
-
     override suspend fun getSharePendingInvites(userId: UserId, shareId: ShareId): GetSharePendingInvitesResponse =
         api.get<PasswordManagerApi>(userId)
             .invoke { getPendingInvitesForShare(shareId.id) }
             .valueOrThrow
-
-    override suspend fun removeShareMember(
-        userId: UserId,
-        shareId: ShareId,
-        memberShareId: ShareId
-    ): CodeOnlyResponse = api.get<PasswordManagerApi>(userId)
-        .invoke {
-            removeMemberFromVault(
-                shareId = shareId.id,
-                memberShareId = memberShareId.id
-            )
-        }
-        .valueOrThrow
-
-    override suspend fun updateShareMember(
-        userId: UserId,
-        shareId: ShareId,
-        memberShareId: ShareId,
-        memberShareRole: ShareRole
-    ): CodeOnlyResponse = api.get<PasswordManagerApi>(userId)
-        .invoke {
-            updateShareMember(
-                shareId = shareId.id,
-                memberShareId = memberShareId.id,
-                request = UpdateMemberShareRequest(
-                    shareRoleId = memberShareRole.value
-                )
-            )
-        }
-        .valueOrThrow
 
     private companion object {
 

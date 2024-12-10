@@ -56,6 +56,8 @@ import proton.android.pass.data.impl.local.assetlink.LocalAssetLinkDataSource
 import proton.android.pass.data.impl.local.assetlink.LocalAssetLinkDataSourceImpl
 import proton.android.pass.data.impl.local.securelinks.SecureLinksLocalDataSource
 import proton.android.pass.data.impl.local.securelinks.SecureLinksLocalDataSourceImpl
+import proton.android.pass.data.impl.local.shares.LocalShareMembersDataSource
+import proton.android.pass.data.impl.local.shares.LocalShareMembersDataSourceImpl
 import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSource
 import proton.android.pass.data.impl.local.simplelogin.LocalSimpleLoginDataSourceImpl
 import javax.inject.Singleton
@@ -121,5 +123,8 @@ abstract class DataLocalDataSourceModule {
 
     @[Binds Singleton]
     abstract fun bindLocalInAppMessagesDataSource(impl: LocalInAppMessagesDataSourceImpl): LocalInAppMessagesDataSource
+
+    @[Binds Singleton]
+    abstract fun bindLocalShareMembersDataSource(impl: LocalShareMembersDataSourceImpl): LocalShareMembersDataSource
 
 }

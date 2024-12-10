@@ -33,7 +33,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.errors.CannotSendMoreInvitesError
 import proton.android.pass.data.api.usecases.CancelInvite
-import proton.android.pass.data.api.usecases.ResendInvite
+import proton.android.pass.data.api.usecases.ResendShareInvite
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.NewUserInviteId
 import proton.android.pass.domain.ShareId
@@ -51,7 +51,7 @@ import javax.inject.Inject
 @HiltViewModel
 class InviteOptionsViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val resendInvite: ResendInvite,
+    private val resendShareInvite: ResendShareInvite,
     private val cancelInvite: CancelInvite,
     savedState: SavedStateHandleProvider
 ) : ViewModel() {
@@ -115,7 +115,7 @@ class InviteOptionsViewModel @Inject constructor(
         PassLogger.i(TAG, "Resending invite: $inviteId")
         loadingOptionFlow.update { LoadingOption.ResendInvite }
         runCatching {
-            resendInvite.invoke(shareId, inviteId)
+            resendShareInvite.invoke(shareId, inviteId)
         }.onSuccess {
             PassLogger.i(TAG, "Invite resent")
             eventFlow.update { InviteOptionsEvent.Close(refresh = true) }

@@ -24,4 +24,6 @@ object ErrorCodes {
 
     const val INVALID_VERIFICATION_CODE_LIMIT = 2011
 
+    const val RESEND_SHARE_INVITE_LIMIT = 2001
+
 }

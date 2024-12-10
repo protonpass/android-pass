@@ -323,10 +323,10 @@ class ItemRepositoryImpl @Inject constructor(
     ) {
         val item: ItemEntity = localItemDataSource.getById(shareId, itemId)
             ?: throw ItemNotFoundError(itemId, shareId)
-        val updatedFlags = if (!isFlagEnabled) {
-            item.flags or flag.value
+        val updatedFlags = if (isFlagEnabled) {
+            item.flags or flag.value // set the flag
         } else {
-            item.flags and flag.value.inv()
+            item.flags and flag.value.inv() // clear the flag
         }
         localItemDataSource.updateItemFlags(shareId, itemId, updatedFlags)
     }

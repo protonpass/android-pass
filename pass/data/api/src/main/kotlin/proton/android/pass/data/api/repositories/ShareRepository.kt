@@ -28,6 +28,7 @@ import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.domain.shares.SharePendingInvite
 
+@Suppress("ComplexInterface", "TooManyFunctions")
 interface ShareRepository {
     suspend fun createVault(userId: SessionUserId, vault: NewVault): Share
 

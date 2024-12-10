@@ -21,16 +21,21 @@ package proton.android.pass.features.sharing.manage.iteminviteoptions.navigation
 import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.sharing.manage.bottomsheet.InviteIdArg
+import proton.android.pass.features.sharing.manage.bottomsheet.IsNewUserInviteArg
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 
 object ManageItemInviteOptionsNavItem : NavItem(
     baseRoute = "sharing/manage/item/invite/options",
-    navArgIds = listOf(CommonNavArgId.ShareId, InviteIdArg),
+    navArgIds = listOf(CommonNavArgId.ShareId, InviteIdArg, IsNewUserInviteArg),
     navItemType = NavItemType.Bottomsheet
 ) {
 
-    fun createNavRoute(shareId: ShareId, inviteId: InviteId) = "$baseRoute/${shareId.id}/${inviteId.value}"
+    fun createNavRoute(
+        shareId: ShareId,
+        inviteId: InviteId,
+        isForNewUser: Boolean
+    ) = "$baseRoute/${shareId.id}/${inviteId.value}/$isForNewUser"
 
 }

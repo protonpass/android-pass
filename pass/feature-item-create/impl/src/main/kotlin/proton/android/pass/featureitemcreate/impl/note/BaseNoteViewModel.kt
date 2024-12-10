@@ -60,6 +60,8 @@ abstract class BaseNoteViewModel(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
+    private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
     init {
         draftAttachmentRepository.observeNew()
             .onEach { newUris: Set<URI> ->
@@ -82,7 +84,6 @@ abstract class BaseNoteViewModel(
         MutableStateFlow(ItemSavedState.Unknown)
     protected val noteItemValidationErrorsState: MutableStateFlow<Set<NoteItemValidationErrors>> =
         MutableStateFlow(emptySet())
-    private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val draftAttachments = draftAttachmentRepository.observeAll()
         .map { uris -> uris.mapNotNull { metadataResolver.extractMetadata(it) } }

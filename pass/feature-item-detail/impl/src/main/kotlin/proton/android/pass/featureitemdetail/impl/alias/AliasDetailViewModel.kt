@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -171,6 +172,11 @@ class AliasDetailViewModel @Inject constructor(
     private var hasItemBeenFetchedAtLeastOnce = false
 
     private val itemWithVaultFlow = getItemByIdWithVault(shareId, itemId)
+        .shareIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            replay = 1
+        )
 
     private val itemAttachmentsFlow = itemWithVaultFlow
         .flatMapLatest { itemWithVault ->

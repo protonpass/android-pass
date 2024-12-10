@@ -24,7 +24,7 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeClearAttachments @Inject constructor() : ClearAttachments {
-    override suspend fun invoke() {
+    override fun invoke() {
         // no-op
     }
 }

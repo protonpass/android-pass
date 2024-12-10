@@ -16,31 +16,35 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases.shares
+package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import proton.android.pass.data.api.repositories.ShareMembersRepository
-import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.shares.ShareMember
-import javax.inject.Inject
 
-class ObserveShareItemMembersImpl @Inject constructor(
-    private val observeCurrentUser: ObserveCurrentUser,
-    private val shareMemberRepository: ShareMembersRepository
-) : ObserveShareItemMembers {
+interface ShareMembersRepository {
 
-    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<ShareMember>> = observeCurrentUser()
-        .flatMapLatest { user ->
-            shareMemberRepository.observeShareItemMembers(
-                userId = user.userId,
-                shareId = shareId,
-                itemId = itemId,
-                userEmail = user.email
-            )
-        }
+    fun observeShareItemMembers(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        userEmail: String?
+    ): Flow<List<ShareMember>>
+
+    suspend fun updateShareMember(
+        userId: UserId,
+        shareId: ShareId,
+        memberShareId: ShareId,
+        memberShareRole: ShareRole
+    )
+
+    suspend fun deleteShareMember(
+        userId: UserId,
+        shareId: ShareId,
+        memberShareId: ShareId
+    )
 
 }

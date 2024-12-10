@@ -36,6 +36,7 @@ import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.featureitemcreate.impl.alias.AliasDraftSavedState
@@ -68,6 +69,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     uploadAttachment: UploadAttachment,
     draftAttachmentRepository: DraftAttachmentRepository,
     metadataResolver: MetadataResolver,
+    linkAttachmentsToItem: LinkAttachmentsToItem,
     featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : CreateAliasViewModel(
     accountManager = accountManager,
@@ -87,6 +89,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     uploadAttachment = uploadAttachment,
     draftAttachmentRepository = draftAttachmentRepository,
     metadataResolver = metadataResolver,
+    linkAttachmentsToItem = linkAttachmentsToItem,
     featureFlagsRepository = featureFlagsRepository
 ) {
 

@@ -53,7 +53,7 @@ fun AttachmentSection(
     onAddAttachment: () -> Unit,
     onTrashAll: () -> Unit
 ) {
-    if (attachmentsState.hasAnyAttachment && isDetail) return
+    if (!attachmentsState.hasAnyAttachment && isDetail) return
     Column(
         modifier = modifier
             .applyIf(

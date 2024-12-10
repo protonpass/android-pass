@@ -100,7 +100,7 @@ import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.data.api.usecases.RemoveShareMember
 import proton.android.pass.data.api.usecases.RequestImage
-import proton.android.pass.data.api.usecases.ResendInvite
+import proton.android.pass.data.api.usecases.ResendShareInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.RestoreAllItems
 import proton.android.pass.data.api.usecases.RestoreItems
@@ -296,7 +296,7 @@ import proton.android.pass.data.impl.usecases.RefreshPlanImpl
 import proton.android.pass.data.impl.usecases.RejectInviteImpl
 import proton.android.pass.data.impl.usecases.RemoveShareMemberImpl
 import proton.android.pass.data.impl.usecases.RequestImageImpl
-import proton.android.pass.data.impl.usecases.ResendInviteImpl
+import proton.android.pass.data.impl.usecases.ResendShareInviteImpl
 import proton.android.pass.data.impl.usecases.ResetAppToDefaultsImpl
 import proton.android.pass.data.impl.usecases.RestoreAllItemsImpl
 import proton.android.pass.data.impl.usecases.RestoreItemImpl
@@ -660,7 +660,7 @@ abstract class DataUseCaseModule {
     abstract fun bindCancelInvite(impl: CancelInviteImpl): CancelInvite
 
     @Binds
-    abstract fun bindResendInvite(impl: ResendInviteImpl): ResendInvite
+    abstract fun bindResendInvite(impl: ResendShareInviteImpl): ResendShareInvite
 
     @Binds
     abstract fun bindTransferOwnership(impl: TransferVaultOwnershipImpl): TransferVaultOwnership

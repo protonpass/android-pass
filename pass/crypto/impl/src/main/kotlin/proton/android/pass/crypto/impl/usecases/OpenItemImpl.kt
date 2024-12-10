@@ -199,7 +199,8 @@ class OpenItemImpl @Inject constructor(
             lastAutofillTime = response.lastUseTime.toOption().map(Instant::fromEpochSeconds),
             isPinned = response.isPinned,
             flags = Flags(response.flags),
-            shareCount = response.shareCount
+            shareCount = response.shareCount,
+            isOwner = response.key != null
         )
     }
 

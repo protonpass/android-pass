@@ -40,12 +40,17 @@ data class ItemUiModel(
     val isPinned: Boolean,
     val category: ItemCategory = ItemCategory.Unknown,
     val revision: Long,
-    val shareCount: Int
+    val shareCount: Int,
+    val isOwner: Boolean
 ) {
 
     val key = "${shareId.id}-${id.id}"
 
     val isShared: Boolean = shareCount > 0
+
+    val isSharedByMe: Boolean = isOwner && isShared
+
+    val isSharedWithMe: Boolean = !isOwner && isShared
 
     fun isInTrash() = state == ItemState.Trashed.value
 

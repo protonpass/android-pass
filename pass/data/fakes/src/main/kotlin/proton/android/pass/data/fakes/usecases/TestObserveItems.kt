@@ -132,7 +132,8 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                     lastAutofillTime = None,
                     isPinned = false,
                     flags = Flags(flags),
-                    shareCount = 0
+                    shareCount = 0,
+                    isOwner = true
                 )
             }
         }

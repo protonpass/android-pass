@@ -26,7 +26,9 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.attachments.AttachmentRow
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOpen
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOptions
+import proton.android.pass.featureitemcreate.impl.note.NoteContentUiEvent.OnAttachmentEvent
 
 @Composable
 fun AttachmentList(
@@ -54,22 +56,10 @@ fun AttachmentList(
                 isLoading = false,
                 isEnabled = true,
                 onOptionsClick = {
-                    onEvent(
-                        NoteContentUiEvent.OnAttachmentEvent(
-                            AttachmentContentEvent.OnAttachmentOptions(
-                                attachment.id
-                            )
-                        )
-                    )
+                    onEvent(OnAttachmentEvent(OnAttachmentOptions(attachment.id)))
                 },
                 onAttachmentOpen = {
-                    onEvent(
-                        NoteContentUiEvent.OnAttachmentEvent(
-                            AttachmentContentEvent.OnAttachmentOpen(
-                                attachment.id
-                            )
-                        )
-                    )
+                    onEvent(OnAttachmentEvent(OnAttachmentOpen(attachment.id)))
                 }
             )
         }
@@ -86,7 +76,7 @@ fun AttachmentList(
                 attachmentType = draftAttachment.attachmentType,
                 size = draftAttachment.size,
                 createTime = draftAttachment.createTime,
-                isLoading = false,
+                isLoading = attachmentsUiState.loadingAttachments.contains(draftAttachment.uri),
                 isEnabled = true,
                 onOptionsClick = {},
                 onAttachmentOpen = {}

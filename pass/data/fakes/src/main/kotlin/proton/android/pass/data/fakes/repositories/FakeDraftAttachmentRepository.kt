@@ -42,6 +42,10 @@ class FakeDraftAttachmentRepository @Inject constructor() : DraftAttachmentRepos
         .map { it }
         .distinctUntilChanged()
 
+    override fun observeNew(): Flow<Set<URI>> = uriSetFlow
+        .map { it }
+        .distinctUntilChanged()
+
     override fun remove(uri: URI): Boolean {
         var removedSuccessfully = false
         uriSetFlow.update { currentSet ->

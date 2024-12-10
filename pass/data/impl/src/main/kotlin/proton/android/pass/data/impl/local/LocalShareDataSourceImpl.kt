@@ -19,27 +19,19 @@
 package proton.android.pass.data.impl.local
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.update
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
-import proton.android.pass.domain.shares.ShareMember
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class LocalShareDataSourceImpl @Inject constructor(
     private val database: PassDatabase
 ) : LocalShareDataSource {
-
-    private val shareMembersFlow = MutableStateFlow<Map<UserId, Map<ShareId, List<ShareMember>>>>(
-        value = emptyMap()
-    )
 
     override suspend fun upsertShares(shares: List<ShareEntity>) {
         val (active, inactive) = shares.partition { it.isActive }
@@ -98,62 +90,6 @@ class LocalShareDataSourceImpl @Inject constructor(
             isActive = isActive
         )
 
-    override fun observeShareMembers(userId: UserId, shareId: ShareId): Flow<List<ShareMember>> =
-        shareMembersFlow.mapLatest { shareMembersMap ->
-            shareMembersMap[userId]?.get(shareId).orEmpty()
-        }
-
-    override fun upsertShareMembers(
-        userId: UserId,
-        shareId: ShareId,
-        shareMembers: List<ShareMember>
-    ) {
-        shareMembersFlow.update { shareMembersMap ->
-            shareMembersMap.toMutableMap().apply {
-                put(userId, mapOf(shareId to shareMembers))
-            }
-        }
-    }
-
-    override fun deleteShareMember(
-        userId: UserId,
-        shareId: ShareId,
-        memberShareId: ShareId
-    ) {
-        shareMembersFlow.value[userId]
-            ?.get(shareId)
-            ?.filter { it.shareId != memberShareId }
-            ?.also { newShareMembers ->
-                upsertShareMembers(userId, shareId, newShareMembers)
-            }
-    }
-
-    override fun getShareMember(
-        userId: UserId,
-        shareId: ShareId,
-        memberShareId: ShareId
-    ): ShareMember? = shareMembersFlow.value[userId]
-        ?.get(shareId)
-        ?.first { it.shareId == memberShareId }
-
-    override fun upsertShareMember(
-        userId: UserId,
-        shareId: ShareId,
-        shareMember: ShareMember
-    ) {
-        shareMembersFlow.value[userId]
-            ?.get(shareId)
-            ?.map { currentShareMember ->
-                if (currentShareMember.shareId == shareMember.shareId) {
-                    shareMember
-                } else {
-                    currentShareMember
-                }
-            }
-            ?.also { newShareMembers ->
-                upsertShareMembers(userId, shareId, newShareMembers)
-            }
-    }
 
     private companion object {
 

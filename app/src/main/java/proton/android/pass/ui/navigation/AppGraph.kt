@@ -1922,7 +1922,8 @@ fun NavGraphBuilder.appGraph(
             is SharingNavigation.ManageItemInviteOptions -> appNavigator.navigate(
                 destination = ManageItemInviteOptionsNavItem,
                 route = ManageItemInviteOptionsNavItem.createNavRoute(
-                    shareId = it.shareId
+                    shareId = it.shareId,
+                    inviteId = it.inviteId
                 )
             )
 

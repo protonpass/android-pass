@@ -67,6 +67,7 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
@@ -119,6 +120,7 @@ class CreateLoginViewModel @Inject constructor(
     private val generatePasskey: GeneratePasskey,
     private val workerLauncher: WorkerLauncher,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    private val linkAttachmentsToItem: LinkAttachmentsToItem,
     passwordStrengthCalculator: PasswordStrengthCalculator,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
@@ -395,43 +397,55 @@ class CreateLoginViewModel @Inject constructor(
                         .map(AliasMailboxUiModel::toDomain)
                 )
             )
-        }.onSuccess { item ->
-            launchUpdateAssetLinksWorker(contents.urls.toSet())
-            inAppReviewTriggerMetrics.incrementItemCreatedCount()
-            when (passkeyResponse) {
-                None -> {
-                    isItemSavedState.update {
-                        encryptionContextProvider.withEncryptionContext {
-                            ItemSavedState.Success(
-                                item.id,
-                                item.toUiModel(this@withEncryptionContext)
-                            )
+        }
+            .onFailure {
+                when (it) {
+                    is CannotCreateMoreAliasesError -> snackbarDispatcher(CannotCreateMoreAliases)
+                    is EmailNotValidatedError -> snackbarDispatcher(EmailNotValidated)
+                    is AliasRateLimitError -> snackbarDispatcher(AliasRateLimited)
+                    else -> snackbarDispatcher(ItemCreationError)
+                }
+                PassLogger.w(TAG, "Could not create item")
+                PassLogger.w(TAG, it)
+            }
+            .mapCatching { item ->
+                if (baseLoginUiState.value.isFileAttachmentsEnabled) {
+                    linkAttachmentsToItem(item.id, shareId, item.revision)
+                }
+                item
+            }
+            .onFailure {
+                PassLogger.w(TAG, "Link attachment error")
+                PassLogger.w(TAG, it)
+            }
+            .onSuccess { item ->
+                launchUpdateAssetLinksWorker(contents.urls.toSet())
+                inAppReviewTriggerMetrics.incrementItemCreatedCount()
+                when (passkeyResponse) {
+                    None -> {
+                        isItemSavedState.update {
+                            encryptionContextProvider.withEncryptionContext {
+                                ItemSavedState.Success(
+                                    item.id,
+                                    item.toUiModel(this@withEncryptionContext)
+                                )
+                            }
+                        }
+                    }
+
+                    is Some -> {
+                        isItemSavedState.update {
+                            ItemSavedState.SuccessWithPasskeyResponse(passkeyResponse.value)
                         }
                     }
                 }
 
-                is Some -> {
-                    isItemSavedState.update {
-                        ItemSavedState.SuccessWithPasskeyResponse(passkeyResponse.value)
-                    }
-                }
+                telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
+                telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
+                send2FACreatedTelemetryEvent(item.itemType as ItemType.Login)
+                draftRepository.delete<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+                snackbarDispatcher(LoginCreated)
             }
-
-            telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
-            telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
-            send2FACreatedTelemetryEvent(item.itemType as ItemType.Login)
-            draftRepository.delete<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
-            snackbarDispatcher(LoginCreated)
-        }.onFailure {
-            when (it) {
-                is CannotCreateMoreAliasesError -> snackbarDispatcher(CannotCreateMoreAliases)
-                is EmailNotValidatedError -> snackbarDispatcher(EmailNotValidated)
-                is AliasRateLimitError -> snackbarDispatcher(AliasRateLimited)
-                else -> snackbarDispatcher(ItemCreationError)
-            }
-            PassLogger.w(TAG, "Could not create item")
-            PassLogger.w(TAG, it)
-        }
     }
 
     private suspend fun performCreateItem(
@@ -445,35 +459,47 @@ class CreateLoginViewModel @Inject constructor(
                 shareId = shareId,
                 itemContents = loginItemFormState.toItemContents(emailValidator = emailValidator)
             )
-        }.onSuccess { item ->
-            inAppReviewTriggerMetrics.incrementItemCreatedCount()
+        }
+            .onFailure {
+                PassLogger.w(TAG, "Could not create item")
+                PassLogger.w(TAG, it)
+                snackbarDispatcher(ItemCreationError)
+            }
+            .mapCatching { item ->
+                if (baseLoginUiState.value.isFileAttachmentsEnabled) {
+                    linkAttachmentsToItem(item.id, shareId, item.revision)
+                }
+                item
+            }
+            .onFailure {
+                PassLogger.w(TAG, "Link attachment error")
+                PassLogger.w(TAG, it)
+            }
+            .onSuccess { item ->
+                inAppReviewTriggerMetrics.incrementItemCreatedCount()
 
-            when (passkeyResponse) {
-                None -> {
-                    isItemSavedState.update {
-                        encryptionContextProvider.withEncryptionContext {
-                            ItemSavedState.Success(
-                                item.id,
-                                item.toUiModel(this@withEncryptionContext)
-                            )
+                when (passkeyResponse) {
+                    None -> {
+                        isItemSavedState.update {
+                            encryptionContextProvider.withEncryptionContext {
+                                ItemSavedState.Success(
+                                    item.id,
+                                    item.toUiModel(this@withEncryptionContext)
+                                )
+                            }
+                        }
+                    }
+
+                    is Some -> {
+                        isItemSavedState.update {
+                            ItemSavedState.SuccessWithPasskeyResponse(passkeyResponse.value)
                         }
                     }
                 }
-
-                is Some -> {
-                    isItemSavedState.update {
-                        ItemSavedState.SuccessWithPasskeyResponse(passkeyResponse.value)
-                    }
-                }
+                telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
+                send2FACreatedTelemetryEvent(item.itemType as ItemType.Login)
+                snackbarDispatcher(LoginCreated)
             }
-            telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
-            send2FACreatedTelemetryEvent(item.itemType as ItemType.Login)
-            snackbarDispatcher(LoginCreated)
-        }.onFailure {
-            PassLogger.w(TAG, "Could not create item")
-            PassLogger.w(TAG, it)
-            snackbarDispatcher(ItemCreationError)
-        }
     }
 
     private fun send2FACreatedTelemetryEvent(login: ItemType.Login) {

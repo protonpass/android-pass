@@ -54,7 +54,8 @@ data class Item(
     val lastAutofillTime: Option<Instant>,
     val isPinned: Boolean,
     val flags: Flags,
-    val shareCount: Int
+    val shareCount: Int,
+    val isOwner: Boolean
 ) {
     val hasPasskeys: Boolean = when (val type = itemType) {
         is ItemType.Login -> type.passkeys.isNotEmpty()
@@ -81,5 +82,6 @@ data class ItemEncrypted(
     val lastAutofillTime: Option<Instant>,
     val isPinned: Boolean,
     val flags: Flags,
-    val shareCount: Int
+    val shareCount: Int,
+    val isOwner: Boolean
 )

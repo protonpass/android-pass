@@ -24,6 +24,3 @@ interface FileUriGenerator {
     suspend fun generate(fileType: FileType): URI
 }
 
-sealed interface FileType {
-    data object CameraTemp : FileType
-}

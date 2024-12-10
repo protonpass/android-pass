@@ -44,7 +44,7 @@ class ChangeAliasStatusImpl @Inject constructor(
         val userId = accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
         aliasRepository.changeAliasStatus(userId, shareId, itemId, enabled)
-        itemRepository.updateLocalItemFlags(shareId, itemId, ItemFlag.AliasDisabled, enabled)
+        itemRepository.updateLocalItemFlags(shareId, itemId, ItemFlag.AliasDisabled, !enabled)
     }
 
     override suspend fun invoke(items: List<Pair<ShareId, ItemId>>, enabled: Boolean): AliasItemsChangeStatusResult {

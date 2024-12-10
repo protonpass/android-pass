@@ -55,7 +55,7 @@ internal fun ManageItemPendingInvitesSection(
         )
 
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .roundedContainerNorm()
                 .padding(vertical = Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)

@@ -65,6 +65,7 @@ import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.ShareId
@@ -97,6 +98,7 @@ open class CreateAliasViewModel @Inject constructor(
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val aliasPrefixValidator: AliasPrefixValidator,
+    private val linkAttachmentsToItem: LinkAttachmentsToItem,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     observeUpgradeInfo: ObserveUpgradeInfo,
@@ -365,17 +367,29 @@ open class CreateAliasViewModel @Inject constructor(
                         mailboxes = mailboxes.map(AliasMailboxUiModel::toDomain)
                     )
                 )
-            }.onSuccess { item ->
-                inAppReviewTriggerMetrics.incrementItemCreatedCount()
-                val itemUiModel = encryptionContextProvider.withEncryptionContext {
-                    item.toUiModel(this)
+            }
+                .onFailure { onCreateAliasError(it) }
+                .mapCatching { item ->
+                    if (baseAliasUiState.value.isFileAttachmentEnabled) {
+                        linkAttachmentsToItem(item.id, shareId, item.revision)
+                    }
+                    item
                 }
-                isItemSavedState.update {
-                    ItemSavedState.Success(item.id, itemUiModel)
+                .onFailure {
+                    PassLogger.w(TAG, "Link attachment error")
+                    PassLogger.w(TAG, it)
                 }
-                snackbarDispatcher(AliasCreated)
-                telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
-            }.onFailure { onCreateAliasError(it) }
+                .onSuccess { item ->
+                    inAppReviewTriggerMetrics.incrementItemCreatedCount()
+                    val itemUiModel = encryptionContextProvider.withEncryptionContext {
+                        item.toUiModel(this)
+                    }
+                    isItemSavedState.update {
+                        ItemSavedState.Success(item.id, itemUiModel)
+                    }
+                    snackbarDispatcher(AliasCreated)
+                    telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
+                }
         } else {
             PassLogger.i(TAG, "Empty User Id")
             snackbarDispatcher(ItemCreationError)

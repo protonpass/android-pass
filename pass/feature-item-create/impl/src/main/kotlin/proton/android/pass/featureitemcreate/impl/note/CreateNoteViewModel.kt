@@ -51,7 +51,8 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.data.api.usecases.attachments.LinkAttachmentToItem
+import proton.android.pass.data.api.usecases.attachments.ClearAttachments
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.ShareId
@@ -72,6 +73,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 class CreateNoteViewModel @Inject constructor(
     private val accountManager: AccountManager,
@@ -81,11 +83,12 @@ class CreateNoteViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
-    private val linkAttachmentToItem: LinkAttachmentToItem,
+    private val linkAttachmentsToItem: LinkAttachmentsToItem,
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
     metadataResolver: MetadataResolver,
     uploadAttachment: UploadAttachment,
+    clearAttachments: ClearAttachments,
     draftAttachmentRepository: DraftAttachmentRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -93,6 +96,7 @@ class CreateNoteViewModel @Inject constructor(
     snackbarDispatcher = snackbarDispatcher,
     metadataResolver = metadataResolver,
     uploadAttachment = uploadAttachment,
+    clearAttachments = clearAttachments,
     draftAttachmentRepository = draftAttachmentRepository,
     featureFlagsRepository = featureFlagsRepository,
     savedStateHandleProvider = savedStateHandleProvider
@@ -164,7 +168,7 @@ class CreateNoteViewModel @Inject constructor(
                     }
                     .mapCatching { item ->
                         if (baseNoteUiState.value.isFileAttachmentsEnabled) {
-                            linkAttachmentToItem(item.id, shareId, item.revision)
+                            linkAttachmentsToItem(item.id, shareId, item.revision)
                         }
                         item
                     }

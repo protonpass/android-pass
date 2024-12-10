@@ -24,6 +24,7 @@ import java.net.URI
 interface DraftAttachmentRepository {
     fun add(uri: URI)
     fun observeAll(): Flow<Set<URI>>
+    fun observeNew(): Flow<Set<URI>>
     fun remove(uri: URI): Boolean
     fun clear(): Boolean
     fun contains(uri: URI): Flow<Boolean>

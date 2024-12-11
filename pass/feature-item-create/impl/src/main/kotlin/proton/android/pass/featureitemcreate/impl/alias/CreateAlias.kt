@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ItemContents
@@ -42,7 +43,6 @@ import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareList
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.PerformActionAfterKeyboardHide
 
@@ -143,6 +143,12 @@ fun CreateAliasScreen(
                             }
                             AttachmentContentEvent.OnDeleteAllAttachments -> {
                                 // delete all attachments
+                            }
+                            is AttachmentContentEvent.OnDraftAttachmentOpen -> {
+
+                            }
+                            is AttachmentContentEvent.OnDraftAttachmentOptions -> {
+
                             }
                         }
                     }

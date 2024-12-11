@@ -19,10 +19,11 @@
 package proton.android.pass.features.item.details.detail.ui
 
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsActionForbiddenReason
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
@@ -92,4 +93,8 @@ internal sealed interface ItemDetailsUiEvent {
         internal val itemState: ItemState
     ) : ItemDetailsUiEvent
 
+    @JvmInline
+    value class OnAttachmentEvent(
+        internal val attachmentContentEvent: AttachmentContentEvent
+    ) : ItemDetailsUiEvent
 }

@@ -26,8 +26,8 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
@@ -88,10 +88,7 @@ fun CreditCardDetailContent(
                 attachmentsState = attachmentsState,
                 isDetail = true,
                 colors = passItemColors(ItemCategory.CreditCard),
-                onAttachmentOptions = {},
-                onAttachmentOpen = {},
-                onAddAttachment = {},
-                onTrashAll = {}
+                onEvent = { onEvent(CreditCardDetailEvent.OnAttachmentEvent(it)) }
             )
         }
 

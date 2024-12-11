@@ -16,9 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.common.attachments
+package proton.android.pass.composecomponents.impl.attachments
 
 import proton.android.pass.domain.attachments.AttachmentId
+import java.net.URI
 
 sealed interface AttachmentContentEvent {
     data object OnAddAttachment : AttachmentContentEvent
@@ -30,4 +31,10 @@ sealed interface AttachmentContentEvent {
 
     @JvmInline
     value class OnAttachmentOpen(val attachmentId: AttachmentId) : AttachmentContentEvent
+
+    @JvmInline
+    value class OnDraftAttachmentOptions(val uri: URI) : AttachmentContentEvent
+
+    @JvmInline
+    value class OnDraftAttachmentOpen(val uri: URI) : AttachmentContentEvent
 }

@@ -337,12 +337,10 @@ fun NavGraphBuilder.autofillActivityGraph(
                 is BaseLoginNavigation.TotpSuccess ->
                     appNavigator.navigateBackWithResult(it.results)
 
-                BaseLoginNavigation.AddAttachment -> {
-                    throw IllegalStateException("Cannot add attachment from autofill")
-                }
-
-                is BaseLoginNavigation.OpenAttachmentOptions -> TODO()
-                is BaseLoginNavigation.OpenDraftAttachmentOptions -> TODO()
+                BaseLoginNavigation.AddAttachment,
+                is BaseLoginNavigation.OpenAttachmentOptions,
+                is BaseLoginNavigation.OpenDraftAttachmentOptions ->
+                    throw IllegalStateException("Cannot use attachments from autofill")
             }
         }
     )
@@ -391,11 +389,9 @@ fun NavGraphBuilder.autofillActivityGraph(
                     )
                 }
 
-                CreateAliasNavigation.AddAttachment -> {
-                    throw IllegalStateException("Cannot add attachment from autofill")
-                }
-
-                is CreateAliasNavigation.OpenDraftAttachmentOptions -> TODO()
+                CreateAliasNavigation.AddAttachment,
+                is CreateAliasNavigation.OpenDraftAttachmentOptions ->
+                    throw IllegalStateException("Cannot use attachments from autofill")
             }
         }
     )
@@ -414,12 +410,12 @@ fun NavGraphBuilder.autofillActivityGraph(
 
             BaseCreditCardNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
             is UpdateCreditCardNavigation -> {}
-            BaseCreditCardNavigation.AddAttachment -> {
-                throw IllegalStateException("Cannot add attachment from autofill")
-            }
 
-            is BaseCreditCardNavigation.OpenAttachmentOptions -> TODO()
-            is BaseCreditCardNavigation.OpenDraftAttachmentOptions -> TODO()
+            is BaseCreditCardNavigation.OpenAttachmentOptions,
+            is BaseCreditCardNavigation.OpenDraftAttachmentOptions,
+            BaseCreditCardNavigation.AddAttachment ->
+                throw IllegalStateException("Cannot use attachment from autofill")
+
         }
     }
     createIdentityGraph(
@@ -501,12 +497,11 @@ fun NavGraphBuilder.autofillActivityGraph(
                     // Updates cannot happen
                 }
 
-                BaseIdentityNavigation.AddAttachment -> {
-                    throw IllegalStateException("Cannot add attachment from autofill")
-                }
+                BaseIdentityNavigation.AddAttachment,
+                is BaseIdentityNavigation.OpenAttachmentOptions,
+                is BaseIdentityNavigation.OpenDraftAttachmentOptions ->
+                    throw IllegalStateException("Cannot use attachments from autofill")
 
-                is BaseIdentityNavigation.OpenAttachmentOptions -> TODO()
-                is BaseIdentityNavigation.OpenDraftAttachmentOptions -> TODO()
             }
         }
     )

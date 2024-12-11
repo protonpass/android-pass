@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -72,6 +73,11 @@ class GeneratePasswordViewModel @Inject constructor(
         }
 
     private val passwordConfigFlow = observePasswordConfig()
+        .shareIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            replay = 1
+        )
 
     private val regeneratePasswordFlow = MutableStateFlow(false)
 
@@ -83,7 +89,11 @@ class GeneratePasswordViewModel @Inject constructor(
             .filter { it }
     ) { passwordConfig, _ ->
         passwordGenerator.generatePassword(passwordConfig)
-    }
+    }.shareIn(
+        scope = viewModelScope,
+        started = SharingStarted.Lazily,
+        replay = 1
+    )
 
     private val passwordStrengthFlow = passwordFlow
         .mapLatest(passwordStrengthCalculator::calculateStrength)

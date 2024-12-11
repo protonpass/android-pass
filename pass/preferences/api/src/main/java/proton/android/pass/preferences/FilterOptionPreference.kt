@@ -51,7 +51,7 @@ enum class FilterOptionPreference(val value: Int) {
             FILTER_LOGIN_MFA -> LoginMFA
             FILTER_SHARED_WITH_ME -> SharedWithMe
             FILTER_SHARED_BY_ME -> SharedByMe
-            else -> throw IllegalArgumentException("Unknown filter option preference value: $value")
+            else -> All
         }
 
     }

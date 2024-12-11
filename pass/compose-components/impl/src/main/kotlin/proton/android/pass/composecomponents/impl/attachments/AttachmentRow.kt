@@ -22,12 +22,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
+import androidx.compose.material.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -90,7 +89,10 @@ fun AttachmentRow(
                 buildString {
                     append(date.dayOfMonth)
                     append(" ")
-                    append(date.month.name.lowercase(Locale.getDefault()).replaceFirstChar { it.uppercase() })
+                    append(
+                        date.month.name.lowercase(Locale.getDefault())
+                            .replaceFirstChar { it.uppercase() }
+                    )
                     append(" ")
                     append(date.year)
                 }
@@ -100,11 +102,10 @@ fun AttachmentRow(
         }
         when {
             isLoading -> {
-                Row {
+                Row(Modifier.minimumInteractiveComponentSize()) {
                     CircularProgressIndicator(
                         modifier = Modifier.size(24.dp)
                     )
-                    Spacer(Modifier.width(Spacing.small))
                 }
             }
 

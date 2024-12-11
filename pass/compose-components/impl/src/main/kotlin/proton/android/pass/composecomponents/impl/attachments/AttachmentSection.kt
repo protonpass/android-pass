@@ -76,24 +76,31 @@ fun AttachmentSection(
             onTrashAll = onTrashAll.takeIf { !isDetail }
         )
         Column {
-            attachmentsState.attachmentsList.forEachIndexed { index, file ->
+            attachmentsState.attachmentsList.forEachIndexed { index, attachment ->
                 AttachmentRow(
                     innerModifier = Modifier
-                        .padding(horizontal = Spacing.medium)
+                        .applyIf(
+                            condition = isDetail,
+                            ifTrue = { padding(start = Spacing.medium) },
+                            ifFalse = { padding(horizontal = Spacing.medium) }
+                        )
                         .padding(top = Spacing.small)
                         .applyIf(
-                            condition = attachmentsState.attachmentsList.lastIndex == index && isDetail,
-                            ifTrue = { padding(bottom = Spacing.medium) },
-                            ifFalse = { padding(bottom = Spacing.small) }
+                            condition = attachmentsState.shouldDisplayDivider(index),
+                            ifTrue = { padding(bottom = Spacing.small) }
+                        )
+                        .applyIf(
+                            condition = isDetail && !attachmentsState.shouldDisplayDivider(index),
+                            ifTrue = { padding(bottom = Spacing.medium) }
                         ),
-                    filename = file.name,
-                    attachmentType = file.type,
-                    size = file.size,
-                    createTime = file.createTime,
+                    filename = attachment.name,
+                    attachmentType = attachment.type,
+                    size = attachment.size,
+                    createTime = attachment.createTime,
                     isEnabled = attachmentsState.isEnabled,
-                    isLoading = attachmentsState.loadingAttachments.contains(file.id),
-                    onOptionsClick = { onAttachmentOptions(file) },
-                    onAttachmentOpen = { onAttachmentOpen(file) }
+                    isLoading = attachmentsState.loadingAttachments.contains(attachment.id),
+                    onOptionsClick = { onAttachmentOptions(attachment) },
+                    onAttachmentOpen = { onAttachmentOpen(attachment) }
                 )
                 if (attachmentsState.shouldDisplayDivider(index)) {
                     PassDivider()
@@ -102,12 +109,19 @@ fun AttachmentSection(
             attachmentsState.draftAttachmentsList.forEachIndexed { index, fileMetadata ->
                 AttachmentRow(
                     innerModifier = Modifier
-                        .padding(horizontal = Spacing.medium)
+                        .applyIf(
+                            condition = isDetail,
+                            ifTrue = { padding(start = Spacing.medium) },
+                            ifFalse = { padding(horizontal = Spacing.medium) }
+                        )
                         .padding(top = Spacing.small)
                         .applyIf(
-                            condition = attachmentsState.draftAttachmentsList.lastIndex == index,
-                            ifTrue = { padding(bottom = Spacing.medium) },
-                            ifFalse = { padding(bottom = Spacing.small) }
+                            condition = index < attachmentsState.draftAttachmentsList.lastIndex,
+                            ifTrue = { padding(bottom = Spacing.small) }
+                        )
+                        .applyIf(
+                            condition = isDetail && index == attachmentsState.draftAttachmentsList.lastIndex,
+                            ifTrue = { padding(bottom = Spacing.medium) }
                         ),
                     filename = fileMetadata.name,
                     isEnabled = attachmentsState.isEnabled,

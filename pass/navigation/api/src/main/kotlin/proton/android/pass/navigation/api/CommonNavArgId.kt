@@ -38,6 +38,8 @@ private const val ADDRESS_ID_KEY = "AddressID"
 private const val USER_ID_KEY = "UserID"
 private const val EMAIL_KEY = "Email"
 private const val INVITE_TOKEN_KEY = "InviteToken"
+private const val URI_KEY = "Uri"
+private const val ATTACHMENT_ID_KEY = "Attachment"
 
 enum class CommonNavArgId : NavArgId {
     ItemId {
@@ -86,6 +88,14 @@ enum class CommonOptionalNavArgId : OptionalNavArgId {
     },
     ItemId {
         override val key: String = ITEM_ID_KEY
+        override val navType: NavType<*> = NavType.StringType
+    },
+    Uri {
+        override val key: String = URI_KEY
+        override val navType: NavType<*> = NavType.StringType
+    },
+    AttachmentId {
+        override val key: String = ATTACHMENT_ID_KEY
         override val navType: NavType<*> = NavType.StringType
     }
 }

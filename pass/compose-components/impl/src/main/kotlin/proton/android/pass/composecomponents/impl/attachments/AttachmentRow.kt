@@ -60,6 +60,7 @@ fun AttachmentRow(
     createTime: Instant,
     isLoading: Boolean = false,
     isEnabled: Boolean = true,
+    hasOptions: Boolean,
     onOptionsClick: () -> Unit,
     onAttachmentOpen: () -> Unit
 ) {
@@ -101,15 +102,13 @@ fun AttachmentRow(
             Text.Body3Weak("$sizeFormatted ${SpecialCharacters.DOT_SEPARATOR} $dateFormatted")
         }
         when {
-            isLoading -> {
-                Row(Modifier.minimumInteractiveComponentSize()) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
+            isLoading -> Row(Modifier.minimumInteractiveComponentSize()) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp)
+                )
             }
 
-            isEnabled -> IconButton(onOptionsClick) {
+            hasOptions && isEnabled -> IconButton(onOptionsClick) {
                 Icon.Default(
                     id = CoreR.drawable.ic_proton_three_dots_vertical,
                     tint = PassTheme.colors.textWeak
@@ -130,6 +129,7 @@ fun AttachmentRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: 
                 attachmentType = AttachmentType.RasterImage,
                 size = 1_572_864L,
                 createTime = Instant.fromEpochSeconds(seconds),
+                hasOptions = true,
                 onAttachmentOpen = {},
                 onOptionsClick = {}
             )

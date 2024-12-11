@@ -16,11 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.attachments.attachmentoptions.ui
+package proton.android.pass.features.attachments.attachmentoptions.presentation
 
 sealed interface AttachmentOptionsEvent {
-    data object Open : AttachmentOptionsEvent
-    data object Save : AttachmentOptionsEvent
-    data object Rename : AttachmentOptionsEvent
-    data object Delete : AttachmentOptionsEvent
+
+    data object Idle : AttachmentOptionsEvent
+
+    data object Close : AttachmentOptionsEvent
+
 }

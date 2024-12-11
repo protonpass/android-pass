@@ -24,11 +24,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.attachments.AttachmentRow
-import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnAttachmentOpen
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnAttachmentOptions
-import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnDraftAttachmentOpen
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnDraftAttachmentOptions
+import proton.android.pass.composecomponents.impl.attachments.AttachmentRow
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.featureitemcreate.impl.note.NoteContentUiEvent.OnAttachmentEvent
 
 @Composable
@@ -54,8 +56,9 @@ fun AttachmentList(
                 attachmentType = attachment.type,
                 size = attachment.size,
                 createTime = attachment.createTime,
-                isLoading = false,
-                isEnabled = true,
+                isLoading = attachmentsState.loadingAttachments.contains(attachment.id),
+                isEnabled = attachmentsState.isEnabled,
+                hasOptions = true,
                 onOptionsClick = {
                     onEvent(OnAttachmentEvent(OnAttachmentOptions(attachment.id)))
                 },
@@ -75,12 +78,17 @@ fun AttachmentList(
                 ),
                 filename = draftAttachment.name,
                 attachmentType = draftAttachment.attachmentType,
+                hasOptions = true,
                 size = draftAttachment.size,
                 createTime = draftAttachment.createTime,
                 isLoading = attachmentsState.loadingDraftAttachments.contains(draftAttachment.uri),
-                isEnabled = true,
-                onOptionsClick = {},
-                onAttachmentOpen = {}
+                isEnabled = attachmentsState.isEnabled,
+                onOptionsClick = {
+                    onEvent(OnAttachmentEvent(OnDraftAttachmentOptions(draftAttachment.uri)))
+                },
+                onAttachmentOpen = {
+                    onEvent(OnAttachmentEvent(OnDraftAttachmentOpen(draftAttachment.uri)))
+                }
             )
         }
     }

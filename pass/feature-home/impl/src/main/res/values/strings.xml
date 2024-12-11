@@ -17,7 +17,7 @@
     <string name="home_empty_vault_cc_subtitle">Get started by creating your first credit card item.</string>
     <string name="home_empty_shared_items_title">No shared items found</string>
     <string name="home_empty_shared_items_with_me_subtitle">No items have been shared with you.</string>
-    <string name="home_empty_shared_items_by_me_subtitle">You have not shared any items yet.</string>
+    <string name="home_empty_shared_items_by_me_subtitle">No items have been shared by you.</string>
 
     <string name="home_empty_read_only_vault_title">This vault is empty</string>
     <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>

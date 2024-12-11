@@ -22,13 +22,9 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
-import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.GetSharePendingInvitesResponse
-import proton.android.pass.data.impl.responses.ShareMemberResponse
 import proton.android.pass.data.impl.responses.ShareResponse
-import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareRole
 
 class TestRemoteShareDataSource : RemoteShareDataSource {
 
@@ -98,32 +94,11 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
         leaveVaultResponse.getOrThrow()
     }
 
-    override suspend fun getShareMembers(userId: UserId, shareId: ShareId): List<ShareMemberResponse> = emptyList()
-
-    override suspend fun getShareItemMembers(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId
-    ): List<ShareMemberResponse> = emptyList()
-
     override suspend fun getSharePendingInvites(userId: UserId, shareId: ShareId): GetSharePendingInvitesResponse =
         GetSharePendingInvitesResponse(
             code = 1000,
             invites = emptyList(),
             newUserInvites = emptyList()
         )
-
-    override suspend fun removeShareMember(
-        userId: UserId,
-        shareId: ShareId,
-        memberShareId: ShareId
-    ): CodeOnlyResponse = CodeOnlyResponse(code = 1000)
-
-    override suspend fun updateShareMember(
-        userId: UserId,
-        shareId: ShareId,
-        memberShareId: ShareId,
-        memberShareRole: ShareRole
-    ): CodeOnlyResponse = CodeOnlyResponse(code = 1000)
 
 }

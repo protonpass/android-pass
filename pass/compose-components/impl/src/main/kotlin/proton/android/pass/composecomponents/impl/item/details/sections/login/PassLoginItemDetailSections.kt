@@ -33,8 +33,8 @@ import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
-import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys.PasskeysSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
@@ -59,7 +59,6 @@ internal fun PassLoginItemDetailSections(
     passkeys: ImmutableList<UIPasskeyContent>,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.Login,
-    onEvent: (PassItemDetailsUiEvent) -> Unit,
     lastAutofillOption: Option<Instant>,
     revision: Long,
     createdAt: Instant,
@@ -67,7 +66,8 @@ internal fun PassLoginItemDetailSections(
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
     shouldDisplayFileAttachments: Boolean,
-    attachmentsState: AttachmentsState
+    attachmentsState: AttachmentsState,
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(contents) {
     Column(
         modifier = modifier,
@@ -127,10 +127,7 @@ internal fun PassLoginItemDetailSections(
                 attachmentsState = attachmentsState,
                 isDetail = true,
                 colors = itemColors,
-                onAttachmentOptions = {},
-                onAttachmentOpen = {},
-                onAddAttachment = {},
-                onTrashAll = {}
+                onEvent = { onEvent(PassItemDetailsUiEvent.OnAttachmentEvent(it)) }
             )
         }
 

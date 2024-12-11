@@ -127,6 +127,10 @@ internal fun ItemDetailsContent(
                             sharedVaultId = uiEvent.sharedVaultId,
                             itemCategory = itemDetailState.itemCategory
                         )
+
+                        is PassItemDetailsUiEvent.OnAttachmentEvent -> ItemDetailsUiEvent.OnAttachmentEvent(
+                            attachmentContentEvent = uiEvent.attachmentContentEvent
+                        )
                     }.also(onEvent)
                 }
             )

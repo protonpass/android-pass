@@ -19,7 +19,7 @@
 package proton.android.pass.featureitemcreate.impl.note
 
 import proton.android.pass.domain.ShareId
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 
 sealed interface NoteContentUiEvent {
     data object Back : NoteContentUiEvent

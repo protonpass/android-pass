@@ -43,6 +43,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.domain.ItemContents
@@ -332,6 +333,17 @@ fun LoginDetail(
                                         itemId = state.itemUiModel.id
                                     ).also(onNavigate)
                                 }
+
+                                is LoginDetailEvent.OnAttachmentEvent ->
+                                    when (it.attachmentContentEvent) {
+                                        is AttachmentContentEvent.OnAttachmentOpen -> {}
+                                        is AttachmentContentEvent.OnAttachmentOptions -> {}
+                                        AttachmentContentEvent.OnAddAttachment,
+                                        AttachmentContentEvent.OnDeleteAllAttachments,
+                                        is AttachmentContentEvent.OnDraftAttachmentOpen,
+                                        is AttachmentContentEvent.OnDraftAttachmentOptions ->
+                                            throw IllegalStateException("Action not allowed: $it")
+                                    }
                             }
                         },
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,

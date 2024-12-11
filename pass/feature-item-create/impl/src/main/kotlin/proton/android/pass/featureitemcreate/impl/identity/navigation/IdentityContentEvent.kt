@@ -19,7 +19,7 @@
 package proton.android.pass.featureitemcreate.impl.identity.navigation
 
 import proton.android.pass.domain.ShareId
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.CustomExtraField
 

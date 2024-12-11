@@ -44,10 +44,6 @@ import proton.android.pass.composecomponents.impl.labels.CollapsibleSectionHeade
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemcreate.impl.R
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAddAttachment
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOpen
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOptions
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnDeleteAllAttachments
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnAttachmentEvent
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnExtraSectionOptions
@@ -210,10 +206,7 @@ fun IdentityItemForm(
                 attachmentsState = identityUiState.getAttachmentsState(),
                 isDetail = false,
                 colors = passItemColors(ItemCategory.Identity),
-                onAttachmentOptions = { onEvent(OnAttachmentEvent(OnAttachmentOptions(it.id))) },
-                onAttachmentOpen = { onEvent(OnAttachmentEvent(OnAttachmentOpen(it.id))) },
-                onAddAttachment = { onEvent(OnAttachmentEvent(OnAddAttachment)) },
-                onTrashAll = { onEvent(OnAttachmentEvent(OnDeleteAllAttachments)) }
+                onEvent = { onEvent(OnAttachmentEvent(it)) }
             )
         }
 

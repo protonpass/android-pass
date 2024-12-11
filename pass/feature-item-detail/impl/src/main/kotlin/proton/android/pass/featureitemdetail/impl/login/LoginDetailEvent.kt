@@ -19,6 +19,7 @@
 package proton.android.pass.featureitemdetail.impl.login
 
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.featureitemdetail.impl.login.customfield.CustomFieldEvent
 
 internal sealed interface LoginDetailEvent {
@@ -57,4 +58,8 @@ internal sealed interface LoginDetailEvent {
 
     data object OnShowReusedPasswords : LoginDetailEvent
 
+    @JvmInline
+    value class OnAttachmentEvent(
+        val attachmentContentEvent: AttachmentContentEvent
+    ) : LoginDetailEvent
 }

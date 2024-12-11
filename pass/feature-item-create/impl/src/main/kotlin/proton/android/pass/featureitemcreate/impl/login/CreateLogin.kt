@@ -33,6 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.OneTimeLaunchedEffect
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
@@ -41,7 +42,6 @@ import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareList
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation.OnCreateLoginEvent
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
@@ -238,6 +238,12 @@ fun CreateLoginScreen(
                             }
                             AttachmentContentEvent.OnDeleteAllAttachments -> {
                                 // delete all attachments
+                            }
+                            is AttachmentContentEvent.OnDraftAttachmentOpen -> {
+
+                            }
+                            is AttachmentContentEvent.OnDraftAttachmentOptions -> {
+
                             }
                         }
                     }

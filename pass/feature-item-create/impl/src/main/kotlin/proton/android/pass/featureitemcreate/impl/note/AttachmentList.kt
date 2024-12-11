@@ -26,8 +26,8 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.attachments.AttachmentRow
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOpen
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOptions
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnAttachmentOpen
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnAttachmentOptions
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.featureitemcreate.impl.note.NoteContentUiEvent.OnAttachmentEvent
 

@@ -21,9 +21,11 @@ package proton.android.pass.featureitemcreate.impl.note
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
+import java.net.URI
 
 object EditNote : NavItem(
     baseRoute = "note/edit",
@@ -42,4 +44,10 @@ sealed interface UpdateNoteNavigation {
     data class NoteUpdated(val shareId: ShareId, val itemId: ItemId) : UpdateNoteNavigation
     data object Back : UpdateNoteNavigation
     data object AddAttachment : UpdateNoteNavigation
+
+    @JvmInline
+    value class OpenAttachmentOptions(val attachmentId: AttachmentId) : UpdateNoteNavigation
+
+    @JvmInline
+    value class OpenDraftAttachmentOptions(val uri: URI) : UpdateNoteNavigation
 }

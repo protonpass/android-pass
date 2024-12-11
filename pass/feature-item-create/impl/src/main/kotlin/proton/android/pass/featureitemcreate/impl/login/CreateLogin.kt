@@ -43,7 +43,10 @@ import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareLi
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation.AddAttachment
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation.OnCreateLoginEvent
+import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation.OpenAttachmentOptions
+import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation.OpenDraftAttachmentOptions
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
 
 @Suppress("ComplexMethod")
@@ -228,23 +231,20 @@ fun CreateLoginScreen(
 
                     is LoginContentEvent.OnAttachmentEvent -> {
                         when (it.event) {
-                            AttachmentContentEvent.OnAddAttachment ->
-                                onNavigate(BaseLoginNavigation.AddAttachment)
+                            AttachmentContentEvent.OnAddAttachment -> onNavigate(AddAttachment)
                             is AttachmentContentEvent.OnAttachmentOpen -> {
                                 // open attachment
                             }
-                            is AttachmentContentEvent.OnAttachmentOptions -> {
-                                // show attachment options
-                            }
+                            is AttachmentContentEvent.OnAttachmentOptions ->
+                                onNavigate(OpenAttachmentOptions(it.event.attachmentId))
                             AttachmentContentEvent.OnDeleteAllAttachments -> {
                                 // delete all attachments
                             }
                             is AttachmentContentEvent.OnDraftAttachmentOpen -> {
-
+                                // open draft attachment
                             }
-                            is AttachmentContentEvent.OnDraftAttachmentOptions -> {
-
-                            }
+                            is AttachmentContentEvent.OnDraftAttachmentOptions ->
+                                onNavigate(OpenDraftAttachmentOptions(it.event.uri))
                         }
                     }
                 }

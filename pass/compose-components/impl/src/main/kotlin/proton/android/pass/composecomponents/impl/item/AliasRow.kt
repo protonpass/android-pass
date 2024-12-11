@@ -109,7 +109,8 @@ internal fun AliasRow(
         titleSuffix = titleSuffix,
         subtitles = fields.subtitles,
         vaultIcon = vaultIcon,
-        enabled = selection.isSelectable()
+        enabled = selection.isSelectable(),
+        isShared = item.isShared
     )
 }
 

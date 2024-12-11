@@ -43,6 +43,7 @@ import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultSmallWeak
+import me.proton.core.compose.theme.textNorm
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.common.api.some
@@ -64,7 +65,7 @@ internal fun ItemRow(
     titleSuffix: Option<String>,
     isShared: Boolean
 ) {
-    val color = if (enabled) ProtonTheme.colors.textNorm else ProtonTheme.colors.textWeak
+    val color = ProtonTheme.colors.textNorm(enabled)
 
     Row(
         modifier = modifier
@@ -84,7 +85,7 @@ internal fun ItemRow(
             ) {
                 vaultIcon?.let {
                     Icon(
-                        modifier = Modifier.height(12.dp),
+                        modifier = Modifier.height(height = Spacing.mediumSmall),
                         painter = painterResource(it),
                         contentDescription = null,
                         tint = PassTheme.colors.textWeak
@@ -102,7 +103,7 @@ internal fun ItemRow(
 
                 if (isShared) {
                     Icon(
-                        modifier = Modifier.height(16.dp),
+                        modifier = Modifier.height(height = Spacing.medium),
                         painter = painterResource(CoreR.drawable.ic_proton_users_filled),
                         contentDescription = null,
                         tint = color
@@ -135,9 +136,8 @@ internal fun ItemRow(
     }
 }
 
-@Preview
-@Composable
-fun ItemRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+@[Preview Composable]
+internal fun ItemRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             ItemRow(

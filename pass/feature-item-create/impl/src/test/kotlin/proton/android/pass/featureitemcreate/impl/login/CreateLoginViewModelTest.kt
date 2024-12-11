@@ -210,7 +210,8 @@ internal class CreateLoginViewModelTest {
                             isPinned = false,
                             category = ItemCategory.Login,
                             revision = item.revision,
-                            shareCount = item.shareCount
+                            shareCount = item.shareCount,
+                            isOwner = item.isOwner
                         )
                     )
                 )

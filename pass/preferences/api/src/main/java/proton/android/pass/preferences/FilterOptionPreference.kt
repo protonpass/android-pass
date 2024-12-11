@@ -25,32 +25,35 @@ const val FILTER_NOTE = 4
 const val FILTER_CREDIT_CARD = 5
 const val FILTER_IDENTITY = 6
 const val FILTER_LOGIN_MFA = 7
+const val FILTER_SHARED_WITH_ME = 8
+const val FILTER_SHARED_BY_ME = 9
 
-enum class FilterOptionPreference(private val internalValue: Int) {
-
+enum class FilterOptionPreference(val value: Int) {
     All(FILTER_ALL),
     Login(FILTER_LOGIN),
     Alias(FILTER_ALIAS),
     Note(FILTER_NOTE),
     CreditCard(FILTER_CREDIT_CARD),
     Identity(FILTER_IDENTITY),
-    LoginMFA(FILTER_LOGIN_MFA)
-    ;
-
-    fun value() = internalValue
+    LoginMFA(FILTER_LOGIN_MFA),
+    SharedWithMe(FILTER_SHARED_WITH_ME),
+    SharedByMe(FILTER_SHARED_BY_ME);
 
     companion object {
-        fun fromValue(value: Int): FilterOptionPreference {
-            return when (value) {
-                FILTER_ALL -> All
-                FILTER_LOGIN -> Login
-                FILTER_ALIAS -> Alias
-                FILTER_NOTE -> Note
-                FILTER_CREDIT_CARD -> CreditCard
-                FILTER_IDENTITY -> Identity
-                FILTER_LOGIN_MFA -> LoginMFA
-                else -> All
-            }
+
+        fun fromValue(value: Int): FilterOptionPreference = when (value) {
+            FILTER_ALL -> All
+            FILTER_LOGIN -> Login
+            FILTER_ALIAS -> Alias
+            FILTER_NOTE -> Note
+            FILTER_CREDIT_CARD -> CreditCard
+            FILTER_IDENTITY -> Identity
+            FILTER_LOGIN_MFA -> LoginMFA
+            FILTER_SHARED_WITH_ME -> SharedWithMe
+            FILTER_SHARED_BY_ME -> SharedByMe
+            else -> throw IllegalArgumentException("Unknown filter option preference value: $value")
         }
+
     }
+
 }

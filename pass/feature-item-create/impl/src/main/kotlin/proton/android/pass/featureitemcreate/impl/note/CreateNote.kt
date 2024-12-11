@@ -44,6 +44,7 @@ import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAva
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.PerformActionAfterKeyboardHide
+import proton.android.pass.featureitemcreate.impl.note.CreateNoteNavigation.OpenDraftAttachmentOptions
 
 @Suppress("ComplexMethod")
 @OptIn(ExperimentalComposeUiApi::class)
@@ -123,21 +124,18 @@ fun CreateNoteScreen(
                                     AttachmentContentEvent.OnAddAttachment ->
                                         onNavigate(CreateNoteNavigation.AddAttachment)
 
-                                    is AttachmentContentEvent.OnAttachmentOpen -> {
-
-                                    }
+                                    is AttachmentContentEvent.OnAttachmentOpen,
                                     is AttachmentContentEvent.OnAttachmentOptions -> {
-
+                                        throw IllegalStateException("Action not allowed")
                                     }
                                     AttachmentContentEvent.OnDeleteAllAttachments -> {
-                                        // cannot delete all attachments in notes
+                                        // delete all attachments
                                     }
                                     is AttachmentContentEvent.OnDraftAttachmentOpen -> {
-
+                                        // open draft attachment
                                     }
-                                    is AttachmentContentEvent.OnDraftAttachmentOptions -> {
-
-                                    }
+                                    is AttachmentContentEvent.OnDraftAttachmentOptions ->
+                                        onNavigate(OpenDraftAttachmentOptions(event.event.uri))
                                 }
                             }
                 }

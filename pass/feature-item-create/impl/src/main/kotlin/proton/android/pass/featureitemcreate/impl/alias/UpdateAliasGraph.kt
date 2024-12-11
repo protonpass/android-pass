@@ -23,9 +23,11 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
+import java.net.URI
 
 object EditAlias : NavItem(
     baseRoute = "alias/edit",
@@ -54,4 +56,10 @@ sealed interface UpdateAliasNavigation {
     data object Upgrade : UpdateAliasNavigation
     data object Close : UpdateAliasNavigation
     data object AddAttachment : UpdateAliasNavigation
+
+    @JvmInline
+    value class OpenAttachmentOptions(val attachmentId: AttachmentId) : UpdateAliasNavigation
+
+    @JvmInline
+    value class OpenDraftAttachmentOptions(val uri: URI) : UpdateAliasNavigation
 }

@@ -86,10 +86,10 @@ fun AttachmentSection(
                             ifTrue = { padding(start = Spacing.medium) },
                             ifFalse = { padding(horizontal = Spacing.medium) }
                         )
-                        .padding(top = Spacing.small)
+                        .padding(top = Spacing.medium)
                         .applyIf(
                             condition = attachmentsState.shouldDisplayDivider(index),
-                            ifTrue = { padding(bottom = Spacing.small) }
+                            ifTrue = { padding(bottom = Spacing.medium) }
                         )
                         .applyIf(
                             condition = isDetail && !attachmentsState.shouldDisplayDivider(index),
@@ -117,10 +117,10 @@ fun AttachmentSection(
                             ifTrue = { padding(start = Spacing.medium) },
                             ifFalse = { padding(horizontal = Spacing.medium) }
                         )
-                        .padding(top = Spacing.small)
+                        .padding(top = Spacing.medium)
                         .applyIf(
                             condition = index < attachmentsState.draftAttachmentsList.lastIndex,
-                            ifTrue = { padding(bottom = Spacing.small) }
+                            ifTrue = { padding(bottom = Spacing.medium) }
                         )
                         .applyIf(
                             condition = isDetail && index == attachmentsState.draftAttachmentsList.lastIndex,

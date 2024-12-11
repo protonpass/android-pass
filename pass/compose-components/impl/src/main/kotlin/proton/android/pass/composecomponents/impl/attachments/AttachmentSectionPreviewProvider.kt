@@ -28,32 +28,67 @@ import proton.android.pass.domain.attachments.AttachmentType
 import proton.android.pass.domain.attachments.FileMetadata
 import java.net.URI
 
+private const val SIZE_1_MB = 1_048_576L
+private const val CREATE_TIME = 1_640_000_000L
+
 class AttachmentSectionPreviewProvider :
     PreviewParameterProvider<Pair<Boolean, AttachmentsState>> {
 
     override val values: Sequence<Pair<Boolean, AttachmentsState>>
         get() = sequence {
+            // only attachments
+            yield(
+                false to createAttachmentsUiState(
+                    attachments = listOf(
+                        createFile(AttachmentId("1"), "create-file1", AttachmentType.Pdf),
+                        createFile(AttachmentId("2"), "create-file2", AttachmentType.RasterImage)
+                    ),
+                    draftAttachments = emptyList()
+                )
+            )
+            // attachments and draft attachments for detail and non-detail view
             for (isDetail in listOf(true, false)) {
+                val prefix = if (isDetail) "detail" else "create"
                 yield(
                     isDetail to createAttachmentsUiState(
                         attachments = listOf(
-                            createFile(AttachmentId("1"), "file1", AttachmentType.Pdf),
-                            createFile(AttachmentId("2"), "file2", AttachmentType.RasterImage)
+                            createFile(AttachmentId("1"), "$prefix-file1", AttachmentType.Calendar),
+                            createFile(AttachmentId("2"), "$prefix-file2", AttachmentType.Audio)
+                        ),
+                        draftAttachments = listOf(
+                            createFileMetadata(URI("file:///file1"), "draft-file1"),
+                            createFileMetadata(URI("file:///file2"), "draft-file2")
                         )
                     )
                 )
-                yield(
-                    isDetail to createAttachmentsUiState(
-                        attachments = listOf(
-                            createFile(AttachmentId("1"), "file1", AttachmentType.Calendar),
-                            createFile(AttachmentId("2"), "file2", AttachmentType.Audio)
-                        ),
-                        loadingAttachments = setOf(AttachmentId("1"))
-                    )
+            }
+            // loading attachments
+            yield(
+                false to createAttachmentsUiState(
+                    attachments = listOf(
+                        createFile(AttachmentId("1"), "create-file1", AttachmentType.Calendar),
+                        createFile(AttachmentId("2"), "create-file2", AttachmentType.Audio)
+                    ),
+                    loadingAttachments = setOf(AttachmentId("1")),
+                    draftAttachments = emptyList()
                 )
+            )
+            // loading draft attachments
+            yield(
+                false to createAttachmentsUiState(
+                    draftAttachments = listOf(
+                        createFileMetadata(URI("file:///file1"), "draft-file1"),
+                        createFileMetadata(URI("file:///file2"), "draft-file2")
+                    ),
+                    loadingDraftAttachments = setOf(URI("file:///file1"))
+                )
+            )
+            // empty attachments for detail and non-detail view
+            for (isDetail in listOf(true, false)) {
                 yield(
                     isDetail to createAttachmentsUiState(
-                        attachments = emptyList()
+                        attachments = emptyList(),
+                        draftAttachments = emptyList()
                     )
                 )
             }
@@ -64,8 +99,8 @@ class AttachmentSectionPreviewProvider :
         id: AttachmentId,
         name: String,
         type: AttachmentType,
-        size: Long = 1_572_864L, // 1.5 MB
-        createTime: Instant = Instant.fromEpochSeconds(1_640_000_000L)
+        size: Long = SIZE_1_MB,
+        createTime: Instant = Instant.fromEpochSeconds(CREATE_TIME)
     ) = Attachment(
         id = id,
         name = name,
@@ -78,8 +113,24 @@ class AttachmentSectionPreviewProvider :
         chunks = listOf()
     )
 
+    private fun createFileMetadata(
+        uri: URI,
+        name: String,
+        size: Long = SIZE_1_MB,
+        mimeType: String = "application/pdf",
+        attachmentType: AttachmentType = AttachmentType.Pdf,
+        createTime: Instant = Instant.fromEpochSeconds(CREATE_TIME)
+    ) = FileMetadata(
+        uri = uri,
+        name = name,
+        size = size,
+        mimeType = mimeType,
+        attachmentType = attachmentType,
+        createTime = createTime
+    )
+
     private fun createAttachmentsUiState(
-        attachments: List<Attachment>,
+        attachments: List<Attachment> = emptyList(),
         draftAttachments: List<FileMetadata> = emptyList(),
         loadingAttachments: Set<AttachmentId> = emptySet(),
         loadingDraftAttachments: Set<URI> = emptySet()

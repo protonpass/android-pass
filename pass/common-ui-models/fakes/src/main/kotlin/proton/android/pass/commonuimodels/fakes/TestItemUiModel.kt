@@ -38,7 +38,8 @@ object TestItemUiModel {
         lastAutofillTime: Instant? = null,
         isPinned: Boolean = false,
         revision: Long = 0,
-        shareCount: Int = 0
+        shareCount: Int = 0,
+        isOwner: Boolean = true
     ): ItemUiModel = ItemUiModel(
         id = ItemId(id = id),
         userId = UserId("user-id"),
@@ -50,7 +51,8 @@ object TestItemUiModel {
         lastAutofillTime = lastAutofillTime,
         isPinned = isPinned,
         revision = revision,
-        shareCount = shareCount
+        shareCount = shareCount,
+        isOwner = isOwner
     )
 
 }

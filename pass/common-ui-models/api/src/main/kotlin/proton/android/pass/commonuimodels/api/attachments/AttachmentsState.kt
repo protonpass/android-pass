@@ -42,6 +42,9 @@ data class AttachmentsState(
 
     val size = draftAttachmentsList.size + attachmentsList.size
 
+    fun shouldDisplayDivider(index: Int): Boolean =
+        index < attachmentsList.lastIndex || draftAttachmentsList.isNotEmpty()
+
     companion object {
         val Initial = AttachmentsState(
             loadingDraftAttachments = emptySet(),

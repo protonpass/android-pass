@@ -77,7 +77,7 @@ class CreateIdentityViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            identityActionsProvider.observeDraftChanges(this)
+            identityActionsProvider.observeActions(this)
         }
     }
 

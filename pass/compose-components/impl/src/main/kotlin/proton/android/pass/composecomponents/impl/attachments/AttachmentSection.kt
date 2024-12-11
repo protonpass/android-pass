@@ -95,7 +95,7 @@ fun AttachmentSection(
                     onOptionsClick = { onAttachmentOptions(file) },
                     onAttachmentOpen = { onAttachmentOpen(file) }
                 )
-                if (index < attachmentsState.attachmentsList.lastIndex || attachmentsState.draftAttachmentsList.isNotEmpty()) {
+                if (attachmentsState.shouldDisplayDivider(index)) {
                     PassDivider()
                 }
             }
@@ -116,10 +116,10 @@ fun AttachmentSection(
                     size = fileMetadata.size,
                     createTime = fileMetadata.createTime,
                     onOptionsClick = {
-                        // TODO: Implement onOptionsClick
+                        // Implement onOptionsClick
                     },
                     onAttachmentOpen = {
-                        // TODO: Implement onAttachmentOpen
+                        // Implement onAttachmentOpen
                     }
                 )
                 if (index < attachmentsState.draftAttachmentsList.lastIndex) {
@@ -148,7 +148,8 @@ class ThemeAttachmentSectionPreviewProvider :
 @Preview
 @Composable
 fun AttachmentSectionPreview(
-    @PreviewParameter(ThemeAttachmentSectionPreviewProvider::class) input: Pair<Boolean, Pair<Boolean, AttachmentsState>>
+    @PreviewParameter(ThemeAttachmentSectionPreviewProvider::class)
+    input: Pair<Boolean, Pair<Boolean, AttachmentsState>>
 ) {
     PassTheme(isDark = input.first) {
         Surface {

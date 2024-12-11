@@ -46,6 +46,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.work.FakeWorkerLauncher
@@ -61,6 +62,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasOptionsUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
+import proton.android.pass.featureitemcreate.impl.attachments.FakeAttachmentHandler
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -125,7 +127,9 @@ internal class CreateLoginViewModelTest {
             observeTooltipEnabled = FakeObserveTooltipEnabled(),
             disableTooltip = FakeDisableTooltip(),
             workerLauncher = FakeWorkerLauncher(),
-            userPreferencesRepository = TestPreferenceRepository()
+            userPreferencesRepository = TestPreferenceRepository(),
+            linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
+            attachmentsHandler = FakeAttachmentHandler()
         )
     }
 

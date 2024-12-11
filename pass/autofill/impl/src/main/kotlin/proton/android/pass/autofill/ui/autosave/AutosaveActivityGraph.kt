@@ -171,12 +171,10 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 is BaseLoginNavigation.TotpSuccess ->
                     appNavigator.navigateBackWithResult(it.results)
 
-                BaseLoginNavigation.AddAttachment -> {
-                    throw IllegalStateException("Cannot add attachment from autosave")
-                }
-
-                is BaseLoginNavigation.OpenAttachmentOptions -> TODO()
-                is BaseLoginNavigation.OpenDraftAttachmentOptions -> TODO()
+                BaseLoginNavigation.AddAttachment,
+                is BaseLoginNavigation.OpenAttachmentOptions,
+                is BaseLoginNavigation.OpenDraftAttachmentOptions ->
+                    throw IllegalStateException("Cannot use attachments from autofill")
             }
         }
     )

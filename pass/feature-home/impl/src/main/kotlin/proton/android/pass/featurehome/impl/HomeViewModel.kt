@@ -26,7 +26,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentMap
@@ -308,14 +307,10 @@ class HomeViewModel @Inject constructor(
         )
     }.distinctUntilChanged()
 
-    data class ShareListWrapper(
+    private data class ShareListWrapper(
         val shares: ImmutableMap<ShareId, ShareUiModel>,
         val selectedShare: Option<ShareUiModel>
-    ) {
-        companion object {
-            val Empty = ShareListWrapper(persistentMapOf(), None)
-        }
-    }
+    )
 
     private val searchEntryState: StateFlow<List<SearchEntry>> =
         searchOptionsFlow.map { it.vaultSelectionOption }
@@ -1085,6 +1080,9 @@ class HomeViewModel @Inject constructor(
             SearchFilterType.Identity -> item.contents is ItemContents.Identity
             SearchFilterType.LoginMFA ->
                 item.contents is ItemContents.Login && (item.contents as ItemContents.Login).hasPrimaryTotp
+
+            SearchFilterType.SharedWithMe -> item.isSharedWithMe
+            SearchFilterType.SharedByMe -> item.isSharedByMe
         }
     }
 

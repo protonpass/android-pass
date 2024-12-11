@@ -92,6 +92,8 @@ private fun filtering(
                 SearchFilterType.CreditCard -> stringResource(id = R.string.item_type_filter_credit_card)
                 SearchFilterType.Identity -> stringResource(id = R.string.item_type_filter_identity)
                 SearchFilterType.LoginMFA -> stringResource(id = R.string.item_type_filter_login_mfa)
+                SearchFilterType.SharedWithMe -> stringResource(id = R.string.item_type_filter_shared_with_me)
+                SearchFilterType.SharedByMe -> stringResource(id = R.string.item_type_filter_shared_by_me)
             }
             BottomSheetItemSubtitle(text = "$title (${state.count})")
         }

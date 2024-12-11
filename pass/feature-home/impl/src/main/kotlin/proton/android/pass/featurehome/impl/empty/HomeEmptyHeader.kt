@@ -30,46 +30,61 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.headlineSmallNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.featurehome.impl.R
 import proton.android.pass.searchoptions.api.SearchFilterType
 
 @Composable
-fun HomeEmptyHeader(modifier: Modifier = Modifier, filterType: SearchFilterType) {
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        val (title, desc) = remember(filterType) {
-            when (filterType) {
-                SearchFilterType.All ->
-                    R.string.home_empty_vault_title to
-                        R.string.home_empty_vault_subtitle
-                SearchFilterType.Login ->
-                    R.string.home_empty_vault_login_title to
-                        R.string.home_empty_vault_login_subtitle
-                SearchFilterType.LoginMFA ->
-                    R.string.home_empty_vault_logins_mfa_title to
-                        R.string.home_empty_vault_logins_mfa_subtitle
-                SearchFilterType.Alias ->
-                    R.string.home_empty_vault_aliases_title to
-                        R.string.home_empty_vault_aliases_subtitle
-                SearchFilterType.Note ->
-                    R.string.home_empty_vault_notes_title to
-                        R.string.home_empty_vault_notes_subtitle
-                SearchFilterType.CreditCard ->
-                    R.string.home_empty_vault_cc_title to
-                        R.string.home_empty_vault_cc_subtitle
-                SearchFilterType.Identity ->
-                    R.string.home_empty_vault_identity_title to
-                        R.string.home_empty_vault_identity_subtitle
+internal fun HomeEmptyHeader(modifier: Modifier = Modifier, filterType: SearchFilterType) {
+    val (title, desc) = remember(filterType) {
+        when (filterType) {
+            SearchFilterType.All ->
+                R.string.home_empty_vault_title to
+                    R.string.home_empty_vault_subtitle
+
+            SearchFilterType.Login ->
+                R.string.home_empty_vault_login_title to
+                    R.string.home_empty_vault_login_subtitle
+
+            SearchFilterType.LoginMFA ->
+                R.string.home_empty_vault_logins_mfa_title to
+                    R.string.home_empty_vault_logins_mfa_subtitle
+
+            SearchFilterType.Alias ->
+                R.string.home_empty_vault_aliases_title to
+                    R.string.home_empty_vault_aliases_subtitle
+
+            SearchFilterType.Note ->
+                R.string.home_empty_vault_notes_title to
+                    R.string.home_empty_vault_notes_subtitle
+
+            SearchFilterType.CreditCard ->
+                R.string.home_empty_vault_cc_title to
+                    R.string.home_empty_vault_cc_subtitle
+
+            SearchFilterType.Identity ->
+                R.string.home_empty_vault_identity_title to
+                    R.string.home_empty_vault_identity_subtitle
+
+            SearchFilterType.SharedWithMe -> {
+                R.string.home_empty_shared_items_title to R.string.home_empty_shared_items_with_me_subtitle
+            }
+
+            SearchFilterType.SharedByMe -> {
+                R.string.home_empty_shared_items_title to R.string.home_empty_shared_items_by_me_subtitle
             }
         }
+    }
+
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+    ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(title),
@@ -86,9 +101,8 @@ fun HomeEmptyHeader(modifier: Modifier = Modifier, filterType: SearchFilterType)
     }
 }
 
-@Preview
-@Composable
-fun HomeEmptyHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+@[Preview Composable]
+internal fun HomeEmptyHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             HomeEmptyHeader(filterType = SearchFilterType.All)

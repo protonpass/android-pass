@@ -30,6 +30,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -98,6 +99,34 @@ private fun ItemTypeButton(
     count: Int,
     onItemTypeClick: (SearchFilterType) -> Unit
 ) {
+    val filterIconRes = remember(searchFilterType) {
+        when (searchFilterType) {
+            All -> CoreR.drawable.ic_proton_list_bullets
+            Login -> CoreR.drawable.ic_proton_user
+            Alias -> CoreR.drawable.ic_proton_alias
+            Note -> CoreR.drawable.ic_proton_file_lines
+            CreditCard -> CoreR.drawable.ic_proton_credit_card
+            Identity -> CoreR.drawable.ic_proton_card_identity
+            LoginMFA -> CoreR.drawable.ic_proton_lock
+            SearchFilterType.SharedWithMe -> CoreR.drawable.ic_proton_user_arrow_left
+            SearchFilterType.SharedByMe -> CoreR.drawable.ic_proton_user_arrow_right
+        }
+    }
+
+    val filterText = remember(searchFilterType) {
+        when (searchFilterType) {
+            All -> R.string.item_type_filter_all
+            Login -> R.string.item_type_filter_login
+            Alias -> R.string.item_type_filter_alias
+            Note -> R.string.item_type_filter_note
+            CreditCard -> R.string.item_type_filter_credit_card
+            Identity -> R.string.item_type_filter_identity
+            LoginMFA -> R.string.item_type_filter_login_totp
+            SearchFilterType.SharedWithMe -> R.string.item_type_filter_items_shared_with_me
+            SearchFilterType.SharedByMe -> R.string.item_type_filter_items_shared_by_me
+        }
+    }
+
     CircleButton(
         contentPadding = PaddingValues(Spacing.mediumSmall, Spacing.none),
         color = if (isSelected) {
@@ -113,15 +142,7 @@ private fun ItemTypeButton(
         ) {
             Icon(
                 modifier = Modifier.height(Spacing.medium),
-                painter = when (searchFilterType) {
-                    All -> painterResource(CoreR.drawable.ic_proton_list_bullets)
-                    Login -> painterResource(CoreR.drawable.ic_proton_user)
-                    Alias -> painterResource(CoreR.drawable.ic_proton_alias)
-                    Note -> painterResource(CoreR.drawable.ic_proton_file_lines)
-                    CreditCard -> painterResource(CoreR.drawable.ic_proton_credit_card)
-                    Identity -> painterResource(CoreR.drawable.ic_proton_card_identity)
-                    LoginMFA -> painterResource(CoreR.drawable.ic_proton_lock)
-                },
+                painter = painterResource(id = filterIconRes),
                 contentDescription = stringResource(R.string.item_type_filter_list_icon_content_description),
                 tint = if (isSelected) {
                     PassTheme.colors.textNorm
@@ -129,19 +150,13 @@ private fun ItemTypeButton(
                     PassTheme.colors.textWeak
                 }
             )
+
             Text(
-                text = when (searchFilterType) {
-                    All -> stringResource(R.string.item_type_filter_all)
-                    Login -> stringResource(R.string.item_type_filter_login)
-                    Alias -> stringResource(R.string.item_type_filter_alias)
-                    Note -> stringResource(R.string.item_type_filter_note)
-                    CreditCard -> stringResource(R.string.item_type_filter_credit_card)
-                    Identity -> stringResource(R.string.item_type_filter_identity)
-                    LoginMFA -> stringResource(R.string.item_type_filter_login_totp)
-                },
+                text = stringResource(id = filterText),
                 style = ProtonTheme.typography.defaultSmallNorm,
                 color = PassTheme.colors.textNorm
             )
+
             Text(
                 text = "$count",
                 style = ProtonTheme.typography.overlineNorm,
@@ -151,9 +166,8 @@ private fun ItemTypeButton(
     }
 }
 
-@Preview
-@Composable
-fun ItemTypeFilterListPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+@[Preview Composable]
+internal fun ItemTypeFilterListPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ItemTypeFilterList(

@@ -28,17 +28,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.PersistentSet
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAddAttachment
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOpen
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOptions
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnDeleteAllAttachments
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnAttachmentEvent
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnCVVChange
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnCVVFocusChange
@@ -105,10 +101,7 @@ fun CreditCardItemForm(
                 attachmentsState = attachmentsState,
                 isDetail = false,
                 colors = passItemColors(ItemCategory.CreditCard),
-                onAttachmentOptions = { onEvent(OnAttachmentEvent(OnAttachmentOptions(it.id))) },
-                onAttachmentOpen = { onEvent(OnAttachmentEvent(OnAttachmentOpen(it.id))) },
-                onAddAttachment = { onEvent(OnAttachmentEvent(OnAddAttachment)) },
-                onTrashAll = { onEvent(OnAttachmentEvent(OnDeleteAllAttachments)) }
+                onEvent = { onEvent(OnAttachmentEvent(it)) }
             )
         }
     }

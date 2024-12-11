@@ -47,7 +47,8 @@ fun AttachmentHeader(
     colors: PassItemColors,
     fileAmount: Int,
     isEnabled: Boolean,
-    onTrashAll: (() -> Unit)? = null
+    isDetail: Boolean = false,
+    onTrashAll: (() -> Unit)
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -74,7 +75,7 @@ fun AttachmentHeader(
             }
             Text.Body1Weak(text)
         }
-        if (fileAmount > 0 && onTrashAll != null) {
+        if (fileAmount > 0 && !isDetail) {
             Button.CircleIcon(
                 backgroundColor = colors.minorPrimary,
                 enabled = isEnabled,

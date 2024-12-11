@@ -34,12 +34,16 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnAddAttachment
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnAttachmentOpen
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnAttachmentOptions
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnDraftAttachmentOpen
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnDraftAttachmentOptions
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
-import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 
 @Composable
@@ -48,10 +52,7 @@ fun AttachmentSection(
     attachmentsState: AttachmentsState,
     isDetail: Boolean,
     colors: PassItemColors,
-    onAttachmentOptions: (Attachment) -> Unit,
-    onAttachmentOpen: (Attachment) -> Unit,
-    onAddAttachment: () -> Unit,
-    onTrashAll: () -> Unit
+    onEvent: (AttachmentContentEvent) -> Unit
 ) {
     if (!attachmentsState.hasAnyAttachment && isDetail) return
     Column(
@@ -73,7 +74,8 @@ fun AttachmentSection(
             colors = colors,
             isEnabled = attachmentsState.isEnabled,
             fileAmount = attachmentsState.size,
-            onTrashAll = onTrashAll.takeIf { !isDetail }
+            isDetail = isDetail,
+            onTrashAll = { onEvent(AttachmentContentEvent.OnDeleteAllAttachments) }
         )
         Column {
             attachmentsState.attachmentsList.forEachIndexed { index, attachment ->
@@ -99,8 +101,8 @@ fun AttachmentSection(
                     createTime = attachment.createTime,
                     isEnabled = attachmentsState.isEnabled,
                     isLoading = attachmentsState.loadingAttachments.contains(attachment.id),
-                    onOptionsClick = { onAttachmentOptions(attachment) },
-                    onAttachmentOpen = { onAttachmentOpen(attachment) }
+                    onOptionsClick = { onEvent(OnAttachmentOptions(attachment.id)) },
+                    onAttachmentOpen = { onEvent(OnAttachmentOpen(attachment.id)) }
                 )
                 if (attachmentsState.shouldDisplayDivider(index)) {
                     PassDivider()
@@ -129,12 +131,8 @@ fun AttachmentSection(
                     attachmentType = fileMetadata.attachmentType,
                     size = fileMetadata.size,
                     createTime = fileMetadata.createTime,
-                    onOptionsClick = {
-                        // Implement onOptionsClick
-                    },
-                    onAttachmentOpen = {
-                        // Implement onAttachmentOpen
-                    }
+                    onOptionsClick = { onEvent(OnDraftAttachmentOptions(fileMetadata.uri)) },
+                    onAttachmentOpen = { onEvent(OnDraftAttachmentOpen(fileMetadata.uri)) }
                 )
                 if (index < attachmentsState.draftAttachmentsList.lastIndex) {
                     PassDivider()
@@ -150,7 +148,7 @@ fun AttachmentSection(
                 ),
                 colors = colors,
                 isEnabled = attachmentsState.isEnabled,
-                onClick = onAddAttachment
+                onClick = { onEvent(OnAddAttachment) }
             )
         }
     }
@@ -171,10 +169,7 @@ fun AttachmentSectionPreview(
                 colors = passItemColors(itemCategory = ItemCategory.Login),
                 attachmentsState = input.second.second,
                 isDetail = input.second.first,
-                onAttachmentOptions = {},
-                onAttachmentOpen = {},
-                onAddAttachment = {},
-                onTrashAll = {}
+                onEvent = {}
             )
         }
     }

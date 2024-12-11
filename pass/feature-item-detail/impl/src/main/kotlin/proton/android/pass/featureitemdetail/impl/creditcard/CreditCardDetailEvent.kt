@@ -18,6 +18,8 @@
 
 package proton.android.pass.featureitemdetail.impl.creditcard
 
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
+
 sealed interface CreditCardDetailEvent {
 
     data object OnCardHolderClick : CreditCardDetailEvent
@@ -38,4 +40,8 @@ sealed interface CreditCardDetailEvent {
 
     data object OnViewItemHistoryClicked : CreditCardDetailEvent
 
+    @JvmInline
+    value class OnAttachmentEvent(
+        val attachmentContentEvent: AttachmentContentEvent
+    ) : CreditCardDetailEvent
 }

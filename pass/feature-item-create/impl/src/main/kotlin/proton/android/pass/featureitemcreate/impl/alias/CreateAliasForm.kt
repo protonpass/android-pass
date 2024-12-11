@@ -48,10 +48,6 @@ import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.AliasContentUiEvent.OnAttachmentEvent
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAddAttachment
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOpen
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOptions
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnDeleteAllAttachments
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -174,10 +170,7 @@ internal fun CreateAliasForm(
                 attachmentsState = attachmentsState,
                 isDetail = false,
                 colors = passItemColors(ItemCategory.Alias),
-                onAttachmentOptions = { onEvent(OnAttachmentEvent(OnAttachmentOptions(it.id))) },
-                onAttachmentOpen = { onEvent(OnAttachmentEvent(OnAttachmentOpen(it.id))) },
-                onAddAttachment = { onEvent(OnAttachmentEvent(OnAddAttachment)) },
-                onTrashAll = { onEvent(OnAttachmentEvent(OnDeleteAllAttachments)) }
+                onEvent = { onEvent(OnAttachmentEvent(it)) }
             )
         }
     }

@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsContent
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
@@ -82,6 +83,15 @@ internal fun ItemHistoryRestoreTab(
 
                 is PassItemDetailsUiEvent.OnSharedVaultClick -> {
                     // We do nothing since we don't allow shared vault management from restore screen
+                }
+
+                is PassItemDetailsUiEvent.OnAttachmentEvent -> when (uiEvent.attachmentContentEvent) {
+                    AttachmentContentEvent.OnAddAttachment -> {}
+                    is AttachmentContentEvent.OnAttachmentOpen -> {}
+                    is AttachmentContentEvent.OnAttachmentOptions -> {}
+                    AttachmentContentEvent.OnDeleteAllAttachments -> {}
+                    is AttachmentContentEvent.OnDraftAttachmentOpen -> {}
+                    is AttachmentContentEvent.OnDraftAttachmentOptions -> {}
                 }
             }
         },

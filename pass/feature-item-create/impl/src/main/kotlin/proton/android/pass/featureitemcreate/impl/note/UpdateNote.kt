@@ -32,11 +32,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.PerformActionAfterKeyboardHide
 
@@ -97,6 +97,12 @@ fun UpdateNote(
                                     }
                                     AttachmentContentEvent.OnDeleteAllAttachments -> {
                                         // cannot delete all attachments in notes
+                                    }
+                                    is AttachmentContentEvent.OnDraftAttachmentOpen -> {
+
+                                    }
+                                    is AttachmentContentEvent.OnDraftAttachmentOptions -> {
+
                                     }
                                 }
                             }

@@ -39,8 +39,9 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
+import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
@@ -60,13 +61,14 @@ fun NoteContent(
     isShared: Boolean,
     shareCount: Int,
     share: Share,
-    onShareClick: () -> Unit,
     isPinned: Boolean,
     isHistoryFeatureEnabled: Boolean,
     isFileAttachmentsEnabled: Boolean,
     attachmentsState: AttachmentsState,
     hasMoreThanOneVaultShare: Boolean,
-    onViewItemHistoryClicked: () -> Unit
+    onShareClick: () -> Unit,
+    onViewItemHistoryClicked: () -> Unit,
+    onAttachmentEvent: (AttachmentContentEvent) -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.Note
 
@@ -115,10 +117,7 @@ fun NoteContent(
                 attachmentsState = attachmentsState,
                 isDetail = true,
                 colors = passItemColors(ItemCategory.Note),
-                onAttachmentOptions = {},
-                onAttachmentOpen = {},
-                onAddAttachment = {},
-                onTrashAll = {}
+                onEvent = { onAttachmentEvent(it) }
             )
         }
 
@@ -157,7 +156,8 @@ fun NoteContentPreview(@PreviewParameter(ThemeItemTitleProvider::class) input: P
                 shareCount = params.itemUiModel.shareCount,
                 isFileAttachmentsEnabled = false,
                 attachmentsState = AttachmentsState.Initial,
-                hasMoreThanOneVaultShare = true
+                hasMoreThanOneVaultShare = true,
+                onAttachmentEvent = { }
             )
         }
     }

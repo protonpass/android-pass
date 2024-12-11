@@ -44,6 +44,8 @@ internal fun FilterOptionPreference.toDomain(): SearchFilterType = when (this) {
     FilterOptionPreference.CreditCard -> SearchFilterType.CreditCard
     FilterOptionPreference.Identity -> SearchFilterType.Identity
     FilterOptionPreference.LoginMFA -> SearchFilterType.LoginMFA
+    FilterOptionPreference.SharedWithMe -> SearchFilterType.SharedWithMe
+    FilterOptionPreference.SharedByMe -> SearchFilterType.SharedByMe
 }
 
 internal fun SelectedVaultPreference.toSelectionOption(): VaultSelectionOption = when (this) {
@@ -68,6 +70,8 @@ internal fun FilterOption.toPreference(): FilterOptionPreference = when (this.se
     SearchFilterType.CreditCard -> FilterOptionPreference.CreditCard
     SearchFilterType.Identity -> FilterOptionPreference.Identity
     SearchFilterType.LoginMFA -> FilterOptionPreference.LoginMFA
+    SearchFilterType.SharedWithMe -> FilterOptionPreference.SharedWithMe
+    SearchFilterType.SharedByMe -> FilterOptionPreference.SharedByMe
 }
 
 internal fun VaultSelectionOption.toPreference(): SelectedVaultPreference = when (this) {

@@ -25,9 +25,13 @@ data class ItemCountSummary(
     val note: Long,
     val alias: Long,
     val creditCard: Long,
-    val identities: Long
+    val identities: Long,
+    val sharedWithMe: Long,
+    val sharedByMe: Long
 ) {
+
     companion object {
+
         val Initial = ItemCountSummary(
             total = 0,
             login = 0,
@@ -35,7 +39,11 @@ data class ItemCountSummary(
             note = 0,
             alias = 0,
             creditCard = 0,
-            identities = 0
+            identities = 0,
+            sharedWithMe = 0,
+            sharedByMe = 0
         )
+
     }
+
 }

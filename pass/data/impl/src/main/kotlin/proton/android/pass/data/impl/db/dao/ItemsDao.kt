@@ -37,6 +37,11 @@ data class ShareItemCountRow(
     val trashedItemCount: Long
 )
 
+data class SharedItemsCountRow(
+    val sharedWithMe: Long,
+    val sharedByMe: Long
+)
+
 @Dao
 @Suppress("TooManyFunctions")
 abstract class ItemsDao : BaseDao<ItemEntity>() {
@@ -408,4 +413,16 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract fun findUserId(shareId: String, itemId: String): String?
+
+    @Query(
+        """
+        SELECT 
+            SUM(CASE WHEN ${ItemEntity.Columns.KEY} IS NULL THEN 1 ELSE 0 END) as sharedWithMe,
+            SUM(CASE WHEN ${ItemEntity.Columns.KEY} IS NOT NULL THEN 1 ELSE 0 END) as sharedByMe
+        FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+            AND ${ItemEntity.Columns.SHARE_COUNT} > 0
+        """
+    )
+    abstract fun countSharedItems(userId: String): Flow<SharedItemsCountRow>
 }

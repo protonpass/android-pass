@@ -86,7 +86,7 @@ class InternalSettingsRepositoryImpl @Inject constructor(
     }
 
     override fun setHomeFilterOption(filterOption: FilterOptionPreference): Result<Unit> = setPreference { settings ->
-        settings.setHomeFilteringOption(filterOption.value())
+        settings.setHomeFilteringOption(filterOption.value)
     }
 
     override fun getHomeFilterOption(): Flow<FilterOptionPreference> = getPreference { settings ->
@@ -101,7 +101,7 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         .map { settings -> SortingOptionPreference.fromValue(settings.autofillSortingOption) }
 
     override fun setAutofillFilterOption(filterOption: FilterOptionPreference): Result<Unit> = runCatching {
-        inMemoryPreferences.set(FilterOptionPreference::class.java.name, filterOption.value())
+        inMemoryPreferences.set(FilterOptionPreference::class.java.name, filterOption.value)
     }
 
     override fun getAutofillFilterOption(): Flow<FilterOptionPreference> =

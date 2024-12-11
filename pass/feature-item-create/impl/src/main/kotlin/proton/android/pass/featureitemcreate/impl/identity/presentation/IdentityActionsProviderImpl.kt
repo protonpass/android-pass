@@ -60,6 +60,7 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.CustomFieldIndexTitle
 import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentsHandler
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.AddressCustomField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Birthdate
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ContactCustomField
@@ -95,6 +96,7 @@ class IdentityActionsProviderImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val identityFieldDraftRepository: IdentityFieldDraftRepository,
     private val observeUpgradeInfo: ObserveUpgradeInfo,
+    private val attachmentsHandler: AttachmentsHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : IdentityActionsProvider {
@@ -114,7 +116,7 @@ class IdentityActionsProviderImpl @Inject constructor(
 
     @Suppress("LongMethod")
     override fun onFieldChange(field: FieldChange) {
-        hasUserEditedContentState.update { true }
+        onUserEditedContent()
         identityItemFormMutableState = when (field) {
             is FieldChange.Birthdate -> identityItemFormMutableState.copy(
                 uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(birthdate = field.value)
@@ -495,6 +497,7 @@ class IdentityActionsProviderImpl @Inject constructor(
 
     override fun clearState() {
         identityFieldDraftRepository.clearAddedFields()
+        attachmentsHandler.clearAttachments()
     }
 
     @Suppress("LongMethod")
@@ -615,6 +618,7 @@ class IdentityActionsProviderImpl @Inject constructor(
         identityFieldDraftRepository.observeLastAddedExtraField(),
         observeUpgradeInfo().distinctUntilChanged().asLoadingResult().map(::canUseCustomFields),
         featureFlagsRepository[FeatureFlag.FILE_ATTACHMENTS_V1],
+        attachmentsHandler.attachmentsFlow,
         ::IdentitySharedUiState
     )
 
@@ -870,12 +874,29 @@ class IdentityActionsProviderImpl @Inject constructor(
             }
     }
 
-    override fun observeDraftChanges(coroutineScope: CoroutineScope) {
+    private fun onUserEditedContent() {
+        if (hasUserEditedContentState.value) return
+        hasUserEditedContentState.update { true }
+    }
+
+    override fun observeActions(coroutineScope: CoroutineScope) {
         coroutineScope.launch { observeNewCustomField() }
         coroutineScope.launch { observeRemoveCustomField() }
         coroutineScope.launch { observeRenameCustomField() }
         coroutineScope.launch { observeNewExtraSection() }
         coroutineScope.launch { observeRemoveExtraSection() }
         coroutineScope.launch { observeRenameExtraSection() }
+        observeNewAttachments(coroutineScope)
+    }
+
+    override fun observeNewAttachments(coroutineScope: CoroutineScope) {
+        attachmentsHandler.observeNewAttachments(coroutineScope) { newUris ->
+            if (newUris.isNotEmpty()) {
+                onUserEditedContent()
+                newUris.forEach { uri ->
+                    attachmentsHandler.uploadNewAttachment(uri, coroutineScope)
+                }
+            }
+        }
     }
 }

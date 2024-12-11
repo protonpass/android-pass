@@ -47,6 +47,7 @@ import proton.android.pass.data.fakes.work.FakeWorkerLauncher
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featureitemcreate.impl.attachments.FakeAttachmentHandler
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -103,7 +104,8 @@ class UpdateLoginViewModelTest {
             observeTooltipEnabled = FakeObserveTooltipEnabled(),
             disableTooltip = FakeDisableTooltip(),
             userPreferencesRepository = TestPreferenceRepository(),
-            workerLauncher = FakeWorkerLauncher()
+            workerLauncher = FakeWorkerLauncher(),
+            attachmentsHandler = FakeAttachmentHandler()
         )
     }
 

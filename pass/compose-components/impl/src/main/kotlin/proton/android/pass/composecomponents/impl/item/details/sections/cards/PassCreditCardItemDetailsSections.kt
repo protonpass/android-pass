@@ -28,6 +28,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent.OnAttachmentEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
@@ -45,7 +46,6 @@ internal fun PassCreditCardItemDetailsSections(
     contents: ItemContents.CreditCard,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.CreditCard,
-    onEvent: (PassItemDetailsUiEvent) -> Unit,
     lastAutofillOption: Option<Instant>,
     revision: Long,
     createdAt: Instant,
@@ -53,7 +53,8 @@ internal fun PassCreditCardItemDetailsSections(
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
     shouldDisplayFileAttachments: Boolean,
-    attachmentsState: AttachmentsState
+    attachmentsState: AttachmentsState,
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(contents) {
     Column(
         modifier = modifier,
@@ -82,10 +83,7 @@ internal fun PassCreditCardItemDetailsSections(
                 attachmentsState = attachmentsState,
                 isDetail = true,
                 colors = itemColors,
-                onAttachmentOptions = {},
-                onAttachmentOpen = {},
-                onAddAttachment = {},
-                onTrashAll = {}
+                onEvent = { onEvent(OnAttachmentEvent(it)) }
             )
         }
 

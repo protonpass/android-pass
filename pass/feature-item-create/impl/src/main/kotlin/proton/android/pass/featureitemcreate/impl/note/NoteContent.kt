@@ -29,7 +29,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAddAttachment
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnAddAttachment
 import proton.android.pass.featureitemcreate.impl.note.NoteContentUiEvent.OnAttachmentEvent
 import proton.android.pass.featureitemcreate.impl.note.NoteItemValidationErrors.BlankTitle
 

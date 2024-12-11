@@ -32,9 +32,10 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
+import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
@@ -70,7 +71,8 @@ fun AliasDetailContent(
     onToggleAliasState: (Boolean) -> Unit,
     onShareClick: () -> Unit,
     onViewItemHistoryClicked: () -> Unit,
-    onContactsClicked: () -> Unit
+    onContactsClicked: () -> Unit,
+    onAttachmentEvent: (AttachmentContentEvent) -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.Alias
     Column(
@@ -144,10 +146,7 @@ fun AliasDetailContent(
                 attachmentsState = attachmentsState,
                 isDetail = true,
                 colors = passItemColors(ItemCategory.Alias),
-                onAttachmentOptions = {},
-                onAttachmentOpen = {},
-                onAddAttachment = {},
-                onTrashAll = {}
+                onEvent = { onAttachmentEvent(it) }
             )
         }
 

@@ -169,8 +169,9 @@ class LocalItemDataSourceImpl @Inject constructor(
         itemState: ItemState?
     ): Flow<ItemCountSummary> = combine(
         database.itemsDao().itemSummary(userId.id, shareIds.map { it.id }, itemState?.value),
-        database.itemsDao().countAllItemsWithTotp(userId.id)
-    ) { values: List<SummaryRow>, totpCount: Int ->
+        database.itemsDao().countAllItemsWithTotp(userId.id),
+        database.itemsDao().countSharedItems(userId.id)
+    ) { values: List<SummaryRow>, totpCount: Int, sharedItemsCount ->
         val logins =
             values.firstOrNull { it.itemKind == ItemCategory.Login.value }?.itemCount ?: 0
         val aliases =
@@ -183,6 +184,7 @@ class LocalItemDataSourceImpl @Inject constructor(
         val identities =
             values.firstOrNull { it.itemKind == ItemCategory.Identity.value }?.itemCount
                 ?: 0
+
         ItemCountSummary(
             total = logins + aliases + notes + creditCards,
             login = logins,
@@ -190,7 +192,9 @@ class LocalItemDataSourceImpl @Inject constructor(
             alias = aliases,
             note = notes,
             creditCard = creditCards,
-            identities = identities
+            identities = identities,
+            sharedWithMe = sharedItemsCount.sharedWithMe,
+            sharedByMe = sharedItemsCount.sharedByMe
         )
     }
 

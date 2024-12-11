@@ -32,12 +32,11 @@ import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-fun AttachmentOptionsContent(modifier: Modifier = Modifier, onEvent: (AttachmentOptionsEvent) -> Unit) {
+fun AttachmentOptionsContent(modifier: Modifier = Modifier, onEvent: (AttachmentOptionsUIEvent) -> Unit) {
     val list = listOf(
-        openFile { onEvent(AttachmentOptionsEvent.Open) },
-        saveFile { onEvent(AttachmentOptionsEvent.Save) },
-        renameFile { onEvent(AttachmentOptionsEvent.Rename) },
-        deleteFile { onEvent(AttachmentOptionsEvent.Delete) }
+        openFile { onEvent(AttachmentOptionsUIEvent.Open) },
+        renameFile { onEvent(AttachmentOptionsUIEvent.Rename) },
+        deleteFile { onEvent(AttachmentOptionsUIEvent.Delete) }
     ).withDividers().toPersistentList()
     BottomSheetItemList(
         modifier = modifier,
@@ -58,28 +57,6 @@ private fun openFile(onClick: () -> Unit): BottomSheetItem = object : BottomShee
         get() = {
             BottomSheetItemIcon(
                 iconId = CoreR.drawable.ic_proton_eye
-            )
-        }
-    override val endIcon: (@Composable () -> Unit)?
-        get() = null
-    override val onClick: () -> Unit
-        get() = onClick
-    override val isDivider = false
-}
-
-private fun saveFile(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = {
-            BottomSheetItemTitle(
-                text = stringResource(R.string.attachment_options_save)
-            )
-        }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val leftIcon: @Composable () -> Unit
-        get() = {
-            BottomSheetItemIcon(
-                iconId = CoreR.drawable.ic_proton_arrow_down_to_square
             )
         }
     override val endIcon: (@Composable () -> Unit)?

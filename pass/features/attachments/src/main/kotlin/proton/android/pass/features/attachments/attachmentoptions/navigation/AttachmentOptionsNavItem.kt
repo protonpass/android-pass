@@ -18,10 +18,28 @@
 
 package proton.android.pass.features.attachments.attachmentoptions.navigation
 
+import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
+import proton.android.pass.navigation.api.NavParamEncoder
+import proton.android.pass.navigation.api.toPath
+import java.net.URI
 
 data object AttachmentOptionsNavItem : NavItem(
     baseRoute = "attachmentoptions/bottomsheet",
-    navItemType = NavItemType.Bottomsheet
-)
+    navItemType = NavItemType.Bottomsheet,
+    optionalArgIds = listOf(CommonOptionalNavArgId.AttachmentId, CommonOptionalNavArgId.Uri)
+) {
+    fun createNavRoute(attachmentId: AttachmentId) = buildString {
+        append(baseRoute)
+        val params = mapOf(CommonOptionalNavArgId.AttachmentId.key to attachmentId.id)
+        append(params.toPath())
+    }
+
+    fun createNavRoute(uri: URI) = buildString {
+        append(baseRoute)
+        val params = mapOf(CommonOptionalNavArgId.Uri.key to NavParamEncoder.encode(uri.toString()))
+        append(params.toPath())
+    }
+}

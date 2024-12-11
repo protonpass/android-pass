@@ -120,6 +120,7 @@ import proton.android.pass.features.alias.contacts.onboarding.navigation.OnBoard
 import proton.android.pass.features.alias.contacts.options.navigation.OptionsAliasContactNavItem
 import proton.android.pass.features.attachments.AttachmentsNavigation
 import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavItem
+import proton.android.pass.features.attachments.attachmentoptions.navigation.AttachmentOptionsNavItem
 import proton.android.pass.features.attachments.attachmentsGraph
 import proton.android.pass.features.attachments.camera.navigation.CameraNavItem
 import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavItem
@@ -887,8 +888,16 @@ fun NavGraphBuilder.appGraph(
                 BaseLoginNavigation.AddAttachment ->
                     appNavigator.navigate(AddAttachmentNavItem)
 
-                is BaseLoginNavigation.OpenAttachmentOptions -> TODO()
-                is BaseLoginNavigation.OpenDraftAttachmentOptions -> TODO()
+                is BaseLoginNavigation.OpenAttachmentOptions ->
+                    appNavigator.navigate(
+                        destination = AttachmentOptionsNavItem,
+                        route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
+                    )
+                is BaseLoginNavigation.OpenDraftAttachmentOptions ->
+                    appNavigator.navigate(
+                        destination = AttachmentOptionsNavItem,
+                        route = AttachmentOptionsNavItem.createNavRoute(it.uri)
+                    )
             }
         }
     )
@@ -905,7 +914,11 @@ fun NavGraphBuilder.appGraph(
                 CreateNoteNavigation.AddAttachment ->
                     appNavigator.navigate(AddAttachmentNavItem)
 
-                is CreateNoteNavigation.OpenDraftAttachmentOptions -> TODO()
+                is CreateNoteNavigation.OpenDraftAttachmentOptions ->
+                    appNavigator.navigate(
+                        destination = AttachmentOptionsNavItem,
+                        route = AttachmentOptionsNavItem.createNavRoute(it.uri)
+                    )
             }
         }
     )
@@ -920,8 +933,16 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 UpdateNoteNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
-                is UpdateNoteNavigation.OpenAttachmentOptions -> TODO()
-                is UpdateNoteNavigation.OpenDraftAttachmentOptions -> TODO()
+                is UpdateNoteNavigation.OpenAttachmentOptions ->
+                    appNavigator.navigate(
+                        destination = AttachmentOptionsNavItem,
+                        route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
+                    )
+                is UpdateNoteNavigation.OpenDraftAttachmentOptions ->
+                    appNavigator.navigate(
+                        destination = AttachmentOptionsNavItem,
+                        route = AttachmentOptionsNavItem.createNavRoute(it.uri)
+                    )
             }
         }
     )
@@ -939,8 +960,16 @@ fun NavGraphBuilder.appGraph(
             BaseCreditCardNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
             is UpdateCreditCardNavigation -> {}
             BaseCreditCardNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
-            is BaseCreditCardNavigation.OpenAttachmentOptions -> TODO()
-            is BaseCreditCardNavigation.OpenDraftAttachmentOptions -> TODO()
+            is BaseCreditCardNavigation.OpenAttachmentOptions ->
+                appNavigator.navigate(
+                    destination = AttachmentOptionsNavItem,
+                    route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
+                )
+            is BaseCreditCardNavigation.OpenDraftAttachmentOptions ->
+                appNavigator.navigate(
+                    destination = AttachmentOptionsNavItem,
+                    route = AttachmentOptionsNavItem.createNavRoute(it.uri)
+                )
         }
     }
     updateCreditCardGraph {
@@ -959,8 +988,16 @@ fun NavGraphBuilder.appGraph(
 
             BaseCreditCardNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
             BaseCreditCardNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
-            is BaseCreditCardNavigation.OpenAttachmentOptions -> TODO()
-            is BaseCreditCardNavigation.OpenDraftAttachmentOptions -> TODO()
+            is BaseCreditCardNavigation.OpenAttachmentOptions ->
+                appNavigator.navigate(
+                    destination = AttachmentOptionsNavItem,
+                    route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
+                )
+            is BaseCreditCardNavigation.OpenDraftAttachmentOptions ->
+                appNavigator.navigate(
+                    destination = AttachmentOptionsNavItem,
+                    route = AttachmentOptionsNavItem.createNavRoute(it.uri)
+                )
         }
     }
     createAliasGraph(
@@ -991,7 +1028,11 @@ fun NavGraphBuilder.appGraph(
                 CreateAliasNavigation.AddAttachment ->
                     appNavigator.navigate(AddAttachmentNavItem)
 
-                is CreateAliasNavigation.OpenDraftAttachmentOptions -> TODO()
+                is CreateAliasNavigation.OpenDraftAttachmentOptions ->
+                    appNavigator.navigate(
+                        destination = AttachmentOptionsNavItem,
+                        route = AttachmentOptionsNavItem.createNavRoute(it.uri)
+                    )
             }
         }
     )
@@ -1007,8 +1048,16 @@ fun NavGraphBuilder.appGraph(
 
                 UpdateAliasNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 UpdateAliasNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
-                is UpdateAliasNavigation.OpenAttachmentOptions -> TODO()
-                is UpdateAliasNavigation.OpenDraftAttachmentOptions -> TODO()
+                is UpdateAliasNavigation.OpenAttachmentOptions ->
+                    appNavigator.navigate(
+                        destination = AttachmentOptionsNavItem,
+                        route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
+                    )
+                is UpdateAliasNavigation.OpenDraftAttachmentOptions ->
+                    appNavigator.navigate(
+                        destination = AttachmentOptionsNavItem,
+                        route = AttachmentOptionsNavItem.createNavRoute(it.uri)
+                    )
             }
         }
     )
@@ -1106,8 +1155,16 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 BaseIdentityNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
-                is BaseIdentityNavigation.OpenAttachmentOptions -> TODO()
-                is BaseIdentityNavigation.OpenDraftAttachmentOptions -> TODO()
+                is BaseIdentityNavigation.OpenAttachmentOptions ->
+                    appNavigator.navigate(
+                        destination = AttachmentOptionsNavItem,
+                        route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
+                    )
+                is BaseIdentityNavigation.OpenDraftAttachmentOptions ->
+                    appNavigator.navigate(
+                        destination = AttachmentOptionsNavItem,
+                        route = AttachmentOptionsNavItem.createNavRoute(it.uri)
+                    )
             }
         }
     )

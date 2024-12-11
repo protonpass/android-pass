@@ -51,6 +51,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun ItemRow(
@@ -60,8 +61,11 @@ internal fun ItemRow(
     subtitles: ImmutableList<AnnotatedString>,
     vaultIcon: Int?,
     enabled: Boolean,
-    titleSuffix: Option<String>
+    titleSuffix: Option<String>,
+    isShared: Boolean
 ) {
+    val color = if (enabled) ProtonTheme.colors.textNorm else ProtonTheme.colors.textWeak
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -86,13 +90,25 @@ internal fun ItemRow(
                         tint = PassTheme.colors.textWeak
                     )
                 }
+
                 Text(
                     modifier = Modifier.weight(1f, fill = false),
                     text = title,
                     style = ProtonTheme.typography.defaultNorm(enabled = enabled),
                     overflow = TextOverflow.Ellipsis,
-                    maxLines = 1
+                    maxLines = 1,
+                    color = color
                 )
+
+                if (isShared) {
+                    Icon(
+                        modifier = Modifier.height(16.dp),
+                        painter = painterResource(CoreR.drawable.ic_proton_users_filled),
+                        contentDescription = null,
+                        tint = color
+                    )
+                }
+
                 titleSuffix.value()?.let {
                     Text(
                         text = SpecialCharacters.DOT_SEPARATOR.toString(),
@@ -130,7 +146,8 @@ fun ItemRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input:
                 subtitles = persistentListOf("".asAnnotatedString()),
                 vaultIcon = null,
                 enabled = input.second,
-                titleSuffix = "suffix".some()
+                titleSuffix = "suffix".some(),
+                isShared = true
             )
         }
     }

@@ -100,6 +100,7 @@ fun AttachmentSection(
                     size = attachment.size,
                     createTime = attachment.createTime,
                     isEnabled = attachmentsState.isEnabled,
+                    hasOptions = !isDetail,
                     isLoading = attachmentsState.loadingAttachments.contains(attachment.id),
                     onOptionsClick = { onEvent(OnAttachmentOptions(attachment.id)) },
                     onAttachmentOpen = { onEvent(OnAttachmentOpen(attachment.id)) }
@@ -128,6 +129,7 @@ fun AttachmentSection(
                     filename = fileMetadata.name,
                     isEnabled = attachmentsState.isEnabled,
                     isLoading = attachmentsState.loadingDraftAttachments.contains(fileMetadata.uri),
+                    hasOptions = !isDetail,
                     attachmentType = fileMetadata.attachmentType,
                     size = fileMetadata.size,
                     createTime = fileMetadata.createTime,

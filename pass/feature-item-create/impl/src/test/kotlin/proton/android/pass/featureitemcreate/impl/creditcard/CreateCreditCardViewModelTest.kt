@@ -182,7 +182,8 @@ class CreateCreditCardViewModelTest {
                             isPinned = false,
                             category = ItemCategory.CreditCard,
                             revision = item.revision,
-                            shareCount = item.shareCount
+                            shareCount = item.shareCount,
+                            isOwner = item.isOwner
                         )
                     )
                 )

@@ -45,6 +45,7 @@ import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
@@ -66,7 +67,8 @@ class ShareFromItemViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     getItemById: GetItemById,
     canManageVaultAccess: CanManageVaultAccess,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    observeShare: ObserveShare
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -103,18 +105,19 @@ class ShareFromItemViewModel @Inject constructor(
         }
     }.asLoadingResult()
 
-    private val isSingleSharingAvailableFlow = oneShot { getItemById(shareId, itemId) }.map { item ->
-        when (item.itemType.category) {
-            ItemCategory.Login,
-            ItemCategory.Note,
-            ItemCategory.Password,
-            ItemCategory.CreditCard,
-            ItemCategory.Identity -> true
+    private val isSingleSharingAvailableFlow =
+        oneShot { getItemById(shareId, itemId) }.map { item ->
+            when (item.itemType.category) {
+                ItemCategory.Login,
+                ItemCategory.Note,
+                ItemCategory.Password,
+                ItemCategory.CreditCard,
+                ItemCategory.Identity -> true
 
-            ItemCategory.Alias,
-            ItemCategory.Unknown -> false
+                ItemCategory.Alias,
+                ItemCategory.Unknown -> false
+            }
         }
-    }
 
     private val canUsePaidFeaturesFlow = getUserPlan()
         .map { userPlan ->
@@ -134,9 +137,10 @@ class ShareFromItemViewModel @Inject constructor(
         navEventState,
         isSingleSharingAvailableFlow,
         canUsePaidFeaturesFlow,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
+        featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1),
+        observeShare(shareId)
     ) { vault, canMoveToSharedVault, createVault, event, isSecureLinkAvailable, canUsePaidFeatures,
-        isItemSharingAvailable ->
+        isItemSharingAvailable, share ->
         ShareFromItemUiState(
             vault = vault.some(),
             itemId = itemId,
@@ -146,7 +150,8 @@ class ShareFromItemViewModel @Inject constructor(
             isSingleSharingAvailable = isSecureLinkAvailable,
             canUsePaidFeatures = canUsePaidFeatures,
             vaultAccessData = canManageVaultAccess(vault.vault),
-            isItemSharingAvailable = isItemSharingAvailable
+            isItemSharingAvailable = isItemSharingAvailable,
+            shareOption = share.some()
         )
     }.stateIn(
         scope = viewModelScope,

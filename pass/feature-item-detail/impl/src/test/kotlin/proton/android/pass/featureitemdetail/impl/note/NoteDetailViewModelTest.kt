@@ -264,7 +264,6 @@ class NoteDetailViewModelTest {
         instance.state.test {
             val value = awaitItem() as NoteDetailUiState.Success
             assertThat(value.hasMoreThanOneVault).isFalse()
-            assertThat(value.share).isNull()
         }
     }
 

@@ -54,11 +54,18 @@ import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAddAttachment
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOpen
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnAttachmentOptions
-import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentContentEvent.OnDeleteAllAttachments
 import proton.android.pass.featureitemcreate.impl.login.LoginContentEvent.OnAttachmentEvent
+import proton.android.pass.featureitemcreate.impl.login.LoginContentEvent.OnCreateAlias
+import proton.android.pass.featureitemcreate.impl.login.LoginContentEvent.OnCreatePassword
+import proton.android.pass.featureitemcreate.impl.login.LoginContentEvent.OnCustomFieldEvent
+import proton.android.pass.featureitemcreate.impl.login.LoginContentEvent.OnEmailChanged
+import proton.android.pass.featureitemcreate.impl.login.LoginContentEvent.OnFocusChange
+import proton.android.pass.featureitemcreate.impl.login.LoginContentEvent.OnLinkedAppDelete
+import proton.android.pass.featureitemcreate.impl.login.LoginContentEvent.OnNoteChange
+import proton.android.pass.featureitemcreate.impl.login.LoginContentEvent.OnScanTotp
+import proton.android.pass.featureitemcreate.impl.login.LoginContentEvent.OnTitleChange
+import proton.android.pass.featureitemcreate.impl.login.LoginContentEvent.OnWebsiteEvent
+import proton.android.pass.featureitemcreate.impl.login.LoginContentEvent.PasteTotp
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.AddTotp
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.AliasOptions
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.GeneratePassword
@@ -129,7 +136,7 @@ internal fun LoginItemForm(
                 onTitleRequiredError = isTitleError,
                 enabled = isEditAllowed,
                 isRounded = true,
-                onChange = { onEvent(LoginContentEvent.OnTitleChange(it)) }
+                onChange = { onEvent(OnTitleChange(it)) }
             )
 
             Spacer(modifier = Modifier.height(height = Spacing.extraSmall))
@@ -160,7 +167,7 @@ internal fun LoginItemForm(
                 hasReachedAliasLimit = hasReachedAliasLimit,
                 onEvent = onEvent,
                 onFocusChange = { field, isFocused ->
-                    onEvent(LoginContentEvent.OnFocusChange(field, isFocused))
+                    onEvent(OnFocusChange(field, isFocused))
                 },
                 isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled
             )
@@ -170,13 +177,13 @@ internal fun LoginItemForm(
                 isEditAllowed = isEditAllowed,
                 websitesWithErrors = websitesWithErrors,
                 focusLastWebsite = focusLastWebsite,
-                onWebsiteSectionEvent = { onEvent(LoginContentEvent.OnWebsiteEvent(it)) }
+                onWebsiteSectionEvent = { onEvent(OnWebsiteEvent(it)) }
             )
 
             SimpleNoteSection(
                 value = loginItemFormState.note,
                 enabled = isEditAllowed,
-                onChange = { onEvent(LoginContentEvent.OnNoteChange(it)) }
+                onChange = { onEvent(OnNoteChange(it)) }
             )
 
             if (isFileAttachmentsEnabled) {
@@ -184,10 +191,7 @@ internal fun LoginItemForm(
                     attachmentsState = attachmentsState,
                     isDetail = false,
                     colors = passItemColors(ItemCategory.Login),
-                    onAttachmentOptions = { onEvent(OnAttachmentEvent(OnAttachmentOptions(it.id))) },
-                    onAttachmentOpen = { onEvent(OnAttachmentEvent(OnAttachmentOpen(it.id))) },
-                    onAddAttachment = { onEvent(OnAttachmentEvent(OnAddAttachment)) },
-                    onTrashAll = { onEvent(OnAttachmentEvent(OnDeleteAllAttachments)) }
+                    onEvent = { onEvent(OnAttachmentEvent(it)) }
                 )
             }
 
@@ -197,14 +201,14 @@ internal fun LoginItemForm(
                 canEdit = isEditAllowed,
                 canUseCustomFields = canUseCustomFields,
                 validationErrors = customFieldValidationErrors,
-                onEvent = { onEvent(LoginContentEvent.OnCustomFieldEvent(it)) }
+                onEvent = { onEvent(OnCustomFieldEvent(it)) }
             )
 
             if (isUpdate) {
                 LinkedAppsListSection(
                     packageInfoUiSet = loginItemFormState.packageInfoSet.toImmutableSet(),
                     isEditable = true,
-                    onLinkedAppDelete = { onEvent(LoginContentEvent.OnLinkedAppDelete(it)) }
+                    onLinkedAppDelete = { onEvent(OnLinkedAppDelete(it)) }
                 )
             }
 
@@ -223,7 +227,7 @@ internal fun LoginItemForm(
             when (currentStickyFormOption) {
                 GeneratePassword ->
                     StickyGeneratePassword(
-                        onClick = { onEvent(LoginContentEvent.OnCreatePassword) }
+                        onClick = { onEvent(OnCreatePassword) }
                     )
 
                 AliasOptions -> StickyUsernameOptions(
@@ -232,7 +236,7 @@ internal fun LoginItemForm(
                     onCreateAliasClick = {
                         selectedShareId ?: return@StickyUsernameOptions
                         onEvent(
-                            LoginContentEvent.OnCreateAlias(
+                            OnCreateAlias(
                                 shareId = selectedShareId,
                                 hasReachedAliasLimit = hasReachedAliasLimit,
                                 title = loginItemFormState.title.some()
@@ -240,7 +244,7 @@ internal fun LoginItemForm(
                         )
                     },
                     onPrefillCurrentEmailClick = { prefillEmail ->
-                        onEvent(LoginContentEvent.OnEmailChanged(prefillEmail))
+                        onEvent(OnEmailChanged(prefillEmail))
                     }
                 )
 
@@ -253,11 +257,11 @@ internal fun LoginItemForm(
                     StickyTotpOptions(
                         hasCamera = hasCamera,
                         onPasteCode = {
-                            onEvent(LoginContentEvent.PasteTotp)
+                            onEvent(PasteTotp)
                         },
                         onScanCode = {
                             val index = (focusedField as? LoginCustomField)?.index
-                            onEvent(LoginContentEvent.OnScanTotp(index.toOption()))
+                            onEvent(OnScanTotp(index.toOption()))
                         }
                     )
                 }

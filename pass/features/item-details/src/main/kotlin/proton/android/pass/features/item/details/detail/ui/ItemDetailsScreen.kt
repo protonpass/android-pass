@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.BrowserUtils
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ItemState
 import proton.android.pass.features.item.details.detail.presentation.ItemDetailsEvent
 import proton.android.pass.features.item.details.detail.presentation.ItemDetailsViewModel
@@ -127,6 +128,17 @@ fun ItemDetailsScreen(
                         itemId = uiEvent.itemId
                     )
                 }.also(onNavigated)
+
+                is ItemDetailsUiEvent.OnAttachmentEvent ->
+                    when (uiEvent.attachmentContentEvent) {
+                        is AttachmentContentEvent.OnAttachmentOpen -> {}
+                        is AttachmentContentEvent.OnAttachmentOptions -> {}
+                        AttachmentContentEvent.OnAddAttachment,
+                        AttachmentContentEvent.OnDeleteAllAttachments,
+                        is AttachmentContentEvent.OnDraftAttachmentOpen,
+                        is AttachmentContentEvent.OnDraftAttachmentOptions ->
+                            throw IllegalStateException("Action not allowed: $uiEvent")
+                    }
             }
         }
     )

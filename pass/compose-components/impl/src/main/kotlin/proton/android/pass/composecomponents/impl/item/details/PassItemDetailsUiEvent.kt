@@ -18,10 +18,11 @@
 
 package proton.android.pass.composecomponents.impl.item.details
 
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ShareId
 
 sealed interface PassItemDetailsUiEvent {
@@ -53,5 +54,8 @@ sealed interface PassItemDetailsUiEvent {
 
     @JvmInline
     value class OnSharedVaultClick(val sharedVaultId: ShareId) : PassItemDetailsUiEvent
+
+    @JvmInline
+    value class OnAttachmentEvent(val attachmentContentEvent: AttachmentContentEvent) : PassItemDetailsUiEvent
 
 }

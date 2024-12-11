@@ -27,9 +27,10 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Instant
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.composecomponents.impl.attachments.AttachmentSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent.OnAttachmentEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
@@ -46,7 +47,6 @@ internal fun PassIdentityItemDetailsSections(
     contents: ItemContents.Identity,
     itemColors: PassItemColors,
     itemDiffs: ItemDiffs.Identity,
-    onEvent: (PassItemDetailsUiEvent) -> Unit,
     lastAutofillOption: Option<Instant>,
     revision: Long,
     createdAt: Instant,
@@ -54,7 +54,8 @@ internal fun PassIdentityItemDetailsSections(
     shouldDisplayItemHistorySection: Boolean,
     shouldDisplayItemHistoryButton: Boolean,
     shouldDisplayFileAttachments: Boolean,
-    attachmentsState: AttachmentsState
+    attachmentsState: AttachmentsState,
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(contents) {
     Column(
         modifier = modifier,
@@ -110,10 +111,7 @@ internal fun PassIdentityItemDetailsSections(
                 attachmentsState = attachmentsState,
                 isDetail = true,
                 colors = itemColors,
-                onAttachmentOptions = {},
-                onAttachmentOpen = {},
-                onAddAttachment = {},
-                onTrashAll = {}
+                onEvent = { onEvent(OnAttachmentEvent(it)) }
             )
         }
 

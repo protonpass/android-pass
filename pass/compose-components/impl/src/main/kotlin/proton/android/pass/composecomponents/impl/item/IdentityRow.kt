@@ -120,7 +120,8 @@ fun IdentityRow(
         titleSuffix = titleSuffix,
         subtitles = fields.subtitles.toImmutableList(),
         vaultIcon = vaultIcon,
-        enabled = selection.isSelectable()
+        enabled = selection.isSelectable(),
+        isShared = item.isShared
     )
 }
 

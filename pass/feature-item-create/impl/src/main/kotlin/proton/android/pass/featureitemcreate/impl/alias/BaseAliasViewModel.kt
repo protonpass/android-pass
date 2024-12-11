@@ -28,9 +28,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -38,27 +35,18 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
-import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.repositories.DraftAttachmentRepository
-import proton.android.pass.data.api.repositories.MetadataResolver
-import proton.android.pass.data.api.usecases.attachments.ClearAttachments
-import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
-import proton.android.pass.log.api.PassLogger
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentsHandler
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
-import java.net.URI
 
 abstract class BaseAliasViewModel(
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val uploadAttachment: UploadAttachment,
-    private val clearAttachments: ClearAttachments,
-    draftAttachmentRepository: DraftAttachmentRepository,
-    metadataResolver: MetadataResolver,
+    private val attachmentsHandler: AttachmentsHandler,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
@@ -66,13 +54,14 @@ abstract class BaseAliasViewModel(
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     init {
-        draftAttachmentRepository.observeNew()
-            .onEach { newUris: Set<URI> ->
-                if (newUris.isEmpty()) return@onEach
+        attachmentsHandler.observeNewAttachments(viewModelScope) { newUris ->
+            if (newUris.isNotEmpty()) {
                 onUserEditedContent()
-                newUris.forEach(::uploadNewAttachment)
+                newUris.forEach { uri ->
+                    attachmentsHandler.uploadNewAttachment(uri, viewModelScope)
+                }
             }
-            .launchIn(viewModelScope)
+        }
     }
 
     private val title: Option<String> = savedStateHandleProvider.get()
@@ -99,7 +88,6 @@ abstract class BaseAliasViewModel(
         MutableStateFlow(CloseScreenEvent.NotClose)
     protected val selectedMailboxListState: MutableStateFlow<List<Int>> =
         MutableStateFlow(emptyList())
-    private val isUploadingAttachment: MutableStateFlow<Set<URI>> = MutableStateFlow(emptySet())
 
     private val eventWrapperState = combine(
         isItemSavedState,
@@ -116,21 +104,6 @@ abstract class BaseAliasViewModel(
         val closeScreenEvent: CloseScreenEvent
     )
 
-    private val draftAttachments = draftAttachmentRepository.observeAll()
-        .map { uris -> uris.mapNotNull { metadataResolver.extractMetadata(it) } }
-
-    private val attachmentsFlow = combine(
-        isUploadingAttachment,
-        draftAttachments
-    ) { loadingAttachments, draftAttachmentsList ->
-        AttachmentsState(
-            loadingDraftAttachments = loadingAttachments,
-            draftAttachmentsList = draftAttachmentsList,
-            attachmentsList = emptyList(),
-            loadingAttachments = emptySet()
-        )
-    }
-
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     val baseAliasUiState: StateFlow<BaseAliasUiState> = combineN(
         aliasItemValidationErrorsState,
@@ -139,7 +112,7 @@ abstract class BaseAliasViewModel(
         hasUserEditedContentFlow,
         featureFlagsRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
-        attachmentsFlow
+        attachmentsHandler.attachmentsFlow
     ) { aliasItemValidationErrors, isLoading, eventWrapper, hasUserEditedContent,
         isAliasManagementEnabled, isFileAttachmentEnabled, attachmentsState ->
         BaseAliasUiState(
@@ -222,24 +195,8 @@ abstract class BaseAliasViewModel(
         snackbarDispatcher(snackbarMessage)
     }
 
-    private fun uploadNewAttachment(uri: URI) {
-        isUploadingAttachment.update { it + uri }
-        viewModelScope.launch {
-            runCatching { uploadAttachment(uri) }
-                .onFailure {
-                    PassLogger.w(TAG, "Could not upload attachment: $uri")
-                    PassLogger.w(TAG, it)
-                }
-        }
-        isUploadingAttachment.update { it - uri }
-    }
-
     override fun onCleared() {
-        clearAttachments()
+        attachmentsHandler.clearAttachments()
         super.onCleared()
-    }
-
-    companion object {
-        private const val TAG = "BaseAliasViewModel"
     }
 }

@@ -68,7 +68,7 @@ class UpdateIdentityViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            identityActionsProvider.observeDraftChanges(this)
+            identityActionsProvider.observeActions(this)
             launch { getItem() }
         }
     }

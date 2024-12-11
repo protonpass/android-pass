@@ -39,11 +39,13 @@ import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.domain.AliasOptions
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
+import proton.android.pass.featureitemcreate.impl.attachments.FakeAttachmentHandler
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -252,7 +254,9 @@ class CreateAliasViewModelTest {
         encryptionContextProvider = TestEncryptionContextProvider(),
         aliasPrefixValidator = TestAliasPrefixValidator(),
         observeDefaultVault = TestObserveDefaultVault(),
-        featureFlagsRepository = TestFeatureFlagsPreferenceRepository()
+        featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
+        linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
+        attachmentsHandler = FakeAttachmentHandler()
     ).apply {
         setDraftStatus(isDraft)
     }

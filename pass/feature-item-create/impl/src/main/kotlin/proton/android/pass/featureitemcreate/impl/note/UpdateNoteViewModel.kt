@@ -40,17 +40,14 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
-import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.GetShareById
-import proton.android.pass.data.api.usecases.attachments.ClearAttachments
-import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentsHandler
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.InitError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.ItemUpdateError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.NoteUpdated
@@ -71,18 +68,12 @@ class UpdateNoteViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
-    metadataResolver: MetadataResolver,
-    uploadAttachment: UploadAttachment,
-    clearAttachments: ClearAttachments,
-    draftAttachmentRepository: DraftAttachmentRepository,
+    attachmentsHandler: AttachmentsHandler,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseNoteViewModel(
     snackbarDispatcher = snackbarDispatcher,
-    metadataResolver = metadataResolver,
-    uploadAttachment = uploadAttachment,
-    clearAttachments = clearAttachments,
-    draftAttachmentRepository = draftAttachmentRepository,
+    attachmentsHandler = attachmentsHandler,
     featureFlagsRepository = featureFlagsRepository,
     savedStateHandleProvider = savedStateHandleProvider
 ) {

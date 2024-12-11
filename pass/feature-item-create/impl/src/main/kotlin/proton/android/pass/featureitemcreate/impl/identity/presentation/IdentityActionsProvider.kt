@@ -24,6 +24,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.Item
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
@@ -50,7 +51,8 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsh
 @Suppress("ComplexInterface", "TooManyFunctions")
 interface IdentityFormActions {
     fun onFieldChange(field: FieldChange)
-    fun observeDraftChanges(coroutineScope: CoroutineScope)
+    fun observeActions(coroutineScope: CoroutineScope)
+    fun observeNewAttachments(coroutineScope: CoroutineScope)
     fun onRenameCustomField(value: CustomFieldIndexTitle, customExtraField: CustomExtraField)
     fun getFormState(): IdentityItemFormState
     fun isFormStateValid(): Boolean
@@ -81,7 +83,8 @@ data class IdentitySharedUiState(
     val extraFields: PersistentSet<ExtraField>,
     val focusedField: Option<FocusedField>,
     val canUseCustomFields: Boolean,
-    val isFileAttachmentsEnabled: Boolean
+    val isFileAttachmentsEnabled: Boolean,
+    val attachmentsState: AttachmentsState
 ) {
 
     val showAddPersonalDetailsButton: Boolean = if (canUseCustomFields) {
@@ -119,7 +122,8 @@ data class IdentitySharedUiState(
             extraFields = persistentSetOf(),
             focusedField = None,
             canUseCustomFields = false,
-            isFileAttachmentsEnabled = false
+            isFileAttachmentsEnabled = false,
+            attachmentsState = AttachmentsState.Initial
         )
     }
 }

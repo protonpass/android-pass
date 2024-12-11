@@ -39,12 +39,14 @@ import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
+import proton.android.pass.featureitemcreate.impl.attachments.FakeAttachmentHandler
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -89,7 +91,9 @@ class CreateCreditCardViewModelTest {
             canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) },
             inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
             observeDefaultVault = TestObserveDefaultVault(),
-            featureFlagsRepository = featureFlagsRepository
+            featureFlagsRepository = featureFlagsRepository,
+            linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
+            attachmentsHandler = FakeAttachmentHandler()
         )
     }
 

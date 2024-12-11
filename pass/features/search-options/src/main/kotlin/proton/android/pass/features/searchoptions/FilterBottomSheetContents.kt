@@ -42,7 +42,7 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 internal fun FilterBottomSheetContents(
     modifier: Modifier = Modifier,
-    state: SuccessFilterOptionsUIState,
+    state: FilterOptionsState.Success,
     onSortingTypeSelected: (SearchFilterType) -> Unit
 ) = with(state) {
     buildList {
@@ -102,21 +102,23 @@ internal fun FilterBottomSheetContents(
             onClick = { onSortingTypeSelected(SearchFilterType.LoginMFA) }
         ).also(::add)
 
-        filterRow(
-            titleResId = R.string.item_type_filter_shared_with_me,
-            startIconResId = CoreR.drawable.ic_proton_user_arrow_left,
-            itemCount = summary.sharedWithMe,
-            isSelected = filterType == SearchFilterType.SharedWithMe,
-            onClick = { onSortingTypeSelected(SearchFilterType.SharedWithMe) }
-        ).also(::add)
+        if (isItemSharingAvailable) {
+            filterRow(
+                titleResId = R.string.item_type_filter_shared_with_me,
+                startIconResId = CoreR.drawable.ic_proton_user_arrow_left,
+                itemCount = summary.sharedWithMe,
+                isSelected = filterType == SearchFilterType.SharedWithMe,
+                onClick = { onSortingTypeSelected(SearchFilterType.SharedWithMe) }
+            ).also(::add)
 
-        filterRow(
-            titleResId = R.string.item_type_filter_shared_by_me,
-            startIconResId = CoreR.drawable.ic_proton_user_arrow_right,
-            itemCount = summary.sharedByMe,
-            isSelected = filterType == SearchFilterType.SharedByMe,
-            onClick = { onSortingTypeSelected(SearchFilterType.SharedByMe) }
-        ).also(::add)
+            filterRow(
+                titleResId = R.string.item_type_filter_shared_by_me,
+                startIconResId = CoreR.drawable.ic_proton_user_arrow_right,
+                itemCount = summary.sharedByMe,
+                isSelected = filterType == SearchFilterType.SharedByMe,
+                onClick = { onSortingTypeSelected(SearchFilterType.SharedByMe) }
+            ).also(::add)
+        }
     }.let { items ->
         BottomSheetItemList(
             modifier = modifier.bottomSheet(),
@@ -174,7 +176,7 @@ internal fun FilterBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProv
     PassTheme(isDark = isDark) {
         Surface {
             FilterBottomSheetContents(
-                state = SuccessFilterOptionsUIState(
+                state = FilterOptionsState.Success(
                     filterType = SearchFilterType.All,
                     summary = ItemCountSummary(
                         total = 0,
@@ -186,7 +188,8 @@ internal fun FilterBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProv
                         identities = 0,
                         sharedWithMe = 0,
                         sharedByMe = 0
-                    )
+                    ),
+                    isItemSharingAvailable = true
                 ),
                 onSortingTypeSelected = {}
             )

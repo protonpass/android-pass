@@ -88,6 +88,8 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
                 SearchFilterType.CreditCard -> summary.creditCard
                 SearchFilterType.Identity -> summary.identities
                 SearchFilterType.LoginMFA -> summary.loginWithMFA
+                SearchFilterType.SharedWithMe -> summary.sharedWithMe
+                SearchFilterType.SharedByMe -> summary.sharedByMe
             }.toInt(),
             showBulkActionsOption = bulkActionsEnabled,
             event = event

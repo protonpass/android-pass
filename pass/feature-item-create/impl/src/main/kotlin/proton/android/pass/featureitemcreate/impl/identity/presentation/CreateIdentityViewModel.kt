@@ -42,6 +42,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemCreate
@@ -65,6 +66,7 @@ class CreateIdentityViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val snackbarDispatcher: SnackbarDispatcher,
+    private val linkAttachmentsToItem: LinkAttachmentsToItem,
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -130,16 +132,28 @@ class CreateIdentityViewModel @Inject constructor(
                 shareId = shareId,
                 itemContents = identityActionsProvider.getFormState().toItemContents()
             )
-        }.onSuccess { item ->
-            inAppReviewTriggerMetrics.incrementItemCreatedCount()
-            identityActionsProvider.onItemSavedState(item)
-            telemetryManager.sendEvent(ItemCreate(EventItemType.Identity))
-            snackbarDispatcher(ItemCreated)
-        }.onFailure {
-            PassLogger.w(TAG, "Could not create item")
-            PassLogger.w(TAG, it)
-            snackbarDispatcher(ItemCreationError)
         }
+            .onFailure {
+                PassLogger.w(TAG, "Could not create item")
+                PassLogger.w(TAG, it)
+                snackbarDispatcher(ItemCreationError)
+            }
+            .mapCatching { item ->
+                if (state.value.showFileAttachments()) {
+                    linkAttachmentsToItem(item.id, shareId, item.revision)
+                }
+                item
+            }
+            .onFailure {
+                PassLogger.w(TAG, "Link attachment error")
+                PassLogger.w(TAG, it)
+            }
+            .onSuccess { item ->
+                inAppReviewTriggerMetrics.incrementItemCreatedCount()
+                identityActionsProvider.onItemSavedState(item)
+                telemetryManager.sendEvent(ItemCreate(EventItemType.Identity))
+                snackbarDispatcher(ItemCreated)
+            }
         identityActionsProvider.updateLoadingState(IsLoadingState.NotLoading)
     }
 

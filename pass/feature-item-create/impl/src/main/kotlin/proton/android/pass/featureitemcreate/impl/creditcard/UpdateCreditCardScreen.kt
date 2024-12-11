@@ -19,7 +19,10 @@ import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.AddAttachment
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Close
+import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.OpenAttachmentOptions
+import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.OpenDraftAttachmentOptions
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Upgrade
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.PerformActionAfterKeyboardHide
@@ -105,22 +108,20 @@ fun UpdateCreditCardScreen(
                             is CreditCardContentEvent.OnAttachmentEvent ->
                                 when (event.event) {
                                     AttachmentContentEvent.OnAddAttachment ->
-                                        onNavigate(BaseCreditCardNavigation.AddAttachment)
+                                        onNavigate(AddAttachment)
                                     is AttachmentContentEvent.OnAttachmentOpen -> {
                                         // open attachment
                                     }
-                                    is AttachmentContentEvent.OnAttachmentOptions -> {
-                                        // show attachment options
-                                    }
+                                    is AttachmentContentEvent.OnAttachmentOptions ->
+                                        onNavigate(OpenAttachmentOptions(event.event.attachmentId))
                                     AttachmentContentEvent.OnDeleteAllAttachments -> {
                                         // delete all attachments
                                     }
                                     is AttachmentContentEvent.OnDraftAttachmentOpen -> {
-
+                                        // open draft attachment
                                     }
-                                    is AttachmentContentEvent.OnDraftAttachmentOptions -> {
-
-                                    }
+                                    is AttachmentContentEvent.OnDraftAttachmentOptions ->
+                                        onNavigate(OpenDraftAttachmentOptions(event.event.uri))
                                 }
                         }
                     }

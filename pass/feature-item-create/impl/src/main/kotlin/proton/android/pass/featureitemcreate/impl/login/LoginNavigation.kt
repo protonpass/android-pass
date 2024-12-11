@@ -22,7 +22,9 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
+import java.net.URI
 
 sealed interface CreateLoginNavigation {
     @JvmInline
@@ -83,4 +85,10 @@ sealed interface BaseLoginNavigation {
     value class OpenImagePicker(val index: Option<Int>) : BaseLoginNavigation
 
     data object AddAttachment : BaseLoginNavigation
+
+    @JvmInline
+    value class OpenDraftAttachmentOptions(val uri: URI) : BaseLoginNavigation
+
+    @JvmInline
+    value class OpenAttachmentOptions(val attachmentId: AttachmentId) : BaseLoginNavigation
 }

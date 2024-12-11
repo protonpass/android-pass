@@ -39,6 +39,8 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation.AddAttachment
+import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation.OpenDraftAttachmentOptions
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareList
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
@@ -133,23 +135,18 @@ fun CreateAliasScreen(
                     AliasContentUiEvent.OnSlNoteInfoClick -> Unit
                     is AliasContentUiEvent.OnAttachmentEvent -> {
                         when (event.event) {
-                            AttachmentContentEvent.OnAddAttachment ->
-                                onNavigate(CreateAliasNavigation.AddAttachment)
-                            is AttachmentContentEvent.OnAttachmentOpen -> {
-                                // open attachment
-                            }
-                            is AttachmentContentEvent.OnAttachmentOptions -> {
-                                // show attachment options
-                            }
+                            AttachmentContentEvent.OnAddAttachment -> onNavigate(AddAttachment)
                             AttachmentContentEvent.OnDeleteAllAttachments -> {
                                 // delete all attachments
                             }
                             is AttachmentContentEvent.OnDraftAttachmentOpen -> {
-
+                                // open draft attachment
                             }
-                            is AttachmentContentEvent.OnDraftAttachmentOptions -> {
-
-                            }
+                            is AttachmentContentEvent.OnDraftAttachmentOptions ->
+                                onNavigate(OpenDraftAttachmentOptions(event.event.uri))
+                            is AttachmentContentEvent.OnAttachmentOpen,
+                            is AttachmentContentEvent.OnAttachmentOptions ->
+                                throw IllegalStateException("Action not allowed: $event")
                         }
                     }
                 }

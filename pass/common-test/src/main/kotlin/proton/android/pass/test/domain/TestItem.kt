@@ -116,7 +116,8 @@ object TestItem {
                 .toOption(),
             isPinned = Random.nextBoolean(),
             flags = Flags(Random.nextInt()),
-            shareCount = Random.nextInt()
+            shareCount = Random.nextInt(),
+            isOwner = Random.nextBoolean()
         )
     }
 }

@@ -24,14 +24,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.zip
-import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.domain.ItemState
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.searchoptions.api.FilterOption
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.searchoptions.api.SearchFilterType
@@ -40,8 +41,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FilterBottomSheetViewModel @Inject constructor(
-    private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
-    observeItemCount: ObserveItemCount
+    observeItemCount: ObserveItemCount,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    private val homeSearchOptionsRepository: HomeSearchOptionsRepository
 ) : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -61,27 +63,23 @@ class FilterBottomSheetViewModel @Inject constructor(
             }
         }
 
-    val state: StateFlow<FilterOptionsUIState> =
-        summaryAndOptionsFlow.map { (summary, options) ->
-            SuccessFilterOptionsUIState(
-                filterType = options.filterOption.searchFilterType,
-                summary = summary
-            )
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = EmptyFilterOptionsUIState
+    internal val stateFlow: StateFlow<FilterOptionsState> = combine(
+        summaryAndOptionsFlow,
+        featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
+    ) { (summary, options), isItemSharingAvailable ->
+        FilterOptionsState.Success(
+            filterType = options.filterOption.searchFilterType,
+            summary = summary,
+            isItemSharingAvailable = isItemSharingAvailable
         )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = FilterOptionsState.Empty
+    )
 
-    fun onFilterTypeChanged(searchFilterType: SearchFilterType) {
-        val value = FilterOption(searchFilterType)
-        homeSearchOptionsRepository.setFilterOption(value)
+    internal fun onFilterTypeChanged(searchFilterType: SearchFilterType) {
+        FilterOption(searchFilterType).also(homeSearchOptionsRepository::setFilterOption)
     }
-}
 
-sealed interface FilterOptionsUIState
-data object EmptyFilterOptionsUIState : FilterOptionsUIState
-data class SuccessFilterOptionsUIState(
-    val filterType: SearchFilterType,
-    val summary: ItemCountSummary
-) : FilterOptionsUIState
+}

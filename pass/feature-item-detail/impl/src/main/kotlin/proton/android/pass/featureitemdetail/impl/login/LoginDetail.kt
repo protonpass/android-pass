@@ -337,7 +337,7 @@ fun LoginDetail(
                                 is LoginDetailEvent.OnAttachmentEvent ->
                                     when (it.attachmentContentEvent) {
                                         is AttachmentContentEvent.OnAttachmentOpen -> {}
-                                        is AttachmentContentEvent.OnAttachmentOptions -> {}
+                                        is AttachmentContentEvent.OnAttachmentOptions,
                                         AttachmentContentEvent.OnAddAttachment,
                                         AttachmentContentEvent.OnDeleteAllAttachments,
                                         is AttachmentContentEvent.OnDraftAttachmentOpen,

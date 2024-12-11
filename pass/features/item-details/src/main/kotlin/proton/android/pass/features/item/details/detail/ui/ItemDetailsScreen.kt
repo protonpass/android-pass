@@ -132,7 +132,7 @@ fun ItemDetailsScreen(
                 is ItemDetailsUiEvent.OnAttachmentEvent ->
                     when (uiEvent.attachmentContentEvent) {
                         is AttachmentContentEvent.OnAttachmentOpen -> {}
-                        is AttachmentContentEvent.OnAttachmentOptions -> {}
+                        is AttachmentContentEvent.OnAttachmentOptions,
                         AttachmentContentEvent.OnAddAttachment,
                         AttachmentContentEvent.OnDeleteAllAttachments,
                         is AttachmentContentEvent.OnDraftAttachmentOpen,

@@ -24,6 +24,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.VaultWithItemCount
 
 @Stable
@@ -64,7 +65,8 @@ internal data class ShareFromItemUiState(
     val isSingleSharingAvailable: Boolean,
     val canUsePaidFeatures: Boolean,
     val isItemSharingAvailable: Boolean,
-    private val vaultAccessData: VaultAccessData
+    private val vaultAccessData: VaultAccessData,
+    private val shareOption: Option<Share>
 ) {
 
     private val isSharedVault: Boolean = when (vault) {
@@ -74,12 +76,21 @@ internal data class ShareFromItemUiState(
 
     internal val canManageSharedVault: Boolean = isSharedVault && vaultAccessData.canManageAccess
 
-    internal val canViewSharedVaultMembers: Boolean = isSharedVault && vaultAccessData.canViewMembers
+    internal val canViewSharedVaultMembers: Boolean =
+        isSharedVault && vaultAccessData.canViewMembers
 
     internal val sharedVaultMembersCount: Int by lazy {
         when (vault) {
             None -> 0
             is Some -> vault.value.vault.members
+        }
+    }
+
+    internal val canShareVault: Boolean = when (shareOption) {
+        None -> false
+        is Some -> when (val share = shareOption.value) {
+            is Share.Item -> false
+            is Share.Vault -> share.isOwner || share.isAdmin
         }
     }
 
@@ -97,7 +108,8 @@ internal data class ShareFromItemUiState(
             vaultAccessData = VaultAccessData(
                 canManageAccess = false,
                 canViewMembers = false
-            )
+            ),
+            shareOption = None
         )
 
     }

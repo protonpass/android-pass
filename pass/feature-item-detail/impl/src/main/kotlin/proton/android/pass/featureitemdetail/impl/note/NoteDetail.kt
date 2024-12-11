@@ -206,7 +206,7 @@ fun NoteDetail(
                         onAttachmentEvent = {
                             when (it) {
                                 is AttachmentContentEvent.OnAttachmentOpen -> {}
-                                is AttachmentContentEvent.OnAttachmentOptions -> {}
+                                is AttachmentContentEvent.OnAttachmentOptions,
                                 AttachmentContentEvent.OnAddAttachment,
                                 AttachmentContentEvent.OnDeleteAllAttachments,
                                 is AttachmentContentEvent.OnDraftAttachmentOpen,

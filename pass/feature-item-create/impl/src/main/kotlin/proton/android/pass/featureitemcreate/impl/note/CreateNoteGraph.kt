@@ -30,6 +30,7 @@ import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
+import java.net.URI
 
 object CreateNote : NavItem(
     baseRoute = "note/create",
@@ -64,4 +65,7 @@ sealed interface CreateNoteNavigation {
     data object NoteCreated : CreateNoteNavigation
     data object AddAttachment : CreateNoteNavigation
     data object Back : CreateNoteNavigation
+
+    @JvmInline
+    value class OpenDraftAttachmentOptions(val uri: URI) : CreateNoteNavigation
 }

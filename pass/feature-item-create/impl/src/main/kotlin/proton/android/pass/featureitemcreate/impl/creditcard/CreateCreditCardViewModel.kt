@@ -28,14 +28,10 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState.NotLoading
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.repositories.DraftAttachmentRepository
-import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
-import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
@@ -43,6 +39,7 @@ import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.OptionShareIdSaver
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentsHandler
 import proton.android.pass.featureitemcreate.impl.common.getShareUiStateFlow
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardSnackbarMessage.ItemCreated
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardSnackbarMessage.ItemCreationError
@@ -55,7 +52,6 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
-@Suppress("LongParameterList")
 @HiltViewModel
 class CreateCreditCardViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -65,20 +61,14 @@ class CreateCreditCardViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
-    clearAttachments: ClearAttachments,
-    uploadAttachment: UploadAttachment,
-    draftAttachmentRepository: DraftAttachmentRepository,
-    metadataResolver: MetadataResolver,
+    attachmentsHandler: AttachmentsHandler,
     observeVaults: ObserveVaultsWithItemCount,
     canPerformPaidAction: CanPerformPaidAction,
     observeDefaultVault: ObserveDefaultVault,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseCreditCardViewModel(
-    clearAttachments = clearAttachments,
-    uploadAttachment = uploadAttachment,
-    draftAttachmentRepository = draftAttachmentRepository,
-    metadataResolver = metadataResolver,
+    attachmentsHandler = attachmentsHandler,
     encryptionContextProvider = encryptionContextProvider,
     canPerformPaidAction = canPerformPaidAction,
     featureFlagsRepository = featureFlagsRepository,

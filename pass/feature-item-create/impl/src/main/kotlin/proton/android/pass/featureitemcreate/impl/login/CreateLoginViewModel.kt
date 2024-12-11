@@ -58,17 +58,13 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
-import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.DraftRepository
-import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
-import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
@@ -88,6 +84,7 @@ import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.featureitemcreate.impl.common.OptionShareIdSaver
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentsHandler
 import proton.android.pass.featureitemcreate.impl.common.getShareUiStateFlow
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.AliasRateLimited
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.CannotCreateMoreAliases
@@ -132,10 +129,7 @@ class CreateLoginViewModel @Inject constructor(
     emailValidator: EmailValidator,
     observeTooltipEnabled: ObserveTooltipEnabled,
     disableTooltip: DisableTooltip,
-    clearAttachments: ClearAttachments,
-    uploadAttachment: UploadAttachment,
-    draftAttachmentRepository: DraftAttachmentRepository,
-    metadataResolver: MetadataResolver,
+    attachmentsHandler: AttachmentsHandler,
     userPreferencesRepository: UserPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseLoginViewModel(
@@ -152,10 +146,7 @@ class CreateLoginViewModel @Inject constructor(
     observeTooltipEnabled = observeTooltipEnabled,
     disableTooltip = disableTooltip,
     userPreferencesRepository = userPreferencesRepository,
-    clearAttachments = clearAttachments,
-    uploadAttachment = uploadAttachment,
-    draftAttachmentRepository = draftAttachmentRepository,
-    metadataResolver = metadataResolver,
+    attachmentsHandler = attachmentsHandler,
     featureFlagsRepository = featureFlagsRepository,
     savedStateHandleProvider = savedStateHandleProvider
 ) {

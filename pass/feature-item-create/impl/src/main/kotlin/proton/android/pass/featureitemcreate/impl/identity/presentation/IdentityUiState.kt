@@ -24,6 +24,7 @@ import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
@@ -152,5 +153,11 @@ sealed interface IdentityUiState {
         is CreateIdentity -> sharedState.showFileAttachments
         is UpdateIdentity -> sharedState.showFileAttachments
         else -> false
+    }
+
+    fun getAttachmentsState(): AttachmentsState = when (this) {
+        is CreateIdentity -> sharedState.attachmentsState
+        is UpdateIdentity -> sharedState.attachmentsState
+        else -> AttachmentsState.Initial
     }
 }

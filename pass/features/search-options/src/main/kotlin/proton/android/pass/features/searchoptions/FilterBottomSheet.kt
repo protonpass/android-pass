@@ -31,16 +31,17 @@ fun FilterBottomSheet(
     onNavigateEvent: (SearchOptionsNavigation) -> Unit,
     viewModel: FilterBottomSheetViewModel = hiltViewModel()
 ) = with(viewModel) {
-    val state by state.collectAsStateWithLifecycle()
+    val state by stateFlow.collectAsStateWithLifecycle()
 
     when (val currentState = state) {
-        EmptyFilterOptionsUIState -> Unit
-        is SuccessFilterOptionsUIState -> {
+        FilterOptionsState.Empty -> Unit
+        is FilterOptionsState.Success -> {
             FilterBottomSheetContents(
                 modifier = modifier,
                 state = currentState
-            ) {
-                viewModel.onFilterTypeChanged(it)
+            ) { searchFilterType ->
+                onFilterTypeChanged(searchFilterType)
+
                 onNavigateEvent(SelectSorting)
             }
         }

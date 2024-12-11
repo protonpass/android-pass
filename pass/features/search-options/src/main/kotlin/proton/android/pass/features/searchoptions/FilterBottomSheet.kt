@@ -18,7 +18,6 @@
 
 package proton.android.pass.features.searchoptions
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -26,21 +25,24 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.searchoptions.SearchOptionsNavigation.SelectSorting
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FilterBottomSheet(
     modifier: Modifier = Modifier,
     onNavigateEvent: (SearchOptionsNavigation) -> Unit,
     viewModel: FilterBottomSheetViewModel = hiltViewModel()
-) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+) = with(viewModel) {
+    val state by state.collectAsStateWithLifecycle()
 
-    FilterBottomSheetContents(
-        modifier = modifier,
-        state = state
-    ) {
-        viewModel.onFilterTypeChanged(it)
-        onNavigateEvent(SelectSorting)
+    when (val currentState = state) {
+        EmptyFilterOptionsUIState -> Unit
+        is SuccessFilterOptionsUIState -> {
+            FilterBottomSheetContents(
+                modifier = modifier,
+                state = currentState
+            ) {
+                viewModel.onFilterTypeChanged(it)
+                onNavigateEvent(SelectSorting)
+            }
+        }
     }
 }
-

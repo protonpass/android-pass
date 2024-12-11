@@ -886,6 +886,9 @@ fun NavGraphBuilder.appGraph(
                 is BaseLoginNavigation.TotpSuccess -> appNavigator.navigateBackWithResult(it.results)
                 BaseLoginNavigation.AddAttachment ->
                     appNavigator.navigate(AddAttachmentNavItem)
+
+                is BaseLoginNavigation.OpenAttachmentOptions -> TODO()
+                is BaseLoginNavigation.OpenDraftAttachmentOptions -> TODO()
             }
         }
     )
@@ -901,6 +904,8 @@ fun NavGraphBuilder.appGraph(
                 CreateNoteNavigation.NoteCreated -> appNavigator.navigateBack()
                 CreateNoteNavigation.AddAttachment ->
                     appNavigator.navigate(AddAttachmentNavItem)
+
+                is CreateNoteNavigation.OpenDraftAttachmentOptions -> TODO()
             }
         }
     )
@@ -915,6 +920,8 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 UpdateNoteNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
+                is UpdateNoteNavigation.OpenAttachmentOptions -> TODO()
+                is UpdateNoteNavigation.OpenDraftAttachmentOptions -> TODO()
             }
         }
     )
@@ -932,6 +939,8 @@ fun NavGraphBuilder.appGraph(
             BaseCreditCardNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
             is UpdateCreditCardNavigation -> {}
             BaseCreditCardNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
+            is BaseCreditCardNavigation.OpenAttachmentOptions -> TODO()
+            is BaseCreditCardNavigation.OpenDraftAttachmentOptions -> TODO()
         }
     }
     updateCreditCardGraph {
@@ -950,6 +959,8 @@ fun NavGraphBuilder.appGraph(
 
             BaseCreditCardNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
             BaseCreditCardNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
+            is BaseCreditCardNavigation.OpenAttachmentOptions -> TODO()
+            is BaseCreditCardNavigation.OpenDraftAttachmentOptions -> TODO()
         }
     }
     createAliasGraph(
@@ -979,6 +990,8 @@ fun NavGraphBuilder.appGraph(
 
                 CreateAliasNavigation.AddAttachment ->
                     appNavigator.navigate(AddAttachmentNavItem)
+
+                is CreateAliasNavigation.OpenDraftAttachmentOptions -> TODO()
             }
         }
     )
@@ -994,6 +1007,8 @@ fun NavGraphBuilder.appGraph(
 
                 UpdateAliasNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 UpdateAliasNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
+                is UpdateAliasNavigation.OpenAttachmentOptions -> TODO()
+                is UpdateAliasNavigation.OpenDraftAttachmentOptions -> TODO()
             }
         }
     )
@@ -1091,6 +1106,8 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 BaseIdentityNavigation.AddAttachment -> appNavigator.navigate(AddAttachmentNavItem)
+                is BaseIdentityNavigation.OpenAttachmentOptions -> TODO()
+                is BaseIdentityNavigation.OpenDraftAttachmentOptions -> TODO()
             }
         }
     )

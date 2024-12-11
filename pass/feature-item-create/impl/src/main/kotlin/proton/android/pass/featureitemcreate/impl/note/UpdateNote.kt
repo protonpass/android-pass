@@ -39,6 +39,9 @@ import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.PerformActionAfterKeyboardHide
+import proton.android.pass.featureitemcreate.impl.note.UpdateNoteNavigation.AddAttachment
+import proton.android.pass.featureitemcreate.impl.note.UpdateNoteNavigation.OpenAttachmentOptions
+import proton.android.pass.featureitemcreate.impl.note.UpdateNoteNavigation.OpenDraftAttachmentOptions
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -87,23 +90,21 @@ fun UpdateNote(
                             {
                                 when (event.event) {
                                     AttachmentContentEvent.OnAddAttachment ->
-                                        onNavigate(UpdateNoteNavigation.AddAttachment)
+                                        onNavigate(AddAttachment)
 
                                     is AttachmentContentEvent.OnAttachmentOpen -> {
-
+                                        // open attachment
                                     }
-                                    is AttachmentContentEvent.OnAttachmentOptions -> {
-
-                                    }
+                                    is AttachmentContentEvent.OnAttachmentOptions ->
+                                        onNavigate(OpenAttachmentOptions(event.event.attachmentId))
                                     AttachmentContentEvent.OnDeleteAllAttachments -> {
                                         // cannot delete all attachments in notes
                                     }
                                     is AttachmentContentEvent.OnDraftAttachmentOpen -> {
-
+                                        // open draft attachment
                                     }
-                                    is AttachmentContentEvent.OnDraftAttachmentOptions -> {
-
-                                    }
+                                    is AttachmentContentEvent.OnDraftAttachmentOptions ->
+                                        onNavigate(OpenDraftAttachmentOptions(event.event.uri))
                                 }
                             }
                 }

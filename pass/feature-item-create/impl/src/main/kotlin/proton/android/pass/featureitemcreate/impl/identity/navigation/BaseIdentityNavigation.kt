@@ -20,8 +20,10 @@ package proton.android.pass.featureitemcreate.impl.identity.navigation
 
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.AddIdentityFieldType
+import java.net.URI
 
 sealed interface BaseIdentityNavigation {
     data object Close : BaseIdentityNavigation
@@ -51,4 +53,10 @@ sealed interface BaseIdentityNavigation {
     data object AddExtraSection : BaseIdentityNavigation
 
     data object AddAttachment : BaseIdentityNavigation
+
+    @JvmInline
+    value class OpenAttachmentOptions(val attachmentId: AttachmentId) : BaseIdentityNavigation
+
+    @JvmInline
+    value class OpenDraftAttachmentOptions(val uri: URI) : BaseIdentityNavigation
 }

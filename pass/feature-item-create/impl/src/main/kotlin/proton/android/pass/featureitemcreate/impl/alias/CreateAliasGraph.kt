@@ -39,6 +39,7 @@ import proton.android.pass.navigation.api.ShowUpgradeNavArgId
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
+import java.net.URI
 
 object IsEditAliasNavArg : OptionalNavArgId {
     override val key = "isEdit"
@@ -101,6 +102,9 @@ sealed interface CreateAliasNavigation {
     data object Close : CreateAliasNavigation
     data object CloseBottomsheet : CreateAliasNavigation
     data object AddAttachment : CreateAliasNavigation
+
+    @JvmInline
+    value class OpenDraftAttachmentOptions(val uri: URI) : CreateAliasNavigation
 
     data class SelectVault(val shareId: ShareId) : CreateAliasNavigation
 }

@@ -18,8 +18,17 @@
 
 package proton.android.pass.featureitemcreate.impl.creditcard
 
+import proton.android.pass.domain.attachments.AttachmentId
+import java.net.URI
+
 sealed interface BaseCreditCardNavigation {
     data object Upgrade : BaseCreditCardNavigation
     data object Close : BaseCreditCardNavigation
     data object AddAttachment : BaseCreditCardNavigation
+
+    @JvmInline
+    value class OpenAttachmentOptions(val attachmentId: AttachmentId) : BaseCreditCardNavigation
+
+    @JvmInline
+    value class OpenDraftAttachmentOptions(val uri: URI) : BaseCreditCardNavigation
 }

@@ -340,6 +340,9 @@ fun NavGraphBuilder.autofillActivityGraph(
                 BaseLoginNavigation.AddAttachment -> {
                     throw IllegalStateException("Cannot add attachment from autofill")
                 }
+
+                is BaseLoginNavigation.OpenAttachmentOptions -> TODO()
+                is BaseLoginNavigation.OpenDraftAttachmentOptions -> TODO()
             }
         }
     )
@@ -391,6 +394,8 @@ fun NavGraphBuilder.autofillActivityGraph(
                 CreateAliasNavigation.AddAttachment -> {
                     throw IllegalStateException("Cannot add attachment from autofill")
                 }
+
+                is CreateAliasNavigation.OpenDraftAttachmentOptions -> TODO()
             }
         }
     )
@@ -412,6 +417,9 @@ fun NavGraphBuilder.autofillActivityGraph(
             BaseCreditCardNavigation.AddAttachment -> {
                 throw IllegalStateException("Cannot add attachment from autofill")
             }
+
+            is BaseCreditCardNavigation.OpenAttachmentOptions -> TODO()
+            is BaseCreditCardNavigation.OpenDraftAttachmentOptions -> TODO()
         }
     }
     createIdentityGraph(
@@ -496,6 +504,9 @@ fun NavGraphBuilder.autofillActivityGraph(
                 BaseIdentityNavigation.AddAttachment -> {
                     throw IllegalStateException("Cannot add attachment from autofill")
                 }
+
+                is BaseIdentityNavigation.OpenAttachmentOptions -> TODO()
+                is BaseIdentityNavigation.OpenDraftAttachmentOptions -> TODO()
             }
         }
     )

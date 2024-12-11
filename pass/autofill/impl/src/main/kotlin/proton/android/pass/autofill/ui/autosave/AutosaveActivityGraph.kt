@@ -174,6 +174,9 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 BaseLoginNavigation.AddAttachment -> {
                     throw IllegalStateException("Cannot add attachment from autosave")
                 }
+
+                is BaseLoginNavigation.OpenAttachmentOptions -> TODO()
+                is BaseLoginNavigation.OpenDraftAttachmentOptions -> TODO()
             }
         }
     )

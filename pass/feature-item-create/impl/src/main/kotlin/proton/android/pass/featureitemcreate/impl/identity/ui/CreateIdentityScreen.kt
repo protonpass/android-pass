@@ -40,9 +40,12 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation
+import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.AddAttachment
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.AddExtraSection
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.CustomFieldOptions
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.ExtraSectionOptions
+import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.OpenAttachmentOptions
+import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.OpenDraftAttachmentOptions
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.OpenExtraFieldBottomSheet
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation.SelectVault
@@ -139,24 +142,23 @@ fun CreateIdentityScreen(
                         viewModel.onCustomFieldFocusChange(event.index, event.isFocused, event.customExtraField)
 
                     is IdentityContentEvent.OnAttachmentEvent -> when (event.event) {
-                        AttachmentContentEvent.OnAddAttachment ->
-                            onNavigate(BaseIdentityNavigation.AddAttachment)
+                        AttachmentContentEvent.OnAddAttachment -> onNavigate(AddAttachment)
                         is AttachmentContentEvent.OnAttachmentOpen -> {
                             // open attachment
                         }
-                        is AttachmentContentEvent.OnAttachmentOptions -> {
-                            // show attachment options
-                        }
+                        is AttachmentContentEvent.OnAttachmentOptions ->
+                            onNavigate(OpenAttachmentOptions(event.event.attachmentId))
+
                         AttachmentContentEvent.OnDeleteAllAttachments -> {
                             // delete all attachments
                         }
 
                         is AttachmentContentEvent.OnDraftAttachmentOpen -> {
-
+                            // open draft attachment
                         }
-                        is AttachmentContentEvent.OnDraftAttachmentOptions -> {
+                        is AttachmentContentEvent.OnDraftAttachmentOptions ->
+                            onNavigate(OpenDraftAttachmentOptions(event.event.uri))
 
-                        }
                     }
                 }
             }

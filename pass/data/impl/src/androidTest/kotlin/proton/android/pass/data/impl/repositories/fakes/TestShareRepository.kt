@@ -173,11 +173,6 @@ class TestShareRepository : ShareRepository {
     override suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress =
         getAddressForShareIdResult.getOrThrow()
 
-    override fun observeSharePendingInvites(
-        userId: UserId,
-        shareId: ShareId
-    ): Flow<List<SharePendingInvite>> = sharePendingInvitesFlow
-
     data class RefreshSharePayload(
         val userId: UserId,
         val shareId: ShareId

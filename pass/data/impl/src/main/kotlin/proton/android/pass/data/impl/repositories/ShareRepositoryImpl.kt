@@ -25,7 +25,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.SessionUserId
@@ -63,7 +62,6 @@ import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.data.impl.util.TimeUtil.toDate
-import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.SharePermission
@@ -72,7 +70,6 @@ import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewVault
 import proton.android.pass.domain.key.ShareKey
-import proton.android.pass.domain.shares.SharePendingInvite
 import proton.android.pass.log.api.PassLogger
 import proton_pass_vault_v1.VaultV1
 import java.sql.Date
@@ -377,44 +374,6 @@ class ShareRepositoryImpl @Inject constructor(
         val address = userAddressRepository.getAddress(userId, AddressId(entity.addressId))
             ?: throw IllegalStateException("Could not find address for share")
         return address
-    }
-
-
-    override fun observeSharePendingInvites(userId: UserId, shareId: ShareId): Flow<List<SharePendingInvite>> = flow {
-        remoteShareDataSource.getSharePendingInvites(userId, shareId)
-            .let { sharePendingInviteResponse ->
-                buildList {
-                    sharePendingInviteResponse.invites
-                        .map { actualUserPendingInvite ->
-                            SharePendingInvite.ExistingUser(
-                                email = actualUserPendingInvite.invitedEmail,
-                                inviteId = InviteId(actualUserPendingInvite.inviteId)
-                            )
-                        }
-                        .also(::addAll)
-
-                    sharePendingInviteResponse.newUserInvites
-                        .map { newUserPendingInvite ->
-                            SharePendingInvite.NewUser(
-                                email = newUserPendingInvite.invitedEmail,
-                                inviteId = InviteId(newUserPendingInvite.newUserInviteId),
-                                role = ShareRole.fromValue(newUserPendingInvite.shareRoleId),
-                                inviteState = SharePendingInvite.NewUser.InviteState.fromValue(
-                                    value = newUserPendingInvite.state
-                                )
-                            )
-                        }
-                        .also(::addAll)
-                }.also { sharePendingInvites ->
-                    localShareDataSource.upsertSharePendingInvites(
-                        userId,
-                        shareId,
-                        sharePendingInvites
-                    )
-                }
-            }
-
-        emitAll(localShareDataSource.observeSharePendingInvites(userId, shareId))
     }
 
     private suspend fun onShareResponseEntity(

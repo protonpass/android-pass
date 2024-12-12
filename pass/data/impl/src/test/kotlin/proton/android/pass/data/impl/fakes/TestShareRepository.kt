@@ -19,7 +19,6 @@
 package proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
@@ -32,7 +31,6 @@ import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.NewVault
-import proton.android.pass.domain.shares.SharePendingInvite
 
 class TestShareRepository : ShareRepository {
 
@@ -63,8 +61,6 @@ class TestShareRepository : ShareRepository {
 
     private val deleteVaultMemory: MutableList<ShareId> = mutableListOf()
     private val refreshShareMemory: MutableList<RefreshSharePayload> = mutableListOf()
-
-    private val sharePendingInvitesFlow: MutableSharedFlow<List<SharePendingInvite>> = testFlow()
 
     fun deleteVaultMemory(): List<ShareId> = deleteVaultMemory
     fun refreshShareMemory(): List<RefreshSharePayload> = refreshShareMemory
@@ -164,9 +160,6 @@ class TestShareRepository : ShareRepository {
 
     override suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress =
         getAddressForShareIdResult.getOrThrow()
-
-    override fun observeSharePendingInvites(userId: UserId, shareId: ShareId): Flow<List<SharePendingInvite>> =
-        sharePendingInvitesFlow
 
     data class RefreshSharePayload(
         val userId: UserId,

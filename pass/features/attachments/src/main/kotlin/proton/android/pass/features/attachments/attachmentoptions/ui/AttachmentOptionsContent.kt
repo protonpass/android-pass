@@ -18,10 +18,15 @@
 
 package proton.android.pass.features.attachments.attachmentoptions.ui
 
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
@@ -85,4 +90,16 @@ private fun deleteFile(onClick: () -> Unit): BottomSheetItem = object : BottomSh
     override val onClick: () -> Unit
         get() = onClick
     override val isDivider = false
+}
+
+@Preview
+@Composable
+fun AttachmentOptionsContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            AttachmentOptionsContent(
+                onEvent = {}
+            )
+        }
+    }
 }

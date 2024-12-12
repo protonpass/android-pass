@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,32 +16,29 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.remote
+package proton.android.pass.data.impl.remote.shares
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.impl.requests.CreateVaultRequest
-import proton.android.pass.data.impl.requests.UpdateVaultRequest
-import proton.android.pass.data.impl.responses.ShareResponse
+import proton.android.pass.data.impl.responses.CodeOnlyResponse
+import proton.android.pass.data.impl.responses.GetSharePendingInvitesResponse
+import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.ShareId
 
-interface RemoteShareDataSource {
+interface RemoteShareInvitesDataSource {
 
-    suspend fun createVault(userId: UserId, body: CreateVaultRequest): ShareResponse
+    suspend fun getSharePendingInvites(userId: UserId, shareId: ShareId): GetSharePendingInvitesResponse
 
-    suspend fun updateVault(
+    suspend fun deleteSharePendingInvite(
         userId: UserId,
         shareId: ShareId,
-        body: UpdateVaultRequest
-    ): ShareResponse
+        inviteId: InviteId,
+        isForNewUser: Boolean
+    ): CodeOnlyResponse
 
-    suspend fun deleteVault(userId: UserId, shareId: ShareId)
-
-    suspend fun getShares(userId: UserId): List<ShareResponse>
-
-    suspend fun fetchShareById(userId: UserId, shareId: ShareId): ShareResponse?
-
-    suspend fun markAsPrimary(userId: UserId, shareId: ShareId)
-
-    suspend fun leaveVault(userId: UserId, shareId: ShareId)
+    suspend fun resendShareInvite(
+        userId: UserId,
+        shareId: ShareId,
+        inviteId: InviteId
+    ): CodeOnlyResponse
 
 }

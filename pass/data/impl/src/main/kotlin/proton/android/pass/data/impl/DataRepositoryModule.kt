@@ -41,6 +41,7 @@ import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
 import proton.android.pass.data.api.repositories.ReportRepository
 import proton.android.pass.data.api.repositories.SearchEntryRepository
+import proton.android.pass.data.api.repositories.ShareInvitesRepository
 import proton.android.pass.data.api.repositories.ShareMembersRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.SimpleLoginRepository
@@ -79,6 +80,7 @@ import proton.android.pass.data.impl.repositories.ReportRepositoryImpl
 import proton.android.pass.data.impl.repositories.SearchEntryRepositoryImpl
 import proton.android.pass.data.impl.repositories.SecureLinkRepository
 import proton.android.pass.data.impl.repositories.SecureLinkRepositoryImpl
+import proton.android.pass.data.impl.repositories.ShareInvitesRepositoryImpl
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.repositories.ShareKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.ShareMembersRepositoryImpl
@@ -192,5 +194,8 @@ abstract class DataRepositoryModule {
 
     @[Binds Singleton]
     abstract fun bindShareMembersRepository(impl: ShareMembersRepositoryImpl): ShareMembersRepository
+
+    @[Binds Singleton]
+    abstract fun bindShareInvitesRepository(impl: ShareInvitesRepositoryImpl): ShareInvitesRepository
 
 }

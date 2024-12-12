@@ -49,12 +49,12 @@ import proton.android.pass.crypto.fakes.usecases.TestMigrateItem
 import proton.android.pass.crypto.fakes.usecases.TestOpenItem
 import proton.android.pass.crypto.fakes.usecases.TestUpdateItem
 import proton.android.pass.data.api.repositories.ItemRevision
+import proton.android.pass.data.fakes.crypto.FakeGetItemKeys
 import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
 import proton.android.pass.data.impl.db.AppDatabase
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.local.LocalItemDataSourceImpl
-import proton.android.pass.data.impl.repositories.fakes.TestItemKeyRepository
 import proton.android.pass.data.impl.repositories.fakes.TestRemoteItemDataSource
 import proton.android.pass.data.impl.repositories.fakes.TestShareKeyRepository
 import proton.android.pass.data.impl.repositories.fakes.TestShareRepository
@@ -121,9 +121,9 @@ class ItemRepositoryImplTest {
                 )
             },
             migrateItem = TestMigrateItem(),
-            itemKeyRepository = TestItemKeyRepository(),
             encryptionContextProvider = TestEncryptionContextProvider(),
             openItemRevision = FakeOpenItemRevision(),
+            getItemKeys = FakeGetItemKeys(),
         )
     }
 
@@ -174,12 +174,12 @@ class ItemRepositoryImplTest {
         database.inTransaction {
             database.accountDao().insertOrUpdate(
                 AccountEntity(
-                    userId =  USER_ID,
-                    username =  USER_ID.id,
-                    email =  "test@email.test",
-                    state =  AccountState.Ready,
-                    sessionId =  null,
-                    sessionState =  SessionState.Authenticated
+                    userId = USER_ID,
+                    username = USER_ID.id,
+                    email = "test@email.test",
+                    state = AccountState.Ready,
+                    sessionId = null,
+                    sessionState = SessionState.Authenticated
                 )
             )
 

@@ -51,6 +51,7 @@ import proton.android.pass.crypto.api.usecases.UpdateItem
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.PendingEventList
+import proton.android.pass.data.api.crypto.GetItemKeys
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
@@ -61,7 +62,6 @@ import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
-import proton.android.pass.data.impl.crypto.GetItemKeys
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.hasPackageName

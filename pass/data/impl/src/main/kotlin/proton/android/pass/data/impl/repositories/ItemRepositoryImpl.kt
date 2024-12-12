@@ -61,6 +61,7 @@ import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
+import proton.android.pass.data.impl.crypto.GetItemKeys
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.hasPackageName
@@ -118,9 +119,9 @@ class ItemRepositoryImpl @Inject constructor(
     private val shareKeyRepository: ShareKeyRepository,
     private val openItem: OpenItem,
     private val migrateItem: MigrateItem,
-    private val itemKeyRepository: ItemKeyRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val openItemRevision: OpenItemRevision
+    private val openItemRevision: OpenItemRevision,
+    private val getItemKeys: GetItemKeys
 ) : BaseRepository(userAddressRepository), ItemRepository {
 
     @Suppress("TooGenericExceptionCaught")
@@ -862,10 +863,16 @@ class ItemRepositoryImpl @Inject constructor(
         PassLogger.i(TAG, "Updating last used time [vaultId=$vaultId][itemId=$itemId]")
 
         val now = TimeUtil.getNowUtc()
-        val items = localItemDataSource.getByVaultIdAndItemId(readyUsers.map { it.userId }, vaultId, itemId)
+        val items =
+            localItemDataSource.getByVaultIdAndItemId(readyUsers.map { it.userId }, vaultId, itemId)
         items.forEach {
             localItemDataSource.updateLastUsedTime(ShareId(it.shareId), ItemId(it.id), now)
-            remoteItemDataSource.updateLastUsedTime(UserId(it.userId), ShareId(it.shareId), ItemId(it.id), now)
+            remoteItemDataSource.updateLastUsedTime(
+                UserId(it.userId),
+                ShareId(it.shareId),
+                ItemId(it.id),
+                now
+            )
             PassLogger.i(TAG, "Updated last used time [shareId=${it.shareId}][itemId=$itemId]")
         }
     }
@@ -899,9 +906,10 @@ class ItemRepositoryImpl @Inject constructor(
             // Happy path
             successes.isNotEmpty() && failures.isEmpty() -> {
                 val migrated = successes.mapNotNull { it.getOrNull() }.flatten()
-                val migratedItemsMapped = encryptionContextProvider.withEncryptionContextSuspendable {
-                    migrated.map { it.toDomain(this) }
-                }
+                val migratedItemsMapped =
+                    encryptionContextProvider.withEncryptionContextSuspendable {
+                        migrated.map { it.toDomain(this) }
+                    }
 
                 MigrateItemsResult.AllMigrated(migratedItemsMapped)
             }
@@ -914,9 +922,10 @@ class ItemRepositoryImpl @Inject constructor(
                 PassLogger.w(TAG, firstFailure)
 
                 val migrated = successes.mapNotNull { it.getOrNull() }.flatten()
-                val migratedItemsMapped = encryptionContextProvider.withEncryptionContextSuspendable {
-                    migrated.map { it.toDomain(this) }
-                }
+                val migratedItemsMapped =
+                    encryptionContextProvider.withEncryptionContextSuspendable {
+                        migrated.map { it.toDomain(this) }
+                    }
                 MigrateItemsResult.SomeMigrated(migratedItemsMapped)
             }
 
@@ -1372,9 +1381,11 @@ class ItemRepositoryImpl @Inject constructor(
         item: Item,
         itemContents: ItemV1.Item
     ): Item = withUserAddress(userId) { userAddress ->
-        val (shareKey, itemKey) = itemKeyRepository
-            .getLatestItemKey(userId, userAddress.addressId, share.id, item.id)
-            .first()
+        val (shareKey, itemKey) = getItemKeys(
+            userAddress = userAddress,
+            shareId = share.id,
+            itemId = item.id
+        )
         val body = updateItem.createRequest(
             itemKey,
             itemContents,

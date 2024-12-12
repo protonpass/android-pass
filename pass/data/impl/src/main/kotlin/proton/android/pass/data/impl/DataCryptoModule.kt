@@ -30,6 +30,8 @@ import proton.android.pass.data.impl.crypto.EncryptItemsKeysForUser
 import proton.android.pass.data.impl.crypto.EncryptItemsKeysForUserImpl
 import proton.android.pass.data.impl.crypto.EncryptShareKeysForUser
 import proton.android.pass.data.impl.crypto.EncryptShareKeysForUserImpl
+import proton.android.pass.data.impl.crypto.GetItemKeys
+import proton.android.pass.data.impl.crypto.GetItemKeysImpl
 import proton.android.pass.data.impl.crypto.ReencryptInviteContents
 import proton.android.pass.data.impl.crypto.ReencryptInviteContentsImpl
 import proton.android.pass.data.impl.crypto.ReencryptShareContents
@@ -64,5 +66,8 @@ abstract class DataCryptoModule {
 
     @[Binds Singleton]
     abstract fun bindEncryptItemsKeysForUser(impl: EncryptItemsKeysForUserImpl): EncryptItemsKeysForUser
+
+    @[Binds Singleton]
+    abstract fun bindGetItemKeys(impl: GetItemKeysImpl): GetItemKeys
 
 }

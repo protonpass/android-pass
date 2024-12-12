@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -62,6 +63,7 @@ fun CreateIdentityScreen(
     viewModel: CreateIdentityViewModel = hiltViewModel(),
     onNavigate: (BaseIdentityNavigation) -> Unit
 ) {
+    val context = LocalContext.current
     LaunchedEffect(selectVault) {
         if (selectVault != null) {
             viewModel.onVaultSelect(selectVault)
@@ -153,9 +155,12 @@ fun CreateIdentityScreen(
                             // delete all attachments
                         }
 
-                        is AttachmentContentEvent.OnDraftAttachmentOpen -> {
-                            // open draft attachment
-                        }
+                        is AttachmentContentEvent.OnDraftAttachmentOpen ->
+                            viewModel.openDraftAttachment(
+                                context,
+                                event.event.uri,
+                                event.event.mimetype
+                            )
                         is AttachmentContentEvent.OnDraftAttachmentOptions ->
                             onNavigate(OpenDraftAttachmentOptions(event.event.uri))
 

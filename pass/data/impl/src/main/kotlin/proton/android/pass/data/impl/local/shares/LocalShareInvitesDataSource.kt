@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,32 +16,34 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.remote
+package proton.android.pass.data.impl.local.shares
 
+import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.impl.requests.CreateVaultRequest
-import proton.android.pass.data.impl.requests.UpdateVaultRequest
-import proton.android.pass.data.impl.responses.ShareResponse
+import proton.android.pass.domain.InviteId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.shares.SharePendingInvite
 
-interface RemoteShareDataSource {
+interface LocalShareInvitesDataSource {
 
-    suspend fun createVault(userId: UserId, body: CreateVaultRequest): ShareResponse
-
-    suspend fun updateVault(
+    fun getSharePendingInvite(
         userId: UserId,
         shareId: ShareId,
-        body: UpdateVaultRequest
-    ): ShareResponse
+        inviteId: InviteId
+    ): SharePendingInvite?
 
-    suspend fun deleteVault(userId: UserId, shareId: ShareId)
+    fun deleteSharePendingInvite(
+        userId: UserId,
+        shareId: ShareId,
+        inviteId: InviteId
+    )
 
-    suspend fun getShares(userId: UserId): List<ShareResponse>
+    fun observeSharePendingInvites(userId: UserId, shareId: ShareId): Flow<List<SharePendingInvite>>
 
-    suspend fun fetchShareById(userId: UserId, shareId: ShareId): ShareResponse?
-
-    suspend fun markAsPrimary(userId: UserId, shareId: ShareId)
-
-    suspend fun leaveVault(userId: UserId, shareId: ShareId)
+    fun upsertSharePendingInvites(
+        userId: UserId,
+        shareId: ShareId,
+        pendingInvites: List<SharePendingInvite>
+    )
 
 }

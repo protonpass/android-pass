@@ -1,5 +1,6 @@
 package proton.android.pass.featureitemcreate.impl.creditcard
 
+import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -25,6 +26,7 @@ import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentsHandler
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import java.net.URI
 
 abstract class BaseCreditCardViewModel(
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -216,6 +218,14 @@ abstract class BaseCreditCardViewModel(
     override fun onCleared() {
         attachmentsHandler.clearAttachments()
         super.onCleared()
+    }
+
+    fun openDraftAttachment(
+        context: Context,
+        uri: URI,
+        mimetype: String
+    ) {
+        attachmentsHandler.openDraftAttachment(context, uri, mimetype)
     }
 
     companion object {

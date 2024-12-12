@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.identity.presentation
 
+import android.content.Context
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.CoroutineScope
@@ -47,6 +48,7 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsh
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkEmail
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkPhoneNumber
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Yahoo
+import java.net.URI
 
 @Suppress("ComplexInterface", "TooManyFunctions")
 interface IdentityFormActions {
@@ -61,6 +63,11 @@ interface IdentityFormActions {
         index: Int,
         focused: Boolean,
         customExtraField: CustomExtraField
+    )
+    fun openDraftAttachment(
+        context: Context,
+        uri: URI,
+        mimetype: String
     )
 }
 

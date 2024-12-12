@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.login
 
+import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -88,6 +89,7 @@ import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.totp.api.TotpManager
+import java.net.URI
 
 @Suppress("TooManyFunctions", "LargeClass", "LongParameterList")
 abstract class BaseLoginViewModel(
@@ -954,6 +956,14 @@ abstract class BaseLoginViewModel(
     override fun onCleared() {
         attachmentsHandler.clearAttachments()
         super.onCleared()
+    }
+
+    fun openDraftAttachment(
+        context: Context,
+        uri: URI,
+        mimetype: String
+    ) {
+        attachmentsHandler.openDraftAttachment(context, uri, mimetype)
     }
 
     private companion object {

@@ -19,7 +19,6 @@
 package proton.android.pass.features.attachments.attachmentoptions.ui
 
 sealed interface AttachmentOptionsUIEvent {
-    data object Open : AttachmentOptionsUIEvent
     data object Rename : AttachmentOptionsUIEvent
     data object Delete : AttachmentOptionsUIEvent
 }

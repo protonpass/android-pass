@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.attachments
 
+import android.content.Context
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -30,6 +31,14 @@ class FakeAttachmentHandler : AttachmentsHandler {
         get() = flowOf(emptySet())
     override val attachmentsFlow: Flow<AttachmentsState>
         get() = flowOf(AttachmentsState.Initial)
+
+    override fun openDraftAttachment(
+        context: Context,
+        uri: URI,
+        mimetype: String
+    ) {
+        // no-op
+    }
 
     override fun uploadNewAttachment(uri: URI, scope: CoroutineScope) {
         // no-op

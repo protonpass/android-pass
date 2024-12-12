@@ -31,6 +31,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -56,6 +57,7 @@ fun UpdateAlias(
     onNavigate: (UpdateAliasNavigation) -> Unit,
     viewModel: UpdateAliasViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
 
     PerformActionAfterKeyboardHide(
@@ -131,9 +133,12 @@ fun UpdateAlias(
                             AttachmentContentEvent.OnDeleteAllAttachments -> {
                                 // delete all attachments
                             }
-                            is AttachmentContentEvent.OnDraftAttachmentOpen -> {
-                                // open draft attachment
-                            }
+                            is AttachmentContentEvent.OnDraftAttachmentOpen ->
+                                viewModel.openDraftAttachment(
+                                    context,
+                                    event.event.uri,
+                                    event.event.mimetype
+                                )
                             is AttachmentContentEvent.OnDraftAttachmentOptions ->
                                 onNavigate(OpenDraftAttachmentOptions(event.event.uri))
                         }

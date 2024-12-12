@@ -64,6 +64,8 @@ import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSou
 import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSourceImpl
 import proton.android.pass.data.impl.remote.inappmessages.RemoteInAppMessagesDataSource
 import proton.android.pass.data.impl.remote.inappmessages.RemoteInAppMessagesDataSourceImpl
+import proton.android.pass.data.impl.remote.shares.RemoteShareInvitesDataSource
+import proton.android.pass.data.impl.remote.shares.RemoteShareInvitesDataSourceImpl
 import proton.android.pass.data.impl.remote.shares.RemoteShareMembersDataSource
 import proton.android.pass.data.impl.remote.shares.RemoteShareMembersDataSourceImpl
 import proton.android.pass.data.impl.remote.simplelogin.RemoteSimpleLoginDataSource
@@ -152,6 +154,9 @@ abstract class DataRemoteDataSourceModule {
 
     @[Binds Singleton]
     abstract fun bindRemoteShareMembersDataSource(impl: RemoteShareMembersDataSourceImpl): RemoteShareMembersDataSource
+
+    @[Binds Singleton]
+    abstract fun bindRemoteShareInvitesDataSource(impl: RemoteShareInvitesDataSourceImpl): RemoteShareInvitesDataSource
 
 }
 

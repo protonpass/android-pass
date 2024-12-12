@@ -18,19 +18,13 @@
 
 package proton.android.pass.data.impl.crypto
 
-import kotlinx.coroutines.flow.first
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
-import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
-import proton.android.pass.data.impl.repositories.ItemKeyRepository
-import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareType
-import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -46,11 +40,9 @@ interface EncryptItemsKeysForUser {
 }
 
 class EncryptItemsKeysForUserImpl @Inject constructor(
-    private val shareRepository: ShareRepository,
-    private val shareKeyRepository: ShareKeyRepository,
-    private val itemKeyRepository: ItemKeyRepository,
     private val getAllKeysByAddress: GetAllKeysByAddress,
-    private val encryptInviteKeys: EncryptInviteKeys
+    private val encryptInviteKeys: EncryptInviteKeys,
+    private val getItemKeys: GetItemKeys
 ) : EncryptItemsKeysForUser {
 
     @Suppress("ReturnCount")
@@ -60,7 +52,7 @@ class EncryptItemsKeysForUserImpl @Inject constructor(
         userAddress: UserAddress,
         targetEmail: String
     ): Result<EncryptedInviteShareKeyList> {
-        val itemKey = getItemKey(userAddress, shareId, itemId)
+        val (_, itemKey) = getItemKeys(userAddress, shareId, itemId)
 
         val inviterAddressKey = userAddress.keys.primary()?.privateKey
             ?: return Result.failure(IllegalStateException("No primary address key for inviter user"))
@@ -87,33 +79,6 @@ class EncryptItemsKeysForUserImpl @Inject constructor(
             }
         )
 
-    }
-
-    private suspend fun getItemKey(
-        userAddress: UserAddress,
-        shareId: ShareId,
-        itemId: ItemId
-    ): ItemKey {
-        val share = shareRepository.getById(userAddress.userId, shareId)
-        return when (share.shareType) {
-            ShareType.Vault -> {
-                val (_, itemKey) = itemKeyRepository.getLatestItemKey(
-                    userId = userAddress.userId,
-                    addressId = userAddress.addressId,
-                    shareId = shareId,
-                    itemId = itemId
-                ).first()
-                itemKey
-            }
-            ShareType.Item -> {
-                val shareKey = shareKeyRepository.getLatestKeyForShare(shareId).first()
-                ItemKey(
-                    rotation = shareKey.rotation,
-                    key = shareKey.key,
-                    responseKey = shareKey.responseKey
-                )
-            }
-        }
     }
 
     private companion object {

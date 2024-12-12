@@ -134,7 +134,14 @@ fun AttachmentSection(
                     size = fileMetadata.size,
                     createTime = fileMetadata.createTime,
                     onOptionsClick = { onEvent(OnDraftAttachmentOptions(fileMetadata.uri)) },
-                    onAttachmentOpen = { onEvent(OnDraftAttachmentOpen(fileMetadata.uri)) }
+                    onAttachmentOpen = {
+                        onEvent(
+                            OnDraftAttachmentOpen(
+                                uri = fileMetadata.uri,
+                                mimetype = fileMetadata.mimeType
+                            )
+                        )
+                    }
                 )
                 if (index < attachmentsState.draftAttachmentsList.lastIndex) {
                     PassDivider()

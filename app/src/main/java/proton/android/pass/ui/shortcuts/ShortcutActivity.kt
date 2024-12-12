@@ -56,7 +56,6 @@ class ShortcutActivity : FragmentActivity() {
         fileHandler.shareFileWithEmail(
             context = this,
             file = logFileUri.toFile(),
-            mimeType = "text/plain",
             chooserTitle = ShareLogsConstants.CHOOSER_TITLE,
             email = ShareLogsConstants.EMAIL,
             subject = ShareLogsConstants.SUBJECT

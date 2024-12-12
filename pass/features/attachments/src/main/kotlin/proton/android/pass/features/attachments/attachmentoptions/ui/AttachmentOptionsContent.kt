@@ -34,7 +34,6 @@ import proton.android.pass.composecomponents.impl.R as CompR
 @Composable
 fun AttachmentOptionsContent(modifier: Modifier = Modifier, onEvent: (AttachmentOptionsUIEvent) -> Unit) {
     val list = listOf(
-        openFile { onEvent(AttachmentOptionsUIEvent.Open) },
         renameFile { onEvent(AttachmentOptionsUIEvent.Rename) },
         deleteFile { onEvent(AttachmentOptionsUIEvent.Delete) }
     ).withDividers().toPersistentList()
@@ -42,28 +41,6 @@ fun AttachmentOptionsContent(modifier: Modifier = Modifier, onEvent: (Attachment
         modifier = modifier,
         items = list
     )
-}
-
-private fun openFile(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = {
-            BottomSheetItemTitle(
-                text = stringResource(R.string.attachment_options_open)
-            )
-        }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val leftIcon: @Composable () -> Unit
-        get() = {
-            BottomSheetItemIcon(
-                iconId = CoreR.drawable.ic_proton_eye
-            )
-        }
-    override val endIcon: (@Composable () -> Unit)?
-        get() = null
-    override val onClick: () -> Unit
-        get() = onClick
-    override val isDivider = false
 }
 
 private fun renameFile(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {

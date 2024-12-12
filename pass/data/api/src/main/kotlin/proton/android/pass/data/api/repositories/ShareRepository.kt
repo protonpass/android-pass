@@ -26,7 +26,6 @@ import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.entity.NewVault
-import proton.android.pass.domain.shares.SharePendingInvite
 
 @Suppress("ComplexInterface", "TooManyFunctions")
 interface ShareRepository {
@@ -67,8 +66,6 @@ interface ShareRepository {
 
     suspend fun applyPendingShareEventKeys(userId: UserId, event: UpdateShareEvent)
     suspend fun getAddressForShareId(userId: UserId, shareId: ShareId): UserAddress
-
-    fun observeSharePendingInvites(userId: UserId, shareId: ShareId): Flow<List<SharePendingInvite>>
 
 }
 

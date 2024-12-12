@@ -863,16 +863,10 @@ class ItemRepositoryImpl @Inject constructor(
         PassLogger.i(TAG, "Updating last used time [vaultId=$vaultId][itemId=$itemId]")
 
         val now = TimeUtil.getNowUtc()
-        val items =
-            localItemDataSource.getByVaultIdAndItemId(readyUsers.map { it.userId }, vaultId, itemId)
+        val items = localItemDataSource.getByVaultIdAndItemId(readyUsers.map { it.userId }, vaultId, itemId)
         items.forEach {
             localItemDataSource.updateLastUsedTime(ShareId(it.shareId), ItemId(it.id), now)
-            remoteItemDataSource.updateLastUsedTime(
-                UserId(it.userId),
-                ShareId(it.shareId),
-                ItemId(it.id),
-                now
-            )
+            remoteItemDataSource.updateLastUsedTime(UserId(it.userId), ShareId(it.shareId), ItemId(it.id), now)
             PassLogger.i(TAG, "Updated last used time [shareId=${it.shareId}][itemId=$itemId]")
         }
     }
@@ -906,10 +900,9 @@ class ItemRepositoryImpl @Inject constructor(
             // Happy path
             successes.isNotEmpty() && failures.isEmpty() -> {
                 val migrated = successes.mapNotNull { it.getOrNull() }.flatten()
-                val migratedItemsMapped =
-                    encryptionContextProvider.withEncryptionContextSuspendable {
-                        migrated.map { it.toDomain(this) }
-                    }
+                val migratedItemsMapped = encryptionContextProvider.withEncryptionContextSuspendable {
+                    migrated.map { it.toDomain(this) }
+                }
 
                 MigrateItemsResult.AllMigrated(migratedItemsMapped)
             }
@@ -922,10 +915,9 @@ class ItemRepositoryImpl @Inject constructor(
                 PassLogger.w(TAG, firstFailure)
 
                 val migrated = successes.mapNotNull { it.getOrNull() }.flatten()
-                val migratedItemsMapped =
-                    encryptionContextProvider.withEncryptionContextSuspendable {
-                        migrated.map { it.toDomain(this) }
-                    }
+                val migratedItemsMapped = encryptionContextProvider.withEncryptionContextSuspendable {
+                    migrated.map { it.toDomain(this) }
+                }
                 MigrateItemsResult.SomeMigrated(migratedItemsMapped)
             }
 

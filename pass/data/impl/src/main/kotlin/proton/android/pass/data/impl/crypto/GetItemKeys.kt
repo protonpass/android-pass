@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.crypto
 
 import kotlinx.coroutines.flow.first
 import me.proton.core.user.domain.entity.UserAddress
+import proton.android.pass.data.api.crypto.GetItemKeys
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.impl.repositories.ItemKeyRepository
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
@@ -29,16 +30,6 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
-
-interface GetItemKeys {
-
-    suspend operator fun invoke(
-        userAddress: UserAddress,
-        shareId: ShareId,
-        itemId: ItemId
-    ): Pair<ShareKey, ItemKey>
-
-}
 
 class GetItemKeysImpl @Inject constructor(
     private val shareRepository: ShareRepository,

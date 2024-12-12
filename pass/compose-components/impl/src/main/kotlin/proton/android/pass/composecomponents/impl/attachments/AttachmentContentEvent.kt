@@ -35,6 +35,5 @@ sealed interface AttachmentContentEvent {
     @JvmInline
     value class OnDraftAttachmentOptions(val uri: URI) : AttachmentContentEvent
 
-    @JvmInline
-    value class OnDraftAttachmentOpen(val uri: URI) : AttachmentContentEvent
+    data class OnDraftAttachmentOpen(val uri: URI, val mimetype: String) : AttachmentContentEvent
 }

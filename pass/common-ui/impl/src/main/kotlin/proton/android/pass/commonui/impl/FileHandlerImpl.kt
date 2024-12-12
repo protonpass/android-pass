@@ -25,7 +25,9 @@ import android.os.Bundle
 import androidx.core.content.FileProvider
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.commonui.api.FileHandler
+import proton.android.pass.log.api.PassLogger
 import java.io.File
+import java.net.URI
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -40,83 +42,77 @@ class FileHandlerImpl @Inject constructor(
         file
     )
 
-    private fun createIntent(
-        action: String,
-        mimeType: String,
-        extras: Bundle = Bundle()
-    ): Intent = Intent(action).apply {
-        setType(mimeType)
-        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        putExtras(extras)
-    }
-
     override fun openFile(
         context: Context,
-        file: File,
+        uri: URI,
         mimeType: String,
         chooserTitle: String
     ) {
-        val contentUri = createContentUri(context, file)
-        performFileAction(
-            context = context,
-            action = Intent.ACTION_VIEW,
-            mimeType = mimeType,
-            chooserTitle = chooserTitle,
-            extras = Bundle().apply {
-                putParcelable(Intent.EXTRA_STREAM, contentUri)
-            }
-        )
+        val contentUri = Uri.parse(uri.toString())
+        val intent = Intent(Intent.ACTION_VIEW)
+            .setDataAndType(contentUri, mimeType)
+        performFileAction(context, intent, chooserTitle)
     }
 
     override fun shareFile(
         context: Context,
         file: File,
-        mimeType: String,
         chooserTitle: String
     ) {
         val contentUri = createContentUri(context, file)
+        val intent = Intent(Intent.ACTION_SEND)
+            .setType("text/plain")
+        val bundle = Bundle().apply {
+            putParcelable(Intent.EXTRA_STREAM, contentUri)
+        }
         performFileAction(
             context = context,
-            action = Intent.ACTION_SEND,
-            mimeType = mimeType,
+            intent = intent,
             chooserTitle = chooserTitle,
-            extras = Bundle().apply {
-                putParcelable(Intent.EXTRA_STREAM, contentUri)
-            }
+            extras = bundle
         )
     }
 
     override fun shareFileWithEmail(
         context: Context,
         file: File,
-        mimeType: String,
         chooserTitle: String,
         email: String,
         subject: String
     ) {
         val contentUri = createContentUri(context, file)
+        val intent = Intent(Intent.ACTION_SEND)
+            .setType("text/plain")
+        val bundle = Bundle().apply {
+            putStringArray(Intent.EXTRA_EMAIL, arrayOf(email))
+            putString(Intent.EXTRA_SUBJECT, subject)
+            putParcelable(Intent.EXTRA_STREAM, contentUri)
+        }
         performFileAction(
             context = context,
-            action = Intent.ACTION_SEND,
-            mimeType = mimeType,
+            intent = intent,
             chooserTitle = chooserTitle,
-            extras = Bundle().apply {
-                putStringArray(Intent.EXTRA_EMAIL, arrayOf(email))
-                putString(Intent.EXTRA_SUBJECT, subject)
-                putParcelable(Intent.EXTRA_STREAM, contentUri)
-            }
+            extras = bundle
         )
     }
 
     override fun performFileAction(
         context: Context,
-        action: String,
-        mimeType: String,
+        intent: Intent,
         chooserTitle: String,
         extras: Bundle
     ) {
-        val intent = createIntent(action, mimeType, extras)
-        val chooserIntent = Intent.createChooser(intent, chooserTitle)
-        context.startActivity(chooserIntent)
+        val intentWithExtras = intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            .putExtras(extras)
+        val chooserIntent = Intent.createChooser(intentWithExtras, chooserTitle)
+        runCatching {
+            context.startActivity(chooserIntent)
+        }.onFailure {
+            PassLogger.w(TAG, "Could not start activity for intent")
+        }
+    }
+
+    companion object {
+        private const val TAG = "FileHandlerImpl"
     }
 }

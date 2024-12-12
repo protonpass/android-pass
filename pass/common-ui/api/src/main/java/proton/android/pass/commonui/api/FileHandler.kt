@@ -19,22 +19,22 @@
 package proton.android.pass.commonui.api
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import java.io.File
+import java.net.URI
 
 interface FileHandler {
 
     fun shareFile(
         context: Context,
         file: File,
-        mimeType: String = "*/*",
         chooserTitle: String
     )
 
     fun shareFileWithEmail(
         context: Context,
         file: File,
-        mimeType: String = "*/*",
         chooserTitle: String,
         email: String,
         subject: String
@@ -42,16 +42,15 @@ interface FileHandler {
 
     fun openFile(
         context: Context,
-        file: File,
-        mimeType: String = "*/*",
+        uri: URI,
+        mimeType: String,
         chooserTitle: String
     )
 
     fun performFileAction(
         context: Context,
-        action: String,
-        mimeType: String,
+        intent: Intent,
         chooserTitle: String,
-        extras: Bundle
+        extras: Bundle = Bundle()
     )
 }

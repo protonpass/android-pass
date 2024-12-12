@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.common.attachments
 
+import android.content.Context
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
@@ -27,6 +28,11 @@ interface AttachmentsHandler {
     val isUploadingAttachment: Flow<Set<URI>>
     val attachmentsFlow: Flow<AttachmentsState>
 
+    fun openDraftAttachment(
+        context: Context,
+        uri: URI,
+        mimetype: String
+    )
     fun uploadNewAttachment(uri: URI, scope: CoroutineScope)
     fun clearAttachments()
     fun observeNewAttachments(scope: CoroutineScope, onNewAttachment: (Set<URI>) -> Unit)

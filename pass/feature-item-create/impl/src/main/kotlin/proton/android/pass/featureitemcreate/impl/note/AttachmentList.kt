@@ -87,7 +87,14 @@ fun AttachmentList(
                     onEvent(OnAttachmentEvent(OnDraftAttachmentOptions(draftAttachment.uri)))
                 },
                 onAttachmentOpen = {
-                    onEvent(OnAttachmentEvent(OnDraftAttachmentOpen(draftAttachment.uri)))
+                    onEvent(
+                        OnAttachmentEvent(
+                            OnDraftAttachmentOpen(
+                                uri = draftAttachment.uri,
+                                mimetype = draftAttachment.mimeType
+                            )
+                        )
+                    )
                 }
             )
         }

@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.alias
 
+import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -43,6 +44,7 @@ import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import java.net.URI
 
 abstract class BaseAliasViewModel(
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -198,5 +200,13 @@ abstract class BaseAliasViewModel(
     override fun onCleared() {
         attachmentsHandler.clearAttachments()
         super.onCleared()
+    }
+
+    fun openDraftAttachment(
+        context: Context,
+        uri: URI,
+        mimetype: String
+    ) {
+        attachmentsHandler.openDraftAttachment(context, uri, mimetype)
     }
 }

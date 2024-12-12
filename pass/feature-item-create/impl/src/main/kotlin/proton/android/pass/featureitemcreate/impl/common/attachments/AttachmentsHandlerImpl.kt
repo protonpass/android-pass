@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.common.attachments
 
+import android.content.Context
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -30,11 +31,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
+import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.log.api.PassLogger
 import java.net.URI
 import javax.inject.Inject
@@ -44,7 +47,8 @@ class AttachmentsHandlerImpl @Inject constructor(
     private val draftAttachmentRepository: DraftAttachmentRepository,
     private val metadataResolver: MetadataResolver,
     private val uploadAttachment: UploadAttachment,
-    private val clearAttachmentsCallback: ClearAttachments
+    private val clearAttachmentsCallback: ClearAttachments,
+    private val fileHandler: FileHandler
 ) : AttachmentsHandler {
 
     private val isUploadingAttachmentState: MutableStateFlow<Set<URI>> =
@@ -65,6 +69,19 @@ class AttachmentsHandlerImpl @Inject constructor(
             loadingAttachments = emptySet()
         )
     }.distinctUntilChanged()
+
+    override fun openDraftAttachment(
+        context: Context,
+        uri: URI,
+        mimetype: String
+    ) {
+        fileHandler.openFile(
+            context = context,
+            uri = uri,
+            mimeType = mimetype,
+            chooserTitle = context.getString(R.string.open_with)
+        )
+    }
 
     override fun uploadNewAttachment(uri: URI, scope: CoroutineScope) {
         isUploadingAttachmentState.update { it + uri }

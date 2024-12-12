@@ -18,17 +18,12 @@
 
 package proton.android.pass.features.attachments.attachmentoptions.ui
 
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.features.attachments.attachmentoptions.navigation.AttachmentOptionsNavigation
 import proton.android.pass.features.attachments.attachmentoptions.presentation.AttachmentOptionsEvent
@@ -57,25 +52,9 @@ fun AttachmentOptionsBottomsheet(
                 AttachmentOptionsUIEvent.Delete ->
                     viewmodel.deleteAttachment()
 
-                AttachmentOptionsUIEvent.Open ->
-                    viewmodel.openAttachment()
-
                 AttachmentOptionsUIEvent.Rename ->
                     viewmodel.renameAttachment()
             }
         }
     )
-}
-
-
-@Preview
-@Composable
-fun AttachmentOptionsBottomsheetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
-        Surface {
-            AttachmentOptionsBottomsheet(
-                onNavigate = {}
-            )
-        }
-    }
 }

@@ -62,10 +62,6 @@ class AttachmentOptionsViewModel @Inject constructor(
         eventFlow.update { AttachmentOptionsEvent.Close }
     }
 
-    fun openAttachment() {
-        eventFlow.update { AttachmentOptionsEvent.Close }
-    }
-
     fun renameAttachment() {
         eventFlow.update { AttachmentOptionsEvent.Close }
     }

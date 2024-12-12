@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.identity.presentation
 
+import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
@@ -87,6 +88,7 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsh
 import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import java.net.URI
 import javax.inject.Inject
 
 @Suppress("TooManyFunctions", "LargeClass")
@@ -575,6 +577,14 @@ class IdentityActionsProviderImpl @Inject constructor(
                 }
             }
         }
+    }
+
+    override fun openDraftAttachment(
+        context: Context,
+        uri: URI,
+        mimetype: String
+    ) {
+        attachmentsHandler.openDraftAttachment(context, uri, mimetype)
     }
 
     private fun handleFieldFocusChange(

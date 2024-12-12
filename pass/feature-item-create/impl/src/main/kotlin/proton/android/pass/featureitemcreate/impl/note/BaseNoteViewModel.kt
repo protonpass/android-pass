@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.note
 
+import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -38,6 +39,7 @@ import proton.android.pass.featureitemcreate.impl.common.attachments.Attachments
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import java.net.URI
 
 abstract class BaseNoteViewModel(
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -116,6 +118,14 @@ abstract class BaseNoteViewModel(
 
     fun onEmitSnackbarMessage(snackbarMessage: NoteSnackbarMessage) = viewModelScope.launch {
         snackbarDispatcher(snackbarMessage)
+    }
+
+    fun openDraftAttachment(
+        context: Context,
+        uri: URI,
+        mimetype: String
+    ) {
+        attachmentsHandler.openDraftAttachment(context, uri, mimetype)
     }
 
     override fun onCleared() {

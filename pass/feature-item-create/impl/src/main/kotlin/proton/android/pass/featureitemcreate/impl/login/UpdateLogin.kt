@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -58,6 +59,7 @@ internal fun UpdateLogin(
     onNavigate: (BaseLoginNavigation) -> Unit,
     viewModel: UpdateLoginViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
 
     PerformActionAfterKeyboardHide(
@@ -233,9 +235,12 @@ internal fun UpdateLogin(
                             AttachmentContentEvent.OnDeleteAllAttachments -> {
                                 // delete all attachments
                             }
-                            is AttachmentContentEvent.OnDraftAttachmentOpen -> {
-                                // open draft attachment
-                            }
+                            is AttachmentContentEvent.OnDraftAttachmentOpen ->
+                                viewModel.openDraftAttachment(
+                                    context,
+                                    it.event.uri,
+                                    it.event.mimetype
+                                )
                             is AttachmentContentEvent.OnDraftAttachmentOptions ->
                                 onNavigate(OpenDraftAttachmentOptions(it.event.uri))
                         }

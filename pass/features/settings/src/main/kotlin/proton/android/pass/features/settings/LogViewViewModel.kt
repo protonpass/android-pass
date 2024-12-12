@@ -70,7 +70,6 @@ class LogViewViewModel @Inject constructor(
         fileHandler.shareFileWithEmail(
             context = context,
             file = logFileUri.toFile(),
-            mimeType = "text/plain",
             chooserTitle = ShareLogsConstants.CHOOSER_TITLE,
             email = ShareLogsConstants.EMAIL,
             subject = ShareLogsConstants.SUBJECT

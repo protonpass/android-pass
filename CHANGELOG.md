@@ -6,6 +6,13 @@
 
 ### Other
 
+## 1.28.3 (2024-12-13)
+
+### Fixes :bug:
+
+- Fix incorrect password score during password generation.
+- Update common library for passkeys improvements
+
 ## 1.28.2 (2024-11-26)
 
 ### Fixes :bug:

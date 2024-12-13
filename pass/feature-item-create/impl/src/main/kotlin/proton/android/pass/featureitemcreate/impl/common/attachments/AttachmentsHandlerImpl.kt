@@ -20,17 +20,14 @@ package proton.android.pass.featureitemcreate.impl.common.attachments
 
 import android.content.Context
 import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
@@ -92,49 +89,44 @@ class AttachmentsHandlerImpl @Inject constructor(
         )
     }
 
-    override fun openAttachment(
+    override suspend fun openAttachment(
         context: Context,
         shareId: ShareId,
         itemId: ItemId,
-        attachment: Attachment,
-        scope: CoroutineScope
+        attachment: Attachment
     ) {
-        scope.launch {
-            runCatching {
-                loadingAttachmentsState.update { it + attachment.id }
-                val uri = downloadAttachment(
-                    shareId = shareId,
-                    itemId = itemId,
-                    attachment = attachment
-                )
-                loadingAttachmentsState.update { it - attachment.id }
-                fileHandler.openFile(
-                    context = context,
-                    uri = uri,
-                    mimeType = attachment.mimeType,
-                    chooserTitle = context.getString(R.string.open_with)
-                )
-            }.onSuccess {
-                PassLogger.i(TAG, "Attachment opened: ${attachment.id}")
-            }.onFailure {
-                PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
-                PassLogger.w(TAG, it)
-            }
+        loadingAttachmentsState.update { it + attachment.id }
+        runCatching {
+            val uri = downloadAttachment(
+                shareId = shareId,
+                itemId = itemId,
+                attachment = attachment
+            )
+            fileHandler.openFile(
+                context = context,
+                uri = uri,
+                mimeType = attachment.mimeType,
+                chooserTitle = context.getString(R.string.open_with)
+            )
+        }.onSuccess {
+            PassLogger.i(TAG, "Attachment opened: ${attachment.id}")
+        }.onFailure {
+            PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
+            PassLogger.w(TAG, it)
         }
+        loadingAttachmentsState.update { it - attachment.id }
     }
 
-    override fun uploadNewAttachment(uri: URI, scope: CoroutineScope) {
+    override suspend fun uploadNewAttachment(uri: URI) {
         loadingDraftAttachmentsState.update { it + uri }
-        scope.launch {
-            runCatching { uploadAttachment(uri) }
-                .onSuccess {
-                    PassLogger.i(TAG, "Attachment uploaded: $uri")
-                }
-                .onFailure {
-                    PassLogger.w(TAG, "Could not upload attachment: $uri")
-                    PassLogger.w(TAG, it)
-                }
-        }
+        runCatching { uploadAttachment(uri) }
+            .onSuccess {
+                PassLogger.i(TAG, "Attachment uploaded: $uri")
+            }
+            .onFailure {
+                PassLogger.w(TAG, "Could not upload attachment: $uri")
+                PassLogger.w(TAG, it)
+            }
         loadingDraftAttachmentsState.update { it - uri }
     }
 
@@ -142,13 +134,11 @@ class AttachmentsHandlerImpl @Inject constructor(
         clearAttachments()
     }
 
-    override fun observeNewAttachments(scope: CoroutineScope, onNewAttachment: (Set<URI>) -> Unit) {
+    override fun observeNewAttachments(onNewAttachment: (Set<URI>) -> Unit): Flow<Set<URI>> =
         draftAttachmentRepository.observeNew()
             .onEach { newUris ->
                 if (newUris.isNotEmpty()) onNewAttachment(newUris)
             }
-            .launchIn(scope)
-    }
 
     companion object {
         private const val TAG = "DefaultAttachmentsHandler"

@@ -99,7 +99,7 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Data de expiração</string>
-  <string name="field_card_expiration_date_hint">MM/YY</string>
+  <string name="field_card_expiration_date_hint">MM/AA</string>
   <string name="field_card_expiration_date_error">Insira uma data válida no formato MM/AA</string>
   <string name="create_credit_card_item_creation_error">Não foi possível criar o cartão de crédito</string>
   <string name="create_credit_card_item_creation_success">Cartão de crédito criado</string>

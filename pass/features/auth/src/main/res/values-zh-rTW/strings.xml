@@ -35,9 +35,9 @@
   <string name="auth_unlock_button">解鎖</string>
   <string name="auth_error_empty_password">密碼不能為空</string>
   <string name="auth_error_pin_cannot_be_empty">Pin碼不能為空白</string>
-  <string name="auth_extra_password_label">Enter your extra password</string>
-  <string name="auth_extra_password_error">Error on authenticating with extra password</string>
-  <string name="auth_extra_password_too_many_attempts">Too many failed login attempts. You have been logged out.</string>
+  <string name="auth_extra_password_label">輸入你的第二密碼</string>
+  <string name="auth_extra_password_error">以第二密碼驗證時發生錯誤</string>
+  <string name="auth_extra_password_too_many_attempts">過多的登入嘗試失敗，您將被登出。</string>
   <string name="auth_error_wrong_password_no_attempts">密碼錯誤</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="other">密碼錯誤。剩餘 %d 次嘗試</item>

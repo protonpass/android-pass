@@ -17,13 +17,14 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="item_options_alias_trash_dialog_title">Move to Trash</string>
-  <string name="item_options_alias_trash_dialog_message">Aliases in Trash will continue forwarding emails. If you want to stop receiving emails on this address, disable it instead.</string>
-  <string name="item_options_alias_trash_dialog_checkbox_text">Don\'t remind me again</string>
-  <string name="item_options_alias_trash_dialog_button_text_disable">Disable instead</string>
-  <string name="item_options_alias_trash_dialog_button_text_trash">Move to trash</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">There was an error disabling the alias</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Alias disabled</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">There was an error moving the alias to trash</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Alias moved to trash</string>
+  <string name="item_options_alias_trash_dialog_title">Chuyển vào Thùng rác</string>
+  <string name="item_options_alias_trash_dialog_message">Các bí danh trong Thùng rác sẽ tiếp tục chuyển tiếp email. Nếu bạn muốn ngừng nhận
+email tại địa chỉ này, thay vào đó hãy vô hiệu hóa nó.</string>
+  <string name="item_options_alias_trash_dialog_checkbox_text">Đừng nhắc tôi nữa</string>
+  <string name="item_options_alias_trash_dialog_button_text_disable">Vô hiệu hóa thay vào đó</string>
+  <string name="item_options_alias_trash_dialog_button_text_trash">Chuyển vào thùng rác</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">Đã xảy ra lỗi khi vô hiệu hóa bí danh</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Bí danh đã bị vô hiệu hóa</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">Đã xảy ra lỗi khi chuyển bí danh vào thùng rác</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Bí danh đã được chuyển vào thùng rác</string>
 </resources>

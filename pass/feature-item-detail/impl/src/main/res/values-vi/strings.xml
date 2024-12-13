@@ -103,18 +103,18 @@
   <string name="passkey_detail_bottomsheet_domain">Tên miền</string>
   <string name="passkey_detail_bottomsheet_key">Chìa khóa</string>
   <string name="passkey_detail_bottomsheet_created">Đã tạo</string>
-  <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
-  <string name="contacts">Contacts</string>
-  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
-  <string name="field_detail_display_name_title">Display name</string>
-  <string name="display_name_section_description">The display name when sending an email from this alias.</string>
+  <string name="activity_in_last_two_weeks">Hoạt động trong 14 ngày qua</string>
+  <string name="contacts">Danh bạ</string>
+  <string name="contacts_section_description">Để giữ địa chỉ email cá nhân của bạn ẩn, bạn có thể tạo một liên hệ bí danh che giấu địa chỉ của bạn.</string>
+  <string name="field_detail_display_name_title">Tên hiển thị</string>
+  <string name="display_name_section_description">Tên hiển thị khi gửi email từ bí danh này.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="other">%1$s forwards</item>
+    <item quantity="other">%1$s chuyển tiếp</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="other">%1$s replies</item>
+    <item quantity="other">%1$s phản hồi</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="other">%1$s blocks</item>
+    <item quantity="other">%1$s khối</item>
   </plurals>
 </resources>

@@ -43,13 +43,12 @@
   <string name="sharing_item_invitation_title">Undangan brankas terbagi</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s ingin membagikan item dengan Anda.</string>
   <string name="sharing_item_invitation_accept">Terima dan lihat item</string>
-  <string name="sharing_snackbar_get_invite_error">Undangan tidak dapat diperoleh</string>
+  <string name="sharing_item_leave">Tinggalkan</string>
   <string name="sharing_snackbar_invite_accepted">Undangan diterima</string>
   <string name="sharing_snackbar_invite_accept_error">Terjadi kesalahan menerima undangan</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Undangan tidak dapat diterima karena Anda telah mencapai batas jumlah brankas</string>
   <string name="sharing_snackbar_invite_rejected">Undangan ditolak</string>
   <string name="sharing_snackbar_invite_reject_error">Terjadi kesalahan menolak undangan</string>
-  <string name="sharing_snackbar_vault_not_found">Brankas tidak dapat ditemukan</string>
   <string name="sharing_snackbar_invite_sent_success">Undangan dikirim</string>
   <string name="sharing_snackbar_invite_sent_error">Tidak dapat mengirim undangan</string>
   <string name="sharing_snackbar_get_vault_members_error">Tidak dapat mendapatkan anggota brankas</string>
@@ -57,6 +56,8 @@
   <string name="sharing_snackbar_change_permission_error">Tidak dapat mengubah izin</string>
   <string name="sharing_snackbar_remove_member_success">Anggota dikeluarkan dari brankas</string>
   <string name="sharing_snackbar_remove_member_error">Tidak dapat menghapus dari brankas</string>
+  <string name="sharing_snackbar_fetch_member_error">Terdapat masalah dalam memperoleh anggota</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Terdapat masalah dalam memperoleh undangan yang menunggu untuk dijawab</string>
   <string name="share_summary_title">Kaji dan bagikan</string>
   <string name="share_summary_vault">%s brankas</string>
   <string name="share_summary_share_vault">Bagikan brankas</string>
@@ -83,6 +84,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Transfer kepemilikan</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Anda tidak dapat mentransfer brankas terakhir yang Anda miliki.</string>
   <string name="sharing_bottomsheet_remove_access">Cabut akses</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
   <string name="sharing_bottomsheet_resend_invite">Kirim ulang undangan</string>
   <string name="sharing_bottomsheet_cancel_invite">Batalkan undangan</string>
   <string name="sharing_transfer_ownership_confirm_title">Transfer kepemilikan</string>

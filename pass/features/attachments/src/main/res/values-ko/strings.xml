@@ -21,9 +21,11 @@
   <string name="add_attachment_choose_a_photo_or_video">사진 및 비디오 선택</string>
   <string name="add_attachment_choose_a_file">파일 선택</string>
   <string name="attachment_options_open">열기</string>
-  <string name="attachment_options_save">저장</string>
   <string name="attachment_options_rename">이름 변경</string>
   <string name="attachment_options_delete">삭제</string>
   <string name="file_picker_open_error">파일 선택기를 열 수 없습니다.</string>
-  <string name="file_picker_select_error">파일 선택 할 수 없습니다.</string>
+  <string name="media_picker_open_error">미디어 선택기 열 수 없음</string>
+  <string name="camera_open_error">카메라 열 수 없음</string>
+  <string name="camera_permission_explanation">이 기능을 사용하기 위해 카메라 권한이 필요합니다.</string>
+  <string name="camera_permission_open_settings">설정 열기</string>
 </resources>

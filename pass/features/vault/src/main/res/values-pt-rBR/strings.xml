@@ -34,7 +34,7 @@
   <string name="bottomsheet_leave_vault">Deixar cofre</string>
   <string name="bottomsheet_view_members">Ver membros</string>
   <string name="bottomsheet_manage_access">Gerenciar acesso</string>
-  <string name="bottomsheet_select_vault_read_only">You can only view</string>
+  <string name="bottomsheet_select_vault_read_only">Você só pode ler</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Você só pode criar itens nos seus cofres mais antigos.</string>
   <string name="vault_title">Cofre</string>
 </resources>

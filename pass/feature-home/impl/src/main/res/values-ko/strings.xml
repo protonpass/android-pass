@@ -15,6 +15,9 @@
   <string name="home_empty_vault_identity_subtitle">첫 신원 항목 생성을 시작해 보세요.</string>
   <string name="home_empty_vault_cc_title">발견된 신용 카드가 없습니다.</string>
   <string name="home_empty_vault_cc_subtitle">첫 신용 카드 항목 생성을 시작해 보세요.</string>
+  <string name="home_empty_shared_items_title">No shared items found</string>
+  <string name="home_empty_shared_items_with_me_subtitle">No items have been shared with you.</string>
+  <string name="home_empty_shared_items_by_me_subtitle">No items have been shared by you.</string>
   <string name="home_empty_read_only_vault_title">이 금고는 비어 있습니다.</string>
   <string name="home_empty_read_only_vault_subtitle">읽기 전용 금고에서는 항목 생성이 불가합니다.</string>
   <string name="home_empty_vault_create_login">로그인 생성</string>
@@ -98,6 +101,8 @@
   <string name="item_type_filter_credit_card">카드</string>
   <string name="item_type_filter_identity">신원</string>
   <string name="item_type_filter_login_totp">TOTP로 진행한 로그인</string>
+  <string name="item_type_filter_items_shared_with_me">Shared with me</string>
+  <string name="item_type_filter_items_shared_by_me">Shared by me</string>
   <!-- Trash -->
   <string name="trash_empty_list_title">휴지통이 비어 있습니다.</string>
   <string name="trash_empty_list_message">삭제한 항목이 여기에 나타납니다.</string>

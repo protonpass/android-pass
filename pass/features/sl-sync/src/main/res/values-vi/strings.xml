@@ -18,62 +18,62 @@
   -->
 <resources>
   <!-- Management screen -->
-  <string name="simple_login_sync_management_title">Alias management</string>
-  <string name="simple_login_sync_management_domain_label">Domain</string>
-  <string name="simple_login_sync_management_domain_title">Default domain for aliases</string>
-  <string name="simple_login_sync_management_domain_option_blank">Not selected</string>
-  <string name="simple_login_sync_management_mailboxes_label">Mailboxes</string>
-  <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
-  <string name="simple_login_sync_management_mailbox_default">Default</string>
-  <string name="simple_login_sync_management_mailbox_unverified">Unverified mailbox</string>
-  <string name="simple_login_sync_management_vault_title">SimpleLogin sync</string>
-  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
-  <string name="simple_login_sync_management_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_domains">Default domain for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_mailboxes">Default mailbox for aliases</string>
+  <string name="simple_login_sync_management_title">Quản lý bí danh</string>
+  <string name="simple_login_sync_management_domain_label">Tên miền</string>
+  <string name="simple_login_sync_management_domain_title">Tên miền mặc định cho bí danh</string>
+  <string name="simple_login_sync_management_domain_option_blank">Không được chọn</string>
+  <string name="simple_login_sync_management_mailboxes_label">Hộp thư</string>
+  <string name="simple_login_sync_management_mailboxes_description">Hộp thư là nơi các email gửi đến một bí danh được chuyển tiếp đến. Đây là hộp thư thông thường của bạn, ví dụ: Gmail, Outlook, Proton Mail, v.v.</string>
+  <string name="simple_login_sync_management_mailbox_default">Mặc định</string>
+  <string name="simple_login_sync_management_mailbox_unverified">Hộp thư chưa xác minh</string>
+  <string name="simple_login_sync_management_vault_title">Đồng bộ SimpleLogin</string>
+  <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">Đã xảy ra lỗi khi lấy chi tiết bí danh SL</string>
+  <string name="simple_login_sync_management_mailboxes_title">Hộp thư mặc định cho các bí danh</string>
+  <string name="simple_login_sync_management_dialog_title_domains">Tên miền mặc định cho các bí danh</string>
+  <string name="simple_login_sync_management_dialog_title_mailboxes">Hộp thư mặc định cho các bí danh</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Đồng bộ hoá alias</string>
-  <string name="simple_login_sync_enable_snackbar_error">There was an error enabling SimpleLogin aliases sync</string>
-  <string name="simple_login_sync_enable_snackbar_success">SimpleLogin aliases sync successfully enabled</string>
+  <string name="simple_login_sync_enable_snackbar_error">Đã xảy ra lỗi khi kích hoạt đồng bộ bí danh SimpleLogin</string>
+  <string name="simple_login_sync_enable_snackbar_success">Đồng bộ bí danh SimpleLogin in đã được kích hoạt thành công</string>
   <!-- Mailbox create screen -->
-  <string name="simple_login_sync_mailbox_create_title">Add mailbox</string>
-  <string name="simple_login_sync_mailbox_create_message_error">There was an error adding the mailbox</string>
+  <string name="simple_login_sync_mailbox_create_title">Thêm hộp thư</string>
+  <string name="simple_login_sync_mailbox_create_message_error">Đã xảy ra lỗi khi thêm hộp thư</string>
   <!-- Mailbox verify screen -->
-  <string name="simple_login_sync_mailbox_verify_title">Confirm your mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">We sent a verification code to %s. Enter it below:</string>
-  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">your email address</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Invalid mailbox verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Invalid mailbox verification code limit reached, mailbox was deleted</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_error">There was an error verifying the mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_message_verification_success">Mailbox successfully verified</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">There was an error sending verification code</string>
-  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Verification code successfully sent</string>
+  <string name="simple_login_sync_mailbox_verify_title">Xác nhận hộp thư của bạn</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Chúng tôi đã gửi một mã xác minh đến %s. Nhập nó bên dưới:</string>
+  <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">địa chỉ email của bạn</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Mã xác minh hộp thư không hợp lệ</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Đã đạt giới hạn mã xác minh hộp thư không hợp lệ, hộp thư đã bị xóa</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_error">Đã xảy ra lỗi khi xác minh hộp thư</string>
+  <string name="simple_login_sync_mailbox_verify_message_verification_success">Hộp thư đã được xác minh thành công</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_error">Đã xảy ra lỗi khi gửi mã xác minh</string>
+  <string name="simple_login_sync_mailbox_verify_message_resend_code_success">Mã xác minh đã được gửi thành công</string>
   <!-- Mailbox delete screen -->
-  <string name="simple_login_sync_mailbox_delete_title">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_subtitle">All aliases using the mailbox %s will be also deleted. To keep receiving emails transfer these aliases to a different mailbox:</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfer aliases</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">To mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete">Delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transfer and delete mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_error">There was an error deleting mailbox</string>
-  <string name="simple_login_sync_mailbox_delete_message_delete_success">Mailbox successfully deleted</string>
-  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Transfer aliases to</string>
-  <string name="simple_login_sync_mailbox_delete_warning">Please note that once deleted, aliases can\'t be restored</string>
+  <string name="simple_login_sync_mailbox_delete_title">Xóa hộp thư</string>
+  <string name="simple_login_sync_mailbox_delete_subtitle">Tất cả các bí danh sử dụng hộp thư %s cũng sẽ bị xóa. Để tiếp tục nhận email, hãy chuyển các bí danh này sang một hộp thư khác:</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Chuyển bí danh</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">Đến hộp thư</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete">Xóa hộp thư</string>
+  <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Chuyển và xóa hộp thư</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_error">Đã xảy ra lỗi khi xóa hộp thư</string>
+  <string name="simple_login_sync_mailbox_delete_message_delete_success">Hộp thư đã được xóa thành công</string>
+  <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Chuyển bí danh đến</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Xin lưu ý rằng một khi đã xóa, các bí danh không thể được khôi phục</string>
   <!-- Domain select screen -->
-  <string name="simple_login_sync_domain_select_title">Default domain</string>
-  <string name="simple_login_sync_domain_select_title_none">none</string>
-  <string name="simple_login_sync_domain_select_description_none">No domain</string>
-  <string name="simple_login_sync_domain_select_description_custom">Your domain</string>
-  <string name="simple_login_sync_domain_select_description_free">Public domain</string>
-  <string name="simple_login_sync_domain_select_description_premium">Premium domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">There was an error fetching SL alias domains</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">There was an error updating SL alias domain</string>
-  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">SL alias domain successfully updated</string>
+  <string name="simple_login_sync_domain_select_title">Tên miền mặc định</string>
+  <string name="simple_login_sync_domain_select_title_none">không có</string>
+  <string name="simple_login_sync_domain_select_description_none">Không có tên miền</string>
+  <string name="simple_login_sync_domain_select_description_custom">Tên miền của bạn</string>
+  <string name="simple_login_sync_domain_select_description_free">Tên miền công cộng</string>
+  <string name="simple_login_sync_domain_select_description_premium">Tên miền cao cấp</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">Đã xảy ra lỗi khi lấy tên miền bí danh SL</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_error">Đã xảy ra lỗi khi lấy cập nhật miền bí danh SL</string>
+  <string name="simple_login_sync_domain_select_snackbar_alias_domain_update_success">Tên miền bí danh SL đã được cập nhật thành công</string>
   <!-- Mailbox options screen -->
-  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Cannot display mailbox options</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_error">There was an error updating default mailbox</string>
-  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Default mailbox successfully updated</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_options_error">Không thể hiển thị tùy chọn hộp thư</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_error">Đã xảy ra lỗi khi cập nhật hộp thư mặc định</string>
+  <string name="simple_login_sync_mailbox_options_snackbar_default_success">Hộp thư mặc định đã được cập nhật thành công</string>
   <!-- Shared -->
-  <string name="simple_login_sync_shared_default_vault_title">Default SL vault</string>
-  <string name="simple_login_sync_shared_default_vault_description">SimpleLogin aliases will be imported into this vault.</string>
+  <string name="simple_login_sync_shared_default_vault_title">Kho SL mặc định</string>
+  <string name="simple_login_sync_shared_default_vault_description">Các bí danh SimpleLogin sẽ được nhập vào kho này.</string>
 </resources>

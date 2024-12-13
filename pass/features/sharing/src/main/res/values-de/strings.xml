@@ -39,19 +39,18 @@
   <string name="share_with_email_email_already_added">Du hast diese E-Mail-Adresse bereits hinzugefügt.</string>
   <string name="share_permissions_title">Zugriffsstufe festlegen</string>
   <string name="sharing_reject_invitation">Einladung ablehnen</string>
-  <string name="sharing_vault_invitation_title">Shared vault invitation</string>
+  <string name="sharing_vault_invitation_title">Geteilte Tresoreinladung</string>
   <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
   <string name="sharing_vault_invitation_accept">Join shared vault</string>
   <string name="sharing_item_invitation_title">Shared item invitation</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
   <string name="sharing_item_invitation_accept">Accept and view the item</string>
-  <string name="sharing_snackbar_get_invite_error">Fehler beim Abrufen der Einladung.</string>
+  <string name="sharing_item_leave">Verlassen</string>
   <string name="sharing_snackbar_invite_accepted">Einladung angenommen</string>
   <string name="sharing_snackbar_invite_accept_error">Fehler beim Annehmen der Einladung.</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Die Einladung konnte nicht angenommen werden, da du bereits die zulässige Anzahl an Tresoren erreicht hast.</string>
   <string name="sharing_snackbar_invite_rejected">Einladung abgelehnt</string>
   <string name="sharing_snackbar_invite_reject_error">Fehler beim Ablehnen der Einladung.</string>
-  <string name="sharing_snackbar_vault_not_found">Tresor konnte nicht gefunden werden.</string>
   <string name="sharing_snackbar_invite_sent_success">Einladung gesendet</string>
   <string name="sharing_snackbar_invite_sent_error">Fehler beim Senden der Einladung.</string>
   <string name="sharing_snackbar_get_vault_members_error">Fehler beim Abrufen der Tresormitglieder.</string>
@@ -59,12 +58,14 @@
   <string name="sharing_snackbar_change_permission_error">Fehler beim Ändern der Berechtigungen.</string>
   <string name="sharing_snackbar_remove_member_success">Mitglied aus dem Tresor entfernt.</string>
   <string name="sharing_snackbar_remove_member_error">Fehler beim Entfernen aus dem Tresor.</string>
+  <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
   <string name="share_summary_title">Überprüfen und teilen</string>
   <string name="share_summary_vault">%s Tresor</string>
   <string name="share_summary_share_vault">Tresor teilen</string>
-  <string name="share_summary_share_item">Share item</string>
+  <string name="share_summary_share_item">Element teilen</string>
   <string name="share_summary_vault_title">Tresor</string>
-  <string name="share_summary_item_title">Item</string>
+  <string name="share_summary_item_title">Element</string>
   <string name="share_manage_vault_share_with_more_people">Mit weiteren Personen teilen</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">%d Einladung verbleibend</item>
@@ -87,6 +88,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Inhaberschaft übertragen</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kannst deinen letzten Tresor nicht übertragen.</string>
   <string name="sharing_bottomsheet_remove_access">Zugriff entfernen</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
   <string name="sharing_bottomsheet_resend_invite">Einladung erneut senden</string>
   <string name="sharing_bottomsheet_cancel_invite">Einladung verwerfen</string>
   <string name="sharing_transfer_ownership_confirm_title">Inhaberschaft übertragen</string>

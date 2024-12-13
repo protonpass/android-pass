@@ -102,6 +102,12 @@ fun InternalDrawerContents(
         ) {
             Text(text = "Remove access key")
         }
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { viewModel.clearAttachments() },
+        ) {
+            Text(text = "Clear attachments")
+        }
     }
 }
 

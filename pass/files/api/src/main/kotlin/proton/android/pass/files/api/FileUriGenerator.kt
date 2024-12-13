@@ -23,7 +23,7 @@ import java.net.URI
 
 interface FileUriGenerator {
     suspend fun generate(fileType: FileType): URI
-    fun getDirectoryForFileType(fileType: FileType): File
+    suspend fun getDirectoryForFileType(fileType: FileType): File
     fun getFileProviderUri(file: File): URI
 }
 

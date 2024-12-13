@@ -34,6 +34,7 @@ import proton.android.pass.data.impl.db.dao.TelemetryDao
 import proton.android.pass.data.impl.db.dao.UserAccessDataDao
 import proton.android.pass.data.impl.db.dao.assetlink.AssetLinkDao
 import proton.android.pass.data.impl.db.dao.assetlink.IgnoredAssetLinkDao
+import proton.android.pass.data.impl.db.dao.attachment.AttachmentDao
 import proton.android.pass.data.impl.db.dao.inappmessages.InAppMessagesDao
 import proton.android.pass.data.impl.db.dao.securelinks.SecureLinksDao
 import proton.android.pass.log.api.PassLogger
@@ -73,6 +74,8 @@ interface PassDatabase : Database {
     fun ignoredAssetLinkDao(): IgnoredAssetLinkDao
 
     fun inAppMessagesDao(): InAppMessagesDao
+
+    fun attachmentDao(): AttachmentDao
 
     suspend fun <R> inTransaction(name: String, block: suspend () -> R): R {
         PassLogger.i(TAG, "$name transaction started")

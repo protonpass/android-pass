@@ -19,8 +19,6 @@
 package proton.android.pass.data.fakes.usecases.attachments
 
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import java.net.URI
 import javax.inject.Inject
@@ -28,9 +26,5 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeDownloadAttachment @Inject constructor() : DownloadAttachment {
-    override suspend fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-        attachment: Attachment
-    ): URI = URI.create("https://proton.me")
+    override suspend fun invoke(attachment: Attachment): URI = URI.create("https://proton.me")
 }

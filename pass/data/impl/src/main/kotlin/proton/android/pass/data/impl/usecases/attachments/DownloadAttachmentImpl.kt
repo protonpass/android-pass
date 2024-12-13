@@ -23,8 +23,6 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import java.net.URI
 import javax.inject.Inject
@@ -36,17 +34,13 @@ class DownloadAttachmentImpl @Inject constructor(
     private val attachmentRepository: AttachmentRepository
 ) : DownloadAttachment {
 
-    override suspend fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-        attachment: Attachment
-    ): URI {
+    override suspend fun invoke(attachment: Attachment): URI {
         val userId = accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
         return attachmentRepository.downloadAttachment(
             userId = userId,
-            shareId = shareId,
-            itemId = itemId,
+            shareId = attachment.shareId,
+            itemId = attachment.itemId,
             attachmentId = attachment.id,
             attachmentKey = attachment.key,
             chunks = attachment.chunks

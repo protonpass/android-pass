@@ -35,8 +35,6 @@ import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.featureitemcreate.impl.R
@@ -89,19 +87,10 @@ class AttachmentsHandlerImpl @Inject constructor(
         )
     }
 
-    override suspend fun openAttachment(
-        context: Context,
-        shareId: ShareId,
-        itemId: ItemId,
-        attachment: Attachment
-    ) {
+    override suspend fun openAttachment(context: Context, attachment: Attachment) {
         loadingAttachmentsState.update { it + attachment.id }
         runCatching {
-            val uri = downloadAttachment(
-                shareId = shareId,
-                itemId = itemId,
-                attachment = attachment
-            )
+            val uri = downloadAttachment(attachment)
             fileHandler.openFile(
                 context = context,
                 uri = uri,

@@ -345,11 +345,7 @@ class NoteDetailViewModel @Inject constructor(
         viewModelScope.launch {
             loadingAttachmentsState.update { it + attachment.id }
             runCatching {
-                val uri = downloadAttachment(
-                    shareId = shareId,
-                    itemId = itemId,
-                    attachment = attachment
-                )
+                val uri = downloadAttachment(attachment)
                 fileHandler.openFile(
                     context = context,
                     uri = uri,

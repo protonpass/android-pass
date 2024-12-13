@@ -36,6 +36,8 @@ internal sealed interface ShareFromItemEvent {
 
     data object ShareItem : ShareFromItemEvent
 
+    data object ManageSharedItem : ShareFromItemEvent
+
     data object UpsellItemSharing : ShareFromItemEvent
 
 }

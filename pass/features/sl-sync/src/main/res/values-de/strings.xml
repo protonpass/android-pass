@@ -58,7 +58,7 @@
   <string name="simple_login_sync_mailbox_delete_message_delete_error">Fehler beim Löschen des Postfachs</string>
   <string name="simple_login_sync_mailbox_delete_message_delete_success">Postfach erfolgreich gelöscht</string>
   <string name="simple_login_sync_mailbox_delete_transfer_dialog_title">Aliasse übertragen nach</string>
-  <string name="simple_login_sync_mailbox_delete_warning">Please note that once deleted, aliases can\'t be restored</string>
+  <string name="simple_login_sync_mailbox_delete_warning">Bitte beachte, dass einmal gelöschte Aliasnamen nicht wiederhergestellt werden können</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Standard-Domain</string>
   <string name="simple_login_sync_domain_select_title_none">keine</string>

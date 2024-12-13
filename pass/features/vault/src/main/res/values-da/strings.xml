@@ -34,7 +34,7 @@
   <string name="bottomsheet_leave_vault">Forlad boks</string>
   <string name="bottomsheet_view_members">Vis medlemmer</string>
   <string name="bottomsheet_manage_access">Administrer adgang</string>
-  <string name="bottomsheet_select_vault_read_only">You can only view</string>
+  <string name="bottomsheet_select_vault_read_only">Du kan kun læse</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Du kan kun oprette elementer i dine ældste bokse</string>
   <string name="vault_title">Boks</string>
 </resources>

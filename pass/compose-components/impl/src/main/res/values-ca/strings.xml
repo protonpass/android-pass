@@ -19,6 +19,8 @@
     <item quantity="other">resultats</item>
   </plurals>
   <string name="item_list_header_identities_type">Identitats</string>
+  <string name="item_list_header_shared_with_me">Compartit amb mi</string>
+  <string name="item_list_header_shared_by_me">Compartit per mi</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Confirma</string>
   <string name="bottomsheet_cancel_button">Cancel·la</string>

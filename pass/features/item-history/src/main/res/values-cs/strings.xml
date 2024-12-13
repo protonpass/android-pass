@@ -27,5 +27,5 @@
   <string name="item_history_timeline_node_child_title">Upraveno</string>
   <string name="item_history_timeline_node_leaf_title">Vytvořeno</string>
   <string name="item_history_timeline_node_root_title">Aktuální verze</string>
-  <string name="item_history_timeline_snackbar_message_error">Při načítání revize položky došlo k chybě</string>
+  <string name="item_history_timeline_snackbar_message_error">Při získávání revizí položky došlo k chybě</string>
 </resources>

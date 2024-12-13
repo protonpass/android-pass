@@ -39,11 +39,11 @@
   </plurals>
   <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d sendt</item>
-    <item quantity="other">%1$d sendt</item>
+    <item quantity="other">%1$d sendte</item>
   </plurals>
   <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d blokkert</item>
-    <item quantity="other">%1$d blokkert</item>
+    <item quantity="other">%1$d blokkerte</item>
   </plurals>
   <string name="blocked_addresses_subtitle">Blokkerte adresser</string>
   <string name="forwarding_addresses_subtitle">Videresendelsesadresser</string>

@@ -21,6 +21,8 @@
     <item quantity="other">вынікаў</item>
   </plurals>
   <string name="item_list_header_identities_type">Ідэнтычнасці</string>
+  <string name="item_list_header_shared_with_me">Абагулена са мной</string>
+  <string name="item_list_header_shared_by_me">Абагулена мной</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Пацвердзіць</string>
   <string name="bottomsheet_cancel_button">Скасаваць</string>

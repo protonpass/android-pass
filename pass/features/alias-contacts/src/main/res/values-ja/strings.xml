@@ -19,7 +19,7 @@
 <resources>
   <string name="create_contact_button">連絡先を作成</string>
   <string name="save_contact_alias">保存</string>
-  <string name="snackbar_contact_create_success">連絡先が正しく作成されました</string>
+  <string name="snackbar_contact_create_success">連絡先が正常に作成されました</string>
   <string name="snackbar_contact_create_error">連絡先の作成に失敗しました</string>
   <string name="create_contact_title">連絡先を作成</string>
   <string name="detail_contact_title">連絡先</string>

@@ -82,11 +82,11 @@
   <string name="alias_created">Đã tạo bí danh</string>
   <string name="cannot_retrieve_alias_options">Không thể lấy tùy chọn bí danh</string>
   <string name="alias_mailbox_dialog_title">Chuyển tiếp đến</string>
-  <string name="sl_note_info_title">What is a SimpleLogin note?</string>
-  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">In Pass, an item note is encrypted with the item encryption key and only users who have access to the item can view the note.</string>
-  <string name="sl_note_info_message_part2">Not even Proton or SimpleLogin can see it.</string>
-  <string name="sl_note_info_message_part3">SimpleLogin note is stored together in the same location with alias address and while it is protected by encryption at rest, it isn\'t E2E encrypted meaning anyone who has access to SimpleLogin database can read it.</string>
-  <string name="sl_note_info_content_description">Show SL note information dialog</string>
+  <string name="sl_note_info_title">Ghi chú SimpleLogin là gì?</string>
+  <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">Trong Pass, một ghi chú mục được mã hóa bằng khóa mã hóa mục và chỉ những người dùng có quyền truy cập vào mục mới có thể xem ghi chú.</string>
+  <string name="sl_note_info_message_part2">Ngay cả Proton hay SimpleLogin cũng không thể thấy nó.</string>
+  <string name="sl_note_info_message_part3">Ghi chú SimpleLogin được lưu trữ cùng một vị trí với địa chỉ bí danh và trong khi nó được bảo vệ bằng mã hóa khi nghỉ, nó không được mã hóa E2E có nghĩa là bất kỳ ai có quyền truy cập vào cơ sở dữ liệu SimpleLogin đều có thể đọc nó.</string>
+  <string name="sl_note_info_content_description">Hiển thị hộp thoại thông tin ghi chú SL</string>
   <!-- Create note -->
   <string name="note_hint">Ghi chú</string>
   <!-- Create Credit Card -->
@@ -188,6 +188,6 @@
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Bạn chuẩn bị xóa passkey cho người dùng \'%1$s\' cho \'%2$s\'. Xác nhận ?</string>
   <string name="add_a_custom_section">Thêm phần tùy chỉnh</string>
   <!-- Attachments -->
-  <string name="banner_title_attachments">Attachments</string>
-  <string name="banner_body_attachments">You can attach files to items for a better organization</string>
+  <string name="banner_title_attachments">Tệp đính kèm</string>
+  <string name="banner_body_attachments">Bạn có thể đính kèm tệp vào các mục để tổ chức tốt hơn</string>
 </resources>

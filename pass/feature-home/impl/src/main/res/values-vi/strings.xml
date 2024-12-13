@@ -3,18 +3,21 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Kho lưu trữ của bạn trống</string>
   <string name="home_empty_vault_subtitle">Bắt đầu bằng việc tạo nội dung đầu tiên của bạn.</string>
-  <string name="home_empty_vault_login_title">No logins found</string>
-  <string name="home_empty_vault_login_subtitle">Get started by creating your first login item.</string>
-  <string name="home_empty_vault_aliases_title">No aliases found</string>
-  <string name="home_empty_vault_aliases_subtitle">Get started by creating your first alias item.</string>
-  <string name="home_empty_vault_notes_title">No notes found</string>
-  <string name="home_empty_vault_notes_subtitle">Get started by creating your first note item.</string>
-  <string name="home_empty_vault_logins_mfa_title">No logins with TOTP found</string>
-  <string name="home_empty_vault_logins_mfa_subtitle">Get started by creating your first login with TOTP.</string>
-  <string name="home_empty_vault_identity_title">No identity found</string>
-  <string name="home_empty_vault_identity_subtitle">Get started by creating your first identity item.</string>
-  <string name="home_empty_vault_cc_title">No credit card found</string>
-  <string name="home_empty_vault_cc_subtitle">Get started by creating your first credit card item.</string>
+  <string name="home_empty_vault_login_title">Không tìm thấy đăng nhập nào</string>
+  <string name="home_empty_vault_login_subtitle">Bắt đầu bằng cách tạo mục đăng nhập đầu tiên của bạn.</string>
+  <string name="home_empty_vault_aliases_title">Không tìm thấy bí danh nào</string>
+  <string name="home_empty_vault_aliases_subtitle">Bắt đầu bằng cách tạo mục bí danh đầu tiên của bạn.</string>
+  <string name="home_empty_vault_notes_title">Không tìm thấy ghi chú nào</string>
+  <string name="home_empty_vault_notes_subtitle">Bắt đầu bằng cách tạo mục ghi chú đầu tiên của bạn.</string>
+  <string name="home_empty_vault_logins_mfa_title">Không tìm thấy đăng nhập nào với TOTP</string>
+  <string name="home_empty_vault_logins_mfa_subtitle">Bắt đầu bằng cách tạo đăng nhập đầu tiên với TOTP.</string>
+  <string name="home_empty_vault_identity_title">Không tìm thấy danh tính nào</string>
+  <string name="home_empty_vault_identity_subtitle">Bắt đầu bằng cách tạo mục danh tính đầu tiên của bạn.</string>
+  <string name="home_empty_vault_cc_title">Không tìm thấy thẻ tín dụng nào</string>
+  <string name="home_empty_vault_cc_subtitle">Bắt đầu bằng cách tạo mục thẻ tín dụng đầu tiên của bạn.</string>
+  <string name="home_empty_shared_items_title">No shared items found</string>
+  <string name="home_empty_shared_items_with_me_subtitle">No items have been shared with you.</string>
+  <string name="home_empty_shared_items_by_me_subtitle">No items have been shared by you.</string>
   <string name="home_empty_read_only_vault_title">Kho lưu trữ này trống</string>
   <string name="home_empty_read_only_vault_subtitle">Bạn không thể thêm nội dung vào một kho lưu trữ chỉ đọc.</string>
   <string name="home_empty_vault_create_login">Tạo đăng nhập</string>
@@ -39,19 +42,19 @@
   <string name="home_trial_banner_title">Quà tặng chào mừng của chúng tôi</string>
   <string name="home_trial_banner_text">7 ngày miễn phí để dùng thử các tính năng cao cấp. Chỉ trong tuần đầu của bạn với Proton Pass.</string>
   <string name="home_trial_banner_settings">Tìm hiểu thêm ›</string>
-  <string name="sl_sync_banner_title">Sync your aliases from SimpleLogin</string>
+  <string name="sl_sync_banner_title">Đồng bộ bí danh của bạn từ SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
-    <item quantity="other">You have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to sync them?</item>
+    <item quantity="other">Bạn có %d bí danh có trong SimpleLogin nhưng thiếu trong Proton Pass. Bạn có muốn đồng bộ hóa không?</item>
   </plurals>
-  <string name="sl_sync_banner_settings">Sync aliases ›</string>
-  <string name="sl_sync_banner_note">Once synced, deleting aliases in Pass will also delete them in SimpleLogin.</string>
+  <string name="sl_sync_banner_settings">Đồng bộ bí danh ›</string>
+  <string name="sl_sync_banner_note">Khi đã đồng bộ, việc xóa bí danh trong Pass cũng sẽ xóa chúng trong SimpleLogin.</string>
   <string name="home_notification_permission_banner_title">Nhận thông báo quan trọng</string>
   <string name="home_notification_permission_banner_text">Bật thông báo đẩy để biết được khi nào người khác chia sẽ kho lưu trữ với bạn.</string>
   <string name="home_notification_permission_banner_settings">Mở màn hình cấp quyền ›</string>
   <string name="home_invite_banner_title">Kho lưu trữ được chia sẽ với bạn</string>
   <string name="home_invite_banner_subtitle">Bạn được mời vào một kho lưu trữ. Chạm vào để biết thêm thông tin.</string>
-  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
-  <string name="home_item_invite_banner_subtitle">Tap for details.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s muốn chia sẻ một mục với bạn.</string>
+  <string name="home_item_invite_banner_subtitle">Chạm để xem chi tiết.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Sao chép mật khẩu</string>
   <string name="bottomsheet_copy_username">Sao chép tên đăng nhập</string>
@@ -97,7 +100,9 @@
   <string name="item_type_filter_note">Ghi chú</string>
   <string name="item_type_filter_credit_card">Thẻ</string>
   <string name="item_type_filter_identity">Danh tính</string>
-  <string name="item_type_filter_login_totp">Login with TOTP</string>
+  <string name="item_type_filter_login_totp">Đăng nhập với TOTP</string>
+  <string name="item_type_filter_items_shared_with_me">Shared with me</string>
+  <string name="item_type_filter_items_shared_by_me">Shared by me</string>
   <!-- Trash -->
   <string name="trash_empty_list_title">Thùng rác trống</string>
   <string name="trash_empty_list_message">Các nội dung được đưa vào thùng rác xuất hiện ở đây.</string>
@@ -113,7 +118,7 @@
   <string name="trash_deleting_items_error">Lỗi khi xóa nội dung</string>
   <string name="trash_deleting_items_success">Đã xóa nội dung</string>
   <!-- Alerts -->
-  <string name="alert_confirm_clear_trash_title">Dọn thủng rác?</string>
+  <string name="alert_confirm_clear_trash_title">Dọn rác</string>
   <string name="alert_confirm_clear_trash_message">Bạn có muốn dọn thùng rác không? Tất cả nội dung rác của bạn sẽ bị xóa vĩnh viễn</string>
   <string name="alert_confirm_restore_all_title">Khôi phục tất cả nội dung?</string>
   <string name="alert_confirm_restore_all_message">Bạn có muốn khôi phục tất cả nội dung rác không?</string>

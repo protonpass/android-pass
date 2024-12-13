@@ -45,13 +45,12 @@
   <string name="sharing_item_invitation_title">Πρόσκληση για κοινόχρηστο αντικείμενο</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">Ο %s θέλει να μοιραστεί μαζί σας ένα αντικείμενο.</string>
   <string name="sharing_item_invitation_accept">Αποδοχή και προβολή αντικειμένου</string>
-  <string name="sharing_snackbar_get_invite_error">Δεν ήταν δυνατή η λήψη πρόσκλησης</string>
+  <string name="sharing_item_leave">Αποχώρηση</string>
   <string name="sharing_snackbar_invite_accepted">Η πρόσκληση έγινε αποδεκτή</string>
   <string name="sharing_snackbar_invite_accept_error">Σφάλμα κατά την αποδοχή της πρόσκλησης</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Δεν ήταν δυνατή η αποδοχή της πρόσκλησης καθώς έχετε συμπληρώσει το όριο κρυπτών</string>
   <string name="sharing_snackbar_invite_rejected">Η πρόσκληση απορρίφθηκε</string>
   <string name="sharing_snackbar_invite_reject_error">Σφάλμα κατά την απόρριψη της πρόσκλησης</string>
-  <string name="sharing_snackbar_vault_not_found">Η κρύπτη δεν βρέθηκε</string>
   <string name="sharing_snackbar_invite_sent_success">Η πρόσκληση στάλθηκε</string>
   <string name="sharing_snackbar_invite_sent_error">Δεν ήταν δυνατή η αποστολή πρόσκλησης</string>
   <string name="sharing_snackbar_get_vault_members_error">Δεν ήταν δυνατή η λήψη μελών της κρύπτης</string>
@@ -59,6 +58,8 @@
   <string name="sharing_snackbar_change_permission_error">Δεν ήταν δυνατή η αλλαγή των δικαιωμάτων</string>
   <string name="sharing_snackbar_remove_member_success">Το μέλος αφαιρέθηκε από την κρύπτη</string>
   <string name="sharing_snackbar_remove_member_error">Δεν ήταν δυνατή η κατάργηση από την κρύπτη</string>
+  <string name="sharing_snackbar_fetch_member_error">Συνέβη κάποιο σφάλμα κατά τη λήψη μελών</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Συνέβη κάποιο σφάλμα κατά τη λήψη εκκρεμών προσκλήσεων</string>
   <string name="share_summary_title">Επανεξέταση και κοινή χρήση</string>
   <string name="share_summary_vault">%s κρύπτη</string>
   <string name="share_summary_share_vault">Κοινή χρήση κρύπτης</string>
@@ -87,6 +88,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Μεταβίβαση κυριότητας</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Δεν μπορείτε να μεταφέρετε την τελευταία κρύπτη που κατέχετε.</string>
   <string name="sharing_bottomsheet_remove_access">Ανάκληση πρόσβασης</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Μπορεί να παραχωρήσει και να ανακαλέσει την πρόσβαση σε αυτό το στοιχείο.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Μπορεί να τροποποιήσει αυτό το στοιχείο.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Μπορεί να προβάλλει αυτό το στοιχείο.</string>
   <string name="sharing_bottomsheet_resend_invite">Επανάληψη αποστολής πρόσκλησης</string>
   <string name="sharing_bottomsheet_cancel_invite">Ακύρωση πρόσκλησης</string>
   <string name="sharing_transfer_ownership_confirm_title">Μεταβίβαση κυριότητας</string>

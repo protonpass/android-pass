@@ -21,9 +21,11 @@
   <string name="add_attachment_choose_a_photo_or_video">Alegeți o fotografie sau un videoclip</string>
   <string name="add_attachment_choose_a_file">Alegeți un fișier</string>
   <string name="attachment_options_open">Deschidere</string>
-  <string name="attachment_options_save">Salvare</string>
   <string name="attachment_options_rename">Redenumire</string>
   <string name="attachment_options_delete">Ștergere</string>
   <string name="file_picker_open_error">Nu s-a putut deschide selectorul de fișiere.</string>
-  <string name="file_picker_select_error">Nu s-a putut selecta fișierul.</string>
+  <string name="media_picker_open_error">Nu s-a putut deschide selectorul de fișiere.</string>
+  <string name="camera_open_error">Nu s-a putut deschide camera.</string>
+  <string name="camera_permission_explanation">Este necesar accesul la cameră pentru ca funcția să fie disponibilă.</string>
+  <string name="camera_permission_open_settings">Deschidere setări</string>
 </resources>

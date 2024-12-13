@@ -21,10 +21,10 @@
   <string name="error_credentials_not_found">Không tìm thấy thông tin đăng nhập phù hợp</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Gợi ý cho %s</string>
-  <string name="error_loading_items">Không thể tải nội dung</string>
+  <string name="error_loading_items">Không thể tải các mục</string>
   <string name="topbar_search_query">Tìm trong tất cả kho lưu trữ…</string>
   <string name="topbar_search_pinned_items">Tìm trong Đã ghim…</string>
   <string name="topbar_search_query_oldest_vaults">Tìm trong các kho lưu trữ cũ nhất của bạn…</string>
   <string name="topbar_search_query_uninitialized" comment="Placeholder string before we know where we're searching (all vaults, oldest vaults, etc.)">Tìm kiếm…</string>
-  <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">All accounts (%1$s)</string>
+  <string name="all_accounts_item" comment="The placeholder argument will have the count of how many accounts the user has added">Tất cả tài khoản (%1$s)</string>
 </resources>

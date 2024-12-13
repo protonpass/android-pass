@@ -23,13 +23,13 @@
     <item quantity="other">Mã PIN không chính xác, %d lần thử còn lại.</item>
   </plurals>
   <string name="auth_unlock_app_title">Mở khóa Proton Pass</string>
-  <string name="auth_unlock_app_subtitle">Nhập mật khẩu chủ cho %s</string>
+  <string name="auth_unlock_app_subtitle">Nhập mật khẩu chính cho %s</string>
   <string name="auth_unlock_app_extra_password_subtitle">Nhập mật khẩu phụ cho %s</string>
-  <string name="auth_unlock_app_subtitle_account_switch">Nhập mật khẩu chủ cho:</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Nhập mật khẩu chính cho:</string>
   <string name="auth_unlock_app_extra_password_subtitle_account_switch">Nhập mật khẩu phụ cho:</string>
-  <string name="auth_master_password_label">Mật khẩu chủ</string>
-  <string name="auth_action_reveal_password">Hiển thị mật khẩu chủ</string>
-  <string name="auth_action_conceal_password">Ẩn mật khẩu chủ</string>
+  <string name="auth_master_password_label">Mật khẩu chính</string>
+  <string name="auth_action_reveal_password">Hiển thị mật khẩu chính</string>
+  <string name="auth_action_conceal_password">Ẩn mật khẩu chính</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Sử dụng PIN thay thế</string>
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
   <string name="auth_unlock_button">Mở khóa</string>

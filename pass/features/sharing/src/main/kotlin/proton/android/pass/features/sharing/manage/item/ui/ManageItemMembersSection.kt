@@ -43,7 +43,7 @@ import proton.android.pass.domain.shares.ShareMember
 import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.common.toShortSummary
 
-@Composable
+@[Composable Suppress("ComplexCondition")]
 internal fun ManageItemMembersSection(
     modifier: Modifier = Modifier,
     sectionTitle: String,
@@ -119,7 +119,7 @@ internal fun ManageItemMembersSection(
                         }
                     }
 
-                    if (share.isAdmin && !member.isOwner && !member.isCurrentUser) {
+                    if (share.isAdmin && !member.isOwner && !member.isCurrentUser && member.isItemMember) {
                         ThreeDotsMenuButton(
                             onClick = { onMenuOptionsClick(member) }
                         )

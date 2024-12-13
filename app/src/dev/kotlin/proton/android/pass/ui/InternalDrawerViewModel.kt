@@ -18,30 +18,39 @@
 
 package proton.android.pass.ui
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
+import proton.android.pass.files.impl.FilesDirectories
 import proton.android.pass.image.api.ClearIconCache
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.tooltips.TooltipPreferencesRepository
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.ui.InternalDrawerSnackbarMessage.PreferencesClearError
 import proton.android.pass.ui.InternalDrawerSnackbarMessage.PreferencesCleared
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class InternalDrawerViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val appDispatchers: AppDispatchers,
     private val preferenceRepository: UserPreferencesRepository,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -52,7 +61,8 @@ class InternalDrawerViewModel @Inject constructor(
     private val authWithExtraPassword: AuthWithExtraPassword,
     private val removeExtraPassword: RemoveExtraPassword,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val accountManager: AccountManager
+    private val accountManager: AccountManager,
+    private val toastManager: ToastManager
 ) : ViewModel() {
 
     internal fun clearPreferences() = viewModelScope.launch {
@@ -122,6 +132,24 @@ class InternalDrawerViewModel @Inject constructor(
         }.onFailure {
             PassLogger.w(TAG, "Error removing access key")
             PassLogger.w(TAG, it)
+        }
+    }
+
+    fun clearAttachments() {
+        viewModelScope.launch {
+            withContext(appDispatchers.io) {
+                val file = File(context.filesDir, FilesDirectories.Attachments.value)
+                if (file.exists()) {
+                    file.deleteRecursively()
+                    withContext(appDispatchers.main) {
+                        toastManager.showToast("Attachments removed")
+                    }
+                } else {
+                    withContext(appDispatchers.main) {
+                        toastManager.showToast("No attachments found")
+                    }
+                }
+            }
         }
     }
 

@@ -21,11 +21,13 @@ package proton.android.pass.featureitemdetail.impl.common
 internal interface ItemFeatures {
     val isHistoryEnabled: Boolean
     val isFileAttachmentsEnabled: Boolean
+    val isItemSharingEnabled: Boolean
 }
 
 internal data class AliasItemFeatures(
     override val isHistoryEnabled: Boolean,
     override val isFileAttachmentsEnabled: Boolean,
+    override val isItemSharingEnabled: Boolean,
     internal val slAliasSyncEnabled: Boolean,
     internal val isAliasTrashDialogChecked: Boolean,
     internal val isAliasManagementEnabled: Boolean
@@ -33,15 +35,18 @@ internal data class AliasItemFeatures(
 
 internal data class CreditCardItemFeatures(
     override val isHistoryEnabled: Boolean,
-    override val isFileAttachmentsEnabled: Boolean
+    override val isFileAttachmentsEnabled: Boolean,
+    override val isItemSharingEnabled: Boolean
 ) : ItemFeatures
 
 internal data class NoteItemFeatures(
     override val isHistoryEnabled: Boolean,
-    override val isFileAttachmentsEnabled: Boolean
+    override val isFileAttachmentsEnabled: Boolean,
+    override val isItemSharingEnabled: Boolean
 ) : ItemFeatures
 
 internal data class LoginItemFeatures(
     override val isHistoryEnabled: Boolean,
-    override val isFileAttachmentsEnabled: Boolean
+    override val isFileAttachmentsEnabled: Boolean,
+    override val isItemSharingEnabled: Boolean
 ) : ItemFeatures

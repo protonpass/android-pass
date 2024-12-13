@@ -194,20 +194,22 @@ class AliasDetailViewModel @Inject constructor(
         .onEach { hasItemBeenFetchedAtLeastOnce = true }
         .asLoadingResult()
 
-    private val itemFeaturesFlow: Flow<AliasItemFeatures> = combine(
+    private val itemFeaturesFlow: Flow<AliasItemFeatures> = combineN(
         getUserPlan().map { it.isPaidPlan },
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
         userPreferencesRepository.observeAliasTrashDialogStatusPreference().map { it.value },
-        featureFlagsRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1)
+        featureFlagsRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
     ) { isHistoryEnabled, isFileAttachmentsEnabled, slAliasSyncEnabled, isAliasTrashDialogChecked,
-        aliasManagementV1 ->
+        aliasManagementV1, isItemSharingEnabled ->
         AliasItemFeatures(
             isHistoryEnabled = isHistoryEnabled,
             isFileAttachmentsEnabled = isFileAttachmentsEnabled,
             slAliasSyncEnabled = slAliasSyncEnabled,
             isAliasTrashDialogChecked = isAliasTrashDialogChecked,
-            isAliasManagementEnabled = aliasManagementV1
+            isAliasManagementEnabled = aliasManagementV1,
+            isItemSharingEnabled = isItemSharingEnabled
         )
     }
 
@@ -274,11 +276,7 @@ class AliasDetailViewModel @Inject constructor(
                     shareClickAction = shareAction,
                     itemActions = actions,
                     event = event,
-                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
-                    isSLAliasSyncEnabled = itemFeatures.slAliasSyncEnabled,
-                    isAliasManagementEnabled = itemFeatures.isAliasManagementEnabled,
-                    isAliasTrashDialogChecked = itemFeatures.isAliasTrashDialogChecked,
-                    isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled,
+                    itemFeatures = itemFeatures,
                     attachmentsState = AttachmentsState(
                         draftAttachmentsList = listOf(),
                         attachmentsList = attachments,

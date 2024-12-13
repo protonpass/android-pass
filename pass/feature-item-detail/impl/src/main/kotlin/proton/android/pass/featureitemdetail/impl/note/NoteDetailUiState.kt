@@ -24,9 +24,10 @@ import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.Share
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
+import proton.android.pass.featureitemdetail.impl.common.NoteItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 
-sealed interface NoteDetailUiState {
+internal sealed interface NoteDetailUiState {
 
     @Stable
     data object NotInitialised : NoteDetailUiState
@@ -49,8 +50,7 @@ sealed interface NoteDetailUiState {
         val shareClickAction: ShareClickAction,
         val itemActions: ItemActions,
         val event: ItemDetailEvent,
-        val isHistoryFeatureEnabled: Boolean,
-        val isFileAttachmentsEnabled: Boolean,
+        val itemFeatures: NoteItemFeatures,
         val attachmentsState: AttachmentsState,
         val hasMoreThanOneVault: Boolean
     ) : NoteDetailUiState

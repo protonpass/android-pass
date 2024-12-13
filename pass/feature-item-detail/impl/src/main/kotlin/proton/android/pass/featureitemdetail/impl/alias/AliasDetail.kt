@@ -123,8 +123,8 @@ fun AliasDetail(
                             },
                             onMoveToTrash = {
                                 scope.launch { bottomSheetState.hide() }
-                                if (state.isSLAliasSyncEnabled) {
-                                    if (contents.isEnabled && !state.isAliasTrashDialogChecked) {
+                                if (state.itemFeatures.slAliasSyncEnabled) {
+                                    if (contents.isEnabled && !state.itemFeatures.isAliasTrashDialogChecked) {
                                         ItemDetailNavigation.OnTrashAlias(
                                             shareId = state.itemUiModel.shareId,
                                             itemId = state.itemUiModel.id
@@ -187,6 +187,9 @@ fun AliasDetail(
                             actionColor = PassTheme.colors.aliasInteractionNormMajor1,
                             iconColor = PassTheme.colors.aliasInteractionNormMajor2,
                             iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
+                            itemCategory = state.itemUiModel.category,
+                            itemShareCount = state.itemUiModel.shareCount,
+                            isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
                             onUpClick = { onNavigate(ItemDetailNavigation.Back) },
                             onEditClick = {
                                 onEditClick(state.itemActions, onNavigate, state.itemUiModel)
@@ -215,11 +218,11 @@ fun AliasDetail(
                         stats = state.stats,
                         contactsCount = state.contactsCount,
                         isLoading = state.isLoadingMailboxes,
-                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
-                        isAliasSyncEnabled = state.isSLAliasSyncEnabled,
+                        isHistoryFeatureEnabled = state.itemFeatures.isHistoryEnabled,
+                        isAliasSyncEnabled = state.itemFeatures.slAliasSyncEnabled,
                         isAliasStateToggling = state.isLoading(LoadingStateKey.AliasStateToggling),
-                        isAliasManagementEnabled = state.isAliasManagementEnabled,
-                        isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
+                        isAliasManagementEnabled = state.itemFeatures.isAliasManagementEnabled,
+                        isFileAttachmentsEnabled = state.itemFeatures.isFileAttachmentsEnabled,
                         attachmentsState = state.attachmentsState,
                         hasMoreThanOneVaultShare = state.hasMoreThanOneVault,
                         onCopyAlias = { viewModel.onCopyAlias(it) },

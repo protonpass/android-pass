@@ -25,10 +25,12 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -55,6 +57,7 @@ import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.Updat
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -68,8 +71,8 @@ class UpdateNoteViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
-    attachmentsHandler: AttachmentsHandler,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    private val attachmentsHandler: AttachmentsHandler,
+    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseNoteViewModel(
     snackbarDispatcher = snackbarDispatcher,
@@ -109,11 +112,26 @@ class UpdateNoteViewModel @Inject constructor(
         if (itemOption != None) return
         isLoadingState.update { IsLoadingState.Loading }
         runCatching { itemRepository.getById(navShareId, navItemId) }
-            .onSuccess(::onNoteItemReceived)
             .onFailure {
-                PassLogger.i(TAG, it, "Get by id error")
+                PassLogger.w(TAG, it)
+                PassLogger.w(TAG, "Get item error")
                 snackbarDispatcher(InitError)
             }
+            .mapCatching {
+                val isFileAttachmentsEnabled = runBlocking {
+                    featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1).firstOrNull() ?: false
+                }
+                if (it.hasAttachments && isFileAttachmentsEnabled) {
+                    attachmentsHandler.getAttachmentsForItem(it.shareId, it.id)
+                }
+                it
+            }
+            .onFailure {
+                PassLogger.w(TAG, it)
+                PassLogger.w(TAG, "Get attachments error")
+            }
+            .onSuccess(::onNoteItemReceived)
+
 
         isLoadingState.update { IsLoadingState.NotLoading }
     }

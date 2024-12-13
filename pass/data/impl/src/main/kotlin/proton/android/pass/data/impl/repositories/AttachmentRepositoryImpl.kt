@@ -158,7 +158,13 @@ class AttachmentRepositoryImpl @Inject constructor(
                 val fileType = fileTypeDetector.getFileTypeFromMimeType(
                     MimeType(metadata.mimeType)
                 )
-                it.value.toDomain(metadata.name, metadata.mimeType, fileType.toDomain())
+                it.value.toDomain(
+                    name = metadata.name,
+                    mimeType = metadata.mimeType,
+                    type = fileType.toDomain(),
+                    shareId = shareId,
+                    itemId = itemId
+                )
             }
         }
     }

@@ -19,7 +19,6 @@
 package proton.android.pass.featureitemcreate.impl.attachments
 
 import android.content.Context
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
@@ -44,7 +43,7 @@ class FakeAttachmentHandler : AttachmentsHandler {
         // no-op
     }
 
-    override fun uploadNewAttachment(uri: URI, scope: CoroutineScope) {
+    override suspend fun uploadNewAttachment(uri: URI) {
         // no-op
     }
 
@@ -52,17 +51,13 @@ class FakeAttachmentHandler : AttachmentsHandler {
         // no-op
     }
 
-    override fun observeNewAttachments(scope: CoroutineScope, onNewAttachment: (Set<URI>) -> Unit) {
+    override fun observeNewAttachments(onNewAttachment: (Set<URI>) -> Unit): Flow<Set<URI>> = flowOf(emptySet())
+
+    override suspend fun getAttachmentsForItem(shareId: ShareId, itemId: ItemId) {
         // no-op
     }
 
-    override fun openAttachment(
-        context: Context,
-        shareId: ShareId,
-        itemId: ItemId,
-        attachment: Attachment,
-        scope: CoroutineScope
-    ) {
+    override suspend fun openAttachment(context: Context, attachment: Attachment) {
         // no-op
     }
 }

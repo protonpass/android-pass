@@ -21,6 +21,8 @@ package proton.android.pass.composecomponents.impl.attachments
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Instant
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.AttachmentKey
@@ -103,6 +105,8 @@ class AttachmentSectionPreviewProvider :
         createTime: Instant = Instant.fromEpochSeconds(CREATE_TIME)
     ) = Attachment(
         id = id,
+        shareId = ShareId("share-$id"),
+        itemId = ItemId("item-$id"),
         name = name,
         type = type,
         size = size,

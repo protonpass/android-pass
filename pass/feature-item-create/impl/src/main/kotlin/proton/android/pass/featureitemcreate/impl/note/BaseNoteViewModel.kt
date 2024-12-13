@@ -35,6 +35,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.combineN
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentsHandler
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -129,6 +130,12 @@ abstract class BaseNoteViewModel(
         mimetype: String
     ) {
         attachmentsHandler.openDraftAttachment(context, uri, mimetype)
+    }
+
+    fun onAttachmentOpen(context: Context, attachment: Attachment) {
+        viewModelScope.launch {
+            attachmentsHandler.openAttachment(context, attachment)
+        }
     }
 
     override fun onCleared() {

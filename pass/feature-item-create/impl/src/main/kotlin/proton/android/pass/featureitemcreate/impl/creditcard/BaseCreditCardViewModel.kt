@@ -11,8 +11,10 @@ import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.CommonRegex.NON_DIGIT_REGEX
 import proton.android.pass.common.api.combineN
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -39,14 +41,16 @@ abstract class BaseCreditCardViewModel(
     private val hasUserEditedContentState: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     init {
-        attachmentsHandler.observeNewAttachments(viewModelScope) { newUris ->
+        attachmentsHandler.observeNewAttachments { newUris ->
             if (newUris.isNotEmpty()) {
                 onUserEditedContent()
                 newUris.forEach { uri ->
-                    attachmentsHandler.uploadNewAttachment(uri, viewModelScope)
+                    viewModelScope.launch {
+                        attachmentsHandler.uploadNewAttachment(uri)
+                    }
                 }
             }
-        }
+        }.launchIn(viewModelScope)
     }
 
     protected val isLoadingState: MutableStateFlow<IsLoadingState> = MutableStateFlow(NotLoading)

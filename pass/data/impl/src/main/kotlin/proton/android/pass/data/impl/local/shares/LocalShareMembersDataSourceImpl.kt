@@ -39,7 +39,7 @@ class LocalShareMembersDataSourceImpl @Inject constructor() : LocalShareMembersD
         memberShareId: ShareId
     ): ShareMember? = shareMembersFlow.value[userId]
         ?.get(shareId)
-        ?.first { it.shareId == memberShareId }
+        ?.firstOrNull { it.shareId == memberShareId }
 
     override fun upsertShareMember(
         userId: UserId,

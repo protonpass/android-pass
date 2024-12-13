@@ -21,6 +21,8 @@ package proton.android.pass.featureitemcreate.impl.common.attachments
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import java.net.URI
 
@@ -44,4 +46,5 @@ interface AttachmentsHandler {
 
     fun observeNewAttachments(onNewAttachment: (Set<URI>) -> Unit): Flow<Set<URI>>
 
+    suspend fun getAttachmentsForItem(shareId: ShareId, itemId: ItemId)
 }

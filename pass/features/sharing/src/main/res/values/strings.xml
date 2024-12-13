@@ -32,6 +32,8 @@
         <item quantity="other">%d members</item>
     </plurals>
     <string name="sharing_member_count_header">Members</string>
+    <string name="sharing_item_member_count_header">Item members</string>
+    <string name="sharing_vault_member_count_header">Vault members</string>
 
     <string name="share_with_title">Share with</string>
     <string name="share_with_email_hint">Email address</string>

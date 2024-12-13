@@ -49,13 +49,12 @@
   <string name="sharing_item_invitation_title">Запрашэнне да абагуленага элемента</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s хоча абагуліць элемент з вамі.</string>
   <string name="sharing_item_invitation_accept">Прыняць і паглядзець элемент</string>
-  <string name="sharing_snackbar_get_invite_error">Немагчыма атрымаць запрашэнне</string>
+  <string name="sharing_item_leave">Выйсці</string>
   <string name="sharing_snackbar_invite_accepted">Запрашэнне прынята</string>
   <string name="sharing_snackbar_invite_accept_error">Памылка прымання запрашэння</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Немагчыма прыняць запрашэнне па той прычыне, што вы дасягнулі абмежавання ў сховішчы</string>
   <string name="sharing_snackbar_invite_rejected">Запрашэнне адхілена</string>
   <string name="sharing_snackbar_invite_reject_error">Памылка адхілення запрашэння</string>
-  <string name="sharing_snackbar_vault_not_found">Не атрымалася знайсці сховішча</string>
   <string name="sharing_snackbar_invite_sent_success">Запрашэнне адпраўлена</string>
   <string name="sharing_snackbar_invite_sent_error">Немагчыма адправіць запрашэнне</string>
   <string name="sharing_snackbar_get_vault_members_error">Немагчыма атрымаць удзельнікаў сховішча</string>
@@ -63,6 +62,8 @@
   <string name="sharing_snackbar_change_permission_error">Немагчыма змяніць дазволы</string>
   <string name="sharing_snackbar_remove_member_success">Удзельнік выдалены са сховішча</string>
   <string name="sharing_snackbar_remove_member_error">Немагчыма выдаліць са сховішча</string>
+  <string name="sharing_snackbar_fetch_member_error">Адбылася памылка падчас атрымання ўдзельнікаў</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Адбылася памылка падчас атрымання запрашэнняў, якія чакаюць адказу</string>
   <string name="share_summary_title">Прагляд і абагульненне</string>
   <string name="share_summary_vault">%s сховішча</string>
   <string name="share_summary_share_vault">Абагуліць сховішча</string>
@@ -95,6 +96,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Перадаць права ўласнасці</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Вы не можаце перанесці апошняе сховішча, якое належала вам.</string>
   <string name="sharing_bottomsheet_remove_access">Адклікаць доступ</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Можа даваць і адклікаць дазвол на доступ да гэтага элемента.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Можа рэдагаваць гэты элемент.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Можа праглядаць гэты элемент.</string>
   <string name="sharing_bottomsheet_resend_invite">Паўторна адправіць запрашэнне</string>
   <string name="sharing_bottomsheet_cancel_invite">Скасаваць запрашэнне</string>
   <string name="sharing_transfer_ownership_confirm_title">Перадача правоў уласнасці</string>

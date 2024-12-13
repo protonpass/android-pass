@@ -21,9 +21,11 @@
   <string name="add_attachment_choose_a_photo_or_video">აირჩიეთ ფოტო ან ვიდეო</string>
   <string name="add_attachment_choose_a_file">ფაილის არჩევა</string>
   <string name="attachment_options_open">გახსნა</string>
-  <string name="attachment_options_save">შენახვა</string>
   <string name="attachment_options_rename">გადარქმევა</string>
   <string name="attachment_options_delete">წაშლა</string>
   <string name="file_picker_open_error">ვერ გავხსენი ფაილის ამრჩევი</string>
-  <string name="file_picker_select_error">ფაილის არჩევა შეუძლებელია</string>
+  <string name="media_picker_open_error">Could not open media picker</string>
+  <string name="camera_open_error">Could not open camera</string>
+  <string name="camera_permission_explanation">ამ ფუნქციას კამერასთან წვდომა სჭირდება.</string>
+  <string name="camera_permission_open_settings">მორგების ფანჯრის გახსნა</string>
 </resources>

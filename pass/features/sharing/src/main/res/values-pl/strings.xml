@@ -49,13 +49,12 @@
   <string name="sharing_item_invitation_title">Zaproszenie do udostępnionego elementu</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">Użytkownik %s udostępnia Ci element.</string>
   <string name="sharing_item_invitation_accept">Zaakceptuj i zobacz element</string>
-  <string name="sharing_snackbar_get_invite_error">Nie można pobrać zaproszenia</string>
+  <string name="sharing_item_leave">Leave</string>
   <string name="sharing_snackbar_invite_accepted">Zaproszenie zostało zaakceptowane</string>
   <string name="sharing_snackbar_invite_accept_error">Wystąpił błąd podczas akceptowania zaproszenia</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Nie można zaakceptować zaproszenia z powodu osiągnięcia limitu maksymalnej liczby sejfów</string>
   <string name="sharing_snackbar_invite_rejected">Zaproszenie zostało odrzucone</string>
   <string name="sharing_snackbar_invite_reject_error">Wystąpił błąd podczas odrzucania zaproszenia</string>
-  <string name="sharing_snackbar_vault_not_found">Sejf nie został znaleziony</string>
   <string name="sharing_snackbar_invite_sent_success">Zaproszenie zostało wysłane</string>
   <string name="sharing_snackbar_invite_sent_error">Nie można wysłać zaproszenia</string>
   <string name="sharing_snackbar_get_vault_members_error">Nie można pobrać użytkowników sejfu</string>
@@ -63,6 +62,8 @@
   <string name="sharing_snackbar_change_permission_error">Nie można zmienić uprawnień</string>
   <string name="sharing_snackbar_remove_member_success">Użytkownik został usunięty z sejfu</string>
   <string name="sharing_snackbar_remove_member_error">Nie można usunąć z sejfu</string>
+  <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
   <string name="share_summary_title">Przejrzyj i udostępnij</string>
   <string name="share_summary_vault">sejfu %s</string>
   <string name="share_summary_share_vault">Udostępnij sejf</string>
@@ -95,6 +96,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Zmień właściciela</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Nie możesz zmienić właściciela swojego jedynego sejfu.</string>
   <string name="sharing_bottomsheet_remove_access">Unieważnij dostęp</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
   <string name="sharing_bottomsheet_resend_invite">Wyślij ponownie zaproszenie</string>
   <string name="sharing_bottomsheet_cancel_invite">Anuluj zaproszenie</string>
   <string name="sharing_transfer_ownership_confirm_title">Zmień właściciela</string>

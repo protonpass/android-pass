@@ -47,13 +47,12 @@
   <string name="sharing_item_invitation_title">Invitație articol partajat</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s doreşte să vă partajeze un articol.</string>
   <string name="sharing_item_invitation_accept">Acceptare și vizualizare articol</string>
-  <string name="sharing_snackbar_get_invite_error">Nu s-a putut primi invitația.</string>
+  <string name="sharing_item_leave">Părăsire</string>
   <string name="sharing_snackbar_invite_accepted">Invitație acceptată</string>
   <string name="sharing_snackbar_invite_accept_error">Eroare la acceptarea invitației.</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Nu s-a putut deschide invitația deoarece v-ați atins limita seifului.</string>
   <string name="sharing_snackbar_invite_rejected">Invitație refuzată</string>
   <string name="sharing_snackbar_invite_reject_error">Eroare la refuzarea invitației.</string>
-  <string name="sharing_snackbar_vault_not_found">Nu s-a putut găsi seiful.</string>
   <string name="sharing_snackbar_invite_sent_success">Invitația a fost trimisă.</string>
   <string name="sharing_snackbar_invite_sent_error">Nu s-a putut trimite invitația.</string>
   <string name="sharing_snackbar_get_vault_members_error">Nu s-au putut prelua membrii seifului.</string>
@@ -61,6 +60,8 @@
   <string name="sharing_snackbar_change_permission_error">Nu s-au putut modifica permisiunile.</string>
   <string name="sharing_snackbar_remove_member_success">Membrul a fost eliminat de la seif.</string>
   <string name="sharing_snackbar_remove_member_error">Nu a putut fi eliminat de la seif.</string>
+  <string name="sharing_snackbar_fetch_member_error">A apărut o eroare la preluarea membrilor.</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">A apărut o eroare la preluarea invitațiilor în așteptare.</string>
   <string name="share_summary_title">Revizuire și partajare</string>
   <string name="share_summary_vault">seiful %s</string>
   <string name="share_summary_share_vault">Partajare seif</string>
@@ -91,6 +92,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Schimbare proprietar</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Nu puteți transfera ultimul seif deținut.</string>
   <string name="sharing_bottomsheet_remove_access">Revocare acces</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
   <string name="sharing_bottomsheet_resend_invite">Retrimitere invitație</string>
   <string name="sharing_bottomsheet_cancel_invite">Anulare invitație</string>
   <string name="sharing_transfer_ownership_confirm_title">Schimbare proprietar</string>

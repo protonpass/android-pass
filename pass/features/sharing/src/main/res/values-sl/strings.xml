@@ -49,13 +49,12 @@
   <string name="sharing_item_invitation_title">Shared item invitation</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
   <string name="sharing_item_invitation_accept">Accept and view the item</string>
-  <string name="sharing_snackbar_get_invite_error">Povabila ni bilo mogoče dobiti</string>
+  <string name="sharing_item_leave">Leave</string>
   <string name="sharing_snackbar_invite_accepted">Povabilo sprejeto</string>
   <string name="sharing_snackbar_invite_accept_error">Napaka pri sprejemanju povabila</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Povabila ni bilo mogoče sprejeti, ker ste dosegli omejitev trezorja</string>
   <string name="sharing_snackbar_invite_rejected">Povabilo zavrnjeno</string>
   <string name="sharing_snackbar_invite_reject_error">Napaka pri zavrnitvi povabila</string>
-  <string name="sharing_snackbar_vault_not_found">Trezorja ni bilo mogoče najti</string>
   <string name="sharing_snackbar_invite_sent_success">Povabilo poslano.</string>
   <string name="sharing_snackbar_invite_sent_error">Povabila ni bilo mogoče poslati</string>
   <string name="sharing_snackbar_get_vault_members_error">Ni bilo mogoče pridobiti članov trezorja</string>
@@ -63,6 +62,8 @@
   <string name="sharing_snackbar_change_permission_error">Dovoljenj ni bilo mogoče spremeniti</string>
   <string name="sharing_snackbar_remove_member_success">Član odstranjen iz trezorja</string>
   <string name="sharing_snackbar_remove_member_error">Ni bilo mogoče odstraniti iz trezorja</string>
+  <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
   <string name="share_summary_title">Preglejte in delite</string>
   <string name="share_summary_vault">%s trezor</string>
   <string name="share_summary_share_vault">Skupni trezor</string>
@@ -95,6 +96,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Prenos lastništva</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Svojega zadnjega trezorja ne morete prenesti.</string>
   <string name="sharing_bottomsheet_remove_access">Odvzemi dostop</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
   <string name="sharing_bottomsheet_resend_invite">Ponovno pošlji povabilo</string>
   <string name="sharing_bottomsheet_cancel_invite">Prekliči povabilo</string>
   <string name="sharing_transfer_ownership_confirm_title">Prenos lastništva</string>

@@ -21,9 +21,11 @@
   <string name="add_attachment_choose_a_photo_or_video">Choose a photo or video</string>
   <string name="add_attachment_choose_a_file">Choose a file</string>
   <string name="attachment_options_open">Open</string>
-  <string name="attachment_options_save">Save</string>
   <string name="attachment_options_rename">Rename</string>
   <string name="attachment_options_delete">Delete</string>
   <string name="file_picker_open_error">Could not open file picker</string>
-  <string name="file_picker_select_error">Could not select file</string>
+  <string name="media_picker_open_error">Could not open media picker</string>
+  <string name="camera_open_error">Could not open camera</string>
+  <string name="camera_permission_explanation">Для роботи цієї функції потрібен дозвіл на доступ до камери.</string>
+  <string name="camera_permission_open_settings">Відкрити налаштування</string>
 </resources>

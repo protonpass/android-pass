@@ -45,13 +45,12 @@
   <string name="sharing_item_invitation_title">Öge paylaşma daveti</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s sizinle bir öge paylaşmak istiyor.</string>
   <string name="sharing_item_invitation_accept">Kabul et ve ögeyi görüntüle</string>
-  <string name="sharing_snackbar_get_invite_error">Davet alınamadı</string>
+  <string name="sharing_item_leave">Leave</string>
   <string name="sharing_snackbar_invite_accepted">Davet kabul edildi</string>
   <string name="sharing_snackbar_invite_accept_error">Davet kabul edilirken sorun çıktı</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Kasa sayısı sınırına ulaştığınız için davet kabul edilemedi</string>
   <string name="sharing_snackbar_invite_rejected">Davet reddedildi</string>
   <string name="sharing_snackbar_invite_reject_error">Davet reddedilirken sorun çıktı</string>
-  <string name="sharing_snackbar_vault_not_found">Kasa bulunamadı</string>
   <string name="sharing_snackbar_invite_sent_success">Davet gönderildi</string>
   <string name="sharing_snackbar_invite_sent_error">Davet gönderilemedi</string>
   <string name="sharing_snackbar_get_vault_members_error">Kasa üyeleri alınamadı</string>
@@ -59,6 +58,8 @@
   <string name="sharing_snackbar_change_permission_error">İzinler değiştirilemedi</string>
   <string name="sharing_snackbar_remove_member_success">Üye kasadan kaldırıldı</string>
   <string name="sharing_snackbar_remove_member_error">Kasadan kaldırılamadı</string>
+  <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
   <string name="share_summary_title">Gözden geçirip paylaş</string>
   <string name="share_summary_vault">%s kasa</string>
   <string name="share_summary_share_vault">Kasayı paylaş</string>
@@ -87,6 +88,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Sahipliği aktar</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Sahibi olduğunuz son kasanın sahipliğini aktaramazsınız.</string>
   <string name="sharing_bottomsheet_remove_access">Erişme iznini geri al</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
   <string name="sharing_bottomsheet_resend_invite">Daveti yeniden gönder</string>
   <string name="sharing_bottomsheet_cancel_invite">Daveti iptal et</string>
   <string name="sharing_transfer_ownership_confirm_title">Sahipliği aktar</string>

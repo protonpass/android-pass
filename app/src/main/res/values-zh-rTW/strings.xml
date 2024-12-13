@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="twenty_vaults">20 個保險庫</string>
-  <string name="unlimited_email_alias">電子郵件別名無上限</string>
+  <string name="unlimited_email_alias">不限數量的電子郵件別名</string>
   <string name="custom_fields">自訂欄位</string>
   <string name="restart_to_complete_the_update">重新啟動已完成更新</string>
   <string name="action_restart">重新啟動</string>
   <string name="shortcut_share_logs_title">分享記錄檔</string>
-  <string name="no_account_found">No account found</string>
-  <string name="no_session_found">No session found</string>
-  <string name="auth_with_extra_password_failed">Auth with extra password failed</string>
+  <string name="no_account_found">找不到帳戶</string>
+  <string name="no_session_found">找不到連線階段</string>
+  <string name="auth_with_extra_password_failed">第二密碼驗證失敗</string>
 </resources>

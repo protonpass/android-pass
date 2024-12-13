@@ -39,7 +39,7 @@ class CameraViewModel @Inject constructor(
 
     fun createTempUri(onUriGenerated: (Uri) -> Unit) {
         viewModelScope.launch {
-            val uri = fileUriGenerator.generate(FileType.CameraTemp)
+            val uri = fileUriGenerator.generate(FileType.CameraCache)
             onUriGenerated(Uri.parse(uri.toString()))
         }
     }

@@ -198,7 +198,7 @@ abstract class BaseAliasViewModel(
     }
 
     override fun onCleared() {
-        attachmentsHandler.clearAttachments()
+        attachmentsHandler.onClearAttachments()
         super.onCleared()
     }
 

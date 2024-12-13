@@ -50,7 +50,7 @@ data class Attachment(
     val type: AttachmentType,
     val size: Long,
     val createTime: Instant,
-    val fileKey: AttachmentKey,
+    val key: AttachmentKey,
     val itemKeyRotation: String,
     val chunks: List<Chunk>
 )

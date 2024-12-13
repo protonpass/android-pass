@@ -216,7 +216,7 @@ abstract class BaseCreditCardViewModel(
     }
 
     override fun onCleared() {
-        attachmentsHandler.clearAttachments()
+        attachmentsHandler.onClearAttachments()
         super.onCleared()
     }
 

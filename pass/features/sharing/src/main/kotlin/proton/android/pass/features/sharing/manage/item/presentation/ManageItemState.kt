@@ -47,11 +47,11 @@ internal sealed interface ManageItemState {
 
         internal val itemMembers: List<ShareMember> = members.filter { it.isItemMember }
 
-        internal val hasItemMembers: Boolean = members.isNotEmpty()
+        internal val hasItemMembers: Boolean = itemMembers.isNotEmpty()
 
         internal val vaultMembers: List<ShareMember> = members.filter { it.isVaultMember }
 
-        internal val hasVaultMembers: Boolean = members.isNotEmpty()
+        internal val hasVaultMembers: Boolean = vaultMembers.isNotEmpty()
 
         internal val hasPendingInvites = pendingInvites.isNotEmpty()
 

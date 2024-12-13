@@ -23,10 +23,11 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.Share
+import proton.android.pass.featureitemdetail.impl.common.CreditCardItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 
-sealed interface CreditCardDetailUiState {
+internal sealed interface CreditCardDetailUiState {
 
     @Stable
     data object NotInitialised : CreditCardDetailUiState
@@ -50,8 +51,7 @@ sealed interface CreditCardDetailUiState {
         val shareClickAction: ShareClickAction,
         val itemActions: ItemActions,
         val event: ItemDetailEvent,
-        val isHistoryFeatureEnabled: Boolean,
-        val isFileAttachmentsEnabled: Boolean,
+        val itemFeatures: CreditCardItemFeatures,
         val attachmentsState: AttachmentsState,
         val hasMoreThanOneVault: Boolean
     ) : CreditCardDetailUiState

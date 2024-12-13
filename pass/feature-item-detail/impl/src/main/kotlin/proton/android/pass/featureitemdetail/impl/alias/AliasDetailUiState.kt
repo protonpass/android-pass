@@ -28,10 +28,11 @@ import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasStats
 import proton.android.pass.domain.Share
+import proton.android.pass.featureitemdetail.impl.common.AliasItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 
-sealed interface AliasDetailUiState {
+internal sealed interface AliasDetailUiState {
 
     @Stable
     data object NotInitialised : AliasDetailUiState
@@ -61,11 +62,7 @@ sealed interface AliasDetailUiState {
         val shareClickAction: ShareClickAction,
         val itemActions: ItemActions,
         val event: ItemDetailEvent,
-        val isHistoryFeatureEnabled: Boolean,
-        val isFileAttachmentsEnabled: Boolean,
-        val isSLAliasSyncEnabled: Boolean,
-        val isAliasTrashDialogChecked: Boolean,
-        val isAliasManagementEnabled: Boolean,
+        val itemFeatures: AliasItemFeatures,
         val hasMoreThanOneVault: Boolean,
         val attachmentsState: AttachmentsState
     ) : AliasDetailUiState {

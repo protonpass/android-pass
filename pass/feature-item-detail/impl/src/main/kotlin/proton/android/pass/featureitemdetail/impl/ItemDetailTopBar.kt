@@ -45,8 +45,10 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
+import proton.android.pass.composecomponents.impl.buttons.PassShareItemIcon
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 import proton.android.pass.data.api.usecases.ItemActions
+import proton.android.pass.domain.items.ItemCategory
 import me.proton.core.presentation.R as CoreR
 
 @ExperimentalComposeUiApi
@@ -58,6 +60,9 @@ internal fun ItemDetailTopBar(
     iconColor: Color,
     iconBackgroundColor: Color,
     actionColor: Color,
+    itemCategory: ItemCategory,
+    itemShareCount: Int,
+    isItemSharingEnabled: Boolean,
     onUpClick: () -> Unit,
     onEditClick: () -> Unit,
     onOptionsClick: () -> Unit,
@@ -82,6 +87,9 @@ internal fun ItemDetailTopBar(
                 actionColor = actionColor,
                 iconColor = iconColor,
                 iconBackgroundColor = iconBackgroundColor,
+                itemCategory = itemCategory,
+                itemShareCount = itemShareCount,
+                isItemSharingEnabled = isItemSharingEnabled,
                 onEditClick = onEditClick,
                 onOptionsClick = onOptionsClick,
                 onShareClick = onShareClick
@@ -98,6 +106,9 @@ private fun ItemTopBarActions(
     actionColor: Color,
     iconColor: Color,
     iconBackgroundColor: Color,
+    itemCategory: ItemCategory,
+    itemShareCount: Int,
+    isItemSharingEnabled: Boolean,
     onEditClick: () -> Unit,
     onOptionsClick: () -> Unit,
     onShareClick: () -> Unit
@@ -116,12 +127,20 @@ private fun ItemTopBarActions(
             onEditClick = onEditClick
         )
 
-        ItemDetailShareButton(
-            isEnabled = actions.canShare.value(),
-            iconBackgroundColor = iconBackgroundColor,
-            iconColor = iconColor,
-            onShareClick = onShareClick
-        )
+        if (isItemSharingEnabled) {
+            PassShareItemIcon(
+                itemShareCount = itemShareCount,
+                itemCategory = itemCategory,
+                onClick = onShareClick
+            )
+        } else {
+            ItemDetailShareButton(
+                isEnabled = actions.canShare.value(),
+                iconBackgroundColor = iconBackgroundColor,
+                iconColor = iconColor,
+                onShareClick = onShareClick
+            )
+        }
 
         ItemDetailOptionsButton(
             isVisible = !isLoading,
@@ -239,7 +258,10 @@ fun ItemDetailTopBarPreview(
                 onEditClick = {},
                 onOptionsClick = {},
                 onShareClick = {},
-                actions = input.second.actions
+                actions = input.second.actions,
+                itemCategory = ItemCategory.Login,
+                itemShareCount = 0,
+                isItemSharingEnabled = false
             )
         }
     }

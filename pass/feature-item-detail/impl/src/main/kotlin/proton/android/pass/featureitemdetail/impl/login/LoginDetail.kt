@@ -201,6 +201,9 @@ fun LoginDetail(
                             actionColor = PassTheme.colors.loginInteractionNormMajor1,
                             iconColor = PassTheme.colors.loginInteractionNormMajor2,
                             iconBackgroundColor = PassTheme.colors.loginInteractionNormMinor1,
+                            itemCategory = state.itemUiModel.category,
+                            itemShareCount = state.itemUiModel.shareCount,
+                            isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
                             onUpClick = { onNavigate(ItemDetailNavigation.Back) },
                             onEditClick = {
                                 onEditClick(state.itemActions, onNavigate, state.itemUiModel)
@@ -346,8 +349,8 @@ fun LoginDetail(
                                     }
                             }
                         },
-                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
-                        isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
+                        isHistoryFeatureEnabled = state.itemFeatures.isHistoryEnabled,
+                        isFileAttachmentsEnabled = state.itemFeatures.isFileAttachmentsEnabled,
                         hasMoreThanOneVaultShare = state.hasMoreThanOneVault
                     )
                 }

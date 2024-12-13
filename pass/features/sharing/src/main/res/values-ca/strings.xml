@@ -45,13 +45,12 @@
   <string name="sharing_item_invitation_title">Invitació a un element compartit</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s vol compartir un element amb vosaltres.</string>
   <string name="sharing_item_invitation_accept">Accepta i mostra l\'element</string>
-  <string name="sharing_snackbar_get_invite_error">No s’ha pogut obtenir la invitació.</string>
+  <string name="sharing_item_leave">Deixa</string>
   <string name="sharing_snackbar_invite_accepted">Invitació acceptada</string>
   <string name="sharing_snackbar_invite_accept_error">S\'ha produït un error en acceptar la invitació</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">No s\'ha pogut acceptar la invitació perquè heu arribat al límit de la caixa forta</string>
   <string name="sharing_snackbar_invite_rejected">Invitació rebutjada</string>
   <string name="sharing_snackbar_invite_reject_error">S\'ha produït un error en rebutjar la invitació.</string>
-  <string name="sharing_snackbar_vault_not_found">No s\'ha pogut trobar la caixa forta.</string>
   <string name="sharing_snackbar_invite_sent_success">S\'ha enviat la invitació.</string>
   <string name="sharing_snackbar_invite_sent_error">No s’ha pogut enviar la invitació.</string>
   <string name="sharing_snackbar_get_vault_members_error">No s\'han pogut obtenir els membres de la caixa forta</string>
@@ -59,6 +58,8 @@
   <string name="sharing_snackbar_change_permission_error">No s\'ha pogut canviar els permisos.</string>
   <string name="sharing_snackbar_remove_member_success">S\'ha esborrat el membre de la caixa forta.</string>
   <string name="sharing_snackbar_remove_member_error">No s\'ha pogut esborrar de la caixa forta.</string>
+  <string name="sharing_snackbar_fetch_member_error">S\'ha produït un error en obtenir els membres.</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">S\'ha produït un error en obtenir les invitacions pendents.</string>
   <string name="share_summary_title">Reviseu i comparteu</string>
   <string name="share_summary_vault">a caixa forta %s</string>
   <string name="share_summary_share_vault">Comparteix la caixa forta</string>
@@ -87,6 +88,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Transfereix la propietat</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">No podeu transferir la vostra última caixa forta que heu tingut en propietat.</string>
   <string name="sharing_bottomsheet_remove_access">Revoca l\'accés</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Pot concedir i revocar l\'accés a aquest element.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Pot editar aquest element.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Pot veure aquest element.</string>
   <string name="sharing_bottomsheet_resend_invite">Reenvia la invitació</string>
   <string name="sharing_bottomsheet_cancel_invite">Cancel·la la invitació</string>
   <string name="sharing_transfer_ownership_confirm_title">Transfereix la propietat</string>

@@ -7,14 +7,14 @@
   <string name="alias_dialog_move_to_trash_title">Chuyển vào thùng rác?</string>
   <string name="alias_dialog_move_to_trash_content">Nếu bạn chuyển một bí danh vào thùng rác, nó sẽ không chuyển tiếp email vào hộp thư đến của bạn.</string>
   <string name="alias_dialog_move_to_trash_confirm">Xác nhận</string>
-  <string name="delete_alias_confirm">Delete it, I will never need it</string>
-  <string name="delete_alias_title">Delete %s</string>
-  <string name="delete_alias_enabled_subtitle">"Please note once deleted, the alias can't be restored. Maybe you want to disable the alias instead? "</string>
-  <string name="delete_alias_disabled_subtitle">Please note once deleted, the alias can\'t be restored. The alias is already disabled and won’t forward emails to your mailbox.</string>
+  <string name="delete_alias_confirm">Xóa nó, tôi sẽ không bao giờ cần nó</string>
+  <string name="delete_alias_title">Xóa %s</string>
+  <string name="delete_alias_enabled_subtitle">"Xin lưu ý rằng một khi đã xóa, bí danh sẽ không thể khôi phục. Thay vì đó có thể bạn muốn vô hiệu hóa bí danh? "</string>
+  <string name="delete_alias_disabled_subtitle">Xin lưu ý rằng một khi đã xóa, bí danh không thể được khôi phục. Bí danh đã được vô hiệu hóa và email sẽ không chuyển tiếp đến hộp thư của bạn.</string>
   <plurals name="bulk_delete_alias_title">
-    <item quantity="other">You\'re about to permanently delete %d aliases</item>
+    <item quantity="other">Bạn sắp xóa vĩnh viễn %d bí danh</item>
   </plurals>
-  <string name="bulk_delete_alias_subtitle">Please note once deleted, the aliases can\'t be restored</string>
-  <string name="bulk_delete_alias_confirm">Understood, I will never need them</string>
-  <string name="delete_alias_disable">Disable alias</string>
+  <string name="bulk_delete_alias_subtitle">Xin lưu ý rằng một khi đã xóa, các bí danh không thể được khôi phục</string>
+  <string name="bulk_delete_alias_confirm">Đã hiểu, tôi sẽ không bao giờ cần chúng</string>
+  <string name="delete_alias_disable">Vô hiệu hóa bí danh</string>
 </resources>

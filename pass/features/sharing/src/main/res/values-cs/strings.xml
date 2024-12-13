@@ -49,13 +49,12 @@
   <string name="sharing_item_invitation_title">Pozvánka ke sdílené položce</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s chce s vámi sdílet položku.</string>
   <string name="sharing_item_invitation_accept">Přijmout a zobrazit položku</string>
-  <string name="sharing_snackbar_get_invite_error">Nepodařilo se získat pozvánku</string>
+  <string name="sharing_item_leave">Opustit</string>
   <string name="sharing_snackbar_invite_accepted">Pozvánka přijata</string>
   <string name="sharing_snackbar_invite_accept_error">Chyba při přijetí pozvánky</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Pozvánku nelze přijmout, protože jste dosáhli limitu pozvánek trezoru</string>
   <string name="sharing_snackbar_invite_rejected">Pozvánka odmítnuta</string>
   <string name="sharing_snackbar_invite_reject_error">Chyba při odmítnutí pozvánky</string>
-  <string name="sharing_snackbar_vault_not_found">Trezor se nepodařilo najít</string>
   <string name="sharing_snackbar_invite_sent_success">Pozvánka odeslána</string>
   <string name="sharing_snackbar_invite_sent_error">Nepodařilo se odeslat pozvánku</string>
   <string name="sharing_snackbar_get_vault_members_error">Nelze získat členy trezoru</string>
@@ -63,6 +62,8 @@
   <string name="sharing_snackbar_change_permission_error">Nepodařilo se změnit oprávnění</string>
   <string name="sharing_snackbar_remove_member_success">Člen odebrán z trezoru</string>
   <string name="sharing_snackbar_remove_member_error">Nelze odebrat z trezoru</string>
+  <string name="sharing_snackbar_fetch_member_error">Došlo k chybě při načítání členů</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Došlo k chybě při získávání čekajících pozvánek</string>
   <string name="share_summary_title">Prohlédnout a sdílet</string>
   <string name="share_summary_vault">%s trezor</string>
   <string name="share_summary_share_vault">Sdílet trezor</string>
@@ -95,6 +96,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Převést vlastnictví</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Nemůžete převést váš poslední trezor, který vlastníte.</string>
   <string name="sharing_bottomsheet_remove_access">Zrušit přístup</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Může udělovat a rušit přístup k této položce.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Může upravit tuto položku.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Může zobrazit tuto položku.</string>
   <string name="sharing_bottomsheet_resend_invite">Znovu poslat pozvánku</string>
   <string name="sharing_bottomsheet_cancel_invite">Zrušit pozvánku</string>
   <string name="sharing_transfer_ownership_confirm_title">Převést vlastnictví</string>

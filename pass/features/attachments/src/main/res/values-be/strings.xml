@@ -21,9 +21,11 @@
   <string name="add_attachment_choose_a_photo_or_video">Выберыце фатаграфію або файл з відэа</string>
   <string name="add_attachment_choose_a_file">Выберыце файл</string>
   <string name="attachment_options_open">Адкрыць</string>
-  <string name="attachment_options_save">Захаваць</string>
   <string name="attachment_options_rename">Перайменаваць</string>
   <string name="attachment_options_delete">Выдаліць</string>
   <string name="file_picker_open_error">Немагчыма адкрыць сродак выбару файлаў</string>
-  <string name="file_picker_select_error">Немагчыма выбраць файл</string>
+  <string name="media_picker_open_error">Немагчыма адкрыць сродак выбару медыя</string>
+  <string name="camera_open_error">Немагчыма адрыць камеру</string>
+  <string name="camera_permission_explanation">Для працы гэтай функцыі неабходны доступ да камеры.</string>
+  <string name="camera_permission_open_settings">Адкрыць налады</string>
 </resources>

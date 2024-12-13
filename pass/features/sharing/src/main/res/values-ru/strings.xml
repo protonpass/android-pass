@@ -49,13 +49,12 @@
   <string name="sharing_item_invitation_title">Приглашение для общего предмета</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s хочет поделиться с вами элементом.</string>
   <string name="sharing_item_invitation_accept">Принять и просмотреть элемент</string>
-  <string name="sharing_snackbar_get_invite_error">Не могу получить приглашение</string>
+  <string name="sharing_item_leave">Leave</string>
   <string name="sharing_snackbar_invite_accepted">Приглашение принято</string>
   <string name="sharing_snackbar_invite_accept_error">Ошибка при принятии приглашения</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Не удалось принять приглашение, так как вы достигли предела объема хранилища</string>
   <string name="sharing_snackbar_invite_rejected">Приглашение отклонено</string>
   <string name="sharing_snackbar_invite_reject_error">Ошибка при отклонении приглашения</string>
-  <string name="sharing_snackbar_vault_not_found">Хранилище не может быть найдено</string>
   <string name="sharing_snackbar_invite_sent_success">Приглашение отправлено</string>
   <string name="sharing_snackbar_invite_sent_error">Не могу отправить приглашение</string>
   <string name="sharing_snackbar_get_vault_members_error">Не могу получить участников хранилища</string>
@@ -63,6 +62,8 @@
   <string name="sharing_snackbar_change_permission_error">Не могу изменить разрешения</string>
   <string name="sharing_snackbar_remove_member_success">Участник удалён из хранилища</string>
   <string name="sharing_snackbar_remove_member_error">Не могу удалить из хранилища</string>
+  <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
   <string name="share_summary_title">Проверить и поделиться</string>
   <string name="share_summary_vault">%s хранилище</string>
   <string name="share_summary_share_vault">Поделиться хранилищем</string>
@@ -95,6 +96,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Передать права владельца</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Вы не можете передать последнее принадлежащее вам хранилище.</string>
   <string name="sharing_bottomsheet_remove_access">Отозвать доступ</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
   <string name="sharing_bottomsheet_resend_invite">Отправить повторное приглашение</string>
   <string name="sharing_bottomsheet_cancel_invite">Отменить приглашение</string>
   <string name="sharing_transfer_ownership_confirm_title">Передать права владельца</string>

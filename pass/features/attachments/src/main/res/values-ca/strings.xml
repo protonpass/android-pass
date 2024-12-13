@@ -21,9 +21,11 @@
   <string name="add_attachment_choose_a_photo_or_video">Escolliu una foto o un vídeo</string>
   <string name="add_attachment_choose_a_file">Trieu un fitxer</string>
   <string name="attachment_options_open">Obre</string>
-  <string name="attachment_options_save">Desa</string>
   <string name="attachment_options_rename">Canvia el nom</string>
   <string name="attachment_options_delete">Elimina</string>
   <string name="file_picker_open_error">No s\'ha pogut obrir el selector de fitxers.</string>
-  <string name="file_picker_select_error">No s\'ha pogut seleccionar el fitxer.</string>
+  <string name="media_picker_open_error">No s\'ha pogut obrir el selector de medià.</string>
+  <string name="camera_open_error">No s\'ha pogut obrir la càmera.</string>
+  <string name="camera_permission_explanation">El permís de càmera és necessari perquè aquesta característica estigui disponible.</string>
+  <string name="camera_permission_open_settings">Obre les preferències</string>
 </resources>

@@ -45,13 +45,12 @@
   <string name="sharing_item_invitation_title">Invitation à un élément partagé</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s souhaite partager un élément avec vous.</string>
   <string name="sharing_item_invitation_accept">Accepter et afficher l\'élément</string>
-  <string name="sharing_snackbar_get_invite_error">Impossible d\'obtenir l\'invitation</string>
+  <string name="sharing_item_leave">Quitter</string>
   <string name="sharing_snackbar_invite_accepted">Invitation acceptée</string>
   <string name="sharing_snackbar_invite_accept_error">Une erreur s\'est produite lors de l\'acceptation de l\'invitation.</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">L\'invitation n\'a pu être acceptée, vous avez atteint la limite du coffre-fort.</string>
   <string name="sharing_snackbar_invite_rejected">Invitation refusée</string>
   <string name="sharing_snackbar_invite_reject_error">Une erreur s\'est produite lors du refus de l\'invitation.</string>
-  <string name="sharing_snackbar_vault_not_found">Ce coffre-fort est introuvable.</string>
   <string name="sharing_snackbar_invite_sent_success">L\'invitation a été envoyée.</string>
   <string name="sharing_snackbar_invite_sent_error">L’invitation n’a pas pu être envoyée.</string>
   <string name="sharing_snackbar_get_vault_members_error">Impossible d\'obtenir les membres du coffre-fort.</string>
@@ -59,6 +58,8 @@
   <string name="sharing_snackbar_change_permission_error">Impossible de modifier les autorisations</string>
   <string name="sharing_snackbar_remove_member_success">Le membre a été retiré du coffre-fort.</string>
   <string name="sharing_snackbar_remove_member_error">Impossible de retirer du coffre-fort</string>
+  <string name="sharing_snackbar_fetch_member_error">Une erreur s\'est produite lors de la récupération des membres.</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Une erreur s\'est produite lors de la récupération des invitations en attente.</string>
   <string name="share_summary_title">Vérifier et partager</string>
   <string name="share_summary_vault">coffre-fort %s</string>
   <string name="share_summary_share_vault">Partager le coffre-fort</string>
@@ -87,6 +88,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Transférer la propriété</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Vous ne pouvez pas transférer le dernier coffre-fort dont vous disposez.</string>
   <string name="sharing_bottomsheet_remove_access">Révoquer l\'accès</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Peu accorder et révoquer l\'accès à cet élément.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Peut modifier cet élément.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Peut afficher cet élément.</string>
   <string name="sharing_bottomsheet_resend_invite">Renvoyer l\'invitation</string>
   <string name="sharing_bottomsheet_cancel_invite">Annuler l\'invitation</string>
   <string name="sharing_transfer_ownership_confirm_title">Transférer la propriété</string>

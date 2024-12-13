@@ -10,9 +10,9 @@
   <string name="profile_option_tutorial">Cách sử dụng Proton Pass</string>
   <string name="profile_option_rating">Đánh giá ứng dụng</string>
   <string name="profile_option_autofill">Tự động điền</string>
-  <string name="profile_option_autofill_subtitle">Tự động điền các tên đăng nhập và mật khẩu của bạn.</string>
+  <string name="profile_option_autofill_subtitle">Tự động điền tên người dùng và mật khẩu của bạn.</string>
   <string name="profile_option_secure_links">Các liên kết bảo mật</string>
-  <string name="profile_option_alias_management">Alias management</string>
+  <string name="profile_option_alias_management">Quản lý bí danh</string>
   <string name="profile_error_biometry_failed_to_start">Không thể bắt đầu xác thực sinh trắc học</string>
   <string name="profile_error_biometry_failed_to_authenticate">Xác thực thất bại</string>
   <string name="profile_fingerprint_lock_enabled">Đã bật mở khóa bằng vân tay</string>
@@ -69,13 +69,13 @@
   <string name="account_switcher_switch_to">Chuyển sang</string>
   <string name="account_switcher_add_account">Thêm tài khoản</string>
   <string name="account_switcher_remove">Loại bỏ</string>
-  <string name="filtered_by_logins">Filtered by logins. Trashed items aren\'t shown</string>
-  <string name="filtered_by_logins_with_mfa">Filtered by logins with TOTP. Trashed items aren\'t shown</string>
-  <string name="filtered_by_aliases">Filtered by aliases. Trashed items aren\'t shown</string>
-  <string name="filtered_by_notes">Filtered by notes. Trashed items aren\'t shown</string>
-  <string name="filtered_by_credit_cards">Filtered by credit cards. Trashed items aren\'t shown</string>
-  <string name="filtered_by_identities">Filtered by identities. Trashed items aren\'t shown</string>
-  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">You need to switch to %1$s in order to manage it</string>
-  <string name="account_switch_confirmation_title">Manage account</string>
-  <string name="account_switch_confirmation_confirm">Switch and manage</string>
+  <string name="filtered_by_logins">Đã lọc theo đăng nhập. Các mục đã xóa không được hiển thị</string>
+  <string name="filtered_by_logins_with_mfa">Đã lọc theo đăng nhập với TOTP. Các mục đã xóa không được hiển thị</string>
+  <string name="filtered_by_aliases">Đã lọc theo bí danh. Các mục đã xóa không được hiển thị</string>
+  <string name="filtered_by_notes">Đã lọc theo ghi chú. Các mục đã xóa không được hiển thị</string>
+  <string name="filtered_by_credit_cards">Đã lọc theo thẻ tín dụng. Các mục đã xóa không được hiển thị</string>
+  <string name="filtered_by_identities">Đã lọc theo danh tính. Các mục đã xóa không được hiển thị</string>
+  <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Bạn cần chuyển sang %1$s để quản lý nó</string>
+  <string name="account_switch_confirmation_title">Quản lý tài khoản</string>
+  <string name="account_switch_confirmation_confirm">Chuyển và quản lý</string>
 </resources>

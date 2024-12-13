@@ -42,7 +42,7 @@
   <!--List screen-->
   <string name="secure_links_list_title">Sikre links</string>
   <string name="secure_links_list_empty_title">Ingen sikre links</string>
-  <string name="secure_links_list_empty_subtitle">Det er muligt at oprette sikre links fra delingsindstillinger for varedetaljer</string>
+  <string name="secure_links_list_empty_subtitle">Du kan begynde at oprette sikre links fra en delingsindstilling for elementdetaljer</string>
   <string name="secure_links_list_expiration_description">Udløber om %s.</string>
   <string name="secure_links_list_expired_description">Udløbet</string>
   <plurals name="secure_links_list_viewed_times_description">

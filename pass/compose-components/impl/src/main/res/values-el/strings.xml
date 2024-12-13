@@ -19,6 +19,8 @@
     <item quantity="other">αποτελέσματα</item>
   </plurals>
   <string name="item_list_header_identities_type">Ταυτότητες</string>
+  <string name="item_list_header_shared_with_me">Σε κοινή χρήση με εμένα</string>
+  <string name="item_list_header_shared_by_me">Κοινοποιημένο από εμένα</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Επιβεβαίωση</string>
   <string name="bottomsheet_cancel_button">Ακύρωση</string>

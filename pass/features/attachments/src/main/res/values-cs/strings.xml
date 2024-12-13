@@ -21,9 +21,11 @@
   <string name="add_attachment_choose_a_photo_or_video">Vybrat fotku nebo video</string>
   <string name="add_attachment_choose_a_file">Vybrat soubor</string>
   <string name="attachment_options_open">Otevřít</string>
-  <string name="attachment_options_save">Uložit</string>
   <string name="attachment_options_rename">Přejmenovat</string>
   <string name="attachment_options_delete">Smazat</string>
   <string name="file_picker_open_error">Nelze otevřít nástroj pro výběr souborů</string>
-  <string name="file_picker_select_error">Nelze vybrat soubor</string>
+  <string name="media_picker_open_error">Nelze otevřít nástroj pro výběr médií</string>
+  <string name="camera_open_error">Nelze otevřít fotoaparát</string>
+  <string name="camera_permission_explanation">Pro tuto funkci je nutné povolit přístup k fotoaparátu.</string>
+  <string name="camera_permission_open_settings">Otevřít nastavení</string>
 </resources>

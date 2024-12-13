@@ -19,6 +19,8 @@
     <item quantity="other">résultats</item>
   </plurals>
   <string name="item_list_header_identities_type">Identités</string>
+  <string name="item_list_header_shared_with_me">Partagé avec moi</string>
+  <string name="item_list_header_shared_by_me">Partagé par moi</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Confirmer</string>
   <string name="bottomsheet_cancel_button">Annuler</string>

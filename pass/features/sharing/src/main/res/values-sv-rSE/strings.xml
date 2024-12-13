@@ -45,13 +45,12 @@
   <string name="sharing_item_invitation_title">Delad valvinbjudan</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s vill dela ett objekt med dig.</string>
   <string name="sharing_item_invitation_accept">Acceptera och visa objektet</string>
-  <string name="sharing_snackbar_get_invite_error">Kunde inte få inbjudan</string>
+  <string name="sharing_item_leave">Lämna</string>
   <string name="sharing_snackbar_invite_accepted">Inbjudan accepterad</string>
   <string name="sharing_snackbar_invite_accept_error">Det gick inte acceptera inbjudan</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Kunde inte acceptera inbjudan eftersom du har nått valvgränsen</string>
   <string name="sharing_snackbar_invite_rejected">Inbjudan avvisad</string>
   <string name="sharing_snackbar_invite_reject_error">Det gick inte avvisa inbjudan</string>
-  <string name="sharing_snackbar_vault_not_found">Valv kunde inte hittas</string>
   <string name="sharing_snackbar_invite_sent_success">Inbjudan skickad</string>
   <string name="sharing_snackbar_invite_sent_error">Kunde inte skicka inbjudan</string>
   <string name="sharing_snackbar_get_vault_members_error">Kunde inte hämta valvmedlemmar</string>
@@ -59,6 +58,8 @@
   <string name="sharing_snackbar_change_permission_error">Kunde inte ändra behörigheter</string>
   <string name="sharing_snackbar_remove_member_success">Medlem borttagen från valvet</string>
   <string name="sharing_snackbar_remove_member_error">Kunde inte ta bort från valvet</string>
+  <string name="sharing_snackbar_fetch_member_error">Det gick inte hämta medlemmar</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Det gick inte hämta väntade inbjudningar</string>
   <string name="share_summary_title">Granska och dela</string>
   <string name="share_summary_vault">%s valv</string>
   <string name="share_summary_share_vault">Dela valv</string>
@@ -87,6 +88,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Överför ägarskap</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kan inte överföra ditt sista ägda valv.</string>
   <string name="sharing_bottomsheet_remove_access">Återkalla åtkomst</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Kan redigera detta objekt.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Kan visa detta objekt.</string>
   <string name="sharing_bottomsheet_resend_invite">Skicka inbjudan igen</string>
   <string name="sharing_bottomsheet_cancel_invite">Avbryt inbjudan</string>
   <string name="sharing_transfer_ownership_confirm_title">Överför ägarskap</string>

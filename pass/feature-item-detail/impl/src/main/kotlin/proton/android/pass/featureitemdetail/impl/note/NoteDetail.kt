@@ -157,7 +157,10 @@ fun NoteDetail(
                             actions = state.itemActions,
                             actionColor = PassTheme.colors.noteInteractionNormMajor1,
                             iconColor = PassTheme.colors.noteInteractionNormMajor2,
-                            iconBackgroundColor = PassTheme.colors.noteInteractionNormMinor2,
+                            iconBackgroundColor = PassTheme.colors.noteInteractionNormMinor1,
+                            itemCategory = state.itemUiModel.category,
+                            itemShareCount = state.itemUiModel.shareCount,
+                            isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
                             onUpClick = { onNavigate(ItemDetailNavigation.Back) },
                             onEditClick = {
                                 onEditClick(state.itemActions, onNavigate, state.itemUiModel)
@@ -200,8 +203,8 @@ fun NoteDetail(
                             )
                         },
                         attachmentsState = state.attachmentsState,
-                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
-                        isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
+                        isHistoryFeatureEnabled = state.itemFeatures.isHistoryEnabled,
+                        isFileAttachmentsEnabled = state.itemFeatures.isFileAttachmentsEnabled,
                         isShared = state.itemUiModel.isShared,
                         shareCount = state.itemUiModel.shareCount,
                         hasMoreThanOneVaultShare = state.hasMoreThanOneVault,

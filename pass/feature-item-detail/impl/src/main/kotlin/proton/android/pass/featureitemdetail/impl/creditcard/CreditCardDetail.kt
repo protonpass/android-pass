@@ -154,6 +154,9 @@ fun CreditCardDetail(
                             actionColor = PassTheme.colors.cardInteractionNormMajor1,
                             iconColor = PassTheme.colors.cardInteractionNormMajor2,
                             iconBackgroundColor = PassTheme.colors.cardInteractionNormMinor1,
+                            itemCategory = state.itemContent.model.category,
+                            itemShareCount = state.itemContent.model.shareCount,
+                            isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
                             onUpClick = { onNavigate(ItemDetailNavigation.Back) },
                             onEditClick = {
                                 onEditClick(state.itemActions, onNavigate, state.itemContent.model)
@@ -238,8 +241,8 @@ fun CreditCardDetail(
                                     }
                             }
                         },
-                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
-                        isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
+                        isHistoryFeatureEnabled = state.itemFeatures.isHistoryEnabled,
+                        isFileAttachmentsEnabled = state.itemFeatures.isFileAttachmentsEnabled,
                         attachmentsState = state.attachmentsState,
                         hasMoreThanOneVaultShare = state.hasMoreThanOneVault
                     )

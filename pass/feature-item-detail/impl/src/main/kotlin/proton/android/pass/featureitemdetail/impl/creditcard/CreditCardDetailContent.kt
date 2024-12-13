@@ -37,7 +37,7 @@ import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 
 @Composable
-fun CreditCardDetailContent(
+internal fun CreditCardDetailContent(
     modifier: Modifier = Modifier,
     contents: CreditCardDetailUiState.ItemContent,
     share: Share,

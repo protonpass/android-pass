@@ -24,7 +24,7 @@ import kotlinx.coroutines.withContext
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.files.api.CacheCleaner
 import proton.android.pass.files.api.DirectoryType
-import proton.android.pass.files.impl.CacheDirectories.CameraTemp
+import proton.android.pass.files.impl.CacheDirectories.Camera
 import proton.android.pass.log.api.PassLogger
 import java.io.File
 import javax.inject.Inject
@@ -38,7 +38,7 @@ class CacheCleanerImpl @Inject constructor(
             when (type) {
                 DirectoryType.CameraTemp -> {
                     runCatching {
-                        val file = File(context.cacheDir, CameraTemp.directoryName)
+                        val file = File(context.cacheDir, Camera.value)
                         file.deleteRecursively()
                     }.onFailure {
                         PassLogger.w(TAG, "Failed to delete cache directory")

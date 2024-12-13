@@ -46,6 +46,11 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.attachments.AttachmentKey
+import proton.android.pass.domain.attachments.Chunk
+import proton.android.pass.files.api.FileType
+import proton.android.pass.files.api.FileUriGenerator
+import java.io.File
 import java.net.URI
 import javax.inject.Inject
 
@@ -57,7 +62,8 @@ class AttachmentRepositoryImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val fileKeyRepository: FileKeyRepository,
     private val fileTypeDetector: FileTypeDetector,
-    private val localItemDataSource: LocalItemDataSource
+    private val localItemDataSource: LocalItemDataSource,
+    private val fileUriGenerator: FileUriGenerator
 ) : AttachmentRepository {
 
     override suspend fun createPendingAttachment(userId: UserId, uri: URI): AttachmentId {
@@ -155,5 +161,45 @@ class AttachmentRepositoryImpl @Inject constructor(
                 it.value.toDomain(metadata.name, metadata.mimeType, fileType.toDomain())
             }
         }
+    }
+
+    override suspend fun downloadAttachment(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId,
+        attachmentKey: AttachmentKey,
+        chunks: List<Chunk>
+    ): URI {
+        if (chunks.isEmpty()) throw IllegalStateException("No chunks provided")
+        val fileType = FileType.ItemAttachment(userId, shareId, itemId, attachmentId)
+        val directory = fileUriGenerator.getDirectoryForFileType(fileType)
+        val file = File(directory, attachmentId.id)
+        if (file.exists() && file.length() != 0L) return fileUriGenerator.getFileProviderUri(file)
+        val uri = fileUriGenerator.generate(fileType)
+        val contentUri = Uri.parse(uri.toString())
+
+        val encryptedItemKey = localItemDataSource.getById(shareId, itemId)?.encryptedKey
+            ?: throw ItemKeyNotAvailableError()
+        val itemKey = encryptionContextProvider.withEncryptionContextSuspendable {
+            EncryptionKey(decrypt(encryptedItemKey))
+        }
+        val fileKey = encryptionContextProvider.withEncryptionContextSuspendable(itemKey) {
+            val decodedFileKey = Base64.decodeBase64(attachmentKey.value)
+            val decryptedKey =
+                decrypt(EncryptedByteArray(decodedFileKey), EncryptionTag.FileKey)
+            EncryptionKey(decryptedKey)
+        }
+
+        context.contentResolver.openOutputStream(contentUri)?.use { outputStream ->
+            encryptionContextProvider.withEncryptionContextSuspendable(fileKey) {
+                chunks.sortedBy { it.index }.forEach { chunk ->
+                    val encryptedChunk =
+                        remote.downloadChunk(userId, shareId, itemId, attachmentId, chunk.id)
+                    decrypt(encryptedChunk, EncryptionTag.FileData).let(outputStream::write)
+                }
+            }
+        } ?: throw IllegalStateException("Unable to open output stream for URI: $contentUri")
+        return URI.create(contentUri.toString())
     }
 }

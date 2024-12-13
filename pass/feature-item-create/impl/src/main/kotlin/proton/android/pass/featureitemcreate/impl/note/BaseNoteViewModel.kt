@@ -129,7 +129,7 @@ abstract class BaseNoteViewModel(
     }
 
     override fun onCleared() {
-        attachmentsHandler.clearAttachments()
+        attachmentsHandler.onClearAttachments()
         super.onCleared()
     }
 }

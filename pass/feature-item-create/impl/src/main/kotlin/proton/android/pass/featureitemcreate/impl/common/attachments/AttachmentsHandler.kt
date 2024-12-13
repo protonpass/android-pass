@@ -22,6 +22,9 @@ import android.content.Context
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.Attachment
 import java.net.URI
 
 interface AttachmentsHandler {
@@ -34,6 +37,13 @@ interface AttachmentsHandler {
         mimetype: String
     )
     fun uploadNewAttachment(uri: URI, scope: CoroutineScope)
-    fun clearAttachments()
+    fun onClearAttachments()
     fun observeNewAttachments(scope: CoroutineScope, onNewAttachment: (Set<URI>) -> Unit)
+    fun openAttachment(
+        context: Context,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachment: Attachment,
+        scope: CoroutineScope
+    )
 }

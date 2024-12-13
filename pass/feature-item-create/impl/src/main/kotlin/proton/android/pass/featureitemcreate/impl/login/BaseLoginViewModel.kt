@@ -954,7 +954,7 @@ abstract class BaseLoginViewModel(
     }
 
     override fun onCleared() {
-        attachmentsHandler.clearAttachments()
+        attachmentsHandler.onClearAttachments()
         super.onCleared()
     }
 

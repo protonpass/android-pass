@@ -36,6 +36,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
@@ -63,6 +64,7 @@ fun NoteDetail(
     viewModel: NoteDetailViewModel = hiltViewModel(),
     onNavigate: (ItemDetailNavigation) -> Unit
 ) {
+    val context = LocalContext.current
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     when (val state = uiState) {
         NoteDetailUiState.NotInitialised, NoteDetailUiState.Pending -> {}
@@ -205,7 +207,8 @@ fun NoteDetail(
                         hasMoreThanOneVaultShare = state.hasMoreThanOneVault,
                         onAttachmentEvent = {
                             when (it) {
-                                is AttachmentContentEvent.OnAttachmentOpen -> {}
+                                is AttachmentContentEvent.OnAttachmentOpen ->
+                                    viewModel.onAttachmentOpen(context, it.attachment)
                                 is AttachmentContentEvent.OnAttachmentOptions,
                                 AttachmentContentEvent.OnAddAttachment,
                                 AttachmentContentEvent.OnDeleteAllAttachments,

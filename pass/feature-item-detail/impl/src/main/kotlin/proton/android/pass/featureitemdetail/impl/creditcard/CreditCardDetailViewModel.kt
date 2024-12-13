@@ -219,15 +219,17 @@ class CreditCardDetailViewModel @Inject constructor(
 
     private val itemFeaturesFlow: Flow<CreditCardItemFeatures> = combine(
         getUserPlan(),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
-    ) { userPlan, isFileAttachmentsEnabled ->
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
+    ) { userPlan, isFileAttachmentsEnabled, isItemSharingEnabled ->
         CreditCardItemFeatures(
             isHistoryEnabled = userPlan.isPaidPlan,
-            isFileAttachmentsEnabled = isFileAttachmentsEnabled
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled,
+            isItemSharingEnabled = isItemSharingEnabled
         )
     }
 
-    val uiState: StateFlow<CreditCardDetailUiState> = combineN(
+    internal val uiState: StateFlow<CreditCardDetailUiState> = combineN(
         itemInfoFlow,
         isLoadingState,
         isItemSentToTrashState,
@@ -279,8 +281,7 @@ class CreditCardDetailViewModel @Inject constructor(
                     shareClickAction = shareAction,
                     itemActions = actions,
                     event = event,
-                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
-                    isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled,
+                    itemFeatures = itemFeatures,
                     attachmentsState = AttachmentsState(
                         draftAttachmentsList = listOf(),
                         attachmentsList = details.attachments,

@@ -31,6 +31,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
+import proton.android.pass.featureitemdetail.impl.common.LoginItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 
 internal sealed interface LoginDetailUiState {
@@ -61,8 +62,7 @@ internal sealed interface LoginDetailUiState {
         val shareClickAction: ShareClickAction,
         val itemActions: ItemActions,
         val event: ItemDetailEvent,
-        val isHistoryFeatureEnabled: Boolean,
-        val isFileAttachmentsEnabled: Boolean,
+        val itemFeatures: LoginItemFeatures,
         val attachmentsState: AttachmentsState,
         val monitorState: LoginMonitorState,
         val hasMoreThanOneVault: Boolean

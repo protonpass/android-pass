@@ -45,7 +45,7 @@ internal fun ManageItemContent(
         topBar = {
             PassExtendedTopBar(
                 backButton = PassTopBarBackButtonType.BackArrow,
-                title = stringResource(R.string.share_with_title),
+                title = stringResource(R.string.shared_via_title),
                 onUpClick = { onUiEvent(ManageItemUiEvent.OnBackClick) }
             )
         },
@@ -93,7 +93,7 @@ internal fun ManageItemContent(
 
                     if (state.hasItemMembers) {
                         ManageItemMembersSection(
-                            sectionTitle = stringResource(R.string.sharing_item_member_count_header),
+                            sectionTitle = stringResource(R.string.shared_via_item_member_count_header),
                             share = state.share,
                             members = state.itemMembers,
                             onMenuOptionsClick = { member ->
@@ -107,7 +107,7 @@ internal fun ManageItemContent(
 
                     if (state.hasVaultMembers) {
                         ManageItemMembersSection(
-                            sectionTitle = stringResource(R.string.sharing_vault_member_count_header),
+                            sectionTitle = stringResource(R.string.shared_via_vault_member_count_header),
                             share = state.share,
                             members = state.vaultMembers,
                             onMenuOptionsClick = { member ->

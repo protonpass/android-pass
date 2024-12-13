@@ -91,10 +91,25 @@ internal fun ManageItemContent(
                         )
                     }
 
-                    if (state.hasMembers) {
+                    if (state.hasItemMembers) {
                         ManageItemMembersSection(
+                            sectionTitle = stringResource(R.string.sharing_item_member_count_header),
                             share = state.share,
-                            members = state.members,
+                            members = state.itemMembers,
+                            onMenuOptionsClick = { member ->
+                                ManageItemUiEvent.OnMemberOptionsClick(
+                                    shareId = state.share.id,
+                                    member = member
+                                ).also(onUiEvent)
+                            }
+                        )
+                    }
+
+                    if (state.hasVaultMembers) {
+                        ManageItemMembersSection(
+                            sectionTitle = stringResource(R.string.sharing_vault_member_count_header),
+                            share = state.share,
+                            members = state.vaultMembers,
                             onMenuOptionsClick = { member ->
                                 ManageItemUiEvent.OnMemberOptionsClick(
                                     shareId = state.share.id,

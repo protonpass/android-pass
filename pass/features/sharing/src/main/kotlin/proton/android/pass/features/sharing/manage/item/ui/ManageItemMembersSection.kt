@@ -46,6 +46,7 @@ import proton.android.pass.features.sharing.common.toShortSummary
 @Composable
 internal fun ManageItemMembersSection(
     modifier: Modifier = Modifier,
+    sectionTitle: String,
     share: Share,
     members: List<ShareMember>,
     onMenuOptionsClick: (ShareMember) -> Unit
@@ -56,7 +57,7 @@ internal fun ManageItemMembersSection(
     ) {
         Text.Body2Medium(
             modifier = Modifier.padding(bottom = Spacing.small),
-            text = "${stringResource(R.string.sharing_member_count_header)} (${members.size})",
+            text = "$sectionTitle (${members.size})",
             color = PassTheme.colors.textWeak
         )
 

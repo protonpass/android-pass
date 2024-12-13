@@ -108,7 +108,7 @@ class AttachmentSectionPreviewProvider :
         size = size,
         createTime = createTime,
         mimeType = "",
-        fileKey = AttachmentKey(""),
+        key = AttachmentKey(""),
         itemKeyRotation = "",
         chunks = listOf()
     )

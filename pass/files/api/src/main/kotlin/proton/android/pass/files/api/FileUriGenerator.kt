@@ -18,9 +18,12 @@
 
 package proton.android.pass.files.api
 
+import java.io.File
 import java.net.URI
 
 interface FileUriGenerator {
     suspend fun generate(fileType: FileType): URI
+    fun getDirectoryForFileType(fileType: FileType): File
+    fun getFileProviderUri(file: File): URI
 }
 

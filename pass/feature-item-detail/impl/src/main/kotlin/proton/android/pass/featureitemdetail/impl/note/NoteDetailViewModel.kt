@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemdetail.impl.note
 
+import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -42,6 +43,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -63,12 +65,14 @@ import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
+import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMovedToTrash
@@ -78,6 +82,7 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemPer
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemRestored
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.NoteCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.ItemDelete
+import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.NoteItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
@@ -103,6 +108,8 @@ class NoteDetailViewModel @Inject constructor(
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
+    private val downloadAttachment: DownloadAttachment,
+    private val fileHandler: FileHandler,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     canPerformPaidAction: CanPerformPaidAction,
     observeItemByIdWithVault: ObserveItemByIdWithVault,
@@ -327,6 +334,29 @@ class NoteDetailViewModel @Inject constructor(
             }
 
         isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    fun onAttachmentOpen(context: Context, attachment: Attachment) {
+        viewModelScope.launch {
+            runCatching {
+                val uri = downloadAttachment(
+                    shareId = shareId,
+                    itemId = itemId,
+                    attachment = attachment
+                )
+                fileHandler.openFile(
+                    context = context,
+                    uri = uri,
+                    mimeType = attachment.mimeType,
+                    chooserTitle = context.getString(R.string.open_with)
+                )
+            }.onSuccess {
+                PassLogger.i(TAG, "Attachment opened: ${attachment.id}")
+            }.onFailure {
+                PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
+                PassLogger.w(TAG, it)
+            }
+        }
     }
 
     companion object {

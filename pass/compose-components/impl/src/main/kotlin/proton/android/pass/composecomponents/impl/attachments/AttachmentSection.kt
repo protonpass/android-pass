@@ -103,7 +103,7 @@ fun AttachmentSection(
                     hasOptions = !isDetail,
                     isLoading = attachmentsState.loadingAttachments.contains(attachment.id),
                     onOptionsClick = { onEvent(OnAttachmentOptions(attachment.id)) },
-                    onAttachmentOpen = { onEvent(OnAttachmentOpen(attachment.id)) }
+                    onAttachmentOpen = { onEvent(OnAttachmentOpen(attachment)) }
                 )
                 if (attachmentsState.shouldDisplayDivider(index)) {
                     PassDivider()

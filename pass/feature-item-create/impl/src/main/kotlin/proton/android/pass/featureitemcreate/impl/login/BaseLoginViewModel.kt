@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
@@ -114,14 +115,16 @@ abstract class BaseLoginViewModel(
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     init {
-        attachmentsHandler.observeNewAttachments(viewModelScope) { newUris ->
+        attachmentsHandler.observeNewAttachments { newUris ->
             if (newUris.isNotEmpty()) {
                 onUserEditedContent()
                 newUris.forEach { uri ->
-                    attachmentsHandler.uploadNewAttachment(uri, viewModelScope)
+                    viewModelScope.launch {
+                        attachmentsHandler.uploadNewAttachment(uri)
+                    }
                 }
             }
-        }
+        }.launchIn(viewModelScope)
     }
 
     @OptIn(SavedStateHandleSaveableApi::class)

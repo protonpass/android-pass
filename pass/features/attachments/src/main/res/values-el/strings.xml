@@ -21,9 +21,11 @@
   <string name="add_attachment_choose_a_photo_or_video">Επιλέξτε φωτογραφία ή βίντεο</string>
   <string name="add_attachment_choose_a_file">Επιλέξτε αρχείο</string>
   <string name="attachment_options_open">Άνοιγμα</string>
-  <string name="attachment_options_save">Αποθήκευση</string>
   <string name="attachment_options_rename">Μετονομασία</string>
   <string name="attachment_options_delete">Διαγραφή</string>
   <string name="file_picker_open_error">Δεν ήταν δυνατό το άνοιγμα του επιλογέα αρχείων</string>
-  <string name="file_picker_select_error">Δεν ήταν δυνατή η επιλογή του αρχείου</string>
+  <string name="media_picker_open_error">Δεν ήταν δυνατό το άνοιγμα του επιλογέα αρχείων</string>
+  <string name="camera_open_error">Δεν ήταν δυνατό το άνοιγμα της κάμερας</string>
+  <string name="camera_permission_explanation">Απαιτείται άδεια κάμερας για να είναι διαθέσιμη αυτή η λειτουργία.</string>
+  <string name="camera_permission_open_settings">Άνοιγμα ρυθμίσεων</string>
 </resources>

@@ -189,5 +189,5 @@
   <string name="add_a_custom_section">Lisää mukautettu osio</string>
   <!-- Attachments -->
   <string name="banner_title_attachments">Liitteet</string>
-  <string name="banner_body_attachments">You can attach files to items for a better organization</string>
+  <string name="banner_body_attachments">Voit liittää kohteisiin tiedostoja parempaa organisointia varten</string>
 </resources>

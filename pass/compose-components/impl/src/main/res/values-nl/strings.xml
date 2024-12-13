@@ -19,6 +19,8 @@
     <item quantity="other">resultaten</item>
   </plurals>
   <string name="item_list_header_identities_type">Identiteiten</string>
+  <string name="item_list_header_shared_with_me">Shared with me</string>
+  <string name="item_list_header_shared_by_me">Shared by me</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Bevestigen</string>
   <string name="bottomsheet_cancel_button">Annuleer</string>
@@ -265,7 +267,7 @@
   </plurals>
   <string name="simple_login_widget_action">Synchroniseer aliassen</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Heeft u de code niet ontvangen?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Controleer in uw spam voor een e-mail met onderwerp \"%s\"</string>
   <string name="verification_code_suggestion_subject_new_email_address">Bevestig uw e-mailadres voor Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Bevestig uw mailbox</string>
@@ -274,10 +276,10 @@
   <string name="field_display_name_title">Weergavenaam</string>
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
-    <item quantity="one">%1$s file</item>
-    <item quantity="other">%1$s files</item>
+    <item quantity="one">%1$s bestand</item>
+    <item quantity="other">%1$s bestanden</item>
   </plurals>
-  <string name="attachment_title">Attachments</string>
-  <string name="attachment_no_files">Upload files from your device</string>
-  <string name="attachment_add_file">Attach a file</string>
+  <string name="attachment_title">Bijlagen</string>
+  <string name="attachment_no_files">Bestanden uploaden van uw computer</string>
+  <string name="attachment_add_file">Bestand toevoegen</string>
 </resources>

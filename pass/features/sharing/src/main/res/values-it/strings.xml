@@ -45,13 +45,12 @@
   <string name="sharing_item_invitation_title">Invito a un elemento condiviso</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s vuole condividere un elemento con te.</string>
   <string name="sharing_item_invitation_accept">Accetta e visualizza l\'elemento</string>
-  <string name="sharing_snackbar_get_invite_error">Caricamento dell\'invito non riuscito</string>
+  <string name="sharing_item_leave">Abbandona</string>
   <string name="sharing_snackbar_invite_accepted">Invito accettato</string>
   <string name="sharing_snackbar_invite_accept_error">Accettazione dell\'invito non riuscita</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Impossibile accettare l\'invito poiché hai raggiunto il limite di casseforti</string>
   <string name="sharing_snackbar_invite_rejected">Invito rifiutato</string>
   <string name="sharing_snackbar_invite_reject_error">Rifiuto dell\'invito non riuscito</string>
-  <string name="sharing_snackbar_vault_not_found">Cassaforte non trovata</string>
   <string name="sharing_snackbar_invite_sent_success">Invito spedito</string>
   <string name="sharing_snackbar_invite_sent_error">Spedizione dell\'invito non riuscita</string>
   <string name="sharing_snackbar_get_vault_members_error">Caricamento dei membri non riuscito</string>
@@ -59,6 +58,8 @@
   <string name="sharing_snackbar_change_permission_error">Cambio delle autorizzazioni non riuscito</string>
   <string name="sharing_snackbar_remove_member_success">Membro rimosso dalla cassaforte</string>
   <string name="sharing_snackbar_remove_member_error">Rimozione del membro non riuscita</string>
+  <string name="sharing_snackbar_fetch_member_error">Si è verificato un errore nel caricamento dei membri</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Si è verificato un errore durante il caricamento degli inviti in sospeso</string>
   <string name="share_summary_title">Controlla e condividi</string>
   <string name="share_summary_vault">%s</string>
   <string name="share_summary_share_vault">Condividi la cassaforte</string>
@@ -87,6 +88,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Trasferisci la proprietà</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Non puoi trasferire la tua unica cassaforte.</string>
   <string name="sharing_bottomsheet_remove_access">Revoca l\'accesso</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Può concedere e revocare l\'accesso a questo elemento.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Può modificare questo elemento.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Può visualizzare questo elemento.</string>
   <string name="sharing_bottomsheet_resend_invite">Spedisci nuovamente l\'invito</string>
   <string name="sharing_bottomsheet_cancel_invite">Annulla l\'invito</string>
   <string name="sharing_transfer_ownership_confirm_title">Trasferisci la proprietà</string>

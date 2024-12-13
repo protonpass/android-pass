@@ -21,9 +21,11 @@
   <string name="add_attachment_choose_a_photo_or_video">Välj ett foto eller video</string>
   <string name="add_attachment_choose_a_file">Välj en fil</string>
   <string name="attachment_options_open">Öppna</string>
-  <string name="attachment_options_save">Spara</string>
   <string name="attachment_options_rename">Byt namn</string>
   <string name="attachment_options_delete">Ta bort</string>
   <string name="file_picker_open_error">Kunde inte öppna filväljare</string>
-  <string name="file_picker_select_error">Kunde inte välja fil</string>
+  <string name="media_picker_open_error">Kunde inte öppna mediaväljare</string>
+  <string name="camera_open_error">Kunde inte öppna kamera</string>
+  <string name="camera_permission_explanation">Tillåtelse för kamera krävs för att denna funktion ska vara tillgänglig.</string>
+  <string name="camera_permission_open_settings">Öppna inställningar</string>
 </resources>

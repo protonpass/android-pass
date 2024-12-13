@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="twenty_vaults">20 kho</string>
-  <string name="unlimited_email_alias">Không giới hạn email alias</string>
+  <string name="unlimited_email_alias">Không giới hạn email bí danh</string>
   <string name="custom_fields">Trường tùy chỉnh</string>
   <string name="restart_to_complete_the_update">Mở lại để hoàn tất cập nhật</string>
   <string name="action_restart">Mở lại</string>
-  <string name="shortcut_share_logs_title">Chia sẽ nhật ký</string>
+  <string name="shortcut_share_logs_title">Chia sẻ nhật ký</string>
   <string name="no_account_found">Không tìm thấy tài khoản</string>
   <string name="no_session_found">Không tìm thấy phiên làm việc</string>
-  <string name="auth_with_extra_password_failed">Xác thực bằng mật khẩu thứ 2 thất bại</string>
+  <string name="auth_with_extra_password_failed">Xác thực với mật khẩu bổ sung thất bại</string>
 </resources>

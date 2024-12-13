@@ -19,6 +19,8 @@
     <item quantity="other">resultater</item>
   </plurals>
   <string name="item_list_header_identities_type">Identiteter</string>
+  <string name="item_list_header_shared_with_me">Delt med mig</string>
+  <string name="item_list_header_shared_by_me">Delt af mig</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Bekræft</string>
   <string name="bottomsheet_cancel_button">Annullér</string>
@@ -265,7 +267,7 @@
   </plurals>
   <string name="simple_login_widget_action">Synkroniser aliasser</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Har du ikke modtaget koden?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Se efter en e-mail med navnet %s i din spam-mappe.</string>
   <string name="verification_code_suggestion_subject_new_email_address">Bekræft venligst din e-mailadresse for Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Bekræft venligst din postkasse</string>

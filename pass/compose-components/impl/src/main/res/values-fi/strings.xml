@@ -19,6 +19,8 @@
     <item quantity="other">tulosta</item>
   </plurals>
   <string name="item_list_header_identities_type">Identiteetit</string>
+  <string name="item_list_header_shared_with_me">Shared with me</string>
+  <string name="item_list_header_shared_by_me">Shared by me</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Vahvista</string>
   <string name="bottomsheet_cancel_button">Peruuta</string>

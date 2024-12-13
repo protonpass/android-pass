@@ -99,7 +99,7 @@
   <string name="field_card_pin_title">Pinkode</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Udløbsdato</string>
-  <string name="field_card_expiration_date_hint">MM/YY</string>
+  <string name="field_card_expiration_date_hint">MM/ÅÅ</string>
   <string name="field_card_expiration_date_error">Indtast en gyldig dato i MM/ÅÅÅÅ format</string>
   <string name="create_credit_card_item_creation_error">Kunne ikke oprette betalingskort</string>
   <string name="create_credit_card_item_creation_success">Betalingskort oprettet</string>
@@ -133,7 +133,7 @@
   <string name="identity_field_reddit_title">Reddit - brugernavn</string>
   <string name="identity_field_facebook_title">Facebook-adresse</string>
   <string name="identity_field_yahoo_title">Yahoo - brugernavn</string>
-  <string name="identity_field_instagram_title">Instagram username</string>
+  <string name="identity_field_instagram_title">Instagram - brugernavn</string>
   <string name="identity_field_personal_website_title">Personlig webstedsadresse</string>
   <string name="identity_field_work_phone_number_title">Arbejdstelefon nr.</string>
   <string name="identity_field_work_email_title">Arbejdsmail-adresse</string>
@@ -148,7 +148,7 @@
   <string name="identity_add_field_reddit">Reddit - brugernavn</string>
   <string name="identity_add_field_facebook">Facebook-adresse</string>
   <string name="identity_add_field_yahoo">Yahoo - brugernavn</string>
-  <string name="identity_add_field_instagram">Instagram username</string>
+  <string name="identity_add_field_instagram">Instagram - brugernavn</string>
   <string name="identity_add_field_personal_website">Personlig webstedsadresse</string>
   <string name="identity_add_field_work_phone_number">Arbejdstelefon nr.</string>
   <string name="identity_add_field_work_email_address">Arbejdsmail-adresse</string>

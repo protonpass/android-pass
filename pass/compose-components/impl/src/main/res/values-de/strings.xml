@@ -19,6 +19,8 @@
     <item quantity="other">Ergebnisse</item>
   </plurals>
   <string name="item_list_header_identities_type">Identitäten</string>
+  <string name="item_list_header_shared_with_me">Shared with me</string>
+  <string name="item_list_header_shared_by_me">Shared by me</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Bestätigen</string>
   <string name="bottomsheet_cancel_button">Abbrechen</string>
@@ -265,19 +267,19 @@
   </plurals>
   <string name="simple_login_widget_action">Aliasse synchronisieren</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Code nicht erhalten?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
   <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
-  <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
-  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">If you can\'t find such email, you can %s.</string>
-  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Bitte bestätige dein Postfach</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Wenn du eine solche E-Mail nicht finden kannst, kannst du %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">einen neuen Code anfordern</string>
   <string name="field_display_name_title">Anzeigename</string>
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
-    <item quantity="one">%1$s file</item>
-    <item quantity="other">%1$s files</item>
+    <item quantity="one">%1$s Datei</item>
+    <item quantity="other">%1$s Dateien</item>
   </plurals>
-  <string name="attachment_title">Attachments</string>
+  <string name="attachment_title">Anhänge</string>
   <string name="attachment_no_files">Upload files from your device</string>
-  <string name="attachment_add_file">Attach a file</string>
+  <string name="attachment_add_file">Datei anhängen</string>
 </resources>

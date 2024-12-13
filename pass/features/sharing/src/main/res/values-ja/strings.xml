@@ -43,13 +43,12 @@
   <string name="sharing_item_invitation_title">共有済みのアイテム招待</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%sがあなたにアイテムを共有したいようです。</string>
   <string name="sharing_item_invitation_accept">承諾してアイテムを閲覧</string>
-  <string name="sharing_snackbar_get_invite_error">招待状が届かない</string>
+  <string name="sharing_item_leave">退出</string>
   <string name="sharing_snackbar_invite_accepted">招待を受ける</string>
   <string name="sharing_snackbar_invite_accept_error">招待の受け入れエラー</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">保管庫の制限に達したため、招待を受け入れることができませんでした</string>
   <string name="sharing_snackbar_invite_rejected">招待を拒否</string>
   <string name="sharing_snackbar_invite_reject_error">招待の拒否エラー</string>
-  <string name="sharing_snackbar_vault_not_found">保管庫が見つかりません</string>
   <string name="sharing_snackbar_invite_sent_success">招待状送付</string>
   <string name="sharing_snackbar_invite_sent_error">招待状を送信できませんでした</string>
   <string name="sharing_snackbar_get_vault_members_error">保管庫メンバーを取得できませんでした</string>
@@ -57,6 +56,8 @@
   <string name="sharing_snackbar_change_permission_error">権限を変更できませんでした</string>
   <string name="sharing_snackbar_remove_member_success">メンバーが保管庫から削除されました</string>
   <string name="sharing_snackbar_remove_member_error">保管庫から削除できませんでした</string>
+  <string name="sharing_snackbar_fetch_member_error">メンバーの取得にエラーが発生しました</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">保留中の招待の取得中にエラーが発生しました</string>
   <string name="share_summary_title">レビューして共有</string>
   <string name="share_summary_vault">%s 保管庫</string>
   <string name="share_summary_share_vault">保管庫を共有する</string>
@@ -83,6 +84,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">所有権の移転</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">最後に所有していたボールトを譲渡することはできません。</string>
   <string name="sharing_bottomsheet_remove_access">アクセスの失効</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">このアイテムへのアクセス権を付与したり、取り消したりすることができます。</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">このアイテムを編集できます。</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">このアイテムを閲覧できます。</string>
   <string name="sharing_bottomsheet_resend_invite">招待の再送</string>
   <string name="sharing_bottomsheet_cancel_invite">招待のキャンセル</string>
   <string name="sharing_transfer_ownership_confirm_title">所有権の移転</string>

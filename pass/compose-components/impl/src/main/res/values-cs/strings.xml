@@ -21,6 +21,8 @@
     <item quantity="other">výsledků</item>
   </plurals>
   <string name="item_list_header_identities_type">Identity</string>
+  <string name="item_list_header_shared_with_me">Sdíleno se mnou</string>
+  <string name="item_list_header_shared_by_me">Sdíleno mnou</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Potvrdit</string>
   <string name="bottomsheet_cancel_button">Zrušit</string>

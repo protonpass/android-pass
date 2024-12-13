@@ -21,9 +21,11 @@
   <string name="add_attachment_choose_a_photo_or_video">Valitse kuva tai video</string>
   <string name="add_attachment_choose_a_file">Valitse tiedosto</string>
   <string name="attachment_options_open">Avaa</string>
-  <string name="attachment_options_save">Tallenna</string>
   <string name="attachment_options_rename">Nimeä uudelleen</string>
   <string name="attachment_options_delete">Poista</string>
   <string name="file_picker_open_error">Tiedostovalitsinta ei voitu avata</string>
-  <string name="file_picker_select_error">Tiedostoa ei voitu valita</string>
+  <string name="media_picker_open_error">Mediavalitsinta ei voitu avata</string>
+  <string name="camera_open_error">Kameraa ei voitu avata</string>
+  <string name="camera_permission_explanation">Ominaisuus tarvitsee kameran käyttöoikeuden.</string>
+  <string name="camera_permission_open_settings">Avaa asetukset</string>
 </resources>

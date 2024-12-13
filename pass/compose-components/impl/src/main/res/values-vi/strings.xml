@@ -10,7 +10,7 @@
   <string name="item_list_header_all_search_results">Tất cả</string>
   <string name="item_list_header_pinned_search_results">Đã ghim</string>
   <string name="item_list_header_logins_type">Đăng nhập</string>
-  <string name="item_list_header_logins_totp_type">Logins with TOTP</string>
+  <string name="item_list_header_logins_totp_type">Đăng nhập với TOTP</string>
   <string name="item_list_header_aliases_type">Bí danh</string>
   <string name="item_list_header_notes_type">Ghi chú</string>
   <string name="item_list_header_credit_cards_type">Thẻ tín dụng</string>
@@ -18,6 +18,8 @@
     <item quantity="other">kết quả</item>
   </plurals>
   <string name="item_list_header_identities_type">Danh tính</string>
+  <string name="item_list_header_shared_with_me">Shared with me</string>
+  <string name="item_list_header_shared_by_me">Shared by me</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Xác nhận</string>
   <string name="bottomsheet_cancel_button">Hủy</string>
@@ -32,7 +34,7 @@
   <string name="bottomsheet_delete_permanently">Xóa vĩnh viễn</string>
   <string name="bottomsheet_restore">Khôi phục</string>
   <!-- Actions -->
-  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Mở menu tùy chọn nội dung</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Mở menu hành động mục</string>
   <string name="action_upgrade_now">Nâng cấp ngay</string>
   <string name="action_not_now">Để sau</string>
   <string name="action_learn_more">Tìm hiểu thêm</string>
@@ -46,20 +48,20 @@
   <string name="action_edit">Chỉnh sửa</string>
   <string name="action_add">Thêm</string>
   <string name="action_delete">Xóa</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
+  <string name="action_make_default">Đặt làm mặc định</string>
+  <string name="action_verify">Xác thực</string>
   <string name="action_close">Đóng</string>
   <string name="action_update">Cập nhật</string>
   <!-- Empty list -->
-  <string name="empty_list_title">Thêm nội dung đầu tiên của bạn</string>
-  <string name="empty_search_results_title">Không có kết quả được tìm thấy</string>
-  <string name="empty_list_open_extension">Mở trang web phần mở rộng</string>
-  <string name="empty_list_create_item_button">Tạo nội dung mới</string>
+  <string name="empty_list_title">Thêm mục đầu tiên của bạn</string>
+  <string name="empty_search_results_title">Không tìm thấy kết quả nào</string>
+  <string name="empty_list_open_extension">Truy cập tiện ích mở rộng web</string>
+  <string name="empty_list_create_item_button">Tạo mục mới</string>
   <!-- Field -->
   <string name="field_title_title">Tiêu đề</string>
   <string name="field_title_hint">Không có tiêu đề</string>
   <string name="field_title_required">Tiêu đề bắt buộc</string>
-  <string name="small_cross_icon_content_description">Biểu tượng chữ thập nhỏ.</string>
+  <string name="small_cross_icon_content_description">Biểu tượng dấu thập nhỏ</string>
   <string name="field_note_title">Ghi chú</string>
   <string name="field_note_hint">Thêm ghi chú</string>
   <string name="linked_apps_title">Các ứng dụng liên kết</string>
@@ -201,19 +203,19 @@
   <string name="dialog_upgrade_plan_action_cancel">Để sau</string>
   <!-- Words -->
   <string name="email_address">Địa chỉ email</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">Địa chỉ email không hợp lệ</string>
   <string name="password">Mật khẩu</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Nút để tắt đi hướng dẫn và không bao giờ hiện lại nó</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="other">%d years</item>
+    <item quantity="other">%d năm</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="other">%d months</item>
+    <item quantity="other">%d tháng</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="other">%d weeks</item>
+    <item quantity="other">%d tuần</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="other">%d ngày</item>
@@ -228,7 +230,7 @@
     <item quantity="other">%d giây</item>
   </plurals>
   <plurals name="aliases_count">
-    <item quantity="other">%d aliases</item>
+    <item quantity="other">%d bí danh</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Đã copy</string>
@@ -248,24 +250,24 @@
   <string name="snack_bar_message_item_delete_success">Đã xoá mục thành công</string>
   <string name="snack_bar_message_item_delete_error">Đã xảy ra lỗi khi xoá mục này</string>
   <!-- Simple Login -->
-  <string name="simple_login_widget_title">Bật SimpleLogin sync</string>
+  <string name="simple_login_widget_title">Bật đồng bộ Simple Login</string>
   <plurals name="simple_login_widget_pending_aliases_message">
     <item quantity="other">Chúng tôi nhận thấy bạn có %d bí danh trong SimpleLogin nhưng chưa có trong Proton Pass. Bạn muốn nhập chúng vào không?</item>
   </plurals>
   <string name="simple_login_widget_action"/>
   <!-- Verification codes -->
   <string name="verification_code_not_received">Haven\'t received the code?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
-  <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
-  <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
-  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">If you can\'t find such email, you can %s.</string>
-  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code</string>
-  <string name="field_display_name_title">Display name</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Vui lòng kiểm tra trong thư mục Spam của bạn để tìm email có tên “%s“</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Vui lòng xác minh địa chỉ email của bạn cho Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Vui lòng xác minh hộp thư của bạn</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Nếu bạn không thể tìm thấy email như vậy, bạn có thể %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">yêu cầu mã mới</string>
+  <string name="field_display_name_title">Tên hiển thị</string>
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
-    <item quantity="other">%1$s files</item>
+    <item quantity="other">%1$s tệp</item>
   </plurals>
-  <string name="attachment_title">Attachments</string>
-  <string name="attachment_no_files">Upload files from your device</string>
-  <string name="attachment_add_file">Attach a file</string>
+  <string name="attachment_title">Tệp đính kèm</string>
+  <string name="attachment_no_files">Tải lên tệp từ thiết bị của bạn</string>
+  <string name="attachment_add_file">Đính kèm một tệp</string>
 </resources>

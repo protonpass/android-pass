@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">Skift pinkode</string>
   <string name="profile_passkey_support_section_title">Adgangsnøgler</string>
   <string name="profile_passkey_support_subtitle_supported">Adgangsnøgler understøttes</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Din Android-version understøtter ikke adgangsnøgler.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Din enhed understøtter ikke adgangsnøgler</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Kunne ikke tjekke understøttelse af adgangsnøgler</string>
   <plurals name="profile_after_days">

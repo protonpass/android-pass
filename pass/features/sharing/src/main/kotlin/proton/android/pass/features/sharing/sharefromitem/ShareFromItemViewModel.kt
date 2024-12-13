@@ -50,7 +50,6 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.canCreate
-import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.preferences.FeatureFlag
@@ -105,20 +104,6 @@ class ShareFromItemViewModel @Inject constructor(
         }
     }.asLoadingResult()
 
-    private val isSingleSharingAvailableFlow =
-        oneShot { getItemById(shareId, itemId) }.map { item ->
-            when (item.itemType.category) {
-                ItemCategory.Login,
-                ItemCategory.Note,
-                ItemCategory.Password,
-                ItemCategory.CreditCard,
-                ItemCategory.Identity -> true
-
-                ItemCategory.Alias,
-                ItemCategory.Unknown -> false
-            }
-        }
-
     private val canUsePaidFeaturesFlow = getUserPlan()
         .map { userPlan ->
             when (userPlan.planType) {
@@ -130,38 +115,41 @@ class ShareFromItemViewModel @Inject constructor(
             }
         }
 
-    internal val state: StateFlow<ShareFromItemUiState> = combineN(
+    internal val stateFlow: StateFlow<ShareFromItemUiState> = combineN(
         getVaultWithItemCount(shareId = shareId),
         canMoveToSharedVaultFlow,
         showCreateVaultFlow,
         navEventState,
-        isSingleSharingAvailableFlow,
         canUsePaidFeaturesFlow,
         featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1),
-        observeShare(shareId)
-    ) { vault, canMoveToSharedVault, createVault, event, isSecureLinkAvailable, canUsePaidFeatures,
-        isItemSharingAvailable, share ->
+        observeShare(shareId),
+        oneShot { getItemById(shareId, itemId) }
+    ) { vault, canMoveToSharedVault, createVault, event, canUsePaidFeatures,
+        isItemSharingAvailable, share, item ->
         ShareFromItemUiState(
-            vault = vault.some(),
+            shareId = shareId,
             itemId = itemId,
+            vault = vault.some(),
             showMoveToSharedVault = canMoveToSharedVault.getOrNull() ?: false,
             showCreateVault = createVault.getOrNull() ?: CreateNewVaultState.Hide,
             event = event,
-            isSingleSharingAvailable = isSecureLinkAvailable,
             canUsePaidFeatures = canUsePaidFeatures,
             vaultAccessData = canManageVaultAccess(vault.vault),
             isItemSharingAvailable = isItemSharingAvailable,
-            shareOption = share.some()
+            shareOption = share.some(),
+            itemOption = item.some()
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = ShareFromItemUiState.initial(itemId)
+        initialValue = ShareFromItemUiState.initial(shareId, itemId)
     )
 
-    internal fun moveItemToSharedVault() = viewModelScope.launch {
-        bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
-        navEventState.update { ShareFromItemNavEvent.MoveToSharedVault }
+    internal fun moveItemToSharedVault() {
+        viewModelScope.launch {
+            bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
+            navEventState.update { ShareFromItemNavEvent.MoveToSharedVault }
+        }
     }
 
     internal fun onEventConsumed(event: ShareFromItemNavEvent) {

@@ -120,6 +120,7 @@ import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
+import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
@@ -321,6 +322,7 @@ import proton.android.pass.data.fakes.usecases.accesskey.FakeRemoveExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeSetupExtraPassword
 import proton.android.pass.data.fakes.usecases.aliascontact.FakeObserveAliasContacts
 import proton.android.pass.data.fakes.usecases.attachments.FakeClearAttachments
+import proton.android.pass.data.fakes.usecases.attachments.FakeDownloadAttachment
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeObserveItemAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeUploadAttachment
@@ -976,5 +978,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindGetItemKeys(impl: FakeGetItemKeys): GetItemKeys
+
+    @Binds
+    abstract fun bindDownloadAttachment(impl: FakeDownloadAttachment): DownloadAttachment
 
 }

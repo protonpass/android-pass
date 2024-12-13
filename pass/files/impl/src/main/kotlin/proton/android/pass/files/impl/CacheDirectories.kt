@@ -18,6 +18,6 @@
 
 package proton.android.pass.files.impl
 
-enum class CacheDirectories(val directoryName: String) {
-    CameraTemp("camera")
+enum class CacheDirectories(val value: String) {
+    Camera("camera")
 }

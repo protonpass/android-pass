@@ -23,10 +23,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentsHandler
 import java.net.URI
 
 class FakeAttachmentHandler : AttachmentsHandler {
+
     override val isUploadingAttachment: Flow<Set<URI>>
         get() = flowOf(emptySet())
     override val attachmentsFlow: Flow<AttachmentsState>
@@ -44,11 +48,21 @@ class FakeAttachmentHandler : AttachmentsHandler {
         // no-op
     }
 
-    override fun clearAttachments() {
+    override fun onClearAttachments() {
         // no-op
     }
 
     override fun observeNewAttachments(scope: CoroutineScope, onNewAttachment: (Set<URI>) -> Unit) {
+        // no-op
+    }
+
+    override fun openAttachment(
+        context: Context,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachment: Attachment,
+        scope: CoroutineScope
+    ) {
         // no-op
     }
 }

@@ -33,6 +33,7 @@ import proton.android.pass.data.impl.responses.attachments.FilesDataResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.attachments.ChunkId
 import javax.inject.Inject
 
 class RemoteAttachmentsDataSourceImpl @Inject constructor(
@@ -90,4 +91,18 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
         .invoke { retrieveAllFiles(shareId.id, itemId.id) }
         .valueOrThrow
         .filesData
+
+    override suspend fun downloadChunk(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId,
+        chunkId: ChunkId
+    ): EncryptedByteArray = api.get<PasswordManagerApi>(userId)
+        .invoke { downloadChunk(shareId.id, itemId.id, attachmentId.id, chunkId.id) }
+        .valueOrThrow
+        .body()
+        ?.bytes()
+        ?.let(::EncryptedByteArray)
+        ?: throw IllegalStateException("Chunk download failed for attachmentId: $attachmentId, chunkId: $chunkId")
 }

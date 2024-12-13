@@ -23,10 +23,11 @@ import androidx.core.content.FileProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withContext
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.files.api.FileType
 import proton.android.pass.files.api.FileUriGenerator
-import proton.android.pass.files.impl.CacheDirectories.CameraTemp
 import java.io.File
+import java.io.IOException
 import java.net.URI
 import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
@@ -40,30 +41,66 @@ class FileUriGeneratorImpl @Inject constructor(
 
     override suspend fun generate(fileType: FileType): URI = withContext(appDispatchers.io) {
         val file = createFileForType(fileType)
+        getFileProviderUri(file)
+    }
+
+    override fun getFileProviderUri(file: File): URI {
         val authority = "${context.packageName}.fileprovider"
         val uri = FileProvider.getUriForFile(context, authority, file)
-        URI.create(uri.toString())
+        return URI.create(uri.toString())
     }
 
     private fun createFileForType(fileType: FileType): File {
-        val (directoryName, prefix, suffix) = when (fileType) {
-            FileType.CameraTemp -> Triple(CameraTemp.directoryName, "photo_", ".jpg")
-        }
-
-        val cacheDir = File(context.cacheDir, directoryName).apply {
-            if (!exists()) mkdirs()
-        }
-
+        val directory = getDirectoryForFileType(fileType)
         return when (fileType) {
-            FileType.CameraTemp -> {
-                var file: File
-                do {
-                    val name = "$prefix${cameraFileCounter.getAndIncrement()}$suffix"
-                    file = File(cacheDir, name)
-                } while (file.exists())
-
-                file.apply { createNewFile() }
+            FileType.CameraCache -> createUniqueFile(directory, CAMERA_PREFIX, CAMERA_SUFFIX)
+            is FileType.ItemAttachment -> File(directory, fileType.attachmentId.id).apply {
+                if (!exists()) createNewFile()
             }
         }
+    }
+
+    override fun getDirectoryForFileType(fileType: FileType): File = when (fileType) {
+        FileType.CameraCache -> File(
+            context.cacheDir,
+            CacheDirectories.Camera.value
+        )
+            .apply { ensureDirectoryExists(this) }
+        is FileType.ItemAttachment ->
+            File(
+                context.filesDir,
+                FilesDirectories.Attachments.value +
+                    SpecialCharacters.SLASH +
+                    fileType.userId.id +
+                    SpecialCharacters.SLASH +
+                    fileType.shareId.id +
+                    SpecialCharacters.SLASH +
+                    fileType.itemId.id
+            ).apply { ensureDirectoryExists(this) }
+    }
+
+    private fun createUniqueFile(
+        directory: File,
+        prefix: String,
+        suffix: String
+    ): File {
+        var file: File
+        do {
+            val name = "$prefix${cameraFileCounter.getAndIncrement()}$suffix"
+            file = File(directory, name)
+        } while (file.exists())
+        file.createNewFile()
+        return file
+    }
+
+    private fun ensureDirectoryExists(directory: File) {
+        if (!directory.exists() && !directory.mkdirs()) {
+            throw IOException("Failed to create directory: ${directory.absolutePath}")
+        }
+    }
+
+    private companion object {
+        const val CAMERA_PREFIX = "photo_"
+        const val CAMERA_SUFFIX = ".jpg"
     }
 }

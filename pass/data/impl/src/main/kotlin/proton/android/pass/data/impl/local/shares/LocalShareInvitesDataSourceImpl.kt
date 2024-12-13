@@ -41,7 +41,7 @@ class LocalShareInvitesDataSourceImpl @Inject constructor() : LocalShareInvitesD
         inviteId: InviteId
     ): SharePendingInvite? = sharePendingInvitesFlow.value[userId]
         ?.get(shareId)
-        ?.first { it.inviteId == inviteId }
+        ?.firstOrNull { it.inviteId == inviteId }
 
     override fun deleteSharePendingInvite(
         userId: UserId,

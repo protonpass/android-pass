@@ -18,15 +18,9 @@
 
 package proton.android.pass.data.api.usecases.attachments
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import java.net.URI
 
 interface DownloadAttachment {
-    suspend operator fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-        attachment: Attachment
-    ): URI
+    suspend operator fun invoke(attachment: Attachment): URI
 }

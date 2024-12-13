@@ -123,4 +123,7 @@
         <item quantity="one">%1$s block</item>
         <item quantity="other">%1$s blocks</item>
     </plurals>
+
+    <string name="open_with">Open with:</string>
+
 </resources>

@@ -25,6 +25,8 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.attachments.AttachmentKey
+import proton.android.pass.domain.attachments.Chunk
 import java.net.URI
 
 interface AttachmentRepository {
@@ -52,4 +54,14 @@ interface AttachmentRepository {
         shareId: ShareId,
         itemId: ItemId
     ): Flow<List<Attachment>>
+
+    @Suppress("LongParameterList")
+    suspend fun downloadAttachment(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId,
+        attachmentKey: AttachmentKey,
+        chunks: List<Chunk>
+    ): URI
 }

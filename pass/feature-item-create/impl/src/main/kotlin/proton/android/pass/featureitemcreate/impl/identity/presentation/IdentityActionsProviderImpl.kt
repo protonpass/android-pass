@@ -499,7 +499,7 @@ class IdentityActionsProviderImpl @Inject constructor(
 
     override fun clearState() {
         identityFieldDraftRepository.clearAddedFields()
-        attachmentsHandler.clearAttachments()
+        attachmentsHandler.onClearAttachments()
     }
 
     @Suppress("LongMethod")

@@ -16,19 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.files.api
+package proton.android.pass.data.fakes.usecases.attachments
 
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.attachments.Attachment
+import java.net.URI
+import javax.inject.Inject
+import javax.inject.Singleton
 
-sealed interface FileType {
-    data object CameraCache : FileType
-    data class ItemAttachment(
-        val userId: UserId,
-        val shareId: ShareId,
-        val itemId: ItemId,
-        val attachmentId: AttachmentId
-    ) : FileType
+@Singleton
+class FakeDownloadAttachment @Inject constructor() : DownloadAttachment {
+    override suspend fun invoke(
+        shareId: ShareId,
+        itemId: ItemId,
+        attachment: Attachment
+    ): URI = URI.create("https://proton.me")
 }

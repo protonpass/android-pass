@@ -63,7 +63,7 @@ fun FileDetailsResponse.toDomain(
     type = type,
     size = size,
     createTime = Instant.fromEpochSeconds(createTime),
-    fileKey = AttachmentKey(fileKey),
+    key = AttachmentKey(fileKey),
     itemKeyRotation = itemKeyRotation,
     chunks = chunks.map(ChunkResponse::toDomain)
 )

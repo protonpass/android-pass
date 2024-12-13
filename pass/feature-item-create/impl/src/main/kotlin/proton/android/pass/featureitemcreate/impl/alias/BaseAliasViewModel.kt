@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -56,14 +57,16 @@ abstract class BaseAliasViewModel(
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     init {
-        attachmentsHandler.observeNewAttachments(viewModelScope) { newUris ->
+        attachmentsHandler.observeNewAttachments { newUris ->
             if (newUris.isNotEmpty()) {
                 onUserEditedContent()
                 newUris.forEach { uri ->
-                    attachmentsHandler.uploadNewAttachment(uri, viewModelScope)
+                    viewModelScope.launch {
+                        attachmentsHandler.uploadNewAttachment(uri)
+                    }
                 }
             }
-        }
+        }.launchIn(viewModelScope)
     }
 
     private val title: Option<String> = savedStateHandleProvider.get()

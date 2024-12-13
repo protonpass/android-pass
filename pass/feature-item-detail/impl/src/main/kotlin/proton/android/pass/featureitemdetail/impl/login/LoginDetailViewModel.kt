@@ -234,11 +234,13 @@ class LoginDetailViewModel @Inject constructor(
 
     private val itemFeaturesFlow: Flow<LoginItemFeatures> = combine(
         getUserPlan(),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
-    ) { userPlan, isFileAttachmentsEnabled ->
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
+    ) { userPlan, isFileAttachmentsEnabled, isItemSharingEnabled ->
         LoginItemFeatures(
             isHistoryEnabled = userPlan.isPaidPlan,
-            isFileAttachmentsEnabled = isFileAttachmentsEnabled
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled,
+            isItemSharingEnabled = isItemSharingEnabled
         )
     }
 
@@ -456,8 +458,7 @@ class LoginDetailViewModel @Inject constructor(
                     shareClickAction = details.shareClickAction,
                     itemActions = actions,
                     event = event,
-                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
-                    isFileAttachmentsEnabled = itemFeatures.isFileAttachmentsEnabled,
+                    itemFeatures = itemFeatures,
                     monitorState = details.securityState,
                     attachmentsState = AttachmentsState(
                         draftAttachmentsList = listOf(),

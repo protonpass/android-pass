@@ -18,6 +18,17 @@
 
 package proton.android.pass.files.api
 
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.AttachmentId
+
 sealed interface FileType {
-    data object CameraTemp : FileType
+    data object CameraCache : FileType
+    data class ItemAttachment(
+        val userId: UserId,
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val attachmentId: AttachmentId
+    ) : FileType
 }

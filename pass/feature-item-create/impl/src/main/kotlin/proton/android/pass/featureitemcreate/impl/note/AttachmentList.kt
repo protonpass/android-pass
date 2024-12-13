@@ -63,7 +63,7 @@ fun AttachmentList(
                     onEvent(OnAttachmentEvent(OnAttachmentOptions(attachment.id)))
                 },
                 onAttachmentOpen = {
-                    onEvent(OnAttachmentEvent(OnAttachmentOpen(attachment.id)))
+                    onEvent(OnAttachmentEvent(OnAttachmentOpen(attachment)))
                 }
             )
         }

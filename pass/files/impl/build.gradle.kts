@@ -33,6 +33,7 @@ dependencies {
 
     implementation(projects.pass.common.api)
     implementation(projects.pass.log.api)
+    implementation(projects.pass.domain)
     implementation(libs.core.utilKotlin)
 
     implementation(libs.dagger.hilt.android)

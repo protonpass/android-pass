@@ -25,6 +25,7 @@ import proton.android.pass.data.impl.responses.attachments.FilesDataResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.attachments.ChunkId
 
 interface RemoteAttachmentsDataSource {
 
@@ -51,4 +52,12 @@ interface RemoteAttachmentsDataSource {
         shareId: ShareId,
         itemId: ItemId
     ): FilesDataResponse
+
+    suspend fun downloadChunk(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId,
+        chunkId: ChunkId
+    ): EncryptedByteArray
 }

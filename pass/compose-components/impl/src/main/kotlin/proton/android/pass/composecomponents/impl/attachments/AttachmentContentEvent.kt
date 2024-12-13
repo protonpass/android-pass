@@ -18,6 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.attachments
 
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
 import java.net.URI
 
@@ -30,7 +31,7 @@ sealed interface AttachmentContentEvent {
     value class OnAttachmentOptions(val attachmentId: AttachmentId) : AttachmentContentEvent
 
     @JvmInline
-    value class OnAttachmentOpen(val attachmentId: AttachmentId) : AttachmentContentEvent
+    value class OnAttachmentOpen(val attachment: Attachment) : AttachmentContentEvent
 
     @JvmInline
     value class OnDraftAttachmentOptions(val uri: URI) : AttachmentContentEvent

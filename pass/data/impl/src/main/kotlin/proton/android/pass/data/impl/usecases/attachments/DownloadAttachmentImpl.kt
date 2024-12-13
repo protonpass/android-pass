@@ -23,6 +23,8 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import java.net.URI
 import javax.inject.Inject

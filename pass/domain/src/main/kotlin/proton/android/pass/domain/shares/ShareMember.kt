@@ -20,6 +20,7 @@ package proton.android.pass.domain.shares
 
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.ShareType
 
 data class ShareMember(
     val email: String,
@@ -27,5 +28,12 @@ data class ShareMember(
     val username: String,
     val role: ShareRole,
     val isCurrentUser: Boolean,
-    val isOwner: Boolean
-)
+    val isOwner: Boolean,
+    private val shareType: ShareType
+) {
+
+    val isItemMember: Boolean = shareType == ShareType.Item
+
+    val isVaultMember: Boolean = shareType == ShareType.Vault
+
+}

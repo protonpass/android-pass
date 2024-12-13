@@ -33,11 +33,11 @@ fun ShareFromItemBottomSheet(
     onNavigateEvent: (SharingNavigation) -> Unit,
     viewModel: ShareFromItemViewModel = hiltViewModel()
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
         when (state.event) {
-            ShareFromItemNavEvent.Unknown -> {}
+            ShareFromItemNavEvent.Unknown -> Unit
             ShareFromItemNavEvent.MoveToSharedVault -> {
                 onNavigateEvent(SharingNavigation.MoveItemToSharedVault)
             }
@@ -50,51 +50,53 @@ fun ShareFromItemBottomSheet(
         modifier = modifier,
         state = state,
         onEvent = { event ->
-            state.vault.value()?.let { vault ->
-                when (event) {
-                    ShareFromItemEvent.CreateNewVault -> {
-                        onNavigateEvent(
-                            SharingNavigation.CreateVaultAndMoveItem(
-                                shareId = vault.vault.shareId,
-                                itemId = state.itemId
-                            )
+            when (event) {
+                ShareFromItemEvent.CreateNewVault -> {
+                    onNavigateEvent(
+                        SharingNavigation.CreateVaultAndMoveItem(
+                            shareId = state.shareId,
+                            itemId = state.itemId
                         )
-                    }
-
-                    ShareFromItemEvent.MoveToSharedVault -> {
-                        viewModel.moveItemToSharedVault()
-                    }
-
-                    ShareFromItemEvent.ShareVault -> {
-                        onNavigateEvent(SharingNavigation.ShareVault(vault.vault.shareId))
-                    }
-
-                    ShareFromItemEvent.ShareSecureLink -> SharingNavigation.ShareItemLink(
-                        shareId = vault.vault.shareId,
-                        itemId = state.itemId
-                    ).also(onNavigateEvent)
-
-                    ShareFromItemEvent.Upgrade -> {
-                        onNavigateEvent(SharingNavigation.Upgrade)
-                    }
-
-                    ShareFromItemEvent.UpsellSecureLink -> SharingNavigation.Upsell(
-                        paidFeature = PaidFeature.SecureLinks
-                    ).also(onNavigateEvent)
-
-                    ShareFromItemEvent.ManageSharedVault -> SharingNavigation.ManageSharedVault(
-                        sharedVaultId = vault.vault.shareId
-                    ).also(onNavigateEvent)
-
-                    ShareFromItemEvent.ShareItem -> SharingNavigation.ShareItem(
-                        shareId = vault.vault.shareId,
-                        itemId = state.itemId
-                    ).also(onNavigateEvent)
-
-                    ShareFromItemEvent.UpsellItemSharing -> SharingNavigation.Upsell(
-                        paidFeature = PaidFeature.ItemSharing
-                    ).also(onNavigateEvent)
+                    )
                 }
+
+                ShareFromItemEvent.MoveToSharedVault -> {
+                    viewModel.moveItemToSharedVault()
+                }
+
+                ShareFromItemEvent.ShareVault -> {
+                    onNavigateEvent(SharingNavigation.ShareVault(state.shareId))
+                }
+
+                ShareFromItemEvent.ShareSecureLink -> SharingNavigation.ShareItemLink(
+                    shareId = state.shareId,
+                    itemId = state.itemId
+                ).also(onNavigateEvent)
+
+                ShareFromItemEvent.Upgrade -> {
+                    onNavigateEvent(SharingNavigation.Upgrade)
+                }
+
+                ShareFromItemEvent.UpsellSecureLink -> SharingNavigation.Upsell(
+                    paidFeature = PaidFeature.SecureLinks
+                ).also(onNavigateEvent)
+
+                ShareFromItemEvent.ManageSharedVault -> SharingNavigation.ManageSharedVault(
+                    sharedVaultId = state.shareId
+                ).also(onNavigateEvent)
+
+                ShareFromItemEvent.ShareItem -> SharingNavigation.ShareItem(
+                    shareId = state.shareId,
+                    itemId = state.itemId
+                ).also(onNavigateEvent)
+
+                ShareFromItemEvent.ManageSharedItem -> SharingNavigation.ManageItem(
+                    shareId = state.shareId
+                ).also(onNavigateEvent)
+
+                ShareFromItemEvent.UpsellItemSharing -> SharingNavigation.Upsell(
+                    paidFeature = PaidFeature.ItemSharing
+                ).also(onNavigateEvent)
             }
         }
     )

@@ -18,6 +18,8 @@
     <item quantity="other">hasil</item>
   </plurals>
   <string name="item_list_header_identities_type">Identitas</string>
+  <string name="item_list_header_shared_with_me">Shared with me</string>
+  <string name="item_list_header_shared_by_me">Shared by me</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Konfirmasi</string>
   <string name="bottomsheet_cancel_button">Batal</string>
@@ -252,7 +254,7 @@
   <plurals name="simple_login_widget_pending_aliases_message">
     <item quantity="other">Kami mendeteksi bahwa Anda memiliki %d alias yang saat ini ada di SimpleLogin namun belum terdaftar pada Proton Pass. Apakah Anda ingin mengimpor alias ini?</item>
   </plurals>
-  <string name="simple_login_widget_action">Sinkronisasikan alias</string>
+  <string name="simple_login_widget_action">Sinkronkan alias</string>
   <!-- Verification codes -->
   <string name="verification_code_not_received">Haven\'t received the code?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Silakan periksa dalam Spam untuk email bernama “%s”</string>
@@ -263,9 +265,9 @@
   <string name="field_display_name_title">Nama tampilan</string>
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
-    <item quantity="other">%1$s files</item>
+    <item quantity="other">%1$s berkas</item>
   </plurals>
-  <string name="attachment_title">Attachments</string>
-  <string name="attachment_no_files">Upload files from your device</string>
-  <string name="attachment_add_file">Attach a file</string>
+  <string name="attachment_title">Lampiran</string>
+  <string name="attachment_no_files">Unggah berkas dari perangkat Anda</string>
+  <string name="attachment_add_file">Lampirkan berkas</string>
 </resources>

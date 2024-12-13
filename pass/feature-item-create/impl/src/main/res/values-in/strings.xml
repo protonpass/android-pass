@@ -11,7 +11,7 @@
   <string name="action_password">Kata sandi</string>
   <string name="action_identity">Identitas</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Tambahkan rincian entri masuk untuk aplikasi atau situs tertentu</string>
-  <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Dapatkan alamat email samaran untuk digunakan pada aplikasi baru</string>
+  <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Dapatkan alias email untuk digunakan pada berbagai aplikasi baru</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Tulis PIN, kode, atau catatan untuk diri Anda sendiri</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Simpan informasi pembayaran Anda dengan aman</string>
   <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Isi data pribadi Anda</string>
@@ -75,12 +75,12 @@
   <string name="alias_bottomsheet_suffix_title">Akhiran</string>
   <string name="create_alias_item_creation_error">Alias tidak dapat dibuat</string>
   <string name="create_alias_cannot_create_more_aliases_error">Anda tidak dapat membuat lebih banyak alias</string>
-  <string name="create_alias_email_not_validated_error">Anda harus memverifikasi alamat email Anda terlebih dahulu sebelum membuat alias</string>
+  <string name="create_alias_email_not_validated_error">Anda tidak dapat membuat alias sebelum memvalidasi email Anda terlebih dahulu</string>
   <string name="alias_rate_limited">Terlalu banyak alias yang dibuat baru-baru ini</string>
   <string name="create_alias_item_update_error">Alias tidak dapat diperbarui</string>
   <string name="create_alias_init_error">Terdapat masalah dalam memperoleh rincian alias</string>
   <string name="alias_created">Alias dibuat</string>
-  <string name="cannot_retrieve_alias_options">Tidak dapat menerima opsi alias</string>
+  <string name="cannot_retrieve_alias_options">Pengaturan alias tidak dapat diperoleh</string>
   <string name="alias_mailbox_dialog_title">Teruskan ke</string>
   <string name="sl_note_info_title">Apa itu catatan SimpleLogin?</string>
   <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">Dalam Pass, catatan item terenkripsi dengan kunci enkripsi item dan hanya pengguna dengan akses item dapat melihat catatan.</string>

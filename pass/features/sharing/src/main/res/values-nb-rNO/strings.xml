@@ -45,13 +45,12 @@
   <string name="sharing_item_invitation_title">Delt elementinvitasjon</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s ønsker å dele et element med deg.</string>
   <string name="sharing_item_invitation_accept">Aksepter og se elementet</string>
-  <string name="sharing_snackbar_get_invite_error">Kunne ikke få invitasjon</string>
+  <string name="sharing_item_leave">Forlat</string>
   <string name="sharing_snackbar_invite_accepted">Invitasjon godtatt</string>
   <string name="sharing_snackbar_invite_accept_error">Feil under godkjenning av invitasjonen</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Kunne ikke godta invitasjonen da du har nådd hvelvgrensen.</string>
   <string name="sharing_snackbar_invite_rejected">Invitasjon avslått</string>
   <string name="sharing_snackbar_invite_reject_error">Feil under avvisning av invitasjonen</string>
-  <string name="sharing_snackbar_vault_not_found">Finner ikke hvelvet</string>
   <string name="sharing_snackbar_invite_sent_success">Invitasjon sendt</string>
   <string name="sharing_snackbar_invite_sent_error">Kunne ikke sende invitasjon</string>
   <string name="sharing_snackbar_get_vault_members_error">Fikk ikke tak i hvelvmedlemmer</string>
@@ -59,6 +58,8 @@
   <string name="sharing_snackbar_change_permission_error">Kunne ikke endre rettighetene</string>
   <string name="sharing_snackbar_remove_member_success">Medlem fjernet fra hvelvet</string>
   <string name="sharing_snackbar_remove_member_error">Kunne ikke fjerne fra hvelvet</string>
+  <string name="sharing_snackbar_fetch_member_error">Det oppstod en feil under henting av medlemmer</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Det oppstod en feil under henting av ventende invitasjoner</string>
   <string name="share_summary_title">Se over og del</string>
   <string name="share_summary_vault">%s hvelv</string>
   <string name="share_summary_share_vault">Del hvelv</string>
@@ -87,6 +88,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Overfør eierskap</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kan ikke overføre ditt sist eide hvelv.</string>
   <string name="sharing_bottomsheet_remove_access">Opphev tilgang</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
   <string name="sharing_bottomsheet_resend_invite">Send invitasjon på nytt</string>
   <string name="sharing_bottomsheet_cancel_invite">Avbryt invitasjon</string>
   <string name="sharing_transfer_ownership_confirm_title">Overfør eierskap</string>

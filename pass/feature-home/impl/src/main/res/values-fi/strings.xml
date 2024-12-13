@@ -15,6 +15,9 @@
   <string name="home_empty_vault_identity_subtitle">Aloita luomalla ensimmäinen identiteettisi.</string>
   <string name="home_empty_vault_cc_title">Maksukortteja ei löytynyt</string>
   <string name="home_empty_vault_cc_subtitle">Aloita luomalla ensimmäinen maksukorttikohteesi.</string>
+  <string name="home_empty_shared_items_title">No shared items found</string>
+  <string name="home_empty_shared_items_with_me_subtitle">No items have been shared with you.</string>
+  <string name="home_empty_shared_items_by_me_subtitle">No items have been shared by you.</string>
   <string name="home_empty_read_only_vault_title">Tämä holvi on tyhjä</string>
   <string name="home_empty_read_only_vault_subtitle">Et voi lisätä kohteita holviin, johon on vain lukuoikeus.</string>
   <string name="home_empty_vault_create_login">Luo kirjautumistieto</string>
@@ -100,6 +103,8 @@
   <string name="item_type_filter_credit_card">Maksukortti</string>
   <string name="item_type_filter_identity">Identiteetti</string>
   <string name="item_type_filter_login_totp">Kirjaudu TOTP:lla</string>
+  <string name="item_type_filter_items_shared_with_me">Shared with me</string>
+  <string name="item_type_filter_items_shared_by_me">Shared by me</string>
   <!-- Trash -->
   <string name="trash_empty_list_title">Roskakori on tyhjä</string>
   <string name="trash_empty_list_message">Roskakoriin siirretyt kohteet näkyvät tässä.</string>

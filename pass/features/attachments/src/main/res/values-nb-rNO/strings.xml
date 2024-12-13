@@ -21,9 +21,11 @@
   <string name="add_attachment_choose_a_photo_or_video">Velg et bilde eller en video</string>
   <string name="add_attachment_choose_a_file">Velg en fil</string>
   <string name="attachment_options_open">Åpne</string>
-  <string name="attachment_options_save">Lagre</string>
   <string name="attachment_options_rename">Gi nytt navn</string>
   <string name="attachment_options_delete">Slett</string>
   <string name="file_picker_open_error">Kunne ikke åpne filvelgeren</string>
-  <string name="file_picker_select_error">Kunne ikke velge filen</string>
+  <string name="media_picker_open_error">Kunne ikke åpne medievelgeren</string>
+  <string name="camera_open_error">Kunne ikke åpne kameraet</string>
+  <string name="camera_permission_explanation">Kameratillatelse kreves for at denne funksjonen skal være tilgjengelig.</string>
+  <string name="camera_permission_open_settings">Åpne innstillinger</string>
 </resources>

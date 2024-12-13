@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="autofill_authenticate_prompt">Lấy từ Proton Pass</string>
-  <string name="error_loading_items">Không thể tải nội dung</string>
+  <string name="error_loading_items">Không thể tải các mục</string>
   <string name="inline_suggestions_open_app">Mở Proton Pass</string>
   <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Nâng cấp để tự động điền</string>
   <string name="autofill_associate_web_app_name_dialog_title">Sử dụng thông tin đăng nhập từ \"%s\" cho ứng dụng hoặc trang web.</string>

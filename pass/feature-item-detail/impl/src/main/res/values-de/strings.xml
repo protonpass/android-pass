@@ -106,7 +106,7 @@
   <string name="passkey_detail_bottomsheet_created">Erstellt</string>
   <string name="activity_in_last_two_weeks">Aktivität in den letzten 14 Tagen</string>
   <string name="contacts">Kontakte</string>
-  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="contacts_section_description">Um deine persönliche E-Mail-Adresse zu verbergen, kannst du einen Alias-Kontakt erstellen, der deine Adresse verschleiert.</string>
   <string name="field_detail_display_name_title">Anzeigename</string>
   <string name="display_name_section_description">The display name when sending an email from this alias.</string>
   <plurals name="alias_forwards_count">

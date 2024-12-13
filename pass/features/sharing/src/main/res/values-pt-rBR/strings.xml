@@ -45,13 +45,12 @@
   <string name="sharing_item_invitation_title">Convite de item compartilhado</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s deseja compartilhar um item com você.</string>
   <string name="sharing_item_invitation_accept">Aceitar e ver esse item</string>
-  <string name="sharing_snackbar_get_invite_error">Não foi possível receber o convite</string>
+  <string name="sharing_item_leave">Deixar</string>
   <string name="sharing_snackbar_invite_accepted">Convite aceito</string>
   <string name="sharing_snackbar_invite_accept_error">Erro ao aceitar o convite.</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Não foi possível aceitar o convite porque você atingiu o limite do cofre</string>
   <string name="sharing_snackbar_invite_rejected">Convite rejeitado</string>
   <string name="sharing_snackbar_invite_reject_error">Erro ao rejeitar o convite.</string>
-  <string name="sharing_snackbar_vault_not_found">Não foi possível encontrar o cofre.</string>
   <string name="sharing_snackbar_invite_sent_success">Convite enviado</string>
   <string name="sharing_snackbar_invite_sent_error">Não foi possível enviar o convite.</string>
   <string name="sharing_snackbar_get_vault_members_error">Não foi possível obter os membros do cofre.</string>
@@ -59,6 +58,8 @@
   <string name="sharing_snackbar_change_permission_error">Não foi possível mudar as permissões</string>
   <string name="sharing_snackbar_remove_member_success">O membro foi removido do cofre.</string>
   <string name="sharing_snackbar_remove_member_error">Não foi possível remover do cofre.</string>
+  <string name="sharing_snackbar_fetch_member_error">Houve um erro ao obter estes membros</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
   <string name="share_summary_title">Revisar e compartilhar</string>
   <string name="share_summary_vault">o cofre %s</string>
   <string name="share_summary_share_vault">Compartilhar cofre</string>
@@ -87,6 +88,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Transferir a propriedade</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Você não pode transferir o seu último cofre possuído.</string>
   <string name="sharing_bottomsheet_remove_access">Revogar acesso</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
   <string name="sharing_bottomsheet_resend_invite">Reenviar convite</string>
   <string name="sharing_bottomsheet_cancel_invite">Cancelar convite</string>
   <string name="sharing_transfer_ownership_confirm_title">Transferir a propriedade</string>

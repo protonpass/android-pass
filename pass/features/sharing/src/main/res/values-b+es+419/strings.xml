@@ -45,13 +45,12 @@
   <string name="sharing_item_invitation_title">Invitación a un elemento compartido</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s desea compartir un elemento con usted.</string>
   <string name="sharing_item_invitation_accept">Aceptar y mostrar el elemento</string>
-  <string name="sharing_snackbar_get_invite_error">No se pudo obtener la invitación</string>
+  <string name="sharing_item_leave">Abandonar</string>
   <string name="sharing_snackbar_invite_accepted">Invitación aceptada</string>
   <string name="sharing_snackbar_invite_accept_error">Error al aceptar la invitación</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">No se pudo aceptar la invitación porque alcanzó el límite de la bóveda</string>
   <string name="sharing_snackbar_invite_rejected">Invitación rechazada</string>
   <string name="sharing_snackbar_invite_reject_error">Error al rechazar la invitación</string>
-  <string name="sharing_snackbar_vault_not_found">No se pudo encontrar la bóveda</string>
   <string name="sharing_snackbar_invite_sent_success">Invitación enviada</string>
   <string name="sharing_snackbar_invite_sent_error">No se pudo enviar la invitación</string>
   <string name="sharing_snackbar_get_vault_members_error">No se pudieron obtener los miembros de la bóveda</string>
@@ -59,6 +58,8 @@
   <string name="sharing_snackbar_change_permission_error">Error al cambiar los permisos</string>
   <string name="sharing_snackbar_remove_member_success">El miembro fue borrado de la bóveda.</string>
   <string name="sharing_snackbar_remove_member_error">Error al borrar de la bóveda</string>
+  <string name="sharing_snackbar_fetch_member_error">Ocurrió un error al obtener los miembros.</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Ocurrió un error al obtener las invitaciones pendientes.</string>
   <string name="share_summary_title">Revisar y compartir</string>
   <string name="share_summary_vault">la bóveda %s</string>
   <string name="share_summary_share_vault">Compartir bóveda</string>
@@ -87,6 +88,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Transferir la propiedad</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">No puede transferir su última bóveda propia.</string>
   <string name="sharing_bottomsheet_remove_access">Revocar el acceso</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Puede conceder y revocar acceso a este elemento.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Puede editar este elemento.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Puede ver este elemento.</string>
   <string name="sharing_bottomsheet_resend_invite">Reenviar la invitación</string>
   <string name="sharing_bottomsheet_cancel_invite">Cancelar la invitación</string>
   <string name="sharing_transfer_ownership_confirm_title">Transferir la propiedad</string>

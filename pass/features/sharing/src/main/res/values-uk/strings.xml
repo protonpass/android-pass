@@ -49,13 +49,12 @@
   <string name="sharing_item_invitation_title">Shared item invitation</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
   <string name="sharing_item_invitation_accept">Accept and view the item</string>
-  <string name="sharing_snackbar_get_invite_error">Не вдалося отримати запрошення</string>
+  <string name="sharing_item_leave">Leave</string>
   <string name="sharing_snackbar_invite_accepted">Запрошення прийнято</string>
   <string name="sharing_snackbar_invite_accept_error">Помилка приймання запрошення</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Не вдалося прийняти запрошення, оскільки ви досягли ліміту сховища</string>
   <string name="sharing_snackbar_invite_rejected">Запрошення відхилено</string>
   <string name="sharing_snackbar_invite_reject_error">Помилка відхилення запрошення</string>
-  <string name="sharing_snackbar_vault_not_found">Не вдалося знайти сховище</string>
   <string name="sharing_snackbar_invite_sent_success">Запрошення надіслано</string>
   <string name="sharing_snackbar_invite_sent_error">Не вдалося надіслати запрошення</string>
   <string name="sharing_snackbar_get_vault_members_error">Не вдалося отримати інформацію про учасників сховища</string>
@@ -63,12 +62,14 @@
   <string name="sharing_snackbar_change_permission_error">Не вдалося змінити дозволи</string>
   <string name="sharing_snackbar_remove_member_success">Учасника вилучено зі сховища</string>
   <string name="sharing_snackbar_remove_member_error">Не вдалося вилучити зі сховища</string>
+  <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
   <string name="share_summary_title">Перегляд і спільний доступ</string>
   <string name="share_summary_vault">Сховище %s</string>
   <string name="share_summary_share_vault">Поділитися сховищем</string>
   <string name="share_summary_share_item">Share item</string>
   <string name="share_summary_vault_title">Сховище</string>
-  <string name="share_summary_item_title">Item</string>
+  <string name="share_summary_item_title">Елемент</string>
   <string name="share_manage_vault_share_with_more_people">Поділитися з іншими людьми</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Залишилось %d запрошення</item>
@@ -95,6 +96,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Передати право власності</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Не можна передати власність вашого останнього сховища.</string>
   <string name="sharing_bottomsheet_remove_access">Відкликати доступ</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
   <string name="sharing_bottomsheet_resend_invite">Повторно надіслати запрошення</string>
   <string name="sharing_bottomsheet_cancel_invite">Скасувати запрошення</string>
   <string name="sharing_transfer_ownership_confirm_title">Передача права власності</string>

@@ -21,9 +21,11 @@
   <string name="add_attachment_choose_a_photo_or_video">Wybierz zdjęcie lub plik wideo</string>
   <string name="add_attachment_choose_a_file">Wybierz plik</string>
   <string name="attachment_options_open">Otwórz</string>
-  <string name="attachment_options_save">Zapisz</string>
   <string name="attachment_options_rename">Zmień nazwę</string>
   <string name="attachment_options_delete">Usuń</string>
   <string name="file_picker_open_error">Could not open file picker</string>
-  <string name="file_picker_select_error">Nie można wybrać pliku</string>
+  <string name="media_picker_open_error">Could not open media picker</string>
+  <string name="camera_open_error">Could not open camera</string>
+  <string name="camera_permission_explanation">Ta funkcja potrzebuje uprawnienia do aparatu.</string>
+  <string name="camera_permission_open_settings">Otwórz ustawienia</string>
 </resources>

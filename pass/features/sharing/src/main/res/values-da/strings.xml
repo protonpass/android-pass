@@ -45,13 +45,12 @@
   <string name="sharing_item_invitation_title">Delte element-invitation</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s ønsker at dele et element med dig.</string>
   <string name="sharing_item_invitation_accept">Accepter og se elementet</string>
-  <string name="sharing_snackbar_get_invite_error">Kunne ikke hente invitation</string>
+  <string name="sharing_item_leave">Forlad</string>
   <string name="sharing_snackbar_invite_accepted">Invitation accepteret</string>
   <string name="sharing_snackbar_invite_accept_error">Fejl ved accept af invitationen</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Kunne ikke acceptere invitationen, da du har nået boksens grænse</string>
   <string name="sharing_snackbar_invite_rejected">Invitation afvist</string>
   <string name="sharing_snackbar_invite_reject_error">Fejl ved afvisning af invitationen</string>
-  <string name="sharing_snackbar_vault_not_found">Boks kunne ikke findes</string>
   <string name="sharing_snackbar_invite_sent_success">Invitation sendt</string>
   <string name="sharing_snackbar_invite_sent_error">Kunne ikke sende invitation</string>
   <string name="sharing_snackbar_get_vault_members_error">Kunne ikke hente boksmedlemmer</string>
@@ -59,6 +58,8 @@
   <string name="sharing_snackbar_change_permission_error">Kunne ikke ændre tilladelserne</string>
   <string name="sharing_snackbar_remove_member_success">Medlem fjernet fra boksen</string>
   <string name="sharing_snackbar_remove_member_error">Kunne ikke fjerne fra boksen</string>
+  <string name="sharing_snackbar_fetch_member_error">Der opstod en fejl ved indhentning af medlemmer</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Der opstod en fejl ved indhentning af afventende invitationer</string>
   <string name="share_summary_title">Gennemgå og del</string>
   <string name="share_summary_vault">%s boks</string>
   <string name="share_summary_share_vault">Del boks</string>
@@ -87,6 +88,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Overfør ejerskab</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kan ikke overføre den sidste boks, du ejer.</string>
   <string name="sharing_bottomsheet_remove_access">Tilbagekald adgang</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Kan give og tilbagekalde adgang til dette element.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Kan redigere dette element.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Kan se dette element.</string>
   <string name="sharing_bottomsheet_resend_invite">Gensend invitation</string>
   <string name="sharing_bottomsheet_cancel_invite">Annullér invitation</string>
   <string name="sharing_transfer_ownership_confirm_title">Overfør ejerskab</string>

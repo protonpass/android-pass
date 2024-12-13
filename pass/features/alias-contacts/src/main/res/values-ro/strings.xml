@@ -25,7 +25,7 @@
   <string name="detail_contact_title">Contacte</string>
   <string name="email_input_error">Adresă de e-mail nevalidă.</string>
   <string name="detail_contact_display_name" comment="sender email address">Este creată o persoană de contact pentru fiecare adresă de e-mail care trimite mesaje către sau primește de la %1$s.</string>
-  <string name="empty_alias_contacts_title">Contactele aliasului</string>
+  <string name="empty_alias_contacts_title">Contacte alias</string>
   <string name="empty_alias_contacts_body">Pentru a vă păstra adresa de e-mail personală ascunsă, puteți crea un alias de contact care vă maschează adresa.</string>
   <string name="empty_alias_contacts_learn_more">Detalii</string>
   <string name="unblock_button">Deblocare contact</string>
@@ -62,7 +62,7 @@
   <string name="contact_option_block_contact">Blocare contact</string>
   <string name="contact_option_unblock_contact">Deblocare contact</string>
   <string name="contact_option_delete">Ștergere</string>
-  <string name="alias_contacts_bottomsheet_title">Contactele aliasului</string>
+  <string name="alias_contacts_bottomsheet_title">Contacte alias</string>
   <string name="alias_contacts_bottomsheet_subtitle">Pentru a vă păstra adresa de e-mail personală ascunsă, puteți crea un alias de contact care vă maschează adresa.</string>
   <string name="alias_contacts_explanation">Iată cum funcționează:</string>
   <string name="alias_contacts_bottomsheet_section_1">Introduceți adresa la care trimiteți mesajul.</string>

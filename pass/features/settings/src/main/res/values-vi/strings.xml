@@ -31,9 +31,9 @@
   <string name="settings_share_telemetry">Chia sẻ dữ liệu sử dụng ẩn danh</string>
   <string name="settings_share_crashes">Chia sẽ báo cáo dừng đột ngột ẩn danh</string>
   <string name="settings_preference_updated">Tùy chọn của bạn đã được cập nhật</string>
-  <string name="settings_display_section_title">Display</string>
-  <string name="settings_preference_display_username">Username field always visible</string>
-  <string name="settings_preference_display_autofill_pinning">Autofill pinning always visible</string>
+  <string name="settings_display_section_title">Hiển thị</string>
+  <string name="settings_preference_display_username">Trường tên người dùng luôn hiển thị</string>
+  <string name="settings_preference_display_autofill_pinning">Ghim tự động luôn hiển thị</string>
   <string name="view_logs_title">Xem nhật kí</string>
   <string name="clipboard_bottomsheet_title">Bộ nhớ tạm</string>
   <string name="clipboard_option_clear_clipboard_label">Xóa bộ nhớ tạm</string>

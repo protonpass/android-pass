@@ -103,8 +103,8 @@
   <string name="security_center_verify_email_snackbar_message_resend_code_success">Đã gửi email xác thực. Hãy kiểm tra hộp thư của bạn.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Đã xảy ra lỗi khi gửi mã xác minh. Vui lòng thử lại sau.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Quá nhiều xác minh không hợp lệ. Xóa email tùy chỉnh.</string>
-  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Invalid verification code</string>
-  <string name="security_center_verify_email_snackbar_message_verification_error">There was an error verifying the email. Please try again later.</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Mã xác minh không hợp lệ</string>
+  <string name="security_center_verify_email_snackbar_message_verification_error">Đã có lỗi xác minh email. Vui lòng thử lại sau.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Rò rỉ dữ liệu cho</string>
   <string name="security_center_verify_report_title_none">Không có vụ rò rỉ dữ liệu nào được tìm thấy cho</string>

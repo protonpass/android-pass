@@ -45,13 +45,12 @@
   <string name="sharing_item_invitation_title">გაზიარებული ელემენტის მოსაწვევი</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s უნდა, ელემენტი გაგიზიაროთ.</string>
   <string name="sharing_item_invitation_accept">მიღება და ელემენტის ნახვა</string>
-  <string name="sharing_snackbar_get_invite_error">მოსაწვევის მიღება შეუძლებელია</string>
+  <string name="sharing_item_leave">Leave</string>
   <string name="sharing_snackbar_invite_accepted">მოწვევა მიღებულია</string>
   <string name="sharing_snackbar_invite_accept_error">მოსაწვევის დათანხმების შეცდომა</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">მოსაწვევს ვერ დავეთნახმე, რადგან საცავების ზღვარს მიაღწიეთ</string>
   <string name="sharing_snackbar_invite_rejected">მოწვევა უარყოფილია</string>
   <string name="sharing_snackbar_invite_reject_error">მოსაწვევის უარყოფის შეცდომა</string>
-  <string name="sharing_snackbar_vault_not_found">საცავი ვერ ვიპოვე</string>
   <string name="sharing_snackbar_invite_sent_success">მოსაწვევი გაგზავნილია</string>
   <string name="sharing_snackbar_invite_sent_error">მოსაწვევის გაგზავნის შეცდომა</string>
   <string name="sharing_snackbar_get_vault_members_error">საცავის წევრების მიღება შეუძლებელია</string>
@@ -59,6 +58,8 @@
   <string name="sharing_snackbar_change_permission_error">წვდომების შეცვლა შეუძლებელია</string>
   <string name="sharing_snackbar_remove_member_success">წევრი წაიშალა საცავიდან</string>
   <string name="sharing_snackbar_remove_member_error">საცავიდან წაშლის შეცდომა</string>
+  <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
   <string name="share_summary_title">მიმოხილვა და გაზიარება</string>
   <string name="share_summary_vault">%s საცავი</string>
   <string name="share_summary_share_vault">საცავის გაზიარება</string>
@@ -87,6 +88,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">მფლობელობის გადაცემა</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">თქვენი უკანასკნელი საკუთარი საცავის გადატანა შეუძლებელია.</string>
   <string name="sharing_bottomsheet_remove_access">წვდომის გაუქმება</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
   <string name="sharing_bottomsheet_resend_invite">მოსაწვევის თავიდან გაგზავნა</string>
   <string name="sharing_bottomsheet_cancel_invite">Cancel invitation</string>
   <string name="sharing_transfer_ownership_confirm_title">მფლობელობის გადაცემა</string>

@@ -28,6 +28,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -520,6 +521,7 @@ class IdentityActionsProviderImpl @Inject constructor(
                     )
                 )
             }
+
             ContactCustomField -> handleFieldFocusChange(
                 index,
                 focused,
@@ -531,6 +533,7 @@ class IdentityActionsProviderImpl @Inject constructor(
                     )
                 )
             }
+
             PersonalCustomField -> handleFieldFocusChange(
                 index,
                 focused,
@@ -542,6 +545,7 @@ class IdentityActionsProviderImpl @Inject constructor(
                     )
                 )
             }
+
             WorkCustomField -> handleFieldFocusChange(
                 index,
                 focused,
@@ -553,6 +557,7 @@ class IdentityActionsProviderImpl @Inject constructor(
                     )
                 )
             }
+
             is ExtraSectionCustomField -> {
                 if (customExtraField.index >= identityItemFormMutableState.uiExtraSections.size) {
                     identityItemFormMutableState
@@ -607,6 +612,7 @@ class IdentityActionsProviderImpl @Inject constructor(
                         )
                     )
                 }
+
                 else -> fieldContent.copy(
                     value = UIHiddenState.Concealed(
                         encrypted = fieldContent.value.encrypted
@@ -900,13 +906,15 @@ class IdentityActionsProviderImpl @Inject constructor(
     }
 
     override fun observeNewAttachments(coroutineScope: CoroutineScope) {
-        attachmentsHandler.observeNewAttachments(coroutineScope) { newUris ->
+        attachmentsHandler.observeNewAttachments { newUris ->
             if (newUris.isNotEmpty()) {
                 onUserEditedContent()
                 newUris.forEach { uri ->
-                    attachmentsHandler.uploadNewAttachment(uri, coroutineScope)
+                    coroutineScope.launch {
+                        attachmentsHandler.uploadNewAttachment(uri)
+                    }
                 }
             }
-        }
+        }.launchIn(coroutineScope)
     }
 }

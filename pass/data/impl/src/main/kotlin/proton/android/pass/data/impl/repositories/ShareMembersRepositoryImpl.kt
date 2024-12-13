@@ -28,6 +28,7 @@ import proton.android.pass.data.impl.remote.shares.RemoteShareMembersDataSource
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.ShareType
 import proton.android.pass.domain.shares.ShareMember
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -53,7 +54,8 @@ class ShareMembersRepositoryImpl @Inject constructor(
                     isOwner = shareMemberResponse.owner ?: false,
                     role = shareMemberResponse.shareRoleId
                         ?.let(ShareRole::fromValue)
-                        ?: ShareRole.fromValue(ShareRole.SHARE_ROLE_READ)
+                        ?: ShareRole.fromValue(ShareRole.SHARE_ROLE_READ),
+                    shareType = ShareType.from(shareMemberResponse.targetType)
                 )
             }
             .also { shareMembers ->

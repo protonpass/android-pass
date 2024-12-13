@@ -73,6 +73,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMovedToTrash
@@ -133,6 +134,8 @@ class NoteDetailViewModel @Inject constructor(
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
     private val eventState: MutableStateFlow<ItemDetailEvent> =
         MutableStateFlow(ItemDetailEvent.Unknown)
+    private val loadingAttachmentsState: MutableStateFlow<Set<AttachmentId>> =
+        MutableStateFlow(emptySet())
 
     private val canPerformPaidActionFlow: Flow<LoadingResult<Boolean>> =
         canPerformPaidAction().asLoadingResult()
@@ -186,6 +189,7 @@ class NoteDetailViewModel @Inject constructor(
     val state: StateFlow<NoteDetailUiState> = combineN(
         noteItemDetailsResultFlow,
         isLoadingState,
+        loadingAttachmentsState,
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
@@ -195,6 +199,7 @@ class NoteDetailViewModel @Inject constructor(
         itemFeaturesFlow
     ) { itemLoadingResult,
         isLoading,
+        loadingAttachments,
         isItemSentToTrash,
         isPermanentlyDeleted,
         isRestoredFromTrash,
@@ -229,10 +234,10 @@ class NoteDetailViewModel @Inject constructor(
                     canPerformActions = details.canPerformItemActions,
                     shareClickAction = shareAction,
                     attachmentsState = AttachmentsState(
-                        loadingDraftAttachments = emptySet(),
-                        draftAttachmentsList = emptyList(),
+                        draftAttachmentsList = emptyList(), // no drafts in detail
+                        loadingDraftAttachments = emptySet(), // no drafts in detail
                         attachmentsList = attachments,
-                        loadingAttachments = emptySet()
+                        loadingAttachments = loadingAttachments
                     ),
                     itemActions = actions,
                     event = event,
@@ -338,6 +343,7 @@ class NoteDetailViewModel @Inject constructor(
 
     fun onAttachmentOpen(context: Context, attachment: Attachment) {
         viewModelScope.launch {
+            loadingAttachmentsState.update { it + attachment.id }
             runCatching {
                 val uri = downloadAttachment(
                     shareId = shareId,
@@ -356,6 +362,7 @@ class NoteDetailViewModel @Inject constructor(
                 PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
                 PassLogger.w(TAG, it)
             }
+            loadingAttachmentsState.update { it - attachment.id }
         }
     }
 

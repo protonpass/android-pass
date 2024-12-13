@@ -48,7 +48,7 @@ internal fun ManageItemPendingInvitesSection(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
-        Text.Body2Medium(
+        Text.Body3Regular(
             modifier = Modifier.padding(bottom = Spacing.small),
             text = "${stringResource(R.string.share_manage_vault_invitations_title)} (${pendingInvites.size})",
             color = PassTheme.colors.textWeak

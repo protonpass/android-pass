@@ -174,8 +174,13 @@ class AttachmentRepositoryImpl @Inject constructor(
         if (chunks.isEmpty()) throw IllegalStateException("No chunks provided")
         val fileType = FileType.ItemAttachment(userId, shareId, itemId, attachmentId)
         val directory = fileUriGenerator.getDirectoryForFileType(fileType)
-        val file = File(directory, attachmentId.id)
-        if (file.exists() && file.length() != 0L) return fileUriGenerator.getFileProviderUri(file)
+        val existingFileUri = withContext(appDispatchers.io) {
+            val file = File(directory, attachmentId.id)
+            if (file.exists() && file.length() != 0L) {
+                fileUriGenerator.getFileProviderUri(file)
+            } else null
+        }
+        if (existingFileUri != null) return existingFileUri
         val uri = fileUriGenerator.generate(fileType)
         val contentUri = Uri.parse(uri.toString())
 
@@ -191,15 +196,17 @@ class AttachmentRepositoryImpl @Inject constructor(
             EncryptionKey(decryptedKey)
         }
 
-        context.contentResolver.openOutputStream(contentUri)?.use { outputStream ->
-            encryptionContextProvider.withEncryptionContextSuspendable(fileKey) {
-                chunks.sortedBy { it.index }.forEach { chunk ->
-                    val encryptedChunk =
-                        remote.downloadChunk(userId, shareId, itemId, attachmentId, chunk.id)
-                    decrypt(encryptedChunk, EncryptionTag.FileData).let(outputStream::write)
+        withContext(appDispatchers.io) {
+            context.contentResolver.openOutputStream(contentUri)?.use { outputStream ->
+                encryptionContextProvider.withEncryptionContextSuspendable(fileKey) {
+                    chunks.sortedBy { it.index }.forEach { chunk ->
+                        val encryptedChunk =
+                            remote.downloadChunk(userId, shareId, itemId, attachmentId, chunk.id)
+                        decrypt(encryptedChunk, EncryptionTag.FileData).let(outputStream::write)
+                    }
                 }
-            }
-        } ?: throw IllegalStateException("Unable to open output stream for URI: $contentUri")
+            } ?: throw IllegalStateException("Unable to open output stream for URI: $contentUri")
+        }
         return URI.create(contentUri.toString())
     }
 }

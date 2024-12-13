@@ -39,9 +39,9 @@ class FileUriGeneratorImpl @Inject constructor(
 
     private val cameraFileCounter = AtomicInteger(0)
 
-    override suspend fun generate(fileType: FileType): URI = withContext(appDispatchers.io) {
+    override suspend fun generate(fileType: FileType): URI {
         val file = createFileForType(fileType)
-        getFileProviderUri(file)
+        return getFileProviderUri(file)
     }
 
     override fun getFileProviderUri(file: File): URI {
@@ -50,9 +50,9 @@ class FileUriGeneratorImpl @Inject constructor(
         return URI.create(uri.toString())
     }
 
-    private fun createFileForType(fileType: FileType): File {
+    private suspend fun createFileForType(fileType: FileType): File = withContext(appDispatchers.io) {
         val directory = getDirectoryForFileType(fileType)
-        return when (fileType) {
+        when (fileType) {
             FileType.CameraCache -> createUniqueFile(directory, CAMERA_PREFIX, CAMERA_SUFFIX)
             is FileType.ItemAttachment -> File(directory, fileType.attachmentId.id).apply {
                 if (!exists()) createNewFile()
@@ -60,14 +60,14 @@ class FileUriGeneratorImpl @Inject constructor(
         }
     }
 
-    override fun getDirectoryForFileType(fileType: FileType): File = when (fileType) {
-        FileType.CameraCache -> File(
-            context.cacheDir,
-            CacheDirectories.Camera.value
-        )
-            .apply { ensureDirectoryExists(this) }
-        is FileType.ItemAttachment ->
-            File(
+    override suspend fun getDirectoryForFileType(fileType: FileType): File = withContext(appDispatchers.io) {
+        when (fileType) {
+            FileType.CameraCache -> File(
+                context.cacheDir,
+                CacheDirectories.Camera.value
+            ).apply { ensureDirectoryExists(this) }
+
+            is FileType.ItemAttachment -> File(
                 context.filesDir,
                 FilesDirectories.Attachments.value +
                     SpecialCharacters.SLASH +
@@ -77,23 +77,24 @@ class FileUriGeneratorImpl @Inject constructor(
                     SpecialCharacters.SLASH +
                     fileType.itemId.id
             ).apply { ensureDirectoryExists(this) }
+        }
     }
 
-    private fun createUniqueFile(
+    private suspend fun createUniqueFile(
         directory: File,
         prefix: String,
         suffix: String
-    ): File {
+    ): File = withContext(appDispatchers.io) {
         var file: File
         do {
             val name = "$prefix${cameraFileCounter.getAndIncrement()}$suffix"
             file = File(directory, name)
         } while (file.exists())
         file.createNewFile()
-        return file
+        file
     }
 
-    private fun ensureDirectoryExists(directory: File) {
+    private suspend fun ensureDirectoryExists(directory: File) = withContext(appDispatchers.io) {
         if (!directory.exists() && !directory.mkdirs()) {
             throw IOException("Failed to create directory: ${directory.absolutePath}")
         }

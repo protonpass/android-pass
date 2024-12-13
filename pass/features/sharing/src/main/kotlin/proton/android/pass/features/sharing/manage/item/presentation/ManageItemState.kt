@@ -40,16 +40,22 @@ internal sealed interface ManageItemState {
     data class Success(
         override val event: ManageItemEvent = ManageItemEvent.Idle,
         internal val share: Share,
-        internal val members: List<ShareMember>,
         internal val pendingInvites: List<SharePendingInvite>,
+        private val members: List<ShareMember>,
         private val isLoadingState: IsLoadingState
     ) : ManageItemState {
 
-        internal val hasMembers = members.isNotEmpty()
+        internal val itemMembers: List<ShareMember> = members.filter { it.isItemMember }
+
+        internal val hasItemMembers: Boolean = members.isNotEmpty()
+
+        internal val vaultMembers: List<ShareMember> = members.filter { it.isVaultMember }
+
+        internal val hasVaultMembers: Boolean = members.isNotEmpty()
 
         internal val hasPendingInvites = pendingInvites.isNotEmpty()
 
-        internal val isLoading = isLoadingState.value()
+        internal val isLoading: Boolean = isLoadingState.value()
 
     }
 

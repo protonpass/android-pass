@@ -19,26 +19,8 @@
 package proton.android.pass.data.impl.db.dao.attachment
 
 import androidx.room.Dao
-import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
-import proton.android.pass.data.impl.db.entities.ChunkEntity
+import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
 
 @Dao
-abstract class ChunkDao : BaseDao<ChunkEntity>() {
-
-    @Query(
-        """
-        SELECT * FROM ${ChunkEntity.TABLE}
-        WHERE ${ChunkEntity.Columns.ATTACHMENT_ID} = :attachmentId
-          AND ${ChunkEntity.Columns.ITEM_ID} = :itemId
-          AND ${ChunkEntity.Columns.SHARE_ID} = :shareId
-        ORDER BY ${ChunkEntity.Columns.INDEX} ASC
-        """
-    )
-    abstract fun observeChunksForAttachment(
-        shareId: String,
-        itemId: String,
-        attachmentId: String
-    ): Flow<List<ChunkEntity>>
-}
+abstract class ChunkDao : BaseDao<ChunkEntity>()

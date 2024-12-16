@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.db.entities
+package proton.android.pass.data.impl.db.entities.attachments
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -24,6 +24,9 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import kotlinx.datetime.Instant
 import me.proton.core.user.data.entity.UserEntity
+import proton.android.pass.data.impl.db.entities.ExternalColumns
+import proton.android.pass.data.impl.db.entities.ItemEntity
+import proton.android.pass.data.impl.db.entities.ShareEntity
 
 @Entity(
     tableName = AttachmentEntity.TABLE,

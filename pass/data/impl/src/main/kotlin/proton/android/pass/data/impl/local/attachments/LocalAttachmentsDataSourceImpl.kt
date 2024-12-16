@@ -20,8 +20,9 @@ package proton.android.pass.data.impl.local.attachments
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.data.impl.db.PassDatabase
-import proton.android.pass.data.impl.db.entities.AttachmentEntity
-import proton.android.pass.data.impl.db.entities.ChunkEntity
+import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
+import proton.android.pass.data.impl.db.entities.attachments.AttachmentWithChunks
+import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
@@ -60,19 +61,11 @@ class LocalAttachmentsDataSourceImpl @Inject constructor(
         )
     }
 
-    override fun observeAttachmentsForItem(shareId: ShareId, itemId: ItemId): Flow<List<AttachmentEntity>> =
-        database.attachmentDao().observeByItem(
-            shareId = shareId.id,
-            itemId = itemId.id
-        )
-
-    override fun observeChunksForAttachment(
+    override fun observeAttachmentsWithChunksForItem(
         shareId: ShareId,
-        itemId: ItemId,
-        attachmentId: AttachmentId
-    ): Flow<List<ChunkEntity>> = database.chunkDao().observeChunksForAttachment(
+        itemId: ItemId
+    ): Flow<List<AttachmentWithChunks>> = database.attachmentDao().observeAttachmentsWithChunks(
         shareId = shareId.id,
-        itemId = itemId.id,
-        attachmentId = attachmentId.id
+        itemId = itemId.id
     )
 }

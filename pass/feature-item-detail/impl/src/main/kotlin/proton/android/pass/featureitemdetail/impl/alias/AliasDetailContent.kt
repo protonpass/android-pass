@@ -64,6 +64,7 @@ fun AliasDetailContent(
     isHistoryFeatureEnabled: Boolean,
     isAliasManagementEnabled: Boolean,
     isFileAttachmentsEnabled: Boolean,
+    isItemSharingEnabled: Boolean,
     attachmentsState: AttachmentsState,
     hasMoreThanOneVaultShare: Boolean,
     onCopyAlias: (String) -> Unit,
@@ -86,7 +87,8 @@ fun AliasDetailContent(
             share = share,
             onShareClick = onShareClick,
             isPinned = itemUiModel.isPinned,
-            hasMoreThanOneVaultShare = hasMoreThanOneVaultShare
+            hasMoreThanOneVaultShare = hasMoreThanOneVaultShare,
+            isItemSharingEnabled = isItemSharingEnabled
         )
 
         AliasSection(

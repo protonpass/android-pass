@@ -67,15 +67,20 @@ fun VaultNameSubtitle(
     modifier: Modifier = Modifier,
     share: Share,
     hasMoreThanOneVaultShare: Boolean,
+    isItemSharingEnabled: Boolean,
     onClick: () -> Unit
 ) {
     when (share) {
         is Share.Item -> Unit
 
         is Share.Vault -> {
+            val shouldHandleVaultSharing = remember(isItemSharingEnabled, share.shared) {
+                !isItemSharingEnabled && share.shared
+            }
+
             if (hasMoreThanOneVaultShare) {
                 val vaultText = remember(share.shared, share.memberCount) {
-                    if (share.shared) {
+                    if (shouldHandleVaultSharing) {
                         buildAnnotatedString {
                             append(share.name)
                             append(" ${SpecialCharacters.DOT_SEPARATOR} ")
@@ -95,7 +100,7 @@ fun VaultNameSubtitle(
                             shape = RoundedCornerShape(24.dp)
                         )
                         .applyIf(
-                            condition = share.shared,
+                            condition = shouldHandleVaultSharing,
                             ifTrue = {
                                 background(
                                     color = share.color.toColor(isBackground = true),
@@ -155,7 +160,8 @@ fun VaultNameSubtitlePreview(@PreviewParameter(ThemedBooleanPreviewProvider::cla
                     canAutofill = true
                 ),
                 onClick = {},
-                hasMoreThanOneVaultShare = true
+                hasMoreThanOneVaultShare = true,
+                isItemSharingEnabled = true
             )
         }
     }

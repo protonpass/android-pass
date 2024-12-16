@@ -58,8 +58,6 @@ import proton.android.pass.featureitemdetail.impl.common.VaultNameSubtitle
 fun NoteContent(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
-    isShared: Boolean,
-    shareCount: Int,
     share: Share,
     isPinned: Boolean,
     isHistoryFeatureEnabled: Boolean,
@@ -95,10 +93,7 @@ fun NoteContent(
             }
 
             VaultNameSubtitle(
-                isShared = isShared,
-                shareCount = shareCount,
                 share = share,
-                itemCategory = ItemCategory.Note,
                 onClick = onShareClick,
                 hasMoreThanOneVaultShare = hasMoreThanOneVaultShare
             )
@@ -152,8 +147,6 @@ fun NoteContentPreview(@PreviewParameter(ThemeItemTitleProvider::class) input: P
                 isPinned = params.isPinned,
                 onViewItemHistoryClicked = {},
                 isHistoryFeatureEnabled = params.isHistoryFeatureEnabled,
-                isShared = params.itemUiModel.isShared,
-                shareCount = params.itemUiModel.shareCount,
                 isFileAttachmentsEnabled = false,
                 attachmentsState = AttachmentsState.Initial,
                 hasMoreThanOneVaultShare = true,

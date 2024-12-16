@@ -22,6 +22,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import kotlinx.datetime.Instant
 import me.proton.core.user.data.entity.UserEntity
 
 @Entity(
@@ -48,7 +49,7 @@ import me.proton.core.user.data.entity.UserEntity
         )
     ],
     indices = [
-        Index(value = [AttachmentEntity.Columns.ITEM_ID, AttachmentEntity.Columns.SHARE_ID]) // Composite index
+        Index(value = [AttachmentEntity.Columns.ITEM_ID, AttachmentEntity.Columns.SHARE_ID])
     ]
 )
 data class AttachmentEntity(
@@ -69,7 +70,7 @@ data class AttachmentEntity(
     @ColumnInfo(name = Columns.SIZE)
     val size: Long,
     @ColumnInfo(name = Columns.CREATE_TIME)
-    val createTime: Long,
+    val createTime: Instant,
     @ColumnInfo(name = Columns.KEY)
     val key: String,
     @ColumnInfo(name = Columns.ITEM_KEY_ROTATION)

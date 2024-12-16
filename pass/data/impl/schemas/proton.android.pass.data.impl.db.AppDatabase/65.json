@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 65,
-    "identityHash": "2b801ede5c0de285824d1e4702956e5c",
+    "identityHash": "3fc166a213fbcd7669205bf4e380a4f5",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -4746,12 +4746,93 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "ChunkEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `attachment_id` TEXT NOT NULL, `item_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `size` INTEGER NOT NULL, `chunk_index` INTEGER NOT NULL, PRIMARY KEY(`id`, `attachment_id`, `share_id`, `item_id`), FOREIGN KEY(`attachment_id`, `item_id`, `share_id`) REFERENCES `AttachmentEntity`(`id`, `item_id`, `share_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "attachmentId",
+            "columnName": "attachment_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemId",
+            "columnName": "item_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shareId",
+            "columnName": "share_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "size",
+            "columnName": "size",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "index",
+            "columnName": "chunk_index",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id",
+            "attachment_id",
+            "share_id",
+            "item_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_ChunkEntity_attachment_id_item_id_share_id",
+            "unique": false,
+            "columnNames": [
+              "attachment_id",
+              "item_id",
+              "share_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_ChunkEntity_attachment_id_item_id_share_id` ON `${TABLE_NAME}` (`attachment_id`, `item_id`, `share_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "AttachmentEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "attachment_id",
+              "item_id",
+              "share_id"
+            ],
+            "referencedColumns": [
+              "id",
+              "item_id",
+              "share_id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2b801ede5c0de285824d1e4702956e5c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3fc166a213fbcd7669205bf4e380a4f5')"
     ]
   }
 }

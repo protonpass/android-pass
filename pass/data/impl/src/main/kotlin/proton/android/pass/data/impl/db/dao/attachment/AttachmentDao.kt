@@ -19,8 +19,43 @@
 package proton.android.pass.data.impl.db.dao.attachment
 
 import androidx.room.Dao
+import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
 import proton.android.pass.data.impl.db.entities.AttachmentEntity
 
 @Dao
-abstract class AttachmentDao : BaseDao<AttachmentEntity>()
+abstract class AttachmentDao : BaseDao<AttachmentEntity>() {
+
+    @Query(
+        """
+        DELETE FROM ${AttachmentEntity.TABLE} 
+        WHERE ${AttachmentEntity.Columns.SHARE_ID} = :shareId 
+          AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId
+        """
+    )
+    abstract fun removeByItem(shareId: String, itemId: String)
+
+    @Query(
+        """
+        DELETE FROM ${AttachmentEntity.TABLE} 
+        WHERE ${AttachmentEntity.Columns.SHARE_ID} = :shareId 
+          AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId 
+          AND ${AttachmentEntity.Columns.ID} = :attachmentId
+        """
+    )
+    abstract fun removeByAttachment(
+        shareId: String,
+        itemId: String,
+        attachmentId: String
+    )
+
+    @Query(
+        """
+        SELECT * FROM ${AttachmentEntity.TABLE} 
+        WHERE ${AttachmentEntity.Columns.SHARE_ID} = :shareId 
+          AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId
+        """
+    )
+    abstract fun observeByItem(shareId: String, itemId: String): Flow<List<AttachmentEntity>>
+}

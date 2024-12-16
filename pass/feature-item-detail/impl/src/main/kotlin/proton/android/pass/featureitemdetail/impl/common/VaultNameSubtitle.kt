@@ -52,8 +52,6 @@ import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toSmallResource
-import proton.android.pass.composecomponents.impl.sharing.PassSharingItemChip
-import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
@@ -62,29 +60,17 @@ import proton.android.pass.domain.SharePermission
 import proton.android.pass.domain.SharePermissionFlag
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.VaultId
-import proton.android.pass.domain.items.ItemCategory
 import java.util.Date
 
 @Composable
 fun VaultNameSubtitle(
     modifier: Modifier = Modifier,
-    isShared: Boolean,
-    shareCount: Int,
     share: Share,
     hasMoreThanOneVaultShare: Boolean,
-    itemCategory: ItemCategory,
     onClick: () -> Unit
 ) {
     when (share) {
-        is Share.Item -> {
-            if (isShared) {
-                PassSharingItemChip(
-                    shareCount = shareCount,
-                    itemColors = passItemColors(itemCategory),
-                    onClick = onClick
-                )
-            }
-        }
+        is Share.Item -> Unit
 
         is Share.Vault -> {
             if (hasMoreThanOneVaultShare) {
@@ -169,9 +155,6 @@ fun VaultNameSubtitlePreview(@PreviewParameter(ThemedBooleanPreviewProvider::cla
                     canAutofill = true
                 ),
                 onClick = {},
-                isShared = input.second,
-                shareCount = 0,
-                itemCategory = ItemCategory.Login,
                 hasMoreThanOneVaultShare = true
             )
         }

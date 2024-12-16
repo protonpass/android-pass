@@ -59,8 +59,6 @@ internal fun PassItemDetailTitleRow(
                 title = itemContents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
-                isShared = isSharedItem,
-                shareCount = itemShareCount,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
                 onSharedVaultClick = { sharedVaultId ->
@@ -83,8 +81,6 @@ internal fun PassItemDetailTitleRow(
                 title = itemContents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
-                isShared = isSharedItem,
-                shareCount = itemShareCount,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
                 onSharedVaultClick = { sharedVaultId ->
@@ -106,8 +102,6 @@ internal fun PassItemDetailTitleRow(
                 title = itemContents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
-                isShared = isSharedItem,
-                shareCount = itemShareCount,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
                 onSharedVaultClick = { sharedVaultId ->
@@ -129,8 +123,6 @@ internal fun PassItemDetailTitleRow(
                 title = itemContents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
-                isShared = isSharedItem,
-                shareCount = itemShareCount,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
                 onSharedVaultClick = { sharedVaultId ->
@@ -178,10 +170,7 @@ internal fun PassItemDetailTitleRow(
                     }
 
                     PassItemDetailSubtitle(
-                        isShared = isSharedItem,
-                        shareCount = itemShareCount,
                         share = itemShare,
-                        itemColors = itemColors,
                         onClick = {
                             PassItemDetailsUiEvent.OnSharedVaultClick(
                                 sharedVaultId = itemShare.id
@@ -198,8 +187,6 @@ internal fun PassItemDetailTitleRow(
                 title = itemContents.title,
                 isPinned = false,
                 itemColors = itemColors,
-                isShared = isSharedItem,
-                shareCount = itemShareCount,
                 share = itemShare,
                 itemDiffType = itemDetailState.itemDiffs.title,
                 onSharedVaultClick = {},
@@ -215,8 +202,6 @@ private fun ItemDetailTitleRow(
     title: String,
     isPinned: Boolean,
     itemColors: PassItemColors,
-    isShared: Boolean,
-    shareCount: Int,
     share: Share,
     itemDiffType: ItemDiffType,
     onSharedVaultClick: (ShareId) -> Unit,
@@ -247,10 +232,7 @@ private fun ItemDetailTitleRow(
             )
 
             PassItemDetailSubtitle(
-                isShared = isShared,
-                shareCount = shareCount,
                 share = share,
-                itemColors = itemColors,
                 onClick = { onSharedVaultClick(share.id) }
             )
         }

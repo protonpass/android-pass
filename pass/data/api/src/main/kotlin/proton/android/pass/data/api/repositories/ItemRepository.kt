@@ -44,7 +44,12 @@ import proton.android.pass.domain.entity.PackageInfo
 data class ShareItemCount(
     val activeItems: Long,
     val trashedItems: Long
-)
+) {
+
+    val totalItems: Long
+        get() = activeItems.plus(trashedItems)
+
+}
 
 @Suppress("ComplexInterface", "TooManyFunctions")
 interface ItemRepository {

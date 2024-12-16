@@ -26,10 +26,13 @@ internal sealed interface ManageItemUiEvent {
 
     data object OnBackClick : ManageItemUiEvent
 
-    data class OnInviteShareClick(
+    data class OnInviteToItemClick(
         internal val shareId: ShareId,
         internal val targetId: String
     ) : ManageItemUiEvent
+
+    @JvmInline
+    value class OnInviteToVaultClick(internal val shareId: ShareId) : ManageItemUiEvent
 
     data object OnLeaveShareClick : ManageItemUiEvent
 

@@ -16,21 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sharing.manage.item.navigation
+package proton.android.pass.data.api.usecases.shares
 
-import proton.android.pass.domain.ItemId
+import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.ShareId
-import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.navigation.api.NavItem
 
-object ManageItemNavItem : NavItem(
-    baseRoute = "sharing/manage/item",
-    navArgIds = listOf(
-        CommonNavArgId.ShareId,
-        CommonNavArgId.ItemId
-    )
-) {
+interface ObserveShareItemsCount {
 
-    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+    operator fun invoke(shareId: ShareId): Flow<Int>
 
 }

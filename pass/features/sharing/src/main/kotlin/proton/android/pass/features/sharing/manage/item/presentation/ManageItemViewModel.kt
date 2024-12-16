@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
@@ -33,12 +32,14 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.common.api.combineN
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.LeaveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
+import proton.android.pass.data.api.usecases.shares.ObserveShareItemsCount
 import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -54,6 +55,7 @@ class ManageItemViewModel @Inject constructor(
     observeShare: ObserveShare,
     observeShareItemMembers: ObserveShareItemMembers,
     observeSharePendingInvites: ObserveSharePendingInvites,
+    observeShareItemsCount: ObserveShareItemsCount,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val leaveShare: LeaveShare
 ) : ViewModel() {
@@ -62,14 +64,15 @@ class ManageItemViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ShareId.key)
         .let(::ShareId)
 
+    private val itemId: ItemId = savedStateHandleProvider.get()
+        .require<String>(CommonNavArgId.ItemId.key)
+        .let(::ItemId)
+
     private val eventFlow = MutableStateFlow<ManageItemEvent>(ManageItemEvent.Idle)
 
     private val shareFlow = oneShot { observeShare(shareId).first() }
 
-    private val shareItemMembersFlow = shareFlow
-        .flatMapLatest { share ->
-            observeShareItemMembers(shareId, ItemId(share.targetId))
-        }
+    private val shareItemMembersFlow = observeShareItemMembers(shareId, itemId)
         .catch { error ->
             PassLogger.w(TAG, "There was an error observing share members")
             PassLogger.w(TAG, error)
@@ -98,10 +101,11 @@ class ManageItemViewModel @Inject constructor(
 
     private val isLoadingStateFlow = MutableStateFlow<IsLoadingState>(IsLoadingState.NotLoading)
 
-    internal val stateFlow: StateFlow<ManageItemState> = combine(
+    internal val stateFlow: StateFlow<ManageItemState> = combineN(
         eventFlow,
         shareFlow,
         sharePendingInvitesFlow,
+        observeShareItemsCount(shareId),
         shareItemMembersFlow,
         isLoadingStateFlow,
         ManageItemState::Success

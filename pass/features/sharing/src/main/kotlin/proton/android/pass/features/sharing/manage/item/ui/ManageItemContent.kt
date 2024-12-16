@@ -27,10 +27,12 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.PassTopBarBackButtonType
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.loading.PassFullScreenLoading
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
+import proton.android.pass.crypto.api.extensions.toVault
 import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.manage.item.presentation.ManageItemState
 
@@ -48,18 +50,6 @@ internal fun ManageItemContent(
                 title = stringResource(R.string.shared_via_title),
                 onUpClick = { onUiEvent(ManageItemUiEvent.OnBackClick) }
             )
-        },
-        bottomBar = {
-            when (state) {
-                ManageItemState.Loading -> Unit
-                is ManageItemState.Success -> {
-                    ManageItemBottomBar(
-                        share = state.share,
-                        isLoading = state.isLoading,
-                        onUiEvent = onUiEvent
-                    )
-                }
-            }
         }
     ) { innerPaddingValues ->
         when (state) {
@@ -94,12 +84,20 @@ internal fun ManageItemContent(
                     if (state.hasItemMembers) {
                         ManageItemMembersSection(
                             sectionTitle = stringResource(R.string.shared_via_item_member_count_header),
-                            share = state.share,
+                            isShareAdmin = state.share.isAdmin,
+                            vaultOption = None,
+                            shareItemsCount = state.itemsCount,
                             members = state.itemMembers,
                             onMenuOptionsClick = { member ->
                                 ManageItemUiEvent.OnMemberOptionsClick(
                                     shareId = state.share.id,
                                     member = member
+                                ).also(onUiEvent)
+                            },
+                            onInviteMoreClick = {
+                                ManageItemUiEvent.OnInviteToItemClick(
+                                    shareId = state.share.id,
+                                    targetId = state.share.targetId
                                 ).also(onUiEvent)
                             }
                         )
@@ -108,12 +106,19 @@ internal fun ManageItemContent(
                     if (state.hasVaultMembers) {
                         ManageItemMembersSection(
                             sectionTitle = stringResource(R.string.shared_via_vault_member_count_header),
-                            share = state.share,
+                            isShareAdmin = state.share.isAdmin,
+                            vaultOption = state.share.toVault(),
+                            shareItemsCount = state.itemsCount,
                             members = state.vaultMembers,
                             onMenuOptionsClick = { member ->
                                 ManageItemUiEvent.OnMemberOptionsClick(
                                     shareId = state.share.id,
                                     member = member
+                                ).also(onUiEvent)
+                            },
+                            onInviteMoreClick = {
+                                ManageItemUiEvent.OnInviteToVaultClick(
+                                    shareId = state.share.id
                                 ).also(onUiEvent)
                             }
                         )

@@ -16,21 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sharing.manage.item.navigation
+package proton.android.pass.data.impl.usecases.shares
 
-import proton.android.pass.domain.ItemId
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.mapLatest
+import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.usecases.shares.ObserveShareItemsCount
 import proton.android.pass.domain.ShareId
-import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.navigation.api.NavItem
+import javax.inject.Inject
 
-object ManageItemNavItem : NavItem(
-    baseRoute = "sharing/manage/item",
-    navArgIds = listOf(
-        CommonNavArgId.ShareId,
-        CommonNavArgId.ItemId
-    )
-) {
+class ObserveShareItemsCountImpl @Inject constructor(
+    private val itemRepository: ItemRepository
+) : ObserveShareItemsCount {
 
-    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+    override fun invoke(shareId: ShareId): Flow<Int> = itemRepository.observeItemCount(listOf(shareId))
+        .mapLatest { shareItemCountMap ->
+            shareItemCountMap[shareId]
+                ?.totalItems
+                ?.toInt()
+                ?: 0
+        }
 
 }

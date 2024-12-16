@@ -57,7 +57,7 @@ import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetItemActions
-import proton.android.pass.data.api.usecases.GetItemByIdWithVault
+import proton.android.pass.data.api.usecases.ObserveItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.PinItem
@@ -106,7 +106,7 @@ class NoteDetailViewModel @Inject constructor(
     private val unpinItem: UnpinItem,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     canPerformPaidAction: CanPerformPaidAction,
-    getItemByIdWithVault: GetItemByIdWithVault,
+    observeItemByIdWithVault: ObserveItemByIdWithVault,
     observeItemAttachments: ObserveItemAttachments,
     savedStateHandle: SavedStateHandle,
     getItemActions: GetItemActions,
@@ -144,7 +144,7 @@ class NoteDetailViewModel @Inject constructor(
 
     private var hasItemBeenFetchedAtLeastOnce = false
 
-    private val itemWithVaultFlow = getItemByIdWithVault(shareId, itemId)
+    private val itemWithVaultFlow = observeItemByIdWithVault(shareId, itemId)
         .shareIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,

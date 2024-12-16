@@ -35,7 +35,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -61,10 +60,10 @@ import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetItemActions
-import proton.android.pass.data.api.usecases.ObserveItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
+import proton.android.pass.data.api.usecases.ObserveItemByIdWithVault
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
@@ -172,33 +171,25 @@ class AliasDetailViewModel @Inject constructor(
 
     private var hasItemBeenFetchedAtLeastOnce = false
 
-    private val itemWithVaultFlow = observeItemByIdWithVault(shareId, itemId)
-        .shareIn(
-            scope = viewModelScope,
-            started = SharingStarted.Lazily,
-            replay = 1
-        )
-
-    private val itemAttachmentsFlow = itemWithVaultFlow
-        .flatMapLatest { itemWithVault ->
-            if (itemWithVault.item.hasAttachments) {
+    private val aliasItemDetailsResultFlow = combine(
+        observeItemByIdWithVault(shareId, itemId),
+        observeShare(shareId),
+        ::Pair
+    )
+        .flatMapLatest { (itemWithVault, share) ->
+            val attachmentsFlow = if (itemWithVault.item.hasAttachments) {
                 observeItemAttachments(shareId, itemId)
                     .catch { error ->
-                        PassLogger.w(TAG, "Error fetching attachments")
-                        PassLogger.w(TAG, error)
-                        throw error
+                        PassLogger.w(TAG, "Error fetching attachments: ${error.message}")
+                        emit(emptyList())
                     }
             } else {
                 flowOf(emptyList())
             }
+            attachmentsFlow.map { attachments ->
+                Triple(itemWithVault, attachments, share)
+            }
         }
-
-    private val aliasItemDetailsResultFlow = combine(
-        itemWithVaultFlow,
-        itemAttachmentsFlow,
-        observeShare(shareId),
-        ::Triple
-    )
         .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is ItemNotFoundError)) throw it }
         .onEach { hasItemBeenFetchedAtLeastOnce = true }
         .asLoadingResult()

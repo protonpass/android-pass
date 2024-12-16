@@ -16,32 +16,28 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.domain.Item
+import kotlinx.coroutines.flow.map
+import proton.android.pass.common.api.FlowUtils.testFlow
+import proton.android.pass.data.api.usecases.ObserveItemByIdWithVault
+import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
-import proton.android.pass.domain.canUpdate
-import proton.android.pass.domain.toPermissions
+import javax.inject.Inject
+import javax.inject.Singleton
 
-data class ItemWithVaultInfo(
-    val item: Item,
-    private val vaults: List<Vault>
-) {
-    val vault: Vault? = vaults.firstOrNull { vault ->
-        vault.shareId == item.shareId
+@Singleton
+class TestObserveItemByIdWithVault @Inject constructor() : ObserveItemByIdWithVault {
+
+    private val result = testFlow<Result<ItemWithVaultInfo>>()
+
+    fun emitValue(value: Result<ItemWithVaultInfo>) {
+        result.tryEmit(value)
     }
 
-    val hasMoreThanOneVault: Boolean = vaults.size > 1
-
-    val canPerformItemActions: Boolean = vault?.role
-        ?.toPermissions()
-        ?.canUpdate()
-        ?: false
-}
-
-interface GetItemByIdWithVault {
-    operator fun invoke(shareId: ShareId, itemId: ItemId): Flow<ItemWithVaultInfo>
+    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<ItemWithVaultInfo> = result.map {
+        it.getOrThrow()
+    }
 }

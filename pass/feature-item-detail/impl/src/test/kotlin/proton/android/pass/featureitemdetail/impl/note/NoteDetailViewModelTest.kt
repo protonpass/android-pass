@@ -41,8 +41,8 @@ import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
 import proton.android.pass.data.fakes.usecases.TestDeleteItems
 import proton.android.pass.data.fakes.usecases.TestGetItemActions
-import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
+import proton.android.pass.data.fakes.usecases.TestObserveItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.data.fakes.usecases.attachments.FakeObserveItemAttachments
@@ -74,7 +74,7 @@ class NoteDetailViewModelTest {
 
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var telemetryManager: TestTelemetryManager
-    private lateinit var getItemByIdWithVault: TestGetItemByIdWithVault
+    private lateinit var observeItemByIdWithVault: TestObserveItemByIdWithVault
     private lateinit var trashItem: TestTrashItems
     private lateinit var deleteItem: TestDeleteItems
     private lateinit var restoreItem: TestRestoreItems
@@ -87,7 +87,7 @@ class NoteDetailViewModelTest {
     fun setup() {
         snackbarDispatcher = TestSnackbarDispatcher()
         telemetryManager = TestTelemetryManager()
-        getItemByIdWithVault = TestGetItemByIdWithVault()
+        observeItemByIdWithVault = TestObserveItemByIdWithVault()
         trashItem = TestTrashItems()
         deleteItem = TestDeleteItems()
         restoreItem = TestRestoreItems()
@@ -99,7 +99,7 @@ class NoteDetailViewModelTest {
         instance = NoteDetailViewModel(
             snackbarDispatcher = snackbarDispatcher,
             telemetryManager = telemetryManager,
-            getItemByIdWithVault = getItemByIdWithVault,
+            observeItemByIdWithVault = observeItemByIdWithVault,
             savedStateHandle = TestSavedStateHandle.create().apply {
                 set(CommonNavArgId.ShareId.key, SHARE_ID)
                 set(CommonNavArgId.ItemId.key, ITEM_ID)
@@ -308,7 +308,7 @@ class NoteDetailViewModelTest {
             item = item,
             vaults = listOf(TEST_VAULT.copy(role = shareRole))
         )
-        getItemByIdWithVault.emitValue(Result.success(value))
+        observeItemByIdWithVault.emitValue(Result.success(value))
         return item
     }
 

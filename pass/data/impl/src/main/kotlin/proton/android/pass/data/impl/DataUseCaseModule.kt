@@ -51,7 +51,6 @@ import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemById
-import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetPublicSuffixList
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
@@ -78,6 +77,7 @@ import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemById
+import proton.android.pass.data.api.usecases.ObserveItemByIdWithVault
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
@@ -104,7 +104,6 @@ import proton.android.pass.data.api.usecases.ResendShareInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.RestoreAllItems
 import proton.android.pass.data.api.usecases.RestoreItems
-import proton.android.pass.data.api.usecases.shares.UpdateShareMemberRole
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
@@ -195,6 +194,7 @@ import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
 import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
 import proton.android.pass.data.api.usecases.shares.ObserveSharesByType
+import proton.android.pass.data.api.usecases.shares.UpdateShareMemberRole
 import proton.android.pass.data.api.usecases.simplelogin.CreateSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.DeleteSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.DisableSimpleLoginSyncPreference
@@ -246,7 +246,6 @@ import proton.android.pass.data.impl.usecases.GetInviteUserModeImpl
 import proton.android.pass.data.impl.usecases.GetItemActionsImpl
 import proton.android.pass.data.impl.usecases.GetItemByAliasEmailImpl
 import proton.android.pass.data.impl.usecases.GetItemByIdImpl
-import proton.android.pass.data.impl.usecases.GetItemByIdWithVaultImpl
 import proton.android.pass.data.impl.usecases.GetPublicSuffixListImpl
 import proton.android.pass.data.impl.usecases.GetShareByIdImpl
 import proton.android.pass.data.impl.usecases.GetSuggestedAutofillItemsImpl
@@ -274,6 +273,7 @@ import proton.android.pass.data.impl.usecases.ObserveGlobalMonitorStateImpl
 import proton.android.pass.data.impl.usecases.ObserveInviteRecommendationsImpl
 import proton.android.pass.data.impl.usecases.ObserveInvitesImpl
 import proton.android.pass.data.impl.usecases.ObserveItemByIdImpl
+import proton.android.pass.data.impl.usecases.ObserveItemByIdWithVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveItemCountImpl
 import proton.android.pass.data.impl.usecases.ObserveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveMFACountImpl
@@ -302,7 +302,6 @@ import proton.android.pass.data.impl.usecases.RestoreAllItemsImpl
 import proton.android.pass.data.impl.usecases.RestoreItemImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessRequest
 import proton.android.pass.data.impl.usecases.SendUserAccessRequestImpl
-import proton.android.pass.data.impl.usecases.shares.UpdateShareMemberRoleImpl
 import proton.android.pass.data.impl.usecases.TransferVaultOwnershipImpl
 import proton.android.pass.data.impl.usecases.TrashItemImpl
 import proton.android.pass.data.impl.usecases.UnpinItemImpl
@@ -394,6 +393,7 @@ import proton.android.pass.data.impl.usecases.shares.ObserveShareImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveShareItemMembersImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveSharePendingInvitesImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveSharesByTypeImpl
+import proton.android.pass.data.impl.usecases.shares.UpdateShareMemberRoleImpl
 import proton.android.pass.data.impl.usecases.simplelogin.CreateSimpleLoginAliasMailboxImpl
 import proton.android.pass.data.impl.usecases.simplelogin.DeleteSimpleLoginAliasMailboxImpl
 import proton.android.pass.data.impl.usecases.simplelogin.DisableSimpleLoginSyncPreferenceImpl
@@ -567,7 +567,7 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveSearchEntry(impl: ObserveSearchEntryImpl): ObserveSearchEntry
 
     @Binds
-    abstract fun bindGetItemByIdWithVaultImpl(impl: GetItemByIdWithVaultImpl): GetItemByIdWithVault
+    abstract fun bindObserveItemByIdWithVault(impl: ObserveItemByIdWithVaultImpl): ObserveItemByIdWithVault
 
     @Binds
     abstract fun bindClearUserData(impl: ClearUserDataImpl): ClearUserData

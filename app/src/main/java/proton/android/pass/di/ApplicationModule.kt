@@ -28,6 +28,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.datetime.Clock
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.compose.theme.AppTheme
 import me.proton.core.configuration.EnvironmentConfiguration
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
@@ -37,6 +38,7 @@ import proton.android.pass.R
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.autofill.AppIcon
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.data.impl.remote.PublicOkhttpClient
 import proton.android.pass.notifications.api.MainActivityAnnotation
 import proton.android.pass.ui.MainActivity
@@ -82,6 +84,11 @@ object ApplicationModule {
     @Provides
     @AppIcon
     fun provideAppIcon(): Int = R.mipmap.ic_launcher
+
+    @Provides
+    fun provideAppTheme() = AppTheme { content ->
+        PassTheme { content() }
+    }
 
     @PublicOkhttpClient
     @Provides

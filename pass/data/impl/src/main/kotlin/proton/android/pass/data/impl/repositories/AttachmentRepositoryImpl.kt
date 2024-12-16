@@ -39,15 +39,20 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.data.api.errors.ItemKeyNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
+import proton.android.pass.data.impl.db.entities.AttachmentEntity
+import proton.android.pass.data.impl.db.entities.ChunkEntity
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalItemDataSource
+import proton.android.pass.data.impl.local.attachments.LocalAttachmentsDataSource
 import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSource
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.AttachmentKey
+import proton.android.pass.domain.attachments.AttachmentType
 import proton.android.pass.domain.attachments.Chunk
+import proton.android.pass.domain.attachments.ChunkId
 import proton.android.pass.files.api.FileType
 import proton.android.pass.files.api.FileUriGenerator
 import java.io.File
@@ -59,6 +64,7 @@ class AttachmentRepositoryImpl @Inject constructor(
     private val appDispatchers: AppDispatchers,
     private val metadataResolver: MetadataResolver,
     private val remote: RemoteAttachmentsDataSource,
+    private val local: LocalAttachmentsDataSource,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val fileKeyRepository: FileKeyRepository,
     private val fileTypeDetector: FileTypeDetector,
@@ -216,3 +222,54 @@ class AttachmentRepositoryImpl @Inject constructor(
         return URI.create(contentUri.toString())
     }
 }
+
+fun Attachment.toEntity(userId: UserId): AttachmentEntity = AttachmentEntity(
+    id = this.id.id,
+    userId = userId.id,
+    shareId = this.shareId.id,
+    itemId = this.itemId.id,
+    name = this.name,
+    mimeType = this.mimeType,
+    type = this.type.id,
+    size = this.size,
+    createTime = this.createTime,
+    key = this.key.value,
+    itemKeyRotation = this.itemKeyRotation
+)
+
+fun AttachmentEntity.toDomain(
+    shareId: ShareId,
+    itemId: ItemId,
+    chunks: List<Chunk>
+): Attachment = Attachment(
+    id = AttachmentId(this.id),
+    shareId = shareId,
+    itemId = itemId,
+    name = this.name,
+    mimeType = this.mimeType,
+    type = AttachmentType.entries.find { it.id == this.type } ?: AttachmentType.Unknown,
+    size = this.size,
+    createTime = this.createTime,
+    key = AttachmentKey(this.key),
+    itemKeyRotation = this.itemKeyRotation,
+    chunks = chunks
+)
+
+fun Chunk.toEntity(
+    attachmentId: String,
+    itemId: String,
+    shareId: String
+): ChunkEntity = ChunkEntity(
+    id = this.id.id,
+    attachmentId = attachmentId,
+    itemId = itemId,
+    shareId = shareId,
+    size = this.size,
+    index = this.index
+)
+
+fun ChunkEntity.toDomain(): Chunk = Chunk(
+    id = ChunkId(this.id),
+    size = this.size,
+    index = this.index
+)

@@ -88,6 +88,7 @@ import me.proton.core.usersettings.data.entity.OrganizationKeysEntity
 import me.proton.core.usersettings.data.entity.UserSettingsEntity
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
 import proton.android.pass.data.impl.db.entities.AttachmentEntity
+import proton.android.pass.data.impl.db.entities.ChunkEntity
 import proton.android.pass.data.impl.db.entities.IgnoredAssetLinkEntity
 import proton.android.pass.data.impl.db.entities.InAppMessageEntity
 import proton.android.pass.data.impl.db.entities.InstantConverter
@@ -159,7 +160,8 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
         AssetLinkEntity::class,
         IgnoredAssetLinkEntity::class,
         InAppMessageEntity::class,
-        AttachmentEntity::class
+        AttachmentEntity::class,
+        ChunkEntity::class
     ],
     autoMigrations = [
         AutoMigration(from = 2, to = 3, spec = AppDatabaseMigrations.MIGRATION_2_3::class),

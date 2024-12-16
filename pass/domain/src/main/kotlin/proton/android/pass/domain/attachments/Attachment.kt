@@ -28,21 +28,21 @@ value class AttachmentId(val id: String)
 @JvmInline
 value class AttachmentKey(val value: String)
 
-enum class AttachmentType {
-    RasterImage,
-    VectorImage,
-    Photo,
-    Video,
-    Audio,
-    Key,
-    Text,
-    Calendar,
-    Pdf,
-    Word,
-    PowerPoint,
-    Excel,
-    Document,
-    Unknown
+enum class AttachmentType(val id: Int) {
+    RasterImage(1),
+    VectorImage(2),
+    Photo(3),
+    Video(4),
+    Audio(5),
+    Key(6),
+    Text(7),
+    Calendar(8),
+    Pdf(9),
+    Word(10),
+    PowerPoint(11),
+    Excel(12),
+    Document(13),
+    Unknown(0)
 }
 
 data class Attachment(

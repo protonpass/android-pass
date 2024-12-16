@@ -23,6 +23,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import kotlinx.datetime.Instant
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.user.data.entity.UserEntity
 import proton.android.pass.data.impl.db.entities.ExternalColumns
 import proton.android.pass.data.impl.db.entities.ItemEntity
@@ -77,7 +78,9 @@ data class AttachmentEntity(
     @ColumnInfo(name = Columns.KEY)
     val key: String,
     @ColumnInfo(name = Columns.ITEM_KEY_ROTATION)
-    val itemKeyRotation: String
+    val itemKeyRotation: String,
+    @ColumnInfo(name = Columns.REENCRYPTED_KEY)
+    val reencryptedKey: EncryptedByteArray
 ) {
     object Columns {
         const val ID = "id"
@@ -91,6 +94,7 @@ data class AttachmentEntity(
         const val CREATE_TIME = "create_time"
         const val KEY = "key"
         const val ITEM_KEY_ROTATION = "item_key_rotation"
+        const val REENCRYPTED_KEY = "reencrypted_key"
     }
 
     companion object {

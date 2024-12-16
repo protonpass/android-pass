@@ -161,7 +161,7 @@ class AttachmentRepositoryImpl @Inject constructor(
                             PassLogger.i(
                                 TAG,
                                 "Failed to refresh attachments for item " +
-                                    "with share $shareId and item $itemId"
+                                    "with share ${shareId.id} and item ${itemId.id}"
                             )
                         }
                 }

@@ -241,7 +241,8 @@ fun AliasDetail(
                                 )
 
                                 ShareType.Item -> ItemDetailNavigation.ManageItem(
-                                    shareId = state.share.id
+                                    shareId = state.share.id,
+                                    itemId = state.itemUiModel.id
                                 )
                             }.also(onNavigate)
                         },

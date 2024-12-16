@@ -18,15 +18,19 @@
 
 package proton.android.pass.features.sharing.manage.item.navigation
 
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 
 object ManageItemNavItem : NavItem(
     baseRoute = "sharing/manage/item",
-    navArgIds = listOf(CommonNavArgId.ShareId)
+    navArgIds = listOf(
+        CommonNavArgId.ShareId,
+        CommonNavArgId.ItemId
+    )
 ) {
 
-    fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
+    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 
 }

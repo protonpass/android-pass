@@ -56,10 +56,16 @@ internal fun ManageItemScreen(
                     onNavigateEvent(SharingNavigation.Back)
                 }
 
-                is ManageItemUiEvent.OnInviteShareClick -> {
+                is ManageItemUiEvent.OnInviteToItemClick -> {
                     SharingNavigation.ShareItem(
                         shareId = uiEvent.shareId,
                         itemId = ItemId(id = uiEvent.targetId)
+                    ).also(onNavigateEvent)
+                }
+
+                is ManageItemUiEvent.OnInviteToVaultClick -> {
+                    SharingNavigation.ShareVault(
+                        shareId = uiEvent.shareId
                     ).also(onNavigateEvent)
                 }
 

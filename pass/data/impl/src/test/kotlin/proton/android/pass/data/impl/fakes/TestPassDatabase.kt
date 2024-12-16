@@ -35,6 +35,7 @@ import proton.android.pass.data.impl.db.dao.UserAccessDataDao
 import proton.android.pass.data.impl.db.dao.assetlink.AssetLinkDao
 import proton.android.pass.data.impl.db.dao.assetlink.IgnoredAssetLinkDao
 import proton.android.pass.data.impl.db.dao.attachment.AttachmentDao
+import proton.android.pass.data.impl.db.dao.attachment.ChunkDao
 import proton.android.pass.data.impl.db.dao.inappmessages.InAppMessagesDao
 import proton.android.pass.data.impl.db.dao.securelinks.SecureLinksDao
 
@@ -105,6 +106,10 @@ internal class TestPassDatabase : PassDatabase {
     }
 
     override fun attachmentDao(): AttachmentDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun chunkDao(): ChunkDao {
         throw IllegalStateException("This method should not be called")
     }
 

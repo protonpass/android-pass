@@ -23,13 +23,18 @@ import android.content.Context
 import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
 import fileMetadata
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
-import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.runCatching
 import proton.android.pass.commonrust.api.FileTypeDetector
 import proton.android.pass.commonrust.api.MimeType
 import proton.android.pass.crypto.api.Base64
@@ -39,12 +44,13 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.data.api.errors.ItemKeyNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
-import proton.android.pass.data.impl.db.entities.AttachmentEntity
-import proton.android.pass.data.impl.db.entities.ChunkEntity
+import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
+import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.attachments.LocalAttachmentsDataSource
 import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSource
+import proton.android.pass.data.impl.responses.attachments.FileDetailsResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
@@ -55,6 +61,7 @@ import proton.android.pass.domain.attachments.Chunk
 import proton.android.pass.domain.attachments.ChunkId
 import proton.android.pass.files.api.FileType
 import proton.android.pass.files.api.FileUriGenerator
+import proton.android.pass.log.api.PassLogger
 import java.io.File
 import java.net.URI
 import javax.inject.Inject
@@ -136,23 +143,55 @@ class AttachmentRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<List<Attachment>> = oneShot {
-        val files = remote.retrieveAllFiles(userId, shareId, itemId).files
-            .associateBy { it.fileId }
+    ): Flow<List<Attachment>> = local.observeAttachmentsWithChunksForItem(shareId, itemId)
+        .map { attachmentsWithChunks ->
+            attachmentsWithChunks.map { attachmentWithChunks ->
+                attachmentWithChunks.attachment.toDomain(
+                    shareId = shareId,
+                    itemId = itemId,
+                    chunks = attachmentWithChunks.chunks.map(ChunkEntity::toDomain)
+                )
+            }
+        }
+        .onStart {
+            coroutineScope {
+                launch {
+                    runCatching { refreshAttachments(userId, shareId, itemId) }
+                        .onError {
+                            PassLogger.i(
+                                TAG,
+                                "Failed to refresh attachments for item " +
+                                    "with share $shareId and item $itemId"
+                            )
+                        }
+                }
+            }
+        }
+
+    private suspend fun refreshAttachments(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ) {
+        val responseMap: Map<String, FileDetailsResponse> = remote.retrieveAllFiles(
+            userId = userId,
+            shareId = shareId,
+            itemId = itemId
+        ).files.associateBy { it.fileId }
         val encryptedItemKey = localItemDataSource.getById(shareId, itemId)?.encryptedKey
             ?: throw ItemKeyNotAvailableError()
         val itemKey = encryptionContextProvider.withEncryptionContextSuspendable {
             EncryptionKey(decrypt(encryptedItemKey))
         }
         val keyMap = encryptionContextProvider.withEncryptionContextSuspendable(itemKey) {
-            files.mapValues { file ->
+            responseMap.mapValues { file ->
                 val decodedFileKey = Base64.decodeBase64(file.value.fileKey)
                 val decryptedKey =
                     decrypt(EncryptedByteArray(decodedFileKey), EncryptionTag.FileKey)
                 EncryptionKey(decryptedKey)
             }
         }
-        files.map {
+        val attachments = responseMap.map {
             val fileEncryptionKey = keyMap[it.key] ?: throw IllegalStateException("No key found")
             encryptionContextProvider.withEncryptionContextSuspendable(fileEncryptionKey) {
                 val decodedMetadata = Base64.decodeBase64(it.value.metadata)
@@ -173,6 +212,18 @@ class AttachmentRepositoryImpl @Inject constructor(
                 )
             }
         }
+        local.saveAttachmentsWithChunks(
+            attachmentEntities = attachments.map { it.toEntity(userId) },
+            chunkEntities = attachments.flatMap { attachment ->
+                attachment.chunks.map {
+                    it.toEntity(
+                        attachmentId = attachment.id.id,
+                        itemId = itemId.id,
+                        shareId = shareId.id
+                    )
+                }
+            }
+        )
     }
 
     override suspend fun downloadAttachment(
@@ -220,6 +271,10 @@ class AttachmentRepositoryImpl @Inject constructor(
             } ?: throw IllegalStateException("Unable to open output stream for URI: $contentUri")
         }
         return URI.create(contentUri.toString())
+    }
+
+    companion object {
+        private const val TAG = "AttachmentRepositoryImpl"
     }
 }
 

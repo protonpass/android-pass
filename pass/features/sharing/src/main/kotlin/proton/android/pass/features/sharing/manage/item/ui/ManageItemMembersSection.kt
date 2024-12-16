@@ -18,38 +18,31 @@
 
 package proton.android.pass.features.sharing.manage.item.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
-import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.text.Text
-import proton.android.pass.domain.Share
+import proton.android.pass.domain.Vault
 import proton.android.pass.domain.shares.ShareMember
-import proton.android.pass.features.sharing.R
-import proton.android.pass.features.sharing.common.toShortSummary
 
-@[Composable Suppress("ComplexCondition")]
+@Composable
 internal fun ManageItemMembersSection(
     modifier: Modifier = Modifier,
     sectionTitle: String,
-    share: Share,
+    isShareAdmin: Boolean,
+    vaultOption: Option<Vault>,
+    shareItemsCount: Int,
     members: List<ShareMember>,
-    onMenuOptionsClick: (ShareMember) -> Unit
+    onMenuOptionsClick: (ShareMember) -> Unit,
+    onInviteMoreClick: () -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -62,69 +55,32 @@ internal fun ManageItemMembersSection(
         )
 
         Column(
-            modifier = Modifier
-                .roundedContainerNorm()
-                .padding(vertical = Spacing.medium),
-            verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+            modifier = Modifier.roundedContainerNorm()
         ) {
+            vaultOption.value()?.let { vaultShare ->
+                ManageItemVaultRow(
+                    vault = vaultShare,
+                    vaultItemsCount = shareItemsCount
+                )
+
+                PassDivider()
+            }
+
+            if (isShareAdmin) {
+                ManageItemInviteMoreRow(
+                    onClick = onInviteMoreClick
+                )
+
+                PassDivider()
+            }
+
             members.forEachIndexed { index, member ->
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    CircleTextIcon(
-                        modifier = Modifier.padding(start = Spacing.medium),
-                        text = member.email,
-                        backgroundColor = PassTheme.colors.interactionNormMinor1,
-                        textColor = PassTheme.colors.interactionNormMajor2,
-                        shape = PassTheme.shapes.squircleMediumShape
-                    )
-
-                    Column(
-                        modifier = Modifier
-                            .padding(horizontal = Spacing.medium)
-                            .weight(weight = 1f, fill = true),
-                        verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
-                    ) {
-                        Text.Body2Regular(
-                            text = member.email
-                        )
-
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
-                        ) {
-                            if (member.isCurrentUser) {
-                                Text.OverlineRegular(
-                                    modifier = Modifier
-                                        .clip(shape = RoundedCornerShape(size = Radius.medium))
-                                        .background(color = PassTheme.colors.interactionNormMajor2)
-                                        .padding(
-                                            horizontal = Spacing.small,
-                                            vertical = Spacing.extraSmall
-                                        ),
-                                    text = stringResource(id = R.string.share_manage_vault_current_user_indicator),
-                                    color = PassTheme.colors.textInvert
-                                )
-                            }
-
-                            Text.Body2Regular(
-                                text = if (member.isOwner) {
-                                    stringResource(id = R.string.share_role_owner)
-                                } else {
-                                    member.role.toShortSummary()
-                                },
-                                color = PassTheme.colors.textWeak
-                            )
-                        }
-                    }
-
-                    if (share.isAdmin && !member.isOwner && !member.isCurrentUser && member.isItemMember) {
-                        ThreeDotsMenuButton(
-                            onClick = { onMenuOptionsClick(member) }
-                        )
-                    }
-                }
+                ManageItemMemberRow(
+                    member = member,
+                    canAdmin = isShareAdmin,
+                    hasVaultAccess = vaultOption is Some,
+                    onMenuOptionsClick = onMenuOptionsClick
+                )
 
                 if (index < members.lastIndex) {
                     PassDivider()

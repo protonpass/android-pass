@@ -1262,7 +1262,10 @@ fun NavGraphBuilder.appGraph(
                 is ItemDetailNavigation.ManageItem -> {
                     appNavigator.navigate(
                         destination = ManageItemNavItem,
-                        route = ManageItemNavItem.createNavRoute(it.shareId),
+                        route = ManageItemNavItem.createNavRoute(
+                            shareId = it.shareId,
+                            itemId = it.itemId
+                        ),
                         backDestination = ViewItem
                     )
                 }
@@ -1904,7 +1907,10 @@ fun NavGraphBuilder.appGraph(
 
             is SharingNavigation.ManageItem -> appNavigator.navigate(
                 destination = ManageItemNavItem,
-                route = ManageItemNavItem.createNavRoute(it.shareId),
+                route = ManageItemNavItem.createNavRoute(
+                    shareId = it.shareId,
+                    itemId = it.itemId
+                ),
                 backDestination = HomeNavItem
             )
 

@@ -223,6 +223,7 @@ fun AliasDetail(
                         isAliasStateToggling = state.isLoading(LoadingStateKey.AliasStateToggling),
                         isAliasManagementEnabled = state.itemFeatures.isAliasManagementEnabled,
                         isFileAttachmentsEnabled = state.itemFeatures.isFileAttachmentsEnabled,
+                        isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
                         attachmentsState = state.attachmentsState,
                         hasMoreThanOneVaultShare = state.hasMoreThanOneVault,
                         onCopyAlias = { viewModel.onCopyAlias(it) },

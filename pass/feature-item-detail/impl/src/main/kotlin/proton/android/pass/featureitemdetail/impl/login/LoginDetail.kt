@@ -351,6 +351,7 @@ fun LoginDetail(
                         },
                         isHistoryFeatureEnabled = state.itemFeatures.isHistoryEnabled,
                         isFileAttachmentsEnabled = state.itemFeatures.isFileAttachmentsEnabled,
+                        isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
                         hasMoreThanOneVaultShare = state.hasMoreThanOneVault
                     )
                 }

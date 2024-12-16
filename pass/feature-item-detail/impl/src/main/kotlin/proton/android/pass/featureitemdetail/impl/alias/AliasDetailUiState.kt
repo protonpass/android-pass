@@ -74,6 +74,8 @@ internal sealed interface AliasDetailUiState {
         internal val isAnyLoading: Boolean
             get() = isLoadingMap.values.any { it.value() }
 
+        internal val shareSharedCount: Int = share.memberCount.plus(itemUiModel.shareCount)
+
         internal fun isLoading(key: LoadingStateKey): Boolean = isLoadingMap[key]?.value() ?: false
 
     }

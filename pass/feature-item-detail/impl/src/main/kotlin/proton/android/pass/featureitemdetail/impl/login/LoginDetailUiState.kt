@@ -66,7 +66,11 @@ internal sealed interface LoginDetailUiState {
         val attachmentsState: AttachmentsState,
         val monitorState: LoginMonitorState,
         val hasMoreThanOneVault: Boolean
-    ) : LoginDetailUiState
+    ) : LoginDetailUiState {
+
+        internal val shareSharedCount: Int = share.memberCount.plus(itemUiModel.shareCount)
+
+    }
 }
 
 sealed interface TotpUiState {

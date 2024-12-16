@@ -61,7 +61,7 @@ internal fun ItemDetailTopBar(
     iconBackgroundColor: Color,
     actionColor: Color,
     itemCategory: ItemCategory,
-    itemShareCount: Int,
+    shareSharedCount: Int,
     isItemSharingEnabled: Boolean,
     onUpClick: () -> Unit,
     onEditClick: () -> Unit,
@@ -88,7 +88,7 @@ internal fun ItemDetailTopBar(
                 iconColor = iconColor,
                 iconBackgroundColor = iconBackgroundColor,
                 itemCategory = itemCategory,
-                itemShareCount = itemShareCount,
+                shareSharedCount = shareSharedCount,
                 isItemSharingEnabled = isItemSharingEnabled,
                 onEditClick = onEditClick,
                 onOptionsClick = onOptionsClick,
@@ -107,7 +107,7 @@ private fun ItemTopBarActions(
     iconColor: Color,
     iconBackgroundColor: Color,
     itemCategory: ItemCategory,
-    itemShareCount: Int,
+    shareSharedCount: Int,
     isItemSharingEnabled: Boolean,
     onEditClick: () -> Unit,
     onOptionsClick: () -> Unit,
@@ -129,7 +129,7 @@ private fun ItemTopBarActions(
 
         if (isItemSharingEnabled) {
             PassSharingShareIcon(
-                itemShareCount = itemShareCount,
+                shareSharedCount = shareSharedCount,
                 itemCategory = itemCategory,
                 isEnabled = actions.canShare.value(),
                 onClick = onShareClick
@@ -261,7 +261,7 @@ fun ItemDetailTopBarPreview(
                 onShareClick = {},
                 actions = input.second.actions,
                 itemCategory = ItemCategory.Login,
-                itemShareCount = 0,
+                shareSharedCount = 0,
                 isItemSharingEnabled = false
             )
         }

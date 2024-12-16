@@ -65,9 +65,6 @@ sealed interface ItemDetailState {
 
     val attachmentsState: AttachmentsState
 
-    val isSharedItem: Boolean
-        get() = itemShareCount > 0
-
     fun update(itemContents: ItemContents, itemDiffs: ItemDiffs = ItemDiffs.None): ItemDetailState
 
     @Stable

@@ -86,8 +86,6 @@ fun AliasDetailContent(
             share = share,
             onShareClick = onShareClick,
             isPinned = itemUiModel.isPinned,
-            isShared = itemUiModel.isShared,
-            shareCount = itemUiModel.shareCount,
             hasMoreThanOneVaultShare = hasMoreThanOneVaultShare
         )
 

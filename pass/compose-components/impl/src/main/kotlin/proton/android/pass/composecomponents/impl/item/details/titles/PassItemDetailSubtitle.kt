@@ -47,31 +47,16 @@ import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toSmallResource
-import proton.android.pass.composecomponents.impl.sharing.PassSharingItemChip
-import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.Share
 
 @Composable
 internal fun PassItemDetailSubtitle(
     modifier: Modifier = Modifier,
-    isShared: Boolean,
-    shareCount: Int,
     share: Share,
-    itemColors: PassItemColors,
     onClick: () -> Unit
 ) {
     when (share) {
-        is Share.Item -> {
-            if (isShared) {
-                PassSharingItemChip(
-                    shareCount = shareCount,
-                    itemColors = itemColors,
-                    onClick = {
-                        // Shared item management not supported from item history
-                    }
-                )
-            }
-        }
+        is Share.Item -> Unit
 
         is Share.Vault -> {
             val vaultText = remember(share.shared, share.memberCount) {

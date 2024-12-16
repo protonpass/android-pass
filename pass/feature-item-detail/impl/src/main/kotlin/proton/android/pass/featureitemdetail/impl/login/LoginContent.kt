@@ -89,8 +89,6 @@ internal fun LoginContent(
             canLoadExternalImages = canLoadExternalImages,
             onShareClick = { onEvent(LoginDetailEvent.OnShareClick) },
             isPinned = itemUiModel.isPinned,
-            isShared = itemUiModel.isShared,
-            shareCount = itemUiModel.shareCount,
             hasMoreThanOneVaultShare = hasMoreThanOneVaultShare
         )
 

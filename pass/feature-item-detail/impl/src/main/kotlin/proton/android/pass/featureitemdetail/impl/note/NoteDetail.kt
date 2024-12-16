@@ -205,8 +205,6 @@ fun NoteDetail(
                         attachmentsState = state.attachmentsState,
                         isHistoryFeatureEnabled = state.itemFeatures.isHistoryEnabled,
                         isFileAttachmentsEnabled = state.itemFeatures.isFileAttachmentsEnabled,
-                        isShared = state.itemUiModel.isShared,
-                        shareCount = state.itemUiModel.shareCount,
                         hasMoreThanOneVaultShare = state.hasMoreThanOneVault,
                         onAttachmentEvent = {
                             when (it) {

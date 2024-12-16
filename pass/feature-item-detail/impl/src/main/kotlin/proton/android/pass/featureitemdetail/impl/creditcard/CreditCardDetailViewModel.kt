@@ -60,9 +60,9 @@ import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetItemActions
-import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemActions
+import proton.android.pass.data.api.usecases.ObserveItemByIdWithVault
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
@@ -106,7 +106,7 @@ class CreditCardDetailViewModel @Inject constructor(
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     observeItemAttachments: ObserveItemAttachments,
     canPerformPaidAction: CanPerformPaidAction,
-    getItemByIdWithVault: GetItemByIdWithVault,
+    observeItemByIdWithVault: ObserveItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider,
     getItemActions: GetItemActions,
     getUserPlan: GetUserPlan,
@@ -161,7 +161,7 @@ class CreditCardDetailViewModel @Inject constructor(
     )
 
     private var hasItemBeenFetchedAtLeastOnce = false
-    private val creditCardItemDetailsResultFlow = getItemByIdWithVault(shareId, itemId)
+    private val creditCardItemDetailsResultFlow = observeItemByIdWithVault(shareId, itemId)
         .flatMapLatest { itemByIdWithVault ->
             if (itemByIdWithVault.item.hasAttachments) {
                 observeItemAttachments(shareId, itemId)

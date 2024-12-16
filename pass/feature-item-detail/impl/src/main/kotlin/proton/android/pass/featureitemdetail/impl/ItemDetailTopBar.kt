@@ -45,7 +45,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
-import proton.android.pass.composecomponents.impl.buttons.PassShareItemIcon
+import proton.android.pass.composecomponents.impl.buttons.PassSharingShareIcon
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.items.ItemCategory
@@ -128,9 +128,10 @@ private fun ItemTopBarActions(
         )
 
         if (isItemSharingEnabled) {
-            PassShareItemIcon(
+            PassSharingShareIcon(
                 itemShareCount = itemShareCount,
                 itemCategory = itemCategory,
+                isEnabled = actions.canShare.value(),
                 onClick = onShareClick
             )
         } else {

@@ -16,11 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.db.dao.attachment
+package proton.android.pass.data.impl.db.entities.attachments
 
-import androidx.room.Dao
-import me.proton.core.data.room.db.BaseDao
-import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
+import androidx.room.Embedded
+import androidx.room.Relation
 
-@Dao
-abstract class ChunkDao : BaseDao<ChunkEntity>()
+data class AttachmentWithChunks(
+    @Embedded val attachment: AttachmentEntity,
+    @Relation(
+        parentColumn = AttachmentEntity.Columns.ID,
+        entityColumn = ChunkEntity.Columns.ATTACHMENT_ID
+    )
+    val chunks: List<ChunkEntity>
+)

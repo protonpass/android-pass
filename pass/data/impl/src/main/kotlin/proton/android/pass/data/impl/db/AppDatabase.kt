@@ -87,8 +87,8 @@ import me.proton.core.usersettings.data.entity.OrganizationEntity
 import me.proton.core.usersettings.data.entity.OrganizationKeysEntity
 import me.proton.core.usersettings.data.entity.UserSettingsEntity
 import proton.android.pass.data.impl.db.entities.AssetLinkEntity
-import proton.android.pass.data.impl.db.entities.AttachmentEntity
-import proton.android.pass.data.impl.db.entities.ChunkEntity
+import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
+import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
 import proton.android.pass.data.impl.db.entities.IgnoredAssetLinkEntity
 import proton.android.pass.data.impl.db.entities.InAppMessageEntity
 import proton.android.pass.data.impl.db.entities.InstantConverter

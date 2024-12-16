@@ -66,6 +66,7 @@ net.slions.fulguris.full.download,10000000000
 net.slions.fulguris.full.download.debug,10000000000
 net.slions.fulguris.full.playstore,10000000000
 net.slions.fulguris.full.playstore.debug,10000000000
+net.waterfox.android.release,10000000000
 org.adblockplus.browser,10000000000
 org.adblockplus.browser.beta,10000000000
 org.bromite.bromite,10000000000

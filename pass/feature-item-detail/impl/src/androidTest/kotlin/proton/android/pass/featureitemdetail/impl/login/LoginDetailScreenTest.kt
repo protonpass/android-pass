@@ -40,8 +40,8 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
+import proton.android.pass.data.fakes.usecases.TestObserveItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.HiddenState
@@ -86,7 +86,7 @@ class LoginDetailScreenTest {
     lateinit var getItemById: FakeGetItemById
 
     @Inject
-    lateinit var getItemByIdWithVault: TestGetItemByIdWithVault
+    lateinit var observeItemByIdWithVault: TestObserveItemByIdWithVault
 
     @Inject
     lateinit var clipboardManager: TestClipboardManager
@@ -313,7 +313,7 @@ class LoginDetailScreenTest {
         )
         val share = TestShare.Vault.create(id = SHARE_ID)
 
-        getItemByIdWithVault.emitValue(Result.success(withVault))
+        observeItemByIdWithVault.emitValue(Result.success(withVault))
         observeItemById.emitValue(Result.success(item))
         getItemById.emit(Result.success(item))
         observeShare.emitValue(share)

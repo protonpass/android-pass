@@ -61,7 +61,7 @@ import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetItemActions
-import proton.android.pass.data.api.usecases.GetItemByIdWithVault
+import proton.android.pass.data.api.usecases.ObserveItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
@@ -115,7 +115,7 @@ class AliasDetailViewModel @Inject constructor(
     observeItemAttachments: ObserveItemAttachments,
     userPreferencesRepository: UserPreferencesRepository,
     canPerformPaidAction: CanPerformPaidAction,
-    getItemByIdWithVault: GetItemByIdWithVault,
+    observeItemByIdWithVault: ObserveItemByIdWithVault,
     observeAliasDetails: ObserveAliasDetails,
     savedStateHandle: SavedStateHandle,
     getItemActions: GetItemActions,
@@ -172,7 +172,7 @@ class AliasDetailViewModel @Inject constructor(
 
     private var hasItemBeenFetchedAtLeastOnce = false
 
-    private val itemWithVaultFlow = getItemByIdWithVault(shareId, itemId)
+    private val itemWithVaultFlow = observeItemByIdWithVault(shareId, itemId)
         .shareIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,

@@ -36,7 +36,7 @@ import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
 import proton.android.pass.data.fakes.usecases.TestDeleteItems
 import proton.android.pass.data.fakes.usecases.TestGetItemActions
-import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
+import proton.android.pass.data.fakes.usecases.TestObserveItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
@@ -62,7 +62,7 @@ class CreditCardDetailViewModelTest {
 
     private lateinit var instance: CreditCardDetailViewModel
 
-    private lateinit var getItem: TestGetItemByIdWithVault
+    private lateinit var getItem: TestObserveItemByIdWithVault
     private lateinit var clipboardManager: TestClipboardManager
     private lateinit var trashItem: TestTrashItems
     private lateinit var restoreItem: TestRestoreItems
@@ -71,7 +71,7 @@ class CreditCardDetailViewModelTest {
 
     @Before
     fun setup() {
-        getItem = TestGetItemByIdWithVault()
+        getItem = TestObserveItemByIdWithVault()
         clipboardManager = TestClipboardManager()
         trashItem = TestTrashItems()
         restoreItem = TestRestoreItems()
@@ -89,7 +89,7 @@ class CreditCardDetailViewModelTest {
             canPerformPaidAction = canPerformPaidAction.apply {
                 setResult(true)
             },
-            getItemByIdWithVault = getItem,
+            observeItemByIdWithVault = getItem,
             savedStateHandle = TestSavedStateHandleProvider().apply {
                 get().apply {
                     set(CommonNavArgId.ShareId.key, SHARE_ID)

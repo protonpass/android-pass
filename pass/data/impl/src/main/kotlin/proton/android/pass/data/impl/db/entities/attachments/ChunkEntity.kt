@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.db.entities
+package proton.android.pass.data.impl.db.entities.attachments
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

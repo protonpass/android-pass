@@ -46,8 +46,8 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
-import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
+import proton.android.pass.data.fakes.usecases.TestObserveItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.ItemId
@@ -80,7 +80,7 @@ class CreditCardDetailScreenTest {
     lateinit var savedStateHandle: TestSavedStateHandleProvider
 
     @Inject
-    lateinit var getItemByIdWithVault: TestGetItemByIdWithVault
+    lateinit var observeItemByIdWithVault: TestObserveItemByIdWithVault
 
     @Inject
     lateinit var observeItemById: TestObserveItemById
@@ -393,7 +393,7 @@ class CreditCardDetailScreenTest {
         val share = TestShare.Vault.create(id = SHARE_ID)
 
         observeItemById.emitValue(Result.success(item))
-        getItemByIdWithVault.emitValue(Result.success(withVault))
+        observeItemByIdWithVault.emitValue(Result.success(withVault))
         getItemById.emit(Result.success(item))
         observeShare.emitValue(share)
         return title

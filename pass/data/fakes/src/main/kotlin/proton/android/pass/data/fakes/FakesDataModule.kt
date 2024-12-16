@@ -62,7 +62,6 @@ import proton.android.pass.data.api.usecases.GetInviteUserMode
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemById
-import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedAutofillItems
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -85,6 +84,7 @@ import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveInvites
 import proton.android.pass.data.api.usecases.ObserveItemById
+import proton.android.pass.data.api.usecases.ObserveItemByIdWithVault
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
@@ -109,7 +109,6 @@ import proton.android.pass.data.api.usecases.ResendShareInvite
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.data.api.usecases.RestoreAllItems
 import proton.android.pass.data.api.usecases.RestoreItems
-import proton.android.pass.data.api.usecases.shares.UpdateShareMemberRole
 import proton.android.pass.data.api.usecases.TransferVaultOwnership
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
@@ -185,6 +184,7 @@ import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
 import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
 import proton.android.pass.data.api.usecases.shares.ObserveSharesByType
+import proton.android.pass.data.api.usecases.shares.UpdateShareMemberRole
 import proton.android.pass.data.api.usecases.simplelogin.CreateSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.DeleteSimpleLoginAliasMailbox
 import proton.android.pass.data.api.usecases.simplelogin.DisableSimpleLoginSyncPreference
@@ -256,7 +256,6 @@ import proton.android.pass.data.fakes.usecases.TestGetDefaultBrowser
 import proton.android.pass.data.fakes.usecases.TestGetInviteUserMode
 import proton.android.pass.data.fakes.usecases.TestGetItemActions
 import proton.android.pass.data.fakes.usecases.TestGetItemByAliasEmail
-import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestGetPasskeyById
 import proton.android.pass.data.fakes.usecases.TestGetShareById
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedAutofillItems
@@ -279,6 +278,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveCurrentUserSettings
 import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveInvites
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
+import proton.android.pass.data.fakes.usecases.TestObserveItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveItemsWithPasskeys
@@ -306,13 +306,13 @@ import proton.android.pass.data.fakes.usecases.TestResetAppToDefaults
 import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestSetDefaultVault
-import proton.android.pass.data.fakes.usecases.TestUpdateShareMemberRole
 import proton.android.pass.data.fakes.usecases.TestTransferVaultOwnership
 import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.data.fakes.usecases.TestUnpinItems
 import proton.android.pass.data.fakes.usecases.TestUpdateAlias
 import proton.android.pass.data.fakes.usecases.TestUpdateAutofillItem
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
+import proton.android.pass.data.fakes.usecases.TestUpdateShareMemberRole
 import proton.android.pass.data.fakes.usecases.TestUpdateVault
 import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeCheckLocalExtraPassword
@@ -513,7 +513,7 @@ abstract class FakesDataModule {
     abstract fun bindItemSyncStatusRepository(impl: TestItemSyncStatusRepository): ItemSyncStatusRepository
 
     @Binds
-    abstract fun bindGetItemByIdWithVault(impl: TestGetItemByIdWithVault): GetItemByIdWithVault
+    abstract fun bindObserveItemByIdWithVault(impl: TestObserveItemByIdWithVault): ObserveItemByIdWithVault
 
     @Binds
     abstract fun bindClearUserData(impl: TestClearUserData): ClearUserData

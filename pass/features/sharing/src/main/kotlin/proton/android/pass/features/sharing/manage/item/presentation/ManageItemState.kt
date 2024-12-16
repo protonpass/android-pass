@@ -41,6 +41,7 @@ internal sealed interface ManageItemState {
         override val event: ManageItemEvent = ManageItemEvent.Idle,
         internal val share: Share,
         internal val pendingInvites: List<SharePendingInvite>,
+        internal val itemsCount: Int,
         private val members: List<ShareMember>,
         private val isLoadingState: IsLoadingState
     ) : ManageItemState {

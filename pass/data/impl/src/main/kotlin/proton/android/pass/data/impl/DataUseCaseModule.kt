@@ -192,6 +192,7 @@ import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
+import proton.android.pass.data.api.usecases.shares.ObserveShareItemsCount
 import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
 import proton.android.pass.data.api.usecases.shares.ObserveSharesByType
 import proton.android.pass.data.api.usecases.shares.UpdateShareMemberRole
@@ -391,6 +392,7 @@ import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveShareImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveShareItemMembersImpl
+import proton.android.pass.data.impl.usecases.shares.ObserveShareItemsCountImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveSharePendingInvitesImpl
 import proton.android.pass.data.impl.usecases.shares.ObserveSharesByTypeImpl
 import proton.android.pass.data.impl.usecases.shares.UpdateShareMemberRoleImpl
@@ -1051,5 +1053,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindDownloadAttachment(impl: DownloadAttachmentImpl): DownloadAttachment
+
+    @[Binds Singleton]
+    abstract fun bindObserveShareItemsCount(impl: ObserveShareItemsCountImpl): ObserveShareItemsCount
 
 }

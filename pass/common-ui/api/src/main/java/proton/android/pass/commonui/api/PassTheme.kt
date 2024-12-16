@@ -18,11 +18,14 @@
 
 package proton.android.pass.commonui.api
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import me.proton.core.compose.theme.ProtonColors
+import me.proton.core.compose.theme.ProtonShapes
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.ProtonTypography
 import me.proton.core.compose.theme.isNightMode
 
 @Composable
@@ -44,7 +47,18 @@ fun PassTheme(
         ProtonTheme(
             isDark = isDark,
             colors = protonColors.copy(
-                backgroundNorm = PassTheme.colors.backgroundNorm
+                brandNorm = passColors.interactionNorm,
+                backgroundNorm = passColors.backgroundNorm,
+                interactionNorm = passColors.interactionNorm,
+            ),
+            typography = ProtonTypography.Default.copy(
+                hero = passTypography.heroUnspecified,
+            ),
+            shapes = ProtonShapes().copy(
+                small = RoundedCornerShape(Radius.small + Radius.small),
+                medium = RoundedCornerShape(Radius.medium + Radius.small),
+                large = RoundedCornerShape(Radius.large + Radius.small),
+                bottomSheet = passShapes.bottomsheetShape,
             ),
             content = content
         )

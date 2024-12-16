@@ -53,6 +53,10 @@ internal sealed interface NoteDetailUiState {
         val itemFeatures: NoteItemFeatures,
         val attachmentsState: AttachmentsState,
         val hasMoreThanOneVault: Boolean
-    ) : NoteDetailUiState
+    ) : NoteDetailUiState {
+
+        internal val shareSharedCount: Int = share.memberCount.plus(itemUiModel.shareCount)
+
+    }
 
 }

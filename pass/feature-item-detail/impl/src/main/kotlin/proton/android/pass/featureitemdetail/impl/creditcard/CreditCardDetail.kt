@@ -155,7 +155,7 @@ fun CreditCardDetail(
                             iconColor = PassTheme.colors.cardInteractionNormMajor2,
                             iconBackgroundColor = PassTheme.colors.cardInteractionNormMinor1,
                             itemCategory = state.itemContent.model.category,
-                            itemShareCount = state.itemContent.model.shareCount,
+                            shareSharedCount = state.shareSharedCount,
                             isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
                             onUpClick = { onNavigate(ItemDetailNavigation.Back) },
                             onEditClick = {

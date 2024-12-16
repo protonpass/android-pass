@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 65,
-    "identityHash": "7a9fa2b57de21ef2c17a2af05b3374f9",
+    "identityHash": "8614b83c0a16b2c04ae4668f6a7b59fc",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -4593,7 +4593,7 @@
       },
       {
         "tableName": "AttachmentEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `item_id` TEXT NOT NULL, `name` TEXT NOT NULL, `mime_type` TEXT NOT NULL, `type` INTEGER NOT NULL, `size` INTEGER NOT NULL, `create_time` INTEGER NOT NULL, `key` TEXT NOT NULL, `item_key_rotation` TEXT NOT NULL, PRIMARY KEY(`id`, `share_id`, `item_id`), FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`share_id`) REFERENCES `ShareEntity`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`item_id`, `share_id`) REFERENCES `ItemEntity`(`id`, `share_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `item_id` TEXT NOT NULL, `name` TEXT NOT NULL, `mime_type` TEXT NOT NULL, `type` INTEGER NOT NULL, `size` INTEGER NOT NULL, `create_time` INTEGER NOT NULL, `key` TEXT NOT NULL, `item_key_rotation` TEXT NOT NULL, `reencrypted_key` BLOB NOT NULL, PRIMARY KEY(`id`, `share_id`, `item_id`), FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`share_id`) REFERENCES `ShareEntity`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`item_id`, `share_id`) REFERENCES `ItemEntity`(`id`, `share_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -4659,6 +4659,12 @@
             "fieldPath": "itemKeyRotation",
             "columnName": "item_key_rotation",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reencryptedKey",
+            "columnName": "reencrypted_key",
+            "affinity": "BLOB",
             "notNull": true
           }
         ],
@@ -4832,7 +4838,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7a9fa2b57de21ef2c17a2af05b3374f9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8614b83c0a16b2c04ae4668f6a7b59fc')"
     ]
   }
 }

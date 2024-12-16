@@ -19,26 +19,24 @@
 package proton.android.pass.data.impl.local.attachments
 
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.data.impl.db.entities.AttachmentEntity
-import proton.android.pass.data.impl.db.entities.ChunkEntity
+import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
+import proton.android.pass.data.impl.db.entities.attachments.AttachmentWithChunks
+import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 
 interface LocalAttachmentsDataSource {
+
     suspend fun removeAttachmentsForItem(shareId: ShareId, itemId: ItemId)
+
     suspend fun removeAttachmentById(
         shareId: ShareId,
         itemId: ItemId,
         attachmentId: AttachmentId
     )
-    fun observeAttachmentsForItem(shareId: ShareId, itemId: ItemId): Flow<List<AttachmentEntity>>
 
-    fun observeChunksForAttachment(
-        shareId: ShareId,
-        itemId: ItemId,
-        attachmentId: AttachmentId
-    ): Flow<List<ChunkEntity>>
+    fun observeAttachmentsWithChunksForItem(shareId: ShareId, itemId: ItemId): Flow<List<AttachmentWithChunks>>
 
     suspend fun saveAttachmentsWithChunks(attachmentEntities: List<AttachmentEntity>, chunkEntities: List<ChunkEntity>)
 }

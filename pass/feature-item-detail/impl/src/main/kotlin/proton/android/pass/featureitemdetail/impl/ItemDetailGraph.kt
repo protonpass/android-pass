@@ -63,8 +63,7 @@ sealed interface ItemDetailNavigation {
     @JvmInline
     value class Upgrade(val popBefore: Boolean = false) : ItemDetailNavigation
 
-    @JvmInline
-    value class ManageItem(val shareId: ShareId) : ItemDetailNavigation
+    data class ManageItem(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
 
     @JvmInline
     value class ManageVault(val shareId: ShareId) : ItemDetailNavigation

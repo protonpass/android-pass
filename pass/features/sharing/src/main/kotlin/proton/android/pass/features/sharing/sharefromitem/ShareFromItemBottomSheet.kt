@@ -91,7 +91,8 @@ fun ShareFromItemBottomSheet(
                 ).also(onNavigateEvent)
 
                 ShareFromItemEvent.ManageSharedItem -> SharingNavigation.ManageItem(
-                    shareId = state.shareId
+                    shareId = state.shareId,
+                    itemId = state.itemId
                 ).also(onNavigateEvent)
 
                 ShareFromItemEvent.UpsellItemSharing -> SharingNavigation.Upsell(

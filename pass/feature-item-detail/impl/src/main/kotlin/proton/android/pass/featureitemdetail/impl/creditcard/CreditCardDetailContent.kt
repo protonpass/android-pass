@@ -61,8 +61,6 @@ internal fun CreditCardDetailContent(
             share = share,
             onShareClick = { onEvent(CreditCardDetailEvent.OnShareClick) },
             isPinned = isPinned,
-            isShared = contents.model.isShared,
-            shareCount = contents.model.shareCount,
             hasMoreThanOneVaultShare = hasMoreThanOneVaultShare
         )
 

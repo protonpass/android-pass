@@ -34,7 +34,6 @@ import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.domain.Share
-import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
 import proton.android.pass.featureitemdetail.impl.common.ThemeItemTitleProvider
@@ -44,8 +43,6 @@ import proton.android.pass.featureitemdetail.impl.common.VaultNameSubtitle
 fun AliasTitle(
     modifier: Modifier = Modifier,
     title: String,
-    isShared: Boolean,
-    shareCount: Int,
     share: Share,
     hasMoreThanOneVaultShare: Boolean,
     onShareClick: () -> Unit,
@@ -80,11 +77,8 @@ fun AliasTitle(
             ItemTitleText(text = title)
 
             VaultNameSubtitle(
-                isShared = isShared,
-                shareCount = shareCount,
                 share = share,
                 hasMoreThanOneVaultShare = hasMoreThanOneVaultShare,
-                itemCategory = ItemCategory.Alias,
                 onClick = onShareClick
             )
         }
@@ -104,8 +98,6 @@ fun AliasTitlePreview(@PreviewParameter(ThemeItemTitleProvider::class) input: Pa
                 onShareClick = {},
                 isPinned = params.itemUiModel.isPinned,
                 isActive = true,
-                isShared = params.itemUiModel.isShared,
-                shareCount = params.itemUiModel.shareCount,
                 hasMoreThanOneVaultShare = true
             )
         }

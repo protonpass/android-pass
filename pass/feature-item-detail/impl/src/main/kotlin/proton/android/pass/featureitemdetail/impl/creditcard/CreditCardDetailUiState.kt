@@ -54,7 +54,11 @@ internal sealed interface CreditCardDetailUiState {
         val itemFeatures: CreditCardItemFeatures,
         val attachmentsState: AttachmentsState,
         val hasMoreThanOneVault: Boolean
-    ) : CreditCardDetailUiState
+    ) : CreditCardDetailUiState {
+
+        internal val shareSharedCount: Int = share.memberCount.plus(itemContent.model.shareCount)
+
+    }
 
     @Stable
     data class ItemContent(

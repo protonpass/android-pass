@@ -188,7 +188,7 @@ fun AliasDetail(
                             iconColor = PassTheme.colors.aliasInteractionNormMajor2,
                             iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
                             itemCategory = state.itemUiModel.category,
-                            itemShareCount = state.itemUiModel.shareCount,
+                            shareSharedCount = state.shareSharedCount,
                             isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
                             onUpClick = { onNavigate(ItemDetailNavigation.Back) },
                             onEditClick = {

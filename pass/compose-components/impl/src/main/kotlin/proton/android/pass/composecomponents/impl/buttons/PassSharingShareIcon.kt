@@ -48,7 +48,7 @@ import me.proton.core.presentation.R as CoreR
 fun PassSharingShareIcon(
     modifier: Modifier = Modifier,
     itemCategory: ItemCategory,
-    itemShareCount: Int,
+    shareSharedCount: Int,
     onClick: () -> Unit,
     isEnabled: Boolean = true
 ) {
@@ -57,6 +57,8 @@ fun PassSharingShareIcon(
     val contentAlpha = remember(isEnabled) { if (isEnabled) 1f else 0.2f }
 
     val itemColors = passItemColors(itemCategory)
+
+    val showShareSharedCounter = remember(shareSharedCount) { shareSharedCount > 1 }
 
     Row(
         modifier = modifier
@@ -73,7 +75,7 @@ fun PassSharingShareIcon(
             contentDescription = null
         )
 
-        if (itemShareCount > 0) {
+        if (showShareSharedCounter) {
             Text.CaptionMedium(
                 modifier = Modifier
                     .background(
@@ -84,7 +86,7 @@ fun PassSharingShareIcon(
                         horizontal = Spacing.small,
                         vertical = Spacing.extraSmall
                     ),
-                text = itemShareCount.toString(),
+                text = shareSharedCount.toString(),
                 color = PassTheme.colors.textInvert
             )
         }
@@ -97,7 +99,7 @@ internal fun PassShareItemIconPreview(@PreviewParameter(ThemePreviewProvider::cl
         Surface {
             PassSharingShareIcon(
                 itemCategory = ItemCategory.Login,
-                itemShareCount = 5,
+                shareSharedCount = 5,
                 onClick = {}
             )
         }

@@ -28,6 +28,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,19 +45,23 @@ import proton.android.pass.domain.items.ItemCategory
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun PassShareItemIcon(
+fun PassSharingShareIcon(
     modifier: Modifier = Modifier,
     itemCategory: ItemCategory,
     itemShareCount: Int,
     onClick: () -> Unit,
     isEnabled: Boolean = true
 ) {
+    val backgroundAlpha = remember(isEnabled) { if (isEnabled) 1f else 0.6f }
+
+    val contentAlpha = remember(isEnabled) { if (isEnabled) 1f else 0.2f }
+
     val itemColors = passItemColors(itemCategory)
 
     Row(
         modifier = modifier
             .clip(shape = RoundedCornerShape(size = Radius.large))
-            .background(color = itemColors.minorPrimary)
+            .background(color = itemColors.minorPrimary.copy(alpha = backgroundAlpha))
             .clickable { onClick() }
             .padding(all = Spacing.small),
         verticalAlignment = Alignment.CenterVertically,
@@ -64,7 +69,7 @@ fun PassShareItemIcon(
     ) {
         Icon(
             painter = painterResource(id = CoreR.drawable.ic_proton_users_plus),
-            tint = itemColors.majorSecondary,
+            tint = itemColors.majorSecondary.copy(alpha = contentAlpha),
             contentDescription = null
         )
 
@@ -72,7 +77,7 @@ fun PassShareItemIcon(
             Text.CaptionMedium(
                 modifier = Modifier
                     .background(
-                        color = itemColors.majorSecondary,
+                        color = itemColors.majorSecondary.copy(alpha = contentAlpha),
                         shape = CircleShape
                     )
                     .padding(
@@ -90,7 +95,7 @@ fun PassShareItemIcon(
 internal fun PassShareItemIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            PassShareItemIcon(
+            PassSharingShareIcon(
                 itemCategory = ItemCategory.Login,
                 itemShareCount = 5,
                 onClick = {}

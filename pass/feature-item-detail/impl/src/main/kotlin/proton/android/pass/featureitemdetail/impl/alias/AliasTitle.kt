@@ -47,7 +47,8 @@ fun AliasTitle(
     hasMoreThanOneVaultShare: Boolean,
     onShareClick: () -> Unit,
     isPinned: Boolean,
-    isActive: Boolean
+    isActive: Boolean,
+    isItemSharingEnabled: Boolean
 ) {
     Row(
         modifier = modifier,
@@ -79,6 +80,7 @@ fun AliasTitle(
             VaultNameSubtitle(
                 share = share,
                 hasMoreThanOneVaultShare = hasMoreThanOneVaultShare,
+                isItemSharingEnabled = isItemSharingEnabled,
                 onClick = onShareClick
             )
         }
@@ -98,7 +100,8 @@ fun AliasTitlePreview(@PreviewParameter(ThemeItemTitleProvider::class) input: Pa
                 onShareClick = {},
                 isPinned = params.itemUiModel.isPinned,
                 isActive = true,
-                hasMoreThanOneVaultShare = true
+                hasMoreThanOneVaultShare = true,
+                isItemSharingEnabled = true
             )
         }
     }

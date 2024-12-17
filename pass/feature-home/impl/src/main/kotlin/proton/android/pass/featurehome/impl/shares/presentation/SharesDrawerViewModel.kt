@@ -23,21 +23,22 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import javax.inject.Inject
 
 @HiltViewModel
-class SharesDrawerViewModel @Inject constructor() : ViewModel() {
+class SharesDrawerViewModel @Inject constructor(
+    canCreateVault: CanCreateVault
+) : ViewModel() {
 
-    internal val stateFlow: StateFlow<SharesDrawerState> = flowOf(
-        SharesDrawerState(
-            canCreateVaults = true
+    internal val stateFlow: StateFlow<SharesDrawerState> = canCreateVault()
+        .mapLatest(::SharesDrawerState)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = SharesDrawerState.Initial
         )
-    ).stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = SharesDrawerState.Initial
-    )
 
 }

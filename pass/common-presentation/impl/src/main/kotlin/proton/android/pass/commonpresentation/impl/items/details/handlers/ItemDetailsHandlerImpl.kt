@@ -22,9 +22,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
@@ -56,7 +58,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
 ) : ItemDetailsHandler {
 
     override fun observeItemDetails(item: Item): Flow<ItemDetailState> = combine(
-        observeShare(item.shareId),
+        oneShot { observeShare(item.shareId).first() },
         attachmentsFlow(item),
         ::Pair
     )

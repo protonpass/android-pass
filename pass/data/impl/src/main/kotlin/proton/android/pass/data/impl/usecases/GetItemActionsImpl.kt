@@ -48,7 +48,7 @@ class GetItemActionsImpl @Inject constructor(
 ) : GetItemActions {
 
     override suspend fun invoke(shareId: ShareId, itemId: ItemId): ItemActions = combine(
-        observeShare(shareId),
+        oneShot { observeShare(shareId).first() },
         oneShot { getItemById(shareId, itemId) },
         observeUserPlan(),
         observeAllShares()

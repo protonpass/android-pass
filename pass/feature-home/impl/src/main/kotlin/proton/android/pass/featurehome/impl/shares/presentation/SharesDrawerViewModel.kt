@@ -28,12 +28,15 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.shares.ObserveSharesItemsCount
 import proton.android.pass.domain.Share
+import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
+import proton.android.pass.searchoptions.api.VaultSelectionOption
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,7 +44,8 @@ class SharesDrawerViewModel @Inject constructor(
     canCreateVault: CanCreateVault,
     observeAllShares: ObserveAllShares,
     observeSharesItemsCount: ObserveSharesItemsCount,
-    observeItemCount: ObserveItemCount
+    observeItemCount: ObserveItemCount,
+    private val homeSearchOptionsRepository: HomeSearchOptionsRepository
 ) : ViewModel() {
 
     private val vaultSharesFlow = observeAllShares()
@@ -70,12 +74,19 @@ class SharesDrawerViewModel @Inject constructor(
         vaultSharesFlow,
         vaultSharesItemsCountFlow,
         canCreateVault(),
+        homeSearchOptionsRepository.observeVaultSelectionOption(),
         itemCountSummaryOptionFlow,
         ::SharesDrawerState
     ).stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000L),
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000L),
         initialValue = SharesDrawerState.Initial
     )
+
+    internal fun setVaultSelection(vaultSelectionOption: VaultSelectionOption) {
+        viewModelScope.launch {
+            homeSearchOptionsRepository.setVaultSelectionOption(vaultSelectionOption)
+        }
+    }
 
 }

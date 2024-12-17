@@ -601,13 +601,12 @@ class HomeViewModel @Inject constructor(
             // Setup initial share id if we can get one from the route
             val initialShareId: String? = savedState.get()[CommonOptionalNavArgId.ShareId.key]
             if (initialShareId != null) {
-                val vaultSelection = VaultSelectionOption.Vault(ShareId(initialShareId))
-                observeCurrentUser().firstOrNull()?.let {
-                    homeSearchOptionsRepository.setVaultSelectionOption(it.userId, vaultSelection)
-                }
+                VaultSelectionOption.Vault(shareId = ShareId(initialShareId))
+                    .also { vaultSelectionOption ->
+                        homeSearchOptionsRepository.setVaultSelectionOption(vaultSelectionOption)
+                    }
             }
         }
-
 
         // Observe bulkMoveToVault event
         viewModelScope.launch {
@@ -820,12 +819,11 @@ class HomeViewModel @Inject constructor(
         isInSuggestionsModeState.update { false }
     }
 
-    fun setVaultSelection(vaultSelection: VaultSelectionOption) {
+    internal fun setVaultSelection(vaultSelection: VaultSelectionOption) {
         viewModelScope.launch {
-            observeCurrentUser().firstOrNull()?.let {
-                homeSearchOptionsRepository.setVaultSelectionOption(it.userId, vaultSelection)
-            }
+            homeSearchOptionsRepository.setVaultSelectionOption(vaultSelection)
         }
+
         homeSearchOptionsRepository.setFilterOption(FilterOption(SearchFilterType.All))
     }
 
@@ -1119,7 +1117,7 @@ class HomeViewModel @Inject constructor(
             SearchSortingType.CreationDesc -> groupAndSortByCreationDesc()
         }
 
-    private fun autoSelectAllVaultsIfCannotFindVault(
+    private suspend fun autoSelectAllVaultsIfCannotFindVault(
         selectedShare: Option<ShareUiModel>,
         vaultList: List<Vault>,
         userId: UserId?
@@ -1127,21 +1125,18 @@ class HomeViewModel @Inject constructor(
         userId ?: return
         val doAllVaultsBelongToUser = vaultList.all { it.userId == userId }
         if (selectedShare is None && vaultList.isNotEmpty() && doAllVaultsBelongToUser) {
-            homeSearchOptionsRepository.setVaultSelectionOption(
-                userId,
-                VaultSelectionOption.AllVaults
-            )
+            homeSearchOptionsRepository.setVaultSelectionOption(VaultSelectionOption.AllVaults)
         }
     }
 
-    private fun autoSelectVaultIfSingle(
+    private suspend fun autoSelectVaultIfSingle(
         vaults: List<Vault>,
         vaultSelection: VaultSelectionOption,
         userId: UserId?
     ) {
         if (vaults.size == 1 && vaultSelection is VaultSelectionOption.AllVaults && userId != null) {
             val selection = VaultSelectionOption.Vault(vaults.first().shareId)
-            homeSearchOptionsRepository.setVaultSelectionOption(userId, selection)
+            homeSearchOptionsRepository.setVaultSelectionOption(selection)
         }
     }
 

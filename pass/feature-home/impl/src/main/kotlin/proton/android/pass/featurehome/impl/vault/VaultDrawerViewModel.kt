@@ -26,7 +26,6 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -34,19 +33,17 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
-import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.searchoptions.api.VaultSelectionOption
-import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 @HiltViewModel
 class VaultDrawerViewModel @Inject constructor(
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
     canCreateVault: CanCreateVault,
-    private val observeCurrentUser: ObserveCurrentUser,
     private val homeSearchOptionsRepository: HomeSearchOptionsRepository
 ) : ViewModel() {
 
@@ -109,15 +106,16 @@ class VaultDrawerViewModel @Inject constructor(
         )
     )
 
-    fun setVaultSelection(vaultSelection: VaultSelectionOption) {
+    internal fun setVaultSelection(vaultSelection: VaultSelectionOption) {
         viewModelScope.launch {
-            observeCurrentUser().firstOrNull()?.let {
-                homeSearchOptionsRepository.setVaultSelectionOption(it.userId, vaultSelection)
-            }
+            homeSearchOptionsRepository.setVaultSelectionOption(vaultSelection)
         }
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "VaultDrawerViewModel"
+
     }
+
 }

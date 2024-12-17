@@ -30,7 +30,7 @@ interface HomeSearchOptionsRepository {
     fun observeVaultSelectionOption(): Flow<VaultSelectionOption>
     fun setSortingOption(sortingOption: SortingOption)
     fun setFilterOption(filterOption: FilterOption)
-    fun setVaultSelectionOption(userId: UserId, vaultSelectionOption: VaultSelectionOption)
+    suspend fun setVaultSelectionOption(vaultSelectionOption: VaultSelectionOption)
 }
 
 data class SearchOptions(

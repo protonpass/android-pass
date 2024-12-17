@@ -22,22 +22,22 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.searchoptions.api.FilterOption
 import proton.android.pass.searchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.searchoptions.api.SearchOptions
 import proton.android.pass.searchoptions.api.SortingOption
 import proton.android.pass.searchoptions.api.VaultSelectionOption
-import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class HomeSearchOptionsRepositoryImpl @Inject constructor(
-    observeCurrentUser: ObserveCurrentUser,
+    private val observeCurrentUser: ObserveCurrentUser,
     private val internalSettingsRepository: InternalSettingsRepository
 ) : HomeSearchOptionsRepository {
 
@@ -80,7 +80,13 @@ class HomeSearchOptionsRepositoryImpl @Inject constructor(
         internalSettingsRepository.setHomeFilterOption(filterOption.toPreference())
     }
 
-    override fun setVaultSelectionOption(userId: UserId, vaultSelectionOption: VaultSelectionOption) {
-        internalSettingsRepository.setSelectedVault(userId, vaultSelectionOption.toPreference())
+    override suspend fun setVaultSelectionOption(vaultSelectionOption: VaultSelectionOption) {
+        observeCurrentUser().firstOrNull()?.also { user ->
+            internalSettingsRepository.setSelectedVault(
+                userId = user.userId,
+                selectedVault = vaultSelectionOption.toPreference()
+            )
+        }
     }
+
 }

@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemdetail.impl.creditcard
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -42,6 +43,7 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
+import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.StringUtils.maskCreditCardNumber
 import proton.android.pass.commonui.api.require
@@ -67,6 +69,7 @@ import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
+import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.shares.ObserveShare
@@ -76,8 +79,10 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.ItemDelete
+import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.CreditCardItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
@@ -103,6 +108,8 @@ class CreditCardDetailViewModel @Inject constructor(
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
+    private val downloadAttachment: DownloadAttachment,
+    private val fileHandler: FileHandler,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     observeItemAttachments: ObserveItemAttachments,
     canPerformPaidAction: CanPerformPaidAction,
@@ -126,6 +133,8 @@ class CreditCardDetailViewModel @Inject constructor(
         MutableStateFlow(IsPermanentlyDeletedState.NotDeleted)
     private val isRestoredFromTrashState: MutableStateFlow<IsRestoredFromTrashState> =
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
+    private val loadingAttachmentsState: MutableStateFlow<Set<AttachmentId>> =
+        MutableStateFlow(emptySet())
     private val eventState: MutableStateFlow<ItemDetailEvent> =
         MutableStateFlow(ItemDetailEvent.Unknown)
 
@@ -232,9 +241,15 @@ class CreditCardDetailViewModel @Inject constructor(
         )
     }
 
+    private val loadingStates = combine(
+        isLoadingState,
+        loadingAttachmentsState,
+        ::Pair
+    )
+
     internal val uiState: StateFlow<CreditCardDetailUiState> = combineN(
         itemInfoFlow,
-        isLoadingState,
+        loadingStates,
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
@@ -244,7 +259,7 @@ class CreditCardDetailViewModel @Inject constructor(
         eventState,
         itemFeaturesFlow
     ) { itemDetails,
-        isLoading,
+        (isLoading, loadingAttachments),
         isItemSentToTrash,
         isPermanentlyDeleted,
         isRestoredFromTrash,
@@ -286,10 +301,10 @@ class CreditCardDetailViewModel @Inject constructor(
                     event = event,
                     itemFeatures = itemFeatures,
                     attachmentsState = AttachmentsState(
-                        draftAttachmentsList = listOf(),
+                        draftAttachmentsList = emptyList(), // no drafts in detail
+                        loadingDraftAttachments = emptySet(), // no drafts in detail
                         attachmentsList = details.attachments,
-                        loadingDraftAttachments = setOf(),
-                        loadingAttachments = setOf()
+                        loadingAttachments = loadingAttachments
                     ),
                     hasMoreThanOneVault = details.hasMoreThanOneVault
                 )
@@ -465,6 +480,27 @@ class CreditCardDetailViewModel @Inject constructor(
             "$month / $year"
         } else {
             input
+        }
+    }
+
+    fun onAttachmentOpen(context: Context, attachment: Attachment) {
+        viewModelScope.launch {
+            loadingAttachmentsState.update { it + attachment.id }
+            runCatching {
+                val uri = downloadAttachment(attachment)
+                fileHandler.openFile(
+                    context = context,
+                    uri = uri,
+                    mimeType = attachment.mimeType,
+                    chooserTitle = context.getString(R.string.open_with)
+                )
+            }.onSuccess {
+                PassLogger.i(TAG, "Attachment opened: ${attachment.id}")
+            }.onFailure {
+                PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
+                PassLogger.w(TAG, it)
+            }
+            loadingAttachmentsState.update { it - attachment.id }
         }
     }
 

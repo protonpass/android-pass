@@ -36,6 +36,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
@@ -65,7 +66,9 @@ fun CreditCardDetail(
     onNavigate: (ItemDetailNavigation) -> Unit,
     viewModel: CreditCardDetailViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     when (val state = uiState) {
         CreditCardDetailUiState.NotInitialised, CreditCardDetailUiState.Pending -> {}
         CreditCardDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
@@ -231,8 +234,9 @@ fun CreditCardDetail(
                                 )
 
                                 is CreditCardDetailEvent.OnAttachmentEvent ->
-                                    when (it.attachmentContentEvent) {
-                                        is AttachmentContentEvent.OnAttachmentOpen -> {}
+                                    when (val event = it.attachmentContentEvent) {
+                                        is AttachmentContentEvent.OnAttachmentOpen ->
+                                            viewModel.onAttachmentOpen(context, event.attachment)
                                         is AttachmentContentEvent.OnAttachmentOptions,
                                         AttachmentContentEvent.OnAddAttachment,
                                         AttachmentContentEvent.OnDeleteAllAttachments,

@@ -65,12 +65,8 @@ data class AttachmentEntity(
     val shareId: String,
     @ColumnInfo(name = Columns.ITEM_ID, index = true)
     val itemId: String,
-    @ColumnInfo(name = Columns.NAME)
-    val name: String,
-    @ColumnInfo(name = Columns.MIME_TYPE)
-    val mimeType: String,
-    @ColumnInfo(name = Columns.TYPE)
-    val type: Int,
+    @ColumnInfo(name = Columns.METADATA)
+    val metadata: String,
     @ColumnInfo(name = Columns.SIZE)
     val size: Long,
     @ColumnInfo(name = Columns.CREATE_TIME)
@@ -80,21 +76,22 @@ data class AttachmentEntity(
     @ColumnInfo(name = Columns.ITEM_KEY_ROTATION)
     val itemKeyRotation: String,
     @ColumnInfo(name = Columns.REENCRYPTED_KEY)
-    val reencryptedKey: EncryptedByteArray
+    val reencryptedKey: EncryptedByteArray,
+    @ColumnInfo(name = Columns.REENCRYPTED_METADATA)
+    val reencryptedMetadata: EncryptedByteArray
 ) {
     object Columns {
         const val ID = "id"
         const val USER_ID = "user_id"
         const val SHARE_ID = "share_id"
         const val ITEM_ID = "item_id"
-        const val NAME = "name"
-        const val MIME_TYPE = "mime_type"
-        const val TYPE = "type"
+        const val METADATA = "metadata"
         const val SIZE = "size"
         const val CREATE_TIME = "create_time"
         const val KEY = "key"
         const val ITEM_KEY_ROTATION = "item_key_rotation"
         const val REENCRYPTED_KEY = "reencrypted_key"
+        const val REENCRYPTED_METADATA = "reencrypted_metadata"
     }
 
     companion object {

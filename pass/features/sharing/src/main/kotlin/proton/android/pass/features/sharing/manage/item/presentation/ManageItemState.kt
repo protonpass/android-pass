@@ -20,6 +20,7 @@ package proton.android.pass.features.sharing.manage.item.presentation
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.shares.ShareMember
 import proton.android.pass.domain.shares.SharePendingInvite
@@ -39,6 +40,7 @@ internal sealed interface ManageItemState {
     @Stable
     data class Success(
         override val event: ManageItemEvent = ManageItemEvent.Idle,
+        internal val itemId: ItemId,
         internal val share: Share,
         internal val pendingInvites: List<SharePendingInvite>,
         internal val itemsCount: Int,

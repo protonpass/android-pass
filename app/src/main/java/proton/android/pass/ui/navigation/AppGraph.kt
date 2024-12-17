@@ -1905,14 +1905,15 @@ fun NavGraphBuilder.appGraph(
                 )
             }
 
-            is SharingNavigation.ManageItem -> appNavigator.navigate(
-                destination = ManageItemNavItem,
-                route = ManageItemNavItem.createNavRoute(
-                    shareId = it.shareId,
-                    itemId = it.itemId
-                ),
-                backDestination = HomeNavItem
-            )
+            is SharingNavigation.ManageItem -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = ManageItemNavItem,
+                    route = ManageItemNavItem.createNavRoute(
+                        shareId = it.shareId,
+                        itemId = it.itemId
+                    )
+                )
+            }
 
             is SharingNavigation.ManageItemMemberOptions -> appNavigator.navigate(
                 destination = ManageItemMemberOptionsNavItem,

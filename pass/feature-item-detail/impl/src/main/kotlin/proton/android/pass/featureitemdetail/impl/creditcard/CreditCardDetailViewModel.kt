@@ -161,30 +161,33 @@ class CreditCardDetailViewModel @Inject constructor(
     )
 
     private var hasItemBeenFetchedAtLeastOnce = false
-    private val creditCardItemDetailsResultFlow = observeItemByIdWithVault(shareId, itemId)
-        .flatMapLatest { itemByIdWithVault ->
-            if (itemByIdWithVault.item.hasAttachments) {
-                observeItemAttachments(shareId, itemId)
-                    .map { attachments -> itemByIdWithVault to attachments }
-                    .catch { error ->
-                        PassLogger.w(TAG, "Error fetching attachments")
-                        PassLogger.w(TAG, error)
-                        throw error
-                    }
-            } else {
-                flowOf(itemByIdWithVault to emptyList())
-            }
+    private val creditCardItemDetailsResultFlow = combine(
+        observeItemByIdWithVault(shareId, itemId),
+        observeShare(shareId),
+        ::Pair
+    ).flatMapLatest { (itemByIdWithVault, share) ->
+        if (itemByIdWithVault.item.hasAttachments) {
+            observeItemAttachments(shareId, itemId)
+                .catch { error ->
+                    PassLogger.w(TAG, "Error fetching attachments")
+                    PassLogger.w(TAG, error)
+                    throw error
+                }
+        } else {
+            flowOf(emptyList())
+        }.map { attachments ->
+            Triple(itemByIdWithVault, attachments, share)
         }
+    }
         .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is ItemNotFoundError)) throw it }
         .onEach { hasItemBeenFetchedAtLeastOnce = true }
         .asLoadingResult()
 
     private val itemInfoFlow: Flow<LoadingResult<CreditCardItemInfo>> = combine(
         creditCardItemDetailsResultFlow,
-        fieldVisibilityFlow,
-        observeShare(shareId)
-    ) { detailsResult, fieldVisibility, share ->
-        detailsResult.map { (details, attachments) ->
+        fieldVisibilityFlow
+    ) { detailsResult, fieldVisibility ->
+        detailsResult.map { (details, attachments, share) ->
             val (itemUiModel, cardNumber) = encryptionContextProvider.withEncryptionContext {
                 val model = details.item.toUiModel(this)
                 var contents = model.contents as ItemContents.CreditCard

@@ -71,9 +71,9 @@ import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
-import proton.android.pass.data.api.usecases.ObserveItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemActions
+import proton.android.pass.data.api.usecases.ObserveItemByIdWithVault
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
@@ -214,20 +214,24 @@ class LoginDetailViewModel @Inject constructor(
     }
 
     private var hasItemBeenFetchedAtLeastOnce = false
-    private val loginItemDetailsResultFlow = observeItemByIdWithVault(shareId, itemId)
-        .flatMapLatest { itemByIdWithVault ->
-            if (itemByIdWithVault.item.hasAttachments) {
-                observeItemAttachments(shareId, itemId)
-                    .map { attachments -> itemByIdWithVault to attachments }
-                    .catch { error ->
-                        PassLogger.w(TAG, "Error fetching attachments")
-                        PassLogger.w(TAG, error)
-                        throw error
-                    }
-            } else {
-                flowOf(itemByIdWithVault to emptyList())
-            }
+    private val loginItemDetailsResultFlow = combine(
+        observeItemByIdWithVault(shareId, itemId),
+        observeShare(shareId),
+        ::Pair
+    ).flatMapLatest { (itemByIdWithVault, share) ->
+        if (itemByIdWithVault.item.hasAttachments) {
+            observeItemAttachments(shareId, itemId)
+                .catch { error ->
+                    PassLogger.w(TAG, "Error fetching attachments")
+                    PassLogger.w(TAG, error)
+                    throw error
+                }
+        } else {
+            flowOf(emptyList())
+        }.map { attachments ->
+            Triple(itemByIdWithVault, attachments, share)
         }
+    }
         .catch { if (!(hasItemBeenFetchedAtLeastOnce && it is ItemNotFoundError)) throw it }
         .onEach { hasItemBeenFetchedAtLeastOnce = true }
         .asLoadingResult()
@@ -246,11 +250,10 @@ class LoginDetailViewModel @Inject constructor(
 
     private val loginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> = combine(
         loginItemDetailsResultFlow,
-        canPerformPaidActionFlow,
-        observeShare(shareId)
-    ) { detailsResult, paidActionResult, share ->
+        canPerformPaidActionFlow
+    ) { detailsResult, paidActionResult ->
         paidActionResult.flatMap { isPaid ->
-            detailsResult.map { (details, attachments) ->
+            detailsResult.map { (details, attachments, share) ->
                 val itemType = details.item.itemType as ItemType.Login
                 val alias = getAliasForItem(itemType)
 

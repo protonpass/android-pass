@@ -103,6 +103,7 @@ class ManageItemViewModel @Inject constructor(
 
     internal val stateFlow: StateFlow<ManageItemState> = combineN(
         eventFlow,
+        flowOf(itemId),
         shareFlow,
         sharePendingInvitesFlow,
         observeShareItemsCount(shareId),

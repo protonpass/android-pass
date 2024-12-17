@@ -36,7 +36,9 @@ import proton.android.pass.featurehome.impl.shares.presentation.SharesDrawerStat
 @Composable
 internal fun SharesDrawerContent(modifier: Modifier = Modifier, state: SharesDrawerState) = with(state) {
     Column(
-        modifier = modifier.background(color = PassTheme.colors.backgroundWeak)
+        modifier = modifier
+            .background(color = PassTheme.colors.backgroundWeak)
+            .padding(top = Spacing.small)
     ) {
         SharesDrawerShareList(
             modifier = modifier
@@ -44,6 +46,8 @@ internal fun SharesDrawerContent(modifier: Modifier = Modifier, state: SharesDra
                 .weight(weight = 1f, fill = true),
             vaultShares = vaultShares.toPersistentList(),
             vaultSharesItemsCount = vaultSharesItemsCounter.toPersistentMap(),
+            sharedWithMeItemsCount = sharedWithMeItemsCount,
+            sharedByMeItemsCount = sharedByMeItemsCount,
             trashedItemsCount = trashedItemsCount
         )
 

@@ -94,7 +94,7 @@ fun PassSharingShareIcon(
 }
 
 @[Preview Composable]
-internal fun PassShareItemIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun PassSharingShareIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             PassSharingShareIcon(

@@ -22,6 +22,7 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.crypto.api.context.EncryptionTag
 import javax.inject.Inject
 
 interface ReencryptAttachmentKey {
@@ -42,8 +43,16 @@ class ReencryptAttachmentKeyImpl @Inject constructor(
         val itemKey = encryptionContextProvider.withEncryptionContextSuspendable {
             EncryptionKey(decrypt(encryptedItemKey))
         }
-        return encryptionContextProvider.withEncryptionContextSuspendable(itemKey) {
-            attachmentKeys.map { key -> encrypt(Base64.decodeBase64(key)) }
+        val decryptedKeys = encryptionContextProvider.withEncryptionContextSuspendable(itemKey) {
+            attachmentKeys.map { key ->
+                decrypt(
+                    EncryptedByteArray(Base64.decodeBase64(key)),
+                    EncryptionTag.FileKey
+                )
+            }
+        }
+        return encryptionContextProvider.withEncryptionContextSuspendable {
+            decryptedKeys.map { encrypt(it) }
         }
     }
 }

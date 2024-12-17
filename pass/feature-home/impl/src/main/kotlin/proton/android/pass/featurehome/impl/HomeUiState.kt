@@ -80,6 +80,7 @@ internal data class HomeUiState(
     val action: BottomSheetItemAction,
     val isFreePlan: Boolean,
     val isSLAliasSyncEnabled: Boolean,
+    val isItemSharingEnabled: Boolean,
     private val aliasTrashDialogStatusPreference: AliasTrashDialogStatusPreference
 ) {
     internal fun shouldShowRecentSearchHeader() =
@@ -116,6 +117,7 @@ internal data class HomeUiState(
             action = BottomSheetItemAction.None,
             isFreePlan = true,
             isSLAliasSyncEnabled = false,
+            isItemSharingEnabled = false,
             aliasTrashDialogStatusPreference = AliasTrashDialogStatusPreference.Disabled
         )
 

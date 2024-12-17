@@ -565,6 +565,7 @@ class HomeViewModel @Inject constructor(
         pinningUiStateFlow,
         bottomSheetItemActionFlow,
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1),
         preferencesRepository.observeAliasTrashDialogStatusPreference()
     ) { homeListUiState,
         searchUiState,
@@ -573,6 +574,7 @@ class HomeViewModel @Inject constructor(
         pinningUiState,
         bottomSheetItemAction,
         isSLAliasSyncEnabled,
+        isItemSharingEnabled,
         aliasTrashDialogStatusPreference ->
         HomeUiState(
             homeListUiState = homeListUiState,
@@ -583,6 +585,7 @@ class HomeViewModel @Inject constructor(
             action = bottomSheetItemAction,
             isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() ?: true,
             isSLAliasSyncEnabled = isSLAliasSyncEnabled,
+            isItemSharingEnabled = isItemSharingEnabled,
             aliasTrashDialogStatusPreference = aliasTrashDialogStatusPreference
         )
     }

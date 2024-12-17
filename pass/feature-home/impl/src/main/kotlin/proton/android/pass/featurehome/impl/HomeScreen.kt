@@ -82,6 +82,8 @@ import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsEvent
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsViewModel
 import proton.android.pass.featurehome.impl.saver.HomeBottomSheetTypeSaver
 import proton.android.pass.featurehome.impl.saver.ItemUiModelSaver
+import proton.android.pass.featurehome.impl.shares.presentation.SharesDrawerViewModel
+import proton.android.pass.featurehome.impl.shares.ui.SharesDrawerContent
 import proton.android.pass.featurehome.impl.trash.ConfirmClearTrashDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmDeleteItemsDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmRestoreAllDialog
@@ -111,11 +113,11 @@ fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
     routerViewModel: RouterViewModel = hiltViewModel(),
     vaultDrawerViewModel: VaultDrawerViewModel = hiltViewModel(),
-    onBoardingTipsViewModel: OnBoardingTipsViewModel = hiltViewModel()
+    onBoardingTipsViewModel: OnBoardingTipsViewModel = hiltViewModel(),
+    sharesDrawerViewModel: SharesDrawerViewModel = hiltViewModel()
 ) {
     val routerEvent by routerViewModel.routerEventState.collectAsStateWithLifecycle(RouterEvent.None)
     val homeUiState by homeViewModel.homeUiState.collectAsStateWithLifecycle()
-    val drawerUiState by vaultDrawerViewModel.drawerUiState.collectAsStateWithLifecycle()
     val onBoardingTipsUiState by onBoardingTipsViewModel.stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(homeUiState.navEvent) {
@@ -658,43 +660,53 @@ fun HomeScreen(
             drawerShape = CutCornerShape(0.dp),
             scrimColor = PassTheme.colors.backdrop,
             drawerContent = {
-                VaultDrawerContent(
-                    homeVaultSelection = drawerUiState.vaultSelection,
-                    list = drawerUiState.shares,
-                    totalTrashedItems = drawerUiState.totalTrashedItems,
-                    canCreateVault = drawerUiState.canCreateVault,
-                    onAllVaultsClick = remember {
-                        {
-                            scope.launch { drawerState.close() }
-                            vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.AllVaults)
-                            homeViewModel.setVaultSelection(VaultSelectionOption.AllVaults)
-                        }
-                    },
-                    onVaultClick = remember {
-                        {
-                            scope.launch { drawerState.close() }
-                            vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.Vault(it))
-                            homeViewModel.setVaultSelection(VaultSelectionOption.Vault(it))
-                        }
-                    },
-                    onTrashClick = remember {
-                        {
-                            scope.launch { drawerState.close() }
-                            vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.Trash)
-                            homeViewModel.setVaultSelection(VaultSelectionOption.Trash)
-                        }
-                    },
-                    onCreateVaultClick = remember { { onNavigateEvent(HomeNavigation.CreateVault) } },
-                    onVaultOptionsClick = remember {
-                        {
-                            onNavigateEvent(
-                                HomeNavigation.VaultOptions(
-                                    it.id
+                if (homeUiState.isItemSharingEnabled) {
+                    val sharesDrawerState by sharesDrawerViewModel.stateFlow.collectAsStateWithLifecycle()
+
+                    SharesDrawerContent(
+                        state = sharesDrawerState
+                    )
+                } else {
+                    val drawerUiState by vaultDrawerViewModel.drawerUiState.collectAsStateWithLifecycle()
+
+                    VaultDrawerContent(
+                        homeVaultSelection = drawerUiState.vaultSelection,
+                        list = drawerUiState.shares,
+                        totalTrashedItems = drawerUiState.totalTrashedItems,
+                        canCreateVault = drawerUiState.canCreateVault,
+                        onAllVaultsClick = remember {
+                            {
+                                scope.launch { drawerState.close() }
+                                vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.AllVaults)
+                                homeViewModel.setVaultSelection(VaultSelectionOption.AllVaults)
+                            }
+                        },
+                        onVaultClick = remember {
+                            {
+                                scope.launch { drawerState.close() }
+                                vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.Vault(it))
+                                homeViewModel.setVaultSelection(VaultSelectionOption.Vault(it))
+                            }
+                        },
+                        onTrashClick = remember {
+                            {
+                                scope.launch { drawerState.close() }
+                                vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.Trash)
+                                homeViewModel.setVaultSelection(VaultSelectionOption.Trash)
+                            }
+                        },
+                        onCreateVaultClick = remember { { onNavigateEvent(HomeNavigation.CreateVault) } },
+                        onVaultOptionsClick = remember {
+                            {
+                                onNavigateEvent(
+                                    HomeNavigation.VaultOptions(
+                                        it.id
+                                    )
                                 )
-                            )
+                            }
                         }
-                    }
-                )
+                    )
+                }
             }
         ) {
             HomeContent(

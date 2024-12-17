@@ -40,12 +40,15 @@ import proton.android.pass.commonrust.api.FileTypeDetector
 import proton.android.pass.commonrust.api.MimeType
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
+import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.data.api.errors.ItemKeyNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
-import proton.android.pass.data.impl.crypto.ReencryptAttachmentKey
+import proton.android.pass.data.impl.crypto.ReencryptAttachment
+import proton.android.pass.data.impl.crypto.ReencryptedKey
+import proton.android.pass.data.impl.crypto.ReencryptedMetadata
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
 import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
 import proton.android.pass.data.impl.extensions.toDomain
@@ -58,7 +61,6 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
-import proton.android.pass.domain.attachments.AttachmentType
 import proton.android.pass.domain.attachments.Chunk
 import proton.android.pass.domain.attachments.ChunkId
 import proton.android.pass.files.api.FileType
@@ -67,7 +69,6 @@ import proton.android.pass.log.api.PassLogger
 import java.io.File
 import java.net.URI
 import javax.inject.Inject
-import proton.android.pass.commonrust.api.FileType as RustFileType
 
 class AttachmentRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
@@ -80,7 +81,7 @@ class AttachmentRepositoryImpl @Inject constructor(
     private val fileTypeDetector: FileTypeDetector,
     private val localItemDataSource: LocalItemDataSource,
     private val fileUriGenerator: FileUriGenerator,
-    private val reencryptAttachmentKey: ReencryptAttachmentKey
+    private val reencryptAttachment: ReencryptAttachment
 ) : AttachmentRepository {
 
     override suspend fun createPendingAttachment(userId: UserId, uri: URI): AttachmentId {
@@ -149,12 +150,16 @@ class AttachmentRepositoryImpl @Inject constructor(
         itemId: ItemId
     ): Flow<List<Attachment>> = local.observeAttachmentsWithChunksForItem(shareId, itemId)
         .map { attachmentsWithChunks ->
-            attachmentsWithChunks.map { attachmentWithChunks ->
-                attachmentWithChunks.attachment.toDomain(
-                    shareId = shareId,
-                    itemId = itemId,
-                    chunks = attachmentWithChunks.chunks.map(ChunkEntity::toDomain)
-                )
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                attachmentsWithChunks.map {
+                    it.attachment.toDomain(
+                        encryptionContext = this,
+                        fileTypeDetector = fileTypeDetector,
+                        shareId = shareId,
+                        itemId = itemId,
+                        chunks = it.chunks.map(ChunkEntity::toDomain)
+                    )
+                }
             }
         }
         .onStart {
@@ -172,71 +177,45 @@ class AttachmentRepositoryImpl @Inject constructor(
             }
         }
 
-    @Suppress("LongMethod")
     private suspend fun refreshAttachments(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
     ) {
-        val responseMap = remote.retrieveAllFiles(
+        val fileDetails = remote.retrieveAllFiles(
             userId = userId,
             shareId = shareId,
             itemId = itemId
-        ).files.associateBy { it.fileId }
+        ).files
 
         val encryptedItemKey = localItemDataSource.getById(shareId, itemId)?.encryptedKey
             ?: throw ItemKeyNotAvailableError()
 
-        val itemKey = encryptionContextProvider.withEncryptionContextSuspendable {
-            EncryptionKey(decrypt(encryptedItemKey))
-        }
-
-        val keyMap = encryptionContextProvider.withEncryptionContextSuspendable(itemKey) {
-            responseMap.mapValues { file ->
-                val decodedFileKey = Base64.decodeBase64(file.value.fileKey)
-                val decryptedKey = decrypt(
-                    EncryptedByteArray(decodedFileKey),
-                    EncryptionTag.FileKey
-                )
-                EncryptionKey(decryptedKey)
-            }
-        }
-        val attachmentsWithChunks = responseMap.map { (fileId, fileDetails) ->
-            val fileEncryptionKey = keyMap[fileId] ?: throw IllegalStateException("No key found")
-            encryptionContextProvider.withEncryptionContextSuspendable(fileEncryptionKey) {
-                val decodedMetadata = Base64.decodeBase64(fileDetails.metadata)
-                val decryptedMetadata = decrypt(
-                    content = EncryptedByteArray(decodedMetadata),
-                    tag = EncryptionTag.FileData
-                )
-                val metadata = FileV1.FileMetadata.parseFrom(decryptedMetadata)
-                val fileType = fileTypeDetector.getFileTypeFromMimeType(
-                    MimeType(metadata.mimeType)
-                )
-                val attachmentEntity = fileDetails.toEntity(
+        val (reencryptedMetadatas, reencryptedKeys) = reencryptAttachment(
+            encryptedItemKey,
+            fileDetails.map(FileDetailsResponse::metadata),
+            fileDetails.map(FileDetailsResponse::fileKey)
+        )
+        val attachmentsWithChunks = fileDetails
+            .zip(reencryptedMetadatas)
+            .zip(reencryptedKeys)
+            .associate { (pair, key: ReencryptedKey) ->
+                val (fileDetail, metadata: ReencryptedMetadata) = pair
+                val attachmentEntity = fileDetail.toEntity(
                     userId = userId,
                     shareId = shareId,
                     itemId = itemId,
-                    metadata = metadata,
-                    fileType = fileType,
-                    reencryptedKey = EncryptedByteArray(ByteArray(0))
+                    reencryptedKey = key.value,
+                    reencryptedMetadata = metadata.value
                 )
-                val chunkEntities =
-                    fileDetails.chunks.map { it.toChunkEntity(fileId, itemId, shareId) }
+                val chunkEntities = fileDetail.chunks.map {
+                    it.toChunkEntity(fileDetail.fileId, itemId, shareId)
+                }
                 attachmentEntity to chunkEntities
             }
-        }.toMap()
-        val reencryptedAttachmentKeys = reencryptAttachmentKey(
-            encryptedItemKey,
-            attachmentsWithChunks.keys.map(AttachmentEntity::key)
-        )
-        val attachmentsWithReencryptedKeys = attachmentsWithChunks.keys.zip(reencryptedAttachmentKeys)
-            .map { (attachment, key) -> attachment.copy(reencryptedKey = key) }
-        val chunkEntities = attachmentsWithChunks.values.flatten()
-
         local.saveAttachmentsWithChunks(
-            attachmentEntities = attachmentsWithReencryptedKeys,
-            chunkEntities = chunkEntities
+            attachmentEntities = attachmentsWithChunks.keys.toList(),
+            chunkEntities = attachmentsWithChunks.values.flatten()
         )
     }
 
@@ -291,22 +270,20 @@ fun FileDetailsResponse.toEntity(
     userId: UserId,
     shareId: ShareId,
     itemId: ItemId,
-    metadata: FileV1.FileMetadata,
-    fileType: RustFileType,
-    reencryptedKey: EncryptedByteArray
+    reencryptedKey: EncryptedByteArray,
+    reencryptedMetadata: EncryptedByteArray
 ): AttachmentEntity = AttachmentEntity(
     userId = userId.id,
     id = this.fileId,
     shareId = shareId.id,
     itemId = itemId.id,
-    name = metadata.name,
-    mimeType = metadata.mimeType,
-    type = fileType.toDomain().id,
+    metadata = this.metadata,
     size = this.size,
     createTime = Instant.fromEpochSeconds(this.createTime),
     key = this.fileKey,
     itemKeyRotation = this.itemKeyRotation,
-    reencryptedKey = reencryptedKey
+    reencryptedKey = reencryptedKey,
+    reencryptedMetadata = reencryptedMetadata
 )
 
 fun ChunkResponse.toChunkEntity(
@@ -323,21 +300,28 @@ fun ChunkResponse.toChunkEntity(
 )
 
 fun AttachmentEntity.toDomain(
+    encryptionContext: EncryptionContext,
+    fileTypeDetector: FileTypeDetector,
     shareId: ShareId,
     itemId: ItemId,
     chunks: List<Chunk>
-): Attachment = Attachment(
-    id = AttachmentId(this.id),
-    shareId = shareId,
-    itemId = itemId,
-    name = this.name,
-    mimeType = this.mimeType,
-    type = AttachmentType.entries.find { it.id == this.type } ?: AttachmentType.Unknown,
-    size = this.size,
-    createTime = this.createTime,
-    reencryptedKey = this.reencryptedKey,
-    chunks = chunks
-)
+): Attachment {
+    val decryptedMetadata = encryptionContext.decrypt(this.reencryptedMetadata)
+    val metadata = FileV1.FileMetadata.parseFrom(decryptedMetadata)
+    val fileType = fileTypeDetector.getFileTypeFromMimeType(MimeType(metadata.mimeType))
+    return Attachment(
+        id = AttachmentId(this.id),
+        shareId = shareId,
+        itemId = itemId,
+        name = metadata.name,
+        mimeType = metadata.mimeType,
+        type = fileType.toDomain(),
+        size = this.size,
+        createTime = this.createTime,
+        reencryptedKey = this.reencryptedKey,
+        chunks = chunks
+    )
+}
 
 fun ChunkEntity.toDomain(): Chunk = Chunk(
     id = ChunkId(this.id),

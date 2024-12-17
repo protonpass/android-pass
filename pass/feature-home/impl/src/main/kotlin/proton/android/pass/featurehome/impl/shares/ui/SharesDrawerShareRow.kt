@@ -35,7 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.buttons.PassSharingShareIcon
@@ -55,9 +55,9 @@ internal fun SharesDrawerShareRow(
     iconBackgroundColor: Color,
     name: String,
     itemsCount: Int,
-    membersCount: Int,
     isSelected: Boolean,
     onClick: () -> Unit,
+    membersCount: Int = 0,
     onShareClick: (() -> Unit)? = null,
     onMenuOptionsClick: (() -> Unit)? = null
 ) {
@@ -67,8 +67,8 @@ internal fun SharesDrawerShareRow(
             .clickable { onClick() }
             .padding(
                 start = Spacing.medium,
-                top = Spacing.medium,
-                bottom = Spacing.medium
+                top = Spacing.mediumSmall,
+                bottom = Spacing.mediumSmall
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -94,7 +94,7 @@ internal fun SharesDrawerShareRow(
         Column(
             modifier = Modifier
                 .weight(weight = 1f)
-                .padding(start = Spacing.medium),
+                .padding(start = Spacing.mediumSmall),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
         ) {
             Text.Body1Regular(
@@ -128,7 +128,11 @@ internal fun SharesDrawerShareRow(
 }
 
 @[Preview Composable]
-internal fun ShareDrawerVaultRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun ShareDrawerVaultRowPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, isSelected) = input
+
     PassTheme(isDark = isDark) {
         Surface {
             SharesDrawerShareRow(
@@ -138,7 +142,7 @@ internal fun ShareDrawerVaultRowPreview(@PreviewParameter(ThemePreviewProvider::
                 name = "Share name",
                 itemsCount = 16,
                 membersCount = 5,
-                isSelected = false,
+                isSelected = isSelected,
                 onClick = {},
                 onShareClick = {},
                 onMenuOptionsClick = {}

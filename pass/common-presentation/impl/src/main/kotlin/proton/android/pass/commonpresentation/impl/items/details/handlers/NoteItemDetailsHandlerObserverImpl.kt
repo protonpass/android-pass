@@ -61,9 +61,9 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
                 itemDiffs = ItemDiffs.Note(),
                 itemShareCount = item.shareCount,
                 attachmentsState = AttachmentsState(
-                    draftAttachmentsList = listOf(),
+                    draftAttachmentsList = emptyList(),
                     attachmentsList = attachments,
-                    loadingDraftAttachments = setOf(),
+                    loadingDraftAttachments = emptySet(),
                     loadingAttachments = setOf()
                 )
             )

@@ -90,9 +90,9 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             secondaryTotps = secondaryTotps,
             passkeys = loginItemContents.passkeys.map { passkey -> UIPasskeyContent.from(passkey) },
             attachmentsState = AttachmentsState(
-                draftAttachmentsList = listOf(),
+                draftAttachmentsList = emptyList(),
                 attachmentsList = attachments,
-                loadingDraftAttachments = setOf(),
+                loadingDraftAttachments = emptySet(),
                 loadingAttachments = setOf()
             )
         )

@@ -43,6 +43,8 @@ internal fun SharesDrawerShareList(
     modifier: Modifier = Modifier,
     vaultShares: ImmutableList<Share.Vault>,
     vaultSharesItemsCount: ImmutableMap<ShareId, ShareItemCount>,
+    sharedWithMeItemsCount: Int,
+    sharedByMeItemsCount: Int,
     trashedItemsCount: Int
 ) {
     LazyColumn(
@@ -55,7 +57,6 @@ internal fun SharesDrawerShareList(
                 iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
                 name = stringResource(id = R.string.vault_drawer_all_vaults),
                 itemsCount = 4,
-                membersCount = 0,
                 isSelected = true,
                 onClick = { }
             )
@@ -93,12 +94,41 @@ internal fun SharesDrawerShareList(
 
         item {
             SharesDrawerShareRow(
+                shareIconRes = CoreR.drawable.ic_proton_user_arrow_left,
+                iconColor = PassTheme.colors.interactionNormMajor2,
+                iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
+                name = stringResource(id = R.string.item_type_filter_items_shared_with_me),
+                itemsCount = sharedWithMeItemsCount,
+                isSelected = false,
+                onClick = { }
+            )
+        }
+
+        item {
+            PassDivider(
+                modifier = Modifier.padding(horizontal = Spacing.medium)
+            )
+        }
+
+        item {
+            SharesDrawerShareRow(
+                shareIconRes = CoreR.drawable.ic_proton_user_arrow_right,
+                iconColor = PassTheme.colors.interactionNormMajor2,
+                iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
+                name = stringResource(id = R.string.item_type_filter_items_shared_by_me),
+                itemsCount = sharedByMeItemsCount,
+                isSelected = false,
+                onClick = { }
+            )
+        }
+
+        item {
+            SharesDrawerShareRow(
                 shareIconRes = CoreR.drawable.ic_proton_trash,
                 iconColor = PassTheme.colors.textWeak,
                 iconBackgroundColor = PassTheme.colors.textDisabled,
                 name = stringResource(id = R.string.vault_drawer_item_trash),
                 itemsCount = trashedItemsCount,
-                membersCount = 0,
                 isSelected = false,
                 onClick = { },
                 onMenuOptionsClick = {}

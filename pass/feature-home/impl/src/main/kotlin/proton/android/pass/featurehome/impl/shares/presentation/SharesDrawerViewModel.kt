@@ -28,7 +28,9 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.usecases.ObserveAllShares
+import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.shares.ObserveSharesItemsCount
 import proton.android.pass.domain.Share
@@ -38,7 +40,8 @@ import javax.inject.Inject
 class SharesDrawerViewModel @Inject constructor(
     canCreateVault: CanCreateVault,
     observeAllShares: ObserveAllShares,
-    observeSharesItemsCount: ObserveSharesItemsCount
+    observeSharesItemsCount: ObserveSharesItemsCount,
+    observeItemCount: ObserveItemCount
 ) : ViewModel() {
 
     private val vaultSharesFlow = observeAllShares()
@@ -60,10 +63,14 @@ class SharesDrawerViewModel @Inject constructor(
                 .let { vaultShareIds -> observeSharesItemsCount(vaultShareIds) }
         }
 
+    private val itemCountSummaryOptionFlow = observeItemCount()
+        .mapLatest(::Some)
+
     internal val stateFlow: StateFlow<SharesDrawerState> = combine(
         vaultSharesFlow,
         vaultSharesItemsCountFlow,
         canCreateVault(),
+        itemCountSummaryOptionFlow,
         ::SharesDrawerState
     ).stateIn(
         scope = viewModelScope,

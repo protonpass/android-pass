@@ -19,6 +19,10 @@
 package proton.android.pass.featurehome.impl.shares.presentation
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
@@ -27,8 +31,27 @@ import proton.android.pass.domain.ShareId
 internal data class SharesDrawerState(
     internal val vaultShares: List<Share.Vault>,
     internal val vaultSharesItemsCounter: Map<ShareId, ShareItemCount>,
-    internal val canCreateVaults: Boolean
+    internal val canCreateVaults: Boolean,
+    private val itemCountSummaryOption: Option<ItemCountSummary>
 ) {
+
+    internal val sharedWithMeItemsCount: Int = when (itemCountSummaryOption) {
+        None -> 0
+        is Some ->
+            itemCountSummaryOption
+                .value
+                .sharedWithMe
+                .toInt()
+    }
+
+    internal val sharedByMeItemsCount: Int = when (itemCountSummaryOption) {
+        None -> 0
+        is Some ->
+            itemCountSummaryOption
+                .value
+                .sharedByMe
+                .toInt()
+    }
 
     internal val trashedItemsCount: Int = vaultSharesItemsCounter
         .values
@@ -40,7 +63,8 @@ internal data class SharesDrawerState(
         internal val Initial: SharesDrawerState = SharesDrawerState(
             vaultShares = emptyList(),
             vaultSharesItemsCounter = emptyMap(),
-            canCreateVaults = false
+            canCreateVaults = false,
+            itemCountSummaryOption = None
         )
 
     }

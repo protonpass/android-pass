@@ -28,7 +28,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
@@ -103,7 +102,7 @@ class ProfileViewModel @Inject constructor(
     private val userManager: UserManager,
     private val refreshContent: RefreshContent,
     private val searchOptionsRepository: HomeSearchOptionsRepository,
-    private val accountManager: AccountManager,
+    accountManager: AccountManager,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
@@ -372,9 +371,7 @@ class ProfileViewModel @Inject constructor(
     )
 
     private suspend fun selectFilters(filterType: SearchFilterType) {
-        accountManager.getPrimaryUserId().firstOrNull()?.let {
-            searchOptionsRepository.setVaultSelectionOption(it, VaultSelectionOption.AllVaults)
-        }
+        searchOptionsRepository.setVaultSelectionOption(VaultSelectionOption.AllVaults)
         searchOptionsRepository.setFilterOption(FilterOption(filterType))
     }
 

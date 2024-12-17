@@ -24,7 +24,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.domain.ItemId
 import proton.android.pass.features.sharing.SharingNavigation
 import proton.android.pass.features.sharing.manage.item.presentation.ManageItemEvent
 import proton.android.pass.features.sharing.manage.item.presentation.ManageItemViewModel
@@ -59,7 +58,7 @@ internal fun ManageItemScreen(
                 is ManageItemUiEvent.OnInviteToItemClick -> {
                     SharingNavigation.ShareItem(
                         shareId = uiEvent.shareId,
-                        itemId = ItemId(id = uiEvent.targetId)
+                        itemId = uiEvent.itemId
                     ).also(onNavigateEvent)
                 }
 

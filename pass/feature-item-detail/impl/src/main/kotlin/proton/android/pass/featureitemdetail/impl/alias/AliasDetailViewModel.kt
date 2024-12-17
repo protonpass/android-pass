@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemdetail.impl.alias
 
+import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -45,6 +46,7 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -69,11 +71,14 @@ import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
+import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.AliasChangeStatusError
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.AliasCopiedToClipboard
@@ -83,6 +88,7 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNot
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotRestored
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemRestored
 import proton.android.pass.featureitemdetail.impl.ItemDelete
+import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.AliasItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
@@ -110,6 +116,8 @@ class AliasDetailViewModel @Inject constructor(
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
     private val changeAliasStatus: ChangeAliasStatus,
+    private val downloadAttachment: DownloadAttachment,
+    private val fileHandler: FileHandler,
     observeAliasContacts: ObserveAliasContacts,
     observeItemAttachments: ObserveItemAttachments,
     userPreferencesRepository: UserPreferencesRepository,
@@ -131,27 +139,15 @@ class AliasDetailViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
-    private val loadingStates: Map<LoadingStateKey, MutableStateFlow<IsLoadingState>> = mapOf(
-        LoadingStateKey.MovingToTrash to MutableStateFlow(IsLoadingState.NotLoading),
-        LoadingStateKey.PermanentlyDeleting to MutableStateFlow(IsLoadingState.NotLoading),
-        LoadingStateKey.RestoringFromTrash to MutableStateFlow(IsLoadingState.NotLoading),
-        LoadingStateKey.Pinning to MutableStateFlow(IsLoadingState.NotLoading),
-        LoadingStateKey.Unpinning to MutableStateFlow(IsLoadingState.NotLoading),
-        LoadingStateKey.AliasStateToggling to MutableStateFlow(IsLoadingState.NotLoading)
-    )
-    private val allLoadingStates =
-        combine<Pair<LoadingStateKey, IsLoadingState>, Map<LoadingStateKey, IsLoadingState>>(
-            loadingStates.map { (key, flow) ->
-                flow.map { key to it }
-            },
-            Array<Pair<LoadingStateKey, IsLoadingState>>::toMap
-        )
+    private val allLoadingStates = MutableStateFlow<Map<LoadingStateKey, IsLoadingState>>(emptyMap())
     private val isItemSentToTrashState: MutableStateFlow<IsSentToTrashState> =
         MutableStateFlow(IsSentToTrashState.NotSent)
     private val isPermanentlyDeletedState: MutableStateFlow<IsPermanentlyDeletedState> =
         MutableStateFlow(IsPermanentlyDeletedState.NotDeleted)
     private val isRestoredFromTrashState: MutableStateFlow<IsRestoredFromTrashState> =
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
+    private val loadingAttachmentsState: MutableStateFlow<Set<AttachmentId>> =
+        MutableStateFlow(emptySet())
     private val eventState: MutableStateFlow<ItemDetailEvent> =
         MutableStateFlow(ItemDetailEvent.Unknown)
 
@@ -219,10 +215,16 @@ class AliasDetailViewModel @Inject constructor(
         ::Pair
     )
 
+    private val loadingStates = combine(
+        allLoadingStates,
+        loadingAttachmentsState,
+        ::Pair
+    )
+
     internal val uiState: StateFlow<AliasDetailUiState> = combineN(
         aliasItemDetailsResultFlow,
         aliasDetailsAndContactsFlow,
-        allLoadingStates,
+        loadingStates,
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
@@ -232,7 +234,7 @@ class AliasDetailViewModel @Inject constructor(
         itemFeaturesFlow
     ) { itemLoadingResult,
         (aliasDetailsResult, aliasContactsResult),
-        allLoadingStates,
+        (allLoadingStates, loadingAttachments),
         isItemSentToTrash,
         isPermanentlyDeleted,
         isRestoredFromTrash,
@@ -278,10 +280,10 @@ class AliasDetailViewModel @Inject constructor(
                     event = event,
                     itemFeatures = itemFeatures,
                     attachmentsState = AttachmentsState(
-                        draftAttachmentsList = listOf(),
+                        draftAttachmentsList = emptyList(), // no drafts in detail
+                        loadingDraftAttachments = emptySet(), // no drafts in detail
                         attachmentsList = attachments,
-                        loadingDraftAttachments = setOf(),
-                        loadingAttachments = setOf()
+                        loadingAttachments = loadingAttachments
                     ),
                     hasMoreThanOneVault = details.hasMoreThanOneVault
                 )
@@ -373,7 +375,7 @@ class AliasDetailViewModel @Inject constructor(
                     PassLogger.w(TAG, error, "An error occurred pinning Alias item")
                     snackbarDispatcher(DetailSnackbarMessages.ItemPinnedError)
                 }
-            setLoadingState(LoadingStateKey.Unpinning, IsLoadingState.NotLoading)
+            setLoadingState(LoadingStateKey.Pinning, IsLoadingState.NotLoading)
         }
     }
 
@@ -411,7 +413,28 @@ class AliasDetailViewModel @Inject constructor(
     }
 
     private fun setLoadingState(key: LoadingStateKey, isLoading: IsLoadingState) {
-        loadingStates[key]?.update { isLoading }
+        allLoadingStates.update { it + (key to isLoading) }
+    }
+
+    fun onAttachmentOpen(context: Context, attachment: Attachment) {
+        viewModelScope.launch {
+            loadingAttachmentsState.update { it + attachment.id }
+            runCatching {
+                val uri = downloadAttachment(attachment)
+                fileHandler.openFile(
+                    context = context,
+                    uri = uri,
+                    mimeType = attachment.mimeType,
+                    chooserTitle = context.getString(R.string.open_with)
+                )
+            }.onSuccess {
+                PassLogger.i(TAG, "Attachment opened: ${attachment.id}")
+            }.onFailure {
+                PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
+                PassLogger.w(TAG, it)
+            }
+            loadingAttachmentsState.update { it - attachment.id }
+        }
     }
 
     private companion object {

@@ -61,9 +61,9 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
                 itemDiffs = ItemDiffs.CreditCard(),
                 itemShareCount = item.shareCount,
                 attachmentsState = AttachmentsState(
-                    draftAttachmentsList = listOf(),
+                    draftAttachmentsList = emptyList(),
                     attachmentsList = attachments,
-                    loadingDraftAttachments = setOf(),
+                    loadingDraftAttachments = emptySet(),
                     loadingAttachments = setOf()
                 )
             )

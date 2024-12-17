@@ -61,9 +61,9 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                 itemShare = share,
                 itemShareCount = item.shareCount,
                 attachmentsState = AttachmentsState(
-                    draftAttachmentsList = listOf(),
+                    draftAttachmentsList = emptyList(),
                     attachmentsList = attachments,
-                    loadingDraftAttachments = setOf(),
+                    loadingDraftAttachments = emptySet(),
                     loadingAttachments = setOf()
                 )
             )

@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemdetail.impl.login
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -52,6 +53,7 @@ import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonrust.api.PasswordScorer
+import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
@@ -78,6 +80,7 @@ import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
+import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
@@ -91,6 +94,7 @@ import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.FieldCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
@@ -110,6 +114,7 @@ import proton.android.pass.featureitemdetail.impl.ItemDetailScopeNavArgId
 import proton.android.pass.featureitemdetail.impl.PassMonitorItemDetailFromMissing2FA
 import proton.android.pass.featureitemdetail.impl.PassMonitorItemDetailFromReusedPassword
 import proton.android.pass.featureitemdetail.impl.PassMonitorItemDetailFromWeakPassword
+import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.LoginItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
@@ -146,6 +151,8 @@ class LoginDetailViewModel @Inject constructor(
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
     private val updateItemFlag: UpdateItemFlag,
+    private val downloadAttachment: DownloadAttachment,
+    private val fileHandler: FileHandler,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     observeItemAttachments: ObserveItemAttachments,
     canPerformPaidAction: CanPerformPaidAction,
@@ -206,6 +213,8 @@ class LoginDetailViewModel @Inject constructor(
     private val canPerformPaidActionFlow = canPerformPaidAction().asLoadingResult()
     private val customFieldsState: MutableStateFlow<List<CustomFieldUiContent>> =
         MutableStateFlow(emptyList())
+    private val loadingAttachmentsState: MutableStateFlow<Set<AttachmentId>> =
+        MutableStateFlow(emptySet())
     private val eventState: MutableStateFlow<ItemDetailEvent> =
         MutableStateFlow(ItemDetailEvent.Unknown)
 
@@ -402,10 +411,16 @@ class LoginDetailViewModel @Inject constructor(
         val attachments: List<Attachment>
     )
 
+    private val loadingStates = combine(
+        isLoadingState,
+        loadingAttachmentsState,
+        ::Pair
+    )
+
     internal val uiState: StateFlow<LoginDetailUiState> = combineN(
         revealedLoginItemInfoFlow,
         totpUiStateFlow,
-        isLoadingState,
+        loadingStates,
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
@@ -416,7 +431,7 @@ class LoginDetailViewModel @Inject constructor(
         itemFeaturesFlow
     ) { itemDetails,
         totpUiState,
-        isLoading,
+        (isLoading, loadingAttachments),
         isItemSentToTrash,
         isPermanentlyDeleted,
         isRestoredFromTrash,
@@ -464,10 +479,10 @@ class LoginDetailViewModel @Inject constructor(
                     itemFeatures = itemFeatures,
                     monitorState = details.securityState,
                     attachmentsState = AttachmentsState(
-                        draftAttachmentsList = listOf(),
+                        draftAttachmentsList = emptyList(), // no drafts in detail
+                        loadingDraftAttachments = emptySet(), // no drafts in detail
                         attachmentsList = details.attachments,
-                        loadingDraftAttachments = setOf(),
-                        loadingAttachments = setOf()
+                        loadingAttachments = loadingAttachments
                     ),
                     hasMoreThanOneVault = details.hasMoreThanOneVault
                 )
@@ -848,6 +863,27 @@ class LoginDetailViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    fun onAttachmentOpen(context: Context, attachment: Attachment) {
+        viewModelScope.launch {
+            loadingAttachmentsState.update { it + attachment.id }
+            runCatching {
+                val uri = downloadAttachment(attachment)
+                fileHandler.openFile(
+                    context = context,
+                    uri = uri,
+                    mimeType = attachment.mimeType,
+                    chooserTitle = context.getString(R.string.open_with)
+                )
+            }.onSuccess {
+                PassLogger.i(TAG, "Attachment opened: ${attachment.id}")
+            }.onFailure {
+                PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
+                PassLogger.w(TAG, it)
+            }
+            loadingAttachmentsState.update { it - attachment.id }
         }
     }
 

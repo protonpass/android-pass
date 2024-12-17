@@ -19,22 +19,17 @@
 package proton.android.pass.data.impl.usecases.shares
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.mapLatest
-import proton.android.pass.data.api.usecases.shares.ObserveShareItemsCount
+import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.shares.ObserveSharesItemsCount
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
-class ObserveShareItemsCountImpl @Inject constructor(
-    private val observeSharesItemsCount: ObserveSharesItemsCount
-) : ObserveShareItemsCount {
+class ObserveSharesItemsCountImpl @Inject constructor(
+    private val itemRepository: ItemRepository
+) : ObserveSharesItemsCount {
 
-    override fun invoke(shareId: ShareId): Flow<Int> = observeSharesItemsCount(listOf(shareId))
-        .mapLatest { shareItemCountMap ->
-            shareItemCountMap[shareId]
-                ?.totalItems
-                ?.toInt()
-                ?: 0
-        }
+    override fun invoke(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> = itemRepository
+        .observeItemCount(shareIds)
 
 }

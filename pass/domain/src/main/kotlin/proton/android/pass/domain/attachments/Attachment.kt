@@ -19,14 +19,12 @@
 package proton.android.pass.domain.attachments
 
 import kotlinx.datetime.Instant
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 @JvmInline
 value class AttachmentId(val id: String)
-
-@JvmInline
-value class AttachmentKey(val value: String)
 
 enum class AttachmentType(val id: Int) {
     RasterImage(1),
@@ -54,8 +52,7 @@ data class Attachment(
     val type: AttachmentType,
     val size: Long,
     val createTime: Instant,
-    val key: AttachmentKey,
-    val itemKeyRotation: String,
+    val reencryptedKey: EncryptedByteArray,
     val chunks: List<Chunk>
 )
 

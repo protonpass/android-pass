@@ -39,11 +39,7 @@ class DownloadAttachmentImpl @Inject constructor(
             ?: throw UserIdNotAvailableError()
         return attachmentRepository.downloadAttachment(
             userId = userId,
-            shareId = attachment.shareId,
-            itemId = attachment.itemId,
-            attachmentId = attachment.id,
-            attachmentKey = attachment.key,
-            chunks = attachment.chunks
+            attachment = attachment
         )
     }
 }

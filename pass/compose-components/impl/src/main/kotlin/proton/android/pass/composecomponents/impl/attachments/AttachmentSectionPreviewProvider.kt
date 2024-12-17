@@ -20,12 +20,12 @@ package proton.android.pass.composecomponents.impl.attachments
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Instant
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
-import proton.android.pass.domain.attachments.AttachmentKey
 import proton.android.pass.domain.attachments.AttachmentType
 import proton.android.pass.domain.attachments.FileMetadata
 import java.net.URI
@@ -112,8 +112,7 @@ class AttachmentSectionPreviewProvider :
         size = size,
         createTime = createTime,
         mimeType = "",
-        key = AttachmentKey(""),
-        itemKeyRotation = "",
+        reencryptedKey = EncryptedByteArray(byteArrayOf()),
         chunks = listOf()
     )
 

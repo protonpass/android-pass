@@ -19,15 +19,27 @@
 package proton.android.pass.featurehome.impl.shares.presentation
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.data.api.repositories.ShareItemCount
+import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareId
 
 @Stable
 internal data class SharesDrawerState(
+    internal val vaultShares: List<Share.Vault>,
+    internal val vaultSharesItemsCounter: Map<ShareId, ShareItemCount>,
     internal val canCreateVaults: Boolean
 ) {
+
+    internal val trashedItemsCount: Int = vaultSharesItemsCounter
+        .values
+        .sumOf { shareItemCount -> shareItemCount.trashedItems }
+        .toInt()
 
     internal companion object {
 
         internal val Initial: SharesDrawerState = SharesDrawerState(
+            vaultShares = emptyList(),
+            vaultSharesItemsCounter = emptyMap(),
             canCreateVaults = false
         )
 

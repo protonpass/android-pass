@@ -35,6 +35,7 @@ import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.R
+import proton.android.pass.searchoptions.api.VaultSelectionOption
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -43,9 +44,12 @@ internal fun SharesDrawerShareList(
     modifier: Modifier = Modifier,
     vaultShares: ImmutableList<Share.Vault>,
     vaultSharesItemsCount: ImmutableMap<ShareId, ShareItemCount>,
+    vaultSelectionOption: VaultSelectionOption,
+    allItemsCount: Int,
     sharedWithMeItemsCount: Int,
     sharedByMeItemsCount: Int,
-    trashedItemsCount: Int
+    trashedItemsCount: Int,
+    onUiEvent: (SharesDrawerUiEvent) -> Unit
 ) {
     LazyColumn(
         modifier = modifier
@@ -56,9 +60,11 @@ internal fun SharesDrawerShareList(
                 iconColor = PassTheme.colors.interactionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
                 name = stringResource(id = R.string.vault_drawer_all_vaults),
-                itemsCount = 4,
-                isSelected = true,
-                onClick = { }
+                itemsCount = allItemsCount,
+                isSelected = vaultSelectionOption is VaultSelectionOption.AllVaults,
+                onClick = {
+                    onUiEvent(SharesDrawerUiEvent.OnAllVaultsClick)
+                }
             )
         }
 
@@ -79,10 +85,24 @@ internal fun SharesDrawerShareList(
                 name = vaultShare.name,
                 itemsCount = vaultSharesItemsCount[vaultShare.id]?.activeItems?.toInt() ?: 0,
                 membersCount = vaultShare.memberCount,
-                isSelected = false,
-                onClick = {},
-                onShareClick = {},
-                onMenuOptionsClick = {}
+                isSelected = vaultSelectionOption == VaultSelectionOption.Vault(vaultShare.id),
+                onClick = {
+                    SharesDrawerUiEvent.OnVaultClick(
+                        shareId = vaultShare.id
+                    ).also(onUiEvent)
+                },
+                onShareClick = {
+                    if (vaultShare.shared) {
+                        SharesDrawerUiEvent.OnManageVaultClick(shareId = vaultShare.id)
+                    } else {
+                        SharesDrawerUiEvent.OnShareVaultClick(shareId = vaultShare.id)
+                    }.also(onUiEvent)
+                },
+                onMenuOptionsClick = {
+                    SharesDrawerUiEvent.OnVaultOptionsClick(
+                        shareId = vaultShare.id
+                    ).also(onUiEvent)
+                }
             )
 
             if (index < vaultShares.lastIndex) {
@@ -129,9 +149,10 @@ internal fun SharesDrawerShareList(
                 iconBackgroundColor = PassTheme.colors.textDisabled,
                 name = stringResource(id = R.string.vault_drawer_item_trash),
                 itemsCount = trashedItemsCount,
-                isSelected = false,
-                onClick = { },
-                onMenuOptionsClick = {}
+                isSelected = vaultSelectionOption is VaultSelectionOption.Trash,
+                onClick = {
+                    onUiEvent(SharesDrawerUiEvent.OnTrashClick)
+                }
             )
         }
     }

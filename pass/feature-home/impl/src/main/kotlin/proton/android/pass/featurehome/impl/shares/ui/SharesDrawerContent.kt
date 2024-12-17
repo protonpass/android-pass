@@ -25,6 +25,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toPersistentMap
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
@@ -39,7 +41,10 @@ internal fun SharesDrawerContent(modifier: Modifier = Modifier, state: SharesDra
         SharesDrawerShareList(
             modifier = modifier
                 .fillMaxHeight()
-                .weight(weight = 1f, fill = true)
+                .weight(weight = 1f, fill = true),
+            vaultShares = vaultShares.toPersistentList(),
+            vaultSharesItemsCount = vaultSharesItemsCounter.toPersistentMap(),
+            trashedItemsCount = trashedItemsCount
         )
 
         if (canCreateVaults) {

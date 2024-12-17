@@ -23,22 +23,52 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
+import proton.android.pass.data.api.usecases.shares.ObserveSharesItemsCount
+import proton.android.pass.domain.Share
 import javax.inject.Inject
 
 @HiltViewModel
 class SharesDrawerViewModel @Inject constructor(
-    canCreateVault: CanCreateVault
+    canCreateVault: CanCreateVault,
+    observeAllShares: ObserveAllShares,
+    observeSharesItemsCount: ObserveSharesItemsCount
 ) : ViewModel() {
 
-    internal val stateFlow: StateFlow<SharesDrawerState> = canCreateVault()
-        .mapLatest(::SharesDrawerState)
-        .stateIn(
+    private val vaultSharesFlow = observeAllShares()
+        .mapLatest { shares ->
+            shares
+                .filterIsInstance<Share.Vault>()
+                .sortedBy { vaultShare -> vaultShare.name.lowercase() }
+        }
+        .shareIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000L),
-            initialValue = SharesDrawerState.Initial
+            started = SharingStarted.Lazily,
+            replay = 1
         )
+
+    private val vaultSharesItemsCountFlow = vaultSharesFlow
+        .flatMapLatest { vaultShares ->
+            vaultShares
+                .map { vaultShare -> vaultShare.id }
+                .let { vaultShareIds -> observeSharesItemsCount(vaultShareIds) }
+        }
+
+    internal val stateFlow: StateFlow<SharesDrawerState> = combine(
+        vaultSharesFlow,
+        vaultSharesItemsCountFlow,
+        canCreateVault(),
+        ::SharesDrawerState
+    ).stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000L),
+        initialValue = SharesDrawerState.Initial
+    )
 
 }

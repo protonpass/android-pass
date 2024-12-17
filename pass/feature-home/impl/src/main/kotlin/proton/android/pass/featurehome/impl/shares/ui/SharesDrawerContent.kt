@@ -34,7 +34,11 @@ import proton.android.pass.featurehome.impl.R
 import proton.android.pass.featurehome.impl.shares.presentation.SharesDrawerState
 
 @Composable
-internal fun SharesDrawerContent(modifier: Modifier = Modifier, state: SharesDrawerState) = with(state) {
+internal fun SharesDrawerContent(
+    modifier: Modifier = Modifier,
+    state: SharesDrawerState,
+    onUiEvent: (SharesDrawerUiEvent) -> Unit
+) = with(state) {
     Column(
         modifier = modifier
             .background(color = PassTheme.colors.backgroundWeak)
@@ -46,9 +50,12 @@ internal fun SharesDrawerContent(modifier: Modifier = Modifier, state: SharesDra
                 .weight(weight = 1f, fill = true),
             vaultShares = vaultShares.toPersistentList(),
             vaultSharesItemsCount = vaultSharesItemsCounter.toPersistentMap(),
+            vaultSelectionOption = vaultSelectionOption,
+            allItemsCount = allItemsCount,
             sharedWithMeItemsCount = sharedWithMeItemsCount,
             sharedByMeItemsCount = sharedByMeItemsCount,
-            trashedItemsCount = trashedItemsCount
+            trashedItemsCount = trashedItemsCount,
+            onUiEvent = onUiEvent
         )
 
         if (canCreateVaults) {
@@ -57,7 +64,9 @@ internal fun SharesDrawerContent(modifier: Modifier = Modifier, state: SharesDra
                 text = stringResource(R.string.vault_drawer_create_vault),
                 textColor = PassTheme.colors.interactionNormMajor2,
                 backgroundColor = PassTheme.colors.interactionNormMinor1,
-                onClick = {}
+                onClick = {
+                    onUiEvent(SharesDrawerUiEvent.OnCreateVaultClick)
+                }
             )
         }
     }

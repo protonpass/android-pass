@@ -75,6 +75,7 @@ fun LoginDetail(
     onNavigate: (ItemDetailNavigation) -> Unit,
     viewModel: LoginDetailViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     when (val state = uiState) {
@@ -103,7 +104,7 @@ fun LoginDetail(
 
             var currentBottomSheet by remember { mutableStateOf(WebsiteOptions) }
             var selectedWebsite by remember { mutableStateOf("") }
-            val context = LocalContext.current
+
             PassModalBottomSheetLayout(
                 sheetState = bottomSheetState,
                 sheetContent = {
@@ -339,8 +340,10 @@ fun LoginDetail(
                                 }
 
                                 is LoginDetailEvent.OnAttachmentEvent ->
-                                    when (it.attachmentContentEvent) {
-                                        is AttachmentContentEvent.OnAttachmentOpen -> {}
+                                    when (val event = it.attachmentContentEvent) {
+                                        is AttachmentContentEvent.OnAttachmentOpen ->
+                                            viewModel.onAttachmentOpen(context, event.attachment)
+
                                         is AttachmentContentEvent.OnAttachmentOptions,
                                         AttachmentContentEvent.OnAddAttachment,
                                         AttachmentContentEvent.OnDeleteAllAttachments,

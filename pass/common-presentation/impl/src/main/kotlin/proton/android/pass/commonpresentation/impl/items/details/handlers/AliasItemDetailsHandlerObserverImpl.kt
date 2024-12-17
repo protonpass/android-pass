@@ -68,9 +68,9 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             itemShareCount = item.shareCount,
             mailboxes = aliasDetails.mailboxes,
             attachmentsState = AttachmentsState(
-                draftAttachmentsList = listOf(),
+                draftAttachmentsList = emptyList(),
                 attachmentsList = attachments,
-                loadingDraftAttachments = setOf(),
+                loadingDraftAttachments = emptySet(),
                 loadingAttachments = setOf()
             )
         )

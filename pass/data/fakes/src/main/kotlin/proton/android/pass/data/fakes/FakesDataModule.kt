@@ -93,7 +93,6 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveUsableVaults
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.data.api.usecases.ObserveUserEmail
-import proton.android.pass.data.api.usecases.ObserveVaultById
 import proton.android.pass.data.api.usecases.ObserveVaultWithItemCountById
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
@@ -291,7 +290,6 @@ import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveUsableVaults
 import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.TestObserveUserEmail
-import proton.android.pass.data.fakes.usecases.TestObserveVaultById
 import proton.android.pass.data.fakes.usecases.TestObserveVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
@@ -642,9 +640,6 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveHasConfirmedInvite(impl: TestObserveConfirmedInviteToken): ObserveConfirmedInviteToken
-
-    @Binds
-    abstract fun bindObserveVaultById(impl: TestObserveVaultById): ObserveVaultById
 
     @Binds
     abstract fun bindGetItemActions(impl: TestGetItemActions): GetItemActions

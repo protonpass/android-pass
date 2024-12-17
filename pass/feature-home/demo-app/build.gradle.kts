@@ -24,7 +24,7 @@ plugins {
     id("androidx.baselineprofile")
 }
 
-val appVersionName: String = "1.28.4"
+val appVersionName: String = "1.28.5"
 val appVersionCode: Int = versionCode(appVersionName)
 val archivesBaseName = "FeatureHomeApp-$appVersionName"
 

@@ -19,40 +19,59 @@
 package proton.android.pass.data.impl.crypto
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import javax.inject.Inject
 
-interface ReencryptAttachmentKey {
+@JvmInline
+value class ReencryptedMetadata(val value: EncryptedByteArray)
+
+@JvmInline
+value class ReencryptedKey(val value: EncryptedByteArray)
+
+interface ReencryptAttachment {
     suspend operator fun invoke(
         encryptedItemKey: EncryptedByteArray,
-        attachmentKeys: List<String>
-    ): List<EncryptedByteArray>
+        encryptedMetadatas: List<EncryptedString>,
+        encryptedKeys: List<EncryptedString>
+    ): Pair<List<ReencryptedMetadata>, List<ReencryptedKey>>
 }
 
-class ReencryptAttachmentKeyImpl @Inject constructor(
+class ReencryptAttachmentImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
-) : ReencryptAttachmentKey {
+) : ReencryptAttachment {
 
     override suspend fun invoke(
         encryptedItemKey: EncryptedByteArray,
-        attachmentKeys: List<String>
-    ): List<EncryptedByteArray> {
+        encryptedMetadatas: List<EncryptedString>,
+        encryptedKeys: List<EncryptedString>
+    ): Pair<List<ReencryptedMetadata>, List<ReencryptedKey>> {
         val itemKey = encryptionContextProvider.withEncryptionContextSuspendable {
             EncryptionKey(decrypt(encryptedItemKey))
         }
         val decryptedKeys = encryptionContextProvider.withEncryptionContextSuspendable(itemKey) {
-            attachmentKeys.map { key ->
-                decrypt(
+            encryptedKeys.map { key ->
+                val decrypted = decrypt(
                     EncryptedByteArray(Base64.decodeBase64(key)),
                     EncryptionTag.FileKey
+                )
+                EncryptionKey(decrypted)
+            }
+        }
+        val decryptedMetadata = decryptedKeys.zip(encryptedMetadatas).map { (key, metadata) ->
+            encryptionContextProvider.withEncryptionContextSuspendable(key.clone()) {
+                decrypt(
+                    content = EncryptedByteArray(Base64.decodeBase64(metadata)),
+                    tag = EncryptionTag.FileData
                 )
             }
         }
         return encryptionContextProvider.withEncryptionContextSuspendable {
-            decryptedKeys.map { encrypt(it) }
+            decryptedMetadata.map { ReencryptedMetadata(encrypt(it)) } to
+                decryptedKeys.map { ReencryptedKey(encrypt(it.value())) }
         }
     }
 }

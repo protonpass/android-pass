@@ -97,7 +97,7 @@ internal fun ManageItemContent(
                             onInviteMoreClick = {
                                 ManageItemUiEvent.OnInviteToItemClick(
                                     shareId = state.share.id,
-                                    targetId = state.share.targetId
+                                    itemId = state.itemId
                                 ).also(onUiEvent)
                             }
                         )

@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.BrowserUtils
+import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ItemState
 import proton.android.pass.features.item.details.detail.presentation.ItemDetailsEvent
@@ -132,7 +133,10 @@ fun ItemDetailsScreen(
                 is ItemDetailsUiEvent.OnAttachmentEvent ->
                     when (uiEvent.attachmentContentEvent) {
                         is AttachmentContentEvent.OnAttachmentOpen ->
-                            viewModel.onAttachmentOpen(context, uiEvent.attachmentContentEvent.attachment)
+                            viewModel.onAttachmentOpen(
+                                context = context.toClassHolder(),
+                                attachment = uiEvent.attachmentContentEvent.attachment
+                            )
                         is AttachmentContentEvent.OnAttachmentOptions,
                         AttachmentContentEvent.OnAddAttachment,
                         AttachmentContentEvent.OnDeleteAllAttachments,

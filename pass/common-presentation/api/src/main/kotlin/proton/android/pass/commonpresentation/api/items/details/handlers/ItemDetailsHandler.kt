@@ -21,6 +21,7 @@ package proton.android.pass.commonpresentation.api.items.details.handlers
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
@@ -34,7 +35,7 @@ interface ItemDetailsHandler {
 
     fun observeItemDetails(item: Item): Flow<ItemDetailState>
 
-    suspend fun onAttachmentOpen(context: Context, attachment: Attachment)
+    suspend fun onAttachmentOpen(contextHolder: ClassHolder<Context>, attachment: Attachment)
 
     suspend fun onItemDetailsFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain)
 

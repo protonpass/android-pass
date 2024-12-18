@@ -36,6 +36,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -206,10 +207,10 @@ abstract class BaseAliasViewModel(
     }
 
     fun openDraftAttachment(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         uri: URI,
         mimetype: String
     ) {
-        attachmentsHandler.openDraftAttachment(context, uri, mimetype)
+        attachmentsHandler.openDraftAttachment(contextHolder, uri, mimetype)
     }
 }

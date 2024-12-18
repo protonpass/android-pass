@@ -70,6 +70,7 @@ import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasCreated
+import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemAttachmentsError
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemCreationError
 import proton.android.pass.featureitemcreate.impl.common.OptionShareIdSaver
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
@@ -360,17 +361,17 @@ open class CreateAliasViewModel @Inject constructor(
                 )
             }
                 .onFailure { onCreateAliasError(it) }
-                .mapCatching { item ->
-                    if (baseAliasUiState.value.isFileAttachmentEnabled) {
-                        linkAttachmentsToItem(item.id, shareId, item.revision)
-                    }
-                    item
-                }
-                .onFailure {
-                    PassLogger.w(TAG, "Link attachment error")
-                    PassLogger.w(TAG, it)
-                }
                 .onSuccess { item ->
+                    runCatching {
+                        if (baseAliasUiState.value.isFileAttachmentEnabled) {
+                            linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                        }
+                    }.onFailure {
+                        PassLogger.w(TAG, "Link attachment error")
+                        PassLogger.w(TAG, it)
+                        snackbarDispatcher(ItemAttachmentsError)
+                    }
+
                     inAppReviewTriggerMetrics.incrementItemCreatedCount()
                     val itemUiModel = encryptionContextProvider.withEncryptionContext {
                         item.toUiModel(this)

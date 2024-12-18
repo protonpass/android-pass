@@ -41,6 +41,7 @@ import proton.android.pass.featureitemcreate.impl.common.OptionShareIdSaver
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentsHandler
 import proton.android.pass.featureitemcreate.impl.common.getShareUiStateFlow
+import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardSnackbarMessage.ItemAttachmentsError
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardSnackbarMessage.ItemCreated
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardSnackbarMessage.ItemCreationError
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
@@ -149,17 +150,16 @@ class CreateCreditCardViewModel @Inject constructor(
                     PassLogger.w(TAG, it)
                     snackbarDispatcher(ItemCreationError)
                 }
-                .mapCatching { item ->
-                    if (baseState.value.isFileAttachmentsEnabled) {
-                        linkAttachmentsToItem(item.id, vault.vault.shareId, item.revision)
-                    }
-                    item
-                }
-                .onFailure {
-                    PassLogger.w(TAG, "Link attachment error")
-                    PassLogger.w(TAG, it)
-                }
                 .onSuccess { item ->
+                    runCatching {
+                        if (baseState.value.isFileAttachmentsEnabled) {
+                            linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                        }
+                    }.onFailure {
+                        PassLogger.w(TAG, "Link attachment error")
+                        PassLogger.w(TAG, it)
+                        snackbarDispatcher(ItemAttachmentsError)
+                    }
                     inAppReviewTriggerMetrics.incrementItemCreatedCount()
                     isItemSavedState.update {
                         encryptionContextProvider.withEncryptionContext {

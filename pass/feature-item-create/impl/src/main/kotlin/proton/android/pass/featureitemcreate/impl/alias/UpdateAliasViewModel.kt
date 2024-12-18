@@ -73,7 +73,7 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
-import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AttachmentsInitError as AttachmentsInitError1
+import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.InitAttachmentsError as AttachmentsInitError1
 
 @HiltViewModel
 class UpdateAliasViewModel @Inject constructor(

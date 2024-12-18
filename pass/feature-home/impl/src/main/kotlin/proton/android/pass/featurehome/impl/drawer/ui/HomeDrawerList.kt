@@ -119,8 +119,10 @@ internal fun HomeDrawerList(
                 iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
                 name = stringResource(id = R.string.item_type_filter_items_shared_with_me),
                 itemsCount = sharedWithMeItemsCount,
-                isSelected = false,
-                onClick = { }
+                isSelected = vaultSelectionOption is VaultSelectionOption.SharedWithMe,
+                onClick = {
+                    onUiEvent(HomeDrawerUiEvent.OnSharedWithMeClick)
+                }
             )
         }
 
@@ -137,8 +139,10 @@ internal fun HomeDrawerList(
                 iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
                 name = stringResource(id = R.string.item_type_filter_items_shared_by_me),
                 itemsCount = sharedByMeItemsCount,
-                isSelected = false,
-                onClick = { }
+                isSelected = vaultSelectionOption is VaultSelectionOption.SharedByMe,
+                onClick = {
+                    onUiEvent(HomeDrawerUiEvent.OnSharedByMeClick)
+                }
             )
         }
 

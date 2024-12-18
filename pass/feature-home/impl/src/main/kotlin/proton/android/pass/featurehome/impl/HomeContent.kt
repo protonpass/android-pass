@@ -74,6 +74,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.HomeContentTestTag.DRAWER_ICON_TEST_TAG
 import proton.android.pass.searchoptions.api.SearchFilterType
 import proton.android.pass.searchoptions.api.VaultSelectionOption
+import me.proton.core.presentation.R as CoreR
 
 @Suppress("ComplexMethod")
 @ExperimentalComposeUiApi
@@ -127,8 +128,16 @@ internal fun HomeContent(
 
                             is VaultSelectionOption.Vault -> stringResource(
                                 R.string.search_topbar_placeholder_vault,
-                                uiState.homeListUiState.selectedShare.value()?.name ?: ""
+                                uiState.homeListUiState.selectedShare.value()?.name.orEmpty()
                             )
+
+                            VaultSelectionOption.SharedByMe -> {
+                                stringResource(id = R.string.search_topbar_placeholder_shared_by_me)
+                            }
+
+                            VaultSelectionOption.SharedWithMe -> {
+                                stringResource(id = R.string.search_topbar_placeholder_shared_with_me)
+                            }
                         }
                     },
                     onEnterSearch = { onEvent(HomeUiEvent.EnterSearch) },
@@ -153,7 +162,9 @@ internal fun HomeContent(
                                 Color.Transparent to PassTheme.colors.textWeak
                             }
                         ThreeDotsMenuButton(
-                            modifier = Modifier.clip(CircleShape).background(backgroundColor),
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .background(backgroundColor),
                             dotsColor = iconColor
                         ) { onEvent(HomeUiEvent.ActionsClick) }
                     }
@@ -340,6 +351,26 @@ private fun HomeDrawerIcon(
                         )
                     }
 
+                    VaultSelectionOption.SharedWithMe -> {
+                        VaultIcon(
+                            modifier = modifier.size(48.dp),
+                            icon = CoreR.drawable.ic_proton_user_arrow_left,
+                            iconColor = PassTheme.colors.interactionNormMajor2,
+                            backgroundColor = PassTheme.colors.interactionNormMinor1,
+                            onClick = { onEvent(HomeUiEvent.DrawerIconClick) }
+                        )
+                    }
+
+                    VaultSelectionOption.SharedByMe -> {
+                        VaultIcon(
+                            modifier = modifier.size(48.dp),
+                            icon = CoreR.drawable.ic_proton_user_arrow_right,
+                            iconColor = PassTheme.colors.interactionNormMajor2,
+                            backgroundColor = PassTheme.colors.interactionNormMinor1,
+                            onClick = { onEvent(HomeUiEvent.DrawerIconClick) }
+                        )
+                    }
+
                     VaultSelectionOption.Trash -> {
                         TrashVaultIcon(
                             modifier = modifier,
@@ -349,7 +380,7 @@ private fun HomeDrawerIcon(
                         )
                     }
 
-                    else -> {} // This combination is not possible
+                    else -> Unit // This combination is not possible
                 }
             }
 

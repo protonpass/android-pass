@@ -319,9 +319,12 @@ class HomeViewModel @Inject constructor(
                     VaultSelectionOption.AllVaults ->
                         observeSearchEntry(SearchEntrySelection.AllVaults)
 
-                    VaultSelectionOption.Trash -> emptyFlow()
                     is VaultSelectionOption.Vault ->
                         observeSearchEntry(SearchEntrySelection.Vault(vaultSelection.shareId))
+
+                    VaultSelectionOption.SharedByMe,
+                    VaultSelectionOption.SharedWithMe,
+                    VaultSelectionOption.Trash -> emptyFlow()
                 }
             }
             .stateIn(
@@ -347,6 +350,8 @@ class HomeViewModel @Inject constructor(
                 VaultSelectionOption.AllVaults -> ShareSelection.AllShares to ItemState.Active
                 is VaultSelectionOption.Vault -> ShareSelection.Share(vault.shareId) to ItemState.Active
                 VaultSelectionOption.Trash -> ShareSelection.AllShares to ItemState.Trashed
+                VaultSelectionOption.SharedByMe -> ShareSelection.AllShares to ItemState.Active
+                VaultSelectionOption.SharedWithMe -> ShareSelection.AllShares to ItemState.Active
             }
 
             observeEncryptedItems(

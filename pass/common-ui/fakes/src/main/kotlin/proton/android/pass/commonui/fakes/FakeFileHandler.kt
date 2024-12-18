@@ -21,6 +21,7 @@ package proton.android.pass.commonui.fakes
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import java.io.File
 import java.net.URI
@@ -30,7 +31,7 @@ import javax.inject.Singleton
 @Singleton
 class FakeFileHandler @Inject constructor() : FileHandler {
     override fun shareFile(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         file: File,
         chooserTitle: String
     ) {
@@ -38,7 +39,7 @@ class FakeFileHandler @Inject constructor() : FileHandler {
     }
 
     override fun shareFileWithEmail(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         file: File,
         chooserTitle: String,
         email: String,
@@ -48,7 +49,7 @@ class FakeFileHandler @Inject constructor() : FileHandler {
     }
 
     override fun openFile(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         uri: URI,
         mimeType: String,
         chooserTitle: String
@@ -57,7 +58,7 @@ class FakeFileHandler @Inject constructor() : FileHandler {
     }
 
     override fun performFileAction(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         intent: Intent,
         chooserTitle: String,
         extras: Bundle

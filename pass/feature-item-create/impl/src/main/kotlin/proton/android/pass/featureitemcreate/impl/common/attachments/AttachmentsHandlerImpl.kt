@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
@@ -76,27 +77,27 @@ class AttachmentsHandlerImpl @Inject constructor(
     ).distinctUntilChanged()
 
     override fun openDraftAttachment(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         uri: URI,
         mimetype: String
     ) {
         fileHandler.openFile(
-            context = context,
+            contextHolder = contextHolder,
             uri = uri,
             mimeType = mimetype,
-            chooserTitle = context.getString(R.string.open_with)
+            chooserTitle = contextHolder.get().value()?.getString(R.string.open_with) ?: ""
         )
     }
 
-    override suspend fun openAttachment(context: Context, attachment: Attachment) {
+    override suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         loadingAttachmentsState.update { it + attachment.id }
         runCatching {
             val uri = downloadAttachment(attachment)
             fileHandler.openFile(
-                context = context,
+                contextHolder = contextHolder,
                 uri = uri,
                 mimeType = attachment.mimeType,
-                chooserTitle = context.getString(R.string.open_with)
+                chooserTitle = contextHolder.get().value()?.getString(R.string.open_with) ?: ""
             )
         }.onSuccess {
             PassLogger.i(TAG, "Attachment opened: ${attachment.id}")

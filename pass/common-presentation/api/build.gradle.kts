@@ -34,6 +34,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.domain)

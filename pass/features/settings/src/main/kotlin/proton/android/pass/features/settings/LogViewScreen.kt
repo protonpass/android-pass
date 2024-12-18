@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.toClassHolder
 
 
 @Composable
@@ -42,6 +43,6 @@ fun LogViewScreen(
         modifier = modifier,
         content = state,
         onUpClick = onUpClick,
-        onShareLogsClick = { viewModel.startShareIntent(context) }
+        onShareLogsClick = { viewModel.startShareIntent(context.toClassHolder()) }
     )
 }

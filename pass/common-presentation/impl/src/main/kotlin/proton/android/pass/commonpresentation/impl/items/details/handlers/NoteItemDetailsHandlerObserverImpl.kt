@@ -34,7 +34,6 @@ import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
-import proton.android.pass.domain.attachments.Attachment
 import javax.inject.Inject
 
 class NoteItemDetailsHandlerObserverImpl @Inject constructor(
@@ -44,7 +43,7 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
     override fun observe(
         share: Share,
         item: Item,
-        attachments: List<Attachment>
+        attachmentsState: AttachmentsState
     ): Flow<ItemDetailState> = observeNoteItemContents(item)
         .mapLatest { noteItemContents ->
             ItemDetailState.Note(
@@ -60,12 +59,7 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
                 itemState = ItemState.from(item.state),
                 itemDiffs = ItemDiffs.Note(),
                 itemShareCount = item.shareCount,
-                attachmentsState = AttachmentsState(
-                    draftAttachmentsList = emptyList(),
-                    attachmentsList = attachments,
-                    loadingDraftAttachments = emptySet(),
-                    loadingAttachments = setOf()
-                )
+                attachmentsState = attachmentsState
             )
         }
 

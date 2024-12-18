@@ -52,6 +52,8 @@ internal fun SelectedVaultPreference.toSelectionOption(): VaultSelectionOption =
     SelectedVaultPreference.AllVaults -> VaultSelectionOption.AllVaults
     is SelectedVaultPreference.Vault -> VaultSelectionOption.Vault(ShareId(this.shareId))
     SelectedVaultPreference.Trash -> VaultSelectionOption.Trash
+    SelectedVaultPreference.SharedByMe -> VaultSelectionOption.SharedByMe
+    SelectedVaultPreference.SharedWithMe -> VaultSelectionOption.SharedWithMe
 }
 
 internal fun SortingOption.toPreference(): SortingOptionPreference = when (this.searchSortingType) {
@@ -78,4 +80,6 @@ internal fun VaultSelectionOption.toPreference(): SelectedVaultPreference = when
     VaultSelectionOption.AllVaults -> SelectedVaultPreference.AllVaults
     is VaultSelectionOption.Vault -> SelectedVaultPreference.Vault(this.shareId.id)
     VaultSelectionOption.Trash -> SelectedVaultPreference.Trash
+    VaultSelectionOption.SharedByMe -> SelectedVaultPreference.SharedByMe
+    VaultSelectionOption.SharedWithMe -> SelectedVaultPreference.SharedWithMe
 }

@@ -685,11 +685,15 @@ fun HomeScreen(
                                 }
 
                                 is SharesDrawerUiEvent.OnShareVaultClick -> {
-
+                                    HomeNavigation.ShareVault(
+                                        shareId = uiEvent.shareId
+                                    ).also(onNavigateEvent)
                                 }
 
                                 is SharesDrawerUiEvent.OnManageVaultClick -> {
-
+                                    HomeNavigation.ManageVault(
+                                        shareId = uiEvent.shareId
+                                    ).also(onNavigateEvent)
                                 }
 
                                 is SharesDrawerUiEvent.OnVaultOptionsClick -> {

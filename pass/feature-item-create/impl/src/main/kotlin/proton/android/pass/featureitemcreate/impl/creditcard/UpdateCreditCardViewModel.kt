@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -78,11 +77,10 @@ class UpdateCreditCardViewModel @Inject constructor(
             runCatching { getItemById(navShareId, navItemId).first() }
                 .onSuccess { item ->
                     runCatching {
-                        val isFileAttachmentsEnabled = runBlocking {
+                        val isFileAttachmentsEnabled =
                             featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
                                 .firstOrNull()
                                 ?: false
-                        }
                         if (item.hasAttachments && isFileAttachmentsEnabled) {
                             attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
                         }

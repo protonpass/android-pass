@@ -18,23 +18,30 @@
 
 package proton.android.pass.commonpresentation.impl.items.details.handlers
 
+import android.content.Context
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.update
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
+import proton.android.pass.commonpresentation.impl.R
 import proton.android.pass.commonpresentation.impl.items.details.messages.ItemDetailsSnackbarMessage
+import proton.android.pass.commonui.api.FileHandler
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.errors.ItemNotFoundError
+import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.HiddenState
@@ -43,6 +50,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -53,9 +61,13 @@ class ItemDetailsHandlerImpl @Inject constructor(
     private val observeItemAttachments: ObserveItemAttachments,
     private val observers: Map<ItemCategory, @JvmSuppressWildcards ItemDetailsHandlerObserver<*>>,
     private val clipboardManager: ClipboardManager,
+    private val downloadAttachment: DownloadAttachment,
+    private val fileHandler: FileHandler,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ItemDetailsHandler {
+
+    private val loadingAttachmentsState = MutableStateFlow<Set<AttachmentId>>(emptySet())
 
     override fun observeItemDetails(item: Item): Flow<ItemDetailState> = combine(
         oneShot { observeShare(item.shareId).first() },
@@ -72,6 +84,25 @@ class ItemDetailsHandlerImpl @Inject constructor(
             }
         }
         .distinctUntilChanged()
+
+    override suspend fun onAttachmentOpen(context: Context, attachment: Attachment) {
+        loadingAttachmentsState.update { it + attachment.id }
+        runCatching {
+            val uri = downloadAttachment(attachment)
+            fileHandler.openFile(
+                context = context,
+                uri = uri,
+                mimeType = attachment.mimeType,
+                chooserTitle = context.getString(R.string.open_with)
+            )
+        }.onSuccess {
+            PassLogger.i(TAG, "Attachment opened: ${attachment.id}")
+        }.onFailure {
+            PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
+            PassLogger.w(TAG, it)
+        }
+        loadingAttachmentsState.update { it - attachment.id }
+    }
 
     override suspend fun onItemDetailsFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain) {
         clipboardManager.copyToClipboard(text = text, isSecure = false)
@@ -94,10 +125,20 @@ class ItemDetailsHandlerImpl @Inject constructor(
         displayFieldCopiedSnackbarMessage(hiddenFieldType)
     }
 
-    private fun attachmentsFlow(item: Item): Flow<List<Attachment>> = if (item.hasAttachments) {
-        observeItemAttachments(item.shareId, item.id)
+    private fun attachmentsFlow(item: Item): Flow<AttachmentsState> = if (item.hasAttachments) {
+        combine(
+            observeItemAttachments(item.shareId, item.id),
+            loadingAttachmentsState
+        ) { attachments, loadingAttachments ->
+            AttachmentsState(
+                draftAttachmentsList = emptyList(),
+                attachmentsList = attachments,
+                loadingDraftAttachments = emptySet(),
+                loadingAttachments = loadingAttachments
+            )
+        }
     } else {
-        flowOf(emptyList())
+        flowOf(AttachmentsState.Initial)
     }
 
     private suspend fun displayFieldCopiedSnackbarMessage(fieldType: ItemDetailsFieldType) = when (fieldType) {

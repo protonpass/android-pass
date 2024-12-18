@@ -37,7 +37,6 @@ import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
-import proton.android.pass.domain.attachments.Attachment
 import javax.inject.Inject
 
 class AliasItemDetailsHandlerObserverImpl @Inject constructor(
@@ -48,7 +47,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     override fun observe(
         share: Share,
         item: Item,
-        attachments: List<Attachment>
+        attachmentsState: AttachmentsState
     ): Flow<ItemDetailState> = combine(
         observeAliasItemContents(item),
         observeAliasDetails(item.shareId, item.id).onStart { emit(AliasDetails.EMPTY) }
@@ -67,12 +66,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             itemDiffs = ItemDiffs.Alias(),
             itemShareCount = item.shareCount,
             mailboxes = aliasDetails.mailboxes,
-            attachmentsState = AttachmentsState(
-                draftAttachmentsList = emptyList(),
-                attachmentsList = attachments,
-                loadingDraftAttachments = emptySet(),
-                loadingAttachments = setOf()
-            )
+            attachmentsState = attachmentsState
         )
     }
 

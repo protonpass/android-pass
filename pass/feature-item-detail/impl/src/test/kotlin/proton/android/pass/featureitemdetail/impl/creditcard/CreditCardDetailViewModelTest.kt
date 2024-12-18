@@ -25,6 +25,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.commonui.fakes.FakeFileHandler
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
@@ -36,11 +37,12 @@ import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
 import proton.android.pass.data.fakes.usecases.TestDeleteItems
 import proton.android.pass.data.fakes.usecases.TestGetItemActions
-import proton.android.pass.data.fakes.usecases.TestObserveItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
+import proton.android.pass.data.fakes.usecases.TestObserveItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItems
+import proton.android.pass.data.fakes.usecases.attachments.FakeDownloadAttachment
 import proton.android.pass.data.fakes.usecases.attachments.FakeObserveItemAttachments
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.HiddenState
@@ -104,7 +106,9 @@ class CreditCardDetailViewModelTest {
             getUserPlan = TestGetUserPlan(),
             featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
             observeItemAttachments = FakeObserveItemAttachments(),
-            observeShare = observeShare
+            observeShare = observeShare,
+            downloadAttachment = FakeDownloadAttachment(),
+            fileHandler = FakeFileHandler()
         )
 
         observeShare.emitValue(TestShare.Vault.create(id = SHARE_ID))

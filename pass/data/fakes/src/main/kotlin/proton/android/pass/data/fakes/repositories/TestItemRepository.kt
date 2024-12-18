@@ -48,6 +48,7 @@ import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.items.ItemSharedType
 import javax.inject.Inject
 
 @Suppress("NotImplementedDeclaration", "TooManyFunctions")
@@ -63,6 +64,8 @@ class TestItemRepository @Inject constructor() : ItemRepository {
     private val observeItemEncryptedListFlow: MutableSharedFlow<List<ItemEncrypted>> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
+    private val encryptedSharedItemsFlow = testFlow<List<ItemEncrypted>>()
+
     private val itemFlow = testFlow<Item>()
 
     private val migrateItemMemory = mutableListOf<MigrateItemPayload>()
@@ -73,6 +76,10 @@ class TestItemRepository @Inject constructor() : ItemRepository {
 
     fun setItemRevisions(newItemRevisions: List<ItemRevision>) {
         itemRevisions = newItemRevisions
+    }
+
+    fun emitValue(value: List<ItemEncrypted>) {
+        encryptedSharedItemsFlow.tryEmit(value)
     }
 
     override suspend fun createItem(
@@ -153,6 +160,11 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         setFlags: Int?,
         clearFlags: Int?
     ): Flow<List<ItemEncrypted>> = observeItemEncryptedListFlow
+
+    override fun observeSharedEncryptedItems(
+        userId: UserId,
+        itemSharedType: ItemSharedType
+    ): Flow<List<ItemEncrypted>> = encryptedSharedItemsFlow
 
     override fun observePinnedItems(
         userId: UserId,
@@ -288,6 +300,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
     ): List<ItemRevision> = itemRevisions ?: throw IllegalStateException(
         "Item revisions cannot be null, did you forget to invoke setItemRevisions()?"
     )
+
     override suspend fun addPasskeyToItem(
         userId: UserId,
         shareId: ShareId,

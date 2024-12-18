@@ -121,6 +121,7 @@ import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.UnpinItems
+import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
@@ -132,6 +133,7 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.Vault
+import proton.android.pass.domain.items.ItemSharedType
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasItemsDisabledError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasItemsEnabledError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasItemsEnabledPartialSuccess
@@ -207,6 +209,7 @@ class HomeViewModel @Inject constructor(
     observeVaults: ObserveVaults,
     clock: Clock,
     observeEncryptedItems: ObserveEncryptedItems,
+    observeEncryptedSharedItems: ObserveEncryptedSharedItems,
     observePinnedItems: ObservePinnedItems,
     preferencesRepository: UserPreferencesRepository,
     observeAppNeedsUpdate: ObserveAppNeedsUpdate,
@@ -345,24 +348,40 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(ActionState.Unknown)
 
     private val itemUiModelFlow = searchOptionsFlow.map { it.vaultSelectionOption }
-        .flatMapLatest { vault ->
-            val (shareSelection, itemState) = when (vault) {
-                VaultSelectionOption.AllVaults -> ShareSelection.AllShares to ItemState.Active
-                is VaultSelectionOption.Vault -> ShareSelection.Share(vault.shareId) to ItemState.Active
-                VaultSelectionOption.Trash -> ShareSelection.AllShares to ItemState.Trashed
-                VaultSelectionOption.SharedByMe -> ShareSelection.AllShares to ItemState.Active
-                VaultSelectionOption.SharedWithMe -> ShareSelection.AllShares to ItemState.Active
-            }
+        .flatMapLatest { vaultSelectionOption ->
+            when (vaultSelectionOption) {
+                VaultSelectionOption.AllVaults -> {
+                    observeEncryptedItems(
+                        selection = ShareSelection.AllShares,
+                        itemState = ItemState.Active,
+                        filter = ItemTypeFilter.All
+                    )
+                }
 
-            observeEncryptedItems(
-                selection = shareSelection,
-                itemState = itemState,
+                VaultSelectionOption.Trash -> {
+                    observeEncryptedItems(
+                        selection = ShareSelection.AllShares,
+                        itemState = ItemState.Trashed,
+                        filter = ItemTypeFilter.All
+                    )
+                }
 
-                // We observe them all, because otherwise in the All part of the search we would not
-                // know how many ItemTypes are there for the other ItemTypes.
-                // We filter out the results using the filterByType function
-                filter = ItemTypeFilter.All
-            ).asResultWithoutLoading()
+                is VaultSelectionOption.Vault -> {
+                    observeEncryptedItems(
+                        selection = ShareSelection.Share(vaultSelectionOption.shareId),
+                        itemState = ItemState.Active,
+                        filter = ItemTypeFilter.All
+                    )
+                }
+
+                VaultSelectionOption.SharedByMe -> {
+                    observeEncryptedSharedItems(itemSharedType = ItemSharedType.SharedByMe)
+                }
+
+                VaultSelectionOption.SharedWithMe -> {
+                    observeEncryptedSharedItems(itemSharedType = ItemSharedType.SharedWithMe)
+                }
+            }.asResultWithoutLoading()
                 .map { itemResult ->
                     itemResult.map { list ->
                         encryptionContextProvider.withEncryptionContextSuspendable {
@@ -417,10 +436,10 @@ class HomeViewModel @Inject constructor(
     private val resultsFlow = combine(
         filteredSearchEntriesFlow,
         textFilterListItemFlow,
-        searchOptionsFlow.map { it.filterOption },
+        searchOptionsFlow,
         isInSuggestionsModeState,
         isInSearchModeState
-    ) { recentSearchResult, result, searchFilterType, isInSuggestionsMode, isInSearchMode ->
+    ) { recentSearchResult, result, searchOptions, isInSuggestionsMode, isInSearchMode ->
         if (isInSuggestionsMode && isInSearchMode) {
             recentSearchResult
         } else {
@@ -429,7 +448,7 @@ class HomeViewModel @Inject constructor(
                     .map {
                         GroupedItemList(
                             it.key,
-                            it.items.filterByType(searchFilterType.searchFilterType)
+                            it.items.filterBySearchOptions(searchOptions)
                         )
                     }
                     .filter { it.items.isNotEmpty() }
@@ -453,8 +472,7 @@ class HomeViewModel @Inject constructor(
             .toPersistentList()
         val textFilteredPinnedItems = pinnedItems
             .filterByQuery(searchQuery)
-        val typeFilteredPinnedItems = textFilteredPinnedItems
-            .filterByType(searchOptions.filterOption.searchFilterType)
+        val typeFilteredPinnedItems = textFilteredPinnedItems.filterBySearchOptions(searchOptions)
         val groupedItems = typeFilteredPinnedItems
             .groupedItemLists(searchOptions.sortingOption, clock.now())
             .toPersistentList()
@@ -1076,8 +1094,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun List<ItemUiModel>.filterByType(searchFilterType: SearchFilterType) = filter { item ->
-        when (searchFilterType) {
+    private fun List<ItemUiModel>.filterBySearchOptions(searchOptions: SearchOptions) = filter { item ->
+        when (searchOptions.filterOption.searchFilterType) {
             SearchFilterType.All -> true
             SearchFilterType.Alias -> item.contents is ItemContents.Alias
             SearchFilterType.Login -> item.contents is ItemContents.Login
@@ -1087,8 +1105,23 @@ class HomeViewModel @Inject constructor(
             SearchFilterType.LoginMFA ->
                 item.contents is ItemContents.Login && (item.contents as ItemContents.Login).hasPrimaryTotp
 
-            SearchFilterType.SharedWithMe -> item.isSharedWithMe
-            SearchFilterType.SharedByMe -> item.isSharedByMe
+            SearchFilterType.SharedWithMe -> {
+                val vaultSelectionOption = searchOptions.vaultSelectionOption
+                if (vaultSelectionOption is VaultSelectionOption.Vault) {
+                    item.isSharedWithMe && item.shareId == vaultSelectionOption.shareId
+                } else {
+                    item.isSharedWithMe
+                }
+            }
+
+            SearchFilterType.SharedByMe -> {
+                val vaultSelectionOption = searchOptions.vaultSelectionOption
+                if (vaultSelectionOption is VaultSelectionOption.Vault) {
+                    item.isSharedByMe && item.shareId == vaultSelectionOption.shareId
+                } else {
+                    item.isSharedByMe
+                }
+            }
         }
     }
 

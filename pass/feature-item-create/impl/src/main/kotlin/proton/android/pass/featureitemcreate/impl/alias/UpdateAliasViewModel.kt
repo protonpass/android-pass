@@ -31,7 +31,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.common.api.FlowUtils.oneShot
@@ -61,6 +60,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasUpdated
+import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.InitAttachmentsError
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.InitError
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemUpdateError
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.UpdateAppToUpdateItemError
@@ -73,7 +73,6 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
-import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.InitAttachmentsError as AttachmentsInitError1
 
 @HiltViewModel
 class UpdateAliasViewModel @Inject constructor(
@@ -131,17 +130,16 @@ class UpdateAliasViewModel @Inject constructor(
                 ).first()
             }.onSuccess { (item, aliasDetails) ->
                 runCatching {
-                    val isFileAttachmentsEnabled = runBlocking {
+                    val isFileAttachmentsEnabled =
                         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
                             .firstOrNull()
                             ?: false
-                    }
                     if (item.hasAttachments && isFileAttachmentsEnabled) {
                         attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
                     }
                     item
                 }.onFailure {
-                    showError("Error getting attachments", AttachmentsInitError1, it)
+                    showError("Error getting attachments", InitAttachmentsError, it)
                 }
                 itemOption = item.some()
                 onAliasDetails(aliasDetails, item)

@@ -25,24 +25,37 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.items.ItemSharedType
 import proton.android.pass.featurehome.impl.empty.EmptyReadOnly
+import proton.android.pass.featurehome.impl.empty.EmptySharedItems
 import proton.android.pass.featurehome.impl.empty.HomeEmptyList
 import proton.android.pass.featurehome.impl.trash.EmptyTrashContent
 import proton.android.pass.searchoptions.api.SearchFilterType
+import proton.android.pass.searchoptions.api.VaultSelectionOption
 
 @Composable
 fun HomeEmptyContent(
     modifier: Modifier = Modifier,
-    isTrashMode: Boolean,
     inSearchMode: Boolean,
     readOnly: Boolean,
+    vaultSelectionOption: VaultSelectionOption,
     filterType: SearchFilterType,
     shareId: Option<ShareId>,
     onEvent: (HomeUiEvent) -> Unit
 ) {
     when {
         inSearchMode -> EmptySearchResults(modifier)
-        isTrashMode -> EmptyTrashContent(modifier)
+        vaultSelectionOption is VaultSelectionOption.Trash -> EmptyTrashContent(modifier)
+        vaultSelectionOption is VaultSelectionOption.SharedByMe -> EmptySharedItems(
+            modifier = modifier,
+            itemSharedType = ItemSharedType.SharedByMe
+        )
+
+        vaultSelectionOption is VaultSelectionOption.SharedWithMe -> EmptySharedItems(
+            modifier = modifier,
+            itemSharedType = ItemSharedType.SharedWithMe
+        )
+
         readOnly -> EmptyReadOnly(modifier)
         else -> HomeEmptyList(
             modifier = modifier.fillMaxHeight(),

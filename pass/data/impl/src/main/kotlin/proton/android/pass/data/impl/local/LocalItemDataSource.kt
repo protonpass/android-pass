@@ -30,6 +30,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultId
+import proton.android.pass.domain.items.ItemSharedType
 
 data class ItemWithTotp(
     val shareId: ShareId,
@@ -59,6 +60,8 @@ interface LocalItemDataSource {
         clearFlags: Int? = null
     ): Flow<List<ItemEntity>>
 
+    fun observeSharedItems(userId: UserId, itemSharedType: ItemSharedType): Flow<List<ItemEntity>>
+
     fun observePinnedItems(userId: UserId, filter: ItemTypeFilter): Flow<List<ItemEntity>>
 
     fun observeAllPinnedItemsForShares(
@@ -76,11 +79,13 @@ interface LocalItemDataSource {
         itemId: ItemId,
         itemState: ItemState
     )
+
     suspend fun setItemStates(
         shareId: ShareId,
         itemIds: List<ItemId>,
         itemState: ItemState
     )
+
     suspend fun getTrashedItems(userId: UserId): List<ItemEntity>
     suspend fun delete(shareId: ShareId, itemId: ItemId): Boolean
     suspend fun deleteList(shareId: ShareId, itemIds: List<ItemId>): Boolean
@@ -96,6 +101,7 @@ interface LocalItemDataSource {
         itemId: ItemId,
         now: Long
     )
+
     fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>>
     suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): ItemEntity?
 
@@ -119,4 +125,5 @@ interface LocalItemDataSource {
     ): List<ItemEntity>
 
     fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId>
+
 }

@@ -20,6 +20,7 @@ package proton.android.pass.featureitemcreate.impl.common.attachments
 
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -33,12 +34,12 @@ interface AttachmentsHandler {
     val attachmentsFlow: Flow<AttachmentsState>
 
     fun openDraftAttachment(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         uri: URI,
         mimetype: String
     )
 
-    suspend fun openAttachment(context: Context, attachment: Attachment)
+    suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment)
 
     suspend fun uploadNewAttachment(uri: URI)
 

@@ -55,6 +55,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -962,11 +963,11 @@ abstract class BaseLoginViewModel(
     }
 
     fun openDraftAttachment(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         uri: URI,
         mimetype: String
     ) {
-        attachmentsHandler.openDraftAttachment(context, uri, mimetype)
+        attachmentsHandler.openDraftAttachment(contextHolder, uri, mimetype)
     }
 
     private companion object {

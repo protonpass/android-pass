@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.combineN
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.attachments.Attachment
@@ -125,16 +126,16 @@ abstract class BaseNoteViewModel(
     }
 
     fun openDraftAttachment(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         uri: URI,
         mimetype: String
     ) {
-        attachmentsHandler.openDraftAttachment(context, uri, mimetype)
+        attachmentsHandler.openDraftAttachment(contextHolder, uri, mimetype)
     }
 
-    fun onAttachmentOpen(context: Context, attachment: Attachment) {
+    fun onAttachmentOpen(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         viewModelScope.launch {
-            attachmentsHandler.openAttachment(context, attachment)
+            attachmentsHandler.openAttachment(contextHolder, attachment)
         }
     }
 

@@ -21,6 +21,7 @@ package proton.android.pass.featureitemcreate.impl.attachments
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -36,7 +37,7 @@ class FakeAttachmentHandler : AttachmentsHandler {
         get() = flowOf(AttachmentsState.Initial)
 
     override fun openDraftAttachment(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         uri: URI,
         mimetype: String
     ) {
@@ -57,7 +58,7 @@ class FakeAttachmentHandler : AttachmentsHandler {
         // no-op
     }
 
-    override suspend fun openAttachment(context: Context, attachment: Attachment) {
+    override suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         // no-op
     }
 }

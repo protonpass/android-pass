@@ -35,6 +35,7 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDet
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonpresentation.impl.R
 import proton.android.pass.commonpresentation.impl.items.details.messages.ItemDetailsSnackbarMessage
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
@@ -85,15 +86,15 @@ class ItemDetailsHandlerImpl @Inject constructor(
         }
         .distinctUntilChanged()
 
-    override suspend fun onAttachmentOpen(context: Context, attachment: Attachment) {
+    override suspend fun onAttachmentOpen(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         loadingAttachmentsState.update { it + attachment.id }
         runCatching {
             val uri = downloadAttachment(attachment)
             fileHandler.openFile(
-                context = context,
+                contextHolder = contextHolder,
                 uri = uri,
                 mimeType = attachment.mimeType,
-                chooserTitle = context.getString(R.string.open_with)
+                chooserTitle = contextHolder.get().value()?.getString(R.string.open_with) ?: ""
             )
         }.onSuccess {
             PassLogger.i(TAG, "Attachment opened: ${attachment.id}")

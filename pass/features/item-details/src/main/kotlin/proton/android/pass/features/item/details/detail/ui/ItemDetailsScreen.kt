@@ -131,7 +131,8 @@ fun ItemDetailsScreen(
 
                 is ItemDetailsUiEvent.OnAttachmentEvent ->
                     when (uiEvent.attachmentContentEvent) {
-                        is AttachmentContentEvent.OnAttachmentOpen -> {}
+                        is AttachmentContentEvent.OnAttachmentOpen ->
+                            viewModel.onAttachmentOpen(context, uiEvent.attachmentContentEvent.attachment)
                         is AttachmentContentEvent.OnAttachmentOptions,
                         AttachmentContentEvent.OnAddAttachment,
                         AttachmentContentEvent.OnDeleteAllAttachments,

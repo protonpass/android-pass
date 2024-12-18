@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.item.details.detail.presentation
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -49,6 +50,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.preferences.FeatureFlag
@@ -143,6 +145,12 @@ class ItemDetailsViewModel @Inject constructor(
     internal fun onItemHiddenFieldClicked(hiddenState: HiddenState, hiddenFieldType: ItemDetailsFieldType.Hidden) {
         viewModelScope.launch {
             itemDetailsHandler.onItemDetailsHiddenFieldClicked(hiddenState, hiddenFieldType)
+        }
+    }
+
+    internal fun onAttachmentOpen(context: Context, attachment: Attachment) {
+        viewModelScope.launch {
+            itemDetailsHandler.onAttachmentOpen(context, attachment)
         }
     }
 

@@ -88,7 +88,9 @@ internal fun HomeContent(
     header: LazyListScope.() -> Unit = {},
     onEvent: (HomeUiEvent) -> Unit
 ) {
-    val isTrashMode = uiState.homeListUiState.homeVaultSelection == VaultSelectionOption.Trash
+    val isTrashMode = remember(uiState.homeListUiState.homeVaultSelection) {
+        uiState.homeListUiState.homeVaultSelection is VaultSelectionOption.Trash
+    }
     val isPinningOrSearch =
         remember(uiState.pinningUiState.inPinningMode, uiState.searchUiState.inSearchMode) {
             uiState.pinningUiState.inPinningMode || uiState.searchUiState.inSearchMode
@@ -313,7 +315,7 @@ internal fun HomeContent(
                 emptyContent = {
                     HomeEmptyContent(
                         modifier = Modifier.testTag(HOME_EMPTY_TAG),
-                        isTrashMode = isTrashMode,
+                        vaultSelectionOption = uiState.homeListUiState.homeVaultSelection,
                         inSearchMode = isPinningOrSearch,
                         filterType = uiState.homeListUiState.searchFilterType,
                         readOnly = uiState.isSelectedVaultReadOnly(),

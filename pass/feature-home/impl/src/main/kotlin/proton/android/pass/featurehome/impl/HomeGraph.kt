@@ -162,4 +162,10 @@ sealed interface HomeNavigation {
     value class SLSyncSettings(val shareId: ShareId?) : HomeNavigation
 
     data object SLAliasManagement : HomeNavigation
+
+    @JvmInline
+    value class ShareVault(val shareId: ShareId) : HomeNavigation
+
+    @JvmInline
+    value class ManageVault(val shareId: ShareId) : HomeNavigation
 }

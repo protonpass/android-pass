@@ -55,7 +55,15 @@ data class FilterOption(val searchFilterType: SearchFilterType)
 
 @Stable
 sealed interface VaultSelectionOption {
+
     data object AllVaults : VaultSelectionOption
+
     data object Trash : VaultSelectionOption
+
     data class Vault(val shareId: ShareId) : VaultSelectionOption
+
+    data object SharedWithMe : VaultSelectionOption
+
+    data object SharedByMe : VaultSelectionOption
+
 }

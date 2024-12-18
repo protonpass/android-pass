@@ -36,6 +36,10 @@ internal interface HomeDrawerUiEvent {
     @JvmInline
     value class OnVaultOptionsClick(internal val shareId: ShareId) : HomeDrawerUiEvent
 
+    data object OnSharedWithMeClick : HomeDrawerUiEvent
+
+    data object OnSharedByMeClick : HomeDrawerUiEvent
+
     data object OnTrashClick : HomeDrawerUiEvent
 
     data object OnCreateVaultClick : HomeDrawerUiEvent

@@ -175,11 +175,11 @@ class LocalItemDataSourceImpl @Inject constructor(
         shareIds: List<ShareId>,
         itemState: ItemState?
     ): Flow<ItemCountSummary> = shareIds.map { shareId -> shareId.id }
-        .let { shareIds ->
+        .let { shareIdValues ->
             combine(
-                database.itemsDao().itemSummary(userId.id, shareIds, itemState?.value),
+                database.itemsDao().itemSummary(userId.id, shareIdValues, itemState?.value),
                 database.itemsDao().countAllItemsWithTotp(userId.id),
-                database.itemsDao().countSharedItems(userId.id, shareIds)
+                database.itemsDao().countSharedItems(userId.id, shareIdValues)
             ) { values: List<SummaryRow>, totpCount: Int, sharedItemsCount ->
                 val logins =
                     values.firstOrNull { it.itemKind == ItemCategory.Login.value }?.itemCount ?: 0

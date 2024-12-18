@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featurehome.impl.shares.ui
+package proton.android.pass.featurehome.impl.drawer.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -40,7 +40,7 @@ import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-internal fun SharesDrawerShareList(
+internal fun HomeDrawerList(
     modifier: Modifier = Modifier,
     vaultShares: ImmutableList<Share.Vault>,
     vaultSharesItemsCount: ImmutableMap<ShareId, ShareItemCount>,
@@ -49,13 +49,13 @@ internal fun SharesDrawerShareList(
     sharedWithMeItemsCount: Int,
     sharedByMeItemsCount: Int,
     trashedItemsCount: Int,
-    onUiEvent: (SharesDrawerUiEvent) -> Unit
+    onUiEvent: (HomeDrawerUiEvent) -> Unit
 ) {
     LazyColumn(
         modifier = modifier
     ) {
         item {
-            SharesDrawerShareRow(
+            HomeDrawerRow(
                 shareIconRes = CompR.drawable.ic_brand_pass,
                 iconColor = PassTheme.colors.interactionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
@@ -63,7 +63,7 @@ internal fun SharesDrawerShareList(
                 itemsCount = allItemsCount,
                 isSelected = vaultSelectionOption is VaultSelectionOption.AllVaults,
                 onClick = {
-                    onUiEvent(SharesDrawerUiEvent.OnAllVaultsClick)
+                    onUiEvent(HomeDrawerUiEvent.OnAllVaultsClick)
                 }
             )
         }
@@ -78,7 +78,7 @@ internal fun SharesDrawerShareList(
             items = vaultShares,
             key = { _, vaultShare -> vaultShare.id.id }
         ) { index, vaultShare ->
-            SharesDrawerShareRow(
+            HomeDrawerRow(
                 shareIconRes = vaultShare.icon.toResource(),
                 iconColor = vaultShare.color.toColor(),
                 iconBackgroundColor = vaultShare.color.toColor(isBackground = true),
@@ -87,19 +87,19 @@ internal fun SharesDrawerShareList(
                 membersCount = vaultShare.memberCount,
                 isSelected = vaultSelectionOption == VaultSelectionOption.Vault(vaultShare.id),
                 onClick = {
-                    SharesDrawerUiEvent.OnVaultClick(
+                    HomeDrawerUiEvent.OnVaultClick(
                         shareId = vaultShare.id
                     ).also(onUiEvent)
                 },
                 onShareClick = {
                     if (vaultShare.shared) {
-                        SharesDrawerUiEvent.OnManageVaultClick(shareId = vaultShare.id)
+                        HomeDrawerUiEvent.OnManageVaultClick(shareId = vaultShare.id)
                     } else {
-                        SharesDrawerUiEvent.OnShareVaultClick(shareId = vaultShare.id)
+                        HomeDrawerUiEvent.OnShareVaultClick(shareId = vaultShare.id)
                     }.also(onUiEvent)
                 },
                 onMenuOptionsClick = {
-                    SharesDrawerUiEvent.OnVaultOptionsClick(
+                    HomeDrawerUiEvent.OnVaultOptionsClick(
                         shareId = vaultShare.id
                     ).also(onUiEvent)
                 }
@@ -113,7 +113,7 @@ internal fun SharesDrawerShareList(
         }
 
         item {
-            SharesDrawerShareRow(
+            HomeDrawerRow(
                 shareIconRes = CoreR.drawable.ic_proton_user_arrow_left,
                 iconColor = PassTheme.colors.interactionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
@@ -131,7 +131,7 @@ internal fun SharesDrawerShareList(
         }
 
         item {
-            SharesDrawerShareRow(
+            HomeDrawerRow(
                 shareIconRes = CoreR.drawable.ic_proton_user_arrow_right,
                 iconColor = PassTheme.colors.interactionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
@@ -143,7 +143,7 @@ internal fun SharesDrawerShareList(
         }
 
         item {
-            SharesDrawerShareRow(
+            HomeDrawerRow(
                 shareIconRes = CoreR.drawable.ic_proton_trash,
                 iconColor = PassTheme.colors.textWeak,
                 iconBackgroundColor = PassTheme.colors.textDisabled,
@@ -151,7 +151,7 @@ internal fun SharesDrawerShareList(
                 itemsCount = trashedItemsCount,
                 isSelected = vaultSelectionOption is VaultSelectionOption.Trash,
                 onClick = {
-                    onUiEvent(SharesDrawerUiEvent.OnTrashClick)
+                    onUiEvent(HomeDrawerUiEvent.OnTrashClick)
                 }
             )
         }

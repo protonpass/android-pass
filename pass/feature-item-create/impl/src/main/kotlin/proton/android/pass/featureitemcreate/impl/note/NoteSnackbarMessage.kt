@@ -29,10 +29,11 @@ enum class NoteSnackbarMessage(
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
     InitError(R.string.create_note_init_error, SnackbarType.ERROR),
-    AttachmentsInitError(R.string.update_note_attachments_init_error, SnackbarType.ERROR),
     ItemCreationError(R.string.create_note_item_creation_error, SnackbarType.ERROR),
     ItemUpdateError(R.string.create_note_item_update_error, SnackbarType.ERROR),
     NoteCreated(R.string.note_created, SnackbarType.SUCCESS),
     NoteUpdated(R.string.changes_saved, SnackbarType.SUCCESS),
-    UpdateAppToUpdateItemError(R.string.snackbar_update_app_to_update_item, SnackbarType.ERROR)
+    UpdateAppToUpdateItemError(R.string.snackbar_update_app_to_update_item, SnackbarType.ERROR),
+    AttachmentsInitError(R.string.update_note_attachments_init_error, SnackbarType.ERROR),
+    ItemAttachmentsError(R.string.note_attachments_error, SnackbarType.ERROR)
 }

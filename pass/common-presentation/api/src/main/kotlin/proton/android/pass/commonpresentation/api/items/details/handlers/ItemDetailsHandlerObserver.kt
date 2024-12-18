@@ -20,6 +20,7 @@ package proton.android.pass.commonpresentation.api.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.CustomFieldContent
@@ -30,14 +31,13 @@ import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.Share
-import proton.android.pass.domain.attachments.Attachment
 
 abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
 
     abstract fun observe(
         share: Share,
         item: Item,
-        attachments: List<Attachment>
+        attachmentsState: AttachmentsState
     ): Flow<ItemDetailState>
 
     abstract fun updateItemContents(

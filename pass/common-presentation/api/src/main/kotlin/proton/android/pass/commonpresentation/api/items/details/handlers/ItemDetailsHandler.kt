@@ -18,6 +18,7 @@
 
 package proton.android.pass.commonpresentation.api.items.details.handlers
 
+import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
@@ -26,11 +27,14 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.items.ItemCategory
 
 interface ItemDetailsHandler {
 
     fun observeItemDetails(item: Item): Flow<ItemDetailState>
+
+    suspend fun onAttachmentOpen(context: Context, attachment: Attachment)
 
     suspend fun onItemDetailsFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain)
 

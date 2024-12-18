@@ -35,6 +35,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultId
+import proton.android.pass.domain.items.ItemSharedType
 
 class TestLocalItemDataSource : LocalItemDataSource {
 
@@ -45,6 +46,8 @@ class TestLocalItemDataSource : LocalItemDataSource {
         MutableStateFlow(emptyMap())
     private val itemsWithTotpFlow = testFlow<Result<List<ItemWithTotp>>>()
     private val itemEntityFlow = testFlow<ItemEntity>()
+
+    private val sharedItemsFlow = testFlow<List<ItemEntity>>()
 
     fun getMemory(): List<ItemEntity> = memory
 
@@ -58,6 +61,10 @@ class TestLocalItemDataSource : LocalItemDataSource {
 
     suspend fun emitItemEntity(newItemEntity: ItemEntity) {
         itemEntityFlow.emit(newItemEntity)
+    }
+
+    fun emitSharedItems(value: List<ItemEntity>) {
+        sharedItemsFlow.tryEmit(value)
     }
 
     fun emitItemsWithTotp(value: Result<List<ItemWithTotp>>) {
@@ -90,6 +97,9 @@ class TestLocalItemDataSource : LocalItemDataSource {
     ): Flow<List<ItemEntity>> {
         throw IllegalStateException("Not yet implemented")
     }
+
+    override fun observeSharedItems(userId: UserId, itemSharedType: ItemSharedType): Flow<List<ItemEntity>> =
+        sharedItemsFlow
 
     override fun observePinnedItems(userId: UserId, filter: ItemTypeFilter): Flow<List<ItemEntity>> {
         throw IllegalStateException("Not yet implemented")

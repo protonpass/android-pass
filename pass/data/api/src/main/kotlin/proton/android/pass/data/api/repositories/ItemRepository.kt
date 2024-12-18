@@ -40,6 +40,7 @@ import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.VaultId
 import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.domain.entity.PackageInfo
+import proton.android.pass.domain.items.ItemSharedType
 
 data class ShareItemCount(
     val activeItems: Long,
@@ -117,6 +118,8 @@ interface ItemRepository {
         setFlags: Int? = null,
         clearFlags: Int? = null
     ): Flow<List<ItemEncrypted>>
+
+    fun observeSharedEncryptedItems(userId: UserId, itemSharedType: ItemSharedType): Flow<List<ItemEncrypted>>
 
     fun observePinnedItems(
         userId: UserId,

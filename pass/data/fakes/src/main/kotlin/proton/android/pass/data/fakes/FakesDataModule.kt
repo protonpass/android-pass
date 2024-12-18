@@ -157,6 +157,7 @@ import proton.android.pass.data.api.usecases.invites.InviteToItem
 import proton.android.pass.data.api.usecases.invites.ObserveInvite
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.GetItemOptions
+import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
@@ -364,6 +365,7 @@ import proton.android.pass.data.fakes.usecases.securelink.FakeObserveInactiveSec
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinksCount
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveEncryptedSharedItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShareItemMembers
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShareItemsCount
@@ -986,5 +988,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveSharesItemsCount(impl: FakeObserveSharesItemsCount): ObserveSharesItemsCount
+
+    @Binds
+    abstract fun bindObserveEncryptedSharedItems(impl: FakeObserveEncryptedSharedItems): ObserveEncryptedSharedItems
 
 }

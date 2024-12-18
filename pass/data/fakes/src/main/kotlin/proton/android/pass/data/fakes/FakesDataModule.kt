@@ -75,6 +75,7 @@ import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveAddressesByUserId
 import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
+import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveConfirmedInviteToken
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -273,6 +274,7 @@ import proton.android.pass.data.fakes.usecases.TestMigrateItems
 import proton.android.pass.data.fakes.usecases.TestMigrateVault
 import proton.android.pass.data.fakes.usecases.TestObserveAliasDetails
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
+import proton.android.pass.data.fakes.usecases.TestObserveAllShares
 import proton.android.pass.data.fakes.usecases.TestObserveAnyAccountHasEnforcedLock
 import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
 import proton.android.pass.data.fakes.usecases.TestObserveConfirmedInviteToken
@@ -952,6 +954,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindMetadataResolver(impl: FakeMetadataResolver): MetadataResolver
+
+    @Binds
+    abstract fun bindObserveAllShares(impl: TestObserveAllShares): ObserveAllShares
 
     @Binds
     abstract fun bindObserveShare(impl: FakeObserveShare): ObserveShare

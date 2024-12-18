@@ -22,11 +22,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
-import androidx.compose.material.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -70,7 +71,8 @@ fun AttachmentRow(
                 isEnabled,
                 ifTrue = { clickable(onClick = onAttachmentOpen) }
             )
-            .then(innerModifier),
+            .then(innerModifier)
+            .height(48.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
@@ -102,11 +104,11 @@ fun AttachmentRow(
             Text.Body3Weak("$sizeFormatted ${SpecialCharacters.DOT_SEPARATOR} $dateFormatted")
         }
         when {
-            isLoading -> Row(Modifier.minimumInteractiveComponentSize()) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(24.dp)
-                )
-            }
+            isLoading -> CircularProgressIndicator(
+                modifier = Modifier
+                    .padding(horizontal = Spacing.mediumSmall)
+                    .size(24.dp)
+            )
 
             hasOptions && isEnabled -> IconButton(onOptionsClick) {
                 Icon.Default(

@@ -233,5 +233,7 @@
     <string name="banner_title_attachments">Attachments</string>
     <string name="banner_body_attachments">You can attach files to items for a better organization</string>
     <string name="open_with">Open with:</string>
+    <string name="open_attachments_error">Could not open attachment</string>
+    <string name="upload_attachments_error">Could not upload attachment</string>
 
 </resources>

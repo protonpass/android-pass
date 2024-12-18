@@ -43,7 +43,10 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentSnackbarMessages.OpenAttachmentsError
+import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentSnackbarMessages.UploadAttachmentsError
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import java.net.URI
 import javax.inject.Inject
 
@@ -55,7 +58,8 @@ class AttachmentsHandlerImpl @Inject constructor(
     private val downloadAttachment: DownloadAttachment,
     private val clearAttachments: ClearAttachments,
     private val observeItemAttachments: ObserveItemAttachments,
-    private val fileHandler: FileHandler
+    private val fileHandler: FileHandler,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : AttachmentsHandler {
 
     private val loadingDraftAttachmentsState: MutableStateFlow<Set<URI>> =
@@ -104,6 +108,7 @@ class AttachmentsHandlerImpl @Inject constructor(
         }.onFailure {
             PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
             PassLogger.w(TAG, it)
+            snackbarDispatcher(OpenAttachmentsError)
         }
         loadingAttachmentsState.update { it - attachment.id }
     }
@@ -117,6 +122,7 @@ class AttachmentsHandlerImpl @Inject constructor(
             .onFailure {
                 PassLogger.w(TAG, "Could not upload attachment: $uri")
                 PassLogger.w(TAG, it)
+                snackbarDispatcher(UploadAttachmentsError)
             }
         loadingDraftAttachmentsState.update { it - uri }
     }

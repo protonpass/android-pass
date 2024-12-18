@@ -63,6 +63,7 @@ import proton.android.pass.data.fakes.usecases.TestRestoreAllItems
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.data.fakes.usecases.TestUnpinItems
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveEncryptedSharedItems
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -277,7 +278,8 @@ internal class HomeViewModelTest {
             observeCurrentUser = observeCurrentUser,
             changeAliasStatus = FakeChangeAliasStatus(),
             observeItemCount = TestObserveItemCount(),
-            accountManager = TestAccountManager()
+            accountManager = TestAccountManager(),
+            observeEncryptedSharedItems = FakeObserveEncryptedSharedItems()
         )
     }
 

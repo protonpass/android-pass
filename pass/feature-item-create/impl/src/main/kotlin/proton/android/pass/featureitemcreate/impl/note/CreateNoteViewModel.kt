@@ -59,6 +59,7 @@ import proton.android.pass.featureitemcreate.impl.common.OptionShareIdSaver
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentsHandler
 import proton.android.pass.featureitemcreate.impl.common.getShareUiStateFlow
+import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.ItemAttachmentsError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.ItemCreationError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.NoteCreated
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
@@ -156,17 +157,16 @@ class CreateNoteViewModel @Inject constructor(
                         PassLogger.w(TAG, it)
                         snackbarDispatcher(ItemCreationError)
                     }
-                    .mapCatching { item ->
-                        if (baseNoteUiState.value.isFileAttachmentsEnabled) {
-                            linkAttachmentsToItem(item.id, shareId, item.revision)
-                        }
-                        item
-                    }
-                    .onFailure {
-                        PassLogger.w(TAG, "Link attachment error")
-                        PassLogger.w(TAG, it)
-                    }
                     .onSuccess { item ->
+                        runCatching {
+                            if (baseNoteUiState.value.isFileAttachmentsEnabled) {
+                                linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                            }
+                        }.onFailure {
+                            PassLogger.w(TAG, "Link attachment error")
+                            PassLogger.w(TAG, it)
+                            snackbarDispatcher(ItemAttachmentsError)
+                        }
                         inAppReviewTriggerMetrics.incrementItemCreatedCount()
                         isItemSavedState.update {
                             encryptionContextProvider.withEncryptionContext {

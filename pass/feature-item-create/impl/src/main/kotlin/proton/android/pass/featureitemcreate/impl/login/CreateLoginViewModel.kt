@@ -89,6 +89,7 @@ import proton.android.pass.featureitemcreate.impl.common.getShareUiStateFlow
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.AliasRateLimited
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.CannotCreateMoreAliases
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.EmailNotValidated
+import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemAttachmentsError
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemCreationError
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.LoginCreated
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
@@ -456,17 +457,17 @@ class CreateLoginViewModel @Inject constructor(
                 PassLogger.w(TAG, it)
                 snackbarDispatcher(ItemCreationError)
             }
-            .mapCatching { item ->
-                if (baseLoginUiState.value.isFileAttachmentsEnabled) {
-                    linkAttachmentsToItem(item.id, shareId, item.revision)
-                }
-                item
-            }
-            .onFailure {
-                PassLogger.w(TAG, "Link attachment error")
-                PassLogger.w(TAG, it)
-            }
             .onSuccess { item ->
+                runCatching {
+                    if (baseLoginUiState.value.isFileAttachmentsEnabled) {
+                        linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                    }
+                }.onFailure {
+                    PassLogger.w(TAG, "Link attachment error")
+                    PassLogger.w(TAG, it)
+                    snackbarDispatcher(ItemAttachmentsError)
+                }
+
                 inAppReviewTriggerMetrics.incrementItemCreatedCount()
 
                 when (passkeyResponse) {

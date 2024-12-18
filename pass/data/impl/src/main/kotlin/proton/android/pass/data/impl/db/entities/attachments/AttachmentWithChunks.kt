@@ -18,14 +18,7 @@
 
 package proton.android.pass.data.impl.db.entities.attachments
 
-import androidx.room.Embedded
-import androidx.room.Relation
-
 data class AttachmentWithChunks(
-    @Embedded val attachment: AttachmentEntity,
-    @Relation(
-        parentColumn = AttachmentEntity.Columns.ID,
-        entityColumn = ChunkEntity.Columns.ATTACHMENT_ID
-    )
+    val attachment: AttachmentEntity,
     val chunks: List<ChunkEntity>
 )

@@ -174,36 +174,39 @@ class LocalItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?
-    ): Flow<ItemCountSummary> = combine(
-        database.itemsDao().itemSummary(userId.id, shareIds.map { it.id }, itemState?.value),
-        database.itemsDao().countAllItemsWithTotp(userId.id),
-        database.itemsDao().countSharedItems(userId.id)
-    ) { values: List<SummaryRow>, totpCount: Int, sharedItemsCount ->
-        val logins =
-            values.firstOrNull { it.itemKind == ItemCategory.Login.value }?.itemCount ?: 0
-        val aliases =
-            values.firstOrNull { it.itemKind == ItemCategory.Alias.value }?.itemCount ?: 0
-        val notes =
-            values.firstOrNull { it.itemKind == ItemCategory.Note.value }?.itemCount ?: 0
-        val creditCards =
-            values.firstOrNull { it.itemKind == ItemCategory.CreditCard.value }?.itemCount
-                ?: 0
-        val identities =
-            values.firstOrNull { it.itemKind == ItemCategory.Identity.value }?.itemCount
-                ?: 0
+    ): Flow<ItemCountSummary> = shareIds.map { shareId -> shareId.id }
+        .let { shareIds ->
+            combine(
+                database.itemsDao().itemSummary(userId.id, shareIds, itemState?.value),
+                database.itemsDao().countAllItemsWithTotp(userId.id),
+                database.itemsDao().countSharedItems(userId.id, shareIds)
+            ) { values: List<SummaryRow>, totpCount: Int, sharedItemsCount ->
+                val logins =
+                    values.firstOrNull { it.itemKind == ItemCategory.Login.value }?.itemCount ?: 0
+                val aliases =
+                    values.firstOrNull { it.itemKind == ItemCategory.Alias.value }?.itemCount ?: 0
+                val notes =
+                    values.firstOrNull { it.itemKind == ItemCategory.Note.value }?.itemCount ?: 0
+                val creditCards =
+                    values.firstOrNull { it.itemKind == ItemCategory.CreditCard.value }?.itemCount
+                        ?: 0
+                val identities =
+                    values.firstOrNull { it.itemKind == ItemCategory.Identity.value }?.itemCount
+                        ?: 0
 
-        ItemCountSummary(
-            total = logins + aliases + notes + creditCards,
-            login = logins,
-            loginWithMFA = totpCount.toLong(),
-            alias = aliases,
-            note = notes,
-            creditCard = creditCards,
-            identities = identities,
-            sharedWithMe = sharedItemsCount.sharedWithMe,
-            sharedByMe = sharedItemsCount.sharedByMe
-        )
-    }
+                ItemCountSummary(
+                    total = logins + aliases + notes + creditCards,
+                    login = logins,
+                    loginWithMFA = totpCount.toLong(),
+                    alias = aliases,
+                    note = notes,
+                    creditCard = creditCards,
+                    identities = identities,
+                    sharedWithMe = sharedItemsCount.sharedWithMe,
+                    sharedByMe = sharedItemsCount.sharedByMe
+                )
+            }
+        }
 
     override suspend fun updateLastUsedTime(
         shareId: ShareId,

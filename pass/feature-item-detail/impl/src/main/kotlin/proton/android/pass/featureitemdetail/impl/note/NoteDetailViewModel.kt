@@ -43,6 +43,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
@@ -342,16 +343,16 @@ class NoteDetailViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
-    fun onAttachmentOpen(context: Context, attachment: Attachment) {
+    fun onAttachmentOpen(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         viewModelScope.launch {
             loadingAttachmentsState.update { it + attachment.id }
             runCatching {
                 val uri = downloadAttachment(attachment)
                 fileHandler.openFile(
-                    context = context,
+                    contextHolder = contextHolder,
                     uri = uri,
                     mimeType = attachment.mimeType,
-                    chooserTitle = context.getString(R.string.open_with)
+                    chooserTitle = contextHolder.get().value()?.getString(R.string.open_with) ?: ""
                 )
             }.onSuccess {
                 PassLogger.i(TAG, "Attachment opened: ${attachment.id}")

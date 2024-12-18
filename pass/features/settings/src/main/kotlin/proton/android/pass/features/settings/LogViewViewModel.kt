@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.log.api.LogFileUri
 import proton.android.pass.log.api.PassLogger
@@ -66,9 +67,9 @@ class LogViewViewModel @Inject constructor(
         }
     }
 
-    fun startShareIntent(context: Context) = viewModelScope.launch {
+    fun startShareIntent(contextHolder: ClassHolder<Context>) = viewModelScope.launch {
         fileHandler.shareFileWithEmail(
-            context = context,
+            contextHolder = contextHolder,
             file = logFileUri.toFile(),
             chooserTitle = ShareLogsConstants.CHOOSER_TITLE,
             email = ShareLogsConstants.EMAIL,

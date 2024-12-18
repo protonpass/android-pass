@@ -27,13 +27,13 @@ import java.net.URI
 interface FileHandler {
 
     fun shareFile(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         file: File,
         chooserTitle: String
     )
 
     fun shareFileWithEmail(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         file: File,
         chooserTitle: String,
         email: String,
@@ -41,14 +41,14 @@ interface FileHandler {
     )
 
     fun openFile(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         uri: URI,
         mimeType: String,
         chooserTitle: String
     )
 
     fun performFileAction(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         intent: Intent,
         chooserTitle: String,
         extras: Bundle = Bundle()

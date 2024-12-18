@@ -41,6 +41,7 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.some
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonui.api.toUiModel
@@ -589,11 +590,11 @@ class IdentityActionsProviderImpl @Inject constructor(
     }
 
     override fun openDraftAttachment(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         uri: URI,
         mimetype: String
     ) {
-        attachmentsHandler.openDraftAttachment(context, uri, mimetype)
+        attachmentsHandler.openDraftAttachment(contextHolder, uri, mimetype)
     }
 
     private fun handleFieldFocusChange(

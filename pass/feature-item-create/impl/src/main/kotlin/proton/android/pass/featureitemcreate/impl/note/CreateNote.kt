@@ -34,6 +34,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.domain.ShareId
@@ -135,9 +136,9 @@ fun CreateNoteScreen(
                                     }
                                     is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                         viewModel.openDraftAttachment(
-                                            context,
-                                            event.event.uri,
-                                            event.event.mimetype
+                                            contextHolder = context.toClassHolder(),
+                                            uri = event.event.uri,
+                                            mimetype = event.event.mimetype
                                         )
                                     is AttachmentContentEvent.OnDraftAttachmentOptions ->
                                         onNavigate(OpenDraftAttachmentOptions(event.event.uri))

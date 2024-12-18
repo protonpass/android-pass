@@ -24,6 +24,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.core.content.FileProvider
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.log.api.PassLogger
 import java.io.File
@@ -36,14 +37,18 @@ class FileHandlerImpl @Inject constructor(
     private val appConfig: AppConfig
 ) : FileHandler {
 
-    private fun createContentUri(context: Context, file: File): Uri = FileProvider.getUriForFile(
-        context,
-        "${appConfig.applicationId}.fileprovider",
-        file
-    )
+    private fun createContentUri(contextHolder: ClassHolder<Context>, file: File): Uri {
+        val context = contextHolder.get().value()
+            ?: throw IllegalStateException("Could not get context")
+        return FileProvider.getUriForFile(
+            context,
+            "${appConfig.applicationId}.fileprovider",
+            file
+        )
+    }
 
     override fun openFile(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         uri: URI,
         mimeType: String,
         chooserTitle: String
@@ -51,22 +56,22 @@ class FileHandlerImpl @Inject constructor(
         val contentUri = Uri.parse(uri.toString())
         val intent = Intent(Intent.ACTION_VIEW)
             .setDataAndType(contentUri, mimeType)
-        performFileAction(context, intent, chooserTitle)
+        performFileAction(contextHolder, intent, chooserTitle)
     }
 
     override fun shareFile(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         file: File,
         chooserTitle: String
     ) {
-        val contentUri = createContentUri(context, file)
+        val contentUri = createContentUri(contextHolder, file)
         val intent = Intent(Intent.ACTION_SEND)
             .setType("text/plain")
         val bundle = Bundle().apply {
             putParcelable(Intent.EXTRA_STREAM, contentUri)
         }
         performFileAction(
-            context = context,
+            contextHolder = contextHolder,
             intent = intent,
             chooserTitle = chooserTitle,
             extras = bundle
@@ -74,13 +79,13 @@ class FileHandlerImpl @Inject constructor(
     }
 
     override fun shareFileWithEmail(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         file: File,
         chooserTitle: String,
         email: String,
         subject: String
     ) {
-        val contentUri = createContentUri(context, file)
+        val contentUri = createContentUri(contextHolder, file)
         val intent = Intent(Intent.ACTION_SEND)
             .setType("text/plain")
         val bundle = Bundle().apply {
@@ -89,7 +94,7 @@ class FileHandlerImpl @Inject constructor(
             putParcelable(Intent.EXTRA_STREAM, contentUri)
         }
         performFileAction(
-            context = context,
+            contextHolder = contextHolder,
             intent = intent,
             chooserTitle = chooserTitle,
             extras = bundle
@@ -97,7 +102,7 @@ class FileHandlerImpl @Inject constructor(
     }
 
     override fun performFileAction(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         intent: Intent,
         chooserTitle: String,
         extras: Bundle
@@ -106,7 +111,8 @@ class FileHandlerImpl @Inject constructor(
             .putExtras(extras)
         val chooserIntent = Intent.createChooser(intentWithExtras, chooserTitle)
         runCatching {
-            context.startActivity(chooserIntent)
+            contextHolder.get().value()?.startActivity(chooserIntent)
+                ?: throw IllegalStateException("Could not get context")
         }.onFailure {
             PassLogger.w(TAG, "Could not start activity for intent")
         }

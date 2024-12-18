@@ -92,7 +92,7 @@ class UpdateIdentityViewModel @Inject constructor(
     private suspend fun getItem() {
         identityActionsProvider.updateLoadingState(IsLoadingState.Loading)
         runCatching { getItemById(navShareId, navItemId) }
-            .onSuccess(identityActionsProvider::onItemReceivedState)
+            .onSuccess { identityActionsProvider.onItemReceivedState(it) }
             .onFailure {
                 PassLogger.i(TAG, it, "Get by id error")
                 snackbarDispatcher(InitError)

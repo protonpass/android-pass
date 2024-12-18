@@ -27,10 +27,12 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
@@ -79,6 +81,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage
 import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentsHandler
+import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.AttachmentsInitError
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.InitError
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemUpdateError
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.UpdateAppToUpdateItemError
@@ -158,13 +161,28 @@ class UpdateLoginViewModel @Inject constructor(
 
             isLoadingState.update { IsLoadingState.Loading }
             runCatching { getItemById.invoke(navShareId, navItemId).first() }
-                .onSuccess { item ->
-                    itemOption = item.some()
-                    onItemReceived(item)
-                }
                 .onFailure {
                     PassLogger.i(TAG, it, "Get by id error")
                     snackbarDispatcher(InitError)
+                }
+                .onSuccess { item ->
+                    runCatching {
+                        val isFileAttachmentsEnabled = runBlocking {
+                            featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+                                .firstOrNull()
+                                ?: false
+                        }
+                        if (item.hasAttachments && isFileAttachmentsEnabled) {
+                            attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
+                        }
+                        item
+                    }.onFailure {
+                        PassLogger.w(TAG, it)
+                        PassLogger.w(TAG, "Get attachments error")
+                        snackbarDispatcher(AttachmentsInitError)
+                    }
+                    itemOption = item.some()
+                    onItemReceived(item)
                 }
             isLoadingState.update { IsLoadingState.NotLoading }
         }

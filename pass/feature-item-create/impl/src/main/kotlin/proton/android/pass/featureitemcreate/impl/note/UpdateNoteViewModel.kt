@@ -50,6 +50,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentsHandler
+import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.AttachmentsInitError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.InitError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.ItemUpdateError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.NoteUpdated
@@ -117,21 +118,26 @@ class UpdateNoteViewModel @Inject constructor(
                 PassLogger.w(TAG, "Get item error")
                 snackbarDispatcher(InitError)
             }
-            .mapCatching {
-                val isFileAttachmentsEnabled = runBlocking {
-                    featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1).firstOrNull() ?: false
+            .onSuccess { item ->
+                runCatching {
+                    val isFileAttachmentsEnabled = runBlocking {
+                        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+                            .firstOrNull()
+                            ?: false
+                    }
+                    if (item.hasAttachments && isFileAttachmentsEnabled) {
+                        attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
+                    }
+                    item
                 }
-                if (it.hasAttachments && isFileAttachmentsEnabled) {
-                    attachmentsHandler.getAttachmentsForItem(it.shareId, it.id)
-                }
-                it
+                    .onFailure {
+                        PassLogger.w(TAG, it)
+                        PassLogger.w(TAG, "Get attachments error")
+                        snackbarDispatcher(AttachmentsInitError)
+                    }
+                itemOption = item.some()
+                onNoteItemReceived(item)
             }
-            .onFailure {
-                PassLogger.w(TAG, it)
-                PassLogger.w(TAG, "Get attachments error")
-            }
-            .onSuccess(::onNoteItemReceived)
-
 
         isLoadingState.update { IsLoadingState.NotLoading }
     }

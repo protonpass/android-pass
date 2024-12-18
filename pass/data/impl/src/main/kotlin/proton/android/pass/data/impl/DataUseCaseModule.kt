@@ -161,6 +161,7 @@ import proton.android.pass.data.api.usecases.invites.InviteToItem
 import proton.android.pass.data.api.usecases.invites.ObserveInvite
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.GetItemOptions
+import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
@@ -362,6 +363,7 @@ import proton.android.pass.data.impl.usecases.invites.InviteToItemImpl
 import proton.android.pass.data.impl.usecases.invites.ObserveInviteImpl
 import proton.android.pass.data.impl.usecases.items.GetItemCategoryImpl
 import proton.android.pass.data.impl.usecases.items.GetItemOptionsImpl
+import proton.android.pass.data.impl.usecases.items.ObserveEncryptedSharedItemsImpl
 import proton.android.pass.data.impl.usecases.items.ObserveItemRevisionsImpl
 import proton.android.pass.data.impl.usecases.items.ObserveMonitoredItemsImpl
 import proton.android.pass.data.impl.usecases.items.OpenItemRevisionImpl
@@ -1061,5 +1063,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindObserveSharesItemsCount(impl: ObserveSharesItemsCountImpl): ObserveSharesItemsCount
+
+    @[Binds Singleton]
+    abstract fun bindObserveEncryptedSharedItems(impl: ObserveEncryptedSharedItemsImpl): ObserveEncryptedSharedItems
 
 }

@@ -29,7 +29,6 @@ enum class AliasSnackbarMessage(
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
     InitError(R.string.create_alias_init_error, SnackbarType.ERROR),
-    AttachmentsInitError(R.string.update_alias_attachments_init_error, SnackbarType.ERROR),
     ItemCreationError(R.string.create_alias_item_creation_error, SnackbarType.ERROR),
     CannotCreateMoreAliasesError(R.string.create_alias_cannot_create_more_aliases_error, SnackbarType.ERROR),
     EmailNotValidatedError(R.string.create_alias_email_not_validated_error, SnackbarType.ERROR),
@@ -38,5 +37,7 @@ enum class AliasSnackbarMessage(
     AliasCreated(R.string.alias_created, SnackbarType.SUCCESS),
     AliasUpdated(R.string.changes_saved, SnackbarType.SUCCESS),
     CannotRetrieveAliasOptions(R.string.cannot_retrieve_alias_options, SnackbarType.ERROR),
-    UpdateAppToUpdateItemError(R.string.snackbar_update_app_to_update_item, SnackbarType.ERROR)
+    UpdateAppToUpdateItemError(R.string.snackbar_update_app_to_update_item, SnackbarType.ERROR),
+    InitAttachmentsError(R.string.update_alias_attachments_init_error, SnackbarType.ERROR),
+    ItemAttachmentsError(R.string.credit_card_attachments_error, SnackbarType.ERROR)
 }

@@ -29,7 +29,6 @@ enum class LoginSnackbarMessages(
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
     InitError(R.string.create_login_init_error, SnackbarType.ERROR),
-    AttachmentsInitError(R.string.update_note_attachments_init_error, SnackbarType.ERROR),
     ItemCreationError(R.string.create_login_item_creation_error, SnackbarType.ERROR),
     ItemUpdateError(R.string.create_login_item_update_error, SnackbarType.ERROR),
     LoginCreated(R.string.login_created, SnackbarType.SUCCESS),
@@ -38,5 +37,7 @@ enum class LoginSnackbarMessages(
     EmailNotValidated(R.string.create_alias_email_not_validated_error, SnackbarType.ERROR),
     AliasRateLimited(R.string.alias_rate_limited, SnackbarType.ERROR),
     InvalidTotpError(R.string.create_login_invalid_totp, SnackbarType.ERROR),
-    UpdateAppToUpdateItemError(R.string.snackbar_update_app_to_update_item, SnackbarType.ERROR)
+    UpdateAppToUpdateItemError(R.string.snackbar_update_app_to_update_item, SnackbarType.ERROR),
+    AttachmentsInitError(R.string.update_login_attachments_init_error, SnackbarType.ERROR),
+    ItemAttachmentsError(R.string.login_attachments_error, SnackbarType.ERROR)
 }

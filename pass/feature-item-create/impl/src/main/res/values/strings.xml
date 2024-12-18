@@ -39,6 +39,7 @@
     <string name="create_login_item_update_error">Could not update Login</string>
     <string name="create_login_init_error">Problem retrieving login details</string>
     <string name="create_login_invalid_totp">The 2FA contents are not valid</string>
+    <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
     <string name="login_created">Login created</string>
     <string name="bottomsheet_modify_alias_title">Modify alias</string>
     <string name="bottomsheet_custom_field_type_text">Text</string>
@@ -63,6 +64,7 @@
     <string name="create_note_item_creation_error">Could not create Note</string>
     <string name="create_note_item_update_error">Could not update Note</string>
     <string name="create_note_init_error">Problem retrieving note details</string>
+    <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
     <string name="note_created">Note created</string>
     <!-- Create Alias -->
     <string name="field_alias_title">Alias address</string>
@@ -79,6 +81,7 @@
     <string name="alias_rate_limited">Too many aliases created recently</string>
     <string name="create_alias_item_update_error">Could not update Alias</string>
     <string name="create_alias_init_error">Problem retrieving alias details</string>
+    <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
     <string name="alias_created">Alias created</string>
     <string name="cannot_retrieve_alias_options">Cannot retrieve alias options</string>
     <string name="alias_mailbox_dialog_title">Forward to</string>
@@ -104,6 +107,7 @@
     <string name="create_credit_card_item_creation_error">Could not create credit card</string>
     <string name="create_credit_card_item_creation_success">Credit card created</string>
     <string name="credit_card_init_error">Problem retrieving credit card details</string>
+    <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
     <string name="credit_card_item_update_error">Could not update credit card</string>
     <!-- Create Identity -->
     <string name="identity_field_full_name_title">Full name</string>
@@ -191,6 +195,7 @@
     <string name="identity_add_more_fields">Add another field</string>
     <string name="identity_bottomsheet_add_field">Add field</string>
     <string name="create_identity_init_error">Problem retrieving identity details</string>
+    <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
     <string name="create_identity_item_creation_error">Could not create identity</string>
     <string name="create_identity_item_creation_success">Identity created</string>
     <string name="update_identity_item_creation_success">Identity updated</string>

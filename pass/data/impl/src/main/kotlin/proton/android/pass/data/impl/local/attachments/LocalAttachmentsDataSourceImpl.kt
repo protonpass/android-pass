@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.local.attachments
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentWithChunks
@@ -64,8 +65,17 @@ class LocalAttachmentsDataSourceImpl @Inject constructor(
     override fun observeAttachmentsWithChunksForItem(
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<List<AttachmentWithChunks>> = database.attachmentDao().observeAttachmentsWithChunks(
-        shareId = shareId.id,
-        itemId = itemId.id
-    )
+    ): Flow<List<AttachmentWithChunks>> = combine(
+        database.attachmentDao().observeItemAttachments(shareId.id, itemId.id),
+        database.chunkDao().observeItemChunks(shareId.id, itemId.id)
+    ) { attachments, chunks ->
+        val chunkMap = chunks.groupBy { it.attachmentId }
+
+        attachments.map { attachment ->
+            AttachmentWithChunks(
+                attachment = attachment,
+                chunks = chunkMap[attachment.id] ?: emptyList()
+            )
+        }
+    }
 }

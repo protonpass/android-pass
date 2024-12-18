@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.CommonRegex.NON_DIGIT_REGEX
 import proton.android.pass.common.api.combineN
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState.NotLoading
@@ -225,11 +226,11 @@ abstract class BaseCreditCardViewModel(
     }
 
     fun openDraftAttachment(
-        context: Context,
+        contextHolder: ClassHolder<Context>,
         uri: URI,
         mimetype: String
     ) {
-        attachmentsHandler.openDraftAttachment(context, uri, mimetype)
+        attachmentsHandler.openDraftAttachment(contextHolder, uri, mimetype)
     }
 
     companion object {

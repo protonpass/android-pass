@@ -16,28 +16,28 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featurehome.impl.shares.ui
+package proton.android.pass.featurehome.impl.drawer.ui
 
 import proton.android.pass.domain.ShareId
 
-internal interface SharesDrawerUiEvent {
+internal interface HomeDrawerUiEvent {
 
-    data object OnAllVaultsClick : SharesDrawerUiEvent
-
-    @JvmInline
-    value class OnVaultClick(internal val shareId: ShareId) : SharesDrawerUiEvent
+    data object OnAllVaultsClick : HomeDrawerUiEvent
 
     @JvmInline
-    value class OnShareVaultClick(internal val shareId: ShareId) : SharesDrawerUiEvent
+    value class OnVaultClick(internal val shareId: ShareId) : HomeDrawerUiEvent
 
     @JvmInline
-    value class OnManageVaultClick(internal val shareId: ShareId) : SharesDrawerUiEvent
+    value class OnShareVaultClick(internal val shareId: ShareId) : HomeDrawerUiEvent
 
     @JvmInline
-    value class OnVaultOptionsClick(internal val shareId: ShareId) : SharesDrawerUiEvent
+    value class OnManageVaultClick(internal val shareId: ShareId) : HomeDrawerUiEvent
 
-    data object OnTrashClick : SharesDrawerUiEvent
+    @JvmInline
+    value class OnVaultOptionsClick(internal val shareId: ShareId) : HomeDrawerUiEvent
 
-    data object OnCreateVaultClick : SharesDrawerUiEvent
+    data object OnTrashClick : HomeDrawerUiEvent
+
+    data object OnCreateVaultClick : HomeDrawerUiEvent
 
 }

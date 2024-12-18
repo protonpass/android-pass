@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featurehome.impl.shares.ui
+package proton.android.pass.featurehome.impl.drawer.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -31,20 +31,20 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.featurehome.impl.R
-import proton.android.pass.featurehome.impl.shares.presentation.SharesDrawerState
+import proton.android.pass.featurehome.impl.drawer.presentation.HomeDrawerState
 
 @Composable
-internal fun SharesDrawerContent(
+internal fun HomeDrawerContent(
     modifier: Modifier = Modifier,
-    state: SharesDrawerState,
-    onUiEvent: (SharesDrawerUiEvent) -> Unit
+    state: HomeDrawerState,
+    onUiEvent: (HomeDrawerUiEvent) -> Unit
 ) = with(state) {
     Column(
         modifier = modifier
             .background(color = PassTheme.colors.backgroundWeak)
             .padding(top = Spacing.small)
     ) {
-        SharesDrawerShareList(
+        HomeDrawerList(
             modifier = modifier
                 .fillMaxHeight()
                 .weight(weight = 1f, fill = true),
@@ -65,7 +65,7 @@ internal fun SharesDrawerContent(
                 textColor = PassTheme.colors.interactionNormMajor2,
                 backgroundColor = PassTheme.colors.interactionNormMinor1,
                 onClick = {
-                    onUiEvent(SharesDrawerUiEvent.OnCreateVaultClick)
+                    onUiEvent(HomeDrawerUiEvent.OnCreateVaultClick)
                 }
             )
         }

@@ -182,6 +182,7 @@ import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
+import proton.android.pass.data.api.usecases.shares.ObserveShareItemsCount
 import proton.android.pass.data.api.usecases.shares.ObserveSharePendingInvites
 import proton.android.pass.data.api.usecases.shares.ObserveSharesByType
 import proton.android.pass.data.api.usecases.shares.UpdateShareMemberRole
@@ -364,6 +365,7 @@ import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinksCount
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShareItemMembers
+import proton.android.pass.data.fakes.usecases.shares.FakeObserveShareItemsCount
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveSharePendingInvites
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveSharesByType
 import proton.android.pass.data.fakes.usecases.simplelogin.FakeCreateSimpleLoginAliasMailbox
@@ -976,5 +978,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindDownloadAttachment(impl: FakeDownloadAttachment): DownloadAttachment
+
+    @Binds
+    abstract fun bindObserveShareItemsCount(impl: FakeObserveShareItemsCount): ObserveShareItemsCount
 
 }

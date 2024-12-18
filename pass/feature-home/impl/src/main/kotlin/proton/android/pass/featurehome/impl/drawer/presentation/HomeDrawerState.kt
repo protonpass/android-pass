@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featurehome.impl.shares.presentation
+package proton.android.pass.featurehome.impl.drawer.presentation
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.None
@@ -29,7 +29,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.searchoptions.api.VaultSelectionOption
 
 @Stable
-internal data class SharesDrawerState(
+internal data class HomeDrawerState(
     internal val vaultShares: List<Share.Vault>,
     internal val vaultSharesItemsCounter: Map<ShareId, ShareItemCount>,
     internal val canCreateVaults: Boolean,
@@ -68,7 +68,7 @@ internal data class SharesDrawerState(
 
     internal companion object {
 
-        internal val Initial: SharesDrawerState = SharesDrawerState(
+        internal val Initial: HomeDrawerState = HomeDrawerState(
             vaultShares = emptyList(),
             vaultSharesItemsCounter = emptyMap(),
             canCreateVaults = false,

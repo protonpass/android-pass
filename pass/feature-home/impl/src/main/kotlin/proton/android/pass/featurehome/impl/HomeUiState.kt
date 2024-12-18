@@ -93,10 +93,14 @@ internal data class HomeUiState(
         (searchUiState.inSearchMode || pinningUiState.inPinningMode)
 
     internal fun isSelectedVaultReadOnly() = when (val selection = homeListUiState.homeVaultSelection) {
-        is VaultSelectionOption.AllVaults -> false
         is VaultSelectionOption.Vault ->
-            homeListUiState.shares[selection.shareId]?.role == ShareRole.Read
+            homeListUiState
+                .shares[selection.shareId]
+                ?.role == ShareRole.Read
 
+        VaultSelectionOption.AllVaults,
+        VaultSelectionOption.SharedByMe,
+        VaultSelectionOption.SharedWithMe,
         is VaultSelectionOption.Trash -> false
     }
 

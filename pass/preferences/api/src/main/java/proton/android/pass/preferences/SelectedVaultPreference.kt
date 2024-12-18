@@ -19,6 +19,8 @@
 package proton.android.pass.preferences
 
 private const val ALL_VAULTS_VALUE = "AllVaults"
+private const val SHARED_BY_ME_VALUE = "SharedByMe"
+private const val SHARED_WITH_ME_VALUE = "SharedWithMe"
 private const val TRASH_VALUE = "Trash"
 
 sealed interface SelectedVaultPreference {
@@ -26,23 +28,47 @@ sealed interface SelectedVaultPreference {
     fun value(): String
 
     data object AllVaults : SelectedVaultPreference {
+
         override fun value(): String = ALL_VAULTS_VALUE
+
     }
+
+    data object SharedByMe : SelectedVaultPreference {
+
+        override fun value(): String = SHARED_BY_ME_VALUE
+
+    }
+
+    data object SharedWithMe : SelectedVaultPreference {
+
+        override fun value(): String = SHARED_WITH_ME_VALUE
+
+    }
+
     data object Trash : SelectedVaultPreference {
+
         override fun value(): String = TRASH_VALUE
+
     }
 
     @JvmInline
     value class Vault(val shareId: String) : SelectedVaultPreference {
+
         override fun value(): String = shareId
+
     }
 
     companion object {
+
         fun fromValue(value: String?): SelectedVaultPreference = when {
             value == ALL_VAULTS_VALUE -> AllVaults
+            value == SHARED_BY_ME_VALUE -> SharedByMe
+            value == SHARED_WITH_ME_VALUE -> SharedWithMe
             value == TRASH_VALUE -> Trash
             !value.isNullOrBlank() -> Vault(value)
             else -> AllVaults
         }
+
     }
+
 }

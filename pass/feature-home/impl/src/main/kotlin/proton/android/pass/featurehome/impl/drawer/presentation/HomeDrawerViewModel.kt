@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featurehome.impl.shares.presentation
+package proton.android.pass.featurehome.impl.drawer.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -40,7 +40,7 @@ import proton.android.pass.searchoptions.api.VaultSelectionOption
 import javax.inject.Inject
 
 @HiltViewModel
-class SharesDrawerViewModel @Inject constructor(
+class HomeDrawerViewModel @Inject constructor(
     canCreateVault: CanCreateVault,
     observeAllShares: ObserveAllShares,
     observeSharesItemsCount: ObserveSharesItemsCount,
@@ -70,17 +70,17 @@ class SharesDrawerViewModel @Inject constructor(
     private val itemCountSummaryOptionFlow = observeItemCount()
         .mapLatest(::Some)
 
-    internal val stateFlow: StateFlow<SharesDrawerState> = combine(
+    internal val stateFlow: StateFlow<HomeDrawerState> = combine(
         vaultSharesFlow,
         vaultSharesItemsCountFlow,
         canCreateVault(),
         homeSearchOptionsRepository.observeVaultSelectionOption(),
         itemCountSummaryOptionFlow,
-        ::SharesDrawerState
+        ::HomeDrawerState
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000L),
-        initialValue = SharesDrawerState.Initial
+        initialValue = HomeDrawerState.Initial
     )
 
     internal fun setVaultSelection(vaultSelectionOption: VaultSelectionOption) {

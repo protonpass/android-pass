@@ -82,9 +82,9 @@ import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsEvent
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipsViewModel
 import proton.android.pass.featurehome.impl.saver.HomeBottomSheetTypeSaver
 import proton.android.pass.featurehome.impl.saver.ItemUiModelSaver
-import proton.android.pass.featurehome.impl.shares.presentation.SharesDrawerViewModel
-import proton.android.pass.featurehome.impl.shares.ui.SharesDrawerContent
-import proton.android.pass.featurehome.impl.shares.ui.SharesDrawerUiEvent
+import proton.android.pass.featurehome.impl.drawer.presentation.HomeDrawerViewModel
+import proton.android.pass.featurehome.impl.drawer.ui.HomeDrawerContent
+import proton.android.pass.featurehome.impl.drawer.ui.HomeDrawerUiEvent
 import proton.android.pass.featurehome.impl.trash.ConfirmClearTrashDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmDeleteItemsDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmRestoreAllDialog
@@ -115,7 +115,7 @@ fun HomeScreen(
     routerViewModel: RouterViewModel = hiltViewModel(),
     vaultDrawerViewModel: VaultDrawerViewModel = hiltViewModel(),
     onBoardingTipsViewModel: OnBoardingTipsViewModel = hiltViewModel(),
-    sharesDrawerViewModel: SharesDrawerViewModel = hiltViewModel()
+    homeDrawerViewModel: HomeDrawerViewModel = hiltViewModel()
 ) {
     val routerEvent by routerViewModel.routerEventState.collectAsStateWithLifecycle(RouterEvent.None)
     val homeUiState by homeViewModel.homeUiState.collectAsStateWithLifecycle()
@@ -662,55 +662,55 @@ fun HomeScreen(
             scrimColor = PassTheme.colors.backdrop,
             drawerContent = {
                 if (homeUiState.isItemSharingEnabled) {
-                    val sharesDrawerState by sharesDrawerViewModel.stateFlow.collectAsStateWithLifecycle()
+                    val homeDrawerState by homeDrawerViewModel.stateFlow.collectAsStateWithLifecycle()
 
-                    SharesDrawerContent(
-                        state = sharesDrawerState,
+                    HomeDrawerContent(
+                        state = homeDrawerState,
                         onUiEvent = { uiEvent ->
                             when (uiEvent) {
-                                SharesDrawerUiEvent.OnAllVaultsClick -> {
+                                HomeDrawerUiEvent.OnAllVaultsClick -> {
                                     scope.launch { drawerState.close() }
 
                                     VaultSelectionOption.AllVaults
-                                        .also(sharesDrawerViewModel::setVaultSelection)
+                                        .also(homeDrawerViewModel::setVaultSelection)
                                         .also(homeViewModel::setVaultSelection)
                                 }
 
-                                is SharesDrawerUiEvent.OnVaultClick -> {
+                                is HomeDrawerUiEvent.OnVaultClick -> {
                                     scope.launch { drawerState.close() }
 
                                     VaultSelectionOption.Vault(shareId = uiEvent.shareId)
-                                        .also(sharesDrawerViewModel::setVaultSelection)
+                                        .also(homeDrawerViewModel::setVaultSelection)
                                         .also(homeViewModel::setVaultSelection)
                                 }
 
-                                is SharesDrawerUiEvent.OnShareVaultClick -> {
+                                is HomeDrawerUiEvent.OnShareVaultClick -> {
                                     HomeNavigation.ShareVault(
                                         shareId = uiEvent.shareId
                                     ).also(onNavigateEvent)
                                 }
 
-                                is SharesDrawerUiEvent.OnManageVaultClick -> {
+                                is HomeDrawerUiEvent.OnManageVaultClick -> {
                                     HomeNavigation.ManageVault(
                                         shareId = uiEvent.shareId
                                     ).also(onNavigateEvent)
                                 }
 
-                                is SharesDrawerUiEvent.OnVaultOptionsClick -> {
+                                is HomeDrawerUiEvent.OnVaultOptionsClick -> {
                                     HomeNavigation.VaultOptions(
                                         shareId = uiEvent.shareId
                                     ).also(onNavigateEvent)
                                 }
 
-                                SharesDrawerUiEvent.OnTrashClick -> {
+                                HomeDrawerUiEvent.OnTrashClick -> {
                                     scope.launch { drawerState.close() }
 
                                     VaultSelectionOption.Trash
-                                        .also(sharesDrawerViewModel::setVaultSelection)
+                                        .also(homeDrawerViewModel::setVaultSelection)
                                         .also(homeViewModel::setVaultSelection)
                                 }
 
-                                SharesDrawerUiEvent.OnCreateVaultClick -> {
+                                HomeDrawerUiEvent.OnCreateVaultClick -> {
                                     onNavigateEvent(HomeNavigation.CreateVault)
                                 }
                             }

@@ -28,10 +28,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -87,6 +89,8 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsh
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkPhoneNumber
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Yahoo
 import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import java.net.URI
@@ -101,6 +105,7 @@ class IdentityActionsProviderImpl @Inject constructor(
     private val observeUpgradeInfo: ObserveUpgradeInfo,
     private val attachmentsHandler: AttachmentsHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : IdentityActionsProvider {
 
@@ -659,7 +664,8 @@ class IdentityActionsProviderImpl @Inject constructor(
         draftRepository.save(DRAFT_IDENTITY_CUSTOM_FIELD_KEY, customExtraField)
     }
 
-    override fun onItemReceivedState(item: Item) {
+    override suspend fun onItemReceivedState(item: Item) {
+        getItemAttachments(item)
         itemState.update { item.some() }
         val itemContents = encryptionContextProvider.withEncryptionContext {
             toItemContents(
@@ -716,6 +722,23 @@ class IdentityActionsProviderImpl @Inject constructor(
             }
         }
         identityItemFormMutableState = IdentityItemFormState(itemContents)
+    }
+
+    private suspend fun getItemAttachments(item: Item) {
+        runCatching {
+            val isFileAttachmentsEnabled = runBlocking {
+                featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+                    .firstOrNull()
+                    ?: false
+            }
+            if (item.hasAttachments && isFileAttachmentsEnabled) {
+                attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
+            }
+        }.onFailure {
+            PassLogger.w(TAG, it)
+            PassLogger.w(TAG, "Get attachments error")
+            snackbarDispatcher(IdentitySnackbarMessage.AttachmentsInitError)
+        }
     }
 
     override fun getReceivedItem(): Item =
@@ -916,5 +939,9 @@ class IdentityActionsProviderImpl @Inject constructor(
                 }
             }
         }.launchIn(coroutineScope)
+    }
+
+    companion object {
+        private const val TAG = "IdentityActionsProviderImpl"
     }
 }

@@ -60,7 +60,10 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
     private val itemCountAndSearchOptionsFlow = homeSearchOptionsRepository.observeSearchOptions()
         .flatMapLatest {
             when (val vault = it.vaultSelectionOption) {
-                VaultSelectionOption.AllVaults -> observeItemCount()
+                VaultSelectionOption.AllVaults,
+                VaultSelectionOption.SharedByMe,
+                VaultSelectionOption.SharedWithMe -> observeItemCount()
+
                 VaultSelectionOption.Trash -> observeItemCount(
                     itemState = ItemState.Trashed
                 )

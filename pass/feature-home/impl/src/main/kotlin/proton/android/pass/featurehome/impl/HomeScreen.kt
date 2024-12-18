@@ -702,6 +702,22 @@ fun HomeScreen(
                                     ).also(onNavigateEvent)
                                 }
 
+                                HomeDrawerUiEvent.OnSharedWithMeClick -> {
+                                    scope.launch { drawerState.close() }
+
+                                    VaultSelectionOption.SharedWithMe
+                                        .also(homeDrawerViewModel::setVaultSelection)
+                                        .also(homeViewModel::setVaultSelection)
+                                }
+
+                                HomeDrawerUiEvent.OnSharedByMeClick -> {
+                                    scope.launch { drawerState.close() }
+
+                                    VaultSelectionOption.SharedByMe
+                                        .also(homeDrawerViewModel::setVaultSelection)
+                                        .also(homeViewModel::setVaultSelection)
+                                }
+
                                 HomeDrawerUiEvent.OnTrashClick -> {
                                     scope.launch { drawerState.close() }
 

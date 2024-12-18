@@ -23,9 +23,10 @@ import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.update
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import java.net.URI
 import javax.inject.Inject
@@ -43,8 +44,16 @@ class DraftAttachmentRepositoryImpl @Inject constructor() : DraftAttachmentRepos
         .map { it }
         .distinctUntilChanged()
 
-    override fun observeNew(): Flow<Set<URI>> = observeAll()
-        .scan(emptySet()) { previousUris, currentUris -> currentUris - previousUris }
+    override fun observeNew(): Flow<Set<URI>> {
+        var seenSet = setOf<URI>()
+
+        return uriSetFlow
+            .flatMapLatest { currentSet ->
+                val newUris = currentSet - seenSet
+                seenSet = seenSet.intersect(currentSet) + newUris
+                oneShot { newUris }
+            }
+    }
 
     override fun remove(uri: URI): Boolean {
         var removedSuccessfully = false

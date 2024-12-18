@@ -20,11 +20,9 @@ package proton.android.pass.data.impl.db.dao.attachment
 
 import androidx.room.Dao
 import androidx.room.Query
-import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
-import proton.android.pass.data.impl.db.entities.attachments.AttachmentWithChunks
 
 @Dao
 abstract class AttachmentDao : BaseDao<AttachmentEntity>() {
@@ -59,6 +57,5 @@ abstract class AttachmentDao : BaseDao<AttachmentEntity>() {
           AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId
         """
     )
-    @Transaction
-    abstract fun observeAttachmentsWithChunks(shareId: String, itemId: String): Flow<List<AttachmentWithChunks>>
+    abstract fun observeItemAttachments(shareId: String, itemId: String): Flow<List<AttachmentEntity>>
 }

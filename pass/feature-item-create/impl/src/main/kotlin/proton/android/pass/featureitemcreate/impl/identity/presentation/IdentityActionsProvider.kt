@@ -76,7 +76,7 @@ interface IdentityActionsProvider : IdentityFormActions {
     fun updateLoadingState(loadingState: IsLoadingState)
     fun onItemSavedState(item: Item)
     fun updateSelectedSection(customExtraField: CustomExtraField)
-    fun onItemReceivedState(item: Item)
+    suspend fun onItemReceivedState(item: Item)
     fun getReceivedItem(): Item
     fun observeReceivedItem(): Flow<Option<Item>>
     fun resetLastAddedFieldFocus()

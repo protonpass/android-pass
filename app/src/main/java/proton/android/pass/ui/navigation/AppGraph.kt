@@ -435,6 +435,20 @@ fun NavGraphBuilder.appGraph(
                 HomeNavigation.SLAliasManagement -> appNavigator.navigate(
                     destination = SimpleLoginSyncManagementNavItem
                 )
+
+                is HomeNavigation.ShareVault -> appNavigator.navigate(
+                    destination = SharingWith,
+                    route = SharingWith.createRoute(
+                        shareId = it.shareId,
+                        showEditVault = false,
+                        itemIdOption = None
+                    )
+                )
+
+                is HomeNavigation.ManageVault -> appNavigator.navigate(
+                    destination = ManageVault,
+                    route = ManageVault.createRoute(shareId = it.shareId)
+                )
             }
         }
     )
@@ -893,6 +907,7 @@ fun NavGraphBuilder.appGraph(
                         destination = AttachmentOptionsNavItem,
                         route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
                     )
+
                 is BaseLoginNavigation.OpenDraftAttachmentOptions ->
                     appNavigator.navigate(
                         destination = AttachmentOptionsNavItem,
@@ -938,6 +953,7 @@ fun NavGraphBuilder.appGraph(
                         destination = AttachmentOptionsNavItem,
                         route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
                     )
+
                 is UpdateNoteNavigation.OpenDraftAttachmentOptions ->
                     appNavigator.navigate(
                         destination = AttachmentOptionsNavItem,
@@ -965,6 +981,7 @@ fun NavGraphBuilder.appGraph(
                     destination = AttachmentOptionsNavItem,
                     route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
                 )
+
             is BaseCreditCardNavigation.OpenDraftAttachmentOptions ->
                 appNavigator.navigate(
                     destination = AttachmentOptionsNavItem,
@@ -993,6 +1010,7 @@ fun NavGraphBuilder.appGraph(
                     destination = AttachmentOptionsNavItem,
                     route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
                 )
+
             is BaseCreditCardNavigation.OpenDraftAttachmentOptions ->
                 appNavigator.navigate(
                     destination = AttachmentOptionsNavItem,
@@ -1053,6 +1071,7 @@ fun NavGraphBuilder.appGraph(
                         destination = AttachmentOptionsNavItem,
                         route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
                     )
+
                 is UpdateAliasNavigation.OpenDraftAttachmentOptions ->
                     appNavigator.navigate(
                         destination = AttachmentOptionsNavItem,
@@ -1160,6 +1179,7 @@ fun NavGraphBuilder.appGraph(
                         destination = AttachmentOptionsNavItem,
                         route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
                     )
+
                 is BaseIdentityNavigation.OpenDraftAttachmentOptions ->
                     appNavigator.navigate(
                         destination = AttachmentOptionsNavItem,
@@ -2318,9 +2338,11 @@ fun NavGraphBuilder.appGraph(
             AttachmentsNavigation.OpenFilePicker -> dismissBottomSheet {
                 appNavigator.navigate(FilePickerNavItem)
             }
+
             AttachmentsNavigation.OpenMediaPicker -> dismissBottomSheet {
                 appNavigator.navigate(MediaPickerNavItem)
             }
+
             AttachmentsNavigation.OpenCamera -> dismissBottomSheet {
                 appNavigator.navigate(CameraNavItem)
             }

@@ -49,22 +49,21 @@ import androidx.room.Index
     ],
     indices = [
         Index(
-            value = [
-                ChunkEntity.Columns.ATTACHMENT_ID,
-                ChunkEntity.Columns.ITEM_ID,
-                ChunkEntity.Columns.SHARE_ID
-            ]
+            value = [ChunkEntity.Columns.ITEM_ID, ChunkEntity.Columns.SHARE_ID]
+        ),
+        Index(
+            value = [ChunkEntity.Columns.ATTACHMENT_ID, ChunkEntity.Columns.ITEM_ID, ChunkEntity.Columns.SHARE_ID]
         )
     ]
 )
 data class ChunkEntity(
     @ColumnInfo(name = Columns.ID)
     val id: String,
-    @ColumnInfo(name = Columns.ATTACHMENT_ID)
+    @ColumnInfo(name = Columns.ATTACHMENT_ID, index = true)
     val attachmentId: String,
-    @ColumnInfo(name = Columns.ITEM_ID)
+    @ColumnInfo(name = Columns.ITEM_ID, index = true)
     val itemId: String,
-    @ColumnInfo(name = Columns.SHARE_ID)
+    @ColumnInfo(name = Columns.SHARE_ID, index = true)
     val shareId: String,
     @ColumnInfo(name = Columns.SIZE)
     val size: Long,

@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featurehome.impl.shares.ui
+package proton.android.pass.featurehome.impl.drawer.ui
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
@@ -48,7 +48,7 @@ import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-internal fun SharesDrawerShareRow(
+internal fun HomeDrawerRow(
     modifier: Modifier = Modifier,
     @DrawableRes shareIconRes: Int,
     iconColor: Color,
@@ -128,14 +128,14 @@ internal fun SharesDrawerShareRow(
 }
 
 @[Preview Composable]
-internal fun ShareDrawerVaultRowPreview(
+internal fun HomeDrawerRowPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
     val (isDark, isSelected) = input
 
     PassTheme(isDark = isDark) {
         Surface {
-            SharesDrawerShareRow(
+            HomeDrawerRow(
                 shareIconRes = CompR.drawable.ic_brand_pass,
                 iconColor = PassTheme.colors.interactionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.interactionNormMinor1,

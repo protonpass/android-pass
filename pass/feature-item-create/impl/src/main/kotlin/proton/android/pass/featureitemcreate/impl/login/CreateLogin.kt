@@ -34,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.OneTimeLaunchedEffect
+import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.domain.ShareId
@@ -244,9 +245,9 @@ fun CreateLoginScreen(
                             }
                             is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                 viewModel.openDraftAttachment(
-                                    context,
-                                    it.event.uri,
-                                    it.event.mimetype
+                                    contextHolder = context.toClassHolder(),
+                                    uri = it.event.uri,
+                                    mimetype = it.event.mimetype
                                 )
                             is AttachmentContentEvent.OnDraftAttachmentOptions ->
                                 onNavigate(OpenDraftAttachmentOptions(it.event.uri))

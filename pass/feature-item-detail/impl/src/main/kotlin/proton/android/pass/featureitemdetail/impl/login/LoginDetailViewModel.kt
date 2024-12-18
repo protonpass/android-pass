@@ -53,6 +53,7 @@ import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonrust.api.PasswordScorer
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -866,16 +867,16 @@ class LoginDetailViewModel @Inject constructor(
         }
     }
 
-    fun onAttachmentOpen(context: Context, attachment: Attachment) {
+    fun onAttachmentOpen(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         viewModelScope.launch {
             loadingAttachmentsState.update { it + attachment.id }
             runCatching {
                 val uri = downloadAttachment(attachment)
                 fileHandler.openFile(
-                    context = context,
+                    contextHolder = contextHolder,
                     uri = uri,
                     mimeType = attachment.mimeType,
-                    chooserTitle = context.getString(R.string.open_with)
+                    chooserTitle = contextHolder.get().value()?.getString(R.string.open_with) ?: ""
                 )
             }.onSuccess {
                 PassLogger.i(TAG, "Attachment opened: ${attachment.id}")

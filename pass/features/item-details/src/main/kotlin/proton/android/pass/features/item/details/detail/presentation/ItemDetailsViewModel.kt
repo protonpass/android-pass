@@ -39,6 +39,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.errors.ItemNotFoundError
@@ -148,7 +149,7 @@ class ItemDetailsViewModel @Inject constructor(
         }
     }
 
-    internal fun onAttachmentOpen(context: Context, attachment: Attachment) {
+    internal fun onAttachmentOpen(context: ClassHolder<Context>, attachment: Attachment) {
         viewModelScope.launch {
             itemDetailsHandler.onAttachmentOpen(context, attachment)
         }

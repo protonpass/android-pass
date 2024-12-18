@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 65,
-    "identityHash": "93c98695080a5830bedf0319230b0e28",
+    "identityHash": "2f6330265317d54239d993f2f990e675",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -4799,6 +4799,16 @@
         },
         "indices": [
           {
+            "name": "index_ChunkEntity_item_id_share_id",
+            "unique": false,
+            "columnNames": [
+              "item_id",
+              "share_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_ChunkEntity_item_id_share_id` ON `${TABLE_NAME}` (`item_id`, `share_id`)"
+          },
+          {
             "name": "index_ChunkEntity_attachment_id_item_id_share_id",
             "unique": false,
             "columnNames": [
@@ -4808,6 +4818,33 @@
             ],
             "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_ChunkEntity_attachment_id_item_id_share_id` ON `${TABLE_NAME}` (`attachment_id`, `item_id`, `share_id`)"
+          },
+          {
+            "name": "index_ChunkEntity_attachment_id",
+            "unique": false,
+            "columnNames": [
+              "attachment_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_ChunkEntity_attachment_id` ON `${TABLE_NAME}` (`attachment_id`)"
+          },
+          {
+            "name": "index_ChunkEntity_item_id",
+            "unique": false,
+            "columnNames": [
+              "item_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_ChunkEntity_item_id` ON `${TABLE_NAME}` (`item_id`)"
+          },
+          {
+            "name": "index_ChunkEntity_share_id",
+            "unique": false,
+            "columnNames": [
+              "share_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_ChunkEntity_share_id` ON `${TABLE_NAME}` (`share_id`)"
           }
         ],
         "foreignKeys": [
@@ -4832,7 +4869,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '93c98695080a5830bedf0319230b0e28')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2f6330265317d54239d993f2f990e675')"
     ]
   }
 }

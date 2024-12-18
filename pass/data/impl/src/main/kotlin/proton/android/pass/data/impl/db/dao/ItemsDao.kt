@@ -438,7 +438,8 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
             AND ${ItemEntity.Columns.SHARE_COUNT} > 0
+            AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
         """
     )
-    abstract fun countSharedItems(userId: String): Flow<SharedItemsCountRow>
+    abstract fun countSharedItems(userId: String, shareIds: List<String>): Flow<SharedItemsCountRow>
 }

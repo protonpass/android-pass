@@ -141,6 +141,7 @@ internal fun HomeContent(
                             homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
                             isSeeAllPinsMode = uiState.pinningUiState.inPinningMode,
                             isSearchMode = uiState.searchUiState.inSearchMode,
+                            isItemSharingEnabled = uiState.isItemSharingEnabled,
                             onEvent = onEvent
                         )
                     },
@@ -323,6 +324,7 @@ private fun HomeDrawerIcon(
     homeVaultSelection: VaultSelectionOption,
     isSeeAllPinsMode: Boolean,
     isSearchMode: Boolean,
+    isItemSharingEnabled: Boolean,
     onEvent: (HomeUiEvent) -> Unit
 ) {
     if (!isSeeAllPinsMode && !isSearchMode) {
@@ -332,6 +334,7 @@ private fun HomeDrawerIcon(
                     VaultSelectionOption.AllVaults -> {
                         AllVaultsIcon(
                             modifier = modifier,
+                            isItemSharingEnabled = isItemSharingEnabled,
                             size = 48,
                             onClick = { onEvent(HomeUiEvent.DrawerIconClick) }
                         )
@@ -361,12 +364,16 @@ private fun HomeDrawerIcon(
             }
         }
     } else {
-        ArrowBackIconButton(modifier) {
-            when {
-                isSearchMode -> onEvent(HomeUiEvent.StopSearch)
-                isSeeAllPinsMode -> onEvent(HomeUiEvent.StopSeeAllPinned)
+        ArrowBackIconButton(
+            modifier = modifier,
+            onUpClick = {
+                if (isSearchMode) {
+                    HomeUiEvent.StopSearch
+                } else {
+                    HomeUiEvent.StopSeeAllPinned
+                }.also(onEvent)
             }
-        }
+        )
     }
 }
 

@@ -26,10 +26,12 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.common.api.FlowUtils.oneShot
@@ -66,10 +68,12 @@ import proton.android.pass.featureitemcreate.impl.common.attachments.Attachments
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
+import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AttachmentsInitError as AttachmentsInitError1
 
 @HiltViewModel
 class UpdateAliasViewModel @Inject constructor(
@@ -115,7 +119,37 @@ class UpdateAliasViewModel @Inject constructor(
     init {
         viewModelScope.launch(coroutineExceptionHandler) {
             isApplyButtonEnabledState.update { IsButtonEnabled.Disabled }
-            setupInitialState()
+            if (itemOption != None) return@launch
+
+            isLoadingState.update { IsLoadingState.Loading }
+
+            runCatching {
+                combine(
+                    oneShot { getItemById(shareId, itemId) },
+                    observeAliasDetails(shareId, itemId),
+                    ::Pair
+                ).first()
+            }.onSuccess { (item, aliasDetails) ->
+                runCatching {
+                    val isFileAttachmentsEnabled = runBlocking {
+                        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+                            .firstOrNull()
+                            ?: false
+                    }
+                    if (item.hasAttachments && isFileAttachmentsEnabled) {
+                        attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
+                    }
+                    item
+                }.onFailure {
+                    showError("Error getting attachments", AttachmentsInitError1, it)
+                }
+                itemOption = item.some()
+                onAliasDetails(aliasDetails, item)
+            }.onFailure { error ->
+                showError("Error setting the initial state", InitError, error)
+            }
+
+            isLoadingState.update { IsLoadingState.NotLoading }
         }
     }
 
@@ -175,27 +209,6 @@ class UpdateAliasViewModel @Inject constructor(
         }
         isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
         itemDataChanged = true
-    }
-
-    private suspend fun setupInitialState() {
-        if (itemOption != None) return
-
-        isLoadingState.update { IsLoadingState.Loading }
-
-        runCatching {
-            combine(
-                oneShot { getItemById(shareId, itemId) },
-                observeAliasDetails(shareId, itemId),
-                ::Pair
-            ).first()
-        }.onSuccess { (item, aliasDetails) ->
-            itemOption = item.some()
-            onAliasDetails(aliasDetails, item)
-        }.onFailure { error ->
-            showError("Error setting the initial state", InitError, error)
-        }
-
-        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
     private fun onAliasDetails(aliasDetails: AliasDetails, item: Item) {

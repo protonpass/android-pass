@@ -101,6 +101,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
         }.onFailure {
             PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
             PassLogger.w(TAG, it)
+            snackbarDispatcher(ItemDetailsSnackbarMessage.OpenAttachmentsError)
         }
         loadingAttachmentsState.update { it - attachment.id }
     }

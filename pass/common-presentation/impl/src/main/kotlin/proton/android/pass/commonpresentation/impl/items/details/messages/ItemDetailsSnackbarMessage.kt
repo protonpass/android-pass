@@ -243,6 +243,8 @@ internal enum class ItemDetailsSnackbarMessage(
         id = R.string.item_details_snackbar_message_zip_or_postal_code_copied,
         type = SnackbarType.NORM,
         isClipboard = true
-    )
+    ),
+
+    OpenAttachmentsError(R.string.open_attachments_error, SnackbarType.ERROR)
 
 }

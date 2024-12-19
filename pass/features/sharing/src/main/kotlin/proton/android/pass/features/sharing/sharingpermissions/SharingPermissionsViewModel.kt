@@ -73,6 +73,7 @@ class SharingPermissionsViewModel @Inject constructor(
             event
         }
         SharingPermissionsUIState(
+            itemIdOption = itemIdOption,
             addresses = addresses.map { it.toUiState() }.toImmutableList(),
             vaultName = vault.getOrNull()?.name,
             event = uiEvent

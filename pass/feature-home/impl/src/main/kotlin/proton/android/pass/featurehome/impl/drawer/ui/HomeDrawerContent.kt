@@ -45,7 +45,7 @@ internal fun HomeDrawerContent(
             .padding(top = Spacing.small)
     ) {
         HomeDrawerList(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxHeight()
                 .weight(weight = 1f, fill = true),
             vaultShares = vaultShares.toPersistentList(),

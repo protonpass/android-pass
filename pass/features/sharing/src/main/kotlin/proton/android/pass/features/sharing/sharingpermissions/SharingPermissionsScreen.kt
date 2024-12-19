@@ -60,14 +60,17 @@ fun SharingPermissionsScreen(
                 }
 
                 is SharingPermissionsUiEvent.OnPermissionChangeClick -> {
-                    SharingNavigation.InviteToVaultEditPermissions(
+                    SharingNavigation.InviteToShareEditPermissions(
+                        itemIdOption = state.itemIdOption,
                         email = uiEvent.address.address,
                         permission = uiEvent.address.permission.toShareRole()
                     ).also(onNavigateEvent)
                 }
 
                 SharingPermissionsUiEvent.OnSetAllPermissionsClick -> {
-                    onNavigateEvent(SharingNavigation.InviteToVaultEditAllPermissions)
+                    SharingNavigation.InviteToShareEditAllPermissions(
+                        itemIdOption = state.itemIdOption
+                    ).also(onNavigateEvent)
                 }
 
                 SharingPermissionsUiEvent.OnSubmit -> {

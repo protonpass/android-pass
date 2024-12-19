@@ -18,9 +18,11 @@
 
 package proton.android.pass.features.sharing.sharingpermissions.bottomsheet
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -32,7 +34,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIco
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
+import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.sharingpermissions.SharingType
@@ -44,49 +46,53 @@ internal fun SharingPermissionsBottomSheetContent(
     state: SharingPermissionsBottomSheetUiState,
     onPermissionClick: (SharingType) -> Unit,
     onDeleteUserClick: () -> Unit
-) {
-    val (titleText, selectedSharingType) = when (state.mode) {
+) = with(state) {
+    val (titleText, selectedSharingType) = when (mode) {
         is SharingPermissionsEditMode.All ->
             stringResource(R.string.sharing_edit_permissions_set_access_level_all_members) to null
 
         is SharingPermissionsEditMode.EditOne -> stringResource(
             R.string.sharing_edit_permissions_set_access_level_single_member,
-            state.mode.email
-        ) to state.mode.sharingType
+            mode.email
+        ) to mode.sharingType
     }
 
     buildList {
         titleText(titleText).also(::add)
 
         setAdminPermission(
+            isSharingAnItem = isSharingAnItem,
             sharingType = selectedSharingType,
             onClick = onPermissionClick
         ).also(::add)
 
         setWritePermission(
+            isSharingAnItem = isSharingAnItem,
             sharingType = selectedSharingType,
             onClick = onPermissionClick
         ).also(::add)
 
         setReadPermission(
+            isSharingAnItem = isSharingAnItem,
             sharingType = selectedSharingType,
             onClick = onPermissionClick
         ).also(::add)
 
         if (state.displayRemove) {
-            bottomSheetDivider().also(::add)
-
             removeUserRow(onClick = onDeleteUserClick).also(::add)
         }
-    }.also { items ->
+    }.let { items ->
         BottomSheetItemList(
             modifier = modifier.bottomSheet(),
-            items = items.toPersistentList()
+            items = items
+                .withDividers()
+                .toPersistentList()
         )
     }
 }
 
 private fun titleText(text: String): BottomSheetItem = object : BottomSheetItem {
+
     override val title: @Composable () -> Unit = {
         Text.Body2Regular(
             modifier = Modifier.fillMaxWidth(),
@@ -106,36 +112,77 @@ private fun titleText(text: String): BottomSheetItem = object : BottomSheetItem 
     override val isDivider = false
 }
 
-private fun setAdminPermission(sharingType: SharingType?, onClick: (SharingType) -> Unit): BottomSheetItem =
+@Composable
+private fun setAdminPermission(
+    isSharingAnItem: Boolean,
+    sharingType: SharingType?,
+    onClick: (SharingType) -> Unit
+): BottomSheetItem = remember(isSharingAnItem) {
+    if (isSharingAnItem) {
+        R.string.sharing_bottomsheet_item_admin_subtitle
+    } else {
+        R.string.sharing_can_manage_description
+    }
+}.let { subtitleResId ->
     permissionRow(
         title = R.string.sharing_can_manage,
-        subtitle = R.string.sharing_can_manage_description,
+        subtitle = subtitleResId,
+        icon = CoreR.drawable.ic_proton_key,
         checked = sharingType == SharingType.Admin,
         onClick = { onClick(SharingType.Admin) }
     )
+}
 
-private fun setWritePermission(sharingType: SharingType?, onClick: (SharingType) -> Unit): BottomSheetItem =
+@Composable
+private fun setWritePermission(
+    isSharingAnItem: Boolean,
+    sharingType: SharingType?,
+    onClick: (SharingType) -> Unit
+): BottomSheetItem = remember(isSharingAnItem) {
+    if (isSharingAnItem) {
+        R.string.sharing_bottomsheet_item_editor_subtitle
+    } else {
+        R.string.sharing_can_edit_description
+    }
+}.let { subtitleResId ->
     permissionRow(
         title = R.string.sharing_can_edit,
-        subtitle = R.string.sharing_can_edit_description,
+        subtitle = subtitleResId,
+        icon = CoreR.drawable.ic_proton_pencil,
         checked = sharingType == SharingType.Write,
         onClick = { onClick(SharingType.Write) }
     )
+}
 
-private fun setReadPermission(sharingType: SharingType?, onClick: (SharingType) -> Unit): BottomSheetItem =
+@Composable
+private fun setReadPermission(
+    isSharingAnItem: Boolean,
+    sharingType: SharingType?,
+    onClick: (SharingType) -> Unit
+): BottomSheetItem = remember(isSharingAnItem) {
+    if (isSharingAnItem) {
+        R.string.sharing_bottomsheet_item_viewer_subtitle
+    } else {
+        R.string.sharing_can_view_description
+    }
+}.let { subtitleResId ->
     permissionRow(
         title = R.string.sharing_can_view,
-        subtitle = R.string.sharing_can_view_description,
+        subtitle = subtitleResId,
+        icon = CoreR.drawable.ic_proton_eye,
         checked = sharingType == SharingType.Read,
         onClick = { onClick(SharingType.Read) }
     )
+}
 
 private fun permissionRow(
     @StringRes title: Int,
     @StringRes subtitle: Int,
+    @DrawableRes icon: Int,
     checked: Boolean,
     onClick: () -> Unit
 ): BottomSheetItem = object : BottomSheetItem {
+
     override val title: @Composable () -> Unit = {
         BottomSheetItemTitle(
             text = stringResource(id = title),
@@ -151,7 +198,12 @@ private fun permissionRow(
         )
     }
 
-    override val leftIcon: (@Composable () -> Unit)? = null
+    override val leftIcon: @Composable () -> Unit = {
+        BottomSheetItemIcon(
+            iconId = icon,
+            tint = PassTheme.colors.textNorm
+        )
+    }
 
     override val endIcon: (@Composable () -> Unit) = {
         if (checked) {
@@ -168,6 +220,7 @@ private fun permissionRow(
 }
 
 private fun removeUserRow(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+
     override val title: @Composable () -> Unit = {
         BottomSheetItemTitle(
             text = stringResource(id = R.string.sharing_edit_permissions_remove_user),

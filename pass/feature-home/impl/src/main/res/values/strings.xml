@@ -43,6 +43,7 @@
     <string name="home_trial_banner_title">Our welcome gift to you</string>
     <string name="home_trial_banner_text">7 days to try premium features for free. Only during your first week of Proton Pass.</string>
     <string name="home_trial_banner_settings">Learn more ›</string>
+    <string name="home_drawer_all_items">All items</string>
     <string name="sl_sync_banner_title">Sync your aliases from SimpleLogin</string>
     <plurals name="sl_sync_banner_text">
         <item quantity="one">You have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to sync it?</item>

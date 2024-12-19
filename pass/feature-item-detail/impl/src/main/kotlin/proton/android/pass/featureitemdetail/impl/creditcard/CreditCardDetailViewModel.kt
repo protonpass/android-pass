@@ -500,6 +500,7 @@ class CreditCardDetailViewModel @Inject constructor(
             }.onFailure {
                 PassLogger.w(TAG, "Could not open attachment: ${attachment.id}")
                 PassLogger.w(TAG, it)
+                snackbarDispatcher(DetailSnackbarMessages.OpenAttachmentsError)
             }
             loadingAttachmentsState.update { it - attachment.id }
         }

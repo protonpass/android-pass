@@ -125,5 +125,6 @@
     </plurals>
 
     <string name="open_with">Open with:</string>
+    <string name="open_attachments_error">Could not open attachment</string>
 
 </resources>

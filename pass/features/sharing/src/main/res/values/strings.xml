@@ -185,13 +185,8 @@
     <string name="share_with_recents_title">Recent</string>
     <string name="share_with_remove_email_content_description">Remove email</string>
 
-    <string name="share_with_user_title">Share with</string>
-    <string name="share_with_user_description">Share this item with other Proton users.</string>
     <string name="share_with_secure_link_title">Via secure link</string>
     <string name="share_with_secure_link_description">Generate a secure link to this item.</string>
-    <string name="share_with_vault_title">Entire vault</string>
-    <string name="share_with_vault_description">Share this vault and its content.</string>
-
 
     <string name="share_with_user_shared_title">With other Proton Pass users</string>
     <string name="share_with_user_shared_description">Useful for permanent sharing.</string>

@@ -59,7 +59,7 @@ internal fun HomeDrawerList(
                 shareIconRes = CompR.drawable.ic_brand_pass,
                 iconColor = PassTheme.colors.interactionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
-                name = stringResource(id = R.string.vault_drawer_all_vaults),
+                name = stringResource(id = R.string.home_drawer_all_items),
                 itemsCount = allItemsCount,
                 isSelected = vaultSelectionOption is VaultSelectionOption.AllVaults,
                 onClick = {

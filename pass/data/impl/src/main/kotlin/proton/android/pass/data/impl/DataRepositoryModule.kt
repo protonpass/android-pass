@@ -62,8 +62,6 @@ import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepositoryImpl
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepository
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepositoryImpl
-import proton.android.pass.data.impl.repositories.FileKeyRepository
-import proton.android.pass.data.impl.repositories.FileKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.InAppMessagesRepositoryImpl
 import proton.android.pass.data.impl.repositories.InviteRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemKeyRepository
@@ -74,6 +72,8 @@ import proton.android.pass.data.impl.repositories.LiveTelemetryRepositoryImpl
 import proton.android.pass.data.impl.repositories.MetadataResolverImpl
 import proton.android.pass.data.impl.repositories.OnMemoryDraftRepository
 import proton.android.pass.data.impl.repositories.OrganizationSettingsRepositoryImpl
+import proton.android.pass.data.impl.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.impl.repositories.PendingAttachmentLinkRepositoryImpl
 import proton.android.pass.data.impl.repositories.PlanRepository
 import proton.android.pass.data.impl.repositories.PlanRepositoryImpl
 import proton.android.pass.data.impl.repositories.ReportRepositoryImpl
@@ -190,7 +190,9 @@ abstract class DataRepositoryModule {
     abstract fun bindMetadataResolver(impl: MetadataResolverImpl): MetadataResolver
 
     @[Binds Singleton]
-    abstract fun bindFileKeyRepository(impl: FileKeyRepositoryImpl): FileKeyRepository
+    abstract fun bindPendingAttachmentLinkRepository(
+        impl: PendingAttachmentLinkRepositoryImpl
+    ): PendingAttachmentLinkRepository
 
     @[Binds Singleton]
     abstract fun bindShareMembersRepository(impl: ShareMembersRepositoryImpl): ShareMembersRepository

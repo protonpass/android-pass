@@ -24,7 +24,7 @@ import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
-import proton.android.pass.data.impl.repositories.FileKeyRepository
+import proton.android.pass.data.impl.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -37,7 +37,7 @@ class LinkAttachmentsToItemImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val attachmentRepository: AttachmentRepository,
     private val itemRepository: ItemRepository,
-    private val fileKeyRepository: FileKeyRepository
+    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository
 ) : LinkAttachmentsToItem {
 
     override suspend fun invoke(
@@ -45,10 +45,16 @@ class LinkAttachmentsToItemImpl @Inject constructor(
         shareId: ShareId,
         revision: Long
     ) {
-        val toLink = fileKeyRepository.getAllMappings()
-        if (toLink.isEmpty()) return
+        val toLink = pendingAttachmentLinkRepository.getAllToLink()
+        val toUnlink = pendingAttachmentLinkRepository.getAllToUnLink()
+        if (toLink.isEmpty() && toUnlink.isEmpty()) return
 
-        PassLogger.i(TAG, "${toLink.size} attachments to link")
+        if (toLink.isNotEmpty()) {
+            PassLogger.i(TAG, "Linking ${toLink.size} attachments to item $itemId")
+        }
+        if (toUnlink.isNotEmpty()) {
+            PassLogger.i(TAG, "Unlinking ${toUnlink.size} attachments to item $itemId")
+        }
 
         val userId = accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
@@ -58,14 +64,16 @@ class LinkAttachmentsToItemImpl @Inject constructor(
             shareId = shareId,
             revision = revision,
             toLink = toLink,
-            toUnlink = emptySet()
+            toUnlink = toUnlink
         )
-        itemRepository.updateLocalItemFlags(
-            shareId = shareId,
-            itemId = itemId,
-            flag = ItemFlag.HasAttachments,
-            isFlagEnabled = true
-        )
+        if (toLink.isNotEmpty()) {
+            itemRepository.updateLocalItemFlags(
+                shareId = shareId,
+                itemId = itemId,
+                flag = ItemFlag.HasAttachments,
+                isFlagEnabled = true
+            )
+        }
     }
 
     companion object {

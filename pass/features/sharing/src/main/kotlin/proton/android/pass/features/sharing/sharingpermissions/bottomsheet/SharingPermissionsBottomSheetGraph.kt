@@ -20,8 +20,11 @@ package proton.android.pass.features.sharing.sharingpermissions.bottomsheet
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import proton.android.pass.common.api.Option
+import proton.android.pass.domain.ItemId
 import proton.android.pass.features.sharing.SharingNavigation
 import proton.android.pass.features.sharing.sharingpermissions.SharingType
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
@@ -52,15 +55,40 @@ object PermissionNavArgId : OptionalNavArgId {
 object SharingEditPermissions : NavItem(
     baseRoute = "sharing/permissions/bottomsheet",
     navArgIds = listOf(EditPermissionsModeNavArgId),
-    optionalArgIds = listOf(EmailNavArgId, PermissionNavArgId),
+    optionalArgIds = listOf(
+        CommonOptionalNavArgId.ItemId,
+        EmailNavArgId,
+        PermissionNavArgId
+    ),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun buildRouteForEditAll(): String = "$baseRoute/${EditPermissionsMode.AllUsers.name}"
-    fun buildRouteForEditOne(email: String, permission: SharingType) = buildString {
+
+    fun buildRouteForEditAll(itemIdOption: Option<ItemId>): String = buildString {
+        append("$baseRoute/${EditPermissionsMode.AllUsers.name}")
+
+        itemIdOption.value()?.let { itemId ->
+            mapOf(CommonOptionalNavArgId.ItemId.key to itemId.id)
+                .toPath()
+                .also(::append)
+        }
+    }
+
+    fun buildRouteForEditOne(
+        itemIdOption: Option<ItemId>,
+        email: String,
+        permission: SharingType
+    ) = buildString {
         append("$baseRoute/${EditPermissionsMode.SingleUser.name}")
 
-        val params = mapOf(EmailNavArgId.key to email, PermissionNavArgId.key to permission.name)
-        append(params.toPath())
+        buildMap {
+            itemIdOption.value()?.let { itemId ->
+                put(CommonOptionalNavArgId.ItemId.key, itemId.id)
+            }
+            put(EmailNavArgId.key, email)
+            put(PermissionNavArgId.key, permission.name)
+        }.also { params ->
+            append(params.toPath())
+        }
     }
 }
 

@@ -50,16 +50,17 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
     override suspend fun uploadPendingFile(
         userId: UserId,
         attachmentId: AttachmentId,
+        chunkIndex: Int,
         encryptedByteArray: EncryptedByteArray
     ) {
-        val chunkIndex = "0".toRequestBody("text/plain".toMediaTypeOrNull())
+        val chunkIndexBody = "$chunkIndex".toRequestBody("text/plain".toMediaTypeOrNull())
         val chunkDataPart = MultipartBody.Part.createFormData(
             name = "ChunkData",
             filename = "no-op", // not used by the backend
             body = encryptedByteArray.array.toRequestBody("application/octet-stream".toMediaTypeOrNull())
         )
         api.get<PasswordManagerApi>(userId)
-            .invoke { uploadChunk(attachmentId.id, chunkIndex, chunkDataPart) }
+            .invoke { uploadChunk(attachmentId.id, chunkIndexBody, chunkDataPart) }
             .valueOrThrow
     }
 

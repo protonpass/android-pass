@@ -20,17 +20,17 @@ package proton.android.pass.data.impl.usecases.attachments
 
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
-import proton.android.pass.data.impl.repositories.FileKeyRepository
+import proton.android.pass.data.impl.repositories.PendingAttachmentLinkRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ClearAttachmentsImpl @Inject constructor(
-    private val fileKeyRepository: FileKeyRepository,
+    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
     private val draftAttachmentRepository: DraftAttachmentRepository
 ) : ClearAttachments {
     override fun invoke() {
         draftAttachmentRepository.clear()
-        fileKeyRepository.clearAllMappings()
+        pendingAttachmentLinkRepository.clearAll()
     }
 }

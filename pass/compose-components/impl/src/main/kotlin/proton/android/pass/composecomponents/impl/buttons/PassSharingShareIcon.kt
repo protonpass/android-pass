@@ -71,7 +71,7 @@ fun PassSharingShareIcon(
     ) {
         Icon(
             painter = painterResource(id = CoreR.drawable.ic_proton_users_plus),
-            tint = itemColors.majorSecondary.copy(alpha = contentAlpha),
+            tint = itemColors.majorPrimary.copy(alpha = contentAlpha),
             contentDescription = null
         )
 
@@ -79,7 +79,7 @@ fun PassSharingShareIcon(
             Text.CaptionMedium(
                 modifier = Modifier
                     .background(
-                        color = itemColors.majorSecondary.copy(alpha = contentAlpha),
+                        color = itemColors.majorPrimary.copy(alpha = contentAlpha),
                         shape = CircleShape
                     )
                     .padding(

@@ -28,11 +28,15 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.BulkInviteRepository
+import proton.android.pass.domain.ItemId
 import proton.android.pass.features.sharing.extensions.toShareRole
 import proton.android.pass.features.sharing.sharingpermissions.SharingType
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,6 +44,11 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
     private val bulkInviteRepository: BulkInviteRepository,
     private val savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
+
+    private val itemIdOption: Option<ItemId> = savedStateHandleProvider.get()
+        .get<String>(CommonOptionalNavArgId.ItemId.key)
+        .toOption()
+        .map(::ItemId)
 
     private val mode = getMode()
 
@@ -55,43 +64,57 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
             mode = mode.toUi(),
             displayRemove = when (mode) {
                 is SharingPermissionMode.SetAll -> false
-                is SharingPermissionMode.SetOne -> { addresses.size > 1 }
-            }
+                is SharingPermissionMode.SetOne -> {
+                    addresses.size > 1
+                }
+            },
+            itemIdOption = itemIdOption
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = SharingPermissionsBottomSheetUiState.initial(mode = mode.toUi())
+        initialValue = SharingPermissionsBottomSheetUiState.initial(
+            mode = mode.toUi(),
+            itemIdOption = itemIdOption
+        )
     )
 
-    fun onPermissionSelected(sharingType: SharingType) = viewModelScope.launch {
-        when (mode) {
-            is SharingPermissionMode.SetAll -> {
-                bulkInviteRepository.setAllPermissions(sharingType.toShareRole())
+    internal fun onPermissionSelected(sharingType: SharingType) {
+        viewModelScope.launch {
+            when (mode) {
+                is SharingPermissionMode.SetAll -> {
+                    bulkInviteRepository.setAllPermissions(sharingType.toShareRole())
+                }
+
+                is SharingPermissionMode.SetOne -> {
+                    bulkInviteRepository.setPermission(
+                        address = mode.email,
+                        permission = sharingType.toShareRole()
+                    )
+                }
             }
-            is SharingPermissionMode.SetOne -> {
-                bulkInviteRepository.setPermission(
-                    address = mode.email,
-                    permission = sharingType.toShareRole()
-                )
-            }
+
+            eventFlow.update { SharingPermissionsBottomSheetEvent.Close }
         }
-        eventFlow.update { SharingPermissionsBottomSheetEvent.Close }
     }
 
-    fun onDeleteUser() = viewModelScope.launch {
-        when (mode) {
-            is SharingPermissionMode.SetAll -> {
-                throw IllegalStateException("Cannot delete user in SetAll mode")
+    internal fun onDeleteUser() {
+        viewModelScope.launch {
+            when (mode) {
+                is SharingPermissionMode.SetAll -> {
+                    throw IllegalStateException("Cannot delete user in SetAll mode")
+                }
+
+                is SharingPermissionMode.SetOne -> {
+                    bulkInviteRepository.removeAddress(mode.email)
+                }
             }
-            is SharingPermissionMode.SetOne -> {
-                bulkInviteRepository.removeAddress(mode.email)
-            }
+
+            eventFlow.update { SharingPermissionsBottomSheetEvent.Close }
         }
-        eventFlow.update { SharingPermissionsBottomSheetEvent.Close }
     }
 
-    fun clearEvent() = viewModelScope.launch {
+    internal fun clearEvent() {
         eventFlow.update { SharingPermissionsBottomSheetEvent.Unknown }
     }
 
@@ -110,6 +133,7 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
                     else -> SharingPermissionMode.SetOne(email, permissionAsEnum)
                 }
             }
+
             EditPermissionsMode.AllUsers -> SharingPermissionMode.SetAll
         }
     }
@@ -122,12 +146,15 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
         )
     }
 
-    sealed interface SharingPermissionMode {
+    private sealed interface SharingPermissionMode {
+
         data object SetAll : SharingPermissionMode
+
         data class SetOne(
             val email: String,
             val currentPermission: SharingType
         ) : SharingPermissionMode
+
     }
 
 }

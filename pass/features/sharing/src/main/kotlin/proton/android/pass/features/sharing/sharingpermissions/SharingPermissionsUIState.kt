@@ -21,6 +21,9 @@ package proton.android.pass.features.sharing.sharingpermissions
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.domain.ItemId
 import proton.android.pass.features.sharing.common.AddressPermissionUiState
 
 enum class SharingType {
@@ -31,6 +34,7 @@ enum class SharingType {
 
 @Immutable
 internal data class SharingPermissionsUIState(
+    internal val itemIdOption: Option<ItemId> = None,
     internal val addresses: ImmutableList<AddressPermissionUiState> = persistentListOf(),
     internal val vaultName: String? = null,
     internal val event: SharingPermissionsEvents = SharingPermissionsEvents.Idle

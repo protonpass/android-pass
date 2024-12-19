@@ -2044,17 +2044,20 @@ fun NavGraphBuilder.appGraph(
                 }
             }
 
-            is SharingNavigation.InviteToVaultEditPermissions -> appNavigator.navigate(
+            is SharingNavigation.InviteToShareEditPermissions -> appNavigator.navigate(
                 destination = SharingEditPermissions,
                 route = SharingEditPermissions.buildRouteForEditOne(
+                    itemIdOption = it.itemIdOption,
                     email = it.email,
                     permission = it.permission.toSharingType()
                 )
             )
 
-            is SharingNavigation.InviteToVaultEditAllPermissions -> appNavigator.navigate(
+            is SharingNavigation.InviteToShareEditAllPermissions -> appNavigator.navigate(
                 destination = SharingEditPermissions,
-                route = SharingEditPermissions.buildRouteForEditAll()
+                route = SharingEditPermissions.buildRouteForEditAll(
+                    itemIdOption = it.itemIdOption
+                )
             )
 
             SharingNavigation.InviteError -> appNavigator.navigate(

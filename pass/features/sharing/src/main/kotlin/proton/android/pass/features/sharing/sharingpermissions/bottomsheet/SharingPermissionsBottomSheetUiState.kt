@@ -19,6 +19,10 @@
 package proton.android.pass.features.sharing.sharingpermissions.bottomsheet
 
 import androidx.compose.runtime.Immutable
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.domain.ItemId
 import proton.android.pass.features.sharing.sharingpermissions.SharingType
 
 @Immutable
@@ -47,16 +51,24 @@ internal sealed interface SharingPermissionsEditMode {
 internal data class SharingPermissionsBottomSheetUiState(
     val event: SharingPermissionsBottomSheetEvent,
     val displayRemove: Boolean,
-    val mode: SharingPermissionsEditMode
+    val mode: SharingPermissionsEditMode,
+    private val itemIdOption: Option<ItemId>
 ) {
+
+    internal val isSharingAnItem: Boolean = when (itemIdOption) {
+        None -> false
+        is Some -> true
+    }
 
     internal companion object {
 
-        fun initial(mode: SharingPermissionsEditMode) = SharingPermissionsBottomSheetUiState(
-            event = SharingPermissionsBottomSheetEvent.Unknown,
-            mode = mode,
-            displayRemove = false
-        )
+        fun initial(mode: SharingPermissionsEditMode, itemIdOption: Option<ItemId>) =
+            SharingPermissionsBottomSheetUiState(
+                event = SharingPermissionsBottomSheetEvent.Unknown,
+                mode = mode,
+                displayRemove = false,
+                itemIdOption = itemIdOption
+            )
 
     }
 

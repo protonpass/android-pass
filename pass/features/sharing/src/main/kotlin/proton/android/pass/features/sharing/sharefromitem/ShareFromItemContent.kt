@@ -107,78 +107,78 @@ internal fun ShareFromItemContent(
                 // Under this conditions we don't need to show the rest of possible options nor divider
                 return
             }
+
+            PassDivider(
+                modifier = Modifier.padding(vertical = Spacing.small)
+            )
+        } else {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+            ) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(R.string.sharing_from_item_title),
+                    style = ProtonTheme.typography.defaultHighlightNorm,
+                    textAlign = TextAlign.Center
+                )
+
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(R.string.sharing_from_item_description),
+                    style = PassTheme.typography.body3Weak(),
+                    color = PassTheme.colors.textWeak,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
 
-        PassDivider(
-            modifier = Modifier.padding(vertical = Spacing.small)
-        )
-
-        Column(
-            verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
-        ) {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.sharing_from_item_title),
-                style = ProtonTheme.typography.defaultHighlightNorm,
-                textAlign = TextAlign.Center
-            )
-
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.sharing_from_item_description),
-                style = PassTheme.typography.body3Weak(),
-                color = PassTheme.colors.textWeak,
-                textAlign = TextAlign.Center
+        if (state.vault is Some) {
+            ShareThisVaultRow(
+                vault = state.vault.value,
+                onShareClick = { onEvent(ShareFromItemEvent.ShareVault) }
             )
         }
-    }
 
-    if (state.vault is Some) {
-        ShareThisVaultRow(
-            vault = state.vault.value,
-            onShareClick = { onEvent(ShareFromItemEvent.ShareVault) }
-        )
-    }
-
-    if (state.showMoveToSharedVault) {
-        ShareFromItemActionRow(
-            modifier = Modifier.fillMaxWidth(),
-            icon = CoreR.drawable.ic_proton_folder_arrow_in,
-            title = R.string.sharing_from_item_move_to_shared_vault_action,
-            onClick = { onEvent(ShareFromItemEvent.MoveToSharedVault) }
-        )
-    }
-
-    when (state.showCreateVault) {
-        CreateNewVaultState.Hide -> {}
-        CreateNewVaultState.Allow -> {
+        if (state.showMoveToSharedVault) {
             ShareFromItemActionRow(
                 modifier = Modifier.fillMaxWidth(),
-                icon = CoreR.drawable.ic_proton_plus,
-                title = R.string.sharing_from_item_create_vault_to_share_action,
-                onClick = { onEvent(ShareFromItemEvent.CreateNewVault) }
-            )
-
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.sharing_from_item_create_vault_to_share_subtitle),
-                style = PassTheme.typography.body3Weak(),
-                color = PassTheme.colors.textWeak,
-                textAlign = TextAlign.Center
+                icon = CoreR.drawable.ic_proton_folder_arrow_in,
+                title = R.string.sharing_from_item_move_to_shared_vault_action,
+                onClick = { onEvent(ShareFromItemEvent.MoveToSharedVault) }
             )
         }
 
-        CreateNewVaultState.Upgrade -> {
-            ShareFromItemUpgradeRow(
-                modifier = Modifier.fillMaxWidth(),
-                onClick = { onEvent(ShareFromItemEvent.Upgrade) }
-            )
-        }
+        when (state.showCreateVault) {
+            CreateNewVaultState.Hide -> {}
+            CreateNewVaultState.Allow -> {
+                ShareFromItemActionRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    icon = CoreR.drawable.ic_proton_plus,
+                    title = R.string.sharing_from_item_create_vault_to_share_action,
+                    onClick = { onEvent(ShareFromItemEvent.CreateNewVault) }
+                )
 
-        CreateNewVaultState.VaultLimitReached -> {
-            ShareFromItemVaultLimitReached(
-                modifier = Modifier.fillMaxWidth()
-            )
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(R.string.sharing_from_item_create_vault_to_share_subtitle),
+                    style = PassTheme.typography.body3Weak(),
+                    color = PassTheme.colors.textWeak,
+                    textAlign = TextAlign.Center
+                )
+            }
+
+            CreateNewVaultState.Upgrade -> {
+                ShareFromItemUpgradeRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = { onEvent(ShareFromItemEvent.Upgrade) }
+                )
+            }
+
+            CreateNewVaultState.VaultLimitReached -> {
+                ShareFromItemVaultLimitReached(
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
     }
 }

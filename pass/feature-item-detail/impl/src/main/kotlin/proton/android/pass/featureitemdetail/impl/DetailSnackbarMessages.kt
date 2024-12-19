@@ -59,5 +59,6 @@ enum class DetailSnackbarMessages(
     ItemMonitorExcludedError(R.string.item_monitor_exclude_message_error, SnackbarType.ERROR),
     ItemMonitorIncludedSuccess(R.string.item_monitor_include_message, SnackbarType.SUCCESS),
     ItemMonitorIncludedError(R.string.item_monitor_include_message_error, SnackbarType.ERROR),
-    AliasChangeStatusError(R.string.alias_change_status_error, SnackbarType.ERROR)
+    AliasChangeStatusError(R.string.alias_change_status_error, SnackbarType.ERROR),
+    OpenAttachmentsError(R.string.open_attachments_error, SnackbarType.ERROR)
 }

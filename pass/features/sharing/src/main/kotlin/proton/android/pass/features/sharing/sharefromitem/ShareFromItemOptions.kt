@@ -31,7 +31,6 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultHighlightNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.features.sharing.R
 import me.proton.core.presentation.R as CoreR
 
@@ -80,21 +79,20 @@ private fun SharedItemOptions(onEvent: (ShareFromItemEvent) -> Unit) {
     )
 
     ShareItemSecureLinkRow(
-        iconResId = CoreR.drawable.ic_proton_users,
-        title = stringResource(id = R.string.share_with_manage_shared_item_title),
-        description = stringResource(id = R.string.share_with_manage_shared_item_description),
-        shouldShowPlusIcon = false,
-        onClick = { onEvent(ShareFromItemEvent.ManageSharedItem) }
-    )
-
-    PassDivider()
-
-    ShareItemSecureLinkRow(
         iconResId = CoreR.drawable.ic_proton_link,
         title = stringResource(id = R.string.share_with_secure_link_shared_title),
         description = stringResource(id = R.string.share_with_secure_link_shared_description),
         shouldShowPlusIcon = false,
         onClick = { onEvent(ShareFromItemEvent.ShareSecureLink) }
+    )
+
+    ShareItemSecureLinkRow(
+        iconResId = CoreR.drawable.ic_proton_users,
+        title = stringResource(id = R.string.share_with_manage_shared_item_title),
+        description = stringResource(id = R.string.share_with_manage_shared_item_description),
+        shouldShowPlusIcon = false,
+        backgroundColor = PassTheme.colors.backgroundWeak,
+        onClick = { onEvent(ShareFromItemEvent.ManageSharedItem) }
     )
 }
 

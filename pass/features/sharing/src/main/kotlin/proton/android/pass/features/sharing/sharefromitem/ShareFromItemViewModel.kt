@@ -45,7 +45,6 @@ import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
-import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
@@ -66,8 +65,7 @@ class ShareFromItemViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     getItemById: GetItemById,
     canManageVaultAccess: CanManageVaultAccess,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
-    observeShare: ObserveShare
+    featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -122,10 +120,9 @@ class ShareFromItemViewModel @Inject constructor(
         navEventState,
         canUsePaidFeaturesFlow,
         featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1),
-        observeShare(shareId),
         oneShot { getItemById(shareId, itemId) }
     ) { vault, canMoveToSharedVault, createVault, event, canUsePaidFeatures,
-        isItemSharingAvailable, share, item ->
+        isItemSharingAvailable, item ->
         ShareFromItemUiState(
             shareId = shareId,
             itemId = itemId,
@@ -136,7 +133,6 @@ class ShareFromItemViewModel @Inject constructor(
             canUsePaidFeatures = canUsePaidFeatures,
             vaultAccessData = canManageVaultAccess(vault.vault),
             isItemSharingAvailable = isItemSharingAvailable,
-            shareOption = share.some(),
             itemOption = item.some()
         )
     }.stateIn(

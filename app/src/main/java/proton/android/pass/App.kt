@@ -21,7 +21,6 @@ package proton.android.pass
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import androidx.annotation.MainThread
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import dagger.hilt.android.HiltAndroidApp
@@ -33,7 +32,6 @@ import proton.android.pass.initializer.MainInitializer
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
-import java.lang.ref.WeakReference
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -47,12 +45,6 @@ class App : Application(), ImageLoaderFactory {
 
     @Inject
     lateinit var inAppReviewTriggerMetrics: InAppReviewTriggerMetrics
-
-    val currentActivity: Activity?
-        @MainThread
-        get() = currentActivityReference?.get()
-
-    private var currentActivityReference: WeakReference<Activity>? = null
 
     override fun newImageLoader(): ImageLoader = imageLoader.get()
 
@@ -73,13 +65,9 @@ class App : Application(), ImageLoaderFactory {
                     PassLogger.i(TAG, "Created activity ${activity::class.java.simpleName}")
                 },
                 onActivityResumed = { activity ->
-                    currentActivityReference = WeakReference(activity)
                     PassLogger.i(TAG, "Resumed activity ${activity::class.java.simpleName}")
                 },
                 onActivityPaused = { activity ->
-                    if (currentActivityReference?.get() == activity) {
-                        currentActivityReference = null
-                    }
                     PassLogger.i(TAG, "Paused activity ${activity::class.java.simpleName}")
                 }
             )

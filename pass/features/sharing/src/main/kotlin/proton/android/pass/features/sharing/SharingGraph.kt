@@ -234,12 +234,14 @@ sealed interface SharingNavigation {
     @JvmInline
     value class ViewVault(val shareId: ShareId) : SharingNavigation
 
-    data class InviteToVaultEditPermissions(
+    data class InviteToShareEditPermissions(
+        val itemIdOption: Option<ItemId>,
         val email: String,
         val permission: ShareRole
     ) : SharingNavigation
 
-    data object InviteToVaultEditAllPermissions : SharingNavigation
+    @JvmInline
+    value class InviteToShareEditAllPermissions(val itemIdOption: Option<ItemId>) : SharingNavigation
 
     data object InviteError : SharingNavigation
 

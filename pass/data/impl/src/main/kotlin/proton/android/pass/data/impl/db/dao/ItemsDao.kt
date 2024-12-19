@@ -42,6 +42,10 @@ data class SharedItemsCountRow(
     val sharedByMe: Long
 )
 
+private const val ITEM_SHARED_TYPE_ALL = 0
+private const val ITEM_SHARED_TYPE_SHARED_BY_ME = 1
+private const val ITEM_SHARED_TYPE_SHARED_WITH_ME = 2
+
 @Dao
 @Suppress("TooManyFunctions")
 abstract class ItemsDao : BaseDao<ItemEntity>() {
@@ -87,11 +91,11 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.SHARE_COUNT} > 0
           AND CASE 
-                WHEN :itemSharedType = 0 THEN 1 
-                WHEN :itemSharedType = 1 THEN ${ItemEntity.Columns.KEY} IS NOT NULL
-                WHEN :itemSharedType = 2 THEN ${ItemEntity.Columns.KEY} IS NULL
-                ELSE 0 
-            END
+            WHEN :itemSharedType = $ITEM_SHARED_TYPE_ALL THEN 1 
+            WHEN :itemSharedType = $ITEM_SHARED_TYPE_SHARED_BY_ME THEN ${ItemEntity.Columns.KEY} IS NOT NULL
+            WHEN :itemSharedType = $ITEM_SHARED_TYPE_SHARED_WITH_ME THEN ${ItemEntity.Columns.KEY} IS NULL
+            ELSE 0 
+          END
         ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
     """
     )

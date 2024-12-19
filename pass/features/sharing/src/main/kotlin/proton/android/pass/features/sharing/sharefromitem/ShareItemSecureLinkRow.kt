@@ -35,7 +35,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -55,15 +54,13 @@ internal fun ShareItemSecureLinkRow(
     title: String,
     description: String,
     shouldShowPlusIcon: Boolean,
-    onClick: () -> Unit,
-    backgroundColor: Color = PassTheme.colors.inputBackgroundNorm,
-    iconBackgroundColor: Color = PassTheme.colors.interactionNormMinor1
+    onClick: () -> Unit
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .roundedContainer(
-                backgroundColor = backgroundColor,
+                backgroundColor = PassTheme.colors.inputBackgroundNorm,
                 borderColor = PassTheme.colors.inputBorderNorm
             )
             .clickable(onClick = onClick)
@@ -75,7 +72,7 @@ internal fun ShareItemSecureLinkRow(
             modifier = Modifier
                 .size(42.dp)
                 .clip(CircleShape)
-                .background(color = iconBackgroundColor)
+                .background(color = PassTheme.colors.interactionNormMinor1)
                 .padding(all = Spacing.small),
             contentAlignment = Alignment.Center
         ) {

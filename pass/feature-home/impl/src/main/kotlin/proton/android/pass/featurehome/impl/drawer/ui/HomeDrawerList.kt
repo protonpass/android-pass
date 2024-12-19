@@ -20,7 +20,7 @@ package proton.android.pass.featurehome.impl.drawer.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -74,10 +74,10 @@ internal fun HomeDrawerList(
             )
         }
 
-        itemsIndexed(
+        items(
             items = vaultShares,
-            key = { _, vaultShare -> vaultShare.id.id }
-        ) { index, vaultShare ->
+            key = { vaultShare -> vaultShare.id.id }
+        ) { vaultShare ->
             HomeDrawerRow(
                 shareIconRes = vaultShare.icon.toResource(),
                 iconColor = vaultShare.color.toColor(),
@@ -105,11 +105,9 @@ internal fun HomeDrawerList(
                 }
             )
 
-            if (index < vaultShares.lastIndex) {
-                PassDivider(
-                    modifier = Modifier.padding(horizontal = Spacing.medium)
-                )
-            }
+            PassDivider(
+                modifier = Modifier.padding(horizontal = Spacing.medium)
+            )
         }
 
         item {
@@ -143,6 +141,12 @@ internal fun HomeDrawerList(
                 onClick = {
                     onUiEvent(HomeDrawerUiEvent.OnSharedByMeClick)
                 }
+            )
+        }
+
+        item {
+            PassDivider(
+                modifier = Modifier.padding(horizontal = Spacing.medium)
             )
         }
 

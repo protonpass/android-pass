@@ -34,6 +34,7 @@ interface RemoteAttachmentsDataSource {
     suspend fun uploadPendingFile(
         userId: UserId,
         attachmentId: AttachmentId,
+        chunkIndex: Int,
         encryptedByteArray: EncryptedByteArray
     )
 

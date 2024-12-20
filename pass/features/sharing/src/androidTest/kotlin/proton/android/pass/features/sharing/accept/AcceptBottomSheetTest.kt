@@ -29,10 +29,12 @@ import org.junit.Test
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestAcceptInvite
 import proton.android.pass.data.fakes.usecases.TestRejectInvite
 import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.sharing.R
@@ -40,6 +42,7 @@ import proton.android.pass.features.sharing.SharingNavigation
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestPendingInvite
 import javax.inject.Inject
 
@@ -60,6 +63,9 @@ class AcceptBottomSheetTest {
 
     @Inject
     lateinit var rejectInvite: TestRejectInvite
+
+    @Inject
+    lateinit var getItemById: FakeGetItemById
 
     @Inject
     lateinit var savedStateHandle: TestSavedStateHandleProvider
@@ -187,7 +193,13 @@ class AcceptBottomSheetTest {
 
     @Test
     fun acceptsItemInvite() {
+        val item = TestItem.create(
+            shareId = ShareId(TestAcceptInvite.DEFAULT_SHARE_ID),
+            itemId = ItemId(TestAcceptInvite.DEFAULT_ITEM_ID),
+            itemType = ItemType.Note(text = "Test note")
+        )
         observeInvite.emit(itemInvite.some())
+        getItemById.emit(Result.success(item))
 
         composeTestRule.apply {
             val checker = CallChecker<Unit>()
@@ -195,7 +207,7 @@ class AcceptBottomSheetTest {
             val expectedNavigation = SharingNavigation.SharedItemDetails(
                 shareId = ShareId(TestAcceptInvite.DEFAULT_SHARE_ID),
                 itemId = ItemId(TestAcceptInvite.DEFAULT_ITEM_ID),
-                itemCategory = ItemCategory.Login
+                itemCategory = ItemCategory.Note
             )
 
             setContent {

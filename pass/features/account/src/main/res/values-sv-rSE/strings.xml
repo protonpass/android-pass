@@ -17,17 +17,17 @@
   <string name="account_settings_list_item_password_header">Ändra lösenord</string>
   <string name="account_settings_list_item_recovery_header">E-post för återställning</string>
   <string name="account_settings_list_item_security_keys">Säkerhetsnycklar</string>
-  <string name="account_settings_list_item_recovery_hint_not_set">Inte inställd</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Ej konfigurerat</string>
   <string name="account_settings_list_item_password_hint_grace">Lösenordsåterställning väntar</string>
   <string name="account_settings_list_item_password_hint_insecure">Lösenordsåterställning redo</string>
   <string name="account_settings_list_item_extra_password_header">Extralösenord för Proton Pass</string>
   <string name="account_settings_list_item_extra_password_header_set">Ställ in extralösenord för Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Aktiv</string>
   <string name="account_settings_list_item_extra_password_description">Extralösenordet kommer att krävas för att använda Pass. Det fungerar som ett extra lösenord utöver ditt Proton-lösenord.</string>
-  <string name="account_settings_list_item_security_keys_hint_not_set">Inte inställd</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Ej konfigurerat</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
-    <item quantity="one">%d säkerhetsnyckel inställd</item>
-    <item quantity="other">%d säkerhetsnycklar inställda</item>
+    <item quantity="one">%d säkerhetsnyckel konfigurerad</item>
+    <item quantity="other">%d säkerhetsnycklar konfigurerade</item>
   </plurals>
 </resources>

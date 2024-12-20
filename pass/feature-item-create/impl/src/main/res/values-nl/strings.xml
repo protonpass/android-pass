@@ -39,6 +39,8 @@
   <string name="create_login_item_update_error">Kan login niet bijwerken</string>
   <string name="create_login_init_error">Probleem bij het verkrijgen van inloggegevens</string>
   <string name="create_login_invalid_totp">De 2FA-inhoud is niet geldig</string>
+  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
+  <string name="login_attachments_error">Could not add attachments to login</string>
   <string name="login_created">Login aangemaakt</string>
   <string name="bottomsheet_modify_alias_title">Alias wijzigen</string>
   <string name="bottomsheet_custom_field_type_text">Tekst</string>
@@ -63,6 +65,8 @@
   <string name="create_note_item_creation_error">Kan notitie niet maken</string>
   <string name="create_note_item_update_error">Kan notitie niet bijwerken</string>
   <string name="create_note_init_error">Probleem bij het verkrijgen van notitie gegevens</string>
+  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
+  <string name="note_attachments_error">Could not add attachments to note</string>
   <string name="note_created">Notitie aangemaakt</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Alias-adres</string>
@@ -79,6 +83,8 @@
   <string name="alias_rate_limited">Er zijn recentelijk te veel aliassen gemaakt</string>
   <string name="create_alias_item_update_error">Alias kan niet worden bijgewerkt</string>
   <string name="create_alias_init_error">Probleem bij het verkrijgen van alias gegevens</string>
+  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
+  <string name="alias_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">Alias gemaakt</string>
   <string name="cannot_retrieve_alias_options">Kan aliasopties niet ophalen</string>
   <string name="alias_mailbox_dialog_title">Doorsturen naar</string>
@@ -104,6 +110,8 @@
   <string name="create_credit_card_item_creation_error">Kon kredietkaart niet aanmaken</string>
   <string name="create_credit_card_item_creation_success">Kredietkaart aangemaakt</string>
   <string name="credit_card_init_error">Probleem bij het verkrijgen kredietkaart gegevens</string>
+  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
+  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">Kon kredietkaart niet bijwerken</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Volledige naam</string>
@@ -160,6 +168,8 @@
   <string name="identity_add_more_fields">Nog een veld toevoegen</string>
   <string name="identity_bottomsheet_add_field">Veld toevoegen</string>
   <string name="create_identity_init_error">Probleem bij verkrijgen identiteitsgegevens</string>
+  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
+  <string name="identity_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">Kan identiteit niet aanmaken</string>
   <string name="create_identity_item_creation_success">Identiteit aangemaakt</string>
   <string name="update_identity_item_creation_success">Identiteit bijgewerkt</string>
@@ -190,4 +200,5 @@
   <!-- Attachments -->
   <string name="banner_title_attachments">Bijlagen</string>
   <string name="banner_body_attachments">U kunt bestanden bijvoegen aan items voor een betere organisatie</string>
+  <string name="open_with">Openen met</string>
 </resources>

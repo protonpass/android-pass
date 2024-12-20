@@ -39,6 +39,8 @@
   <string name="create_login_item_update_error">Не могу обновить логин</string>
   <string name="create_login_init_error">Проблема с получением данных для входа в систему</string>
   <string name="create_login_invalid_totp">Недействительное содержимое 2FA</string>
+  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
+  <string name="login_attachments_error">Could not add attachments to login</string>
   <string name="login_created">Логин создан</string>
   <string name="bottomsheet_modify_alias_title">Изменить псевдоним</string>
   <string name="bottomsheet_custom_field_type_text">Текст</string>
@@ -63,6 +65,8 @@
   <string name="create_note_item_creation_error">Не удалось создать заметку</string>
   <string name="create_note_item_update_error">Не удалось обновить заметку</string>
   <string name="create_note_init_error">Проблема с извлечением сведений о заметке</string>
+  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
+  <string name="note_attachments_error">Could not add attachments to note</string>
   <string name="note_created">Заметка создана</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Адрес псевдонима</string>
@@ -79,6 +83,8 @@
   <string name="alias_rate_limited">За последнее время создано слишком много псевдонимов</string>
   <string name="create_alias_item_update_error">Не могу обновить псевдоним</string>
   <string name="create_alias_init_error">Проблема с получением данных о псевдониме</string>
+  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
+  <string name="alias_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">Псевдоним создан</string>
   <string name="cannot_retrieve_alias_options">Не могу получить варианты псевдонима</string>
   <string name="alias_mailbox_dialog_title">Переслать на</string>
@@ -104,6 +110,8 @@
   <string name="create_credit_card_item_creation_error">Не могу создать кредитную карту</string>
   <string name="create_credit_card_item_creation_success">Кредитная карта создана</string>
   <string name="credit_card_init_error">Проблема с получением данных о кредитной карте</string>
+  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
+  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">Не могу обновить кредитную карту</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Полное имя</string>
@@ -160,6 +168,8 @@
   <string name="identity_add_more_fields">Добавить другое поле</string>
   <string name="identity_bottomsheet_add_field">Добавить поле</string>
   <string name="create_identity_init_error">Проблема с получением информации о личных данных</string>
+  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
+  <string name="identity_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">Не удалось создать личные данные</string>
   <string name="create_identity_item_creation_success">Личные данные созданы</string>
   <string name="update_identity_item_creation_success">Личные данные обновлены</string>
@@ -190,4 +200,5 @@
   <!-- Attachments -->
   <string name="banner_title_attachments">Attachments</string>
   <string name="banner_body_attachments">You can attach files to items for a better organization</string>
+  <string name="open_with">Открыть с помощью:</string>
 </resources>

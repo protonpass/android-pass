@@ -39,6 +39,8 @@
   <string name="create_login_item_update_error">Немагчыма абнавіць запіс уваходу</string>
   <string name="create_login_init_error">Праблема пры атрыманні падрабязнасцяў запісу ўваходу</string>
   <string name="create_login_invalid_totp">Недапушчальнае змесціва для 2ФА</string>
+  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
+  <string name="login_attachments_error">Could not add attachments to login</string>
   <string name="login_created">Запіс уваходу створаны</string>
   <string name="bottomsheet_modify_alias_title">Змяніць псеўданім</string>
   <string name="bottomsheet_custom_field_type_text">Тэкст</string>
@@ -63,6 +65,8 @@
   <string name="create_note_item_creation_error">Не атрымалася стварыць нататку</string>
   <string name="create_note_item_update_error">Не атрымалася абнавіць нататку</string>
   <string name="create_note_init_error">Праблема з аднаўленнем падрабязнасцяў нататкі</string>
+  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
+  <string name="note_attachments_error">Could not add attachments to note</string>
   <string name="note_created">Нататка створана</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Адрас псеўданіма</string>
@@ -79,6 +83,8 @@
   <string name="alias_rate_limited">Занадта шмат псеўданімаў было нядаўна створана</string>
   <string name="create_alias_item_update_error">Не атрымалася абнавіць псеўданім</string>
   <string name="create_alias_init_error">Праблема пры атрыманні падрабязнасцяў псеўданіма</string>
+  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
+  <string name="alias_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">Псеўданім створаны</string>
   <string name="cannot_retrieve_alias_options">Немагчыма атрымаць параметры псеўданіма!</string>
   <string name="alias_mailbox_dialog_title">Перасылаць на</string>
@@ -99,11 +105,13 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Тэрмін дзеяння</string>
-  <string name="field_card_expiration_date_hint">MM/YY</string>
+  <string name="field_card_expiration_date_hint">ММ/ГГ</string>
   <string name="field_card_expiration_date_error">Увядзіце сапраўдную дату ў фармаце ММ/ГГ</string>
   <string name="create_credit_card_item_creation_error">Немагчыма стварыць крэдытную картку</string>
   <string name="create_credit_card_item_creation_success">Крэдытная картка створана</string>
   <string name="credit_card_init_error">Праблема пры атрыманні падрабязнасцяў крэдытнай карткі</string>
+  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
+  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">Немагчыма абнавіць крэдытную картку</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Поўнае імя</string>
@@ -133,7 +141,7 @@
   <string name="identity_field_reddit_title">Імя карыстальніка Reddit</string>
   <string name="identity_field_facebook_title">URL-адрас Facebook</string>
   <string name="identity_field_yahoo_title">Імя карыстальніка Yahoo</string>
-  <string name="identity_field_instagram_title">Instagram username</string>
+  <string name="identity_field_instagram_title">Профіль Instagram</string>
   <string name="identity_field_personal_website_title">URL-адрас асабістага вэб-сайта</string>
   <string name="identity_field_work_phone_number_title">Працоўны нумар тэлефона</string>
   <string name="identity_field_work_email_title">Працоўны адрас электроннай пошты</string>
@@ -148,7 +156,7 @@
   <string name="identity_add_field_reddit">Імя карыстальніка Reddit</string>
   <string name="identity_add_field_facebook">URL-адрас Facebook</string>
   <string name="identity_add_field_yahoo">Імя карыстальніка Yahoo</string>
-  <string name="identity_add_field_instagram">Instagram username</string>
+  <string name="identity_add_field_instagram">Профіль Instagram</string>
   <string name="identity_add_field_personal_website">URL-адрас асабістага вэб-сайта</string>
   <string name="identity_add_field_work_phone_number">Працоўны нумар тэлефона</string>
   <string name="identity_add_field_work_email_address">Працоўны адрас электроннай пошты</string>
@@ -160,6 +168,8 @@
   <string name="identity_add_more_fields">Дадаць яшчэ адно поле</string>
   <string name="identity_bottomsheet_add_field">Дадаць поле</string>
   <string name="create_identity_init_error">Праблема пры атрыманні падрабязнасцяў ідэнтычнасці</string>
+  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
+  <string name="identity_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">Не атрымалася стварыць ідэнтычнасць:</string>
   <string name="create_identity_item_creation_success">Ідэнтычнасць створана</string>
   <string name="update_identity_item_creation_success">Ідэнтычнасць абноўлена</string>
@@ -190,4 +200,5 @@
   <!-- Attachments -->
   <string name="banner_title_attachments">Далучэнні</string>
   <string name="banner_body_attachments">Вы можаце далучыць файлы да элементаў для лепшай арганізацыі</string>
+  <string name="open_with">Адкрыць праз:</string>
 </resources>

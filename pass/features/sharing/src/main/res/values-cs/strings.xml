@@ -36,6 +36,9 @@
     <item quantity="other">%d členů</item>
   </plurals>
   <string name="sharing_member_count_header">Členové</string>
+  <string name="shared_via_title">Sdíleno pomocí</string>
+  <string name="shared_via_item_member_count_header">Sdílení položky</string>
+  <string name="shared_via_vault_member_count_header">Sdílení trezoru</string>
   <string name="share_with_title">Sdílet s</string>
   <string name="share_with_email_hint">E-mailová adresa</string>
   <string name="share_with_email_error">Neplatná e-mailová adresa</string>
@@ -49,7 +52,7 @@
   <string name="sharing_item_invitation_title">Pozvánka ke sdílené položce</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s chce s vámi sdílet položku.</string>
   <string name="sharing_item_invitation_accept">Přijmout a zobrazit položku</string>
-  <string name="sharing_item_leave">Opustit</string>
+  <string name="sharing_invite_more">Pozvat více...</string>
   <string name="sharing_snackbar_invite_accepted">Pozvánka přijata</string>
   <string name="sharing_snackbar_invite_accept_error">Chyba při přijetí pozvánky</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Pozvánku nelze přijmout, protože jste dosáhli limitu pozvánek trezoru</string>
@@ -63,7 +66,7 @@
   <string name="sharing_snackbar_remove_member_success">Člen odebrán z trezoru</string>
   <string name="sharing_snackbar_remove_member_error">Nelze odebrat z trezoru</string>
   <string name="sharing_snackbar_fetch_member_error">Došlo k chybě při načítání členů</string>
-  <string name="sharing_snackbar_fetch_pending_invites_error">Došlo k chybě při získávání čekajících pozvánek</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Došlo k chybě při načítání čekajících pozvánek</string>
   <string name="share_summary_title">Prohlédnout a sdílet</string>
   <string name="share_summary_vault">%s trezor</string>
   <string name="share_summary_share_vault">Sdílet trezor</string>
@@ -136,6 +139,14 @@
   <string name="share_with_user_description">Sdílejte tuto položku s ostatními uživateli Proton.</string>
   <string name="share_with_secure_link_title">Přes bezpečný odkaz</string>
   <string name="share_with_secure_link_description">Vygenerujte bezpečný odkaz na tuto položku.</string>
+  <string name="share_with_vault_title">Celý trezor</string>
+  <string name="share_with_vault_description">Sdílejte tento trezor a jeho obsah.</string>
+  <string name="share_with_user_shared_title">S ostatními uživateli Proton Pass</string>
+  <string name="share_with_user_shared_description">Užitečné pro trvalé sdílení.</string>
+  <string name="share_with_manage_shared_item_title">Správa přístupu</string>
+  <string name="share_with_manage_shared_item_description">Přehled členů a oprávnění.</string>
+  <string name="share_with_secure_link_shared_title">Pomocí bezpečného odkazu</string>
+  <string name="share_with_secure_link_shared_description">Pro jednorázové sdílení.</string>
   <string name="share_with_manage_shared_vault_title">Spravovat přístup do trezoru</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Trezor položky je nyní sdílen s %d uživatelem.</item>

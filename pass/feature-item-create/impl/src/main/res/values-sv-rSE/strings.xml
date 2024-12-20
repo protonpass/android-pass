@@ -39,6 +39,8 @@
   <string name="create_login_item_update_error">Kunde inte uppdatera inloggning</string>
   <string name="create_login_init_error">Problem att hämta inloggningsdetaljer</string>
   <string name="create_login_invalid_totp">2FA-innehållet är inte giltigt</string>
+  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
+  <string name="login_attachments_error">Could not add attachments to login</string>
   <string name="login_created">Inloggning skapad</string>
   <string name="bottomsheet_modify_alias_title">Modifiera alias</string>
   <string name="bottomsheet_custom_field_type_text">Text</string>
@@ -63,6 +65,8 @@
   <string name="create_note_item_creation_error">Kunde inte skapa anteckning</string>
   <string name="create_note_item_update_error">Kunde inte uppdatera anteckning</string>
   <string name="create_note_init_error">Problem att hämta anteckningsdetaljer</string>
+  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
+  <string name="note_attachments_error">Could not add attachments to note</string>
   <string name="note_created">Anteckning skapad</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Alias-adress</string>
@@ -79,6 +83,8 @@
   <string name="alias_rate_limited">För många alias skapade nyligen</string>
   <string name="create_alias_item_update_error">Kunde inte uppdatera alias</string>
   <string name="create_alias_init_error">Problem att hämta aliasdetaljer</string>
+  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
+  <string name="alias_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">Alias skapat</string>
   <string name="cannot_retrieve_alias_options">Kan inte hämta alias-alternativ</string>
   <string name="alias_mailbox_dialog_title">Vidarebefordra till</string>
@@ -104,6 +110,8 @@
   <string name="create_credit_card_item_creation_error">Kunde inte skapa kreditkort</string>
   <string name="create_credit_card_item_creation_success">Kreditkort skapat</string>
   <string name="credit_card_init_error">Problem att hämta kreditkortsdetaljer</string>
+  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
+  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">Kunde inte uppdatera kreditkort</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Fullständigt namn</string>
@@ -160,6 +168,8 @@
   <string name="identity_add_more_fields">Lägg till ett annat fält</string>
   <string name="identity_bottomsheet_add_field">Lägg till fält</string>
   <string name="create_identity_init_error">Problem att hämta identitetsdetaljer</string>
+  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
+  <string name="identity_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">Kunde inte skapa identitet</string>
   <string name="create_identity_item_creation_success">Identitet skapad</string>
   <string name="update_identity_item_creation_success">Identitet uppdaterad</string>
@@ -190,4 +200,5 @@
   <!-- Attachments -->
   <string name="banner_title_attachments">Bilagor</string>
   <string name="banner_body_attachments">Du kan bifoga filer till objekt för en bättre organisering</string>
+  <string name="open_with">Öppna med:</string>
 </resources>

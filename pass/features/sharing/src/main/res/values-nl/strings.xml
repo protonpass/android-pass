@@ -32,6 +32,9 @@
     <item quantity="other">%d leden</item>
   </plurals>
   <string name="sharing_member_count_header">Leden</string>
+  <string name="shared_via_title">Gedeeld via</string>
+  <string name="shared_via_item_member_count_header">Item delen</string>
+  <string name="shared_via_vault_member_count_header">Kluis delen</string>
   <string name="share_with_title">Deel met</string>
   <string name="share_with_email_hint">E-mailadres</string>
   <string name="share_with_email_error">Ongeldig e-mailadres</string>
@@ -40,12 +43,12 @@
   <string name="share_permissions_title">Stel toegangsniveau in</string>
   <string name="sharing_reject_invitation">Uitnodiging afwijzen</string>
   <string name="sharing_vault_invitation_title">Gedeelde kluis uitnodiging</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
-  <string name="sharing_vault_invitation_accept">Join shared vault</string>
-  <string name="sharing_item_invitation_title">Shared item invitation</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
-  <string name="sharing_item_invitation_accept">Accept and view the item</string>
-  <string name="sharing_item_leave">Verlaten</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wil een kluis delen met u.</string>
+  <string name="sharing_vault_invitation_accept">Deelnemen aan gedeelde kluis</string>
+  <string name="sharing_item_invitation_title">Gedeelde item uitnodiging</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wil een item delen met u.</string>
+  <string name="sharing_item_invitation_accept">Accepteer en bekijk het item</string>
+  <string name="sharing_invite_more">Meer uitnodigen…</string>
   <string name="sharing_snackbar_invite_accepted">Uitnodiging geaccepteerd</string>
   <string name="sharing_snackbar_invite_accept_error">Fout bij het accepteren van de uitnodiging</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Kan de uitnodiging niet accepteren omdat u uw kluislimiet heeft bereikt</string>
@@ -58,8 +61,8 @@
   <string name="sharing_snackbar_change_permission_error">Kon machtigingen niet wijzigen</string>
   <string name="sharing_snackbar_remove_member_success">Lid verwijderd van de kluis</string>
   <string name="sharing_snackbar_remove_member_error">Kon niet verwijderen van de kluis</string>
-  <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
-  <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
+  <string name="sharing_snackbar_fetch_member_error">Er is een fout opgetreden bij het ophalen van de leden</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Er is een fout opgetreden bij het ophalen van opstaande uitnodigingen</string>
   <string name="share_summary_title">Beoordelen en delen</string>
   <string name="share_summary_vault">%s kluis</string>
   <string name="share_summary_share_vault">Kluis delen</string>
@@ -88,9 +91,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Eigendom overdragen</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">U mag uw laatste eigen kluis niet overdragen.</string>
   <string name="sharing_bottomsheet_remove_access">Toegang ontzeggen</string>
-  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
-  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Kan toegang tot dit item verlenen en intrekken.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Kan dit item wijzigen</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Kan dit item bekijken</string>
   <string name="sharing_bottomsheet_resend_invite">Uitnodiging opnieuw verzenden</string>
   <string name="sharing_bottomsheet_cancel_invite">Uitnodiging annuleren</string>
   <string name="sharing_transfer_ownership_confirm_title">Eigendom overdragen</string>
@@ -126,6 +129,14 @@
   <string name="share_with_user_description">Deel dit item met andere Proton gebruikers.</string>
   <string name="share_with_secure_link_title">Via beveiligde link</string>
   <string name="share_with_secure_link_description">Genereer een beveiligde link naar dit item.</string>
+  <string name="share_with_vault_title">Volledige kluis</string>
+  <string name="share_with_vault_description">Deel deze kluis en de inhoud.</string>
+  <string name="share_with_user_shared_title">Met andere Proton Pass gebruikers</string>
+  <string name="share_with_user_shared_description">Nuttig voor permanent delen</string>
+  <string name="share_with_manage_shared_item_title">Beheer toegang</string>
+  <string name="share_with_manage_shared_item_description">Zie leden en overzicht toelatingen.</string>
+  <string name="share_with_secure_link_shared_title">Via een veilige link</string>
+  <string name="share_with_secure_link_shared_description">Voor eenmalige delen.</string>
   <string name="share_with_manage_shared_vault_title">Toegang kluis beheren</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">De kluis van het item wordt momenteel gedeeld met %d gebruiker.</item>

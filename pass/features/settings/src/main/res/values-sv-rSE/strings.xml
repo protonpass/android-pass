@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="title_settings">Inställningar</string>
-  <string name="settings_autofill_section_title">Fyll automatiskt</string>
-  <string name="settings_autofill_preference_title">Fyll automatiskt</string>
+  <string name="settings_autofill_section_title">Autofyll</string>
+  <string name="settings_autofill_preference_title">Autofyll</string>
   <string name="settings_autofill_preference_description">För snabba och enkla inloggningar, låt Proton Pass fylla i dina användarnamn och lösenord.</string>
   <string name="settings_authentication_section_title">Autentisering</string>
   <string name="settings_authentication_preference_title">Fingeravtryckslås</string>
@@ -31,7 +31,7 @@
   <string name="settings_share_telemetry">Dela anonym användning</string>
   <string name="settings_share_crashes">Dela anonyma kraschrapporter</string>
   <string name="settings_preference_updated">Dina preferenser har uppdaterats</string>
-  <string name="settings_display_section_title">Visa</string>
+  <string name="settings_display_section_title">Visning</string>
   <string name="settings_preference_display_username">Fält för användarnamn alltid synligt</string>
   <string name="settings_preference_display_autofill_pinning">Autofyllfästning alltid synlig</string>
   <string name="view_logs_title">Visa loggar</string>

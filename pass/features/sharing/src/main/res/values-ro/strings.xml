@@ -34,6 +34,9 @@
     <item quantity="other">%d de membri</item>
   </plurals>
   <string name="sharing_member_count_header">Membri</string>
+  <string name="shared_via_title">Shared via</string>
+  <string name="shared_via_item_member_count_header">Item sharing</string>
+  <string name="shared_via_vault_member_count_header">Vault sharing</string>
   <string name="share_with_title">Partajare cu</string>
   <string name="share_with_email_hint">Adresa de e-mail</string>
   <string name="share_with_email_error">Adresă de e-mail nevalidă.</string>
@@ -47,7 +50,7 @@
   <string name="sharing_item_invitation_title">Invitație articol partajat</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s doreşte să vă partajeze un articol.</string>
   <string name="sharing_item_invitation_accept">Acceptare și vizualizare articol</string>
-  <string name="sharing_item_leave">Părăsire</string>
+  <string name="sharing_invite_more">Invite more…</string>
   <string name="sharing_snackbar_invite_accepted">Invitație acceptată</string>
   <string name="sharing_snackbar_invite_accept_error">Eroare la acceptarea invitației.</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Nu s-a putut deschide invitația deoarece v-ați atins limita seifului.</string>
@@ -92,9 +95,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Schimbare proprietar</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Nu puteți transfera ultimul seif deținut.</string>
   <string name="sharing_bottomsheet_remove_access">Revocare acces</string>
-  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
-  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Poate acorda și anula accesul la acest articol.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Poate edita acest articol.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Poate vedea acest articol.</string>
   <string name="sharing_bottomsheet_resend_invite">Retrimitere invitație</string>
   <string name="sharing_bottomsheet_cancel_invite">Anulare invitație</string>
   <string name="sharing_transfer_ownership_confirm_title">Schimbare proprietar</string>
@@ -131,6 +134,14 @@
   <string name="share_with_user_description">Partajare acest articol cu alți utilizatori Proton.</string>
   <string name="share_with_secure_link_title">Prin legătură web securizată</string>
   <string name="share_with_secure_link_description">Generează o legătură web sigură pentru acest articol.</string>
+  <string name="share_with_vault_title">Entire vault</string>
+  <string name="share_with_vault_description">Share this vault and its content.</string>
+  <string name="share_with_user_shared_title">With other Proton Pass users</string>
+  <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
+  <string name="share_with_manage_shared_item_title">Manage access</string>
+  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
+  <string name="share_with_secure_link_shared_title">Via a secure link</string>
+  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
   <string name="share_with_manage_shared_vault_title">Gestionare acces la seif</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Articolele seifului sunt partajate cu %d utilizator.</item>

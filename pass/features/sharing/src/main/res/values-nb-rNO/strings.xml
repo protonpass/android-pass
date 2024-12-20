@@ -32,6 +32,9 @@
     <item quantity="other">%d medlemmer</item>
   </plurals>
   <string name="sharing_member_count_header">Medlemmer</string>
+  <string name="shared_via_title">Shared via</string>
+  <string name="shared_via_item_member_count_header">Item sharing</string>
+  <string name="shared_via_vault_member_count_header">Vault sharing</string>
   <string name="share_with_title">Del med</string>
   <string name="share_with_email_hint">E-postadresse</string>
   <string name="share_with_email_error">Ugyldig e-postadresse</string>
@@ -45,7 +48,7 @@
   <string name="sharing_item_invitation_title">Delt elementinvitasjon</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s ønsker å dele et element med deg.</string>
   <string name="sharing_item_invitation_accept">Aksepter og se elementet</string>
-  <string name="sharing_item_leave">Forlat</string>
+  <string name="sharing_invite_more">Invite more…</string>
   <string name="sharing_snackbar_invite_accepted">Invitasjon godtatt</string>
   <string name="sharing_snackbar_invite_accept_error">Feil under godkjenning av invitasjonen</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Kunne ikke godta invitasjonen da du har nådd hvelvgrensen.</string>
@@ -88,9 +91,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Overfør eierskap</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kan ikke overføre ditt sist eide hvelv.</string>
   <string name="sharing_bottomsheet_remove_access">Opphev tilgang</string>
-  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
-  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Kan innvilge og oppheve tilgang til dette elementet.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Kan redigere dette elementet.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Kan lese dette elementet.</string>
   <string name="sharing_bottomsheet_resend_invite">Send invitasjon på nytt</string>
   <string name="sharing_bottomsheet_cancel_invite">Avbryt invitasjon</string>
   <string name="sharing_transfer_ownership_confirm_title">Overfør eierskap</string>
@@ -126,6 +129,14 @@
   <string name="share_with_user_description">Del dette elementet med andre Proton-brukere.</string>
   <string name="share_with_secure_link_title">Via sikker kobling</string>
   <string name="share_with_secure_link_description">Generer en sikker kobling til dette elementet.</string>
+  <string name="share_with_vault_title">Entire vault</string>
+  <string name="share_with_vault_description">Share this vault and its content.</string>
+  <string name="share_with_user_shared_title">With other Proton Pass users</string>
+  <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
+  <string name="share_with_manage_shared_item_title">Manage access</string>
+  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
+  <string name="share_with_secure_link_shared_title">Via a secure link</string>
+  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
   <string name="share_with_manage_shared_vault_title">Administrer hvelvtilgang</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Elementets hvelv er for øyeblikket delt med %d bruker.</item>

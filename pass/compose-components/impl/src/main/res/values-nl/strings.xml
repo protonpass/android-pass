@@ -19,8 +19,8 @@
     <item quantity="other">resultaten</item>
   </plurals>
   <string name="item_list_header_identities_type">Identiteiten</string>
-  <string name="item_list_header_shared_with_me">Shared with me</string>
-  <string name="item_list_header_shared_by_me">Shared by me</string>
+  <string name="item_list_header_shared_with_me">Gedeeld met mij</string>
+  <string name="item_list_header_shared_by_me">Gedeeld door mij</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Bevestigen</string>
   <string name="bottomsheet_cancel_button">Annuleer</string>

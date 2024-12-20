@@ -34,7 +34,7 @@
   <string name="bottomsheet_leave_vault">Abbandona la cassaforte</string>
   <string name="bottomsheet_view_members">Visualizza i membri</string>
   <string name="bottomsheet_manage_access">Gestisci l\'accesso</string>
-  <string name="bottomsheet_select_vault_read_only">You can only view</string>
+  <string name="bottomsheet_select_vault_read_only">Puoi solo visualizzare</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Puoi creare elementi solamente nelle tue casseforti più vecchie</string>
   <string name="vault_title">Cassaforte</string>
 </resources>

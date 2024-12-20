@@ -36,6 +36,9 @@
     <item quantity="other">%d členov</item>
   </plurals>
   <string name="sharing_member_count_header">Členovia</string>
+  <string name="shared_via_title">Zdieľané cez</string>
+  <string name="shared_via_item_member_count_header">Zdieľanie položky</string>
+  <string name="shared_via_vault_member_count_header">Zdieľanie trezora</string>
   <string name="share_with_title">Zdieľať s</string>
   <string name="share_with_email_hint">Emailová adresa</string>
   <string name="share_with_email_error">Neplatná emailová adresa</string>
@@ -47,9 +50,9 @@
   <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s s vami chce zdieľať trezor.</string>
   <string name="sharing_vault_invitation_accept">Pripojiť sa k zdieľanému trezoru</string>
   <string name="sharing_item_invitation_title">Pozvánka ku zdieľanej položke</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s s vami chce zdieľať položku.</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s chce s vami zdieľať položku.</string>
   <string name="sharing_item_invitation_accept">Prijať a zobraziť novú položku</string>
-  <string name="sharing_item_leave">Opustiť</string>
+  <string name="sharing_invite_more">Pozvite ďalších...</string>
   <string name="sharing_snackbar_invite_accepted">Pozvánka prijatá</string>
   <string name="sharing_snackbar_invite_accept_error">Chyba pri prijatí pozvánky</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Pozvánku nebolo možné prijať, keďže ste dosiahli limit trezoru</string>
@@ -136,6 +139,14 @@
   <string name="share_with_user_description">Zdieľajte túto položku s ostatnými používateľmi Protonu.</string>
   <string name="share_with_secure_link_title">Cez bezpečný odkaz</string>
   <string name="share_with_secure_link_description">Vygenerovať bezpečný odkaz na túto položku.</string>
+  <string name="share_with_vault_title">Celý trezor</string>
+  <string name="share_with_vault_description">Zdieľať tento trezor a jeho obsah.</string>
+  <string name="share_with_user_shared_title">S ostatnými používateľmi Proton Pass</string>
+  <string name="share_with_user_shared_description">Užitočné na trvalé zdieľanie.</string>
+  <string name="share_with_manage_shared_item_title">Spravujte prístup</string>
+  <string name="share_with_manage_shared_item_description">Pozrite si prehľad členov a povolení.</string>
+  <string name="share_with_secure_link_shared_title">Cez bezpečný odkaz</string>
+  <string name="share_with_secure_link_shared_description">Na jednorazové zdieľanie.</string>
   <string name="share_with_manage_shared_vault_title">Spravovať prístup k trezoru</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Trezor položky je momentálne zdieľaný s %d používateľom.</item>

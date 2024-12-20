@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Hvad er problemet?</string>
-  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
+  <string name="description_field_hint">Beskriv problemet så detaljeret som muligt, og fortæl os, hvad der står, hvis der er en fejlmeddelelse.</string>
   <string name="email_field_label">E-mail</string>
   <string name="email_field_hint">e-mail</string>
   <string name="attach_image_button">Vedhæft billede</string>
@@ -44,7 +44,7 @@
   <string name="report_sending_success">Rapport sendt korrekt</string>
   <string name="report_sending_error">Kunne ikke sende rapporten.</string>
   <string name="tips_passkey_check_guide">Tjek vores guide, hvis du har problemer.</string>
-  <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
+  <string name="tips_passkey_android_not_supported">Din Android-version er for lav. Prøv at opgradere din enhed.</string>
   <string name="tips_passkeys_credential_manager_not_supported">Producenten af enheden tilbyder ikke håndtering af legitimationsoplysninger.</string>
   <string name="tips_passkey_supported">Adgangsnøgler understøttes</string>
   <string name="tips_passkey_not_supported">Adgangsnøgler understøttes ikke</string>

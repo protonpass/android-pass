@@ -152,7 +152,7 @@
   <string name="security_center_address_bottomsheet_snackbar_message_disable_success">S\'ha pausat el monitoratge.</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">S\'ha esborrat el correu electrònic personalitzat</string>
   <!-- Alias list -->
-  <string name="security_center_alias_list_top_bar_title">Àlies hide-my-email</string>
+  <string name="security_center_alias_list_top_bar_title">Àlies de hide-my-email</string>
   <string name="security_center_alias_list_excluded_from_monitoring">Exclòs del monitoratge</string>
   <string name="security_center_alias_list_error">No s\'han pogut carregar les adreces</string>
   <string name="security_center_alias_list_included_in_monitoring">Activeu el monitoratge per rebre notificacions si els vostres àlies de hide-my-email es van filtrar.</string>

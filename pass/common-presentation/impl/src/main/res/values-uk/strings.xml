@@ -30,7 +30,7 @@
   <string name="item_details_snackbar_message_facebook_copied">Facebook copied</string>
   <string name="item_details_snackbar_message_first_name_copied">First name copied</string>
   <string name="item_details_snackbar_message_floor_copied">Floor copied</string>
-  <string name="item_details_snackbar_message_full_name_copied">Full name copied</string>
+  <string name="item_details_snackbar_message_full_name_copied">Повне ім\'я скопійовано</string>
   <string name="item_details_snackbar_message_gender_copied">Gender copied</string>
   <string name="item_details_snackbar_message_instagram_copied">Instagram copied</string>
   <string name="item_details_snackbar_message_last_name_copied">Last name copied</string>
@@ -53,4 +53,5 @@
   <string name="item_details_snackbar_message_x_handle_copied">X handle copied</string>
   <string name="item_details_snackbar_message_yahoo_copied">Yahoo copied</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">Zip or postal code copied</string>
+  <string name="open_with">Відкрити з:</string>
 </resources>

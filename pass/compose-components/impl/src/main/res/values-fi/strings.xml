@@ -19,8 +19,8 @@
     <item quantity="other">tulosta</item>
   </plurals>
   <string name="item_list_header_identities_type">Identiteetit</string>
-  <string name="item_list_header_shared_with_me">Shared with me</string>
-  <string name="item_list_header_shared_by_me">Shared by me</string>
+  <string name="item_list_header_shared_with_me">Jaettu minulle</string>
+  <string name="item_list_header_shared_by_me">Minun jakamani</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Vahvista</string>
   <string name="bottomsheet_cancel_button">Peruuta</string>
@@ -267,7 +267,7 @@
   </plurals>
   <string name="simple_login_widget_action">Synkronoi aliakset</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Etkö saanut koodia?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Tarkista, onko roskapostissasi sähköpostia \"%s\"</string>
   <string name="verification_code_suggestion_subject_new_email_address">Vahvista sähköpostiosoitteesi Proton Passille</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Vahvista postilaatikkosi</string>

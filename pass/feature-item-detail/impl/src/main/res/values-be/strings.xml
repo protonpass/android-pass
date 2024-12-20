@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">Адрас электроннай пошты скапіяваны</string>
   <string name="username_copied_to_clipboard">Імя карыстальніка скапіявана</string>
   <string name="password_copied_to_clipboard">Пароль скапіяваны</string>
-  <string name="website_copied_to_clipboard">Web address copied</string>
+  <string name="website_copied_to_clipboard">Вэб-сайт скапіяваны</string>
   <string name="totp_copied_to_clipboard">TOTP скапіяваны</string>
   <string name="field_copied_to_clipboard">Поле скапіявана</string>
   <string name="move_item_to_trash_message">Элемент перамешчаны ў сметніцу</string>
@@ -129,4 +129,5 @@
     <item quantity="many">%1$s блакіровак</item>
     <item quantity="other">%1$s блакіровак</item>
   </plurals>
+  <string name="open_with">Адкрыць праз:</string>
 </resources>

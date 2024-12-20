@@ -34,7 +34,7 @@
   <string name="bottomsheet_leave_vault">Forlat hvelv</string>
   <string name="bottomsheet_view_members">Vis medlemmer</string>
   <string name="bottomsheet_manage_access">Administrer tilgang</string>
-  <string name="bottomsheet_select_vault_read_only">You can only view</string>
+  <string name="bottomsheet_select_vault_read_only">Du kan kun lese</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Du kan kun opprette elementer i dine eldste hvelv</string>
   <string name="vault_title">Hvelv</string>
 </resources>

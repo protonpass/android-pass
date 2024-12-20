@@ -96,7 +96,7 @@
   <string name="security_center_dark_web_monitor_monitoring_disabled">Not monitored</string>
   <string name="security_center_dark_web_monitor_see_all">Переглянути все</string>
   <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
-  <string name="security_center_dark_web_monitor_no_aliases">No aliases</string>
+  <string name="security_center_dark_web_monitor_no_aliases">Немає псевдонімів</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">There was an error removing the email. Please try again later.</string>
   <!-- Add custom email monitoring -->
@@ -104,7 +104,7 @@
   <string name="security_center_custom_email_email_address_placeholder">Адреса електронної пошти</string>
   <string name="security_center_custom_email_invalid_address">Недійсна адреса електронної пошти</string>
   <string name="security_center_custom_email_continue">Продовжити</string>
-  <string name="security_center_custom_email_already_verified">Email already verified</string>
+  <string name="security_center_custom_email_already_verified">Пошта вже підтверджена</string>
   <string name="security_center_custom_email_error_adding">Error adding the email address</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_title">Підтвердьте вашу пошту</string>
@@ -112,7 +112,7 @@
   <string name="security_center_verify_email_snackbar_message_resend_code_success">A new verification has been sent, please check your inbox.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Too many invalid verifications. Removing custom email.</string>
-  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Invalid verification code</string>
+  <string name="security_center_verify_email_snackbar_message_invalid_verification_error">Недійсний код підтвердження</string>
   <string name="security_center_verify_email_snackbar_message_verification_error">There was an error verifying the email. Please try again later.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Порушення виявлено для</string>
@@ -138,7 +138,7 @@
   <string name="security_center_report_detail_snackbar_error">Could not load breach details</string>
   <string name="security_center_report_detail_excluded_from_monitoring">Виключено з моніторингу</string>
   <string name="security_center_report_resolve_confirmation_dialog_title">Resolve all breaches?</string>
-  <string name="security_center_report_resolve_confirmation_dialog_message">All current breaches will be marked as resolved. In case of future data breaches, you will be notified.</string>
+  <string name="security_center_report_resolve_confirmation_dialog_message">Всі поточні витоки будуть позначені як вирішені. У разі майбутніх витоків даних ви будете повідомлені.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Адреси Proton</string>
   <string name="security_center_proton_list_no_breaches_detected">Порушень не виявлено</string>

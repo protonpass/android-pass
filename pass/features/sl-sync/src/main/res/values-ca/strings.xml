@@ -51,7 +51,7 @@
   <!-- Mailbox delete screen -->
   <string name="simple_login_sync_mailbox_delete_title">Elimina la bústia de correu</string>
   <string name="simple_login_sync_mailbox_delete_subtitle">També se suprimiran tots els àlies que utilitzen la bústia de correu %s. Per continuar rebent correus electrònics, transferiu aquests àlies a una bústia de correu diferent:</string>
-  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transferí els àlies</string>
+  <string name="simple_login_sync_mailbox_delete_tranfer_option_toggle">Transfereix els àlies</string>
   <string name="simple_login_sync_mailbox_delete_tranfer_option_mailbox">A la bústia de correu</string>
   <string name="simple_login_sync_mailbox_delete_action_delete">Elimina la bústia de correu</string>
   <string name="simple_login_sync_mailbox_delete_action_delete_and_transfer">Transferirà i elimina la bústia de correu</string>

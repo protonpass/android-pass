@@ -20,7 +20,6 @@
   <string name="add_attachment_take_a_photo">Зрабіць фота</string>
   <string name="add_attachment_choose_a_photo_or_video">Выберыце фатаграфію або файл з відэа</string>
   <string name="add_attachment_choose_a_file">Выберыце файл</string>
-  <string name="attachment_options_open">Адкрыць</string>
   <string name="attachment_options_rename">Перайменаваць</string>
   <string name="attachment_options_delete">Выдаліць</string>
   <string name="file_picker_open_error">Немагчыма адкрыць сродак выбару файлаў</string>

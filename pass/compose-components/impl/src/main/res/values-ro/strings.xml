@@ -20,8 +20,8 @@
     <item quantity="other">de rezultate</item>
   </plurals>
   <string name="item_list_header_identities_type">Identități</string>
-  <string name="item_list_header_shared_with_me">Shared with me</string>
-  <string name="item_list_header_shared_by_me">Shared by me</string>
+  <string name="item_list_header_shared_with_me">Partajate cu mine</string>
+  <string name="item_list_header_shared_by_me">Partajate de mine</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Confirmare</string>
   <string name="bottomsheet_cancel_button">Anulare</string>
@@ -278,7 +278,7 @@
   </plurals>
   <string name="simple_login_widget_action">Sincronizare aliasuri</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Nu ați primit codul?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Verificați în folderul de mesaje nedorite un e-mail cu subiectul „%s”.</string>
   <string name="verification_code_suggestion_subject_new_email_address">Confirmați adresa de e-mail pentru Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Confirmați adresa de e-mail</string>

@@ -31,7 +31,7 @@
   <string name="unblock_button">კონტაქტის განბლოკვა</string>
   <string name="block_button">კონტაქტის დაბლოკვა</string>
   <string name="contact_created_date" comment="date of creation">შექმნილია %1$s-ის წინ</string>
-  <string name="no_activity_contact">No activity in the last 14 days.</string>
+  <string name="no_activity_contact">აქტივობის გარეშე ბოლო 14 დღეში.</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">ბოლო 14 დღეში.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d გადაგზავნილია</item>

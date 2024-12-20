@@ -18,8 +18,8 @@
     <item quantity="other">hasil</item>
   </plurals>
   <string name="item_list_header_identities_type">Identitas</string>
-  <string name="item_list_header_shared_with_me">Shared with me</string>
-  <string name="item_list_header_shared_by_me">Shared by me</string>
+  <string name="item_list_header_shared_with_me">Dibagikan dengan saya</string>
+  <string name="item_list_header_shared_by_me">Dibagikan oleh saya</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Konfirmasi</string>
   <string name="bottomsheet_cancel_button">Batal</string>
@@ -256,7 +256,7 @@
   </plurals>
   <string name="simple_login_widget_action">Sinkronkan alias</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Belum menerima kodenya?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Silakan periksa dalam Spam untuk email bernama “%s”</string>
   <string name="verification_code_suggestion_subject_new_email_address">Silakan konfirmasi alamat email Anda untuk Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Silakan konfirmasi kotak surat Anda</string>

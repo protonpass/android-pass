@@ -20,12 +20,11 @@
   <string name="add_attachment_take_a_photo">Foto maken</string>
   <string name="add_attachment_choose_a_photo_or_video">Kies een foto of video</string>
   <string name="add_attachment_choose_a_file">Kies een bestand</string>
-  <string name="attachment_options_open">Open</string>
   <string name="attachment_options_rename">Hernoem</string>
   <string name="attachment_options_delete">Verwijderen</string>
-  <string name="file_picker_open_error">Could not open file picker</string>
-  <string name="media_picker_open_error">Could not open media picker</string>
-  <string name="camera_open_error">Could not open camera</string>
+  <string name="file_picker_open_error">Kan de bestandskiezer niet openen</string>
+  <string name="media_picker_open_error">Kan de mediakiezer niet openen</string>
+  <string name="camera_open_error">Camera kan niet worden geopend</string>
   <string name="camera_permission_explanation">Cameratoestemming vereist om deze functie beschikbaar te maken.</string>
   <string name="camera_permission_open_settings">Instellingen openen</string>
 </resources>

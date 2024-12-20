@@ -9,7 +9,7 @@
   <string name="profile_option_import_export">Importera/exportera</string>
   <string name="profile_option_tutorial">Hur man använder Proton Pass</string>
   <string name="profile_option_rating">Betygsätt app</string>
-  <string name="profile_option_autofill">Fyll automatiskt</string>
+  <string name="profile_option_autofill">Autofyll</string>
   <string name="profile_option_autofill_subtitle">Fyll i dina användarnamn och lösenord automatiskt.</string>
   <string name="profile_option_secure_links">Säkra länkar</string>
   <string name="profile_option_alias_management">Aliashantering</string>
@@ -30,11 +30,11 @@
   <string name="app_lock_four_hours">Efter 4 timmar</string>
   <string name="profile_account_plan_name_trial">Pass Plus provperiod</string>
   <string name="app_lock_config_none">Ingen</string>
-  <string name="app_lock_config_biometric">Biometrisk</string>
+  <string name="app_lock_config_biometric">Biometri</string>
   <string name="app_lock_config_pin_code">PIN-kod</string>
   <string name="app_lock_config_app_lock_time">Automatiskt lås</string>
   <string name="app_lock_config_password">Lösenord</string>
-  <string name="app_lock_config_use_system_lock_when_biometric_fails">Använd systemlås när biometriska misslyckas</string>
+  <string name="app_lock_config_use_system_lock_when_biometric_fails">Använd systemlås när biometri misslyckas</string>
   <string name="configure_pin_set_pin_code">Ställ in PIN-kod</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Lås upp appen med denna kod</string>
   <string name="configure_pin_enter_pin_code">Ange PIN-kod</string>
@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">Ändra PIN-kod</string>
   <string name="profile_passkey_support_section_title">Passkeys</string>
   <string name="profile_passkey_support_subtitle_supported">Passkeys stöds</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Din Android-version stöder inte passkeys.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Din enhet stöder inte passkeys</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Kunde inte kontrollera stöd för passkeys</string>
   <plurals name="profile_after_days">

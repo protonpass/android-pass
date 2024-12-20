@@ -23,6 +23,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.NoteItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
@@ -54,6 +55,9 @@ internal sealed interface NoteDetailUiState {
         val attachmentsState: AttachmentsState,
         val hasMoreThanOneVault: Boolean
     ) : NoteDetailUiState {
+
+        internal val canViewItemHistory: Boolean = itemFeatures.isHistoryEnabled
+            .and(share.shareRole !is ShareRole.Read)
 
         internal val shareSharedCount: Int = share.memberCount.plus(itemUiModel.shareCount)
 

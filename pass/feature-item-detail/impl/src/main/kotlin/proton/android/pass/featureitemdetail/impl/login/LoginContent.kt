@@ -57,7 +57,7 @@ internal fun LoginContent(
     showViewAlias: Boolean,
     canLoadExternalImages: Boolean,
     customFields: ImmutableList<CustomFieldUiContent>,
-    isHistoryFeatureEnabled: Boolean,
+    canViewItemHistory: Boolean,
     isFileAttachmentsEnabled: Boolean,
     isItemSharingEnabled: Boolean,
     passkeys: ImmutableList<UIPasskeyContent>,
@@ -151,7 +151,7 @@ internal fun LoginContent(
             modifiedAt = itemUiModel.modificationTime,
             onViewItemHistoryClicked = { onEvent(LoginDetailEvent.OnViewItemHistoryClicked) },
             itemColors = passItemColors(itemCategory = ItemCategory.Login),
-            shouldDisplayItemHistoryButton = isHistoryFeatureEnabled
+            shouldDisplayItemHistoryButton = canViewItemHistory
         )
 
         LinkedAppsListSection(

@@ -69,15 +69,6 @@ class NotificationManagerImpl @Inject constructor(
     override fun sendReceivedInviteNotification(pendingInvite: PendingInvite) {
         createUpdatesNotificationChannel()
 
-        val pendingIntent = PendingIntent.getActivity(
-            context,
-            ITEM_INVITE_RECEIVED_UNIQUE_ID,
-            Intent(context, mainActivityClass).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            },
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-
         val (contentTitle, contentText, notificationId) = when (pendingInvite) {
             is PendingInvite.Item -> Triple(
                 first = context.getString(R.string.new_item_invite_notification_title),
@@ -97,6 +88,15 @@ class NotificationManagerImpl @Inject constructor(
                 third = VAULT_INVITE_RECEIVED_UNIQUE_ID
             )
         }
+
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            notificationId,
+            Intent(context, mainActivityClass).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            },
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
 
         NotificationCompat.Builder(context, UPDATES_CHANNEL_ID)
             .setSmallIcon(CoreR.drawable.ic_proton_brand_proton_pass)

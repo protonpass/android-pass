@@ -20,14 +20,19 @@ package proton.android.pass.files.impl
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.data.api.usecases.CheckIfAttachmentExists
 import proton.android.pass.data.api.usecases.CheckIfItemExists
 import proton.android.pass.data.api.usecases.CheckIfShareExists
 import proton.android.pass.data.api.usecases.CheckIfUserExists
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.files.api.DirectoryCleaner
 import proton.android.pass.files.api.DirectoryType
 import proton.android.pass.files.impl.CacheDirectories.Camera
@@ -41,84 +46,114 @@ class DirectoryCleanerImpl @Inject constructor(
     private val appDispatchers: AppDispatchers,
     private val checkIfUserExists: CheckIfUserExists,
     private val checkIfShareExists: CheckIfShareExists,
-    private val checkIfItemExists: CheckIfItemExists
+    private val checkIfItemExists: CheckIfItemExists,
+    private val checkIfAttachmentExists: CheckIfAttachmentExists
 ) : DirectoryCleaner {
     override suspend fun deleteDir(type: DirectoryType) {
         withContext(appDispatchers.io) {
             when (type) {
-                DirectoryType.CameraTemp ->
-                    runCatching {
-                        val file = File(context.cacheDir, Camera.value)
-                        file.deleteRecursively()
-                    }.onFailure {
-                        PassLogger.w(TAG, "Failed to delete cache directory")
-                        PassLogger.w(TAG, it)
+                DirectoryType.CameraTemp -> runCatching {
+                    val file = File(context.cacheDir, Camera.value)
+                    file.deleteRecursively()
+                }.onFailure {
+                    PassLogger.w(TAG, "Failed to delete cache directory")
+                    PassLogger.w(TAG, it)
+                }
+
+                DirectoryType.OrphanedAttachments -> runCatching {
+                    val attachmentsDirectory = File(context.filesDir, Attachments.value)
+
+                    coroutineScope {
+                        processUserDirsAsync(attachmentsDirectory)
+                            .awaitAll()
                     }
+                }.onFailure {
+                    PassLogger.w(TAG, "Failed to delete orphaned attachments")
+                    PassLogger.w(TAG, it)
+                }
+            }
+        }
+    }
 
-                DirectoryType.OrphanedAttachments ->
-                    runCatching {
-                        val attachmentsDirectory = File(context.filesDir, Attachments.value)
-                        processUserDirs(attachmentsDirectory)
-                            .forEach { userDir ->
-                                processShareDirs(userDir)
-                                    .forEach { shareDir ->
-                                        processItemDirs(shareDir)
-                                    }
-                            }
-                    }.onFailure {
-                        PassLogger.w(TAG, "Failed to delete orphaned attachments")
-                        PassLogger.w(TAG, it)
+    private suspend fun processUserDirsAsync(attachmentsDirectory: File) = coroutineScope {
+        (attachmentsDirectory.listFiles() ?: emptyArray())
+            .filter { it.isDirectory }
+            .map { userDir ->
+                async {
+                    if (deleteIfEmpty(userDir)) {
+                        null
+                    } else {
+                        val userExists = checkIfUserExists(UserId(userDir.name))
+                        if (!userExists) {
+                            userDir.deleteRecursively()
+                            PassLogger.d(TAG, "Deleted attachment user directory: ${userDir.path}")
+                            null
+                        } else {
+                            processShareDirsAsync(userDir).awaitAll()
+                        }
                     }
+                }
             }
-        }
     }
 
-    private suspend fun DirectoryCleanerImpl.processUserDirs(attachmentsDirectory: File) =
-        processDirectory(attachmentsDirectory) { userDir ->
-            val userExists = checkIfUserExists(UserId(userDir.name))
-            if (!userExists) {
-                userDir.deleteRecursively()
-                PassLogger.d(
-                    TAG,
-                    "Deleted attachment user directory: ${userDir.path}"
-                )
-                null
-            } else {
-                userDir
+    private suspend fun processShareDirsAsync(userDir: File) = coroutineScope {
+        (userDir.listFiles() ?: emptyArray())
+            .filter { it.isDirectory }
+            .map { shareDir ->
+                async {
+                    if (deleteIfEmpty(shareDir)) {
+                        null
+                    } else {
+                        val shareExists = checkIfShareExists(ShareId(shareDir.name))
+                        if (!shareExists) {
+                            shareDir.deleteRecursively()
+                            PassLogger.d(TAG, "Deleted attachment share directory: ${shareDir.path}")
+                            null
+                        } else {
+                            processItemDirsAsync(shareDir).awaitAll()
+                        }
+                    }
+                }
             }
-        }
-
-    private suspend fun DirectoryCleanerImpl.processShareDirs(userDir: File) = processDirectory(userDir) { shareDir ->
-        val shareExists = checkIfShareExists(ShareId(shareDir.name))
-        if (!shareExists) {
-            shareDir.deleteRecursively()
-            PassLogger.d(TAG, "Deleted attachment share directory: ${shareDir.path}")
-            null
-        } else {
-            shareDir
-        }
     }
 
-    private suspend fun DirectoryCleanerImpl.processItemDirs(shareDir: File) {
-        processDirectory(shareDir) { itemDir ->
-            val itemExists = checkIfItemExists(ShareId(shareDir.name), ItemId(itemDir.name))
-            if (!itemExists) {
-                itemDir.deleteRecursively()
-                PassLogger.d(TAG, "Deleted attachment item directory: ${itemDir.path}")
-                null
-            } else {
-                itemDir
+    private suspend fun processItemDirsAsync(shareDir: File) = coroutineScope {
+        (shareDir.listFiles() ?: emptyArray())
+            .filter { it.isDirectory }
+            .map { itemDir ->
+                async {
+                    if (deleteIfEmpty(itemDir)) {
+                        null
+                    } else {
+                        val itemExists = checkIfItemExists(ShareId(shareDir.name), ItemId(itemDir.name))
+                        if (!itemExists) {
+                            itemDir.deleteRecursively()
+                            PassLogger.d(TAG, "Deleted attachment item directory: ${itemDir.path}")
+                            null
+                        } else {
+                            processAttachmentsAsync(shareDir, itemDir).awaitAll()
+                        }
+                    }
+                }
             }
-        }
     }
 
-    private suspend fun processDirectory(directory: File, filter: suspend (File) -> File?): List<File> =
-        directory.listFiles()
-            ?.filter { it.isDirectory }
-            ?.mapNotNull { subDir ->
-                if (deleteIfEmpty(subDir)) null else filter(subDir)
+    private suspend fun processAttachmentsAsync(shareDir: File, itemDir: File) = coroutineScope {
+        (itemDir.listFiles() ?: emptyArray())
+            .map { attachment ->
+                async {
+                    val attachmentExists = checkIfAttachmentExists(
+                        ShareId(shareDir.name),
+                        ItemId(itemDir.name),
+                        AttachmentId(attachment.name)
+                    )
+                    if (!attachmentExists) {
+                        attachment.delete()
+                        PassLogger.d(TAG, "Deleted attachment item: ${attachment.path}")
+                    }
+                }
             }
-            ?: emptyList()
+    }
 
     private fun deleteIfEmpty(file: File): Boolean = file.listFiles()?.isEmpty() == true && file.delete().also {
         if (it) {

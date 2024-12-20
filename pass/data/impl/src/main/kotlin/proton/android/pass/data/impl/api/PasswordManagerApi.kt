@@ -40,7 +40,6 @@ import proton.android.pass.data.impl.requests.CreateSecureLinkRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
 import proton.android.pass.data.impl.requests.ItemReadRequest
-import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.SetupExtraPasswordRequest
 import proton.android.pass.data.impl.requests.SimpleLoginCreateAliasMailboxRequest
@@ -214,13 +213,6 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     @POST("$PREFIX/share/{shareId}/item/untrash")
     suspend fun untrashItems(@Path("shareId") shareId: String, @Body request: TrashItemsRequest): TrashItemsResponse
-
-    @PUT("$PREFIX/share/{shareId}/item/{itemId}/share")
-    suspend fun migrateItem(
-        @Path("shareId") shareId: String,
-        @Path("itemId") itemId: String,
-        @Body request: MigrateItemRequest
-    ): ItemRevisionResponse
 
     @PUT("$PREFIX/share/{shareId}/item/share")
     suspend fun migrateItems(@Path("shareId") shareId: String, @Body request: MigrateItemsRequest): MigrateItemsResponse

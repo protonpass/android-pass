@@ -30,6 +30,9 @@
     <item quantity="other">%d thành viên</item>
   </plurals>
   <string name="sharing_member_count_header">Thành viên</string>
+  <string name="shared_via_title">Shared via</string>
+  <string name="shared_via_item_member_count_header">Item sharing</string>
+  <string name="shared_via_vault_member_count_header">Vault sharing</string>
   <string name="share_with_title">Chia sẻ với</string>
   <string name="share_with_email_hint">Địa chỉ email</string>
   <string name="share_with_email_error">Địa chỉ email không hợp lệ</string>
@@ -43,7 +46,7 @@
   <string name="sharing_item_invitation_title">Lời mời chia sẻ mục</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s muốn chia sẻ một mục với bạn.</string>
   <string name="sharing_item_invitation_accept">Chấp nhận và xem mục</string>
-  <string name="sharing_item_leave">Leave</string>
+  <string name="sharing_invite_more">Invite more…</string>
   <string name="sharing_snackbar_invite_accepted">Đã chấp nhận lời mời</string>
   <string name="sharing_snackbar_invite_accept_error">Lỗi khi chấp nhận lời mời</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Không thể chấp nhận lời mời vì bạn đã đạt đến số lượng kho lưu trữ tối đa</string>
@@ -56,8 +59,8 @@
   <string name="sharing_snackbar_change_permission_error">Không thể thay đổi quyền</string>
   <string name="sharing_snackbar_remove_member_success">Đã xóa thành viên khỏi kho lưu trữ</string>
   <string name="sharing_snackbar_remove_member_error">Không thể xóa khỏi kho lưu trữ</string>
-  <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
-  <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
+  <string name="sharing_snackbar_fetch_member_error">Đã xảy ra lỗi khi truy xuất thành viên</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Đã xảy ra lỗi khi truy xuất lời mời đang chờ</string>
   <string name="share_summary_title">Xem lại và chia sẻ</string>
   <string name="share_summary_vault">kho lưu trữ %s</string>
   <string name="share_summary_share_vault">Chia sẽ kho lưu trữ</string>
@@ -84,9 +87,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">Chuyển quyền sở hữu</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Bạn không thể chuyển quyền sở hữu kho lưu trữ cuối cùng của mình.</string>
   <string name="sharing_bottomsheet_remove_access">Thu hồi quyền truy cập</string>
-  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
-  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Có thể cấp và thu hồi quyền truy cập vào mục này.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">Có thể chỉnh sửa mục này.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">Có thể xem mục này.</string>
   <string name="sharing_bottomsheet_resend_invite">Gửi lại lời mời</string>
   <string name="sharing_bottomsheet_cancel_invite">Hủy lời mời</string>
   <string name="sharing_transfer_ownership_confirm_title">Chuyển quyền sở hữu</string>
@@ -121,6 +124,14 @@
   <string name="share_with_user_description">Chia sẻ mục này với các người dùng Proton khác.</string>
   <string name="share_with_secure_link_title">Thông qua liên kết an toàn</string>
   <string name="share_with_secure_link_description">Tạo một liên kết an toàn tới nội dung này.</string>
+  <string name="share_with_vault_title">Entire vault</string>
+  <string name="share_with_vault_description">Share this vault and its content.</string>
+  <string name="share_with_user_shared_title">With other Proton Pass users</string>
+  <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
+  <string name="share_with_manage_shared_item_title">Manage access</string>
+  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
+  <string name="share_with_secure_link_shared_title">Via a secure link</string>
+  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
   <string name="share_with_manage_shared_vault_title">Quản lý quyền truy cập vault</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="other">Kho được chia sẻ với %d người dùng.</item>

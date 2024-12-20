@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Vad är ditt problem?</string>
-  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
+  <string name="description_field_hint">Beskriv problemet så mer detaljerat som möjligt. Om det är något fel, berätta vad det står.</string>
   <string name="email_field_label">E-post</string>
   <string name="email_field_hint">e-post</string>
   <string name="attach_image_button">Bifoga bild</string>
@@ -28,7 +28,7 @@
   <string name="cancel_tips_button">Avbryt</string>
   <string name="contact_us_button">Kontakta oss</string>
   <string name="hint_tips_screen">Fungerade det inte?</string>
-  <string name="report_reason_autofill">Fyll automatiskt</string>
+  <string name="report_reason_autofill">Autofyll</string>
   <string name="report_reason_sharing">Delning</string>
   <string name="report_reason_sync">Synkronisera</string>
   <string name="report_reason_passkeys">Passkeys</string>
@@ -44,7 +44,7 @@
   <string name="report_sending_success">Rapport skickad.</string>
   <string name="report_sending_error">Kunde inte skicka rapporten.</string>
   <string name="tips_passkey_check_guide">Om du har några problem, kolla in vår guide.</string>
-  <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
+  <string name="tips_passkey_android_not_supported">Din Android-version är för låg. Prova uppgradera din enhet.</string>
   <string name="tips_passkeys_credential_manager_not_supported">Tillverkaren av enheten tillhandahåller inte en autentiseringshanterare.</string>
   <string name="tips_passkey_supported">Passkeys stöds</string>
   <string name="tips_passkey_not_supported">Passkeys stöds inte</string>

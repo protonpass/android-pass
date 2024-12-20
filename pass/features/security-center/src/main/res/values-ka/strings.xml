@@ -85,7 +85,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">გაჟონვები აღმოჩენილი არაა</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton-ის მისამართები</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-ის ფსევდონიმები</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Proton-ის მისამართების მიღების შეცდომა</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Hide-my-email-ის ფსევდონიმების მიღების შეცდომა</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">მონიტორინგის ქვეშ არაა</string>
   <string name="security_center_dark_web_monitor_see_all">ყველას ნახვა</string>

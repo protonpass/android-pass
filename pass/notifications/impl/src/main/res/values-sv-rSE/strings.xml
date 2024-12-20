@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="updates_notification_channel_name">Uppdateringar</string>
-  <string name="autofill_notification_channel_name">Fyll automatiskt</string>
+  <string name="autofill_notification_channel_name">Autofyll</string>
   <string name="autofill_notification_copy_to_clipboard_title">TOTP-kod</string>
   <string name="autofill_notification_copy_to_clipboard_body">TOTP har kopierats till urklipp</string>
   <string name="updates_new_invite_received_title">Du har fått en inbjudan</string>

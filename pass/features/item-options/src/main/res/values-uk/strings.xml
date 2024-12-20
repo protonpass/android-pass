@@ -17,13 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="item_options_alias_trash_dialog_title">Move to Trash</string>
-  <string name="item_options_alias_trash_dialog_message">Aliases in Trash will continue forwarding emails. If you want to stop receiving emails on this address, disable it instead.</string>
-  <string name="item_options_alias_trash_dialog_checkbox_text">Don\'t remind me again</string>
-  <string name="item_options_alias_trash_dialog_button_text_disable">Disable instead</string>
-  <string name="item_options_alias_trash_dialog_button_text_trash">Move to trash</string>
+  <string name="item_options_alias_trash_dialog_title">Перемістити до смітника</string>
+  <string name="item_options_alias_trash_dialog_message">Псевдоніми у «Смітнику» продовжуватимуть пересилати листи. Якщо ви хочете припинити отримувати їх на цю адресу, вимкніть псевдонім.</string>
+  <string name="item_options_alias_trash_dialog_checkbox_text">Більше не нагадувати</string>
+  <string name="item_options_alias_trash_dialog_button_text_disable">Натомість вимкнути</string>
+  <string name="item_options_alias_trash_dialog_button_text_trash">Перемістити до смітника</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">There was an error disabling the alias</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Alias disabled</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Псевдонім вимкнено</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_trash_error">There was an error moving the alias to trash</string>
-  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Alias moved to trash</string>
+  <string name="item_options_alias_trash_dialog_snackbar_message_trash_success">Псевдонім переміщено до смітника</string>
 </resources>

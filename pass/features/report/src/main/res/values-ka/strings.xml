@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">რა პრობლემა გაქვთ?</string>
-  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
+  <string name="description_field_hint">აღწერეთ პრობლემა უფრო დეტალურად, თუ ეს შესაძლებელია. თუ გიგდებთ რამე შეცდომას, გვითხარით, რას ამბობს.</string>
   <string name="email_field_label">ელფოსტა</string>
   <string name="email_field_hint">ელფოსტა</string>
   <string name="attach_image_button">გამოსახულების მიმაგრება</string>
@@ -44,7 +44,7 @@
   <string name="report_sending_success">ანგარიში წარმატებით გაიგზავნა.</string>
   <string name="report_sending_error">ანგარიშის გაგზავნა შეუძლებელია.</string>
   <string name="tips_passkey_check_guide">თუ გაქვთ ნებისმიერი პრობლემა, შეამოწმეთ ჩვენი სახელმძღვანელო.</string>
-  <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
+  <string name="tips_passkey_android_not_supported">თქვენი Android-ის ვერსია ძალიან ძველია. სხცადეთ, განაახლოთ თქვენი მოწყობილობა.</string>
   <string name="tips_passkeys_credential_manager_not_supported">მოწყობილობის მწარემოებელს შესვლის დეტალების მმართველი არ მოუწოდებია.</string>
   <string name="tips_passkey_supported">საკვანძო გასაღებები მხარდაჭერილია</string>
   <string name="tips_passkey_not_supported">საკვანძო გასაღებები მხარდაჭერილი არაა</string>

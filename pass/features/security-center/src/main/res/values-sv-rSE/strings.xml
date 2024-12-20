@@ -34,7 +34,7 @@
   <string name="security_center_home_row_reused_passwords_subtitle">Generera unika lösenord</string>
   <string name="security_center_home_row_missing_tfa_title">Inaktiv 2FA</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Konfigurera 2FA för mer säkerhet</string>
-  <string name="security_center_home_row_excludes_items_title">Exkluderad från övervakning</string>
+  <string name="security_center_home_row_excludes_items_title">Exkluderat från övervakning</string>
   <string name="security_center_home_row_excludes_items_subtitle">Dessa objekt är fortfarande i fara</string>
   <string name="security_center_get_breaches_error">Kunde inte ladda intrång</string>
   <string name="security_center_home_section_password_health">Lösenordshälsa</string>
@@ -130,13 +130,13 @@
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Den exponerade informationen läckte från %s. Din Proton-kontoinformation förblir säker och krypterad.</string>
   <string name="security_center_report_detail_learn_more">Lär dig mer</string>
   <string name="security_center_report_detail_snackbar_error">Kunde inte ladda intrångsdetaljer</string>
-  <string name="security_center_report_detail_excluded_from_monitoring">Exkluderad från övervakning</string>
+  <string name="security_center_report_detail_excluded_from_monitoring">Exkluderat från övervakning</string>
   <string name="security_center_report_resolve_confirmation_dialog_title">Lös alla intrång?</string>
   <string name="security_center_report_resolve_confirmation_dialog_message">Alla nuvarande intrång kommer att markeras som lösta. I händelse av framtida dataintrång kommer du att aviseras.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Proton-adresser</string>
   <string name="security_center_proton_list_no_breaches_detected">Inga intrång upptäckta</string>
-  <string name="security_center_proton_list_excluded_from_monitoring">Exkluderad från övervakning</string>
+  <string name="security_center_proton_list_excluded_from_monitoring">Exkluderat från övervakning</string>
   <string name="security_center_proton_list_error">Kunde inte ladda adresser</string>
   <string name="security_center_proton_list_included_in_monitoring">Aktivera övervakning för att bli aviserad om dina Proton-adresser läckt.</string>
   <string name="security_center_proton_list_options_menu">Alternativmeny för Proton-skärm</string>
@@ -153,7 +153,7 @@
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Anpassad e-post borttagen</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Hide-my-email-alias</string>
-  <string name="security_center_alias_list_excluded_from_monitoring">Exkluderad från övervakning</string>
+  <string name="security_center_alias_list_excluded_from_monitoring">Exkluderat från övervakning</string>
   <string name="security_center_alias_list_error">Kunde inte ladda adresser</string>
   <string name="security_center_alias_list_included_in_monitoring">Aktivera övervakning för att bli aviserad om dina hide-my-email-alias läckt.</string>
   <string name="security_center_alias_list_monitored">Övervakad</string>

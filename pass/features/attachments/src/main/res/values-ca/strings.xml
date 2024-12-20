@@ -20,7 +20,6 @@
   <string name="add_attachment_take_a_photo">Fes una foto</string>
   <string name="add_attachment_choose_a_photo_or_video">Escolliu una foto o un vídeo</string>
   <string name="add_attachment_choose_a_file">Trieu un fitxer</string>
-  <string name="attachment_options_open">Obre</string>
   <string name="attachment_options_rename">Canvia el nom</string>
   <string name="attachment_options_delete">Elimina</string>
   <string name="file_picker_open_error">No s\'ha pogut obrir el selector de fitxers.</string>

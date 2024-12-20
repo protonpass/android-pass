@@ -39,6 +39,8 @@
   <string name="create_login_item_update_error">Entri masuk tidak dapat diperbarui</string>
   <string name="create_login_init_error">Terdapat masalah dalam memperoleh rincian entri masuk</string>
   <string name="create_login_invalid_totp">Konten 2FA tidak valid</string>
+  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
+  <string name="login_attachments_error">Could not add attachments to login</string>
   <string name="login_created">Entri masuk dihasilkan</string>
   <string name="bottomsheet_modify_alias_title">Sesuaikan alias</string>
   <string name="bottomsheet_custom_field_type_text">Teks</string>
@@ -63,6 +65,8 @@
   <string name="create_note_item_creation_error">Catatan tidak dapat dibuat</string>
   <string name="create_note_item_update_error">Catatan tidak dapat diperbarui</string>
   <string name="create_note_init_error">Terdapat masalah dalam memperoleh rincian catatan</string>
+  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
+  <string name="note_attachments_error">Could not add attachments to note</string>
   <string name="note_created">Catatan dibuat</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Alamat alias</string>
@@ -79,12 +83,14 @@
   <string name="alias_rate_limited">Terlalu banyak alias yang dibuat baru-baru ini</string>
   <string name="create_alias_item_update_error">Alias tidak dapat diperbarui</string>
   <string name="create_alias_init_error">Terdapat masalah dalam memperoleh rincian alias</string>
+  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
+  <string name="alias_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">Alias dibuat</string>
   <string name="cannot_retrieve_alias_options">Pengaturan alias tidak dapat diperoleh</string>
   <string name="alias_mailbox_dialog_title">Teruskan ke</string>
   <string name="sl_note_info_title">Apa itu catatan SimpleLogin?</string>
   <string name="sl_note_info_message_part1" comment="this is the first part of a text compose by this and the following part2 and part3">Dalam Pass, catatan item terenkripsi dengan kunci enkripsi item dan hanya pengguna dengan akses item dapat melihat catatan.</string>
-  <string name="sl_note_info_message_part2">Bahkan Proton atau SimpleLogin tidak dapat melihatnya.</string>
+  <string name="sl_note_info_message_part2">Bahkan Proton atau SimpleLogin pun tidak dapat melihat catatan ini.</string>
   <string name="sl_note_info_message_part3">Catatan SimpleLogin disimpan pada lokasi yang sama dengan alamat alias, dan walaupun catatan ini terlindung oleh enkripsi, catatan ini tidak terlindung secara E2E — yang berarti bahwa siapa pun yang memiliki akses ke basis data SimpleLogin akan dapat membaca catatan ini.</string>
   <string name="sl_note_info_content_description">Tampilkan dialog informasi catatan SL</string>
   <!-- Create note -->
@@ -99,11 +105,13 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Tanggal kedaluwarsa</string>
-  <string name="field_card_expiration_date_hint">MM/YY</string>
+  <string name="field_card_expiration_date_hint">BB/TT</string>
   <string name="field_card_expiration_date_error">Masukkan tanggal yang valid dalam format BB/TT</string>
   <string name="create_credit_card_item_creation_error">Tidak dapat membuat kartu kredit</string>
   <string name="create_credit_card_item_creation_success">Kartu kredit dibuat</string>
   <string name="credit_card_init_error">Terdapat masalah dalam memperoleh rincian kartu kredit</string>
+  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
+  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">Tidak dapat memperbarui kartu kredit</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Nama lengkap</string>
@@ -133,7 +141,7 @@
   <string name="identity_field_reddit_title">Nama pengguna Reddit</string>
   <string name="identity_field_facebook_title">URL Facebook</string>
   <string name="identity_field_yahoo_title">Nama pengguna Yahoo</string>
-  <string name="identity_field_instagram_title">Instagram username</string>
+  <string name="identity_field_instagram_title">Akun Instagram</string>
   <string name="identity_field_personal_website_title">URL situs web pribadi</string>
   <string name="identity_field_work_phone_number_title">Nomor telepon kantor</string>
   <string name="identity_field_work_email_title">Alamat email kantor</string>
@@ -148,7 +156,7 @@
   <string name="identity_add_field_reddit">Nama pengguna Reddit</string>
   <string name="identity_add_field_facebook">URL Facebook</string>
   <string name="identity_add_field_yahoo">Nama pengguna Yahoo</string>
-  <string name="identity_add_field_instagram">Instagram username</string>
+  <string name="identity_add_field_instagram">Akun Instagram</string>
   <string name="identity_add_field_personal_website">URL situs web pribadi</string>
   <string name="identity_add_field_work_phone_number">Nomor telepon kantor</string>
   <string name="identity_add_field_work_email_address">Alamat email kantor</string>
@@ -160,6 +168,8 @@
   <string name="identity_add_more_fields">Tambah kolom lainnya</string>
   <string name="identity_bottomsheet_add_field">Tambah kolom</string>
   <string name="create_identity_init_error">Terdapat masalah dalam memperoleh rincian identitas</string>
+  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
+  <string name="identity_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">Identitas tidak dapat dibuat</string>
   <string name="create_identity_item_creation_success">Identitas telah dibuat</string>
   <string name="update_identity_item_creation_success">Identitas diperbarui</string>
@@ -190,4 +200,5 @@
   <!-- Attachments -->
   <string name="banner_title_attachments">Lampiran</string>
   <string name="banner_body_attachments">Anda dapat melampirkan item ke berkas untuk pengelolaan yang lebih baik</string>
+  <string name="open_with">Buka dengan:</string>
 </resources>

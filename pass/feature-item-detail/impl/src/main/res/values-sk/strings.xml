@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">Emailová adresa skopírovaná</string>
   <string name="username_copied_to_clipboard">Požívateľské meno skopírované</string>
   <string name="password_copied_to_clipboard">Heslo skopírované</string>
-  <string name="website_copied_to_clipboard">Web address copied</string>
+  <string name="website_copied_to_clipboard">Webová stránka skopírovaná</string>
   <string name="totp_copied_to_clipboard">TOTP skopírované</string>
   <string name="field_copied_to_clipboard">Pole skopírované</string>
   <string name="move_item_to_trash_message">Položka presunutá do koša</string>
@@ -129,4 +129,5 @@
     <item quantity="many">%1$s blokovaní</item>
     <item quantity="other">%1$s blokovaní</item>
   </plurals>
+  <string name="open_with">Otvoriť pomocou:</string>
 </resources>

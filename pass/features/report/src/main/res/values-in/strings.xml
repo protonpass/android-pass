@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Masalah apa yang Anda hadapi?</string>
-  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
+  <string name="description_field_hint">Jelaskan masalah Anda serinci mungkin. Apabila Anda menemui pesan kesalahan tertentu, beri tahu kami apa isi dari pesan kesalahan tersebut.</string>
   <string name="email_field_label">Email</string>
   <string name="email_field_hint">email</string>
   <string name="attach_image_button">Lampirkan gambar</string>
@@ -44,7 +44,7 @@
   <string name="report_sending_success">Laporan berhasil dikirim.</string>
   <string name="report_sending_error">Laporan tidak dapat dikirim.</string>
   <string name="tips_passkey_check_guide">Jika Anda mengalami masalah, lihat panduan kami.</string>
-  <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
+  <string name="tips_passkey_android_not_supported">Versi Android Anda terlalu rendah. Cobalah untuk meningkatkan versi perangkat Anda.</string>
   <string name="tips_passkeys_credential_manager_not_supported">Produsen perangkat ini tidak menyediakan pengelola kredensial.</string>
   <string name="tips_passkey_supported">Passkey didukung</string>
   <string name="tips_passkey_not_supported">Passkey tidak didukung</string>

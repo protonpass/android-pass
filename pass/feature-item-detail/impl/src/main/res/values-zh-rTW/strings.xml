@@ -117,4 +117,5 @@
   <plurals name="alias_blocks_count">
     <item quantity="other">%1$s blocks</item>
   </plurals>
+  <string name="open_with">Open with:</string>
 </resources>

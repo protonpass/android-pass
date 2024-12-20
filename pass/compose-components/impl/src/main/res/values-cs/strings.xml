@@ -289,7 +289,7 @@
   </plurals>
   <string name="simple_login_widget_action">Synchronizovat aliasy</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Neobdrželi jste kód?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Zkontrolujte, zda se ve spamu nenachází e-mail s názvem \"%s\"</string>
   <string name="verification_code_suggestion_subject_new_email_address">Potvrďte prosím svou e-mailovou adresu pro Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Potvrďte prosím svou e-mailovou schránku</string>

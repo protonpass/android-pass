@@ -49,5 +49,5 @@
     <item quantity="other">დარჩენილია %d ცდა</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">მეტისმეტად ბევრი PIN-კოდის შეყვანის მცდელობა. ყველა თქვენი მომხმარებელი გავა.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
+  <string name="auth_pin_too_many_attempts_dismiss">PIN-კოდის შეყვანის მეტისმეტად ბევრი ჩავარდნილი მცდელობა</string>
 </resources>

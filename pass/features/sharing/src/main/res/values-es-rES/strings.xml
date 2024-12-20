@@ -32,6 +32,9 @@
     <item quantity="other">%d miembros</item>
   </plurals>
   <string name="sharing_member_count_header">Miembros</string>
+  <string name="shared_via_title">Compartido por</string>
+  <string name="shared_via_item_member_count_header">Elementos compartidos</string>
+  <string name="shared_via_vault_member_count_header">Cajas fuertes compartidas</string>
   <string name="share_with_title">Compartir con</string>
   <string name="share_with_email_hint">Dirección de correo electrónico</string>
   <string name="share_with_email_error">La dirección de correo electrónico no es válida.</string>
@@ -44,8 +47,8 @@
   <string name="sharing_vault_invitation_accept">Unirte a la caja fuerte compartida</string>
   <string name="sharing_item_invitation_title">Invitación a un elemento compartido</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s desea compartir un elemento contigo.</string>
-  <string name="sharing_item_invitation_accept">Aceptar i mostrar el elemento</string>
-  <string name="sharing_item_leave">Abandonar</string>
+  <string name="sharing_item_invitation_accept">Aceptar y mostrar el elemento</string>
+  <string name="sharing_invite_more">Invita más personas…</string>
   <string name="sharing_snackbar_invite_accepted">Invitación aceptada</string>
   <string name="sharing_snackbar_invite_accept_error">Error al aceptar la invitación</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">No se ha podido aceptar la invitación porque has alcanzado el límite de la bóveda.</string>
@@ -126,6 +129,14 @@
   <string name="share_with_user_description">Comparte este elemento con otros usuarios de Proton.</string>
   <string name="share_with_secure_link_title">Vía enlace seguro</string>
   <string name="share_with_secure_link_description">Genera un enlace seguro para este elemento.</string>
+  <string name="share_with_vault_title">Caja fuerte completa</string>
+  <string name="share_with_vault_description">Comparte esta caja fuerte y su contenido.</string>
+  <string name="share_with_user_shared_title">Con otros usuarios de Proton Pass</string>
+  <string name="share_with_user_shared_description">Útil para compartir permanentemente.</string>
+  <string name="share_with_manage_shared_item_title">Gestionar el acceso</string>
+  <string name="share_with_manage_shared_item_description">Consulta todos los miembros y permisos.</string>
+  <string name="share_with_secure_link_shared_title">Vía un enlace seguro</string>
+  <string name="share_with_secure_link_shared_description">Para un uso único.</string>
   <string name="share_with_manage_shared_vault_title">Gestionar el acceso a la caja fuerte</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">La caja fuerte del elemento se comparte con %d usuario.</item>

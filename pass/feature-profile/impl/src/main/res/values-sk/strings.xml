@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">Zmeniť PIN kód</string>
   <string name="profile_passkey_support_section_title">Prístupové kľúče</string>
   <string name="profile_passkey_support_subtitle_supported">Prístupové kľúče sú podporované</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Vaša android verzia nepodporuje prístupové kľúče.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Vaše zariadenie nepodporuje prístupové kľúče</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Nebolo možné skontrolovať podporu pre prístupové kľúče</string>
   <plurals name="profile_after_days">

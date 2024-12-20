@@ -32,6 +32,9 @@
     <item quantity="other">%d membres</item>
   </plurals>
   <string name="sharing_member_count_header">Membres</string>
+  <string name="shared_via_title">Partagé via</string>
+  <string name="shared_via_item_member_count_header">Partage d\'éléments</string>
+  <string name="shared_via_vault_member_count_header">Partage de coffre-fort</string>
   <string name="share_with_title">Partager avec</string>
   <string name="share_with_email_hint">Adresse e-mail</string>
   <string name="share_with_email_error">L\'adresse e-mail n\'est pas valide.</string>
@@ -45,7 +48,7 @@
   <string name="sharing_item_invitation_title">Invitation à un élément partagé</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s souhaite partager un élément avec vous.</string>
   <string name="sharing_item_invitation_accept">Accepter et afficher l\'élément</string>
-  <string name="sharing_item_leave">Quitter</string>
+  <string name="sharing_invite_more">Invitez plus de personnes…</string>
   <string name="sharing_snackbar_invite_accepted">Invitation acceptée</string>
   <string name="sharing_snackbar_invite_accept_error">Une erreur s\'est produite lors de l\'acceptation de l\'invitation.</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">L\'invitation n\'a pu être acceptée, vous avez atteint la limite du coffre-fort.</string>
@@ -88,7 +91,7 @@
   <string name="sharing_bottomsheet_transfer_ownership">Transférer la propriété</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Vous ne pouvez pas transférer le dernier coffre-fort dont vous disposez.</string>
   <string name="sharing_bottomsheet_remove_access">Révoquer l\'accès</string>
-  <string name="sharing_bottomsheet_item_admin_subtitle">Peu accorder et révoquer l\'accès à cet élément.</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Peut accorder et révoquer l\'accès à cet élément.</string>
   <string name="sharing_bottomsheet_item_editor_subtitle">Peut modifier cet élément.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Peut afficher cet élément.</string>
   <string name="sharing_bottomsheet_resend_invite">Renvoyer l\'invitation</string>
@@ -126,6 +129,14 @@
   <string name="share_with_user_description">Partagez cet élément avec d\'autres utilisateurs Proton.</string>
   <string name="share_with_secure_link_title">Par lien sécurisé</string>
   <string name="share_with_secure_link_description">Générez un lien sécurisé vers cet élément.</string>
+  <string name="share_with_vault_title">Tout le coffre-fort</string>
+  <string name="share_with_vault_description">Partagez ce coffre-fort et son contenu.</string>
+  <string name="share_with_user_shared_title">Avec d\'autres utilisateurs de Proton Pass</string>
+  <string name="share_with_user_shared_description">Utile pour un partage permanent.</string>
+  <string name="share_with_manage_shared_item_title">Gérer l\'accès</string>
+  <string name="share_with_manage_shared_item_description">Affichez l\'ensemble des membres et des autorisations.</string>
+  <string name="share_with_secure_link_shared_title">Par un lien sécurisé</string>
+  <string name="share_with_secure_link_shared_description">Pour un partage unique.</string>
   <string name="share_with_manage_shared_vault_title">Gérer l\'accès au coffre-fort</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Le coffre-fort de l\'élément est partagé avec %d utilisateur.</item>

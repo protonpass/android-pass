@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Jaký máte problém?</string>
-  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
+  <string name="description_field_hint">Popište problém co nejpodrobněji. Pokud se objevila chyba, dejte nám vědět, co to říká.</string>
   <string name="email_field_label">E-mail</string>
   <string name="email_field_hint">e-mail</string>
   <string name="attach_image_button">Připojit obrázek</string>
@@ -44,7 +44,7 @@
   <string name="report_sending_success">Hlášení bylo úspěšně odesláno.</string>
   <string name="report_sending_error">Hlášení se nepodařilo odeslat.</string>
   <string name="tips_passkey_check_guide">Pokud máte nějaké problémy, podívejte se do našeho průvodce.</string>
-  <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
+  <string name="tips_passkey_android_not_supported">Vaše verze systému Android je zastaralá. Zkuste zařízení aktualizovat.</string>
   <string name="tips_passkeys_credential_manager_not_supported">Výrobce zařízení neposkytuje správce přihlašovacích údajů.</string>
   <string name="tips_passkey_supported">Přístupové klíče jsou podporovány</string>
   <string name="tips_passkey_not_supported">Přístupové klíče nejsou podporovány</string>

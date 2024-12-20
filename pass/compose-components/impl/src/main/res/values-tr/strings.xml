@@ -19,8 +19,8 @@
     <item quantity="other">sonuçlar</item>
   </plurals>
   <string name="item_list_header_identities_type">Kimlikler</string>
-  <string name="item_list_header_shared_with_me">Shared with me</string>
-  <string name="item_list_header_shared_by_me">Shared by me</string>
+  <string name="item_list_header_shared_with_me">Benimle paylaşılan</string>
+  <string name="item_list_header_shared_by_me">Benim paylaştıklarım</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Onayla</string>
   <string name="bottomsheet_cancel_button">İptal</string>
@@ -267,7 +267,7 @@
   </plurals>
   <string name="simple_login_widget_action">Takma adları eşitle</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Kodu almadınız mı?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Lütfen istenmeyen klasörünüzde “%s“ konulu bir e-posta olup olmadığına bakın</string>
   <string name="verification_code_suggestion_subject_new_email_address">Lütfen Proton Pass ile kullanmak istediğiniz e-posta adresini doğrulayın</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Lütfen e-posta kutunuzu doğrulayın</string>

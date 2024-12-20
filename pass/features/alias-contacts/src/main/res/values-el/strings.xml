@@ -31,7 +31,7 @@
   <string name="unblock_button">Άρση αποκλεισμού επαφής</string>
   <string name="block_button">Αποκλεισμός επαφής</string>
   <string name="contact_created_date" comment="date of creation">Δημιουργήθηκε πριν %1$s</string>
-  <string name="no_activity_contact">No activity in the last 14 days.</string>
+  <string name="no_activity_contact">Καμία δραστηριότητα στις τελευταίες 14 ημέρες.</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">στις τελευταίες 14 ημέρες.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d προωθήθηκε</item>

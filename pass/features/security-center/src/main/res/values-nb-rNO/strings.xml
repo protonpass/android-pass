@@ -85,7 +85,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">Ingen brudd oppdaget</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton-adresser</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-aliaser</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Feil ved henting av Proton-adresser</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Feil ved henting av Hide-my-email-aliaser</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Ikke overvåket</string>
   <string name="security_center_dark_web_monitor_see_all">Se alle</string>

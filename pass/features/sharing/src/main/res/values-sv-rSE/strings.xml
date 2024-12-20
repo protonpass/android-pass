@@ -32,6 +32,9 @@
     <item quantity="other">%d medlemmar</item>
   </plurals>
   <string name="sharing_member_count_header">Medlemmar</string>
+  <string name="shared_via_title">Delad via</string>
+  <string name="shared_via_item_member_count_header">Objektdelning</string>
+  <string name="shared_via_vault_member_count_header">Valvdelning</string>
   <string name="share_with_title">Dela med</string>
   <string name="share_with_email_hint">E-postadress</string>
   <string name="share_with_email_error">Ogiltig e-postadress</string>
@@ -45,7 +48,7 @@
   <string name="sharing_item_invitation_title">Delad valvinbjudan</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s vill dela ett objekt med dig.</string>
   <string name="sharing_item_invitation_accept">Acceptera och visa objektet</string>
-  <string name="sharing_item_leave">Lämna</string>
+  <string name="sharing_invite_more">Bjud in fler…</string>
   <string name="sharing_snackbar_invite_accepted">Inbjudan accepterad</string>
   <string name="sharing_snackbar_invite_accept_error">Det gick inte acceptera inbjudan</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Kunde inte acceptera inbjudan eftersom du har nått valvgränsen</string>
@@ -88,7 +91,7 @@
   <string name="sharing_bottomsheet_transfer_ownership">Överför ägarskap</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Du kan inte överföra ditt sista ägda valv.</string>
   <string name="sharing_bottomsheet_remove_access">Återkalla åtkomst</string>
-  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Kan bevilja och återkalla åtkomst till detta objekt.</string>
   <string name="sharing_bottomsheet_item_editor_subtitle">Kan redigera detta objekt.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Kan visa detta objekt.</string>
   <string name="sharing_bottomsheet_resend_invite">Skicka inbjudan igen</string>
@@ -126,6 +129,14 @@
   <string name="share_with_user_description">Dela detta objekt med andra Proton-användare.</string>
   <string name="share_with_secure_link_title">Via säker länk</string>
   <string name="share_with_secure_link_description">Generera en säker länk till detta objekt.</string>
+  <string name="share_with_vault_title">Hela valvet</string>
+  <string name="share_with_vault_description">Dela detta valv och dess innehåll.</string>
+  <string name="share_with_user_shared_title">Med andra Proton Pass-användare</string>
+  <string name="share_with_user_shared_description">Användbart för permanent delning.</string>
+  <string name="share_with_manage_shared_item_title">Hantera åtkomst</string>
+  <string name="share_with_manage_shared_item_description">Visa medlems- och rättighetsöversikt</string>
+  <string name="share_with_secure_link_shared_title">Via säker länk</string>
+  <string name="share_with_secure_link_shared_description">För engångsdelning.</string>
   <string name="share_with_manage_shared_vault_title">Hantera valvåtkomst</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Objektets valv delas för närvarande med %d användare.</item>

@@ -10,7 +10,7 @@
   <string name="item_list_header_all_search_results">Всі</string>
   <string name="item_list_header_pinned_search_results">Прикріплено</string>
   <string name="item_list_header_logins_type">Записи входу</string>
-  <string name="item_list_header_logins_totp_type">Logins with TOTP</string>
+  <string name="item_list_header_logins_totp_type">Вхід з TOTP</string>
   <string name="item_list_header_aliases_type">Псевдоніми</string>
   <string name="item_list_header_notes_type">Нотатки</string>
   <string name="item_list_header_credit_cards_type">Банківські картки</string>
@@ -21,8 +21,8 @@
     <item quantity="other">результатів</item>
   </plurals>
   <string name="item_list_header_identities_type">Особисті дані</string>
-  <string name="item_list_header_shared_with_me">Shared with me</string>
-  <string name="item_list_header_shared_by_me">Shared by me</string>
+  <string name="item_list_header_shared_with_me">Поширено для мене</string>
+  <string name="item_list_header_shared_by_me">Поширено мною</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Підтвердити</string>
   <string name="bottomsheet_cancel_button">Скасувати</string>
@@ -51,10 +51,10 @@
   <string name="action_edit">Змінити</string>
   <string name="action_add">Додати</string>
   <string name="action_delete">Видалити</string>
-  <string name="action_make_default">Make default</string>
-  <string name="action_verify">Verify</string>
+  <string name="action_make_default">Зробити типовою</string>
+  <string name="action_verify">Перевірити</string>
   <string name="action_close">Закрити</string>
-  <string name="action_update">Update</string>
+  <string name="action_update">Оновити</string>
   <!-- Empty list -->
   <string name="empty_list_title">Додайте свій перший елемент</string>
   <string name="empty_search_results_title">Нічого не знайдено</string>
@@ -142,7 +142,7 @@
   <string name="date_full_date_format_with_year_compact_month" comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Адреса псевдоніма</string>
-  <string name="item_details_alias_section_alias_disabled_title">Alias address (disabled)</string>
+  <string name="item_details_alias_section_alias_disabled_title">Адреса псевдоніма (вимкнено)</string>
   <string name="item_details_alias_section_mailboxes_title">Переслати до</string>
   <string name="item_details_credit_card_section_cardholder_title">Ім\'я на картці</string>
   <string name="item_details_credit_card_section_card_number_title">Номер картки</string>
@@ -209,28 +209,28 @@
   <string name="dialog_upgrade_plan_action_cancel">Не зараз</string>
   <!-- Words -->
   <string name="email_address">Адреса е-пошти</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">Недійсна адреса електронної пошти</string>
   <string name="password">Пароль</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Кнопка, щоб відкинути цю підказку і не показувати її більше</string>
   <!-- Time units -->
   <plurals name="time_unit_years">
-    <item quantity="one">%d year</item>
-    <item quantity="few">%d years</item>
-    <item quantity="many">%d years</item>
-    <item quantity="other">%d years</item>
+    <item quantity="one">%d рік</item>
+    <item quantity="few">%d роки</item>
+    <item quantity="many">%d років</item>
+    <item quantity="other">%d років</item>
   </plurals>
   <plurals name="time_unit_months">
-    <item quantity="one">%d month</item>
-    <item quantity="few">%d months</item>
-    <item quantity="many">%d months</item>
-    <item quantity="other">%d months</item>
+    <item quantity="one">%d місяць</item>
+    <item quantity="few">%d місяці</item>
+    <item quantity="many">%d місяців</item>
+    <item quantity="other">%d місяців</item>
   </plurals>
   <plurals name="time_unit_weeks">
-    <item quantity="one">%d week</item>
-    <item quantity="few">%d weeks</item>
-    <item quantity="many">%d weeks</item>
-    <item quantity="other">%d weeks</item>
+    <item quantity="one">%d тиждень</item>
+    <item quantity="few">%d тижні</item>
+    <item quantity="many">%d тижнів</item>
+    <item quantity="other">%d тижнів</item>
   </plurals>
   <plurals name="time_unit_days">
     <item quantity="one">%d день</item>
@@ -257,10 +257,10 @@
     <item quantity="other">%d секунди</item>
   </plurals>
   <plurals name="aliases_count">
-    <item quantity="one">%d alias</item>
-    <item quantity="few">%d aliases</item>
-    <item quantity="many">%d aliases</item>
-    <item quantity="other">%d aliases</item>
+    <item quantity="one">%d псевдонім</item>
+    <item quantity="few">%d псевдоніми</item>
+    <item quantity="many">%d псевдонімів</item>
+    <item quantity="other">%d псевдонімів</item>
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Вміст нотатки скопійовано</string>
@@ -282,28 +282,28 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Увімкнути синхронізацію SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="one">We detected that you have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to import it?</item>
-    <item quantity="few">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
-    <item quantity="many">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
-    <item quantity="other">We detected that you have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</item>
+    <item quantity="one">Ми виявили, що у вас є псевдонім %d, який присутній у SimpleLogin, але відсутній у Proton Pass. Бажаєте його імпортувати?</item>
+    <item quantity="few">Ми виявили, що у вас є псевдоніми %d, які присутні в SimpleLogin, але відсутні в Proton Pass. Бажаєте їх імпортувати?</item>
+    <item quantity="many">Ми виявили, що у вас є псевдонімів %d, які присутні в SimpleLogin, але відсутні в Proton Pass. Бажаєте їх імпортувати?</item>
+    <item quantity="other">Ми виявили, що у вас є псевдоніми %d, які присутні в SimpleLogin, але відсутні в Proton Pass. Бажаєте їх імпортувати?</item>
   </plurals>
   <string name="simple_login_widget_action">Синхронізувати псевдоніми</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
-  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Please check in your Spam for an email called “%s“</string>
-  <string name="verification_code_suggestion_subject_new_email_address">Please confirm your email address for Proton Pass</string>
-  <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
-  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">If you can\'t find such email, you can %s.</string>
-  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code</string>
-  <string name="field_display_name_title">Display name</string>
+  <string name="verification_code_not_received">Не отримали код?</string>
+  <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Будь ласка, перевірте у Спамі наявність листа з назвою “%s“</string>
+  <string name="verification_code_suggestion_subject_new_email_address">Будь ласка, підтвердьте свою адресу електронної пошти для отримання Proton Pass</string>
+  <string name="verification_code_suggestion_subject_new_mailbox">Будь ласка, підтвердьте поштову скриньку</string>
+  <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Якщо ви не можете знайти таку адресу, ви можете ввести %s.</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">запросити новий код</string>
+  <string name="field_display_name_title">Ім\'я</string>
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
-    <item quantity="one">%1$s file</item>
-    <item quantity="few">%1$s files</item>
-    <item quantity="many">%1$s files</item>
-    <item quantity="other">%1$s files</item>
+    <item quantity="one">%1$s файл</item>
+    <item quantity="few">%1$s файлів</item>
+    <item quantity="many">%1$s файлів</item>
+    <item quantity="other">%1$s файли</item>
   </plurals>
-  <string name="attachment_title">Attachments</string>
-  <string name="attachment_no_files">Upload files from your device</string>
-  <string name="attachment_add_file">Attach a file</string>
+  <string name="attachment_title">Вкладення</string>
+  <string name="attachment_no_files">Вивантажуйте файли зі свого пристрою</string>
+  <string name="attachment_add_file">Вкласти файл</string>
 </resources>

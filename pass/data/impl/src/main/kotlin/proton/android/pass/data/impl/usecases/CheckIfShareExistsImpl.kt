@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.usecases
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.CheckIfShareExists
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.domain.ShareId
@@ -27,5 +28,6 @@ class CheckIfShareExistsImpl @Inject constructor(
     private val database: PassDatabase
 ) : CheckIfShareExists {
 
-    override suspend fun invoke(shareId: ShareId): Boolean = database.sharesDao().checkIfShareExists(shareId.id)
+    override suspend fun invoke(userId: UserId, shareId: ShareId): Boolean =
+        database.sharesDao().checkIfShareExists(userId.id, shareId.id)
 }

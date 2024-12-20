@@ -18,8 +18,9 @@
 
 package proton.android.pass.data.api.usecases
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ShareId
 
 interface CheckIfShareExists {
-    suspend operator fun invoke(shareId: ShareId): Boolean
+    suspend operator fun invoke(userId: UserId, shareId: ShareId): Boolean
 }

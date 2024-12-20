@@ -22,9 +22,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.bottomSheet
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
+import proton.android.pass.composecomponents.impl.bottomsheet.leave
 import proton.android.pass.composecomponents.impl.bottomsheet.monitorExclude
 import proton.android.pass.composecomponents.impl.bottomsheet.monitorInclude
 import proton.android.pass.composecomponents.impl.bottomsheet.pin
@@ -38,6 +38,7 @@ fun LoginTopBarOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     canMigrate: Boolean,
     canMoveToTrash: Boolean,
+    canLeave: Boolean,
     onMigrate: () -> Unit,
     onMoveToTrash: () -> Unit,
     isPinned: Boolean,
@@ -45,31 +46,49 @@ fun LoginTopBarOptionsBottomSheetContents(
     onUnpinned: () -> Unit,
     onExcludeFromMonitoring: () -> Unit,
     onIncludeInMonitoring: () -> Unit,
+    onLeave: () -> Unit,
     isExcludedFromMonitor: Boolean
 ) {
-    val items = mutableListOf<BottomSheetItem>().apply {
+    buildList {
         if (canMigrate) {
-            add(migrate(onClick = onMigrate))
+            migrate(onClick = onMigrate).also(::add)
         }
 
         if (isPinned) {
-            add(unpin(BottomSheetItemAction.None) { onUnpinned() })
+            unpin(
+                action = BottomSheetItemAction.None,
+                onClick = onUnpinned
+            ).also(::add)
         } else {
-            add(pin(BottomSheetItemAction.None) { onPinned() })
+            pin(
+                action = BottomSheetItemAction.None,
+                onClick = onPinned
+            ).also(::add)
         }
 
         if (isExcludedFromMonitor) {
-            add(monitorInclude(BottomSheetItemAction.None) { onIncludeInMonitoring() })
+            monitorInclude(
+                action = BottomSheetItemAction.None,
+                onClick = onIncludeInMonitoring
+            ).also(::add)
         } else {
-            add(monitorExclude(BottomSheetItemAction.None) { onExcludeFromMonitoring() })
+            monitorExclude(
+                action = BottomSheetItemAction.None,
+                onClick = onExcludeFromMonitoring
+            ).also(::add)
         }
 
         if (canMoveToTrash) {
-            add(moveToTrash(onClick = onMoveToTrash))
+            moveToTrash(onClick = onMoveToTrash).also(::add)
         }
-    }
 
-    BottomSheetItemList(
-        modifier = modifier.bottomSheet(), items = items.withDividers().toPersistentList()
-    )
+        if (canLeave) {
+            leave(onClick = onLeave).also(::add)
+        }
+    }.also { items ->
+        BottomSheetItemList(
+            modifier = modifier.bottomSheet(),
+            items = items.withDividers().toPersistentList()
+        )
+    }
 }

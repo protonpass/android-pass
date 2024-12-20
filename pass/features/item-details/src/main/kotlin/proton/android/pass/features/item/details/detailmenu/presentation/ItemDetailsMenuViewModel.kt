@@ -25,12 +25,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
-import proton.android.pass.common.api.toOption
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
@@ -42,6 +43,7 @@ import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -55,6 +57,7 @@ class ItemDetailsMenuViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     getItemById: GetItemById,
     getItemActions: GetItemActions,
+    observeShare: ObserveShare,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val clipboardManager: ClipboardManager,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
@@ -79,16 +82,21 @@ class ItemDetailsMenuViewModel @Inject constructor(
 
     private val itemFlow = oneShot { getItemById(shareId, itemId) }
 
+    private val shareFlow = oneShot { observeShare(shareId).first() }
+
     internal val state: StateFlow<ItemDetailsMenuState> = combine(
         actionFlow,
         eventFlow,
-        itemFlow
-    ) { action, event, item ->
+        itemFlow,
+        shareFlow
+    ) { action, event, item, share ->
+        println("JIBIRI: share = $share")
         ItemDetailsMenuState(
             action = action,
             event = event,
-            itemOption = item.toOption(),
-            itemActionsOption = getItemActions(shareId, itemId).toOption()
+            itemOption = item.some(),
+            itemActionsOption = getItemActions(shareId, itemId).some(),
+            shareOption = share.some()
         )
     }.stateIn(
         scope = viewModelScope,
@@ -245,6 +253,10 @@ class ItemDetailsMenuViewModel @Inject constructor(
 
             actionFlow.update { BottomSheetItemAction.None }
         }
+    }
+
+    internal fun onLeaveItem() {
+        eventFlow.update { ItemDetailsMenuEvent.OnItemLeaved }
     }
 
     private companion object {

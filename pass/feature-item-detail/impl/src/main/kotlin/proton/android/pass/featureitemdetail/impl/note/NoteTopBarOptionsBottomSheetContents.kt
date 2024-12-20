@@ -32,6 +32,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAct
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.leave
 import proton.android.pass.composecomponents.impl.bottomsheet.pin
 import proton.android.pass.composecomponents.impl.bottomsheet.unpin
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
@@ -46,33 +47,47 @@ fun NoteTopBarOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     canMigrate: Boolean,
     canMoveToTrash: Boolean,
+    canLeave: Boolean,
     isPinned: Boolean,
     onMigrate: () -> Unit,
     onMoveToTrash: () -> Unit,
     onCopyNote: () -> Unit = {},
     onPinned: () -> Unit,
-    onUnpinned: () -> Unit
+    onUnpinned: () -> Unit,
+    onLeave: () -> Unit
 ) {
-    val items = mutableListOf(copyNote(onClick = onCopyNote)).apply {
+    buildList {
+        copyNote(onClick = onCopyNote).also(::add)
+
         if (canMigrate) {
-            add(migrate(onClick = onMigrate))
+            migrate(onClick = onMigrate).also(::add)
         }
 
         if (isPinned) {
-            add(unpin(BottomSheetItemAction.None) { onUnpinned() })
+            unpin(
+                action = BottomSheetItemAction.None,
+                onClick = onUnpinned
+            ).also(::add)
         } else {
-            add(pin(BottomSheetItemAction.None) { onPinned() })
+            pin(
+                action = BottomSheetItemAction.None,
+                onClick = onPinned
+            ).also(::add)
         }
 
         if (canMoveToTrash) {
-            add(moveToTrash(onClick = onMoveToTrash))
+            moveToTrash(onClick = onMoveToTrash).also(::add)
         }
-    }
 
-    BottomSheetItemList(
-        modifier = modifier.bottomSheet(),
-        items = items.withDividers().toPersistentList()
-    )
+        if (canLeave) {
+            leave(onClick = onLeave).also(::add)
+        }
+    }.also { items ->
+        BottomSheetItemList(
+            modifier = modifier.bottomSheet(),
+            items = items.withDividers().toPersistentList()
+        )
+    }
 }
 
 private fun copyNote(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
@@ -102,10 +117,12 @@ fun NoteTopBarOptionsBSContentsPreview(
                 canMigrate = params.canMigrate,
                 canMoveToTrash = params.canMoveToTrash,
                 isPinned = params.isPinned,
+                canLeave = false,
                 onMigrate = {},
                 onMoveToTrash = {},
                 onPinned = {},
-                onUnpinned = {}
+                onUnpinned = {},
+                onLeave = {}
             )
         }
     }

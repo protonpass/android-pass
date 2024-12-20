@@ -22,9 +22,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.bottomSheet
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.copyNote
+import proton.android.pass.composecomponents.impl.bottomsheet.leave
 import proton.android.pass.composecomponents.impl.bottomsheet.migrate
 import proton.android.pass.composecomponents.impl.bottomsheet.monitorExclude
 import proton.android.pass.composecomponents.impl.bottomsheet.monitorInclude
@@ -40,65 +40,57 @@ internal fun ItemDetailsMenuContent(
     onEvent: (ItemDetailsMenuUiEvent) -> Unit,
     state: ItemDetailsMenuState
 ) = with(state) {
-    mutableListOf<BottomSheetItem>().apply {
+    buildList {
         if (canCopyItemNote) {
-            add(
-                copyNote(
-                    onClick = { onEvent(ItemDetailsMenuUiEvent.OnCopyItemNoteClicked) }
-                )
-            )
+            copyNote(
+                onClick = { onEvent(ItemDetailsMenuUiEvent.OnCopyItemNoteClicked) }
+            ).also(::add)
         }
 
         if (canMigrateItem) {
-            add(
-                migrate(
-                    action = action,
-                    onClick = { onEvent(ItemDetailsMenuUiEvent.OnMigrateItemClicked) }
-                )
-            )
+            migrate(
+                action = action,
+                onClick = { onEvent(ItemDetailsMenuUiEvent.OnMigrateItemClicked) }
+            ).also(::add)
         }
 
         if (isItemPinned) {
-            add(
-                unpin(
-                    action = action,
-                    onClick = { onEvent(ItemDetailsMenuUiEvent.OnUnpinItemClicked) }
-                )
-            )
+            unpin(
+                action = action,
+                onClick = { onEvent(ItemDetailsMenuUiEvent.OnUnpinItemClicked) }
+            ).also(::add)
         } else {
-            add(
-                pin(
-                    action = action,
-                    onClick = { onEvent(ItemDetailsMenuUiEvent.OnPinItemClicked) }
-                )
-            )
+            pin(
+                action = action,
+                onClick = { onEvent(ItemDetailsMenuUiEvent.OnPinItemClicked) }
+            ).also(::add)
         }
 
         if (canBeMonitored) {
             if (isItemExcludedFromMonitoring) {
-                add(
-                    monitorInclude(
-                        action = action,
-                        onClick = { onEvent(ItemDetailsMenuUiEvent.OnIncludeItemMonitorClicked) }
-                    )
-                )
+                monitorInclude(
+                    action = action,
+                    onClick = { onEvent(ItemDetailsMenuUiEvent.OnIncludeItemMonitorClicked) }
+                ).also(::add)
             } else {
-                add(
-                    monitorExclude(
-                        action = action,
-                        onClick = { onEvent(ItemDetailsMenuUiEvent.OnExcludeItemMonitorClicked) }
-                    )
-                )
+                monitorExclude(
+                    action = action,
+                    onClick = { onEvent(ItemDetailsMenuUiEvent.OnExcludeItemMonitorClicked) }
+                ).also(::add)
             }
         }
 
         if (canTrashItem) {
-            add(
-                trash(
-                    action = action,
-                    onClick = { onEvent(ItemDetailsMenuUiEvent.OnTrashItemClicked) }
-                )
-            )
+            trash(
+                action = action,
+                onClick = { onEvent(ItemDetailsMenuUiEvent.OnTrashItemClicked) }
+            ).also(::add)
+        }
+
+        if (canLeaveItem) {
+            leave(
+                onClick = { onEvent(ItemDetailsMenuUiEvent.OnLeaveItemClicked) }
+            ).also(::add)
         }
     }.let { bottomSheetItems ->
         BottomSheetItemList(

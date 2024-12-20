@@ -58,4 +58,20 @@ abstract class AttachmentDao : BaseDao<AttachmentEntity>() {
         """
     )
     abstract fun observeItemAttachments(shareId: String, itemId: String): Flow<List<AttachmentEntity>>
+
+    @Query(
+        """
+        SELECT EXISTS(
+            SELECT 1 FROM ${AttachmentEntity.TABLE}
+            WHERE ${AttachmentEntity.Columns.SHARE_ID} = :shareId 
+              AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId 
+              AND ${AttachmentEntity.Columns.ID} = :attachmentId
+        )
+        """
+    )
+    abstract fun checkIfAttachmentExists(
+        shareId: String,
+        itemId: String,
+        attachmentId: String
+    ): Boolean
 }

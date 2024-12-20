@@ -267,7 +267,7 @@
   </plurals>
   <string name="simple_login_widget_action">Συγχρονισμός ψευδωνύμων</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Δεν έχετε λάβει τον κωδικό;</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Παρακαλούμε ελέγξτε στα Ανεπιθύμητα σας για ένα μήνυμα που ονομάζεται \"%s\"</string>
   <string name="verification_code_suggestion_subject_new_email_address">Παρακαλούμε επιβεβαιώστε τη διεύθυνση email σας για το Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Παρακαλούμε επιβεβαιώστε το γραμματοκιβώτιό σας</string>

@@ -34,7 +34,7 @@
   <string name="bottomsheet_leave_vault">금고 떠나기</string>
   <string name="bottomsheet_view_members">회원 보기</string>
   <string name="bottomsheet_manage_access">접근 관리</string>
-  <string name="bottomsheet_select_vault_read_only">You can only view</string>
+  <string name="bottomsheet_select_vault_read_only">읽기 전용입니다</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">사용자의 소유한 가장 오래된 금고에만 항목을 생성할 수 있습니다.</string>
   <string name="vault_title">금고</string>
 </resources>

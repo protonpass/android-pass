@@ -32,6 +32,9 @@
     <item quantity="other">%d medlemmer</item>
   </plurals>
   <string name="sharing_member_count_header">Medlemmer</string>
+  <string name="shared_via_title">Del via</string>
+  <string name="shared_via_item_member_count_header">Elementdeling</string>
+  <string name="shared_via_vault_member_count_header">Boksdeling</string>
   <string name="share_with_title">Del med</string>
   <string name="share_with_email_hint">E-mailadresse</string>
   <string name="share_with_email_error">Ugyldig e-mailadresse</string>
@@ -45,7 +48,7 @@
   <string name="sharing_item_invitation_title">Delte element-invitation</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s ønsker at dele et element med dig.</string>
   <string name="sharing_item_invitation_accept">Accepter og se elementet</string>
-  <string name="sharing_item_leave">Forlad</string>
+  <string name="sharing_invite_more">Inviter flere…</string>
   <string name="sharing_snackbar_invite_accepted">Invitation accepteret</string>
   <string name="sharing_snackbar_invite_accept_error">Fejl ved accept af invitationen</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Kunne ikke acceptere invitationen, da du har nået boksens grænse</string>
@@ -126,6 +129,14 @@
   <string name="share_with_user_description">Del dette element med andre Proton-brugere.</string>
   <string name="share_with_secure_link_title">Via sikkert link</string>
   <string name="share_with_secure_link_description">Generer et sikkert link til dette element.</string>
+  <string name="share_with_vault_title">Hele boksen</string>
+  <string name="share_with_vault_description">Del denne boks og dens indhold.</string>
+  <string name="share_with_user_shared_title">Med andre Proton Pass-brugere</string>
+  <string name="share_with_user_shared_description">Nyttigt til permanent deling.</string>
+  <string name="share_with_manage_shared_item_title">Administrer adgang</string>
+  <string name="share_with_manage_shared_item_description">Se oversigt over medlemmer og tilladelser.</string>
+  <string name="share_with_secure_link_shared_title">Via sikkert link</string>
+  <string name="share_with_secure_link_shared_description">Til engangsdeling.</string>
   <string name="share_with_manage_shared_vault_title">Håndter adgang til boks</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Elementets boks er i øjeblikket delt med %d bruger.</item>

@@ -44,7 +44,7 @@
   <string name="report_sending_success">보고서를 정상적으로 보냈습니다.</string>
   <string name="report_sending_error">보고서 전송 오류.</string>
   <string name="tips_passkey_check_guide">문제 발생시 가이드를 참고하세요.</string>
-  <string name="tips_passkey_android_not_supported">Your Android version is too low. Try upgrading your device.</string>
+  <string name="tips_passkey_android_not_supported">사용자의 Android 버전이 너무 낮음. 기기를 업그레이드해주세요.</string>
   <string name="tips_passkeys_credential_manager_not_supported">사용자의 기기 제조사가 인증 관리자를 제공하지 않습니다.</string>
   <string name="tips_passkey_supported">패스키를 지원함</string>
   <string name="tips_passkey_not_supported">패스키를 미지원함</string>

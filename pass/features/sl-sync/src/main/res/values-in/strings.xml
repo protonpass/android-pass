@@ -33,7 +33,7 @@
   <string name="simple_login_sync_management_dialog_title_mailboxes">Kotak surat bawaan untuk alias</string>
   <!-- Settings screen -->
   <string name="simple_login_sync_settings_title">Sinkronkan alias</string>
-  <string name="simple_login_sync_enable_snackbar_error">Ada kesalahan mengaktifkan sinkroniasi alias SimpleLogin</string>
+  <string name="simple_login_sync_enable_snackbar_error">Terdapat kesalahan dalam mengaktifkan sinkronisasi alias SimpleLogin</string>
   <string name="simple_login_sync_enable_snackbar_success">Sinkronisasi alias SimpleLogin berhasil diaktifkan</string>
   <!-- Mailbox create screen -->
   <string name="simple_login_sync_mailbox_create_title">Tambahkan kotak surat</string>

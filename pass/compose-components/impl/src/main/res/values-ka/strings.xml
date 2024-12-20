@@ -19,8 +19,8 @@
     <item quantity="other">შედეგი</item>
   </plurals>
   <string name="item_list_header_identities_type">იდენტიფიკატორები</string>
-  <string name="item_list_header_shared_with_me">Shared with me</string>
-  <string name="item_list_header_shared_by_me">Shared by me</string>
+  <string name="item_list_header_shared_with_me">ჩემთან გაზიარებული</string>
+  <string name="item_list_header_shared_by_me">ჩემი გაზიარებული</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">დასტური</string>
   <string name="bottomsheet_cancel_button">გაუქმება</string>
@@ -267,7 +267,7 @@
   </plurals>
   <string name="simple_login_widget_action">ფსევდონიმების სინქი</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">კოდი არ მიგიღიათ?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">მოძებნეთ თქვენი სპამის საქაღალდეში ელფოსტა სახელით \"%s\"</string>
   <string name="verification_code_suggestion_subject_new_email_address">დაადასტურეთ თქვენი ელფოსტის მისამართი Proton Pass-სთვის</string>
   <string name="verification_code_suggestion_subject_new_mailbox">გთხოვთ, დაადასტუროთ საფოსტო ყუთი</string>

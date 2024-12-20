@@ -34,7 +34,7 @@
   <string name="bottomsheet_leave_vault">Выйсці са сховішча</string>
   <string name="bottomsheet_view_members">Прагляд удзельнікаў</string>
   <string name="bottomsheet_manage_access">Кіраваць доступам</string>
-  <string name="bottomsheet_select_vault_read_only">You can only view</string>
+  <string name="bottomsheet_select_vault_read_only">Вы можаце толькі чытаць</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Вы можаце толькі ствараць элементы ў самых старых сховішчах</string>
   <string name="vault_title">Сховішча</string>
 </resources>

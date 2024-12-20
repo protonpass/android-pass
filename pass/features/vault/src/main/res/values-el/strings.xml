@@ -34,7 +34,7 @@
   <string name="bottomsheet_leave_vault">Αποχώρηση από την κρύπτη</string>
   <string name="bottomsheet_view_members">Προβολή μελών</string>
   <string name="bottomsheet_manage_access">Διαχείριση πρόσβασης</string>
-  <string name="bottomsheet_select_vault_read_only">You can only view</string>
+  <string name="bottomsheet_select_vault_read_only">Μπορείτε μόνο να διαβάσετε</string>
   <string name="bottomsheet_select_vault_only_oldest_vaults">Μπορείτε να δημιουργήσετε στοιχεία μόνο στις παλαιότερες κρύπτες σας</string>
   <string name="vault_title">Κρύπτη</string>
 </resources>

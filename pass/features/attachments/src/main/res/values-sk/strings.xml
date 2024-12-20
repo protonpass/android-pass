@@ -20,10 +20,9 @@
   <string name="add_attachment_take_a_photo">Odfotiť</string>
   <string name="add_attachment_choose_a_photo_or_video">Vyberte fotografiu alebo video</string>
   <string name="add_attachment_choose_a_file">Vyberte súbor</string>
-  <string name="attachment_options_open">Otvoriť</string>
   <string name="attachment_options_rename">Premenovať</string>
   <string name="attachment_options_delete">Vymazať</string>
-  <string name="file_picker_open_error">Nepodarilo sa otvoriť vyberač súborov</string>
+  <string name="file_picker_open_error">Nepodarilo sa otvoriť nástroj pre výber súborov</string>
   <string name="media_picker_open_error">Nepodarilo sa otvoriť nástroj na výber médií</string>
   <string name="camera_open_error">Nie je možné otvoriť fotoaparát</string>
   <string name="camera_permission_explanation">Na sprístupnenie tejto funkcie sa vyžaduje prístup k fotoaparátu.</string>

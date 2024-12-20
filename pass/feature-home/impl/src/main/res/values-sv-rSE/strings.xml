@@ -50,7 +50,7 @@
   <string name="sl_sync_banner_settings">Synkronisera alias ›</string>
   <string name="sl_sync_banner_note">När de väl har synkroniserats kommer borttagning av alias i Pass också att tas bort i SimpleLogin.</string>
   <string name="home_notification_permission_banner_title">Få viktiga uppdateringar</string>
-  <string name="home_notification_permission_banner_text">Aktivera push-notiser för att informeras när andra delar ett valv med dig.</string>
+  <string name="home_notification_permission_banner_text">Aktivera pushaviseringar för att informeras när andra delar ett valv med dig.</string>
   <string name="home_notification_permission_banner_settings">Aktivera behörighet ›</string>
   <string name="home_invite_banner_title">Valv delade med dig</string>
   <string name="home_invite_banner_subtitle">Du är inbjuden till ett delat valv. Tryck för detaljer.</string>
@@ -95,6 +95,8 @@
   <string name="search_topbar_placeholder_vault">Sök i %s…</string>
   <string name="search_topbar_placeholder_trash">Sök i papperskorg…</string>
   <string name="search_topbar_placeholder_pinning">Sök i fästade…</string>
+  <string name="search_topbar_placeholder_shared_by_me">Search in Shared by me…</string>
+  <string name="search_topbar_placeholder_shared_with_me">Search in Shared with me…</string>
   <string name="item_type_filter_list_icon_content_description">Ikon för “Objekttyp“</string>
   <string name="item_type_filter_all">Alla</string>
   <string name="item_type_filter_login">Inloggning</string>
@@ -160,10 +162,10 @@
   <string name="home_snackbar_items_unpinned_partial_success">Det gick inte lossa några av objekten</string>
   <string name="home_snackbar_items_unpinned_error">Det gick inte lossa objekten</string>
   <string name="home_snackbar_items_alias_enabled_success">Alias aktiverat</string>
-  <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_enabled_partial_success">Fel vid aktivering för några alias</string>
   <string name="home_snackbar_items_alias_enabled_error">Fel vid aktivering av alias</string>
   <string name="home_snackbar_items_alias_disabled_success">Alias inaktiverat</string>
-  <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
+  <string name="home_snackbar_items_alias_disabled_partial_success">Fel vid inaktivering för några alias</string>
   <string name="home_snackbar_items_alias_disabled_error">Fel vid inaktivering av alias</string>
   <string name="bulk_action_unpin">Lossa</string>
   <string name="bulk_action_pin">Fäst</string>

@@ -53,4 +53,5 @@
   <string name="item_details_snackbar_message_x_handle_copied">Το όνομα X αντιγράφηκε</string>
   <string name="item_details_snackbar_message_yahoo_copied">Το Yahoo αντιγράφηκε</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">Ο Τ.Κ ή ταχυδρομικός κώδικας αντιγράφηκε</string>
+  <string name="open_with">Άνοιγμα με:</string>
 </resources>

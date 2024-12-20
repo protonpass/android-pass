@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="description_field_label">Care este problema?</string>
-  <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
+  <string name="description_field_hint">Descrieți problema cu cât mai multe detalii posibile. Dacă este o eroare spuneți-ne care este mesajul acesteia.</string>
   <string name="email_field_label">E-mail</string>
   <string name="email_field_hint">e-mail</string>
   <string name="attach_image_button">Atașare imagine</string>

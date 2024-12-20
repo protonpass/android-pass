@@ -36,6 +36,9 @@
     <item quantity="other">%d użytkowników</item>
   </plurals>
   <string name="sharing_member_count_header">Użytkownicy</string>
+  <string name="shared_via_title">Shared via</string>
+  <string name="shared_via_item_member_count_header">Item sharing</string>
+  <string name="shared_via_vault_member_count_header">Vault sharing</string>
   <string name="share_with_title">Udostępnij</string>
   <string name="share_with_email_hint">Adres e-mail</string>
   <string name="share_with_email_error">Adres e-mail jest nieprawidłowy</string>
@@ -49,7 +52,7 @@
   <string name="sharing_item_invitation_title">Zaproszenie do udostępnionego elementu</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">Użytkownik %s udostępnia Ci element.</string>
   <string name="sharing_item_invitation_accept">Zaakceptuj i zobacz element</string>
-  <string name="sharing_item_leave">Leave</string>
+  <string name="sharing_invite_more">Invite more…</string>
   <string name="sharing_snackbar_invite_accepted">Zaproszenie zostało zaakceptowane</string>
   <string name="sharing_snackbar_invite_accept_error">Wystąpił błąd podczas akceptowania zaproszenia</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Nie można zaakceptować zaproszenia z powodu osiągnięcia limitu maksymalnej liczby sejfów</string>
@@ -62,8 +65,8 @@
   <string name="sharing_snackbar_change_permission_error">Nie można zmienić uprawnień</string>
   <string name="sharing_snackbar_remove_member_success">Użytkownik został usunięty z sejfu</string>
   <string name="sharing_snackbar_remove_member_error">Nie można usunąć z sejfu</string>
-  <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
-  <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
+  <string name="sharing_snackbar_fetch_member_error">Wystąpił błąd podczas pobierania użytkowników</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Wystąpił błąd podczas pobierania oczekujących zaproszeń</string>
   <string name="share_summary_title">Przejrzyj i udostępnij</string>
   <string name="share_summary_vault">sejfu %s</string>
   <string name="share_summary_share_vault">Udostępnij sejf</string>
@@ -96,7 +99,7 @@
   <string name="sharing_bottomsheet_transfer_ownership">Zmień właściciela</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">Nie możesz zmienić właściciela swojego jedynego sejfu.</string>
   <string name="sharing_bottomsheet_remove_access">Unieważnij dostęp</string>
-  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">Zarządza dostępem do elementu.</string>
   <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
   <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
   <string name="sharing_bottomsheet_resend_invite">Wyślij ponownie zaproszenie</string>
@@ -136,6 +139,14 @@
   <string name="share_with_user_description">Udostępnij element innym użytkownikom Proton.</string>
   <string name="share_with_secure_link_title">przez link</string>
   <string name="share_with_secure_link_description">Utwórz link do elementu.</string>
+  <string name="share_with_vault_title">Entire vault</string>
+  <string name="share_with_vault_description">Share this vault and its content.</string>
+  <string name="share_with_user_shared_title">With other Proton Pass users</string>
+  <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
+  <string name="share_with_manage_shared_item_title">Manage access</string>
+  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
+  <string name="share_with_secure_link_shared_title">Via a secure link</string>
+  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
   <string name="share_with_manage_shared_vault_title">Zarządzaj dostępem do sejfu</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Sejf z tym elementem jest udostępniony %d użytkownikowi.</item>

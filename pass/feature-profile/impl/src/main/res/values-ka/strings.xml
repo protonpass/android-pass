@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">PIN-კოდის შეცვლა</string>
   <string name="profile_passkey_support_section_title">წვდომის გასაღებები</string>
   <string name="profile_passkey_support_subtitle_supported">საკვანძო გასაღებები მხარდაჭერილია</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">თქვენს Android-ის ვერსიას შესვლის გასაღებების მხარდაჭერა არ გააჩნია.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">თქვენს მოწყობილობას შესვლის გასაღებების მხარდაჭერა არ გააჩნია</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">შესვლის გასაღებების მხარდაჭერის შემოწმება შეუძლებელია</string>
   <plurals name="profile_after_days">

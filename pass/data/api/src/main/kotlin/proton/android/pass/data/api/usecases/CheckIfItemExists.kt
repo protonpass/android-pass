@@ -16,12 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.files.api
+package proton.android.pass.data.api.usecases
 
-interface CacheCleaner {
-    suspend fun deleteDir(type: DirectoryType)
-}
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
-sealed interface DirectoryType {
-    data object CameraTemp : DirectoryType
+interface CheckIfItemExists {
+    suspend operator fun invoke(shareId: ShareId, itemId: ItemId): Boolean
 }

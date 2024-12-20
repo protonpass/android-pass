@@ -28,21 +28,29 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import proton.android.pass.files.api.CacheCleaner
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+import proton.android.pass.files.api.DirectoryCleaner
 import proton.android.pass.files.api.DirectoryType
 import proton.android.pass.log.api.PassLogger
 import java.util.concurrent.TimeUnit
 
 @HiltWorker
-class PeriodicCacheCleanupWorker @AssistedInject constructor(
+class PeriodicCleanupWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted private val workerParameters: WorkerParameters,
-    private val cacheCleaner: CacheCleaner
+    private val directoryCleaner: DirectoryCleaner
 ) : CoroutineWorker(appContext, workerParameters) {
 
     override suspend fun doWork(): Result = runCatching {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
-        cacheCleaner.deleteDir(DirectoryType.CameraTemp)
+        coroutineScope {
+            listOf(
+                async { directoryCleaner.deleteDir(DirectoryType.CameraTemp) },
+                async { directoryCleaner.deleteDir(DirectoryType.OrphanedAttachments) }
+            ).awaitAll()
+        }
     }.onSuccess {
         PassLogger.i(TAG, "Finished $TAG")
     }.onFailure {
@@ -51,12 +59,12 @@ class PeriodicCacheCleanupWorker @AssistedInject constructor(
     }.toWorkerResult()
 
     companion object {
-        const val WORKER_UNIQUE_NAME = "periodic_cache_cleanup_worker"
-        private const val TAG = "PeriodicCacheCleanupWorker"
+        const val WORKER_UNIQUE_NAME = "periodic_cleanup_worker"
+        private const val TAG = "PeriodicCleanupWorker"
         private const val REPEAT_DAYS = 1L
 
         fun getRequestFor(): PeriodicWorkRequest =
-            PeriodicWorkRequestBuilder<PeriodicCacheCleanupWorker>(REPEAT_DAYS, TimeUnit.DAYS)
+            PeriodicWorkRequestBuilder<PeriodicCleanupWorker>(REPEAT_DAYS, TimeUnit.DAYS)
                 .setInitialDelay(1, TimeUnit.DAYS)
                 .setConstraints(
                     Constraints.Builder()

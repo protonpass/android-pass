@@ -3,28 +3,28 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Ваше сховище порожнє</string>
   <string name="home_empty_vault_subtitle">Почніть зі створення свого першого елементу.</string>
-  <string name="home_empty_vault_login_title">No logins found</string>
-  <string name="home_empty_vault_login_subtitle">Get started by creating your first login item.</string>
-  <string name="home_empty_vault_aliases_title">No aliases found</string>
-  <string name="home_empty_vault_aliases_subtitle">Get started by creating your first alias item.</string>
-  <string name="home_empty_vault_notes_title">No notes found</string>
-  <string name="home_empty_vault_notes_subtitle">Get started by creating your first note item.</string>
-  <string name="home_empty_vault_logins_mfa_title">No logins with TOTP found</string>
-  <string name="home_empty_vault_logins_mfa_subtitle">Get started by creating your first login with TOTP.</string>
-  <string name="home_empty_vault_identity_title">No identity found</string>
-  <string name="home_empty_vault_identity_subtitle">Get started by creating your first identity item.</string>
-  <string name="home_empty_vault_cc_title">No credit card found</string>
-  <string name="home_empty_vault_cc_subtitle">Get started by creating your first credit card item.</string>
-  <string name="home_empty_shared_items_title">No shared items found</string>
-  <string name="home_empty_shared_items_with_me_subtitle">No items have been shared with you.</string>
-  <string name="home_empty_shared_items_by_me_subtitle">No items have been shared by you.</string>
+  <string name="home_empty_vault_login_title">Входів не знайдено</string>
+  <string name="home_empty_vault_login_subtitle">Почніть зі створення свого першого елемента входу.</string>
+  <string name="home_empty_vault_aliases_title">Немає псевдонімів</string>
+  <string name="home_empty_vault_aliases_subtitle">Почніть зі створення свого першого псевдоніма.</string>
+  <string name="home_empty_vault_notes_title">Не знайдено жодної нотатки</string>
+  <string name="home_empty_vault_notes_subtitle">Почніть зі створення першої нотатки.</string>
+  <string name="home_empty_vault_logins_mfa_title">Не знайдено входів з TOTP</string>
+  <string name="home_empty_vault_logins_mfa_subtitle">Почніть зі створення першого входу з TOTP.</string>
+  <string name="home_empty_vault_identity_title">Особисті дані не знайдено</string>
+  <string name="home_empty_vault_identity_subtitle">Почніть зі створення свого першого елемента особистих даних.</string>
+  <string name="home_empty_vault_cc_title">Кредитну картку не знайдено</string>
+  <string name="home_empty_vault_cc_subtitle">Почніть зі створення першої кредитної картки.</string>
+  <string name="home_empty_shared_items_title">Не знайдено спільних елементів</string>
+  <string name="home_empty_shared_items_with_me_subtitle">З вами не поділились жодним елементом.</string>
+  <string name="home_empty_shared_items_by_me_subtitle">Ви не поділилися жодним елементом.</string>
   <string name="home_empty_read_only_vault_title">Ваше сховище порожнє</string>
   <string name="home_empty_read_only_vault_subtitle">Ви не можете додавати елементи до сховища, доступні лише для читання.</string>
   <string name="home_empty_vault_create_login">Створити запис входу</string>
   <string name="home_empty_vault_create_alias">Створити псевдонім Hide-my-email</string>
   <string name="home_empty_vault_create_note">Створити нотатку</string>
   <string name="home_empty_vault_create_credit_card">Створити банківську картку</string>
-  <string name="home_empty_vault_create_identity">Create an identity</string>
+  <string name="home_empty_vault_create_identity">Створити ідентичність</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Помилка завантаження елементів</string>
   <string name="error_refreshing">Помилка під час оновлення</string>
   <string name="home_snackbar_login_moved_to_trash">Запис входу переміщено до смітника</string>
@@ -42,22 +42,22 @@
   <string name="home_trial_banner_title">Наш вітальний подарунок для вас</string>
   <string name="home_trial_banner_text">7 днів на безплатне випробування преміальних функцій. Лише протягом першого тижня користування Proton Pass.</string>
   <string name="home_trial_banner_settings">Докладніше ›</string>
-  <string name="sl_sync_banner_title">Sync your aliases from SimpleLogin</string>
+  <string name="sl_sync_banner_title">Синхронізуйте свої псевдоніми з SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
-    <item quantity="one">You have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to sync it?</item>
-    <item quantity="few">You have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to sync them?</item>
-    <item quantity="many">You have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to sync them?</item>
-    <item quantity="other">You have %d aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to sync them?</item>
+    <item quantity="one">У вас є псевдонім %d, який присутній у SimpleLogin, але відсутній у Proton Pass. Бажаєте синхронізувати його?</item>
+    <item quantity="few">У вас є псевдоніми %d, які присутні в SimpleLogin, але відсутні в Proton Pass. Бажаєте їх синхронізувати?</item>
+    <item quantity="many">У вас є псевдонімів %d, які присутні в SimpleLogin, але відсутні в Proton Pass. Бажаєте їх синхронізувати?</item>
+    <item quantity="other">У вас є псевдоніми %d, які присутні в SimpleLogin, але відсутні в Proton Pass. Бажаєте їх синхронізувати?</item>
   </plurals>
-  <string name="sl_sync_banner_settings">Sync aliases ›</string>
-  <string name="sl_sync_banner_note">Once synced, deleting aliases in Pass will also delete them in SimpleLogin.</string>
+  <string name="sl_sync_banner_settings">Синхронізувати псевдоніми ›</string>
+  <string name="sl_sync_banner_note">Після синхронізації, видалення псевдонімів у Pass також видалить їх у SimpleLogin.</string>
   <string name="home_notification_permission_banner_title">Отримувати важливі оновлення</string>
   <string name="home_notification_permission_banner_text">Увімкніть push-сповіщення, щоб знати коли інші надають вам спільний доступ до сховища.</string>
   <string name="home_notification_permission_banner_settings">Надати дозвіл ›</string>
   <string name="home_invite_banner_title">Вам надано спільний доступ до сховища</string>
   <string name="home_invite_banner_subtitle">Вас запрошено до спільного сховища. Торкніться для перегляду подробиць.</string>
-  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
-  <string name="home_item_invite_banner_subtitle">Tap for details.</string>
+  <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%s хоче поділитися з вами елементом.</string>
+  <string name="home_item_invite_banner_subtitle">Торкніться для отримання деталей.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Копіювати пароль</string>
   <string name="bottomsheet_copy_username">Копіювати ім\'я користувача</string>
@@ -99,6 +99,8 @@
   <string name="search_topbar_placeholder_vault">Пошук у %s…</string>
   <string name="search_topbar_placeholder_trash">Пошук у смітнику…</string>
   <string name="search_topbar_placeholder_pinning">Пошук в прикріплених…</string>
+  <string name="search_topbar_placeholder_shared_by_me">Search in Shared by me…</string>
+  <string name="search_topbar_placeholder_shared_with_me">Search in Shared with me…</string>
   <string name="item_type_filter_list_icon_content_description">Піктограма типу елемента</string>
   <string name="item_type_filter_all">Всі</string>
   <string name="item_type_filter_login">Вхід</string>
@@ -106,9 +108,9 @@
   <string name="item_type_filter_note">Нотатка</string>
   <string name="item_type_filter_credit_card">Картка</string>
   <string name="item_type_filter_identity">Ідентичність</string>
-  <string name="item_type_filter_login_totp">Login with TOTP</string>
-  <string name="item_type_filter_items_shared_with_me">Shared with me</string>
-  <string name="item_type_filter_items_shared_by_me">Shared by me</string>
+  <string name="item_type_filter_login_totp">Вхід з TOTP</string>
+  <string name="item_type_filter_items_shared_with_me">Поширено для мене</string>
+  <string name="item_type_filter_items_shared_by_me">Поширено мною</string>
   <!-- Trash -->
   <string name="trash_empty_list_title">Смітник порожній</string>
   <string name="trash_empty_list_message">Тут з\'являються елементи, переміщені до смітника.</string>
@@ -175,14 +177,14 @@
   <string name="home_snackbar_items_unpinned_success">Елементи успішно відкріплено</string>
   <string name="home_snackbar_items_unpinned_partial_success">Помилка відкріплення деяких елементів</string>
   <string name="home_snackbar_items_unpinned_error">Помилка відкріплення елементів</string>
-  <string name="home_snackbar_items_alias_enabled_success">Alias enabled successfully</string>
+  <string name="home_snackbar_items_alias_enabled_success">Псевдонім успішно ввімкнений</string>
   <string name="home_snackbar_items_alias_enabled_partial_success">Error enabling some of the aliases</string>
-  <string name="home_snackbar_items_alias_enabled_error">Error enabling aliases</string>
-  <string name="home_snackbar_items_alias_disabled_success">Alias disabled successfully</string>
+  <string name="home_snackbar_items_alias_enabled_error">Помилка увімкнення псевдонімів</string>
+  <string name="home_snackbar_items_alias_disabled_success">Псевдонім успішно вимкнений</string>
   <string name="home_snackbar_items_alias_disabled_partial_success">Error disabling some of the aliases</string>
-  <string name="home_snackbar_items_alias_disabled_error">Error disabling aliases</string>
+  <string name="home_snackbar_items_alias_disabled_error">Помилка вимкнення псевдонімів</string>
   <string name="bulk_action_unpin">Відкріпити</string>
   <string name="bulk_action_pin">Прикріпити</string>
-  <string name="bulk_action_enable_alias">Enable alias</string>
-  <string name="bulk_action_disable_alias">Disable alias</string>
+  <string name="bulk_action_enable_alias">Ввімкнути псевдонім</string>
+  <string name="bulk_action_disable_alias">Вимкнути псевдонім</string>
 </resources>

@@ -38,8 +38,8 @@
     <item quantity="other">%1$d forwarded</item>
   </plurals>
   <plurals name="sent_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
-    <item quantity="one">%1$d sent</item>
-    <item quantity="other">%1$d sent</item>
+    <item quantity="one">%1$d gesendet</item>
+    <item quantity="other">%1$d gesendet</item>
   </plurals>
   <plurals name="blocked_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d blocked</item>
@@ -59,7 +59,7 @@
   <string name="contact_option_block_contact">Kontakt blockieren</string>
   <string name="contact_option_unblock_contact">Kontakt entsperren</string>
   <string name="contact_option_delete">Löschen</string>
-  <string name="alias_contacts_bottomsheet_title">Alias Contacts</string>
+  <string name="alias_contacts_bottomsheet_title">Alias-Kontakte</string>
   <string name="alias_contacts_bottomsheet_subtitle">Um deine persönliche E-Mail-Adresse zu verbergen, kannst du einen Alias-Kontakt erstellen, der deine Adresse verschleiert.</string>
   <string name="alias_contacts_explanation">Here’s how it works:</string>
   <string name="alias_contacts_bottomsheet_section_1">Enter the address you want to email.</string>

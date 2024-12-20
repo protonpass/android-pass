@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">PINコードの変更</string>
   <string name="profile_passkey_support_section_title">パスキー</string>
   <string name="profile_passkey_support_subtitle_supported">パスキーに対応しています</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">あなたのAndroidバージョンはパスキーをサポートしていません.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">お使いのデバイスはパスキーをサポートしていません</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">パスキーのサポートを確認できませんでした</string>
   <plurals name="profile_after_days">

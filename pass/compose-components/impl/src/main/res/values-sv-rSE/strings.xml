@@ -69,7 +69,7 @@
   <!-- Indicator that indicates lack of internet connectivity -->
   <string name="indicator_no_network">Offline</string>
   <!-- Icon content description -->
-  <string name="missing_app_icon_content_description">Saknar app-ikon</string>
+  <string name="missing_app_icon_content_description">Saknar appikon</string>
   <string name="add_item_icon_content_description">Ikon för “Lägg till objekt“</string>
   <string name="navigate_back_icon_content_description">Ikon för “Gå tillbaka“</string>
   <!-- Vault selector -->
@@ -267,7 +267,7 @@
   </plurals>
   <string name="simple_login_widget_action">Synkronisera alias</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Har du inte fått koden?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Kolla i din skräppost efter ett e-postmeddelande som heter ”%s”</string>
   <string name="verification_code_suggestion_subject_new_email_address">Bekräfta din e-postadress för Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Bekräfta din brevlåda</string>

@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">Endereço de e-mail copiado</string>
   <string name="username_copied_to_clipboard">Nome de usuário copiado</string>
   <string name="password_copied_to_clipboard">Senha copiada</string>
-  <string name="website_copied_to_clipboard">Web address copied</string>
+  <string name="website_copied_to_clipboard">Site copiado</string>
   <string name="totp_copied_to_clipboard">TOTP copiado</string>
   <string name="field_copied_to_clipboard">Campo copiado</string>
   <string name="move_item_to_trash_message">Item movido para a lixeira</string>
@@ -121,4 +121,5 @@
     <item quantity="one">%1$s bloqueado</item>
     <item quantity="other">%1$s bloqueados</item>
   </plurals>
+  <string name="open_with">Abrir com:</string>
 </resources>

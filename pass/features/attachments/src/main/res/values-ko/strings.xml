@@ -20,7 +20,6 @@
   <string name="add_attachment_take_a_photo">사진 촬영</string>
   <string name="add_attachment_choose_a_photo_or_video">사진 및 비디오 선택</string>
   <string name="add_attachment_choose_a_file">파일 선택</string>
-  <string name="attachment_options_open">열기</string>
   <string name="attachment_options_rename">이름 변경</string>
   <string name="attachment_options_delete">삭제</string>
   <string name="file_picker_open_error">파일 선택기를 열 수 없습니다.</string>

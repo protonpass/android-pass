@@ -20,12 +20,11 @@
   <string name="add_attachment_take_a_photo">Bir fotoğraf çekin</string>
   <string name="add_attachment_choose_a_photo_or_video">Bir fotoğraf ya da video seçin</string>
   <string name="add_attachment_choose_a_file">Bir dosya seçin</string>
-  <string name="attachment_options_open">Aç</string>
   <string name="attachment_options_rename">Yeniden adlandır</string>
   <string name="attachment_options_delete">Sil</string>
   <string name="file_picker_open_error">Dosya seçici açılamadı</string>
-  <string name="media_picker_open_error">Could not open media picker</string>
-  <string name="camera_open_error">Could not open camera</string>
+  <string name="media_picker_open_error">Ortam seçici açılamadı</string>
+  <string name="camera_open_error">Kamera açılamadı</string>
   <string name="camera_permission_explanation">Bu özelliği kullanabilmek için kameraya erişme izni verilmelidir.</string>
   <string name="camera_permission_open_settings">Ayarları aç</string>
 </resources>

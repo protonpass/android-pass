@@ -36,6 +36,9 @@
     <item quantity="other">%d članov</item>
   </plurals>
   <string name="sharing_member_count_header">Člani</string>
+  <string name="shared_via_title">Shared via</string>
+  <string name="shared_via_item_member_count_header">Item sharing</string>
+  <string name="shared_via_vault_member_count_header">Vault sharing</string>
   <string name="share_with_title">Deli z</string>
   <string name="share_with_email_hint">E-poštni naslov</string>
   <string name="share_with_email_error">Neveljaven e-poštni naslov</string>
@@ -49,7 +52,7 @@
   <string name="sharing_item_invitation_title">Shared item invitation</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
   <string name="sharing_item_invitation_accept">Accept and view the item</string>
-  <string name="sharing_item_leave">Leave</string>
+  <string name="sharing_invite_more">Invite more…</string>
   <string name="sharing_snackbar_invite_accepted">Povabilo sprejeto</string>
   <string name="sharing_snackbar_invite_accept_error">Napaka pri sprejemanju povabila</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Povabila ni bilo mogoče sprejeti, ker ste dosegli omejitev trezorja</string>
@@ -136,6 +139,14 @@
   <string name="share_with_user_description">Share this item with other Proton users.</string>
   <string name="share_with_secure_link_title">Via secure link</string>
   <string name="share_with_secure_link_description">Generate a secure link to this item.</string>
+  <string name="share_with_vault_title">Entire vault</string>
+  <string name="share_with_vault_description">Share this vault and its content.</string>
+  <string name="share_with_user_shared_title">With other Proton Pass users</string>
+  <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
+  <string name="share_with_manage_shared_item_title">Manage access</string>
+  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
+  <string name="share_with_secure_link_shared_title">Via a secure link</string>
+  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
   <string name="share_with_manage_shared_vault_title">Upravljajte dostop do trezorja</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Trezor predmeta je trenutno v skupni rabi z uporabnikom %d.</item>

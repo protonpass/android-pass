@@ -31,7 +31,7 @@
   <string name="unblock_button">Разблакіраваць кантакт</string>
   <string name="block_button">Заблакіраваць кантакт</string>
   <string name="contact_created_date" comment="date of creation">Створана %1$s таму</string>
-  <string name="no_activity_contact">No activity in the last 14 days.</string>
+  <string name="no_activity_contact">Адсутнічае актыўнасць за апошнія 14 дзён.</string>
   <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">за апошнія 14 дзён.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d перасланы</item>

@@ -30,6 +30,9 @@
     <item quantity="other">%d명 회원</item>
   </plurals>
   <string name="sharing_member_count_header">구성원</string>
+  <string name="shared_via_title">Shared via</string>
+  <string name="shared_via_item_member_count_header">Item sharing</string>
+  <string name="shared_via_vault_member_count_header">Vault sharing</string>
   <string name="share_with_title">공유 대상:</string>
   <string name="share_with_email_hint">이메일 주소</string>
   <string name="share_with_email_error">유효하지 않은 이메일 주소입니다.</string>
@@ -43,7 +46,7 @@
   <string name="sharing_item_invitation_title">공유된 금고 초대</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s님이 나와 항목을 공유하고자 합니다.</string>
   <string name="sharing_item_invitation_accept">항목 공유 수락 및 확인</string>
-  <string name="sharing_item_leave">나가기</string>
+  <string name="sharing_invite_more">Invite more…</string>
   <string name="sharing_snackbar_invite_accepted">초대가 수락됨</string>
   <string name="sharing_snackbar_invite_accept_error">초대 수락 중 오류</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">금고 제한에 도달하여 초대를 수락할 수 없습니다.</string>
@@ -57,7 +60,7 @@
   <string name="sharing_snackbar_remove_member_success">구성원이 금고로 부터 삭제되었습니다</string>
   <string name="sharing_snackbar_remove_member_error">금고로 부터 삭제할 수 없습니다</string>
   <string name="sharing_snackbar_fetch_member_error">멤버들을 불러오는 도중 오류가 발생했습니다</string>
-  <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">대기중인 초대를 불러오는 도중 오류가 발생했습니다</string>
   <string name="share_summary_title">검토 및 공유</string>
   <string name="share_summary_vault">%s개 금고</string>
   <string name="share_summary_share_vault">금고 공유</string>
@@ -84,9 +87,9 @@
   <string name="sharing_bottomsheet_transfer_ownership">소유권 이전</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">마지막에 소유했던 금고를 이전할 수 없습니다.</string>
   <string name="sharing_bottomsheet_remove_access">접근 권한 회수</string>
-  <string name="sharing_bottomsheet_item_admin_subtitle">Can grant and revoke access to this item.</string>
-  <string name="sharing_bottomsheet_item_editor_subtitle">Can edit this item.</string>
-  <string name="sharing_bottomsheet_item_viewer_subtitle">Can view this item.</string>
+  <string name="sharing_bottomsheet_item_admin_subtitle">이 항목에 접근 권한을 부여하고 회수할 수 있습니다.</string>
+  <string name="sharing_bottomsheet_item_editor_subtitle">이 항목을 수정할 수 있습니다.</string>
+  <string name="sharing_bottomsheet_item_viewer_subtitle">이 항목을 볼 수 있습니다.</string>
   <string name="sharing_bottomsheet_resend_invite">초대장 재전송</string>
   <string name="sharing_bottomsheet_cancel_invite">초대 취소</string>
   <string name="sharing_transfer_ownership_confirm_title">소유권 이전</string>
@@ -121,6 +124,14 @@
   <string name="share_with_user_description">이 항목을 다른 Proton 사용자들과 공유하세요.</string>
   <string name="share_with_secure_link_title">안전한 링크를 통해 공유</string>
   <string name="share_with_secure_link_description">이 항목으로의 안전한 링크를 만듭니다.</string>
+  <string name="share_with_vault_title">Entire vault</string>
+  <string name="share_with_vault_description">Share this vault and its content.</string>
+  <string name="share_with_user_shared_title">With other Proton Pass users</string>
+  <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
+  <string name="share_with_manage_shared_item_title">Manage access</string>
+  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
+  <string name="share_with_secure_link_shared_title">Via a secure link</string>
+  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
   <string name="share_with_manage_shared_vault_title">금고 접근 관리</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="other">이 금고의 항목이 %d명 사용자와 공유 중입니다.</item>

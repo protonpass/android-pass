@@ -18,8 +18,8 @@
     <item quantity="other">kết quả</item>
   </plurals>
   <string name="item_list_header_identities_type">Danh tính</string>
-  <string name="item_list_header_shared_with_me">Shared with me</string>
-  <string name="item_list_header_shared_by_me">Shared by me</string>
+  <string name="item_list_header_shared_with_me">Đã chia sẻ với tôi</string>
+  <string name="item_list_header_shared_by_me">Đã chia sẻ bởi tôi</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Xác nhận</string>
   <string name="bottomsheet_cancel_button">Hủy</string>

@@ -117,4 +117,5 @@
   <plurals name="alias_blocks_count">
     <item quantity="other">%1$s khối</item>
   </plurals>
+  <string name="open_with">Mở bằng:</string>
 </resources>

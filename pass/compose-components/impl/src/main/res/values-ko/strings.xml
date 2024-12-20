@@ -18,8 +18,8 @@
     <item quantity="other">결과</item>
   </plurals>
   <string name="item_list_header_identities_type">신원</string>
-  <string name="item_list_header_shared_with_me">Shared with me</string>
-  <string name="item_list_header_shared_by_me">Shared by me</string>
+  <string name="item_list_header_shared_with_me">나와 공유됨</string>
+  <string name="item_list_header_shared_by_me">내가 공유함</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">확인</string>
   <string name="bottomsheet_cancel_button">취소</string>
@@ -256,7 +256,7 @@
   </plurals>
   <string name="simple_login_widget_action">별칭 동기화</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">인증번호를 받지 못하셨나요?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">스팸함에 \"%s\" 로 된 이메일이 있는지 확인해주세요</string>
   <string name="verification_code_suggestion_subject_new_email_address">Proton Pass의 이메일 주소를 확인해주세요</string>
   <string name="verification_code_suggestion_subject_new_mailbox">메일함을 확인해 주세요</string>

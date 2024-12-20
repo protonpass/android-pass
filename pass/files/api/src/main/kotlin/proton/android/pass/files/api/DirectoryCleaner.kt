@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,23 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.files.impl
+package proton.android.pass.files.api
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import proton.android.pass.files.api.DirectoryCleaner
-import proton.android.pass.files.api.FileUriGenerator
-import javax.inject.Singleton
+interface DirectoryCleaner {
+    suspend fun deleteDir(type: DirectoryType)
+}
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class FilesModule {
-
-    @[Binds Singleton]
-    abstract fun bindFileUriGenerator(impl: FileUriGeneratorImpl): FileUriGenerator
-
-    @[Binds Singleton]
-    abstract fun bindCacheCleaner(impl: DirectoryCleanerImpl): DirectoryCleaner
+sealed interface DirectoryType {
+    data object CameraTemp : DirectoryType
+    data object OrphanedAttachments : DirectoryType
 }

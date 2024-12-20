@@ -153,8 +153,9 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
             SELECT 1
             FROM ${ShareEntity.TABLE}
             WHERE ${ShareEntity.Columns.ID} = :shareId
+                AND ${ShareEntity.Columns.USER_ID} = :userId
         )
         """
     )
-    abstract suspend fun checkIfShareExists(shareId: String): Boolean
+    abstract suspend fun checkIfShareExists(userId: String, shareId: String): Boolean
 }

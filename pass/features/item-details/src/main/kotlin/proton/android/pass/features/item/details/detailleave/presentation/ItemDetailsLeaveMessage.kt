@@ -18,24 +18,22 @@
 
 package proton.android.pass.features.item.details.detailleave.presentation
 
-import androidx.compose.runtime.Stable
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import androidx.annotation.StringRes
+import proton.android.pass.features.item.details.R
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 
-@Stable
-internal data class ItemDetailsLeaveState(
-    internal val event: ItemDetailsLeaveEvent,
-    private val isLoadingState: IsLoadingState
-) {
-
-    internal val isLoading: Boolean = isLoadingState.value()
-
-    internal companion object {
-
-        internal val Initial = ItemDetailsLeaveState(
-            event = ItemDetailsLeaveEvent.Idle,
-            isLoadingState = IsLoadingState.NotLoading
-        )
-
-    }
-
+internal enum class ItemDetailsLeaveMessage(
+    @StringRes override val id: Int,
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
+) : SnackbarMessage {
+    LeaveItemError(
+        id = R.string.item_details_leave_item_message_error,
+        type = SnackbarType.ERROR
+    ),
+    LeaveItemSuccess(
+        id = R.string.item_details_leave_item_message_success,
+        type = SnackbarType.SUCCESS
+    )
 }

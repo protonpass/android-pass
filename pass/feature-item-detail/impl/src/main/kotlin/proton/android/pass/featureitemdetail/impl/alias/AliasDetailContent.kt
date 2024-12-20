@@ -61,7 +61,7 @@ fun AliasDetailContent(
     isLoading: Boolean,
     isAliasSyncEnabled: Boolean,
     isAliasStateToggling: Boolean,
-    isHistoryFeatureEnabled: Boolean,
+    canViewItemHistory: Boolean,
     isAliasManagementEnabled: Boolean,
     isFileAttachmentsEnabled: Boolean,
     isItemSharingEnabled: Boolean,
@@ -157,7 +157,7 @@ fun AliasDetailContent(
             modifiedAt = itemUiModel.modificationTime,
             onViewItemHistoryClicked = onViewItemHistoryClicked,
             itemColors = passItemColors(itemCategory = ItemCategory.Alias),
-            shouldDisplayItemHistoryButton = isHistoryFeatureEnabled
+            shouldDisplayItemHistoryButton = canViewItemHistory
         )
 
         PassItemDetailsMoreInfoSection(

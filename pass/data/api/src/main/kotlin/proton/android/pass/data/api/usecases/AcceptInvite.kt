@@ -35,8 +35,12 @@ sealed interface AcceptInviteStatus {
         val itemId: ItemId
     ) : AcceptInviteStatus
 
+    data object Error : AcceptInviteStatus
+
 }
 
 interface AcceptInvite {
-    operator fun invoke(invite: InviteToken): Flow<AcceptInviteStatus>
+
+    operator fun invoke(inviteToken: InviteToken): Flow<AcceptInviteStatus>
+
 }

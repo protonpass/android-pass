@@ -22,6 +22,7 @@ import androidx.work.WorkManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import me.proton.core.accountmanager.domain.AccountManager
@@ -34,21 +35,28 @@ import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepositor
 import proton.android.pass.data.impl.work.FetchShareItemsWorker
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ShareInvite
+import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
 
 class AcceptInviteImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val inviteRepository: InviteRepository,
     private val workManager: WorkManager,
-    private val fetchShareItemsStatusRepository: FetchShareItemsStatusRepository
+    private val fetchShareItemsStatusRepository: FetchShareItemsStatusRepository,
+    private val notificationManager: NotificationManager
 ) : AcceptInvite {
 
-    override fun invoke(invite: InviteToken): Flow<AcceptInviteStatus> = accountManager
+    override fun invoke(inviteToken: InviteToken): Flow<AcceptInviteStatus> = accountManager
         .getPrimaryUserId()
         .filterNotNull()
         .flatMapLatest { userId ->
-            val shareInvite = inviteRepository.acceptInvite(userId, invite)
-            downloadItems(userId, shareInvite)
+            inviteRepository.getInvite(userId, inviteToken).value()
+                ?.let { pendingInvite ->
+                    val shareInvite = inviteRepository.acceptInvite(userId, inviteToken)
+                    notificationManager.removeReceivedInviteNotification(pendingInvite)
+                    downloadItems(userId, shareInvite)
+                }
+                ?: flowOf(AcceptInviteStatus.Error)
         }
         .onStart { emit(AcceptInviteStatus.AcceptingInvite) }
 

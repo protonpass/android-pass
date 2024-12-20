@@ -28,15 +28,17 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
-import me.proton.core.presentation.R as CoreR
+import proton.android.pass.domain.PendingInvite
 import proton.android.pass.notifications.api.MainActivityAnnotation
 import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
 import android.app.NotificationManager as AndroidNotificationManager
+import me.proton.core.presentation.R as CoreR
 
 class NotificationManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
-    @MainActivityAnnotation private val mainActivityClass: Class<*>
+    @MainActivityAnnotation private val mainActivityClass: Class<*>,
+    private val notificationManagerCompat: NotificationManagerCompat
 ) : NotificationManager {
 
     override fun hasNotificationPermission(): Boolean = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU) {
@@ -51,38 +53,68 @@ class NotificationManagerImpl @Inject constructor(
 
     override fun sendNotification() {
         createAutofillNotificationChannel()
-        val builder = NotificationCompat.Builder(context, AUTOFILL_CHANNEL_ID)
+
+        NotificationCompat.Builder(context, AUTOFILL_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.autofill_notification_copy_to_clipboard_title))
             .setContentText(context.getString(R.string.autofill_notification_copy_to_clipboard_body))
             .setAutoCancel(true)
             .setTimeoutAfter(NOTIFICATION_TIMEOUT)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-        with(NotificationManagerCompat.from(context)) {
-            notify(COPY_TO_CLIPBOARD_UNIQUE_ID, builder.build())
-        }
+            .also { notificationBuilder ->
+                showNotification(COPY_TO_CLIPBOARD_UNIQUE_ID, notificationBuilder)
+            }
     }
 
-    override fun sendReceivedInviteNotification() {
+    override fun sendReceivedInviteNotification(pendingInvite: PendingInvite) {
         createUpdatesNotificationChannel()
+
         val pendingIntent = PendingIntent.getActivity(
             context,
-            INVITE_RECEIVED_UNIQUE_ID,
+            ITEM_INVITE_RECEIVED_UNIQUE_ID,
             Intent(context, mainActivityClass).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             },
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        val builder = NotificationCompat.Builder(context, UPDATES_CHANNEL_ID)
+
+        val (contentTitle, contentText, notificationId) = when (pendingInvite) {
+            is PendingInvite.Item -> Triple(
+                first = context.getString(R.string.new_item_invite_notification_title),
+                second = context.getString(
+                    R.string.new_item_invite_notification_message,
+                    pendingInvite.inviterEmail
+                ),
+                third = ITEM_INVITE_RECEIVED_UNIQUE_ID
+            )
+
+            is PendingInvite.Vault -> Triple(
+                first = context.getString(R.string.new_vault_invite_notification_title),
+                second = context.getString(
+                    R.string.new_vault_invite_notification_message,
+                    pendingInvite.inviterEmail
+                ),
+                third = VAULT_INVITE_RECEIVED_UNIQUE_ID
+            )
+        }
+
+        NotificationCompat.Builder(context, UPDATES_CHANNEL_ID)
             .setSmallIcon(CoreR.drawable.ic_proton_brand_proton_pass)
-            .setContentTitle(context.getString(R.string.updates_new_invite_received_title))
-            .setContentText(context.getString(R.string.updates_new_invite_received_message))
+            .setContentTitle(contentTitle)
+            .setContentText(contentText)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-        with(NotificationManagerCompat.from(context)) {
-            notify(INVITE_RECEIVED_UNIQUE_ID, builder.build())
-        }
+            .also { notificationBuilder ->
+                showNotification(notificationId, notificationBuilder)
+            }
+    }
+
+    override fun removeReceivedInviteNotification(pendingInvite: PendingInvite) {
+        when (pendingInvite) {
+            is PendingInvite.Item -> ITEM_INVITE_RECEIVED_UNIQUE_ID
+            is PendingInvite.Vault -> VAULT_INVITE_RECEIVED_UNIQUE_ID
+        }.also(::removeNotification)
     }
 
     private fun createAutofillNotificationChannel() {
@@ -110,11 +142,23 @@ class NotificationManagerImpl @Inject constructor(
         notificationManager.createNotificationChannel(channel)
     }
 
-    companion object {
+    private fun showNotification(notificationId: Int, notificationBuilder: NotificationCompat.Builder) {
+        if (hasNotificationPermission()) {
+            notificationManagerCompat.notify(notificationId, notificationBuilder.build())
+        }
+    }
+
+    private fun removeNotification(notificationId: Int) {
+        notificationManagerCompat.cancel(notificationId)
+    }
+
+    private companion object {
         private const val NOTIFICATION_TIMEOUT = 2000L
         private const val COPY_TO_CLIPBOARD_UNIQUE_ID = 1
-        private const val INVITE_RECEIVED_UNIQUE_ID = 3
+        private const val ITEM_INVITE_RECEIVED_UNIQUE_ID = 3
+        private const val VAULT_INVITE_RECEIVED_UNIQUE_ID = 4
         private const val AUTOFILL_CHANNEL_ID = "AUTOFILL"
         private const val UPDATES_CHANNEL_ID = "UPDATES"
     }
+
 }

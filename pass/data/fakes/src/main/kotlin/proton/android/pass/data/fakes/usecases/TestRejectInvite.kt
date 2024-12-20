@@ -35,8 +35,8 @@ class TestRejectInvite @Inject constructor() : RejectInvite {
         result = value
     }
 
-    override suspend fun invoke(invite: InviteToken) {
-        memory.add(invite)
+    override suspend fun invoke(inviteToken: InviteToken) {
+        memory.add(inviteToken)
         result.getOrThrow()
     }
 

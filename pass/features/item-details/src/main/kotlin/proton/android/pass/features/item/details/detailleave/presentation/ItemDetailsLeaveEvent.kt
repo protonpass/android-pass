@@ -18,24 +18,12 @@
 
 package proton.android.pass.features.item.details.detailleave.presentation
 
-import androidx.compose.runtime.Stable
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+internal sealed interface ItemDetailsLeaveEvent {
 
-@Stable
-internal data class ItemDetailsLeaveState(
-    internal val event: ItemDetailsLeaveEvent,
-    private val isLoadingState: IsLoadingState
-) {
+    data object Idle : ItemDetailsLeaveEvent
 
-    internal val isLoading: Boolean = isLoadingState.value()
+    data object OnLeaveShareError : ItemDetailsLeaveEvent
 
-    internal companion object {
-
-        internal val Initial = ItemDetailsLeaveState(
-            event = ItemDetailsLeaveEvent.Idle,
-            isLoadingState = IsLoadingState.NotLoading
-        )
-
-    }
+    data object OnLeaveShareSuccess : ItemDetailsLeaveEvent
 
 }

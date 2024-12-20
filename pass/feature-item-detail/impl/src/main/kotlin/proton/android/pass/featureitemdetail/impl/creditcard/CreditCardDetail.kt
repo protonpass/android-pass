@@ -101,8 +101,9 @@ fun CreditCardDetail(
                 sheetContent = {
                     when (itemUiModel.state) {
                         ItemState.Active.value -> TopBarOptionsBottomSheetContents(
-                            canMigrate = state.itemActions.canMoveToOtherVault.value(),
-                            canMoveToTrash = state.itemActions.canMoveToTrash,
+                            canMigrate = state.canMigrate,
+                            canMoveToTrash = state.canMoveToTrash,
+                            canLeave = state.canLeaveItem,
                             isPinned = state.itemContent.model.isPinned,
                             onMigrate = {
                                 scope.launch {
@@ -131,6 +132,9 @@ fun CreditCardDetail(
                                     shareId = itemUiModel.shareId,
                                     itemId = itemUiModel.id
                                 )
+                            },
+                            onLeave = {
+                                scope.launch { bottomSheetState.hide() }
                             }
                         )
 

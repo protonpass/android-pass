@@ -27,9 +27,9 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
+import proton.android.pass.composecomponents.impl.bottomsheet.leave
 import proton.android.pass.composecomponents.impl.bottomsheet.pin
 import proton.android.pass.composecomponents.impl.bottomsheet.unpin
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
@@ -39,32 +39,44 @@ fun TopBarOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     canMigrate: Boolean,
     canMoveToTrash: Boolean,
+    canLeave: Boolean,
     onMigrate: () -> Unit,
     onMoveToTrash: () -> Unit,
     isPinned: Boolean,
     onPinned: () -> Unit,
-    onUnpinned: () -> Unit
+    onUnpinned: () -> Unit,
+    onLeave: () -> Unit
 ) {
-    val items = mutableListOf<BottomSheetItem>().apply {
+    buildList {
         if (canMigrate) {
-            add(migrate(onClick = onMigrate))
+            migrate(onClick = onMigrate).also(::add)
         }
 
         if (isPinned) {
-            add(unpin(BottomSheetItemAction.None) { onUnpinned() })
+            unpin(
+                action = BottomSheetItemAction.None,
+                onClick = onUnpinned
+            ).also(::add)
         } else {
-            add(pin(BottomSheetItemAction.None) { onPinned() })
+            pin(
+                action = BottomSheetItemAction.None,
+                onClick = onPinned
+            ).also(::add)
         }
 
         if (canMoveToTrash) {
-            add(moveToTrash(onClick = onMoveToTrash))
+            moveToTrash(onClick = onMoveToTrash).also(::add)
         }
-    }
 
-    BottomSheetItemList(
-        modifier = modifier.bottomSheet(),
-        items = items.withDividers().toPersistentList()
-    )
+        if (canLeave) {
+            leave(onClick = onLeave).also(::add)
+        }
+    }.also { items ->
+        BottomSheetItemList(
+            modifier = modifier.bottomSheet(),
+            items = items.withDividers().toPersistentList()
+        )
+    }
 }
 
 class ThemedTopBarOptionsPreviewProvider :
@@ -84,10 +96,12 @@ fun TopBarOptionsBottomSheetContentsPreview(
                     canMigrate = canMigrate,
                     canMoveToTrash = canMoveToTrash,
                     isPinned = isPinned,
+                    canLeave = false,
                     onMigrate = {},
                     onMoveToTrash = {},
                     onPinned = {},
-                    onUnpinned = {}
+                    onUnpinned = {},
+                    onLeave = {}
                 )
             }
         }

@@ -116,8 +116,9 @@ fun AliasDetail(
                 sheetContent = {
                     when (state.itemUiModel.state) {
                         ItemState.Active.value -> TopBarOptionsBottomSheetContents(
-                            canMigrate = state.itemActions.canMoveToOtherVault.value(),
-                            canMoveToTrash = state.itemActions.canMoveToTrash,
+                            canMigrate = state.canMigrate,
+                            canMoveToTrash = state.canMoveToTrash,
+                            canLeave = state.canLeaveItem,
                             isPinned = state.itemUiModel.isPinned,
                             onMigrate = {
                                 scope.launch {
@@ -156,6 +157,9 @@ fun AliasDetail(
                                     shareId = state.itemUiModel.shareId,
                                     itemId = state.itemUiModel.id
                                 )
+                            },
+                            onLeave = {
+                                scope.launch { bottomSheetState.hide() }
                             }
                         )
 

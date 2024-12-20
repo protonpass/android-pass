@@ -23,6 +23,8 @@ import proton.android.pass.features.item.details.detail.navigation.ItemDetailsNa
 import proton.android.pass.features.item.details.detail.ui.ItemDetailsScreen
 import proton.android.pass.features.item.details.detailforbidden.navigation.ItemDetailsForbiddenNavItem
 import proton.android.pass.features.item.details.detailforbidden.ui.ItemDetailsForbiddenDialog
+import proton.android.pass.features.item.details.detailleave.navigation.ItemDetailsLeaveNavItem
+import proton.android.pass.features.item.details.detailleave.ui.ItemDetailsLeaveDialog
 import proton.android.pass.features.item.details.detailmenu.navigation.ItemDetailsMenuNavItem
 import proton.android.pass.features.item.details.detailmenu.ui.ItemDetailsMenuBottomSheet
 import proton.android.pass.navigation.api.bottomSheet
@@ -41,6 +43,10 @@ fun NavGraphBuilder.itemDetailsNavGraph(onNavigated: (ItemDetailsNavDestination)
 
     dialog(navItem = ItemDetailsForbiddenNavItem) {
         ItemDetailsForbiddenDialog(onNavigated = onNavigated)
+    }
+
+    dialog(navItem = ItemDetailsLeaveNavItem) {
+        ItemDetailsLeaveDialog(onNavigated = onNavigated)
     }
 
 }

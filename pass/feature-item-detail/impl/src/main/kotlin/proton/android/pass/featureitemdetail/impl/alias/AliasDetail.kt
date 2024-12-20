@@ -160,6 +160,10 @@ fun AliasDetail(
                             },
                             onLeave = {
                                 scope.launch { bottomSheetState.hide() }
+
+                                ItemDetailNavigation.LeaveItemShare(
+                                    shareId = state.itemUiModel.shareId
+                                ).also(onNavigate)
                             }
                         )
 

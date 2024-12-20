@@ -16,18 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.details.detailforbidden.navigation
+package proton.android.pass.features.item.details.detailleave.navigation
 
-import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsActionForbiddenReason
+import proton.android.pass.domain.ShareId
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 
-object ItemDetailsForbiddenNavItem : NavItem(
-    baseRoute = "item/details/forbidden",
-    navArgIds = listOf(ItemDetailsForbiddenReasonNavArgId),
+object ItemDetailsLeaveNavItem : NavItem(
+    baseRoute = "item/details/leave",
+    navArgIds = listOf(CommonNavArgId.ShareId),
     navItemType = NavItemType.Dialog
 ) {
 
-    fun createNavRoute(reason: ItemDetailsActionForbiddenReason) = "$baseRoute/$reason"
+    fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
 
 }

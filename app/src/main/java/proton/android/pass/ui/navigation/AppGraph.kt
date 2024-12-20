@@ -140,6 +140,7 @@ import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMe
 import proton.android.pass.features.inappmessages.bottomsheet.navigation.inAppMessageGraph
 import proton.android.pass.features.item.details.detail.navigation.ItemDetailsNavItem
 import proton.android.pass.features.item.details.detailforbidden.navigation.ItemDetailsForbiddenNavItem
+import proton.android.pass.features.item.details.detailleave.navigation.ItemDetailsLeaveNavItem
 import proton.android.pass.features.item.details.detailmenu.navigation.ItemDetailsMenuNavItem
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 import proton.android.pass.features.item.details.shared.navigation.itemDetailsNavGraph
@@ -1354,6 +1355,15 @@ fun NavGraphBuilder.appGraph(
                     destination = DetailAliasContactNavItem,
                     route = DetailAliasContactNavItem.createNavRoute(it.shareId, it.itemId)
                 )
+
+                is ItemDetailNavigation.LeaveItemShare -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = ItemDetailsLeaveNavItem,
+                        route = ItemDetailsLeaveNavItem.createNavRoute(
+                            shareId = it.shareId
+                        )
+                    )
+                }
             }
         }
     )
@@ -1474,6 +1484,15 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 ItemDetailsNavDestination.Upgrade -> onNavigate(AppNavigation.Upgrade)
+
+                is ItemDetailsNavDestination.LeaveItemShare -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = ItemDetailsLeaveNavItem,
+                        route = ItemDetailsLeaveNavItem.createNavRoute(
+                            shareId = itemDetailsNavDestination.shareId
+                        )
+                    )
+                }
             }
         }
     )

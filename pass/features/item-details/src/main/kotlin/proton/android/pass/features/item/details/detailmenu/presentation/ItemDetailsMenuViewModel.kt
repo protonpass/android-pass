@@ -256,7 +256,7 @@ class ItemDetailsMenuViewModel @Inject constructor(
     }
 
     internal fun onLeaveItem() {
-        eventFlow.update { ItemDetailsMenuEvent.OnItemLeaved }
+        eventFlow.update { ItemDetailsMenuEvent.OnItemLeaved(shareId) }
     }
 
     private companion object {

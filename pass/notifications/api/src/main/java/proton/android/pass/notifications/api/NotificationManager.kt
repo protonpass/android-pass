@@ -18,9 +18,16 @@
 
 package proton.android.pass.notifications.api
 
+import proton.android.pass.domain.PendingInvite
+
 interface NotificationManager {
+
     fun sendNotification()
-    fun sendReceivedInviteNotification()
+
+    fun sendReceivedInviteNotification(pendingInvite: PendingInvite)
+
+    fun removeReceivedInviteNotification(pendingInvite: PendingInvite)
 
     fun hasNotificationPermission(): Boolean
+
 }

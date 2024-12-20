@@ -5,6 +5,8 @@
     <string name="autofill_notification_copy_to_clipboard_title">TOTP code</string>
     <string name="autofill_notification_copy_to_clipboard_body">TOTP has been copied to clipboard</string>
 
-    <string name="updates_new_invite_received_title">You have received an invite</string>
-    <string name="updates_new_invite_received_message">You have been invited to a vault. Open the app to see the invite and accept it.</string>
+    <string name="new_item_invite_notification_title">New item invite received</string>
+    <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s wants to share an item with you.</string>
+    <string name="new_vault_invite_notification_title">New vault invite received</string>
+    <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s wants to share a vault with you.</string>
 </resources>

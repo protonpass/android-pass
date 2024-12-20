@@ -30,8 +30,10 @@
     <string name="item_details_forbidden_actions_share_permission">You don\'t have enough permissions to share this vault.</string>
     <string name="item_details_forbidden_actions_share_trash">You cannot share this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
 
-    <!-- Item details leave dialog -->
+    <!-- Item details leave item -->
     <string name="item_details_leave_dialog_title">Leave this Item?</string>
     <string name="item_details_leave_dialog_message">You will lose access to this item and its details. Do you want to continue?</string>
+    <string name="item_details_leave_item_message_error">There was an error leaving the item</string>
+    <string name="item_details_leave_item_message_success">Item successfully left</string>
 
 </resources>

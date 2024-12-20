@@ -23,6 +23,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 @Stable
 internal data class ItemDetailsLeaveState(
+    internal val event: ItemDetailsLeaveEvent,
     private val isLoadingState: IsLoadingState
 ) {
 
@@ -31,6 +32,7 @@ internal data class ItemDetailsLeaveState(
     internal companion object {
 
         internal val Initial = ItemDetailsLeaveState(
+            event = ItemDetailsLeaveEvent.Idle,
             isLoadingState = IsLoadingState.NotLoading
         )
 

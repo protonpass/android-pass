@@ -19,10 +19,12 @@
 package proton.android.pass.features.item.details.detailleave.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.features.item.details.detailleave.presentation.ItemDetailsLeaveEvent
 import proton.android.pass.features.item.details.detailleave.presentation.ItemDetailsLeaveViewModel
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 
@@ -34,16 +36,36 @@ fun ItemDetailsLeaveDialog(
 ) = with(viewModel) {
     val state by stateFlow.collectAsStateWithLifecycle()
 
+    LaunchedEffect(state.event) {
+        when (state.event) {
+            ItemDetailsLeaveEvent.Idle -> Unit
+
+            ItemDetailsLeaveEvent.OnLeaveShareError -> {
+                onNavigated(ItemDetailsNavDestination.Back)
+            }
+
+            ItemDetailsLeaveEvent.OnLeaveShareSuccess -> {
+                onNavigated(ItemDetailsNavDestination.Home)
+            }
+        }
+
+        onConsumeEvent(event = state.event)
+    }
+
     ItemDetailsLeaveContent(
         modifier = modifier,
         state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 ItemDetailsLeaveUiEvent.OnCancelClick,
-                ItemDetailsLeaveUiEvent.OnDismiss -> ItemDetailsNavDestination.Back
+                ItemDetailsLeaveUiEvent.OnDismiss -> {
+                    onNavigated(ItemDetailsNavDestination.Back)
+                }
 
-                ItemDetailsLeaveUiEvent.OnContinueClick -> ItemDetailsNavDestination.Back
-            }.also(onNavigated)
+                ItemDetailsLeaveUiEvent.OnContinueClick -> {
+                    onLeaveShare()
+                }
+            }
         }
     )
 }

@@ -254,7 +254,11 @@ sealed interface SharingNavigation {
     @JvmInline
     value class ItemDetails(val itemCategory: ItemCategory) : SharingNavigation
 
-    data class SharedItemDetails(val shareId: ShareId, val itemId: ItemId) : SharingNavigation
+    data class SharedItemDetails(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val itemCategory: ItemCategory
+    ) : SharingNavigation
 }
 
 fun NavGraphBuilder.sharingGraph(onNavigateEvent: (SharingNavigation) -> Unit) {

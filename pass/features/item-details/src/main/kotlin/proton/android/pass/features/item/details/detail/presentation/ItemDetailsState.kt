@@ -60,6 +60,10 @@ internal sealed interface ItemDetailsState {
 
         internal val isFileAttachmentsEnabled: Boolean = itemFeatures.isFileAttachmentsEnabled
 
+        internal val isItemSharingEnabled: Boolean = itemFeatures.isItemSharingEnabled
+
+        internal val shareSharedCount: Int = share.memberCount.plus(itemDetailState.itemShareCount)
+
         internal val isEditEnabled: Boolean =
             itemActions.canEdit is ItemActions.CanEditActionState.Enabled
 

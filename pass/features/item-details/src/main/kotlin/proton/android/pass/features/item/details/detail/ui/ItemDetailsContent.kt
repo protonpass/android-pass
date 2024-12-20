@@ -33,9 +33,7 @@ internal fun ItemDetailsContent(
     state: ItemDetailsState
 ) = with(state) {
     when (this) {
-        ItemDetailsState.Error -> {
-
-        }
+        ItemDetailsState.Error -> Unit
 
         ItemDetailsState.Loading -> {
             PassFullScreenLoading()
@@ -54,7 +52,9 @@ internal fun ItemDetailsContent(
                 topBar = {
                     ItemDetailsTopBar(
                         isLoading = false,
-                        itemColors = itemColors,
+                        itemCategory = itemDetailState.itemCategory,
+                        isItemSharingEnabled = isItemSharingEnabled,
+                        shareSharedCount = shareSharedCount,
                         onUpClick = {
                             ItemDetailsUiEvent.OnNavigateBack
                                 .also(onEvent)

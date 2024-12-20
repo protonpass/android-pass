@@ -39,12 +39,11 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.transpose
+import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.CreateItem
-import proton.android.pass.crypto.api.usecases.ItemMigrationContent
-import proton.android.pass.crypto.api.usecases.ItemMigrationHistoryContent
-import proton.android.pass.crypto.api.usecases.ItemMigrationPayload
+import proton.android.pass.crypto.api.usecases.ItemKeyWithRotation
 import proton.android.pass.crypto.api.usecases.MigrateItem
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.UpdateItem
@@ -79,6 +78,7 @@ import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
+import proton.android.pass.data.impl.requests.ItemKeyBody
 import proton.android.pass.data.impl.requests.MigrateItemsBody
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.TrashItemRevision
@@ -1183,40 +1183,41 @@ class ItemRepositoryImpl @Inject constructor(
         destinationKey: ShareKey,
         items: List<ItemEntity>
     ): List<ItemEntity> = withContext(Dispatchers.Default) {
+        val userAddress = shareRepository.getAddressForShareId(userId, source)
         items.chunked(MAX_BATCH_ITEMS_PER_REQUEST).map { chunk ->
             async {
-                migrateChunk(userId, source, destination, destinationKey, chunk)
+                migrateChunk(userAddress, source, destination, destinationKey, chunk)
             }
         }.awaitAll().flatten()
     }
 
     private suspend fun migrateChunk(
-        userId: UserId,
+        userAddress: UserAddress,
         source: ShareId,
         destination: ShareId,
         destinationKey: ShareKey,
         chunk: List<ItemEntity>
     ): List<ItemEntity> {
+        val userId = userAddress.userId
         val migrations = chunk.map { item ->
-            ItemMigrationPayload(
-                itemContent = ItemMigrationContent(
-                    encryptedItemContents = item.encryptedContent,
-                    contentFormatVersion = item.contentFormatVersion
-                ),
-                historyContents = createItemMigrationHistoryContent(
-                    userId = userId,
-                    shareId = source,
-                    itemId = ItemId(item.id)
-                )
-            ).let { migrationPayload ->
-                migrateItem.migrate(destinationKey, migrationPayload)
-            }.let { encryptedMigrateItemBody ->
-                MigrateItemsBody(
-                    itemId = item.id,
-                    item = encryptedMigrateItemBody.item.toRequest(),
-                    history = encryptedMigrateItemBody.history.toRequest()
-                )
-            }
+            val (_, itemKey) = getItemKeys(
+                userAddress = userAddress,
+                shareId = source,
+                itemId = ItemId(item.id)
+            )
+            val encryptedMigrateItemBody = migrateItem.migrate(
+                destinationKey,
+                listOf(ItemKeyWithRotation(itemKey.key, itemKey.rotation))
+            )
+            MigrateItemsBody(
+                itemId = item.id,
+                itemKeys = encryptedMigrateItemBody.map {
+                    ItemKeyBody(
+                        key = Base64.encodeBase64String(it.itemKey.array),
+                        keyRotation = it.keyRotation
+                    )
+                }
+            )
         }
 
         val body = MigrateItemsRequest(
@@ -1225,7 +1226,6 @@ class ItemRepositoryImpl @Inject constructor(
         )
 
         val destinationShare = shareRepository.getById(userId, destination)
-        val userAddress = shareRepository.getAddressForShareId(userId, destination)
 
         val res = remoteItemDataSource.migrateItems(userId, source, body)
 
@@ -1248,33 +1248,6 @@ class ItemRepositoryImpl @Inject constructor(
         }
 
         return resAsEntities
-    }
-
-    private suspend fun createItemMigrationHistoryContent(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId
-    ): List<ItemMigrationHistoryContent> {
-        val itemRevisions = getItemRevisions(userId, shareId, itemId)
-            .drop(n = 1)
-            .take(ITEM_HISTORY_MAX_PREVIOUS_REVISIONS)
-
-        return encryptionContextProvider.withEncryptionContextSuspendable {
-            itemRevisions.map { itemRevision ->
-                val item = openItemRevision(
-                    shareId = shareId,
-                    itemRevision = itemRevision,
-                    encryptionContext = this
-                )
-                ItemMigrationHistoryContent(
-                    revision = item.revision,
-                    itemContent = ItemMigrationContent(
-                        encryptedItemContents = item.content,
-                        contentFormatVersion = itemRevision.contentFormatVersion
-                    )
-                )
-            }
-        }
     }
 
     private suspend fun restoreItemsForShare(

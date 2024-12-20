@@ -90,7 +90,6 @@ class ItemDetailsMenuViewModel @Inject constructor(
         itemFlow,
         shareFlow
     ) { action, event, item, share ->
-        println("JIBIRI: share = $share")
         ItemDetailsMenuState(
             action = action,
             event = event,

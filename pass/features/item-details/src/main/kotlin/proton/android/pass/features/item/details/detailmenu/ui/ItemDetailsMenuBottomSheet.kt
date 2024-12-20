@@ -36,16 +36,17 @@ fun ItemDetailsMenuBottomSheet(
 
     LaunchedEffect(key1 = state.event) {
         when (state.event) {
-            ItemDetailsMenuEvent.Idle -> {}
+            ItemDetailsMenuEvent.Idle -> Unit
 
             ItemDetailsMenuEvent.OnItemNotFound,
             ItemDetailsMenuEvent.OnItemTrashed ->
-                ItemDetailsNavDestination.Home
-                    .also(onNavigated)
+                onNavigated(ItemDetailsNavDestination.Home)
 
             ItemDetailsMenuEvent.OnItemMigrated ->
-                ItemDetailsNavDestination.ItemMigration
-                    .also(onNavigated)
+                onNavigated(ItemDetailsNavDestination.ItemMigration)
+
+            ItemDetailsMenuEvent.OnItemLeaved ->
+                onNavigated(ItemDetailsNavDestination.DismissBottomSheet)
 
             ItemDetailsMenuEvent.OnItemNoteCopied,
             ItemDetailsMenuEvent.OnItemMigrationError,
@@ -58,8 +59,7 @@ fun ItemDetailsMenuBottomSheet(
             ItemDetailsMenuEvent.OnItemUnpinned,
             ItemDetailsMenuEvent.OnItemUnpinningError,
             ItemDetailsMenuEvent.OnItemTrashingError ->
-                ItemDetailsNavDestination.DismissBottomSheet
-                    .also(onNavigated)
+                onNavigated(ItemDetailsNavDestination.DismissBottomSheet)
         }
 
         onConsumeEvent(state.event)
@@ -76,6 +76,7 @@ fun ItemDetailsMenuBottomSheet(
                 ItemDetailsMenuUiEvent.OnExcludeItemMonitorClicked -> onExcludeItemFromMonitoring()
                 ItemDetailsMenuUiEvent.OnIncludeItemMonitorClicked -> onIncludeItemInMonitoring()
                 ItemDetailsMenuUiEvent.OnTrashItemClicked -> onTrashItem()
+                ItemDetailsMenuUiEvent.OnLeaveItemClicked -> onLeaveItem()
             }
         }
     )

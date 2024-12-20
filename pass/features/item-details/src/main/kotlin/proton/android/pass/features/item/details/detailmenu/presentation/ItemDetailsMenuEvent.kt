@@ -50,4 +50,6 @@ internal sealed interface ItemDetailsMenuEvent {
 
     data object OnItemTrashingError : ItemDetailsMenuEvent
 
+    data object OnItemLeaved : ItemDetailsMenuEvent
+
 }

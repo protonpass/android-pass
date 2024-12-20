@@ -28,6 +28,7 @@ import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.AliasStats
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.featureitemdetail.impl.common.AliasItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
@@ -66,6 +67,9 @@ internal sealed interface AliasDetailUiState {
         val hasMoreThanOneVault: Boolean,
         val attachmentsState: AttachmentsState
     ) : AliasDetailUiState {
+
+        internal val canViewItemHistory: Boolean = itemFeatures.isHistoryEnabled
+            .and(share.shareRole !is ShareRole.Read)
 
         internal val requiresBackNavigation: Boolean = isItemSentToTrash ||
             isPermanentlyDeleted ||

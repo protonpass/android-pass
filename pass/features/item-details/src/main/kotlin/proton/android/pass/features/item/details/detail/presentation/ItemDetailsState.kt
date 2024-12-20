@@ -24,7 +24,9 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 
 @Stable
 internal sealed interface ItemDetailsState {
@@ -49,10 +51,12 @@ internal sealed interface ItemDetailsState {
         internal val itemDetailState: ItemDetailState,
         override val event: ItemDetailsEvent,
         private val itemActions: ItemActions,
-        private val itemFeatures: ItemFeatures
+        private val itemFeatures: ItemFeatures,
+        private val share: Share
     ) : ItemDetailsState {
 
-        internal val isHistoryEnabled: Boolean = itemFeatures.isHistoryEnabled
+        internal val canViewItemHistory: Boolean = itemFeatures.isHistoryEnabled
+            .and(share.shareRole !is ShareRole.Read)
 
         internal val isFileAttachmentsEnabled: Boolean = itemFeatures.isFileAttachmentsEnabled
 

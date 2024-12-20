@@ -60,7 +60,7 @@ fun NoteContent(
     itemUiModel: ItemUiModel,
     share: Share,
     isPinned: Boolean,
-    isHistoryFeatureEnabled: Boolean,
+    canViewItemHistory: Boolean,
     isFileAttachmentsEnabled: Boolean,
     isItemSharingEnabled: Boolean,
     attachmentsState: AttachmentsState,
@@ -125,7 +125,7 @@ fun NoteContent(
             modifiedAt = itemUiModel.modificationTime,
             onViewItemHistoryClicked = onViewItemHistoryClicked,
             itemColors = passItemColors(itemCategory = ItemCategory.Note),
-            shouldDisplayItemHistoryButton = isHistoryFeatureEnabled
+            shouldDisplayItemHistoryButton = canViewItemHistory
         )
 
         PassItemDetailsMoreInfoSection(
@@ -148,7 +148,7 @@ fun NoteContentPreview(@PreviewParameter(ThemeItemTitleProvider::class) input: P
                 onShareClick = {},
                 isPinned = params.isPinned,
                 onViewItemHistoryClicked = {},
-                isHistoryFeatureEnabled = params.isHistoryFeatureEnabled,
+                canViewItemHistory = params.isHistoryFeatureEnabled,
                 isFileAttachmentsEnabled = false,
                 isItemSharingEnabled = true,
                 attachmentsState = AttachmentsState.Initial,

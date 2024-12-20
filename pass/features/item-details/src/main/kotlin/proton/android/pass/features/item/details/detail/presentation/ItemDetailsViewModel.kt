@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -46,6 +47,7 @@ import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveItemById
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
@@ -65,6 +67,7 @@ class ItemDetailsViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     observeItemById: ObserveItemById,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    observeShare: ObserveShare,
     private val itemDetailsHandler: ItemDetailsHandler
 ) : ViewModel() {
 
@@ -117,15 +120,17 @@ class ItemDetailsViewModel @Inject constructor(
         itemDetailsStateFlow,
         oneShot { getItemActions(shareId, itemId) },
         itemFeaturesFlow,
-        eventFlow
-    ) { itemDetailsState, itemActions, itemFeatures, event ->
+        eventFlow,
+        oneShot { observeShare(shareId).first() }
+    ) { itemDetailsState, itemActions, itemFeatures, event, share ->
         ItemDetailsState.Success(
             shareId = shareId,
             itemId = itemId,
             itemDetailState = itemDetailsState,
             itemActions = itemActions,
             itemFeatures = itemFeatures,
-            event = event
+            event = event,
+            share = share
         )
     }.stateIn(
         scope = viewModelScope,

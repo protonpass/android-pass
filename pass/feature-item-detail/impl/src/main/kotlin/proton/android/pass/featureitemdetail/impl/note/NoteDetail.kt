@@ -205,7 +205,7 @@ fun NoteDetail(
                             )
                         },
                         attachmentsState = state.attachmentsState,
-                        isHistoryFeatureEnabled = state.itemFeatures.isHistoryEnabled,
+                        canViewItemHistory = state.canViewItemHistory,
                         isFileAttachmentsEnabled = state.itemFeatures.isFileAttachmentsEnabled,
                         isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
                         hasMoreThanOneVaultShare = state.hasMoreThanOneVault,

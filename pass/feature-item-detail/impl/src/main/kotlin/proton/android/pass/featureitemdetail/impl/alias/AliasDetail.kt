@@ -222,7 +222,7 @@ fun AliasDetail(
                         stats = state.stats,
                         contactsCount = state.contactsCount,
                         isLoading = state.isLoadingMailboxes,
-                        isHistoryFeatureEnabled = state.itemFeatures.isHistoryEnabled,
+                        canViewItemHistory = state.canViewItemHistory,
                         isAliasSyncEnabled = state.itemFeatures.slAliasSyncEnabled,
                         isAliasStateToggling = state.isLoading(LoadingStateKey.AliasStateToggling),
                         isAliasManagementEnabled = state.itemFeatures.isAliasManagementEnabled,

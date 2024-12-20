@@ -51,8 +51,8 @@ class TestAcceptInvite @Inject constructor() : AcceptInvite {
         result.update { value }
     }
 
-    override fun invoke(invite: InviteToken): Flow<AcceptInviteStatus> {
-        memory.add(invite)
+    override fun invoke(inviteToken: InviteToken): Flow<AcceptInviteStatus> {
+        memory.add(inviteToken)
         return result.map { it.getOrThrow() }
     }
 

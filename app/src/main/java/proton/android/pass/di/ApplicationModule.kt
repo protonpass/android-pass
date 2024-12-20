@@ -19,6 +19,7 @@
 package proton.android.pass.di
 
 import android.content.Context
+import androidx.core.app.NotificationManagerCompat
 import androidx.work.WorkManager
 import dagger.Module
 import dagger.Provides
@@ -88,4 +89,9 @@ object ApplicationModule {
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
         .retryOnConnectionFailure(false)
         .build()
+
+    @[Provides Singleton]
+    fun provideNotificationManagerCompat(@ApplicationContext context: Context): NotificationManagerCompat =
+        NotificationManagerCompat.from(context)
+
 }

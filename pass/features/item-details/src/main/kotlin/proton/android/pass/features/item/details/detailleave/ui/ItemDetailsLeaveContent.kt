@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.component.ProtonDialogTitle
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.dialogs.DialogButton
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.item.details.R
@@ -78,24 +78,18 @@ internal fun ItemDetailsLeaveContent(
                         bottom = Spacing.medium
                     )
             ) {
-                TextButton(
-                    enabled = !isLoading,
+                DialogButton(
+                    text = stringResource(id = CompR.string.action_cancel),
+                    isEnabled = !isLoading,
                     onClick = { onUiEvent(ItemDetailsLeaveUiEvent.OnCancelClick) }
-                ) {
-                    Text.Body2Regular(
-                        text = stringResource(id = CompR.string.action_cancel),
-                        color = PassTheme.colors.interactionNormMajor2
-                    )
-                }
+                )
 
-                TextButton(
+                DialogButton(
+                    text = stringResource(id = CompR.string.action_continue),
+                    isEnabled = !isLoading,
+                    isLoading = isLoading,
                     onClick = { onUiEvent(ItemDetailsLeaveUiEvent.OnContinueClick) }
-                ) {
-                    Text.Body2Regular(
-                        text = stringResource(id = CompR.string.action_continue),
-                        color = PassTheme.colors.interactionNormMajor2
-                    )
-                }
+                )
             }
         }
     }

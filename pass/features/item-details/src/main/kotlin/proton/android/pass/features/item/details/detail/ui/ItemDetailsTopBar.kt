@@ -64,8 +64,6 @@ internal fun ItemDetailsTopBar(
 ) {
     val itemColors = passItemColors(itemCategory = itemCategory)
 
-    println("JIBIRI: shareSharedCount -> $shareSharedCount")
-
     ProtonTopAppBar(
         modifier = modifier,
         backgroundColor = PassTheme.colors.itemDetailBackground,

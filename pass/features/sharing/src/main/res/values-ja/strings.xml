@@ -30,6 +30,9 @@
     <item quantity="other">%d メンバー</item>
   </plurals>
   <string name="sharing_member_count_header">メンバー</string>
+  <string name="shared_via_title">Shared via</string>
+  <string name="shared_via_item_member_count_header">Item sharing</string>
+  <string name="shared_via_vault_member_count_header">Vault sharing</string>
   <string name="share_with_title">と共有する</string>
   <string name="share_with_email_hint">メールアドレス</string>
   <string name="share_with_email_error">無効なメールアドレスです</string>
@@ -43,7 +46,7 @@
   <string name="sharing_item_invitation_title">共有済みのアイテム招待</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%sがあなたにアイテムを共有したいようです。</string>
   <string name="sharing_item_invitation_accept">承諾してアイテムを閲覧</string>
-  <string name="sharing_item_leave">退出</string>
+  <string name="sharing_invite_more">Invite more…</string>
   <string name="sharing_snackbar_invite_accepted">招待を受ける</string>
   <string name="sharing_snackbar_invite_accept_error">招待の受け入れエラー</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">保管庫の制限に達したため、招待を受け入れることができませんでした</string>
@@ -121,6 +124,14 @@
   <string name="share_with_user_description">他のProtonユーザーにこのアイテムを共有</string>
   <string name="share_with_secure_link_title">セキュアリンク経由</string>
   <string name="share_with_secure_link_description">このアイテムへのセキュアリンクを生成</string>
+  <string name="share_with_vault_title">Entire vault</string>
+  <string name="share_with_vault_description">Share this vault and its content.</string>
+  <string name="share_with_user_shared_title">With other Proton Pass users</string>
+  <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
+  <string name="share_with_manage_shared_item_title">Manage access</string>
+  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
+  <string name="share_with_secure_link_shared_title">Via a secure link</string>
+  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
   <string name="share_with_manage_shared_vault_title">保管庫のアクセス権を管理</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="other">このアイテムの保管庫は現在%d人のユーザーに共有されています。</item>

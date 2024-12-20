@@ -85,7 +85,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">Herhangi bir verilerin ele geçirilmesi olayı yok</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton adresleri</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email takma adları</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Proton adresleri alınırken sorun çıktı</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Hide-my-email takma adları alınırken sorun çıktı</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">İzlenmiyor</string>
   <string name="security_center_dark_web_monitor_see_all">Tümünü görüntüle</string>

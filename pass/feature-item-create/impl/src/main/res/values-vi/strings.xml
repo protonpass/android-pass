@@ -39,6 +39,8 @@
   <string name="create_login_item_update_error">Không thể cập nhật đăng nhập</string>
   <string name="create_login_init_error">Lỗi khi lấy thông tin đăng nhập</string>
   <string name="create_login_invalid_totp">Nội dung 2FA không hợp lệ</string>
+  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
+  <string name="login_attachments_error">Could not add attachments to login</string>
   <string name="login_created">Đã tạo đăng nhập</string>
   <string name="bottomsheet_modify_alias_title">Chỉnh sửa bí danh</string>
   <string name="bottomsheet_custom_field_type_text">Văn bản</string>
@@ -63,6 +65,8 @@
   <string name="create_note_item_creation_error">Không thể tạo ghi chú</string>
   <string name="create_note_item_update_error">Không thể cập nhật ghi chú</string>
   <string name="create_note_init_error">Lỗi khi lấy thông tin ghi chú</string>
+  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
+  <string name="note_attachments_error">Could not add attachments to note</string>
   <string name="note_created">Đã tạo ghi chú</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Địa chỉ bí danh</string>
@@ -79,6 +83,8 @@
   <string name="alias_rate_limited">Quá nhiều bí danh được tạo gần đây</string>
   <string name="create_alias_item_update_error">Không thể cập nhật bí danh</string>
   <string name="create_alias_init_error">Lỗi khi lấy thông tin bí danh</string>
+  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
+  <string name="alias_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">Đã tạo bí danh</string>
   <string name="cannot_retrieve_alias_options">Không thể lấy tùy chọn bí danh</string>
   <string name="alias_mailbox_dialog_title">Chuyển tiếp đến</string>
@@ -104,6 +110,8 @@
   <string name="create_credit_card_item_creation_error">Không thể tạo thẻ</string>
   <string name="create_credit_card_item_creation_success">Đã tạo thẻ</string>
   <string name="credit_card_init_error">Lỗi khi lấy thông tin thẻ</string>
+  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
+  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">Không thể cập nhật thẻ</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Tên đầy đủ</string>
@@ -160,6 +168,8 @@
   <string name="identity_add_more_fields">Thêm trường khác</string>
   <string name="identity_bottomsheet_add_field">Thêm trường</string>
   <string name="create_identity_init_error">Lỗi khi lấy thông tin bí danh</string>
+  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
+  <string name="identity_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">Không thể tạo danh tính</string>
   <string name="create_identity_item_creation_success">Đã tạo danh tính</string>
   <string name="update_identity_item_creation_success">Đã cập nhật danh tính</string>
@@ -190,4 +200,5 @@
   <!-- Attachments -->
   <string name="banner_title_attachments">Tệp đính kèm</string>
   <string name="banner_body_attachments">Bạn có thể đính kèm tệp vào các mục để tổ chức tốt hơn</string>
+  <string name="open_with">Mở bằng:</string>
 </resources>

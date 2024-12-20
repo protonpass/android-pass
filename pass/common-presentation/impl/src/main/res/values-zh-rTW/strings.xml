@@ -53,4 +53,5 @@
   <string name="item_details_snackbar_message_x_handle_copied">X handle copied</string>
   <string name="item_details_snackbar_message_yahoo_copied">Yahoo copied</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">Zip or postal code copied</string>
+  <string name="open_with">Open with:</string>
 </resources>

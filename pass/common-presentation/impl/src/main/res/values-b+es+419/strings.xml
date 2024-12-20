@@ -53,4 +53,5 @@
   <string name="item_details_snackbar_message_x_handle_copied">Se copió el nombre de usuario de X.</string>
   <string name="item_details_snackbar_message_yahoo_copied">Se copió la cuenta Yahoo.</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">Se copió el código postal.</string>
+  <string name="open_with">Abrir con:</string>
 </resources>

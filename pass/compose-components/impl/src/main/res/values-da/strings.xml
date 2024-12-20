@@ -155,7 +155,7 @@
   <string name="item_details_identity_section_personal_middle_name_title">Mellemnavn</string>
   <string name="item_details_identity_section_personal_last_name_title">Efternavn</string>
   <string name="item_details_identity_section_personal_full_name_title">Fulde navn</string>
-  <string name="item_details_identity_section_personal_email_title">Mailadresse</string>
+  <string name="item_details_identity_section_personal_email_title">E-mailadresse</string>
   <string name="item_details_identity_section_personal_gender_title">Køn</string>
   <string name="item_details_identity_section_personal_phone_title">Telefonnummer</string>
   <string name="item_details_identity_section_personal_birthday_title">Fødselsdag</string>
@@ -166,15 +166,15 @@
   <string name="item_details_identity_section_address_city_title">By</string>
   <string name="item_details_identity_section_address_zip_or_postal_code_title">Postnummer</string>
   <string name="item_details_identity_section_address_state_or_province_title">Stat eller provins</string>
-  <string name="item_details_identity_section_address_county_title">Land</string>
+  <string name="item_details_identity_section_address_county_title">Amt</string>
   <string name="item_details_identity_section_address_country_or_region_title">Land eller region</string>
   <string name="item_details_identity_section_contact_title">Kontaktoplysninger</string>
   <string name="item_details_identity_section_contact_social_security_number_title">Personnummer</string>
   <string name="item_details_identity_section_contact_passport_number_title">Pasnummer</string>
-  <string name="item_details_identity_section_contact_license_number_title">Licensnummer</string>
+  <string name="item_details_identity_section_contact_license_number_title">Kørekortnummer</string>
   <string name="item_details_identity_section_contact_website_title">Websted</string>
   <string name="item_details_identity_section_contact_x_handle_title">X-@navn</string>
-  <string name="item_details_identity_section_contact_secondary_phone_number_title">Andet telefonnummer</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">Sekundært telefonnummer</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
   <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
   <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
@@ -182,7 +182,7 @@
   <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
   <string name="item_details_identity_section_work_title">Arbejdsoplysninger</string>
   <string name="item_details_identity_section_work_company_title">Firma</string>
-  <string name="item_details_identity_section_work_occupation_title">Erhverv</string>
+  <string name="item_details_identity_section_work_occupation_title">Beskæftigelse</string>
   <string name="item_details_identity_section_work_email_title">Arbejdsmail-adresse</string>
   <string name="item_details_identity_section_work_phone_number_title">Arbejdstelefonnummer</string>
   <string name="item_details_identity_section_work_personal_website_title">Personligt websted</string>

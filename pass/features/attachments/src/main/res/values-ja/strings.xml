@@ -20,7 +20,6 @@
   <string name="add_attachment_take_a_photo">写真撮影</string>
   <string name="add_attachment_choose_a_photo_or_video">写真・動画を選択</string>
   <string name="add_attachment_choose_a_file">ファイルを選択</string>
-  <string name="attachment_options_open">開く</string>
   <string name="attachment_options_rename">名前を変更</string>
   <string name="attachment_options_delete">削除</string>
   <string name="file_picker_open_error">ファイルピッカーを開くことができませんでした</string>

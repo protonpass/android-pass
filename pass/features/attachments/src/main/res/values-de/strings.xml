@@ -20,7 +20,6 @@
   <string name="add_attachment_take_a_photo">Foto aufnehmen</string>
   <string name="add_attachment_choose_a_photo_or_video">Foto oder Video wählen</string>
   <string name="add_attachment_choose_a_file">Datei wählen</string>
-  <string name="attachment_options_open">Öffnen</string>
   <string name="attachment_options_rename">Umbenennen</string>
   <string name="attachment_options_delete">Löschen</string>
   <string name="file_picker_open_error">Could not open file picker</string>

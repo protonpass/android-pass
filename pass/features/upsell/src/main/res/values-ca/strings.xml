@@ -32,7 +32,7 @@
   <string name="upsell_paid_feature_sso_essential">Integració SSO (pròximament)</string>
   <string name="upsell_paid_feature_advance_alias_management_title">Gestioneu els àlies</string>
   <string name="upsell_paid_feature_advance_alias_management_subtitle">La gestió avançada dels àlies està disponible amb un pla de pagament. Milloreu el vostre pla per accedir-hi immediatament.</string>
-  <string name="upsell_paid_feature_item_sharing_title">Comparteu ràpidament un element</string>
+  <string name="upsell_paid_feature_item_sharing_title">Compartiu ràpidament un element</string>
   <string name="upsell_paid_feature_item_sharing_subtitle">Milloreu avui mateix per poder compartir un element amb qualsevol usuari de Pass. I gaudiu d\'altres característiques prèmium:</string>
   <string name="upsell_button_upgrade">Aconsegueixi Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Aconsegueixi Pass Business</string>

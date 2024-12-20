@@ -21,7 +21,7 @@
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
   <string name="security_center_home_dark_web_monitoring_title">Dark Web Monitoring</string>
   <string name="security_center_home_widget_breaches_title">違反が検出されました</string>
-  <string name="security_center_home_widget_breaches_subtitle">あなたの電子メール アドレスは、少なくとも 1 件のデータ侵害で漏洩しました。</string>
+  <string name="security_center_home_widget_breaches_subtitle">あなたのメール アドレスは、少なくとも 1 件のデータ侵害で漏洩しました。</string>
   <string name="security_center_home_widget_no_breaches_subtitle">メールアドレス、パスワード、その他の個人データが漏洩した場合に通知を受け取ります。</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">侵害は検出されませんでした</string>
   <string name="security_center_home_row_data_breaches_title">ダークウェブアラート</string>
@@ -154,7 +154,7 @@
   <string name="security_center_alias_list_error">アドレスが読み込めませんでした</string>
   <string name="security_center_alias_list_included_in_monitoring">メール非表示ide-my-emailエイリアスが漏洩した場合に通知を受け取るモニタリングを有効</string>
   <string name="security_center_alias_list_monitored">監視済み</string>
-  <string name="security_center_alias_list_custom_email_message">カスタム ドメインを持つエイリアスは監視されません。監視用のカスタム電子メールとして追加してください。</string>
+  <string name="security_center_alias_list_custom_email_message">カスタム ドメインを持つエイリアスは監視されません。監視用のカスタムメールとして追加してください。</string>
   <string name="security_center_alias_list_options_menu">エイリアス画面オプションメニュー</string>
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">データセキュリティ</string>

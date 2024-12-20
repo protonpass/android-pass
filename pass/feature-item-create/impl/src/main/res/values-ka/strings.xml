@@ -39,6 +39,8 @@
   <string name="create_login_item_update_error">შესვლის ჩანაწერის განახლების შეცდომა</string>
   <string name="create_login_init_error">შეცდომა შესვლის დეტალების მიღებისას</string>
   <string name="create_login_invalid_totp">2FA-ს შემცველობა არასწორია</string>
+  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
+  <string name="login_attachments_error">Could not add attachments to login</string>
   <string name="login_created">შესვლის ჩანაწერი შეიქმნა</string>
   <string name="bottomsheet_modify_alias_title">ფსევდონიმის ჩასწორება</string>
   <string name="bottomsheet_custom_field_type_text">ტექსტი</string>
@@ -63,6 +65,8 @@
   <string name="create_note_item_creation_error">შენიშვნის შექმნის შეცდომა</string>
   <string name="create_note_item_update_error">შენიშვნის განახლების შეცდომა</string>
   <string name="create_note_init_error">შეცდომა შენიშვნის დეტალების მიღებისას</string>
+  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
+  <string name="note_attachments_error">Could not add attachments to note</string>
   <string name="note_created">შენიშვნა შეიქმნა</string>
   <!-- Create Alias -->
   <string name="field_alias_title">ფსევდონიმის მისამართი</string>
@@ -79,6 +83,8 @@
   <string name="alias_rate_limited">ახლახან, მეტისმეტად, ბევრი ფსევდონიმი შექმენით</string>
   <string name="create_alias_item_update_error">ფსევდონიმის განახლების შეცდომა</string>
   <string name="create_alias_init_error">შეცდომა ფსევდონიმის დეტალების მიღებისას</string>
+  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
+  <string name="alias_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">ფსევდონიმი შეიქმნა</string>
   <string name="cannot_retrieve_alias_options">ფსევდონიმის პარამეტების მიღების შეცდომა</string>
   <string name="alias_mailbox_dialog_title">გადაგზავნა</string>
@@ -99,11 +105,13 @@
   <string name="field_card_pin_title">PIN-კოდი</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">ვადის ამოწურვის თარიღი</string>
-  <string name="field_card_expiration_date_hint">MM/YY</string>
+  <string name="field_card_expiration_date_hint">თთ/წწ</string>
   <string name="field_card_expiration_date_error">შეიყვანეთ სწორი თარიღი თთ/წწ ფორმატში</string>
   <string name="create_credit_card_item_creation_error">საკრედიტო ბარათის შექმნის შეცდომა</string>
   <string name="create_credit_card_item_creation_success">საკრედიტო ბარათი შეიქმნა</string>
   <string name="credit_card_init_error">შეცდომა საკრედიტო ბარათის დეტალების მიღებისას</string>
+  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
+  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">საკრედიტო ბარათის განახლების შეცდომა</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">სრული სახელი</string>
@@ -133,7 +141,7 @@
   <string name="identity_field_reddit_title">Reddit-ის მომხმარებლის სახელი</string>
   <string name="identity_field_facebook_title">Facebook URL</string>
   <string name="identity_field_yahoo_title">Yahoo-ის მომხმარებლის სახელი</string>
-  <string name="identity_field_instagram_title">Instagram username</string>
+  <string name="identity_field_instagram_title">Instagram-ის წარწერა</string>
   <string name="identity_field_personal_website_title">პირადი ვებგვერდის URL</string>
   <string name="identity_field_work_phone_number_title">სამსახურის ტელეფონის ნომერი</string>
   <string name="identity_field_work_email_title">სამსახურის ელფოსტის მისამართი</string>
@@ -148,7 +156,7 @@
   <string name="identity_add_field_reddit">Reddit-ის მომხმარებლის სახელი</string>
   <string name="identity_add_field_facebook">Facebook URL</string>
   <string name="identity_add_field_yahoo">Yahoo-ის მომხმარებლის სახელი</string>
-  <string name="identity_add_field_instagram">Instagram username</string>
+  <string name="identity_add_field_instagram">Instagram-ის წარწერა</string>
   <string name="identity_add_field_personal_website">პირადი ვებგვერდის URL</string>
   <string name="identity_add_field_work_phone_number">სამსახურის ტელეფონის ნომერი</string>
   <string name="identity_add_field_work_email_address">სამსახურის ელფოსტის მისამართი</string>
@@ -160,6 +168,8 @@
   <string name="identity_add_more_fields">კიდევ ერთი ველის დამატება</string>
   <string name="identity_bottomsheet_add_field">ველის დამატება</string>
   <string name="create_identity_init_error">შეცდომა იდენტიფიკატორის დეტალების მიღებისას</string>
+  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
+  <string name="identity_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">იდენტიფიკატორის შექმნა შეუძლებელია</string>
   <string name="create_identity_item_creation_success">იდენტიფიკატორი შეიცვალა</string>
   <string name="update_identity_item_creation_success">იდენტიფიკატორი განახლდა</string>
@@ -190,4 +200,5 @@
   <!-- Attachments -->
   <string name="banner_title_attachments">მიმაგრებული ფაილები</string>
   <string name="banner_body_attachments">უკეთესად ორგანიზმებისთვის ელემენტებს, შეგიძლიათ, ფაილები მიამაგროთ</string>
+  <string name="open_with">გახსნა პროგრამით:</string>
 </resources>

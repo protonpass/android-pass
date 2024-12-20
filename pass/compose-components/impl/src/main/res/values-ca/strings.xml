@@ -173,7 +173,7 @@
   <string name="item_details_identity_section_contact_passport_number_title">Número de passaport</string>
   <string name="item_details_identity_section_contact_license_number_title">Número de llicència</string>
   <string name="item_details_identity_section_contact_website_title">Lloc web</string>
-  <string name="item_details_identity_section_contact_x_handle_title">Compte a X</string>
+  <string name="item_details_identity_section_contact_x_handle_title">Usuari de X</string>
   <string name="item_details_identity_section_contact_secondary_phone_number_title">Número de telèfon secondari</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
   <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
@@ -188,7 +188,7 @@
   <string name="item_details_identity_section_work_personal_website_title">Lloc web personal</string>
   <string name="item_details_shared_section_note_title">Nota</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">Darrer emplenament automàtic</string>
-  <string name="item_details_shared_section_item_history_created_title">Creació</string>
+  <string name="item_details_shared_section_item_history_created_title">Creat</string>
   <string name="item_details_shared_section_item_history_modified_times_title">Modificat (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Mostra l\'historial de l\'element</string>
   <string name="item_details_shared_section_more_info_header_title">Més informació</string>
@@ -272,7 +272,7 @@
   <string name="verification_code_suggestion_subject_new_email_address">Confirmeu la vostra adreça de correu electrònic per a Proton Pass.</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Confirmeu la vostra bústia de correu</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">Si no trobeu aquest correu electrònic, podeu %s.</string>
-  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">sol·licitar un codi nou</string>
+  <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">sol·licita un codi nou</string>
   <string name="field_display_name_title">Nom per a mostrar</string>
   <!-- Attachments -->
   <plurals name="attachment_file_amount">

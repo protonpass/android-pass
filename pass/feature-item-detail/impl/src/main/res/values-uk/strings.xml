@@ -7,7 +7,7 @@
   <string name="top_bar_edit_button_text">Редагувати</string>
   <!-- Alias details -->
   <string name="field_alias_title">Адреса псевдоніма</string>
-  <string name="field_alias_disabled_title">Alias address (disabled)</string>
+  <string name="field_alias_disabled_title">Адреса псевдоніма (вимкнено)</string>
   <string name="alias_copied_to_clipboard">Псевдонім скопійовано</string>
   <string name="alias_detail_field_mailboxes_title">Пересилання на</string>
   <string name="alias_create_login_from_alias">Створити запис входу</string>
@@ -107,9 +107,9 @@
   <string name="passkey_detail_bottomsheet_key">Ключ</string>
   <string name="passkey_detail_bottomsheet_created">Створено</string>
   <string name="activity_in_last_two_weeks">Activity in the last 14 days</string>
-  <string name="contacts">Contacts</string>
-  <string name="contacts_section_description">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
-  <string name="field_detail_display_name_title">Display name</string>
+  <string name="contacts">Контакти</string>
+  <string name="contacts_section_description">Щоб приховати свою особисту електронну адресу, ви можете створити псевдонім контакту, який замаскує вашу адресу.</string>
+  <string name="field_detail_display_name_title">Ім\'я</string>
   <string name="display_name_section_description">The display name when sending an email from this alias.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s forward</item>
@@ -129,4 +129,5 @@
     <item quantity="many">%1$s blocks</item>
     <item quantity="other">%1$s blocks</item>
   </plurals>
+  <string name="open_with">Відкрити з:</string>
 </resources>

@@ -53,4 +53,5 @@
   <string name="item_details_snackbar_message_x_handle_copied">Профіль X скапіяваны</string>
   <string name="item_details_snackbar_message_yahoo_copied">Профіль Yahoo скапіяваны</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">Паштовы індэкс скапіяваны</string>
+  <string name="open_with">Адкрыць праз:</string>
 </resources>

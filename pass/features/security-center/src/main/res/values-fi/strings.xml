@@ -85,7 +85,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">Tietomurtoja ei ole havaittu</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton-osoitteet</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-aliakset</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Virhe noudettaessa Proton-osoitteita</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Virhe noudettaessa Hide-my-email-aliaksia</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Ei valvottu</string>
   <string name="security_center_dark_web_monitor_see_all">Näytä kaikki</string>

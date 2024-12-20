@@ -22,7 +22,7 @@
   <string name="configure_extra_password_enter_extra_password">Kata sandi tambahan</string>
   <string name="configure_extra_password_repeat_extra_password">Ulangi kata sandi</string>
   <string name="configure_extra_password_description">Kamu akan diminta kata sandi ini saat masuk dan saat berpindah dari Proton app lain ke Proton Pass di web.</string>
-  <string name="configure_extra_password_warning">Perhatian: Kamu tidak akan bisa mengakses Pass account jika kamu lupa sandi ini.</string>
+  <string name="configure_extra_password_warning">Perhatian: Anda tidak akan dapat mengakses akun pass Anda apabla Anda kehilangan kata sandi ini.</string>
   <string name="configure_extra_password_mismatch">Kata sandi tidak sesuai</string>
   <string name="extra_password_options_remove">Hapus</string>
   <string name="info_extra_password_title">Kata sandi tambahan</string>

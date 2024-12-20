@@ -20,19 +20,19 @@
   <!-- Management screen -->
   <string name="simple_login_sync_management_title">Alias management</string>
   <string name="simple_login_sync_management_domain_label">Домен</string>
-  <string name="simple_login_sync_management_domain_title">Default domain for aliases</string>
-  <string name="simple_login_sync_management_domain_option_blank">Not selected</string>
-  <string name="simple_login_sync_management_mailboxes_label">Mailboxes</string>
+  <string name="simple_login_sync_management_domain_title">Типовий домен для псевдоніма</string>
+  <string name="simple_login_sync_management_domain_option_blank">Не вибрано</string>
+  <string name="simple_login_sync_management_mailboxes_label">Поштові скриньки</string>
   <string name="simple_login_sync_management_mailboxes_description">Mailbox is where emails sent to an alias are forwarded to. It\'s your usual mailbox, e.g. Gmail, Outlook, Proton Mail, etc.</string>
-  <string name="simple_login_sync_management_mailbox_default">Default</string>
+  <string name="simple_login_sync_management_mailbox_default">За замовчуванням</string>
   <string name="simple_login_sync_management_mailbox_unverified">Unverified mailbox</string>
   <string name="simple_login_sync_management_vault_title">SimpleLogin sync</string>
   <string name="simple_login_sync_management_snackbar_alias_details_fetch_error">There was an error fetching SL alias details</string>
-  <string name="simple_login_sync_management_mailboxes_title">Default mailbox for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_domains">Default domain for aliases</string>
-  <string name="simple_login_sync_management_dialog_title_mailboxes">Default mailbox for aliases</string>
+  <string name="simple_login_sync_management_mailboxes_title">Типова поштова скринька для псевдоніма</string>
+  <string name="simple_login_sync_management_dialog_title_domains">Типовий домен для псевдоніма</string>
+  <string name="simple_login_sync_management_dialog_title_mailboxes">Типова поштова скринька для псевдоніма</string>
   <!-- Settings screen -->
-  <string name="simple_login_sync_settings_title">Sync aliases</string>
+  <string name="simple_login_sync_settings_title">Синхронізувати псевдоніми</string>
   <string name="simple_login_sync_enable_snackbar_error">There was an error enabling SimpleLogin aliases sync</string>
   <string name="simple_login_sync_enable_snackbar_success">SimpleLogin aliases sync successfully enabled</string>
   <!-- Mailbox create screen -->
@@ -40,7 +40,7 @@
   <string name="simple_login_sync_mailbox_create_message_error">There was an error adding the mailbox</string>
   <!-- Mailbox verify screen -->
   <string name="simple_login_sync_mailbox_verify_title">Confirm your mailbox</string>
-  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">We sent a verification code to %s. Enter it below:</string>
+  <string name="simple_login_sync_mailbox_verify_subtitle" comment="the placeholder will be replaced by an email address">Ми відправили код підтвердження на %s. Введіть його нижче:</string>
   <string name="simple_login_sync_mailbox_verify_email_fallback" comment="this text will replace the placeholder in the subtitle above in case the email address is not available">your email address</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_error">Invalid mailbox verification code</string>
   <string name="simple_login_sync_mailbox_verify_message_verification_code_limit_error">Invalid mailbox verification code limit reached, mailbox was deleted</string>
@@ -61,9 +61,9 @@
   <string name="simple_login_sync_mailbox_delete_warning">Please note that once deleted, aliases can\'t be restored</string>
   <!-- Domain select screen -->
   <string name="simple_login_sync_domain_select_title">Default domain</string>
-  <string name="simple_login_sync_domain_select_title_none">none</string>
+  <string name="simple_login_sync_domain_select_title_none">нічого</string>
   <string name="simple_login_sync_domain_select_description_none">No domain</string>
-  <string name="simple_login_sync_domain_select_description_custom">Your domain</string>
+  <string name="simple_login_sync_domain_select_description_custom">Ваш домен</string>
   <string name="simple_login_sync_domain_select_description_free">Public domain</string>
   <string name="simple_login_sync_domain_select_description_premium">Premium domain</string>
   <string name="simple_login_sync_domain_select_snackbar_alias_domain_fetch_error">There was an error fetching SL alias domains</string>

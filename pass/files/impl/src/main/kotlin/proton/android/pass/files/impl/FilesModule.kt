@@ -34,5 +34,5 @@ abstract class FilesModule {
     abstract fun bindFileUriGenerator(impl: FileUriGeneratorImpl): FileUriGenerator
 
     @[Binds Singleton]
-    abstract fun bindCacheCleaner(impl: DirectoryCleanerImpl): DirectoryCleaner
+    abstract fun bindDirectoryCleaner(impl: DirectoryCleanerImpl): DirectoryCleaner
 }

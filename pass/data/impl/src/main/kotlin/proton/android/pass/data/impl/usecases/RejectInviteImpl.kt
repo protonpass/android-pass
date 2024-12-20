@@ -24,14 +24,22 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.usecases.RejectInvite
 import proton.android.pass.domain.InviteToken
+import proton.android.pass.notifications.api.NotificationManager
 import javax.inject.Inject
 
 class RejectInviteImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val inviteRepository: InviteRepository
+    private val inviteRepository: InviteRepository,
+    private val notificationManager: NotificationManager
 ) : RejectInvite {
-    override suspend fun invoke(invite: InviteToken) {
+
+    override suspend fun invoke(inviteToken: InviteToken) {
         val userId = accountManager.getPrimaryUserId().filterNotNull().first()
-        inviteRepository.rejectInvite(userId, invite)
+
+        inviteRepository.getInvite(userId, inviteToken).value()
+            ?.let { pendingInvite ->
+                inviteRepository.rejectInvite(userId, inviteToken)
+                notificationManager.removeReceivedInviteNotification(pendingInvite)
+            }
     }
 }

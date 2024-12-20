@@ -41,22 +41,25 @@ class RefreshInvitesImpl @Inject constructor(
             val currentUserId = userId ?: accountManager.getPrimaryUserId()
                 .filterNotNull()
                 .first()
-            inviteRepository.refreshInvites(currentUserId)
+
+            if (inviteRepository.refreshInvites(currentUserId)) {
+                inviteRepository.observeInvites(currentUserId)
+                    .first()
+                    .lastOrNull()
+            } else null
+        }.onSuccess { pendingInvite ->
+            PassLogger.i(TAG, "Invites refreshed successfully")
+            pendingInvite?.let(notificationManager::sendReceivedInviteNotification)
+        }.onFailure { error ->
+            PassLogger.i(TAG, "Error refreshing invites")
+            PassLogger.w(TAG, error)
         }
-            .onSuccess { hasNewInvites ->
-                PassLogger.i(TAG, "Invites refreshed successfully")
-                if (hasNewInvites) {
-                    notificationManager.sendReceivedInviteNotification()
-                }
-            }
-            .onFailure { error ->
-                PassLogger.i(TAG, "Error refreshing invites")
-                PassLogger.w(TAG, error)
-            }
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "RefreshInvitesImpl"
+
     }
 
 }

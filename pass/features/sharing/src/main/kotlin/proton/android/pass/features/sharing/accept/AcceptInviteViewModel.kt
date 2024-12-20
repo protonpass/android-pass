@@ -157,6 +157,12 @@ class AcceptInviteViewModel @Inject constructor(
 
                             snackbarDispatcher(SharingSnackbarMessage.InviteAccepted)
                         }
+
+                        AcceptInviteStatus.Error -> {
+                            PassLogger.w(TAG, "There was an error accepting invite")
+                            eventFlow.update { AcceptInviteEvent.Close }
+                            snackbarDispatcher(SharingSnackbarMessage.InviteAcceptError)
+                        }
                     }
                 }
         }

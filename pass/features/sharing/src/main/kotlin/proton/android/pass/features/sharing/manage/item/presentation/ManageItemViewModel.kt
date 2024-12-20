@@ -30,13 +30,11 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.combineN
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.LeaveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemMembers
 import proton.android.pass.data.api.usecases.shares.ObserveShareItemsCount
@@ -56,8 +54,7 @@ class ManageItemViewModel @Inject constructor(
     observeShareItemMembers: ObserveShareItemMembers,
     observeSharePendingInvites: ObserveSharePendingInvites,
     observeShareItemsCount: ObserveShareItemsCount,
-    private val snackbarDispatcher: SnackbarDispatcher,
-    private val leaveShare: LeaveShare
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -118,23 +115,6 @@ class ManageItemViewModel @Inject constructor(
 
     internal fun onConsumeEvent(event: ManageItemEvent) {
         eventFlow.compareAndSet(event, ManageItemEvent.Idle)
-    }
-
-    internal fun onLeaveShare() {
-        viewModelScope.launch {
-            isLoadingStateFlow.update { IsLoadingState.Loading }
-
-            runCatching { leaveShare(shareId) }
-                .onFailure { error ->
-                    PassLogger.w(TAG, "There was an error leaving item share")
-                    PassLogger.w(TAG, error)
-                }
-                .onSuccess {
-                    eventFlow.update { ManageItemEvent.OnShareLeaveSuccess }
-                }
-
-            isLoadingStateFlow.update { IsLoadingState.NotLoading }
-        }
     }
 
     private companion object {

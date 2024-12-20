@@ -104,7 +104,7 @@ class DirectoryCleanerImpl @Inject constructor(
                     if (deleteIfEmpty(shareDir)) {
                         null
                     } else {
-                        val shareExists = checkIfShareExists(ShareId(shareDir.name))
+                        val shareExists = checkIfShareExists(UserId(userDir.name), ShareId(shareDir.name))
                         if (!shareExists) {
                             shareDir.deleteRecursively()
                             PassLogger.d(TAG, "Deleted attachment share directory: ${shareDir.path}")

@@ -30,6 +30,7 @@ import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.LoginItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
@@ -69,6 +70,9 @@ internal sealed interface LoginDetailUiState {
     ) : LoginDetailUiState {
 
         internal val shareSharedCount: Int = share.memberCount.plus(itemUiModel.shareCount)
+
+        internal val canViewItemHistory: Boolean = itemFeatures.isHistoryEnabled
+            .and(share.shareRole !is ShareRole.Read)
 
     }
 }

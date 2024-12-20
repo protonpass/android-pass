@@ -43,7 +43,7 @@ internal fun CreditCardDetailContent(
     share: Share,
     isDowngradedMode: Boolean,
     isPinned: Boolean,
-    isHistoryFeatureEnabled: Boolean,
+    canViewItemHistory: Boolean,
     isFileAttachmentsEnabled: Boolean,
     isItemSharingEnabled: Boolean,
     attachmentsState: AttachmentsState,
@@ -99,7 +99,7 @@ internal fun CreditCardDetailContent(
             modifiedAt = contents.model.modificationTime,
             onViewItemHistoryClicked = { onEvent(CreditCardDetailEvent.OnViewItemHistoryClicked) },
             itemColors = passItemColors(itemCategory = ItemCategory.CreditCard),
-            shouldDisplayItemHistoryButton = isHistoryFeatureEnabled
+            shouldDisplayItemHistoryButton = canViewItemHistory
         )
 
         PassItemDetailsMoreInfoSection(

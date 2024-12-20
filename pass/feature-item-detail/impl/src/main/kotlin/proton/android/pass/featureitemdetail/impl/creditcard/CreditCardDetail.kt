@@ -250,7 +250,7 @@ fun CreditCardDetail(
                                     }
                             }
                         },
-                        isHistoryFeatureEnabled = state.itemFeatures.isHistoryEnabled,
+                        canViewItemHistory = state.canViewItemHistory,
                         isFileAttachmentsEnabled = state.itemFeatures.isFileAttachmentsEnabled,
                         isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
                         attachmentsState = state.attachmentsState,

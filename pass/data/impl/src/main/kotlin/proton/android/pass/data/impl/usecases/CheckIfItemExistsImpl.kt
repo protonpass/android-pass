@@ -16,23 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.files.impl
+package proton.android.pass.data.impl.usecases
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import proton.android.pass.files.api.DirectoryCleaner
-import proton.android.pass.files.api.FileUriGenerator
-import javax.inject.Singleton
+import proton.android.pass.data.api.usecases.CheckIfItemExists
+import proton.android.pass.data.impl.db.PassDatabase
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import javax.inject.Inject
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class FilesModule {
+class CheckIfItemExistsImpl @Inject constructor(
+    private val database: PassDatabase
+) : CheckIfItemExists {
 
-    @[Binds Singleton]
-    abstract fun bindFileUriGenerator(impl: FileUriGeneratorImpl): FileUriGenerator
+    override suspend fun invoke(shareId: ShareId, itemId: ItemId): Boolean =
+        database.itemsDao().checkIfItemExists(shareId = shareId.id, itemId = itemId.id)
 
-    @[Binds Singleton]
-    abstract fun bindCacheCleaner(impl: DirectoryCleanerImpl): DirectoryCleaner
 }

@@ -16,23 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.files.impl
+package proton.android.pass.data.impl.usecases
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import proton.android.pass.files.api.DirectoryCleaner
-import proton.android.pass.files.api.FileUriGenerator
-import javax.inject.Singleton
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.CheckIfUserExists
+import javax.inject.Inject
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class FilesModule {
+class CheckIfUserExistsImpl @Inject constructor(
+    private val accountManager: AccountManager
+) : CheckIfUserExists {
 
-    @[Binds Singleton]
-    abstract fun bindFileUriGenerator(impl: FileUriGeneratorImpl): FileUriGenerator
-
-    @[Binds Singleton]
-    abstract fun bindCacheCleaner(impl: DirectoryCleanerImpl): DirectoryCleaner
+    override suspend fun invoke(userId: UserId): Boolean =
+        accountManager.getAccount(userId).map { it != null }.firstOrNull() ?: false
 }

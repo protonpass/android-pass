@@ -446,4 +446,16 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract fun countSharedItems(userId: String, shareIds: List<String>): Flow<SharedItemsCountRow>
+
+    @Query(
+        """
+        SELECT EXISTS(
+            SELECT 1
+            FROM ${ItemEntity.TABLE}
+            WHERE ${ItemEntity.Columns.ID} = :itemId
+              AND ${ItemEntity.Columns.SHARE_ID} = :shareId
+        )
+        """
+    )
+    abstract suspend fun checkIfItemExists(shareId: String, itemId: String): Boolean
 }

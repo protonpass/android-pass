@@ -146,4 +146,15 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
         update(*entities)
         insertOrIgnore(*entities)
     }
+
+    @Query(
+        """
+        SELECT EXISTS(
+            SELECT 1
+            FROM ${ShareEntity.TABLE}
+            WHERE ${ShareEntity.Columns.ID} = :shareId
+        )
+        """
+    )
+    abstract suspend fun checkIfShareExists(shareId: String): Boolean
 }

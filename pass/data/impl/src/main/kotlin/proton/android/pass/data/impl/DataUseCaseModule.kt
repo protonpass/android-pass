@@ -30,6 +30,7 @@ import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CancelShareInvite
 import proton.android.pass.data.api.usecases.ChangeAliasStatus
 import proton.android.pass.data.api.usecases.CheckCanAddressesBeInvited
+import proton.android.pass.data.api.usecases.CheckIfAttachmentExists
 import proton.android.pass.data.api.usecases.CheckIfItemExists
 import proton.android.pass.data.api.usecases.CheckIfShareExists
 import proton.android.pass.data.api.usecases.CheckIfUserExists
@@ -231,6 +232,7 @@ import proton.android.pass.data.impl.usecases.CanPerformPaidActionImpl
 import proton.android.pass.data.impl.usecases.CancelShareInviteImpl
 import proton.android.pass.data.impl.usecases.ChangeAliasStatusImpl
 import proton.android.pass.data.impl.usecases.CheckCanAddressesBeInvitedImpl
+import proton.android.pass.data.impl.usecases.CheckIfAttachmentExistsImpl
 import proton.android.pass.data.impl.usecases.CheckIfItemExistsImpl
 import proton.android.pass.data.impl.usecases.CheckIfShareExistsImpl
 import proton.android.pass.data.impl.usecases.CheckIfUserExistsImpl
@@ -1081,5 +1083,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindCheckIfItemExists(impl: CheckIfItemExistsImpl): CheckIfItemExists
+
+    @[Binds Singleton]
+    abstract fun bindCheckIfAttachmentExists(impl: CheckIfAttachmentExistsImpl): CheckIfAttachmentExists
 
 }

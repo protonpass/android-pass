@@ -35,7 +35,9 @@ dependencies {
     implementation(projects.pass.log.api)
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
+
     implementation(libs.core.utilKotlin)
+    implementation(libs.kotlinx.coroutines.core)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

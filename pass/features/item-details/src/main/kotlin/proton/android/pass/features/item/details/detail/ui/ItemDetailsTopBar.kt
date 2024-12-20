@@ -40,8 +40,10 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
+import proton.android.pass.composecomponents.impl.buttons.PassSharingShareIcon
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
-import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.item.details.R
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -49,15 +51,21 @@ import proton.android.pass.composecomponents.impl.R as CompR
 @Composable
 internal fun ItemDetailsTopBar(
     modifier: Modifier = Modifier,
-    itemColors: PassItemColors,
+    itemCategory: ItemCategory,
+    shareSharedCount: Int,
     onUpClick: () -> Unit,
     isEditEnabled: Boolean,
     onEditClick: () -> Unit,
     onOptionsClick: () -> Unit,
     isShareEnabled: Boolean,
     onShareClick: () -> Unit,
-    isLoading: Boolean
+    isLoading: Boolean,
+    isItemSharingEnabled: Boolean
 ) {
+    val itemColors = passItemColors(itemCategory = itemCategory)
+
+    println("JIBIRI: shareSharedCount -> $shareSharedCount")
+
     ProtonTopAppBar(
         modifier = modifier,
         backgroundColor = PassTheme.colors.itemDetailBackground,
@@ -92,6 +100,9 @@ internal fun ItemDetailsTopBar(
                 )
 
                 ItemDetailShareButton(
+                    itemCategory = itemCategory,
+                    isItemSharingEnabled = isItemSharingEnabled,
+                    shareSharedCount = shareSharedCount,
                     isEnabled = isShareEnabled,
                     iconBackgroundColor = itemColors.minorPrimary,
                     iconColor = itemColors.majorSecondary,
@@ -152,22 +163,37 @@ private fun ItemDetailEditButton(
 @Composable
 private fun ItemDetailShareButton(
     modifier: Modifier = Modifier,
+    itemCategory: ItemCategory,
+    shareSharedCount: Int,
     isEnabled: Boolean,
     iconBackgroundColor: Color,
     iconColor: Color,
-    onShareClick: () -> Unit
+    onShareClick: () -> Unit,
+    isItemSharingEnabled: Boolean
 ) {
-    CircleIconButton(
-        modifier = modifier,
-        drawableRes = CoreR.drawable.ic_proton_users_plus,
-        size = 40,
-        backgroundColor = iconBackgroundColor,
-        tintColor = iconColor,
-        iconContentDescription = stringResource(id = R.string.item_details_toolbar_content_description_share_button),
-        enabled = isEnabled,
-        onClick = onShareClick,
-        onDisabledClick = onShareClick
-    )
+    if (isItemSharingEnabled) {
+        PassSharingShareIcon(
+            modifier = modifier,
+            itemCategory = itemCategory,
+            shareSharedCount = shareSharedCount,
+            isEnabled = isEnabled,
+            onClick = onShareClick
+        )
+    } else {
+        CircleIconButton(
+            modifier = modifier,
+            drawableRes = CoreR.drawable.ic_proton_users_plus,
+            size = 40,
+            backgroundColor = iconBackgroundColor,
+            tintColor = iconColor,
+            iconContentDescription = stringResource(
+                id = R.string.item_details_toolbar_content_description_share_button
+            ),
+            enabled = isEnabled,
+            onClick = onShareClick,
+            onDisabledClick = onShareClick
+        )
+    }
 }
 
 @Composable

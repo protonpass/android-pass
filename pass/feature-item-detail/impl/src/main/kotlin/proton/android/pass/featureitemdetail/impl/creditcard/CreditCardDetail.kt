@@ -135,6 +135,10 @@ fun CreditCardDetail(
                             },
                             onLeave = {
                                 scope.launch { bottomSheetState.hide() }
+
+                                ItemDetailNavigation.LeaveItemShare(
+                                    shareId = itemUiModel.shareId
+                                ).also(onNavigate)
                             }
                         )
 

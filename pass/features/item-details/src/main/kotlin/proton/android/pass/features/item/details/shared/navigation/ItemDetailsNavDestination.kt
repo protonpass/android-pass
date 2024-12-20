@@ -75,4 +75,7 @@ sealed interface ItemDetailsNavDestination {
 
     data object Upgrade : ItemDetailsNavDestination
 
+    @JvmInline
+    value class LeaveItemShare(val shareId: ShareId) : ItemDetailsNavDestination
+
 }

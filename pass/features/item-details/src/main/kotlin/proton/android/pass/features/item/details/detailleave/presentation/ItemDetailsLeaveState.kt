@@ -16,18 +16,24 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.details.detailforbidden.navigation
+package proton.android.pass.features.item.details.detailleave.presentation
 
-import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsActionForbiddenReason
-import proton.android.pass.navigation.api.NavItem
-import proton.android.pass.navigation.api.NavItemType
+import androidx.compose.runtime.Stable
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
-object ItemDetailsForbiddenNavItem : NavItem(
-    baseRoute = "item/details/forbidden",
-    navArgIds = listOf(ItemDetailsForbiddenReasonNavArgId),
-    navItemType = NavItemType.Dialog
+@Stable
+internal data class ItemDetailsLeaveState(
+    private val isLoadingState: IsLoadingState
 ) {
 
-    fun createNavRoute(reason: ItemDetailsActionForbiddenReason) = "$baseRoute/$reason"
+    internal val isLoading: Boolean = isLoadingState.value()
+
+    internal companion object {
+
+        internal val Initial = ItemDetailsLeaveState(
+            isLoadingState = IsLoadingState.NotLoading
+        )
+
+    }
 
 }

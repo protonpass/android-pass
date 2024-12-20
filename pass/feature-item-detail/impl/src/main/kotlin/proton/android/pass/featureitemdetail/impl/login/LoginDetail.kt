@@ -165,6 +165,10 @@ fun LoginDetail(
                                 },
                                 onLeave = {
                                     scope.launch { bottomSheetState.hide() }
+
+                                    ItemDetailNavigation.LeaveItemShare(
+                                        shareId = state.itemUiModel.shareId
+                                    ).also(onNavigate)
                                 },
                                 isExcludedFromMonitor = state.monitorState.isExcludedFromMonitor
                             )

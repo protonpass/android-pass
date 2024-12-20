@@ -22,7 +22,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.files.api.CacheCleaner
+import proton.android.pass.files.api.DirectoryCleaner
 import proton.android.pass.files.api.FileUriGenerator
 import javax.inject.Singleton
 
@@ -34,5 +34,5 @@ abstract class FilesModule {
     abstract fun bindFileUriGenerator(impl: FileUriGeneratorImpl): FileUriGenerator
 
     @[Binds Singleton]
-    abstract fun bindCacheCleaner(impl: CacheCleanerImpl): CacheCleaner
+    abstract fun bindCacheCleaner(impl: DirectoryCleanerImpl): DirectoryCleaner
 }

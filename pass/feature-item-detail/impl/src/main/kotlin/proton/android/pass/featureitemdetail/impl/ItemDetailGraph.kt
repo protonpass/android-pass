@@ -92,6 +92,9 @@ sealed interface ItemDetailNavigation {
 
     data class OnContactsClicked(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
 
+    @JvmInline
+    value class LeaveItemShare(val shareId: ShareId) : ItemDetailNavigation
+
 }
 
 enum class ItemDetailCannotPerformActionType {

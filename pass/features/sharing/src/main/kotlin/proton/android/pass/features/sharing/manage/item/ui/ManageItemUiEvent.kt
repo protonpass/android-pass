@@ -35,8 +35,6 @@ internal sealed interface ManageItemUiEvent {
     @JvmInline
     value class OnInviteToVaultClick(internal val shareId: ShareId) : ManageItemUiEvent
 
-    data object OnLeaveShareClick : ManageItemUiEvent
-
     data class OnPendingInviteOptionsClick(
         internal val shareId: ShareId,
         internal val pendingInvite: SharePendingInvite

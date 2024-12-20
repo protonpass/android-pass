@@ -40,7 +40,6 @@ internal fun ManageItemScreen(
         when (state.event) {
             ManageItemEvent.Idle -> Unit
             ManageItemEvent.OnShareManagementError -> onNavigateEvent(SharingNavigation.Back)
-            ManageItemEvent.OnShareLeaveSuccess -> onNavigateEvent(SharingNavigation.BackToHome)
         }
 
         onConsumeEvent(state.event)
@@ -66,10 +65,6 @@ internal fun ManageItemScreen(
                     SharingNavigation.ShareVault(
                         shareId = uiEvent.shareId
                     ).also(onNavigateEvent)
-                }
-
-                ManageItemUiEvent.OnLeaveShareClick -> {
-                    onLeaveShare()
                 }
 
                 is ManageItemUiEvent.OnPendingInviteOptionsClick -> {

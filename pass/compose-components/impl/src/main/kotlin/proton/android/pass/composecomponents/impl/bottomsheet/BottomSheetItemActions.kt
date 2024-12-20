@@ -319,3 +319,23 @@ fun delete(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val isDivider = false
 
 }
+
+fun leave(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+
+    override val title: @Composable () -> Unit = {
+        BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_leave))
+    }
+
+    override val subtitle: @Composable (() -> Unit)? = null
+
+    override val leftIcon: @Composable (() -> Unit) = {
+        BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_arrow_out_from_rectangle)
+    }
+
+    override val endIcon: (@Composable () -> Unit)? = null
+
+    override val onClick: (() -> Unit) = onClick
+
+    override val isDivider = false
+
+}

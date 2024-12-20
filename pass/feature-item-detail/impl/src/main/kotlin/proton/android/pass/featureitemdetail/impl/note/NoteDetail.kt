@@ -96,8 +96,9 @@ fun NoteDetail(
                 sheetContent = {
                     when (state.itemUiModel.state) {
                         ItemState.Active.value -> NoteTopBarOptionsBottomSheetContents(
-                            canMigrate = state.itemActions.canMoveToOtherVault.value(),
-                            canMoveToTrash = state.itemActions.canMoveToTrash,
+                            canMigrate = state.canMigrate,
+                            canMoveToTrash = state.canMoveToTrash,
+                            canLeave = state.canLeaveItem,
                             isPinned = state.itemUiModel.isPinned,
                             onMigrate = {
                                 scope.launch {
@@ -132,6 +133,9 @@ fun NoteDetail(
                                     shareId = state.itemUiModel.shareId,
                                     itemId = state.itemUiModel.id
                                 )
+                            },
+                            onLeave = {
+                                scope.launch { bottomSheetState.hide() }
                             }
                         )
 

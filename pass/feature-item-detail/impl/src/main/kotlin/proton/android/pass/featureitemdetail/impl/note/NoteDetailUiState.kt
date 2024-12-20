@@ -56,8 +56,16 @@ internal sealed interface NoteDetailUiState {
         val hasMoreThanOneVault: Boolean
     ) : NoteDetailUiState {
 
+        private val isVaultShare: Boolean = share is Share.Vault
+
         internal val canViewItemHistory: Boolean = itemFeatures.isHistoryEnabled
             .and(share.shareRole !is ShareRole.Read)
+
+        internal val canMigrate: Boolean = isVaultShare && itemActions.canMoveToOtherVault.value()
+
+        internal val canMoveToTrash: Boolean = isVaultShare && itemActions.canMoveToTrash
+
+        internal val canLeaveItem: Boolean = !isVaultShare
 
         internal val shareSharedCount: Int = share.memberCount.plus(itemUiModel.shareCount)
 

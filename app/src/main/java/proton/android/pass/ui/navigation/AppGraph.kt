@@ -2124,8 +2124,9 @@ fun NavGraphBuilder.appGraph(
 
             is SharingNavigation.SharedItemDetails -> dismissBottomSheet {
                 appNavigator.navigate(
-                    destination = ViewItem,
-                    route = ViewItem.createNavRoute(
+                    destination = getItemDetailsDestination(it.itemCategory),
+                    route = getItemDetailsRoute(
+                        itemCategory = it.itemCategory,
                         shareId = it.shareId,
                         itemId = it.itemId
                     ),

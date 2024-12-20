@@ -34,6 +34,7 @@ import proton.android.pass.data.fakes.usecases.TestRejectInvite
 import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.sharing.R
 import proton.android.pass.features.sharing.SharingNavigation
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -193,7 +194,8 @@ class AcceptBottomSheetTest {
             val acceptButtonText = activity.getString(R.string.sharing_item_invitation_accept)
             val expectedNavigation = SharingNavigation.SharedItemDetails(
                 shareId = ShareId(TestAcceptInvite.DEFAULT_SHARE_ID),
-                itemId = ItemId(TestAcceptInvite.DEFAULT_ITEM_ID)
+                itemId = ItemId(TestAcceptInvite.DEFAULT_ITEM_ID),
+                itemCategory = ItemCategory.Login
             )
 
             setContent {

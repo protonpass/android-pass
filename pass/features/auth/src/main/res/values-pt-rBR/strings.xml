@@ -32,7 +32,7 @@
   <string name="auth_action_reveal_password">Exibir senha mestra</string>
   <string name="auth_action_conceal_password">Ocultar senha mestra</string>
   <string name="auth_action_enter_pin_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Insira o PIN em vez disso</string>
-  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Use fingerprint instead</string>
+  <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Usa a impressão digital em vez disso</string>
   <string name="auth_unlock_button">Desbloquear</string>
   <string name="auth_error_empty_password">A senha não pode estar em branco</string>
   <string name="auth_error_pin_cannot_be_empty">O código PIN não pode estar vazio</string>
@@ -49,5 +49,5 @@
     <item quantity="other">%d tentativas restantes</item>
   </plurals>
   <string name="auth_pin_too_many_attempts">Muitas tentativas de acesso com PIN falharam. Todos os seus usuários estão sendo desconectados.</string>
-  <string name="auth_pin_too_many_attempts_dismiss">Too many failed PIN attempts</string>
+  <string name="auth_pin_too_many_attempts_dismiss">Muitas tentativas de código PIN com falha</string>
 </resources>

@@ -39,6 +39,8 @@
   <string name="create_login_item_update_error">Oturum açma kaydı güncellenemedi</string>
   <string name="create_login_init_error">Oturum açma bilgileri alınırken sorun çıktı</string>
   <string name="create_login_invalid_totp">İki adımlı doğrulama içerikleri geçersiz</string>
+  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
+  <string name="login_attachments_error">Could not add attachments to login</string>
   <string name="login_created">Oturum açma kaydı oluşturuldu</string>
   <string name="bottomsheet_modify_alias_title">Takma adı düzenle</string>
   <string name="bottomsheet_custom_field_type_text">Metin</string>
@@ -63,6 +65,8 @@
   <string name="create_note_item_creation_error">Not oluşturulamadı</string>
   <string name="create_note_item_update_error">Not güncellenemedi</string>
   <string name="create_note_init_error">Not bilgileri alınırken sorun çıktı</string>
+  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
+  <string name="note_attachments_error">Could not add attachments to note</string>
   <string name="note_created">Not oluşturuldu</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Takma ad adresi</string>
@@ -79,6 +83,8 @@
   <string name="alias_rate_limited">Kısa sürede çok fazla sayıda takma ad oluşturuldu</string>
   <string name="create_alias_item_update_error">Takma ad güncellenemedi</string>
   <string name="create_alias_init_error">Takma ad bilgileri alınırken sorun çıktı</string>
+  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
+  <string name="alias_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">Takma ad oluşturuldu</string>
   <string name="cannot_retrieve_alias_options">Takma ad seçenekleri alınamadı</string>
   <string name="alias_mailbox_dialog_title">Şuraya ilet</string>
@@ -99,11 +105,13 @@
   <string name="field_card_pin_title">PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Son kullanma tarihi</string>
-  <string name="field_card_expiration_date_hint">MM/YY</string>
+  <string name="field_card_expiration_date_hint">AA/YY</string>
   <string name="field_card_expiration_date_error">AA/YY biçiminde geçerli bir tarih yazın</string>
   <string name="create_credit_card_item_creation_error">Kredi kartı oluşturulamadı</string>
   <string name="create_credit_card_item_creation_success">Kredi kartı oluşturuldu</string>
   <string name="credit_card_init_error">Kredi kartı bilgileri alınırken sorun çıktı</string>
+  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
+  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">Kredi kartı güncellenemedi</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Tam ad</string>
@@ -133,7 +141,7 @@
   <string name="identity_field_reddit_title">Reddit kullanıcı adı</string>
   <string name="identity_field_facebook_title">Facebook adresi</string>
   <string name="identity_field_yahoo_title">Yahoo kullanıcı adı</string>
-  <string name="identity_field_instagram_title">Instagram username</string>
+  <string name="identity_field_instagram_title">Instagram kullanıcı adı</string>
   <string name="identity_field_personal_website_title">Kişisel site adresi</string>
   <string name="identity_field_work_phone_number_title">İş telefonu</string>
   <string name="identity_field_work_email_title">İş e-posta adresi</string>
@@ -148,7 +156,7 @@
   <string name="identity_add_field_reddit">Reddit kullanıcı adı</string>
   <string name="identity_add_field_facebook">Facebook adresi</string>
   <string name="identity_add_field_yahoo">Yahoo kullanıcı adı</string>
-  <string name="identity_add_field_instagram">Instagram username</string>
+  <string name="identity_add_field_instagram">Instagram kullanıcı adı</string>
   <string name="identity_add_field_personal_website">Kişisel site adresi</string>
   <string name="identity_add_field_work_phone_number">İş telefonu</string>
   <string name="identity_add_field_work_email_address">İş e-posta adresi</string>
@@ -160,6 +168,8 @@
   <string name="identity_add_more_fields">Başka bir alan ekle</string>
   <string name="identity_bottomsheet_add_field">Alan ekle</string>
   <string name="create_identity_init_error">Kimlik bilgileri alınırken sorun çıktı</string>
+  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
+  <string name="identity_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">Kimlik oluşturulamadı</string>
   <string name="create_identity_item_creation_success">Kimlik oluşturuldu</string>
   <string name="update_identity_item_creation_success">Kimlik güncellendi</string>
@@ -190,4 +200,5 @@
   <!-- Attachments -->
   <string name="banner_title_attachments">Ek dosyalar</string>
   <string name="banner_body_attachments">Daha iyi bir düzen için ögelere dosyalar ekleyebilirsiniz</string>
+  <string name="open_with">Şununla aç:</string>
 </resources>

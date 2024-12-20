@@ -39,6 +39,8 @@
   <string name="create_login_item_update_error">無法更新登入</string>
   <string name="create_login_init_error">Problem retrieving login details</string>
   <string name="create_login_invalid_totp">雙重驗證無法驗證</string>
+  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
+  <string name="login_attachments_error">Could not add attachments to login</string>
   <string name="login_created">登入已創建</string>
   <string name="bottomsheet_modify_alias_title">變更別名</string>
   <string name="bottomsheet_custom_field_type_text">文字</string>
@@ -63,6 +65,8 @@
   <string name="create_note_item_creation_error">無法創建備註</string>
   <string name="create_note_item_update_error">無法更新備註</string>
   <string name="create_note_init_error">Problem retrieving note details</string>
+  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
+  <string name="note_attachments_error">Could not add attachments to note</string>
   <string name="note_created">已創建備註</string>
   <!-- Create Alias -->
   <string name="field_alias_title">別名位址</string>
@@ -79,6 +83,8 @@
   <string name="alias_rate_limited">近期創建太多的別名</string>
   <string name="create_alias_item_update_error">無法更新別名</string>
   <string name="create_alias_init_error">Problem retrieving alias details</string>
+  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
+  <string name="alias_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">已創建別名</string>
   <string name="cannot_retrieve_alias_options">無法提取別名選項</string>
   <string name="alias_mailbox_dialog_title">轉寄至</string>
@@ -104,6 +110,8 @@
   <string name="create_credit_card_item_creation_error">無法創建信用卡</string>
   <string name="create_credit_card_item_creation_success">信用卡已創建</string>
   <string name="credit_card_init_error">Problem retrieving credit card details</string>
+  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
+  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">無法更新信用卡</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">全名</string>
@@ -160,6 +168,8 @@
   <string name="identity_add_more_fields">新增其他欄位</string>
   <string name="identity_bottomsheet_add_field">Add field</string>
   <string name="create_identity_init_error">Problem retrieving identity details</string>
+  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
+  <string name="identity_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">Could not create identity</string>
   <string name="create_identity_item_creation_success">Identity created</string>
   <string name="update_identity_item_creation_success">Identity updated</string>
@@ -190,4 +200,5 @@
   <!-- Attachments -->
   <string name="banner_title_attachments">Attachments</string>
   <string name="banner_body_attachments">You can attach files to items for a better organization</string>
+  <string name="open_with">Open with:</string>
 </resources>

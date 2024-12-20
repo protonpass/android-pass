@@ -39,6 +39,8 @@
   <string name="create_login_item_update_error">Kunne ikke opdatere login</string>
   <string name="create_login_init_error">Problem med at hente loginoplysninger</string>
   <string name="create_login_invalid_totp">2FA-indholdet er ikke gyldigt</string>
+  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
+  <string name="login_attachments_error">Could not add attachments to login</string>
   <string name="login_created">Login oprettet</string>
   <string name="bottomsheet_modify_alias_title">Tilpas alias</string>
   <string name="bottomsheet_custom_field_type_text">Tekst</string>
@@ -63,6 +65,8 @@
   <string name="create_note_item_creation_error">Kunne ikke oprette note</string>
   <string name="create_note_item_update_error">Kunne ikke opdatere note</string>
   <string name="create_note_init_error">Problem med at hente noteoplysninger</string>
+  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
+  <string name="note_attachments_error">Could not add attachments to note</string>
   <string name="note_created">Note oprettet</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Alias-adresse</string>
@@ -79,6 +83,8 @@
   <string name="alias_rate_limited">For mange aliasser oprettet for nylig</string>
   <string name="create_alias_item_update_error">Kunne ikke opdatere alias</string>
   <string name="create_alias_init_error">Problem med at hente aliasoplysninger</string>
+  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
+  <string name="alias_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">Alias oprettet</string>
   <string name="cannot_retrieve_alias_options">Kan ikke hente alias-indstillinger</string>
   <string name="alias_mailbox_dialog_title">Videresend til</string>
@@ -104,6 +110,8 @@
   <string name="create_credit_card_item_creation_error">Kunne ikke oprette betalingskort</string>
   <string name="create_credit_card_item_creation_success">Betalingskort oprettet</string>
   <string name="credit_card_init_error">Problem med at hente betalingskortoplysninger</string>
+  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
+  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">Kunne ikke opdatere betalingskort</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Fulde navn</string>
@@ -160,6 +168,8 @@
   <string name="identity_add_more_fields">Tilføj et felt mere</string>
   <string name="identity_bottomsheet_add_field">Tilføj felt</string>
   <string name="create_identity_init_error">Problem med at hente identitetsdetaljer</string>
+  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
+  <string name="identity_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">Identitet kunne ikke oprettes</string>
   <string name="create_identity_item_creation_success">Identitet oprettet</string>
   <string name="update_identity_item_creation_success">Identitet opdateret</string>
@@ -190,4 +200,5 @@
   <!-- Attachments -->
   <string name="banner_title_attachments">Vedhæftninger</string>
   <string name="banner_body_attachments">Du kan vedhæfte filer til elementer for at få en bedre organisering</string>
+  <string name="open_with">Åbn med:</string>
 </resources>

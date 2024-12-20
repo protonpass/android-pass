@@ -108,7 +108,7 @@
   <string name="contacts">Kontakte</string>
   <string name="contacts_section_description">Um deine persönliche E-Mail-Adresse zu verbergen, kannst du einen Alias-Kontakt erstellen, der deine Adresse verschleiert.</string>
   <string name="field_detail_display_name_title">Anzeigename</string>
-  <string name="display_name_section_description">The display name when sending an email from this alias.</string>
+  <string name="display_name_section_description">Der Anzeigename, wenn eine E-Mail von diesem Alias versendet wird.</string>
   <plurals name="alias_forwards_count">
     <item quantity="one">%1$s Weitergeleiteter</item>
     <item quantity="other">%1$s Weitergeleitete</item>
@@ -121,4 +121,5 @@
     <item quantity="one">%1$s Blockierter</item>
     <item quantity="other">%1$s Blockierte</item>
   </plurals>
+  <string name="open_with">Öffnen mit:</string>
 </resources>

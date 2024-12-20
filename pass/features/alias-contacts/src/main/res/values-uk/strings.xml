@@ -17,17 +17,17 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="create_contact_button">Create contact</string>
-  <string name="save_contact_alias">Save</string>
+  <string name="create_contact_button">Створити контакт</string>
+  <string name="save_contact_alias">Зберегти</string>
   <string name="snackbar_contact_create_success">Contact created successfully</string>
   <string name="snackbar_contact_create_error">Failed to create contact</string>
-  <string name="create_contact_title">Create contact</string>
-  <string name="detail_contact_title">Contacts</string>
-  <string name="email_input_error">Invalid email address</string>
-  <string name="detail_contact_display_name" comment="sender email address">A contact is created for every email address that sends emails to or receives emails from %1$s</string>
+  <string name="create_contact_title">Створити контакт</string>
+  <string name="detail_contact_title">Контакти</string>
+  <string name="email_input_error">Недійсна адреса електронної пошти</string>
+  <string name="detail_contact_display_name" comment="sender email address">Контакт створюється для кожної адреси електронної пошти, яка надсилає або отримує електронні листи з %1$s</string>
   <string name="empty_alias_contacts_title">Alias contacts</string>
-  <string name="empty_alias_contacts_body">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
-  <string name="empty_alias_contacts_learn_more">Learn more</string>
+  <string name="empty_alias_contacts_body">Щоб приховати свою особисту електронну адресу, ви можете створити псевдонім контакту, який замаскує вашу адресу.</string>
+  <string name="empty_alias_contacts_learn_more">Докладніше</string>
   <string name="unblock_button">Unblock contact</string>
   <string name="block_button">Block contact</string>
   <string name="contact_created_date" comment="date of creation">Created %1$s ago</string>
@@ -57,16 +57,16 @@
   <string name="snackbar_contact_block_error">Could not block contact</string>
   <string name="snackbar_contact_unblock_success">Contact unblocked</string>
   <string name="snackbar_contact_unblock_error">Could not unblock contact</string>
-  <string name="snackbar_delete_contact_success">Contact deleted</string>
+  <string name="snackbar_delete_contact_success">Контакт видалено</string>
   <string name="snackbar_delete_contact_error">Could not delete contact</string>
-  <string name="snackbar_email_copied_success">Email copied to clipboard</string>
-  <string name="contact_option_send_email">Send email</string>
-  <string name="contact_option_copy_address">Copy address</string>
+  <string name="snackbar_email_copied_success">Електронний лист скопійовано до буфера обміну</string>
+  <string name="contact_option_send_email">Надіслати лист</string>
+  <string name="contact_option_copy_address">Копіювати адресу</string>
   <string name="contact_option_block_contact">Block contact</string>
   <string name="contact_option_unblock_contact">Unblock contact</string>
-  <string name="contact_option_delete">Delete</string>
+  <string name="contact_option_delete">Видалити</string>
   <string name="alias_contacts_bottomsheet_title">Alias Contacts</string>
-  <string name="alias_contacts_bottomsheet_subtitle">To keep your personal email address hidden, you can create an alias contact that masks your address.</string>
+  <string name="alias_contacts_bottomsheet_subtitle">Щоб приховати свою особисту електронну адресу, ви можете створити псевдонім контакту, який замаскує вашу адресу.</string>
   <string name="alias_contacts_explanation">Here’s how it works:</string>
   <string name="alias_contacts_bottomsheet_section_1">Enter the address you want to email.</string>
   <string name="alias_contacts_bottomsheet_section_2">Proton Pass will generate a forwarding address (also referred to as reverse alias).</string>

@@ -32,6 +32,9 @@
     <item quantity="other">%d μέλη</item>
   </plurals>
   <string name="sharing_member_count_header">Μέλη</string>
+  <string name="shared_via_title">Κοινή χρήση μέσω</string>
+  <string name="shared_via_item_member_count_header">Κοινοποίησης στοιχείου</string>
+  <string name="shared_via_vault_member_count_header">Κοινή χρήση κρύπτης</string>
   <string name="share_with_title">Κοινοποίηση με</string>
   <string name="share_with_email_hint">Διεύθυνση ηλεκτρονικού ταχυδρομείου</string>
   <string name="share_with_email_error">Μη έγκυρη διεύθυνση email</string>
@@ -45,7 +48,7 @@
   <string name="sharing_item_invitation_title">Πρόσκληση για κοινόχρηστο αντικείμενο</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">Ο %s θέλει να μοιραστεί μαζί σας ένα αντικείμενο.</string>
   <string name="sharing_item_invitation_accept">Αποδοχή και προβολή αντικειμένου</string>
-  <string name="sharing_item_leave">Αποχώρηση</string>
+  <string name="sharing_invite_more">Προσκαλέστε περισσότερα…</string>
   <string name="sharing_snackbar_invite_accepted">Η πρόσκληση έγινε αποδεκτή</string>
   <string name="sharing_snackbar_invite_accept_error">Σφάλμα κατά την αποδοχή της πρόσκλησης</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Δεν ήταν δυνατή η αποδοχή της πρόσκλησης καθώς έχετε συμπληρώσει το όριο κρυπτών</string>
@@ -126,6 +129,14 @@
   <string name="share_with_user_description">Μοιραστείτε αυτό το στοιχείο με άλλους χρήστες Proton.</string>
   <string name="share_with_secure_link_title">Μέσω ασφαλούς συνδέσμου</string>
   <string name="share_with_secure_link_description">Δημιουργία ασφαλούς σύνδεσης προς αυτό το στοιχείο.</string>
+  <string name="share_with_vault_title">Ολόκληρη κρύπτη</string>
+  <string name="share_with_vault_description">Μοιραστείτε αυτή την κρύπτη και το περιεχόμενά της.</string>
+  <string name="share_with_user_shared_title">Με άλλους χρήστες του Proton Pass</string>
+  <string name="share_with_user_shared_description">Χρήσιμο για μόνιμη κοινή χρήση.</string>
+  <string name="share_with_manage_shared_item_title">Διαχείριση πρόσβασης</string>
+  <string name="share_with_manage_shared_item_description">Δείτε την επισκόπηση μελών και δικαιωμάτων.</string>
+  <string name="share_with_secure_link_shared_title">Μέσω ασφαλούς συνδέσμου</string>
+  <string name="share_with_secure_link_shared_description">Για εφάπαξ κοινή χρήση.</string>
   <string name="share_with_manage_shared_vault_title">Διαχείριση πρόσβασης κρύπτης</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Η κρύπτη του στοιχείου είναι προς το παρόν κοινόχρηστη με %d χρήστη.</item>

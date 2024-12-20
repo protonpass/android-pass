@@ -85,7 +85,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">Nessuna violazione di dati rilevata</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Indirizzi Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Alias Hide-my-email</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving Proton addresses</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Caricamento degli indirizzi Proton non riuscito</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Caricamento degli alias Hide-my-email non riuscito</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Non monitorato</string>
   <string name="security_center_dark_web_monitor_see_all">Mostra tutto</string>

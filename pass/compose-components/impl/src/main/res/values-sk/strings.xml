@@ -289,7 +289,7 @@
   </plurals>
   <string name="simple_login_widget_action">Synchronizovať aliasy</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Nedostali ste kód?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Skontrolujte, prosím, či sa vo vašom spame nenachádza email s názvom “%s“</string>
   <string name="verification_code_suggestion_subject_new_email_address">Potvrďte svoju emailovú adresu pre Proton Pass, prosím</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Potvrďte, prosím, svoju poštovú schránku</string>
@@ -300,7 +300,7 @@
   <plurals name="attachment_file_amount">
     <item quantity="one">%1$s súbor</item>
     <item quantity="few">%1$s súbory</item>
-    <item quantity="many">%1$s súbory</item>
+    <item quantity="many">%1$s súborov</item>
     <item quantity="other">%1$s súborov</item>
   </plurals>
   <string name="attachment_title">Prílohy</string>

@@ -10,7 +10,7 @@
   <string name="autofill_dialog_cancel">Avbryt</string>
   <string name="autofill_notification_copy_to_clipboard">TOTP er kopiert til utklippstavlen</string>
   <string name="autofill_dialog_associate_title">Bruk pålogging?</string>
-  <string name="autofill_user_logged_out">Du er logget av. Vennligst logg på igjen ved å åpne appen.</string>
+  <string name="autofill_user_logged_out">Du er logget av. Logg på igjen ved å åpne appen.</string>
   <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofyll kortinformasjon</string>
   <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Automatisk utfylling av kredittkortinformasjon er en betalt funksjon. Hvis du vil at Proton Pass automatisk skal legge inn kortinformasjonen din for deg i apper og nettsteder, må du oppgradere til en betalt plan.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Bekreft handlingen</string>

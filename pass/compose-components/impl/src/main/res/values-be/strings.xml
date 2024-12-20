@@ -289,7 +289,7 @@
   </plurals>
   <string name="simple_login_widget_action">Сінхранізаваць псеўданімы</string>
   <!-- Verification codes -->
-  <string name="verification_code_not_received">Haven\'t received the code?</string>
+  <string name="verification_code_not_received">Не атрымалі код?</string>
   <string name="verification_code_suggestion_spam" comment="placeholder will be replaced by an email subject">Праверце, ці ёсць у папцы Спам ліст з назвай “%s“</string>
   <string name="verification_code_suggestion_subject_new_email_address">Пацвердзіце свой адрас электроннай пошты для Proton Pass</string>
   <string name="verification_code_suggestion_subject_new_mailbox">Пацвердзіце сваю паштовую скрыню</string>

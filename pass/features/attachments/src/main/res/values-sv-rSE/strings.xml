@@ -20,7 +20,6 @@
   <string name="add_attachment_take_a_photo">Ta ett foto</string>
   <string name="add_attachment_choose_a_photo_or_video">Välj ett foto eller video</string>
   <string name="add_attachment_choose_a_file">Välj en fil</string>
-  <string name="attachment_options_open">Öppna</string>
   <string name="attachment_options_rename">Byt namn</string>
   <string name="attachment_options_delete">Ta bort</string>
   <string name="file_picker_open_error">Kunde inte öppna filväljare</string>

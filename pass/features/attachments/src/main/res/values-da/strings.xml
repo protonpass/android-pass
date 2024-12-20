@@ -20,7 +20,6 @@
   <string name="add_attachment_take_a_photo">Tag et foto</string>
   <string name="add_attachment_choose_a_photo_or_video">Vælg et foto eller en video</string>
   <string name="add_attachment_choose_a_file">Vælg en fil</string>
-  <string name="attachment_options_open">Åbn</string>
   <string name="attachment_options_rename">Omdøb</string>
   <string name="attachment_options_delete">Slet</string>
   <string name="file_picker_open_error">Kunne ikke åbne filvælgeren</string>

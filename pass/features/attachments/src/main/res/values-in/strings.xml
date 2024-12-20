@@ -20,7 +20,6 @@
   <string name="add_attachment_take_a_photo">Ambil foto</string>
   <string name="add_attachment_choose_a_photo_or_video">Pilih foto atau video</string>
   <string name="add_attachment_choose_a_file">Pilih berkas</string>
-  <string name="attachment_options_open">Buka</string>
   <string name="attachment_options_rename">Ubah nama</string>
   <string name="attachment_options_delete">Hapus</string>
   <string name="file_picker_open_error">Tidak dapat membuka pemilih berkas</string>

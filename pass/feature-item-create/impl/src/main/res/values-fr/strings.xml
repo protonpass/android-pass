@@ -39,6 +39,8 @@
   <string name="create_login_item_update_error">Impossible de mettre à jour l\'identifiant</string>
   <string name="create_login_init_error">Problème de récupération des informations de l\'identifiant</string>
   <string name="create_login_invalid_totp">Les données A2F ne sont pas valides.</string>
+  <string name="update_login_attachments_init_error">Problème de récupération des pièces jointes de l\'identifiant</string>
+  <string name="login_attachments_error">Les pièces jointes n\'ont pas pu être ajoutées à l\'identifiant.</string>
   <string name="login_created">L\'identifiant a été créé.</string>
   <string name="bottomsheet_modify_alias_title">Modifier l\'alias</string>
   <string name="bottomsheet_custom_field_type_text">Texte</string>
@@ -63,6 +65,8 @@
   <string name="create_note_item_creation_error">Impossible de créer une note</string>
   <string name="create_note_item_update_error">Impossible de mettre à jour la note</string>
   <string name="create_note_init_error">Problème de récupération des informations de la note</string>
+  <string name="update_note_attachments_init_error">Problème de récupération des pièces jointes de la note</string>
+  <string name="note_attachments_error">Les pièces jointes n\'ont pas pu être ajoutées à la note.</string>
   <string name="note_created">La note a été créée.</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Adresse de l\'alias</string>
@@ -79,6 +83,8 @@
   <string name="alias_rate_limited">Trop d\'alias ont été créés récemment.</string>
   <string name="create_alias_item_update_error">Impossible de mettre à jour l\'alias</string>
   <string name="create_alias_init_error">Problème de récupération des informations de l\'alias</string>
+  <string name="update_alias_attachments_init_error">Problème de récupération des pièces jointes de l\'alias</string>
+  <string name="alias_attachments_error">Les pièces jointes n\'ont pas pu être ajoutées à l\'alias.</string>
   <string name="alias_created">L\'alias a été créé.</string>
   <string name="cannot_retrieve_alias_options">Impossible de récupérer les options d\'alias</string>
   <string name="alias_mailbox_dialog_title">Transférer à</string>
@@ -104,6 +110,8 @@
   <string name="create_credit_card_item_creation_error">Impossible de créer la carte de paiement</string>
   <string name="create_credit_card_item_creation_success">La carte de paiement a été créée.</string>
   <string name="credit_card_init_error">Problème de récupération des informations de la carte de paiement</string>
+  <string name="update_credit_card_attachments_init_error">Problème de récupération des pièces jointes de la carte de paiement</string>
+  <string name="credit_card_attachments_error">Les pièces jointes n\'ont pas pu être ajoutées à la carte de paiement.</string>
   <string name="credit_card_item_update_error">Impossible de mettre à jour la carte de paiement</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Nom complet</string>
@@ -160,6 +168,8 @@
   <string name="identity_add_more_fields">Ajouter un autre champ</string>
   <string name="identity_bottomsheet_add_field">Ajouter un champ</string>
   <string name="create_identity_init_error">Un problème est survenu lors de la récupération des informations d\'identité.</string>
+  <string name="update_identity_attachments_init_error">Problème de récupération des pièces jointes de l\'identité</string>
+  <string name="identity_attachments_error">Les pièces jointes n\'ont pas pu être ajoutées à l\'identité.</string>
   <string name="create_identity_item_creation_error">L\'identité n\'a pas pu être créée.</string>
   <string name="create_identity_item_creation_success">L\'identité a été créée.</string>
   <string name="update_identity_item_creation_success">L\'identité a été mise à jour.</string>
@@ -190,4 +200,5 @@
   <!-- Attachments -->
   <string name="banner_title_attachments">Pièces jointes</string>
   <string name="banner_body_attachments">Vous pouvez joindre des fichiers aux éléments pour mieux vous organiser.</string>
+  <string name="open_with">Ouvrir avec :</string>
 </resources>

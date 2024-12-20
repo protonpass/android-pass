@@ -121,4 +121,5 @@
     <item quantity="one">%1$s blokering</item>
     <item quantity="other">%1$s blokeringer</item>
   </plurals>
+  <string name="open_with">Åbn med:</string>
 </resources>

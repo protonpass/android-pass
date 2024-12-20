@@ -19,7 +19,7 @@
   <string name="email_copied_to_clipboard">E-postadressen er kopiert</string>
   <string name="username_copied_to_clipboard">Brukernavn kopiert</string>
   <string name="password_copied_to_clipboard">Passord kopiert</string>
-  <string name="website_copied_to_clipboard">Web address copied</string>
+  <string name="website_copied_to_clipboard">Nettsted kopiert</string>
   <string name="totp_copied_to_clipboard">TOTP-kopiert</string>
   <string name="field_copied_to_clipboard">Felt kopiert</string>
   <string name="move_item_to_trash_message">Element flyttet til papirkurven</string>
@@ -90,12 +90,12 @@
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
   <string name="item_detail_cannot_perform_action_edit_title">Kan ikke redigere</string>
   <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Du kan ikke redigere dette elementet fordi du ikke har nok tillatelser til å gjøre det.</string>
-  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Du har bare lov til å redigere elementer i de eldste hvelvene dine. For å redigere dette elementet, vennligst oppgrader din nåværende plan.</string>
-  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Du kan ikke redigere dette elementet fordi det er i papirkurven. Vennligst flytt det ut av papirkurven før du redigerer det.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Du har bare lov til å redigere elementer i de eldste hvelvene dine. For å redigere dette elementet, oppgrader din nåværende plan.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Du kan ikke redigere dette elementet fordi det er i papirkurven. Flytt det ut av papirkurven før du redigerer det.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan ikke dele</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Du har ikke nok tillatelser til å dele dette hvelvet.</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">Du har nådd delingsgrensen for hvelv. For å dele flere hvelv, vennligst oppgrader din nåværende plan.</string>
-  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Du kan ikke dele dette elementet fordi det er i papirkurven. Vennligst flytt det ut av papirkurven før du deler det.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Du har nådd delingsgrensen for hvelv. For å dele flere hvelv, oppgrader din nåværende plan.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Du kan ikke dele dette elementet fordi det er i papirkurven. Flytt det ut av papirkurven før du deler det.</string>
   <string name="password_score_vulnerable">Sårbar</string>
   <string name="password_score_weak">Svak</string>
   <string name="password_score_strong">Sterk</string>
@@ -121,4 +121,5 @@
     <item quantity="one">%1$s blokkering</item>
     <item quantity="other">%1$s blokkeringer</item>
   </plurals>
+  <string name="open_with">Åpne med:</string>
 </resources>

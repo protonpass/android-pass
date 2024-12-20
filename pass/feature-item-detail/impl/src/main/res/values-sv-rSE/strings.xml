@@ -96,7 +96,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Du har inte tillräckligt med behörigheter för att dela detta valv.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Du har nått gränsen för valvdelning. För att dela fler valv, uppgradera ditt nuvarande paket.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Du kan inte dela detta objekt eftersom det ligger i papperskorgen. Flytta den ur papperskorgen innan du delar det.</string>
-  <string name="password_score_vulnerable">Sårbar</string>
+  <string name="password_score_vulnerable">Sårbart</string>
   <string name="password_score_weak">Svagt</string>
   <string name="password_score_strong">Starkt</string>
   <string name="passkey_detail_bottomsheet_title">Passkey</string>
@@ -121,4 +121,5 @@
     <item quantity="one">%1$s blockering</item>
     <item quantity="other">%1$s blockeringar</item>
   </plurals>
+  <string name="open_with">Öppna med:</string>
 </resources>

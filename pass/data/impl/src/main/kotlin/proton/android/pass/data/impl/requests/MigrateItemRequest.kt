@@ -22,14 +22,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MigrateItemRequest(
-    @SerialName("ShareID")
-    val shareId: String,
-    @SerialName("Item")
-    val item: MigrateItemBody
-)
-
-@Serializable
 data class MigrateItemsRequest(
     @SerialName("ShareID")
     val shareId: String,
@@ -41,28 +33,14 @@ data class MigrateItemsRequest(
 data class MigrateItemsBody(
     @SerialName("ItemID")
     val itemId: String,
-    @SerialName("Item")
-    val item: MigrateItemBody,
-    @SerialName("History")
-    val history: List<MigrateItemHistory>
+    @SerialName("ItemKeys")
+    val itemKeys: List<ItemKeyBody>
 )
 
 @Serializable
-data class MigrateItemBody(
+data class ItemKeyBody(
+    @SerialName("Key")
+    val key: String,
     @SerialName("KeyRotation")
-    val keyRotation: Long,
-    @SerialName("ContentFormatVersion")
-    val contentFormatVersion: Int,
-    @SerialName("Content")
-    val content: String,
-    @SerialName("ItemKey")
-    val itemKey: String
-)
-
-@Serializable
-data class MigrateItemHistory(
-    @SerialName("Revision")
-    val revision: Long,
-    @SerialName("Item")
-    val item: MigrateItemBody
+    val keyRotation: Long
 )

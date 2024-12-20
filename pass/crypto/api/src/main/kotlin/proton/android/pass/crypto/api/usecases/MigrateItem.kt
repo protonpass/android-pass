@@ -21,40 +21,13 @@ package proton.android.pass.crypto.api.usecases
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.domain.key.ShareKey
 
-data class EncryptedMigrateItemBody(
-    val item: EncryptedMigrateContent,
-    val history: List<EncryptedMigrateItemHistory>
-)
-
-data class EncryptedMigrateContent(
-    val keyRotation: Long,
-    val contentFormatVersion: Int,
-    val content: String,
-    val itemKey: String
-)
-
-data class EncryptedMigrateItemHistory(
-    val revision: Long,
-    val content: EncryptedMigrateContent
-)
-
 interface MigrateItem {
 
-    fun migrate(destinationKey: ShareKey, payload: ItemMigrationPayload): EncryptedMigrateItemBody
+    fun migrate(destinationKey: ShareKey, itemKeys: List<ItemKeyWithRotation>): List<ItemKeyWithRotation>
 
 }
 
-data class ItemMigrationPayload(
-    val itemContent: ItemMigrationContent,
-    val historyContents: List<ItemMigrationHistoryContent>
-)
-
-data class ItemMigrationContent(
-    val encryptedItemContents: EncryptedByteArray,
-    val contentFormatVersion: Int
-)
-
-data class ItemMigrationHistoryContent(
-    val revision: Long,
-    val itemContent: ItemMigrationContent
+data class ItemKeyWithRotation(
+    val itemKey: EncryptedByteArray,
+    val keyRotation: Long
 )

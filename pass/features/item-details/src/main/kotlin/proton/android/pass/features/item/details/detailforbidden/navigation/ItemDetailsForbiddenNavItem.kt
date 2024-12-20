@@ -20,10 +20,12 @@ package proton.android.pass.features.item.details.detailforbidden.navigation
 
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsActionForbiddenReason
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 
 object ItemDetailsForbiddenNavItem : NavItem(
     baseRoute = "item/details/forbidden",
-    navArgIds = listOf(ItemDetailsForbiddenReasonNavArgId)
+    navArgIds = listOf(ItemDetailsForbiddenReasonNavArgId),
+    navItemType = NavItemType.Dialog
 ) {
 
     fun createNavRoute(reason: ItemDetailsActionForbiddenReason) = "$baseRoute/$reason"

@@ -35,18 +35,23 @@ fun ItemDetailsMenuBottomSheet(
     val state by state.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = state.event) {
-        when (state.event) {
+        when (val event = state.event) {
             ItemDetailsMenuEvent.Idle -> Unit
 
             ItemDetailsMenuEvent.OnItemNotFound,
-            ItemDetailsMenuEvent.OnItemTrashed ->
+            ItemDetailsMenuEvent.OnItemTrashed -> {
                 onNavigated(ItemDetailsNavDestination.Home)
+            }
 
-            ItemDetailsMenuEvent.OnItemMigrated ->
+            ItemDetailsMenuEvent.OnItemMigrated -> {
                 onNavigated(ItemDetailsNavDestination.ItemMigration)
+            }
 
-            ItemDetailsMenuEvent.OnItemLeaved ->
-                onNavigated(ItemDetailsNavDestination.DismissBottomSheet)
+            is ItemDetailsMenuEvent.OnItemLeaved -> {
+                ItemDetailsNavDestination.LeaveItemShare(
+                    shareId = event.shareId
+                )
+            }
 
             ItemDetailsMenuEvent.OnItemNoteCopied,
             ItemDetailsMenuEvent.OnItemMigrationError,
@@ -58,8 +63,9 @@ fun ItemDetailsMenuBottomSheet(
             ItemDetailsMenuEvent.OnItemPinningError,
             ItemDetailsMenuEvent.OnItemUnpinned,
             ItemDetailsMenuEvent.OnItemUnpinningError,
-            ItemDetailsMenuEvent.OnItemTrashingError ->
+            ItemDetailsMenuEvent.OnItemTrashingError -> {
                 onNavigated(ItemDetailsNavDestination.DismissBottomSheet)
+            }
         }
 
         onConsumeEvent(state.event)

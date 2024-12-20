@@ -19,11 +19,17 @@
 package proton.android.pass.features.item.details.detail.presentation
 
 sealed interface ItemFeatures {
+
     val isHistoryEnabled: Boolean
+
     val isFileAttachmentsEnabled: Boolean
+
+    val isItemSharingEnabled: Boolean
+
 }
 
 internal data class IdentityItemFeatures(
     override val isHistoryEnabled: Boolean,
-    override val isFileAttachmentsEnabled: Boolean
+    override val isFileAttachmentsEnabled: Boolean,
+    override val isItemSharingEnabled: Boolean
 ) : ItemFeatures

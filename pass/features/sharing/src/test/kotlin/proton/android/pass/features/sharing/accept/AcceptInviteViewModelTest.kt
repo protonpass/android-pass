@@ -29,16 +29,20 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.usecases.AcceptInviteStatus
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestAcceptInvite
 import proton.android.pass.data.fakes.usecases.TestRejectInvite
 import proton.android.pass.data.fakes.usecases.invites.FakeObserveInvite
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareType
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.sharing.SharingSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestPendingInvite
 
 internal class AcceptInviteViewModelTest {
@@ -50,6 +54,7 @@ internal class AcceptInviteViewModelTest {
     private lateinit var observeInvite: FakeObserveInvite
     private lateinit var acceptInvite: TestAcceptInvite
     private lateinit var rejectInvite: TestRejectInvite
+    private lateinit var getItemById: FakeGetItemById
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
 
     private lateinit var viewModel: AcceptInviteViewModel
@@ -62,6 +67,7 @@ internal class AcceptInviteViewModelTest {
         observeInvite = FakeObserveInvite()
         acceptInvite = TestAcceptInvite()
         rejectInvite = TestRejectInvite()
+        getItemById = FakeGetItemById()
         snackbarDispatcher = TestSnackbarDispatcher()
 
         viewModel = AcceptInviteViewModel(
@@ -69,7 +75,8 @@ internal class AcceptInviteViewModelTest {
             observeInvite = observeInvite,
             acceptInvite = acceptInvite,
             rejectInvite = rejectInvite,
-            snackbarDispatcher = snackbarDispatcher
+            snackbarDispatcher = snackbarDispatcher,
+            getItemById = getItemById
         )
     }
 
@@ -140,10 +147,16 @@ internal class AcceptInviteViewModelTest {
             itemId = ItemId(""),
             items = 1
         )
+        val item = TestItem.create(
+            shareId = acceptInviteStatus.shareId,
+            itemId = acceptInviteStatus.itemId,
+            itemType = ItemType.Note(text = "Test note")
+        )
         val acceptationResult: Result<AcceptInviteStatus> = Result.success(acceptInviteStatus)
         val expectedMessage = SharingSnackbarMessage.InviteAccepted
         observeInvite.emit(pendingItemInvite.toOption())
         acceptInvite.emitValue(acceptationResult)
+        getItemById.emit(Result.success(item))
 
         viewModel.onAcceptInvite(shareType = ShareType.Item)
 
@@ -208,16 +221,23 @@ internal class AcceptInviteViewModelTest {
             itemId = ItemId(""),
             items = 1
         )
+        val item = TestItem.create(
+            shareId = acceptInviteStatus.shareId,
+            itemId = acceptInviteStatus.itemId,
+            itemType = ItemType.Note(text = "Test note")
+        )
         val acceptationResult: Result<AcceptInviteStatus> = Result.success(acceptInviteStatus)
         val expectedState = AcceptInviteStateMother.Item.create(
             pendingItemInvite = pendingItemInvite,
             event = AcceptInviteEvent.OnItemInviteAcceptSuccess(
                 shareId = acceptInviteStatus.shareId,
-                itemId = acceptInviteStatus.itemId
+                itemId = acceptInviteStatus.itemId,
+                itemCategory = ItemCategory.Note
             )
         )
         observeInvite.emit(pendingItemInvite.toOption())
         acceptInvite.emitValue(acceptationResult)
+        getItemById.emit(Result.success(item))
 
         viewModel.onAcceptInvite(shareType = ShareType.Item)
 

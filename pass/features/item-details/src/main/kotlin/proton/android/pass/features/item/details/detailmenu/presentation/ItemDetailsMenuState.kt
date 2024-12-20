@@ -25,6 +25,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.items.ItemCategory
 
 @Stable
@@ -32,32 +33,45 @@ internal data class ItemDetailsMenuState(
     internal val action: BottomSheetItemAction,
     internal val event: ItemDetailsMenuEvent,
     private val itemOption: Option<Item>,
-    private val itemActionsOption: Option<ItemActions>
+    private val itemActionsOption: Option<ItemActions>,
+    private val shareOption: Option<Share>
 ) {
+
+    private val itemCategory = when (itemOption) {
+        None -> ItemCategory.Unknown
+        is Some -> itemOption.value.itemType.category
+    }
+
+    private val isItemShare = when (shareOption) {
+        None -> false
+        is Some -> shareOption.value is Share.Item
+    }
 
     internal val isItemPinned: Boolean = when (itemOption) {
         None -> false
         is Some -> itemOption.value.isPinned
     }
 
-    internal val canBeMonitored: Boolean = when (itemOption) {
-        None -> false
-        is Some -> itemOption.value.itemType.category == ItemCategory.Login
+    internal val canBeMonitored: Boolean = itemCategory == ItemCategory.Login
+
+    internal val canCopyItemNote: Boolean = itemCategory == ItemCategory.Note
+
+    internal val canLeaveItem: Boolean = isItemShare
+
+    internal val canMigrateItem: Boolean = when {
+        isItemShare -> false
+        else -> when (itemActionsOption) {
+            None -> false
+            is Some -> itemActionsOption.value.canMoveToOtherVault.value()
+        }
     }
 
-    internal val canCopyItemNote: Boolean = when (itemOption) {
-        None -> false
-        is Some -> itemOption.value.itemType.category == ItemCategory.Note
-    }
-
-    internal val canMigrateItem: Boolean = when (itemActionsOption) {
-        None -> false
-        is Some -> itemActionsOption.value.canMoveToOtherVault.value()
-    }
-
-    internal val canTrashItem: Boolean = when (itemActionsOption) {
-        None -> false
-        is Some -> itemActionsOption.value.canMoveToTrash
+    internal val canTrashItem: Boolean = when {
+        isItemShare -> false
+        else -> when (itemActionsOption) {
+            None -> false
+            is Some -> itemActionsOption.value.canMoveToTrash
+        }
     }
 
     internal val isItemExcludedFromMonitoring: Boolean by lazy {
@@ -80,7 +94,8 @@ internal data class ItemDetailsMenuState(
             action = BottomSheetItemAction.None,
             event = ItemDetailsMenuEvent.Idle,
             itemOption = None,
-            itemActionsOption = None
+            itemActionsOption = None,
+            shareOption = None
         )
 
     }

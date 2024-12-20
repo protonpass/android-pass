@@ -124,8 +124,9 @@ fun LoginDetail(
 
                         TopBarOptions -> when (state.itemUiModel.state) {
                             ItemState.Active.value -> LoginTopBarOptionsBottomSheetContents(
-                                canMigrate = state.itemActions.canMoveToOtherVault.value(),
-                                canMoveToTrash = state.itemActions.canMoveToTrash,
+                                canMigrate = state.canMigrate,
+                                canMoveToTrash = state.canMoveToTrash,
+                                canLeave = state.canLeaveItem,
                                 isPinned = state.itemUiModel.isPinned,
                                 onMigrate = {
                                     scope.launch {
@@ -161,6 +162,9 @@ fun LoginDetail(
                                 onIncludeInMonitoring = {
                                     scope.launch { bottomSheetState.hide() }
                                     viewModel.onIncludeItemInMonitoring()
+                                },
+                                onLeave = {
+                                    scope.launch { bottomSheetState.hide() }
                                 },
                                 isExcludedFromMonitor = state.monitorState.isExcludedFromMonitor
                             )

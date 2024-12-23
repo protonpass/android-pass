@@ -33,7 +33,7 @@ class FakeAttachmentHandler : AttachmentsHandler {
 
     override val isUploadingAttachment: Flow<Set<URI>>
         get() = flowOf(emptySet())
-    override val attachmentsFlow: Flow<AttachmentsState>
+    override val attachmentState: Flow<AttachmentsState>
         get() = flowOf(AttachmentsState.Initial)
 
     override fun openDraftAttachment(

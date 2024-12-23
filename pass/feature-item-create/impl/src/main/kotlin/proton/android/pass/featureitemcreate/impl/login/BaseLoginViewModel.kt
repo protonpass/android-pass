@@ -236,7 +236,7 @@ abstract class BaseLoginViewModel(
         userInteractionFlow,
         observeTooltipEnabled(Tooltip.UsernameSplit),
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
-        attachmentsHandler.attachmentsFlow
+        attachmentsHandler.attachmentState
     ) { loginItemValidationErrors, primaryEmail, aliasItemFormState, isLoading, totpUiState,
         upgradeInfoResult, userInteraction, isUsernameSplitTooltipEnabled,
         isFileAttachmentsEnabled, attachmentsState ->

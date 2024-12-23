@@ -43,7 +43,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.data.fakes.usecases.attachments.FakeDownloadAttachment
-import proton.android.pass.data.fakes.usecases.attachments.FakeObserveItemAttachments
+import proton.android.pass.data.fakes.usecases.attachments.FakeObserveDetailItemAttachments
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
@@ -105,7 +105,7 @@ class CreditCardDetailViewModelTest {
             unpinItem = FakeUnpinItem(),
             getUserPlan = TestGetUserPlan(),
             featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
-            observeItemAttachments = FakeObserveItemAttachments(),
+            observeItemAttachments = FakeObserveDetailItemAttachments(),
             observeShare = observeShare,
             downloadAttachment = FakeDownloadAttachment(),
             fileHandler = FakeFileHandler()

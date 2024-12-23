@@ -42,14 +42,12 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.common.OptionShareIdSaver
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.common.getShareUiStateFlow
-import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentitySnackbarMessage.ItemAttachmentsError
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentitySnackbarMessage.ItemCreated
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentitySnackbarMessage.ItemCreationError
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
@@ -67,7 +65,6 @@ class CreateIdentityViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val linkAttachmentsToItem: LinkAttachmentsToItem,
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -140,15 +137,6 @@ class CreateIdentityViewModel @Inject constructor(
                 snackbarDispatcher(ItemCreationError)
             }
             .onSuccess { item ->
-                runCatching {
-                    if (state.value.showFileAttachments()) {
-                        linkAttachmentsToItem(item.id, item.shareId, item.revision)
-                    }
-                }.onFailure {
-                    PassLogger.w(TAG, "Link attachment error")
-                    PassLogger.w(TAG, it)
-                    snackbarDispatcher(ItemAttachmentsError)
-                }
                 inAppReviewTriggerMetrics.incrementItemCreatedCount()
                 identityActionsProvider.onItemSavedState(item)
                 telemetryManager.sendEvent(ItemCreate(EventItemType.Identity))

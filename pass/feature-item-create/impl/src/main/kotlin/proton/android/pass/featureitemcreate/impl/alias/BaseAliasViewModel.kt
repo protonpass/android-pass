@@ -118,7 +118,7 @@ abstract class BaseAliasViewModel(
         hasUserEditedContentFlow,
         featureFlagsRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
-        attachmentsHandler.attachmentsFlow
+        attachmentsHandler.attachmentState
     ) { aliasItemValidationErrors, isLoading, eventWrapper, hasUserEditedContent,
         isAliasManagementEnabled, isFileAttachmentEnabled, attachmentsState ->
         BaseAliasUiState(

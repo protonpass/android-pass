@@ -25,10 +25,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
@@ -36,7 +40,7 @@ import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
-import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
+import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -57,26 +61,39 @@ class AttachmentsHandlerImpl @Inject constructor(
     private val uploadAttachment: UploadAttachment,
     private val downloadAttachment: DownloadAttachment,
     private val clearAttachments: ClearAttachments,
-    private val observeItemAttachments: ObserveItemAttachments,
+    private val observeUpdateItemAttachments: ObserveUpdateItemAttachments,
     private val fileHandler: FileHandler,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : AttachmentsHandler {
 
-    private val loadingDraftAttachmentsState: MutableStateFlow<Set<URI>> =
+    private val shareIdState = MutableStateFlow<Option<ShareId>>(None)
+    private val itemIdState = MutableStateFlow<Option<ItemId>>(None)
+    private val loadingDraftAttachments: MutableStateFlow<Set<URI>> =
         MutableStateFlow(emptySet())
-    private val loadingAttachmentsState: MutableStateFlow<Set<AttachmentId>> =
+    private val loadingAttachments: MutableStateFlow<Set<AttachmentId>> =
         MutableStateFlow(emptySet())
-    private val draftAttachmentsFlow = draftAttachmentRepository.observeAll()
+    private val draftAttachments = draftAttachmentRepository.observeAll()
         .map { uris -> uris.mapNotNull { metadataResolver.extractMetadata(it) } }
-    private val attachmentsState = MutableStateFlow(emptyList<Attachment>())
 
-    override val isUploadingAttachment: StateFlow<Set<URI>> get() = loadingDraftAttachmentsState
+    private val attachments = combine(
+        shareIdState,
+        itemIdState,
+        ::Pair
+    ).flatMapLatest { (shareId, itemId) ->
+        if (shareId is Some && itemId is Some) {
+            observeUpdateItemAttachments(shareId.value, itemId.value)
+        } else {
+            flowOf(emptyList())
+        }
+    }
 
-    override val attachmentsFlow: Flow<AttachmentsState> = combine(
-        draftAttachmentsFlow,
-        attachmentsState,
-        loadingDraftAttachmentsState,
-        loadingAttachmentsState,
+    override val isUploadingAttachment: StateFlow<Set<URI>> get() = loadingDraftAttachments
+
+    override val attachmentState: Flow<AttachmentsState> = combine(
+        draftAttachments,
+        attachments,
+        loadingDraftAttachments,
+        loadingAttachments,
         ::AttachmentsState
     ).distinctUntilChanged()
 
@@ -94,7 +111,7 @@ class AttachmentsHandlerImpl @Inject constructor(
     }
 
     override suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
-        loadingAttachmentsState.update { it + attachment.id }
+        loadingAttachments.update { it + attachment.id }
         runCatching {
             val uri = downloadAttachment(attachment)
             fileHandler.openFile(
@@ -110,11 +127,11 @@ class AttachmentsHandlerImpl @Inject constructor(
             PassLogger.w(TAG, it)
             snackbarDispatcher(OpenAttachmentsError)
         }
-        loadingAttachmentsState.update { it - attachment.id }
+        loadingAttachments.update { it - attachment.id }
     }
 
     override suspend fun uploadNewAttachment(uri: URI) {
-        loadingDraftAttachmentsState.update { it + uri }
+        loadingDraftAttachments.update { it + uri }
         runCatching { uploadAttachment(uri) }
             .onSuccess {
                 PassLogger.i(TAG, "Attachment uploaded: $uri")
@@ -124,7 +141,7 @@ class AttachmentsHandlerImpl @Inject constructor(
                 PassLogger.w(TAG, it)
                 snackbarDispatcher(UploadAttachmentsError)
             }
-        loadingDraftAttachmentsState.update { it - uri }
+        loadingDraftAttachments.update { it - uri }
     }
 
     override fun onClearAttachments() {
@@ -138,15 +155,8 @@ class AttachmentsHandlerImpl @Inject constructor(
             }
 
     override suspend fun getAttachmentsForItem(shareId: ShareId, itemId: ItemId) {
-        runCatching {
-            observeItemAttachments(shareId, itemId).first()
-        }.onSuccess { attachments ->
-            attachmentsState.update { attachments }
-            PassLogger.i(TAG, "Fetched attachments for item $itemId")
-        }.onFailure {
-            PassLogger.w(TAG, "Failed to fetch attachments for item $itemId")
-            PassLogger.w(TAG, it)
-        }
+        shareIdState.update { Some(shareId) }
+        itemIdState.update { Some(itemId) }
     }
 
     companion object {

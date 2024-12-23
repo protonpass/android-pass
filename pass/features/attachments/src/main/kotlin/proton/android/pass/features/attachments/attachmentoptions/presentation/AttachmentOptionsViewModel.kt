@@ -26,8 +26,10 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.data.api.usecases.attachments.RemoveAttachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import java.net.URI
@@ -35,17 +37,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AttachmentOptionsViewModel @Inject constructor(
+    private val removeAttachment: RemoveAttachment,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val attachmentId: Option<AttachmentId> = savedStateHandleProvider.get()
-        .get<String>(CommonOptionalNavArgId.ShareId.key)
-        ?.let { AttachmentId(it) }
+        .get<String>(CommonOptionalNavArgId.AttachmentId.key)
+        ?.let(::AttachmentId)
         .toOption()
 
     private val uri: Option<URI> = savedStateHandleProvider.get()
         .get<String>(CommonOptionalNavArgId.Uri.key)
-        ?.let { URI.create(it) }
+        ?.let(URI::create)
         .toOption()
 
     private val eventFlow = MutableStateFlow<AttachmentOptionsEvent>(AttachmentOptionsEvent.Idle)
@@ -59,6 +62,10 @@ class AttachmentOptionsViewModel @Inject constructor(
 
 
     fun deleteAttachment() {
+        when {
+            attachmentId is Some -> removeAttachment(attachmentId.value)
+            uri is Some -> removeAttachment(uri.value)
+        }
         eventFlow.update { AttachmentOptionsEvent.Close }
     }
 

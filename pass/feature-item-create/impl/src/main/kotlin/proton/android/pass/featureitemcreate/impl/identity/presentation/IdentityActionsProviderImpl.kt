@@ -639,7 +639,7 @@ class IdentityActionsProviderImpl @Inject constructor(
         identityFieldDraftRepository.observeLastAddedExtraField(),
         observeUpgradeInfo().distinctUntilChanged().asLoadingResult().map(::canUseCustomFields),
         featureFlagsRepository[FeatureFlag.FILE_ATTACHMENTS_V1],
-        attachmentsHandler.attachmentsFlow,
+        attachmentsHandler.attachmentState,
         ::IdentitySharedUiState
     )
 

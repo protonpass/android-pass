@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.AttachmentRepository
-import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
+import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
@@ -31,10 +31,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ObserveItemAttachmentsImpl @Inject constructor(
+class ObserveDetailItemAttachmentsImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val attachmentRepository: AttachmentRepository
-) : ObserveItemAttachments {
+) : ObserveDetailItemAttachments {
 
     override fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<Attachment>> = accountManager.getPrimaryUserId()
         .filterNotNull()

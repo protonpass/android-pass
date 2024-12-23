@@ -18,10 +18,15 @@
 
 package proton.android.pass.data.impl.repositories
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.domain.attachments.AttachmentId
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
+import javax.inject.Singleton
 
 interface PendingAttachmentLinkRepository {
     fun addToLink(attachmentId: AttachmentId, encryptionKey: EncryptionKey)
@@ -29,40 +34,76 @@ interface PendingAttachmentLinkRepository {
     fun addAllToUnLink(list: Set<AttachmentId>)
     fun getToLinkKey(attachmentId: AttachmentId): EncryptionKey?
     fun getAllToLink(): Map<AttachmentId, EncryptionKey>
+    fun observeAllToLink(): Flow<Map<AttachmentId, EncryptionKey>>
     fun getAllToUnLink(): Set<AttachmentId>
+    fun observeAllToUnLink(): Flow<Set<AttachmentId>>
     fun removeToLink(attachmentId: AttachmentId): Boolean
     fun removeToUnlink(attachmentId: AttachmentId): Boolean
     fun clearAll()
 }
 
+@Singleton
 class PendingAttachmentLinkRepositoryImpl @Inject constructor() : PendingAttachmentLinkRepository {
-    private val toLink: MutableMap<AttachmentId, EncryptionKey> = ConcurrentHashMap()
-    private val toUnlink: MutableSet<AttachmentId> = mutableSetOf()
+
+    private val toLink = MutableStateFlow<Map<AttachmentId, EncryptionKey>>(emptyMap())
+    private val toUnlink = MutableStateFlow<Set<AttachmentId>>(emptySet())
 
     override fun addToLink(attachmentId: AttachmentId, encryptionKey: EncryptionKey) {
-        toLink[attachmentId] = encryptionKey
+        toLink.update { currentMap ->
+            ConcurrentHashMap(currentMap).apply {
+                this[attachmentId] = encryptionKey
+            }.toMap()
+        }
     }
 
     override fun addToUnLink(attachmentId: AttachmentId) {
-        toUnlink.add(attachmentId)
+        toUnlink.update { currentSet ->
+            currentSet.toMutableSet().apply {
+                add(attachmentId)
+            }
+        }
     }
 
     override fun addAllToUnLink(list: Set<AttachmentId>) {
-        toUnlink.addAll(list)
+        toUnlink.update { currentSet ->
+            currentSet.toMutableSet().apply {
+                addAll(list)
+            }
+        }
     }
 
-    override fun getToLinkKey(attachmentId: AttachmentId): EncryptionKey? = toLink[attachmentId]?.clone()
+    override fun getToLinkKey(attachmentId: AttachmentId): EncryptionKey? = toLink.value[attachmentId]?.clone()
 
-    override fun getAllToLink(): Map<AttachmentId, EncryptionKey> = toLink.toMap()
+    override fun getAllToLink(): Map<AttachmentId, EncryptionKey> = toLink.value
 
-    override fun getAllToUnLink(): Set<AttachmentId> = toUnlink
+    override fun observeAllToLink(): StateFlow<Map<AttachmentId, EncryptionKey>> = toLink
 
-    override fun removeToLink(attachmentId: AttachmentId): Boolean = toLink.remove(attachmentId) != null
+    override fun getAllToUnLink(): Set<AttachmentId> = toUnlink.value
 
-    override fun removeToUnlink(attachmentId: AttachmentId): Boolean = toUnlink.remove(attachmentId)
+    override fun observeAllToUnLink(): StateFlow<Set<AttachmentId>> = toUnlink
+
+    override fun removeToLink(attachmentId: AttachmentId): Boolean {
+        var removed = false
+        toLink.update { currentMap ->
+            ConcurrentHashMap(currentMap).apply {
+                removed = this.remove(attachmentId) != null
+            }.toMap()
+        }
+        return removed
+    }
+
+    override fun removeToUnlink(attachmentId: AttachmentId): Boolean {
+        var removed = false
+        toUnlink.update { currentSet ->
+            currentSet.toMutableSet().apply {
+                removed = this.remove(attachmentId)
+            }
+        }
+        return removed
+    }
 
     override fun clearAll() {
-        toLink.clear()
-        toUnlink.clear()
+        toLink.update { emptyMap() }
+        toUnlink.update { emptySet() }
     }
 }

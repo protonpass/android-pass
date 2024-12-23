@@ -75,7 +75,7 @@ interface IdentityFormActions {
 interface IdentityActionsProvider : IdentityFormActions {
     fun observeSharedState(): Flow<IdentitySharedUiState>
     fun updateLoadingState(loadingState: IsLoadingState)
-    fun onItemSavedState(item: Item)
+    suspend fun onItemSavedState(item: Item)
     fun updateSelectedSection(customExtraField: CustomExtraField)
     suspend fun onItemReceivedState(item: Item)
     fun getReceivedItem(): Item

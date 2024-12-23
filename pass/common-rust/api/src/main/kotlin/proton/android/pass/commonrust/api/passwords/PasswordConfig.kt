@@ -36,10 +36,12 @@ sealed interface PasswordConfig {
     ) : PasswordConfig {
 
         val minLength: Int = passwordMinLength
+            ?.takeIf { it <= PASSWORD_MAX_LENGTH }
             ?.coerceIn(range = PASSWORD_MIN_LENGTH..PASSWORD_MAX_LENGTH)
             ?: PASSWORD_MIN_LENGTH
 
         val maxLength: Int = passwordMaxLength
+            ?.takeIf { it >= PASSWORD_MIN_LENGTH }
             ?.coerceIn(range = PASSWORD_MIN_LENGTH..PASSWORD_MAX_LENGTH)
             ?: PASSWORD_MAX_LENGTH
 
@@ -60,10 +62,12 @@ sealed interface PasswordConfig {
     ) : PasswordConfig {
 
         val minWordsCount: Int = passwordMinWords
+            ?.takeIf { it <= PASSWORD_MAX_LENGTH }
             ?.coerceIn(range = PASSWORD_MIN_WORDS..PASSWORD_MAX_WORDS)
             ?: PASSWORD_MIN_WORDS
 
         val maxWordsCount: Int = passwordMaxWords
+            ?.takeIf { it >= PASSWORD_MIN_LENGTH }
             ?.coerceIn(range = PASSWORD_MIN_WORDS..PASSWORD_MAX_WORDS)
             ?: PASSWORD_MAX_WORDS
 

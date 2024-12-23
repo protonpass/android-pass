@@ -18,21 +18,23 @@
 
 package proton.android.pass.data.impl.repositories
 
+import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.update
-import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import java.net.URI
 import javax.inject.Inject
 
 class DraftAttachmentRepositoryImpl @Inject constructor() : DraftAttachmentRepository {
-    private val uriSetFlow = MutableStateFlow(persistentSetOf<URI>())
+    private val uriSetFlow: MutableStateFlow<PersistentSet<URI>> = MutableStateFlow(persistentSetOf())
 
     override fun add(uri: URI) {
         uriSetFlow.update { currentSet ->
@@ -40,20 +42,15 @@ class DraftAttachmentRepositoryImpl @Inject constructor() : DraftAttachmentRepos
         }
     }
 
-    override fun observeAll(): Flow<Set<URI>> = uriSetFlow
-        .map { it }
-        .distinctUntilChanged()
+    override fun observeAll(): StateFlow<Set<URI>> = uriSetFlow
 
-    override fun observeNew(): Flow<Set<URI>> {
-        var seenSet = setOf<URI>()
-
-        return uriSetFlow
-            .flatMapLatest { currentSet ->
-                val newUris = currentSet - seenSet
-                seenSet = seenSet.intersect(currentSet) + newUris
-                oneShot { newUris }
-            }
-    }
+    override fun observeNew(): Flow<Set<URI>> = uriSetFlow
+        .scan(emptySet<URI>() to emptySet<URI>()) { (previouslySeen, _), currentSet ->
+            val newUris = currentSet - previouslySeen
+            currentSet to newUris
+        }
+        .map { (_, newUris) -> newUris }
+        .filter(Set<URI>::isNotEmpty)
 
     override fun remove(uri: URI): Boolean {
         var removedSuccessfully = false

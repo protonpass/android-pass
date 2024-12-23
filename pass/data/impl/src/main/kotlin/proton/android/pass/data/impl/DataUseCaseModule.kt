@@ -124,7 +124,9 @@ import proton.android.pass.data.api.usecases.aliascontact.UpdateBlockedAliasCont
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
-import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
+import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
+import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
+import proton.android.pass.data.api.usecases.attachments.RemoveAttachment
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
@@ -331,7 +333,9 @@ import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLinkImpl
 import proton.android.pass.data.impl.usecases.attachments.ClearAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.DownloadAttachmentImpl
 import proton.android.pass.data.impl.usecases.attachments.LinkAttachmentsToItemImpl
-import proton.android.pass.data.impl.usecases.attachments.ObserveItemAttachmentsImpl
+import proton.android.pass.data.impl.usecases.attachments.ObserveDetailItemAttachmentsImpl
+import proton.android.pass.data.impl.usecases.attachments.ObserveUpdateItemAttachmentsImpl
+import proton.android.pass.data.impl.usecases.attachments.RemoveAttachmentImpl
 import proton.android.pass.data.impl.usecases.attachments.UploadAttachmentImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.MarkEmailBreachAsResolvedImpl
@@ -1052,7 +1056,10 @@ abstract class DataUseCaseModule {
     abstract fun bindLinkAttachmentToItem(impl: LinkAttachmentsToItemImpl): LinkAttachmentsToItem
 
     @[Binds Singleton]
-    abstract fun bindObserveItemAttachments(impl: ObserveItemAttachmentsImpl): ObserveItemAttachments
+    abstract fun bindObserveUpdateItemAttachments(impl: ObserveUpdateItemAttachmentsImpl): ObserveUpdateItemAttachments
+
+    @[Binds Singleton]
+    abstract fun bindObserveDetailItemAttachments(impl: ObserveDetailItemAttachmentsImpl): ObserveDetailItemAttachments
 
     @[Binds Singleton]
     abstract fun bindObserveShareMembers(impl: ObserveShareItemMembersImpl): ObserveShareItemMembers
@@ -1086,5 +1093,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindCheckIfAttachmentExists(impl: CheckIfAttachmentExistsImpl): CheckIfAttachmentExists
+
+    @[Binds Singleton]
+    abstract fun bindRemoveAttachment(impl: RemoveAttachmentImpl): RemoveAttachment
 
 }

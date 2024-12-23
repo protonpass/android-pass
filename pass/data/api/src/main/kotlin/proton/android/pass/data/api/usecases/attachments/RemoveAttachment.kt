@@ -18,11 +18,10 @@
 
 package proton.android.pass.data.api.usecases.attachments
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.AttachmentId
+import java.net.URI
 
-interface ObserveItemAttachments {
-    operator fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<Attachment>>
+interface RemoveAttachment {
+    operator fun invoke(uri: URI)
+    operator fun invoke(attachmentId: AttachmentId)
 }

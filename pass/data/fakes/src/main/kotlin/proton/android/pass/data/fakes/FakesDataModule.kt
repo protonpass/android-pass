@@ -122,7 +122,8 @@ import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
-import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
+import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
+import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
@@ -327,7 +328,8 @@ import proton.android.pass.data.fakes.usecases.aliascontact.FakeObserveAliasCont
 import proton.android.pass.data.fakes.usecases.attachments.FakeClearAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeDownloadAttachment
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
-import proton.android.pass.data.fakes.usecases.attachments.FakeObserveItemAttachments
+import proton.android.pass.data.fakes.usecases.attachments.FakeObserveDetailItemAttachments
+import proton.android.pass.data.fakes.usecases.attachments.FakeObserveUpdateItemAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeUploadAttachment
 import proton.android.pass.data.fakes.usecases.breach.FakeAddBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeMarkEmailBreachAsResolved
@@ -971,7 +973,10 @@ abstract class FakesDataModule {
     abstract fun bindLinkAttachmentToItem(impl: FakeLinkAttachmentsToItem): LinkAttachmentsToItem
 
     @Binds
-    abstract fun bindObserveItemAttachments(impl: FakeObserveItemAttachments): ObserveItemAttachments
+    abstract fun bindObserveUpdateItemAttachments(impl: FakeObserveUpdateItemAttachments): ObserveUpdateItemAttachments
+
+    @Binds
+    abstract fun bindObserveDetailItemAttachments(impl: FakeObserveDetailItemAttachments): ObserveDetailItemAttachments
 
     @Binds
     abstract fun bindObserveShareMembers(impl: FakeObserveShareItemMembers): ObserveShareItemMembers

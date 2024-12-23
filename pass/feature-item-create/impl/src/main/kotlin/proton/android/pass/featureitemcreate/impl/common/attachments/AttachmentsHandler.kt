@@ -31,7 +31,7 @@ interface AttachmentsHandler {
 
     val isUploadingAttachment: Flow<Set<URI>>
 
-    val attachmentsFlow: Flow<AttachmentsState>
+    val attachmentState: Flow<AttachmentsState>
 
     fun openDraftAttachment(
         contextHolder: ClassHolder<Context>,

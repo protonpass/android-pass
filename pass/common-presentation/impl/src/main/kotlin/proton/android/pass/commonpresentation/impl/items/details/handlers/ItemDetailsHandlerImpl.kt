@@ -43,7 +43,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
-import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
+import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
@@ -59,7 +59,7 @@ import javax.inject.Inject
 
 class ItemDetailsHandlerImpl @Inject constructor(
     private val observeShare: ObserveShare,
-    private val observeItemAttachments: ObserveItemAttachments,
+    private val observeItemAttachments: ObserveDetailItemAttachments,
     private val observers: Map<ItemCategory, @JvmSuppressWildcards ItemDetailsHandlerObserver<*>>,
     private val clipboardManager: ClipboardManager,
     private val downloadAttachment: DownloadAttachment,

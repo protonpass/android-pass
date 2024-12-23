@@ -20,7 +20,7 @@ package proton.android.pass.data.fakes.usecases.attachments
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
+import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
@@ -28,7 +28,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FakeObserveItemAttachments @Inject constructor() : ObserveItemAttachments {
+class FakeObserveDetailItemAttachments @Inject constructor() : ObserveDetailItemAttachments {
 
     override fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<Attachment>> = flowOf(emptyList())
 

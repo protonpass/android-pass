@@ -78,7 +78,7 @@ abstract class BaseCreditCardViewModel(
         isItemSavedState,
         canPerformPaidAction(),
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
-        attachmentsHandler.attachmentsFlow
+        attachmentsHandler.attachmentState
     ) { isLoading, hasUserEditedContent, validationErrors, isItemSaved, canPerformPaidAction,
         isFileAttachmentsEnabled, attachmentsState ->
         BaseCreditCardUiState(

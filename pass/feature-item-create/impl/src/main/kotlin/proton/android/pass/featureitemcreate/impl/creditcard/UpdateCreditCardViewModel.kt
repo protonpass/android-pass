@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -25,6 +24,7 @@ import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.UpdateItem
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -36,10 +36,10 @@ import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardSnackbarM
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardSnackbarMessage.InitError
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardSnackbarMessage.ItemUpdateError
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardSnackbarMessage.UpdateAppToUpdateItemError
+import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemAttachmentsError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -53,7 +53,8 @@ class UpdateCreditCardViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val accountManager: AccountManager,
     private val telemetryManager: TelemetryManager,
-    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    private val linkAttachmentsToItem: LinkAttachmentsToItem,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     attachmentsHandler: AttachmentsHandler,
     canPerformPaidAction: CanPerformPaidAction,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -77,11 +78,7 @@ class UpdateCreditCardViewModel @Inject constructor(
             runCatching { getItemById(navShareId, navItemId).first() }
                 .onSuccess { item ->
                     runCatching {
-                        val isFileAttachmentsEnabled =
-                            featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
-                                .firstOrNull()
-                                ?: false
-                        if (item.hasAttachments && isFileAttachmentsEnabled) {
+                        if (item.hasAttachments && isFileAttachmentsEnabled()) {
                             attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
                         }
                         item
@@ -141,15 +138,24 @@ class UpdateCreditCardViewModel @Inject constructor(
         runCatching {
             val userId = accountManager.getPrimaryUserId().first()
                 ?: throw IllegalStateException("User id is null")
-            val item = itemOption.value() ?: throw IllegalStateException("Item is null")
+            val initialItem = itemOption.value() ?: throw IllegalStateException("Item is null")
             val sanitisedItemFormState = creditCardItemFormState.sanitise()
             updateItem(
                 userId = userId,
                 shareId = navShareId,
-                item = item,
+                item = initialItem,
                 contents = sanitisedItemFormState.toItemContents()
             )
         }.onSuccess { item ->
+            if (isFileAttachmentsEnabled()) {
+                runCatching {
+                    linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                }.onFailure {
+                    PassLogger.w(TAG, "Link attachment error")
+                    PassLogger.w(TAG, it)
+                    snackbarDispatcher(ItemAttachmentsError)
+                }
+            }
             PassLogger.i(TAG, "Credit card successfully updated")
             isItemSavedState.update {
                 ItemSavedState.Success(

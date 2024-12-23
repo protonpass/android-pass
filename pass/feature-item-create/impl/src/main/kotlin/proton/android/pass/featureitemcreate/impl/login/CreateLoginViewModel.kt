@@ -400,17 +400,16 @@ class CreateLoginViewModel @Inject constructor(
                 PassLogger.w(TAG, "Could not create item")
                 PassLogger.w(TAG, it)
             }
-            .mapCatching { item ->
-                if (baseLoginUiState.value.isFileAttachmentsEnabled) {
-                    linkAttachmentsToItem(item.id, shareId, item.revision)
-                }
-                item
-            }
-            .onFailure {
-                PassLogger.w(TAG, "Link attachment error")
-                PassLogger.w(TAG, it)
-            }
             .onSuccess { item ->
+                runCatching {
+                    if (baseLoginUiState.value.isFileAttachmentsEnabled) {
+                        linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                    }
+                }.onFailure {
+                    PassLogger.w(TAG, "Link attachment error")
+                    PassLogger.w(TAG, it)
+                    snackbarDispatcher(ItemAttachmentsError)
+                }
                 launchUpdateAssetLinksWorker(contents.urls.toSet())
                 inAppReviewTriggerMetrics.incrementItemCreatedCount()
                 when (passkeyResponse) {

@@ -11,6 +11,7 @@ import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -34,8 +35,8 @@ import java.net.URI
 abstract class BaseCreditCardViewModel(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val attachmentsHandler: AttachmentsHandler,
+    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     canPerformPaidAction: CanPerformPaidAction,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -232,6 +233,10 @@ abstract class BaseCreditCardViewModel(
     ) {
         attachmentsHandler.openDraftAttachment(contextHolder, uri, mimetype)
     }
+
+    suspend fun isFileAttachmentsEnabled() = featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+        .firstOrNull()
+        ?: false
 
     companion object {
         @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)

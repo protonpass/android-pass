@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -43,12 +42,14 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetShareById
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentsHandler
+import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemAttachmentsError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.AttachmentsInitError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.InitError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.ItemUpdateError
@@ -57,7 +58,6 @@ import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.Updat
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -72,7 +72,8 @@ class UpdateNoteViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
     private val attachmentsHandler: AttachmentsHandler,
-    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    private val linkAttachmentsToItem: LinkAttachmentsToItem,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseNoteViewModel(
     snackbarDispatcher = snackbarDispatcher,
@@ -119,20 +120,15 @@ class UpdateNoteViewModel @Inject constructor(
             }
             .onSuccess { item ->
                 runCatching {
-                    val isFileAttachmentsEnabled =
-                        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
-                            .firstOrNull()
-                            ?: false
-                    if (item.hasAttachments && isFileAttachmentsEnabled) {
+                    if (item.hasAttachments && isFileAttachmentsEnabled()) {
                         attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
                     }
                     item
+                }.onFailure {
+                    PassLogger.w(TAG, it)
+                    PassLogger.w(TAG, "Get attachments error")
+                    snackbarDispatcher(AttachmentsInitError)
                 }
-                    .onFailure {
-                        PassLogger.w(TAG, it)
-                        PassLogger.w(TAG, "Get attachments error")
-                        snackbarDispatcher(AttachmentsInitError)
-                    }
                 itemOption = item.some()
                 onNoteItemReceived(item)
             }
@@ -153,13 +149,13 @@ class UpdateNoteViewModel @Inject constructor(
     }
 
     fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
-        val item = itemOption
-        if (item == None) return@launch
+        val initialItem = itemOption
+        if (initialItem == None) return@launch
         isLoadingState.update { IsLoadingState.Loading }
         val noteItem = noteItemFormMutableState
         val userId = accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
-        if (userId != null && item is Some) {
+        if (userId != null && initialItem is Some) {
             val itemContents = noteItem.toItemContents()
             runCatching { getShare(userId, shareId) }
                 .onFailure {
@@ -167,14 +163,23 @@ class UpdateNoteViewModel @Inject constructor(
                     snackbarDispatcher(ItemUpdateError)
                 }
                 .mapCatching { share ->
-                    itemRepository.updateItem(userId, share, item.value, itemContents)
+                    itemRepository.updateItem(userId, share, initialItem.value, itemContents)
                 }
-                .onSuccess { newItem ->
+                .onSuccess { item ->
+                    if (isFileAttachmentsEnabled()) {
+                        runCatching {
+                            linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                        }.onFailure {
+                            PassLogger.w(TAG, "Link attachment error")
+                            PassLogger.w(TAG, it)
+                            snackbarDispatcher(ItemAttachmentsError)
+                        }
+                    }
                     isItemSavedState.update {
                         encryptionContextProvider.withEncryptionContext {
                             ItemSavedState.Success(
-                                newItem.id,
-                                newItem.toUiModel(this@withEncryptionContext)
+                                item.id,
+                                item.toUiModel(this@withEncryptionContext)
                             )
                         }
                     }

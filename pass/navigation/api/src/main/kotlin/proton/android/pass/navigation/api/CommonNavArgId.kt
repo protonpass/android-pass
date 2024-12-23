@@ -93,6 +93,7 @@ enum class CommonOptionalNavArgId : OptionalNavArgId {
     Uri {
         override val key: String = URI_KEY
         override val navType: NavType<*> = NavType.StringType
+        override val requireEncoding: Boolean = true
     },
     AttachmentId {
         override val key: String = ATTACHMENT_ID_KEY

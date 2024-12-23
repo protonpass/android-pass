@@ -32,6 +32,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.usecases.attachments.RemoveAttachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
+import proton.android.pass.navigation.api.NavParamEncoder
 import java.net.URI
 import javax.inject.Inject
 
@@ -48,8 +49,9 @@ class AttachmentOptionsViewModel @Inject constructor(
 
     private val uri: Option<URI> = savedStateHandleProvider.get()
         .get<String>(CommonOptionalNavArgId.Uri.key)
-        ?.let(URI::create)
         .toOption()
+        .map(NavParamEncoder::decode)
+        .map(URI::create)
 
     private val eventFlow = MutableStateFlow<AttachmentOptionsEvent>(AttachmentOptionsEvent.Idle)
 

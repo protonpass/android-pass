@@ -41,13 +41,13 @@ abstract class AttachmentDao : BaseDao<AttachmentEntity>() {
         DELETE FROM ${AttachmentEntity.TABLE} 
         WHERE ${AttachmentEntity.Columns.SHARE_ID} = :shareId 
           AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId 
-          AND ${AttachmentEntity.Columns.ID} = :attachmentId
+      AND ${AttachmentEntity.Columns.ID} IN (:attachmentIds)
         """
     )
-    abstract fun removeByAttachment(
+    abstract fun removeByAttachments(
         shareId: String,
         itemId: String,
-        attachmentId: String
+        attachmentIds: List<String>
     )
 
     @Query(

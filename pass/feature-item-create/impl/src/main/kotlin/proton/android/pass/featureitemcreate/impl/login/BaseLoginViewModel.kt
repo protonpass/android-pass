@@ -106,10 +106,10 @@ abstract class BaseLoginViewModel(
     private val disableTooltip: DisableTooltip,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val attachmentsHandler: AttachmentsHandler,
+    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeTooltipEnabled: ObserveTooltipEnabled,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -969,6 +969,10 @@ abstract class BaseLoginViewModel(
     ) {
         attachmentsHandler.openDraftAttachment(contextHolder, uri, mimetype)
     }
+
+    suspend fun isFileAttachmentsEnabled() = featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+        .firstOrNull()
+        ?: false
 
     private companion object {
 

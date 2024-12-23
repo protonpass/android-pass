@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -58,6 +57,7 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpdateItem
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.work.WorkerItem
@@ -82,6 +82,7 @@ import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentsHandler
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.AttachmentsInitError
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.InitError
+import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemAttachmentsError
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemUpdateError
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.UpdateAppToUpdateItemError
 import proton.android.pass.log.api.PassLogger
@@ -107,6 +108,7 @@ class UpdateLoginViewModel @Inject constructor(
     private val workerLauncher: WorkerLauncher,
     private val totpManager: TotpManager,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    private val linkAttachmentsToItem: LinkAttachmentsToItem,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
     observeCurrentUser: ObserveCurrentUser,
@@ -166,11 +168,7 @@ class UpdateLoginViewModel @Inject constructor(
                 }
                 .onSuccess { item ->
                     runCatching {
-                        val isFileAttachmentsEnabled =
-                            featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
-                                .firstOrNull()
-                                ?: false
-                        if (item.hasAttachments && isFileAttachmentsEnabled) {
+                        if (item.hasAttachments && isFileAttachmentsEnabled()) {
                             attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
                         }
                         item
@@ -362,6 +360,15 @@ class UpdateLoginViewModel @Inject constructor(
         runCatching {
             updateItem(userId, shareId, currentItem, contents)
         }.onSuccess { item ->
+            if (isFileAttachmentsEnabled()) {
+                runCatching {
+                    linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                }.onFailure {
+                    PassLogger.w(TAG, "Link attachment error")
+                    PassLogger.w(TAG, it)
+                    snackbarDispatcher(ItemAttachmentsError)
+                }
+            }
             launchUpdateAssetLinksWorker(contents.urls.toSet())
             isItemSavedState.update {
                 encryptionContextProvider.withEncryptionContext {

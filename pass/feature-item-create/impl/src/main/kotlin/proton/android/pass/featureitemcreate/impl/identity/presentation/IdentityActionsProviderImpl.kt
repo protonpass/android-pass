@@ -57,6 +57,7 @@ import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_SECTION_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpgradeInfo
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -89,6 +90,7 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsh
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkPhoneNumber
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Yahoo
 import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType
+import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemAttachmentsError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlag
@@ -106,6 +108,7 @@ class IdentityActionsProviderImpl @Inject constructor(
     private val attachmentsHandler: AttachmentsHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
+    private val linkAttachmentsToItem: LinkAttachmentsToItem,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : IdentityActionsProvider {
 
@@ -650,7 +653,16 @@ class IdentityActionsProviderImpl @Inject constructor(
         isLoadingState.update { loadingState }
     }
 
-    override fun onItemSavedState(item: Item) {
+    override suspend fun onItemSavedState(item: Item) {
+        if (isFileAttachmentsEnabled()) {
+            runCatching {
+                linkAttachmentsToItem(item.id, item.shareId, item.revision)
+            }.onFailure {
+                PassLogger.w(TAG, "Link attachment error")
+                PassLogger.w(TAG, it)
+                snackbarDispatcher(ItemAttachmentsError)
+            }
+        }
         val itemSavedState = encryptionContextProvider.withEncryptionContext {
             ItemSavedState.Success(
                 item.id,
@@ -939,6 +951,9 @@ class IdentityActionsProviderImpl @Inject constructor(
             }
         }.launchIn(coroutineScope)
     }
+
+    suspend fun isFileAttachmentsEnabled(): Boolean =
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1).firstOrNull() ?: false
 
     companion object {
         private const val TAG = "IdentityActionsProviderImpl"

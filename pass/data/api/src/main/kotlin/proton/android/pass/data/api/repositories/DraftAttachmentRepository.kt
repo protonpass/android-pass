@@ -19,11 +19,12 @@
 package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import java.net.URI
 
 interface DraftAttachmentRepository {
     fun add(uri: URI)
-    fun observeAll(): Flow<Set<URI>>
+    fun observeAll(): StateFlow<Set<URI>>
     fun observeNew(): Flow<Set<URI>>
     fun remove(uri: URI): Boolean
     fun clear(): Boolean

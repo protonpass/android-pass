@@ -47,7 +47,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItems
 import proton.android.pass.data.fakes.usecases.attachments.FakeDownloadAttachment
-import proton.android.pass.data.fakes.usecases.attachments.FakeObserveItemAttachments
+import proton.android.pass.data.fakes.usecases.attachments.FakeObserveDetailItemAttachments
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
 import proton.android.pass.domain.Flags
 import proton.android.pass.domain.Item
@@ -119,7 +119,7 @@ class NoteDetailViewModelTest {
             unpinItem = FakeUnpinItem(),
             getUserPlan = TestGetUserPlan(),
             featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
-            observeItemAttachments = FakeObserveItemAttachments(),
+            observeItemAttachments = FakeObserveDetailItemAttachments(),
             observeShare = observeShare,
             downloadAttachment = FakeDownloadAttachment(),
             fileHandler = FakeFileHandler()

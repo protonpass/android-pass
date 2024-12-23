@@ -82,7 +82,7 @@ import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
-import proton.android.pass.data.api.usecases.attachments.ObserveItemAttachments
+import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.data.api.usecases.shares.ObserveShare
@@ -155,7 +155,7 @@ class LoginDetailViewModel @Inject constructor(
     private val downloadAttachment: DownloadAttachment,
     private val fileHandler: FileHandler,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
-    observeItemAttachments: ObserveItemAttachments,
+    observeItemAttachments: ObserveDetailItemAttachments,
     canPerformPaidAction: CanPerformPaidAction,
     observeItemByIdWithVault: ObserveItemByIdWithVault,
     savedStateHandle: SavedStateHandleProvider,

@@ -84,7 +84,7 @@ abstract class BaseNoteViewModel(
         isLoadingState,
         isItemSavedState,
         hasUserEditedContentFlow,
-        attachmentsHandler.attachmentsFlow,
+        attachmentsHandler.attachmentState,
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
     ) { noteItemValidationErrors, isLoading, isItemSaved, hasUserEditedContent, attachmentsState,
         isFileAttachmentsEnabled ->

@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -52,6 +51,7 @@ import proton.android.pass.data.api.usecases.ObserveAliasDetails
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateAliasItemContent
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
@@ -65,10 +65,10 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.Ini
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemUpdateError
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.UpdateAppToUpdateItemError
 import proton.android.pass.featureitemcreate.impl.common.attachments.AttachmentsHandler
+import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemAttachmentsError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -84,8 +84,9 @@ class UpdateAliasViewModel @Inject constructor(
     private val aliasPrefixValidator: AliasPrefixValidator,
     private val getItemById: GetItemById,
     private val observeAliasDetails: ObserveAliasDetails,
-    attachmentsHandler: AttachmentsHandler,
+    private val linkAttachmentsToItem: LinkAttachmentsToItem,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    attachmentsHandler: AttachmentsHandler,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseAliasViewModel(
     attachmentsHandler = attachmentsHandler,
@@ -130,11 +131,7 @@ class UpdateAliasViewModel @Inject constructor(
                 ).first()
             }.onSuccess { (item, aliasDetails) ->
                 runCatching {
-                    val isFileAttachmentsEnabled =
-                        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
-                            .firstOrNull()
-                            ?: false
-                    if (item.hasAttachments && isFileAttachmentsEnabled) {
+                    if (item.hasAttachments && isFileAttachmentsEnabled()) {
                         attachmentsHandler.getAttachmentsForItem(item.shareId, item.id)
                     }
                     item
@@ -286,22 +283,31 @@ class UpdateAliasViewModel @Inject constructor(
             isLoadingState.update { IsLoadingState.Loading }
 
             val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
-            val item = itemOption
-            if (userId != null && item is Some) {
+            val initialItem = itemOption
+            if (userId != null && initialItem is Some) {
                 runCatching {
                     updateAliasUseCase(
                         userId = userId,
-                        item = item.value,
+                        item = initialItem.value,
                         content = body
                     )
-                }.onSuccess { newItem ->
+                }.onSuccess { item ->
+                    if (isFileAttachmentsEnabled()) {
+                        runCatching {
+                            linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                        }.onFailure {
+                            PassLogger.w(TAG, "Link attachment error")
+                            PassLogger.w(TAG, it)
+                            snackbarDispatcher(ItemAttachmentsError)
+                        }
+                    }
                     PassLogger.i(TAG, "Alias successfully updated")
                     isItemSavedState.update {
                         val itemUiModel = encryptionContextProvider.withEncryptionContext {
-                            newItem.toUiModel(this)
+                            item.toUiModel(this)
                         }
                         ItemSavedState.Success(
-                            itemId = newItem.id,
+                            itemId = item.id,
                             item = itemUiModel
                         )
                     }

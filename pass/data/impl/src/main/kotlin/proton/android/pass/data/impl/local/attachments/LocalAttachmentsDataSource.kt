@@ -33,7 +33,7 @@ interface LocalAttachmentsDataSource {
     suspend fun removeAttachmentById(
         shareId: ShareId,
         itemId: ItemId,
-        attachmentId: AttachmentId
+        attachmentIdList: List<AttachmentId>
     )
 
     fun observeAttachmentsWithChunksForItem(shareId: ShareId, itemId: ItemId): Flow<List<AttachmentWithChunks>>

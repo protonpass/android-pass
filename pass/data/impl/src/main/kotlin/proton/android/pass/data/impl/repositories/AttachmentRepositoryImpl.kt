@@ -246,6 +246,13 @@ class AttachmentRepositoryImpl @Inject constructor(
                 filesToAdd = batchedToLinkEncrypted.getOrNull(i) ?: emptyMap(),
                 filesToRemove = batchedToUnlink.getOrNull(i)?.toSet() ?: emptySet()
             )
+            withContext(appDispatchers.io) {
+                local.removeAttachmentById(
+                    shareId = shareId,
+                    itemId = itemId,
+                    attachmentIdList = batchedToUnlink.getOrNull(i) ?: emptyList()
+                )
+            }
         }
     }
 

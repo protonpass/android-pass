@@ -53,12 +53,12 @@ class LocalAttachmentsDataSourceImpl @Inject constructor(
     override suspend fun removeAttachmentById(
         shareId: ShareId,
         itemId: ItemId,
-        attachmentId: AttachmentId
+        attachmentIdList: List<AttachmentId>
     ) {
-        database.attachmentDao().removeByAttachment(
+        database.attachmentDao().removeByAttachments(
             shareId = shareId.id,
             itemId = itemId.id,
-            attachmentId = attachmentId.id
+            attachmentIds = attachmentIdList.map { it.id }
         )
     }
 

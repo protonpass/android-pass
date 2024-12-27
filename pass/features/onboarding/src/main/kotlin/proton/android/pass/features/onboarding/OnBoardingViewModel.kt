@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureonboarding.impl
+package proton.android.pass.features.onboarding
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -44,13 +44,13 @@ import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.biometry.UnlockMethod
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
-import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
-import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
-import proton.android.pass.featureonboarding.impl.OnBoardingPageName.InvitePending
-import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
-import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.BiometryFailedToAuthenticateError
-import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.BiometryFailedToStartError
-import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.FingerprintLockEnabled
+import proton.android.pass.features.onboarding.OnBoardingPageName.Autofill
+import proton.android.pass.features.onboarding.OnBoardingPageName.Fingerprint
+import proton.android.pass.features.onboarding.OnBoardingPageName.InvitePending
+import proton.android.pass.features.onboarding.OnBoardingPageName.Last
+import proton.android.pass.features.onboarding.OnBoardingSnackbarMessage.BiometryFailedToAuthenticateError
+import proton.android.pass.features.onboarding.OnBoardingSnackbarMessage.BiometryFailedToStartError
+import proton.android.pass.features.onboarding.OnBoardingSnackbarMessage.FingerprintLockEnabled
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AppLockState

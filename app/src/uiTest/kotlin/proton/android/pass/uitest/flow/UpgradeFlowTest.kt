@@ -22,7 +22,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.plan.test.MinimalUpgradeTests
 import me.proton.core.test.quark.Quark
-import proton.android.pass.featureonboarding.impl.OnBoardingPageName
+import proton.android.pass.features.onboarding.OnBoardingPageName
 import proton.android.pass.uitest.BaseTest
 import proton.android.pass.uitest.robot.HomeRobot
 import proton.android.pass.uitest.robot.OnBoardingRobot

@@ -21,7 +21,7 @@ package proton.android.pass.features
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject2
 
-const val PACKAGE_NAME = "proton.android.pass.featurehome.demoapp"
+const val PACKAGE_NAME = "proton.android.pass.features.homedemo"
 const val TIMEOUT = 5_000L
 const val ITERATIONS = 10
 const val ITEMS_LIST_ID = "itemsList"

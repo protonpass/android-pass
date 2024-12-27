@@ -29,6 +29,10 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasData
 import androidx.test.espresso.intent.rule.IntentsRule
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.features.profile.FeedbackBottomsheet
+import proton.android.pass.features.profile.PASS_REDDIT
+import proton.android.pass.features.profile.PASS_USERVOICE
+import proton.android.pass.features.profile.ProfileNavigation
 import proton.android.pass.features.profile.R
 import proton.android.pass.test.CallChecker
 

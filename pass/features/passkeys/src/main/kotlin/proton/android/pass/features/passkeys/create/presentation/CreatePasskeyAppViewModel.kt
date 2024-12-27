@@ -39,7 +39,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.Suggestion
 import proton.android.pass.data.api.usecases.passkeys.StorePasskey
-import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
+import proton.android.pass.features.itemcreate.login.InitialCreateLoginUiState
 import proton.android.pass.features.passkeys.create.CreatePasskeySnackbarMessage
 import proton.android.pass.features.selectitem.navigation.SelectItemState
 import proton.android.pass.log.api.PassLogger

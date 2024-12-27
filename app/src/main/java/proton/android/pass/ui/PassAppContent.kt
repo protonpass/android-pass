@@ -76,8 +76,8 @@ import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.domain.inappmessages.InAppMessageMode
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.featurehome.impl.HomeNavItem
-import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode
-import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavItem
+import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomSheetMode
+import proton.android.pass.features.itemcreate.bottomsheets.createitem.CreateItemBottomsheetNavItem
 import proton.android.pass.features.profile.ProfileNavItem
 import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.features.inappmessages.banner.ui.InAppMessageBanner

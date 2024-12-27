@@ -451,7 +451,7 @@ dependencies {
     implementation(projects.pass.featureItemCreate.impl)
     implementation(projects.pass.featureItemDetail.impl)
     implementation(projects.pass.featureMigrate.impl)
-    implementation(projects.pass.featureOnboarding.impl)
+    implementation(projects.pass.features.onboarding)
     implementation(projects.pass.features.passkeys)
     implementation(projects.pass.features.profile)
     implementation(projects.pass.features.settings)

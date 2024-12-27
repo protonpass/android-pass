@@ -263,7 +263,7 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 BaseLoginNavigation.AddAttachment,
                 is BaseLoginNavigation.OpenAttachmentOptions,
                 is BaseLoginNavigation.OpenDraftAttachmentOptions,
-                BaseLoginNavigation.DeleteAllAttachments -> {
+                is BaseLoginNavigation.DeleteAllAttachments -> {
                     throw IllegalStateException("Cannot use attachments from CreatePasskey")
                 }
             }
@@ -316,7 +316,7 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
 
                 CreateAliasNavigation.AddAttachment,
                 is CreateAliasNavigation.OpenDraftAttachmentOptions,
-                CreateAliasNavigation.DeleteAllAttachments -> {
+                is CreateAliasNavigation.DeleteAllAttachments -> {
                     throw IllegalStateException("Cannot use attachments from CreatePasskey")
                 }
             }

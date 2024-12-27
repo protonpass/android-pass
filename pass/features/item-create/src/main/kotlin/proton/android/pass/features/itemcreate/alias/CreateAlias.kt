@@ -140,8 +140,11 @@ fun CreateAliasScreen(
                     is AliasContentUiEvent.OnAttachmentEvent -> {
                         when (event.event) {
                             AttachmentContentEvent.OnAddAttachment -> onNavigate(AddAttachment)
-                            AttachmentContentEvent.OnDeleteAllAttachments ->
-                                onNavigate(DeleteAllAttachments)
+                            AttachmentContentEvent.OnDeleteAllAttachments -> onNavigate(
+                                DeleteAllAttachments(
+                                    uiState.baseAliasUiState.attachmentsState.allToUnlink
+                                )
+                            )
                             is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                 viewModel.openDraftAttachment(
                                     contextHolder = context.toClassHolder(),

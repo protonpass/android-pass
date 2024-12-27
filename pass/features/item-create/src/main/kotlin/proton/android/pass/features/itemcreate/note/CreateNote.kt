@@ -132,14 +132,21 @@ fun CreateNoteScreen(
                                     is AttachmentContentEvent.OnAttachmentOptions -> {
                                         throw IllegalStateException("Action not allowed")
                                     }
+
                                     AttachmentContentEvent.OnDeleteAllAttachments ->
-                                        onNavigate(DeleteAllAttachments)
+                                        onNavigate(
+                                            DeleteAllAttachments(
+                                                uiState.baseNoteUiState.attachmentsState.allToUnlink
+                                            )
+                                        )
+
                                     is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                         viewModel.openDraftAttachment(
                                             contextHolder = context.toClassHolder(),
                                             uri = event.event.uri,
                                             mimetype = event.event.mimetype
                                         )
+
                                     is AttachmentContentEvent.OnDraftAttachmentOptions ->
                                         onNavigate(OpenDraftAttachmentOptions(event.event.uri))
                                 }

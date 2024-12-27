@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
-import proton.android.pass.data.impl.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment

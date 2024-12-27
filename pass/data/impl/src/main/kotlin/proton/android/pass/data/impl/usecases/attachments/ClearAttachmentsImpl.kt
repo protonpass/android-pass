@@ -20,7 +20,7 @@ package proton.android.pass.data.impl.usecases.attachments
 
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
-import proton.android.pass.data.impl.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 

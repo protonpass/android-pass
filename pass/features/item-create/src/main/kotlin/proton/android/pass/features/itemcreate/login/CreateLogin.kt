@@ -236,9 +236,8 @@ fun CreateLoginScreen(
                     is LoginContentEvent.OnAttachmentEvent -> {
                         when (it.event) {
                             AttachmentContentEvent.OnAddAttachment -> onNavigate(AddAttachment)
-                            is AttachmentContentEvent.OnAttachmentOpen -> {
-                                // open attachment
-                            }
+                            is AttachmentContentEvent.OnAttachmentOpen ->
+                                throw IllegalStateException("Cannot open attachment during create")
 
                             is AttachmentContentEvent.OnAttachmentOptions ->
                                 onNavigate(OpenAttachmentOptions(it.event.attachmentId))

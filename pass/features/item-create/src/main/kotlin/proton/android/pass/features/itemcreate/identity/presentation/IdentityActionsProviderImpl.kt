@@ -945,7 +945,9 @@ class IdentityActionsProviderImpl @Inject constructor(
                 onUserEditedContent()
                 newUris.forEach { uri ->
                     coroutineScope.launch {
+                        isLoadingState.update { IsLoadingState.Loading }
                         attachmentsHandler.uploadNewAttachment(uri)
+                        isLoadingState.update { IsLoadingState.NotLoading }
                     }
                 }
             }

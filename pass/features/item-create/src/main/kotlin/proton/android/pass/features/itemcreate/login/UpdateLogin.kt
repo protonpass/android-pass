@@ -230,9 +230,11 @@ internal fun UpdateLogin(
                             AttachmentContentEvent.OnAddAttachment ->
                                 onNavigate(AddAttachment)
 
-                            is AttachmentContentEvent.OnAttachmentOpen -> {
-                                // open attachment
-                            }
+                            is AttachmentContentEvent.OnAttachmentOpen ->
+                                viewModel.openAttachment(
+                                    contextHolder = context.toClassHolder(),
+                                    attachment = it.event.attachment
+                                )
 
                             is AttachmentContentEvent.OnAttachmentOptions ->
                                 onNavigate(OpenAttachmentOptions(it.event.attachmentId))

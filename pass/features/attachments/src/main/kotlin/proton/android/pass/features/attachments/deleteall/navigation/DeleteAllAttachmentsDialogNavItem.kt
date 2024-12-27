@@ -18,10 +18,22 @@
 
 package proton.android.pass.features.attachments.deleteall.navigation
 
+import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
+import proton.android.pass.navigation.api.toPath
 
 object DeleteAllAttachmentsDialogNavItem : NavItem(
     baseRoute = "deleteallattachments/dialog",
-    navItemType = NavItemType.Dialog
-)
+    navItemType = NavItemType.Dialog,
+    optionalArgIds = listOf(CommonOptionalNavArgId.AttachmentIdList)
+) {
+    fun createNavRoute(attachmentIds: Set<AttachmentId> = emptySet()): String = buildString {
+        append(baseRoute)
+        val map = mutableMapOf<String, String>()
+        map[CommonOptionalNavArgId.AttachmentIdList.key] = attachmentIds.joinToString { it.id }
+        val optionalPath = map.toPath()
+        append(optionalPath)
+    }
+}

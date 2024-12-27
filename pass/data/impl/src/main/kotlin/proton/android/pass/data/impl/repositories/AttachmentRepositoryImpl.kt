@@ -45,6 +45,7 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.data.api.errors.ItemKeyNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.impl.crypto.ReencryptAttachment
 import proton.android.pass.data.impl.crypto.ReencryptedKey
 import proton.android.pass.data.impl.crypto.ReencryptedMetadata

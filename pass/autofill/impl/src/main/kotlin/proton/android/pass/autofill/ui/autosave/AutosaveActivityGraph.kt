@@ -181,7 +181,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
 
                 BaseLoginNavigation.AddAttachment,
                 is BaseLoginNavigation.OpenAttachmentOptions,
-                BaseLoginNavigation.DeleteAllAttachments,
+                is BaseLoginNavigation.DeleteAllAttachments,
                 is BaseLoginNavigation.OpenDraftAttachmentOptions ->
                     throw IllegalStateException("Cannot use attachments from autofill")
             }

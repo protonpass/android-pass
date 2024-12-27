@@ -95,21 +95,30 @@ fun UpdateNote(
                                 when (event.event) {
                                     AttachmentContentEvent.OnAddAttachment ->
                                         onNavigate(AddAttachment)
+
                                     is AttachmentContentEvent.OnAttachmentOpen ->
                                         viewModel.onAttachmentOpen(
                                             contextHolder = context.toClassHolder(),
                                             attachment = event.event.attachment
                                         )
+
                                     is AttachmentContentEvent.OnAttachmentOptions ->
                                         onNavigate(OpenAttachmentOptions(event.event.attachmentId))
+
                                     AttachmentContentEvent.OnDeleteAllAttachments ->
-                                        onNavigate(DeleteAllAttachments)
+                                        onNavigate(
+                                            DeleteAllAttachments(
+                                                noteUiState.baseNoteUiState.attachmentsState.allToUnlink
+                                            )
+                                        )
+
                                     is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                         viewModel.openDraftAttachment(
                                             contextHolder = context.toClassHolder(),
                                             uri = event.event.uri,
                                             mimetype = event.event.mimetype
                                         )
+
                                     is AttachmentContentEvent.OnDraftAttachmentOptions ->
                                         onNavigate(OpenDraftAttachmentOptions(event.event.uri))
                                 }

@@ -7,16 +7,14 @@ plugins {
 }
 
 android {
-    namespace = "proton.android.pass.featureonboarding.impl"
+    namespace = "proton.android.pass.features.onboarding"
     compileSdk = libs.versions.compileSdk.get().toInt()
-
+    
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        
-
         testInstrumentationRunner = "proton.android.pass.test.HiltRunner"
     }
-
+    
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -99,4 +97,3 @@ dependencies {
     androidTestImplementation(projects.pass.preferences.fakes)
     androidTestImplementation(projects.pass.securityCenter.fakes)
 }
-

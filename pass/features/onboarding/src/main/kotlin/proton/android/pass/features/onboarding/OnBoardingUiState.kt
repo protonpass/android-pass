@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,16 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureonboarding.impl
+package proton.android.pass.features.onboarding
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
-import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
-import proton.android.pass.featureonboarding.impl.OnBoardingPageName.InvitePending
-import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
+import proton.android.pass.features.onboarding.OnBoardingPageName.Autofill
+import proton.android.pass.features.onboarding.OnBoardingPageName.Fingerprint
+import proton.android.pass.features.onboarding.OnBoardingPageName.InvitePending
+import proton.android.pass.features.onboarding.OnBoardingPageName.Last
 
 sealed interface OnboardingEvent {
     data object Unknown : OnboardingEvent

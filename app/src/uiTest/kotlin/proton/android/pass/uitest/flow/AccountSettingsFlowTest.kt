@@ -5,7 +5,7 @@ import me.proton.core.accountmanager.test.robot.AccountSettingsRobot
 import me.proton.core.test.quark.Quark
 import me.proton.core.usersettings.test.MinimalUserSettingsTest
 import org.junit.Before
-import proton.android.pass.featureonboarding.impl.OnBoardingPageName
+import proton.android.pass.features.onboarding.OnBoardingPageName
 import proton.android.pass.uitest.BaseTest
 import proton.android.pass.uitest.robot.HomeRobot
 import proton.android.pass.uitest.robot.OnBoardingRobot

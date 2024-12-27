@@ -86,6 +86,8 @@ sealed interface BaseLoginNavigation {
 
     data object AddAttachment : BaseLoginNavigation
 
+    data object DeleteAllAttachments : BaseLoginNavigation
+
     @JvmInline
     value class OpenDraftAttachmentOptions(val uri: URI) : BaseLoginNavigation
 

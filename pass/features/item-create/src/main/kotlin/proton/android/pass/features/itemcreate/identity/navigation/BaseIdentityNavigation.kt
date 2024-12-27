@@ -54,6 +54,8 @@ sealed interface BaseIdentityNavigation {
 
     data object AddAttachment : BaseIdentityNavigation
 
+    data object DeleteAllAttachments : BaseIdentityNavigation
+
     @JvmInline
     value class OpenAttachmentOptions(val attachmentId: AttachmentId) : BaseIdentityNavigation
 

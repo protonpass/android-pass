@@ -42,6 +42,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation.AddAttachment
+import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation.DeleteAllAttachments
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation.OpenDraftAttachmentOptions
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.common.ShareError.EmptyShareList
@@ -139,9 +140,8 @@ fun CreateAliasScreen(
                     is AliasContentUiEvent.OnAttachmentEvent -> {
                         when (event.event) {
                             AttachmentContentEvent.OnAddAttachment -> onNavigate(AddAttachment)
-                            AttachmentContentEvent.OnDeleteAllAttachments -> {
-                                // delete all attachments
-                            }
+                            AttachmentContentEvent.OnDeleteAllAttachments ->
+                                onNavigate(DeleteAllAttachments)
                             is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                 viewModel.openDraftAttachment(
                                     contextHolder = context.toClassHolder(),

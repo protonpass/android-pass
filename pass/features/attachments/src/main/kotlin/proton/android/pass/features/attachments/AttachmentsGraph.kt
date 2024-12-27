@@ -28,6 +28,9 @@ import proton.android.pass.features.attachments.attachmentoptions.ui.AttachmentO
 import proton.android.pass.features.attachments.camera.navigation.CameraNavItem
 import proton.android.pass.features.attachments.camera.navigation.CameraNavigation
 import proton.android.pass.features.attachments.camera.ui.CameraScreen
+import proton.android.pass.features.attachments.deleteall.navigation.DeleteAllAttachmentsDialogNavItem
+import proton.android.pass.features.attachments.deleteall.navigation.DeleteAllAttachmentsNavigation
+import proton.android.pass.features.attachments.deleteall.ui.DeleteAllAttachmentsDialog
 import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavItem
 import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavigation
 import proton.android.pass.features.attachments.filepicker.ui.FilePickerScreen
@@ -36,7 +39,9 @@ import proton.android.pass.features.attachments.mediapicker.navigation.MediaPick
 import proton.android.pass.features.attachments.mediapicker.ui.MediaPickerScreen
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
+import proton.android.pass.navigation.api.dialog
 
+@Suppress("LongMethod")
 fun NavGraphBuilder.attachmentsGraph(onNavigate: (AttachmentsNavigation) -> Unit) {
     bottomSheet(navItem = AddAttachmentNavItem) {
         AddAttachmentBottomsheet(
@@ -90,6 +95,15 @@ fun NavGraphBuilder.attachmentsGraph(onNavigate: (AttachmentsNavigation) -> Unit
             onNavigate = {
                 when (it) {
                     CameraNavigation.Close -> onNavigate(AttachmentsNavigation.CloseScreen)
+                }
+            }
+        )
+    }
+    dialog(DeleteAllAttachmentsDialogNavItem) {
+        DeleteAllAttachmentsDialog(
+            onNavigate = {
+                when (it) {
+                    DeleteAllAttachmentsNavigation.CloseDialog -> onNavigate(AttachmentsNavigation.CloseScreen)
                 }
             }
         )

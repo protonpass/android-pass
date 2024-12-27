@@ -447,7 +447,7 @@ dependencies {
     implementation(projects.pass.features.aliasContacts)
     implementation(projects.pass.features.auth)
     implementation(projects.pass.features.featureFlags)
-    implementation(projects.pass.featureHome.impl)
+    implementation(projects.pass.features.home)
     implementation(projects.pass.features.itemCreate)
     implementation(projects.pass.features.itemDetail)
     implementation(projects.pass.features.migrate)

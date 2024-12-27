@@ -22,7 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
-import proton.android.pass.featurehome.impl.HomeNavItem
+import proton.android.pass.features.home.HomeNavItem
 import proton.android.pass.navigation.api.AppNavigator
 
 @Composable

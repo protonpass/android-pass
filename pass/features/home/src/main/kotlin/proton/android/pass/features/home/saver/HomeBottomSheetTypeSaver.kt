@@ -16,28 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.ui
+package proton.android.pass.features.home.saver
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.NavHost
-import proton.android.pass.features.home.HomeNavItem
-import proton.android.pass.navigation.api.AppNavigator
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.mapSaver
+import proton.android.pass.features.home.HomeBottomSheetType
 
-@Composable
-fun PassNavHost(
-    modifier: Modifier = Modifier,
-    appNavigator: AppNavigator,
-    startDestination: String = HomeNavItem.route,
-    graph: NavGraphBuilder.() -> Unit
-) {
-    NavHost(
-        modifier = modifier,
-        navController = appNavigator.navController,
-        startDestination = startDestination
-    ) {
-        graph()
+private const val HOME_BOTTOM_SHEET_TYPE_KEY = "variant"
+
+internal val HomeBottomSheetTypeSaver: Saver<HomeBottomSheetType, Any> = mapSaver(
+    save = { homeBottomSheetType ->
+        mapOf(HOME_BOTTOM_SHEET_TYPE_KEY to homeBottomSheetType.name)
+    },
+    restore = { values ->
+        if (values.isNotEmpty()) {
+            HomeBottomSheetType.valueOf(values[HOME_BOTTOM_SHEET_TYPE_KEY] as String)
+        } else {
+            HomeBottomSheetType.Unknown
+        }
     }
-}
-
+)

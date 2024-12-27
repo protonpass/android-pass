@@ -147,19 +147,18 @@ fun UpdateIdentityScreen(
 
                     is IdentityContentEvent.OnAttachmentEvent -> when (event.event) {
                         AttachmentContentEvent.OnAddAttachment -> onNavigate(AddAttachment)
-                        is AttachmentContentEvent.OnAttachmentOpen -> {
-                            // open attachment
-                        }
+                        is AttachmentContentEvent.OnAttachmentOpen ->
+                            viewModel.onOpenAttachment(
+                                contextHolder = context.toClassHolder(),
+                                attachment = event.event.attachment
+                            )
 
                         is AttachmentContentEvent.OnAttachmentOptions ->
                             onNavigate(OpenAttachmentOptions(event.event.attachmentId))
 
                         AttachmentContentEvent.OnDeleteAllAttachments ->
                             onNavigate(
-                                DeleteAllAttachments(
-                                    state.getAttachmentsState().allToUnlink
-
-                                )
+                                DeleteAllAttachments(state.getAttachmentsState().allToUnlink)
                             )
 
                         is AttachmentContentEvent.OnDraftAttachmentOpen ->

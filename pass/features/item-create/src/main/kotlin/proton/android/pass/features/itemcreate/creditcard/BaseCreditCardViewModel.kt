@@ -24,6 +24,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
@@ -234,6 +235,15 @@ abstract class BaseCreditCardViewModel(
         mimetype: String
     ) {
         attachmentsHandler.openDraftAttachment(contextHolder, uri, mimetype)
+    }
+
+    fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
+        viewModelScope.launch {
+            attachmentsHandler.openAttachment(
+                contextHolder = contextHolder,
+                attachment = attachment
+            )
+        }
     }
 
     suspend fun isFileAttachmentsEnabled() = featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)

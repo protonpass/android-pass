@@ -58,7 +58,7 @@ dependencies {
     implementation(projects.pass.featureMigrate.impl)
     implementation(projects.pass.featureOnboarding.impl)
     implementation(projects.pass.features.passkeys)
-    implementation(projects.pass.featureProfile.impl)
+    implementation(projects.pass.features.profile)
     implementation(projects.pass.features.searchOptions)
     implementation(projects.pass.features.aliasContacts)
     implementation(projects.pass.features.password)

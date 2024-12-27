@@ -21,6 +21,9 @@ package proton.android.pass.autofill.ui.autosave
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.autofill.entities.usernamePassword
 import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.features.auth.AuthNavigation
+import proton.android.pass.features.auth.EnterPin
+import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem
@@ -34,9 +37,6 @@ import proton.android.pass.features.itemcreate.login.InitialCreateLoginUiState
 import proton.android.pass.features.itemcreate.login.createUpdateLoginGraph
 import proton.android.pass.features.itemcreate.totp.CameraTotp
 import proton.android.pass.features.itemcreate.totp.PhotoPickerTotp
-import proton.android.pass.features.auth.AuthNavigation
-import proton.android.pass.features.auth.EnterPin
-import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.password.GeneratePasswordBottomsheet
 import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.features.password.GeneratePasswordNavigation
@@ -65,13 +65,15 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 AuthNavigation.Failed -> onNavigate(AutosaveNavigation.Cancel)
                 is AuthNavigation.ForceSignOut ->
                     onNavigate(AutosaveNavigation.ForceSignOut(it.userId))
+
                 is AuthNavigation.EnterPin -> appNavigator.navigate(
                     destination = EnterPin,
                     route = EnterPin.buildRoute(it.origin)
                 )
 
                 is AuthNavigation.SignOut,
-                AuthNavigation.ForceSignOutAllUsers -> {}
+                AuthNavigation.ForceSignOutAllUsers -> {
+                }
 
                 AuthNavigation.CloseBottomsheet -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
@@ -140,13 +142,19 @@ fun NavGraphBuilder.autosaveActivityGraph(
 
                 is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
                     destination = CustomFieldOptionsBottomSheetNavItem.CreateLogin,
-                    route = CustomFieldOptionsBottomSheetNavItem.CreateLogin.buildRoute(it.index, it.currentValue)
+                    route = CustomFieldOptionsBottomSheetNavItem.CreateLogin.buildRoute(
+                        it.index,
+                        it.currentValue
+                    )
                 )
 
                 is BaseLoginNavigation.EditCustomField -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem.CreateLogin,
-                        route = EditCustomFieldNameDialogNavItem.CreateLogin.buildRoute(it.index, it.currentValue),
+                        route = EditCustomFieldNameDialogNavItem.CreateLogin.buildRoute(
+                            it.index,
+                            it.currentValue
+                        ),
                         backDestination = CreateLogin
                     )
                 }
@@ -173,6 +181,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
 
                 BaseLoginNavigation.AddAttachment,
                 is BaseLoginNavigation.OpenAttachmentOptions,
+                BaseLoginNavigation.DeleteAllAttachments,
                 is BaseLoginNavigation.OpenDraftAttachmentOptions ->
                     throw IllegalStateException("Cannot use attachments from autofill")
             }

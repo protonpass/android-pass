@@ -29,6 +29,8 @@ sealed interface BaseCreditCardNavigation {
     @JvmInline
     value class OpenAttachmentOptions(val attachmentId: AttachmentId) : BaseCreditCardNavigation
 
+    data object DeleteAllAttachments : BaseCreditCardNavigation
+
     @JvmInline
     value class OpenDraftAttachmentOptions(val uri: URI) : BaseCreditCardNavigation
 }

@@ -121,7 +121,9 @@ abstract class BaseLoginViewModel(
                 onUserEditedContent()
                 newUris.forEach { uri ->
                     viewModelScope.launch {
+                        isLoadingState.update { IsLoadingState.Loading }
                         attachmentsHandler.uploadNewAttachment(uri)
+                        isLoadingState.update { IsLoadingState.NotLoading }
                     }
                 }
             }

@@ -21,7 +21,6 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState.NotLoading
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
@@ -48,14 +47,17 @@ abstract class BaseCreditCardViewModel(
                 onUserEditedContent()
                 newUris.forEach { uri ->
                     viewModelScope.launch {
+                        isLoadingState.update { IsLoadingState.Loading }
                         attachmentsHandler.uploadNewAttachment(uri)
+                        isLoadingState.update { IsLoadingState.NotLoading }
                     }
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-    protected val isLoadingState: MutableStateFlow<IsLoadingState> = MutableStateFlow(NotLoading)
+    protected val isLoadingState: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.NotLoading)
     private val validationErrorsState: MutableStateFlow<Set<CreditCardValidationErrors>> =
         MutableStateFlow(emptySet())
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =

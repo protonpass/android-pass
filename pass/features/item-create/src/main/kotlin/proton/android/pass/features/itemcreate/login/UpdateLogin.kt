@@ -229,19 +229,28 @@ internal fun UpdateLogin(
                         when (it.event) {
                             AttachmentContentEvent.OnAddAttachment ->
                                 onNavigate(AddAttachment)
+
                             is AttachmentContentEvent.OnAttachmentOpen -> {
                                 // open attachment
                             }
+
                             is AttachmentContentEvent.OnAttachmentOptions ->
                                 onNavigate(OpenAttachmentOptions(it.event.attachmentId))
+
                             AttachmentContentEvent.OnDeleteAllAttachments ->
-                                onNavigate(DeleteAllAttachments)
+                                onNavigate(
+                                    DeleteAllAttachments(
+                                        uiState.baseLoginUiState.attachmentsState.allToUnlink
+                                    )
+                                )
+
                             is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                 viewModel.openDraftAttachment(
                                     contextHolder = context.toClassHolder(),
                                     uri = it.event.uri,
                                     mimetype = it.event.mimetype
                                 )
+
                             is AttachmentContentEvent.OnDraftAttachmentOptions ->
                                 onNavigate(OpenDraftAttachmentOptions(it.event.uri))
                         }

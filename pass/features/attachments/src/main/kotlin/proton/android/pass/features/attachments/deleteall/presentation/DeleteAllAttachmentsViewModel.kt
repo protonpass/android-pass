@@ -26,11 +26,26 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.repositories.DraftAttachmentRepository
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
-class DeleteAllAttachmentsViewModel @Inject constructor() : ViewModel() {
+class DeleteAllAttachmentsViewModel @Inject constructor(
+    private val draftAttachmentRepository: DraftAttachmentRepository,
+    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
+    savedStateHandleProvider: SavedStateHandleProvider
+) : ViewModel() {
+
+    private val attachmentIds: Set<AttachmentId> = savedStateHandleProvider.get()
+        .get<Array<String>>(CommonOptionalNavArgId.AttachmentIdList.key)
+        .orEmpty()
+        .map(::AttachmentId)
+        .toSet()
 
     private val isLoadingState = MutableStateFlow<IsLoadingState>(IsLoadingState.NotLoading)
     private val eventFlow =
@@ -53,7 +68,8 @@ class DeleteAllAttachmentsViewModel @Inject constructor() : ViewModel() {
 
     fun deleteAllAttachments() {
         isLoadingState.update { IsLoadingState.Loading }
-        // delete
+        draftAttachmentRepository.clear()
+        pendingAttachmentLinkRepository.addAllToUnLink(attachmentIds)
         isLoadingState.update { IsLoadingState.NotLoading }
         eventFlow.update { DeleteAllAttachmentsEvent.Close }
     }

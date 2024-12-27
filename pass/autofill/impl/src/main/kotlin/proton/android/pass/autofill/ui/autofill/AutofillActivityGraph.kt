@@ -339,7 +339,7 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 BaseLoginNavigation.AddAttachment,
                 is BaseLoginNavigation.OpenAttachmentOptions,
-                BaseLoginNavigation.DeleteAllAttachments,
+                is BaseLoginNavigation.DeleteAllAttachments,
                 is BaseLoginNavigation.OpenDraftAttachmentOptions ->
                     throw IllegalStateException("Cannot use attachments from autofill")
             }
@@ -391,7 +391,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                 }
 
                 CreateAliasNavigation.AddAttachment,
-                CreateAliasNavigation.DeleteAllAttachments,
+                is CreateAliasNavigation.DeleteAllAttachments,
                 is CreateAliasNavigation.OpenDraftAttachmentOptions ->
                     throw IllegalStateException("Cannot use attachments from autofill")
             }
@@ -415,7 +415,7 @@ fun NavGraphBuilder.autofillActivityGraph(
 
             is BaseCreditCardNavigation.OpenAttachmentOptions,
             is BaseCreditCardNavigation.OpenDraftAttachmentOptions,
-            BaseCreditCardNavigation.DeleteAllAttachments,
+            is BaseCreditCardNavigation.DeleteAllAttachments,
             BaseCreditCardNavigation.AddAttachment ->
                 throw IllegalStateException("Cannot use attachment from autofill")
         }
@@ -501,7 +501,7 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 BaseIdentityNavigation.AddAttachment,
                 is BaseIdentityNavigation.OpenAttachmentOptions,
-                BaseIdentityNavigation.DeleteAllAttachments,
+                is BaseIdentityNavigation.DeleteAllAttachments,
                 is BaseIdentityNavigation.OpenDraftAttachmentOptions ->
                     throw IllegalStateException("Cannot use attachments from autofill")
             }

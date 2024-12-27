@@ -42,6 +42,9 @@ data class AttachmentsState(
 
     val size = draftAttachmentsList.size + attachmentsList.size
 
+    val allToUnlink: Set<AttachmentId>
+        get() = attachmentsList.map { it.id }.toSet()
+
     fun shouldDisplayDivider(index: Int): Boolean =
         index < attachmentsList.lastIndex || draftAttachmentsList.isNotEmpty()
 

@@ -22,6 +22,9 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsBottomSheetNavItem
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsNavDestination
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.itemOptionsNavGraph
+import proton.android.pass.features.auth.AuthNavigation
+import proton.android.pass.features.auth.EnterPin
+import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
 import proton.android.pass.features.itemcreate.alias.createAliasGraph
@@ -38,9 +41,6 @@ import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.CL
 import proton.android.pass.features.itemcreate.login.createUpdateLoginGraph
 import proton.android.pass.features.itemcreate.totp.CameraTotp
 import proton.android.pass.features.itemcreate.totp.PhotoPickerTotp
-import proton.android.pass.features.auth.AuthNavigation
-import proton.android.pass.features.auth.EnterPin
-import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.passkeys.create.presentation.CreatePasskeyNavState
 import proton.android.pass.features.passkeys.create.ui.app.CreatePasskeyEvent
 import proton.android.pass.features.passkeys.create.ui.app.CreatePasskeyNavigation
@@ -260,12 +260,12 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 is BaseLoginNavigation.TotpSuccess ->
                     appNavigator.navigateBackWithResult(it.results)
 
-                BaseLoginNavigation.AddAttachment -> {
-                    throw IllegalStateException("Cannot add attachment from CreatePasskey")
+                BaseLoginNavigation.AddAttachment,
+                is BaseLoginNavigation.OpenAttachmentOptions,
+                is BaseLoginNavigation.OpenDraftAttachmentOptions,
+                BaseLoginNavigation.DeleteAllAttachments -> {
+                    throw IllegalStateException("Cannot use attachments from CreatePasskey")
                 }
-
-                is BaseLoginNavigation.OpenAttachmentOptions -> TODO()
-                is BaseLoginNavigation.OpenDraftAttachmentOptions -> TODO()
             }
         }
     )
@@ -314,11 +314,11 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                     )
                 }
 
-                CreateAliasNavigation.AddAttachment -> {
-                    throw IllegalStateException("Cannot add attachment from CreatePasskey")
+                CreateAliasNavigation.AddAttachment,
+                is CreateAliasNavigation.OpenDraftAttachmentOptions,
+                CreateAliasNavigation.DeleteAllAttachments -> {
+                    throw IllegalStateException("Cannot use attachments from CreatePasskey")
                 }
-
-                is CreateAliasNavigation.OpenDraftAttachmentOptions -> TODO()
             }
         }
     )

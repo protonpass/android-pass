@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,21 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.creditcard
+package proton.android.pass.features.attachments.deleteall.navigation
 
-import proton.android.pass.domain.attachments.AttachmentId
-import java.net.URI
+import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 
-sealed interface BaseCreditCardNavigation {
-    data object Upgrade : BaseCreditCardNavigation
-    data object Close : BaseCreditCardNavigation
-    data object AddAttachment : BaseCreditCardNavigation
-
-    @JvmInline
-    value class OpenAttachmentOptions(val attachmentId: AttachmentId) : BaseCreditCardNavigation
-
-    data object DeleteAllAttachments : BaseCreditCardNavigation
-
-    @JvmInline
-    value class OpenDraftAttachmentOptions(val uri: URI) : BaseCreditCardNavigation
-}
+object DeleteAllAttachmentsDialogNavItem : NavItem(
+    baseRoute = "deleteallattachments/dialog",
+    navItemType = NavItemType.Dialog
+)

@@ -44,6 +44,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.alias.UpdateAliasNavigation.AddAttachment
+import proton.android.pass.features.itemcreate.alias.UpdateAliasNavigation.DeleteAllAttachments
 import proton.android.pass.features.itemcreate.alias.UpdateAliasNavigation.OpenAttachmentOptions
 import proton.android.pass.features.itemcreate.alias.UpdateAliasNavigation.OpenDraftAttachmentOptions
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
@@ -131,9 +132,8 @@ fun UpdateAlias(
                             }
                             is AttachmentContentEvent.OnAttachmentOptions ->
                                 onNavigate(OpenAttachmentOptions(event.event.attachmentId))
-                            AttachmentContentEvent.OnDeleteAllAttachments -> {
-                                // delete all attachments
-                            }
+                            AttachmentContentEvent.OnDeleteAllAttachments ->
+                                onNavigate(DeleteAllAttachments)
                             is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                 viewModel.openDraftAttachment(
                                     contextHolder = context.toClassHolder(),

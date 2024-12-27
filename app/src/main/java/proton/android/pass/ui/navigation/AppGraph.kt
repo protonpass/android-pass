@@ -28,8 +28,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.domain.items.ItemCategory
-import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
-import proton.android.pass.featurefeatureflags.impl.featureFlagsGraph
+import proton.android.pass.features.featureflags.featureFlagsGraph
 import proton.android.pass.featurehome.impl.HOME_ENABLE_BULK_ACTIONS_KEY
 import proton.android.pass.featurehome.impl.HOME_GO_TO_VAULT_KEY
 import proton.android.pass.featurehome.impl.HomeNavItem
@@ -125,6 +124,7 @@ import proton.android.pass.features.extrapassword.confirm.navigation.ConfirmExtr
 import proton.android.pass.features.extrapassword.extraPasswordGraph
 import proton.android.pass.features.extrapassword.infosheet.navigation.ExtraPasswordInfoNavItem
 import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
+import proton.android.pass.features.featureflags.FeatureFlagRoute
 import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalDestination
 import proton.android.pass.features.inappmessages.bottomsheet.navigation.inAppMessageGraph
 import proton.android.pass.features.item.details.detail.navigation.ItemDetailsNavItem

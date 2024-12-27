@@ -6,14 +6,14 @@ plugins {
 }
 
 android {
-    namespace = "proton.android.pass.featurefeatureflags"
+    namespace = "proton.android.pass.features.featureflags"
     compileSdk = libs.versions.compileSdk.get().toInt()
-
+    
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
         
     }
-
+    
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17

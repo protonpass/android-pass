@@ -19,9 +19,9 @@
 package proton.android.pass.uitest.robot
 
 import me.proton.test.fusion.Fusion.node
-import proton.android.pass.featureonboarding.impl.OnBoardingPageName
-import proton.android.pass.featureonboarding.impl.OnBoardingPageTestTag
-import proton.android.pass.featureonboarding.impl.OnBoardingScreenTestTag
+import proton.android.pass.features.onboarding.OnBoardingPageName
+import proton.android.pass.features.onboarding.OnBoardingPageTestTag
+import proton.android.pass.features.onboarding.OnBoardingScreenTestTag
 
 object OnBoardingRobot : Robot {
 

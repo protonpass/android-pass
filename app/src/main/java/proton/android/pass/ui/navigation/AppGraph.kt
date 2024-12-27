@@ -98,8 +98,8 @@ import proton.android.pass.featuremigrate.impl.MigrateNavigation
 import proton.android.pass.featuremigrate.impl.MigrateSelectVault
 import proton.android.pass.featuremigrate.impl.MigrateVaultFilter
 import proton.android.pass.featuremigrate.impl.migrateGraph
-import proton.android.pass.featureonboarding.impl.OnBoarding
-import proton.android.pass.featureonboarding.impl.onBoardingGraph
+import proton.android.pass.features.onboarding.OnBoarding
+import proton.android.pass.features.onboarding.onBoardingGraph
 import proton.android.pass.featureprofile.impl.AppLockTimeBottomsheet
 import proton.android.pass.featureprofile.impl.AppLockTypeBottomsheet
 import proton.android.pass.featureprofile.impl.ENTER_PIN_PARAMETER_KEY

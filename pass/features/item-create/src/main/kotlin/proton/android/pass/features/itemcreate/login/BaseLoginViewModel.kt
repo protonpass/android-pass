@@ -75,6 +75,7 @@ import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.tooltips.Tooltip
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.OpenScanState
@@ -970,6 +971,15 @@ abstract class BaseLoginViewModel(
         mimetype: String
     ) {
         attachmentsHandler.openDraftAttachment(contextHolder, uri, mimetype)
+    }
+
+    fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
+        viewModelScope.launch {
+            attachmentsHandler.openAttachment(
+                contextHolder = contextHolder,
+                attachment = attachment
+            )
+        }
     }
 
     suspend fun isFileAttachmentsEnabled() = featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)

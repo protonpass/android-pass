@@ -114,9 +114,11 @@ fun UpdateCreditCardScreen(
                                     AttachmentContentEvent.OnAddAttachment ->
                                         onNavigate(AddAttachment)
 
-                                    is AttachmentContentEvent.OnAttachmentOpen -> {
-                                        // open attachment
-                                    }
+                                    is AttachmentContentEvent.OnAttachmentOpen ->
+                                        viewModel.openAttachment(
+                                            contextHolder = context.toClassHolder(),
+                                            attachment = event.event.attachment
+                                        )
 
                                     is AttachmentContentEvent.OnAttachmentOptions ->
                                         onNavigate(OpenAttachmentOptions(event.event.attachmentId))

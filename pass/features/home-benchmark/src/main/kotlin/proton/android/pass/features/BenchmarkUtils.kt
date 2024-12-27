@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,28 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.ui
+package proton.android.pass.features
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.NavHost
-import proton.android.pass.features.home.HomeNavItem
-import proton.android.pass.navigation.api.AppNavigator
+import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiObject2
 
-@Composable
-fun PassNavHost(
-    modifier: Modifier = Modifier,
-    appNavigator: AppNavigator,
-    startDestination: String = HomeNavItem.route,
-    graph: NavGraphBuilder.() -> Unit
-) {
-    NavHost(
-        modifier = modifier,
-        navController = appNavigator.navController,
-        startDestination = startDestination
-    ) {
-        graph()
-    }
+const val PACKAGE_NAME = "proton.android.pass.featurehome.demoapp"
+const val TIMEOUT = 5_000L
+const val ITERATIONS = 10
+const val ITEMS_LIST_ID = "itemsList"
+const val VISIBLE_ITEM = "Login 50"
+
+@Suppress("MagicNumber")
+fun UiObject2.setSafeGestureMargin(device: UiDevice) {
+    setGestureMargin(device.displayWidth / 5)
 }
-

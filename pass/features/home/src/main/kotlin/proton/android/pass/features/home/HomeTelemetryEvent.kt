@@ -16,28 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.ui
+package proton.android.pass.features.home
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.NavHost
-import proton.android.pass.features.home.HomeNavItem
-import proton.android.pass.navigation.api.AppNavigator
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryEvent.DeferredTelemetryEvent
 
-@Composable
-fun PassNavHost(
-    modifier: Modifier = Modifier,
-    appNavigator: AppNavigator,
-    startDestination: String = HomeNavItem.route,
-    graph: NavGraphBuilder.() -> Unit
-) {
-    NavHost(
-        modifier = modifier,
-        navController = appNavigator.navController,
-        startDestination = startDestination
-    ) {
-        graph()
-    }
+data class ItemDelete(val itemType: EventItemType) : DeferredTelemetryEvent("item.deletion") {
+    override fun dimensions(): Map<String, String> = mapOf("type" to itemType.itemTypeName)
 }
-
+data object SearchTriggered : DeferredTelemetryEvent("search.triggered")
+data object SearchItemClicked : DeferredTelemetryEvent("search.click")

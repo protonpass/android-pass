@@ -18,29 +18,15 @@
 
 package proton.android.pass.data.impl.repositories
 
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import proton.android.pass.crypto.api.EncryptionKey
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.domain.attachments.AttachmentId
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
-
-interface PendingAttachmentLinkRepository {
-    fun addToLink(attachmentId: AttachmentId, encryptionKey: EncryptionKey)
-    fun addToUnLink(attachmentId: AttachmentId)
-    fun addAllToUnLink(list: Set<AttachmentId>)
-    fun getToLinkKey(attachmentId: AttachmentId): EncryptionKey?
-    fun getAllToLink(): Map<AttachmentId, EncryptionKey>
-    fun observeAllToLink(): Flow<Map<AttachmentId, EncryptionKey>>
-    fun getAllToUnLink(): Set<AttachmentId>
-    fun observeAllToUnLink(): Flow<Set<AttachmentId>>
-    fun removeToLink(attachmentId: AttachmentId): Boolean
-    fun removeToUnlink(attachmentId: AttachmentId): Boolean
-    fun clearAll()
-}
 
 @Singleton
 class PendingAttachmentLinkRepositoryImpl @Inject constructor() : PendingAttachmentLinkRepository {

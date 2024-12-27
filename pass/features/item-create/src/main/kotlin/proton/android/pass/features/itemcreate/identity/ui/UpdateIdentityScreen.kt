@@ -119,9 +119,16 @@ fun UpdateIdentityScreen(
                         actionAfterKeyboardHide = { onNavigate(AddExtraSection) }
                     }
 
-                    is IdentityContentEvent.OnAddExtraSectionCustomField -> actionAfterKeyboardHide = {
-                        onNavigate(OpenExtraFieldBottomSheet(AddIdentityFieldType.Extra, event.index.some()))
-                    }
+                    is IdentityContentEvent.OnAddExtraSectionCustomField ->
+                        actionAfterKeyboardHide =
+                            {
+                                onNavigate(
+                                    OpenExtraFieldBottomSheet(
+                                        AddIdentityFieldType.Extra,
+                                        event.index.some()
+                                    )
+                                )
+                            }
 
                     is IdentityContentEvent.OnExtraSectionOptions ->
                         actionAfterKeyboardHide = {
@@ -132,24 +139,36 @@ fun UpdateIdentityScreen(
                         viewModel.resetLastAddedFieldFocus()
 
                     is IdentityContentEvent.OnCustomFieldFocused ->
-                        viewModel.onCustomFieldFocusChange(event.index, event.isFocused, event.customExtraField)
+                        viewModel.onCustomFieldFocusChange(
+                            event.index,
+                            event.isFocused,
+                            event.customExtraField
+                        )
 
                     is IdentityContentEvent.OnAttachmentEvent -> when (event.event) {
                         AttachmentContentEvent.OnAddAttachment -> onNavigate(AddAttachment)
                         is AttachmentContentEvent.OnAttachmentOpen -> {
                             // open attachment
                         }
+
                         is AttachmentContentEvent.OnAttachmentOptions ->
                             onNavigate(OpenAttachmentOptions(event.event.attachmentId))
 
                         AttachmentContentEvent.OnDeleteAllAttachments ->
-                            onNavigate(DeleteAllAttachments)
+                            onNavigate(
+                                DeleteAllAttachments(
+                                    state.getAttachmentsState().allToUnlink
+
+                                )
+                            )
+
                         is AttachmentContentEvent.OnDraftAttachmentOpen ->
                             viewModel.openDraftAttachment(
                                 contextHolder = context.toClassHolder(),
                                 uri = event.event.uri,
                                 mimetype = event.event.mimetype
                             )
+
                         is AttachmentContentEvent.OnDraftAttachmentOptions ->
                             onNavigate(OpenDraftAttachmentOptions(event.event.uri))
                     }

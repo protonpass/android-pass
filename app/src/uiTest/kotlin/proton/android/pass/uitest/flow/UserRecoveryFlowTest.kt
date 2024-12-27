@@ -16,7 +16,7 @@ import me.proton.core.userrecovery.presentation.compose.DeviceRecoveryHandler
 import me.proton.core.userrecovery.presentation.compose.DeviceRecoveryNotificationSetup
 import me.proton.core.userrecovery.test.MinimalUserRecoveryTest
 import org.junit.Rule
-import proton.android.pass.featureonboarding.impl.OnBoardingPageName
+import proton.android.pass.features.onboarding.OnBoardingPageName
 import proton.android.pass.uitest.BaseTest
 import proton.android.pass.uitest.robot.HomeRobot
 import proton.android.pass.uitest.robot.OnBoardingRobot

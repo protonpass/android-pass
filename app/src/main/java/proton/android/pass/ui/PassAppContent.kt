@@ -78,7 +78,7 @@ import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.featurehome.impl.HomeNavItem
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavItem
-import proton.android.pass.featureprofile.impl.ProfileNavItem
+import proton.android.pass.features.profile.ProfileNavItem
 import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.features.inappmessages.banner.ui.InAppMessageBanner
 import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalNavItem

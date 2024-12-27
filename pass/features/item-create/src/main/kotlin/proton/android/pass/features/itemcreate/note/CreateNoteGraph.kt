@@ -25,6 +25,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
@@ -64,7 +65,9 @@ sealed interface CreateNoteNavigation {
     data class SelectVault(val shareId: ShareId) : CreateNoteNavigation
     data object NoteCreated : CreateNoteNavigation
     data object AddAttachment : CreateNoteNavigation
-    data object DeleteAllAttachments : CreateNoteNavigation
+
+    @JvmInline
+    value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : CreateNoteNavigation
     data object Back : CreateNoteNavigation
 
     @JvmInline

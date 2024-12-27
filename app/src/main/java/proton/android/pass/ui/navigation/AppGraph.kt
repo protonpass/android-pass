@@ -916,8 +916,11 @@ fun NavGraphBuilder.appGraph(
                         route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                     )
 
-                BaseLoginNavigation.DeleteAllAttachments ->
-                    appNavigator.navigate(DeleteAllAttachmentsDialogNavItem)
+                is BaseLoginNavigation.DeleteAllAttachments ->
+                    appNavigator.navigate(
+                        destination = DeleteAllAttachmentsDialogNavItem,
+                        route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
+                    )
             }
         }
     )
@@ -940,8 +943,11 @@ fun NavGraphBuilder.appGraph(
                         route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                     )
 
-                CreateNoteNavigation.DeleteAllAttachments ->
-                    appNavigator.navigate(DeleteAllAttachmentsDialogNavItem)
+                is CreateNoteNavigation.DeleteAllAttachments ->
+                    appNavigator.navigate(
+                        destination = DeleteAllAttachmentsDialogNavItem,
+                        route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
+                    )
             }
         }
     )
@@ -968,8 +974,11 @@ fun NavGraphBuilder.appGraph(
                         route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                     )
 
-                UpdateNoteNavigation.DeleteAllAttachments ->
-                    appNavigator.navigate(DeleteAllAttachmentsDialogNavItem)
+                is UpdateNoteNavigation.DeleteAllAttachments ->
+                    appNavigator.navigate(
+                        destination = DeleteAllAttachmentsDialogNavItem,
+                        route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
+                    )
             }
         }
     )
@@ -999,8 +1008,11 @@ fun NavGraphBuilder.appGraph(
                     route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                 )
 
-            BaseCreditCardNavigation.DeleteAllAttachments ->
-                appNavigator.navigate(DeleteAllAttachmentsDialogNavItem)
+            is BaseCreditCardNavigation.DeleteAllAttachments ->
+                appNavigator.navigate(
+                    destination = DeleteAllAttachmentsDialogNavItem,
+                    route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
+                )
         }
     }
     updateCreditCardGraph {
@@ -1031,8 +1043,11 @@ fun NavGraphBuilder.appGraph(
                     route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                 )
 
-            BaseCreditCardNavigation.DeleteAllAttachments ->
-                appNavigator.navigate(DeleteAllAttachmentsDialogNavItem)
+            is BaseCreditCardNavigation.DeleteAllAttachments ->
+                appNavigator.navigate(
+                    destination = DeleteAllAttachmentsDialogNavItem,
+                    route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
+                )
         }
     }
     createAliasGraph(
@@ -1069,8 +1084,11 @@ fun NavGraphBuilder.appGraph(
                         route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                     )
 
-                CreateAliasNavigation.DeleteAllAttachments ->
-                    appNavigator.navigate(DeleteAllAttachmentsDialogNavItem)
+                is CreateAliasNavigation.DeleteAllAttachments ->
+                    appNavigator.navigate(
+                        destination = DeleteAllAttachmentsDialogNavItem,
+                        route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
+                    )
             }
         }
     )
@@ -1098,8 +1116,11 @@ fun NavGraphBuilder.appGraph(
                         route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                     )
 
-                UpdateAliasNavigation.DeleteAllAttachments ->
-                    appNavigator.navigate(DeleteAllAttachmentsDialogNavItem)
+                is UpdateAliasNavigation.DeleteAllAttachments ->
+                    appNavigator.navigate(
+                        destination = DeleteAllAttachmentsDialogNavItem,
+                        route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
+                    )
             }
         }
     )
@@ -1209,8 +1230,11 @@ fun NavGraphBuilder.appGraph(
                         route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                     )
 
-                BaseIdentityNavigation.DeleteAllAttachments ->
-                    appNavigator.navigate(DeleteAllAttachmentsDialogNavItem)
+                is BaseIdentityNavigation.DeleteAllAttachments ->
+                    appNavigator.navigate(
+                        destination = DeleteAllAttachmentsDialogNavItem,
+                        route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
+                    )
             }
         }
     )

@@ -133,7 +133,11 @@ fun UpdateAlias(
                             is AttachmentContentEvent.OnAttachmentOptions ->
                                 onNavigate(OpenAttachmentOptions(event.event.attachmentId))
                             AttachmentContentEvent.OnDeleteAllAttachments ->
-                                onNavigate(DeleteAllAttachments)
+                                onNavigate(
+                                    DeleteAllAttachments(
+                                        uiState.baseAliasUiState.attachmentsState.allToUnlink
+                                    )
+                                )
                             is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                 viewModel.openDraftAttachment(
                                     contextHolder = context.toClassHolder(),

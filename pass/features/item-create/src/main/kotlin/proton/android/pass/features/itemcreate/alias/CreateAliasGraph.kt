@@ -28,6 +28,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.itemcreate.alias.bottomsheet.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.common.KEY_VAULT_SELECTED
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
@@ -102,7 +103,9 @@ sealed interface CreateAliasNavigation {
     data object Close : CreateAliasNavigation
     data object CloseBottomsheet : CreateAliasNavigation
     data object AddAttachment : CreateAliasNavigation
-    data object DeleteAllAttachments : CreateAliasNavigation
+
+    @JvmInline
+    value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : CreateAliasNavigation
 
     @JvmInline
     value class OpenDraftAttachmentOptions(val uri: URI) : CreateAliasNavigation

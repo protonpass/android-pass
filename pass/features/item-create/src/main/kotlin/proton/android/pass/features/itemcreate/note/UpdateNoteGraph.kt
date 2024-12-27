@@ -44,6 +44,7 @@ sealed interface UpdateNoteNavigation {
     data class NoteUpdated(val shareId: ShareId, val itemId: ItemId) : UpdateNoteNavigation
     data object Back : UpdateNoteNavigation
     data object AddAttachment : UpdateNoteNavigation
+    data object DeleteAllAttachments : UpdateNoteNavigation
 
     @JvmInline
     value class OpenAttachmentOptions(val attachmentId: AttachmentId) : UpdateNoteNavigation

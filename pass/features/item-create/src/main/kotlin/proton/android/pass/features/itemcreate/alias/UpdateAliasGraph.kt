@@ -60,6 +60,8 @@ sealed interface UpdateAliasNavigation {
     @JvmInline
     value class OpenAttachmentOptions(val attachmentId: AttachmentId) : UpdateAliasNavigation
 
+    data object DeleteAllAttachments : UpdateAliasNavigation
+
     @JvmInline
     value class OpenDraftAttachmentOptions(val uri: URI) : UpdateAliasNavigation
 }

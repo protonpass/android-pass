@@ -35,6 +35,9 @@ import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.I
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.ItemOptionsNavDestination
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.navigation.itemOptionsNavGraph
 import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.features.auth.AuthNavigation
+import proton.android.pass.features.auth.EnterPin
+import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.itemcreate.alias.CreateAlias
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
@@ -73,9 +76,6 @@ import proton.android.pass.features.itemcreate.login.bottomsheet.aliasoptions.CL
 import proton.android.pass.features.itemcreate.login.createUpdateLoginGraph
 import proton.android.pass.features.itemcreate.totp.CameraTotp
 import proton.android.pass.features.itemcreate.totp.PhotoPickerTotp
-import proton.android.pass.features.auth.AuthNavigation
-import proton.android.pass.features.auth.EnterPin
-import proton.android.pass.features.auth.authGraph
 import proton.android.pass.features.password.GeneratePasswordBottomsheet
 import proton.android.pass.features.password.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.features.password.GeneratePasswordNavigation
@@ -339,6 +339,7 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 BaseLoginNavigation.AddAttachment,
                 is BaseLoginNavigation.OpenAttachmentOptions,
+                BaseLoginNavigation.DeleteAllAttachments,
                 is BaseLoginNavigation.OpenDraftAttachmentOptions ->
                     throw IllegalStateException("Cannot use attachments from autofill")
             }
@@ -390,6 +391,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                 }
 
                 CreateAliasNavigation.AddAttachment,
+                CreateAliasNavigation.DeleteAllAttachments,
                 is CreateAliasNavigation.OpenDraftAttachmentOptions ->
                     throw IllegalStateException("Cannot use attachments from autofill")
             }
@@ -413,9 +415,9 @@ fun NavGraphBuilder.autofillActivityGraph(
 
             is BaseCreditCardNavigation.OpenAttachmentOptions,
             is BaseCreditCardNavigation.OpenDraftAttachmentOptions,
+            BaseCreditCardNavigation.DeleteAllAttachments,
             BaseCreditCardNavigation.AddAttachment ->
                 throw IllegalStateException("Cannot use attachment from autofill")
-
         }
     }
     createIdentityGraph(
@@ -499,9 +501,9 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 BaseIdentityNavigation.AddAttachment,
                 is BaseIdentityNavigation.OpenAttachmentOptions,
+                BaseIdentityNavigation.DeleteAllAttachments,
                 is BaseIdentityNavigation.OpenDraftAttachmentOptions ->
                     throw IllegalStateException("Cannot use attachments from autofill")
-
             }
         }
     )

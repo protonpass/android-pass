@@ -46,6 +46,7 @@ import proton.android.pass.features.itemcreate.common.ShareError.SharesNotAvaila
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
+import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.DeleteAllAttachments
 import proton.android.pass.features.itemcreate.note.CreateNoteNavigation.OpenDraftAttachmentOptions
 
 @Suppress("ComplexMethod")
@@ -131,9 +132,8 @@ fun CreateNoteScreen(
                                     is AttachmentContentEvent.OnAttachmentOptions -> {
                                         throw IllegalStateException("Action not allowed")
                                     }
-                                    AttachmentContentEvent.OnDeleteAllAttachments -> {
-                                        // delete all attachments
-                                    }
+                                    AttachmentContentEvent.OnDeleteAllAttachments ->
+                                        onNavigate(DeleteAllAttachments)
                                     is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                         viewModel.openDraftAttachment(
                                             contextHolder = context.toClassHolder(),

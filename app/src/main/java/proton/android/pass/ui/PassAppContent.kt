@@ -74,7 +74,7 @@ import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffec
 import proton.android.pass.domain.inappmessages.InAppMessageId
 import proton.android.pass.domain.inappmessages.InAppMessageKey
 import proton.android.pass.domain.inappmessages.InAppMessageMode
-import proton.android.pass.featurehome.impl.HomeNavItem
+import proton.android.pass.features.home.HomeNavItem
 import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.features.featureflags.FeatureFlagRoute
 import proton.android.pass.features.inappmessages.banner.ui.InAppMessageBanner

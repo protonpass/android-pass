@@ -20,7 +20,7 @@ package proton.android.pass.uitest.robot
 
 import me.proton.test.fusion.Fusion.node
 import proton.android.pass.composecomponents.impl.bottombar.BottomBarTestTag
-import proton.android.pass.featurehome.impl.HomeScreenTestTag
+import proton.android.pass.features.home.HomeScreenTestTag
 
 object HomeRobot : Robot {
 

@@ -45,6 +45,7 @@ import proton.android.pass.features.itemcreate.identity.navigation.BaseIdentityN
 import proton.android.pass.features.itemcreate.identity.navigation.BaseIdentityNavigation.AddAttachment
 import proton.android.pass.features.itemcreate.identity.navigation.BaseIdentityNavigation.AddExtraSection
 import proton.android.pass.features.itemcreate.identity.navigation.BaseIdentityNavigation.CustomFieldOptions
+import proton.android.pass.features.itemcreate.identity.navigation.BaseIdentityNavigation.DeleteAllAttachments
 import proton.android.pass.features.itemcreate.identity.navigation.BaseIdentityNavigation.ExtraSectionOptions
 import proton.android.pass.features.itemcreate.identity.navigation.BaseIdentityNavigation.OpenAttachmentOptions
 import proton.android.pass.features.itemcreate.identity.navigation.BaseIdentityNavigation.OpenDraftAttachmentOptions
@@ -152,9 +153,8 @@ fun CreateIdentityScreen(
                         is AttachmentContentEvent.OnAttachmentOptions ->
                             onNavigate(OpenAttachmentOptions(event.event.attachmentId))
 
-                        AttachmentContentEvent.OnDeleteAllAttachments -> {
-                            // delete all attachments
-                        }
+                        AttachmentContentEvent.OnDeleteAllAttachments ->
+                            onNavigate(DeleteAllAttachments)
 
                         is AttachmentContentEvent.OnDraftAttachmentOpen ->
                             viewModel.openDraftAttachment(

@@ -46,6 +46,7 @@ import proton.android.pass.features.itemcreate.common.ShareError.SharesNotAvaila
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.AddAttachment
+import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.DeleteAllAttachments
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.OnCreateLoginEvent
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.OpenAttachmentOptions
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.OpenDraftAttachmentOptions
@@ -240,9 +241,8 @@ fun CreateLoginScreen(
                             }
                             is AttachmentContentEvent.OnAttachmentOptions ->
                                 onNavigate(OpenAttachmentOptions(it.event.attachmentId))
-                            AttachmentContentEvent.OnDeleteAllAttachments -> {
-                                // delete all attachments
-                            }
+                            AttachmentContentEvent.OnDeleteAllAttachments ->
+                                onNavigate(DeleteAllAttachments)
                             is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                 viewModel.openDraftAttachment(
                                     contextHolder = context.toClassHolder(),

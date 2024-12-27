@@ -28,6 +28,35 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.features.account.Account
+import proton.android.pass.features.account.AccountNavigation
+import proton.android.pass.features.account.accountGraph
+import proton.android.pass.features.alias.contacts.AliasContactsNavigation
+import proton.android.pass.features.alias.contacts.aliasContactGraph
+import proton.android.pass.features.alias.contacts.create.navigation.CreateAliasContactNavItem
+import proton.android.pass.features.alias.contacts.detail.navigation.DetailAliasContactNavItem
+import proton.android.pass.features.alias.contacts.onboarding.navigation.OnBoardingAliasContactNavItem
+import proton.android.pass.features.alias.contacts.options.navigation.OptionsAliasContactNavItem
+import proton.android.pass.features.attachments.AttachmentsNavigation
+import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavItem
+import proton.android.pass.features.attachments.attachmentoptions.navigation.AttachmentOptionsNavItem
+import proton.android.pass.features.attachments.attachmentsGraph
+import proton.android.pass.features.attachments.camera.navigation.CameraNavItem
+import proton.android.pass.features.attachments.deleteall.navigation.DeleteAllAttachmentsDialogNavItem
+import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavItem
+import proton.android.pass.features.attachments.mediapicker.navigation.MediaPickerNavItem
+import proton.android.pass.features.auth.Auth
+import proton.android.pass.features.auth.AuthNavigation
+import proton.android.pass.features.auth.AuthOrigin
+import proton.android.pass.features.auth.EnterPin
+import proton.android.pass.features.auth.authGraph
+import proton.android.pass.features.extrapassword.ExtraPasswordNavigation
+import proton.android.pass.features.extrapassword.configure.navigation.SetExtraPasswordNavItem
+import proton.android.pass.features.extrapassword.confirm.navigation.ConfirmExtraPasswordNavItem
+import proton.android.pass.features.extrapassword.extraPasswordGraph
+import proton.android.pass.features.extrapassword.infosheet.navigation.ExtraPasswordInfoNavItem
+import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
+import proton.android.pass.features.featureflags.FeatureFlagRoute
 import proton.android.pass.features.featureflags.featureFlagsGraph
 import proton.android.pass.features.home.HOME_ENABLE_BULK_ACTIONS_KEY
 import proton.android.pass.features.home.HOME_GO_TO_VAULT_KEY
@@ -35,6 +64,25 @@ import proton.android.pass.features.home.HomeNavItem
 import proton.android.pass.features.home.HomeNavigation
 import proton.android.pass.features.home.HomeUpgradeDialog
 import proton.android.pass.features.home.homeGraph
+import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalDestination
+import proton.android.pass.features.inappmessages.bottomsheet.navigation.inAppMessageGraph
+import proton.android.pass.features.item.details.detail.navigation.ItemDetailsNavItem
+import proton.android.pass.features.item.details.detailforbidden.navigation.ItemDetailsForbiddenNavItem
+import proton.android.pass.features.item.details.detailleave.navigation.ItemDetailsLeaveNavItem
+import proton.android.pass.features.item.details.detailmenu.navigation.ItemDetailsMenuNavItem
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
+import proton.android.pass.features.item.details.shared.navigation.itemDetailsNavGraph
+import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
+import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
+import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
+import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
+import proton.android.pass.features.item.options.aliases.trash.dialogs.navigation.ItemOptionsAliasTrashDialogNavItem
+import proton.android.pass.features.item.options.shared.navigation.ItemOptionsNavDestination
+import proton.android.pass.features.item.options.shared.navigation.itemOptionsNavGraph
+import proton.android.pass.features.item.trash.shared.navigation.ItemTrashNavDestination
+import proton.android.pass.features.item.trash.shared.navigation.itemTrashNavGraph
+import proton.android.pass.features.item.trash.trashdelete.navigation.ItemTrashDeleteNavItem
+import proton.android.pass.features.item.trash.trashmenu.navigation.ItemTrashMenuNavItem
 import proton.android.pass.features.itemcreate.alias.CreateAlias
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
@@ -97,53 +145,6 @@ import proton.android.pass.features.migrate.MigrateNavigation
 import proton.android.pass.features.migrate.MigrateSelectVault
 import proton.android.pass.features.migrate.MigrateVaultFilter
 import proton.android.pass.features.migrate.migrateGraph
-import proton.android.pass.features.account.Account
-import proton.android.pass.features.account.AccountNavigation
-import proton.android.pass.features.account.accountGraph
-import proton.android.pass.features.alias.contacts.AliasContactsNavigation
-import proton.android.pass.features.alias.contacts.aliasContactGraph
-import proton.android.pass.features.alias.contacts.create.navigation.CreateAliasContactNavItem
-import proton.android.pass.features.alias.contacts.detail.navigation.DetailAliasContactNavItem
-import proton.android.pass.features.alias.contacts.onboarding.navigation.OnBoardingAliasContactNavItem
-import proton.android.pass.features.alias.contacts.options.navigation.OptionsAliasContactNavItem
-import proton.android.pass.features.attachments.AttachmentsNavigation
-import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavItem
-import proton.android.pass.features.attachments.attachmentoptions.navigation.AttachmentOptionsNavItem
-import proton.android.pass.features.attachments.attachmentsGraph
-import proton.android.pass.features.attachments.camera.navigation.CameraNavItem
-import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavItem
-import proton.android.pass.features.attachments.mediapicker.navigation.MediaPickerNavItem
-import proton.android.pass.features.auth.Auth
-import proton.android.pass.features.auth.AuthNavigation
-import proton.android.pass.features.auth.AuthOrigin
-import proton.android.pass.features.auth.EnterPin
-import proton.android.pass.features.auth.authGraph
-import proton.android.pass.features.extrapassword.ExtraPasswordNavigation
-import proton.android.pass.features.extrapassword.configure.navigation.SetExtraPasswordNavItem
-import proton.android.pass.features.extrapassword.confirm.navigation.ConfirmExtraPasswordNavItem
-import proton.android.pass.features.extrapassword.extraPasswordGraph
-import proton.android.pass.features.extrapassword.infosheet.navigation.ExtraPasswordInfoNavItem
-import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
-import proton.android.pass.features.featureflags.FeatureFlagRoute
-import proton.android.pass.features.inappmessages.bottomsheet.navigation.InAppMessageModalDestination
-import proton.android.pass.features.inappmessages.bottomsheet.navigation.inAppMessageGraph
-import proton.android.pass.features.item.details.detail.navigation.ItemDetailsNavItem
-import proton.android.pass.features.item.details.detailforbidden.navigation.ItemDetailsForbiddenNavItem
-import proton.android.pass.features.item.details.detailleave.navigation.ItemDetailsLeaveNavItem
-import proton.android.pass.features.item.details.detailmenu.navigation.ItemDetailsMenuNavItem
-import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
-import proton.android.pass.features.item.details.shared.navigation.itemDetailsNavGraph
-import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
-import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
-import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
-import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
-import proton.android.pass.features.item.options.aliases.trash.dialogs.navigation.ItemOptionsAliasTrashDialogNavItem
-import proton.android.pass.features.item.options.shared.navigation.ItemOptionsNavDestination
-import proton.android.pass.features.item.options.shared.navigation.itemOptionsNavGraph
-import proton.android.pass.features.item.trash.shared.navigation.ItemTrashNavDestination
-import proton.android.pass.features.item.trash.shared.navigation.itemTrashNavGraph
-import proton.android.pass.features.item.trash.trashdelete.navigation.ItemTrashDeleteNavItem
-import proton.android.pass.features.item.trash.trashmenu.navigation.ItemTrashMenuNavItem
 import proton.android.pass.features.onboarding.OnBoarding
 import proton.android.pass.features.onboarding.onBoardingGraph
 import proton.android.pass.features.password.GeneratePasswordBottomsheet
@@ -914,6 +915,9 @@ fun NavGraphBuilder.appGraph(
                         destination = AttachmentOptionsNavItem,
                         route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                     )
+
+                BaseLoginNavigation.DeleteAllAttachments ->
+                    appNavigator.navigate(DeleteAllAttachmentsDialogNavItem)
             }
         }
     )
@@ -935,6 +939,9 @@ fun NavGraphBuilder.appGraph(
                         destination = AttachmentOptionsNavItem,
                         route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                     )
+
+                CreateNoteNavigation.DeleteAllAttachments ->
+                    appNavigator.navigate(DeleteAllAttachmentsDialogNavItem)
             }
         }
     )
@@ -960,6 +967,9 @@ fun NavGraphBuilder.appGraph(
                         destination = AttachmentOptionsNavItem,
                         route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                     )
+
+                UpdateNoteNavigation.DeleteAllAttachments ->
+                    appNavigator.navigate(DeleteAllAttachmentsDialogNavItem)
             }
         }
     )
@@ -988,6 +998,9 @@ fun NavGraphBuilder.appGraph(
                     destination = AttachmentOptionsNavItem,
                     route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                 )
+
+            BaseCreditCardNavigation.DeleteAllAttachments ->
+                appNavigator.navigate(DeleteAllAttachmentsDialogNavItem)
         }
     }
     updateCreditCardGraph {
@@ -1017,6 +1030,9 @@ fun NavGraphBuilder.appGraph(
                     destination = AttachmentOptionsNavItem,
                     route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                 )
+
+            BaseCreditCardNavigation.DeleteAllAttachments ->
+                appNavigator.navigate(DeleteAllAttachmentsDialogNavItem)
         }
     }
     createAliasGraph(
@@ -1052,6 +1068,9 @@ fun NavGraphBuilder.appGraph(
                         destination = AttachmentOptionsNavItem,
                         route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                     )
+
+                CreateAliasNavigation.DeleteAllAttachments ->
+                    appNavigator.navigate(DeleteAllAttachmentsDialogNavItem)
             }
         }
     )
@@ -1078,6 +1097,9 @@ fun NavGraphBuilder.appGraph(
                         destination = AttachmentOptionsNavItem,
                         route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                     )
+
+                UpdateAliasNavigation.DeleteAllAttachments ->
+                    appNavigator.navigate(DeleteAllAttachmentsDialogNavItem)
             }
         }
     )
@@ -1186,6 +1208,9 @@ fun NavGraphBuilder.appGraph(
                         destination = AttachmentOptionsNavItem,
                         route = AttachmentOptionsNavItem.createNavRoute(it.uri)
                     )
+
+                BaseIdentityNavigation.DeleteAllAttachments ->
+                    appNavigator.navigate(DeleteAllAttachmentsDialogNavItem)
             }
         }
     )

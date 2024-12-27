@@ -44,6 +44,7 @@ import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.AddAttachment
+import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.DeleteAllAttachments
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.OpenAttachmentOptions
 import proton.android.pass.features.itemcreate.login.BaseLoginNavigation.OpenDraftAttachmentOptions
 import proton.android.pass.features.itemcreate.login.customfields.CustomFieldEvent
@@ -233,9 +234,8 @@ internal fun UpdateLogin(
                             }
                             is AttachmentContentEvent.OnAttachmentOptions ->
                                 onNavigate(OpenAttachmentOptions(it.event.attachmentId))
-                            AttachmentContentEvent.OnDeleteAllAttachments -> {
-                                // delete all attachments
-                            }
+                            AttachmentContentEvent.OnDeleteAllAttachments ->
+                                onNavigate(DeleteAllAttachments)
                             is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                 viewModel.openDraftAttachment(
                                     contextHolder = context.toClassHolder(),

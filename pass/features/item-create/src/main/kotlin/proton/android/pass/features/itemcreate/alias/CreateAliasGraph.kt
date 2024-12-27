@@ -102,6 +102,7 @@ sealed interface CreateAliasNavigation {
     data object Close : CreateAliasNavigation
     data object CloseBottomsheet : CreateAliasNavigation
     data object AddAttachment : CreateAliasNavigation
+    data object DeleteAllAttachments : CreateAliasNavigation
 
     @JvmInline
     value class OpenDraftAttachmentOptions(val uri: URI) : CreateAliasNavigation

@@ -28,4 +28,7 @@
 
     <string name="camera_permission_explanation">Camera permission required for this feature to be available.</string>
     <string name="camera_permission_open_settings">Open settings</string>
+    <string name="delete_all_attachments_title">Delete all attachments?</string>
+    <string name="delete_all_attachments_subtitle">This action cannot be undone</string>
+    <string name="delete_all_attachments_confirm">Delete all</string>
 </resources>

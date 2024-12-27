@@ -29,6 +29,7 @@ import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.CustomFieldIndexTitle
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Birthdate
@@ -55,7 +56,6 @@ import java.net.URI
 interface IdentityFormActions {
     fun onFieldChange(field: FieldChange)
     fun observeActions(coroutineScope: CoroutineScope)
-    fun observeNewAttachments(coroutineScope: CoroutineScope)
     fun onRenameCustomField(value: CustomFieldIndexTitle, customExtraField: CustomExtraField)
     fun getFormState(): IdentityItemFormState
     fun isFormStateValid(): Boolean
@@ -81,6 +81,7 @@ interface IdentityActionsProvider : IdentityFormActions {
     fun getReceivedItem(): Item
     fun observeReceivedItem(): Flow<Option<Item>>
     fun resetLastAddedFieldFocus()
+    suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment)
 }
 
 data class IdentitySharedUiState(

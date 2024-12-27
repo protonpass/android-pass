@@ -147,6 +147,15 @@ abstract class BaseNoteViewModel(
         super.onCleared()
     }
 
+    fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
+        viewModelScope.launch {
+            attachmentsHandler.openAttachment(
+                contextHolder = contextHolder,
+                attachment = attachment
+            )
+        }
+    }
+
     suspend fun isFileAttachmentsEnabled() = featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
         .firstOrNull()
         ?: false

@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.identity.presentation
 
+import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
@@ -38,12 +39,14 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
@@ -148,6 +151,10 @@ class CreateIdentityViewModel @Inject constructor(
     override fun onCleared() {
         identityActionsProvider.clearState()
         super.onCleared()
+    }
+
+    fun onOpenAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
+        viewModelScope.launch { identityActionsProvider.openAttachment(contextHolder, attachment) }
     }
 
     companion object {

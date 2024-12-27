@@ -61,6 +61,7 @@ import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.CustomFieldIndexTitle
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
@@ -761,6 +762,10 @@ class IdentityActionsProviderImpl @Inject constructor(
         identityFieldDraftRepository.resetLastAddedExtraField()
     }
 
+    override suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
+        attachmentsHandler.openAttachment(contextHolder, attachment)
+    }
+
     @Suppress("LongMethod")
     private fun updateCustomFieldState(
         field: FieldChange.CustomField,
@@ -939,7 +944,7 @@ class IdentityActionsProviderImpl @Inject constructor(
         observeNewAttachments(coroutineScope)
     }
 
-    override fun observeNewAttachments(coroutineScope: CoroutineScope) {
+    private fun observeNewAttachments(coroutineScope: CoroutineScope) {
         attachmentsHandler.observeNewAttachments { newUris ->
             if (newUris.isNotEmpty()) {
                 onUserEditedContent()

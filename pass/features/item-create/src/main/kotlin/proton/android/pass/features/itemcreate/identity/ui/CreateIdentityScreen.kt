@@ -158,9 +158,8 @@ fun CreateIdentityScreen(
 
                     is IdentityContentEvent.OnAttachmentEvent -> when (event.event) {
                         AttachmentContentEvent.OnAddAttachment -> onNavigate(AddAttachment)
-                        is AttachmentContentEvent.OnAttachmentOpen -> {
-                            // open attachment
-                        }
+                        is AttachmentContentEvent.OnAttachmentOpen ->
+                            throw IllegalStateException("Cannot open attachment during create")
 
                         is AttachmentContentEvent.OnAttachmentOptions ->
                             onNavigate(OpenAttachmentOptions(event.event.attachmentId))

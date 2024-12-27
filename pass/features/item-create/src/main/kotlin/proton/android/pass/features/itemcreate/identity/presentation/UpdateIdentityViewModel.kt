@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.identity.presentation
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,6 +31,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.Some
+import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -38,6 +40,7 @@ import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.InitError
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemUpdateError
@@ -124,6 +127,10 @@ class UpdateIdentityViewModel @Inject constructor(
             snackbarDispatcher(ItemUpdateError)
         }
         identityActionsProvider.updateLoadingState(IsLoadingState.NotLoading)
+    }
+
+    fun onOpenAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
+        viewModelScope.launch { identityActionsProvider.openAttachment(contextHolder, attachment) }
     }
 
     override fun onCleared() {

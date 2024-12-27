@@ -27,6 +27,7 @@ import proton.android.pass.features.itemcreate.common.ShareError.SharesNotAvaila
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.AddAttachment
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.Close
+import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.DeleteAllAttachments
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.OpenAttachmentOptions
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.OpenDraftAttachmentOptions
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.Upgrade
@@ -142,9 +143,8 @@ fun CreateCreditCardScreen(
                                     is AttachmentContentEvent.OnAttachmentOptions ->
                                         onNavigate(OpenAttachmentOptions(event.event.attachmentId))
 
-                                    AttachmentContentEvent.OnDeleteAllAttachments -> {
-                                        // delete all attachments
-                                    }
+                                    AttachmentContentEvent.OnDeleteAllAttachments ->
+                                        onNavigate(DeleteAllAttachments)
                                     is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                         viewModel.openDraftAttachment(
                                             contextHolder = context.toClassHolder(),

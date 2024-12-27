@@ -42,6 +42,7 @@ import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.features.itemcreate.login.PerformActionAfterKeyboardHide
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.AddAttachment
+import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.DeleteAllAttachments
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.OpenAttachmentOptions
 import proton.android.pass.features.itemcreate.note.UpdateNoteNavigation.OpenDraftAttachmentOptions
 
@@ -101,9 +102,8 @@ fun UpdateNote(
                                         )
                                     is AttachmentContentEvent.OnAttachmentOptions ->
                                         onNavigate(OpenAttachmentOptions(event.event.attachmentId))
-                                    AttachmentContentEvent.OnDeleteAllAttachments -> {
-                                        // cannot delete all attachments in notes
-                                    }
+                                    AttachmentContentEvent.OnDeleteAllAttachments ->
+                                        onNavigate(DeleteAllAttachments)
                                     is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                         viewModel.openDraftAttachment(
                                             contextHolder = context.toClassHolder(),

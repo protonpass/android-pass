@@ -52,7 +52,7 @@ dependencies {
     implementation(projects.pass.features.account)
     implementation(projects.pass.features.auth)
     implementation(projects.pass.features.attachments)
-    implementation(projects.pass.featureHome.impl)
+    implementation(projects.pass.features.home)
     implementation(projects.pass.features.itemCreate)
     implementation(projects.pass.features.itemDetail)
     implementation(projects.pass.features.migrate)

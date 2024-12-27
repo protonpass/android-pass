@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,28 +16,6 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.ui
+package proton.android.pass.features.home
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.NavHost
-import proton.android.pass.features.home.HomeNavItem
-import proton.android.pass.navigation.api.AppNavigator
-
-@Composable
-fun PassNavHost(
-    modifier: Modifier = Modifier,
-    appNavigator: AppNavigator,
-    startDestination: String = HomeNavItem.route,
-    graph: NavGraphBuilder.() -> Unit
-) {
-    NavHost(
-        modifier = modifier,
-        navController = appNavigator.navController,
-        startDestination = startDestination
-    ) {
-        graph()
-    }
-}
-
+class UserTimeoutException : Exception()

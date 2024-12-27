@@ -453,7 +453,7 @@ dependencies {
     implementation(projects.pass.featureMigrate.impl)
     implementation(projects.pass.featureOnboarding.impl)
     implementation(projects.pass.features.passkeys)
-    implementation(projects.pass.featureProfile.impl)
+    implementation(projects.pass.features.profile)
     implementation(projects.pass.features.settings)
     implementation(projects.pass.searchOptions.api)
     implementation(projects.pass.features.attachments)

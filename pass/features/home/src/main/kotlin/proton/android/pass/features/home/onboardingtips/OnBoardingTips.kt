@@ -16,28 +16,29 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.ui
+package proton.android.pass.features.home.onboardingtips
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.NavHost
-import proton.android.pass.features.home.HomeNavItem
-import proton.android.pass.navigation.api.AppNavigator
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 
 @Composable
-fun PassNavHost(
+fun OnBoardingTips(
     modifier: Modifier = Modifier,
-    appNavigator: AppNavigator,
-    startDestination: String = HomeNavItem.route,
-    graph: NavGraphBuilder.() -> Unit
+    onClick: (OnBoardingTipPage) -> Unit,
+    onDismiss: (OnBoardingTipPage) -> Unit,
+    state: OnBoardingTipsUiState
 ) {
-    NavHost(
-        modifier = modifier,
-        navController = appNavigator.navController,
-        startDestination = startDestination
-    ) {
-        graph()
+    when (state.tipToShow) {
+        None -> Unit
+        is Some -> {
+            OnBoardingTipContent(
+                modifier = modifier,
+                tipPage = state.tipToShow.value,
+                onClick = onClick,
+                onDismiss = onDismiss
+            )
+        }
     }
 }
-

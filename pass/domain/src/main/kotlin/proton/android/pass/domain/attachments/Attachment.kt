@@ -52,6 +52,9 @@ data class Attachment(
     val type: AttachmentType,
     val size: Long,
     val createTime: Instant,
+    val modifyTime: Instant,
+    val revisionAdded: Int,
+    val revisionRemoved: Int?,
     val reencryptedKey: EncryptedByteArray,
     val chunks: List<Chunk>
 )

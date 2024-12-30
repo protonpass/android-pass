@@ -102,7 +102,8 @@ class AttachmentSectionPreviewProvider :
         name: String,
         type: AttachmentType,
         size: Long = SIZE_1_MB,
-        createTime: Instant = Instant.fromEpochSeconds(CREATE_TIME)
+        createTime: Instant = Instant.fromEpochSeconds(CREATE_TIME),
+        modifiedTime: Instant = Instant.fromEpochSeconds(CREATE_TIME)
     ) = Attachment(
         id = id,
         shareId = ShareId("share-$id"),
@@ -111,6 +112,9 @@ class AttachmentSectionPreviewProvider :
         type = type,
         size = size,
         createTime = createTime,
+        modifyTime = modifiedTime,
+        revisionAdded = 1,
+        revisionRemoved = null,
         mimeType = "",
         reencryptedKey = EncryptedByteArray(byteArrayOf()),
         chunks = listOf()

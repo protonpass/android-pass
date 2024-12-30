@@ -43,7 +43,7 @@ class ObserveUpdateItemAttachmentsImpl @Inject constructor(
         .filterNotNull()
         .flatMapLatest {
             combine(
-                attachmentRepository.observeAllAttachments(
+                attachmentRepository.observeActiveAttachments(
                     userId = it,
                     shareId = shareId,
                     itemId = itemId

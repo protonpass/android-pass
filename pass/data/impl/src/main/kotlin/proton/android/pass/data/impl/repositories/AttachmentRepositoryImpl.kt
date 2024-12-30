@@ -25,6 +25,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import fileMetadata
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.isActive
@@ -257,7 +258,26 @@ class AttachmentRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun observeAllAttachments(
+    override suspend fun updateFileMetadata(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId,
+        title: String
+    ) {
+        // To implement
+    }
+
+    override suspend fun restoreOldFile(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId
+    ) {
+        // To implement
+    }
+
+    override fun observeActiveAttachments(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
@@ -289,6 +309,13 @@ class AttachmentRepositoryImpl @Inject constructor(
                 }
             }
         }
+
+    override fun observeAttachmentsForAllRevisions(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<List<Attachment>> = // To implement
+        emptyFlow()
 
     private suspend fun refreshAttachments(
         userId: UserId,
@@ -413,8 +440,11 @@ fun FileApiModel.toEntity(
     metadata = this.metadata,
     size = this.size,
     createTime = Instant.fromEpochSeconds(this.createTime),
+    modifyTime = Instant.fromEpochSeconds(this.modifyTime),
     key = this.fileKey,
     itemKeyRotation = this.itemKeyRotation,
+    revisionAdded = this.revisionAdded,
+    revisionRemoved = this.revisionRemoved,
     reencryptedKey = reencryptedKey,
     reencryptedMetadata = reencryptedMetadata
 )
@@ -451,7 +481,10 @@ fun AttachmentEntity.toDomain(
         type = fileType.toDomain(),
         size = this.size,
         createTime = this.createTime,
+        modifyTime = this.modifyTime ?: this.createTime,
         reencryptedKey = this.reencryptedKey,
+        revisionAdded = this.revisionAdded,
+        revisionRemoved = this.revisionRemoved,
         chunks = chunks
     )
 }

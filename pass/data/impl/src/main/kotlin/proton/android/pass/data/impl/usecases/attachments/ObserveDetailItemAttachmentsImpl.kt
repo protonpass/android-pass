@@ -39,7 +39,7 @@ class ObserveDetailItemAttachmentsImpl @Inject constructor(
     override fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<Attachment>> = accountManager.getPrimaryUserId()
         .filterNotNull()
         .flatMapLatest {
-            attachmentRepository.observeAllAttachments(
+            attachmentRepository.observeActiveAttachments(
                 userId = it,
                 shareId = shareId,
                 itemId = itemId

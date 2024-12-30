@@ -71,10 +71,16 @@ data class AttachmentEntity(
     val size: Long,
     @ColumnInfo(name = Columns.CREATE_TIME)
     val createTime: Instant,
+    @ColumnInfo(name = Columns.MODIFY_TIME)
+    val modifyTime: Instant?,
     @ColumnInfo(name = Columns.KEY)
     val key: String,
     @ColumnInfo(name = Columns.ITEM_KEY_ROTATION)
     val itemKeyRotation: String,
+    @ColumnInfo(name = Columns.REVISION_ADDED, defaultValue = "1")
+    val revisionAdded: Int,
+    @ColumnInfo(name = Columns.REVISION_REMOVED)
+    val revisionRemoved: Int?,
     @ColumnInfo(name = Columns.REENCRYPTED_KEY)
     val reencryptedKey: EncryptedByteArray,
     @ColumnInfo(name = Columns.REENCRYPTED_METADATA)
@@ -88,8 +94,11 @@ data class AttachmentEntity(
         const val METADATA = "metadata"
         const val SIZE = "size"
         const val CREATE_TIME = "create_time"
+        const val MODIFY_TIME = "modify_time"
         const val KEY = "key"
         const val ITEM_KEY_ROTATION = "item_key_rotation"
+        const val REVISION_ADDED = "revision_added"
+        const val REVISION_REMOVED = "revision_removed"
         const val REENCRYPTED_KEY = "reencrypted_key"
         const val REENCRYPTED_METADATA = "reencrypted_metadata"
     }

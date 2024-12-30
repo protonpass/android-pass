@@ -265,7 +265,37 @@ class AttachmentRepositoryImpl @Inject constructor(
         attachmentId: AttachmentId,
         title: String
     ) {
-        // To implement
+        val attachment = local.getAttachmentById(shareId, itemId, attachmentId)
+            ?: throw IllegalStateException("Attachment not found")
+        val updatedMetadataEncrypted = encryptionContextProvider.withEncryptionContextSuspendable {
+            val decrypted = decrypt(attachment.reencryptedMetadata)
+            val metadata = FileV1.FileMetadata.parseFrom(decrypted)
+            val updatedMetadata = metadata.toBuilder().setName(title).build()
+            encrypt(updatedMetadata.toByteArray())
+        }
+        val updatedMetadataEncoded = Base64.encodeBase64String(updatedMetadataEncrypted.array)
+        val updatedAttachment = remote.updateFileMetadata(
+            userId = userId,
+            shareId = shareId,
+            itemId = itemId,
+            attachmentId = attachmentId,
+            metadata = updatedMetadataEncoded
+        )
+        val encryptedItemKey = localItemDataSource.getById(shareId, itemId)?.encryptedKey
+            ?: throw ItemKeyNotAvailableError()
+        val (reencryptedMetadatas, reencryptedKeys) = reencryptAttachment(
+            encryptedItemKey,
+            listOf(updatedAttachment.metadata),
+            listOf(updatedAttachment.fileKey)
+        )
+        val attachmentEntity = updatedAttachment.toEntity(
+            userId = userId,
+            shareId = shareId,
+            itemId = itemId,
+            reencryptedKey = reencryptedKeys.first().value,
+            reencryptedMetadata = reencryptedMetadatas.first().value
+        )
+        local.updateAttachment(attachmentEntity)
     }
 
     override suspend fun restoreOldFile(

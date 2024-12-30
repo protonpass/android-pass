@@ -47,7 +47,28 @@ interface AttachmentRepository {
         toUnlink: Set<AttachmentId>
     )
 
-    fun observeAllAttachments(
+    suspend fun updateFileMetadata(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId,
+        title: String
+    )
+
+    suspend fun restoreOldFile(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId
+    )
+
+    fun observeActiveAttachments(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<List<Attachment>>
+
+    fun observeAttachmentsForAllRevisions(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId

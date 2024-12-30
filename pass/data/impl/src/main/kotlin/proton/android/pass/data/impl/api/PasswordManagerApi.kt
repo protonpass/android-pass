@@ -64,6 +64,8 @@ import proton.android.pass.data.impl.requests.aliascontacts.CreateAliasContactRe
 import proton.android.pass.data.impl.requests.aliascontacts.UpdateBlockedAliasContactRequest
 import proton.android.pass.data.impl.requests.attachments.CreatePendingFileRequest
 import proton.android.pass.data.impl.requests.attachments.LinkPendingFilesRequest
+import proton.android.pass.data.impl.requests.attachments.RestoreOldFileRequest
+import proton.android.pass.data.impl.requests.attachments.UpdateFileMetadataRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
@@ -113,7 +115,9 @@ import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactResp
 import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactsResponse
 import proton.android.pass.data.impl.responses.aliascontacts.UpdateBlockedAliasContactResponse
 import proton.android.pass.data.impl.responses.attachments.CreatePendingFileResponse
-import proton.android.pass.data.impl.responses.attachments.GetAllFilesResponse
+import proton.android.pass.data.impl.responses.attachments.RestoreOldFileResponse
+import proton.android.pass.data.impl.responses.attachments.RetrieveFilesResponse
+import proton.android.pass.data.impl.responses.attachments.UpdateFileMetadataResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -581,14 +585,6 @@ interface PasswordManagerApi : BaseRetrofitApi {
     ): ChangeNotificationStateResponse
 
     // Attachments
-    @Multipart
-    @POST("$PREFIX/file/{fileId}/chunk")
-    suspend fun uploadChunk(
-        @Path("fileId") fileId: String,
-        @Part("ChunkIndex") chunkIndex: RequestBody,
-        @Part chunkData: MultipartBody.Part
-    ): CodeOnlyResponse
-
     @POST("$PREFIX/file")
     suspend fun createPendingFile(@Body request: CreatePendingFileRequest): CreatePendingFileResponse
 
@@ -599,8 +595,41 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Body request: LinkPendingFilesRequest
     ): CodeOnlyResponse
 
+    @POST("$PREFIX/share/{shareId}/item/{itemId}/file/{fileId}/restore")
+    suspend fun restoreOldFile(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Path("fileId") fileId: String,
+        @Body request: RestoreOldFileRequest
+    ): RestoreOldFileResponse
+
+    @PUT("$PREFIX/share/{shareId}/item/{itemId}/file/{fileId}/metadata")
+    suspend fun updateFileMetadata(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Path("fileId") fileId: String,
+        @Body request: UpdateFileMetadataRequest
+    ): UpdateFileMetadataResponse
+
     @GET("$PREFIX/share/{shareId}/item/{itemId}/files")
-    suspend fun retrieveAllFiles(@Path("shareId") shareId: String, @Path("itemId") itemId: String): GetAllFilesResponse
+    suspend fun retrieveActiveFiles(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String
+    ): RetrieveFilesResponse
+
+    @GET("$PREFIX/share/{shareId}/item/{itemId}/revisions/files")
+    suspend fun retrieveAllFilesForAllRevisions(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String
+    ): RetrieveFilesResponse
+
+    @Multipart
+    @POST("$PREFIX/file/{fileId}/chunk")
+    suspend fun uploadChunk(
+        @Path("fileId") fileId: String,
+        @Part("ChunkIndex") chunkIndex: RequestBody,
+        @Part chunkData: MultipartBody.Part
+    ): CodeOnlyResponse
 
     @GET("$PREFIX/share/{shareId}/item/{itemId}/file/{fileId}/chunk/{chunkId}")
     suspend fun downloadChunk(

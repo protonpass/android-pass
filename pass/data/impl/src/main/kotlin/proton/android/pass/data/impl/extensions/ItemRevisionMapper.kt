@@ -20,7 +20,7 @@ package proton.android.pass.data.impl.extensions
 
 import proton.android.pass.data.api.PendingEventItemRevision
 import proton.android.pass.data.api.repositories.ItemRevision as ItemRevisionApi
-import proton.android.pass.data.impl.responses.ItemRevision as ItemRevisionImpl
+import proton.android.pass.data.impl.responses.ItemRevisionApiModel as ItemRevisionImpl
 
 fun ItemRevisionImpl.toDomain(): ItemRevisionApi = ItemRevisionApi(
     itemId = itemId,

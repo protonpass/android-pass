@@ -48,7 +48,31 @@ interface RemoteAttachmentsDataSource {
         filesToRemove: Set<AttachmentId>
     )
 
-    suspend fun retrieveAllFiles(
+    @Suppress("LongParameterList")
+    suspend fun restoreOldFile(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId,
+        itemKeyRotation: String,
+        fileKey: EncryptedString
+    )
+
+    suspend fun updateFileMetadata(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId,
+        metadata: EncryptedString
+    )
+
+    suspend fun retrieveActiveFiles(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): FilesApiModel
+
+    suspend fun retrieveFilesForAllRevisions(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId

@@ -295,7 +295,7 @@ class AttachmentRepositoryImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId
     ) {
-        val fileDetails = remote.retrieveAllFiles(
+        val fileDetails = remote.retrieveActiveFiles(
             userId = userId,
             shareId = shareId,
             itemId = itemId

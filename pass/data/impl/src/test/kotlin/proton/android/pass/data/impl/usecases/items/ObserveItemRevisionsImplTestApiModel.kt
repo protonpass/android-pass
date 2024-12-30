@@ -29,7 +29,7 @@ import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.test.domain.items.ItemIdMother
 import proton.android.pass.test.domain.shares.ShareIdMother
 
-internal class ObserveItemRevisionsImplTest {
+internal class ObserveItemRevisionsImplTestApiModel {
 
     private lateinit var accountManager: TestAccountManager
     private lateinit var itemRepository: TestItemRepository

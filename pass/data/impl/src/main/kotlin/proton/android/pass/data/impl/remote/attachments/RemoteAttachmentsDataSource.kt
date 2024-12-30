@@ -21,7 +21,7 @@ package proton.android.pass.data.impl.remote.attachments
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.impl.responses.attachments.FilesDataResponse
+import proton.android.pass.data.impl.responses.attachments.FilesApiModel
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
@@ -52,7 +52,7 @@ interface RemoteAttachmentsDataSource {
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): FilesDataResponse
+    ): FilesApiModel
 
     suspend fun downloadChunk(
         userId: UserId,

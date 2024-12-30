@@ -62,7 +62,6 @@ class AttachmentOptionsViewModel @Inject constructor(
             initialValue = AttachmentOptionsEvent.Idle
         )
 
-
     fun deleteAttachment() {
         when {
             attachmentId is Some -> removeAttachment(attachmentId.value)

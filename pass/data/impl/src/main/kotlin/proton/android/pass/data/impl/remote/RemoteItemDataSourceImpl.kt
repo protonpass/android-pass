@@ -266,7 +266,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId
     ): List<ItemRevision> = api.get<PasswordManagerApi>(userId)
-        .invoke { getItemRevision(shareId.id, itemId.id).itemsList.revisions }
+        .invoke { getItemRevision(shareId.id, itemId.id).itemsListApiModel.revisions }
         .valueOrThrow
         .toDomain()
 

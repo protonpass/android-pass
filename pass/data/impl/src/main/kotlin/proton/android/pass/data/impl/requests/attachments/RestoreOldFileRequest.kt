@@ -16,23 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.responses
+package proton.android.pass.data.impl.requests.attachments
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.crypto.common.keystore.EncryptedString
 
 @Serializable
-data class CreateItemAliasResponse(
-    @SerialName("Code")
-    val code: Int,
-    @SerialName("Bundle")
-    val bundle: CreateItemAliasBundle
-)
-
-@Serializable
-data class CreateItemAliasBundle(
-    @SerialName("Alias")
-    val alias: ItemRevisionApiModel,
-    @SerialName("Item")
-    val item: ItemRevisionApiModel
+data class RestoreOldFileRequest(
+    @SerialName("FileKey")
+    val fileKey: EncryptedString,
+    @SerialName("ItemKeyRotation")
+    val itemKeyRotation: String
 )

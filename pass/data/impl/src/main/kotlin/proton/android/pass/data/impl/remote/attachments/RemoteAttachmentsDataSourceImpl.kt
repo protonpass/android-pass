@@ -29,7 +29,7 @@ import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.attachments.CreatePendingFileRequest
 import proton.android.pass.data.impl.requests.attachments.LinkPendingFileRequest
 import proton.android.pass.data.impl.requests.attachments.LinkPendingFilesRequest
-import proton.android.pass.data.impl.responses.attachments.FilesDataResponse
+import proton.android.pass.data.impl.responses.attachments.FilesApiModel
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
@@ -88,8 +88,8 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): FilesDataResponse = api.get<PasswordManagerApi>(userId)
-        .invoke { retrieveAllFiles(shareId.id, itemId.id) }
+    ): FilesApiModel = api.get<PasswordManagerApi>(userId)
+        .invoke { retrieveActiveFiles(shareId.id, itemId.id) }
         .valueOrThrow
         .filesData
 

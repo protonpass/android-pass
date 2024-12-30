@@ -24,7 +24,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ItemRevisionResponse(
     @SerialName("Code") val code: Int,
-    @SerialName("Item") val item: ItemRevision
+    @SerialName("Item") val item: ItemRevisionApiModel
 )
 
 @Serializable
@@ -32,21 +32,21 @@ data class GetItemsResponse(
     @SerialName("Code")
     val code: Int,
     @SerialName("Items")
-    val items: ItemsList
+    val items: ItemsListApiModel
 )
 
 @Serializable
-data class ItemsList(
+data class ItemsListApiModel(
     @SerialName("Total")
     val total: Long,
     @SerialName("RevisionsData")
-    val revisions: List<ItemRevision>,
+    val revisions: List<ItemRevisionApiModel>,
     @SerialName("LastToken")
     val lastToken: String?
 )
 
 @Serializable
-data class ItemRevision(
+data class ItemRevisionApiModel(
     @SerialName("ItemID")
     val itemId: String,
     @SerialName("Revision")

@@ -26,11 +26,11 @@ data class CreatePendingFileResponse(
     @SerialName("Code")
     val code: Int,
     @SerialName("File")
-    val file: FileResponse
+    val file: FileIdApiModel
 )
 
 @Serializable
-data class FileResponse(
+data class FileIdApiModel(
     @SerialName("FileID")
     val fileID: String
 )

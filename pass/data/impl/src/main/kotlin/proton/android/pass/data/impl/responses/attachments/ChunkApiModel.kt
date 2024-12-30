@@ -20,46 +20,9 @@ package proton.android.pass.data.impl.responses.attachments
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.crypto.common.keystore.EncryptedString
 
 @Serializable
-data class GetAllFilesResponse(
-    @SerialName("Code")
-    val code: Int,
-    @SerialName("Files")
-    val filesData: FilesDataResponse
-)
-
-@Serializable
-data class FilesDataResponse(
-    @SerialName("Files")
-    val files: List<FileDetailsResponse>,
-    @SerialName("Total")
-    val total: Int,
-    @SerialName("LastID")
-    val lastId: String?
-)
-
-@Serializable
-data class FileDetailsResponse(
-    @SerialName("FileID")
-    val fileId: String,
-    @SerialName("Size")
-    val size: Long,
-    @SerialName("Metadata")
-    val metadata: EncryptedString,
-    @SerialName("FileKey")
-    val fileKey: String,
-    @SerialName("ItemKeyRotation")
-    val itemKeyRotation: String,
-    @SerialName("Chunks")
-    val chunks: List<ChunkResponse>,
-    @SerialName("CreateTime")
-    val createTime: Long
-)
-
-@Serializable
-data class ChunkResponse(
+data class ChunkApiModel(
     @SerialName("ChunkID")
     val chunkId: String,
     @SerialName("Index")

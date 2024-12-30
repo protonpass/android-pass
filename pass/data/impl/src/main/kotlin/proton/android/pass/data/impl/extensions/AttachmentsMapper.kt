@@ -19,7 +19,7 @@
 package proton.android.pass.data.impl.extensions
 
 import proton.android.pass.commonrust.api.FileType
-import proton.android.pass.data.impl.responses.attachments.ChunkResponse
+import proton.android.pass.data.impl.responses.attachments.ChunkApiModel
 import proton.android.pass.domain.attachments.AttachmentType
 import proton.android.pass.domain.attachments.Chunk
 import proton.android.pass.domain.attachments.ChunkId
@@ -41,7 +41,7 @@ fun FileType.toDomain(): AttachmentType = when (this) {
     FileType.Unknown -> AttachmentType.Unknown
 }
 
-fun ChunkResponse.toDomain(): Chunk = Chunk(
+fun ChunkApiModel.toDomain(): Chunk = Chunk(
     id = ChunkId(chunkId),
     index = index,
     size = size

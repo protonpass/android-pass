@@ -55,8 +55,8 @@ import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.attachments.LocalAttachmentsDataSource
 import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSource
-import proton.android.pass.data.impl.responses.attachments.ChunkResponse
-import proton.android.pass.data.impl.responses.attachments.FileDetailsResponse
+import proton.android.pass.data.impl.responses.attachments.ChunkApiModel
+import proton.android.pass.data.impl.responses.attachments.FileApiModel
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
@@ -306,8 +306,8 @@ class AttachmentRepositoryImpl @Inject constructor(
 
         val (reencryptedMetadatas, reencryptedKeys) = reencryptAttachment(
             encryptedItemKey,
-            fileDetails.map(FileDetailsResponse::metadata),
-            fileDetails.map(FileDetailsResponse::fileKey)
+            fileDetails.map(FileApiModel::metadata),
+            fileDetails.map(FileApiModel::fileKey)
         )
         val attachmentsWithChunks = fileDetails
             .zip(reencryptedMetadatas)
@@ -399,7 +399,7 @@ class AttachmentRepositoryImpl @Inject constructor(
 }
 
 @Suppress("LongParameterList")
-fun FileDetailsResponse.toEntity(
+fun FileApiModel.toEntity(
     userId: UserId,
     shareId: ShareId,
     itemId: ItemId,
@@ -419,7 +419,7 @@ fun FileDetailsResponse.toEntity(
     reencryptedMetadata = reencryptedMetadata
 )
 
-fun ChunkResponse.toChunkEntity(
+fun ChunkApiModel.toChunkEntity(
     attachmentId: String,
     itemId: ItemId,
     shareId: ShareId

@@ -21,6 +21,8 @@ package proton.android.pass.data.impl.remote.attachments
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.impl.responses.attachments.FileApiModel
+import proton.android.pass.data.impl.responses.attachments.FileResult
 import proton.android.pass.data.impl.responses.attachments.FilesApiModel
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -56,7 +58,7 @@ interface RemoteAttachmentsDataSource {
         attachmentId: AttachmentId,
         itemKeyRotation: String,
         fileKey: EncryptedString
-    )
+    ): FileResult
 
     suspend fun updateFileMetadata(
         userId: UserId,
@@ -64,7 +66,7 @@ interface RemoteAttachmentsDataSource {
         itemId: ItemId,
         attachmentId: AttachmentId,
         metadata: EncryptedString
-    )
+    ): FileApiModel
 
     suspend fun retrieveActiveFiles(
         userId: UserId,

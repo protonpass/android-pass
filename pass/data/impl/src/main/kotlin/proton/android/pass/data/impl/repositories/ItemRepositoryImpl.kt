@@ -60,7 +60,6 @@ import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.ItemTypeFilter
-import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.hasPackageName
@@ -121,7 +120,6 @@ class ItemRepositoryImpl @Inject constructor(
     private val openItem: OpenItem,
     private val migrateItem: MigrateItem,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val openItemRevision: OpenItemRevision,
     private val getItemKeys: GetItemKeys
 ) : BaseRepository(userAddressRepository), ItemRepository {
 

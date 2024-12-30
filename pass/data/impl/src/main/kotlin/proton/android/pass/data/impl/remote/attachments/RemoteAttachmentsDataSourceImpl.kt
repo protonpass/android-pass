@@ -31,6 +31,8 @@ import proton.android.pass.data.impl.requests.attachments.LinkPendingFileRequest
 import proton.android.pass.data.impl.requests.attachments.LinkPendingFilesRequest
 import proton.android.pass.data.impl.requests.attachments.RestoreOldFileRequest
 import proton.android.pass.data.impl.requests.attachments.UpdateFileMetadataRequest
+import proton.android.pass.data.impl.responses.attachments.FileApiModel
+import proton.android.pass.data.impl.responses.attachments.FileResult
 import proton.android.pass.data.impl.responses.attachments.FilesApiModel
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -93,12 +95,20 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
         attachmentId: AttachmentId,
         itemKeyRotation: String,
         fileKey: EncryptedString
-    ) {
-        val request = RestoreOldFileRequest(fileKey = fileKey, itemKeyRotation = itemKeyRotation)
-        api.get<PasswordManagerApi>(userId)
-            .invoke { restoreOldFile(shareId.id, itemId.id, attachmentId.id, request) }
-            .valueOrThrow
-    }
+    ): FileResult = api.get<PasswordManagerApi>(userId)
+        .invoke {
+            restoreOldFile(
+                shareId = shareId.id,
+                itemId = itemId.id,
+                fileId = attachmentId.id,
+                request = RestoreOldFileRequest(
+                    fileKey = fileKey,
+                    itemKeyRotation = itemKeyRotation
+                )
+            )
+        }
+        .valueOrThrow
+        .result
 
     override suspend fun updateFileMetadata(
         userId: UserId,
@@ -106,12 +116,17 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
         itemId: ItemId,
         attachmentId: AttachmentId,
         metadata: EncryptedString
-    ) {
-        val request = UpdateFileMetadataRequest(metadata)
-        api.get<PasswordManagerApi>(userId)
-            .invoke { updateFileMetadata(shareId.id, itemId.id, attachmentId.id, request) }
-            .valueOrThrow
-    }
+    ): FileApiModel = api.get<PasswordManagerApi>(userId)
+        .invoke {
+            updateFileMetadata(
+                shareId = shareId.id,
+                itemId = itemId.id,
+                fileId = attachmentId.id,
+                request = UpdateFileMetadataRequest(metadata)
+            )
+        }
+        .valueOrThrow
+        .file
 
     override suspend fun retrieveActiveFiles(
         userId: UserId,

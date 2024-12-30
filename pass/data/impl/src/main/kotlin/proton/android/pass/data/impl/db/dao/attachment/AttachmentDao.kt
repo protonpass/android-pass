@@ -74,4 +74,18 @@ abstract class AttachmentDao : BaseDao<AttachmentEntity>() {
         itemId: String,
         attachmentId: String
     ): Boolean
+
+    @Query(
+        """
+        SELECT * FROM ${AttachmentEntity.TABLE}
+        WHERE ${AttachmentEntity.Columns.SHARE_ID} = :shareId 
+          AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId 
+          AND ${AttachmentEntity.Columns.ID} = :attachmentId
+        """
+    )
+    abstract fun getAttachmentById(
+        shareId: String,
+        itemId: String,
+        attachmentId: String
+    ): AttachmentEntity?
 }

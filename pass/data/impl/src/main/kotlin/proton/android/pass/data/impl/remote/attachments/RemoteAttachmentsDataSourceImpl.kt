@@ -29,6 +29,8 @@ import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.attachments.CreatePendingFileRequest
 import proton.android.pass.data.impl.requests.attachments.LinkPendingFileRequest
 import proton.android.pass.data.impl.requests.attachments.LinkPendingFilesRequest
+import proton.android.pass.data.impl.requests.attachments.RestoreOldFileRequest
+import proton.android.pass.data.impl.requests.attachments.UpdateFileMetadataRequest
 import proton.android.pass.data.impl.responses.attachments.FilesApiModel
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -84,12 +86,48 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
             .valueOrThrow
     }
 
-    override suspend fun retrieveAllFiles(
+    override suspend fun restoreOldFile(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId,
+        itemKeyRotation: String,
+        fileKey: EncryptedString
+    ) {
+        val request = RestoreOldFileRequest(fileKey = fileKey, itemKeyRotation = itemKeyRotation)
+        api.get<PasswordManagerApi>(userId)
+            .invoke { restoreOldFile(shareId.id, itemId.id, attachmentId.id, request) }
+            .valueOrThrow
+    }
+
+    override suspend fun updateFileMetadata(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId,
+        metadata: EncryptedString
+    ) {
+        val request = UpdateFileMetadataRequest(metadata)
+        api.get<PasswordManagerApi>(userId)
+            .invoke { updateFileMetadata(shareId.id, itemId.id, attachmentId.id, request) }
+            .valueOrThrow
+    }
+
+    override suspend fun retrieveActiveFiles(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
     ): FilesApiModel = api.get<PasswordManagerApi>(userId)
         .invoke { retrieveActiveFiles(shareId.id, itemId.id) }
+        .valueOrThrow
+        .filesData
+
+    override suspend fun retrieveFilesForAllRevisions(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): FilesApiModel = api.get<PasswordManagerApi>(userId)
+        .invoke { retrieveAllFilesForAllRevisions(shareId.id, itemId.id) }
         .valueOrThrow
         .filesData
 

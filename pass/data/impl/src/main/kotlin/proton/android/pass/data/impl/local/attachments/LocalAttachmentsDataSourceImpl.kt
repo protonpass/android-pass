@@ -43,6 +43,20 @@ class LocalAttachmentsDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun getAttachmentById(
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId
+    ): AttachmentEntity? = database.attachmentDao().getAttachmentById(
+        shareId = shareId.id,
+        itemId = itemId.id,
+        attachmentId = attachmentId.id
+    )
+
+    override suspend fun updateAttachment(attachmentEntity: AttachmentEntity) {
+        database.attachmentDao().update(attachmentEntity)
+    }
+
     override suspend fun removeAttachmentsForItem(shareId: ShareId, itemId: ItemId) {
         database.attachmentDao().removeByItem(
             shareId = shareId.id,

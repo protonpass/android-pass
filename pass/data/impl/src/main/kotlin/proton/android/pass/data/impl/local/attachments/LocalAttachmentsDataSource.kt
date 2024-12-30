@@ -39,4 +39,12 @@ interface LocalAttachmentsDataSource {
     fun observeAttachmentsWithChunksForItem(shareId: ShareId, itemId: ItemId): Flow<List<AttachmentWithChunks>>
 
     suspend fun saveAttachmentsWithChunks(attachmentEntities: List<AttachmentEntity>, chunkEntities: List<ChunkEntity>)
+
+    suspend fun getAttachmentById(
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId
+    ): AttachmentEntity?
+
+    suspend fun updateAttachment(attachmentEntity: AttachmentEntity)
 }

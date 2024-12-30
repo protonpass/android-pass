@@ -30,13 +30,20 @@ interface LocalAttachmentsDataSource {
 
     suspend fun removeAttachmentsForItem(shareId: ShareId, itemId: ItemId)
 
-    suspend fun removeAttachmentById(
+    suspend fun removeAttachmentsById(
         shareId: ShareId,
         itemId: ItemId,
         attachmentIdList: List<AttachmentId>
     )
 
-    fun observeAttachmentsWithChunksForItem(shareId: ShareId, itemId: ItemId): Flow<List<AttachmentWithChunks>>
+    @Suppress("FunctionMaxLength")
+    fun observeActiveAttachmentsWithChunksForItem(shareId: ShareId, itemId: ItemId): Flow<List<AttachmentWithChunks>>
+
+    @Suppress("FunctionMaxLength")
+    fun observeAllAttachmentsWithChunksForItemRevisions(
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<List<AttachmentWithChunks>>
 
     suspend fun saveAttachmentsWithChunks(attachmentEntities: List<AttachmentEntity>, chunkEntities: List<ChunkEntity>)
 

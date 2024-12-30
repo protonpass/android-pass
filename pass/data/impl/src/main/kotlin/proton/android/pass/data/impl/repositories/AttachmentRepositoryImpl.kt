@@ -25,7 +25,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import fileMetadata
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.isActive
@@ -51,6 +50,7 @@ import proton.android.pass.data.impl.crypto.ReencryptAttachment
 import proton.android.pass.data.impl.crypto.ReencryptedKey
 import proton.android.pass.data.impl.crypto.ReencryptedMetadata
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
+import proton.android.pass.data.impl.db.entities.attachments.AttachmentWithChunks
 import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
 import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.local.LocalItemDataSource
@@ -249,7 +249,7 @@ class AttachmentRepositoryImpl @Inject constructor(
                 filesToRemove = batchedToUnlink.getOrNull(i)?.toSet() ?: emptySet()
             )
             withContext(appDispatchers.io) {
-                local.removeAttachmentById(
+                local.removeAttachmentsById(
                     shareId = shareId,
                     itemId = itemId,
                     attachmentIdList = batchedToUnlink.getOrNull(i) ?: emptyList()
@@ -311,24 +311,14 @@ class AttachmentRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<List<Attachment>> = local.observeAttachmentsWithChunksForItem(shareId, itemId)
+    ): Flow<List<Attachment>> = local.observeActiveAttachmentsWithChunksForItem(shareId, itemId)
         .map { attachmentsWithChunks ->
-            encryptionContextProvider.withEncryptionContextSuspendable {
-                attachmentsWithChunks.map {
-                    it.attachment.toDomain(
-                        encryptionContext = this,
-                        fileTypeDetector = fileTypeDetector,
-                        shareId = shareId,
-                        itemId = itemId,
-                        chunks = it.chunks.map(ChunkEntity::toDomain)
-                    )
-                }
-            }
+            mapAttachmentsWithChunksToDomain(attachmentsWithChunks, shareId, itemId)
         }
         .onStart {
             coroutineScope {
                 launch {
-                    runCatching { refreshAttachments(userId, shareId, itemId) }
+                    runCatching { refreshActiveAttachments(userId, shareId, itemId) }
                         .onFailure {
                             PassLogger.i(
                                 TAG,
@@ -344,10 +334,42 @@ class AttachmentRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<List<Attachment>> = // To implement
-        emptyFlow()
+    ): Flow<List<Attachment>> = local.observeAllAttachmentsWithChunksForItemRevisions(shareId, itemId)
+        .map { attachmentsWithChunks ->
+            mapAttachmentsWithChunksToDomain(attachmentsWithChunks, shareId, itemId)
+        }
+        .onStart {
+            coroutineScope {
+                launch {
+                    runCatching { refreshAttachmentsForAllRevisions(userId, shareId, itemId) }
+                        .onFailure {
+                            PassLogger.i(
+                                TAG,
+                                "Failed to refresh attachments for item " +
+                                    "with share ${shareId.id} and item ${itemId.id}"
+                            )
+                        }
+                }
+            }
+        }
 
-    private suspend fun refreshAttachments(
+    private suspend fun mapAttachmentsWithChunksToDomain(
+        attachmentsWithChunks: List<AttachmentWithChunks>,
+        shareId: ShareId,
+        itemId: ItemId
+    ) = encryptionContextProvider.withEncryptionContextSuspendable {
+        attachmentsWithChunks.map {
+            it.attachment.toDomain(
+                encryptionContext = this,
+                fileTypeDetector = fileTypeDetector,
+                shareId = shareId,
+                itemId = itemId,
+                chunks = it.chunks.map(ChunkEntity::toDomain)
+            )
+        }
+    }
+
+    private suspend fun refreshActiveAttachments(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
@@ -358,6 +380,29 @@ class AttachmentRepositoryImpl @Inject constructor(
             itemId = itemId
         ).files
 
+        saveRetrievedAttachments(shareId, itemId, fileDetails, userId)
+    }
+
+    private suspend fun refreshAttachmentsForAllRevisions(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ) {
+        val fileDetails = remote.retrieveFilesForAllRevisions(
+            userId = userId,
+            shareId = shareId,
+            itemId = itemId
+        ).files
+
+        saveRetrievedAttachments(shareId, itemId, fileDetails, userId)
+    }
+
+    private suspend fun AttachmentRepositoryImpl.saveRetrievedAttachments(
+        shareId: ShareId,
+        itemId: ItemId,
+        fileDetails: List<FileApiModel>,
+        userId: UserId
+    ) {
         val encryptedItemKey = localItemDataSource.getById(shareId, itemId)?.encryptedKey
             ?: throw ItemKeyNotAvailableError()
 

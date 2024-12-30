@@ -32,7 +32,6 @@ import proton.android.pass.crypto.fakes.usecases.TestMigrateItem
 import proton.android.pass.crypto.fakes.usecases.TestOpenItem
 import proton.android.pass.crypto.fakes.usecases.TestUpdateItem
 import proton.android.pass.data.fakes.crypto.FakeGetItemKeys
-import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
 import proton.android.pass.data.impl.fakes.TestItemKeyRepository
 import proton.android.pass.data.impl.fakes.TestLocalItemDataSource
 import proton.android.pass.data.impl.fakes.TestPassDatabase
@@ -91,7 +90,6 @@ class ItemRepositoryImplTest {
             encryptionContextProvider = TestEncryptionContextProvider(),
             shareKeyRepository = shareKeyRepository,
             migrateItem = TestMigrateItem(),
-            openItemRevision = FakeOpenItemRevision(),
             getItemKeys = FakeGetItemKeys()
         )
     }

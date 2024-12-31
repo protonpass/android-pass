@@ -25,11 +25,11 @@ import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.DraftAttachment
+import proton.android.pass.domain.attachments.FileMetadata
 import java.net.URI
 
 interface AttachmentsHandler {
-
-    val isUploadingAttachment: Flow<Set<URI>>
 
     val attachmentState: Flow<AttachmentsState>
 
@@ -41,11 +41,11 @@ interface AttachmentsHandler {
 
     suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment)
 
-    suspend fun uploadNewAttachment(uri: URI)
+    suspend fun uploadNewAttachment(fileMetadata: FileMetadata)
 
     fun onClearAttachments()
 
-    fun observeNewAttachments(onNewAttachment: (Set<URI>) -> Unit): Flow<Set<URI>>
+    fun observeNewAttachments(onNewAttachment: (DraftAttachment) -> Unit): Flow<DraftAttachment>
 
     suspend fun getAttachmentsForItem(shareId: ShareId, itemId: ItemId)
 }

@@ -16,10 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.attachments
+package proton.android.pass.features.attachments.renameattachment.presentation
 
-import proton.android.pass.domain.attachments.FileMetadata
-
-interface UploadAttachment {
-    suspend operator fun invoke(metadata: FileMetadata)
+sealed interface RenameAttachmentEvent {
+    data object Close : RenameAttachmentEvent
+    data object Idle : RenameAttachmentEvent
 }

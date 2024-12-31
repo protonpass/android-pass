@@ -25,11 +25,18 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.attachments.FileMetadata
 import java.net.URI
 
 interface AttachmentRepository {
 
-    suspend fun createPendingAttachment(userId: UserId, uri: URI): AttachmentId
+    suspend fun createPendingAttachment(userId: UserId, metadata: FileMetadata): AttachmentId
+
+    suspend fun updatePendingAttachment(
+        userId: UserId,
+        attachmentId: AttachmentId,
+        metadata: FileMetadata
+    )
 
     suspend fun uploadPendingAttachment(
         userId: UserId,

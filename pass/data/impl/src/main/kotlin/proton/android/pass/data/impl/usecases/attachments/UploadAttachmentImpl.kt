@@ -24,7 +24,8 @@ import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
-import java.net.URI
+import proton.android.pass.domain.attachments.DraftAttachment
+import proton.android.pass.domain.attachments.FileMetadata
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,23 +36,34 @@ class UploadAttachmentImpl @Inject constructor(
     private val draftAttachmentRepository: DraftAttachmentRepository
 ) : UploadAttachment {
 
-    override suspend fun invoke(uri: URI) {
+    override suspend fun invoke(metadata: FileMetadata) {
         runCatching {
             val userId = accountManager.getPrimaryUserId().firstOrNull()
                 ?: throw UserIdNotAvailableError()
             val attachmentId = attachmentRepository.createPendingAttachment(
                 userId = userId,
-                uri = uri
+                metadata = metadata
             )
-            attachmentRepository.uploadPendingAttachment(
-                userId = userId,
-                attachmentId = attachmentId,
-                uri = uri
+            runCatching {
+                attachmentRepository.uploadPendingAttachment(
+                    userId = userId,
+                    attachmentId = attachmentId,
+                    uri = metadata.uri
+                )
+            }.onSuccess {
+                val draftAttachment = DraftAttachment.Success(
+                    metadata = metadata,
+                    attachmentId = attachmentId
+                )
+                draftAttachmentRepository.update(draftAttachment)
+            }.onFailure { throw it }
+        }.onFailure {
+            val draftAttachment = DraftAttachment.Error(
+                metadata = metadata,
+                errorMessage = it.message ?: "Unknown error"
             )
+            draftAttachmentRepository.update(draftAttachment)
+            throw it
         }
-            .onFailure {
-                draftAttachmentRepository.remove(uri)
-                throw it
-            }
     }
 }

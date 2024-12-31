@@ -16,10 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.attachments
+package proton.android.pass.domain.attachments
 
-import proton.android.pass.domain.attachments.FileMetadata
+sealed interface DraftAttachment {
+    val metadata: FileMetadata
 
-interface UploadAttachment {
-    suspend operator fun invoke(metadata: FileMetadata)
+    data class Loading(
+        override val metadata: FileMetadata
+    ) : DraftAttachment
+
+    data class Error(
+        override val metadata: FileMetadata,
+        val errorMessage: String
+    ) : DraftAttachment
+
+    data class Success(
+        override val metadata: FileMetadata,
+        val attachmentId: AttachmentId
+    ) : DraftAttachment
 }

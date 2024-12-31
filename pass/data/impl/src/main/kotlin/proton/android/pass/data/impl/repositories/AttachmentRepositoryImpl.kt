@@ -32,7 +32,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.commonrust.api.FileTypeDetector
@@ -45,7 +44,6 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.errors.ItemKeyNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
-import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.impl.crypto.ReencryptAttachment
 import proton.android.pass.data.impl.crypto.ReencryptedKey
@@ -66,6 +64,7 @@ import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.Chunk
 import proton.android.pass.domain.attachments.ChunkId
+import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.files.api.FileType
 import proton.android.pass.files.api.FileUriGenerator
 import proton.android.pass.log.api.PassLogger
@@ -77,7 +76,6 @@ import kotlin.math.max
 class AttachmentRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val appDispatchers: AppDispatchers,
-    private val metadataResolver: MetadataResolver,
     private val remote: RemoteAttachmentsDataSource,
     private val local: LocalAttachmentsDataSource,
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -88,10 +86,8 @@ class AttachmentRepositoryImpl @Inject constructor(
     private val reencryptAttachment: ReencryptAttachment
 ) : AttachmentRepository {
 
-    override suspend fun createPendingAttachment(userId: UserId, uri: URI): AttachmentId {
-        val metadata = metadataResolver.extractMetadata(uri)
-            ?: throw IllegalStateException("Metadata not available for URI: $uri")
-        val fileMetadata: FileV1.FileMetadata = fileMetadata {
+    override suspend fun createPendingAttachment(userId: UserId, metadata: FileMetadata): AttachmentId {
+        val fileMetadata = fileMetadata {
             this.name = metadata.name
             this.mimeType = metadata.mimeType
         }
@@ -106,6 +102,29 @@ class AttachmentRepositoryImpl @Inject constructor(
         return id
     }
 
+    override suspend fun updatePendingAttachment(
+        userId: UserId,
+        attachmentId: AttachmentId,
+        metadata: FileMetadata
+    ) {
+        val fileMetadata = fileMetadata {
+            this.name = metadata.name
+            this.mimeType = metadata.mimeType
+        }
+        val fileKey: EncryptionKey = pendingAttachmentLinkRepository.getToLinkKey(attachmentId)
+            ?: throw IllegalStateException("No encryption key found for attachment")
+        val encryptedMetadata =
+            encryptionContextProvider.withEncryptionContextSuspendable(fileKey.clone()) {
+                encrypt(fileMetadata.toByteArray(), EncryptionTag.FileData)
+            }
+        val encodedMetadata = Base64.encodeBase64String(encryptedMetadata.array)
+        remote.updatePendingFile(
+            userId = userId,
+            attachmentId = attachmentId,
+            metadata = encodedMetadata
+        )
+    }
+
     @Suppress("LongMethod")
     override suspend fun uploadPendingAttachment(
         userId: UserId,
@@ -115,104 +134,110 @@ class AttachmentRepositoryImpl @Inject constructor(
         val fileKey: EncryptionKey = pendingAttachmentLinkRepository.getToLinkKey(attachmentId)
             ?: throw IllegalStateException("No encryption key found for attachment $attachmentId")
         val contentUri: Uri = Uri.parse(uri.toString())
+        withContext(appDispatchers.io) {
+            context.contentResolver.openInputStream(contentUri)
+                ?.buffered()
+                ?.use { inputStream ->
+                    encryptionContextProvider.withEncryptionContextSuspendable(fileKey) {
+                        val buffer = ByteArray(CHUNK_SIZE)
+                        var chunkIndex = 0
+                        var bytesInBuffer = inputStream.read(buffer, 0, CHUNK_SIZE)
+                        if (bytesInBuffer == -1) throw IllegalStateException("File is empty")
 
-        runCatching {
-            withContext(appDispatchers.io) {
-                context.contentResolver.openInputStream(contentUri)
-                    ?.buffered()
-                    ?.use { inputStream ->
-                        encryptionContextProvider.withEncryptionContextSuspendable(fileKey) {
-                            val buffer = ByteArray(CHUNK_SIZE)
-                            var chunkIndex = 0
-                            var bytesInBuffer = inputStream.read(buffer, 0, CHUNK_SIZE)
-                            if (bytesInBuffer == -1) throw IllegalStateException("File is empty")
+                        if (bytesInBuffer < CHUNK_SIZE && bytesInBuffer < MIN_CHUNK_SIZE) {
+                            val encryptedChunk = encrypt(
+                                buffer.copyOf(bytesInBuffer),
+                                EncryptionTag.FileData
+                            )
+                            remote.uploadPendingFile(
+                                userId,
+                                attachmentId,
+                                chunkIndex,
+                                encryptedChunk
+                            )
+                            PassLogger.d(
+                                TAG,
+                                "Finished uploading single chunk with attachment $attachmentId"
+                            )
+                            return@withEncryptionContextSuspendable
+                        }
 
-                            if (bytesInBuffer < CHUNK_SIZE && bytesInBuffer < MIN_CHUNK_SIZE) {
+                        while (isActive) {
+                            val bytesRead =
+                                inputStream.read(
+                                    buffer,
+                                    bytesInBuffer,
+                                    CHUNK_SIZE - bytesInBuffer
+                                )
+                            if (bytesRead == -1) break
+
+                            bytesInBuffer += bytesRead
+
+                            if (bytesInBuffer >= CHUNK_SIZE) {
+                                PassLogger.d(
+                                    TAG,
+                                    "Uploading chunk $chunkIndex for attachment $attachmentId"
+                                )
                                 val encryptedChunk = encrypt(
-                                    buffer.copyOf(bytesInBuffer),
+                                    buffer.copyOf(CHUNK_SIZE),
                                     EncryptionTag.FileData
                                 )
                                 remote.uploadPendingFile(
-                                    userId,
-                                    attachmentId,
-                                    chunkIndex,
-                                    encryptedChunk
+                                    userId = userId,
+                                    attachmentId = attachmentId,
+                                    chunkIndex = chunkIndex,
+                                    encryptedByteArray = encryptedChunk
                                 )
-                                PassLogger.d(TAG, "Finished uploading single chunk with attachment $attachmentId")
-                                return@withEncryptionContextSuspendable
+                                chunkIndex++
+
+                                System.arraycopy(
+                                    buffer,
+                                    CHUNK_SIZE,
+                                    buffer,
+                                    0,
+                                    bytesInBuffer - CHUNK_SIZE
+                                )
+                                bytesInBuffer -= CHUNK_SIZE
                             }
+                        }
 
-                            while (isActive) {
-                                val bytesRead =
-                                    inputStream.read(
-                                        buffer,
-                                        bytesInBuffer,
-                                        CHUNK_SIZE - bytesInBuffer
-                                    )
-                                if (bytesRead == -1) break
-
-                                bytesInBuffer += bytesRead
-
-                                if (bytesInBuffer >= CHUNK_SIZE) {
-                                    PassLogger.d(TAG, "Uploading chunk $chunkIndex for attachment $attachmentId")
-                                    val encryptedChunk = encrypt(
-                                        buffer.copyOf(CHUNK_SIZE),
+                        if (bytesInBuffer > 0) {
+                            if (bytesInBuffer < MIN_CHUNK_SIZE && chunkIndex > 0) {
+                                PassLogger.d(
+                                    TAG,
+                                    "Combining last chunk with previous for attachment $attachmentId"
+                                )
+                                val previousChunk = buffer.copyOf(bytesInBuffer + CHUNK_SIZE)
+                                remote.uploadPendingFile(
+                                    userId = userId,
+                                    attachmentId = attachmentId,
+                                    chunkIndex = chunkIndex - 1,
+                                    encryptedByteArray = encrypt(
+                                        previousChunk,
                                         EncryptionTag.FileData
                                     )
-                                    remote.uploadPendingFile(
-                                        userId = userId,
-                                        attachmentId = attachmentId,
-                                        chunkIndex = chunkIndex,
-                                        encryptedByteArray = encryptedChunk
+                                )
+                            } else {
+                                PassLogger.d(
+                                    TAG,
+                                    "Uploading last chunk for attachment $attachmentId"
+                                )
+                                val encryptedChunk =
+                                    encrypt(
+                                        buffer.copyOf(bytesInBuffer),
+                                        EncryptionTag.FileData
                                     )
-                                    chunkIndex++
-
-                                    System.arraycopy(
-                                        buffer,
-                                        CHUNK_SIZE,
-                                        buffer,
-                                        0,
-                                        bytesInBuffer - CHUNK_SIZE
-                                    )
-                                    bytesInBuffer -= CHUNK_SIZE
-                                }
-                            }
-
-                            if (bytesInBuffer > 0) {
-                                if (bytesInBuffer < MIN_CHUNK_SIZE && chunkIndex > 0) {
-                                    PassLogger.d(TAG, "Combining last chunk with previous for attachment $attachmentId")
-                                    val previousChunk = buffer.copyOf(bytesInBuffer + CHUNK_SIZE)
-                                    remote.uploadPendingFile(
-                                        userId = userId,
-                                        attachmentId = attachmentId,
-                                        chunkIndex = chunkIndex - 1,
-                                        encryptedByteArray = encrypt(
-                                            previousChunk,
-                                            EncryptionTag.FileData
-                                        )
-                                    )
-                                } else {
-                                    PassLogger.d(TAG, "Uploading last chunk for attachment $attachmentId")
-                                    val encryptedChunk =
-                                        encrypt(
-                                            buffer.copyOf(bytesInBuffer),
-                                            EncryptionTag.FileData
-                                        )
-                                    remote.uploadPendingFile(
-                                        userId = userId,
-                                        attachmentId = attachmentId,
-                                        chunkIndex = chunkIndex,
-                                        encryptedByteArray = encryptedChunk
-                                    )
-                                }
+                                remote.uploadPendingFile(
+                                    userId = userId,
+                                    attachmentId = attachmentId,
+                                    chunkIndex = chunkIndex,
+                                    encryptedByteArray = encryptedChunk
+                                )
                             }
                         }
                     }
-                    ?: throw IllegalStateException("Unable to open input stream for URI: $contentUri")
-            }
-        }.onFailure {
-            pendingAttachmentLinkRepository.removeToLink(attachmentId)
-            throw it
+                }
+                ?: throw IllegalStateException("Unable to open input stream for URI: $contentUri")
         }
     }
 
@@ -229,14 +254,13 @@ class AttachmentRepositoryImpl @Inject constructor(
         val itemKey = encryptionContextProvider.withEncryptionContextSuspendable {
             EncryptionKey(decrypt(encryptedItemKey))
         }
-        val mappings: Map<AttachmentId, EncryptionKey> = pendingAttachmentLinkRepository.getAllToLink()
-        val toLinkEncrypted: Map<AttachmentId, EncryptedString> =
-            encryptionContextProvider.withEncryptionContextSuspendable(itemKey) {
-                mappings.mapValues { (_, fileKey) ->
-                    val encryptedKey = encrypt(fileKey.value(), EncryptionTag.FileKey)
-                    Base64.encodeBase64String(encryptedKey.array)
-                }
+        val toLinkEncrypted = encryptionContextProvider.withEncryptionContextSuspendable(itemKey) {
+            val mappings = pendingAttachmentLinkRepository.getAllToLink()
+            mappings.mapValues { (_, fileKey) ->
+                val encryptedKey = encrypt(fileKey.value(), EncryptionTag.FileKey)
+                Base64.encodeBase64String(encryptedKey.array)
             }
+        }
         val batchedToLinkEncrypted = toLinkEncrypted.entries.chunked(TO_LINK_BATCH_SIZE)
             .map { list -> list.associate { item -> item.key to item.value } }
         val batchedToUnlink = toUnlink.chunked(TO_UNLINK_BATCH_SIZE)

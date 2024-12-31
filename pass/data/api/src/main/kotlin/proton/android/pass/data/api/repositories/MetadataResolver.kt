@@ -23,4 +23,5 @@ import java.net.URI
 
 interface MetadataResolver {
     suspend fun extractMetadata(uri: URI): FileMetadata?
+    suspend fun extractName(uri: URI): String?
 }

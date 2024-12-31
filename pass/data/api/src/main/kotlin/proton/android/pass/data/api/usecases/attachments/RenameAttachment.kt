@@ -23,5 +23,5 @@ import java.net.URI
 
 interface RenameAttachment {
     suspend operator fun invoke(uri: URI, newName: String)
-    suspend operator fun invoke(attachmentId: AttachmentId, newName: String)
+    operator fun invoke(attachmentId: AttachmentId, newName: String)
 }

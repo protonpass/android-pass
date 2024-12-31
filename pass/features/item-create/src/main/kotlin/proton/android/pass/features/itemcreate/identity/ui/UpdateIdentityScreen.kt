@@ -170,6 +170,9 @@ fun UpdateIdentityScreen(
 
                         is AttachmentContentEvent.OnDraftAttachmentOptions ->
                             onNavigate(OpenDraftAttachmentOptions(event.event.uri))
+
+                        is AttachmentContentEvent.OnDraftAttachmentRetry ->
+                            viewModel.onRetryUploadDraftAttachment(event.event.metadata)
                     }
                 }
             }

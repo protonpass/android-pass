@@ -38,6 +38,7 @@ import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -155,4 +156,12 @@ abstract class BaseNoteViewModel(
     suspend fun isFileAttachmentsEnabled() = featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
         .firstOrNull()
         ?: false
+
+    fun retryUploadDraftAttachment(metadata: FileMetadata) {
+        viewModelScope.launch {
+            isLoadingState.update { IsLoadingState.Loading }
+            attachmentsHandler.uploadNewAttachment(metadata)
+            isLoadingState.update { IsLoadingState.NotLoading }
+        }
+    }
 }

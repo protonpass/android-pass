@@ -31,6 +31,7 @@ import proton.android.pass.composecomponents.impl.attachments.AttachmentContentE
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnDraftAttachmentOptions
 import proton.android.pass.composecomponents.impl.attachments.AttachmentRow
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.domain.attachments.DraftAttachment
 import proton.android.pass.features.itemcreate.note.NoteContentUiEvent.OnAttachmentEvent
 
 @Composable
@@ -67,36 +68,38 @@ fun AttachmentList(
                 }
             )
         }
-        attachmentsState.draftAttachmentsList.forEach { draftAttachment ->
-            AttachmentRow(
-                modifier = Modifier.roundedContainerNorm(),
-                innerModifier = Modifier.padding(
-                    start = Spacing.medium,
-                    top = Spacing.small,
-                    end = Spacing.none,
-                    bottom = Spacing.small
-                ),
-                filename = draftAttachment.name,
-                attachmentType = draftAttachment.attachmentType,
-                hasOptions = true,
-                size = draftAttachment.size,
-                createTime = draftAttachment.createTime,
-                isLoading = attachmentsState.loadingDraftAttachments.contains(draftAttachment.uri),
-                isEnabled = attachmentsState.isEnabled,
-                onOptionsClick = {
-                    onEvent(OnAttachmentEvent(OnDraftAttachmentOptions(draftAttachment.uri)))
-                },
-                onAttachmentOpen = {
-                    onEvent(
-                        OnAttachmentEvent(
-                            OnDraftAttachmentOpen(
-                                uri = draftAttachment.uri,
-                                mimetype = draftAttachment.mimeType
+        attachmentsState.draftAttachmentsList
+            .map(DraftAttachment::metadata)
+            .forEach { draftAttachment ->
+                AttachmentRow(
+                    modifier = Modifier.roundedContainerNorm(),
+                    innerModifier = Modifier.padding(
+                        start = Spacing.medium,
+                        top = Spacing.small,
+                        end = Spacing.none,
+                        bottom = Spacing.small
+                    ),
+                    filename = draftAttachment.name,
+                    attachmentType = draftAttachment.attachmentType,
+                    hasOptions = true,
+                    size = draftAttachment.size,
+                    createTime = draftAttachment.createTime,
+                    isLoading = attachmentsState.loadingDraftAttachments.contains(draftAttachment.uri),
+                    isEnabled = attachmentsState.isEnabled,
+                    onOptionsClick = {
+                        onEvent(OnAttachmentEvent(OnDraftAttachmentOptions(draftAttachment.uri)))
+                    },
+                    onAttachmentOpen = {
+                        onEvent(
+                            OnAttachmentEvent(
+                                OnDraftAttachmentOpen(
+                                    uri = draftAttachment.uri,
+                                    mimetype = draftAttachment.mimeType
+                                )
                             )
                         )
-                    )
-                }
-            )
-        }
+                    }
+                )
+            }
     }
 }

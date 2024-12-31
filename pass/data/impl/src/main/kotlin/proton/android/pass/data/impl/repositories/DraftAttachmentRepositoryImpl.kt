@@ -18,48 +18,71 @@
 
 package proton.android.pass.data.impl.repositories
 
-import kotlinx.collections.immutable.PersistentSet
-import kotlinx.collections.immutable.persistentSetOf
-import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.scan
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
+import proton.android.pass.domain.attachments.DraftAttachment
 import java.net.URI
 import javax.inject.Inject
 
 class DraftAttachmentRepositoryImpl @Inject constructor() : DraftAttachmentRepository {
-    private val uriSetFlow: MutableStateFlow<PersistentSet<URI>> = MutableStateFlow(persistentSetOf())
 
-    override fun add(uri: URI) {
-        uriSetFlow.update { currentSet ->
-            currentSet.add(uri).toPersistentSet()
+    private val draftAttachmentsStateFlow = MutableStateFlow<Map<URI, DraftAttachment>>(emptyMap())
+
+    override fun add(state: DraftAttachment) {
+        val uri = state.metadata.uri
+        draftAttachmentsStateFlow.update { currentMap ->
+            if (!currentMap.containsKey(uri)) {
+                currentMap + (uri to state)
+            } else {
+                currentMap
+            }
         }
     }
 
-    override fun observeAll(): StateFlow<Set<URI>> = uriSetFlow
-
-    override fun observeNew(): Flow<Set<URI>> = uriSetFlow
-        .scan(emptySet<URI>() to emptySet<URI>()) { (previouslySeen, _), currentSet ->
-            val newUris = currentSet - previouslySeen
-            currentSet to newUris
+    override fun update(state: DraftAttachment) {
+        draftAttachmentsStateFlow.update { currentMap ->
+            currentMap + (state.metadata.uri to state)
         }
-        .map { (_, newUris) -> newUris }
-        .filter(Set<URI>::isNotEmpty)
+    }
+
+    override fun get(uri: URI): DraftAttachment = draftAttachmentsStateFlow.value[uri]
+        ?: throw NoSuchElementException("No draft attachment found for URI: $uri")
+
+    override fun observeAll(): Flow<List<DraftAttachment>> = draftAttachmentsStateFlow.map { it.values.toList() }
+
+    override fun observeNew(): Flow<DraftAttachment> {
+        val seenUris = mutableSetOf<URI>()
+        return draftAttachmentsStateFlow
+            .map { currentMap ->
+                currentMap.filterKeys { it !in seenUris }
+            }
+            .onEach { newEntries ->
+                seenUris.addAll(newEntries.keys)
+            }
+            .flatMapConcat { newEntries ->
+                flow {
+                    for (state in newEntries.values) {
+                        emit(state)
+                    }
+                }
+            }
+    }
 
     override fun remove(uri: URI): Boolean {
         var removedSuccessfully = false
-        uriSetFlow.update { currentSet ->
-            if (uri in currentSet) {
+        draftAttachmentsStateFlow.update { currentMap ->
+            if (uri in currentMap) {
                 removedSuccessfully = true
-                currentSet.remove(uri).toPersistentSet()
+                currentMap - uri
             } else {
-                currentSet
+                currentMap
             }
         }
         return removedSuccessfully
@@ -67,18 +90,17 @@ class DraftAttachmentRepositoryImpl @Inject constructor() : DraftAttachmentRepos
 
     override fun clear(): Boolean {
         var clearedSuccessfully = false
-        uriSetFlow.update { currentSet ->
-            if (currentSet.isNotEmpty()) {
+        draftAttachmentsStateFlow.update { currentMap ->
+            if (currentMap.isNotEmpty()) {
                 clearedSuccessfully = true
-                persistentSetOf()
+                emptyMap()
             } else {
-                currentSet
+                currentMap
             }
         }
         return clearedSuccessfully
     }
 
-    override fun contains(uri: URI): Flow<Boolean> = uriSetFlow
-        .map { it.contains(uri) }
-        .distinctUntilChanged()
+    override fun contains(uri: URI): Flow<Boolean> =
+        draftAttachmentsStateFlow.map { it.containsKey(uri) }.distinctUntilChanged()
 }

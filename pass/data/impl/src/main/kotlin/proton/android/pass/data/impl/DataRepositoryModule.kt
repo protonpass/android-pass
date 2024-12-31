@@ -73,7 +73,9 @@ import proton.android.pass.data.impl.repositories.MetadataResolverImpl
 import proton.android.pass.data.impl.repositories.OnMemoryDraftRepository
 import proton.android.pass.data.impl.repositories.OrganizationSettingsRepositoryImpl
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
 import proton.android.pass.data.impl.repositories.PendingAttachmentLinkRepositoryImpl
+import proton.android.pass.data.impl.repositories.PendingAttachmentUpdaterRepositoryImpl
 import proton.android.pass.data.impl.repositories.PlanRepository
 import proton.android.pass.data.impl.repositories.PlanRepositoryImpl
 import proton.android.pass.data.impl.repositories.ReportRepositoryImpl
@@ -193,6 +195,11 @@ abstract class DataRepositoryModule {
     abstract fun bindPendingAttachmentLinkRepository(
         impl: PendingAttachmentLinkRepositoryImpl
     ): PendingAttachmentLinkRepository
+
+    @[Binds Singleton]
+    abstract fun bindPendingAttachmentUpdaterRepository(
+        impl: PendingAttachmentUpdaterRepositoryImpl
+    ): PendingAttachmentUpdaterRepository
 
     @[Binds Singleton]
     abstract fun bindShareMembersRepository(impl: ShareMembersRepositoryImpl): ShareMembersRepository

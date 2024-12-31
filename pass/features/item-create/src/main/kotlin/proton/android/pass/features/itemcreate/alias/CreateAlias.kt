@@ -156,6 +156,9 @@ fun CreateAliasScreen(
                             is AttachmentContentEvent.OnAttachmentOpen,
                             is AttachmentContentEvent.OnAttachmentOptions ->
                                 throw IllegalStateException("Action not allowed: $event")
+
+                            is AttachmentContentEvent.OnDraftAttachmentRetry ->
+                                viewModel.retryUploadDraftAttachment(event.event.metadata)
                         }
                     }
                 }

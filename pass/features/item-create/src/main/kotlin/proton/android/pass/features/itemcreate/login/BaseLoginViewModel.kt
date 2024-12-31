@@ -76,6 +76,7 @@ import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.domain.tooltips.Tooltip
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.OpenScanState
@@ -981,6 +982,14 @@ abstract class BaseLoginViewModel(
     suspend fun isFileAttachmentsEnabled() = featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
         .firstOrNull()
         ?: false
+
+    fun retryUploadDraftAttachment(metadata: FileMetadata) {
+        viewModelScope.launch {
+            isLoadingState.update { IsLoadingState.Loading }
+            attachmentsHandler.uploadNewAttachment(metadata)
+            isLoadingState.update { IsLoadingState.NotLoading }
+        }
+    }
 
     private companion object {
 

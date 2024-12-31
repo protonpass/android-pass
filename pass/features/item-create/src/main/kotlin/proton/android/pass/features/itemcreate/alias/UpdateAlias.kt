@@ -99,16 +99,16 @@ fun UpdateAlias(
             isCreateMode = false,
             isAliasCreatedByUser = uiState.canModify,
             isEditAllowed = uiState.baseAliasUiState.isLoadingState == IsLoadingState.NotLoading,
-            onEvent = { event ->
-                when (event) {
+            onEvent = {
+                when (it) {
                     AliasContentUiEvent.Back -> onExit()
-                    is AliasContentUiEvent.OnMailBoxChanged -> viewModel.onMailboxesChanged(event.list)
-                    is AliasContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
-                    is AliasContentUiEvent.OnSLNoteChange -> viewModel.onSLNoteChange(event.newSLNote)
+                    is AliasContentUiEvent.OnMailBoxChanged -> viewModel.onMailboxesChanged(it.list)
+                    is AliasContentUiEvent.OnNoteChange -> viewModel.onNoteChange(it.note)
+                    is AliasContentUiEvent.OnSLNoteChange -> viewModel.onSLNoteChange(it.newSLNote)
                     is AliasContentUiEvent.OnSenderNameChange ->
-                        viewModel.onSenderNameChange(event.value)
+                        viewModel.onSenderNameChange(it.value)
 
-                    is AliasContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
+                    is AliasContentUiEvent.OnTitleChange -> viewModel.onTitleChange(it.title)
                     AliasContentUiEvent.OnUpgrade ->
                         actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Upgrade) }
 
@@ -124,33 +124,44 @@ fun UpdateAlias(
                     }
 
                     is AliasContentUiEvent.OnAttachmentEvent ->
-                        when (event.event) {
+                        when (val event = it.event) {
                             AttachmentContentEvent.OnAddAttachment ->
                                 onNavigate(AddAttachment)
+
                             is AttachmentContentEvent.OnAttachmentOpen ->
                                 viewModel.openAttachment(
                                     contextHolder = context.toClassHolder(),
-                                    attachment = event.event.attachment
+                                    attachment = event.attachment
                                 )
+
                             is AttachmentContentEvent.OnAttachmentOptions ->
-                                onNavigate(OpenAttachmentOptions(event.event.attachmentId))
+                                onNavigate(
+                                    OpenAttachmentOptions(
+                                        shareId = event.shareId,
+                                        itemId = event.itemId,
+                                        attachmentId = event.attachmentId
+                                    )
+                                )
+
                             AttachmentContentEvent.OnDeleteAllAttachments ->
                                 onNavigate(
                                     DeleteAllAttachments(
                                         uiState.baseAliasUiState.attachmentsState.allToUnlink
                                     )
                                 )
+
                             is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                 viewModel.openDraftAttachment(
                                     contextHolder = context.toClassHolder(),
-                                    uri = event.event.uri,
-                                    mimetype = event.event.mimetype
+                                    uri = event.uri,
+                                    mimetype = event.mimetype
                                 )
+
                             is AttachmentContentEvent.OnDraftAttachmentOptions ->
-                                onNavigate(OpenDraftAttachmentOptions(event.event.uri))
+                                onNavigate(OpenDraftAttachmentOptions(event.uri))
 
                             is AttachmentContentEvent.OnDraftAttachmentRetry ->
-                                viewModel.retryUploadDraftAttachment(event.event.metadata)
+                                viewModel.retryUploadDraftAttachment(event.metadata)
                         }
                 }
             }

@@ -62,7 +62,15 @@ fun AttachmentList(
                 isError = false,
                 hasOptions = true,
                 onOptionsClick = {
-                    onEvent(OnAttachmentEvent(OnAttachmentOptions(attachment.id)))
+                    onEvent(
+                        OnAttachmentEvent(
+                            OnAttachmentOptions(
+                                shareId = attachment.shareId,
+                                itemId = attachment.itemId,
+                                attachmentId = attachment.id
+                            )
+                        )
+                    )
                 },
                 onAttachmentOpen = {
                     onEvent(OnAttachmentEvent(OnAttachmentOpen(attachment)))

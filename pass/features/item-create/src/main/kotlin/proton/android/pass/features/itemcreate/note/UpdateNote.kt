@@ -82,28 +82,34 @@ fun UpdateNote(
             showVaultSelector = false,
             selectedShareId = noteUiState.selectedShareId,
             noteItemFormState = viewModel.noteItemFormState,
-            onEvent = { event ->
-                when (event) {
+            onEvent = {
+                when (it) {
                     NoteContentUiEvent.Back -> onExit()
-                    is NoteContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
-                    is NoteContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
+                    is NoteContentUiEvent.OnNoteChange -> viewModel.onNoteChange(it.note)
+                    is NoteContentUiEvent.OnTitleChange -> viewModel.onTitleChange(it.title)
                     is NoteContentUiEvent.OnVaultSelect -> {}
-                    is NoteContentUiEvent.Submit -> viewModel.updateItem(event.shareId)
+                    is NoteContentUiEvent.Submit -> viewModel.updateItem(it.shareId)
                     is NoteContentUiEvent.OnAttachmentEvent ->
                         actionAfterKeyboardHide =
                             {
-                                when (event.event) {
+                                when (val event = it.event) {
                                     AttachmentContentEvent.OnAddAttachment ->
                                         onNavigate(AddAttachment)
 
                                     is AttachmentContentEvent.OnAttachmentOpen ->
                                         viewModel.onAttachmentOpen(
                                             contextHolder = context.toClassHolder(),
-                                            attachment = event.event.attachment
+                                            attachment = event.attachment
                                         )
 
                                     is AttachmentContentEvent.OnAttachmentOptions ->
-                                        onNavigate(OpenAttachmentOptions(event.event.attachmentId))
+                                        onNavigate(
+                                            OpenAttachmentOptions(
+                                                shareId = event.shareId,
+                                                itemId = event.itemId,
+                                                attachmentId = event.attachmentId
+                                            )
+                                        )
 
                                     AttachmentContentEvent.OnDeleteAllAttachments ->
                                         onNavigate(
@@ -115,15 +121,15 @@ fun UpdateNote(
                                     is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                         viewModel.openDraftAttachment(
                                             contextHolder = context.toClassHolder(),
-                                            uri = event.event.uri,
-                                            mimetype = event.event.mimetype
+                                            uri = event.uri,
+                                            mimetype = event.mimetype
                                         )
 
                                     is AttachmentContentEvent.OnDraftAttachmentOptions ->
-                                        onNavigate(OpenDraftAttachmentOptions(event.event.uri))
+                                        onNavigate(OpenDraftAttachmentOptions(event.uri))
 
                                     is AttachmentContentEvent.OnDraftAttachmentRetry ->
-                                        viewModel.retryUploadDraftAttachment(event.event.metadata)
+                                        viewModel.retryUploadDraftAttachment(event.metadata)
                                 }
                             }
                 }

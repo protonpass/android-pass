@@ -92,6 +92,9 @@ sealed interface BaseLoginNavigation {
     @JvmInline
     value class OpenDraftAttachmentOptions(val uri: URI) : BaseLoginNavigation
 
-    @JvmInline
-    value class OpenAttachmentOptions(val attachmentId: AttachmentId) : BaseLoginNavigation
+    data class OpenAttachmentOptions(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val attachmentId: AttachmentId
+    ) : BaseLoginNavigation
 }

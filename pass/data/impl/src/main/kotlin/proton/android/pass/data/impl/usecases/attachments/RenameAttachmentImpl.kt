@@ -64,6 +64,6 @@ class RenameAttachmentImpl @Inject constructor(
     }
 
     override fun invoke(attachmentId: AttachmentId, newName: String) {
-        pendingAttachmentUpdaterRepository.addPendingRename(attachmentId, newName)
+        pendingAttachmentUpdaterRepository.putPendingRename(attachmentId, newName)
     }
 }

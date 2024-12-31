@@ -16,12 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.attachments
+package proton.android.pass.data.api.repositories
 
+import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.attachments.AttachmentId
-import java.net.URI
 
-interface RenameAttachment {
-    suspend operator fun invoke(uri: URI, newName: String)
-    operator fun invoke(attachmentId: AttachmentId, newName: String)
+interface PendingAttachmentUpdaterRepository {
+    fun addPendingRename(attachmentId: AttachmentId, newName: String)
+    fun getPendingRename(attachmentId: AttachmentId): String?
+    fun getAllPendingRenames(): Map<AttachmentId, String>
+    fun observeAllPendingRenames(): Flow<Map<AttachmentId, String>>
+    fun clearAll()
 }

@@ -34,6 +34,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
+import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
 import proton.android.pass.data.api.usecases.attachments.RenameAttachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.log.api.PassLogger
@@ -46,6 +47,7 @@ import javax.inject.Inject
 class RenameAttachmentViewModel @Inject constructor(
     private val renameAttachment: RenameAttachment,
     private val draftAttachmentRepository: DraftAttachmentRepository,
+    private val pendingAttachmentUpdaterRepository: PendingAttachmentUpdaterRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -72,17 +74,19 @@ class RenameAttachmentViewModel @Inject constructor(
                 uri is Some -> {
                     val draftAttachment = draftAttachmentRepository.get(uri.value)
                     initialFileName = draftAttachment.metadata.name
-                    filename = initialFileName
                 }
 
                 attachmentId is Some -> {
-                    // To implement
+                    val name = pendingAttachmentUpdaterRepository.getPendingRename(attachmentId.value)
+                        .orEmpty()
+                    initialFileName = name
                 }
 
                 else -> {
                     eventFlow.update { RenameAttachmentEvent.Close }
                 }
             }
+            filename = initialFileName
         }
     }
 

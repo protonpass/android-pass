@@ -24,6 +24,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
+import proton.android.pass.data.api.repositories.MetadataResolver
+import proton.android.pass.domain.attachments.DraftAttachment
+import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.files.api.FileType
 import proton.android.pass.files.api.FileUriGenerator
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -33,6 +36,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CameraViewModel @Inject constructor(
     private val fileUriGenerator: FileUriGenerator,
+    private val metadataResolver: MetadataResolver,
     private val draftAttachmentRepository: DraftAttachmentRepository,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
@@ -44,8 +48,11 @@ class CameraViewModel @Inject constructor(
         }
     }
 
-    fun onPhotoTaken(uri: Uri) = viewModelScope.launch {
-        draftAttachmentRepository.add(URI.create(uri.toString()))
+    fun onPhotoTaken(contentUri: Uri) = viewModelScope.launch {
+        val uri = URI.create(contentUri.toString())
+        val fileMetadata = metadataResolver.extractMetadata(uri) ?: FileMetadata.unknown(uri)
+        val draftAttachment = DraftAttachment.Loading(fileMetadata)
+        draftAttachmentRepository.add(draftAttachment)
     }
 
     fun onCameraError(message: CameraSnackbarMessage) = viewModelScope.launch {

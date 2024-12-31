@@ -18,61 +18,38 @@
 
 package proton.android.pass.data.fakes.repositories
 
-import kotlinx.collections.immutable.persistentSetOf
-import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
+import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.attachments.DraftAttachment
+import proton.android.pass.domain.attachments.FileMetadata
 import java.net.URI
 import javax.inject.Inject
 
 class FakeDraftAttachmentRepository @Inject constructor() : DraftAttachmentRepository {
-    private val uriSetFlow = MutableStateFlow(persistentSetOf<URI>())
 
-    override fun add(uri: URI) {
-        uriSetFlow.update { currentSet ->
-            currentSet.add(uri).toPersistentSet()
-        }
+    override fun add(state: DraftAttachment) {
+        // Do nothing
     }
 
-    override fun observeAll(): StateFlow<Set<URI>> = uriSetFlow.asStateFlow()
-
-    override fun observeNew(): Flow<Set<URI>> = uriSetFlow
-        .map { it }
-        .distinctUntilChanged()
-
-    override fun remove(uri: URI): Boolean {
-        var removedSuccessfully = false
-        uriSetFlow.update { currentSet ->
-            if (uri in currentSet) {
-                removedSuccessfully = true
-                currentSet.remove(uri).toPersistentSet()
-            } else {
-                currentSet
-            }
-        }
-        return removedSuccessfully
+    override fun update(state: DraftAttachment) {
+        // Do nothing
     }
 
-    override fun clear(): Boolean {
-        var clearedSuccessfully = false
-        uriSetFlow.update { currentSet ->
-            if (currentSet.isNotEmpty()) {
-                clearedSuccessfully = true
-                persistentSetOf()
-            } else {
-                currentSet
-            }
-        }
-        return clearedSuccessfully
-    }
+    override fun get(uri: URI): DraftAttachment = DraftAttachment.Success(
+        metadata = FileMetadata.unknown(uri),
+        attachmentId = AttachmentId("attachmentId")
+    )
 
-    override fun contains(uri: URI): Flow<Boolean> = uriSetFlow
-        .map { it.contains(uri) }
-        .distinctUntilChanged()
+    override fun observeAll(): Flow<List<DraftAttachment>> = flowOf(emptyList())
+
+    override fun observeNew(): Flow<DraftAttachment> = emptyFlow()
+
+    override fun remove(uri: URI): Boolean = true
+
+    override fun clear(): Boolean = true
+
+    override fun contains(uri: URI): Flow<Boolean> = flowOf(true)
 }

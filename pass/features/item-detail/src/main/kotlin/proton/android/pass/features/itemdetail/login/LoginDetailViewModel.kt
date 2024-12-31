@@ -481,7 +481,6 @@ class LoginDetailViewModel @Inject constructor(
                     monitorState = details.securityState,
                     attachmentsState = AttachmentsState(
                         draftAttachmentsList = emptyList(), // no drafts in detail
-                        loadingDraftAttachments = emptySet(), // no drafts in detail
                         attachmentsList = details.attachments,
                         loadingAttachments = loadingAttachments
                     ),

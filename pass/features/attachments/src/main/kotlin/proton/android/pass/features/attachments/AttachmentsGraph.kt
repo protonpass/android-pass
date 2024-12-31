@@ -19,6 +19,7 @@
 package proton.android.pass.features.attachments
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavItem
 import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavigation
 import proton.android.pass.features.attachments.addattachment.ui.AddAttachmentBottomsheet
@@ -37,9 +38,13 @@ import proton.android.pass.features.attachments.filepicker.ui.FilePickerScreen
 import proton.android.pass.features.attachments.mediapicker.navigation.MediaPickerNavItem
 import proton.android.pass.features.attachments.mediapicker.navigation.MediaPickerNavigation
 import proton.android.pass.features.attachments.mediapicker.ui.MediaPickerScreen
+import proton.android.pass.features.attachments.renameattachment.navigation.RenameAttachmentNavItem
+import proton.android.pass.features.attachments.renameattachment.navigation.RenameAttachmentNavigation
+import proton.android.pass.features.attachments.renameattachment.ui.RenameAttachmentDialog
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
+import java.net.URI
 
 @Suppress("LongMethod")
 fun NavGraphBuilder.attachmentsGraph(onNavigate: (AttachmentsNavigation) -> Unit) {
@@ -68,6 +73,12 @@ fun NavGraphBuilder.attachmentsGraph(onNavigate: (AttachmentsNavigation) -> Unit
                 when (it) {
                     AttachmentOptionsNavigation.CloseBottomsheet ->
                         onNavigate(AttachmentsNavigation.CloseBottomsheet)
+
+                    is AttachmentOptionsNavigation.OpenRenameAttachment ->
+                        onNavigate(AttachmentsNavigation.OpenRenameAttachment(it.attachmentId))
+
+                    is AttachmentOptionsNavigation.OpenRenameDraftAttachment ->
+                        onNavigate(AttachmentsNavigation.OpenRenameDraftAttachment(it.uri))
                 }
             }
         )
@@ -108,6 +119,13 @@ fun NavGraphBuilder.attachmentsGraph(onNavigate: (AttachmentsNavigation) -> Unit
             }
         )
     }
+    dialog(RenameAttachmentNavItem) {
+        RenameAttachmentDialog {
+            when (it) {
+                RenameAttachmentNavigation.CloseDialog -> onNavigate(AttachmentsNavigation.CloseScreen)
+            }
+        }
+    }
 }
 
 sealed interface AttachmentsNavigation {
@@ -116,4 +134,10 @@ sealed interface AttachmentsNavigation {
     data object OpenFilePicker : AttachmentsNavigation
     data object OpenMediaPicker : AttachmentsNavigation
     data object OpenCamera : AttachmentsNavigation
+
+    @JvmInline
+    value class OpenRenameAttachment(val attachmentId: AttachmentId) : AttachmentsNavigation
+
+    @JvmInline
+    value class OpenRenameDraftAttachment(val uri: URI) : AttachmentsNavigation
 }

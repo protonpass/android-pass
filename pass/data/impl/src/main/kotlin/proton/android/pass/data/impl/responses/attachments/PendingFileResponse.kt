@@ -22,15 +22,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CreatePendingFileResponse(
+data class PendingFileResponse(
     @SerialName("Code")
     val code: Int,
     @SerialName("File")
     val file: FileIdApiModel
-)
-
-@Serializable
-data class FileIdApiModel(
-    @SerialName("FileID")
-    val fileID: String
 )

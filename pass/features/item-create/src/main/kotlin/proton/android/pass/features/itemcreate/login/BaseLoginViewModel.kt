@@ -117,16 +117,12 @@ abstract class BaseLoginViewModel(
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     init {
-        attachmentsHandler.observeNewAttachments { newUris ->
-            if (newUris.isNotEmpty()) {
-                onUserEditedContent()
-                newUris.forEach { uri ->
-                    viewModelScope.launch {
-                        isLoadingState.update { IsLoadingState.Loading }
-                        attachmentsHandler.uploadNewAttachment(uri)
-                        isLoadingState.update { IsLoadingState.NotLoading }
-                    }
-                }
+        attachmentsHandler.observeNewAttachments {
+            onUserEditedContent()
+            viewModelScope.launch {
+                isLoadingState.update { IsLoadingState.Loading }
+                attachmentsHandler.uploadNewAttachment(it.metadata)
+                isLoadingState.update { IsLoadingState.NotLoading }
             }
         }.launchIn(viewModelScope)
     }

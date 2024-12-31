@@ -18,6 +18,7 @@
 
 package proton.android.pass.domain.attachments
 
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import java.net.URI
 
@@ -28,4 +29,15 @@ data class FileMetadata(
     val mimeType: String,
     val attachmentType: AttachmentType,
     val createTime: Instant
-)
+) {
+    companion object {
+        fun unknown(uri: URI): FileMetadata = FileMetadata(
+            uri = uri,
+            name = "unknown",
+            size = 0,
+            mimeType = "application/octet-stream",
+            attachmentType = AttachmentType.Unknown,
+            createTime = Clock.System.now()
+        )
+    }
+}

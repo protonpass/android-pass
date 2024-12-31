@@ -303,7 +303,6 @@ class CreditCardDetailViewModel @Inject constructor(
                     itemFeatures = itemFeatures,
                     attachmentsState = AttachmentsState(
                         draftAttachmentsList = emptyList(), // no drafts in detail
-                        loadingDraftAttachments = emptySet(), // no drafts in detail
                         attachmentsList = details.attachments,
                         loadingAttachments = loadingAttachments
                     ),

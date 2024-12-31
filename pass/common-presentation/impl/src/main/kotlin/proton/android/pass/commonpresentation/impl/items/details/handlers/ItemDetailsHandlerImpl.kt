@@ -135,7 +135,6 @@ class ItemDetailsHandlerImpl @Inject constructor(
             AttachmentsState(
                 draftAttachmentsList = emptyList(),
                 attachmentsList = attachments,
-                loadingDraftAttachments = emptySet(),
                 loadingAttachments = loadingAttachments
             )
         }

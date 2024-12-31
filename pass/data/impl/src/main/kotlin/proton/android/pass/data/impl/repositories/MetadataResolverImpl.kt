@@ -29,9 +29,9 @@ import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.commonrust.api.FileType
 import proton.android.pass.commonrust.api.FileTypeDetector
 import proton.android.pass.commonrust.api.MimeType
-import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.domain.attachments.AttachmentType
+import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.log.api.PassLogger
 import java.net.URI
 import javax.inject.Inject
@@ -43,26 +43,42 @@ class MetadataResolverImpl @Inject constructor(
 ) : MetadataResolver {
 
     override suspend fun extractMetadata(uri: URI): FileMetadata? {
+        return resolveUri(uri) { contentUri ->
+            queryContentResolver(contentUri) { cursor ->
+                extractMetadataFromCursor(cursor, contentUri)
+            }
+        }
+    }
+
+    override suspend fun extractName(uri: URI): String? {
+        return resolveUri(uri) { contentUri ->
+            queryContentResolver(contentUri) { cursor ->
+                cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME))
+            }
+        }
+    }
+
+    private suspend fun <T> resolveUri(uri: URI, action: suspend (Uri) -> T?): T? {
         if (!isValidUri(uri)) {
-            PassLogger.w(TAG, "Invalid URI: $uri")
+            logWarning("Invalid URI: $uri")
             return null
         }
+        return action(Uri.parse(uri.toString()))
+    }
 
-        val contentUri = Uri.parse(uri.toString())
+    private suspend fun <T> queryContentResolver(contentUri: Uri, action: suspend (Cursor) -> T?): T? {
         return withContext(appDispatchers.io) {
-            runCatching {
-                context.contentResolver.query(contentUri, null, null, null, null)?.use { cursor ->
-                    if (cursor.moveToFirst()) {
-                        extractMetadataFromCursor(cursor, contentUri)
-                    } else {
-                        PassLogger.w(TAG, "Cursor is empty for URI: $uri")
-                        null
-                    }
+            context.contentResolver.query(contentUri, null, null, null, null)?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    action(cursor)
+                } else {
+                    logWarning("Cursor is empty for URI: $contentUri")
+                    null
                 }
-            }.onFailure { e ->
-                PassLogger.w(TAG, "Failed to extract metadata for URI: $uri")
-                PassLogger.w(TAG, e)
-            }.getOrNull()
+            } ?: run {
+                logWarning("Failed to query content resolver for URI: $contentUri")
+                null
+            }
         }
     }
 
@@ -116,15 +132,19 @@ class MetadataResolverImpl @Inject constructor(
                 }
             }
         }.onFailure { e ->
-            PassLogger.w(TAG, "Failed to read bytes for MIME type detection")
-            PassLogger.w(TAG, e)
+            logWarning("Failed to read bytes for MIME type detection", e)
         }.getOrNull()
     }
 
     private fun isValidUri(uri: URI): Boolean = runCatching {
         Uri.parse(uri.toString())
         true
-    }.getOrElse { false }
+    }.getOrDefault(false)
+
+    private fun logWarning(message: String, throwable: Throwable? = null) {
+        PassLogger.w(TAG, message)
+        throwable?.let { PassLogger.w(TAG, it) }
+    }
 
     companion object {
         private const val TAG = "MetadataResolverImpl"

@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.local.attachments
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentWithChunks
@@ -80,38 +79,37 @@ class LocalAttachmentsDataSourceImpl @Inject constructor(
     override fun observeActiveAttachmentsWithChunksForItem(
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<List<AttachmentWithChunks>> = database.itemsDao().observeById(shareId.id, itemId.id)
-        .flatMapLatest { item ->
-            observeAttachments(
-                shareId = shareId,
-                itemId = itemId,
-                revision = item.revision
-            )
-        }
-
-    override fun observeAllAttachmentsWithChunksForItemRevisions(
-        shareId: ShareId,
-        itemId: ItemId
-    ): Flow<List<AttachmentWithChunks>> = observeAttachments(
-        shareId = shareId,
-        itemId = itemId,
-        revision = null
-    )
-
-    private fun observeAttachments(
-        shareId: ShareId,
-        itemId: ItemId,
-        revision: Long?
-    ) = combine(
-        database.attachmentDao().observeItemAttachments(
+    ): Flow<List<AttachmentWithChunks>> = observeAttachmentsWithChunks(
+        database.attachmentDao().observeActiveItemAttachments(
             shareId = shareId.id,
-            itemId = itemId.id,
-            revision = revision
+            itemId = itemId.id
         ),
         database.chunkDao().observeItemChunks(
             shareId = shareId.id,
             itemId = itemId.id
         )
+    )
+
+    override fun observeAllAttachmentsWithChunksForItemRevisions(
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<List<AttachmentWithChunks>> = observeAttachmentsWithChunks(
+        database.attachmentDao().observeAllItemRevisionsAttachments(
+            shareId = shareId.id,
+            itemId = itemId.id
+        ),
+        database.chunkDao().observeItemChunks(
+            shareId = shareId.id,
+            itemId = itemId.id
+        )
+    )
+
+    private fun observeAttachmentsWithChunks(
+        attachmentFlow: Flow<List<AttachmentEntity>>,
+        chunkFlow: Flow<List<ChunkEntity>>
+    ): Flow<List<AttachmentWithChunks>> = combine(
+        attachmentFlow,
+        chunkFlow
     ) { attachments, chunks ->
         val chunkMap = chunks.groupBy { it.attachmentId }
 

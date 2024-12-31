@@ -31,7 +31,7 @@ class PendingAttachmentUpdaterRepositoryImpl @Inject constructor() : PendingAtta
 
     private val toUpdate = MutableStateFlow<Map<AttachmentId, String>>(emptyMap())
 
-    override fun addPendingRename(attachmentId: AttachmentId, newName: String) {
+    override fun putPendingRename(attachmentId: AttachmentId, newName: String) {
         toUpdate.update { currentMap ->
             currentMap.toMutableMap().apply {
                 this[attachmentId] = newName

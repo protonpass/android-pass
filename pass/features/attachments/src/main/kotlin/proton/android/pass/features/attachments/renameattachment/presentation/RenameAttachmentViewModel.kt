@@ -35,6 +35,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
+import proton.android.pass.data.api.usecases.attachments.GetAttachment
 import proton.android.pass.data.api.usecases.attachments.RenameAttachment
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -50,6 +51,7 @@ class RenameAttachmentViewModel @Inject constructor(
     private val renameAttachment: RenameAttachment,
     private val draftAttachmentRepository: DraftAttachmentRepository,
     private val pendingAttachmentUpdaterRepository: PendingAttachmentUpdaterRepository,
+    private val getAttachment: GetAttachment,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -86,10 +88,23 @@ class RenameAttachmentViewModel @Inject constructor(
                     initialFileName = draftAttachment.metadata.name
                 }
 
-                attachmentId is Some -> {
-                    val name = pendingAttachmentUpdaterRepository.getPendingRename(attachmentId.value)
-                        .orEmpty()
-                    initialFileName = name
+                shareId is Some && itemId is Some && attachmentId is Some -> {
+                    val renamedName =
+                        pendingAttachmentUpdaterRepository.getPendingRename(attachmentId.value)
+                    if (renamedName != null) {
+                        initialFileName = renamedName
+                    } else {
+                        runCatching {
+                            getAttachment(shareId.value, itemId.value, attachmentId.value).name
+                        }.onSuccess {
+                            initialFileName = it
+                        }.onFailure {
+                            PassLogger.w(TAG, "Failed to get attachment name")
+                            PassLogger.w(TAG, it)
+                            initialFileName = ""
+                            eventFlow.update { RenameAttachmentEvent.Close }
+                        }
+                    }
                 }
 
                 else -> {
@@ -127,10 +142,12 @@ class RenameAttachmentViewModel @Inject constructor(
                                 attachmentId = attachmentId.value,
                                 newName = filename
                             )
+
                         uri is Some -> renameAttachment(
                             uri = uri.value,
                             newName = filename
                         )
+
                         else -> throw IllegalStateException("Invalid state")
                     }
                 }.onSuccess {
@@ -143,6 +160,7 @@ class RenameAttachmentViewModel @Inject constructor(
             }
         }
     }
+
     companion object {
         private const val TAG = "RenameAttachmentViewModel"
     }

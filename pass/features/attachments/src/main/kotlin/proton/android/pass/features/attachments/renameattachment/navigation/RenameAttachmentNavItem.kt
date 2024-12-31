@@ -31,7 +31,12 @@ import java.net.URI
 data object RenameAttachmentNavItem : NavItem(
     baseRoute = "renameattachment/dialog",
     navItemType = NavItemType.Dialog,
-    optionalArgIds = listOf(CommonOptionalNavArgId.AttachmentId, CommonOptionalNavArgId.Uri)
+    optionalArgIds = listOf(
+        CommonOptionalNavArgId.ShareId,
+        CommonOptionalNavArgId.ItemId,
+        CommonOptionalNavArgId.AttachmentId,
+        CommonOptionalNavArgId.Uri
+    )
 ) {
     fun createNavRoute(
         shareId: ShareId,

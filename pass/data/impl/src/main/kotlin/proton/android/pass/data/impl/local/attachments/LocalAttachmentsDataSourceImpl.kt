@@ -53,6 +53,16 @@ class LocalAttachmentsDataSourceImpl @Inject constructor(
         attachmentId = attachmentId.id
     )
 
+    override suspend fun getChunksForAttachment(
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId
+    ): List<ChunkEntity> = database.chunkDao().getChunksForAttachment(
+        shareId = shareId.id,
+        itemId = itemId.id,
+        attachmentId = attachmentId.id
+    )
+
     override suspend fun updateAttachment(attachmentEntity: AttachmentEntity) {
         database.attachmentDao().update(attachmentEntity)
     }

@@ -35,4 +35,18 @@ abstract class ChunkDao : BaseDao<ChunkEntity>() {
         """
     )
     abstract fun observeItemChunks(shareId: String, itemId: String): Flow<List<ChunkEntity>>
+
+    @Query(
+        """
+        SELECT * FROM ${ChunkEntity.TABLE}
+        WHERE ${ChunkEntity.Columns.SHARE_ID} = :shareId 
+          AND ${ChunkEntity.Columns.ITEM_ID} = :itemId
+          AND ${ChunkEntity.Columns.ATTACHMENT_ID} = :attachmentId
+        """
+    )
+    abstract fun getChunksForAttachment(
+        shareId: String,
+        itemId: String,
+        attachmentId: String
+    ): List<ChunkEntity>
 }

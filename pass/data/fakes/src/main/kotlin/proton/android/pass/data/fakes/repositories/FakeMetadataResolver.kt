@@ -18,11 +18,23 @@
 
 package proton.android.pass.data.fakes.repositories
 
-import proton.android.pass.domain.attachments.FileMetadata
+import kotlinx.datetime.Instant
 import proton.android.pass.data.api.repositories.MetadataResolver
+import proton.android.pass.domain.attachments.AttachmentType
+import proton.android.pass.domain.attachments.FileMetadata
 import java.net.URI
 import javax.inject.Inject
 
 class FakeMetadataResolver @Inject constructor() : MetadataResolver {
-    override suspend fun extractMetadata(uri: URI): FileMetadata? = null
+
+    override suspend fun extractMetadata(uri: URI): FileMetadata = FileMetadata(
+        uri = uri,
+        name = "",
+        size = 0,
+        mimeType = "",
+        attachmentType = AttachmentType.Audio,
+        createTime = Instant.DISTANT_PAST
+    )
+
+    override suspend fun extractName(uri: URI): String = uri.toString()
 }

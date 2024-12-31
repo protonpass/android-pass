@@ -18,8 +18,10 @@
 
 package proton.android.pass.data.api.usecases.attachments
 
-import proton.android.pass.domain.attachments.FileMetadata
+import proton.android.pass.domain.attachments.AttachmentId
+import java.net.URI
 
-interface UploadAttachment {
-    suspend operator fun invoke(metadata: FileMetadata)
+interface RenameAttachment {
+    suspend operator fun invoke(uri: URI, newName: String)
+    suspend operator fun invoke(attachmentId: AttachmentId, newName: String)
 }

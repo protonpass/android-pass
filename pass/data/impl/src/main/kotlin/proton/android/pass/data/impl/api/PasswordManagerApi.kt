@@ -62,8 +62,8 @@ import proton.android.pass.data.impl.requests.alias.UpdateAliasNameRequest
 import proton.android.pass.data.impl.requests.alias.UpdateAliasNoteRequest
 import proton.android.pass.data.impl.requests.aliascontacts.CreateAliasContactRequest
 import proton.android.pass.data.impl.requests.aliascontacts.UpdateBlockedAliasContactRequest
-import proton.android.pass.data.impl.requests.attachments.CreatePendingFileRequest
 import proton.android.pass.data.impl.requests.attachments.LinkPendingFilesRequest
+import proton.android.pass.data.impl.requests.attachments.PendingFileRequest
 import proton.android.pass.data.impl.requests.attachments.RestoreOldFileRequest
 import proton.android.pass.data.impl.requests.attachments.UpdateFileMetadataRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
@@ -114,7 +114,7 @@ import proton.android.pass.data.impl.responses.aliascontacts.CreateAliasContactR
 import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactResponse
 import proton.android.pass.data.impl.responses.aliascontacts.GetAliasContactsResponse
 import proton.android.pass.data.impl.responses.aliascontacts.UpdateBlockedAliasContactResponse
-import proton.android.pass.data.impl.responses.attachments.CreatePendingFileResponse
+import proton.android.pass.data.impl.responses.attachments.PendingFileResponse
 import proton.android.pass.data.impl.responses.attachments.RestoreOldFileResponse
 import proton.android.pass.data.impl.responses.attachments.RetrieveFilesResponse
 import proton.android.pass.data.impl.responses.attachments.UpdateFileMetadataResponse
@@ -586,7 +586,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     // Attachments
     @POST("$PREFIX/file")
-    suspend fun createPendingFile(@Body request: CreatePendingFileRequest): CreatePendingFileResponse
+    suspend fun createPendingFile(@Body request: PendingFileRequest): PendingFileResponse
 
     @POST("$PREFIX/share/{shareId}/item/{itemId}/link_files")
     suspend fun linkPendingFiles(
@@ -602,6 +602,12 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("fileId") fileId: String,
         @Body request: RestoreOldFileRequest
     ): RestoreOldFileResponse
+
+    @PUT("$PREFIX/file/{fileId}/metadata")
+    suspend fun updatePendingFileMetadata(
+        @Path("fileId") fileId: String,
+        @Body request: PendingFileRequest
+    ): PendingFileResponse
 
     @PUT("$PREFIX/share/{shareId}/item/{itemId}/file/{fileId}/metadata")
     suspend fun updateFileMetadata(

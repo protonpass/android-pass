@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,10 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.attachments
+package proton.android.pass.data.impl.requests.attachments
 
-import proton.android.pass.domain.attachments.FileMetadata
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-interface UploadAttachment {
-    suspend operator fun invoke(metadata: FileMetadata)
-}
+@Serializable
+data class PendingFileRequest(
+    @SerialName("Metadata")
+    val metadata: String
+)

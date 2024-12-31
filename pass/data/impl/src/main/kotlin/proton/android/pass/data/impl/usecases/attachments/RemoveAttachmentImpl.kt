@@ -19,8 +19,8 @@
 package proton.android.pass.data.impl.usecases.attachments
 
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
-import proton.android.pass.data.api.usecases.attachments.RemoveAttachment
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.api.usecases.attachments.RemoveAttachment
 import proton.android.pass.domain.attachments.AttachmentId
 import java.net.URI
 import javax.inject.Inject

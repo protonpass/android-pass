@@ -55,14 +55,19 @@ abstract class AttachmentDao : BaseDao<AttachmentEntity>() {
         SELECT * FROM ${AttachmentEntity.TABLE}
         WHERE ${AttachmentEntity.Columns.SHARE_ID} = :shareId 
           AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId
-          AND (${AttachmentEntity.Columns.REVISION_ADDED} = :revision OR :revision IS NULL)
+          AND ${AttachmentEntity.Columns.REVISION_REMOVED} IS NULL
         """
     )
-    abstract fun observeItemAttachments(
-        shareId: String,
-        itemId: String,
-        revision: Long? = null
-    ): Flow<List<AttachmentEntity>>
+    abstract fun observeActiveItemAttachments(shareId: String, itemId: String): Flow<List<AttachmentEntity>>
+
+    @Query(
+        """
+        SELECT * FROM ${AttachmentEntity.TABLE}
+        WHERE ${AttachmentEntity.Columns.SHARE_ID} = :shareId 
+          AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId
+        """
+    )
+    abstract fun observeAllItemRevisionsAttachments(shareId: String, itemId: String): Flow<List<AttachmentEntity>>
 
     @Query(
         """

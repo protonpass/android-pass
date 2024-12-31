@@ -403,6 +403,26 @@ class AttachmentRepositoryImpl @Inject constructor(
             }
         }
 
+    override suspend fun getAttachmentById(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId
+    ): Attachment = withContext(appDispatchers.io) {
+        val attachment = local.getAttachmentById(shareId, itemId, attachmentId)
+            ?: throw IllegalStateException("Attachment not found")
+        val chunks = local.getChunksForAttachment(shareId, itemId, attachmentId)
+        encryptionContextProvider.withEncryptionContextSuspendable {
+            attachment.toDomain(
+                encryptionContext = this,
+                fileTypeDetector = fileTypeDetector,
+                shareId = shareId,
+                itemId = itemId,
+                chunks = chunks.map(ChunkEntity::toDomain)
+            )
+        }
+    }
+
     private suspend fun mapAttachmentsWithChunksToDomain(
         attachmentsWithChunks: List<AttachmentWithChunks>,
         shareId: ShareId,

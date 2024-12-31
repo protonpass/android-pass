@@ -30,6 +30,8 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.usecases.attachments.RemoveAttachment
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
@@ -42,6 +44,14 @@ class AttachmentOptionsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
+    private val shareId: Option<ShareId> = savedStateHandleProvider.get()
+        .get<String>(CommonOptionalNavArgId.ShareId.key)
+        ?.let(::ShareId)
+        .toOption()
+    private val itemId: Option<ItemId> = savedStateHandleProvider.get()
+        .get<String>(CommonOptionalNavArgId.ItemId.key)
+        ?.let(::ItemId)
+        .toOption()
     private val attachmentId: Option<AttachmentId> = savedStateHandleProvider.get()
         .get<String>(CommonOptionalNavArgId.AttachmentId.key)
         ?.let(::AttachmentId)
@@ -72,13 +82,18 @@ class AttachmentOptionsViewModel @Inject constructor(
 
     fun renameAttachment() {
         when {
-            attachmentId is Some -> eventFlow.update {
-                AttachmentOptionsEvent.OpenRenameAttachment(attachmentId.value)
+            shareId is Some && itemId is Some && attachmentId is Some -> eventFlow.update {
+                AttachmentOptionsEvent.OpenRenameAttachment(
+                    shareId = shareId.value,
+                    itemId = itemId.value,
+                    attachmentId = attachmentId.value
+                )
             }
 
             uri is Some -> eventFlow.update {
                 AttachmentOptionsEvent.OpenRenameDraftAttachment(uri.value)
             }
+            else -> throw IllegalStateException("No attachment id or uri found")
         }
     }
 

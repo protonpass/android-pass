@@ -57,8 +57,11 @@ sealed interface UpdateAliasNavigation {
     data object Close : UpdateAliasNavigation
     data object AddAttachment : UpdateAliasNavigation
 
-    @JvmInline
-    value class OpenAttachmentOptions(val attachmentId: AttachmentId) : UpdateAliasNavigation
+    data class OpenAttachmentOptions(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val attachmentId: AttachmentId
+    ) : UpdateAliasNavigation
 
     @JvmInline
     value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : UpdateAliasNavigation

@@ -18,6 +18,8 @@
 
 package proton.android.pass.features.itemcreate.creditcard
 
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import java.net.URI
 
@@ -26,8 +28,11 @@ sealed interface BaseCreditCardNavigation {
     data object Close : BaseCreditCardNavigation
     data object AddAttachment : BaseCreditCardNavigation
 
-    @JvmInline
-    value class OpenAttachmentOptions(val attachmentId: AttachmentId) : BaseCreditCardNavigation
+    data class OpenAttachmentOptions(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val attachmentId: AttachmentId
+    ) : BaseCreditCardNavigation
 
     @JvmInline
     value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : BaseCreditCardNavigation

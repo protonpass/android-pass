@@ -105,7 +105,15 @@ fun AttachmentSection(
                     hasOptions = !isDetail,
                     isLoading = attachmentsState.loadingAttachments.contains(attachment.id),
                     onRetryClick = {},
-                    onOptionsClick = { onEvent(OnAttachmentOptions(attachment.id)) },
+                    onOptionsClick = {
+                        onEvent(
+                            OnAttachmentOptions(
+                                shareId = attachment.shareId,
+                                itemId = attachment.itemId,
+                                attachmentId = attachment.id
+                            )
+                        )
+                    },
                     onAttachmentOpen = { onEvent(OnAttachmentOpen(attachment)) }
                 )
                 if (attachmentsState.shouldDisplayDivider(index)) {

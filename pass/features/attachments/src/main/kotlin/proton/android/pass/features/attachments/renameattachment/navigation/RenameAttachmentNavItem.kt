@@ -18,6 +18,8 @@
 
 package proton.android.pass.features.attachments.renameattachment.navigation
 
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
@@ -31,9 +33,17 @@ data object RenameAttachmentNavItem : NavItem(
     navItemType = NavItemType.Dialog,
     optionalArgIds = listOf(CommonOptionalNavArgId.AttachmentId, CommonOptionalNavArgId.Uri)
 ) {
-    fun createNavRoute(attachmentId: AttachmentId) = buildString {
+    fun createNavRoute(
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId
+    ) = buildString {
         append(baseRoute)
-        val params = mapOf(CommonOptionalNavArgId.AttachmentId.key to attachmentId.id)
+        val params = mapOf(
+            CommonOptionalNavArgId.ShareId.key to shareId.id,
+            CommonOptionalNavArgId.ItemId.key to itemId.id,
+            CommonOptionalNavArgId.AttachmentId.key to attachmentId.id
+        )
         append(params.toPath())
     }
 

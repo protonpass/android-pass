@@ -18,6 +18,8 @@
 
 package proton.android.pass.features.attachments.attachmentoptions.presentation
 
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import java.net.URI
 
@@ -27,8 +29,11 @@ sealed interface AttachmentOptionsEvent {
 
     data object Close : AttachmentOptionsEvent
 
-    @JvmInline
-    value class OpenRenameAttachment(val attachmentId: AttachmentId) : AttachmentOptionsEvent
+    data class OpenRenameAttachment(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val attachmentId: AttachmentId
+    ) : AttachmentOptionsEvent
 
     @JvmInline
     value class OpenRenameDraftAttachment(val uri: URI) : AttachmentOptionsEvent

@@ -19,6 +19,8 @@
 package proton.android.pass.features.attachments
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavItem
 import proton.android.pass.features.attachments.addattachment.navigation.AddAttachmentNavigation
@@ -75,7 +77,13 @@ fun NavGraphBuilder.attachmentsGraph(onNavigate: (AttachmentsNavigation) -> Unit
                         onNavigate(AttachmentsNavigation.CloseBottomsheet)
 
                     is AttachmentOptionsNavigation.OpenRenameAttachment ->
-                        onNavigate(AttachmentsNavigation.OpenRenameAttachment(it.attachmentId))
+                        onNavigate(
+                            AttachmentsNavigation.OpenRenameAttachment(
+                                shareId = it.shareId,
+                                itemId = it.itemId,
+                                attachmentId = it.attachmentId
+                            )
+                        )
 
                     is AttachmentOptionsNavigation.OpenRenameDraftAttachment ->
                         onNavigate(AttachmentsNavigation.OpenRenameDraftAttachment(it.uri))
@@ -135,8 +143,11 @@ sealed interface AttachmentsNavigation {
     data object OpenMediaPicker : AttachmentsNavigation
     data object OpenCamera : AttachmentsNavigation
 
-    @JvmInline
-    value class OpenRenameAttachment(val attachmentId: AttachmentId) : AttachmentsNavigation
+    data class OpenRenameAttachment(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val attachmentId: AttachmentId
+    ) : AttachmentsNavigation
 
     @JvmInline
     value class OpenRenameDraftAttachment(val uri: URI) : AttachmentsNavigation

@@ -18,8 +18,8 @@
 
 package proton.android.pass.data.api.usecases.attachments
 
-import java.net.URI
+import proton.android.pass.domain.attachments.FileMetadata
 
 interface UploadAttachment {
-    suspend operator fun invoke(uri: URI)
+    suspend operator fun invoke(metadata: FileMetadata)
 }

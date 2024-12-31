@@ -26,13 +26,14 @@ import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.attachments.DraftAttachment
+import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import java.net.URI
 
 class FakeAttachmentHandler : AttachmentsHandler {
 
-    override val isUploadingAttachment: Flow<Set<URI>>
-        get() = flowOf(emptySet())
     override val attachmentState: Flow<AttachmentsState>
         get() = flowOf(AttachmentsState.Initial)
 
@@ -44,21 +45,26 @@ class FakeAttachmentHandler : AttachmentsHandler {
         // no-op
     }
 
-    override suspend fun uploadNewAttachment(uri: URI) {
-        // no-op
-    }
-
     override fun onClearAttachments() {
         // no-op
     }
 
-    override fun observeNewAttachments(onNewAttachment: (Set<URI>) -> Unit): Flow<Set<URI>> = flowOf(emptySet())
+    override fun observeNewAttachments(onNewAttachment: (DraftAttachment) -> Unit): Flow<DraftAttachment> = flowOf(
+        DraftAttachment.Success(
+            metadata = FileMetadata.unknown(URI("")),
+            attachmentId = AttachmentId("attachmentId")
+        )
+    )
 
     override suspend fun getAttachmentsForItem(shareId: ShareId, itemId: ItemId) {
         // no-op
     }
 
     override suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
+        // no-op
+    }
+
+    override suspend fun uploadNewAttachment(fileMetadata: FileMetadata) {
         // no-op
     }
 }

@@ -33,6 +33,12 @@ interface RemoteAttachmentsDataSource {
 
     suspend fun createPendingFile(userId: UserId, metadata: EncryptedString): String
 
+    suspend fun updatePendingFile(
+        userId: UserId,
+        attachmentId: AttachmentId,
+        metadata: EncryptedString
+    ): String
+
     suspend fun uploadPendingFile(
         userId: UserId,
         attachmentId: AttachmentId,

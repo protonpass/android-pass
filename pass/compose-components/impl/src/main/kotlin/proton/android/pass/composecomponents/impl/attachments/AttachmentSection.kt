@@ -44,6 +44,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.attachments.DraftAttachment
 import proton.android.pass.domain.items.ItemCategory
 
 @Composable
@@ -109,44 +110,46 @@ fun AttachmentSection(
                     PassDivider()
                 }
             }
-            attachmentsState.draftAttachmentsList.forEachIndexed { index, fileMetadata ->
-                AttachmentRow(
-                    innerModifier = Modifier
-                        .applyIf(
-                            condition = isDetail,
-                            ifTrue = { padding(start = Spacing.medium) },
-                            ifFalse = { padding(horizontal = Spacing.medium) }
-                        )
-                        .padding(top = Spacing.medium)
-                        .applyIf(
-                            condition = index < attachmentsState.draftAttachmentsList.lastIndex,
-                            ifTrue = { padding(bottom = Spacing.medium) }
-                        )
-                        .applyIf(
-                            condition = isDetail && index == attachmentsState.draftAttachmentsList.lastIndex,
-                            ifTrue = { padding(bottom = Spacing.medium) }
-                        ),
-                    filename = fileMetadata.name,
-                    isEnabled = attachmentsState.isEnabled,
-                    isLoading = attachmentsState.loadingDraftAttachments.contains(fileMetadata.uri),
-                    hasOptions = !isDetail,
-                    attachmentType = fileMetadata.attachmentType,
-                    size = fileMetadata.size,
-                    createTime = fileMetadata.createTime,
-                    onOptionsClick = { onEvent(OnDraftAttachmentOptions(fileMetadata.uri)) },
-                    onAttachmentOpen = {
-                        onEvent(
-                            OnDraftAttachmentOpen(
-                                uri = fileMetadata.uri,
-                                mimetype = fileMetadata.mimeType
+            attachmentsState.draftAttachmentsList
+                .map(DraftAttachment::metadata)
+                .forEachIndexed { index, fileMetadata ->
+                    AttachmentRow(
+                        innerModifier = Modifier
+                            .applyIf(
+                                condition = isDetail,
+                                ifTrue = { padding(start = Spacing.medium) },
+                                ifFalse = { padding(horizontal = Spacing.medium) }
                             )
-                        )
+                            .padding(top = Spacing.medium)
+                            .applyIf(
+                                condition = index < attachmentsState.draftAttachmentsList.lastIndex,
+                                ifTrue = { padding(bottom = Spacing.medium) }
+                            )
+                            .applyIf(
+                                condition = isDetail && index == attachmentsState.draftAttachmentsList.lastIndex,
+                                ifTrue = { padding(bottom = Spacing.medium) }
+                            ),
+                        filename = fileMetadata.name,
+                        isEnabled = attachmentsState.isEnabled,
+                        isLoading = attachmentsState.loadingDraftAttachments.contains(fileMetadata.uri),
+                        hasOptions = !isDetail,
+                        attachmentType = fileMetadata.attachmentType,
+                        size = fileMetadata.size,
+                        createTime = fileMetadata.createTime,
+                        onOptionsClick = { onEvent(OnDraftAttachmentOptions(fileMetadata.uri)) },
+                        onAttachmentOpen = {
+                            onEvent(
+                                OnDraftAttachmentOpen(
+                                    uri = fileMetadata.uri,
+                                    mimetype = fileMetadata.mimeType
+                                )
+                            )
+                        }
+                    )
+                    if (index < attachmentsState.draftAttachmentsList.lastIndex) {
+                        PassDivider()
                     }
-                )
-                if (index < attachmentsState.draftAttachmentsList.lastIndex) {
-                    PassDivider()
                 }
-            }
         }
         if (!isDetail) {
             AddAttachmentButton(

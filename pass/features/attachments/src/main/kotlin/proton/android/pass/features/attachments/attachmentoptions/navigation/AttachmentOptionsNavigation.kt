@@ -18,6 +18,16 @@
 
 package proton.android.pass.features.attachments.attachmentoptions.navigation
 
+import proton.android.pass.domain.attachments.AttachmentId
+import java.net.URI
+
 sealed interface AttachmentOptionsNavigation {
     data object CloseBottomsheet : AttachmentOptionsNavigation
+
+    @JvmInline
+    value class OpenRenameAttachment(val attachmentId: AttachmentId) : AttachmentOptionsNavigation
+
+    @JvmInline
+    value class OpenRenameDraftAttachment(val uri: URI) : AttachmentOptionsNavigation
+
 }

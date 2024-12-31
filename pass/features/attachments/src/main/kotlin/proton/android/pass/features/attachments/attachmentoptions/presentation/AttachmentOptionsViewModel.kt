@@ -71,7 +71,15 @@ class AttachmentOptionsViewModel @Inject constructor(
     }
 
     fun renameAttachment() {
-        eventFlow.update { AttachmentOptionsEvent.Close }
+        when {
+            attachmentId is Some -> eventFlow.update {
+                AttachmentOptionsEvent.OpenRenameAttachment(attachmentId.value)
+            }
+
+            uri is Some -> eventFlow.update {
+                AttachmentOptionsEvent.OpenRenameDraftAttachment(uri.value)
+            }
+        }
     }
 
     fun onConsumeEvent(event: AttachmentOptionsEvent) {

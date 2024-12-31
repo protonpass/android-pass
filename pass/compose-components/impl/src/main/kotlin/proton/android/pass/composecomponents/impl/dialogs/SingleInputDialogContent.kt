@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.dialogs
+package proton.android.pass.composecomponents.impl.dialogs
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
@@ -41,7 +41,6 @@ import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
-import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 
@@ -52,7 +51,7 @@ fun SingleInputDialogContent(
     value: String,
     @StringRes titleRes: Int,
     @StringRes subtitleRes: Int? = null,
-    @StringRes placeholderRes: Int,
+    @StringRes placeholderRes: Int? = null,
     onChange: (String) -> Unit,
     onConfirm: () -> Unit,
     onCancel: () -> Unit
@@ -87,9 +86,11 @@ fun SingleInputDialogContent(
                     value = value,
                     onChange = onChange,
                     placeholder = {
-                        ProtonTextFieldPlaceHolder(
-                            text = stringResource(placeholderRes)
-                        )
+                        placeholderRes?.let { res ->
+                            ProtonTextFieldPlaceHolder(
+                                text = stringResource(res)
+                            )
+                        }
                     },
                     textStyle = ProtonTheme.typography.defaultNorm,
                     keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),

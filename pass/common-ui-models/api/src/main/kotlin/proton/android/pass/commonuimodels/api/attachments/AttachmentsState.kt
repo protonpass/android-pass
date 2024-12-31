@@ -21,19 +21,23 @@ package proton.android.pass.commonuimodels.api.attachments
 import androidx.compose.runtime.Immutable
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
-import proton.android.pass.domain.attachments.FileMetadata
+import proton.android.pass.domain.attachments.DraftAttachment
 import java.net.URI
 
 @Immutable
 data class AttachmentsState(
-    val draftAttachmentsList: List<FileMetadata>,
+    val draftAttachmentsList: List<DraftAttachment>,
     val attachmentsList: List<Attachment>,
-    val loadingDraftAttachments: Set<URI>,
     val loadingAttachments: Set<AttachmentId>
 ) {
 
     val hasAnyAttachment: Boolean
         get() = draftAttachmentsList.isNotEmpty() || attachmentsList.isNotEmpty()
+
+    val loadingDraftAttachments: Set<URI>
+        get() = draftAttachmentsList.filterIsInstance<DraftAttachment.Loading>()
+            .map { it.metadata.uri }
+            .toSet()
 
     private val isAnyAttachmentLoading: Boolean
         get() = loadingDraftAttachments.isNotEmpty() || loadingAttachments.isNotEmpty()
@@ -50,7 +54,6 @@ data class AttachmentsState(
 
     companion object {
         val Initial = AttachmentsState(
-            loadingDraftAttachments = emptySet(),
             draftAttachmentsList = emptyList(),
             attachmentsList = emptyList(),
             loadingAttachments = emptySet()

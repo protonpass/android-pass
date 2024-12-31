@@ -945,16 +945,12 @@ class IdentityActionsProviderImpl @Inject constructor(
     }
 
     private fun observeNewAttachments(coroutineScope: CoroutineScope) {
-        attachmentsHandler.observeNewAttachments { newUris ->
-            if (newUris.isNotEmpty()) {
-                onUserEditedContent()
-                newUris.forEach { uri ->
-                    coroutineScope.launch {
-                        isLoadingState.update { IsLoadingState.Loading }
-                        attachmentsHandler.uploadNewAttachment(uri)
-                        isLoadingState.update { IsLoadingState.NotLoading }
-                    }
-                }
+        attachmentsHandler.observeNewAttachments {
+            onUserEditedContent()
+            coroutineScope.launch {
+                isLoadingState.update { IsLoadingState.Loading }
+                attachmentsHandler.uploadNewAttachment(it.metadata)
+                isLoadingState.update { IsLoadingState.NotLoading }
             }
         }.launchIn(coroutineScope)
     }

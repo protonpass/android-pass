@@ -127,6 +127,7 @@ import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
 import proton.android.pass.data.api.usecases.attachments.RemoveAttachment
+import proton.android.pass.data.api.usecases.attachments.RenameAttachment
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
@@ -336,6 +337,7 @@ import proton.android.pass.data.impl.usecases.attachments.LinkAttachmentsToItemI
 import proton.android.pass.data.impl.usecases.attachments.ObserveDetailItemAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.ObserveUpdateItemAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.RemoveAttachmentImpl
+import proton.android.pass.data.impl.usecases.attachments.RenameAttachmentImpl
 import proton.android.pass.data.impl.usecases.attachments.UploadAttachmentImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.MarkEmailBreachAsResolvedImpl
@@ -1096,5 +1098,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindRemoveAttachment(impl: RemoveAttachmentImpl): RemoveAttachment
+
+    @[Binds Singleton]
+    abstract fun bindRenameAttachment(impl: RenameAttachmentImpl): RenameAttachment
 
 }

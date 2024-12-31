@@ -53,5 +53,11 @@ interface LocalAttachmentsDataSource {
         attachmentId: AttachmentId
     ): AttachmentEntity?
 
+    suspend fun getChunksForAttachment(
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId
+    ): List<ChunkEntity>
+
     suspend fun updateAttachment(attachmentEntity: AttachmentEntity)
 }

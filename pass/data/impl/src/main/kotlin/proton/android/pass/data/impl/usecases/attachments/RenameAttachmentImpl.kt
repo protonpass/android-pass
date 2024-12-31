@@ -23,6 +23,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
+import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
 import proton.android.pass.data.api.usecases.attachments.RenameAttachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.DraftAttachment
@@ -34,7 +35,8 @@ import javax.inject.Singleton
 class RenameAttachmentImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val draftAttachmentRepository: DraftAttachmentRepository,
-    private val attachmentRepository: AttachmentRepository
+    private val attachmentRepository: AttachmentRepository,
+    private val pendingAttachmentUpdaterRepository: PendingAttachmentUpdaterRepository
 ) : RenameAttachment {
 
     override suspend fun invoke(uri: URI, newName: String) {
@@ -61,7 +63,7 @@ class RenameAttachmentImpl @Inject constructor(
         }
     }
 
-    override suspend fun invoke(attachmentId: AttachmentId, newName: String) {
-        // To implement
+    override fun invoke(attachmentId: AttachmentId, newName: String) {
+        pendingAttachmentUpdaterRepository.addPendingRename(attachmentId, newName)
     }
 }

@@ -123,6 +123,7 @@ import proton.android.pass.data.api.usecases.aliascontact.ObserveAliasContacts
 import proton.android.pass.data.api.usecases.aliascontact.UpdateBlockedAliasContact
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
+import proton.android.pass.data.api.usecases.attachments.GetAttachment
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
@@ -333,6 +334,7 @@ import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLink
 import proton.android.pass.data.impl.usecases.assetlink.UpdateAssetLinkImpl
 import proton.android.pass.data.impl.usecases.attachments.ClearAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.DownloadAttachmentImpl
+import proton.android.pass.data.impl.usecases.attachments.GetAttachmentImpl
 import proton.android.pass.data.impl.usecases.attachments.LinkAttachmentsToItemImpl
 import proton.android.pass.data.impl.usecases.attachments.ObserveDetailItemAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.ObserveUpdateItemAttachmentsImpl
@@ -1101,5 +1103,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindRenameAttachment(impl: RenameAttachmentImpl): RenameAttachment
+
+    @[Binds Singleton]
+    abstract fun bindGetAttachment(impl: GetAttachmentImpl): GetAttachment
 
 }

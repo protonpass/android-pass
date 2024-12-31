@@ -24,8 +24,9 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.repositories.AttachmentRepository
-import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
+import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
@@ -36,7 +37,8 @@ import javax.inject.Singleton
 class ObserveUpdateItemAttachmentsImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val attachmentRepository: AttachmentRepository,
-    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository
+    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
+    private val pendingAttachmentUpdaterRepository: PendingAttachmentUpdaterRepository
 ) : ObserveUpdateItemAttachments {
 
     override fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<Attachment>> = accountManager.getPrimaryUserId()
@@ -48,9 +50,19 @@ class ObserveUpdateItemAttachmentsImpl @Inject constructor(
                     shareId = shareId,
                     itemId = itemId
                 ),
+                pendingAttachmentUpdaterRepository.observeAllPendingRenames(),
                 pendingAttachmentLinkRepository.observeAllToUnLink()
-            ) { attachments, unLinkedAttachments ->
-                attachments.filterNot { attachment -> unLinkedAttachments.contains(attachment.id) }
+            ) { attachments, renames, unLinkedAttachments ->
+                attachments
+                    .filterNot { attachment -> unLinkedAttachments.contains(attachment.id) }
+                    .map { attachment ->
+                        val newName = renames[attachment.id]
+                        if (newName != null) {
+                            attachment.copy(name = newName)
+                        } else {
+                            attachment
+                        }
+                    }
             }
         }
 }

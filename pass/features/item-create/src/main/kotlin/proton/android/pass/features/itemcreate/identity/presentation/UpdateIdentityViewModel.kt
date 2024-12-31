@@ -41,6 +41,7 @@ import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.InitError
 import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemUpdateError
@@ -131,6 +132,10 @@ class UpdateIdentityViewModel @Inject constructor(
 
     fun onOpenAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {
         viewModelScope.launch { identityActionsProvider.openAttachment(contextHolder, attachment) }
+    }
+
+    fun onRetryUploadDraftAttachment(metadata: FileMetadata) {
+        viewModelScope.launch { identityActionsProvider.retryUploadDraftAttachment(metadata) }
     }
 
     override fun onCleared() {

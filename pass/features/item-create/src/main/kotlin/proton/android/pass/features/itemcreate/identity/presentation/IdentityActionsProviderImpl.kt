@@ -62,6 +62,7 @@ import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.CustomFieldIndexTitle
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
@@ -957,6 +958,12 @@ class IdentityActionsProviderImpl @Inject constructor(
 
     suspend fun isFileAttachmentsEnabled(): Boolean =
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1).firstOrNull() ?: false
+
+    override suspend fun retryUploadDraftAttachment(metadata: FileMetadata) {
+        isLoadingState.update { IsLoadingState.Loading }
+        attachmentsHandler.uploadNewAttachment(metadata)
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
 
     companion object {
         private const val TAG = "IdentityActionsProviderImpl"

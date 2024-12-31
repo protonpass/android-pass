@@ -29,9 +29,9 @@ import proton.android.pass.composecomponents.impl.attachments.AttachmentContentE
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnAttachmentOptions
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnDraftAttachmentOpen
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnDraftAttachmentOptions
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnDraftAttachmentRetry
 import proton.android.pass.composecomponents.impl.attachments.AttachmentRow
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
-import proton.android.pass.domain.attachments.DraftAttachment
 import proton.android.pass.features.itemcreate.note.NoteContentUiEvent.OnAttachmentEvent
 
 @Composable
@@ -59,47 +59,52 @@ fun AttachmentList(
                 createTime = attachment.createTime,
                 isLoading = attachmentsState.loadingAttachments.contains(attachment.id),
                 isEnabled = attachmentsState.isEnabled,
+                isError = false,
                 hasOptions = true,
                 onOptionsClick = {
                     onEvent(OnAttachmentEvent(OnAttachmentOptions(attachment.id)))
                 },
                 onAttachmentOpen = {
                     onEvent(OnAttachmentEvent(OnAttachmentOpen(attachment)))
+                },
+                onRetryClick = {}
+            )
+        }
+        attachmentsState.draftAttachmentsList.forEach { draftAttachment ->
+            val metadata = draftAttachment.metadata
+            AttachmentRow(
+                modifier = Modifier.roundedContainerNorm(),
+                innerModifier = Modifier.padding(
+                    start = Spacing.medium,
+                    top = Spacing.small,
+                    end = Spacing.none,
+                    bottom = Spacing.small
+                ),
+                filename = metadata.name,
+                attachmentType = metadata.attachmentType,
+                hasOptions = true,
+                size = metadata.size,
+                createTime = metadata.createTime,
+                isLoading = attachmentsState.loadingDraftAttachments.contains(metadata.uri),
+                isEnabled = attachmentsState.isEnabled,
+                isError = attachmentsState.errorDraftAttachments.contains(metadata.uri),
+                onOptionsClick = {
+                    onEvent(OnAttachmentEvent(OnDraftAttachmentOptions(metadata.uri)))
+                },
+                onAttachmentOpen = {
+                    onEvent(
+                        OnAttachmentEvent(
+                            OnDraftAttachmentOpen(
+                                uri = metadata.uri,
+                                mimetype = metadata.mimeType
+                            )
+                        )
+                    )
+                },
+                onRetryClick = {
+                    onEvent(OnAttachmentEvent(OnDraftAttachmentRetry(metadata)))
                 }
             )
         }
-        attachmentsState.draftAttachmentsList
-            .map(DraftAttachment::metadata)
-            .forEach { draftAttachment ->
-                AttachmentRow(
-                    modifier = Modifier.roundedContainerNorm(),
-                    innerModifier = Modifier.padding(
-                        start = Spacing.medium,
-                        top = Spacing.small,
-                        end = Spacing.none,
-                        bottom = Spacing.small
-                    ),
-                    filename = draftAttachment.name,
-                    attachmentType = draftAttachment.attachmentType,
-                    hasOptions = true,
-                    size = draftAttachment.size,
-                    createTime = draftAttachment.createTime,
-                    isLoading = attachmentsState.loadingDraftAttachments.contains(draftAttachment.uri),
-                    isEnabled = attachmentsState.isEnabled,
-                    onOptionsClick = {
-                        onEvent(OnAttachmentEvent(OnDraftAttachmentOptions(draftAttachment.uri)))
-                    },
-                    onAttachmentOpen = {
-                        onEvent(
-                            OnAttachmentEvent(
-                                OnDraftAttachmentOpen(
-                                    uri = draftAttachment.uri,
-                                    mimetype = draftAttachment.mimeType
-                                )
-                            )
-                        )
-                    }
-                )
-            }
     }
 }

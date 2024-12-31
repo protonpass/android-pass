@@ -141,6 +141,7 @@ fun ItemDetailsScreen(
                         AttachmentContentEvent.OnAddAttachment,
                         AttachmentContentEvent.OnDeleteAllAttachments,
                         is AttachmentContentEvent.OnDraftAttachmentOpen,
+                        is AttachmentContentEvent.OnDraftAttachmentRetry,
                         is AttachmentContentEvent.OnDraftAttachmentOptions ->
                             throw IllegalStateException("Action not allowed: $uiEvent")
                     }

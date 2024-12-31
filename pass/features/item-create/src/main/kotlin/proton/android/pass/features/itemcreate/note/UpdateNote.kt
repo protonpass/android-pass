@@ -121,6 +121,9 @@ fun UpdateNote(
 
                                     is AttachmentContentEvent.OnDraftAttachmentOptions ->
                                         onNavigate(OpenDraftAttachmentOptions(event.event.uri))
+
+                                    is AttachmentContentEvent.OnDraftAttachmentRetry ->
+                                        viewModel.retryUploadDraftAttachment(event.event.metadata)
                                 }
                             }
                 }

@@ -286,4 +286,7 @@
     <string name="attachment_no_files">Upload files from your device</string>
     <string name="attachment_add_file">Attach a file</string>
 
+    <string name="attachment_row_upload_failed">Upload failed</string>
+    <string name="attachment_row_retry">Retry</string>
+
 </resources>

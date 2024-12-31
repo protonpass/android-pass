@@ -32,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -45,6 +46,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.applyIf
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.domain.attachments.AttachmentType
@@ -59,10 +61,12 @@ fun AttachmentRow(
     attachmentType: AttachmentType,
     size: Long,
     createTime: Instant,
-    isLoading: Boolean = false,
-    isEnabled: Boolean = true,
+    isLoading: Boolean,
+    isEnabled: Boolean,
+    isError: Boolean,
     hasOptions: Boolean,
     onOptionsClick: () -> Unit,
+    onRetryClick: () -> Unit,
     onAttachmentOpen: () -> Unit
 ) {
     Row(
@@ -101,7 +105,22 @@ fun AttachmentRow(
                 }
             }
             Text.Body1Regular(text = filename, maxLines = 1, overflow = TextOverflow.Ellipsis)
-            Text.Body3Weak("$sizeFormatted ${SpecialCharacters.DOT_SEPARATOR} $dateFormatted")
+            if (!isError) {
+                Text.Body3Weak("$sizeFormatted ${SpecialCharacters.DOT_SEPARATOR} $dateFormatted")
+            } else {
+                Row(horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)) {
+                    Text.Body3Weak(
+                        text = stringResource(R.string.attachment_row_upload_failed),
+                        color = PassTheme.colors.signalDanger
+                    )
+                    Text.Body3Weak("${SpecialCharacters.DOT_SEPARATOR}")
+                    Text.Body3Weak(
+                        modifier = Modifier.clickable { onRetryClick() },
+                        text = stringResource(R.string.attachment_row_retry),
+                        color = PassTheme.colors.interactionNormMajor2
+                    )
+                }
+            }
         }
         when {
             isLoading -> CircularProgressIndicator(
@@ -132,7 +151,11 @@ fun AttachmentRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: 
                 size = 1_572_864L,
                 createTime = Instant.fromEpochSeconds(seconds),
                 hasOptions = true,
+                isLoading = false,
+                isEnabled = true,
+                isError = true,
                 onAttachmentOpen = {},
+                onRetryClick = {},
                 onOptionsClick = {}
             )
         }

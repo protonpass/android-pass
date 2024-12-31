@@ -255,6 +255,9 @@ internal fun UpdateLogin(
 
                             is AttachmentContentEvent.OnDraftAttachmentOptions ->
                                 onNavigate(OpenDraftAttachmentOptions(it.event.uri))
+
+                            is AttachmentContentEvent.OnDraftAttachmentRetry ->
+                                viewModel.retryUploadDraftAttachment(it.event.metadata)
                         }
                     }
                 }

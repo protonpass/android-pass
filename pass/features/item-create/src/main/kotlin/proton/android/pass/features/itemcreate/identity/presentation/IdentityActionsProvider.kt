@@ -30,6 +30,7 @@ import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.CustomFieldIndexTitle
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Birthdate
@@ -70,6 +71,8 @@ interface IdentityFormActions {
         uri: URI,
         mimetype: String
     )
+    suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment)
+    suspend fun retryUploadDraftAttachment(metadata: FileMetadata)
 }
 
 interface IdentityActionsProvider : IdentityFormActions {
@@ -81,7 +84,6 @@ interface IdentityActionsProvider : IdentityFormActions {
     fun getReceivedItem(): Item
     fun observeReceivedItem(): Flow<Option<Item>>
     fun resetLastAddedFieldFocus()
-    suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment)
 }
 
 data class IdentitySharedUiState(

@@ -38,6 +38,8 @@ class UploadAttachmentImpl @Inject constructor(
 
     override suspend fun invoke(metadata: FileMetadata) {
         runCatching {
+            val draftAttachment = DraftAttachment.Loading(metadata)
+            draftAttachmentRepository.update(draftAttachment)
             val userId = accountManager.getPrimaryUserId().firstOrNull()
                 ?: throw UserIdNotAvailableError()
             val attachmentId = attachmentRepository.createPendingAttachment(
@@ -51,18 +53,18 @@ class UploadAttachmentImpl @Inject constructor(
                     uri = metadata.uri
                 )
             }.onSuccess {
-                val draftAttachment = DraftAttachment.Success(
+                val success = DraftAttachment.Success(
                     metadata = metadata,
                     attachmentId = attachmentId
                 )
-                draftAttachmentRepository.update(draftAttachment)
+                draftAttachmentRepository.update(success)
             }.onFailure { throw it }
         }.onFailure {
-            val draftAttachment = DraftAttachment.Error(
+            val error = DraftAttachment.Error(
                 metadata = metadata,
                 errorMessage = it.message ?: "Unknown error"
             )
-            draftAttachmentRepository.update(draftAttachment)
+            draftAttachmentRepository.update(error)
             throw it
         }
     }

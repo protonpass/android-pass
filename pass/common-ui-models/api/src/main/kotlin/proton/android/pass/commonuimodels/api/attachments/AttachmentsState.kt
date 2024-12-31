@@ -38,6 +38,10 @@ data class AttachmentsState(
         get() = draftAttachmentsList.filterIsInstance<DraftAttachment.Loading>()
             .map { it.metadata.uri }
             .toSet()
+    val errorDraftAttachments: Set<URI>
+        get() = draftAttachmentsList.filterIsInstance<DraftAttachment.Error>()
+            .map { it.metadata.uri }
+            .toSet()
 
     private val isAnyAttachmentLoading: Boolean
         get() = loadingDraftAttachments.isNotEmpty() || loadingAttachments.isNotEmpty()

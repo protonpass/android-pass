@@ -31,4 +31,5 @@
     <string name="delete_all_attachments_title">Delete all attachments?</string>
     <string name="delete_all_attachments_subtitle">This action cannot be undone</string>
     <string name="delete_all_attachments_confirm">Delete all</string>
+    <string name="rename_attachment_dialog_title">Rename file</string>
 </resources>

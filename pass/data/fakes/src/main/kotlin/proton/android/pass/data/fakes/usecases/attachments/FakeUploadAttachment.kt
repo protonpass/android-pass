@@ -19,13 +19,13 @@
 package proton.android.pass.data.fakes.usecases.attachments
 
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
-import java.net.URI
+import proton.android.pass.domain.attachments.FileMetadata
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class FakeUploadAttachment @Inject constructor() : UploadAttachment {
-    override suspend fun invoke(uri: URI) {
+    override suspend fun invoke(metadata: FileMetadata) {
         // no-op
     }
 }

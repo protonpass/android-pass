@@ -45,6 +45,7 @@ import proton.android.pass.features.attachments.camera.navigation.CameraNavItem
 import proton.android.pass.features.attachments.deleteall.navigation.DeleteAllAttachmentsDialogNavItem
 import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavItem
 import proton.android.pass.features.attachments.mediapicker.navigation.MediaPickerNavItem
+import proton.android.pass.features.attachments.renameattachment.navigation.RenameAttachmentNavItem
 import proton.android.pass.features.auth.Auth
 import proton.android.pass.features.auth.AuthNavigation
 import proton.android.pass.features.auth.AuthOrigin
@@ -2417,6 +2418,22 @@ fun NavGraphBuilder.appGraph(
 
             AttachmentsNavigation.OpenCamera -> dismissBottomSheet {
                 appNavigator.navigate(CameraNavItem)
+            }
+
+            is AttachmentsNavigation.OpenRenameAttachment -> dismissBottomSheet {
+                appNavigator.navigateBack(comesFromBottomsheet = true)
+                appNavigator.navigate(
+                    destination = RenameAttachmentNavItem,
+                    route = RenameAttachmentNavItem.createNavRoute(it.attachmentId)
+                )
+            }
+
+            is AttachmentsNavigation.OpenRenameDraftAttachment -> dismissBottomSheet {
+                appNavigator.navigateBack(comesFromBottomsheet = true)
+                appNavigator.navigate(
+                    destination = RenameAttachmentNavItem,
+                    route = RenameAttachmentNavItem.createNavRoute(it.uri)
+                )
             }
         }
     }

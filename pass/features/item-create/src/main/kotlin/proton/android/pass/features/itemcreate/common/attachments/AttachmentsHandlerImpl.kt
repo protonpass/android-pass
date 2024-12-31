@@ -22,12 +22,10 @@ import android.content.Context
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.None
@@ -37,7 +35,6 @@ import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
-import proton.android.pass.data.api.repositories.MetadataResolver
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
@@ -46,6 +43,8 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.attachments.DraftAttachment
+import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentSnackbarMessages.OpenAttachmentsError
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentSnackbarMessages.UploadAttachmentsError
@@ -57,7 +56,6 @@ import javax.inject.Inject
 @ViewModelScoped
 class AttachmentsHandlerImpl @Inject constructor(
     private val draftAttachmentRepository: DraftAttachmentRepository,
-    private val metadataResolver: MetadataResolver,
     private val uploadAttachment: UploadAttachment,
     private val downloadAttachment: DownloadAttachment,
     private val clearAttachments: ClearAttachments,
@@ -68,12 +66,8 @@ class AttachmentsHandlerImpl @Inject constructor(
 
     private val shareIdState = MutableStateFlow<Option<ShareId>>(None)
     private val itemIdState = MutableStateFlow<Option<ItemId>>(None)
-    private val loadingDraftAttachments: MutableStateFlow<Set<URI>> =
-        MutableStateFlow(emptySet())
     private val loadingAttachments: MutableStateFlow<Set<AttachmentId>> =
         MutableStateFlow(emptySet())
-    private val draftAttachments = draftAttachmentRepository.observeAll()
-        .map { uris -> uris.mapNotNull { metadataResolver.extractMetadata(it) } }
 
     private val attachments = combine(
         shareIdState,
@@ -87,12 +81,9 @@ class AttachmentsHandlerImpl @Inject constructor(
         }
     }
 
-    override val isUploadingAttachment: StateFlow<Set<URI>> get() = loadingDraftAttachments
-
     override val attachmentState: Flow<AttachmentsState> = combine(
-        draftAttachments,
+        draftAttachmentRepository.observeAll(),
         attachments,
-        loadingDraftAttachments,
         loadingAttachments,
         ::AttachmentsState
     ).distinctUntilChanged()
@@ -130,9 +121,9 @@ class AttachmentsHandlerImpl @Inject constructor(
         loadingAttachments.update { it - attachment.id }
     }
 
-    override suspend fun uploadNewAttachment(uri: URI) {
-        loadingDraftAttachments.update { it + uri }
-        runCatching { uploadAttachment(uri) }
+    override suspend fun uploadNewAttachment(fileMetadata: FileMetadata) {
+        val uri = fileMetadata.uri
+        runCatching { uploadAttachment(fileMetadata) }
             .onSuccess {
                 PassLogger.i(TAG, "Attachment uploaded: $uri")
             }
@@ -141,18 +132,14 @@ class AttachmentsHandlerImpl @Inject constructor(
                 PassLogger.w(TAG, it)
                 snackbarDispatcher(UploadAttachmentsError)
             }
-        loadingDraftAttachments.update { it - uri }
     }
 
     override fun onClearAttachments() {
         clearAttachments()
     }
 
-    override fun observeNewAttachments(onNewAttachment: (Set<URI>) -> Unit): Flow<Set<URI>> =
-        draftAttachmentRepository.observeNew()
-            .onEach { newUris ->
-                if (newUris.isNotEmpty()) onNewAttachment(newUris)
-            }
+    override fun observeNewAttachments(onNewAttachment: (DraftAttachment) -> Unit): Flow<DraftAttachment> =
+        draftAttachmentRepository.observeNew().onEach(onNewAttachment)
 
     override suspend fun getAttachmentsForItem(shareId: ShareId, itemId: ItemId) {
         shareIdState.update { Some(shareId) }

@@ -38,7 +38,13 @@ fun AttachmentOptionsBottomsheet(
     val state by viewmodel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(state) {
-        when (state) {
+        when (val event = state) {
+            is AttachmentOptionsEvent.OpenRenameAttachment ->
+                onNavigate(AttachmentOptionsNavigation.OpenRenameAttachment(event.attachmentId))
+
+            is AttachmentOptionsEvent.OpenRenameDraftAttachment ->
+                onNavigate(AttachmentOptionsNavigation.OpenRenameDraftAttachment(event.uri))
+
             AttachmentOptionsEvent.Close -> onNavigate(AttachmentOptionsNavigation.CloseBottomsheet)
             AttachmentOptionsEvent.Idle -> {}
         }

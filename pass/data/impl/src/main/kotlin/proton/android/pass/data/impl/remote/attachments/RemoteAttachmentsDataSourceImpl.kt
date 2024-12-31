@@ -26,9 +26,9 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import proton.android.pass.data.impl.api.PasswordManagerApi
-import proton.android.pass.data.impl.requests.attachments.CreatePendingFileRequest
 import proton.android.pass.data.impl.requests.attachments.LinkPendingFileRequest
 import proton.android.pass.data.impl.requests.attachments.LinkPendingFilesRequest
+import proton.android.pass.data.impl.requests.attachments.PendingFileRequest
 import proton.android.pass.data.impl.requests.attachments.RestoreOldFileRequest
 import proton.android.pass.data.impl.requests.attachments.UpdateFileMetadataRequest
 import proton.android.pass.data.impl.responses.attachments.FileApiModel
@@ -46,10 +46,20 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
 
     override suspend fun createPendingFile(userId: UserId, metadata: EncryptedString): String =
         api.get<PasswordManagerApi>(userId)
-            .invoke { createPendingFile(CreatePendingFileRequest(metadata)) }
+            .invoke { createPendingFile(PendingFileRequest(metadata)) }
             .valueOrThrow
             .file
             .fileID
+
+    override suspend fun updatePendingFile(
+        userId: UserId,
+        attachmentId: AttachmentId,
+        metadata: EncryptedString
+    ): String = api.get<PasswordManagerApi>(userId)
+        .invoke { updatePendingFileMetadata(attachmentId.id, PendingFileRequest(metadata)) }
+        .valueOrThrow
+        .file
+        .fileID
 
     override suspend fun uploadPendingFile(
         userId: UserId,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemcreate.dialogs.customfield
+package proton.android.pass.features.attachments.renameattachment.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,35 +25,40 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
-import proton.android.pass.features.itemcreate.R
 import proton.android.pass.composecomponents.impl.dialogs.SingleInputDialogContent
+import proton.android.pass.features.attachments.R
+import proton.android.pass.features.attachments.renameattachment.navigation.RenameAttachmentNavigation
+import proton.android.pass.features.attachments.renameattachment.presentation.RenameAttachmentEvent
+import proton.android.pass.features.attachments.renameattachment.presentation.RenameAttachmentViewModel
 
 @Composable
-fun EditCustomFieldNameDialog(
+fun RenameAttachmentDialog(
     modifier: Modifier = Modifier,
-    onNavigate: (CustomFieldNameNavigation) -> Unit,
-    viewModel: EditCustomFieldNameViewModel = hiltViewModel()
+    viewmodel: RenameAttachmentViewModel = hiltViewModel(),
+    onNavigate: (RenameAttachmentNavigation) -> Unit
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-    LaunchedEffect(state.event) {
-        if (state.event == CustomFieldEvent.Close) {
-            onNavigate(CustomFieldNameNavigation.Close)
+    val state by viewmodel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state) {
+        when (state) {
+            RenameAttachmentEvent.Close -> onNavigate(RenameAttachmentNavigation.CloseDialog)
+            RenameAttachmentEvent.Idle -> {}
         }
+        viewmodel.onConsumeEvent(state)
     }
 
     NoPaddingDialog(
         modifier = modifier,
-        onDismissRequest = { onNavigate(CustomFieldNameNavigation.Close) }
+        onDismissRequest = { onNavigate(RenameAttachmentNavigation.CloseDialog) }
     ) {
         SingleInputDialogContent(
-            value = state.value,
-            canConfirm = state.canConfirm,
-            titleRes = R.string.custom_field_dialog_title,
-            subtitleRes = R.string.custom_field_dialog_body,
-            placeholderRes = R.string.custom_field_dialog_placeholder,
-            onChange = viewModel::onNameChanged,
-            onConfirm = viewModel::onSave,
-            onCancel = { onNavigate(CustomFieldNameNavigation.Close) }
+            value = viewmodel.filename,
+            canConfirm = viewmodel.filename.isNotEmpty(),
+            titleRes = R.string.rename_attachment_dialog_title,
+            onChange = viewmodel::onValueChange,
+            onConfirm = viewmodel::onConfirm,
+            onCancel = { onNavigate(RenameAttachmentNavigation.CloseDialog) }
         )
     }
 }
+

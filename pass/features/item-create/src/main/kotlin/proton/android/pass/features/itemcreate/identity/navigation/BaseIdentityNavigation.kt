@@ -20,6 +20,8 @@ package proton.android.pass.features.itemcreate.identity.navigation
 
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.itemcreate.bottomsheets.customfield.CustomFieldType
 import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.AddIdentityFieldType
@@ -57,8 +59,11 @@ sealed interface BaseIdentityNavigation {
     @JvmInline
     value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : BaseIdentityNavigation
 
-    @JvmInline
-    value class OpenAttachmentOptions(val attachmentId: AttachmentId) : BaseIdentityNavigation
+    data class OpenAttachmentOptions(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val attachmentId: AttachmentId
+    ) : BaseIdentityNavigation
 
     @JvmInline
     value class OpenDraftAttachmentOptions(val uri: URI) : BaseIdentityNavigation

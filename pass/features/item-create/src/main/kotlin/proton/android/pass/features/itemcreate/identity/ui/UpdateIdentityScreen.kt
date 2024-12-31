@@ -82,15 +82,15 @@ fun UpdateIdentityScreen(
             identityItemFormState = viewModel.getFormState(),
             identityUiState = state,
             topBarActionName = stringResource(id = R.string.action_save),
-            onEvent = { event ->
-                when (event) {
+            onEvent = {
+                when (it) {
                     is IdentityContentEvent.OnVaultSelect ->
-                        actionAfterKeyboardHide = { onNavigate(SelectVault(event.shareId)) }
+                        actionAfterKeyboardHide = { onNavigate(SelectVault(it.shareId)) }
 
-                    is IdentityContentEvent.Submit -> viewModel.onSubmit(event.shareId)
+                    is IdentityContentEvent.Submit -> viewModel.onSubmit(it.shareId)
                     IdentityContentEvent.Up -> onExit()
 
-                    is IdentityContentEvent.OnFieldChange -> viewModel.onFieldChange(event.value)
+                    is IdentityContentEvent.OnFieldChange -> viewModel.onFieldChange(it.value)
 
                     IdentityContentEvent.OnAddAddressDetailField -> actionAfterKeyboardHide = {
                         onNavigate(OpenExtraFieldBottomSheet(AddIdentityFieldType.Address))
@@ -109,9 +109,9 @@ fun UpdateIdentityScreen(
                     }
 
                     is IdentityContentEvent.OnCustomFieldOptions -> {
-                        viewModel.updateSelectedSection(event.customExtraField)
+                        viewModel.updateSelectedSection(it.customExtraField)
                         actionAfterKeyboardHide = {
-                            onNavigate(CustomFieldOptions(event.label, event.index))
+                            onNavigate(CustomFieldOptions(it.label, it.index))
                         }
                     }
 
@@ -125,14 +125,14 @@ fun UpdateIdentityScreen(
                                 onNavigate(
                                     OpenExtraFieldBottomSheet(
                                         AddIdentityFieldType.Extra,
-                                        event.index.some()
+                                        it.index.some()
                                     )
                                 )
                             }
 
                     is IdentityContentEvent.OnExtraSectionOptions ->
                         actionAfterKeyboardHide = {
-                            onNavigate(ExtraSectionOptions(event.label, event.index))
+                            onNavigate(ExtraSectionOptions(it.label, it.index))
                         }
 
                     IdentityContentEvent.ClearLastAddedFieldFocus ->
@@ -140,21 +140,27 @@ fun UpdateIdentityScreen(
 
                     is IdentityContentEvent.OnCustomFieldFocused ->
                         viewModel.onCustomFieldFocusChange(
-                            event.index,
-                            event.isFocused,
-                            event.customExtraField
+                            it.index,
+                            it.isFocused,
+                            it.customExtraField
                         )
 
-                    is IdentityContentEvent.OnAttachmentEvent -> when (event.event) {
+                    is IdentityContentEvent.OnAttachmentEvent -> when (val event = it.event) {
                         AttachmentContentEvent.OnAddAttachment -> onNavigate(AddAttachment)
                         is AttachmentContentEvent.OnAttachmentOpen ->
                             viewModel.onOpenAttachment(
                                 contextHolder = context.toClassHolder(),
-                                attachment = event.event.attachment
+                                attachment = event.attachment
                             )
 
                         is AttachmentContentEvent.OnAttachmentOptions ->
-                            onNavigate(OpenAttachmentOptions(event.event.attachmentId))
+                            onNavigate(
+                                OpenAttachmentOptions(
+                                    shareId = event.shareId,
+                                    itemId = event.itemId,
+                                    attachmentId = event.attachmentId
+                                )
+                            )
 
                         AttachmentContentEvent.OnDeleteAllAttachments ->
                             onNavigate(
@@ -164,15 +170,15 @@ fun UpdateIdentityScreen(
                         is AttachmentContentEvent.OnDraftAttachmentOpen ->
                             viewModel.openDraftAttachment(
                                 contextHolder = context.toClassHolder(),
-                                uri = event.event.uri,
-                                mimetype = event.event.mimetype
+                                uri = event.uri,
+                                mimetype = event.mimetype
                             )
 
                         is AttachmentContentEvent.OnDraftAttachmentOptions ->
-                            onNavigate(OpenDraftAttachmentOptions(event.event.uri))
+                            onNavigate(OpenDraftAttachmentOptions(event.uri))
 
                         is AttachmentContentEvent.OnDraftAttachmentRetry ->
-                            viewModel.onRetryUploadDraftAttachment(event.event.metadata)
+                            viewModel.onRetryUploadDraftAttachment(event.metadata)
                     }
                 }
             }

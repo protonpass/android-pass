@@ -74,25 +74,25 @@ fun UpdateCreditCardScreen(
                     selectedVault = null,
                     showVaultSelector = false,
                     selectedShareId = uiState.selectedShareId,
-                    onEvent = { event ->
-                        when (event) {
+                    onEvent = {
+                        when (it) {
                             is CreditCardContentEvent.OnCVVChange ->
-                                viewModel.onCVVChanged(event.value)
+                                viewModel.onCVVChanged(it.value)
 
                             is CreditCardContentEvent.OnExpirationDateChange ->
-                                viewModel.onExpirationDateChanged(event.value)
+                                viewModel.onExpirationDateChanged(it.value)
 
                             is CreditCardContentEvent.OnNameChange ->
-                                viewModel.onNameChanged(event.value)
+                                viewModel.onNameChanged(it.value)
 
                             is CreditCardContentEvent.OnNoteChange ->
-                                viewModel.onNoteChanged(event.value)
+                                viewModel.onNoteChanged(it.value)
 
                             is CreditCardContentEvent.OnNumberChange ->
-                                viewModel.onNumberChanged(event.value)
+                                viewModel.onNumberChanged(it.value)
 
                             is CreditCardContentEvent.OnPinChange ->
-                                viewModel.onPinChanged(event.value)
+                                viewModel.onPinChanged(it.value)
 
                             is CreditCardContentEvent.Submit -> viewModel.update()
                             CreditCardContentEvent.Up -> onExit()
@@ -100,28 +100,34 @@ fun UpdateCreditCardScreen(
                                 actionAfterKeyboardHide = { onNavigate(Upgrade) }
 
                             is CreditCardContentEvent.OnCVVFocusChange ->
-                                viewModel.onCVVFocusChanged(event.isFocused)
+                                viewModel.onCVVFocusChanged(it.isFocused)
 
                             is CreditCardContentEvent.OnPinFocusChange ->
-                                viewModel.onPinFocusChanged(event.isFocused)
+                                viewModel.onPinFocusChanged(it.isFocused)
 
                             is CreditCardContentEvent.OnTitleChange ->
-                                viewModel.onTitleChange(event.value)
+                                viewModel.onTitleChange(it.value)
 
                             is CreditCardContentEvent.OnVaultSelect -> {}
                             is CreditCardContentEvent.OnAttachmentEvent ->
-                                when (event.event) {
+                                when (val event = it.event) {
                                     AttachmentContentEvent.OnAddAttachment ->
                                         onNavigate(AddAttachment)
 
                                     is AttachmentContentEvent.OnAttachmentOpen ->
                                         viewModel.openAttachment(
                                             contextHolder = context.toClassHolder(),
-                                            attachment = event.event.attachment
+                                            attachment = event.attachment
                                         )
 
                                     is AttachmentContentEvent.OnAttachmentOptions ->
-                                        onNavigate(OpenAttachmentOptions(event.event.attachmentId))
+                                        onNavigate(
+                                            OpenAttachmentOptions(
+                                                shareId = event.shareId,
+                                                itemId = event.itemId,
+                                                attachmentId = event.attachmentId
+                                            )
+                                        )
 
                                     AttachmentContentEvent.OnDeleteAllAttachments ->
                                         onNavigate(
@@ -133,15 +139,15 @@ fun UpdateCreditCardScreen(
                                     is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                         viewModel.openDraftAttachment(
                                             contextHolder = context.toClassHolder(),
-                                            uri = event.event.uri,
-                                            mimetype = event.event.mimetype
+                                            uri = event.uri,
+                                            mimetype = event.mimetype
                                         )
 
                                     is AttachmentContentEvent.OnDraftAttachmentOptions ->
-                                        onNavigate(OpenDraftAttachmentOptions(event.event.uri))
+                                        onNavigate(OpenDraftAttachmentOptions(event.uri))
 
                                     is AttachmentContentEvent.OnDraftAttachmentRetry ->
-                                        viewModel.retryUploadDraftAttachment(event.event.metadata)
+                                        viewModel.retryUploadDraftAttachment(event.metadata)
                                 }
                         }
                     }

@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.attachments.AttachmentId
 
 interface PendingAttachmentUpdaterRepository {
-    fun addPendingRename(attachmentId: AttachmentId, newName: String)
+    fun putPendingRename(attachmentId: AttachmentId, newName: String)
     fun getPendingRename(attachmentId: AttachmentId): String?
     fun getAllPendingRenames(): Map<AttachmentId, String>
     fun observeAllPendingRenames(): Flow<Map<AttachmentId, String>>

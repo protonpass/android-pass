@@ -40,7 +40,13 @@ fun AttachmentOptionsBottomsheet(
     LaunchedEffect(state) {
         when (val event = state) {
             is AttachmentOptionsEvent.OpenRenameAttachment ->
-                onNavigate(AttachmentOptionsNavigation.OpenRenameAttachment(event.attachmentId))
+                onNavigate(
+                    AttachmentOptionsNavigation.OpenRenameAttachment(
+                        shareId = event.shareId,
+                        itemId = event.itemId,
+                        attachmentId = event.attachmentId
+                    )
+                )
 
             is AttachmentOptionsEvent.OpenRenameDraftAttachment ->
                 onNavigate(AttachmentOptionsNavigation.OpenRenameDraftAttachment(event.uri))

@@ -18,6 +18,8 @@
 
 package proton.android.pass.composecomponents.impl.attachments
 
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.FileMetadata
@@ -28,8 +30,11 @@ sealed interface AttachmentContentEvent {
 
     data object OnDeleteAllAttachments : AttachmentContentEvent
 
-    @JvmInline
-    value class OnAttachmentOptions(val attachmentId: AttachmentId) : AttachmentContentEvent
+    data class OnAttachmentOptions(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val attachmentId: AttachmentId
+    ) : AttachmentContentEvent
 
     @JvmInline
     value class OnAttachmentOpen(val attachment: Attachment) : AttachmentContentEvent

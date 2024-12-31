@@ -48,8 +48,11 @@ sealed interface UpdateNoteNavigation {
     @JvmInline
     value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : UpdateNoteNavigation
 
-    @JvmInline
-    value class OpenAttachmentOptions(val attachmentId: AttachmentId) : UpdateNoteNavigation
+    data class OpenAttachmentOptions(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val attachmentId: AttachmentId
+    ) : UpdateNoteNavigation
 
     @JvmInline
     value class OpenDraftAttachmentOptions(val uri: URI) : UpdateNoteNavigation

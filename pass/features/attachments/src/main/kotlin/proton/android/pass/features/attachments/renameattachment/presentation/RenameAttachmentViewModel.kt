@@ -36,6 +36,8 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
 import proton.android.pass.data.api.usecases.attachments.RenameAttachment
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -51,6 +53,14 @@ class RenameAttachmentViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
+    private val shareId: Option<ShareId> = savedStateHandleProvider.get()
+        .get<String>(CommonOptionalNavArgId.ShareId.key)
+        ?.let(::ShareId)
+        .toOption()
+    private val itemId: Option<ItemId> = savedStateHandleProvider.get()
+        .get<String>(CommonOptionalNavArgId.ItemId.key)
+        ?.let(::ItemId)
+        .toOption()
     private val attachmentId: Option<AttachmentId> = savedStateHandleProvider.get()
         .get<String>(CommonOptionalNavArgId.AttachmentId.key)
         ?.let(::AttachmentId)
@@ -112,8 +122,16 @@ class RenameAttachmentViewModel @Inject constructor(
             viewModelScope.launch {
                 runCatching {
                     when {
-                        attachmentId is Some -> renameAttachment(attachmentId.value, filename)
-                        uri is Some -> renameAttachment(uri.value, filename)
+                        attachmentId is Some ->
+                            renameAttachment(
+                                attachmentId = attachmentId.value,
+                                newName = filename
+                            )
+                        uri is Some -> renameAttachment(
+                            uri = uri.value,
+                            newName = filename
+                        )
+                        else -> throw IllegalStateException("Invalid state")
                     }
                 }.onSuccess {
                     PassLogger.i(TAG, "Attachment renamed")

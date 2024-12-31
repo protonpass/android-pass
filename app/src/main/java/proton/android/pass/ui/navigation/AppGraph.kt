@@ -908,7 +908,11 @@ fun NavGraphBuilder.appGraph(
                 is BaseLoginNavigation.OpenAttachmentOptions ->
                     appNavigator.navigate(
                         destination = AttachmentOptionsNavItem,
-                        route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
+                        route = AttachmentOptionsNavItem.createNavRoute(
+                            shareId = it.shareId,
+                            itemId = it.itemId,
+                            attachmentId = it.attachmentId
+                        )
                     )
 
                 is BaseLoginNavigation.OpenDraftAttachmentOptions ->
@@ -966,7 +970,11 @@ fun NavGraphBuilder.appGraph(
                 is UpdateNoteNavigation.OpenAttachmentOptions ->
                     appNavigator.navigate(
                         destination = AttachmentOptionsNavItem,
-                        route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
+                        route = AttachmentOptionsNavItem.createNavRoute(
+                            shareId = it.shareId,
+                            itemId = it.itemId,
+                            attachmentId = it.attachmentId
+                        )
                     )
 
                 is UpdateNoteNavigation.OpenDraftAttachmentOptions ->
@@ -1000,7 +1008,11 @@ fun NavGraphBuilder.appGraph(
             is BaseCreditCardNavigation.OpenAttachmentOptions ->
                 appNavigator.navigate(
                     destination = AttachmentOptionsNavItem,
-                    route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
+                    route = AttachmentOptionsNavItem.createNavRoute(
+                        shareId = it.shareId,
+                        itemId = it.itemId,
+                        attachmentId = it.attachmentId
+                    )
                 )
 
             is BaseCreditCardNavigation.OpenDraftAttachmentOptions ->
@@ -1035,7 +1047,11 @@ fun NavGraphBuilder.appGraph(
             is BaseCreditCardNavigation.OpenAttachmentOptions ->
                 appNavigator.navigate(
                     destination = AttachmentOptionsNavItem,
-                    route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
+                    route = AttachmentOptionsNavItem.createNavRoute(
+                        shareId = it.shareId,
+                        itemId = it.itemId,
+                        attachmentId = it.attachmentId
+                    )
                 )
 
             is BaseCreditCardNavigation.OpenDraftAttachmentOptions ->
@@ -1108,7 +1124,11 @@ fun NavGraphBuilder.appGraph(
                 is UpdateAliasNavigation.OpenAttachmentOptions ->
                     appNavigator.navigate(
                         destination = AttachmentOptionsNavItem,
-                        route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
+                        route = AttachmentOptionsNavItem.createNavRoute(
+                            shareId = it.shareId,
+                            itemId = it.itemId,
+                            attachmentId = it.attachmentId
+                        )
                     )
 
                 is UpdateAliasNavigation.OpenDraftAttachmentOptions ->
@@ -1222,7 +1242,11 @@ fun NavGraphBuilder.appGraph(
                 is BaseIdentityNavigation.OpenAttachmentOptions ->
                     appNavigator.navigate(
                         destination = AttachmentOptionsNavItem,
-                        route = AttachmentOptionsNavItem.createNavRoute(it.attachmentId)
+                        route = AttachmentOptionsNavItem.createNavRoute(
+                            shareId = it.shareId,
+                            itemId = it.itemId,
+                            attachmentId = it.attachmentId
+                        )
                     )
 
                 is BaseIdentityNavigation.OpenDraftAttachmentOptions ->
@@ -2424,7 +2448,11 @@ fun NavGraphBuilder.appGraph(
                 appNavigator.navigateBack(comesFromBottomsheet = true)
                 appNavigator.navigate(
                     destination = RenameAttachmentNavItem,
-                    route = RenameAttachmentNavItem.createNavRoute(it.attachmentId)
+                    route = RenameAttachmentNavItem.createNavRoute(
+                        shareId = it.shareId,
+                        itemId = it.itemId,
+                        attachmentId = it.attachmentId
+                    )
                 )
             }
 

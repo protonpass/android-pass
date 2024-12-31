@@ -234,13 +234,19 @@ fun CreateLoginScreen(
                     }
 
                     is LoginContentEvent.OnAttachmentEvent -> {
-                        when (it.event) {
+                        when (val event = it.event) {
                             AttachmentContentEvent.OnAddAttachment -> onNavigate(AddAttachment)
                             is AttachmentContentEvent.OnAttachmentOpen ->
                                 throw IllegalStateException("Cannot open attachment during create")
 
                             is AttachmentContentEvent.OnAttachmentOptions ->
-                                onNavigate(OpenAttachmentOptions(it.event.attachmentId))
+                                onNavigate(
+                                    OpenAttachmentOptions(
+                                        shareId = event.shareId,
+                                        itemId = event.itemId,
+                                        attachmentId = event.attachmentId
+                                    )
+                                )
 
                             AttachmentContentEvent.OnDeleteAllAttachments ->
                                 onNavigate(
@@ -252,15 +258,15 @@ fun CreateLoginScreen(
                             is AttachmentContentEvent.OnDraftAttachmentOpen ->
                                 viewModel.openDraftAttachment(
                                     contextHolder = context.toClassHolder(),
-                                    uri = it.event.uri,
-                                    mimetype = it.event.mimetype
+                                    uri = event.uri,
+                                    mimetype = event.mimetype
                                 )
 
                             is AttachmentContentEvent.OnDraftAttachmentOptions ->
-                                onNavigate(OpenDraftAttachmentOptions(it.event.uri))
+                                onNavigate(OpenDraftAttachmentOptions(event.uri))
 
                             is AttachmentContentEvent.OnDraftAttachmentRetry ->
-                                viewModel.retryUploadDraftAttachment(it.event.metadata)
+                                viewModel.retryUploadDraftAttachment(event.metadata)
                         }
                     }
                 }

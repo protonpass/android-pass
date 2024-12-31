@@ -31,7 +31,12 @@ import java.net.URI
 data object AttachmentOptionsNavItem : NavItem(
     baseRoute = "attachmentoptions/bottomsheet",
     navItemType = NavItemType.Bottomsheet,
-    optionalArgIds = listOf(CommonOptionalNavArgId.AttachmentId, CommonOptionalNavArgId.Uri)
+    optionalArgIds = listOf(
+        CommonOptionalNavArgId.ShareId,
+        CommonOptionalNavArgId.ItemId,
+        CommonOptionalNavArgId.AttachmentId,
+        CommonOptionalNavArgId.Uri
+    )
 ) {
     fun createNavRoute(
         shareId: ShareId,

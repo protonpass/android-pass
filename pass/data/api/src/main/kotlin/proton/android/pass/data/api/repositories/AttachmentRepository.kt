@@ -81,6 +81,13 @@ interface AttachmentRepository {
         itemId: ItemId
     ): Flow<List<Attachment>>
 
+    suspend fun getAttachmentById(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        attachmentId: AttachmentId
+    ): Attachment
+
     @Suppress("LongParameterList")
     suspend fun downloadAttachment(userId: UserId, attachment: Attachment): URI
 }

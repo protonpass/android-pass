@@ -40,7 +40,7 @@
   <string name="create_login_init_error">Πρόβλημα ανάκτησης λεπτομερειών σύνδεσης</string>
   <string name="create_login_invalid_totp">Το περιεχόμενο 2FA δεν είναι έγκυρο</string>
   <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_attachments_error">Could not add attachments to login</string>
+  <string name="login_link_attachments_error">Could not add attachments to login</string>
   <string name="login_created">Η σύνδεση δημιουργήθηκε</string>
   <string name="bottomsheet_modify_alias_title">Τροποποίηση ψευδωνύμου</string>
   <string name="bottomsheet_custom_field_type_text">Κείμενο</string>
@@ -66,7 +66,7 @@
   <string name="create_note_item_update_error">Δεν ήταν δυνατή η ενημέρωση της σημείωσης</string>
   <string name="create_note_init_error">Πρόβλημα ανάκτησης λεπτομερειών σημείωσης</string>
   <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_attachments_error">Could not add attachments to note</string>
+  <string name="note_link_attachments_error">Could not add attachments to note</string>
   <string name="note_created">Η σημείωση δημιουργήθηκε</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Ψευδώνυμη διεύθυνση</string>
@@ -84,7 +84,7 @@
   <string name="create_alias_item_update_error">Δεν ήταν δυνατή η ενημέρωση του ψευδωνύμου</string>
   <string name="create_alias_init_error">Πρόβλημα ανάκτησης λεπτομερειών ψευδώνυμου</string>
   <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_attachments_error">Could not add attachments to alias</string>
+  <string name="alias_link_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">Δημιουργήθηκε ψευδώνυμο</string>
   <string name="cannot_retrieve_alias_options">Δεν είναι δυνατή η ανάκτηση επιλογών ψευδωνύμου</string>
   <string name="alias_mailbox_dialog_title">Προώθηση σε</string>
@@ -111,7 +111,7 @@
   <string name="create_credit_card_item_creation_success">Η πιστωτική κάρτα δημιουργήθηκε</string>
   <string name="credit_card_init_error">Πρόβλημα ανάκτησης λεπτομερειών πιστωτικής κάρτας</string>
   <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
+  <string name="credit_card_link_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">Δεν ήταν δυνατή η ενημέρωση της πιστωτικής κάρτας</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Ονοματεπώνυμο</string>
@@ -169,7 +169,7 @@
   <string name="identity_bottomsheet_add_field">Προσθήκη πεδίου</string>
   <string name="create_identity_init_error">Πρόβλημα ανάκτησης λεπτομερειών ταυτότητας</string>
   <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_attachments_error">Could not add attachments to identity</string>
+  <string name="identity_link_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">Δεν ήταν δυνατή η δημιουργία ταυτότητας</string>
   <string name="create_identity_item_creation_success">Ταυτότητα που δημιουργήθηκε</string>
   <string name="update_identity_item_creation_success">Η ταυτότητα ενημερώθηκε</string>

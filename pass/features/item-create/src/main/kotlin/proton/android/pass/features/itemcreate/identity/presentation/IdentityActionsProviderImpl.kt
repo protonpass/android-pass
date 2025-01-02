@@ -58,6 +58,7 @@ import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
+import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -68,6 +69,8 @@ import proton.android.pass.features.itemcreate.common.CustomFieldIndexTitle
 import proton.android.pass.features.itemcreate.common.UICustomFieldContent
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
+import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemLinkAttachmentsError
+import proton.android.pass.features.itemcreate.identity.presentation.IdentitySnackbarMessage.ItemRenameAttachmentsError
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.AddressCustomField
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Birthdate
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.ContactCustomField
@@ -92,7 +95,6 @@ import proton.android.pass.features.itemcreate.identity.presentation.bottomsheet
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.WorkPhoneNumber
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.Yahoo
 import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType
-import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemAttachmentsError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlag
@@ -111,6 +113,7 @@ class IdentityActionsProviderImpl @Inject constructor(
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
+    private val renameAttachments: RenameAttachments,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : IdentityActionsProvider {
 
@@ -658,11 +661,18 @@ class IdentityActionsProviderImpl @Inject constructor(
     override suspend fun onItemSavedState(item: Item) {
         if (isFileAttachmentsEnabled()) {
             runCatching {
-                linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                renameAttachments(item.shareId, item.id)
+            }.onFailure {
+                PassLogger.w(TAG, "Error renaming attachments")
+                PassLogger.w(TAG, it)
+                snackbarDispatcher(ItemRenameAttachmentsError)
+            }
+            runCatching {
+                linkAttachmentsToItem(item.shareId, item.id, item.revision)
             }.onFailure {
                 PassLogger.w(TAG, "Link attachment error")
                 PassLogger.w(TAG, it)
-                snackbarDispatcher(ItemAttachmentsError)
+                snackbarDispatcher(ItemLinkAttachmentsError)
             }
         }
         val itemSavedState = encryptionContextProvider.withEncryptionContext {

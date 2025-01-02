@@ -34,5 +34,6 @@ internal enum class IdentitySnackbarMessage(
     ItemUpdateError(R.string.update_identity_item_creation_error, SnackbarType.ERROR),
     ItemUpdated(R.string.update_identity_item_creation_success, SnackbarType.SUCCESS),
     AttachmentsInitError(R.string.update_identity_attachments_init_error, SnackbarType.ERROR),
-    ItemAttachmentsError(R.string.identity_attachments_error, SnackbarType.ERROR)
+    ItemLinkAttachmentsError(R.string.identity_link_attachments_error, SnackbarType.ERROR),
+    ItemRenameAttachmentsError(R.string.identity_rename_attachments_error, SnackbarType.ERROR)
 }

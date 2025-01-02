@@ -28,7 +28,6 @@ import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateAliasItemContent
-import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -38,7 +37,6 @@ import javax.inject.Inject
 class UpdateAliasImpl @Inject constructor(
     private val aliasRepository: AliasRepository,
     private val itemRepository: ItemRepository,
-    private val renameAttachments: RenameAttachments,
     private val getShareById: GetShareById
 ) : UpdateAlias {
 
@@ -77,12 +75,12 @@ class UpdateAliasImpl @Inject constructor(
             aliasRepository.updateAliasName(userId, item.shareId, item.id, content.displayName)
         }
 
-        if (content.itemData is Some) {
+        return if (content.itemData is Some) {
             val itemData = (content.itemData as Some<UpdateAliasItemContent>).value
-            return updateItemContent(userId, item, itemData)
+            updateItemContent(userId, item, itemData)
+        } else {
+            item
         }
-
-        return item
     }
 
     private suspend fun updateItemContent(

@@ -124,6 +124,7 @@ import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
+import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
@@ -330,6 +331,7 @@ import proton.android.pass.data.fakes.usecases.attachments.FakeDownloadAttachmen
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeObserveDetailItemAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeObserveUpdateItemAttachments
+import proton.android.pass.data.fakes.usecases.attachments.FakeRenameAttachments
 import proton.android.pass.data.fakes.usecases.attachments.FakeUploadAttachment
 import proton.android.pass.data.fakes.usecases.breach.FakeAddBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeMarkEmailBreachAsResolved
@@ -971,6 +973,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindLinkAttachmentToItem(impl: FakeLinkAttachmentsToItem): LinkAttachmentsToItem
+
+    @Binds
+    abstract fun bindRenameAttachments(impl: FakeRenameAttachments): RenameAttachments
 
     @Binds
     abstract fun bindObserveUpdateItemAttachments(impl: FakeObserveUpdateItemAttachments): ObserveUpdateItemAttachments

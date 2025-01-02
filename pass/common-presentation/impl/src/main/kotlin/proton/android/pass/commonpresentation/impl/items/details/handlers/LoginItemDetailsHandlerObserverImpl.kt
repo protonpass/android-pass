@@ -44,6 +44,7 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.Totp
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -182,7 +183,9 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
 
     override fun calculateItemDiffs(
         baseItemContents: ItemContents.Login,
-        otherItemContents: ItemContents.Login
+        otherItemContents: ItemContents.Login,
+        baseAttachments: List<Attachment>,
+        otherAttachments: List<Attachment>
     ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
         ItemDiffs.Login(
             title = calculateItemDiffType(

@@ -38,6 +38,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
+import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsSource
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toItemContents
@@ -58,6 +59,8 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 private const val TAG = "ItemHistoryRestoreViewModel"
@@ -66,6 +69,7 @@ private const val TAG = "ItemHistoryRestoreViewModel"
 class ItemHistoryRestoreViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     openItemRevision: OpenItemRevision,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val restoreItemRevision: RestoreItemRevision,
     private val itemDetailsHandler: ItemDetailsHandler,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -131,7 +135,10 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     private val revisionItemDetailsStateFlow = revisionItemFlow.flatMapLatest { item ->
         createItemDetailsStateFlow(
             itemContentsUpdateOptionFlow = revisionItemContentsUpdateOptionFlow,
-            itemDetailStateFlow = itemDetailsHandler.observeItemDetails(item),
+            itemDetailStateFlow = itemDetailsHandler.observeItemDetails(
+                item = item,
+                source = ItemDetailsSource.REVISION
+            ),
             itemDiffsFlow = revisionItemDiffsFlow
         )
     }
@@ -148,7 +155,10 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     private val currentItemDetailsStateFlow = currentItemFlow.flatMapLatest { item ->
         createItemDetailsStateFlow(
             itemContentsUpdateOptionFlow = currentItemContentsUpdateOptionFlow,
-            itemDetailStateFlow = itemDetailsHandler.observeItemDetails(item),
+            itemDetailStateFlow = itemDetailsHandler.observeItemDetails(
+                item = item,
+                source = ItemDetailsSource.REVISION
+            ),
             itemDiffsFlow = currentItemDiffsFlow
         )
     }
@@ -158,13 +168,15 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     internal val state = combine(
         currentItemDetailsStateFlow,
         revisionItemDetailsStateFlow,
-        eventFlow
-    ) { currentItemDetailState, revisionItemDetailState, event ->
+        eventFlow,
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+    ) { currentItemDetailState, revisionItemDetailState, event, isFileAttachmentEnabled ->
         ItemHistoryRestoreState.ItemDetails(
             itemRevision = itemRevision,
             currentItemDetailState = currentItemDetailState,
             revisionItemDetailState = revisionItemDetailState,
-            event = event
+            event = event,
+            isFileAttachmentEnabled = isFileAttachmentEnabled
         )
     }.stateIn(
         scope = viewModelScope,

@@ -70,8 +70,8 @@ import proton.android.pass.domain.entity.NewAlias
 import proton.android.pass.features.itemcreate.ItemCreate
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.AliasCreated
-import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.ItemAttachmentsError
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.ItemCreationError
+import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.ItemLinkAttachmentsError
 import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
@@ -364,12 +364,12 @@ open class CreateAliasViewModel @Inject constructor(
                 .onSuccess { item ->
                     runCatching {
                         if (isFileAttachmentsEnabled()) {
-                            linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                            linkAttachmentsToItem(item.shareId, item.id, item.revision)
                         }
                     }.onFailure {
                         PassLogger.w(TAG, "Link attachment error")
                         PassLogger.w(TAG, it)
-                        snackbarDispatcher(ItemAttachmentsError)
+                        snackbarDispatcher(ItemLinkAttachmentsError)
                     }
 
                     inAppReviewTriggerMetrics.incrementItemCreatedCount()

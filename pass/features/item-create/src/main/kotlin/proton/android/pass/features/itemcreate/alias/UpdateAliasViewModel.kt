@@ -52,6 +52,7 @@ import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateAliasItemContent
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
+import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
@@ -62,10 +63,11 @@ import proton.android.pass.features.itemcreate.ItemUpdate
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.AliasUpdated
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.InitAttachmentsError
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.InitError
+import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.ItemLinkAttachmentsError
+import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.ItemRenameAttachmentsError
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.ItemUpdateError
 import proton.android.pass.features.itemcreate.alias.AliasSnackbarMessage.UpdateAppToUpdateItemError
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
-import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemAttachmentsError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -84,6 +86,7 @@ class UpdateAliasViewModel @Inject constructor(
     private val aliasPrefixValidator: AliasPrefixValidator,
     private val getItemById: GetItemById,
     private val observeAliasDetails: ObserveAliasDetails,
+    private val renameAttachments: RenameAttachments,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     attachmentsHandler: AttachmentsHandler,
@@ -271,6 +274,7 @@ class UpdateAliasViewModel @Inject constructor(
         mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
     }
 
+    @Suppress("LongMethod")
     internal fun updateAlias() {
         viewModelScope.launch(coroutineExceptionHandler) {
             val canUpdate = canUpdateAlias()
@@ -292,16 +296,27 @@ class UpdateAliasViewModel @Inject constructor(
                         content = body
                     )
                 }.onSuccess { item ->
+                    PassLogger.i(TAG, "Alias successfully updated")
                     if (isFileAttachmentsEnabled()) {
                         runCatching {
-                            linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                            renameAttachments(item.shareId, item.id)
                         }.onFailure {
-                            PassLogger.w(TAG, "Link attachment error")
+                            PassLogger.w(TAG, "Error renaming attachments")
                             PassLogger.w(TAG, it)
-                            snackbarDispatcher(ItemAttachmentsError)
+                            snackbarDispatcher(ItemRenameAttachmentsError)
+                        }
+                        runCatching {
+                            linkAttachmentsToItem(
+                                shareId = item.shareId,
+                                itemId = item.id,
+                                revision = item.revision
+                            )
+                        }.onFailure {
+                            PassLogger.w(TAG, "Error linking attachments to item")
+                            PassLogger.w(TAG, it)
+                            snackbarDispatcher(ItemLinkAttachmentsError)
                         }
                     }
-                    PassLogger.i(TAG, "Alias successfully updated")
                     isItemSavedState.update {
                         val itemUiModel = encryptionContextProvider.withEncryptionContext {
                             item.toUiModel(this)

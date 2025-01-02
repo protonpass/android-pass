@@ -23,8 +23,8 @@ import proton.android.pass.domain.ShareId
 
 interface LinkAttachmentsToItem {
     suspend operator fun invoke(
-        itemId: ItemId,
         shareId: ShareId,
+        itemId: ItemId,
         revision: Long
     )
 }

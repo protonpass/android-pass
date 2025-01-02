@@ -40,7 +40,7 @@
   <string name="create_login_init_error">Problém s načítaním prihlasovacích údajov</string>
   <string name="create_login_invalid_totp">Obsah 2FA je neplatný</string>
   <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_attachments_error">Could not add attachments to login</string>
+  <string name="login_link_attachments_error">Could not add attachments to login</string>
   <string name="login_created">Prihlásenie vytvorené</string>
   <string name="bottomsheet_modify_alias_title">Upraviť alias</string>
   <string name="bottomsheet_custom_field_type_text">Text</string>
@@ -66,7 +66,7 @@
   <string name="create_note_item_update_error">Nepodarilo sa aktualizovať poznámku</string>
   <string name="create_note_init_error">Problém s načítaním podrobností poznámky</string>
   <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_attachments_error">Could not add attachments to note</string>
+  <string name="note_link_attachments_error">Could not add attachments to note</string>
   <string name="note_created">Poznámka vytvorená</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Alias adresy</string>
@@ -84,7 +84,7 @@
   <string name="create_alias_item_update_error">Nepodarilo sa aktualizovať alias</string>
   <string name="create_alias_init_error">Problém s načítaním podrobností o aliase</string>
   <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_attachments_error">Could not add attachments to alias</string>
+  <string name="alias_link_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">Alias vytvorený</string>
   <string name="cannot_retrieve_alias_options">Nemožno načítať možnosti aliasu</string>
   <string name="alias_mailbox_dialog_title">Preposlať</string>
@@ -111,7 +111,7 @@
   <string name="create_credit_card_item_creation_success">Platobná karta vytvorená</string>
   <string name="credit_card_init_error">Problém s načítaním podrobností o platobnej karte</string>
   <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
+  <string name="credit_card_link_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">Nepodarilo sa aktualizovať platobnú kartu</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Celé meno</string>
@@ -169,7 +169,7 @@
   <string name="identity_bottomsheet_add_field">Pridať pole</string>
   <string name="create_identity_init_error">Problém s načítaním podrobností identity</string>
   <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_attachments_error">Could not add attachments to identity</string>
+  <string name="identity_link_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">Nepodarilo sa vytvoriť identitu</string>
   <string name="create_identity_item_creation_success">Identita bola vytvorená</string>
   <string name="update_identity_item_creation_success">Identita aktualizovaná</string>

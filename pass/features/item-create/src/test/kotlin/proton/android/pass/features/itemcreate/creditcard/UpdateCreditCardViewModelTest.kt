@@ -37,6 +37,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
+import proton.android.pass.data.fakes.usecases.attachments.FakeRenameAttachments
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -84,7 +85,8 @@ class UpdateCreditCardViewModelTest {
             canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) },
             featureFlagsRepository = featureFlagsRepository,
             attachmentsHandler = proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler(),
-            linkAttachmentsToItem = FakeLinkAttachmentsToItem()
+            linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
+            renameAttachments = FakeRenameAttachments()
         )
     }
 

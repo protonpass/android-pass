@@ -290,7 +290,8 @@ class ItemRepositoryImpl @Inject constructor(
         ItemFlag.SkipHealthCheck -> UpdateItemFlagsRequest().copy(skipHealthCheck = isFlagEnabled)
         ItemFlag.EmailBreached,
         ItemFlag.AliasDisabled,
-        ItemFlag.HasAttachments -> UpdateItemFlagsRequest()
+        ItemFlag.HasAttachments,
+        ItemFlag.HasHadAttachments -> UpdateItemFlagsRequest()
     }.let { updateItemFlagsRequest ->
         remoteItemDataSource.updateItemFlags(
             userId = userId,

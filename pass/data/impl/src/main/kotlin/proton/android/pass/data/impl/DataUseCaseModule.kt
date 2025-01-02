@@ -125,6 +125,7 @@ import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.GetAttachment
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
+import proton.android.pass.data.api.usecases.attachments.ObserveAllItemRevisionAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
 import proton.android.pass.data.api.usecases.attachments.RemoveDraftAttachment
@@ -339,6 +340,7 @@ import proton.android.pass.data.impl.usecases.attachments.ClearAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.DownloadAttachmentImpl
 import proton.android.pass.data.impl.usecases.attachments.GetAttachmentImpl
 import proton.android.pass.data.impl.usecases.attachments.LinkAttachmentsToItemImpl
+import proton.android.pass.data.impl.usecases.attachments.ObserveAllItemRevisionAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.ObserveDetailItemAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.ObserveUpdateItemAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.RemoveDraftAttachmentImpl
@@ -1121,5 +1123,10 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindGetAttachment(impl: GetAttachmentImpl): GetAttachment
+
+    @[Binds Singleton]
+    abstract fun bindObserveAllItemRevisionAttachments(
+        impl: ObserveAllItemRevisionAttachmentsImpl
+    ): ObserveAllItemRevisionAttachments
 
 }

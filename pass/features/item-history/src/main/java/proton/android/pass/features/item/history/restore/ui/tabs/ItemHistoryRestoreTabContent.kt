@@ -43,6 +43,7 @@ internal fun ItemHistoryRestoreTabContent(
     currentItemDetailState: ItemDetailState,
     itemColors: PassItemColors,
     revisionTime: Long,
+    isFileAttachmentsEnabled: Boolean,
     onEvent: (ItemHistoryRestoreUiEvent) -> Unit
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(ITEM_HISTORY_TAB_INDEX_REVISION) }
@@ -57,8 +58,9 @@ internal fun ItemHistoryRestoreTabContent(
         ItemHistoryRestoreTab(
             itemDetailState = itemDetailState,
             itemColors = itemColors,
-            onEvent = onEvent,
-            selection = selection
+            selection = selection,
+            isFileAttachmentsEnabled = isFileAttachmentsEnabled,
+            onEvent = onEvent
         )
 
         ItemHistoryRestoreTabRow(

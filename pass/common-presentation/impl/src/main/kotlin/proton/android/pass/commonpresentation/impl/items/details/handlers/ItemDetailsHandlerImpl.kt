@@ -33,6 +33,7 @@ import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
+import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsSource
 import proton.android.pass.commonpresentation.impl.R
 import proton.android.pass.commonpresentation.impl.items.details.messages.ItemDetailsSnackbarMessage
 import proton.android.pass.commonui.api.ClassHolder
@@ -43,6 +44,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
+import proton.android.pass.data.api.usecases.attachments.ObserveAllItemRevisionAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.HiddenState
@@ -59,7 +61,8 @@ import javax.inject.Inject
 
 class ItemDetailsHandlerImpl @Inject constructor(
     private val observeShare: ObserveShare,
-    private val observeItemAttachments: ObserveDetailItemAttachments,
+    private val observeDetailItemAttachments: ObserveDetailItemAttachments,
+    private val observeAllItemRevisionAttachments: ObserveAllItemRevisionAttachments,
     private val observers: Map<ItemCategory, @JvmSuppressWildcards ItemDetailsHandlerObserver<*>>,
     private val clipboardManager: ClipboardManager,
     private val downloadAttachment: DownloadAttachment,
@@ -70,9 +73,9 @@ class ItemDetailsHandlerImpl @Inject constructor(
 
     private val loadingAttachmentsState = MutableStateFlow<Set<AttachmentId>>(emptySet())
 
-    override fun observeItemDetails(item: Item): Flow<ItemDetailState> = combine(
+    override fun observeItemDetails(item: Item, source: ItemDetailsSource): Flow<ItemDetailState> = combine(
         oneShot { observeShare(item.shareId).first() },
-        attachmentsFlow(item),
+        attachmentsFlow(item, source),
         ::Pair
     )
         .flatMapLatest { (share, attachments) ->
@@ -127,19 +130,38 @@ class ItemDetailsHandlerImpl @Inject constructor(
         displayFieldCopiedSnackbarMessage(hiddenFieldType)
     }
 
-    private fun attachmentsFlow(item: Item): Flow<AttachmentsState> = if (item.hasAttachments) {
-        combine(
-            observeItemAttachments(item.shareId, item.id),
-            loadingAttachmentsState
-        ) { attachments, loadingAttachments ->
-            AttachmentsState(
-                draftAttachmentsList = emptyList(),
-                attachmentsList = attachments,
-                loadingAttachments = loadingAttachments
-            )
+    private fun attachmentsFlow(item: Item, source: ItemDetailsSource): Flow<AttachmentsState> {
+        return when (source) {
+            ItemDetailsSource.DETAIL -> if (item.hasAttachments) {
+                combine(
+                    observeDetailItemAttachments(item.shareId, item.id),
+                    loadingAttachmentsState
+                ) { attachments, loadingAttachments ->
+                    AttachmentsState(
+                        draftAttachmentsList = emptyList(),
+                        attachmentsList = attachments,
+                        loadingAttachments = loadingAttachments
+                    )
+                }
+            } else {
+                flowOf(AttachmentsState.Initial)
+            }
+            ItemDetailsSource.REVISION -> if (item.hasHadAttachments) {
+                combine(
+                    observeAllItemRevisionAttachments(item.shareId, item.id),
+                    loadingAttachmentsState
+                ) { attachments, loadingAttachments ->
+                    AttachmentsState(
+                        draftAttachmentsList = emptyList(),
+                        attachmentsList = attachments,
+                        loadingAttachments = loadingAttachments
+                    )
+                }
+            } else {
+                flowOf(AttachmentsState.Initial)
+            }
         }
-    } else {
-        flowOf(AttachmentsState.Initial)
+
     }
 
     private suspend fun displayFieldCopiedSnackbarMessage(fieldType: ItemDetailsFieldType) = when (fieldType) {

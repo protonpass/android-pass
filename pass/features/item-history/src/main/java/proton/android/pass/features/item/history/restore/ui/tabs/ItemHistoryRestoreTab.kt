@@ -35,6 +35,7 @@ internal fun ItemHistoryRestoreTab(
     modifier: Modifier = Modifier,
     itemDetailState: ItemDetailState,
     itemColors: PassItemColors,
+    isFileAttachmentsEnabled: Boolean,
     onEvent: (ItemHistoryRestoreUiEvent) -> Unit,
     selection: ItemHistoryRestoreSelection
 ) {
@@ -86,19 +87,21 @@ internal fun ItemHistoryRestoreTab(
                 }
 
                 is PassItemDetailsUiEvent.OnAttachmentEvent -> when (uiEvent.attachmentContentEvent) {
-                    AttachmentContentEvent.OnAddAttachment -> {}
-                    is AttachmentContentEvent.OnAttachmentOpen -> {}
-                    is AttachmentContentEvent.OnAttachmentOptions -> {}
-                    AttachmentContentEvent.OnDeleteAllAttachments -> {}
-                    is AttachmentContentEvent.OnDraftAttachmentOpen -> {}
-                    is AttachmentContentEvent.OnDraftAttachmentOptions -> {}
-                    is AttachmentContentEvent.OnDraftAttachmentRetry -> {}
+                    AttachmentContentEvent.OnAddAttachment,
+                    is AttachmentContentEvent.OnAttachmentOpen,
+                    is AttachmentContentEvent.OnAttachmentOptions,
+                    AttachmentContentEvent.OnDeleteAllAttachments,
+                    is AttachmentContentEvent.OnDraftAttachmentOpen,
+                    is AttachmentContentEvent.OnDraftAttachmentOptions,
+                    is AttachmentContentEvent.OnDraftAttachmentRetry -> {
+                        // We do nothing since we don't allow attachment management from restore screen
+                    }
                 }
             }
         },
         shouldDisplayItemHistorySection = false,
         shouldDisplayItemHistoryButton = false,
-        shouldDisplayFileAttachments = false,
+        shouldDisplayFileAttachments = isFileAttachmentsEnabled,
         extraBottomSpacing = Spacing.extraLarge
     )
 }

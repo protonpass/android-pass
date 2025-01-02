@@ -43,6 +43,7 @@ class RenameAttachmentsImpl @Inject constructor(
         val pendingRenames: Map<AttachmentId, String> =
             pendingAttachmentUpdaterRepository.getAllPendingRenames()
         if (pendingRenames.isEmpty()) return
+        PassLogger.i(TAG, "Renaming ${pendingRenames.size} attachments")
         val userId = accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
         runConcurrently(

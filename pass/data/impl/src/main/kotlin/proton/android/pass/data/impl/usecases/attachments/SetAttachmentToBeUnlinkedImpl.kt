@@ -16,12 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.attachments
+package proton.android.pass.data.impl.usecases.attachments
 
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeUnlinked
 import proton.android.pass.domain.attachments.AttachmentId
-import java.net.URI
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface RenameAttachment {
-    suspend operator fun invoke(uri: URI, newName: String)
-    operator fun invoke(attachmentId: AttachmentId, newName: String)
+@Singleton
+class SetAttachmentToBeUnlinkedImpl @Inject constructor(
+    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository
+) : SetAttachmentToBeUnlinked {
+
+
+    override fun invoke(attachmentId: AttachmentId) {
+        pendingAttachmentLinkRepository.addToUnLink(attachmentId)
+    }
 }

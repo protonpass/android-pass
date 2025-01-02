@@ -402,7 +402,7 @@ class CreateLoginViewModel @Inject constructor(
             }
             .onSuccess { item ->
                 runCatching {
-                    if (baseLoginUiState.value.isFileAttachmentsEnabled) {
+                    if (isFileAttachmentsEnabled()) {
                         linkAttachmentsToItem(item.id, item.shareId, item.revision)
                     }
                 }.onFailure {
@@ -458,7 +458,7 @@ class CreateLoginViewModel @Inject constructor(
             }
             .onSuccess { item ->
                 runCatching {
-                    if (baseLoginUiState.value.isFileAttachmentsEnabled) {
+                    if (isFileAttachmentsEnabled()) {
                         linkAttachmentsToItem(item.id, item.shareId, item.revision)
                     }
                 }.onFailure {

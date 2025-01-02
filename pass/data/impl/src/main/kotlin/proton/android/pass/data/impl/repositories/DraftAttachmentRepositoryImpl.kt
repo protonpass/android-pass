@@ -88,7 +88,7 @@ class DraftAttachmentRepositoryImpl @Inject constructor() : DraftAttachmentRepos
         return removedSuccessfully
     }
 
-    override fun clear(): Boolean {
+    override fun clearAll(): Boolean {
         var clearedSuccessfully = false
         draftAttachmentsStateFlow.update { currentMap ->
             if (currentMap.isNotEmpty()) {

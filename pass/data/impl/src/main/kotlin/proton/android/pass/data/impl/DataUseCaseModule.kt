@@ -127,8 +127,11 @@ import proton.android.pass.data.api.usecases.attachments.GetAttachment
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
 import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
-import proton.android.pass.data.api.usecases.attachments.RemoveAttachment
-import proton.android.pass.data.api.usecases.attachments.RenameAttachment
+import proton.android.pass.data.api.usecases.attachments.RemoveDraftAttachment
+import proton.android.pass.data.api.usecases.attachments.RenameAttachments
+import proton.android.pass.data.api.usecases.attachments.RenameDraftAttachment
+import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeRenamed
+import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeUnlinked
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
@@ -338,8 +341,11 @@ import proton.android.pass.data.impl.usecases.attachments.GetAttachmentImpl
 import proton.android.pass.data.impl.usecases.attachments.LinkAttachmentsToItemImpl
 import proton.android.pass.data.impl.usecases.attachments.ObserveDetailItemAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.ObserveUpdateItemAttachmentsImpl
-import proton.android.pass.data.impl.usecases.attachments.RemoveAttachmentImpl
-import proton.android.pass.data.impl.usecases.attachments.RenameAttachmentImpl
+import proton.android.pass.data.impl.usecases.attachments.RemoveDraftAttachmentImpl
+import proton.android.pass.data.impl.usecases.attachments.RenameAttachmentsImpl
+import proton.android.pass.data.impl.usecases.attachments.RenameDraftAttachmentImpl
+import proton.android.pass.data.impl.usecases.attachments.SetAttachmentToBeRenamedImpl
+import proton.android.pass.data.impl.usecases.attachments.SetAttachmentToBeUnlinkedImpl
 import proton.android.pass.data.impl.usecases.attachments.UploadAttachmentImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.MarkEmailBreachAsResolvedImpl
@@ -1099,10 +1105,19 @@ abstract class DataUseCaseModule {
     abstract fun bindCheckIfAttachmentExists(impl: CheckIfAttachmentExistsImpl): CheckIfAttachmentExists
 
     @[Binds Singleton]
-    abstract fun bindRemoveAttachment(impl: RemoveAttachmentImpl): RemoveAttachment
+    abstract fun bindSetAttachmentToBeUnlinked(impl: SetAttachmentToBeUnlinkedImpl): SetAttachmentToBeUnlinked
 
     @[Binds Singleton]
-    abstract fun bindRenameAttachment(impl: RenameAttachmentImpl): RenameAttachment
+    abstract fun bindSetAttachmentToBeRenamed(impl: SetAttachmentToBeRenamedImpl): SetAttachmentToBeRenamed
+
+    @[Binds Singleton]
+    abstract fun bindRemoveDraftAttachment(impl: RemoveDraftAttachmentImpl): RemoveDraftAttachment
+
+    @[Binds Singleton]
+    abstract fun bindRenameDraftAttachment(impl: RenameDraftAttachmentImpl): RenameDraftAttachment
+
+    @[Binds Singleton]
+    abstract fun bindRenameAttachments(impl: RenameAttachmentsImpl): RenameAttachments
 
     @[Binds Singleton]
     abstract fun bindGetAttachment(impl: GetAttachmentImpl): GetAttachment

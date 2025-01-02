@@ -18,25 +18,18 @@
 
 package proton.android.pass.data.impl.usecases.attachments
 
-import proton.android.pass.data.api.repositories.DraftAttachmentRepository
-import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
-import proton.android.pass.data.api.usecases.attachments.RemoveAttachment
+import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
+import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeRenamed
 import proton.android.pass.domain.attachments.AttachmentId
-import java.net.URI
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RemoveAttachmentImpl @Inject constructor(
-    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
-    private val draftAttachmentRepository: DraftAttachmentRepository
-) : RemoveAttachment {
+class SetAttachmentToBeRenamedImpl @Inject constructor(
+    private val pendingAttachmentUpdaterRepository: PendingAttachmentUpdaterRepository
+) : SetAttachmentToBeRenamed {
 
-    override fun invoke(uri: URI) {
-        draftAttachmentRepository.remove(uri)
-    }
-
-    override fun invoke(attachmentId: AttachmentId) {
-        pendingAttachmentLinkRepository.addToUnLink(attachmentId)
+    override fun invoke(attachmentId: AttachmentId, newName: String) {
+        pendingAttachmentUpdaterRepository.putPendingRename(attachmentId, newName)
     }
 }

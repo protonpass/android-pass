@@ -29,7 +29,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
-import proton.android.pass.data.api.usecases.attachments.RemoveAttachment
+import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeUnlinked
+import proton.android.pass.data.api.usecases.attachments.RemoveDraftAttachment
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
@@ -40,7 +41,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AttachmentOptionsViewModel @Inject constructor(
-    private val removeAttachment: RemoveAttachment,
+    private val setAttachmentToBeUnlinked: SetAttachmentToBeUnlinked,
+    private val removeDraftAttachment: RemoveDraftAttachment,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -74,8 +76,8 @@ class AttachmentOptionsViewModel @Inject constructor(
 
     fun deleteAttachment() {
         when {
-            attachmentId is Some -> removeAttachment(attachmentId.value)
-            uri is Some -> removeAttachment(uri.value)
+            attachmentId is Some -> setAttachmentToBeUnlinked(attachmentId.value)
+            uri is Some -> removeDraftAttachment(uri.value)
         }
         eventFlow.update { AttachmentOptionsEvent.Close }
     }

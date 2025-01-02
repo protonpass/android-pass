@@ -16,12 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.attachments
+package proton.android.pass.data.impl.usecases.attachments
 
-import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.data.api.repositories.DraftAttachmentRepository
+import proton.android.pass.data.api.usecases.attachments.RemoveDraftAttachment
 import java.net.URI
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface RemoveAttachment {
-    operator fun invoke(uri: URI)
-    operator fun invoke(attachmentId: AttachmentId)
+@Singleton
+class RemoveDraftAttachmentImpl @Inject constructor(
+    private val draftAttachmentRepository: DraftAttachmentRepository
+) : RemoveDraftAttachment {
+
+    override fun invoke(uri: URI) {
+        draftAttachmentRepository.remove(uri)
+    }
 }

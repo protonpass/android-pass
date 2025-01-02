@@ -115,6 +115,7 @@ private fun ItemHistoryRestoreDetails(
         currentItemDetailState = currentItemDetailState,
         itemColors = passItemColors(itemCategory = revisionItemDetailState.itemCategory),
         revisionTime = itemRevision.revisionTime,
+        isFileAttachmentsEnabled = isFileAttachmentEnabled,
         onEvent = onEvent
     )
 

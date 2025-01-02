@@ -16,15 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.attachments
+package proton.android.pass.data.fakes.usecases.attachments
 
+import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface LinkAttachmentsToItem {
-    suspend operator fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-        revision: Long
-    )
+@Singleton
+class FakeRenameAttachments @Inject constructor() : RenameAttachments {
+    override suspend fun invoke(shareId: ShareId, itemId: ItemId) {
+        // no-op
+    }
 }

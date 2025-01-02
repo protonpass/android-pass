@@ -59,8 +59,8 @@ import proton.android.pass.features.itemcreate.common.OptionShareIdSaver
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
-import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.ItemAttachmentsError
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.ItemCreationError
+import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.ItemLinkAttachmentsError
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.NoteCreated
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
@@ -160,12 +160,12 @@ class CreateNoteViewModel @Inject constructor(
                     .onSuccess { item ->
                         runCatching {
                             if (isFileAttachmentsEnabled()) {
-                                linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                                linkAttachmentsToItem(item.shareId, item.id, item.revision)
                             }
                         }.onFailure {
                             PassLogger.w(TAG, "Link attachment error")
                             PassLogger.w(TAG, it)
-                            snackbarDispatcher(ItemAttachmentsError)
+                            snackbarDispatcher(ItemLinkAttachmentsError)
                         }
                         inAppReviewTriggerMetrics.incrementItemCreatedCount()
                         isItemSavedState.update {

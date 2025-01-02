@@ -40,7 +40,7 @@
   <string name="create_login_init_error">ログイン詳細の取得に関する問題</string>
   <string name="create_login_invalid_totp">2 要素認証のコンテンツが正しくありません</string>
   <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_attachments_error">Could not add attachments to login</string>
+  <string name="login_link_attachments_error">Could not add attachments to login</string>
   <string name="login_created">ログイン情報が作成されました</string>
   <string name="bottomsheet_modify_alias_title">エイリアスを変更</string>
   <string name="bottomsheet_custom_field_type_text">テキスト</string>
@@ -66,7 +66,7 @@
   <string name="create_note_item_update_error">ノートを更新できませんでした</string>
   <string name="create_note_init_error">メモの詳細を取得するときに問題が発生しました</string>
   <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_attachments_error">Could not add attachments to note</string>
+  <string name="note_link_attachments_error">Could not add attachments to note</string>
   <string name="note_created">ノートが作成されました</string>
   <!-- Create Alias -->
   <string name="field_alias_title">エイリアスのアドレス</string>
@@ -84,7 +84,7 @@
   <string name="create_alias_item_update_error">エイリアスを更新できませんでした</string>
   <string name="create_alias_init_error">エイリアスの詳細を取得するときに問題が発生しました</string>
   <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_attachments_error">Could not add attachments to alias</string>
+  <string name="alias_link_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">作成されたエイリアス</string>
   <string name="cannot_retrieve_alias_options">エイリアス オプションを取得できません</string>
   <string name="alias_mailbox_dialog_title">転送先</string>
@@ -111,7 +111,7 @@
   <string name="create_credit_card_item_creation_success">クレジットカードが作成されました</string>
   <string name="credit_card_init_error">クレジット カードの詳細を取得する際の問題</string>
   <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
+  <string name="credit_card_link_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">クレジットカードを更新できませんでした</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">フルネーム</string>
@@ -169,7 +169,7 @@
   <string name="identity_bottomsheet_add_field">フィールドを追加</string>
   <string name="create_identity_init_error">ユーザー情報の詳細を取得する際の問題</string>
   <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_attachments_error">Could not add attachments to identity</string>
+  <string name="identity_link_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">ユーザー情報を作成できませんでした</string>
   <string name="create_identity_item_creation_success">ユーザー情報が作成されました</string>
   <string name="update_identity_item_creation_success">ユーザー情報が更新されました</string>

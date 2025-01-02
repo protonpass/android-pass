@@ -25,6 +25,7 @@ import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
+import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -34,9 +35,10 @@ import proton.android.pass.features.itemcreate.ItemUpdate
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.AttachmentsInitError
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.InitError
+import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.ItemLinkAttachmentsError
+import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.ItemRenameAttachmentsError
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.ItemUpdateError
 import proton.android.pass.features.itemcreate.creditcard.CreditCardSnackbarMessage.UpdateAppToUpdateItemError
-import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemAttachmentsError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -54,6 +56,7 @@ class UpdateCreditCardViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val telemetryManager: TelemetryManager,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
+    private val renameAttachments: RenameAttachments,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     attachmentsHandler: AttachmentsHandler,
     canPerformPaidAction: CanPerformPaidAction,
@@ -149,11 +152,18 @@ class UpdateCreditCardViewModel @Inject constructor(
         }.onSuccess { item ->
             if (isFileAttachmentsEnabled()) {
                 runCatching {
-                    linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                    renameAttachments(item.shareId, item.id)
+                }.onFailure {
+                    PassLogger.w(TAG, "Error renaming attachments")
+                    PassLogger.w(TAG, it)
+                    snackbarDispatcher(ItemRenameAttachmentsError)
+                }
+                runCatching {
+                    linkAttachmentsToItem(item.shareId, item.id, item.revision)
                 }.onFailure {
                     PassLogger.w(TAG, "Link attachment error")
                     PassLogger.w(TAG, it)
-                    snackbarDispatcher(ItemAttachmentsError)
+                    snackbarDispatcher(ItemLinkAttachmentsError)
                 }
             }
             PassLogger.i(TAG, "Credit card successfully updated")

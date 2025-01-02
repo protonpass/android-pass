@@ -42,6 +42,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
 import proton.android.pass.data.fakes.usecases.attachments.FakeLinkAttachmentsToItem
+import proton.android.pass.data.fakes.usecases.attachments.FakeRenameAttachments
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.work.FakeWorkerLauncher
@@ -106,7 +107,8 @@ class UpdateLoginViewModelTest {
             userPreferencesRepository = TestPreferenceRepository(),
             workerLauncher = FakeWorkerLauncher(),
             attachmentsHandler = proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler(),
-            linkAttachmentsToItem = FakeLinkAttachmentsToItem()
+            linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
+            renameAttachments = FakeRenameAttachments()
         )
     }
 

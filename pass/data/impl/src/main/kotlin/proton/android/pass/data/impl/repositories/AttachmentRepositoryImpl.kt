@@ -291,37 +291,41 @@ class AttachmentRepositoryImpl @Inject constructor(
         attachmentId: AttachmentId,
         title: String
     ) {
-        val attachment = local.getAttachmentById(shareId, itemId, attachmentId)
-            ?: throw IllegalStateException("Attachment not found")
-        val updatedMetadataEncrypted = encryptionContextProvider.withEncryptionContextSuspendable {
-            val decrypted = decrypt(attachment.reencryptedMetadata)
-            val metadata = FileV1.FileMetadata.parseFrom(decrypted)
+        withContext(appDispatchers.io) {
+            val attachment = local.getAttachmentById(shareId, itemId, attachmentId)
+                ?: throw IllegalStateException("Attachment not found")
+            val (decryptedFileKey, decryptedMetadata) =
+                encryptionContextProvider.withEncryptionContextSuspendable {
+                    decrypt(attachment.reencryptedKey) to decrypt(attachment.reencryptedMetadata)
+                }
+            val metadata = FileV1.FileMetadata.parseFrom(decryptedMetadata)
             val updatedMetadata = metadata.toBuilder().setName(title).build()
-            encrypt(updatedMetadata.toByteArray())
+            val encryptedMetadata = encryptionContextProvider.withEncryptionContextSuspendable(
+                EncryptionKey(decryptedFileKey)
+            ) { encrypt(updatedMetadata.toByteArray(), EncryptionTag.FileData) }
+            val encodedMetadata = Base64.encodeBase64String(encryptedMetadata.array)
+
+            remote.updateFileMetadata(
+                userId = userId,
+                shareId = shareId,
+                itemId = itemId,
+                attachmentId = attachmentId,
+                metadata = encodedMetadata
+            )
+            val encryptedItemKey = localItemDataSource.getById(shareId, itemId)?.encryptedKey
+                ?: throw ItemKeyNotAvailableError()
+
+            val (reencryptedMetadatas, reencryptedKeys) = reencryptAttachment(
+                encryptedItemKey = encryptedItemKey,
+                encryptedMetadatas = listOf(encodedMetadata),
+                encryptedKeys = listOf(attachment.key)
+            )
+            val entity = attachment.copy(
+                reencryptedKey = reencryptedKeys.first().value,
+                reencryptedMetadata = reencryptedMetadatas.first().value
+            )
+            local.updateAttachment(entity)
         }
-        val updatedMetadataEncoded = Base64.encodeBase64String(updatedMetadataEncrypted.array)
-        val updatedAttachment = remote.updateFileMetadata(
-            userId = userId,
-            shareId = shareId,
-            itemId = itemId,
-            attachmentId = attachmentId,
-            metadata = updatedMetadataEncoded
-        )
-        val encryptedItemKey = localItemDataSource.getById(shareId, itemId)?.encryptedKey
-            ?: throw ItemKeyNotAvailableError()
-        val (reencryptedMetadatas, reencryptedKeys) = reencryptAttachment(
-            encryptedItemKey,
-            listOf(updatedAttachment.metadata),
-            listOf(updatedAttachment.fileKey)
-        )
-        val attachmentEntity = updatedAttachment.toEntity(
-            userId = userId,
-            shareId = shareId,
-            itemId = itemId,
-            reencryptedKey = reencryptedKeys.first().value,
-            reencryptedMetadata = reencryptedMetadatas.first().value
-        )
-        local.updateAttachment(attachmentEntity)
     }
 
     override suspend fun restoreOldFile(
@@ -330,31 +334,35 @@ class AttachmentRepositoryImpl @Inject constructor(
         itemId: ItemId,
         attachmentId: AttachmentId
     ) {
-        val attachment: AttachmentEntity = local.getAttachmentById(shareId, itemId, attachmentId)
-            ?: throw IllegalStateException("Attachment not found")
-        val item: ItemEntity = localItemDataSource.getById(shareId, itemId)
-            ?: throw IllegalStateException("Item not found")
+        withContext(appDispatchers.io) {
 
-        val (itemResponse, fileResponse) = remote.restoreOldFile(
-            userId = userId,
-            shareId = shareId,
-            itemId = itemId,
-            attachmentId = AttachmentId(attachment.id),
-            itemKeyRotation = attachment.itemKeyRotation,
-            fileKey = attachment.key
-        )
-        val modifiedItem = item.copy(
-            modifyTime = itemResponse.modifyTime
-        )
-        localItemDataSource.upsertItem(modifiedItem)
-        val entity = fileResponse.toEntity(
-            userId = userId,
-            shareId = shareId,
-            itemId = itemId,
-            reencryptedKey = attachment.key.toEncryptedByteArray(),
-            reencryptedMetadata = attachment.reencryptedMetadata
-        )
-        local.updateAttachment(entity)
+            val attachment: AttachmentEntity =
+                local.getAttachmentById(shareId, itemId, attachmentId)
+                    ?: throw IllegalStateException("Attachment not found")
+            val item: ItemEntity = localItemDataSource.getById(shareId, itemId)
+                ?: throw IllegalStateException("Item not found")
+
+            val (itemResponse, fileResponse) = remote.restoreOldFile(
+                userId = userId,
+                shareId = shareId,
+                itemId = itemId,
+                attachmentId = AttachmentId(attachment.id),
+                itemKeyRotation = attachment.itemKeyRotation,
+                fileKey = attachment.key
+            )
+            val modifiedItem = item.copy(
+                modifyTime = itemResponse.modifyTime
+            )
+            localItemDataSource.upsertItem(modifiedItem)
+            val entity = fileResponse.toEntity(
+                userId = userId,
+                shareId = shareId,
+                itemId = itemId,
+                reencryptedKey = attachment.key.toEncryptedByteArray(),
+                reencryptedMetadata = attachment.reencryptedMetadata
+            )
+            local.updateAttachment(entity)
+        }
     }
 
     override fun observeActiveAttachments(
@@ -369,6 +377,7 @@ class AttachmentRepositoryImpl @Inject constructor(
             coroutineScope {
                 launch {
                     runCatching { refreshActiveAttachments(userId, shareId, itemId) }
+                        .onSuccess { PassLogger.i(TAG, "Refreshed attachments") }
                         .onFailure {
                             PassLogger.i(
                                 TAG,
@@ -392,6 +401,7 @@ class AttachmentRepositoryImpl @Inject constructor(
             coroutineScope {
                 launch {
                     runCatching { refreshAttachmentsForAllRevisions(userId, shareId, itemId) }
+                        .onSuccess { PassLogger.i(TAG, "Refreshed attachments") }
                         .onFailure {
                             PassLogger.i(
                                 TAG,

@@ -33,7 +33,7 @@ import proton.android.pass.domain.items.ItemCategory
 
 interface ItemDetailsHandler {
 
-    fun observeItemDetails(item: Item): Flow<ItemDetailState>
+    fun observeItemDetails(item: Item, source: ItemDetailsSource): Flow<ItemDetailState>
 
     suspend fun onAttachmentOpen(contextHolder: ClassHolder<Context>, attachment: Attachment)
 
@@ -57,4 +57,9 @@ interface ItemDetailsHandler {
         otherItemContents: ItemContents
     ): ItemDiffs
 
+}
+
+enum class ItemDetailsSource {
+    DETAIL,
+    REVISION
 }

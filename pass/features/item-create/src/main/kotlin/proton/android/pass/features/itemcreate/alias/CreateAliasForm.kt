@@ -45,6 +45,7 @@ import proton.android.pass.composecomponents.impl.form.SenderNameSection
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.alias.AliasContentUiEvent.OnAttachmentEvent
@@ -169,7 +170,8 @@ internal fun CreateAliasForm(
             AttachmentSection(
                 attachmentsState = attachmentsState,
                 isDetail = false,
-                colors = passItemColors(ItemCategory.Alias),
+                itemColors = passItemColors(ItemCategory.Alias),
+                itemDiffs = ItemDiffs.None,
                 onEvent = { onEvent(OnAttachmentEvent(it)) }
             )
         }

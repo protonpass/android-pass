@@ -31,6 +31,7 @@ import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.attachments.Attachment
 
 abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
 
@@ -47,7 +48,12 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         hiddenState: HiddenState
     ): ItemContents
 
-    abstract fun calculateItemDiffs(baseItemContents: ITEM_CONTENTS, otherItemContents: ITEM_CONTENTS): ItemDiffs
+    abstract fun calculateItemDiffs(
+        baseItemContents: ITEM_CONTENTS,
+        otherItemContents: ITEM_CONTENTS,
+        baseAttachments: List<Attachment>,
+        otherAttachments: List<Attachment>
+    ): ItemDiffs
 
     protected fun calculateItemDiffTypes(
         encryptionContext: EncryptionContext,
@@ -125,22 +131,19 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         calculateItemDiffType(baseItemFieldValue, otherItemFieldValue)
     }
 
-    protected fun calculateItemDiffType(baseItemFieldValue: String, otherItemFieldValue: String): ItemDiffType = when {
-        baseItemFieldValue.isEmpty() && otherItemFieldValue.isEmpty() -> {
-            ItemDiffType.None
-        }
-
-        baseItemFieldValue.isNotEmpty() && otherItemFieldValue.isNotEmpty() -> {
+    protected fun calculateItemDiffType(
+        baseItemFieldValue: String,
+        otherItemFieldValue: String
+    ): ItemDiffType = when {
+        baseItemFieldValue.isEmpty() && otherItemFieldValue.isEmpty() -> ItemDiffType.None
+        baseItemFieldValue.isNotEmpty() && otherItemFieldValue.isNotEmpty() ->
             if (baseItemFieldValue == otherItemFieldValue) {
                 ItemDiffType.None
             } else {
                 ItemDiffType.Content
             }
-        }
 
-        else -> {
-            ItemDiffType.Field
-        }
+        else -> ItemDiffType.Field
     }
 
     protected fun toggleHiddenCustomField(

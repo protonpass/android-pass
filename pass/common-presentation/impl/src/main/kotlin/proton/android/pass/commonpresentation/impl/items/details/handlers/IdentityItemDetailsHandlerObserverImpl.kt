@@ -34,6 +34,7 @@ import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.attachments.Attachment
 import javax.inject.Inject
 
 class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
@@ -168,7 +169,9 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
     @Suppress("LongMethod")
     override fun calculateItemDiffs(
         baseItemContents: ItemContents.Identity,
-        otherItemContents: ItemContents.Identity
+        otherItemContents: ItemContents.Identity,
+        baseAttachments: List<Attachment>,
+        otherAttachments: List<Attachment>
     ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
         ItemDiffs.Identity(
             title = calculateItemDiffType(

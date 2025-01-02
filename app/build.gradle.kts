@@ -205,7 +205,7 @@ android {
             dimension = "env"
             applicationIdSuffix = ".black"
 
-            val protonHost = customEnvUrl ?: "bacon.proton.black"
+            val protonHost = customEnvUrl ?: "proton.black"
             protonEnvironment {
                 host = protonHost
 

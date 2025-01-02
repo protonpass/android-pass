@@ -16,12 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain
+package proton.android.pass.data.api.usecases.attachments
 
-enum class ItemFlag(val value: Int) {
-    SkipHealthCheck(value = 1 shl 0),
-    EmailBreached(value = 1 shl 1),
-    AliasDisabled(value = 1 shl 2),
-    HasAttachments(value = 1 shl 3),
-    HasHadAttachments(value = 1 shl 4)
+import kotlinx.coroutines.flow.Flow
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.Attachment
+
+interface ObserveAllItemRevisionAttachments {
+    operator fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<Attachment>>
 }

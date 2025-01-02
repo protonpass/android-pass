@@ -68,7 +68,8 @@ internal fun PassNoteItemDetailSections(
             AttachmentSection(
                 attachmentsState = attachmentsState,
                 isDetail = true,
-                colors = itemColors,
+                itemColors = itemColors,
+                itemDiffs = itemDiffs,
                 onEvent = { onEvent(OnAttachmentEvent(it)) }
             )
         }

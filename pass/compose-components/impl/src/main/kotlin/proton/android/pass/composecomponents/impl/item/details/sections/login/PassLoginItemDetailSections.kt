@@ -126,8 +126,9 @@ internal fun PassLoginItemDetailSections(
             AttachmentSection(
                 attachmentsState = attachmentsState,
                 isDetail = true,
-                colors = itemColors,
-                onEvent = { onEvent(PassItemDetailsUiEvent.OnAttachmentEvent(it)) }
+                itemColors = itemColors,
+                onEvent = { onEvent(PassItemDetailsUiEvent.OnAttachmentEvent(it)) },
+                itemDiffs = itemDiffs
             )
         }
 

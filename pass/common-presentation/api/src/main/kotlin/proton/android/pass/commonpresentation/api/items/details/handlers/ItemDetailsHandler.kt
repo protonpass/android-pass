@@ -54,7 +54,9 @@ interface ItemDetailsHandler {
     fun updateItemDetailsDiffs(
         itemCategory: ItemCategory,
         baseItemContents: ItemContents,
-        otherItemContents: ItemContents
+        otherItemContents: ItemContents,
+        baseAttachments: List<Attachment>,
+        otherAttachments: List<Attachment>
     ): ItemDiffs
 
 }

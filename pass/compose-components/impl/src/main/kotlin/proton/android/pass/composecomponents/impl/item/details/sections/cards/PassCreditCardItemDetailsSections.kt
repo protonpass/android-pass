@@ -78,12 +78,14 @@ internal fun PassCreditCardItemDetailsSections(
                 itemDiffs = itemDiffs
             )
         }
+
         if (shouldDisplayFileAttachments) {
             AttachmentSection(
                 attachmentsState = attachmentsState,
                 isDetail = true,
-                colors = itemColors,
-                onEvent = { onEvent(OnAttachmentEvent(it)) }
+                itemColors = itemColors,
+                onEvent = { onEvent(OnAttachmentEvent(it)) },
+                itemDiffs = itemDiffs
             )
         }
 

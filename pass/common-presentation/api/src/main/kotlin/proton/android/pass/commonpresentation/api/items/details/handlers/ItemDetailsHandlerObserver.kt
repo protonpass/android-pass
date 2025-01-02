@@ -131,10 +131,7 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         calculateItemDiffType(baseItemFieldValue, otherItemFieldValue)
     }
 
-    protected fun calculateItemDiffType(
-        baseItemFieldValue: String,
-        otherItemFieldValue: String
-    ): ItemDiffType = when {
+    protected fun calculateItemDiffType(baseItemFieldValue: String, otherItemFieldValue: String): ItemDiffType = when {
         baseItemFieldValue.isEmpty() && otherItemFieldValue.isEmpty() -> ItemDiffType.None
         baseItemFieldValue.isNotEmpty() && otherItemFieldValue.isNotEmpty() ->
             if (baseItemFieldValue == otherItemFieldValue) {

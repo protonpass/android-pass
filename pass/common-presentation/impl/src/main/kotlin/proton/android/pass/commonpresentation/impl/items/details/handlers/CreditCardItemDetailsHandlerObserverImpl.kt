@@ -34,6 +34,7 @@ import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.attachments.Attachment
 import javax.inject.Inject
 
 class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
@@ -97,7 +98,9 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
 
     override fun calculateItemDiffs(
         baseItemContents: ItemContents.CreditCard,
-        otherItemContents: ItemContents.CreditCard
+        otherItemContents: ItemContents.CreditCard,
+        baseAttachments: List<Attachment>,
+        otherAttachments: List<Attachment>
     ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
         ItemDiffs.CreditCard(
             title = calculateItemDiffType(

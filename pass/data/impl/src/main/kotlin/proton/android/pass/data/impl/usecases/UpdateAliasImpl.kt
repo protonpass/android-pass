@@ -28,6 +28,7 @@ import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateAliasItemContent
+import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -37,6 +38,7 @@ import javax.inject.Inject
 class UpdateAliasImpl @Inject constructor(
     private val aliasRepository: AliasRepository,
     private val itemRepository: ItemRepository,
+    private val renameAttachments: RenameAttachments,
     private val getShareById: GetShareById
 ) : UpdateAlias {
 

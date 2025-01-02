@@ -44,7 +44,7 @@ import proton.android.pass.common.api.FileSizeUtil
 import proton.android.pass.common.api.SpecialCharacters
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.icon.Icon
@@ -141,8 +141,8 @@ fun AttachmentRow(
 
 @Preview
 @Composable
-fun AttachmentRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
+fun AttachmentRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+    PassTheme(isDark = input.first) {
         Surface {
             val seconds = 1_630_000_000L
             AttachmentRow(
@@ -153,7 +153,7 @@ fun AttachmentRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: 
                 hasOptions = true,
                 isLoading = false,
                 isEnabled = true,
-                isError = true,
+                isError = input.second,
                 onAttachmentOpen = {},
                 onRetryClick = {},
                 onOptionsClick = {}

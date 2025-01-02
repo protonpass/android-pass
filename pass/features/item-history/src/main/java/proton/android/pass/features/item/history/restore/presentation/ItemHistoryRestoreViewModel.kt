@@ -131,7 +131,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         currentItemContentsFlow,
         flowOf(emptyList<Attachment>()),
         flowOf(emptyList<Attachment>())
-    ) { itemCategory, baseItemContents, otherItemContents, baseAttachments, otherAttachments  ->
+    ) { itemCategory, baseItemContents, otherItemContents, baseAttachments, otherAttachments ->
         itemDetailsHandler.updateItemDetailsDiffs(
             itemCategory = itemCategory,
             baseItemContents = baseItemContents,

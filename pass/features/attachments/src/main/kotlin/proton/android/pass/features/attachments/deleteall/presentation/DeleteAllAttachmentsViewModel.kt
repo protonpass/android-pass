@@ -44,6 +44,7 @@ class DeleteAllAttachmentsViewModel @Inject constructor(
     private val attachmentIds: Set<AttachmentId> = savedStateHandleProvider.get()
         .get<Array<String>>(CommonOptionalNavArgId.AttachmentIdList.key)
         .orEmpty()
+        .flatMap { it.split(',').map(String::trim) }
         .map(::AttachmentId)
         .toSet()
 

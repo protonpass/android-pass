@@ -43,15 +43,17 @@ import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
+import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.ItemUpdate
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
-import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemAttachmentsError
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.AttachmentsInitError
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.InitError
+import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.ItemLinkAttachmentsError
+import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.ItemRenameAttachmentsError
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.ItemUpdateError
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.NoteUpdated
 import proton.android.pass.features.itemcreate.note.NoteSnackbarMessage.UpdateAppToUpdateItemError
@@ -73,6 +75,7 @@ class UpdateNoteViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val attachmentsHandler: AttachmentsHandler,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
+    private val renameAttachments: RenameAttachments,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseNoteViewModel(
@@ -148,6 +151,7 @@ class UpdateNoteViewModel @Inject constructor(
         }
     }
 
+    @Suppress("LongMethod")
     fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
         val initialItem = itemOption
         if (initialItem == None) return@launch
@@ -168,11 +172,18 @@ class UpdateNoteViewModel @Inject constructor(
                 .onSuccess { item ->
                     if (isFileAttachmentsEnabled()) {
                         runCatching {
-                            linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                            renameAttachments(item.shareId, item.id)
+                        }.onFailure {
+                            PassLogger.w(TAG, "Error renaming attachments")
+                            PassLogger.w(TAG, it)
+                            snackbarDispatcher(ItemRenameAttachmentsError)
+                        }
+                        runCatching {
+                            linkAttachmentsToItem(item.shareId, item.id, item.revision)
                         }.onFailure {
                             PassLogger.w(TAG, "Link attachment error")
                             PassLogger.w(TAG, it)
-                            snackbarDispatcher(ItemAttachmentsError)
+                            snackbarDispatcher(ItemLinkAttachmentsError)
                         }
                     }
                     isItemSavedState.update {

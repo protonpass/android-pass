@@ -58,6 +58,7 @@ import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
+import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.work.WorkerItem
@@ -82,7 +83,7 @@ import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.AttachmentsInitError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.InitError
-import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemAttachmentsError
+import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemLinkAttachmentsError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemUpdateError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.UpdateAppToUpdateItemError
 import proton.android.pass.log.api.PassLogger
@@ -95,6 +96,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
+import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemRenameAttachmentsError as ItemRenameAttachmentsError1
 
 @[HiltViewModel Suppress("LongParameterList")]
 class UpdateLoginViewModel @Inject constructor(
@@ -109,6 +111,7 @@ class UpdateLoginViewModel @Inject constructor(
     private val totpManager: TotpManager,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
+    private val renameAttachments: RenameAttachments,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
     observeCurrentUser: ObserveCurrentUser,
@@ -362,11 +365,18 @@ class UpdateLoginViewModel @Inject constructor(
         }.onSuccess { item ->
             if (isFileAttachmentsEnabled()) {
                 runCatching {
-                    linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                    renameAttachments(item.shareId, item.id)
+                }.onFailure {
+                    PassLogger.w(TAG, "Error renaming attachments")
+                    PassLogger.w(TAG, it)
+                    snackbarDispatcher(ItemRenameAttachmentsError1)
+                }
+                runCatching {
+                    linkAttachmentsToItem(item.shareId, item.id, item.revision)
                 }.onFailure {
                     PassLogger.w(TAG, "Link attachment error")
                     PassLogger.w(TAG, it)
-                    snackbarDispatcher(ItemAttachmentsError)
+                    snackbarDispatcher(ItemLinkAttachmentsError)
                 }
             }
             launchUpdateAssetLinksWorker(contents.urls.toSet())

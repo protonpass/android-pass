@@ -40,7 +40,7 @@
   <string name="create_login_init_error">Ongelma kirjautumistiedon tietojen noudossa</string>
   <string name="create_login_invalid_totp">2FA-tiedot ovat virheellisiä</string>
   <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_attachments_error">Could not add attachments to login</string>
+  <string name="login_link_attachments_error">Could not add attachments to login</string>
   <string name="login_created">Kirjautumistieto luotiin</string>
   <string name="bottomsheet_modify_alias_title">Muokkaa aliasta</string>
   <string name="bottomsheet_custom_field_type_text">Teksti</string>
@@ -66,7 +66,7 @@
   <string name="create_note_item_update_error">Muistiinpanoa ei voitu päivittää</string>
   <string name="create_note_init_error">Ongelma muistiinpanon tietojen noudossa</string>
   <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_attachments_error">Could not add attachments to note</string>
+  <string name="note_link_attachments_error">Could not add attachments to note</string>
   <string name="note_created">Muistiinpano luotiin</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Aliaksen osoite</string>
@@ -84,7 +84,7 @@
   <string name="create_alias_item_update_error">Aliasta ei voitu päivittää</string>
   <string name="create_alias_init_error">Ongelma aliaksen tietojen noudossa</string>
   <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_attachments_error">Could not add attachments to alias</string>
+  <string name="alias_link_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">Alias luotiin</string>
   <string name="cannot_retrieve_alias_options">Aliasvaihtoehtojen nouto ei onnistu</string>
   <string name="alias_mailbox_dialog_title">Ohjaa osoitteeseen</string>
@@ -111,7 +111,7 @@
   <string name="create_credit_card_item_creation_success">Maksukortti luotiin</string>
   <string name="credit_card_init_error">Ongelma noudettaessa maksukortin tietoja</string>
   <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
+  <string name="credit_card_link_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">Maksukorttia ei voitu päivittää</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Koko nimi</string>
@@ -169,7 +169,7 @@
   <string name="identity_bottomsheet_add_field">Lisää kenttä</string>
   <string name="create_identity_init_error">Ongelma noudettaessa identiteetin tietoja</string>
   <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_attachments_error">Could not add attachments to identity</string>
+  <string name="identity_link_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">Identiteettiä ei voitu luoda</string>
   <string name="create_identity_item_creation_success">Identiteetti luotiin</string>
   <string name="update_identity_item_creation_success">Identiteettiä muokattiin</string>

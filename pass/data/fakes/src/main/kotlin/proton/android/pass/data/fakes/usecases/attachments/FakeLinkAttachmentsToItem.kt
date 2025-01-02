@@ -27,8 +27,8 @@ import javax.inject.Singleton
 @Singleton
 class FakeLinkAttachmentsToItem @Inject constructor() : LinkAttachmentsToItem {
     override suspend fun invoke(
-        itemId: ItemId,
         shareId: ShareId,
+        itemId: ItemId,
         revision: Long
     ) {
         // no-op

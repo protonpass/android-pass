@@ -40,7 +40,7 @@
   <string name="create_login_init_error">Problema al recuperar los detalles de inicio de sesión</string>
   <string name="create_login_invalid_totp">Los contenidos de 2FA no son válidos.</string>
   <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_attachments_error">Could not add attachments to login</string>
+  <string name="login_link_attachments_error">Could not add attachments to login</string>
   <string name="login_created">Inicio de sesión creado</string>
   <string name="bottomsheet_modify_alias_title">Modificar alias</string>
   <string name="bottomsheet_custom_field_type_text">Texto</string>
@@ -66,7 +66,7 @@
   <string name="create_note_item_update_error">No se ha podido actualizar la nota.</string>
   <string name="create_note_init_error">Problema al recuperar los detalles de la nota</string>
   <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_attachments_error">Could not add attachments to note</string>
+  <string name="note_link_attachments_error">Could not add attachments to note</string>
   <string name="note_created">Nota creada</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Dirección del alias</string>
@@ -84,7 +84,7 @@
   <string name="create_alias_item_update_error">No se ha podido actualizar el alias.</string>
   <string name="create_alias_init_error">Problema al recuperar los detalles del alias</string>
   <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_attachments_error">Could not add attachments to alias</string>
+  <string name="alias_link_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">Alias creado</string>
   <string name="cannot_retrieve_alias_options">No se pueden recuperar las opciones del alias.</string>
   <string name="alias_mailbox_dialog_title">Reenviar a</string>
@@ -111,7 +111,7 @@
   <string name="create_credit_card_item_creation_success">Se ha creado la tarjeta de crédito.</string>
   <string name="credit_card_init_error">Problema al recuperar los detalles de la tarjeta de crédito</string>
   <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
+  <string name="credit_card_link_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">No se ha podido actualizar la tarjeta de crédito.</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Nombre completo</string>
@@ -169,7 +169,7 @@
   <string name="identity_bottomsheet_add_field">Añadir un campo</string>
   <string name="create_identity_init_error">Problema al recuperar los detalles de la identidad</string>
   <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_attachments_error">Could not add attachments to identity</string>
+  <string name="identity_link_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">No se ha podido crear la identidad.</string>
   <string name="create_identity_item_creation_success">Se ha creado la identidad.</string>
   <string name="update_identity_item_creation_success">Se ha actualizado la identidad.</string>

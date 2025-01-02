@@ -40,7 +40,7 @@
   <string name="create_login_init_error">Terdapat masalah dalam memperoleh rincian entri masuk</string>
   <string name="create_login_invalid_totp">Konten 2FA tidak valid</string>
   <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_attachments_error">Could not add attachments to login</string>
+  <string name="login_link_attachments_error">Could not add attachments to login</string>
   <string name="login_created">Entri masuk dihasilkan</string>
   <string name="bottomsheet_modify_alias_title">Sesuaikan alias</string>
   <string name="bottomsheet_custom_field_type_text">Teks</string>
@@ -66,7 +66,7 @@
   <string name="create_note_item_update_error">Catatan tidak dapat diperbarui</string>
   <string name="create_note_init_error">Terdapat masalah dalam memperoleh rincian catatan</string>
   <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_attachments_error">Could not add attachments to note</string>
+  <string name="note_link_attachments_error">Could not add attachments to note</string>
   <string name="note_created">Catatan dibuat</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Alamat alias</string>
@@ -84,7 +84,7 @@
   <string name="create_alias_item_update_error">Alias tidak dapat diperbarui</string>
   <string name="create_alias_init_error">Terdapat masalah dalam memperoleh rincian alias</string>
   <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_attachments_error">Could not add attachments to alias</string>
+  <string name="alias_link_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">Alias dibuat</string>
   <string name="cannot_retrieve_alias_options">Pengaturan alias tidak dapat diperoleh</string>
   <string name="alias_mailbox_dialog_title">Teruskan ke</string>
@@ -111,7 +111,7 @@
   <string name="create_credit_card_item_creation_success">Kartu kredit dibuat</string>
   <string name="credit_card_init_error">Terdapat masalah dalam memperoleh rincian kartu kredit</string>
   <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
+  <string name="credit_card_link_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">Tidak dapat memperbarui kartu kredit</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Nama lengkap</string>
@@ -169,7 +169,7 @@
   <string name="identity_bottomsheet_add_field">Tambah kolom</string>
   <string name="create_identity_init_error">Terdapat masalah dalam memperoleh rincian identitas</string>
   <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_attachments_error">Could not add attachments to identity</string>
+  <string name="identity_link_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">Identitas tidak dapat dibuat</string>
   <string name="create_identity_item_creation_success">Identitas telah dibuat</string>
   <string name="update_identity_item_creation_success">Identitas diperbarui</string>

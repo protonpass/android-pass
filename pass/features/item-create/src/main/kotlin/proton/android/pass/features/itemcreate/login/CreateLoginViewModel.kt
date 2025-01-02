@@ -89,8 +89,8 @@ import proton.android.pass.features.itemcreate.common.getShareUiStateFlow
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.AliasRateLimited
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.CannotCreateMoreAliases
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.EmailNotValidated
-import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemAttachmentsError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemCreationError
+import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.ItemLinkAttachmentsError
 import proton.android.pass.features.itemcreate.login.LoginSnackbarMessages.LoginCreated
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
@@ -403,12 +403,12 @@ class CreateLoginViewModel @Inject constructor(
             .onSuccess { item ->
                 runCatching {
                     if (isFileAttachmentsEnabled()) {
-                        linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                        linkAttachmentsToItem(item.shareId, item.id, item.revision)
                     }
                 }.onFailure {
                     PassLogger.w(TAG, "Link attachment error")
                     PassLogger.w(TAG, it)
-                    snackbarDispatcher(ItemAttachmentsError)
+                    snackbarDispatcher(ItemLinkAttachmentsError)
                 }
                 launchUpdateAssetLinksWorker(contents.urls.toSet())
                 inAppReviewTriggerMetrics.incrementItemCreatedCount()
@@ -459,12 +459,12 @@ class CreateLoginViewModel @Inject constructor(
             .onSuccess { item ->
                 runCatching {
                     if (isFileAttachmentsEnabled()) {
-                        linkAttachmentsToItem(item.id, item.shareId, item.revision)
+                        linkAttachmentsToItem(item.shareId, item.id, item.revision)
                     }
                 }.onFailure {
                     PassLogger.w(TAG, "Link attachment error")
                     PassLogger.w(TAG, it)
-                    snackbarDispatcher(ItemAttachmentsError)
+                    snackbarDispatcher(ItemLinkAttachmentsError)
                 }
 
                 inAppReviewTriggerMetrics.incrementItemCreatedCount()

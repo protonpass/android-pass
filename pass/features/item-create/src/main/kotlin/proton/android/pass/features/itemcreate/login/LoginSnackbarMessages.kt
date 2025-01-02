@@ -39,5 +39,6 @@ enum class LoginSnackbarMessages(
     InvalidTotpError(R.string.create_login_invalid_totp, SnackbarType.ERROR),
     UpdateAppToUpdateItemError(R.string.snackbar_update_app_to_update_item, SnackbarType.ERROR),
     AttachmentsInitError(R.string.update_login_attachments_init_error, SnackbarType.ERROR),
-    ItemAttachmentsError(R.string.login_attachments_error, SnackbarType.ERROR)
+    ItemLinkAttachmentsError(R.string.login_link_attachments_error, SnackbarType.ERROR),
+    ItemRenameAttachmentsError(R.string.login_rename_attachments_error, SnackbarType.ERROR)
 }

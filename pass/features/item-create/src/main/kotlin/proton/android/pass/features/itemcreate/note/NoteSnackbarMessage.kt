@@ -36,5 +36,5 @@ enum class NoteSnackbarMessage(
     UpdateAppToUpdateItemError(R.string.snackbar_update_app_to_update_item, SnackbarType.ERROR),
     AttachmentsInitError(R.string.update_note_attachments_init_error, SnackbarType.ERROR),
     ItemLinkAttachmentsError(R.string.note_link_attachments_error, SnackbarType.ERROR),
-    ItemRenameAttachmentsError(R.string.note_link_attachments_error, SnackbarType.ERROR)
+    ItemRenameAttachmentsError(R.string.note_rename_attachments_error, SnackbarType.ERROR)
 }

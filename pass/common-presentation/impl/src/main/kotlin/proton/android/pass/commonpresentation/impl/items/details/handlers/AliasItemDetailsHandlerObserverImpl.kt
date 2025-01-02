@@ -37,6 +37,7 @@ import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Share
+import proton.android.pass.domain.attachments.Attachment
 import javax.inject.Inject
 
 class AliasItemDetailsHandlerObserverImpl @Inject constructor(
@@ -98,7 +99,9 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
 
     override fun calculateItemDiffs(
         baseItemContents: ItemContents.Alias,
-        otherItemContents: ItemContents.Alias
+        otherItemContents: ItemContents.Alias,
+        baseAttachments: List<Attachment>,
+        otherAttachments: List<Attachment>
     ): ItemDiffs = ItemDiffs.Alias(
         title = calculateItemDiffType(
             baseItemFieldValue = baseItemContents.title,

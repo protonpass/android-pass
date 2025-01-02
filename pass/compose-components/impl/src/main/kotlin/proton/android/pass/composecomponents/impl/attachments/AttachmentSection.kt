@@ -45,6 +45,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
 
 @Composable
@@ -52,7 +53,8 @@ fun AttachmentSection(
     modifier: Modifier = Modifier,
     attachmentsState: AttachmentsState,
     isDetail: Boolean,
-    colors: PassItemColors,
+    itemColors: PassItemColors,
+    itemDiffs: ItemDiffs,
     onEvent: (AttachmentContentEvent) -> Unit
 ) {
     if (!attachmentsState.hasAnyAttachment && isDetail) return
@@ -72,7 +74,7 @@ fun AttachmentSection(
                 top = Spacing.medium,
                 end = Spacing.medium
             ),
-            colors = colors,
+            colors = itemColors,
             isEnabled = attachmentsState.isEnabled,
             fileAmount = attachmentsState.size,
             isDetail = isDetail,
@@ -169,7 +171,7 @@ fun AttachmentSection(
                     end = Spacing.medium,
                     bottom = Spacing.medium
                 ),
-                colors = colors,
+                colors = itemColors,
                 isEnabled = attachmentsState.isEnabled,
                 onClick = { onEvent(OnAddAttachment) }
             )
@@ -189,9 +191,10 @@ fun AttachmentSectionPreview(
     PassTheme(isDark = input.first) {
         Surface {
             AttachmentSection(
-                colors = passItemColors(itemCategory = ItemCategory.Login),
                 attachmentsState = input.second.second,
                 isDetail = input.second.first,
+                itemColors = passItemColors(itemCategory = ItemCategory.Login),
+                itemDiffs = ItemDiffs.None,
                 onEvent = {}
             )
         }

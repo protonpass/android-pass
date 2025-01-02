@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -54,6 +55,7 @@ import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.features.item.history.navigation.ItemHistoryRevisionNavArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -127,8 +129,17 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         revisionItemFlow.map { revisionItem -> revisionItem.itemType.category },
         revisionItemContentsFlow,
         currentItemContentsFlow,
-        itemDetailsHandler::updateItemDetailsDiffs
-    )
+        flowOf(emptyList<Attachment>()),
+        flowOf(emptyList<Attachment>())
+    ) { itemCategory, baseItemContents, otherItemContents, baseAttachments, otherAttachments  ->
+        itemDetailsHandler.updateItemDetailsDiffs(
+            itemCategory = itemCategory,
+            baseItemContents = baseItemContents,
+            otherItemContents = otherItemContents,
+            baseAttachments = baseAttachments,
+            otherAttachments = otherAttachments
+        )
+    }
 
     private val revisionItemContentsUpdateOptionFlow = MutableStateFlow<Option<ItemContents>>(None)
 
@@ -147,8 +158,17 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         currentItemFlow.map { currentItem -> currentItem.itemType.category },
         currentItemContentsFlow,
         revisionItemContentsFlow,
-        itemDetailsHandler::updateItemDetailsDiffs
-    )
+        flowOf(emptyList<Attachment>()),
+        flowOf(emptyList<Attachment>())
+    ) { itemCategory, baseItemContents, otherItemContents, baseAttachments, otherAttachments ->
+        itemDetailsHandler.updateItemDetailsDiffs(
+            itemCategory = itemCategory,
+            baseItemContents = baseItemContents,
+            otherItemContents = otherItemContents,
+            baseAttachments = baseAttachments,
+            otherAttachments = otherAttachments
+        )
+    }
 
     private val currentItemContentsUpdateOptionFlow = MutableStateFlow<Option<ItemContents>>(None)
 

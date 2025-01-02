@@ -363,7 +363,7 @@ open class CreateAliasViewModel @Inject constructor(
                 .onFailure { onCreateAliasError(it) }
                 .onSuccess { item ->
                     runCatching {
-                        if (baseAliasUiState.value.isFileAttachmentEnabled) {
+                        if (isFileAttachmentsEnabled()) {
                             linkAttachmentsToItem(item.id, item.shareId, item.revision)
                         }
                     }.onFailure {

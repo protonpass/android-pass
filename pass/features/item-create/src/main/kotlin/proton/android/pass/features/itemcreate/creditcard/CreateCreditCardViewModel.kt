@@ -152,7 +152,7 @@ class CreateCreditCardViewModel @Inject constructor(
                 }
                 .onSuccess { item ->
                     runCatching {
-                        if (baseState.value.isFileAttachmentsEnabled) {
+                        if (isFileAttachmentsEnabled()) {
                             linkAttachmentsToItem(item.id, item.shareId, item.revision)
                         }
                     }.onFailure {

@@ -41,8 +41,8 @@ class LinkAttachmentsToItemImpl @Inject constructor(
 ) : LinkAttachmentsToItem {
 
     override suspend fun invoke(
-        itemId: ItemId,
         shareId: ShareId,
+        itemId: ItemId,
         revision: Long
     ) {
         val toLink = pendingAttachmentLinkRepository.getAllToLink()

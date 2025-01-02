@@ -40,7 +40,7 @@
   <string name="create_login_init_error">로그인 정보를 검색하는 데 문제가 있습니다.</string>
   <string name="create_login_invalid_totp">2단계 인증값이 유효하지 않습니다</string>
   <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_attachments_error">Could not add attachments to login</string>
+  <string name="login_link_attachments_error">Could not add attachments to login</string>
   <string name="login_created">로그인 생성됨</string>
   <string name="bottomsheet_modify_alias_title">별칭 수정</string>
   <string name="bottomsheet_custom_field_type_text">텍스트</string>
@@ -66,7 +66,7 @@
   <string name="create_note_item_update_error">메모 업데이트 오류</string>
   <string name="create_note_init_error">메모 정보를 검색하는 데 문제가 있습니다.</string>
   <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_attachments_error">Could not add attachments to note</string>
+  <string name="note_link_attachments_error">Could not add attachments to note</string>
   <string name="note_created">메모 생성됨</string>
   <!-- Create Alias -->
   <string name="field_alias_title">별칭 주소</string>
@@ -84,7 +84,7 @@
   <string name="create_alias_item_update_error">별칭을 업데이트할 수 없습니다.</string>
   <string name="create_alias_init_error">별칭 정보를 검색하는 데 문제가 있습니다.</string>
   <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_attachments_error">Could not add attachments to alias</string>
+  <string name="alias_link_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">별칭을 생성했습니다.</string>
   <string name="cannot_retrieve_alias_options">별칭 옵션을 수신할 수 없음</string>
   <string name="alias_mailbox_dialog_title">다음으로 전달:</string>
@@ -111,7 +111,7 @@
   <string name="create_credit_card_item_creation_success">신용 카드 생성됨.</string>
   <string name="credit_card_init_error">신용 카드 정보를 검색하는 데 문제가 있습니다.</string>
   <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
+  <string name="credit_card_link_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">신용 카드를 업데이트할 수 없습니다.</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">이름</string>
@@ -169,7 +169,7 @@
   <string name="identity_bottomsheet_add_field">필드 추가</string>
   <string name="create_identity_init_error">신원 정보 검색하는데 실패했습니다.</string>
   <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_attachments_error">Could not add attachments to identity</string>
+  <string name="identity_link_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">신원을 만들 수 없습니다</string>
   <string name="create_identity_item_creation_success">신원을 만들었습니다</string>
   <string name="update_identity_item_creation_success">신원 업데이트됨</string>

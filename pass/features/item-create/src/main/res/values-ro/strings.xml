@@ -40,7 +40,7 @@
   <string name="create_login_init_error">Problemă preluare detalii de autentificare.</string>
   <string name="create_login_invalid_totp">Conținutul A2F nu este valid.</string>
   <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_attachments_error">Could not add attachments to login</string>
+  <string name="login_link_attachments_error">Could not add attachments to login</string>
   <string name="login_created">Autentificarea s-a creat.</string>
   <string name="bottomsheet_modify_alias_title">Modificare alias</string>
   <string name="bottomsheet_custom_field_type_text">Text</string>
@@ -66,7 +66,7 @@
   <string name="create_note_item_update_error">Nu s-a putut actualiza notița.</string>
   <string name="create_note_init_error">Problemă preluare detalii notiță.</string>
   <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_attachments_error">Could not add attachments to note</string>
+  <string name="note_link_attachments_error">Could not add attachments to note</string>
   <string name="note_created">S-a creat notița.</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Adresă alias</string>
@@ -84,7 +84,7 @@
   <string name="create_alias_item_update_error">Nu s-a putut actualiza aliasul.</string>
   <string name="create_alias_init_error">Problemă preluare detalii alias.</string>
   <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_attachments_error">Could not add attachments to alias</string>
+  <string name="alias_link_attachments_error">Could not add attachments to alias</string>
   <string name="alias_created">S-a creat aliasul.</string>
   <string name="cannot_retrieve_alias_options">Nu se pot prelua informațiile aliasului.</string>
   <string name="alias_mailbox_dialog_title">Redirecționare către</string>
@@ -111,7 +111,7 @@
   <string name="create_credit_card_item_creation_success">S-a creat cardul de credit.</string>
   <string name="credit_card_init_error">Problemă preluare detalii card de credit.</string>
   <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_attachments_error">Could not add attachments to credit card</string>
+  <string name="credit_card_link_attachments_error">Could not add attachments to credit card</string>
   <string name="credit_card_item_update_error">Nu s-a putut actualiza cardul de credit.</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Numele complet</string>
@@ -169,7 +169,7 @@
   <string name="identity_bottomsheet_add_field">Adăugare câmp</string>
   <string name="create_identity_init_error">Problemă preluare detalii identitate.</string>
   <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_attachments_error">Could not add attachments to identity</string>
+  <string name="identity_link_attachments_error">Could not add attachments to identity</string>
   <string name="create_identity_item_creation_error">Nu s-a putut crea identitatea</string>
   <string name="create_identity_item_creation_success">Identitatea s-a creat.</string>
   <string name="update_identity_item_creation_success">Identitatea s-a actualizat.</string>

@@ -33,7 +33,8 @@ internal sealed interface ItemHistoryRestoreState {
         internal val currentItemDetailState: ItemDetailState,
         internal val revisionItemDetailState: ItemDetailState,
         internal val itemRevision: ItemRevision,
-        internal val event: ItemHistoryRestoreEvent = ItemHistoryRestoreEvent.Idle
+        internal val event: ItemHistoryRestoreEvent = ItemHistoryRestoreEvent.Idle,
+        internal val isFileAttachmentEnabled: Boolean
     ) : ItemHistoryRestoreState
 
 }

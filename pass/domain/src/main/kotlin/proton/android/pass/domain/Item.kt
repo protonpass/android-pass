@@ -35,6 +35,7 @@ value class Flags(val value: Int) {
     fun isEmailBreached(): Boolean = value.hasFlag(ItemFlag.EmailBreached.value)
     fun isAliasDisabled(): Boolean = value.hasFlag(ItemFlag.AliasDisabled.value)
     fun hasAttachments(): Boolean = value.hasFlag(ItemFlag.HasAttachments.value)
+    fun hasHadAttachments(): Boolean = value.hasFlag(ItemFlag.HasHadAttachments.value)
 }
 
 data class Item(
@@ -65,6 +66,7 @@ data class Item(
     val hasSkippedHealthCheck: Boolean = flags.hasSkippedHealthCheck()
     val isEmailBreached: Boolean = flags.isEmailBreached()
     val hasAttachments: Boolean = flags.hasAttachments()
+    val hasHadAttachments: Boolean = flags.hasHadAttachments()
 }
 
 data class ItemEncrypted(

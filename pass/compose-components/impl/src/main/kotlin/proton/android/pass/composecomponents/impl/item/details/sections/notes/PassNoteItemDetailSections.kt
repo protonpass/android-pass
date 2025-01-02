@@ -64,6 +64,15 @@ internal fun PassNoteItemDetailSections(
             itemDiffs = itemDiffs
         )
 
+        if (shouldDisplayFileAttachments) {
+            AttachmentSection(
+                attachmentsState = attachmentsState,
+                isDetail = true,
+                colors = itemColors,
+                onEvent = { onEvent(OnAttachmentEvent(it)) }
+            )
+        }
+
         if (shouldDisplayItemHistorySection) {
             PassItemDetailsHistorySection(
                 lastAutofillAtOption = lastAutofillOption,
@@ -73,15 +82,6 @@ internal fun PassNoteItemDetailSections(
                 itemColors = itemColors,
                 onViewItemHistoryClicked = { onEvent(PassItemDetailsUiEvent.OnViewItemHistoryClick) },
                 shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
-            )
-        }
-
-        if (shouldDisplayFileAttachments) {
-            AttachmentSection(
-                attachmentsState = attachmentsState,
-                isDetail = true,
-                colors = itemColors,
-                onEvent = { onEvent(OnAttachmentEvent(it)) }
             )
         }
 

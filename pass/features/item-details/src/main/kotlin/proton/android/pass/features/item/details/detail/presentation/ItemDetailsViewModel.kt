@@ -40,6 +40,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
+import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsSource
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -95,7 +96,7 @@ class ItemDetailsViewModel @Inject constructor(
     private val itemDetailsStateFlow = itemFlow.flatMapLatest { item ->
         combine(
             itemContentsUpdateOptionFlow,
-            itemDetailsHandler.observeItemDetails(item)
+            itemDetailsHandler.observeItemDetails(item, ItemDetailsSource.DETAIL)
         ) { itemContentsUpdateOption, itemDetailState ->
             when (itemContentsUpdateOption) {
                 None -> itemDetailState

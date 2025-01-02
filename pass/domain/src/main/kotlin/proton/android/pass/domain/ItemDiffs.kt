@@ -30,20 +30,25 @@ sealed interface ItemDiffs {
 
     val note: ItemDiffType
 
+    val attachments: ItemDiffType
+
     data object None : ItemDiffs {
         override val title: ItemDiffType = ItemDiffType.None
         override val note: ItemDiffType = ItemDiffType.None
+        override val attachments: ItemDiffType = ItemDiffType.None
     }
 
     data class Alias(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val attachments: ItemDiffType = ItemDiffType.None,
         val aliasEmail: ItemDiffType = ItemDiffType.None
     ) : ItemDiffs
 
     data class CreditCard(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val attachments: ItemDiffType = ItemDiffType.None,
         val cardHolder: ItemDiffType = ItemDiffType.None,
         val cardNumber: ItemDiffType = ItemDiffType.None,
         val cvv: ItemDiffType = ItemDiffType.None,
@@ -54,6 +59,7 @@ sealed interface ItemDiffs {
     data class Identity(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val attachments: ItemDiffType = ItemDiffType.None,
         val organization: ItemDiffType = ItemDiffType.None,
         val streetAddress: ItemDiffType = ItemDiffType.None,
         val floor: ItemDiffType = ItemDiffType.None,
@@ -111,12 +117,16 @@ sealed interface ItemDiffs {
     data class Login(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
+        override val attachments: ItemDiffType = ItemDiffType.None,
         val email: ItemDiffType = ItemDiffType.None,
         val username: ItemDiffType = ItemDiffType.None,
         val password: ItemDiffType = ItemDiffType.None,
         val totp: ItemDiffType = ItemDiffType.None,
         val urls: Pair<ItemDiffType, List<ItemDiffType>> = Pair(ItemDiffType.None, emptyList()),
-        val linkedApps: Pair<ItemDiffType, List<ItemDiffType>> = Pair(ItemDiffType.None, emptyList()),
+        val linkedApps: Pair<ItemDiffType, List<ItemDiffType>> = Pair(
+            ItemDiffType.None,
+            emptyList()
+        ),
         private val customFields: List<ItemDiffType> = emptyList(),
         private val passkeys: Map<String, ItemDiffType> = mapOf()
     ) : ItemDiffs {
@@ -129,12 +139,14 @@ sealed interface ItemDiffs {
 
     data class Note(
         override val title: ItemDiffType = ItemDiffType.None,
-        override val note: ItemDiffType = ItemDiffType.None
+        override val note: ItemDiffType = ItemDiffType.None,
+        override val attachments: ItemDiffType = ItemDiffType.None
     ) : ItemDiffs
 
     data class Unknown(
         override val title: ItemDiffType = ItemDiffType.None,
-        override val note: ItemDiffType = ItemDiffType.None
+        override val note: ItemDiffType = ItemDiffType.None,
+        override val attachments: ItemDiffType = ItemDiffType.None
     ) : ItemDiffs
 
 }

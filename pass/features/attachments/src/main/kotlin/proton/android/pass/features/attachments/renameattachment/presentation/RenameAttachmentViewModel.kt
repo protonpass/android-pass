@@ -36,8 +36,8 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
 import proton.android.pass.data.api.usecases.attachments.GetAttachment
-import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeRenamed
 import proton.android.pass.data.api.usecases.attachments.RenameDraftAttachment
+import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeRenamed
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
@@ -136,30 +136,34 @@ class RenameAttachmentViewModel @Inject constructor(
 
     fun onConfirm() {
         if (initialFileName != filename) {
-            viewModelScope.launch {
-                runCatching {
-                    when {
-                        attachmentId is Some ->
-                            setAttachmentToBeRenamed(
-                                attachmentId = attachmentId.value,
-                                newName = filename
-                            )
+            when {
+                attachmentId is Some -> {
+                    setAttachmentToBeRenamed(
+                        attachmentId = attachmentId.value,
+                        newName = filename
+                    )
+                    PassLogger.i(TAG, "Attachment set to be renamed")
+                    eventFlow.update { RenameAttachmentEvent.Close }
+                }
 
-                        uri is Some -> renameDraftAttachment(
+                uri is Some -> viewModelScope.launch {
+                    runCatching {
+                        renameDraftAttachment(
                             uri = uri.value,
                             newName = filename
                         )
-
-                        else -> throw IllegalStateException("Invalid state")
+                    }.onSuccess {
+                        PassLogger.i(TAG, "Draft attachment renamed")
+                        eventFlow.update { RenameAttachmentEvent.Close }
+                    }.onFailure {
+                        PassLogger.w(TAG, "Failed to rename draft attachment")
+                        PassLogger.w(TAG, it)
                     }
-                }.onSuccess {
-                    PassLogger.i(TAG, "Attachment renamed")
-                    eventFlow.update { RenameAttachmentEvent.Close }
-                }.onFailure {
-                    PassLogger.w(TAG, "Failed to rename attachment")
-                    PassLogger.w(TAG, it)
                 }
+
+                else -> throw IllegalStateException("Invalid state")
             }
+
         }
     }
 

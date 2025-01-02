@@ -49,7 +49,7 @@ class FakeDraftAttachmentRepository @Inject constructor() : DraftAttachmentRepos
 
     override fun remove(uri: URI): Boolean = true
 
-    override fun clear(): Boolean = true
+    override fun clearAll(): Boolean = true
 
     override fun contains(uri: URI): Flow<Boolean> = flowOf(true)
 }

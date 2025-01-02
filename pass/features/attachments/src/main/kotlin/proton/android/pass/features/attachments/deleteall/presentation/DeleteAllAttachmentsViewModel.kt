@@ -68,7 +68,7 @@ class DeleteAllAttachmentsViewModel @Inject constructor(
 
     fun deleteAllAttachments() {
         isLoadingState.update { IsLoadingState.Loading }
-        draftAttachmentRepository.clear()
+        draftAttachmentRepository.clearAll()
         pendingAttachmentLinkRepository.addAllToUnLink(attachmentIds)
         isLoadingState.update { IsLoadingState.NotLoading }
         eventFlow.update { DeleteAllAttachmentsEvent.Close }

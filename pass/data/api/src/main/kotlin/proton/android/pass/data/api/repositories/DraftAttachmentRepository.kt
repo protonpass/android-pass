@@ -36,7 +36,7 @@ interface DraftAttachmentRepository {
 
     fun remove(uri: URI): Boolean
 
-    fun clear(): Boolean
+    fun clearAll(): Boolean
 
     fun contains(uri: URI): Flow<Boolean>
 }

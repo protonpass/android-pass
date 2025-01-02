@@ -159,7 +159,7 @@ class CreateNoteViewModel @Inject constructor(
                     }
                     .onSuccess { item ->
                         runCatching {
-                            if (baseNoteUiState.value.isFileAttachmentsEnabled) {
+                            if (isFileAttachmentsEnabled()) {
                                 linkAttachmentsToItem(item.id, item.shareId, item.revision)
                             }
                         }.onFailure {

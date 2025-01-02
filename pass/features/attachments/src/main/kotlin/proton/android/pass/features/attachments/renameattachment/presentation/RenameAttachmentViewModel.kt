@@ -36,7 +36,8 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
 import proton.android.pass.data.api.usecases.attachments.GetAttachment
-import proton.android.pass.data.api.usecases.attachments.RenameAttachment
+import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeRenamed
+import proton.android.pass.data.api.usecases.attachments.RenameDraftAttachment
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
@@ -48,7 +49,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RenameAttachmentViewModel @Inject constructor(
-    private val renameAttachment: RenameAttachment,
+    private val setAttachmentToBeRenamed: SetAttachmentToBeRenamed,
+    private val renameDraftAttachment: RenameDraftAttachment,
     private val draftAttachmentRepository: DraftAttachmentRepository,
     private val pendingAttachmentUpdaterRepository: PendingAttachmentUpdaterRepository,
     private val getAttachment: GetAttachment,
@@ -138,12 +140,12 @@ class RenameAttachmentViewModel @Inject constructor(
                 runCatching {
                     when {
                         attachmentId is Some ->
-                            renameAttachment(
+                            setAttachmentToBeRenamed(
                                 attachmentId = attachmentId.value,
                                 newName = filename
                             )
 
-                        uri is Some -> renameAttachment(
+                        uri is Some -> renameDraftAttachment(
                             uri = uri.value,
                             newName = filename
                         )

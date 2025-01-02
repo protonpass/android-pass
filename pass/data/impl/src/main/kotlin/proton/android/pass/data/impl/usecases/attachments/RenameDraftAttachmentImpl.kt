@@ -23,21 +23,18 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
-import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
-import proton.android.pass.data.api.usecases.attachments.RenameAttachment
-import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.data.api.usecases.attachments.RenameDraftAttachment
 import proton.android.pass.domain.attachments.DraftAttachment
 import java.net.URI
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RenameAttachmentImpl @Inject constructor(
+class RenameDraftAttachmentImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val draftAttachmentRepository: DraftAttachmentRepository,
-    private val attachmentRepository: AttachmentRepository,
-    private val pendingAttachmentUpdaterRepository: PendingAttachmentUpdaterRepository
-) : RenameAttachment {
+    private val attachmentRepository: AttachmentRepository
+) : RenameDraftAttachment {
 
     override suspend fun invoke(uri: URI, newName: String) {
         when (val draftAttachment = draftAttachmentRepository.get(uri)) {
@@ -61,9 +58,5 @@ class RenameAttachmentImpl @Inject constructor(
             is DraftAttachment.Loading ->
                 throw IllegalStateException("Cannot rename attachment in state: $draftAttachment")
         }
-    }
-
-    override fun invoke(attachmentId: AttachmentId, newName: String) {
-        pendingAttachmentUpdaterRepository.putPendingRename(attachmentId, newName)
     }
 }

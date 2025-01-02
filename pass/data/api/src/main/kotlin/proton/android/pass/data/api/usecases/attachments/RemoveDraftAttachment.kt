@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,27 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.data.api.usecases.attachments
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.domain.attachments.DraftAttachment
 import java.net.URI
 
-interface DraftAttachmentRepository {
-
-    fun add(state: DraftAttachment)
-
-    fun update(state: DraftAttachment)
-
-    fun get(uri: URI): DraftAttachment
-
-    fun observeAll(): Flow<List<DraftAttachment>>
-
-    fun observeNew(): Flow<DraftAttachment>
-
-    fun remove(uri: URI): Boolean
-
-    fun clearAll(): Boolean
-
-    fun contains(uri: URI): Flow<Boolean>
+interface RemoveDraftAttachment {
+    operator fun invoke(uri: URI)
 }

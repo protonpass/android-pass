@@ -32,6 +32,8 @@ interface DraftAttachmentRepository {
 
     fun observeAll(): Flow<List<DraftAttachment>>
 
+    fun getAll(): List<DraftAttachment>
+
     fun observeNew(): Flow<DraftAttachment>
 
     fun remove(uri: URI): Boolean

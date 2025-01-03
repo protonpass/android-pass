@@ -339,7 +339,11 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                         ?.customFields
                         ?: emptyList()
                 )
-            }
+            },
+            attachments = calculateItemDiffType(
+                baseItemAttachments = baseAttachments,
+                otherItemAttachments = otherAttachments
+            )
         )
     }
 

@@ -103,6 +103,10 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
         note = calculateItemDiffType(
             baseItemFieldValue = baseItemContents.note,
             otherItemFieldValue = otherItemContents.note
+        ),
+        attachments = calculateItemDiffType(
+            baseItemAttachments = baseAttachments,
+            otherItemAttachments = otherAttachments
         )
     )
 

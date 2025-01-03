@@ -132,6 +132,10 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
             expirationDate = calculateItemDiffType(
                 baseItemFieldValue = baseItemContents.expirationDate,
                 otherItemFieldValue = otherItemContents.expirationDate
+            ),
+            attachments = calculateItemDiffType(
+                baseItemAttachments = baseAttachments,
+                otherItemAttachments = otherAttachments
             )
         )
     }

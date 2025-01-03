@@ -22,9 +22,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
-import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.DraftAttachment
 import proton.android.pass.domain.attachments.FileMetadata
+import proton.android.pass.domain.attachments.PendingAttachmentId
 import java.net.URI
 import javax.inject.Inject
 
@@ -40,7 +40,7 @@ class FakeDraftAttachmentRepository @Inject constructor() : DraftAttachmentRepos
 
     override fun get(uri: URI): DraftAttachment = DraftAttachment.Success(
         metadata = FileMetadata.unknown(uri),
-        attachmentId = AttachmentId("attachmentId")
+        pendingAttachmentId = PendingAttachmentId("attachmentId")
     )
 
     override fun observeAll(): Flow<List<DraftAttachment>> = flowOf(emptyList())

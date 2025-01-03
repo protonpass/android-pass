@@ -45,21 +45,21 @@ class UploadAttachmentImpl @Inject constructor(
             draftAttachmentRepository.update(draftAttachment)
             val userId = accountManager.getPrimaryUserId().firstOrNull()
                 ?: throw UserIdNotAvailableError()
-            val attachmentId = attachmentRepository.createPendingAttachment(
+            val pendingAttachmentId = attachmentRepository.createPendingAttachment(
                 userId = userId,
                 metadata = metadata
             )
             runCatching {
                 attachmentRepository.uploadPendingAttachment(
                     userId = userId,
-                    attachmentId = attachmentId,
+                    pendingAttachmentId = pendingAttachmentId,
                     uri = metadata.uri
                 )
                 telemetryManager.sendEvent(FileUploaded(metadata.mimeType))
             }.onSuccess {
                 val success = DraftAttachment.Success(
                     metadata = metadata,
-                    attachmentId = attachmentId
+                    pendingAttachmentId = pendingAttachmentId
                 )
                 draftAttachmentRepository.update(success)
             }.onFailure { throw it }

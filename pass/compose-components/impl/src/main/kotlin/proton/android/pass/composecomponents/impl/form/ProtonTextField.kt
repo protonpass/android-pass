@@ -143,6 +143,7 @@ fun ProtonTextField(
                     leadingIcon = leadingIcon,
                     isError = isError,
                     colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent

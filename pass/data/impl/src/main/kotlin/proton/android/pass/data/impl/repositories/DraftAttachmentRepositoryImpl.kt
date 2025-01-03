@@ -57,6 +57,8 @@ class DraftAttachmentRepositoryImpl @Inject constructor() : DraftAttachmentRepos
 
     override fun observeAll(): Flow<List<DraftAttachment>> = draftAttachmentsStateFlow.map { it.values.toList() }
 
+    override fun getAll(): List<DraftAttachment> = draftAttachmentsStateFlow.value.values.toList()
+
     override fun observeNew(): Flow<DraftAttachment> {
         val seenUris = mutableSetOf<URI>()
         return draftAttachmentsStateFlow

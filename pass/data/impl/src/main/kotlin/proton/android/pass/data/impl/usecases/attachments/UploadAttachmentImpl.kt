@@ -26,6 +26,8 @@ import proton.android.pass.data.api.repositories.DraftAttachmentRepository
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
 import proton.android.pass.domain.attachments.DraftAttachment
 import proton.android.pass.domain.attachments.FileMetadata
+import proton.android.pass.telemetry.api.TelemetryEvent.DeferredTelemetryEvent
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -33,7 +35,8 @@ import javax.inject.Singleton
 class UploadAttachmentImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val attachmentRepository: AttachmentRepository,
-    private val draftAttachmentRepository: DraftAttachmentRepository
+    private val draftAttachmentRepository: DraftAttachmentRepository,
+    private val telemetryManager: TelemetryManager
 ) : UploadAttachment {
 
     override suspend fun invoke(metadata: FileMetadata) {
@@ -52,6 +55,7 @@ class UploadAttachmentImpl @Inject constructor(
                     attachmentId = attachmentId,
                     uri = metadata.uri
                 )
+                telemetryManager.sendEvent(FileUploaded(metadata.mimeType))
             }.onSuccess {
                 val success = DraftAttachment.Success(
                     metadata = metadata,
@@ -68,4 +72,10 @@ class UploadAttachmentImpl @Inject constructor(
             throw it
         }
     }
+}
+
+data class FileUploaded(
+    val mimeType: String
+) : DeferredTelemetryEvent("pass_file_attachment.file_uploaded") {
+    override fun dimensions(): Map<String, String> = mapOf("mimeType" to mimeType)
 }

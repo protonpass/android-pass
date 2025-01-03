@@ -69,6 +69,14 @@ class PendingAttachmentLinkRepositoryImpl @Inject constructor() : PendingAttachm
 
     override fun observeAllToUnLink(): StateFlow<Set<AttachmentId>> = toUnlink
 
+    override fun removeToLink(attachmentId: PendingAttachmentId) {
+        toLink.update { currentMap ->
+            ConcurrentHashMap(currentMap).apply {
+                remove(attachmentId)
+            }.toMap()
+        }
+    }
+
     override fun clearAll() {
         toLink.update { emptyMap() }
         toUnlink.update { emptySet() }

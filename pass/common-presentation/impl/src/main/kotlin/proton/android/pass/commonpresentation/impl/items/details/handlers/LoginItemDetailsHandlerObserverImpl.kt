@@ -230,6 +230,10 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             passkeys = calculateItemDiffTypes(
                 baseItemPasskeys = baseItemContents.passkeys,
                 otherItemPasskeys = otherItemContents.passkeys
+            ),
+            attachments = calculateItemDiffType(
+                baseItemAttachments = baseAttachments,
+                otherItemAttachments = otherAttachments
             )
         )
     }

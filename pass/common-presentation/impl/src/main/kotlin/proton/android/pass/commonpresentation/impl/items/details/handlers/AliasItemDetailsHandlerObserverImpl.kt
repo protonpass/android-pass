@@ -114,6 +114,10 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
         aliasEmail = calculateItemDiffType(
             baseItemFieldValue = baseItemContents.aliasEmail,
             otherItemFieldValue = otherItemContents.aliasEmail
+        ),
+        attachments = calculateItemDiffType(
+            baseItemAttachments = baseAttachments,
+            otherItemAttachments = otherAttachments
         )
     )
 

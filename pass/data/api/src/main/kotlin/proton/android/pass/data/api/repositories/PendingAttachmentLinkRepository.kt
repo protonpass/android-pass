@@ -22,27 +22,24 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.attachments.PendingAttachmentId
 
 interface PendingAttachmentLinkRepository {
-    fun addToLink(attachmentId: AttachmentId, encryptionKey: EncryptionKey)
+    fun addToLink(attachmentId: PendingAttachmentId, encryptionKey: EncryptionKey)
 
     fun addToUnLink(attachmentId: AttachmentId)
 
     fun addAllToUnLink(list: Set<AttachmentId>)
 
-    fun getToLinkKey(attachmentId: AttachmentId): EncryptionKey?
+    fun getToLinkKey(attachmentId: PendingAttachmentId): EncryptionKey?
 
-    fun getAllToLink(): Map<AttachmentId, EncryptionKey>
+    fun getAllToLink(): Map<PendingAttachmentId, EncryptionKey>
 
-    fun observeAllToLink(): StateFlow<Map<AttachmentId, EncryptionKey>>
+    fun observeAllToLink(): StateFlow<Map<PendingAttachmentId, EncryptionKey>>
 
     fun getAllToUnLink(): Set<AttachmentId>
 
     fun observeAllToUnLink(): Flow<Set<AttachmentId>>
-
-    fun removeToLink(attachmentId: AttachmentId): Boolean
-
-    fun removeToUnlink(attachmentId: AttachmentId): Boolean
 
     fun clearAll()
 }

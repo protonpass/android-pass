@@ -41,7 +41,7 @@ class RenameDraftAttachmentImpl @Inject constructor(
             is DraftAttachment.Success -> {
                 val userId = accountManager.getPrimaryUserId().firstOrNull()
                     ?: throw UserIdNotAvailableError()
-                val attachmentId = draftAttachment.attachmentId
+                val attachmentId = draftAttachment.pendingAttachmentId
                 val newMetadata = draftAttachment.metadata.copy(name = newName)
                 runCatching {
                     attachmentRepository.updatePendingAttachment(

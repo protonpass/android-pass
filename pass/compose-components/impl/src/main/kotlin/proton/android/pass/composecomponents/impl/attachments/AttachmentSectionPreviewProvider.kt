@@ -29,6 +29,7 @@ import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.AttachmentType
 import proton.android.pass.domain.attachments.DraftAttachment
 import proton.android.pass.domain.attachments.FileMetadata
+import proton.android.pass.domain.attachments.PendingAttachmentId
 import java.net.URI
 
 private const val SIZE_1_MB = 1_048_576L
@@ -129,7 +130,7 @@ class AttachmentSectionPreviewProvider :
         createTime: Instant = Instant.fromEpochSeconds(CREATE_TIME)
     ) = DraftAttachment.Success(
         metadata = createFileMetadata(uri, name, size, mimeType, attachmentType, createTime),
-        attachmentId = AttachmentId("attachment-$name")
+        pendingAttachmentId = PendingAttachmentId("attachment-$name")
     )
 
     private fun createLoadingDraftAttachment(

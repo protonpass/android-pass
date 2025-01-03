@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
@@ -131,38 +132,28 @@ class ItemDetailsHandlerImpl @Inject constructor(
     }
 
     private fun attachmentsFlow(item: Item, source: ItemDetailsSource): Flow<AttachmentsState> {
-        return when (source) {
-            ItemDetailsSource.DETAIL -> if (item.hasAttachments) {
-                combine(
-                    observeDetailItemAttachments(item.shareId, item.id),
-                    loadingAttachmentsState
-                ) { attachments, loadingAttachments ->
-                    AttachmentsState(
-                        draftAttachmentsList = emptyList(),
-                        attachmentsList = attachments,
-                        loadingAttachments = loadingAttachments
-                    )
-                }
-            } else {
-                flowOf(AttachmentsState.Initial)
+        val attachmentsFlow = when (source) {
+            ItemDetailsSource.DETAIL -> {
+                if (item.hasAttachments) observeDetailItemAttachments(item.shareId, item.id)
+                else return flowOf(AttachmentsState.Initial)
             }
-
-            ItemDetailsSource.REVISION -> if (item.hasHadAttachments) {
-                combine(
-                    observeAllItemRevisionAttachments(item.shareId, item.id),
-                    loadingAttachmentsState
-                ) { attachments, loadingAttachments ->
-                    AttachmentsState(
-                        draftAttachmentsList = emptyList(),
-                        attachmentsList = attachments,
-                        loadingAttachments = loadingAttachments
-                    )
+            ItemDetailsSource.REVISION -> {
+                if (item.hasAttachments || item.hasHadAttachments) {
+                    observeAllItemRevisionAttachments(item.shareId, item.id)
+                        .map { it.filter { attachment -> attachment.existsForRevision(item.revision) } }
+                } else {
+                    return flowOf(AttachmentsState.Initial)
                 }
-            } else {
-                flowOf(AttachmentsState.Initial)
             }
         }
 
+        return combine(attachmentsFlow, loadingAttachmentsState) { attachments, loadingAttachments ->
+            AttachmentsState(
+                draftAttachmentsList = emptyList(),
+                attachmentsList = attachments,
+                loadingAttachments = loadingAttachments
+            )
+        }
     }
 
     private suspend fun displayFieldCopiedSnackbarMessage(fieldType: ItemDetailsFieldType) = when (fieldType) {
@@ -249,10 +240,9 @@ class ItemDetailsHandlerImpl @Inject constructor(
         )
 
     @Suppress("UNCHECKED_CAST")
-    private fun getItemDetailsObserver(itemCategory: ItemCategory): ItemDetailsHandlerObserver<ItemContents> {
-        return observers[itemCategory] as? ItemDetailsHandlerObserver<ItemContents>
+    private fun getItemDetailsObserver(itemCategory: ItemCategory): ItemDetailsHandlerObserver<ItemContents> =
+        observers[itemCategory] as? ItemDetailsHandlerObserver<ItemContents>
             ?: throw IllegalStateException("Unsupported item category: $itemCategory")
-    }
 
     private companion object {
 

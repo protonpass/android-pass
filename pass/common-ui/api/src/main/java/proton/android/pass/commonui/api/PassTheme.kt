@@ -49,16 +49,16 @@ fun PassTheme(
             colors = protonColors.copy(
                 brandNorm = passColors.interactionNorm,
                 backgroundNorm = passColors.backgroundNorm,
-                interactionNorm = passColors.interactionNorm,
+                interactionNorm = passColors.interactionNorm
             ),
             typography = ProtonTypography.Default.copy(
-                hero = passTypography.heroUnspecified,
+                hero = passTypography.heroUnspecified
             ),
             shapes = ProtonShapes().copy(
                 small = RoundedCornerShape(Radius.small + Radius.small),
                 medium = RoundedCornerShape(Radius.medium + Radius.small),
                 large = RoundedCornerShape(Radius.large + Radius.small),
-                bottomSheet = passShapes.bottomsheetShape,
+                bottomSheet = passShapes.bottomsheetShape
             ),
             content = content
         )

@@ -29,7 +29,6 @@ class SetAttachmentToBeUnlinkedImpl @Inject constructor(
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository
 ) : SetAttachmentToBeUnlinked {
 
-
     override fun invoke(attachmentId: AttachmentId) {
         pendingAttachmentLinkRepository.addToUnLink(attachmentId)
     }

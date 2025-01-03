@@ -41,5 +41,7 @@ interface PendingAttachmentLinkRepository {
 
     fun observeAllToUnLink(): Flow<Set<AttachmentId>>
 
+    fun removeToLink(attachmentId: PendingAttachmentId)
+
     fun clearAll()
 }

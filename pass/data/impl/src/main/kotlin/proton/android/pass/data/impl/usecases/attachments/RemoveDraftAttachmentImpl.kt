@@ -19,17 +19,24 @@
 package proton.android.pass.data.impl.usecases.attachments
 
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.api.usecases.attachments.RemoveDraftAttachment
+import proton.android.pass.domain.attachments.DraftAttachment
 import java.net.URI
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class RemoveDraftAttachmentImpl @Inject constructor(
-    private val draftAttachmentRepository: DraftAttachmentRepository
+    private val draftAttachmentRepository: DraftAttachmentRepository,
+    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository
 ) : RemoveDraftAttachment {
 
     override fun invoke(uri: URI) {
+        val draft = draftAttachmentRepository.getAll()
+            .filterIsInstance<DraftAttachment.Success>()
+            .first { it.metadata.uri == uri }
+        pendingAttachmentLinkRepository.removeToLink(draft.pendingAttachmentId)
         draftAttachmentRepository.remove(uri)
     }
 }

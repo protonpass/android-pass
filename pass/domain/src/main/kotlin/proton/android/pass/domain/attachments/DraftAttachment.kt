@@ -32,6 +32,6 @@ sealed interface DraftAttachment {
 
     data class Success(
         override val metadata: FileMetadata,
-        val attachmentId: AttachmentId
+        val pendingAttachmentId: PendingAttachmentId
     ) : DraftAttachment
 }

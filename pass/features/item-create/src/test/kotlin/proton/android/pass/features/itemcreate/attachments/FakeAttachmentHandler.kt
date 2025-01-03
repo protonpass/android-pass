@@ -52,7 +52,7 @@ class FakeAttachmentHandler : AttachmentsHandler {
     override fun observeNewAttachments(onNewAttachment: (DraftAttachment) -> Unit): Flow<DraftAttachment> = flowOf(
         DraftAttachment.Success(
             metadata = FileMetadata.unknown(URI("")),
-            attachmentId = AttachmentId("attachmentId")
+            pendingAttachmentId = AttachmentId("attachmentId")
         )
     )
 

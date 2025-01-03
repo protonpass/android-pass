@@ -58,6 +58,8 @@ import proton.android.pass.data.impl.local.attachments.LocalAttachmentsDataSourc
 import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSource
 import proton.android.pass.data.impl.responses.attachments.ChunkApiModel
 import proton.android.pass.data.impl.responses.attachments.FileApiModel
+import proton.android.pass.data.impl.util.PaginatedResponse
+import proton.android.pass.data.impl.util.fetchAllPaginated
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
@@ -454,13 +456,18 @@ class AttachmentRepositoryImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId
     ) {
-        val fileDetails = remote.retrieveActiveFiles(
-            userId = userId,
-            shareId = shareId,
-            itemId = itemId
-        ).files
-
-        saveRetrievedAttachments(shareId, itemId, fileDetails, userId)
+        fetchAllPaginated(
+            fetchPage = { lastToken ->
+                val response = remote.retrieveActiveFiles(userId, shareId, itemId, lastToken)
+                PaginatedResponse(
+                    items = response.files,
+                    total = response.total,
+                    lastId = response.lastId
+                )
+            },
+            mapToDomain = { it },
+            storeResults = { attachments -> saveRetrievedAttachments(shareId, itemId, attachments, userId) }
+        )
     }
 
     private suspend fun refreshAttachmentsForAllRevisions(
@@ -468,13 +475,18 @@ class AttachmentRepositoryImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId
     ) {
-        val fileDetails = remote.retrieveFilesForAllRevisions(
-            userId = userId,
-            shareId = shareId,
-            itemId = itemId
-        ).files
-
-        saveRetrievedAttachments(shareId, itemId, fileDetails, userId)
+        fetchAllPaginated(
+            fetchPage = { lastToken ->
+                val response = remote.retrieveFilesForAllRevisions(userId, shareId, itemId, lastToken)
+                PaginatedResponse(
+                    items = response.files,
+                    total = response.total,
+                    lastId = response.lastId
+                )
+            },
+            mapToDomain = { it },
+            storeResults = { attachments -> saveRetrievedAttachments(shareId, itemId, attachments, userId) }
+        )
     }
 
     private suspend fun AttachmentRepositoryImpl.saveRetrievedAttachments(

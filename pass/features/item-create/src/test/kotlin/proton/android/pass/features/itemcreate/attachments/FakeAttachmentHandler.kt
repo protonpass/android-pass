@@ -26,9 +26,9 @@ import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
-import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.DraftAttachment
 import proton.android.pass.domain.attachments.FileMetadata
+import proton.android.pass.domain.attachments.PendingAttachmentId
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import java.net.URI
 
@@ -52,7 +52,7 @@ class FakeAttachmentHandler : AttachmentsHandler {
     override fun observeNewAttachments(onNewAttachment: (DraftAttachment) -> Unit): Flow<DraftAttachment> = flowOf(
         DraftAttachment.Success(
             metadata = FileMetadata.unknown(URI("")),
-            pendingAttachmentId = AttachmentId("attachmentId")
+            pendingAttachmentId = PendingAttachmentId("attachmentId")
         )
     )
 

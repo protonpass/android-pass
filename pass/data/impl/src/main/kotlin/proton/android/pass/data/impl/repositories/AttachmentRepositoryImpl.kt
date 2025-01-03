@@ -258,8 +258,7 @@ class AttachmentRepositoryImpl @Inject constructor(
             EncryptionKey(decrypt(encryptedItemKey))
         }
         val toLinkEncrypted = encryptionContextProvider.withEncryptionContextSuspendable(itemKey) {
-            val mappings = pendingAttachmentLinkRepository.getAllToLink()
-            mappings.mapValues { (_, fileKey) ->
+            toLink.mapValues { (_, fileKey) ->
                 val encryptedKey = encrypt(fileKey.value(), EncryptionTag.FileKey)
                 Base64.encodeBase64String(encryptedKey.array)
             }

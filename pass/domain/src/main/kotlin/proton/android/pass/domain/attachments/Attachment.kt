@@ -24,6 +24,9 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 @JvmInline
+value class PendingAttachmentId(val id: String)
+
+@JvmInline
 value class AttachmentId(val id: String)
 
 enum class AttachmentType {

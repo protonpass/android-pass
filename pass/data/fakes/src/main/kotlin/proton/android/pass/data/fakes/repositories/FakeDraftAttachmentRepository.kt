@@ -45,6 +45,8 @@ class FakeDraftAttachmentRepository @Inject constructor() : DraftAttachmentRepos
 
     override fun observeAll(): Flow<List<DraftAttachment>> = flowOf(emptyList())
 
+    override fun getAll(): List<DraftAttachment> = emptyList()
+
     override fun observeNew(): Flow<DraftAttachment> = emptyFlow()
 
     override fun remove(uri: URI): Boolean = true

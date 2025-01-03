@@ -28,6 +28,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.ChunkId
+import proton.android.pass.domain.attachments.PendingAttachmentId
 
 interface RemoteAttachmentsDataSource {
 
@@ -35,13 +36,13 @@ interface RemoteAttachmentsDataSource {
 
     suspend fun updatePendingFile(
         userId: UserId,
-        attachmentId: AttachmentId,
+        pendingAttachmentId: PendingAttachmentId,
         metadata: EncryptedString
     ): String
 
     suspend fun uploadPendingFile(
         userId: UserId,
-        attachmentId: AttachmentId,
+        pendingAttachmentId: PendingAttachmentId,
         chunkIndex: Int,
         encryptedByteArray: EncryptedByteArray
     )
@@ -52,7 +53,7 @@ interface RemoteAttachmentsDataSource {
         shareId: ShareId,
         itemId: ItemId,
         revision: Long,
-        filesToAdd: Map<AttachmentId, EncryptedString>,
+        filesToAdd: Map<PendingAttachmentId, EncryptedString>,
         filesToRemove: Set<AttachmentId>
     )
 

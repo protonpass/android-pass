@@ -67,6 +67,7 @@ import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.Chunk
 import proton.android.pass.domain.attachments.ChunkId
 import proton.android.pass.domain.attachments.FileMetadata
+import proton.android.pass.domain.attachments.PendingAttachmentId
 import proton.android.pass.files.api.FileType
 import proton.android.pass.files.api.FileUriGenerator
 import proton.android.pass.log.api.PassLogger
@@ -88,7 +89,7 @@ class AttachmentRepositoryImpl @Inject constructor(
     private val reencryptAttachment: ReencryptAttachment
 ) : AttachmentRepository {
 
-    override suspend fun createPendingAttachment(userId: UserId, metadata: FileMetadata): AttachmentId {
+    override suspend fun createPendingAttachment(userId: UserId, metadata: FileMetadata): PendingAttachmentId {
         val fileMetadata = fileMetadata {
             this.name = metadata.name
             this.mimeType = metadata.mimeType
@@ -99,14 +100,14 @@ class AttachmentRepositoryImpl @Inject constructor(
                 encrypt(fileMetadata.toByteArray(), EncryptionTag.FileData)
             }
         val encodedMetadata = Base64.encodeBase64String(encryptedMetadata.array)
-        val id = remote.createPendingFile(userId, encodedMetadata).let(::AttachmentId)
+        val id = remote.createPendingFile(userId, encodedMetadata).let(::PendingAttachmentId)
         pendingAttachmentLinkRepository.addToLink(id, fileKey)
         return id
     }
 
     override suspend fun updatePendingAttachment(
         userId: UserId,
-        attachmentId: AttachmentId,
+        attachmentId: PendingAttachmentId,
         metadata: FileMetadata
     ) {
         val fileMetadata = fileMetadata {
@@ -122,7 +123,7 @@ class AttachmentRepositoryImpl @Inject constructor(
         val encodedMetadata = Base64.encodeBase64String(encryptedMetadata.array)
         remote.updatePendingFile(
             userId = userId,
-            attachmentId = attachmentId,
+            pendingAttachmentId = attachmentId,
             metadata = encodedMetadata
         )
     }
@@ -130,11 +131,11 @@ class AttachmentRepositoryImpl @Inject constructor(
     @Suppress("LongMethod")
     override suspend fun uploadPendingAttachment(
         userId: UserId,
-        attachmentId: AttachmentId,
+        pendingAttachmentId: PendingAttachmentId,
         uri: URI
     ) {
-        val fileKey: EncryptionKey = pendingAttachmentLinkRepository.getToLinkKey(attachmentId)
-            ?: throw IllegalStateException("No encryption key found for attachment $attachmentId")
+        val fileKey: EncryptionKey = pendingAttachmentLinkRepository.getToLinkKey(pendingAttachmentId)
+            ?: throw IllegalStateException("No encryption key found for attachment $pendingAttachmentId")
         val contentUri: Uri = Uri.parse(uri.toString())
         withContext(appDispatchers.io) {
             context.contentResolver.openInputStream(contentUri)
@@ -153,13 +154,13 @@ class AttachmentRepositoryImpl @Inject constructor(
                             )
                             remote.uploadPendingFile(
                                 userId,
-                                attachmentId,
+                                pendingAttachmentId,
                                 chunkIndex,
                                 encryptedChunk
                             )
                             PassLogger.d(
                                 TAG,
-                                "Finished uploading single chunk with attachment $attachmentId"
+                                "Finished uploading single chunk with attachment $pendingAttachmentId"
                             )
                             return@withEncryptionContextSuspendable
                         }
@@ -178,7 +179,7 @@ class AttachmentRepositoryImpl @Inject constructor(
                             if (bytesInBuffer >= CHUNK_SIZE) {
                                 PassLogger.d(
                                     TAG,
-                                    "Uploading chunk $chunkIndex for attachment $attachmentId"
+                                    "Uploading chunk $chunkIndex for attachment $pendingAttachmentId"
                                 )
                                 val encryptedChunk = encrypt(
                                     buffer.copyOf(CHUNK_SIZE),
@@ -186,7 +187,7 @@ class AttachmentRepositoryImpl @Inject constructor(
                                 )
                                 remote.uploadPendingFile(
                                     userId = userId,
-                                    attachmentId = attachmentId,
+                                    pendingAttachmentId = pendingAttachmentId,
                                     chunkIndex = chunkIndex,
                                     encryptedByteArray = encryptedChunk
                                 )
@@ -207,12 +208,12 @@ class AttachmentRepositoryImpl @Inject constructor(
                             if (bytesInBuffer < MIN_CHUNK_SIZE && chunkIndex > 0) {
                                 PassLogger.d(
                                     TAG,
-                                    "Combining last chunk with previous for attachment $attachmentId"
+                                    "Combining last chunk with previous for attachment $pendingAttachmentId"
                                 )
                                 val previousChunk = buffer.copyOf(bytesInBuffer + CHUNK_SIZE)
                                 remote.uploadPendingFile(
                                     userId = userId,
-                                    attachmentId = attachmentId,
+                                    pendingAttachmentId = pendingAttachmentId,
                                     chunkIndex = chunkIndex - 1,
                                     encryptedByteArray = encrypt(
                                         previousChunk,
@@ -222,7 +223,7 @@ class AttachmentRepositoryImpl @Inject constructor(
                             } else {
                                 PassLogger.d(
                                     TAG,
-                                    "Uploading last chunk for attachment $attachmentId"
+                                    "Uploading last chunk for attachment $pendingAttachmentId"
                                 )
                                 val encryptedChunk =
                                     encrypt(
@@ -231,7 +232,7 @@ class AttachmentRepositoryImpl @Inject constructor(
                                     )
                                 remote.uploadPendingFile(
                                     userId = userId,
-                                    attachmentId = attachmentId,
+                                    pendingAttachmentId = pendingAttachmentId,
                                     chunkIndex = chunkIndex,
                                     encryptedByteArray = encryptedChunk
                                 )
@@ -248,7 +249,7 @@ class AttachmentRepositoryImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         revision: Long,
-        toLink: Map<AttachmentId, EncryptionKey>,
+        toLink: Map<PendingAttachmentId, EncryptionKey>,
         toUnlink: Set<AttachmentId>
     ) {
         val encryptedItemKey = localItemDataSource.getById(shareId, itemId)?.encryptedKey

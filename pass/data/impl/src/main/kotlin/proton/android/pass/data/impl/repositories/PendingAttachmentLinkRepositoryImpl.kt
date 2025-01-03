@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.attachments.PendingAttachmentId
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,10 +32,10 @@ import javax.inject.Singleton
 @Singleton
 class PendingAttachmentLinkRepositoryImpl @Inject constructor() : PendingAttachmentLinkRepository {
 
-    private val toLink = MutableStateFlow<Map<AttachmentId, EncryptionKey>>(emptyMap())
+    private val toLink = MutableStateFlow<Map<PendingAttachmentId, EncryptionKey>>(emptyMap())
     private val toUnlink = MutableStateFlow<Set<AttachmentId>>(emptySet())
 
-    override fun addToLink(attachmentId: AttachmentId, encryptionKey: EncryptionKey) {
+    override fun addToLink(attachmentId: PendingAttachmentId, encryptionKey: EncryptionKey) {
         toLink.update { currentMap ->
             ConcurrentHashMap(currentMap).apply {
                 this[attachmentId] = encryptionKey
@@ -58,35 +59,15 @@ class PendingAttachmentLinkRepositoryImpl @Inject constructor() : PendingAttachm
         }
     }
 
-    override fun getToLinkKey(attachmentId: AttachmentId): EncryptionKey? = toLink.value[attachmentId]?.clone()
+    override fun getToLinkKey(attachmentId: PendingAttachmentId): EncryptionKey? = toLink.value[attachmentId]?.clone()
 
-    override fun getAllToLink(): Map<AttachmentId, EncryptionKey> = toLink.value
+    override fun getAllToLink(): Map<PendingAttachmentId, EncryptionKey> = toLink.value
 
-    override fun observeAllToLink(): StateFlow<Map<AttachmentId, EncryptionKey>> = toLink
+    override fun observeAllToLink(): StateFlow<Map<PendingAttachmentId, EncryptionKey>> = toLink
 
     override fun getAllToUnLink(): Set<AttachmentId> = toUnlink.value
 
     override fun observeAllToUnLink(): StateFlow<Set<AttachmentId>> = toUnlink
-
-    override fun removeToLink(attachmentId: AttachmentId): Boolean {
-        var removed = false
-        toLink.update { currentMap ->
-            ConcurrentHashMap(currentMap).apply {
-                removed = this.remove(attachmentId) != null
-            }.toMap()
-        }
-        return removed
-    }
-
-    override fun removeToUnlink(attachmentId: AttachmentId): Boolean {
-        var removed = false
-        toUnlink.update { currentSet ->
-            currentSet.toMutableSet().apply {
-                removed = this.remove(attachmentId)
-            }
-        }
-        return removed
-    }
 
     override fun clearAll() {
         toLink.update { emptyMap() }

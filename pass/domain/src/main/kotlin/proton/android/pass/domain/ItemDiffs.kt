@@ -18,6 +18,8 @@
 
 package proton.android.pass.domain
 
+import proton.android.pass.domain.attachments.AttachmentId
+
 enum class ItemDiffType {
     Content,
     Field,
@@ -30,25 +32,25 @@ sealed interface ItemDiffs {
 
     val note: ItemDiffType
 
-    val attachments: Map<String, ItemDiffType>
+    val attachments: Map<AttachmentId, ItemDiffType>
 
     data object None : ItemDiffs {
         override val title: ItemDiffType = ItemDiffType.None
         override val note: ItemDiffType = ItemDiffType.None
-        override val attachments: Map<String, ItemDiffType> = mapOf()
+        override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap()
     }
 
     data class Alias(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
-        override val attachments: Map<String, ItemDiffType> = mapOf(),
+        override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         val aliasEmail: ItemDiffType = ItemDiffType.None
     ) : ItemDiffs
 
     data class CreditCard(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
-        override val attachments: Map<String, ItemDiffType> = mapOf(),
+        override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         val cardHolder: ItemDiffType = ItemDiffType.None,
         val cardNumber: ItemDiffType = ItemDiffType.None,
         val cvv: ItemDiffType = ItemDiffType.None,
@@ -59,7 +61,7 @@ sealed interface ItemDiffs {
     data class Identity(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
-        override val attachments: Map<String, ItemDiffType> = mapOf(),
+        override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         val organization: ItemDiffType = ItemDiffType.None,
         val streetAddress: ItemDiffType = ItemDiffType.None,
         val floor: ItemDiffType = ItemDiffType.None,
@@ -117,7 +119,7 @@ sealed interface ItemDiffs {
     data class Login(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
-        override val attachments: Map<String, ItemDiffType> = mapOf(),
+        override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap(),
         val email: ItemDiffType = ItemDiffType.None,
         val username: ItemDiffType = ItemDiffType.None,
         val password: ItemDiffType = ItemDiffType.None,
@@ -128,7 +130,7 @@ sealed interface ItemDiffs {
             emptyList()
         ),
         private val customFields: List<ItemDiffType> = emptyList(),
-        private val passkeys: Map<String, ItemDiffType> = mapOf()
+        private val passkeys: Map<String, ItemDiffType> = emptyMap()
     ) : ItemDiffs {
 
         fun customField(index: Int): ItemDiffType = customFields.getOrElse(index) { ItemDiffType.None }
@@ -140,13 +142,13 @@ sealed interface ItemDiffs {
     data class Note(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
-        override val attachments: Map<String, ItemDiffType> = mapOf()
+        override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap()
     ) : ItemDiffs
 
     data class Unknown(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
-        override val attachments: Map<String, ItemDiffType> = mapOf()
+        override val attachments: Map<AttachmentId, ItemDiffType> = emptyMap()
     ) : ItemDiffs
 
 }

@@ -126,3 +126,5 @@ pass/protos/contents-proto-definition
 # native libraries
 libs/*.aar
 pass/**/*.aar
+
+.kotlin/

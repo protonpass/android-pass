@@ -620,13 +620,15 @@ interface PasswordManagerApi : BaseRetrofitApi {
     @GET("$PREFIX/share/{shareId}/item/{itemId}/files")
     suspend fun retrieveActiveFiles(
         @Path("shareId") shareId: String,
-        @Path("itemId") itemId: String
+        @Path("itemId") itemId: String,
+        @Query("Since") lastToken: String?
     ): RetrieveFilesResponse
 
     @GET("$PREFIX/share/{shareId}/item/{itemId}/revisions/files")
     suspend fun retrieveAllFilesForAllRevisions(
         @Path("shareId") shareId: String,
-        @Path("itemId") itemId: String
+        @Path("itemId") itemId: String,
+        @Query("Since") lastToken: String?
     ): RetrieveFilesResponse
 
     @Multipart

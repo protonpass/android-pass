@@ -141,18 +141,20 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
     override suspend fun retrieveActiveFiles(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId
+        itemId: ItemId,
+        lastToken: String?
     ): FilesApiModel = api.get<PasswordManagerApi>(userId)
-        .invoke { retrieveActiveFiles(shareId.id, itemId.id) }
+        .invoke { retrieveActiveFiles(shareId.id, itemId.id, lastToken) }
         .valueOrThrow
         .filesData
 
     override suspend fun retrieveFilesForAllRevisions(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId
+        itemId: ItemId,
+        lastToken: String?
     ): FilesApiModel = api.get<PasswordManagerApi>(userId)
-        .invoke { retrieveAllFilesForAllRevisions(shareId.id, itemId.id) }
+        .invoke { retrieveAllFilesForAllRevisions(shareId.id, itemId.id, lastToken) }
         .valueOrThrow
         .filesData
 

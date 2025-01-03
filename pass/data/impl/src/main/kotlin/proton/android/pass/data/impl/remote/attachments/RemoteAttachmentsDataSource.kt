@@ -77,13 +77,15 @@ interface RemoteAttachmentsDataSource {
     suspend fun retrieveActiveFiles(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId
+        itemId: ItemId,
+        lastToken: String?
     ): FilesApiModel
 
     suspend fun retrieveFilesForAllRevisions(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId
+        itemId: ItemId,
+        lastToken: String?
     ): FilesApiModel
 
     suspend fun downloadChunk(

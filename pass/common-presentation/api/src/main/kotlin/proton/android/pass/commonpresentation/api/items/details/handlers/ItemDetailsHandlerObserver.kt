@@ -32,6 +32,7 @@ import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.AttachmentId
 
 abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
 
@@ -142,6 +143,50 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
 
         else -> ItemDiffType.Field
     }
+
+    protected fun calculateItemDiffType(
+        baseItemAttachments: List<Attachment>,
+        otherItemAttachments: List<Attachment>
+    ): Map<AttachmentId, ItemDiffType> {
+        val baseAttachmentsMap = baseItemAttachments.associateBy { it.id }
+        val otherAttachmentsMap = otherItemAttachments.associateBy { it.id }
+
+        val diffMap = mutableMapOf<AttachmentId, ItemDiffType>()
+
+        baseAttachmentsMap.forEach { (attachmentId, baseAttachment) ->
+            val otherAttachment = otherAttachmentsMap[attachmentId]
+
+            when {
+                otherAttachment == null -> {
+                    // The attachment was removed
+                    diffMap[attachmentId] = ItemDiffType.Field
+                }
+                baseAttachment != otherAttachment -> {
+                    // The attachment was modified
+                    diffMap[attachmentId] = calculateAttachmentDiffType(baseAttachment, otherAttachment)
+                }
+                else -> {
+                    // No change
+                    diffMap[attachmentId] = ItemDiffType.None
+                }
+            }
+        }
+
+        // Check for newly added attachments
+        otherAttachmentsMap.keys
+            .filterNot { it in baseAttachmentsMap }
+            .forEach { newAttachmentId ->
+                diffMap[newAttachmentId] = ItemDiffType.Field
+            }
+
+        return diffMap
+    }
+
+    private fun calculateAttachmentDiffType(baseAttachment: Attachment, otherAttachment: Attachment): ItemDiffType =
+        when {
+            baseAttachment.name != otherAttachment.name -> ItemDiffType.Content
+            else -> ItemDiffType.None
+        }
 
     protected fun toggleHiddenCustomField(
         customFieldsContent: List<CustomFieldContent>,

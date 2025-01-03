@@ -57,7 +57,10 @@ data class Attachment(
     val revisionRemoved: Int?,
     val reencryptedKey: EncryptedByteArray,
     val chunks: List<Chunk>
-)
+) {
+    fun existsForRevision(revision: Long): Boolean =
+        revision >= revisionAdded && (revisionRemoved == null || revision < revisionRemoved)
+}
 
 @JvmInline
 value class ChunkId(val id: String)

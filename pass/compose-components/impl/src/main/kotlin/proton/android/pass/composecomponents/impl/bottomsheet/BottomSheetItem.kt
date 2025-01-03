@@ -38,7 +38,7 @@ fun bottomSheetDivider(): BottomSheetItem = object : BottomSheetItem {
         get() = null
     override val endIcon: (@Composable () -> Unit)?
         get() = null
-    override val onClick: (@Composable () -> Unit)?
+    override val onClick: (() -> Unit)?
         get() = null
     override val isDivider = true
 }

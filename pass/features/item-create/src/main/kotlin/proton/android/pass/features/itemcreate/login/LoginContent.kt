@@ -98,6 +98,7 @@ internal fun LoginContent(
             selectedShareId = selectedShareId,
             hasReachedAliasLimit = uiState.hasReachedAliasLimit,
             isUsernameSplitTooltipEnabled = uiState.isUsernameSplitTooltipEnabled,
+            displayFileAttachmentsOnboarding = uiState.displayFileAttachmentsOnboarding,
             isFileAttachmentsEnabled = uiState.isFileAttachmentsEnabled,
             attachmentsState = uiState.attachmentsState,
             onEvent = onEvent

@@ -83,7 +83,10 @@ class OnBoardingScreenTest {
             isSimpleLoginSyncEnabled = false,
             simpleLoginSyncPendingAliasCount = 0,
             simpleLoginSyncDefaultShareId = "",
-            canManageSimpleLoginAliases = false
+            canManageSimpleLoginAliases = false,
+            storageQuota = 100,
+            storageUsed = 1,
+            storageAllowed = false
         ).also(observeUserAccessData::sendValue)
     }
 

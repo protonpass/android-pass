@@ -46,7 +46,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.captionWeak
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
@@ -54,6 +53,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.profile.accountswitcher.AccountSwitcherList
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -100,6 +100,7 @@ internal fun ProfileContent(
                         style = ProtonTheme.typography.defaultSmallWeak
                     )
                     AccountSwitcherList(
+                        modifier = Modifier.padding(bottom = Spacing.medium),
                         isExpanded = isExpanded,
                         accountItemList = state.accounts,
                         onExpandedChange = { isExpanded = it },
@@ -110,11 +111,16 @@ internal fun ProfileContent(
                     )
                 }
 
+                DataStorage(
+                    modifier = Modifier
+                        .padding(horizontal = Spacing.medium)
+                        .padding(bottom = Spacing.medium),
+                    state = state.dataStorageState
+                )
+
                 ItemSummary(
-                    modifier = Modifier.padding(
-                        horizontal = Spacing.none,
-                        vertical = Spacing.medium
-                    ),
+                    modifier = Modifier
+                        .padding(bottom = Spacing.medium),
                     itemSummaryUiState = state.itemSummaryUiState,
                     onEvent = onEvent
                 )
@@ -174,10 +180,7 @@ internal fun ProfileContent(
                             .padding(all = Spacing.large),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(
-                            text = state.appVersion,
-                            style = ProtonTheme.typography.captionWeak
-                        )
+                        Text.CaptionWeak(state.appVersion)
                     }
                 }
             }

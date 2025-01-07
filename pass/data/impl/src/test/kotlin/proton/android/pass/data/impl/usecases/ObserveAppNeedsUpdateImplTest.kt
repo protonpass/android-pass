@@ -97,7 +97,10 @@ class ObserveAppNeedsUpdateImplTest {
                 isSimpleLoginSyncEnabled = false,
                 simpleLoginSyncPendingAliasCount = 0,
                 simpleLoginSyncDefaultShareId = "",
-                canManageSimpleLoginAliases = false
+                canManageSimpleLoginAliases = false,
+                storageAllowed = false,
+                storageQuota = 100,
+                storageUsed = 1
             )
         }
         userAccessDataRepository.sendValue(value)

@@ -441,7 +441,7 @@ class AliasDetailViewModel @Inject constructor(
     }
 
     fun resetItemHistory(shareId: ShareId, itemId: ItemId) {
-        TODO()
+        eventState.update { ItemDetailEvent.ConfirmResetHistory(shareId, itemId) }
     }
 
     private companion object {

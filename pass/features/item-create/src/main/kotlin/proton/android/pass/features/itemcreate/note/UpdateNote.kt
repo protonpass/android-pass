@@ -132,6 +132,9 @@ fun UpdateNote(
                                         viewModel.retryUploadDraftAttachment(event.metadata)
                                 }
                             }
+
+                    NoteContentUiEvent.DismissAttachmentBanner ->
+                        viewModel.dismissFileAttachmentsOnboardingBanner()
                 }
             }
         )

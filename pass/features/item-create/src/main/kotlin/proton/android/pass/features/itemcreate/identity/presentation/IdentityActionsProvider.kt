@@ -73,6 +73,7 @@ interface IdentityFormActions {
     )
     suspend fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment)
     suspend fun retryUploadDraftAttachment(metadata: FileMetadata)
+    suspend fun dismissFileAttachmentsOnboardingBanner()
 }
 
 interface IdentityActionsProvider : IdentityFormActions {
@@ -94,6 +95,7 @@ data class IdentitySharedUiState(
     val extraFields: PersistentSet<ExtraField>,
     val focusedField: Option<FocusedField>,
     val canUseCustomFields: Boolean,
+    val displayFileAttachmentsOnboarding: Boolean,
     val isFileAttachmentsEnabled: Boolean,
     val attachmentsState: AttachmentsState
 ) {
@@ -123,6 +125,7 @@ data class IdentitySharedUiState(
     }
 
     val showFileAttachments = isFileAttachmentsEnabled
+    val showFileAttachmentsBanner = isFileAttachmentsEnabled && displayFileAttachmentsOnboarding
 
     companion object {
         val Initial = IdentitySharedUiState(
@@ -133,6 +136,7 @@ data class IdentitySharedUiState(
             extraFields = persistentSetOf(),
             focusedField = None,
             canUseCustomFields = false,
+            displayFileAttachmentsOnboarding = false,
             isFileAttachmentsEnabled = false,
             attachmentsState = AttachmentsState.Initial
         )

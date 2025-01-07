@@ -163,6 +163,9 @@ fun UpdateAlias(
                             is AttachmentContentEvent.OnDraftAttachmentRetry ->
                                 viewModel.retryUploadDraftAttachment(event.metadata)
                         }
+
+                    AliasContentUiEvent.DismissAttachmentBanner ->
+                        viewModel.dismissFileAttachmentsOnboardingBanner()
                 }
             }
         )

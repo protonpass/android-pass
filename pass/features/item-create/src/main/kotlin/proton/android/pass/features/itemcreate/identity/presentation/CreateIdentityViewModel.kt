@@ -155,6 +155,10 @@ class CreateIdentityViewModel @Inject constructor(
         viewModelScope.launch { identityActionsProvider.retryUploadDraftAttachment(metadata) }
     }
 
+    fun dismissFileAttachmentsOnboarding() {
+        viewModelScope.launch { identityActionsProvider.dismissFileAttachmentsOnboardingBanner() }
+    }
+
     companion object {
         private const val TAG = "CreateIdentityViewModel"
     }

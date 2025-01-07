@@ -190,6 +190,9 @@ fun CreateIdentityScreen(
                         is AttachmentContentEvent.OnDraftAttachmentRetry ->
                             viewModel.onRetryUploadDraftAttachment(event.metadata)
                     }
+
+                    IdentityContentEvent.DismissAttachmentBanner ->
+                        viewModel.dismissFileAttachmentsOnboarding()
                 }
             }
         )

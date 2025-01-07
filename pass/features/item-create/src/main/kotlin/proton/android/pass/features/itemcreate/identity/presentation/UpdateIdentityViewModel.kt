@@ -143,6 +143,10 @@ class UpdateIdentityViewModel @Inject constructor(
         super.onCleared()
     }
 
+    fun dismissFileAttachmentsOnboarding() {
+        viewModelScope.launch { identityActionsProvider.dismissFileAttachmentsOnboardingBanner() }
+    }
+
     companion object {
         private const val TAG = "UpdateIdentityViewModel"
     }

@@ -43,6 +43,7 @@ import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHan
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -64,6 +65,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     observeDefaultVault: ObserveDefaultVault,
     attachmentsHandler: AttachmentsHandler,
     linkAttachmentsToItem: LinkAttachmentsToItem,
+    userPreferencesRepository: UserPreferencesRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : CreateAliasViewModel(
     accountManager = accountManager,
@@ -81,6 +83,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     observeDefaultVault = observeDefaultVault,
     attachmentsHandler = attachmentsHandler,
     linkAttachmentsToItem = linkAttachmentsToItem,
+    userPreferencesRepository = userPreferencesRepository,
     featureFlagsRepository = featureFlagsRepository
 ) {
 

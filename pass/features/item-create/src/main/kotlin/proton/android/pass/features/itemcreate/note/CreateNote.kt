@@ -154,6 +154,9 @@ fun CreateNoteScreen(
                                         viewModel.retryUploadDraftAttachment(event.event.metadata)
                                 }
                             }
+
+                    NoteContentUiEvent.DismissAttachmentBanner ->
+                        viewModel.dismissFileAttachmentsOnboardingBanner()
                 }
             }
         )

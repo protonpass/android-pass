@@ -29,6 +29,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.migrate
 import proton.android.pass.composecomponents.impl.bottomsheet.monitorExclude
 import proton.android.pass.composecomponents.impl.bottomsheet.monitorInclude
 import proton.android.pass.composecomponents.impl.bottomsheet.pin
+import proton.android.pass.composecomponents.impl.bottomsheet.resetHistory
 import proton.android.pass.composecomponents.impl.bottomsheet.trash
 import proton.android.pass.composecomponents.impl.bottomsheet.unpin
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
@@ -90,6 +91,11 @@ internal fun ItemDetailsMenuContent(
         if (canLeaveItem) {
             leave(
                 onClick = { onEvent(ItemDetailsMenuUiEvent.OnLeaveItemClicked) }
+            ).also(::add)
+        }
+        if (canResetHistory) {
+            resetHistory(
+                onClick = { onEvent(ItemDetailsMenuUiEvent.OnResetHistoryClicked) }
             ).also(::add)
         }
     }.let { bottomSheetItems ->

@@ -1489,6 +1489,10 @@ fun NavGraphBuilder.appGraph(
                         )
                     )
                 }
+
+                is ItemDetailNavigation.OnConfirmResetHistory -> dismissBottomSheet {
+
+                }
             }
         }
     )

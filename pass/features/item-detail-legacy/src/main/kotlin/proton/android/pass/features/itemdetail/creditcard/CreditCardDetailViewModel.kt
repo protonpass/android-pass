@@ -507,8 +507,8 @@ class CreditCardDetailViewModel @Inject constructor(
         }
     }
 
-    fun resetItemHistory(shareId: ShareId, id: ItemId) {
-        TODO("Not yet implemented")
+    fun resetItemHistory(shareId: ShareId, itemId: ItemId) {
+        eventState.update { ItemDetailEvent.ConfirmResetHistory(shareId, itemId) }
     }
 
     companion object {

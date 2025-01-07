@@ -33,38 +33,8 @@ import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Stable
-sealed interface BottomSheetItemAction {
-
-    @Stable
-    data object None : BottomSheetItemAction
-
-    @Stable
-    data object Pin : BottomSheetItemAction
-
-    @Stable
-    data object Unpin : BottomSheetItemAction
-
-    @Stable
-    data object History : BottomSheetItemAction
-
-    @Stable
-    data object Migrate : BottomSheetItemAction
-
-    @Stable
-    data object MonitorExclude : BottomSheetItemAction
-
-    @Stable
-    data object MonitorInclude : BottomSheetItemAction
-
-    @Stable
-    data object Remove : BottomSheetItemAction
-
-    @Stable
-    data object Restore : BottomSheetItemAction
-
-    @Stable
-    data object Trash : BottomSheetItemAction
-
+enum class BottomSheetItemAction {
+    None, Pin, Unpin, History, Migrate, MonitorExclude, MonitorInclude, Remove, Restore, Trash, ResetHistory
 }
 
 fun copyNote(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
@@ -100,7 +70,7 @@ fun migrate(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem
     }
 
     override val endIcon: (@Composable () -> Unit)? =
-        if (action is BottomSheetItemAction.Migrate) {
+        if (action == BottomSheetItemAction.Migrate) {
             { CircularProgressIndicator(modifier = Modifier.size(20.dp)) }
         } else {
             null
@@ -125,7 +95,7 @@ fun monitorExclude(action: BottomSheetItemAction, onClick: () -> Unit): BottomSh
     }
 
     override val endIcon: @Composable (() -> Unit)? =
-        if (action is BottomSheetItemAction.MonitorExclude) {
+        if (action == BottomSheetItemAction.MonitorExclude) {
             { CircularProgressIndicator(modifier = Modifier.size(20.dp)) }
         } else {
             null
@@ -150,7 +120,7 @@ fun monitorInclude(action: BottomSheetItemAction, onClick: () -> Unit): BottomSh
     }
 
     override val endIcon: @Composable (() -> Unit)? =
-        if (action is BottomSheetItemAction.MonitorInclude) {
+        if (action == BottomSheetItemAction.MonitorInclude) {
             { CircularProgressIndicator(modifier = Modifier.size(20.dp)) }
         } else {
             null
@@ -174,7 +144,7 @@ fun pin(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem = o
         BottomSheetItemIcon(iconId = R.drawable.ic_pin_angled)
     }
 
-    override val endIcon: @Composable (() -> Unit)? = if (action is BottomSheetItemAction.Pin) {
+    override val endIcon: @Composable (() -> Unit)? = if (action == BottomSheetItemAction.Pin) {
         { CircularProgressIndicator(modifier = Modifier.size(20.dp)) }
     } else {
         null
@@ -199,7 +169,7 @@ fun unpin(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem =
     }
 
     override val endIcon: @Composable (() -> Unit)? =
-        if (action is BottomSheetItemAction.Unpin) {
+        if (action == BottomSheetItemAction.Unpin) {
             { CircularProgressIndicator(modifier = Modifier.size(20.dp)) }
         } else {
             null
@@ -253,13 +223,13 @@ fun trash(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem =
     }
 
     override val endIcon: @Composable (() -> Unit)? =
-        if (action is BottomSheetItemAction.Trash) {
+        if (action == BottomSheetItemAction.Trash) {
             { CircularProgressIndicator(modifier = Modifier.size(20.dp)) }
         } else {
             null
         }
 
-    override val onClick: (() -> Unit) = if (action is BottomSheetItemAction.Trash) {
+    override val onClick: (() -> Unit) = if (action == BottomSheetItemAction.Trash) {
         {}
     } else {
         onClick
@@ -282,7 +252,7 @@ fun restore(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem
     }
 
     override val endIcon: @Composable (() -> Unit)? =
-        if (action is BottomSheetItemAction.Restore) {
+        if (action == BottomSheetItemAction.Restore) {
             { CircularProgressIndicator(modifier = Modifier.size(20.dp)) }
         } else {
             null
@@ -339,3 +309,18 @@ fun leave(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val isDivider = false
 
 }
+
+fun resetHistory(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_reset_history)) }
+    override val subtitle: @Composable (() -> Unit)?
+        get() = null
+    override val leftIcon: @Composable (() -> Unit)
+        get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_folder_arrow_in) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onClick() }
+    override val isDivider = false
+}
+

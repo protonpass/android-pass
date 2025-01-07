@@ -75,11 +75,19 @@ fun CreditCardDetail(
         CreditCardDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
         is CreditCardDetailUiState.Success -> {
             LaunchedEffect(state.event) {
-                when (state.event) {
+                when (val event = state.event) {
                     ItemDetailEvent.Unknown -> {}
                     ItemDetailEvent.MoveToVault -> {
                         onNavigate(ItemDetailNavigation.OnMigrate)
                     }
+
+                    is ItemDetailEvent.ConfirmResetHistory ->
+                        onNavigate(
+                            ItemDetailNavigation.OnConfirmResetHistory(
+                                shareId = event.shareId,
+                                itemId = event.itemId
+                            )
+                        )
                 }
                 viewModel.clearEvent()
             }

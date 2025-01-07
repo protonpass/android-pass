@@ -95,6 +95,7 @@ sealed interface ItemDetailNavigation {
     @JvmInline
     value class LeaveItemShare(val shareId: ShareId) : ItemDetailNavigation
 
+    data class OnConfirmResetHistory(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
 }
 
 enum class ItemDetailCannotPerformActionType {

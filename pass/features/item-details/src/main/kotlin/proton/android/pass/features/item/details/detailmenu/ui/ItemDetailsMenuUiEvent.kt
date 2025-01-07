@@ -36,4 +36,6 @@ internal sealed interface ItemDetailsMenuUiEvent {
 
     data object OnTrashItemClicked : ItemDetailsMenuUiEvent
 
+    data object OnResetHistoryClicked : ItemDetailsMenuUiEvent
+
 }

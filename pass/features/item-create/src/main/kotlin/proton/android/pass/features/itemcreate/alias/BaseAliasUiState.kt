@@ -19,12 +19,12 @@
 package proton.android.pass.features.itemcreate.alias
 
 import androidx.compose.runtime.Immutable
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.ShareUiState
-import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 
 @Immutable
 data class BaseAliasUiState(
@@ -40,6 +40,7 @@ data class BaseAliasUiState(
     val canUpgrade: Boolean,
     val isAliasManagementEnabled: Boolean,
     val isFileAttachmentEnabled: Boolean,
+    val displayFileAttachmentsOnboarding: Boolean,
     val attachmentsState: AttachmentsState
 ) {
     companion object {
@@ -56,6 +57,7 @@ data class BaseAliasUiState(
             canUpgrade = false,
             isAliasManagementEnabled = false,
             isFileAttachmentEnabled = false,
+            displayFileAttachmentsOnboarding = false,
             attachmentsState = AttachmentsState.Initial
         )
     }

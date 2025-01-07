@@ -67,6 +67,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -81,12 +82,14 @@ class CreateNoteViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
+    userPreferencesRepository: UserPreferencesRepository,
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
     attachmentsHandler: AttachmentsHandler,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseNoteViewModel(
+    userPreferencesRepository = userPreferencesRepository,
     snackbarDispatcher = snackbarDispatcher,
     attachmentsHandler = attachmentsHandler,
     featureFlagsRepository = featureFlagsRepository,

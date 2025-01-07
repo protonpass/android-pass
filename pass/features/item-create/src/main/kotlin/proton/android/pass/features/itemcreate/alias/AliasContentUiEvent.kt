@@ -18,8 +18,8 @@
 
 package proton.android.pass.features.itemcreate.alias
 
-import proton.android.pass.domain.ShareId
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
+import proton.android.pass.domain.ShareId
 
 sealed interface AliasContentUiEvent {
 
@@ -58,4 +58,6 @@ sealed interface AliasContentUiEvent {
 
     @JvmInline
     value class OnAttachmentEvent(val event: AttachmentContentEvent) : AliasContentUiEvent
+
+    data object DismissAttachmentBanner : AliasContentUiEvent
 }

@@ -81,6 +81,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -97,6 +98,7 @@ open class CreateAliasViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val aliasPrefixValidator: AliasPrefixValidator,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
+    userPreferencesRepository: UserPreferencesRepository,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     observeUpgradeInfo: ObserveUpgradeInfo,
@@ -105,6 +107,7 @@ open class CreateAliasViewModel @Inject constructor(
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : BaseAliasViewModel(
+    userPreferencesRepository = userPreferencesRepository,
     attachmentsHandler = attachmentsHandler,
     snackbarDispatcher = snackbarDispatcher,
     featureFlagsRepository = featureFlagsRepository,

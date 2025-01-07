@@ -25,9 +25,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler
 import proton.android.pass.features.itemcreate.note.BaseNoteUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
+import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 
 internal class BaseNoteViewModelTest {
@@ -48,7 +50,8 @@ internal class BaseNoteViewModelTest {
         baseNoteViewModel = object : BaseNoteViewModel(
             snackbarDispatcher = snackbarDispatcher,
             featureFlagsRepository = featureFlagsPreferenceRepository,
-            attachmentsHandler = proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler(),
+            attachmentsHandler = FakeAttachmentHandler(),
+            userPreferencesRepository = TestPreferenceRepository(),
             savedStateHandleProvider = savedStateHandleProvider
         ) {}
     }

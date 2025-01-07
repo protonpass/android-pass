@@ -18,8 +18,8 @@
 
 package proton.android.pass.features.itemcreate.note
 
-import proton.android.pass.domain.ShareId
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
+import proton.android.pass.domain.ShareId
 
 sealed interface NoteContentUiEvent {
     data object Back : NoteContentUiEvent
@@ -38,4 +38,6 @@ sealed interface NoteContentUiEvent {
 
     @JvmInline
     value class OnAttachmentEvent(val event: AttachmentContentEvent) : NoteContentUiEvent
+
+    data object DismissAttachmentBanner : NoteContentUiEvent
 }

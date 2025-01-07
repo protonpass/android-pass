@@ -18,8 +18,8 @@
 
 package proton.android.pass.features.itemcreate.identity.navigation
 
-import proton.android.pass.domain.ShareId
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
+import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.identity.presentation.FieldChange
 import proton.android.pass.features.itemcreate.identity.presentation.bottomsheets.CustomExtraField
 
@@ -62,4 +62,6 @@ sealed interface IdentityContentEvent {
 
     @JvmInline
     value class OnAttachmentEvent(val event: AttachmentContentEvent) : IdentityContentEvent
+
+    data object DismissAttachmentBanner : IdentityContentEvent
 }

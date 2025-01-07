@@ -58,7 +58,7 @@ class PeriodicFeatureDiscoveryWorker @AssistedInject constructor(
         val total = observeItemCount().firstOrNull()?.total ?: 0
         val preference = userPreferencesRepository.observeDisplayFileAttachmentsOnboarding()
             .firstOrNull()
-            ?: DisplayFileAttachmentsBanner.Unknown
+            ?: DisplayFileAttachmentsBanner.NotDisplay
         if (preference == DisplayFileAttachmentsBanner.Unknown && total > ITEM_AMOUNT_THRESHOLD) {
             userPreferencesRepository.setDisplayFileAttachmentsOnboarding(Display)
         }

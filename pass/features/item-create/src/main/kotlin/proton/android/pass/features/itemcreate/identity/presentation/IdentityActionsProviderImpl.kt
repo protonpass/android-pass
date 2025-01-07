@@ -97,8 +97,11 @@ import proton.android.pass.features.itemcreate.identity.presentation.bottomsheet
 import proton.android.pass.features.itemcreate.identity.ui.IdentitySectionType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.DisplayFileAttachmentsBanner
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
 import java.net.URI
 import javax.inject.Inject
 
@@ -114,6 +117,7 @@ class IdentityActionsProviderImpl @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val linkAttachmentsToItem: LinkAttachmentsToItem,
     private val renameAttachments: RenameAttachments,
+    private val userPreferencesRepository: UserPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : IdentityActionsProvider {
 
@@ -646,6 +650,7 @@ class IdentityActionsProviderImpl @Inject constructor(
         identityFieldDraftRepository.observeExtraFields().map(Set<ExtraField>::toPersistentSet),
         identityFieldDraftRepository.observeLastAddedExtraField(),
         observeUpgradeInfo().distinctUntilChanged().asLoadingResult().map(::canUseCustomFields),
+        userPreferencesRepository.observeDisplayFileAttachmentsOnboarding().map { it.value() },
         featureFlagsRepository[FeatureFlag.FILE_ATTACHMENTS_V1],
         attachmentsHandler.attachmentState,
         ::IdentitySharedUiState
@@ -973,6 +978,12 @@ class IdentityActionsProviderImpl @Inject constructor(
         isLoadingState.update { IsLoadingState.Loading }
         attachmentsHandler.uploadNewAttachment(metadata)
         isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    override suspend fun dismissFileAttachmentsOnboardingBanner() {
+        userPreferencesRepository.setDisplayFileAttachmentsOnboarding(
+            DisplayFileAttachmentsBanner.NotDisplay
+        )
     }
 
     companion object {

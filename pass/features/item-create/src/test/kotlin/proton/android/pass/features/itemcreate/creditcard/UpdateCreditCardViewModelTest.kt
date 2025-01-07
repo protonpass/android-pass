@@ -44,6 +44,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
+import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -86,7 +87,8 @@ class UpdateCreditCardViewModelTest {
             featureFlagsRepository = featureFlagsRepository,
             attachmentsHandler = proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler(),
             linkAttachmentsToItem = FakeLinkAttachmentsToItem(),
-            renameAttachments = FakeRenameAttachments()
+            renameAttachments = FakeRenameAttachments(),
+            userPreferencesRepository = TestPreferenceRepository()
         )
     }
 

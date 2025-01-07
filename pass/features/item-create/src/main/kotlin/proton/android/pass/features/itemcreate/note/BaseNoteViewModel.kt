@@ -42,14 +42,18 @@ import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
 import java.net.URI
 
 abstract class BaseNoteViewModel(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val attachmentsHandler: AttachmentsHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    private val userPreferencesRepository: UserPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -85,15 +89,17 @@ abstract class BaseNoteViewModel(
         isItemSavedState,
         hasUserEditedContentFlow,
         attachmentsHandler.attachmentState,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1)
+        featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
+        userPreferencesRepository.observeDisplayFileAttachmentsOnboarding()
     ) { noteItemValidationErrors, isLoading, isItemSaved, hasUserEditedContent, attachmentsState,
-        isFileAttachmentsEnabled ->
+        isFileAttachmentsEnabled, displayFileAttachmentsOnboarding ->
         BaseNoteUiState(
             errorList = noteItemValidationErrors,
             isLoadingState = isLoading,
             itemSavedState = isItemSaved,
             hasUserEditedContent = hasUserEditedContent,
             attachmentsState = attachmentsState,
+            displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             isFileAttachmentsEnabled = isFileAttachmentsEnabled
         )
     }
@@ -162,6 +168,12 @@ abstract class BaseNoteViewModel(
             isLoadingState.update { IsLoadingState.Loading }
             attachmentsHandler.uploadNewAttachment(metadata)
             isLoadingState.update { IsLoadingState.NotLoading }
+        }
+    }
+
+    fun dismissFileAttachmentsOnboardingBanner() {
+        viewModelScope.launch {
+            userPreferencesRepository.setDisplayFileAttachmentsOnboarding(NotDisplay)
         }
     }
 }

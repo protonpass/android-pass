@@ -47,14 +47,18 @@ import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
 import java.net.URI
 
 abstract class BaseAliasViewModel(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val attachmentsHandler: AttachmentsHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    private val userPreferencesRepository: UserPreferencesRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -120,9 +124,11 @@ abstract class BaseAliasViewModel(
         hasUserEditedContentFlow,
         featureFlagsRepository.get<Boolean>(FeatureFlag.ADVANCED_ALIAS_MANAGEMENT_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
+        userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState
     ) { aliasItemValidationErrors, isLoading, eventWrapper, hasUserEditedContent,
-        isAliasManagementEnabled, isFileAttachmentEnabled, attachmentsState ->
+        isAliasManagementEnabled, isFileAttachmentEnabled, displayFileAttachmentsOnboarding,
+        attachmentsState ->
         BaseAliasUiState(
             isDraft = isDraft,
             errorList = aliasItemValidationErrors,
@@ -136,6 +142,7 @@ abstract class BaseAliasViewModel(
             canUpgrade = false,
             isAliasManagementEnabled = isAliasManagementEnabled,
             isFileAttachmentEnabled = isFileAttachmentEnabled,
+            displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             attachmentsState = attachmentsState
         )
     }
@@ -234,6 +241,12 @@ abstract class BaseAliasViewModel(
             isLoadingState.update { IsLoadingState.Loading }
             attachmentsHandler.uploadNewAttachment(metadata)
             isLoadingState.update { IsLoadingState.NotLoading }
+        }
+    }
+
+    fun dismissFileAttachmentsOnboardingBanner() {
+        viewModelScope.launch {
+            userPreferencesRepository.setDisplayFileAttachmentsOnboarding(NotDisplay)
         }
     }
 }

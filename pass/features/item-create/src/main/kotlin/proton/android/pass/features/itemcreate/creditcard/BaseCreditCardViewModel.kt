@@ -29,14 +29,18 @@ import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHandler
+import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
 import java.net.URI
 
 abstract class BaseCreditCardViewModel(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val attachmentsHandler: AttachmentsHandler,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    private val userPreferencesRepository: UserPreferencesRepository,
     canPerformPaidAction: CanPerformPaidAction,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
@@ -79,15 +83,17 @@ abstract class BaseCreditCardViewModel(
         isItemSavedState,
         canPerformPaidAction(),
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
+        userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState
     ) { isLoading, hasUserEditedContent, validationErrors, isItemSaved, canPerformPaidAction,
-        isFileAttachmentsEnabled, attachmentsState ->
+        isFileAttachmentsEnabled, displayFileAttachmentsOnboarding, attachmentsState ->
         BaseCreditCardUiState(
             isLoading = isLoading.value(),
             hasUserEditedContent = hasUserEditedContent,
             validationErrors = validationErrors.toPersistentSet(),
             isItemSaved = isItemSaved,
             isDowngradedMode = !canPerformPaidAction,
+            displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             isFileAttachmentsEnabled = isFileAttachmentsEnabled,
             attachmentsState = attachmentsState
         )
@@ -252,6 +258,12 @@ abstract class BaseCreditCardViewModel(
             isLoadingState.update { IsLoadingState.Loading }
             attachmentsHandler.uploadNewAttachment(metadata)
             isLoadingState.update { IsLoadingState.NotLoading }
+        }
+    }
+
+    fun dismissFileAttachmentsOnboardingBanner() {
+        viewModelScope.launch {
+            userPreferencesRepository.setDisplayFileAttachmentsOnboarding(NotDisplay)
         }
     }
 

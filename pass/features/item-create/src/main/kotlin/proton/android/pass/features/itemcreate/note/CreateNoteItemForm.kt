@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.note
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,12 +32,14 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
+import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
 
 @Composable
 internal fun CreateNoteItemForm(
     modifier: Modifier = Modifier,
     noteItemFormState: NoteItemFormState,
     isFileAttachmentsEnabled: Boolean,
+    displayFileAttachmentsOnboarding: Boolean,
     attachmentsState: AttachmentsState,
     enabled: Boolean,
     onTitleRequiredError: Boolean,
@@ -49,6 +52,13 @@ internal fun CreateNoteItemForm(
             .padding(Spacing.medium),
         verticalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
+
+        AnimatedVisibility(isFileAttachmentsEnabled && displayFileAttachmentsOnboarding) {
+            AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
+                onEvent(NoteContentUiEvent.DismissAttachmentBanner)
+            }
+        }
+
         NoteTitle(
             value = noteItemFormState.title,
             requestFocus = true,

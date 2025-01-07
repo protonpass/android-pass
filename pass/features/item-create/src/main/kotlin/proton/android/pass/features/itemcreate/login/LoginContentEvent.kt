@@ -21,9 +21,9 @@ package proton.android.pass.features.itemcreate.login
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.tooltips.Tooltip
-import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.features.itemcreate.login.customfields.CustomFieldEvent
 
 internal sealed interface LoginContentEvent {
@@ -91,6 +91,8 @@ internal sealed interface LoginContentEvent {
     value class OnTooltipDismissed(val tooltip: Tooltip) : LoginContentEvent
 
     data object OnUsernameOrEmailManuallyExpanded : LoginContentEvent
+
+    data object DismissAttachmentBanner : LoginContentEvent
 
     @JvmInline
     value class OnAttachmentEvent(val event: AttachmentContentEvent) : LoginContentEvent

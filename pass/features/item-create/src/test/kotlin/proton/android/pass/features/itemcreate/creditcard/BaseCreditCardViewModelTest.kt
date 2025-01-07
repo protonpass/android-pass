@@ -28,8 +28,10 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
+import proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler
 import proton.android.pass.features.itemcreate.common.UIHiddenState
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
+import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 
 class BaseCreditCardViewModelTest {
@@ -52,7 +54,8 @@ class BaseCreditCardViewModelTest {
             canPerformPaidAction = canPerformPaidAction,
             featureFlagsRepository = featureFlagsRepository,
             savedStateHandleProvider = TestSavedStateHandleProvider(),
-            attachmentsHandler = proton.android.pass.features.itemcreate.attachments.FakeAttachmentHandler()
+            attachmentsHandler = FakeAttachmentHandler(),
+            userPreferencesRepository = TestPreferenceRepository()
         ) {}
     }
 

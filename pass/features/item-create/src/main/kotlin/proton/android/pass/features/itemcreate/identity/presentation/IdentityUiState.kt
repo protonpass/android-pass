@@ -155,6 +155,12 @@ sealed interface IdentityUiState {
         else -> false
     }
 
+    fun showFileAttachmentsBanner(): Boolean = when (this) {
+        is CreateIdentity -> sharedState.showFileAttachmentsBanner
+        is UpdateIdentity -> sharedState.showFileAttachmentsBanner
+        else -> false
+    }
+
     fun getAttachmentsState(): AttachmentsState = when (this) {
         is CreateIdentity -> sharedState.attachmentsState
         is UpdateIdentity -> sharedState.attachmentsState

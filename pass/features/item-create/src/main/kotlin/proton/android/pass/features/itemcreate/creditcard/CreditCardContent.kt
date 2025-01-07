@@ -6,10 +6,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.itemcreate.common.CreateUpdateTopBar
-import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.Submit
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.Up
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.Upgrade
@@ -57,6 +57,7 @@ fun CreditCardContent(
             enabled = !state.isLoading,
             validationErrors = state.validationErrors,
             isFileAttachmentsEnabled = state.isFileAttachmentsEnabled,
+            displayFileAttachmentsOnboarding = state.displayFileAttachmentsOnboarding,
             attachmentsState = state.attachmentsState,
             onEvent = onEvent
         )
@@ -102,6 +103,8 @@ sealed interface CreditCardContentEvent {
 
     @JvmInline
     value class OnAttachmentEvent(val event: AttachmentContentEvent) : CreditCardContentEvent
+
+    data object DismissAttachmentBanner : CreditCardContentEvent
 }
 
 

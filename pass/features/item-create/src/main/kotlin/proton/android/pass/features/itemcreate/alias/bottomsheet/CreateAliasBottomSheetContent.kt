@@ -207,6 +207,7 @@ fun CreateAliasBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider:
                     canUpgrade = false,
                     isAliasManagementEnabled = false,
                     isFileAttachmentEnabled = false,
+                    displayFileAttachmentsOnboarding = false,
                     attachmentsState = AttachmentsState.Initial
                 ),
                 aliasItemFormState = AliasItemFormState(

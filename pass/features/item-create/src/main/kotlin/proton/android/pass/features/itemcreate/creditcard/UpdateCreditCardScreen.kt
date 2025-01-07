@@ -149,6 +149,9 @@ fun UpdateCreditCardScreen(
                                     is AttachmentContentEvent.OnDraftAttachmentRetry ->
                                         viewModel.retryUploadDraftAttachment(event.metadata)
                                 }
+
+                            CreditCardContentEvent.DismissAttachmentBanner ->
+                                viewModel.dismissFileAttachmentsOnboardingBanner()
                         }
                     }
                 )

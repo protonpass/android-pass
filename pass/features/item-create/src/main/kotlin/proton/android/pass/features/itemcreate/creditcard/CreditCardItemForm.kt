@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.itemcreate.creditcard
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,6 +37,7 @@ import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.OnAttachmentEvent
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.OnCVVChange
 import proton.android.pass.features.itemcreate.creditcard.CreditCardContentEvent.OnCVVFocusChange
@@ -53,6 +55,7 @@ fun CreditCardItemForm(
     creditCardItemFormState: CreditCardItemFormState,
     enabled: Boolean,
     validationErrors: PersistentSet<CreditCardValidationErrors>,
+    displayFileAttachmentsOnboarding: Boolean,
     isFileAttachmentsEnabled: Boolean,
     attachmentsState: AttachmentsState,
     onEvent: (CreditCardContentEvent) -> Unit
@@ -64,6 +67,11 @@ fun CreditCardItemForm(
             .padding(Spacing.medium),
         verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
+        AnimatedVisibility(isFileAttachmentsEnabled && displayFileAttachmentsOnboarding) {
+            AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
+                onEvent(CreditCardContentEvent.DismissAttachmentBanner)
+            }
+        }
         TitleSection(
             modifier = Modifier.roundedContainerNorm()
                 .padding(

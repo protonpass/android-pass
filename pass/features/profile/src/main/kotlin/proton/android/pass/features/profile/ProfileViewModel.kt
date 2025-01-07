@@ -62,6 +62,7 @@ import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
@@ -108,7 +109,8 @@ class ProfileViewModel @Inject constructor(
     observeMFACount: ObserveMFACount,
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeAnyAccountHasEnforcedLock: ObserveAnyAccountHasEnforcedLock,
-    observeSecureLinksCount: ObserveSecureLinksCount
+    observeSecureLinksCount: ObserveSecureLinksCount,
+    observeUserAccessData: ObserveUserAccessData
 ) : ViewModel() {
 
     private val userAppLockSectionStateFlow: Flow<AppLockSectionState> = combine(
@@ -248,6 +250,17 @@ class ProfileViewModel @Inject constructor(
         .map { (_, readyUserIds) -> readyUserIds }
         .distinctUntilChanged()
 
+    private val dataStorageStateFlow = combine(
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
+        observeUserAccessData()
+    ) { isFileAttachmentEnabled, userAccessData ->
+        DataStorageState(
+            shouldDisplay = isFileAttachmentEnabled && userAccessData?.storageAllowed ?: false,
+            used = userAccessData?.storageUsed ?: 0,
+            quota = userAccessData?.storageQuota ?: 0
+        )
+    }
+
     internal val state: StateFlow<ProfileUiState> = combineN(
         appLockSectionStateFlow,
         autofillStatusFlow,
@@ -257,9 +270,10 @@ class ProfileViewModel @Inject constructor(
         passkeySupportFlow,
         ffFlow,
         observeSecureLinksCount(),
+        dataStorageStateFlow,
         accountsFlow
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event,
-        passkey, flags, secureLinksCount, accounts ->
+        passkey, flags, secureLinksCount, dataStorage, accounts ->
 
         val (accountType, showUpgradeButton) = processUpgradeInfo(upgradeInfo)
         ProfileUiState(
@@ -273,6 +287,7 @@ class ProfileViewModel @Inject constructor(
             passkeySupport = passkey,
             secureLinksCount = secureLinksCount,
             accounts = accounts,
+            dataStorageState = dataStorage,
             isSimpleLoginAliasesSyncEnabled = flags.isSimpleLoginAliasesSyncEnabled,
             isAdvancedAliasManagementEnabled = flags.isAdvancedAliasManagementEnabled
         )

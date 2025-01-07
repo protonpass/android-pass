@@ -82,7 +82,7 @@ internal fun removeLink(
 
     override val endIcon: @Composable (() -> Unit)
         get() = {
-            if (action is BottomSheetItemAction.Remove) {
+            if (action == BottomSheetItemAction.Remove) {
                 PassBottomSheetActionLoading()
             }
         }
@@ -119,7 +119,7 @@ internal fun removeLinks(action: BottomSheetItemAction, onClick: () -> Unit): Bo
 
         override val endIcon: @Composable (() -> Unit)
             get() = {
-                if (action is BottomSheetItemAction.Remove) {
+                if (action == BottomSheetItemAction.Remove) {
                     PassBottomSheetActionLoading()
                 }
             }

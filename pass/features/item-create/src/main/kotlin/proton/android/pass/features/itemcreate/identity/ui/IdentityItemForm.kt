@@ -95,7 +95,11 @@ fun IdentityItemForm(
         verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         AnimatedVisibility(identityUiState.showFileAttachmentsBanner()) {
-            AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
+            AttachmentBanner(
+                modifier = Modifier
+                    .padding(horizontal = Spacing.medium)
+                    .padding(bottom = Spacing.mediumSmall)
+            ) {
                 onEvent(IdentityContentEvent.DismissAttachmentBanner)
             }
         }

@@ -191,7 +191,10 @@ internal class PlanRepositoryImplTest {
                     totpLimit = null,
                     hideUpgrade = false,
                     trialEnd = null,
-                    manageAlias = false
+                    manageAlias = false,
+                    storageAllowed = false,
+                    storageQuota = 100,
+                    storageUsed = 1
                 ),
                 pendingInvites = pendingInvites,
                 waitingNewUserInvites = waitingNewUserInvites,
@@ -219,7 +222,10 @@ internal class PlanRepositoryImplTest {
                 isSimpleLoginSyncEnabled = userAccessResponse.accessResponse.userData.isAliasSyncEnabled,
                 simpleLoginSyncDefaultShareId = userAccessResponse.accessResponse.userData.defaultShareID.orEmpty(),
                 simpleLoginSyncPendingAliasCount = userAccessResponse.accessResponse.userData.pendingAliasToSync,
-                canManageSimpleLoginAliases = userAccessResponse.accessResponse.planResponse.manageAlias
+                canManageSimpleLoginAliases = userAccessResponse.accessResponse.planResponse.manageAlias,
+                storageAllowed = userAccessResponse.accessResponse.planResponse.storageAllowed,
+                storageQuota = userAccessResponse.accessResponse.planResponse.storageQuota,
+                storageUsed = userAccessResponse.accessResponse.planResponse.storageUsed
             )
         )
 

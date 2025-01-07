@@ -55,6 +55,7 @@ import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnAttachmentEvent
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnCreateAlias
 import proton.android.pass.features.itemcreate.login.LoginContentEvent.OnCreatePassword
@@ -97,6 +98,7 @@ internal fun LoginItemForm(
     hasReachedAliasLimit: Boolean,
     isUsernameSplitTooltipEnabled: Boolean,
     isFileAttachmentsEnabled: Boolean,
+    displayFileAttachmentsOnboarding: Boolean,
     attachmentsState: AttachmentsState,
     onEvent: (LoginContentEvent) -> Unit
 ) {
@@ -123,6 +125,11 @@ internal fun LoginItemForm(
                 .padding(all = Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
         ) {
+            AnimatedVisibility(isFileAttachmentsEnabled && displayFileAttachmentsOnboarding) {
+                AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
+                    onEvent(LoginContentEvent.DismissAttachmentBanner)
+                }
+            }
             TitleSection(
                 modifier = Modifier
                     .roundedContainerNorm()

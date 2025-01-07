@@ -89,9 +89,11 @@ import proton.android.pass.features.itemcreate.common.attachments.AttachmentsHan
 import proton.android.pass.features.itemcreate.login.LoginItemValidationErrors.CustomFieldValidationError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.DisplayFileAttachmentsBanner.NotDisplay
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
 import proton.android.pass.totp.api.TotpManager
 import java.net.URI
 
@@ -236,10 +238,11 @@ abstract class BaseLoginViewModel(
         userInteractionFlow,
         observeTooltipEnabled(Tooltip.UsernameSplit),
         featureFlagsRepository.get<Boolean>(FeatureFlag.FILE_ATTACHMENTS_V1),
+        userPreferencesRepository.observeDisplayFileAttachmentsOnboarding(),
         attachmentsHandler.attachmentState
     ) { loginItemValidationErrors, primaryEmail, aliasItemFormState, isLoading, totpUiState,
         upgradeInfoResult, userInteraction, isUsernameSplitTooltipEnabled,
-        isFileAttachmentsEnabled, attachmentsState ->
+        isFileAttachmentsEnabled, displayFileAttachmentsOnboarding, attachmentsState ->
         val userPlan = upgradeInfoResult.getOrNull()?.plan
         BaseLoginUiState(
             validationErrors = loginItemValidationErrors.toPersistentSet(),
@@ -257,6 +260,7 @@ abstract class BaseLoginViewModel(
             focusedField = userInteraction.focusedField.value(),
             isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled,
             isFileAttachmentsEnabled = isFileAttachmentsEnabled,
+            displayFileAttachmentsOnboarding = displayFileAttachmentsOnboarding.value(),
             attachmentsState = attachmentsState
         )
     }
@@ -988,6 +992,12 @@ abstract class BaseLoginViewModel(
             isLoadingState.update { IsLoadingState.Loading }
             attachmentsHandler.uploadNewAttachment(metadata)
             isLoadingState.update { IsLoadingState.NotLoading }
+        }
+    }
+
+    fun dismissFileAttachmentsOnboardingBanner() {
+        viewModelScope.launch {
+            userPreferencesRepository.setDisplayFileAttachmentsOnboarding(NotDisplay)
         }
     }
 

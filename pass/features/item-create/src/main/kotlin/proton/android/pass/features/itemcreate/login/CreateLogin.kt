@@ -269,6 +269,9 @@ fun CreateLoginScreen(
                                 viewModel.retryUploadDraftAttachment(event.metadata)
                         }
                     }
+
+                    LoginContentEvent.DismissAttachmentBanner ->
+                        viewModel.dismissFileAttachmentsOnboardingBanner()
                 }
             }
         )

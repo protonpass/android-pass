@@ -1016,6 +1016,14 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId> =
         localItemDataSource.findUserId(shareId, itemId)
 
+    override suspend fun deleteItemRevisions(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ) {
+        val revision = remoteItemDataSource.deleteItemRevisions(userId, shareId, itemId)
+    }
+
     private suspend fun calculatePlanForSetShareItems(
         userId: UserId,
         shareId: ShareId,

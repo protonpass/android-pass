@@ -270,4 +270,13 @@ class RemoteItemDataSourceImpl @Inject constructor(
         .valueOrThrow
         .toDomain()
 
+    override suspend fun deleteItemRevisions(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): ItemRevision = api.get<PasswordManagerApi>(userId)
+        .invoke { deleteItemRevisions(shareId.id, itemId.id).item }
+        .valueOrThrow
+        .toDomain()
+
 }

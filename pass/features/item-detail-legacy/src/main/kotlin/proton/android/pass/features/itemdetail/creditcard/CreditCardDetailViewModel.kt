@@ -507,6 +507,10 @@ class CreditCardDetailViewModel @Inject constructor(
         }
     }
 
+    fun resetItemHistory(shareId: ShareId, id: ItemId) {
+        TODO("Not yet implemented")
+    }
+
     companion object {
         private const val TAG = "CreditCardDetailViewModel"
     }

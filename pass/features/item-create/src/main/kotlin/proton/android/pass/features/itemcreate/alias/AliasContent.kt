@@ -110,6 +110,7 @@ internal fun AliasContent(
             onEvent = onEvent,
             isAliasManagementEnabled = uiState.isAliasManagementEnabled,
             isFileAttachmentsEnabled = uiState.isFileAttachmentEnabled,
+            displayFileAttachmentsOnboarding = uiState.displayFileAttachmentsOnboarding,
             attachmentsState = uiState.attachmentsState
         )
 

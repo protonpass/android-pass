@@ -161,6 +161,9 @@ fun CreateAliasScreen(
                                 viewModel.retryUploadDraftAttachment(event.event.metadata)
                         }
                     }
+
+                    AliasContentUiEvent.DismissAttachmentBanner ->
+                        viewModel.dismissFileAttachmentsOnboardingBanner()
                 }
             }
         )

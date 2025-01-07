@@ -49,6 +49,7 @@ import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.alias.AliasContentUiEvent.OnAttachmentEvent
+import proton.android.pass.features.itemcreate.attachments.banner.AttachmentBanner
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -65,6 +66,7 @@ internal fun CreateAliasForm(
     isAliasManagementEnabled: Boolean,
     isAliasCreatedByUser: Boolean,
     showUpgrade: Boolean,
+    displayFileAttachmentsOnboarding: Boolean,
     isFileAttachmentsEnabled: Boolean,
     attachmentsState: AttachmentsState,
     onSuffixClick: () -> Unit,
@@ -83,6 +85,12 @@ internal fun CreateAliasForm(
                 backgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
                 text = stringResource(R.string.create_alias_content_limit_banner)
             )
+        }
+
+        AnimatedVisibility(isFileAttachmentsEnabled && displayFileAttachmentsOnboarding) {
+            AttachmentBanner(Modifier.padding(bottom = Spacing.mediumSmall)) {
+                onEvent(AliasContentUiEvent.DismissAttachmentBanner)
+            }
         }
 
         TitleSection(

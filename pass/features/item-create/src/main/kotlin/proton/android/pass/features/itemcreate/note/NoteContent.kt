@@ -85,6 +85,7 @@ internal fun NoteContent(
             noteItemFormState = noteItemFormState,
             attachmentsState = uiState.attachmentsState,
             isFileAttachmentsEnabled = uiState.isFileAttachmentsEnabled,
+            displayFileAttachmentsOnboarding = uiState.displayFileAttachmentsOnboarding,
             onTitleRequiredError = uiState.errorList.contains(BlankTitle),
             enabled = uiState.isLoadingState != IsLoadingState.Loading,
             onEvent = onEvent

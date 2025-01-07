@@ -99,6 +99,7 @@ fun NoteDetail(
                             canMigrate = state.canMigrate,
                             canMoveToTrash = state.canMoveToTrash,
                             canLeave = state.canLeaveItem,
+                            canResetHistory = state.canResetHistory,
                             isPinned = state.itemUiModel.isPinned,
                             onMigrate = {
                                 scope.launch {
@@ -140,6 +141,13 @@ fun NoteDetail(
                                 ItemDetailNavigation.LeaveItemShare(
                                     shareId = state.itemUiModel.shareId
                                 ).also(onNavigate)
+                            },
+                            onResetHistory = {
+                                scope.launch { bottomSheetState.hide() }
+                                viewModel.resetItemHistory(
+                                    shareId = state.itemUiModel.shareId,
+                                    itemId = state.itemUiModel.id
+                                )
                             }
                         )
 

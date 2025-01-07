@@ -366,6 +366,10 @@ class NoteDetailViewModel @Inject constructor(
         }
     }
 
+    fun resetItemHistory(shareId: ShareId, itemId: ItemId) {
+        TODO("Not yet implemented")
+    }
+
     companion object {
         private const val TAG = "NoteDetailViewModel"
     }

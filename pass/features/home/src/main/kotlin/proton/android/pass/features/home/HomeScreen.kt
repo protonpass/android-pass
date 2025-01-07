@@ -75,6 +75,9 @@ import proton.android.pass.features.home.bottomsheet.IdentityOptionsBottomSheetC
 import proton.android.pass.features.home.bottomsheet.LoginOptionsBottomSheetContents
 import proton.android.pass.features.home.bottomsheet.NoteOptionsBottomSheetContents
 import proton.android.pass.features.home.bottomsheet.TrashAllBottomSheetContents
+import proton.android.pass.features.home.drawer.presentation.HomeDrawerViewModel
+import proton.android.pass.features.home.drawer.ui.HomeDrawerContent
+import proton.android.pass.features.home.drawer.ui.HomeDrawerUiEvent
 import proton.android.pass.features.home.needsupdate.AppNeedsUpdateBanner
 import proton.android.pass.features.home.onboardingtips.NotificationPermissionLaunchedEffect
 import proton.android.pass.features.home.onboardingtips.OnBoardingTips
@@ -82,9 +85,6 @@ import proton.android.pass.features.home.onboardingtips.OnBoardingTipsEvent
 import proton.android.pass.features.home.onboardingtips.OnBoardingTipsViewModel
 import proton.android.pass.features.home.saver.HomeBottomSheetTypeSaver
 import proton.android.pass.features.home.saver.ItemUiModelSaver
-import proton.android.pass.features.home.drawer.presentation.HomeDrawerViewModel
-import proton.android.pass.features.home.drawer.ui.HomeDrawerContent
-import proton.android.pass.features.home.drawer.ui.HomeDrawerUiEvent
 import proton.android.pass.features.home.trash.ConfirmClearTrashDialog
 import proton.android.pass.features.home.trash.ConfirmDeleteItemsDialog
 import proton.android.pass.features.home.trash.ConfirmRestoreAllDialog
@@ -251,6 +251,7 @@ fun HomeScreen(
             BottomSheetItemAction.History,
             BottomSheetItemAction.Remove,
             BottomSheetItemAction.Restore,
+            BottomSheetItemAction.ResetHistory,
             BottomSheetItemAction.Trash -> return@LaunchedEffect
         }
     }

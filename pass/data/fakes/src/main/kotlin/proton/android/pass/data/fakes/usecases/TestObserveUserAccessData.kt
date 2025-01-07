@@ -28,11 +28,11 @@ import javax.inject.Singleton
 
 @Singleton
 class TestObserveUserAccessData @Inject constructor() : ObserveUserAccessData {
-    private val flow: MutableSharedFlow<UserAccessData> = FlowUtils.testFlow()
+    private val flow: MutableSharedFlow<UserAccessData?> = FlowUtils.testFlow()
 
-    fun sendValue(value: UserAccessData) {
+    fun sendValue(value: UserAccessData?) {
         flow.tryEmit(value)
     }
 
-    override fun invoke(): Flow<UserAccessData> = flow
+    override fun invoke(): Flow<UserAccessData?> = flow
 }

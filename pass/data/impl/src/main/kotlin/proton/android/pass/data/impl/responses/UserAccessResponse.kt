@@ -72,7 +72,13 @@ data class PlanResponse(
     @SerialName("TrialEnd")
     val trialEnd: Long?,
     @SerialName("ManageAlias")
-    val manageAlias: Boolean
+    val manageAlias: Boolean,
+    @SerialName("StorageAllowed")
+    val storageAllowed: Boolean,
+    @SerialName("StorageUsed")
+    val storageUsed: Long,
+    @SerialName("StorageQuota")
+    val storageQuota: Long
 )
 
 @Serializable

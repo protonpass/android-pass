@@ -180,6 +180,9 @@ fun UpdateIdentityScreen(
                         is AttachmentContentEvent.OnDraftAttachmentRetry ->
                             viewModel.onRetryUploadDraftAttachment(event.metadata)
                     }
+
+                    IdentityContentEvent.DismissAttachmentBanner ->
+                        viewModel.dismissFileAttachmentsOnboarding()
                 }
             }
         )

@@ -55,7 +55,13 @@ data class UserAccessDataEntity(
     @ColumnInfo(name = Columns.SIMPLE_LOGIN_SYNC_PENDING_ALIAS_COUNT, defaultValue = "0")
     val simpleLoginSyncPendingAliasCount: Int,
     @ColumnInfo(name = Columns.SIMPLE_LOGIN_SYNC_CAN_MANAGE_ALIAS, defaultValue = "0")
-    val canManageSimpleLoginAliases: Boolean
+    val canManageSimpleLoginAliases: Boolean,
+    @ColumnInfo(name = Columns.STORAGE_ALLOWED, defaultValue = "0")
+    val storageAllowed: Boolean,
+    @ColumnInfo(name = Columns.STORAGE_USED, defaultValue = "0")
+    val storageUsed: Long,
+    @ColumnInfo(name = Columns.STORAGE_QUOTA, defaultValue = "0")
+    val storageQuota: Long
 ) {
     object Columns {
         const val USER_ID = "user_id"
@@ -68,6 +74,9 @@ data class UserAccessDataEntity(
         const val SIMPLE_LOGIN_SYNC_DEFAULT_SHARE_ID = "simple_login_sync_default_share_id"
         const val SIMPLE_LOGIN_SYNC_PENDING_ALIAS_COUNT = "simple_login_sync_pending_alias_count"
         const val SIMPLE_LOGIN_SYNC_CAN_MANAGE_ALIAS = "simple_login_sync_can_manage_alias"
+        const val STORAGE_ALLOWED = "storage_allowed"
+        const val STORAGE_USED = "storage_used"
+        const val STORAGE_QUOTA = "storage_quota"
     }
 
     companion object {

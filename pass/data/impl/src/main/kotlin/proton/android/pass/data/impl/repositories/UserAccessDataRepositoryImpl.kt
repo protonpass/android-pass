@@ -72,7 +72,10 @@ class UserAccessDataRepositoryImpl @Inject constructor(
         isSimpleLoginSyncEnabled = accessResponse.userData.isAliasSyncEnabled,
         simpleLoginSyncDefaultShareId = accessResponse.userData.defaultShareID.orEmpty(),
         simpleLoginSyncPendingAliasCount = accessResponse.userData.pendingAliasToSync,
-        canManageSimpleLoginAliases = accessResponse.planResponse.manageAlias
+        canManageSimpleLoginAliases = accessResponse.planResponse.manageAlias,
+        storageAllowed = accessResponse.planResponse.storageAllowed,
+        storageUsed = accessResponse.planResponse.storageUsed,
+        storageQuota = accessResponse.planResponse.storageQuota
     )
 
     private fun UserAccessDataEntity.toDomain() = UserAccessData(
@@ -85,7 +88,10 @@ class UserAccessDataRepositoryImpl @Inject constructor(
         isSimpleLoginSyncEnabled = isSimpleLoginSyncEnabled,
         simpleLoginSyncDefaultShareId = simpleLoginSyncDefaultShareId,
         simpleLoginSyncPendingAliasCount = simpleLoginSyncPendingAliasCount,
-        canManageSimpleLoginAliases = canManageSimpleLoginAliases
+        canManageSimpleLoginAliases = canManageSimpleLoginAliases,
+        storageAllowed = storageAllowed,
+        storageUsed = storageUsed,
+        storageQuota = storageQuota
     )
 
     private fun UserAccessData.toEntity(userId: UserId) = UserAccessDataEntity(
@@ -98,6 +104,9 @@ class UserAccessDataRepositoryImpl @Inject constructor(
         isSimpleLoginSyncEnabled = isSimpleLoginSyncEnabled,
         simpleLoginSyncDefaultShareId = simpleLoginSyncDefaultShareId,
         simpleLoginSyncPendingAliasCount = simpleLoginSyncPendingAliasCount,
-        canManageSimpleLoginAliases = canManageSimpleLoginAliases
+        canManageSimpleLoginAliases = canManageSimpleLoginAliases,
+        storageAllowed = storageAllowed,
+        storageUsed = storageUsed,
+        storageQuota = storageQuota
     )
 }

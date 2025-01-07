@@ -43,6 +43,7 @@ import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObserveMFACount
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
@@ -82,6 +83,9 @@ class ProfileScreenTest {
     @Inject
     lateinit var observeMfaCount: TestObserveMFACount
 
+    @Inject
+    lateinit var observeUserAccessData: TestObserveUserAccessData
+
     @Before
     fun setup() {
         hiltRule.inject()
@@ -89,6 +93,7 @@ class ProfileScreenTest {
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         observeItemCount.sendResult(Result.success(ItemCountSummary.Initial))
         observeMfaCount.emitResult(0)
+        observeUserAccessData.sendValue(null)
     }
 
     @Test

@@ -91,6 +91,9 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
 
     private val displayAutofillPinningPreference = MutableStateFlow(SettingsDisplayAutofillPinningPreference.Disabled)
 
+    private val displayFileAttachmentsBanner: MutableStateFlow<DisplayFileAttachmentsBanner> =
+        MutableStateFlow(DisplayFileAttachmentsBanner.Unknown)
+
     override fun setAppLockState(state: AppLockState): Result<Unit> {
         appLockState.tryEmit(state)
         return Result.success(Unit)
@@ -261,5 +264,13 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
 
     override fun observeDisplayAutofillPinningPreference(): Flow<SettingsDisplayAutofillPinningPreference> =
         displayAutofillPinningPreference
+
+    override fun observeDisplayFileAttachmentsOnboarding(): Flow<DisplayFileAttachmentsBanner> =
+        displayFileAttachmentsBanner
+
+    override fun setDisplayFileAttachmentsOnboarding(value: DisplayFileAttachmentsBanner): Result<Unit> {
+        displayFileAttachmentsBanner.tryEmit(value)
+        return Result.success(Unit)
+    }
 
 }

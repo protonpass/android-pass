@@ -266,6 +266,9 @@ internal fun UpdateLogin(
                                 viewModel.retryUploadDraftAttachment(event.metadata)
                         }
                     }
+
+                    LoginContentEvent.DismissAttachmentBanner ->
+                        viewModel.dismissFileAttachmentsOnboardingBanner()
                 }
             }
         )

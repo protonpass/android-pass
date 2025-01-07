@@ -24,13 +24,13 @@ import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.OpenScanState
 import proton.android.pass.features.itemcreate.alias.AliasItemFormState
 import proton.android.pass.features.itemcreate.common.ShareUiState
-import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 
 @Immutable
 internal data class BaseLoginUiState(
@@ -49,6 +49,7 @@ internal data class BaseLoginUiState(
     val focusedField: LoginField?,
     val isUsernameSplitTooltipEnabled: Boolean,
     val isFileAttachmentsEnabled: Boolean,
+    val displayFileAttachmentsOnboarding: Boolean,
     val attachmentsState: AttachmentsState
 ) {
     internal companion object {
@@ -69,6 +70,7 @@ internal data class BaseLoginUiState(
             focusedField = null,
             isUsernameSplitTooltipEnabled = false,
             isFileAttachmentsEnabled = false,
+            displayFileAttachmentsOnboarding = false,
             attachmentsState = AttachmentsState.Initial
         )
 

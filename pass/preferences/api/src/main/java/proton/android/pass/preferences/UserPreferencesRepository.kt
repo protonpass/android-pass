@@ -108,4 +108,7 @@ interface UserPreferencesRepository {
 
     fun observeDisplayAutofillPinningPreference(): Flow<SettingsDisplayAutofillPinningPreference>
 
+    fun observeDisplayFileAttachmentsOnboarding(): Flow<DisplayFileAttachmentsBanner>
+    fun setDisplayFileAttachmentsOnboarding(value: DisplayFileAttachmentsBanner): Result<Unit>
+
 }

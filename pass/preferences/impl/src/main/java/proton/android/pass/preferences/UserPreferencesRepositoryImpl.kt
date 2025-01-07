@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import me.proton.android.pass.preferences.BooleanPrefProto
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.common.api.Option
@@ -298,6 +299,24 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 pref = userPreferences.displayAutofillPinning,
                 default = false
             ).let(SettingsDisplayAutofillPinningPreference::from)
+        }
+
+    override fun observeDisplayFileAttachmentsOnboarding(): Flow<DisplayFileAttachmentsBanner> =
+        getPreference { userPreferences ->
+            when (userPreferences.displayFileAttachmentsOnboarding) {
+                BooleanPrefProto.BOOLEAN_PREFERENCE_TRUE -> DisplayFileAttachmentsBanner.Display
+                BooleanPrefProto.BOOLEAN_PREFERENCE_FALSE -> DisplayFileAttachmentsBanner.NotDisplay
+                BooleanPrefProto.BOOLEAN_PREFERENCE_UNSPECIFIED,
+                BooleanPrefProto.UNRECOGNIZED,
+                null -> DisplayFileAttachmentsBanner.Unknown
+            }
+        }
+
+    override fun setDisplayFileAttachmentsOnboarding(value: DisplayFileAttachmentsBanner): Result<Unit> =
+        setPreference { userPreferencesBuilder ->
+            value.value()
+                .toBooleanPrefProto()
+                .let(userPreferencesBuilder::setDisplayFileAttachmentsOnboarding)
         }
 
     private fun setPreference(mapper: suspend (UserPreferences.Builder) -> UserPreferences.Builder): Result<Unit> =

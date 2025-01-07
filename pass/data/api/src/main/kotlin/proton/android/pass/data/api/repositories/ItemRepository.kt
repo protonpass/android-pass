@@ -211,6 +211,12 @@ interface ItemRepository {
     )
 
     suspend fun findUserId(shareId: ShareId, itemId: ItemId): Option<UserId>
+
+    suspend fun deleteItemRevisions(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    )
 }
 
 data class VaultProgress(

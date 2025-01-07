@@ -61,7 +61,8 @@ class GetItemActionsImpl @Inject constructor(
             canMoveToOtherVault = canMigrate(isItemTrashed, share, shares),
             canMoveToTrash = !isItemTrashed && share.canBeTrashed,
             canDelete = isItemTrashed && share.canBeDeleted,
-            canRestoreFromTrash = isItemTrashed
+            canRestoreFromTrash = isItemTrashed,
+            canResetHistory = item.revision > 1
         )
     }.first()
 

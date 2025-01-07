@@ -127,7 +127,9 @@ fun LoginDetail(
                                 canMigrate = state.canMigrate,
                                 canMoveToTrash = state.canMoveToTrash,
                                 canLeave = state.canLeaveItem,
+                                canResetHistory = state.canResetHistory,
                                 isPinned = state.itemUiModel.isPinned,
+                                isExcludedFromMonitor = state.monitorState.isExcludedFromMonitor,
                                 onMigrate = {
                                     scope.launch {
                                         bottomSheetState.hide()
@@ -170,7 +172,13 @@ fun LoginDetail(
                                         shareId = state.itemUiModel.shareId
                                     ).also(onNavigate)
                                 },
-                                isExcludedFromMonitor = state.monitorState.isExcludedFromMonitor
+                                onResetHistory = {
+                                    scope.launch { bottomSheetState.hide() }
+                                    viewModel.resetItemHistory(
+                                        shareId = state.itemUiModel.shareId,
+                                        itemId = state.itemUiModel.id
+                                    )
+                                }
                             )
 
                             ItemState.Trashed.value -> TrashItemBottomSheetContents(

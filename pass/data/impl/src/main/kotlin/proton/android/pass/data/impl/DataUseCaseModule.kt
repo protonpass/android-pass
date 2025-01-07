@@ -177,6 +177,7 @@ import proton.android.pass.data.api.usecases.items.ObserveEncryptedSharedItems
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
+import proton.android.pass.data.api.usecases.items.ResetItemHistory
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.data.api.usecases.organization.ObserveAnyAccountHasEnforcedLock
@@ -391,6 +392,7 @@ import proton.android.pass.data.impl.usecases.items.ObserveEncryptedSharedItemsI
 import proton.android.pass.data.impl.usecases.items.ObserveItemRevisionsImpl
 import proton.android.pass.data.impl.usecases.items.ObserveMonitoredItemsImpl
 import proton.android.pass.data.impl.usecases.items.OpenItemRevisionImpl
+import proton.android.pass.data.impl.usecases.items.ResetItemHistoryImpl
 import proton.android.pass.data.impl.usecases.items.RestoreItemRevisionImpl
 import proton.android.pass.data.impl.usecases.items.UpdateItemFlagImpl
 import proton.android.pass.data.impl.usecases.organization.ObserveAnyAccountHasEnforcedLockImpl
@@ -1128,5 +1130,8 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveAllItemRevisionAttachments(
         impl: ObserveAllItemRevisionAttachmentsImpl
     ): ObserveAllItemRevisionAttachments
+
+    @[Binds Singleton]
+    abstract fun bindResetItemHistory(impl: ResetItemHistoryImpl): ResetItemHistory
 
 }

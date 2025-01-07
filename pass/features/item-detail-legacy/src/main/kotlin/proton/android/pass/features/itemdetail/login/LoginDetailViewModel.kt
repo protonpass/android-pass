@@ -133,7 +133,7 @@ import proton.android.pass.totp.api.ObserveTotpFromUri
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
-@Suppress("LargeClass", "LongParameterList")
+@Suppress("LargeClass", "LongParameterList", "TooManyFunctions")
 @HiltViewModel
 class LoginDetailViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -887,6 +887,10 @@ class LoginDetailViewModel @Inject constructor(
             }
             loadingAttachmentsState.update { it - attachment.id }
         }
+    }
+
+    fun resetItemHistory(shareId: ShareId, itemId: ItemId) {
+        TODO()
     }
 
     companion object {

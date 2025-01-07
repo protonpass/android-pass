@@ -440,6 +440,10 @@ class AliasDetailViewModel @Inject constructor(
         }
     }
 
+    fun resetItemHistory(shareId: ShareId, itemId: ItemId) {
+        TODO()
+    }
+
     private companion object {
 
         private const val TAG = "AliasDetailViewModel"

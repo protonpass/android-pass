@@ -104,6 +104,7 @@ fun CreditCardDetail(
                             canMigrate = state.canMigrate,
                             canMoveToTrash = state.canMoveToTrash,
                             canLeave = state.canLeaveItem,
+                            canResetHistory = state.canResetHistory,
                             isPinned = state.itemContent.model.isPinned,
                             onMigrate = {
                                 scope.launch {
@@ -139,6 +140,10 @@ fun CreditCardDetail(
                                 ItemDetailNavigation.LeaveItemShare(
                                     shareId = itemUiModel.shareId
                                 ).also(onNavigate)
+                            },
+                            onResetHistory = {
+                                scope.launch { bottomSheetState.hide() }
+                                viewModel.resetItemHistory(itemUiModel.shareId, itemUiModel.id)
                             }
                         )
 

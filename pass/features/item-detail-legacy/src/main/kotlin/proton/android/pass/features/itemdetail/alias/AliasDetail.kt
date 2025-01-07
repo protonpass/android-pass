@@ -119,6 +119,7 @@ fun AliasDetail(
                             canMigrate = state.canMigrate,
                             canMoveToTrash = state.canMoveToTrash,
                             canLeave = state.canLeaveItem,
+                            canResetHistory = state.canResetHistory,
                             isPinned = state.itemUiModel.isPinned,
                             onMigrate = {
                                 scope.launch {
@@ -164,6 +165,13 @@ fun AliasDetail(
                                 ItemDetailNavigation.LeaveItemShare(
                                     shareId = state.itemUiModel.shareId
                                 ).also(onNavigate)
+                            },
+                            onResetHistory = {
+                                scope.launch { bottomSheetState.hide() }
+                                viewModel.resetItemHistory(
+                                    shareId = state.itemUiModel.shareId,
+                                    itemId = state.itemUiModel.id
+                                )
                             }
                         )
 

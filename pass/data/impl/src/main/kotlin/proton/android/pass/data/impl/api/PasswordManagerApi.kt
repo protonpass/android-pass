@@ -189,6 +189,12 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Body request: UpdateItemRequest
     ): ItemRevisionResponse
 
+    @DELETE("$PREFIX/share/{shareId}/item/{itemId}/revisions")
+    suspend fun deleteItemRevisions(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String
+    ): ItemRevisionResponse
+
     @PUT("$PREFIX/share/{shareId}/item/{itemId}/flags")
     suspend fun updateItemFlags(
         @Path("shareId") shareId: String,

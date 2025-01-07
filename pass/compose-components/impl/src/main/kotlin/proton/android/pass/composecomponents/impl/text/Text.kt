@@ -30,6 +30,7 @@ import me.proton.core.compose.theme.captionNorm
 import me.proton.core.compose.theme.captionWeak
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultSmallNorm
+import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.core.compose.theme.defaultWeak
 import me.proton.core.compose.theme.headlineNorm
 import me.proton.core.compose.theme.overlineNorm
@@ -170,6 +171,21 @@ object Text {
                 color = color,
                 fontWeight = FontWeight.W700
             ),
+            modifier = modifier,
+            textAlign = textAlign
+        )
+    }
+
+    @Composable
+    fun Body2Weak(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textWeak,
+        textAlign: TextAlign = TextAlign.Start
+    ) {
+        Text(
+            text = text,
+            style = ProtonTheme.typography.defaultSmallWeak.copy(color = color),
             modifier = modifier,
             textAlign = textAlign
         )

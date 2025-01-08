@@ -56,6 +56,8 @@ sealed interface BaseIdentityNavigation {
 
     data object AddAttachment : BaseIdentityNavigation
 
+    data object UpsellAttachments : BaseIdentityNavigation
+
     @JvmInline
     value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : BaseIdentityNavigation
 

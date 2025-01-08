@@ -152,6 +152,9 @@ fun CreateNoteScreen(
 
                                     is AttachmentContentEvent.OnDraftAttachmentRetry ->
                                         viewModel.retryUploadDraftAttachment(event.event.metadata)
+
+                                    AttachmentContentEvent.UpsellAttachments ->
+                                        onNavigate(CreateNoteNavigation.UpsellAttachments)
                                 }
                             }
 

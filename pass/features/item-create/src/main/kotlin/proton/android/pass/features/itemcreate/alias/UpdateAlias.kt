@@ -162,6 +162,9 @@ fun UpdateAlias(
 
                             is AttachmentContentEvent.OnDraftAttachmentRetry ->
                                 viewModel.retryUploadDraftAttachment(event.metadata)
+
+                            AttachmentContentEvent.UpsellAttachments ->
+                                onNavigate(UpdateAliasNavigation.UpsellAttachments)
                         }
 
                     AliasContentUiEvent.DismissAttachmentBanner ->

@@ -85,6 +85,7 @@ sealed interface BaseLoginNavigation {
     value class OpenImagePicker(val index: Option<Int>) : BaseLoginNavigation
 
     data object AddAttachment : BaseLoginNavigation
+    data object UpsellAttachments : BaseLoginNavigation
 
     @JvmInline
     value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : BaseLoginNavigation

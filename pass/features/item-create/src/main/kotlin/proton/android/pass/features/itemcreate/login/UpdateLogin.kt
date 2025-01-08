@@ -264,6 +264,9 @@ internal fun UpdateLogin(
 
                             is AttachmentContentEvent.OnDraftAttachmentRetry ->
                                 viewModel.retryUploadDraftAttachment(event.metadata)
+
+                            AttachmentContentEvent.UpsellAttachments ->
+                                onNavigate(BaseLoginNavigation.UpsellAttachments)
                         }
                     }
 

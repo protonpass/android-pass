@@ -159,6 +159,9 @@ fun CreateAliasScreen(
 
                             is AttachmentContentEvent.OnDraftAttachmentRetry ->
                                 viewModel.retryUploadDraftAttachment(event.event.metadata)
+
+                            AttachmentContentEvent.UpsellAttachments ->
+                                onNavigate(CreateAliasNavigation.UpsellAttachments)
                         }
                     }
 

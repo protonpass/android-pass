@@ -21,6 +21,7 @@ package proton.android.pass.features.item.history.restore.presentation
 import androidx.compose.runtime.Stable
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.data.api.repositories.ItemRevision
+import proton.android.pass.domain.attachments.AttachmentId
 
 @Stable
 internal sealed interface ItemHistoryRestoreState {
@@ -35,6 +36,14 @@ internal sealed interface ItemHistoryRestoreState {
         internal val itemRevision: ItemRevision,
         internal val event: ItemHistoryRestoreEvent = ItemHistoryRestoreEvent.Idle,
         internal val isFileAttachmentEnabled: Boolean
-    ) : ItemHistoryRestoreState
+    ) : ItemHistoryRestoreState {
+        private val currentAttachmentIds = currentItemDetailState.attachmentsState.attachmentsList
+            .map { it.id }
+            .toSet()
+        private val revisionAttachmentIds = revisionItemDetailState.attachmentsState.attachmentsList
+            .map { it.id }
+            .toSet()
+        val attachmentsToRestore: Set<AttachmentId> = revisionAttachmentIds - currentAttachmentIds
+    }
 
 }

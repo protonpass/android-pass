@@ -47,6 +47,7 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.attachments.RestoreAttachments
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
 import proton.android.pass.domain.HiddenState
@@ -56,6 +57,7 @@ import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.attachments.Attachment
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.item.history.navigation.ItemHistoryRevisionNavArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -73,6 +75,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     openItemRevision: OpenItemRevision,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val restoreItemRevision: RestoreItemRevision,
+    private val restoreAttachments: RestoreAttachments,
     private val itemDetailsHandler: ItemDetailsHandler,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -286,12 +289,22 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         eventFlow.update { ItemHistoryRestoreEvent.OnRestoreItemCanceled }
     }
 
-    internal fun onRestoreItemConfirmed(itemContents: ItemContents) {
+    internal fun onRestoreItemConfirmed(itemContents: ItemContents, attachmentsToRestore: Set<AttachmentId>) {
         viewModelScope.launch {
             eventFlow.update { ItemHistoryRestoreEvent.OnRestoreItemConfirmed }
 
             runCatching { restoreItemRevision(shareId, itemId, itemContents) }
                 .onSuccess {
+                    runCatching {
+                        restoreAttachments(shareId, itemId, attachmentsToRestore)
+                    }.onFailure {
+                        PassLogger.w(TAG, "Error restoring attachments")
+                        PassLogger.w(TAG, it)
+                    }
+
+                    runCatching {
+                        // unlink new files
+                    }.onFailure { }
                     eventFlow.update { ItemHistoryRestoreEvent.OnItemRestored }
                     snackbarDispatcher(ItemHistoryRestoreSnackbarMessage.RestoreItemRevisionSuccess)
                 }

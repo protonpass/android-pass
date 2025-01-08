@@ -18,11 +18,12 @@
 
 package proton.android.pass.features.item.history.restore
 
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreEvent
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreSelection
 
@@ -35,8 +36,10 @@ internal sealed interface ItemHistoryRestoreUiEvent {
 
     data object OnRestoreClick : ItemHistoryRestoreUiEvent
 
-    @JvmInline
-    value class OnRestoreConfirmClick(val contents: ItemContents) : ItemHistoryRestoreUiEvent
+    data class OnRestoreConfirmClick(
+        val contents: ItemContents,
+        val attachmentsToRestore: Set<AttachmentId>
+    ) : ItemHistoryRestoreUiEvent
 
     data object OnRestoreCancelClick : ItemHistoryRestoreUiEvent
 

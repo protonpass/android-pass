@@ -48,7 +48,6 @@ import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.impl.crypto.ReencryptAttachment
 import proton.android.pass.data.impl.crypto.ReencryptedKey
 import proton.android.pass.data.impl.crypto.ReencryptedMetadata
-import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentWithChunks
 import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
@@ -261,31 +260,24 @@ class AttachmentRepositoryImpl @Inject constructor(
         attachmentId: AttachmentId
     ) {
         withContext(appDispatchers.io) {
+            val attachmentEntity = local.getAttachmentById(shareId, itemId, attachmentId)
+                ?: throw IllegalStateException("Attachment not found")
 
-            val attachment: AttachmentEntity =
-                local.getAttachmentById(shareId, itemId, attachmentId)
-                    ?: throw IllegalStateException("Attachment not found")
-            val item: ItemEntity = localItemDataSource.getById(shareId, itemId)
-                ?: throw IllegalStateException("Item not found")
-
-            val (itemResponse, fileResponse) = remote.restoreOldFile(
+            val (_, fileResponse) = remote.restoreOldFile(
                 userId = userId,
                 shareId = shareId,
                 itemId = itemId,
-                attachmentId = AttachmentId(attachment.id),
-                itemKeyRotation = attachment.itemKeyRotation,
-                fileKey = attachment.key
+                attachmentId = AttachmentId(attachmentEntity.id),
+                itemKeyRotation = attachmentEntity.itemKeyRotation.toInt(),
+                fileKey = attachmentEntity.key
             )
-            val modifiedItem = item.copy(
-                modifyTime = itemResponse.modifyTime
-            )
-            localItemDataSource.upsertItem(modifiedItem)
+
             val entity = fileResponse.toEntity(
                 userId = userId,
                 shareId = shareId,
                 itemId = itemId,
-                reencryptedKey = attachment.key.toEncryptedByteArray(),
-                reencryptedMetadata = attachment.reencryptedMetadata
+                reencryptedKey = attachmentEntity.key.toEncryptedByteArray(),
+                reencryptedMetadata = attachmentEntity.reencryptedMetadata
             )
             local.updateAttachment(entity)
         }

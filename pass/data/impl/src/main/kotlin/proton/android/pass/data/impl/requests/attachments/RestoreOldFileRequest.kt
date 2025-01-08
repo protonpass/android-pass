@@ -27,5 +27,5 @@ data class RestoreOldFileRequest(
     @SerialName("FileKey")
     val fileKey: EncryptedString,
     @SerialName("ItemKeyRotation")
-    val itemKeyRotation: String
+    val itemKeyRotation: Int
 )

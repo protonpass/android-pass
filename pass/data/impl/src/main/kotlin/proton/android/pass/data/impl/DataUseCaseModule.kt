@@ -131,6 +131,7 @@ import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttach
 import proton.android.pass.data.api.usecases.attachments.RemoveDraftAttachment
 import proton.android.pass.data.api.usecases.attachments.RenameAttachments
 import proton.android.pass.data.api.usecases.attachments.RenameDraftAttachment
+import proton.android.pass.data.api.usecases.attachments.RestoreAttachments
 import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeRenamed
 import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeUnlinked
 import proton.android.pass.data.api.usecases.attachments.UploadAttachment
@@ -347,6 +348,7 @@ import proton.android.pass.data.impl.usecases.attachments.ObserveUpdateItemAttac
 import proton.android.pass.data.impl.usecases.attachments.RemoveDraftAttachmentImpl
 import proton.android.pass.data.impl.usecases.attachments.RenameAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.RenameDraftAttachmentImpl
+import proton.android.pass.data.impl.usecases.attachments.RestoreAttachmentsImpl
 import proton.android.pass.data.impl.usecases.attachments.SetAttachmentToBeRenamedImpl
 import proton.android.pass.data.impl.usecases.attachments.SetAttachmentToBeUnlinkedImpl
 import proton.android.pass.data.impl.usecases.attachments.UploadAttachmentImpl
@@ -1130,6 +1132,9 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveAllItemRevisionAttachments(
         impl: ObserveAllItemRevisionAttachmentsImpl
     ): ObserveAllItemRevisionAttachments
+
+    @[Binds Singleton]
+    abstract fun bindRestoreAttachment(impl: RestoreAttachmentsImpl): RestoreAttachments
 
     @[Binds Singleton]
     abstract fun bindResetItemHistory(impl: ResetItemHistoryImpl): ResetItemHistory

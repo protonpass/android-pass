@@ -63,7 +63,7 @@ interface RemoteAttachmentsDataSource {
         shareId: ShareId,
         itemId: ItemId,
         attachmentId: AttachmentId,
-        itemKeyRotation: String,
+        itemKeyRotation: Int,
         fileKey: EncryptedString
     ): FileResult
 

@@ -23,8 +23,11 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.OnAddAttachment
+import proton.android.pass.composecomponents.impl.attachments.AttachmentContentEvent.UpsellAttachments
 import proton.android.pass.composecomponents.impl.buttons.Button
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
@@ -73,7 +76,16 @@ internal fun NoteContent(
                             backgroundColor = PassTheme.colors.noteInteractionNormMinor1,
                             iconId = me.proton.core.presentation.R.drawable.ic_proton_paper_clip,
                             iconTint = PassTheme.colors.noteInteractionNormMajor2,
-                            onClick = { onEvent(OnAttachmentEvent(OnAddAttachment)) }
+                            onClick = {
+                                when (val needsUpgrade = uiState.attachmentsState.needsUpgrade) {
+                                    None -> {}
+                                    is Some -> if (needsUpgrade.value) {
+                                        onEvent(OnAttachmentEvent(UpsellAttachments))
+                                    } else {
+                                        onEvent(OnAttachmentEvent(OnAddAttachment))
+                                    }
+                                }
+                            }
                         )
                     }
                 }

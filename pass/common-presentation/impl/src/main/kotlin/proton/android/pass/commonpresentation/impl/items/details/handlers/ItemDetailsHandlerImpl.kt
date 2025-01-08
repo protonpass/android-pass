@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.common.api.None
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
@@ -151,7 +152,8 @@ class ItemDetailsHandlerImpl @Inject constructor(
             AttachmentsState(
                 draftAttachmentsList = emptyList(),
                 attachmentsList = attachments,
-                loadingAttachments = loadingAttachments
+                loadingAttachments = loadingAttachments,
+                needsUpgrade = None
             )
         }
     }

@@ -180,6 +180,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
                     appNavigator.navigateBackWithResult(it.results)
 
                 BaseLoginNavigation.AddAttachment,
+                BaseLoginNavigation.UpsellAttachments,
                 is BaseLoginNavigation.OpenAttachmentOptions,
                 is BaseLoginNavigation.DeleteAllAttachments,
                 is BaseLoginNavigation.OpenDraftAttachmentOptions ->

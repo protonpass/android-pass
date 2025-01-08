@@ -30,15 +30,20 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.buttons.Button
 import proton.android.pass.composecomponents.impl.icon.Icon
+import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.log.api.PassLogger
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -48,7 +53,8 @@ fun AttachmentHeader(
     fileAmount: Int,
     isEnabled: Boolean,
     isDetail: Boolean = false,
-    onTrashAll: (() -> Unit)
+    needsUpgrade: Option<Boolean>,
+    onTrashAll: () -> Unit
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -75,14 +81,19 @@ fun AttachmentHeader(
             }
             Text.Body1Weak(text)
         }
-        if (fileAmount > 0 && !isDetail) {
-            Button.CircleIcon(
-                backgroundColor = colors.minorPrimary,
-                enabled = isEnabled,
-                iconId = CoreR.drawable.ic_proton_trash,
-                iconTint = colors.majorSecondary,
-                onClick = onTrashAll
-            )
+        PassLogger.i("VicLog", needsUpgrade.toString())
+        when {
+            needsUpgrade is Some && needsUpgrade.value && !isDetail ->
+                PassPlusIcon()
+
+            fileAmount > 0 && !isDetail ->
+                Button.CircleIcon(
+                    backgroundColor = colors.minorPrimary,
+                    enabled = isEnabled,
+                    iconId = CoreR.drawable.ic_proton_trash,
+                    iconTint = colors.majorSecondary,
+                    onClick = onTrashAll
+                )
         }
     }
 }
@@ -98,6 +109,7 @@ fun AttachmentHeaderPreview(
                 colors = passItemColors(input.second),
                 fileAmount = 3,
                 isEnabled = true,
+                needsUpgrade = None,
                 onTrashAll = {}
             )
         }

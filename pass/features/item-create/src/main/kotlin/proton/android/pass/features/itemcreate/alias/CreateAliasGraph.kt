@@ -103,6 +103,7 @@ sealed interface CreateAliasNavigation {
     data object Close : CreateAliasNavigation
     data object CloseBottomsheet : CreateAliasNavigation
     data object AddAttachment : CreateAliasNavigation
+    data object UpsellAttachments : CreateAliasNavigation
 
     @JvmInline
     value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : CreateAliasNavigation

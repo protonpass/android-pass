@@ -189,6 +189,9 @@ fun CreateIdentityScreen(
 
                         is AttachmentContentEvent.OnDraftAttachmentRetry ->
                             viewModel.onRetryUploadDraftAttachment(event.metadata)
+
+                        AttachmentContentEvent.UpsellAttachments ->
+                            onNavigate(BaseIdentityNavigation.UpsellAttachments)
                     }
 
                     IdentityContentEvent.DismissAttachmentBanner ->

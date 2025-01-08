@@ -169,6 +169,9 @@ fun CreateCreditCardScreen(
 
                                     is AttachmentContentEvent.OnDraftAttachmentRetry ->
                                         viewModel.retryUploadDraftAttachment(event.metadata)
+
+                                    AttachmentContentEvent.UpsellAttachments ->
+                                        onNavigate(BaseCreditCardNavigation.UpsellAttachments)
                                 }
 
                             CreditCardContentEvent.DismissAttachmentBanner ->

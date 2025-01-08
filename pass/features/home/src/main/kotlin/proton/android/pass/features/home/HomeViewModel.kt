@@ -288,8 +288,9 @@ class HomeViewModel @Inject constructor(
 
     private val shareListWrapperFlow: Flow<ShareListWrapper> = combine(
         searchOptionsFlow,
-        observeVaults().asLoadingResult()
-    ) { searchOptions: SearchOptions, vaultsResult ->
+        observeVaults().asLoadingResult(),
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1)
+    ) { searchOptions, vaultsResult, isItemSharingEnabled ->
         val vaults: List<Vault> = vaultsResult.getOrNull().orEmpty()
         val selectedShare: Option<ShareUiModel> = searchOptions.vaultSelectionOption
             .let { it as? VaultSelectionOption.Vault }
@@ -301,7 +302,14 @@ class HomeViewModel @Inject constructor(
         if (isVaultSelected) {
             autoSelectAllVaultsIfCannotFindVault(selectedShare, vaults, searchOptions.userId)
         }
-        autoSelectVaultIfSingle(vaults, searchOptions.vaultSelectionOption, searchOptions.userId)
+
+        if (!isItemSharingEnabled) {
+            autoSelectVaultIfSingle(
+                vaults = vaults,
+                vaultSelection = searchOptions.vaultSelectionOption,
+                userId = searchOptions.userId
+            )
+        }
 
         ShareListWrapper(
             shares = vaults.associate { it.shareId to ShareUiModel.fromVault(it) }

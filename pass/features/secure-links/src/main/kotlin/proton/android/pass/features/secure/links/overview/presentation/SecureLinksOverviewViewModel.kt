@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -41,10 +42,11 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.GetVaultByShareId
+import proton.android.pass.crypto.api.extensions.toVault
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.securelinks.SecureLinkId
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksLinkIdNavArgId
 import proton.android.pass.features.secure.links.shared.presentation.SecureLinksSharedSnackbarMessage
@@ -60,7 +62,7 @@ class SecureLinksOverviewViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeSecureLink: ObserveSecureLink,
     observeItemById: ObserveItemById,
-    observeVaultById: GetVaultByShareId,
+    observeShare: ObserveShare,
     userPreferencesRepository: UserPreferencesRepository,
     encryptionContextProvider: EncryptionContextProvider,
     private val clipboardManager: ClipboardManager,
@@ -84,9 +86,9 @@ class SecureLinksOverviewViewModel @Inject constructor(
         }
     }
 
-    private val vaultFlow = secureLinkFlow.flatMapLatest { secureLink ->
-        observeVaultById(shareId = secureLink.shareId)
-    }
+    private val vaultOptionFlow = secureLinkFlow
+        .flatMapLatest { secureLink -> observeShare(shareId = secureLink.shareId) }
+        .mapLatest { share -> share.toVault() }
 
     private val eventFlow = MutableStateFlow<SecureLinksOverviewEvent>(SecureLinksOverviewEvent.Idle)
 
@@ -95,11 +97,11 @@ class SecureLinksOverviewViewModel @Inject constructor(
     internal val state: StateFlow<SecureLinksOverviewState> = combineN(
         secureLinkFlow,
         itemUiModelFlow,
-        vaultFlow,
+        vaultOptionFlow,
         userPreferencesRepository.getUseFaviconsPreference(),
         eventFlow,
         isDeletingLoadingStateFlow
-    ) { secureLink, itemUiModel, vault, useFavIconsPreference, event, isDeletingLoadingState ->
+    ) { secureLink, itemUiModel, vaultOption, useFavIconsPreference, event, isDeletingLoadingState ->
         SecureLinksOverviewState(
             secureLinkUrl = secureLink.url,
             currentViews = secureLink.readCount,
@@ -107,7 +109,7 @@ class SecureLinksOverviewViewModel @Inject constructor(
             maxViewsAllowed = secureLink.maxReadCount,
             itemUiModel = itemUiModel,
             canLoadExternalImages = useFavIconsPreference.value(),
-            shareIcon = vault.icon,
+            vaultOption = vaultOption,
             event = event,
             isDeletingLoadingState = isDeletingLoadingState
         )

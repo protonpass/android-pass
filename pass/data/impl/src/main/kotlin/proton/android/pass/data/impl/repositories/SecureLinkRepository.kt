@@ -34,6 +34,8 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
+import proton.android.pass.data.api.crypto.GetItemKeys
+import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.securelink.SecureLinkOptions
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.LocalShareKeyDataSource
@@ -74,7 +76,9 @@ class SecureLinkRepositoryImpl @Inject constructor(
     private val localShareKeyDataSource: LocalShareKeyDataSource,
     private val remoteSecureLinkDataSource: RemoteSecureLinkDataSource,
     private val secureLinksLocalDataSource: SecureLinksLocalDataSource,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val shareRepository: ShareRepository,
+    private val getItemKeys: GetItemKeys
 ) : SecureLinkRepository {
 
     override suspend fun createSecureLink(
@@ -87,27 +91,30 @@ class SecureLinkRepositoryImpl @Inject constructor(
             "Item not found [shareId=${shareId.id}] [itemId=${itemId.id}]"
         )
 
-        val key = item.encryptedKey ?: throw IllegalStateException(
-            "Item does not have an itemKey [shareId=${shareId.id}] [itemId=${itemId.id}]"
+        val userAddress = shareRepository.getAddressForShareId(userId, shareId)
+
+        val (shareKey, itemKey) = getItemKeys(
+            userAddress = userAddress,
+            shareId = shareId,
+            itemId = itemId
         )
 
-        val decryptedKey = encryptionContextProvider.withEncryptionContext { decrypt(key) }
+        val decryptedItemKey = encryptionContextProvider.withEncryptionContext { decrypt(itemKey.key) }
 
-        val linkKey = EncryptionKey.generate()
-        val encryptedItemKey = encryptionContextProvider.withEncryptionContext(linkKey.clone()) {
-            encrypt(decryptedKey, EncryptionTag.ItemKey)
+        val linkEncryptionKey = EncryptionKey.generate()
+
+        val encryptedItemKey = encryptionContextProvider.withEncryptionContext(linkEncryptionKey.clone()) {
+            encrypt(decryptedItemKey, EncryptionTag.ItemKey)
         }
+
         val encodedEncryptedItemKey = Base64.encodeBase64String(encryptedItemKey.array)
 
-        val shareKeyInstance = localShareKeyDataSource.getLatestKeyForShare(shareId).firstOrNull()
-            ?: throw IllegalStateException("No share key found for share [shareId=${shareId.id}]")
-
-        val shareKey = encryptionContextProvider.withEncryptionContext {
-            EncryptionKey(decrypt(shareKeyInstance.symmetricallyEncryptedKey))
+        val shareEncryptionKey = encryptionContextProvider.withEncryptionContext {
+            EncryptionKey(decrypt(shareKey.key))
         }
 
-        val encryptedLinkKey = encryptionContextProvider.withEncryptionContext(shareKey) {
-            encrypt(linkKey.value(), EncryptionTag.LinkKey)
+        val encryptedLinkKey = encryptionContextProvider.withEncryptionContext(shareEncryptionKey) {
+            encrypt(linkEncryptionKey.value(), EncryptionTag.LinkKey)
         }
 
         val encodedEncryptedLinkKey = Base64.encodeBase64String(encryptedLinkKey.array)
@@ -118,7 +125,7 @@ class SecureLinkRepositoryImpl @Inject constructor(
             maxReadCount = options.maxReadCount,
             encryptedItemKey = encodedEncryptedItemKey,
             encryptedLinkKey = encodedEncryptedLinkKey,
-            linkKeyShareKeyRotation = shareKeyInstance.rotation
+            linkKeyShareKeyRotation = shareKey.rotation
         )
 
         val response = remoteSecureLinkDataSource.createSecureLink(
@@ -128,7 +135,7 @@ class SecureLinkRepositoryImpl @Inject constructor(
             request = request
         )
 
-        val encodedLinkKey = Base64.encodeBase64String(linkKey.value(), Base64.Mode.UrlSafe)
+        val encodedLinkKey = Base64.encodeBase64String(linkEncryptionKey.value(), Base64.Mode.UrlSafe)
         val concatenated = "${response.url}#$encodedLinkKey"
 
         secureLinksLocalDataSource.create(

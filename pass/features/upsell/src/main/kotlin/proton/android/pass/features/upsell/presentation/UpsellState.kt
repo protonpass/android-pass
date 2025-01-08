@@ -117,7 +117,7 @@ internal data class UpsellState(
         PaidFeature.FileAttachments,
         PaidFeature.ViewMissing2fa -> buildList {
             if (isFileAttachmentsEnabled) {
-                add(CompR.drawable.ic_shield_union to R.string.upsell_paid_feature_file_attachments)
+                add(CoreR.drawable.ic_proton_paper_clip to R.string.upsell_paid_feature_file_attachments)
             }
             add(CompR.drawable.ic_shield_union to R.string.upsell_paid_feature_dark_web_monitoring)
             add(CoreR.drawable.ic_proton_user to R.string.upsell_paid_feature_sentinel)

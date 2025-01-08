@@ -926,6 +926,12 @@ fun NavGraphBuilder.appGraph(
                         destination = DeleteAllAttachmentsDialogNavItem,
                         route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
                     )
+
+                BaseLoginNavigation.UpsellAttachments ->
+                    appNavigator.navigate(
+                        destination = UpsellNavItem,
+                        route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
+                    )
             }
         }
     )
@@ -952,6 +958,12 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = DeleteAllAttachmentsDialogNavItem,
                         route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
+                    )
+
+                CreateNoteNavigation.UpsellAttachments ->
+                    appNavigator.navigate(
+                        destination = UpsellNavItem,
+                        route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
                     )
             }
         }
@@ -987,6 +999,12 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = DeleteAllAttachmentsDialogNavItem,
                         route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
+                    )
+
+                UpdateNoteNavigation.UpsellAttachments ->
+                    appNavigator.navigate(
+                        destination = UpsellNavItem,
+                        route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
                     )
             }
         }
@@ -1026,6 +1044,12 @@ fun NavGraphBuilder.appGraph(
                     destination = DeleteAllAttachmentsDialogNavItem,
                     route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
                 )
+
+            BaseCreditCardNavigation.UpsellAttachments ->
+                appNavigator.navigate(
+                    destination = UpsellNavItem,
+                    route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
+                )
         }
     }
     updateCreditCardGraph {
@@ -1064,6 +1088,12 @@ fun NavGraphBuilder.appGraph(
                 appNavigator.navigate(
                     destination = DeleteAllAttachmentsDialogNavItem,
                     route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
+                )
+
+            BaseCreditCardNavigation.UpsellAttachments ->
+                appNavigator.navigate(
+                    destination = UpsellNavItem,
+                    route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
                 )
         }
     }
@@ -1106,6 +1136,12 @@ fun NavGraphBuilder.appGraph(
                         destination = DeleteAllAttachmentsDialogNavItem,
                         route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
                     )
+
+                CreateAliasNavigation.UpsellAttachments ->
+                    appNavigator.navigate(
+                        destination = UpsellNavItem,
+                        route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
+                    )
             }
         }
     )
@@ -1141,6 +1177,12 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = DeleteAllAttachmentsDialogNavItem,
                         route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
+                    )
+
+                UpdateAliasNavigation.UpsellAttachments ->
+                    appNavigator.navigate(
+                        destination = UpsellNavItem,
+                        route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
                     )
             }
         }
@@ -1259,6 +1301,12 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = DeleteAllAttachmentsDialogNavItem,
                         route = DeleteAllAttachmentsDialogNavItem.createNavRoute(it.attachmentIds)
+                    )
+
+                BaseIdentityNavigation.UpsellAttachments ->
+                    appNavigator.navigate(
+                        destination = UpsellNavItem,
+                        route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
                     )
             }
         }

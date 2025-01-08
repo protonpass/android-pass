@@ -56,6 +56,7 @@ sealed interface UpdateAliasNavigation {
     data object Upgrade : UpdateAliasNavigation
     data object Close : UpdateAliasNavigation
     data object AddAttachment : UpdateAliasNavigation
+    data object UpsellAttachments : UpdateAliasNavigation
 
     data class OpenAttachmentOptions(
         val shareId: ShareId,

@@ -19,8 +19,10 @@
 package proton.android.pass.features.upsell.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.upsell.navigation.UpsellNavDestination
 import proton.android.pass.features.upsell.presentation.UpsellViewModel
 
@@ -30,9 +32,10 @@ fun UpsellScreen(
     onNavigated: (UpsellNavDestination) -> Unit,
     viewModel: UpsellViewModel = hiltViewModel()
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
     UpsellContent(
         modifier = modifier,
         onNavigated = onNavigated,
-        state = viewModel.state
+        state = state
     )
 }

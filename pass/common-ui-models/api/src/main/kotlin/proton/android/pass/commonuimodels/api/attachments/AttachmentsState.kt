@@ -19,6 +19,8 @@
 package proton.android.pass.commonuimodels.api.attachments
 
 import androidx.compose.runtime.Immutable
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.domain.attachments.Attachment
 import proton.android.pass.domain.attachments.AttachmentId
 import proton.android.pass.domain.attachments.DraftAttachment
@@ -28,7 +30,8 @@ import java.net.URI
 data class AttachmentsState(
     val draftAttachmentsList: List<DraftAttachment>,
     val attachmentsList: List<Attachment>,
-    val loadingAttachments: Set<AttachmentId>
+    val loadingAttachments: Set<AttachmentId>,
+    val needsUpgrade: Option<Boolean>
 ) {
 
     val hasAnyAttachment: Boolean
@@ -60,7 +63,8 @@ data class AttachmentsState(
         val Initial = AttachmentsState(
             draftAttachmentsList = emptyList(),
             attachmentsList = emptyList(),
-            loadingAttachments = emptySet()
+            loadingAttachments = emptySet(),
+            needsUpgrade = None
         )
     }
 }

@@ -78,4 +78,8 @@ sealed interface ItemDetailsNavDestination {
     @JvmInline
     value class LeaveItemShare(val shareId: ShareId) : ItemDetailsNavDestination
 
+    data class ConfirmResetHistory(
+        val shareId: ShareId,
+        val itemId: ItemId
+    ) : ItemDetailsNavDestination
 }

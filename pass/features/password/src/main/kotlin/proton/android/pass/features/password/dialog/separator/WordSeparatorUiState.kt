@@ -42,7 +42,25 @@ internal data class WordSeparatorUiState(
     internal val event: WordSeparatorUiEvent
 ) {
 
+    private val areNumbersAllowed: Boolean = when (configOption) {
+        None -> false
+        is Some -> configOption.value.canWordsContainNumbers
+    }
+
     internal val options: PersistentList<PasswordWordSeparator> = PasswordWordSeparator.entries
+        .filter { passwordWordSeparator ->
+            if (areNumbersAllowed) true
+            else when (passwordWordSeparator) {
+                PasswordWordSeparator.Comma,
+                PasswordWordSeparator.Hyphen,
+                PasswordWordSeparator.Period,
+                PasswordWordSeparator.Space,
+                PasswordWordSeparator.Underscore -> true
+
+                PasswordWordSeparator.Numbers,
+                PasswordWordSeparator.NumbersAndSymbols -> false
+            }
+        }
         .toPersistentList()
 
     internal val selected: Option<PasswordWordSeparator> = when (configOption) {

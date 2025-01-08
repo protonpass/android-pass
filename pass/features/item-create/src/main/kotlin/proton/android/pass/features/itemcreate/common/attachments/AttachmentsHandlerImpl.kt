@@ -31,10 +31,12 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
+import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.ObserveUpdateItemAttachments
@@ -61,7 +63,8 @@ class AttachmentsHandlerImpl @Inject constructor(
     private val clearAttachments: ClearAttachments,
     private val observeUpdateItemAttachments: ObserveUpdateItemAttachments,
     private val fileHandler: FileHandler,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    observeUserAccessData: ObserveUserAccessData
 ) : AttachmentsHandler {
 
     private val shareIdState = MutableStateFlow<Option<ShareId>>(None)
@@ -85,8 +88,15 @@ class AttachmentsHandlerImpl @Inject constructor(
         draftAttachmentRepository.observeAll(),
         attachments,
         loadingAttachments,
-        ::AttachmentsState
-    ).distinctUntilChanged()
+        observeUserAccessData()
+    ) { draftAttachments, attachments, loadingAttachments, userAccessData ->
+        AttachmentsState(
+            draftAttachmentsList = draftAttachments,
+            attachmentsList = attachments,
+            loadingAttachments = loadingAttachments,
+            needsUpgrade = userAccessData?.storageAllowed?.let { !it }.toOption()
+        )
+    }.distinctUntilChanged()
 
     override fun openDraftAttachment(
         contextHolder: ClassHolder<Context>,

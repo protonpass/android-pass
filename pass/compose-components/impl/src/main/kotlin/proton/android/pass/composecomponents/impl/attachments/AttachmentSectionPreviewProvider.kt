@@ -21,6 +21,7 @@ package proton.android.pass.composecomponents.impl.attachments
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import proton.android.pass.common.api.None
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -167,6 +168,7 @@ class AttachmentSectionPreviewProvider :
     ) = AttachmentsState(
         draftAttachmentsList = draftAttachments,
         attachmentsList = attachments,
-        loadingAttachments = loadingAttachments
+        loadingAttachments = loadingAttachments,
+        needsUpgrade = None
     )
 }

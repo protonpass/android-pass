@@ -26,6 +26,8 @@ import proton.android.pass.domain.attachments.FileMetadata
 import java.net.URI
 
 sealed interface AttachmentContentEvent {
+    data object UpsellAttachments : AttachmentContentEvent
+
     data object OnAddAttachment : AttachmentContentEvent
 
     data object OnDeleteAllAttachments : AttachmentContentEvent

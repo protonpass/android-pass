@@ -43,7 +43,6 @@ import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
-import proton.android.pass.log.api.PassLogger
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -81,7 +80,6 @@ fun AttachmentHeader(
             }
             Text.Body1Weak(text)
         }
-        PassLogger.i("VicLog", needsUpgrade.toString())
         when {
             needsUpgrade is Some && needsUpgrade.value && !isDetail ->
                 PassPlusIcon()

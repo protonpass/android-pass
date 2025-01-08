@@ -48,6 +48,7 @@ import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.domain.AliasSuffix
 import proton.android.pass.domain.CustomFieldContent
@@ -111,6 +112,9 @@ class CreateLoginScreenTest {
     lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
 
     @Inject
+    lateinit var observeUserAccessData: TestObserveUserAccessData
+
+    @Inject
     lateinit var draftRepository: TestDraftRepository
 
     @Inject
@@ -143,6 +147,7 @@ class CreateLoginScreenTest {
         )
         totpManager.setParseResult(Result.success(totpSpec))
         observeVaults.sendResult(Result.success(listOf(vault)))
+        observeUserAccessData.sendValue(null)
     }
 
 

@@ -104,7 +104,7 @@ class RemoteAttachmentsDataSourceImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         attachmentId: AttachmentId,
-        itemKeyRotation: String,
+        itemKeyRotation: Int,
         fileKey: EncryptedString
     ): FileResult = api.get<PasswordManagerApi>(userId)
         .invoke {

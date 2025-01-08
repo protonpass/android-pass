@@ -67,7 +67,13 @@ fun ItemDetailsMenuBottomSheet(
                 onNavigated(ItemDetailsNavDestination.DismissBottomSheet)
             }
 
-            is ItemDetailsMenuEvent.OnConfirmResetHistory -> TODO()
+            is ItemDetailsMenuEvent.OnConfirmResetHistory ->
+                onNavigated(
+                    ItemDetailsNavDestination.ConfirmResetHistory(
+                        shareId = event.shareId,
+                        itemId = event.itemId
+                    )
+                )
         }
 
         onConsumeEvent(state.event)

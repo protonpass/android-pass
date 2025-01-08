@@ -34,9 +34,10 @@ class RemoveDraftAttachmentImpl @Inject constructor(
 
     override fun invoke(uri: URI) {
         val draft = draftAttachmentRepository.getAll()
-            .filterIsInstance<DraftAttachment.Success>()
             .first { it.metadata.uri == uri }
-        pendingAttachmentLinkRepository.removeToLink(draft.pendingAttachmentId)
+        if (draft is DraftAttachment.Success) {
+            pendingAttachmentLinkRepository.removeToLink(draft.pendingAttachmentId)
+        }
         draftAttachmentRepository.remove(uri)
     }
 }

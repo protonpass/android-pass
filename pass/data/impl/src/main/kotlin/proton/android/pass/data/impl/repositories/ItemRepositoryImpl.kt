@@ -1022,6 +1022,9 @@ class ItemRepositoryImpl @Inject constructor(
         itemId: ItemId
     ) {
         val revision = remoteItemDataSource.deleteItemRevisions(userId, shareId, itemId)
+        val share = shareRepository.getById(userId, shareId)
+        val entity = createItemEntity(userId, revision, share)
+        localItemDataSource.upsertItem(entity)
     }
 
     private suspend fun calculatePlanForSetShareItems(

@@ -21,6 +21,8 @@ package proton.android.pass.features.item.options.shared.navigation
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.features.item.options.aliases.trash.dialogs.navigation.ItemOptionsAliasTrashDialogNavItem
 import proton.android.pass.features.item.options.aliases.trash.dialogs.ui.ItemOptionsAliasTrashDialog
+import proton.android.pass.features.item.options.confirmresethistory.navigation.ConfirmResetHistoryDialogNavItem
+import proton.android.pass.features.item.options.confirmresethistory.ui.ConfirmResetHistoryDialog
 import proton.android.pass.navigation.api.dialog
 
 fun NavGraphBuilder.itemOptionsNavGraph(onNavigated: (ItemOptionsNavDestination) -> Unit) {
@@ -29,4 +31,7 @@ fun NavGraphBuilder.itemOptionsNavGraph(onNavigated: (ItemOptionsNavDestination)
         ItemOptionsAliasTrashDialog(onNavigated = onNavigated)
     }
 
+    dialog(navItem = ConfirmResetHistoryDialogNavItem) {
+        ConfirmResetHistoryDialog(onNavigated = onNavigated)
+    }
 }

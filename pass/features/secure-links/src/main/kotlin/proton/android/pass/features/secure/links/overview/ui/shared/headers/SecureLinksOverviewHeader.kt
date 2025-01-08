@@ -46,8 +46,7 @@ internal fun SecureLinksOverviewHeader(
 
         ItemCategory.Alias,
         ItemCategory.Password,
-        ItemCategory.Unknown -> {
-        }
+        ItemCategory.Unknown -> Unit
     }
 
 }

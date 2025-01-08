@@ -68,6 +68,7 @@ dependencies {
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.domain)
+    implementation(projects.pass.preferences.api)
     implementation(projects.pass.navigation.api)
 
     implementation(libs.androidx.compose.material)

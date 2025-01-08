@@ -91,6 +91,7 @@ internal fun ItemHistoryRestoreTab(
                     is AttachmentContentEvent.OnAttachmentOpen,
                     is AttachmentContentEvent.OnAttachmentOptions,
                     AttachmentContentEvent.OnDeleteAllAttachments,
+                    AttachmentContentEvent.UpsellAttachments,
                     is AttachmentContentEvent.OnDraftAttachmentOpen,
                     is AttachmentContentEvent.OnDraftAttachmentOptions,
                     is AttachmentContentEvent.OnDraftAttachmentRetry -> {

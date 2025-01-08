@@ -72,4 +72,6 @@ sealed interface CreateNoteNavigation {
 
     @JvmInline
     value class OpenDraftAttachmentOptions(val uri: URI) : CreateNoteNavigation
+
+    data object UpsellAttachments : CreateNoteNavigation
 }

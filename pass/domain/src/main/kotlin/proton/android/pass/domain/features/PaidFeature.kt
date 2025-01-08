@@ -25,5 +25,6 @@ enum class PaidFeature {
     SecureLinks,
     SentinelEssential,
     SentinelFree,
-    ViewMissing2fa
+    ViewMissing2fa,
+    FileAttachments
 }

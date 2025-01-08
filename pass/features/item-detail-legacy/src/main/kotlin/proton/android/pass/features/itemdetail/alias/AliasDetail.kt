@@ -291,6 +291,7 @@ fun AliasDetail(
                                 is AttachmentContentEvent.OnAttachmentOptions,
                                 AttachmentContentEvent.OnAddAttachment,
                                 AttachmentContentEvent.OnDeleteAllAttachments,
+                                AttachmentContentEvent.UpsellAttachments,
                                 is AttachmentContentEvent.OnDraftAttachmentOpen,
                                 is AttachmentContentEvent.OnDraftAttachmentRetry,
                                 is AttachmentContentEvent.OnDraftAttachmentOptions ->

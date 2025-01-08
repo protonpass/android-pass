@@ -123,7 +123,12 @@ private fun ItemHistoryRestoreDetails(
         isVisible = isDialogVisible,
         isLoading = isDialogLoading,
         onConfirm = {
-            onEvent(ItemHistoryRestoreUiEvent.OnRestoreConfirmClick(revisionItemDetailState.itemContents))
+            onEvent(
+                ItemHistoryRestoreUiEvent.OnRestoreConfirmClick(
+                    contents = revisionItemDetailState.itemContents,
+                    attachmentsToRestore = attachmentsToRestore
+                )
+            )
         },
         onDismiss = {
             onEvent(ItemHistoryRestoreUiEvent.OnRestoreCancelClick)

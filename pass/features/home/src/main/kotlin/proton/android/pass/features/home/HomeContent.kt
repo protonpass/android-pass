@@ -122,8 +122,11 @@ internal fun HomeContent(
                         stringResource(R.string.search_topbar_placeholder_pinning)
                     } else {
                         when (uiState.homeListUiState.homeVaultSelection) {
-                            VaultSelectionOption.AllVaults ->
+                            VaultSelectionOption.AllVaults -> if (uiState.isItemSharingEnabled) {
+                                stringResource(R.string.search_topbar_placeholder_all_items)
+                            } else {
                                 stringResource(R.string.search_topbar_placeholder_all_vaults)
+                            }
 
                             VaultSelectionOption.Trash ->
                                 stringResource(R.string.search_topbar_placeholder_trash)

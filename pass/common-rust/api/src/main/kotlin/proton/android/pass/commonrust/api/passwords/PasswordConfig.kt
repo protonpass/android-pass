@@ -61,6 +61,8 @@ sealed interface PasswordConfig {
         private val passwordMaxWords: Int? = null
     ) : PasswordConfig {
 
+        val canWordsContainNumbers: Boolean = includeNumbers || canToggleNumbers
+
         val minWordsCount: Int = passwordMinWords
             ?.takeIf { it <= PASSWORD_MAX_LENGTH }
             ?.coerceIn(range = PASSWORD_MIN_WORDS..PASSWORD_MAX_WORDS)
@@ -73,8 +75,20 @@ sealed interface PasswordConfig {
 
         val wordsCount: Int = passwordWordsCount.coerceIn(range = minWordsCount..maxWordsCount)
 
-        val wordSeparator: PasswordWordSeparator = passwordWordsSeparator
+        val wordSeparator: PasswordWordSeparator = if (canWordsContainNumbers) {
+            passwordWordsSeparator
+        } else {
+            when (passwordWordsSeparator) {
+                PasswordWordSeparator.Comma,
+                PasswordWordSeparator.Hyphen,
+                PasswordWordSeparator.Period,
+                PasswordWordSeparator.Space,
+                PasswordWordSeparator.Underscore -> passwordWordsSeparator
 
+                PasswordWordSeparator.Numbers,
+                PasswordWordSeparator.NumbersAndSymbols -> PasswordWordSeparator.Hyphen
+            }
+        }
     }
 
     private companion object {

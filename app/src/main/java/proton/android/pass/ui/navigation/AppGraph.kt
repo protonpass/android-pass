@@ -79,6 +79,7 @@ import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
 import proton.android.pass.features.item.options.aliases.trash.dialogs.navigation.ItemOptionsAliasTrashDialogNavItem
+import proton.android.pass.features.item.options.confirmresethistory.navigation.ConfirmResetHistoryDialogNavItem
 import proton.android.pass.features.item.options.shared.navigation.ItemOptionsNavDestination
 import proton.android.pass.features.item.options.shared.navigation.itemOptionsNavGraph
 import proton.android.pass.features.item.trash.shared.navigation.ItemTrashNavDestination
@@ -1491,7 +1492,13 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 is ItemDetailNavigation.OnConfirmResetHistory -> dismissBottomSheet {
-
+                    appNavigator.navigate(
+                        destination = ConfirmResetHistoryDialogNavItem,
+                        route = ConfirmResetHistoryDialogNavItem.createNavRoute(
+                            shareId = it.shareId,
+                            itemId = it.itemId
+                        )
+                    )
                 }
             }
         }
@@ -1619,6 +1626,16 @@ fun NavGraphBuilder.appGraph(
                         destination = ItemDetailsLeaveNavItem,
                         route = ItemDetailsLeaveNavItem.createNavRoute(
                             shareId = itemDetailsNavDestination.shareId
+                        )
+                    )
+                }
+
+                is ItemDetailsNavDestination.ConfirmResetHistory -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = ConfirmResetHistoryDialogNavItem,
+                        route = ConfirmResetHistoryDialogNavItem.createNavRoute(
+                            shareId = itemDetailsNavDestination.shareId,
+                            itemId = itemDetailsNavDestination.itemId
                         )
                     )
                 }

@@ -139,6 +139,7 @@ fun ItemDetailsScreen(
                             )
                         is AttachmentContentEvent.OnAttachmentOptions,
                         AttachmentContentEvent.OnAddAttachment,
+                        AttachmentContentEvent.UpsellAttachments,
                         AttachmentContentEvent.OnDeleteAllAttachments,
                         is AttachmentContentEvent.OnDraftAttachmentOpen,
                         is AttachmentContentEvent.OnDraftAttachmentRetry,

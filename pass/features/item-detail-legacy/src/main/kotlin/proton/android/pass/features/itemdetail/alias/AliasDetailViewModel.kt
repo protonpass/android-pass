@@ -42,6 +42,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
@@ -283,7 +284,8 @@ class AliasDetailViewModel @Inject constructor(
                     attachmentsState = AttachmentsState(
                         draftAttachmentsList = emptyList(), // no drafts in detail
                         attachmentsList = attachments,
-                        loadingAttachments = loadingAttachments
+                        loadingAttachments = loadingAttachments,
+                        needsUpgrade = None
                     ),
                     hasMoreThanOneVault = details.hasMoreThanOneVault
                 )

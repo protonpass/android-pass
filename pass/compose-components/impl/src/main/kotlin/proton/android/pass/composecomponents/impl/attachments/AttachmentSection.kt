@@ -29,6 +29,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -78,6 +80,7 @@ fun AttachmentSection(
             isEnabled = attachmentsState.isEnabled,
             fileAmount = attachmentsState.size,
             isDetail = isDetail,
+            needsUpgrade = attachmentsState.needsUpgrade,
             onTrashAll = { onEvent(AttachmentContentEvent.OnDeleteAllAttachments) }
         )
         Column {
@@ -173,7 +176,16 @@ fun AttachmentSection(
                 ),
                 colors = itemColors,
                 isEnabled = attachmentsState.isEnabled,
-                onClick = { onEvent(OnAddAttachment) }
+                onClick = {
+                    when (val needsUpgrade = attachmentsState.needsUpgrade) {
+                        None -> {}
+                        is Some -> if (needsUpgrade.value) {
+                            onEvent(AttachmentContentEvent.UpsellAttachments)
+                        } else {
+                            onEvent(OnAddAttachment)
+                        }
+                    }
+                }
             )
         }
     }

@@ -227,10 +227,12 @@ fun NoteDetail(
                                 is AttachmentContentEvent.OnAttachmentOptions,
                                 AttachmentContentEvent.OnAddAttachment,
                                 AttachmentContentEvent.OnDeleteAllAttachments,
+                                AttachmentContentEvent.UpsellAttachments,
                                 is AttachmentContentEvent.OnDraftAttachmentOpen,
                                 is AttachmentContentEvent.OnDraftAttachmentRetry,
                                 is AttachmentContentEvent.OnDraftAttachmentOptions ->
                                     throw IllegalStateException("Action not allowed: $it")
+
                             }
                         }
                     )

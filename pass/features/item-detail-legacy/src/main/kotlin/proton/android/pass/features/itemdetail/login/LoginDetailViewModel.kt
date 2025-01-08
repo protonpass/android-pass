@@ -482,7 +482,8 @@ class LoginDetailViewModel @Inject constructor(
                     attachmentsState = AttachmentsState(
                         draftAttachmentsList = emptyList(), // no drafts in detail
                         attachmentsList = details.attachments,
-                        loadingAttachments = loadingAttachments
+                        loadingAttachments = loadingAttachments,
+                        needsUpgrade = None
                     ),
                     hasMoreThanOneVault = details.hasMoreThanOneVault
                 )

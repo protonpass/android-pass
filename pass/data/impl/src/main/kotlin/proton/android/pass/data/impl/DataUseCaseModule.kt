@@ -157,7 +157,7 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
-import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.data.api.usecases.capabilities.CanShareShare
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
@@ -372,7 +372,7 @@ import proton.android.pass.data.impl.usecases.capabilities.CanCreateItemInVaultI
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateVaultImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanManageVaultAccessImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanMigrateVaultImpl
-import proton.android.pass.data.impl.usecases.capabilities.CanShareVaultImpl
+import proton.android.pass.data.impl.usecases.capabilities.CanShareShareImpl
 import proton.android.pass.data.impl.usecases.defaultvault.SetDefaultVaultImpl
 import proton.android.pass.data.impl.usecases.extrapassword.AuthWithExtraPasswordImpl
 import proton.android.pass.data.impl.usecases.extrapassword.AuthWithExtraPasswordListenerImpl
@@ -669,7 +669,7 @@ abstract class DataUseCaseModule {
     abstract fun bindLeaveVault(impl: LeaveShareImpl): LeaveShare
 
     @Binds
-    abstract fun bindCanShareVault(impl: CanShareVaultImpl): CanShareVault
+    abstract fun bindCanShareShare(impl: CanShareShareImpl): CanShareShare
 
     @Binds
     abstract fun bindCanMigrateVault(impl: CanMigrateVaultImpl): CanMigrateVault

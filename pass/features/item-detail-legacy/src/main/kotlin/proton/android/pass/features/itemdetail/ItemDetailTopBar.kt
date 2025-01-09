@@ -131,12 +131,12 @@ private fun ItemTopBarActions(
             PassSharingShareIcon(
                 shareSharedCount = shareSharedCount,
                 itemCategory = itemCategory,
-                isEnabled = actions.canShare.value(),
+                isEnabled = actions.canShare.value,
                 onClick = onShareClick
             )
         } else {
             ItemDetailShareButton(
-                isEnabled = actions.canShare.value(),
+                isEnabled = actions.canShare.value,
                 iconBackgroundColor = iconBackgroundColor,
                 iconColor = iconColor,
                 onShareClick = onShareClick

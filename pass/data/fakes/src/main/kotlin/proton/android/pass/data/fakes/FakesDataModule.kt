@@ -148,7 +148,7 @@ import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
-import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.data.api.usecases.capabilities.CanShareShare
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
@@ -239,7 +239,7 @@ import proton.android.pass.data.fakes.usecases.TestCanDisplayTotp
 import proton.android.pass.data.fakes.usecases.TestCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
-import proton.android.pass.data.fakes.usecases.TestCanShareVault
+import proton.android.pass.data.fakes.usecases.TestCanShareShare
 import proton.android.pass.data.fakes.usecases.TestCancelShareInvite
 import proton.android.pass.data.fakes.usecases.TestCheckAddressesCanBeInvited
 import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
@@ -603,7 +603,7 @@ abstract class FakesDataModule {
     abstract fun bindLeaveVault(impl: TestLeaveShare): LeaveShare
 
     @Binds
-    abstract fun bindCanShareVault(impl: TestCanShareVault): CanShareVault
+    abstract fun bindCanShareShare(impl: TestCanShareShare): CanShareShare
 
     @Binds
     abstract fun bindCanMigrateVault(impl: TestCanMigrateVault): CanMigrateVault

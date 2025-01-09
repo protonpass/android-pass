@@ -83,7 +83,7 @@ import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
-import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.data.api.usecases.capabilities.CanShareShare
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.CustomFieldContent
@@ -146,7 +146,7 @@ class LoginDetailViewModel @Inject constructor(
     private val getItemByAliasEmail: GetItemByAliasEmail,
     private val telemetryManager: TelemetryManager,
     private val canDisplayTotp: CanDisplayTotp,
-    private val canShareVault: CanShareVault,
+    private val canShareShare: CanShareShare,
     private val passwordScorer: PasswordScorer,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val pinItem: PinItem,
@@ -312,7 +312,7 @@ class LoginDetailViewModel @Inject constructor(
                 startObservingTotpCustomFields(isPaid, itemUiModel)
 
                 val canShareVault = details.vault
-                    ?.let { vault -> canShareVault(vault).value() }
+                    ?.let { vault -> canShareShare(vault.shareId).value }
                     ?: false
 
                 val shareClickAction = when {

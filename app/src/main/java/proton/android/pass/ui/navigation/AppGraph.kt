@@ -46,6 +46,7 @@ import proton.android.pass.features.attachments.deleteall.navigation.DeleteAllAt
 import proton.android.pass.features.attachments.filepicker.navigation.FilePickerNavItem
 import proton.android.pass.features.attachments.mediapicker.navigation.MediaPickerNavItem
 import proton.android.pass.features.attachments.renameattachment.navigation.RenameAttachmentNavItem
+import proton.android.pass.features.attachments.storagefull.navigation.StorageFullNavItem
 import proton.android.pass.features.auth.Auth
 import proton.android.pass.features.auth.AuthNavigation
 import proton.android.pass.features.auth.AuthOrigin
@@ -737,6 +738,8 @@ fun NavGraphBuilder.appGraph(
                     destination = SimpleLoginSyncSettingsNavItem,
                     route = SimpleLoginSyncSettingsNavItem.createNavRoute(it.shareId)
                 )
+
+                ProfileNavigation.StorageFull -> appNavigator.navigate(StorageFullNavItem)
             }
         }
     )
@@ -2509,6 +2512,13 @@ fun NavGraphBuilder.appGraph(
                 appNavigator.navigate(
                     destination = RenameAttachmentNavItem,
                     route = RenameAttachmentNavItem.createNavRoute(it.uri)
+                )
+            }
+
+            AttachmentsNavigation.Upgrade -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = UpsellNavItem,
+                    route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
                 )
             }
         }

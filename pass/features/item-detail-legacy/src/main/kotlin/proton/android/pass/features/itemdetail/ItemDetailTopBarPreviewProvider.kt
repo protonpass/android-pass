@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.data.api.usecases.ItemActions
-import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
+import proton.android.pass.data.api.usecases.capabilities.CanShareShareStatus
 
 class ItemDetailTopBarPreviewProvider : PreviewParameterProvider<ItemDetailTopBarPreview> {
     override val values: Sequence<ItemDetailTopBarPreview>
@@ -41,7 +41,7 @@ class ItemDetailTopBarPreviewProvider : PreviewParameterProvider<ItemDetailTopBa
                             color = color,
                             closeBackgroundColor = color.copy(alpha = 0.8f),
                             actions = ItemActions(
-                                canShare = CanShareVaultStatus.CanShare(1),
+                                canShare = CanShareShareStatus.CanShare(1),
                                 canEdit = ItemActions.CanEditActionState.Enabled,
                                 canMoveToOtherVault = ItemActions.CanMoveToOtherVaultState.Enabled,
                                 canMoveToTrash = true,

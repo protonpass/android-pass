@@ -38,6 +38,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.HiddenState
@@ -81,6 +82,9 @@ class CreateCreditCardScreenTest {
     @Inject
     lateinit var canPerformPaidAction: TestCanPerformPaidAction
 
+    @Inject
+    lateinit var observeUserAccessData: TestObserveUserAccessData
+
     @Before
     fun setup() {
         hiltRule.inject()
@@ -102,6 +106,7 @@ class CreateCreditCardScreenTest {
         )
         observeVaults.sendResult(Result.success(listOf(vault)))
         canPerformPaidAction.setResult(true)
+        observeUserAccessData.sendValue(null)
     }
 
     @Test

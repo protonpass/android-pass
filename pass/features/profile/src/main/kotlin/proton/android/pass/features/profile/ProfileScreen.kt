@@ -137,6 +137,7 @@ fun ProfileScreen(
                 ProfileUiEvent.OnLoginCountClick -> viewModel.onLoginCountClick()
                 ProfileUiEvent.OnMFACountClick -> viewModel.onMFACountClick()
                 ProfileUiEvent.OnNoteCountClick -> viewModel.onNoteCountClick()
+                ProfileUiEvent.OnStorageFullClick -> onNavigateEvent(ProfileNavigation.StorageFull)
             }
         }
     )

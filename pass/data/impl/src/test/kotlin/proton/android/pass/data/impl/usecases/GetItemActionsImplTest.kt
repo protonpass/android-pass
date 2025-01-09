@@ -23,9 +23,9 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.usecases.ItemActions
-import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
+import proton.android.pass.data.api.usecases.capabilities.CanShareShareStatus
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
-import proton.android.pass.data.fakes.usecases.TestCanShareVault
+import proton.android.pass.data.fakes.usecases.TestCanShareShare
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveAllShares
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveShare
@@ -44,7 +44,7 @@ internal class GetItemActionsImplTest {
     private lateinit var instance: GetItemActionsImpl
     private lateinit var getItemById: FakeGetItemById
     private lateinit var observeUserPlan: TestGetUserPlan
-    private lateinit var canShareVault: TestCanShareVault
+    private lateinit var canShareVault: TestCanShareShare
     private lateinit var observeShare: FakeObserveShare
     private lateinit var observeAllShares: TestObserveAllShares
 
@@ -52,7 +52,7 @@ internal class GetItemActionsImplTest {
     fun setup() {
         getItemById = FakeGetItemById()
         observeUserPlan = TestGetUserPlan()
-        canShareVault = TestCanShareVault()
+        canShareVault = TestCanShareShare()
         observeShare = FakeObserveShare()
         observeAllShares = TestObserveAllShares()
 
@@ -61,7 +61,7 @@ internal class GetItemActionsImplTest {
         instance = GetItemActionsImpl(
             getItemById = getItemById,
             observeUserPlan = observeUserPlan,
-            canShareVault = canShareVault,
+            canShareShare = canShareVault,
             observeShare = observeShare,
             observeAllShares = observeAllShares
         )
@@ -74,7 +74,7 @@ internal class GetItemActionsImplTest {
 
         val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
         val expected = ItemActions(
-            canShare = CanShareVaultStatus.CanShare(1),
+            canShare = CanShareShareStatus.CanShare(1),
             canEdit = ItemActions.CanEditActionState.Enabled,
             canMoveToOtherVault = ItemActions.CanMoveToOtherVaultState.Enabled,
             canMoveToTrash = true,
@@ -87,11 +87,11 @@ internal class GetItemActionsImplTest {
     @Test
     fun `cannot share if canShareVault returns so`() = runTest {
         val reasons = listOf(
-            CanShareVaultStatus.CannotShareReason.NotEnoughPermissions,
-            CanShareVaultStatus.CannotShareReason.NotEnoughInvites
+            CanShareShareStatus.CannotShareReason.NotEnoughPermissions,
+            CanShareShareStatus.CannotShareReason.NotEnoughInvites
         )
         for (reason in reasons) {
-            val canShareResult = CanShareVaultStatus.CannotShare(reason)
+            val canShareResult = CanShareShareStatus.CannotShare(reason)
             canShareVault.setResult(canShareResult)
 
             val res = instance.invoke(shareId = SHARE_ID, itemId = ItemId(""))
@@ -319,7 +319,7 @@ internal class GetItemActionsImplTest {
     private fun setDefaultState() {
         setItem()
         setPlan(planType = PlanType.Paid.Plus("", ""))
-        canShareVault.setResult(CanShareVaultStatus.CanShare(1))
+        canShareVault.setResult(CanShareShareStatus.CanShare(1))
 
         val vaultShare = TestShare.Vault.create(
             id = SHARE_ID.id,

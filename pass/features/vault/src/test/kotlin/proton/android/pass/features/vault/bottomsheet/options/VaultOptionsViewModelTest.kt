@@ -28,7 +28,7 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
 import proton.android.pass.data.fakes.usecases.TestCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
-import proton.android.pass.data.fakes.usecases.TestCanShareVault
+import proton.android.pass.data.fakes.usecases.TestCanShareShare
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
@@ -47,14 +47,14 @@ class VaultOptionsViewModelTest {
 
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var canMigrateVault: TestCanMigrateVault
-    private lateinit var canShareVault: TestCanShareVault
+    private lateinit var canShareVault: TestCanShareShare
     private lateinit var canManageVaultAccess: TestCanManageVaultAccess
     private lateinit var observeVaults: TestObserveVaults
 
     @Before
     fun setup() {
         snackbarDispatcher = TestSnackbarDispatcher()
-        canShareVault = TestCanShareVault()
+        canShareVault = TestCanShareShare()
         canMigrateVault = TestCanMigrateVault()
         canManageVaultAccess = TestCanManageVaultAccess()
         observeVaults = TestObserveVaults()
@@ -337,7 +337,7 @@ class VaultOptionsViewModelTest {
             },
             canMigrateVault = canMigrateVault,
             observeVaults = observeVaults,
-            canShareVault = canShareVault,
+            canShareShare = canShareVault,
             canManageVaultAccess = canManageVaultAccess
         )
     }

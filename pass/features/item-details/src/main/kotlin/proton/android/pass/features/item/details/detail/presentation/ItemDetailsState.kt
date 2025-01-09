@@ -22,7 +22,7 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsActionForbiddenReason
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.data.api.usecases.ItemActions
-import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
+import proton.android.pass.data.api.usecases.capabilities.CanShareShareStatus
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
@@ -85,25 +85,25 @@ internal sealed interface ItemDetailsState {
                 }
             }
 
-        internal val isShareEnabled: Boolean = itemActions.canShare.value()
+        internal val isShareEnabled: Boolean = itemActions.canShare.value
 
         internal val cannotShareReason: ItemDetailsActionForbiddenReason? =
             when (val canShare = itemActions.canShare) {
-                is CanShareVaultStatus.CanShare -> null
-                is CanShareVaultStatus.CannotShare -> when (canShare.reason) {
-                    CanShareVaultStatus.CannotShareReason.ItemInTrash -> {
+                is CanShareShareStatus.CanShare -> null
+                is CanShareShareStatus.CannotShare -> when (canShare.reason) {
+                    CanShareShareStatus.CannotShareReason.ItemInTrash -> {
                         ItemDetailsActionForbiddenReason.ShareItemTrashed
                     }
 
-                    CanShareVaultStatus.CannotShareReason.NotEnoughInvites -> {
+                    CanShareShareStatus.CannotShareReason.NotEnoughInvites -> {
                         ItemDetailsActionForbiddenReason.ShareItemLimitReached
                     }
 
-                    CanShareVaultStatus.CannotShareReason.NotEnoughPermissions -> {
+                    CanShareShareStatus.CannotShareReason.NotEnoughPermissions -> {
                         ItemDetailsActionForbiddenReason.ShareItemPermissionRequired
                     }
 
-                    CanShareVaultStatus.CannotShareReason.Unknown -> null
+                    CanShareShareStatus.CannotShareReason.Unknown -> null
                 }
             }
 

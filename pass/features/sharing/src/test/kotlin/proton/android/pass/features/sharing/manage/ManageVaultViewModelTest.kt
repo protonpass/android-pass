@@ -24,7 +24,7 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.VaultMember
-import proton.android.pass.data.fakes.usecases.TestCanShareVault
+import proton.android.pass.data.fakes.usecases.TestCanShareShare
 import proton.android.pass.data.fakes.usecases.TestConfirmNewUserInvite
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultMembers
@@ -48,7 +48,7 @@ internal class ManageVaultViewModelTest {
         instance = ManageVaultViewModel(
             observeVaultById = TestObserveVaultWithItemCountById(),
             getVaultMembers = TestGetVaultMembers(),
-            canShareVault = TestCanShareVault(),
+            canShareShare = TestCanShareShare(),
             savedStateHandleProvider = TestSavedStateHandleProvider().apply {
                 get()[CommonNavArgId.ShareId.key] = SHARE_ID
             },

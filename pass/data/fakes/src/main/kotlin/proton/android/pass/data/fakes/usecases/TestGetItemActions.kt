@@ -20,7 +20,7 @@ package proton.android.pass.data.fakes.usecases
 
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.ItemActions
-import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
+import proton.android.pass.data.api.usecases.capabilities.CanShareShareStatus
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
@@ -39,7 +39,7 @@ class TestGetItemActions @Inject constructor() : GetItemActions {
 
     companion object {
         val DEFAULT = ItemActions(
-            canShare = CanShareVaultStatus.CanShare(1),
+            canShare = CanShareShareStatus.CanShare(1),
             canEdit = ItemActions.CanEditActionState.Enabled,
             canMoveToOtherVault = ItemActions.CanMoveToOtherVaultState.Enabled,
             canMoveToTrash = true,

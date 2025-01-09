@@ -36,7 +36,7 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
-import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.data.api.usecases.capabilities.CanShareShare
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.vault.VaultSnackbarMessage.CannotFindVaultError
@@ -50,7 +50,7 @@ import javax.inject.Inject
 class VaultOptionsViewModel @Inject constructor(
     snackbarDispatcher: SnackbarDispatcher,
     observeVaults: ObserveVaults,
-    canShareVault: CanShareVault,
+    canShareShare: CanShareShare,
     canMigrateVault: CanMigrateVault,
     canManageVaultAccess: CanManageVaultAccess,
     savedStateHandle: SavedStateHandleProvider
@@ -59,8 +59,8 @@ class VaultOptionsViewModel @Inject constructor(
     private val navShareId: ShareId =
         ShareId(savedStateHandle.get().require(CommonNavArgId.ShareId.key))
 
-    private val canShare: Flow<Boolean> = flow { emit(canShareVault(navShareId)) }
-        .map { it.value() }
+    private val canShare: Flow<Boolean> = flow { emit(canShareShare(navShareId)) }
+        .map { it.value }
         .distinctUntilChanged()
 
     val state: StateFlow<VaultOptionsUiState> = combine(

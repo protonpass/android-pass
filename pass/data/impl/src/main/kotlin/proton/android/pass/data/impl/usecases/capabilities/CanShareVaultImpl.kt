@@ -59,7 +59,9 @@ class CanShareVaultImpl @Inject constructor(
         }
 
         else -> {
-            CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.NotEnoughPermissions)
+            CanShareVaultStatus.CannotShare(
+                reason = CanShareVaultStatus.CannotShareReason.NotEnoughPermissions
+            )
         }
     }
 
@@ -69,7 +71,9 @@ class CanShareVaultImpl @Inject constructor(
         }
 
         !vaultShare.hasRemainingInvites -> {
-            CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.NotEnoughInvites)
+            CanShareVaultStatus.CannotShare(
+                reason = CanShareVaultStatus.CannotShareReason.NotEnoughInvites
+            )
         }
 
         vaultShare.isOwner -> {
@@ -81,7 +85,9 @@ class CanShareVaultImpl @Inject constructor(
         }
 
         else -> {
-            CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.NotEnoughPermissions)
+            CanShareVaultStatus.CannotShare(
+                reason = CanShareVaultStatus.CannotShareReason.NotEnoughPermissions
+            )
         }
     }
 

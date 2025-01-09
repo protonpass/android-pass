@@ -60,7 +60,7 @@ internal data class ItemDetailsForbiddenState(
         }
 
         ItemDetailsActionForbiddenReason.ShareItemPermissionRequired -> {
-            R.string.item_details_forbidden_actions_share_permission
+            R.string.item_details_forbidden_actions_sharing_permission
         }
 
         ItemDetailsActionForbiddenReason.ShareItemTrashed -> {

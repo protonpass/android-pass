@@ -33,12 +33,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.common.api.FileSizeUtil.toHumanReadableSize
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
+import java.util.Locale
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun DataStorage(modifier: Modifier = Modifier, state: DataStorageState) {
@@ -57,7 +62,8 @@ internal fun DataStorage(modifier: Modifier = Modifier, state: DataStorageState)
             }
             val percentage = remember(state.used, state.quota) {
                 if (state.quota > 0) {
-                    state.used.coerceAtLeast(0).toFloat() / state.quota.coerceAtLeast(1).toFloat() * 100
+                    state.used.coerceAtLeast(0).toFloat() / state.quota.coerceAtLeast(1)
+                        .toFloat() * 100
                 } else {
                     0f
                 }.coerceIn(0f, 100f)
@@ -67,25 +73,65 @@ internal fun DataStorage(modifier: Modifier = Modifier, state: DataStorageState)
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
             ) {
+                val color = when {
+                    percentage >= HIGH_THRESHOLD -> PassTheme.colors.signalDanger
+                    percentage >= LOW_THRESHOLD -> PassTheme.colors.signalWarning
+                    else -> PassTheme.colors.signalSuccess
+                }
+
                 val amount = stringResource(R.string.profile_storage_amount, used, quota)
-                Text.Body2Weak("$amount ($percentage%)")
-                CircularProgressIndicator(
-                    modifier = Modifier.size(20.dp),
-                    progress = percentage / 100,
-                    color = PassTheme.colors.signalSuccess,
-                    backgroundColor = PassTheme.colors.signalSuccess.copy(alpha = 0.2f)
+
+                Text.Body2Weak(
+                    text = "$amount (${String.format(Locale.getDefault(), "%.1f", percentage)}%)",
+                    color = if (percentage < LOW_THRESHOLD) ProtonTheme.colors.textWeak else color
                 )
+
+                if (percentage < HIGH_THRESHOLD) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(20.dp),
+                        progress = percentage / 100,
+                        color = color,
+                        backgroundColor = color.copy(alpha = 0.2f)
+                    )
+                } else {
+                    Icon.Default(
+                        modifier = Modifier.size(20.dp),
+                        id = CoreR.drawable.ic_proton_exclamation_circle_filled,
+                        tint = color
+                    )
+                }
             }
         }
     }
 }
 
+private const val LOW_THRESHOLD = 75f
+private const val HIGH_THRESHOLD = 95f
+
+class DataStoragePreviewProvider : PreviewParameterProvider<Int> {
+    override val values: Sequence<Int>
+        get() = sequence {
+            yield(253)
+            yield(821)
+            yield(1 * 1024)
+        }
+}
+
+class ThemeDataStorageProvider :
+    ThemePairPreviewProvider<Int>(DataStoragePreviewProvider())
+
 @Preview
 @Composable
-fun DataStoragePreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
+fun DataStoragePreview(@PreviewParameter(ThemeDataStorageProvider::class) input: Pair<Boolean, Int>) {
+    PassTheme(isDark = input.first) {
         Surface {
-            DataStorage(state = DataStorageState(shouldDisplay = true, used = 100, quota = 1000))
+            DataStorage(
+                state = DataStorageState(
+                    shouldDisplay = true,
+                    used = input.second.toLong(),
+                    quota = 1 * 1024
+                )
+            )
         }
     }
 }

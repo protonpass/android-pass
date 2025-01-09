@@ -19,14 +19,25 @@
 package proton.android.pass.features.attachments.storagefull.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.features.attachments.storagefull.navigation.StorageFullNavigation
+import proton.android.pass.features.attachments.storagefull.presentation.StorageFullViewmodel
 
 @Composable
-fun StorageFullBottomsheet(modifier: Modifier = Modifier, onNavigate: (StorageFullNavigation) -> Unit) {
+fun StorageFullBottomsheet(
+    modifier: Modifier = Modifier,
+    viewmodel: StorageFullViewmodel = hiltViewModel(),
+    onNavigate: (StorageFullNavigation) -> Unit
+) {
+    val state by viewmodel.state.collectAsStateWithLifecycle()
+
     StorageFullContent(
         modifier = modifier.bottomSheet(),
+        state = state,
         onClick = { onNavigate(StorageFullNavigation.Upgrade) }
     )
 }

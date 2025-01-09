@@ -84,6 +84,7 @@ internal fun ManageItemContent(
                     if (state.hasItemMembers) {
                         ManageItemMembersSection(
                             sectionTitle = stringResource(R.string.shared_via_item_member_count_header),
+                            isItemSection = true,
                             isShareAdmin = state.share.isAdmin,
                             vaultOption = None,
                             shareItemsCount = state.itemsCount,
@@ -106,6 +107,7 @@ internal fun ManageItemContent(
                     if (state.hasVaultMembers) {
                         ManageItemMembersSection(
                             sectionTitle = stringResource(R.string.shared_via_vault_member_count_header),
+                            isItemSection = false,
                             isShareAdmin = state.share.isAdmin,
                             vaultOption = state.share.toVault(),
                             shareItemsCount = state.itemsCount,

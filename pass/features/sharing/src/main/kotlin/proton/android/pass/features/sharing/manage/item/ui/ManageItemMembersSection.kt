@@ -37,6 +37,7 @@ import proton.android.pass.domain.shares.ShareMember
 internal fun ManageItemMembersSection(
     modifier: Modifier = Modifier,
     sectionTitle: String,
+    isItemSection: Boolean,
     isShareAdmin: Boolean,
     vaultOption: Option<Vault>,
     shareItemsCount: Int,
@@ -64,9 +65,17 @@ internal fun ManageItemMembersSection(
                 )
 
                 PassDivider()
+
+                if (isShareAdmin) {
+                    ManageItemInviteMoreRow(
+                        onClick = onInviteMoreClick
+                    )
+
+                    PassDivider()
+                }
             }
 
-            if (isShareAdmin) {
+            if (isItemSection && isShareAdmin) {
                 ManageItemInviteMoreRow(
                     onClick = onInviteMoreClick
                 )

@@ -41,6 +41,9 @@ sealed interface CanShareVaultStatus {
 }
 
 interface CanShareVault {
+
     suspend operator fun invoke(shareId: ShareId): CanShareVaultStatus
+
     suspend operator fun invoke(vault: Vault): CanShareVaultStatus
+
 }

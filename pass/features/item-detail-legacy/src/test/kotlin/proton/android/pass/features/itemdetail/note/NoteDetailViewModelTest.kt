@@ -39,7 +39,7 @@ import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakeUnpinItem
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
-import proton.android.pass.data.fakes.usecases.TestCanShareVault
+import proton.android.pass.data.fakes.usecases.TestCanShareShare
 import proton.android.pass.data.fakes.usecases.TestDeleteItems
 import proton.android.pass.data.fakes.usecases.TestGetItemActions
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
@@ -112,7 +112,7 @@ class NoteDetailViewModelTest {
             restoreItem = restoreItem,
             canPerformPaidAction = canPerformPaidAction,
             clipboardManager = clipboardManager,
-            canShareVault = TestCanShareVault(),
+            canShareShare = TestCanShareShare(),
             getItemActions = TestGetItemActions(),
             bulkMoveToVaultRepository = TestBulkMoveToVaultRepository(),
             pinItem = FakePinItem(),

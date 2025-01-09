@@ -69,7 +69,7 @@ import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
 import proton.android.pass.data.api.usecases.attachments.ObserveDetailItemAttachments
-import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.data.api.usecases.capabilities.CanShareShare
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -107,7 +107,7 @@ class NoteDetailViewModel @Inject constructor(
     private val restoreItem: RestoreItems,
     private val telemetryManager: TelemetryManager,
     private val clipboardManager: ClipboardManager,
-    private val canShareVault: CanShareVault,
+    private val canShareShare: CanShareShare,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
@@ -145,7 +145,7 @@ class NoteDetailViewModel @Inject constructor(
     private val shareActionFlow: Flow<ShareClickAction> = canPerformPaidActionFlow
         .map { isPaidResult ->
             val isPaid = isPaidResult.getOrNull() ?: false
-            val canShareVault = canShareVault(shareId).value()
+            val canShareVault = canShareShare(shareId).value
             when {
                 isPaid && canShareVault -> ShareClickAction.Share
                 else -> ShareClickAction.Upgrade

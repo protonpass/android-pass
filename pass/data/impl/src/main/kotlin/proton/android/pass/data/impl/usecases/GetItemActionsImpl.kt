@@ -26,8 +26,8 @@ import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.ObserveAllShares
-import proton.android.pass.data.api.usecases.capabilities.CanShareVault
-import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
+import proton.android.pass.data.api.usecases.capabilities.CanShareShare
+import proton.android.pass.data.api.usecases.capabilities.CanShareShareStatus
 import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -44,7 +44,7 @@ class GetItemActionsImpl @Inject constructor(
     private val observeShare: ObserveShare,
     private val observeUserPlan: GetUserPlan,
     private val observeAllShares: ObserveAllShares,
-    private val canShareVault: CanShareVault
+    private val canShareShare: CanShareShare
 ) : GetItemActions {
 
     override suspend fun invoke(shareId: ShareId, itemId: ItemId): ItemActions = combine(
@@ -67,13 +67,13 @@ class GetItemActionsImpl @Inject constructor(
 
     private suspend fun canShare(isItemTrashed: Boolean, share: Share) = when {
         isItemTrashed -> {
-            CanShareVaultStatus.CannotShare(
-                reason = CanShareVaultStatus.CannotShareReason.ItemInTrash
+            CanShareShareStatus.CannotShare(
+                reason = CanShareShareStatus.CannotShareReason.ItemInTrash
             )
         }
 
         else -> {
-            canShareVault(share.id)
+            canShareShare(share.id)
         }
     }
 

@@ -40,6 +40,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.HiddenState
@@ -81,7 +82,10 @@ class UpdateCreditCardScreenTest {
     @Inject
     lateinit var canPerformPaidAction: TestCanPerformPaidAction
 
-    lateinit var initialItem: Item
+    @Inject
+    lateinit var observeUserAccessData: TestObserveUserAccessData
+
+    private lateinit var initialItem: Item
 
     @Before
     fun setup() {
@@ -105,6 +109,7 @@ class UpdateCreditCardScreenTest {
         getItemById.emitValue(Result.success(initialItem))
         updateItem.setResult(Result.success(initialItem))
         canPerformPaidAction.setResult(true)
+        observeUserAccessData.sendValue(null)
     }
 
     @Test

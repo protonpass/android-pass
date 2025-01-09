@@ -26,18 +26,27 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.crypto.api.extensions.toVault
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -45,9 +54,13 @@ import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
+import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
+import proton.android.pass.data.api.usecases.shares.ObserveShare
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.domain.canCreate
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -65,7 +78,8 @@ class ShareFromItemViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     getItemById: GetItemById,
     canManageVaultAccess: CanManageVaultAccess,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    observeShare: ObserveShare
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -113,25 +127,49 @@ class ShareFromItemViewModel @Inject constructor(
             }
         }
 
+    private val shareFlow = oneShot { observeShare(shareId).first() }
+        .shareIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            replay = 1
+        )
+
+    private val vaultWithItemCountOptionFlow: Flow<Option<VaultWithItemCount>> = shareFlow
+        .flatMapLatest { share ->
+            when (share) {
+                is Share.Item -> flowOf(None)
+                is Share.Vault -> getVaultWithItemCount(shareId = shareId).mapLatest(::Some)
+            }
+        }
+
+    private val vaultAccessDataFlow = shareFlow
+        .mapLatest { share ->
+            when (val vaultOption = share.toVault()) {
+                None -> VaultAccessData(canManageAccess = false, canViewMembers = false)
+                is Some -> canManageVaultAccess(vaultOption.value)
+            }
+        }
+
     internal val stateFlow: StateFlow<ShareFromItemUiState> = combineN(
-        getVaultWithItemCount(shareId = shareId),
+        vaultWithItemCountOptionFlow,
         canMoveToSharedVaultFlow,
         showCreateVaultFlow,
         navEventState,
         canUsePaidFeaturesFlow,
         featureFlagsRepository.get<Boolean>(FeatureFlag.ITEM_SHARING_V1),
-        oneShot { getItemById(shareId, itemId) }
-    ) { vault, canMoveToSharedVault, createVault, event, canUsePaidFeatures,
-        isItemSharingAvailable, item ->
+        oneShot { getItemById(shareId, itemId) },
+        vaultAccessDataFlow
+    ) { vaultWithItemCountOption, canMoveToSharedVault, createVault, event, canUsePaidFeatures,
+        isItemSharingAvailable, item, vaultAccessData ->
         ShareFromItemUiState(
             shareId = shareId,
             itemId = itemId,
-            vault = vault.some(),
+            vault = vaultWithItemCountOption,
             showMoveToSharedVault = canMoveToSharedVault.getOrNull() ?: false,
             showCreateVault = createVault.getOrNull() ?: CreateNewVaultState.Hide,
             event = event,
             canUsePaidFeatures = canUsePaidFeatures,
-            vaultAccessData = canManageVaultAccess(vault.vault),
+            vaultAccessData = vaultAccessData,
             isItemSharingAvailable = isItemSharingAvailable,
             itemOption = item.some()
         )

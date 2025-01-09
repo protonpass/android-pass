@@ -21,9 +21,9 @@ package proton.android.pass.data.impl.usecases.capabilities
 import kotlinx.coroutines.flow.first
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetUserPlan
-import proton.android.pass.data.api.usecases.GetVaultByShareId
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
+import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.Vault
@@ -31,19 +31,58 @@ import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class CanShareVaultImpl @Inject constructor(
-    private val getVaultByShareId: GetVaultByShareId,
     private val getShareById: GetShareById,
     private val getUserPlan: GetUserPlan
 ) : CanShareVault {
 
     override suspend fun invoke(shareId: ShareId): CanShareVaultStatus {
-        val vault = runCatching { getVaultByShareId(shareId = shareId).first() }.getOrElse {
-            PassLogger.w(TAG, "canShare vault not found")
-            PassLogger.w(TAG, it)
+        val share = runCatching { getShareById(shareId = shareId) }.getOrElse { error ->
+            PassLogger.w(TAG, "There was an error getting the share")
+            PassLogger.w(TAG, error)
+
             return CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.Unknown)
         }
 
-        return invoke(vault)
+        return when (share) {
+            is Share.Item -> getItemCanShareStatus(share)
+            is Share.Vault -> getVaultCanShareStatus(share)
+        }
+    }
+
+    private fun getItemCanShareStatus(itemShare: Share.Item) = when {
+        itemShare.isOwner -> {
+            CanShareVaultStatus.CanShare(invitesRemaining = itemShare.remainingInvites)
+        }
+
+        itemShare.isAdmin -> {
+            CanShareVaultStatus.CanShare(invitesRemaining = itemShare.remainingInvites)
+        }
+
+        else -> {
+            CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.NotEnoughPermissions)
+        }
+    }
+
+    private suspend fun getVaultCanShareStatus(vaultShare: Share.Vault) = when {
+        getUserPlan().first().isBusinessPlan -> {
+            CanShareVaultStatus.CanShare(invitesRemaining = vaultShare.remainingInvites)
+        }
+
+        !vaultShare.hasRemainingInvites -> {
+            CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.NotEnoughInvites)
+        }
+
+        vaultShare.isOwner -> {
+            CanShareVaultStatus.CanShare(invitesRemaining = vaultShare.remainingInvites)
+        }
+
+        vaultShare.isAdmin -> {
+            CanShareVaultStatus.CanShare(invitesRemaining = vaultShare.remainingInvites)
+        }
+
+        else -> {
+            CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.NotEnoughPermissions)
+        }
     }
 
     override suspend fun invoke(vault: Vault): CanShareVaultStatus {
@@ -76,8 +115,10 @@ class CanShareVaultImpl @Inject constructor(
         }
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "CanShareVaultImpl"
+
     }
 
 }

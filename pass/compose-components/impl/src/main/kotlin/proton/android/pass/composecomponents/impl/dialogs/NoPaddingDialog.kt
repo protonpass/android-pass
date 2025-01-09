@@ -30,13 +30,14 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import proton.android.pass.commonui.api.PassTheme
 
 @Composable
 fun NoPaddingDialog(
     modifier: Modifier = Modifier,
     onDismissRequest: () -> Unit,
     shape: Shape = MaterialTheme.shapes.medium,
-    backgroundColor: Color = MaterialTheme.colors.surface,
+    backgroundColor: Color = PassTheme.colors.backgroundStrong,
     contentColor: Color = contentColorFor(backgroundColor),
     properties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),
     content: @Composable () -> Unit

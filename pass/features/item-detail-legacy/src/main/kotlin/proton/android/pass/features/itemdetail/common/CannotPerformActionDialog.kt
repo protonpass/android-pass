@@ -22,19 +22,16 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonDialogTitle
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultUnspecified
-import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.itemdetail.R
 import me.proton.core.presentation.compose.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -108,9 +105,8 @@ fun CannotPerformActionDialog(
         ) {
             ProtonDialogTitle(title = stringResource(type.title))
 
-            Text(
-                text = stringResource(id = type.message),
-                style = ProtonTheme.typography.defaultUnspecified
+            Text.Body1Regular(
+                text = stringResource(id = type.message)
             )
 
             val (confirmText, cancelText) = if (type.showUpgrade) {
@@ -121,7 +117,6 @@ fun CannotPerformActionDialog(
             }
 
             DialogCancelConfirmSection(
-                color = PassTheme.colors.loginInteractionNormMajor1,
                 confirmText = confirmText,
                 cancelText = cancelText,
                 onDismiss = onClose,

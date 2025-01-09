@@ -41,6 +41,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.Plan
@@ -95,6 +96,9 @@ class CreateAliasScreenTest {
     @Inject
     lateinit var observeAliasOptions: TestObserveAliasOptions
 
+    @Inject
+    lateinit var observeUserAccessData: TestObserveUserAccessData
+
     @Before
     fun setup() {
         hiltRule.inject()
@@ -124,6 +128,7 @@ class CreateAliasScreenTest {
                 mailboxes = listOf(DEFAULT_MAILBOX)
             )
         )
+        observeUserAccessData.sendValue(null)
     }
 
     @Test

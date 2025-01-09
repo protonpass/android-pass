@@ -43,6 +43,9 @@ import proton.android.pass.features.attachments.mediapicker.ui.MediaPickerScreen
 import proton.android.pass.features.attachments.renameattachment.navigation.RenameAttachmentNavItem
 import proton.android.pass.features.attachments.renameattachment.navigation.RenameAttachmentNavigation
 import proton.android.pass.features.attachments.renameattachment.ui.RenameAttachmentDialog
+import proton.android.pass.features.attachments.storagefull.navigation.StorageFullNavItem
+import proton.android.pass.features.attachments.storagefull.navigation.StorageFullNavigation
+import proton.android.pass.features.attachments.storagefull.ui.StorageFullBottomsheet
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
@@ -134,6 +137,16 @@ fun NavGraphBuilder.attachmentsGraph(onNavigate: (AttachmentsNavigation) -> Unit
             }
         }
     }
+    bottomSheet(navItem = StorageFullNavItem) {
+        StorageFullBottomsheet(
+            onNavigate = {
+                when (it) {
+                    StorageFullNavigation.Upgrade -> onNavigate(AttachmentsNavigation.Upgrade)
+                    StorageFullNavigation.CloseBottomsheet -> onNavigate(AttachmentsNavigation.CloseBottomsheet)
+                }
+            }
+        )
+    }
 }
 
 sealed interface AttachmentsNavigation {
@@ -142,6 +155,7 @@ sealed interface AttachmentsNavigation {
     data object OpenFilePicker : AttachmentsNavigation
     data object OpenMediaPicker : AttachmentsNavigation
     data object OpenCamera : AttachmentsNavigation
+    data object Upgrade : AttachmentsNavigation
 
     data class OpenRenameAttachment(
         val shareId: ShareId,

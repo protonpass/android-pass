@@ -18,12 +18,12 @@
 
 package proton.android.pass.data.api.usecases
 
-import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
+import proton.android.pass.data.api.usecases.capabilities.CanShareShareStatus
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 data class ItemActions(
-    val canShare: CanShareVaultStatus,
+    val canShare: CanShareShareStatus,
     val canEdit: CanEditActionState,
     val canMoveToOtherVault: CanMoveToOtherVaultState,
     val canMoveToTrash: Boolean,
@@ -74,7 +74,7 @@ data class ItemActions(
 
     companion object {
         val Disabled = ItemActions(
-            canShare = CanShareVaultStatus.CannotShare(CanShareVaultStatus.CannotShareReason.Unknown),
+            canShare = CanShareShareStatus.CannotShare(CanShareShareStatus.CannotShareReason.Unknown),
             canEdit = CanEditActionState.Disabled(CanEditActionState.CanEditDisabledReason.NotEnoughPermission),
             canMoveToOtherVault = CanMoveToOtherVaultState.Disabled(
                 CanMoveToOtherVaultState.CanMoveToOtherVaultDisabledReason.NotEnoughPermission

@@ -48,8 +48,8 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultMembers
 import proton.android.pass.data.api.usecases.ObserveVaultWithItemCountById
 import proton.android.pass.data.api.usecases.VaultMember
-import proton.android.pass.data.api.usecases.capabilities.CanShareVault
-import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
+import proton.android.pass.data.api.usecases.capabilities.CanShareShare
+import proton.android.pass.data.api.usecases.capabilities.CanShareShareStatus
 import proton.android.pass.domain.NewUserInviteId
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
@@ -70,7 +70,7 @@ class ManageVaultViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     savedStateHandleProvider: SavedStateHandleProvider,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val canShareVault: CanShareVault,
+    private val canShareShare: CanShareShare,
     private val confirmNewUserInvite: ConfirmNewUserInvite
 ) : ViewModel() {
 
@@ -98,8 +98,8 @@ class ManageVaultViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    private val showShareButtonFlow: Flow<CanShareVaultStatus> = vaultFlow
-        .map { canShareVault(it.vault) }
+    private val showShareButtonFlow: Flow<CanShareShareStatus> = vaultFlow
+        .map { canShareShare(it.vault.shareId) }
         .distinctUntilChanged()
 
     private val canEditFlow: Flow<Boolean> = vaultFlow
@@ -143,7 +143,7 @@ class ManageVaultViewModel @Inject constructor(
         }
 
         val sharingOptions = when (showShareButton) {
-            is CanShareVaultStatus.CanShare -> {
+            is CanShareShareStatus.CanShare -> {
                 val subtitle = if (userPlan.planType is PlanType.Paid.Business) {
                     ShareOptions.ShareOptionsSubtitle.None
                 } else {
@@ -157,9 +157,9 @@ class ManageVaultViewModel @Inject constructor(
                 )
             }
 
-            is CanShareVaultStatus.CannotShare -> {
+            is CanShareShareStatus.CannotShare -> {
                 when (showShareButton.reason) {
-                    CanShareVaultStatus.CannotShareReason.NotEnoughInvites -> {
+                    CanShareShareStatus.CannotShareReason.NotEnoughInvites -> {
                         val subtitle = if (userPlan.isPaidPlan) {
                             ShareOptions.ShareOptionsSubtitle.None
                         } else {
@@ -172,9 +172,9 @@ class ManageVaultViewModel @Inject constructor(
                         )
                     }
 
-                    CanShareVaultStatus.CannotShareReason.ItemInTrash,
-                    CanShareVaultStatus.CannotShareReason.NotEnoughPermissions,
-                    CanShareVaultStatus.CannotShareReason.Unknown -> ShareOptions.Hide
+                    CanShareShareStatus.CannotShareReason.ItemInTrash,
+                    CanShareShareStatus.CannotShareReason.NotEnoughPermissions,
+                    CanShareShareStatus.CannotShareReason.Unknown -> ShareOptions.Hide
                 }
             }
         }

@@ -20,7 +20,7 @@ package proton.android.pass.features.itemdetail.common
 
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.data.api.usecases.ItemActions
-import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
+import proton.android.pass.data.api.usecases.capabilities.CanShareShareStatus
 import proton.android.pass.features.itemdetail.ItemDetailCannotPerformActionType
 import proton.android.pass.features.itemdetail.ItemDetailNavigation
 
@@ -59,7 +59,7 @@ fun onShareClick(
     itemUiModel: ItemUiModel
 ) {
     when (val canShare = itemActions.canShare) {
-        is CanShareVaultStatus.CanShare -> {
+        is CanShareShareStatus.CanShare -> {
             onNavigate(
                 ItemDetailNavigation.OnShareVault(
                     shareId = itemUiModel.shareId,
@@ -68,8 +68,8 @@ fun onShareClick(
             )
         }
 
-        is CanShareVaultStatus.CannotShare -> when (canShare.reason) {
-            CanShareVaultStatus.CannotShareReason.NotEnoughInvites -> {
+        is CanShareShareStatus.CannotShare -> when (canShare.reason) {
+            CanShareShareStatus.CannotShareReason.NotEnoughInvites -> {
                 onNavigate(
                     ItemDetailNavigation.CannotPerformAction(
                         type = ItemDetailCannotPerformActionType.CannotShareBecauseLimitReached
@@ -77,7 +77,7 @@ fun onShareClick(
                 )
             }
 
-            CanShareVaultStatus.CannotShareReason.NotEnoughPermissions -> {
+            CanShareShareStatus.CannotShareReason.NotEnoughPermissions -> {
                 onNavigate(
                     ItemDetailNavigation.CannotPerformAction(
                         ItemDetailCannotPerformActionType.CannotShareBecauseNoPermissions
@@ -85,7 +85,7 @@ fun onShareClick(
                 )
             }
 
-            CanShareVaultStatus.CannotShareReason.ItemInTrash -> {
+            CanShareShareStatus.CannotShareReason.ItemInTrash -> {
                 onNavigate(
                     ItemDetailNavigation.CannotPerformAction(
                         ItemDetailCannotPerformActionType.CannotShareBecauseItemInTrash
@@ -93,7 +93,7 @@ fun onShareClick(
                 )
             }
 
-            CanShareVaultStatus.CannotShareReason.Unknown -> {}
+            CanShareShareStatus.CannotShareReason.Unknown -> {}
         }
     }
 }

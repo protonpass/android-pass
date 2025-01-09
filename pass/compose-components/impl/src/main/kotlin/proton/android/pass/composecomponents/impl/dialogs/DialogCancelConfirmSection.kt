@@ -22,8 +22,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.component.ProtonTextButton
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.composecomponents.impl.text.Text
 import me.proton.core.presentation.compose.R as CoreR
 
 @Composable
@@ -40,49 +41,65 @@ fun DialogCancelConfirmSection(
     modifier: Modifier = Modifier,
     cancelText: String = stringResource(CoreR.string.presentation_alert_cancel),
     confirmText: String = stringResource(CoreR.string.presentation_alert_ok),
-    color: Color,
-    disabledColor: Color = color,
     confirmEnabled: Boolean = true,
     onDismiss: () -> Unit,
-    onConfirm: () -> Unit
+    onConfirm: () -> Unit,
+    color: Color = PassTheme.colors.interactionNormMajor1,
+    disabledColor: Color = color
 ) {
-    val confirmColor = if (confirmEnabled) color else disabledColor
+    val confirmColor = remember(confirmEnabled) {
+        if (confirmEnabled) color else disabledColor
+    }
+
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.End
     ) {
-        ProtonTextButton(onClick = onDismiss) {
-            Text(
-                text = cancelText,
-                color = color,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        }
-        ProtonTextButton(
-            enabled = confirmEnabled,
-            onClick = onConfirm
-        ) {
-            Text(
-                text = confirmText,
-                color = confirmColor,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        }
+        DialogCancelConfirmTextButton(
+            text = cancelText,
+            textColor = color,
+            onClick = onDismiss
+        )
+
+        DialogCancelConfirmTextButton(
+            text = confirmText,
+            textColor = confirmColor,
+            onClick = onConfirm,
+            isEnabled = confirmEnabled
+        )
     }
 }
 
-@Preview
 @Composable
-fun DialogCancelConfirmSectionPreview(
+private fun DialogCancelConfirmTextButton(
+    text: String,
+    textColor: Color,
+    onClick: () -> Unit,
+    isEnabled: Boolean = true
+) {
+    ProtonTextButton(
+        enabled = isEnabled,
+        onClick = onClick
+    ) {
+        Text.Body2Regular(
+            text = text,
+            color = textColor,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+    }
+}
+
+@[Preview Composable]
+internal fun DialogCancelConfirmSectionPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    PassTheme(isDark = input.first) {
+    val (isDark, confirmEnabled) = input
+
+    PassTheme(isDark = isDark) {
         Surface {
             DialogCancelConfirmSection(
-                color = PassTheme.colors.loginInteractionNorm,
-                confirmEnabled = input.second,
+                confirmEnabled = confirmEnabled,
                 onConfirm = {},
                 onDismiss = {}
             )

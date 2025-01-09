@@ -93,7 +93,7 @@
     <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">You are only allowed to edit items in your oldest vaults. In order to edit this item, please upgrade your current plan.</string>
     <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">You cannot edit this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
     <string name="item_detail_cannot_perform_action_share_no_permissions_title">Cannot share</string>
-    <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
+    <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">You don\'t have enough permissions to perform this action.</string>
     <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
     <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
     <string name="password_score_vulnerable">Vulnerable</string>

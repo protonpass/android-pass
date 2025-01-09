@@ -27,7 +27,7 @@
     <string name="item_details_forbidden_actions_edit_upgrade">You are only allowed to edit items in your oldest vaults. In order to edit this item, please upgrade your current plan.</string>
     <string name="item_details_forbidden_actions_share_title">Cannot share</string>
     <string name="item_details_forbidden_actions_share_limit">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
-    <string name="item_details_forbidden_actions_share_permission">You don\'t have enough permissions to share this vault.</string>
+    <string name="item_details_forbidden_actions_sharing_permission">You don\'t have enough permissions to perform this action.</string>
     <string name="item_details_forbidden_actions_share_trash">You cannot share this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
 
     <!-- Item details leave item -->

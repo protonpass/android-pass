@@ -77,7 +77,7 @@ sealed class CannotPerformActionDialogType(
     @Stable
     data object CannotShareBecauseNoPermissions : CannotPerformActionDialogType(
         title = R.string.item_detail_cannot_perform_action_share_no_permissions_title,
-        message = R.string.item_detail_cannot_perform_action_share_no_permissions_message,
+        message = R.string.item_detail_cannot_perform_action_sharing_no_permissions_message,
         showUpgrade = false
     )
 

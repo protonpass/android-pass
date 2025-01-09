@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.profile
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -40,13 +41,19 @@ import proton.android.pass.common.api.FileSizeUtil.toHumanReadableSize
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
 import java.util.Locale
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-internal fun DataStorage(modifier: Modifier = Modifier, state: DataStorageState) {
+internal fun DataStorage(
+    modifier: Modifier = Modifier,
+    canUpgrade: Boolean,
+    state: DataStorageState,
+    onClick: () -> Unit
+) {
     if (state.shouldDisplay) {
         Row(
             modifier = modifier.fillMaxWidth(),
@@ -82,6 +89,10 @@ internal fun DataStorage(modifier: Modifier = Modifier, state: DataStorageState)
                 val amount = stringResource(R.string.profile_storage_amount, used, quota)
 
                 Text.Body2Weak(
+                    modifier = Modifier.applyIf(
+                        condition = percentage >= HIGH_THRESHOLD && canUpgrade,
+                        ifTrue = { clickable { onClick() } }
+                    ),
                     text = "$amount (${String.format(Locale.getDefault(), "%.1f", percentage)}%)",
                     color = if (percentage < LOW_THRESHOLD) ProtonTheme.colors.textWeak else color
                 )
@@ -130,7 +141,9 @@ fun DataStoragePreview(@PreviewParameter(ThemeDataStorageProvider::class) input:
                     shouldDisplay = true,
                     used = input.second.toLong(),
                     quota = 1 * 1024
-                )
+                ),
+                canUpgrade = false,
+                onClick = {}
             )
         }
     }

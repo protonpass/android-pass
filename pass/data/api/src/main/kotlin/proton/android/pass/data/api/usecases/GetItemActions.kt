@@ -28,8 +28,7 @@ data class ItemActions(
     val canMoveToOtherVault: CanMoveToOtherVaultState,
     val canMoveToTrash: Boolean,
     val canRestoreFromTrash: Boolean,
-    val canDelete: Boolean,
-    val canResetHistory: Boolean
+    val canDelete: Boolean
 ) {
     sealed interface CanEditActionState {
 
@@ -82,8 +81,7 @@ data class ItemActions(
             ),
             canMoveToTrash = false,
             canRestoreFromTrash = false,
-            canDelete = false,
-            canResetHistory = false
+            canDelete = false
         )
     }
 }

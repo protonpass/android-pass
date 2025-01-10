@@ -19,8 +19,6 @@
 package proton.android.pass.features.itemdetail.common
 
 import androidx.compose.runtime.Stable
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 
 @Stable
 sealed interface ItemDetailEvent {
@@ -29,7 +27,4 @@ sealed interface ItemDetailEvent {
 
     @Stable
     data object MoveToVault : ItemDetailEvent
-
-    data class ConfirmResetHistory(val shareId: ShareId, val itemId: ItemId) : ItemDetailEvent
-
 }

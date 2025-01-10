@@ -84,19 +84,11 @@ fun LoginDetail(
         LoginDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
         is LoginDetailUiState.Success -> {
             LaunchedEffect(state.event) {
-                when (val event = state.event) {
+                when (state.event) {
                     ItemDetailEvent.Unknown -> {}
                     ItemDetailEvent.MoveToVault -> {
                         onNavigate(ItemDetailNavigation.OnMigrate)
                     }
-
-                    is ItemDetailEvent.ConfirmResetHistory ->
-                        onNavigate(
-                            ItemDetailNavigation.OnConfirmResetHistory(
-                                shareId = event.shareId,
-                                itemId = event.itemId
-                            )
-                        )
                 }
                 viewModel.clearEvent()
             }
@@ -135,7 +127,6 @@ fun LoginDetail(
                                 canMigrate = state.canMigrate,
                                 canMoveToTrash = state.canMoveToTrash,
                                 canLeave = state.canLeaveItem,
-                                canResetHistory = state.canResetHistory,
                                 isPinned = state.itemUiModel.isPinned,
                                 isExcludedFromMonitor = state.monitorState.isExcludedFromMonitor,
                                 onMigrate = {
@@ -179,13 +170,6 @@ fun LoginDetail(
                                     ItemDetailNavigation.LeaveItemShare(
                                         shareId = state.itemUiModel.shareId
                                     ).also(onNavigate)
-                                },
-                                onResetHistory = {
-                                    scope.launch { bottomSheetState.hide() }
-                                    viewModel.resetItemHistory(
-                                        shareId = state.itemUiModel.shareId,
-                                        itemId = state.itemUiModel.id
-                                    )
                                 }
                             )
 

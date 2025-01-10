@@ -37,4 +37,6 @@ internal sealed class ItemHistoryTimelineState(internal val itemCategory: ItemCa
         private val itemRevisionCategory: ItemCategory
     ) : ItemHistoryTimelineState(itemRevisionCategory)
 
+    internal val showOptions: Boolean
+        get() = this is Success && itemRevisions.size > 1
 }

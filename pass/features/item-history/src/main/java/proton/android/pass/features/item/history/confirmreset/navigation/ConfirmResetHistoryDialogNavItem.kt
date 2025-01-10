@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,24 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonui.api
+package proton.android.pass.features.item.history.confirmreset.navigation
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.NavItem
 
-fun Modifier.applyIf(
-    condition: Boolean,
-    ifTrue: @Composable Modifier.() -> Modifier,
-    ifFalse: @Composable (Modifier.() -> Modifier)? = null
-): Modifier = composed {
-    when {
-        condition -> then(ifTrue(Modifier))
-        ifFalse != null -> then(ifFalse(Modifier))
-        else -> this
-    }
+object ConfirmResetHistoryDialogNavItem : NavItem(
+    baseRoute = "item/options/confirmresethistory/dialog",
+    navArgIds = listOf(
+        CommonNavArgId.ShareId,
+        CommonNavArgId.ItemId
+    )
+) {
+
+    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+
 }
-
-fun <T : Any> Modifier.applyIfNotNull(value: T?, ifNotNull: Modifier.(T) -> Modifier): Modifier =
-    value?.let { nonNullValue -> then(ifNotNull(nonNullValue)) } ?: this
-

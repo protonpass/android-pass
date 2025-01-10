@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,26 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.confirmresethistory.presentation
+package proton.android.pass.features.item.history.options.navigation
 
-import androidx.compose.runtime.Stable
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.NavItem
 
-@Stable
-internal data class ConfirmResetHistoryDialogState(
-    internal val event: ConfirmResetHistoryDialogEvent,
-    private val isLoadingState: IsLoadingState
+object HistoryOptionsNavItem : NavItem(
+    baseRoute = "item/history/options",
+    navArgIds = listOf(
+        CommonNavArgId.ShareId,
+        CommonNavArgId.ItemId
+    )
 ) {
 
-    internal val isLoading: Boolean = isLoadingState.value()
-
-    internal companion object {
-
-        internal val Initial = ConfirmResetHistoryDialogState(
-            event = ConfirmResetHistoryDialogEvent.Idle,
-            isLoadingState = IsLoadingState.NotLoading
-        )
-
-    }
+    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 
 }

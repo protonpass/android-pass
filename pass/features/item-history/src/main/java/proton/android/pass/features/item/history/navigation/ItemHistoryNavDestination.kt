@@ -45,4 +45,13 @@ sealed interface ItemHistoryNavDestination {
     @JvmInline
     value class PasskeyDetail(val passkey: UIPasskeyContent) : ItemHistoryNavDestination
 
+    data class Options(
+        val shareId: ShareId,
+        val itemId: ItemId
+    ) : ItemHistoryNavDestination
+
+    data class ConfirmResetHistory(
+        val shareId: ShareId,
+        val itemId: ItemId
+    ) : ItemHistoryNavDestination
 }

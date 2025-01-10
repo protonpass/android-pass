@@ -72,7 +72,7 @@ internal fun TotpInput(
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm(enabled).copy(fontFamily = FontFamily.Monospace),
         keyboardOptions = KeyboardOptions(
-            autoCorrect = false,
+            autoCorrectEnabled = false,
             keyboardType = KeyboardType.Password
         ),
         onFocusChange = onFocus,

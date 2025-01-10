@@ -44,7 +44,12 @@ internal fun ItemHistoryTimelineContent(
         topBar = {
             ItemHistoryTimelineTopBar(
                 colors = itemColors,
-                onUpClick = { onNavigated(ItemHistoryNavDestination.Back) }
+                onUpClick = { onNavigated(ItemHistoryNavDestination.Back) },
+                onOptions = {
+                    if (this@with is ItemHistoryTimelineState.Success) {
+                        onNavigated(ItemHistoryNavDestination.Options(shareId, itemId))
+                    }
+                }
             )
         }
     ) { innerPadding ->

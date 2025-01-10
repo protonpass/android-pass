@@ -16,21 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.confirmresethistory.navigation
+package proton.android.pass.features.item.history.confirmreset.presentation
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.domain.items.ItemCategory
 
-object ConfirmResetHistoryDialogNavItem : NavItem(
-    baseRoute = "item/options/confirmresethistory/dialog",
-    navArgIds = listOf(
-        CommonNavArgId.ShareId,
-        CommonNavArgId.ItemId
-    )
-) {
+internal sealed interface ConfirmResetHistoryDialogEvent {
 
-    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+    data object Idle : ConfirmResetHistoryDialogEvent
+
+    data object OnError : ConfirmResetHistoryDialogEvent
+
+    @JvmInline
+    value class OnSuccess(val itemCategory: ItemCategory) : ConfirmResetHistoryDialogEvent
 
 }

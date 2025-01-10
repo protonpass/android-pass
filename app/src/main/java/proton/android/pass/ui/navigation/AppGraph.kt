@@ -74,12 +74,13 @@ import proton.android.pass.features.item.details.detailleave.navigation.ItemDeta
 import proton.android.pass.features.item.details.detailmenu.navigation.ItemDetailsMenuNavItem
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 import proton.android.pass.features.item.details.shared.navigation.itemDetailsNavGraph
+import proton.android.pass.features.item.history.confirmreset.navigation.ConfirmResetHistoryDialogNavItem
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
+import proton.android.pass.features.item.history.options.navigation.HistoryOptionsNavItem
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
 import proton.android.pass.features.item.options.aliases.trash.dialogs.navigation.ItemOptionsAliasTrashDialogNavItem
-import proton.android.pass.features.item.history.confirmresethistory.navigation.ConfirmResetHistoryDialogNavItem
 import proton.android.pass.features.item.options.shared.navigation.ItemOptionsNavDestination
 import proton.android.pass.features.item.options.shared.navigation.itemOptionsNavGraph
 import proton.android.pass.features.item.trash.shared.navigation.ItemTrashNavDestination
@@ -1666,6 +1667,25 @@ fun NavGraphBuilder.appGraph(
                     destination = ViewPasskeyDetailsBottomSheet,
                     route = ViewPasskeyDetailsBottomSheet.buildRoute(
                         passkey = itemHistoryNavDestination.passkey
+                    )
+                )
+
+                is ItemHistoryNavDestination.ConfirmResetHistory -> dismissBottomSheet {
+                    appNavigator.navigateBack(true)
+                    appNavigator.navigate(
+                        destination = ConfirmResetHistoryDialogNavItem,
+                        route = ConfirmResetHistoryDialogNavItem.createNavRoute(
+                            shareId = itemHistoryNavDestination.shareId,
+                            itemId = itemHistoryNavDestination.itemId
+                        )
+                    )
+                }
+
+                is ItemHistoryNavDestination.Options -> appNavigator.navigate(
+                    destination = HistoryOptionsNavItem,
+                    route = HistoryOptionsNavItem.createNavRoute(
+                        shareId = itemHistoryNavDestination.shareId,
+                        itemId = itemHistoryNavDestination.itemId
                     )
                 )
             }

@@ -19,12 +19,15 @@
 package proton.android.pass.features.item.history.navigation
 
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.features.item.history.confirmresethistory.navigation.ConfirmResetHistoryDialogNavItem
-import proton.android.pass.features.item.history.confirmresethistory.ui.ConfirmResetHistoryDialog
+import proton.android.pass.features.item.history.confirmreset.navigation.ConfirmResetHistoryDialogNavItem
+import proton.android.pass.features.item.history.confirmreset.ui.ConfirmResetHistoryDialog
+import proton.android.pass.features.item.history.options.navigation.HistoryOptionsNavItem
+import proton.android.pass.features.item.history.options.ui.HistoryOptionsBottomsheet
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.restore.ui.ItemHistoryRestoreScreen
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
 import proton.android.pass.features.item.history.timeline.ui.ItemHistoryTimelineScreen
+import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
 
@@ -40,5 +43,9 @@ fun NavGraphBuilder.itemHistoryNavGraph(onNavigated: (ItemHistoryNavDestination)
 
     dialog(navItem = ConfirmResetHistoryDialogNavItem) {
         ConfirmResetHistoryDialog(onNavigated = onNavigated)
+    }
+
+    bottomSheet(navItem = HistoryOptionsNavItem) {
+        HistoryOptionsBottomsheet(onNavigated = onNavigated)
     }
 }

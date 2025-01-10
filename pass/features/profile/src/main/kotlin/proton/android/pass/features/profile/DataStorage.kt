@@ -50,7 +50,6 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 internal fun DataStorage(
     modifier: Modifier = Modifier,
-    canUpgrade: Boolean,
     state: DataStorageState,
     onClick: () -> Unit
 ) {
@@ -90,7 +89,7 @@ internal fun DataStorage(
 
                 Text.Body2Weak(
                     modifier = Modifier.applyIf(
-                        condition = percentage >= HIGH_THRESHOLD && canUpgrade,
+                        condition = percentage >= HIGH_THRESHOLD,
                         ifTrue = { clickable { onClick() } }
                     ),
                     text = "$amount (${String.format(Locale.getDefault(), "%.1f", percentage)}%)",
@@ -142,7 +141,6 @@ fun DataStoragePreview(@PreviewParameter(ThemeDataStorageProvider::class) input:
                     used = input.second.toLong(),
                     quota = 1 * 1024
                 ),
-                canUpgrade = false,
                 onClick = {}
             )
         }

@@ -33,3 +33,7 @@ fun Modifier.applyIf(
         else -> this
     }
 }
+
+fun <T : Any> Modifier.applyIfNotNull(value: T?, ifNotNull: Modifier.(T) -> Modifier): Modifier =
+    value?.let { nonNullValue -> then(ifNotNull(nonNullValue)) } ?: this
+

@@ -16,14 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.confirmresethistory.presentation
+package proton.android.pass.features.item.history.confirmreset.presentation
 
-internal sealed interface ConfirmResetHistoryDialogEvent {
+import androidx.compose.runtime.Stable
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
-    data object Idle : ConfirmResetHistoryDialogEvent
+@Stable
+internal data class ConfirmResetHistoryDialogState(
+    internal val event: ConfirmResetHistoryDialogEvent,
+    private val isLoadingState: IsLoadingState
+) {
 
-    data object OnError : ConfirmResetHistoryDialogEvent
+    internal val isLoading: Boolean = isLoadingState.value()
 
-    data object OnSuccess : ConfirmResetHistoryDialogEvent
+    internal companion object {
+
+        internal val Initial = ConfirmResetHistoryDialogState(
+            event = ConfirmResetHistoryDialogEvent.Idle,
+            isLoadingState = IsLoadingState.NotLoading
+        )
+
+    }
 
 }

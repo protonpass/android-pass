@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.confirmresethistory.ui
+package proton.android.pass.features.item.history.confirmreset.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,8 +27,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
 import proton.android.pass.features.item.history.R
-import proton.android.pass.features.item.history.confirmresethistory.presentation.ConfirmResetHistoryDialogEvent
-import proton.android.pass.features.item.history.confirmresethistory.presentation.ConfirmResetHistoryDialogViewModel
+import proton.android.pass.features.item.history.confirmreset.presentation.ConfirmResetHistoryDialogEvent
+import proton.android.pass.features.item.history.confirmreset.presentation.ConfirmResetHistoryDialogViewModel
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import me.proton.core.presentation.R as CoreR
 
@@ -41,10 +41,11 @@ fun ConfirmResetHistoryDialog(
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
-        when (state.event) {
+        when (val event = state.event) {
             ConfirmResetHistoryDialogEvent.Idle -> {}
-            ConfirmResetHistoryDialogEvent.OnError,
-            ConfirmResetHistoryDialogEvent.OnSuccess -> onNavigated(ItemHistoryNavDestination.Back)
+            ConfirmResetHistoryDialogEvent.OnError -> onNavigated(ItemHistoryNavDestination.Back)
+            is ConfirmResetHistoryDialogEvent.OnSuccess ->
+                onNavigated(ItemHistoryNavDestination.Detail(event.itemCategory))
         }
 
         viewModel.onConsumeEvent(state.event)

@@ -18,12 +18,16 @@
 
 package proton.android.pass.features.item.history.timeline.ui
 
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 
@@ -31,7 +35,8 @@ import proton.android.pass.composecomponents.impl.utils.PassItemColors
 internal fun ItemHistoryTimelineTopBar(
     modifier: Modifier = Modifier,
     colors: PassItemColors,
-    onUpClick: () -> Unit
+    onUpClick: () -> Unit,
+    onOptions: () -> Unit
 ) {
     ProtonTopAppBar(
         modifier = modifier,
@@ -45,6 +50,14 @@ internal fun ItemHistoryTimelineTopBar(
                 onUpClick = onUpClick
             )
         },
-        actions = {}
+        actions = {
+            ThreeDotsMenuButton(
+                size = 40.dp,
+                dotsColor = colors.majorSecondary,
+                backgroundColor = colors.minorPrimary,
+                onClick = onOptions
+            )
+            Spacer(Modifier.width(Spacing.small))
+        }
     )
 }

@@ -530,6 +530,7 @@ fun FileApiModel.toEntity(
     reencryptedMetadata: EncryptedByteArray
 ): AttachmentEntity = AttachmentEntity(
     userId = userId.id,
+    persistentId = this.persistentFileId,
     id = this.fileId,
     shareId = shareId.id,
     itemId = itemId.id,

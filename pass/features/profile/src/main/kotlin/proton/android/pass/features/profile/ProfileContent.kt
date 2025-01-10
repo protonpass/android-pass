@@ -115,7 +115,6 @@ internal fun ProfileContent(
                     modifier = Modifier
                         .padding(horizontal = Spacing.medium)
                         .padding(bottom = Spacing.medium),
-                    canUpgrade = state.showUpgradeButton,
                     state = state.dataStorageState,
                     onClick = { onEvent(ProfileUiEvent.OnStorageFullClick) }
                 )

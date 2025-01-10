@@ -18,19 +18,26 @@
 
 package proton.android.pass.composecomponents.impl.item.icon
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.applyIfNotNull
 import proton.android.pass.composecomponents.impl.R
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun ThreeDotsMenuButton(
@@ -41,17 +48,40 @@ fun ThreeDotsMenuButton(
     } else {
         PassTheme.colors.textDisabled
     },
+    backgroundColor: Color? = null,
+    size: Dp? = null,
     contentDescription: String? = null,
     onClick: () -> Unit
 ) {
     IconButton(
-        modifier = modifier,
+        modifier = modifier
+            .clip(CircleShape)
+            .applyIfNotNull(
+                value = size,
+                ifNotNull = { size(it) }
+            )
+            .applyIfNotNull(
+                value = backgroundColor,
+                ifNotNull = { color ->
+                    if (enabled) {
+                        background(color)
+                    } else {
+                        background(color.copy(alpha = 0.6f))
+                    }
+                }
+            ),
         enabled = enabled,
         onClick = onClick
     ) {
+        val resource = if (backgroundColor == null) {
+            R.drawable.ic_three_dots_vertical_24
+        } else {
+            CoreR.drawable.ic_proton_three_dots_vertical
+        }
         Icon(
-            imageVector = ImageVector.vectorResource(R.drawable.ic_three_dots_vertical_24),
-            contentDescription = contentDescription,
+            painter = painterResource(resource),
+            contentDescription = contentDescription
+                ?: stringResource(R.string.options_menu_content_description),
             tint = dotsColor
         )
     }

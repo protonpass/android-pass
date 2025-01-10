@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.confirmresethistory.presentation
+package proton.android.pass.features.item.history.confirmreset.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,6 +30,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.ResetItemHistory
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -42,6 +43,7 @@ import javax.inject.Inject
 class ConfirmResetHistoryDialogViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     private val resetItemHistory: ResetItemHistory,
+    private val getItemCategory: GetItemCategory,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -87,7 +89,8 @@ class ConfirmResetHistoryDialogViewModel @Inject constructor(
                     snackbarDispatcher(ConfirmResetHistorySnackBarMessage.ResetHistoryError)
                 }
                 .onSuccess {
-                    eventFlow.update { ConfirmResetHistoryDialogEvent.OnSuccess }
+                    val itemCategory = getItemCategory(shareId, itemId)
+                    eventFlow.update { ConfirmResetHistoryDialogEvent.OnSuccess(itemCategory) }
                     snackbarDispatcher(ConfirmResetHistorySnackBarMessage.ResetHistorySuccess)
                 }
 

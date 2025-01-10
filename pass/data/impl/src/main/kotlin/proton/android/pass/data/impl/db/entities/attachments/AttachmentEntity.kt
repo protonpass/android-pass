@@ -59,6 +59,8 @@ import proton.android.pass.data.impl.db.entities.ShareEntity
 data class AttachmentEntity(
     @ColumnInfo(name = Columns.ID)
     val id: String,
+    @ColumnInfo(name = Columns.PERSISTENT_ID, defaultValue = "")
+    val persistentId: String,
     @ColumnInfo(name = Columns.USER_ID, index = true)
     val userId: String,
     @ColumnInfo(name = Columns.SHARE_ID, index = true)
@@ -88,6 +90,7 @@ data class AttachmentEntity(
 ) {
     object Columns {
         const val ID = "id"
+        const val PERSISTENT_ID = "persistent_id"
         const val USER_ID = "user_id"
         const val SHARE_ID = "share_id"
         const val ITEM_ID = "item_id"

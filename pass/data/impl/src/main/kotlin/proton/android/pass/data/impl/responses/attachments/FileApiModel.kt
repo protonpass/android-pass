@@ -26,6 +26,8 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 data class FileApiModel(
     @SerialName("FileID")
     val fileId: String,
+    @SerialName("PersistentFileUID")
+    val persistentFileId: String,
     @SerialName("Size")
     val size: Long,
     @SerialName("Metadata")

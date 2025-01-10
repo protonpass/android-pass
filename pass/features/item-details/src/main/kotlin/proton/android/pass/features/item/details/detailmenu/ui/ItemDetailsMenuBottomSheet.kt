@@ -66,14 +66,6 @@ fun ItemDetailsMenuBottomSheet(
             ItemDetailsMenuEvent.OnItemTrashingError -> {
                 onNavigated(ItemDetailsNavDestination.DismissBottomSheet)
             }
-
-            is ItemDetailsMenuEvent.OnConfirmResetHistory ->
-                onNavigated(
-                    ItemDetailsNavDestination.ConfirmResetHistory(
-                        shareId = event.shareId,
-                        itemId = event.itemId
-                    )
-                )
         }
 
         onConsumeEvent(state.event)
@@ -91,7 +83,6 @@ fun ItemDetailsMenuBottomSheet(
                 ItemDetailsMenuUiEvent.OnIncludeItemMonitorClicked -> onIncludeItemInMonitoring()
                 ItemDetailsMenuUiEvent.OnTrashItemClicked -> onTrashItem()
                 ItemDetailsMenuUiEvent.OnLeaveItemClicked -> onLeaveItem()
-                ItemDetailsMenuUiEvent.OnResetHistoryClicked -> onResetHistory()
             }
         }
     )

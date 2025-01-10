@@ -2516,10 +2516,7 @@ fun NavGraphBuilder.appGraph(
             }
 
             AttachmentsNavigation.Upgrade -> dismissBottomSheet {
-                appNavigator.navigate(
-                    destination = UpsellNavItem,
-                    route = UpsellNavItem.createNavRoute(PaidFeature.FileAttachments)
-                )
+                onNavigate(AppNavigation.Upgrade)
             }
         }
     }

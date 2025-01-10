@@ -889,10 +889,6 @@ class LoginDetailViewModel @Inject constructor(
         }
     }
 
-    fun resetItemHistory(shareId: ShareId, itemId: ItemId) {
-        eventState.update { ItemDetailEvent.ConfirmResetHistory(shareId, itemId) }
-    }
-
     companion object {
         private const val TAG = "LoginDetailViewModel"
     }

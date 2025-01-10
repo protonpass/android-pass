@@ -32,7 +32,6 @@ import proton.android.pass.composecomponents.impl.bottomsheet.unpin
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.features.itemdetail.common.migrate
 import proton.android.pass.features.itemdetail.common.moveToTrash
-import proton.android.pass.features.itemdetail.common.resetHistory
 
 @Composable
 fun LoginTopBarOptionsBottomSheetContents(
@@ -40,7 +39,6 @@ fun LoginTopBarOptionsBottomSheetContents(
     canMigrate: Boolean,
     canMoveToTrash: Boolean,
     canLeave: Boolean,
-    canResetHistory: Boolean,
     onMigrate: () -> Unit,
     onMoveToTrash: () -> Unit,
     isPinned: Boolean,
@@ -49,7 +47,6 @@ fun LoginTopBarOptionsBottomSheetContents(
     onExcludeFromMonitoring: () -> Unit,
     onIncludeInMonitoring: () -> Unit,
     onLeave: () -> Unit,
-    onResetHistory: () -> Unit,
     isExcludedFromMonitor: Boolean
 ) {
     buildList {
@@ -87,9 +84,6 @@ fun LoginTopBarOptionsBottomSheetContents(
 
         if (canLeave) {
             leave(onClick = onLeave).also(::add)
-        }
-        if (canResetHistory) {
-            resetHistory(onClick = onResetHistory).also(::add)
         }
     }.also { items ->
         BottomSheetItemList(

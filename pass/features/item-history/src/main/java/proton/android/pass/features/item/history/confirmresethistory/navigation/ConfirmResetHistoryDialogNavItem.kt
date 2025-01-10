@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,14 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.options.confirmresethistory.presentation
+package proton.android.pass.features.item.history.confirmresethistory.navigation
 
-internal sealed interface ConfirmResetHistoryDialogEvent {
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.NavItem
 
-    data object Idle : ConfirmResetHistoryDialogEvent
+object ConfirmResetHistoryDialogNavItem : NavItem(
+    baseRoute = "item/options/confirmresethistory/dialog",
+    navArgIds = listOf(
+        CommonNavArgId.ShareId,
+        CommonNavArgId.ItemId
+    )
+) {
 
-    data object OnError : ConfirmResetHistoryDialogEvent
-
-    data object OnSuccess : ConfirmResetHistoryDialogEvent
+    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 
 }

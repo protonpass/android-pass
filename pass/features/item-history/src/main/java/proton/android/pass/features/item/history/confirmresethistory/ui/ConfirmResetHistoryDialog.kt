@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024-2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.options.confirmresethistory.ui
+package proton.android.pass.features.item.history.confirmresethistory.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,16 +26,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
-import proton.android.pass.features.item.options.R
-import proton.android.pass.features.item.options.confirmresethistory.presentation.ConfirmResetHistoryDialogEvent
-import proton.android.pass.features.item.options.confirmresethistory.presentation.ConfirmResetHistoryDialogViewModel
-import proton.android.pass.features.item.options.shared.navigation.ItemOptionsNavDestination
+import proton.android.pass.features.item.history.R
+import proton.android.pass.features.item.history.confirmresethistory.presentation.ConfirmResetHistoryDialogEvent
+import proton.android.pass.features.item.history.confirmresethistory.presentation.ConfirmResetHistoryDialogViewModel
+import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun ConfirmResetHistoryDialog(
     modifier: Modifier = Modifier,
-    onNavigated: (ItemOptionsNavDestination) -> Unit,
+    onNavigated: (ItemHistoryNavDestination) -> Unit,
     viewModel: ConfirmResetHistoryDialogViewModel = hiltViewModel()
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -44,7 +44,7 @@ fun ConfirmResetHistoryDialog(
         when (state.event) {
             ConfirmResetHistoryDialogEvent.Idle -> {}
             ConfirmResetHistoryDialogEvent.OnError,
-            ConfirmResetHistoryDialogEvent.OnSuccess -> onNavigated(ItemOptionsNavDestination.Back)
+            ConfirmResetHistoryDialogEvent.OnSuccess -> onNavigated(ItemHistoryNavDestination.Back)
         }
 
         viewModel.onConsumeEvent(state.event)
@@ -61,7 +61,7 @@ fun ConfirmResetHistoryDialog(
         confirmText = stringResource(R.string.reset_history_action),
         cancelText = stringResource(id = CoreR.string.presentation_alert_cancel),
         onConfirm = viewModel::onResetHistory,
-        onDismiss = { onNavigated(ItemOptionsNavDestination.Back) },
-        onCancel = { onNavigated(ItemOptionsNavDestination.Back) }
+        onDismiss = { onNavigated(ItemHistoryNavDestination.Back) },
+        onCancel = { onNavigated(ItemHistoryNavDestination.Back) }
     )
 }

@@ -73,7 +73,6 @@
     <!-- Bottomsheet -->
     <string name="move_to_trash_item_detail_bottom_sheet">Move to trash</string>
     <string name="migrate_item_detail_bottom_sheet">Move to another vault</string>
-    <string name="reset_history_item_detail_bottom_sheet">Reset history</string>
     <!-- More info -->
     <string name="date_today">Today %s</string>
     <string name="date_yesterday">Yesterday %s</string>

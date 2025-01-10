@@ -46,8 +46,7 @@ class ItemDetailTopBarPreviewProvider : PreviewParameterProvider<ItemDetailTopBa
                                 canMoveToOtherVault = ItemActions.CanMoveToOtherVaultState.Enabled,
                                 canMoveToTrash = true,
                                 canRestoreFromTrash = false,
-                                canDelete = false,
-                                canResetHistory = false
+                                canDelete = false
                             )
                         )
                     )

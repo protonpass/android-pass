@@ -440,10 +440,6 @@ class AliasDetailViewModel @Inject constructor(
         }
     }
 
-    fun resetItemHistory(shareId: ShareId, itemId: ItemId) {
-        eventState.update { ItemDetailEvent.ConfirmResetHistory(shareId, itemId) }
-    }
-
     private companion object {
 
         private const val TAG = "AliasDetailViewModel"

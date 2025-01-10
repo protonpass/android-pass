@@ -40,13 +40,11 @@ fun TopBarOptionsBottomSheetContents(
     canMigrate: Boolean,
     canMoveToTrash: Boolean,
     canLeave: Boolean,
-    canResetHistory: Boolean,
     onMigrate: () -> Unit,
     onMoveToTrash: () -> Unit,
     isPinned: Boolean,
     onPinned: () -> Unit,
     onUnpinned: () -> Unit,
-    onResetHistory: () -> Unit,
     onLeave: () -> Unit
 ) {
     buildList {
@@ -72,9 +70,6 @@ fun TopBarOptionsBottomSheetContents(
 
         if (canLeave) {
             leave(onClick = onLeave).also(::add)
-        }
-        if (canResetHistory) {
-            resetHistory(onClick = onResetHistory).also(::add)
         }
     }.also { items ->
         BottomSheetItemList(
@@ -102,13 +97,11 @@ fun TopBarOptionsBottomSheetContentsPreview(
                     canMoveToTrash = canMoveToTrash,
                     isPinned = isPinned,
                     canLeave = true,
-                    canResetHistory = true,
                     onMigrate = {},
                     onMoveToTrash = {},
                     onPinned = {},
                     onUnpinned = {},
-                    onLeave = {},
-                    onResetHistory = {}
+                    onLeave = {}
                 )
             }
         }

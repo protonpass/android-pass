@@ -74,7 +74,7 @@ internal fun PasswordInput(
         editable = isEditAllowed,
         moveToNextOnEnter = true,
         keyboardOptions = KeyboardOptions(
-            autoCorrect = false,
+            autoCorrectEnabled = false,
             keyboardType = KeyboardType.Password
         ),
         textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed)

@@ -100,7 +100,7 @@ internal fun SimpleLoginSyncMailboxCreateContent(
             value = mailboxEmail,
             textStyle = ProtonTheme.typography.subheadlineNorm,
             keyboardOptions = KeyboardOptions(
-                autoCorrect = false,
+                autoCorrectEnabled = false,
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next
             ),

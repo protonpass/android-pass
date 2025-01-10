@@ -20,7 +20,7 @@ package proton.android.pass.composecomponents.impl.topbar.iconbutton
 
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -33,7 +33,7 @@ fun ArrowBackIconButton(modifier: Modifier = Modifier, onUpClick: () -> Unit) {
         onUpClick = onUpClick
     ) {
         Icon(
-            imageVector = Icons.Default.ArrowBack,
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             contentDescription = null
         )
     }

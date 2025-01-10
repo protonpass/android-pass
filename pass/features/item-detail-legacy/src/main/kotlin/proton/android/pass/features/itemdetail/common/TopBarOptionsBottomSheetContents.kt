@@ -96,7 +96,7 @@ fun TopBarOptionsBottomSheetContentsPreview(
                     canMigrate = canMigrate,
                     canMoveToTrash = canMoveToTrash,
                     isPinned = isPinned,
-                    canLeave = true,
+                    canLeave = false,
                     onMigrate = {},
                     onMoveToTrash = {},
                     onPinned = {},

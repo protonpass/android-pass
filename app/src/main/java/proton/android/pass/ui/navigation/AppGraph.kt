@@ -1620,16 +1620,6 @@ fun NavGraphBuilder.appGraph(
                         )
                     )
                 }
-
-                is ItemDetailsNavDestination.ConfirmResetHistory -> dismissBottomSheet {
-                    appNavigator.navigate(
-                        destination = ConfirmResetHistoryDialogNavItem,
-                        route = ConfirmResetHistoryDialogNavItem.createNavRoute(
-                            shareId = itemDetailsNavDestination.shareId,
-                            itemId = itemDetailsNavDestination.itemId
-                        )
-                    )
-                }
             }
         }
     )

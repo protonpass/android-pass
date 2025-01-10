@@ -58,8 +58,6 @@ internal data class ItemDetailsMenuState(
 
     internal val canLeaveItem: Boolean = isItemShare
 
-    internal val canResetHistory: Boolean = itemOption.value()?.revision ?: 0 > 1
-
     internal val canMigrateItem: Boolean = when {
         isItemShare -> false
         else -> when (itemActionsOption) {

@@ -65,7 +65,7 @@ internal fun HiddenNumberInput(
         onChange = onChange,
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm(enabled),
-        keyboardOptions = KeyboardOptions(autoCorrect = false, keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(autoCorrectEnabled = false, keyboardType = KeyboardType.Number),
         editable = enabled,
         label = { ProtonTextFieldLabel(text = label) },
         placeholder = { ProtonTextFieldPlaceHolder(text = placeholder) },

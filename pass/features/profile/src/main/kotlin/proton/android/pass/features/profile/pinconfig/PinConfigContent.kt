@@ -133,7 +133,7 @@ fun PinConfigContent(
                 textStyle = PassTheme.typography.heroNorm(),
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(
-                    autoCorrect = false,
+                    autoCorrectEnabled = false,
                     keyboardType = KeyboardType.NumberPassword,
                     imeAction = ImeAction.Next
                 ),
@@ -153,7 +153,7 @@ fun PinConfigContent(
                 value = state.repeatPin,
                 textStyle = PassTheme.typography.heroNorm(),
                 keyboardOptions = KeyboardOptions(
-                    autoCorrect = false,
+                    autoCorrectEnabled = false,
                     keyboardType = KeyboardType.NumberPassword,
                     imeAction = ImeAction.Done
                 ),

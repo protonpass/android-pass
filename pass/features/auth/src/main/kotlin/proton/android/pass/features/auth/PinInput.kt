@@ -73,7 +73,7 @@ fun PinInput(
             onDone = { onPinSubmit() }
         ),
         keyboardOptions = KeyboardOptions(
-            autoCorrect = false,
+            autoCorrectEnabled = false,
             keyboardType = KeyboardType.NumberPassword,
             imeAction = ImeAction.Done
         ),

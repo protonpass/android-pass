@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.history.confirmresethistory.presentation
+package proton.android.pass.features.item.history.confirmreset.presentation
 
 import androidx.annotation.StringRes
 import proton.android.pass.features.item.history.R

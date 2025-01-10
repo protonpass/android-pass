@@ -19,18 +19,18 @@
 package proton.android.pass.common.api
 
 import java.util.Locale
-import kotlin.math.log10
+import kotlin.math.ln
 import kotlin.math.pow
 
 object FileSizeUtil {
     fun toHumanReadableSize(sizeInBytes: Long): String {
         if (sizeInBytes <= 0) return "0 B"
         val units = arrayOf("B", "KB", "MB", "GB", "TB")
-        val digitGroups = (log10(sizeInBytes.toDouble()) / log10(1024.0)).toInt()
+        val digitGroups = minOf((ln(sizeInBytes.toDouble()) / ln(1024.0)).toInt(), units.size - 1)
         return String.format(
             Locale.getDefault(),
             "%.1f %s",
-            sizeInBytes / 1024.0.pow(digitGroups.toDouble()),
+            sizeInBytes.toDouble() / 1024.0.pow(digitGroups.toDouble()),
             units[digitGroups]
         )
     }

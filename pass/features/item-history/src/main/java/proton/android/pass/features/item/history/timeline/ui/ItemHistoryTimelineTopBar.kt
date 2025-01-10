@@ -35,6 +35,7 @@ import proton.android.pass.composecomponents.impl.utils.PassItemColors
 internal fun ItemHistoryTimelineTopBar(
     modifier: Modifier = Modifier,
     colors: PassItemColors,
+    showOptions: Boolean,
     onUpClick: () -> Unit,
     onOptions: () -> Unit
 ) {
@@ -51,13 +52,16 @@ internal fun ItemHistoryTimelineTopBar(
             )
         },
         actions = {
-            ThreeDotsMenuButton(
-                size = 40.dp,
-                dotsColor = colors.majorSecondary,
-                backgroundColor = colors.minorPrimary,
-                onClick = onOptions
-            )
-            Spacer(Modifier.width(Spacing.small))
+            if (showOptions) {
+                ThreeDotsMenuButton(
+                    size = 40.dp,
+                    dotsColor = colors.majorSecondary,
+                    backgroundColor = colors.minorPrimary,
+                    onClick = onOptions
+                )
+                Spacer(Modifier.width(Spacing.small))
+
+            }
         }
     )
 }

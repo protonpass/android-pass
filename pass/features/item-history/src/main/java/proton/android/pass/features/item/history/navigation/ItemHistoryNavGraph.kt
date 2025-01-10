@@ -19,11 +19,14 @@
 package proton.android.pass.features.item.history.navigation
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.features.item.history.confirmresethistory.navigation.ConfirmResetHistoryDialogNavItem
+import proton.android.pass.features.item.history.confirmresethistory.ui.ConfirmResetHistoryDialog
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.restore.ui.ItemHistoryRestoreScreen
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
 import proton.android.pass.features.item.history.timeline.ui.ItemHistoryTimelineScreen
 import proton.android.pass.navigation.api.composable
+import proton.android.pass.navigation.api.dialog
 
 fun NavGraphBuilder.itemHistoryNavGraph(onNavigated: (ItemHistoryNavDestination) -> Unit) {
 
@@ -35,4 +38,7 @@ fun NavGraphBuilder.itemHistoryNavGraph(onNavigated: (ItemHistoryNavDestination)
         ItemHistoryRestoreScreen(onNavigated = onNavigated)
     }
 
+    dialog(navItem = ConfirmResetHistoryDialogNavItem) {
+        ConfirmResetHistoryDialog(onNavigated = onNavigated)
+    }
 }

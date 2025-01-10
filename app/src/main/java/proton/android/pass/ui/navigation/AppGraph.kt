@@ -79,7 +79,7 @@ import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
 import proton.android.pass.features.item.options.aliases.trash.dialogs.navigation.ItemOptionsAliasTrashDialogNavItem
-import proton.android.pass.features.item.options.confirmresethistory.navigation.ConfirmResetHistoryDialogNavItem
+import proton.android.pass.features.item.history.confirmresethistory.navigation.ConfirmResetHistoryDialogNavItem
 import proton.android.pass.features.item.options.shared.navigation.ItemOptionsNavDestination
 import proton.android.pass.features.item.options.shared.navigation.itemOptionsNavGraph
 import proton.android.pass.features.item.trash.shared.navigation.ItemTrashNavDestination

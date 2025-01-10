@@ -174,6 +174,17 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         )
     )
 
+    override suspend fun deleteItemRevisions(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): ItemRevision = createItemRevision(
+        TestItem.create(
+            shareId = shareId,
+            itemId = itemId
+        )
+    )
+
     data class CreateItemParams(
         val userId: UserId,
         val shareId: ShareId,

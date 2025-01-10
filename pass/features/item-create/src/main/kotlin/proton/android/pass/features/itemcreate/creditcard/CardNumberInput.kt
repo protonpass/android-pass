@@ -62,7 +62,7 @@ internal fun CardNumberInput(
         moveToNextOnEnter = true,
         editable = enabled,
         textStyle = ProtonTheme.typography.defaultNorm(enabled),
-        keyboardOptions = KeyboardOptions(autoCorrect = false, keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(autoCorrectEnabled = false, keyboardType = KeyboardType.Number),
         visualTransformation = { text -> cardNumberTransformedText(text) },
         label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_card_number_title)) },
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.field_card_number_hint)) },

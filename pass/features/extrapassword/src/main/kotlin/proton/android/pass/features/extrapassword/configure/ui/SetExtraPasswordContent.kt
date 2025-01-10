@@ -152,7 +152,7 @@ internal fun SetExtraPasswordContent(
                     VisualTransformation.None
                 },
                 keyboardOptions = KeyboardOptions(
-                    autoCorrect = false,
+                    autoCorrectEnabled = false,
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Next
                 ),
@@ -188,7 +188,7 @@ internal fun SetExtraPasswordContent(
                 isError = validationError is Some && validationError.value == PasswordMismatch,
                 errorMessage = stringResource(R.string.configure_extra_password_mismatch),
                 keyboardOptions = KeyboardOptions(
-                    autoCorrect = false,
+                    autoCorrectEnabled = false,
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
                 ),

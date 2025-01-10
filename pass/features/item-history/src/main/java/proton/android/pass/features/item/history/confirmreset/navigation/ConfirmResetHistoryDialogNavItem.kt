@@ -22,13 +22,15 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 
 object ConfirmResetHistoryDialogNavItem : NavItem(
-    baseRoute = "item/options/confirmresethistory/dialog",
+    baseRoute = "item/history/confirmreset/dialog",
     navArgIds = listOf(
         CommonNavArgId.ShareId,
         CommonNavArgId.ItemId
-    )
+    ),
+    navItemType = NavItemType.Dialog
 ) {
 
     fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"

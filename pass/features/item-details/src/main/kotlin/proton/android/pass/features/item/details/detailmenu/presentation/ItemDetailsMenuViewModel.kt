@@ -258,10 +258,6 @@ class ItemDetailsMenuViewModel @Inject constructor(
         eventFlow.update { ItemDetailsMenuEvent.OnItemLeaved(shareId) }
     }
 
-    internal fun onResetHistory() {
-        eventFlow.update { ItemDetailsMenuEvent.OnConfirmResetHistory(shareId, itemId) }
-    }
-
     private companion object {
 
         private const val TAG = "ItemDetailsMenuViewModel"

@@ -44,6 +44,7 @@ internal fun ItemHistoryTimelineContent(
         topBar = {
             ItemHistoryTimelineTopBar(
                 colors = itemColors,
+                showOptions = showOptions,
                 onUpClick = { onNavigated(ItemHistoryNavDestination.Back) },
                 onOptions = {
                     if (this@with is ItemHistoryTimelineState.Success) {

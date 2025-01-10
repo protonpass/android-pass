@@ -72,19 +72,11 @@ fun NoteDetail(
         NoteDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
         is NoteDetailUiState.Success -> {
             LaunchedEffect(state.event) {
-                when (val event = state.event) {
+                when (state.event) {
                     ItemDetailEvent.Unknown -> {}
                     ItemDetailEvent.MoveToVault -> {
                         onNavigate(ItemDetailNavigation.OnMigrate)
                     }
-
-                    is ItemDetailEvent.ConfirmResetHistory ->
-                        onNavigate(
-                            ItemDetailNavigation.OnConfirmResetHistory(
-                                shareId = event.shareId,
-                                itemId = event.itemId
-                            )
-                        )
                 }
                 viewModel.clearEvent()
             }
@@ -107,7 +99,6 @@ fun NoteDetail(
                             canMigrate = state.canMigrate,
                             canMoveToTrash = state.canMoveToTrash,
                             canLeave = state.canLeaveItem,
-                            canResetHistory = state.canResetHistory,
                             isPinned = state.itemUiModel.isPinned,
                             onMigrate = {
                                 scope.launch {
@@ -149,13 +140,6 @@ fun NoteDetail(
                                 ItemDetailNavigation.LeaveItemShare(
                                     shareId = state.itemUiModel.shareId
                                 ).also(onNavigate)
-                            },
-                            onResetHistory = {
-                                scope.launch { bottomSheetState.hide() }
-                                viewModel.resetItemHistory(
-                                    shareId = state.itemUiModel.shareId,
-                                    itemId = state.itemUiModel.id
-                                )
                             }
                         )
 

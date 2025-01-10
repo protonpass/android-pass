@@ -77,8 +77,6 @@ internal sealed interface AliasDetailUiState {
 
         internal val canMoveToTrash: Boolean = isVaultShare && itemActions.canMoveToTrash
 
-        internal val canResetHistory: Boolean = itemActions.canResetHistory
-
         internal val canLeaveItem: Boolean = !isVaultShare
 
         internal val requiresBackNavigation: Boolean = isItemSentToTrash ||

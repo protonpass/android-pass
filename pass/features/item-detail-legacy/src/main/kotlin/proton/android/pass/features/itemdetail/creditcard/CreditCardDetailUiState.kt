@@ -66,8 +66,6 @@ internal sealed interface CreditCardDetailUiState {
 
         internal val canMoveToTrash: Boolean = isVaultShare && itemActions.canMoveToTrash
 
-        internal val canResetHistory: Boolean = itemActions.canResetHistory
-
         internal val canLeaveItem: Boolean = !isVaultShare
 
         internal val shareSharedCount: Int = share.memberCount.plus(itemContent.model.shareCount)

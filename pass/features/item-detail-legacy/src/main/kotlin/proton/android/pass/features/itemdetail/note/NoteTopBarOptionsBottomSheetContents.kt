@@ -41,7 +41,6 @@ import proton.android.pass.features.itemdetail.common.ThemedTopBarOptionsPreview
 import proton.android.pass.features.itemdetail.common.TopBarOptionsParameters
 import proton.android.pass.features.itemdetail.common.migrate
 import proton.android.pass.features.itemdetail.common.moveToTrash
-import proton.android.pass.features.itemdetail.common.resetHistory
 
 @Composable
 fun NoteTopBarOptionsBottomSheetContents(
@@ -49,14 +48,12 @@ fun NoteTopBarOptionsBottomSheetContents(
     canMigrate: Boolean,
     canMoveToTrash: Boolean,
     canLeave: Boolean,
-    canResetHistory: Boolean,
     isPinned: Boolean,
     onMigrate: () -> Unit,
     onMoveToTrash: () -> Unit,
     onCopyNote: () -> Unit = {},
     onPinned: () -> Unit,
     onUnpinned: () -> Unit,
-    onResetHistory: () -> Unit,
     onLeave: () -> Unit
 ) {
     buildList {
@@ -84,10 +81,6 @@ fun NoteTopBarOptionsBottomSheetContents(
 
         if (canLeave) {
             leave(onClick = onLeave).also(::add)
-        }
-
-        if (canResetHistory) {
-            resetHistory(onClick = onResetHistory).also(::add)
         }
     }.also { items ->
         BottomSheetItemList(
@@ -125,13 +118,11 @@ fun NoteTopBarOptionsBSContentsPreview(
                 canMoveToTrash = params.canMoveToTrash,
                 isPinned = params.isPinned,
                 canLeave = false,
-                canResetHistory = false,
                 onMigrate = {},
                 onMoveToTrash = {},
                 onPinned = {},
                 onUnpinned = {},
-                onLeave = {},
-                onResetHistory = {}
+                onLeave = {}
             )
         }
     }

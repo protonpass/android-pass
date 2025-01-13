@@ -24,9 +24,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.core.view.WindowCompat
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.GetPublicKeyCredentialOption
 import androidx.credentials.PublicKeyCredential
@@ -37,6 +37,9 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
+import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
@@ -73,29 +76,33 @@ class SelectPasskeyActivity : FragmentActivity() {
             is SelectPasskeyAppState.ErrorAuthenticating,
             is SelectPasskeyAppState.Close -> sendResponse(null)
             is SelectPasskeyAppState.Ready -> {
-                WindowCompat.setDecorFitsSystemWindows(window, false)
+                enableEdgeToEdge()
                 setContent {
-                    SelectPasskeyApp(
-                        appState = state,
-                        onNavigate = {
-                            when (it) {
-                                SelectPasskeyNavigation.Cancel -> {
-                                    sendResponse(null)
-                                }
+                    val isDark = isDark(state.theme)
+                    SystemUIDisposableEffect(isDark)
+                    PassTheme(isDark = isDark) {
+                        SelectPasskeyApp(
+                            appState = state,
+                            onNavigate = {
+                                when (it) {
+                                    SelectPasskeyNavigation.Cancel -> {
+                                        sendResponse(null)
+                                    }
 
-                                is SelectPasskeyNavigation.ForceSignOut ->
-                                    viewModel.signOut(it.userId)
+                                    is SelectPasskeyNavigation.ForceSignOut ->
+                                        viewModel.signOut(it.userId)
 
-                                SelectPasskeyNavigation.Upgrade -> {
-                                    viewModel.upgrade()
-                                }
+                                    SelectPasskeyNavigation.Upgrade -> {
+                                        viewModel.upgrade()
+                                    }
 
-                                is SelectPasskeyNavigation.SendResponse -> {
-                                    sendResponse(it.response)
+                                    is SelectPasskeyNavigation.SendResponse -> {
+                                        sendResponse(it.response)
+                                    }
                                 }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }

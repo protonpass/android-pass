@@ -35,8 +35,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
-import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
-import proton.android.pass.composecomponents.impl.theme.isDark
 
 @Composable
 fun AutoSaveApp(
@@ -57,29 +55,24 @@ fun AutoSaveApp(
     )
 
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val isDark = isDark(state.theme)
 
-    SystemUIEffect(isDark = isDark)
-
-    PassTheme(isDark = isDark) {
-        Scaffold(
-            modifier = modifier
-                .background(PassTheme.colors.backgroundStrong)
-                .systemBarsPadding()
-                .imePadding(),
-            snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
-        ) { padding ->
-            AutosaveAppContent(
-                modifier = Modifier.padding(padding),
-                arguments = arguments,
-                needsAuth = state.needsAuth,
-                onNavigate = {
-                    if (it == AutosaveNavigation.Success) {
-                        viewModel.onItemAutoSaved()
-                    }
-                    onNavigate(it)
+    Scaffold(
+        modifier = modifier
+            .background(PassTheme.colors.backgroundStrong)
+            .systemBarsPadding()
+            .imePadding(),
+        snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
+    ) { padding ->
+        AutosaveAppContent(
+            modifier = Modifier.padding(padding),
+            arguments = arguments,
+            needsAuth = state.needsAuth,
+            onNavigate = {
+                if (it == AutosaveNavigation.Success) {
+                    viewModel.onItemAutoSaved()
                 }
-            )
-        }
+                onNavigate(it)
+            }
+        )
     }
 }

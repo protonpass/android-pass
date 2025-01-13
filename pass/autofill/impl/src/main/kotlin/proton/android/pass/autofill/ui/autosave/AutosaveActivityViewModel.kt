@@ -23,10 +23,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
@@ -39,6 +42,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.InternalSettingsRepository
+import proton.android.pass.preferences.ThemePreference
+import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,11 +51,21 @@ class AutosaveActivityViewModel @Inject constructor(
     private val accountOrchestrators: AccountOrchestrators,
     private val accountManager: AccountManager,
     private val toastManager: ToastManager,
-    private val internalSettingsRepository: InternalSettingsRepository
+    private val internalSettingsRepository: InternalSettingsRepository,
+    private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
     private val eventFlow: MutableStateFlow<Option<AutosaveEvent>> = MutableStateFlow(None)
-    val state: StateFlow<Option<AutosaveEvent>> = eventFlow
+    val eventState: StateFlow<Option<AutosaveEvent>> = eventFlow
+    val themePreferenceState = userPreferencesRepository.getThemePreference()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = runBlocking {
+                userPreferencesRepository.getThemePreference().firstOrNull()
+                    ?: ThemePreference.System
+            }
+        )
 
     fun register(context: ComponentActivity) {
         accountOrchestrators.register(context, listOf(Orchestrator.PlansOrchestrator))
@@ -71,10 +86,6 @@ class AutosaveActivityViewModel @Inject constructor(
         if (hasAccountsLeft.not()) {
             eventFlow.update { AutosaveEvent.Close.some() }
         }
-    }
-
-    companion object {
-        private const val TAG = "AutosaveActivityViewModel"
     }
 }
 

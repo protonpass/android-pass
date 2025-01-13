@@ -18,10 +18,6 @@
 
 package proton.android.pass.ui
 
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,14 +28,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.biometry.NeedsBiometricAuth
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.onError
@@ -61,14 +55,11 @@ import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.LastTimeUserHasSeenIAMPreference
-import proton.android.pass.preferences.ThemePreference
-import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
 class AppViewModel @Inject constructor(
-    private val preferenceRepository: UserPreferencesRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val needsBiometricAuth: NeedsBiometricAuth,
     private val inAppUpdatesManager: InAppUpdatesManager,
@@ -79,19 +70,6 @@ class AppViewModel @Inject constructor(
     networkMonitor: NetworkMonitor,
     observeDeliverableInAppMessages: ObserveDeliverableInAppMessages
 ) : ViewModel() {
-
-    private val themePreference: Flow<ThemePreference> = preferenceRepository
-        .getThemePreference()
-        .asResultWithoutLoading()
-        .map(::getThemePreference)
-        .onEach {
-            when (it) {
-                ThemePreference.Light -> AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
-                ThemePreference.Dark -> AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
-                ThemePreference.System ->
-                    AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
-            }
-        }
 
     private val networkStatus: Flow<NetworkStatus> = networkMonitor
         .connectivity
@@ -110,14 +88,12 @@ class AppViewModel @Inject constructor(
 
     val appUiState: StateFlow<AppUiState> = combine(
         snackbarDispatcher.snackbarMessage,
-        themePreference,
         networkStatus,
         inAppUpdatesManager.observeInAppUpdateState(),
         inAppMessageFlow
-    ) { snackbarMessage, theme, networkStatus, inAppUpdateState, inAppMessage ->
+    ) { snackbarMessage, networkStatus, inAppUpdateState, inAppMessage ->
         AppUiState(
             snackbarMessage = snackbarMessage,
-            theme = theme,
             networkStatus = networkStatus,
             inAppUpdateState = inAppUpdateState,
             inAppMessage = inAppMessage
@@ -125,10 +101,7 @@ class AppViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = run {
-            val theme = runBlocking { preferenceRepository.getThemePreference().first() }
-            AppUiState.default(theme)
-        }
+        initialValue = AppUiState.Initial
     )
 
     fun onStop() = viewModelScope.launch {
@@ -146,16 +119,6 @@ class AppViewModel @Inject constructor(
     fun onSnackbarMessageDelivered() {
         viewModelScope.launch {
             snackbarDispatcher.snackbarMessageDelivered()
-        }
-    }
-
-    private fun getThemePreference(state: LoadingResult<ThemePreference>): ThemePreference = when (state) {
-        LoadingResult.Loading -> ThemePreference.System
-        is LoadingResult.Success -> state.data
-        is LoadingResult.Error -> {
-            PassLogger.w(TAG, "Error getting ThemePreference")
-            PassLogger.w(TAG, state.exception)
-            ThemePreference.System
         }
     }
 

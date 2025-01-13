@@ -39,8 +39,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
-import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
-import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.features.passkeys.create.presentation.CreatePasskeyAppEvent
 import proton.android.pass.features.passkeys.create.presentation.CreatePasskeyAppState
 import proton.android.pass.features.passkeys.create.presentation.CreatePasskeyAppViewModel
@@ -90,46 +88,41 @@ fun CreatePasskeyApp(
         viewModel.clearEvent()
     }
 
-    val isDark = isDark(appState.theme)
-    SystemUIEffect(isDark = isDark)
-
     when (val navState = state.navState) {
         CreatePasskeyNavState.Loading -> {}
         is CreatePasskeyNavState.Ready -> {
-            PassTheme(isDark = isDark) {
-                Scaffold(
-                    modifier = modifier
-                        .background(PassTheme.colors.backgroundStrong)
-                        .systemBarsPadding()
-                        .imePadding(),
-                    snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
-                ) { padding ->
-                    CreatePasskeyAppContent(
-                        modifier = Modifier.padding(padding),
-                        needsAuth = appState.needsAuth,
-                        navState = navState,
-                        onEvent = {
-                            when (it) {
-                                is CreatePasskeyEvent.OnItemSelected -> {
-                                    viewModel.onItemSelected(it.item)
-                                }
+            Scaffold(
+                modifier = modifier
+                    .background(PassTheme.colors.backgroundStrong)
+                    .systemBarsPadding()
+                    .imePadding(),
+                snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
+            ) { padding ->
+                CreatePasskeyAppContent(
+                    modifier = Modifier.padding(padding),
+                    needsAuth = appState.needsAuth,
+                    navState = navState,
+                    onEvent = {
+                        when (it) {
+                            is CreatePasskeyEvent.OnItemSelected -> {
+                                viewModel.onItemSelected(it.item)
                             }
-                        },
-                        onNavigate = onNavigate
-                    )
+                        }
+                    },
+                    onNavigate = onNavigate
+                )
 
-                    askForConfirmation?.let { event ->
-                        ConfirmItemDialog(
-                            item = event.item,
-                            isLoading = event.isLoadingState,
-                            onConfirm = {
-                                viewModel.onConfirmed(event.item, request)
-                            },
-                            onDismiss = {
-                                askForConfirmation = null
-                            }
-                        )
-                    }
+                askForConfirmation?.let { event ->
+                    ConfirmItemDialog(
+                        item = event.item,
+                        isLoading = event.isLoadingState,
+                        onConfirm = {
+                            viewModel.onConfirmed(event.item, request)
+                        },
+                        onDismiss = {
+                            askForConfirmation = null
+                        }
+                    )
                 }
             }
         }

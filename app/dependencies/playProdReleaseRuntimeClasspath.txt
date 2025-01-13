@@ -1,6 +1,6 @@
-androidx.activity:activity-compose:1.8.2
-androidx.activity:activity-ktx:1.8.2
-androidx.activity:activity:1.8.2
+androidx.activity:activity-compose:1.9.3
+androidx.activity:activity-ktx:1.9.3
+androidx.activity:activity:1.9.3
 androidx.annotation:annotation-experimental:1.4.1
 androidx.annotation:annotation-jvm:1.8.1
 androidx.annotation:annotation:1.8.1
@@ -169,7 +169,6 @@ com.google.accompanist:accompanist-pager-indicators:0.34.0
 com.google.accompanist:accompanist-pager:0.34.0
 com.google.accompanist:accompanist-permissions:0.34.0
 com.google.accompanist:accompanist-placeholder:0.34.0
-com.google.accompanist:accompanist-systemuicontroller:0.34.0
 com.google.android.datatransport:transport-api:3.0.0
 com.google.android.datatransport:transport-backend-cct:3.1.8
 com.google.android.datatransport:transport-runtime:3.1.8

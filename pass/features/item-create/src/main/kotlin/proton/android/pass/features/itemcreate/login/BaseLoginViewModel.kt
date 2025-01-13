@@ -119,22 +119,8 @@ abstract class BaseLoginViewModel(
 
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    init {
-        attachmentsHandler.observeNewAttachments {
-            onUserEditedContent()
-            viewModelScope.launch {
-                isLoadingState.update { IsLoadingState.Loading }
-                attachmentsHandler.uploadNewAttachment(it.metadata)
-                isLoadingState.update { IsLoadingState.NotLoading }
-            }
-        }.launchIn(viewModelScope)
-        attachmentsHandler.observeHasDeletedAttachments {
-            onUserEditedContent()
-        }.launchIn(viewModelScope)
-        attachmentsHandler.observeHasRenamedAttachments {
-            onUserEditedContent()
-        }.launchIn(viewModelScope)
-    }
+    protected val isLoadingState: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.NotLoading)
 
     @OptIn(SavedStateHandleSaveableApi::class)
     protected var loginItemFormMutableState: LoginItemFormState by savedStateHandleProvider.get()
@@ -163,6 +149,20 @@ abstract class BaseLoginViewModel(
             launch { observeRenameCustomField() }
             launch { observeDisplayUsernameFieldPreference() }
         }
+        attachmentsHandler.observeNewAttachments {
+            onUserEditedContent()
+            viewModelScope.launch {
+                isLoadingState.update { IsLoadingState.Loading }
+                attachmentsHandler.uploadNewAttachment(it.metadata)
+                isLoadingState.update { IsLoadingState.NotLoading }
+            }
+        }.launchIn(viewModelScope)
+        attachmentsHandler.observeHasDeletedAttachments {
+            onUserEditedContent()
+        }.launchIn(viewModelScope)
+        attachmentsHandler.observeHasRenamedAttachments {
+            onUserEditedContent()
+        }.launchIn(viewModelScope)
     }
 
     private val aliasItemFormState: Flow<Option<AliasItemFormState>> = combine(
@@ -179,8 +179,6 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    protected val isLoadingState: MutableStateFlow<IsLoadingState> =
-        MutableStateFlow(IsLoadingState.NotLoading)
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
         MutableStateFlow(ItemSavedState.Unknown)
     private val openScanState: MutableStateFlow<OpenScanState> =

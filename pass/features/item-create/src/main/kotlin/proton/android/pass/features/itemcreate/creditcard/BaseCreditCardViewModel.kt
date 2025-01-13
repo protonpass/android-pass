@@ -46,6 +46,8 @@ abstract class BaseCreditCardViewModel(
 ) : ViewModel() {
 
     private val hasUserEditedContentState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    protected val isLoadingState: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.NotLoading)
 
     init {
         attachmentsHandler.observeNewAttachments {
@@ -64,8 +66,6 @@ abstract class BaseCreditCardViewModel(
         }.launchIn(viewModelScope)
     }
 
-    protected val isLoadingState: MutableStateFlow<IsLoadingState> =
-        MutableStateFlow(IsLoadingState.NotLoading)
     private val validationErrorsState: MutableStateFlow<Set<CreditCardValidationErrors>> =
         MutableStateFlow(emptySet())
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =

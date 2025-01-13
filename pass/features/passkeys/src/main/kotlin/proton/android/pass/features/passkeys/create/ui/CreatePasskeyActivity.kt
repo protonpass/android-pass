@@ -23,9 +23,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.core.view.WindowCompat
 import androidx.credentials.CreatePublicKeyCredentialRequest
 import androidx.credentials.CreatePublicKeyCredentialResponse
 import androidx.credentials.provider.PendingIntentHandler
@@ -36,6 +36,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
+import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.features.passkeys.create.presentation.CreatePasskeyActivityViewModel
 import proton.android.pass.features.passkeys.create.presentation.CreatePasskeyAppState
 import proton.android.pass.features.passkeys.create.presentation.CreatePasskeyRequest
@@ -75,29 +78,34 @@ class CreatePasskeyActivity : FragmentActivity() {
             CreatePasskeyAppState.Close -> sendResponse(CreatePasskeyResponse.Cancel)
             CreatePasskeyAppState.NotReady -> {}
             is CreatePasskeyAppState.Ready -> {
-                WindowCompat.setDecorFitsSystemWindows(window, false)
+                enableEdgeToEdge()
                 setContent {
-                    CreatePasskeyApp(
-                        appState = state,
-                        request = request,
-                        onNavigate = {
-                            when (it) {
-                                CreatePasskeyNavigation.Cancel -> {
-                                    sendResponse(CreatePasskeyResponse.Cancel)
-                                }
-                                is CreatePasskeyNavigation.ForceSignOut ->
-                                    viewModel.signOut(it.userId)
+                    val isDark = isDark(state.theme)
+                    SystemUIDisposableEffect(isDark)
+                    PassTheme(isDark = isDark) {
+                        CreatePasskeyApp(
+                            appState = state,
+                            request = request,
+                            onNavigate = {
+                                when (it) {
+                                    CreatePasskeyNavigation.Cancel -> {
+                                        sendResponse(CreatePasskeyResponse.Cancel)
+                                    }
 
-                                CreatePasskeyNavigation.Upgrade -> {
-                                    viewModel.upgrade()
-                                }
+                                    is CreatePasskeyNavigation.ForceSignOut ->
+                                        viewModel.signOut(it.userId)
 
-                                is CreatePasskeyNavigation.SendResponse -> {
-                                    sendResponse(CreatePasskeyResponse.Success(it.response))
+                                    CreatePasskeyNavigation.Upgrade -> {
+                                        viewModel.upgrade()
+                                    }
+
+                                    is CreatePasskeyNavigation.SendResponse -> {
+                                        sendResponse(CreatePasskeyResponse.Success(it.response))
+                                    }
                                 }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }

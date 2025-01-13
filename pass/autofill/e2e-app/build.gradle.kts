@@ -59,7 +59,6 @@ androidComponents.beforeVariants { variant ->
 
 dependencies {
     implementation(libs.accompanist.navigation.material)
-    implementation(libs.accompanist.systemUiController)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.annotation)

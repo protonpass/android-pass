@@ -22,10 +22,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.core.view.WindowCompat
+import androidx.compose.runtime.getValue
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +41,10 @@ import proton.android.pass.autofill.entities.SaveInformation
 import proton.android.pass.autofill.extensions.deserializeParcelable
 import proton.android.pass.autofill.extensions.marshalParcelable
 import proton.android.pass.common.api.Option
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.setSecureMode
+import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
+import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.preferences.AllowScreenshotsPreference
 
 @AndroidEntryPoint
@@ -54,7 +59,7 @@ class AutoSaveActivity : FragmentActivity() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collectLatest(::onStateReceived)
+                viewModel.eventState.collectLatest(::onStateReceived)
             }
         }
 
@@ -62,19 +67,26 @@ class AutoSaveActivity : FragmentActivity() {
             finishApp()
             return
         }
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        enableEdgeToEdge()
+
         setContent {
-            AutoSaveApp(
-                arguments = arguments,
-                onNavigate = {
-                    when (it) {
-                        AutosaveNavigation.Success -> finishApp()
-                        AutosaveNavigation.Cancel -> finishApp()
-                        AutosaveNavigation.Upgrade -> { viewModel.upgrade() }
-                        is AutosaveNavigation.ForceSignOut -> viewModel.signOut(it.userId)
+            val themePreference by viewModel.themePreferenceState.collectAsStateWithLifecycle()
+            val isDark = isDark(themePreference)
+            SystemUIDisposableEffect(isDark)
+            PassTheme(isDark = isDark) {
+                AutoSaveApp(
+                    arguments = arguments,
+                    onNavigate = {
+                        when (it) {
+                            AutosaveNavigation.Success -> finishApp()
+                            AutosaveNavigation.Cancel -> finishApp()
+                            AutosaveNavigation.Upgrade -> viewModel.upgrade()
+                            is AutosaveNavigation.ForceSignOut -> viewModel.signOut(it.userId)
+                        }
                     }
-                }
-            )
+                )
+            }
         }
     }
 

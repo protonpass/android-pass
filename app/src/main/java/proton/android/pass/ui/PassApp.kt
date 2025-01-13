@@ -29,8 +29,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.LifecycleEffect
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
-import proton.android.pass.composecomponents.impl.theme.isDark
 
 @Composable
 fun PassApp(
@@ -42,37 +40,33 @@ fun PassApp(
         minActiveState = Lifecycle.State.CREATED
     )
     val appUiState by appViewModel.appUiState.collectAsStateWithLifecycle()
-    val isDark = isDark(appUiState.theme)
-    SystemUIEffect(isDark = isDark)
     LifecycleEffect(
         onStop = { appViewModel.onStop() },
         onResume = { appViewModel.onResume() }
     )
-    PassTheme(isDark = isDark) {
-        PassAppContent(
-            modifier = modifier
-                .background(PassTheme.colors.backgroundStrong)
-                .systemBarsPadding()
-                .imePadding(),
-            appUiState = appUiState,
-            needsAuth = needsAuth,
-            onNavigate = {
-                if (it is AppNavigation.Finish) {
-                    appViewModel.onStop()
-                }
-                onNavigate(it)
-            },
-            onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() },
-            onCompleteUpdate = { appViewModel.onCompleteUpdate() },
-            onInAppMessageBannerRead = { userId, id, key ->
-                appViewModel.onInAppMessageBannerRead(userId, id, key)
-            },
-            onInAppMessageBannerDisplayed = { inAppMessageKey ->
-                appViewModel.onInAppMessageBannerDisplayed(inAppMessageKey)
-            },
-            onInAppMessageBannerCTAClicked = { inAppMessageKey ->
-                appViewModel.onInAppMessageBannerCTAClicked(inAppMessageKey)
+    PassAppContent(
+        modifier = modifier
+            .background(PassTheme.colors.backgroundStrong)
+            .systemBarsPadding()
+            .imePadding(),
+        appUiState = appUiState,
+        needsAuth = needsAuth,
+        onNavigate = {
+            if (it is AppNavigation.Finish) {
+                appViewModel.onStop()
             }
-        )
-    }
+            onNavigate(it)
+        },
+        onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() },
+        onCompleteUpdate = { appViewModel.onCompleteUpdate() },
+        onInAppMessageBannerRead = { userId, id, key ->
+            appViewModel.onInAppMessageBannerRead(userId, id, key)
+        },
+        onInAppMessageBannerDisplayed = { inAppMessageKey ->
+            appViewModel.onInAppMessageBannerDisplayed(inAppMessageKey)
+        },
+        onInAppMessageBannerCTAClicked = { inAppMessageKey ->
+            appViewModel.onInAppMessageBannerCTAClicked(inAppMessageKey)
+        }
+    )
 }

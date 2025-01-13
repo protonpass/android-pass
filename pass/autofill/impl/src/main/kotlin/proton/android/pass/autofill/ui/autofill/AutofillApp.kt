@@ -35,9 +35,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
-import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
-import proton.android.pass.composecomponents.impl.theme.isDark
-import proton.android.pass.preferences.ThemePreference
 
 @Composable
 fun AutofillApp(
@@ -57,29 +54,23 @@ fun AutofillApp(
         onSnackBarMessageDelivered = { snackbarViewModel.onSnackbarMessageDelivered() }
     )
 
-    val isDark = isDark(ThemePreference.from(autofillUiState.themePreference))
-
-    SystemUIEffect(isDark = isDark)
-
-    PassTheme(isDark = isDark) {
-        Scaffold(
-            modifier = modifier
-                .background(PassTheme.colors.backgroundStrong)
-                .systemBarsPadding()
-                .imePadding(),
-            snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
-        ) { padding ->
-            AutofillAppContent(
-                modifier = Modifier.padding(padding),
-                autofillAppState = autofillUiState.autofillAppState,
-                selectedAutofillItem = autofillUiState.selectedAutofillItem.value(),
-                needsAuth = autofillUiState.needsAuth,
-                onNavigate = {
-                    snackbarViewModel.onSnackbarMessageDelivered()
-                    onNavigate(it)
-                }
-            )
-        }
+    Scaffold(
+        modifier = modifier
+            .background(PassTheme.colors.backgroundStrong)
+            .systemBarsPadding()
+            .imePadding(),
+        snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
+    ) { padding ->
+        AutofillAppContent(
+            modifier = Modifier.padding(padding),
+            autofillAppState = autofillUiState.autofillAppState,
+            selectedAutofillItem = autofillUiState.selectedAutofillItem.value(),
+            needsAuth = autofillUiState.needsAuth,
+            onNavigate = {
+                snackbarViewModel.onSnackbarMessageDelivered()
+                onNavigate(it)
+            }
+        )
     }
 }
 

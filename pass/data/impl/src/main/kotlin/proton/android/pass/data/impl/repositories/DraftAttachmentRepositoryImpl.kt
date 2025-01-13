@@ -35,20 +35,24 @@ class DraftAttachmentRepositoryImpl @Inject constructor() : DraftAttachmentRepos
 
     private val draftAttachmentsStateFlow = MutableStateFlow<Map<URI, DraftAttachment>>(emptyMap())
 
-    override fun add(state: DraftAttachment) {
-        val uri = state.metadata.uri
+    override fun add(attachment: DraftAttachment) {
+        val uri = attachment.metadata.uri
         draftAttachmentsStateFlow.update { currentMap ->
             if (!currentMap.containsKey(uri)) {
-                currentMap + (uri to state)
+                currentMap + (uri to attachment)
             } else {
                 currentMap
             }
         }
     }
 
-    override fun update(state: DraftAttachment) {
+    override fun update(attachment: DraftAttachment) {
         draftAttachmentsStateFlow.update { currentMap ->
-            currentMap + (state.metadata.uri to state)
+            if (currentMap.containsKey(attachment.metadata.uri)) {
+                currentMap + (attachment.metadata.uri to attachment)
+            } else {
+                currentMap
+            }
         }
     }
 

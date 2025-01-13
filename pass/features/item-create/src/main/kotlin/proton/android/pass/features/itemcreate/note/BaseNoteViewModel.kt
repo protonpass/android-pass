@@ -151,9 +151,8 @@ abstract class BaseNoteViewModel(
         }
     }
 
-    override fun onCleared() {
+    internal fun onClose() {
         attachmentsHandler.onClearAttachments()
-        super.onCleared()
     }
 
     fun openAttachment(contextHolder: ClassHolder<Context>, attachment: Attachment) {

@@ -400,6 +400,7 @@ abstract class BaseLoginViewModel(
     internal fun onClose() {
         draftRepository.delete<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
         draftRepository.delete<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
+        attachmentsHandler.onClearAttachments()
     }
 
     @Suppress("ReturnCount")
@@ -963,11 +964,6 @@ abstract class BaseLoginViewModel(
             ?: currentValue.customFields
     } else {
         currentValue.customFields
-    }
-
-    override fun onCleared() {
-        attachmentsHandler.onClearAttachments()
-        super.onCleared()
     }
 
     fun openDraftAttachment(

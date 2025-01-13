@@ -24,9 +24,9 @@ import java.net.URI
 
 interface DraftAttachmentRepository {
 
-    fun add(state: DraftAttachment)
+    fun add(attachment: DraftAttachment)
 
-    fun update(state: DraftAttachment)
+    fun update(attachment: DraftAttachment)
 
     fun get(uri: URI): DraftAttachment
 

@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberModalBottomSheetState
@@ -44,8 +43,6 @@ import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
-import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
-import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.features.auth.AuthOrigin
 import proton.android.pass.features.auth.AuthWithDefault
 import proton.android.pass.navigation.api.rememberAppNavigator
@@ -57,7 +54,7 @@ import proton.android.pass.ui.navigation.UN_AUTH_GRAPH
 import proton.android.pass.ui.navigation.unAuthGraph
 import proton.android.pass.ui.onBottomSheetDismissed
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterialNavigationApi::class)
+@OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
 fun EnterExtraPasswordApp(
     modifier: Modifier = Modifier,
@@ -66,9 +63,6 @@ fun EnterExtraPasswordApp(
     appViewModel: EnterExtraPasswordAppViewModel = hiltViewModel()
 ) {
     val appUiState by appViewModel.appUiState.collectAsStateWithLifecycle()
-    val isDark = isDark(appUiState.theme)
-    SystemUIEffect(isDark = isDark)
-
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -86,49 +80,47 @@ fun EnterExtraPasswordApp(
         onSnackBarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() }
     )
 
-    PassTheme(isDark = isDark) {
-        Scaffold(
-            modifier = modifier
-                .background(PassTheme.colors.backgroundStrong)
-                .systemBarsPadding()
-                .imePadding()
-                .padding(),
-            scaffoldState = scaffoldState,
-            snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
-        ) { contentPadding ->
-            Column(modifier = Modifier.padding(contentPadding)) {
-                AnimatedVisibility(
-                    visible = appUiState.networkStatus == NetworkStatus.Offline,
-                    label = "EnterExtraPasswordApp-OfflineIndicator"
-                ) {
-                    OfflineIndicator()
-                }
-                PassModalBottomSheetLayout(appNavigator.passBottomSheetNavigator) {
-                    PassNavHost(
-                        modifier = Modifier.weight(1f),
-                        appNavigator = appNavigator,
-                        startDestination = UN_AUTH_GRAPH,
-                        graph = {
-                            unAuthGraph(
-                                appNavigator = appNavigator,
-                                onNavigate = onNavigate,
-                                startDestination = AuthWithDefault(
-                                    origin = AuthOrigin.EXTRA_PASSWORD_LOGIN,
-                                    userId = userId
-                                ).route,
-                                userId = userId,
+    Scaffold(
+        modifier = modifier
+            .background(PassTheme.colors.backgroundStrong)
+            .systemBarsPadding()
+            .imePadding()
+            .padding(),
+        scaffoldState = scaffoldState,
+        snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
+    ) { contentPadding ->
+        Column(modifier = Modifier.padding(contentPadding)) {
+            AnimatedVisibility(
+                visible = appUiState.networkStatus == NetworkStatus.Offline,
+                label = "EnterExtraPasswordApp-OfflineIndicator"
+            ) {
+                OfflineIndicator()
+            }
+            PassModalBottomSheetLayout(appNavigator.passBottomSheetNavigator) {
+                PassNavHost(
+                    modifier = Modifier.weight(1f),
+                    appNavigator = appNavigator,
+                    startDestination = UN_AUTH_GRAPH,
+                    graph = {
+                        unAuthGraph(
+                            appNavigator = appNavigator,
+                            onNavigate = onNavigate,
+                            startDestination = AuthWithDefault(
                                 origin = AuthOrigin.EXTRA_PASSWORD_LOGIN,
-                                dismissBottomSheet = { block ->
-                                    onBottomSheetDismissed(
-                                        coroutineScope = coroutineScope,
-                                        modalBottomSheetState = bottomSheetState,
-                                        block = block
-                                    )
-                                }
-                            )
-                        }
-                    )
-                }
+                                userId = userId
+                            ).route,
+                            userId = userId,
+                            origin = AuthOrigin.EXTRA_PASSWORD_LOGIN,
+                            dismissBottomSheet = { block ->
+                                onBottomSheetDismissed(
+                                    coroutineScope = coroutineScope,
+                                    modalBottomSheetState = bottomSheetState,
+                                    block = block
+                                )
+                            }
+                        )
+                    }
+                )
             }
         }
     }

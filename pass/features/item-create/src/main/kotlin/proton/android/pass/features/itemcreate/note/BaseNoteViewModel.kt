@@ -58,6 +58,8 @@ abstract class BaseNoteViewModel(
 ) : ViewModel() {
 
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    protected val isLoadingState: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.NotLoading)
 
     init {
         attachmentsHandler.observeNewAttachments {
@@ -81,8 +83,6 @@ abstract class BaseNoteViewModel(
         .saveable { mutableStateOf(NoteItemFormState.Empty) }
     val noteItemFormState: NoteItemFormState get() = noteItemFormMutableState
 
-    protected val isLoadingState: MutableStateFlow<IsLoadingState> =
-        MutableStateFlow(IsLoadingState.NotLoading)
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
         MutableStateFlow(ItemSavedState.Unknown)
     protected val noteItemValidationErrorsState: MutableStateFlow<Set<NoteItemValidationErrors>> =

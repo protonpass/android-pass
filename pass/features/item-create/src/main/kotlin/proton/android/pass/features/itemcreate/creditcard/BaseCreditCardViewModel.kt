@@ -56,6 +56,12 @@ abstract class BaseCreditCardViewModel(
                 isLoadingState.update { IsLoadingState.NotLoading }
             }
         }.launchIn(viewModelScope)
+        attachmentsHandler.observeHasDeletedAttachments {
+            onUserEditedContent()
+        }.launchIn(viewModelScope)
+        attachmentsHandler.observeHasRenamedAttachments {
+            onUserEditedContent()
+        }.launchIn(viewModelScope)
     }
 
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =

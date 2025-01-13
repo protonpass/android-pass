@@ -63,6 +63,8 @@ abstract class BaseAliasViewModel(
 ) : ViewModel() {
 
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    protected val isLoadingState: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.Loading)
 
     init {
         attachmentsHandler.observeNewAttachments {
@@ -91,8 +93,6 @@ abstract class BaseAliasViewModel(
         .saveable { mutableStateOf(AliasItemFormState.default(title)) }
     val aliasItemFormState: AliasItemFormState get() = aliasItemFormMutableState
 
-    protected val isLoadingState: MutableStateFlow<IsLoadingState> =
-        MutableStateFlow(IsLoadingState.Loading)
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
         MutableStateFlow(ItemSavedState.Unknown)
     protected val isAliasDraftSavedState: MutableStateFlow<AliasDraftSavedState> =

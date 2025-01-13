@@ -969,6 +969,12 @@ class IdentityActionsProviderImpl @Inject constructor(
                 isLoadingState.update { IsLoadingState.NotLoading }
             }
         }.launchIn(coroutineScope)
+        attachmentsHandler.observeHasDeletedAttachments {
+            onUserEditedContent()
+        }.launchIn(coroutineScope)
+        attachmentsHandler.observeHasRenamedAttachments {
+            onUserEditedContent()
+        }.launchIn(coroutineScope)
     }
 
     suspend fun isFileAttachmentsEnabled(): Boolean =

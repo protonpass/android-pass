@@ -24,8 +24,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.None
@@ -36,6 +38,8 @@ import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.FileHandler
 import proton.android.pass.commonuimodels.api.attachments.AttachmentsState
 import proton.android.pass.data.api.repositories.DraftAttachmentRepository
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.data.api.usecases.attachments.ClearAttachments
 import proton.android.pass.data.api.usecases.attachments.DownloadAttachment
@@ -58,6 +62,8 @@ import javax.inject.Inject
 @ViewModelScoped
 class AttachmentsHandlerImpl @Inject constructor(
     private val draftAttachmentRepository: DraftAttachmentRepository,
+    private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
+    private val pendingAttachmentUpdaterRepository: PendingAttachmentUpdaterRepository,
     private val uploadAttachment: UploadAttachment,
     private val downloadAttachment: DownloadAttachment,
     private val clearAttachments: ClearAttachments,
@@ -150,6 +156,20 @@ class AttachmentsHandlerImpl @Inject constructor(
 
     override fun observeNewAttachments(onNewAttachment: (DraftAttachment) -> Unit): Flow<DraftAttachment> =
         draftAttachmentRepository.observeNew().onEach(onNewAttachment)
+
+    override fun observeHasDeletedAttachments(onAttachmentDeleted: () -> Unit): Flow<Unit> =
+        pendingAttachmentLinkRepository.observeAllToUnLink()
+            .filter { it.isNotEmpty() }
+            .distinctUntilChanged()
+            .onEach { onAttachmentDeleted() }
+            .map { }
+
+    override fun observeHasRenamedAttachments(onAttachmentRenamed: () -> Unit): Flow<Unit> =
+        pendingAttachmentUpdaterRepository.observeAllPendingRenames()
+            .filter { it.isNotEmpty() }
+            .distinctUntilChanged()
+            .onEach { onAttachmentRenamed() }
+            .map { }
 
     override suspend fun getAttachmentsForItem(shareId: ShareId, itemId: ItemId) {
         shareIdState.update { Some(shareId) }

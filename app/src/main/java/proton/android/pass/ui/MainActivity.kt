@@ -22,6 +22,7 @@ import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
@@ -34,7 +35,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.content.IntentSanitizer
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
@@ -47,7 +47,10 @@ import me.proton.core.notification.presentation.deeplink.onActivityCreate
 import me.proton.core.usersettings.presentation.compose.view.SecurityKeysActivity
 import proton.android.pass.PassActivityOrchestrator
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.setSecureMode
+import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
+import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.ui.launcher.AccountState.AccountNeeded
@@ -85,30 +88,30 @@ class MainActivity : FragmentActivity() {
 
         deeplinkManager.onActivityCreate(this, savedInstanceState)
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        enableEdgeToEdge()
 
         // Register activities for result.
         launcherViewModel.register(this)
         passActivityOrchestrator.register(this)
 
         setContent {
-            val loginState by launcherViewModel.accountState.collectAsState()
+            val state by launcherViewModel.state.collectAsState()
             runCatching {
-                splashScreen.setKeepOnScreenCondition(loginState::isLoading)
+                splashScreen.setKeepOnScreenCondition { state.accountState == Processing }
             }.onFailure {
                 PassLogger.w(TAG, "Error setting splash screen keep on screen condition")
                 PassLogger.w(TAG, it)
             }
-            DisposableEffect(loginState) {
-                PassLogger.i(TAG, "Account state: $loginState")
-                when (loginState) {
+            DisposableEffect(state) {
+                PassLogger.i(TAG, "Account state: $state")
+                when (state.accountState) {
                     AccountNeeded -> launcherViewModel.onAccountNeeded()
                     PrimaryExist -> launcherViewModel.onPrimaryExist(updateResultLauncher)
                     Processing,
                     StepNeeded -> Unit
                 }
                 onDispose {
-                    when (loginState) {
+                    when (state.accountState) {
                         PrimaryExist -> launcherViewModel.cancelUpdateListener()
                         Processing,
                         AccountNeeded,
@@ -116,33 +119,40 @@ class MainActivity : FragmentActivity() {
                     }
                 }
             }
-            when (loginState) {
+
+            val isDark = isDark(state.themePreference)
+            SystemUIDisposableEffect(isDark)
+
+            when (state.accountState) {
                 Processing,
                 AccountNeeded,
                 StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
 
-                PrimaryExist -> PassApp(
-                    onNavigate = {
-                        when (it) {
-                            is AppNavigation.Finish -> finish()
-                            is AppNavigation.SignOut ->
-                                SignOutDialogActivity.start(this, it.userId)
+                PrimaryExist ->
+                    PassTheme(isDark = isDark) {
+                        PassApp(
+                            onNavigate = {
+                                when (it) {
+                                    is AppNavigation.Finish -> finish()
+                                    is AppNavigation.SignOut ->
+                                        SignOutDialogActivity.start(this, it.userId)
 
-                            is AppNavigation.SignIn -> launcherViewModel.signIn(it.userId)
-                            is AppNavigation.ForceSignOut -> launcherViewModel.disable(it.userId)
-                            is AppNavigation.Subscription -> launcherViewModel.subscription()
-                            is AppNavigation.Upgrade -> launcherViewModel.upgrade()
-                            is AppNavigation.Restart -> restartApp()
-                            is AppNavigation.PasswordManagement -> launcherViewModel.passwordManagement()
-                            is AppNavigation.RecoveryEmail -> launcherViewModel.recoveryEmail()
-                            is AppNavigation.AddAccount -> launcherViewModel.signIn()
-                            is AppNavigation.RemoveAccount -> launcherViewModel.remove(it.userId)
-                            is AppNavigation.SwitchAccount -> launcherViewModel.switch(it.userId)
-                            is AppNavigation.SecurityKeys -> SecurityKeysActivity.start(this@MainActivity)
-                            is AppNavigation.ForceSignOutAllUsers -> launcherViewModel.disableAll()
-                        }
+                                    is AppNavigation.SignIn -> launcherViewModel.signIn(it.userId)
+                                    is AppNavigation.ForceSignOut -> launcherViewModel.disable(it.userId)
+                                    is AppNavigation.Subscription -> launcherViewModel.subscription()
+                                    is AppNavigation.Upgrade -> launcherViewModel.upgrade()
+                                    is AppNavigation.Restart -> restartApp()
+                                    is AppNavigation.PasswordManagement -> launcherViewModel.passwordManagement()
+                                    is AppNavigation.RecoveryEmail -> launcherViewModel.recoveryEmail()
+                                    is AppNavigation.AddAccount -> launcherViewModel.signIn()
+                                    is AppNavigation.RemoveAccount -> launcherViewModel.remove(it.userId)
+                                    is AppNavigation.SwitchAccount -> launcherViewModel.switch(it.userId)
+                                    is AppNavigation.SecurityKeys -> SecurityKeysActivity.start(this@MainActivity)
+                                    is AppNavigation.ForceSignOutAllUsers -> launcherViewModel.disableAll()
+                                }
+                            }
+                        )
                     }
-                )
             }
         }
     }

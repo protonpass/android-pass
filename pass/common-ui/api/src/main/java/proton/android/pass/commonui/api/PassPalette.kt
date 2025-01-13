@@ -29,6 +29,7 @@ object PassPalette {
     val MacaroniAndCheese16 = Color(0x29FFCA8A)
     val MacaroniAndCheese8 = Color(0x14FFCA8A)
     val White100 = Color(0xFFFFFFFF)
+    val White90 = Color(0xE6FFFFFF)
     val White10 = Color(0x1AFFFFFF)
     val EerieBlack = Color(0xFF191927)
     val DarkGunmetal = Color(0xFF1F1F31)

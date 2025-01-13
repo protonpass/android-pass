@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,14 +18,28 @@
 
 package proton.android.pass.composecomponents.impl.theme
 
+import android.graphics.Color
+import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import com.google.accompanist.systemuicontroller.SystemUiController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.graphics.toArgb
+import proton.android.pass.commonui.api.PassPalette
 
 @Composable
-fun SystemUIEffect(isDark: Boolean, systemUiController: SystemUiController = rememberSystemUiController()) {
-    LaunchedEffect(systemUiController, isDark) {
-        systemUiController.systemBarsDarkContentEnabled = !isDark
+fun ComponentActivity.SystemUIDisposableEffect(isDark: Boolean) {
+    DisposableEffect(isDark) {
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(
+                Color.TRANSPARENT,
+                Color.TRANSPARENT
+            ) { isDark },
+            navigationBarStyle = SystemBarStyle.auto(
+                PassPalette.White90.toArgb(),
+                PassPalette.Black32.toArgb()
+            ) { isDark }
+        )
+        onDispose {}
     }
 }

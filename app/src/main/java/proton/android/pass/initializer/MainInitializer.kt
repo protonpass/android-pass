@@ -47,6 +47,7 @@ import me.proton.core.plan.presentation.UnredeemedPurchaseInitializer
 import me.proton.core.userrecovery.presentation.compose.DeviceRecoveryInitializer
 import proton.android.pass.data.impl.migration.DataMigrationInitializer
 import proton.android.pass.data.impl.sync.SyncInitializer
+import proton.android.pass.initializer.theme.ThemeObserverInitializer
 import proton.android.pass.log.impl.LoggerInitializer
 import proton.android.pass.telemetry.impl.startup.TelemetryInitializer
 import proton.android.pass.tracing.impl.SentryInitializer
@@ -75,7 +76,8 @@ class MainInitializer : Initializer<Unit> {
         UnredeemedPurchaseInitializer::class.java,
         AccountListenerInitializer::class.java,
         AppLockListenerInitializer::class.java,
-        DeviceRecoveryInitializer::class.java
+        DeviceRecoveryInitializer::class.java,
+        ThemeObserverInitializer::class.java
     )
 
     companion object {

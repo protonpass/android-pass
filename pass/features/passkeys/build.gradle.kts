@@ -50,7 +50,6 @@ androidComponents.beforeVariants { variant ->
 dependencies {
 
     implementation(libs.accompanist.navigation.material)
-    implementation(libs.accompanist.systemUiController)
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)

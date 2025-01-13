@@ -24,8 +24,8 @@ import android.os.Bundle
 import android.view.autofill.AutofillManager
 import android.widget.RemoteViews
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -46,9 +46,13 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.setSecureMode
+import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
+import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AllowScreenshotsPreference
+import proton.android.pass.preferences.ThemePreference
 
 @AndroidEntryPoint
 class AutofillActivity : FragmentActivity() {
@@ -81,20 +85,23 @@ class AutofillActivity : FragmentActivity() {
             }
 
             is AutofillUiState.StartAutofillUiState -> {
-                WindowCompat.setDecorFitsSystemWindows(window, false)
-
+                enableEdgeToEdge()
                 setContent {
-                    AutofillApp(
-                        autofillUiState = autofillUiState,
-                        onNavigate = {
-                            when (it) {
-                                AutofillNavigation.Cancel -> onAutofillCancel()
-                                is AutofillNavigation.SendResponse -> onAutofillSuccess(it.mappings)
-                                AutofillNavigation.Upgrade -> viewModel.upgrade()
-                                is AutofillNavigation.ForceSignOut -> viewModel.signOut(it.userId)
+                    val isDark = isDark(ThemePreference.from(autofillUiState.themePreference))
+                    SystemUIDisposableEffect(isDark)
+                    PassTheme(isDark = isDark) {
+                        AutofillApp(
+                            autofillUiState = autofillUiState,
+                            onNavigate = {
+                                when (it) {
+                                    AutofillNavigation.Cancel -> onAutofillCancel()
+                                    is AutofillNavigation.SendResponse -> onAutofillSuccess(it.mappings)
+                                    AutofillNavigation.Upgrade -> viewModel.upgrade()
+                                    is AutofillNavigation.ForceSignOut -> viewModel.signOut(it.userId)
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
 

@@ -20,12 +20,21 @@ package proton.android.pass.enterextrapassword
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.core.view.WindowCompat
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.getValue
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.runBlocking
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.theme.SystemUIDisposableEffect
+import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.ThemePreference
+import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.ui.AppNavigation
 import javax.inject.Inject
 
@@ -33,11 +42,15 @@ import javax.inject.Inject
 class EnterExtraPasswordActivity : FragmentActivity() {
 
     @Inject
+    lateinit var userPreferencesRepository: UserPreferencesRepository
+
+    @Inject
     lateinit var snackbarDispatcher: SnackbarDispatcher
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        enableEdgeToEdge()
 
         val userId = intent.getStringExtra(EXTRA_USER_ID)?.let { UserId(it) } ?: run {
             PassLogger.w(TAG, "Missing user id")
@@ -47,16 +60,26 @@ class EnterExtraPasswordActivity : FragmentActivity() {
         }
 
         setContent {
-            EnterExtraPasswordApp(
-                userId = userId,
-                onNavigate = {
-                    when (it) {
-                        is AppNavigation.Finish -> setResultAndFinish(success = true)
-                        is AppNavigation.ForceSignOut -> setResultAndFinish(success = false)
-                        else -> {}
+            val themePreference by userPreferencesRepository.getThemePreference()
+                .collectAsStateWithLifecycle(
+                    runBlocking {
+                        userPreferencesRepository.getThemePreference().firstOrNull() ?: ThemePreference.System
                     }
-                }
-            )
+                )
+            val isDark = isDark(themePreference)
+            SystemUIDisposableEffect(isDark)
+            PassTheme(isDark = isDark) {
+                EnterExtraPasswordApp(
+                    userId = userId,
+                    onNavigate = {
+                        when (it) {
+                            is AppNavigation.Finish -> setResultAndFinish(success = true)
+                            is AppNavigation.ForceSignOut -> setResultAndFinish(success = false)
+                            else -> {}
+                        }
+                    }
+                )
+            }
         }
     }
 

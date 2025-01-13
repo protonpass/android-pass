@@ -39,8 +39,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
-import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
-import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.features.passkeys.select.navigation.SelectPasskeyNavigation
 import proton.android.pass.features.passkeys.select.presentation.SelectPasskeyAppEvent
 import proton.android.pass.features.passkeys.select.presentation.SelectPasskeyAppState
@@ -82,6 +80,7 @@ fun SelectPasskeyApp(
             is SelectPasskeyAppEvent.Cancel -> {
                 onNavigate(SelectPasskeyNavigation.Cancel)
             }
+
             is SelectPasskeyAppEvent.SelectPasskeyFromItem -> {
                 selectPasskey = event
             }
@@ -93,54 +92,49 @@ fun SelectPasskeyApp(
         viewModel.clearEvent()
     }
 
-    val isDark = isDark(appState.theme)
-    SystemUIEffect(isDark = isDark)
-
-    PassTheme(isDark = isDark) {
-        Scaffold(
-            modifier = modifier
-                .background(PassTheme.colors.backgroundStrong)
-                .systemBarsPadding()
-                .imePadding(),
-            snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
-        ) { padding ->
-            SelectPasskeyAppContent(
-                modifier = Modifier.padding(padding),
-                needsAuth = appState.needsAuth,
-                domain = appState.data.domain,
-                selectPasskey = selectPasskey,
-                actionAfterAuth = appState.actionAfterAuth,
-                onEvent = {
-                    when (it) {
-                        is SelectPasskeyEvent.OnItemSelected -> {
-                            viewModel.onItemSelected(
-                                item = it.item,
-                                origin = appState.data.domain,
-                                request = appState.data.request,
-                                clientDataHash = appState.data.clientDataHash
-                            )
-                        }
-
-                        is SelectPasskeyEvent.OnPasskeySelected -> {
-                            viewModel.onPasskeySelected(
-                                origin = appState.data.domain,
-                                passkey = it.passkey,
-                                request = appState.data.request,
-                                clientDataHash = appState.data.clientDataHash
-                            )
-                        }
-
-                        SelectPasskeyEvent.OnSelectScreenShown -> {
-                            viewModel.onScreenShown()
-                        }
-
-                        SelectPasskeyEvent.OnAuthPerformed -> {
-                            viewModel.onAuthPerformed()
-                        }
+    Scaffold(
+        modifier = modifier
+            .background(PassTheme.colors.backgroundStrong)
+            .systemBarsPadding()
+            .imePadding(),
+        snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
+    ) { padding ->
+        SelectPasskeyAppContent(
+            modifier = Modifier.padding(padding),
+            needsAuth = appState.needsAuth,
+            domain = appState.data.domain,
+            selectPasskey = selectPasskey,
+            actionAfterAuth = appState.actionAfterAuth,
+            onEvent = {
+                when (it) {
+                    is SelectPasskeyEvent.OnItemSelected -> {
+                        viewModel.onItemSelected(
+                            item = it.item,
+                            origin = appState.data.domain,
+                            request = appState.data.request,
+                            clientDataHash = appState.data.clientDataHash
+                        )
                     }
-                },
-                onNavigate = onNavigate
-            )
-        }
+
+                    is SelectPasskeyEvent.OnPasskeySelected -> {
+                        viewModel.onPasskeySelected(
+                            origin = appState.data.domain,
+                            passkey = it.passkey,
+                            request = appState.data.request,
+                            clientDataHash = appState.data.clientDataHash
+                        )
+                    }
+
+                    SelectPasskeyEvent.OnSelectScreenShown -> {
+                        viewModel.onScreenShown()
+                    }
+
+                    SelectPasskeyEvent.OnAuthPerformed -> {
+                        viewModel.onAuthPerformed()
+                    }
+                }
+            },
+            onNavigate = onNavigate
+        )
     }
 }

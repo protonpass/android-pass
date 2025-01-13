@@ -35,6 +35,8 @@ import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.MetadataResolver
+import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
+import proton.android.pass.data.api.repositories.PendingAttachmentUpdaterRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.api.usecases.AcceptInvite
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
@@ -215,6 +217,8 @@ import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
 import proton.android.pass.data.fakes.repositories.FakeDraftAttachmentRepository
 import proton.android.pass.data.fakes.repositories.FakeInAppMessagesRepository
 import proton.android.pass.data.fakes.repositories.FakeMetadataResolver
+import proton.android.pass.data.fakes.repositories.FakePendingAttachmentLinkRepository
+import proton.android.pass.data.fakes.repositories.FakePendingAttachmentUpdaterRepository
 import proton.android.pass.data.fakes.repositories.FakeSentinelRepository
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
 import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
@@ -1006,5 +1010,15 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveEncryptedSharedItems(impl: FakeObserveEncryptedSharedItems): ObserveEncryptedSharedItems
+
+    @Binds
+    abstract fun bindPendingAttachmentUpdaterRepository(
+        impl: FakePendingAttachmentUpdaterRepository
+    ): PendingAttachmentUpdaterRepository
+
+    @Binds
+    abstract fun bindPendingAttachmentLinkRepository(
+        impl: FakePendingAttachmentLinkRepository
+    ): PendingAttachmentLinkRepository
 
 }

@@ -56,6 +56,10 @@ class FakeAttachmentHandler : AttachmentsHandler {
         )
     )
 
+    override fun observeHasDeletedAttachments(onAttachmentDeleted: () -> Unit): Flow<Unit> = flowOf(Unit)
+
+    override fun observeHasRenamedAttachments(onAttachmentRenamed: () -> Unit): Flow<Unit> = flowOf(Unit)
+
     override suspend fun getAttachmentsForItem(shareId: ShareId, itemId: ItemId) {
         // no-op
     }

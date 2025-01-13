@@ -128,6 +128,12 @@ abstract class BaseLoginViewModel(
                 isLoadingState.update { IsLoadingState.NotLoading }
             }
         }.launchIn(viewModelScope)
+        attachmentsHandler.observeHasDeletedAttachments {
+            onUserEditedContent()
+        }.launchIn(viewModelScope)
+        attachmentsHandler.observeHasRenamedAttachments {
+            onUserEditedContent()
+        }.launchIn(viewModelScope)
     }
 
     @OptIn(SavedStateHandleSaveableApi::class)

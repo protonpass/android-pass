@@ -67,6 +67,7 @@ fun UpdateNote(
         if (noteUiState.baseNoteUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
+            viewModel.onClose()
             actionAfterKeyboardHide = { onNavigate(UpdateNoteNavigation.Back) }
         }
     }

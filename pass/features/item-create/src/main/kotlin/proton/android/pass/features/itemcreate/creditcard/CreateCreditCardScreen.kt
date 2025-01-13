@@ -70,6 +70,7 @@ fun CreateCreditCardScreen(
                 if (uiState.baseState.hasUserEditedContent) {
                     showConfirmDialog = !showConfirmDialog
                 } else {
+                    viewModel.onClose()
                     actionAfterKeyboardHide = { onNavigate(Close) }
                 }
             }

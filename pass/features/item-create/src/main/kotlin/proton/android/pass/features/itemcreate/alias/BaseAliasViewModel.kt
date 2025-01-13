@@ -72,7 +72,12 @@ abstract class BaseAliasViewModel(
                 attachmentsHandler.uploadNewAttachment(it.metadata)
                 isLoadingState.update { IsLoadingState.NotLoading }
             }
-
+        }.launchIn(viewModelScope)
+        attachmentsHandler.observeHasDeletedAttachments {
+            onUserEditedContent()
+        }.launchIn(viewModelScope)
+        attachmentsHandler.observeHasRenamedAttachments {
+            onUserEditedContent()
         }.launchIn(viewModelScope)
     }
 

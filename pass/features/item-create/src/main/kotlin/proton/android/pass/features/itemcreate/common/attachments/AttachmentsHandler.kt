@@ -47,5 +47,9 @@ interface AttachmentsHandler {
 
     fun observeNewAttachments(onNewAttachment: (DraftAttachment) -> Unit): Flow<DraftAttachment>
 
+    fun observeHasDeletedAttachments(onAttachmentDeleted: () -> Unit): Flow<Unit>
+
+    fun observeHasRenamedAttachments(onAttachmentRenamed: () -> Unit): Flow<Unit>
+
     suspend fun getAttachmentsForItem(shareId: ShareId, itemId: ItemId)
 }

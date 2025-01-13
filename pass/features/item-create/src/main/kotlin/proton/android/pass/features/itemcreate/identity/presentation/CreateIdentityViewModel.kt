@@ -146,11 +146,6 @@ class CreateIdentityViewModel @Inject constructor(
         identityActionsProvider.updateLoadingState(IsLoadingState.NotLoading)
     }
 
-    override fun onCleared() {
-        identityActionsProvider.clearState()
-        super.onCleared()
-    }
-
     fun onRetryUploadDraftAttachment(metadata: FileMetadata) {
         viewModelScope.launch { identityActionsProvider.retryUploadDraftAttachment(metadata) }
     }

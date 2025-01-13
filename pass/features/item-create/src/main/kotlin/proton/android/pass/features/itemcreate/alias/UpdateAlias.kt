@@ -73,6 +73,7 @@ fun UpdateAlias(
         if (uiState.baseAliasUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
+            viewModel.onClose()
             actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Close) }
         }
     }

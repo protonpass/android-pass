@@ -215,9 +215,8 @@ abstract class BaseAliasViewModel(
         snackbarDispatcher(snackbarMessage)
     }
 
-    override fun onCleared() {
+    internal fun onClose() {
         attachmentsHandler.onClearAttachments()
-        super.onCleared()
     }
 
     fun openDraftAttachment(

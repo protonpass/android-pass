@@ -958,6 +958,8 @@ class IdentityActionsProviderImpl @Inject constructor(
         coroutineScope.launch { observeRemoveExtraSection() }
         coroutineScope.launch { observeRenameExtraSection() }
         observeNewAttachments(coroutineScope)
+        observeHasDeletedAttachments(coroutineScope)
+        observeHasRenamedAttachments(coroutineScope)
     }
 
     private fun observeNewAttachments(coroutineScope: CoroutineScope) {
@@ -969,9 +971,15 @@ class IdentityActionsProviderImpl @Inject constructor(
                 isLoadingState.update { IsLoadingState.NotLoading }
             }
         }.launchIn(coroutineScope)
+    }
+
+    private fun observeHasDeletedAttachments(coroutineScope: CoroutineScope) {
         attachmentsHandler.observeHasDeletedAttachments {
             onUserEditedContent()
         }.launchIn(coroutineScope)
+    }
+
+    private fun observeHasRenamedAttachments(coroutineScope: CoroutineScope) {
         attachmentsHandler.observeHasRenamedAttachments {
             onUserEditedContent()
         }.launchIn(coroutineScope)

@@ -78,6 +78,7 @@ fun CreateNoteScreen(
         if (uiState.baseNoteUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
+            viewModel.onClose()
             actionAfterKeyboardHide = { onNavigate(CreateNoteNavigation.Back) }
         }
     }

@@ -84,6 +84,7 @@ fun CreateIdentityScreen(
         if (state.hasUserEdited) {
             showConfirmDialog = !showConfirmDialog
         } else {
+            viewModel.onClose()
             actionAfterKeyboardHide = { onNavigate(BaseIdentityNavigation.Close) }
         }
     }

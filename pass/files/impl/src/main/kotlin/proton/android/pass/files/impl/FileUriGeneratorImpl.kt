@@ -54,7 +54,7 @@ class FileUriGeneratorImpl @Inject constructor(
         val directory = getDirectoryForFileType(fileType)
         when (fileType) {
             FileType.CameraCache -> createUniqueFile(directory, CAMERA_PREFIX, CAMERA_SUFFIX)
-            is FileType.ItemAttachment -> File(directory, fileType.attachmentId.id).apply {
+            is FileType.ItemAttachment -> File(directory, fileType.persistentId.id).apply {
                 if (!exists()) createNewFile()
             }
         }

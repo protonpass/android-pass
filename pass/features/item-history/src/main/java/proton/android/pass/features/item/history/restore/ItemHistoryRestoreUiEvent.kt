@@ -38,7 +38,8 @@ internal sealed interface ItemHistoryRestoreUiEvent {
 
     data class OnRestoreConfirmClick(
         val contents: ItemContents,
-        val attachmentsToRestore: Set<AttachmentId>
+        val attachmentsToRestore: Set<AttachmentId>,
+        val attachmentsToDelete: Set<AttachmentId>
     ) : ItemHistoryRestoreUiEvent
 
     data object OnRestoreCancelClick : ItemHistoryRestoreUiEvent

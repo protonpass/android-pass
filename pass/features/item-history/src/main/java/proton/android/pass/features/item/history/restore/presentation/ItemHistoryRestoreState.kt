@@ -37,13 +37,22 @@ internal sealed interface ItemHistoryRestoreState {
         internal val event: ItemHistoryRestoreEvent = ItemHistoryRestoreEvent.Idle,
         internal val isFileAttachmentEnabled: Boolean
     ) : ItemHistoryRestoreState {
-        private val currentAttachmentIds = currentItemDetailState.attachmentsState.attachmentsList
+
+        private val currentAttachmentIdMap = currentItemDetailState.attachmentsState.attachmentsList
+            .associateBy { it.persistentId }
+        private val revisionAttachmentIdMap = revisionItemDetailState.attachmentsState.attachmentsList
+            .associateBy { it.persistentId }
+
+        val attachmentsToRestore: Set<AttachmentId> = revisionItemDetailState.attachmentsState.attachmentsList
+            .filter { it.persistentId !in currentAttachmentIdMap }
             .map { it.id }
             .toSet()
-        private val revisionAttachmentIds = revisionItemDetailState.attachmentsState.attachmentsList
+
+        val attachmentsToDelete: Set<AttachmentId> = currentItemDetailState.attachmentsState.attachmentsList
+            .filter { it.persistentId !in revisionAttachmentIdMap }
             .map { it.id }
             .toSet()
-        val attachmentsToRestore: Set<AttachmentId> = revisionAttachmentIds - currentAttachmentIds
+
     }
 
 }

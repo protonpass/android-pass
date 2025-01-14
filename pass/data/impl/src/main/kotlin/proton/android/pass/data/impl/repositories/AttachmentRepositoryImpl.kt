@@ -33,6 +33,8 @@ import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.extension.primary
+import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.commonrust.api.FileTypeDetector
 import proton.android.pass.commonrust.api.MimeType
@@ -42,7 +44,7 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.toEncryptedByteArray
-import proton.android.pass.data.api.errors.ItemKeyNotAvailableError
+import proton.android.pass.data.api.crypto.GetItemKeys
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.impl.crypto.ReencryptAttachment
@@ -68,6 +70,7 @@ import proton.android.pass.domain.attachments.Chunk
 import proton.android.pass.domain.attachments.ChunkId
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.domain.attachments.PendingAttachmentId
+import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.files.api.FileType
 import proton.android.pass.files.api.FileUriGenerator
 import proton.android.pass.log.api.PassLogger
@@ -86,7 +89,9 @@ class AttachmentRepositoryImpl @Inject constructor(
     private val fileTypeDetector: FileTypeDetector,
     private val localItemDataSource: LocalItemDataSource,
     private val fileUriGenerator: FileUriGenerator,
-    private val reencryptAttachment: ReencryptAttachment
+    private val reencryptAttachment: ReencryptAttachment,
+    private val getItemKeys: GetItemKeys,
+    private val userAddressRepository: UserAddressRepository
 ) : AttachmentRepository {
 
     override suspend fun createPendingAttachment(userId: UserId, metadata: FileMetadata): PendingAttachmentId {
@@ -177,10 +182,9 @@ class AttachmentRepositoryImpl @Inject constructor(
         toLink: Map<PendingAttachmentId, EncryptionKey>,
         toUnlink: Set<AttachmentId>
     ) {
-        val encryptedItemKey = localItemDataSource.getById(shareId, itemId)?.encryptedKey
-            ?: throw ItemKeyNotAvailableError()
+        val encryptedItemKey = getItemKey(userId, shareId, itemId)
         val itemKey = encryptionContextProvider.withEncryptionContextSuspendable {
-            EncryptionKey(decrypt(encryptedItemKey))
+            EncryptionKey(decrypt(encryptedItemKey.key))
         }
         val toLinkEncrypted = encryptionContextProvider.withEncryptionContextSuspendable(itemKey) {
             toLink.mapValues { (_, fileKey) ->
@@ -239,11 +243,10 @@ class AttachmentRepositoryImpl @Inject constructor(
                 attachmentId = attachmentId,
                 metadata = encodedMetadata
             )
-            val encryptedItemKey = localItemDataSource.getById(shareId, itemId)?.encryptedKey
-                ?: throw ItemKeyNotAvailableError()
+            val encryptedItemKey = getItemKey(userId, shareId, itemId)
 
             val (reencryptedMetadatas, reencryptedKeys) = reencryptAttachment(
-                encryptedItemKey = encryptedItemKey,
+                encryptedItemKey = encryptedItemKey.key,
                 encryptedMetadatas = listOf(encodedMetadata),
                 encryptedKeys = listOf(attachment.key)
             )
@@ -393,10 +396,10 @@ class AttachmentRepositoryImpl @Inject constructor(
             mapToDomain = { it },
             storeResults = { attachments ->
                 saveRetrievedAttachments(
-                    shareId,
-                    itemId,
-                    attachments,
-                    userId
+                    userId = userId,
+                    shareId = shareId,
+                    itemId = itemId,
+                    fileDetails = attachments
                 )
             }
         )
@@ -420,26 +423,25 @@ class AttachmentRepositoryImpl @Inject constructor(
             mapToDomain = { it },
             storeResults = { attachments ->
                 saveRetrievedAttachments(
-                    shareId,
-                    itemId,
-                    attachments,
-                    userId
+                    userId = userId,
+                    shareId = shareId,
+                    itemId = itemId,
+                    fileDetails = attachments
                 )
             }
         )
     }
 
     private suspend fun AttachmentRepositoryImpl.saveRetrievedAttachments(
+        userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
-        fileDetails: List<FileApiModel>,
-        userId: UserId
+        fileDetails: List<FileApiModel>
     ) {
-        val encryptedItemKey = localItemDataSource.getById(shareId, itemId)?.encryptedKey
-            ?: throw ItemKeyNotAvailableError()
+        val encryptedItemKey = getItemKey(userId, shareId, itemId)
 
         val (reencryptedMetadatas, reencryptedKeys) = reencryptAttachment(
-            encryptedItemKey,
+            encryptedItemKey.key,
             fileDetails.map(FileApiModel::metadata),
             fileDetails.map(FileApiModel::fileKey)
         )
@@ -519,6 +521,20 @@ class AttachmentRepositoryImpl @Inject constructor(
         }
 
         return URI.create(contentUri.toString())
+    }
+
+    private suspend fun getItemKey(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): ItemKey {
+        val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
+        val (_, encryptedItemKey) = getItemKeys(
+            userAddress = userAddress,
+            shareId = shareId,
+            itemId = itemId
+        )
+        return encryptedItemKey
     }
 
     companion object {

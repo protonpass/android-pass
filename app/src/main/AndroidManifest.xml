@@ -142,24 +142,16 @@
             android:launchMode="singleInstance"
             android:theme="@android:style/Theme.NoDisplay" />
 
+        <activity
+            android:name="proton.android.pass.enterextrapassword.EnterExtraPasswordActivity"
+            android:theme="@style/ProtonTheme.Pass"
+            android:windowSoftInputMode="adjustResize" />
+
         <!-- Core-Auth activities -->
         <activity
             android:name="me.proton.core.auth.presentation.ui.AddAccountActivity"
             android:theme="@style/ProtonTheme.Pass.AddAccount"
             tools:replace="theme" />
-        <activity
-            android:name="me.proton.core.payment.presentation.ui.BillingActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.payment.presentation.ui.PaymentOptionsActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.payment.presentation.ui.PaymentTokenApprovalActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="proton.android.pass.enterextrapassword.EnterExtraPasswordActivity"
-            android:theme="@style/ProtonTheme.Pass"
-            android:windowSoftInputMode="adjustResize" />
         <!-- /Core-Auth activities -->
 
         <meta-data

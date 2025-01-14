@@ -462,7 +462,7 @@ class AttachmentRepositoryImpl @Inject constructor(
             userId = userId,
             shareId = attachment.shareId,
             itemId = attachment.itemId,
-            attachmentId = attachment.id
+            persistentId = attachment.persistentId
         )
         val directory = fileUriGenerator.getDirectoryForFileType(fileType)
         val existingFileUri = withContext(appDispatchers.io) {

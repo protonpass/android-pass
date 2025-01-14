@@ -22,7 +22,7 @@ import proton.android.pass.data.api.usecases.CheckIfAttachmentExists
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.attachments.PersistentAttachmentId
 import javax.inject.Inject
 
 class CheckIfAttachmentExistsImpl @Inject constructor(
@@ -32,12 +32,12 @@ class CheckIfAttachmentExistsImpl @Inject constructor(
     override suspend fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-        attachmentId: AttachmentId
+        persistentId: PersistentAttachmentId
     ): Boolean = database.attachmentDao()
         .checkIfAttachmentExists(
             shareId = shareId.id,
             itemId = itemId.id,
-            attachmentId = attachmentId.id
+            persistentId = persistentId.id
         )
 
 }

@@ -32,7 +32,7 @@ import proton.android.pass.data.api.usecases.CheckIfShareExists
 import proton.android.pass.data.api.usecases.CheckIfUserExists
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.attachments.PersistentAttachmentId
 import proton.android.pass.files.api.DirectoryCleaner
 import proton.android.pass.files.api.DirectoryType
 import proton.android.pass.files.impl.CacheDirectories.Camera
@@ -145,7 +145,7 @@ class DirectoryCleanerImpl @Inject constructor(
                     val attachmentExists = checkIfAttachmentExists(
                         ShareId(shareDir.name),
                         ItemId(itemDir.name),
-                        AttachmentId(attachment.name)
+                        PersistentAttachmentId(attachment.name)
                     )
                     if (!attachmentExists) {
                         attachment.delete()

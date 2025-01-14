@@ -52,7 +52,6 @@ import proton.android.pass.data.impl.db.entities.attachments.AttachmentEntity
 import proton.android.pass.data.impl.db.entities.attachments.AttachmentWithChunks
 import proton.android.pass.data.impl.db.entities.attachments.ChunkEntity
 import proton.android.pass.data.impl.extensions.toDomain
-import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.attachments.LocalAttachmentsDataSource
 import proton.android.pass.data.impl.remote.attachments.RemoteAttachmentsDataSource
 import proton.android.pass.data.impl.responses.attachments.ChunkApiModel
@@ -67,6 +66,7 @@ import proton.android.pass.domain.attachments.Chunk
 import proton.android.pass.domain.attachments.ChunkId
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.domain.attachments.PendingAttachmentId
+import proton.android.pass.domain.attachments.PersistentAttachmentId
 import proton.android.pass.files.api.FileType
 import proton.android.pass.files.api.FileUriGenerator
 import proton.android.pass.log.api.PassLogger
@@ -83,7 +83,6 @@ class AttachmentRepositoryImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val pendingAttachmentLinkRepository: PendingAttachmentLinkRepository,
     private val fileTypeDetector: FileTypeDetector,
-    private val localItemDataSource: LocalItemDataSource,
     private val fileUriGenerator: FileUriGenerator,
     private val reencryptAttachment: ReencryptAttachment,
     private val getItemKey: GetItemKey
@@ -260,26 +259,26 @@ class AttachmentRepositoryImpl @Inject constructor(
         attachmentId: AttachmentId
     ) {
         withContext(appDispatchers.io) {
-            val attachmentEntity = local.getAttachmentById(shareId, itemId, attachmentId)
+            val previousEntity = local.getAttachmentById(shareId, itemId, attachmentId)
                 ?: throw IllegalStateException("Attachment not found")
 
             val (_, fileResponse) = remote.restoreOldFile(
                 userId = userId,
                 shareId = shareId,
                 itemId = itemId,
-                attachmentId = AttachmentId(attachmentEntity.id),
-                itemKeyRotation = attachmentEntity.itemKeyRotation.toInt(),
-                fileKey = attachmentEntity.key
+                attachmentId = AttachmentId(previousEntity.id),
+                itemKeyRotation = previousEntity.itemKeyRotation.toInt(),
+                fileKey = previousEntity.key
             )
 
-            val entity = fileResponse.toEntity(
+            val updatedEntity = fileResponse.toEntity(
                 userId = userId,
                 shareId = shareId,
                 itemId = itemId,
-                reencryptedKey = attachmentEntity.key.toEncryptedByteArray(),
-                reencryptedMetadata = attachmentEntity.reencryptedMetadata
+                reencryptedKey = previousEntity.key.toEncryptedByteArray(),
+                reencryptedMetadata = previousEntity.reencryptedMetadata
             )
-            local.updateAttachment(entity)
+            local.updateAttachment(updatedEntity)
         }
     }
 
@@ -571,6 +570,7 @@ fun AttachmentEntity.toDomain(
     val fileType = fileTypeDetector.getFileTypeFromMimeType(MimeType(metadata.mimeType))
     return Attachment(
         id = AttachmentId(this.id),
+        persistentId = PersistentAttachmentId(this.persistentId),
         shareId = shareId,
         itemId = itemId,
         name = metadata.name,

@@ -466,7 +466,7 @@ class AttachmentRepositoryImpl @Inject constructor(
         )
         val directory = fileUriGenerator.getDirectoryForFileType(fileType)
         val existingFileUri = withContext(appDispatchers.io) {
-            val file = File(directory, attachment.id.id)
+            val file = File(directory, attachment.persistentId.id)
             if (file.exists() && file.length() != 0L) {
                 fileUriGenerator.getFileProviderUri(file)
             } else null

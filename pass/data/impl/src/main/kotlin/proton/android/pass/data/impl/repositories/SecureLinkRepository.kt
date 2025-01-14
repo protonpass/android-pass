@@ -34,7 +34,7 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
-import proton.android.pass.data.api.crypto.GetItemKeys
+import proton.android.pass.data.api.crypto.GetShareAndItemKey
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.securelink.SecureLinkOptions
 import proton.android.pass.data.impl.local.LocalItemDataSource
@@ -78,7 +78,7 @@ class SecureLinkRepositoryImpl @Inject constructor(
     private val secureLinksLocalDataSource: SecureLinksLocalDataSource,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val shareRepository: ShareRepository,
-    private val getItemKeys: GetItemKeys
+    private val getShareAndItemKey: GetShareAndItemKey
 ) : SecureLinkRepository {
 
     override suspend fun createSecureLink(
@@ -93,7 +93,7 @@ class SecureLinkRepositoryImpl @Inject constructor(
 
         val userAddress = shareRepository.getAddressForShareId(userId, shareId)
 
-        val (shareKey, itemKey) = getItemKeys(
+        val (shareKey, itemKey) = getShareAndItemKey(
             userAddress = userAddress,
             shareId = shareId,
             itemId = itemId

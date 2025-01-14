@@ -33,8 +33,6 @@ import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.extension.primary
-import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.commonrust.api.FileTypeDetector
 import proton.android.pass.commonrust.api.MimeType
@@ -44,7 +42,7 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.toEncryptedByteArray
-import proton.android.pass.data.api.crypto.GetItemKeys
+import proton.android.pass.data.api.crypto.GetItemKey
 import proton.android.pass.data.api.repositories.AttachmentRepository
 import proton.android.pass.data.api.repositories.PendingAttachmentLinkRepository
 import proton.android.pass.data.impl.crypto.ReencryptAttachment
@@ -70,7 +68,6 @@ import proton.android.pass.domain.attachments.Chunk
 import proton.android.pass.domain.attachments.ChunkId
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.domain.attachments.PendingAttachmentId
-import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.files.api.FileType
 import proton.android.pass.files.api.FileUriGenerator
 import proton.android.pass.log.api.PassLogger
@@ -90,8 +87,7 @@ class AttachmentRepositoryImpl @Inject constructor(
     private val localItemDataSource: LocalItemDataSource,
     private val fileUriGenerator: FileUriGenerator,
     private val reencryptAttachment: ReencryptAttachment,
-    private val getItemKeys: GetItemKeys,
-    private val userAddressRepository: UserAddressRepository
+    private val getItemKey: GetItemKey
 ) : AttachmentRepository {
 
     override suspend fun createPendingAttachment(userId: UserId, metadata: FileMetadata): PendingAttachmentId {
@@ -521,20 +517,6 @@ class AttachmentRepositoryImpl @Inject constructor(
         }
 
         return URI.create(contentUri.toString())
-    }
-
-    private suspend fun getItemKey(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId
-    ): ItemKey {
-        val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-        val (_, encryptedItemKey) = getItemKeys(
-            userAddress = userAddress,
-            shareId = shareId,
-            itemId = itemId
-        )
-        return encryptedItemKey
     }
 
     companion object {

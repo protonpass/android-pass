@@ -39,19 +39,17 @@ class RestoreItemRevisionImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         itemContents: ItemContents
-    ) {
-        accountManager
-            .getPrimaryUserId()
-            .first()
-            ?.let { userId ->
-                updateItem(
-                    userId = userId,
-                    shareId = shareId,
-                    item = itemRepository.getById(shareId, itemId),
-                    contents = itemContents
-                )
-            }
-            ?: throw UserIdNotAvailableError()
-    }
+    ): Long = accountManager
+        .getPrimaryUserId()
+        .first()
+        ?.let { userId ->
+            updateItem(
+                userId = userId,
+                shareId = shareId,
+                item = itemRepository.getById(shareId, itemId),
+                contents = itemContents
+            ).revision
+        }
+        ?: throw UserIdNotAvailableError()
 
 }

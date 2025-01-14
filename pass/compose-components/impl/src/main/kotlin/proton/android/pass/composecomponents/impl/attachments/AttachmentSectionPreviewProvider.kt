@@ -31,6 +31,7 @@ import proton.android.pass.domain.attachments.AttachmentType
 import proton.android.pass.domain.attachments.DraftAttachment
 import proton.android.pass.domain.attachments.FileMetadata
 import proton.android.pass.domain.attachments.PendingAttachmentId
+import proton.android.pass.domain.attachments.PersistentAttachmentId
 import java.net.URI
 
 private const val SIZE_1_MB = 1_048_576L
@@ -108,6 +109,7 @@ class AttachmentSectionPreviewProvider :
         modifiedTime: Instant = Instant.fromEpochSeconds(CREATE_TIME)
     ) = Attachment(
         id = id,
+        persistentId = PersistentAttachmentId("persistent-$id"),
         shareId = ShareId("share-$id"),
         itemId = ItemId("item-$id"),
         name = name,

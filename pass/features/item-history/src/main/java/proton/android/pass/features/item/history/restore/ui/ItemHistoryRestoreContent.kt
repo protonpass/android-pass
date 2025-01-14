@@ -126,7 +126,8 @@ private fun ItemHistoryRestoreDetails(
             onEvent(
                 ItemHistoryRestoreUiEvent.OnRestoreConfirmClick(
                     contents = revisionItemDetailState.itemContents,
-                    attachmentsToRestore = attachmentsToRestore
+                    attachmentsToRestore = attachmentsToRestore,
+                    attachmentsToDelete = attachmentsToDelete
                 )
             )
         },

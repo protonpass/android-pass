@@ -22,4 +22,5 @@ import proton.android.pass.domain.attachments.AttachmentId
 
 interface SetAttachmentToBeUnlinked {
     operator fun invoke(attachmentId: AttachmentId)
+    operator fun invoke(attachmentId: Set<AttachmentId>)
 }

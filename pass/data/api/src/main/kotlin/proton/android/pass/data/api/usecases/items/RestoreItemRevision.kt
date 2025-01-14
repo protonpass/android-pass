@@ -28,6 +28,6 @@ interface RestoreItemRevision {
         shareId: ShareId,
         itemId: ItemId,
         itemContents: ItemContents
-    )
+    ): Long
 
 }

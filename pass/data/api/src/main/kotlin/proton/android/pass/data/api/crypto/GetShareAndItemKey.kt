@@ -16,30 +16,20 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.crypto
+package proton.android.pass.data.api.crypto
 
 import me.proton.core.user.domain.entity.UserAddress
-import proton.android.pass.data.api.crypto.GetItemKeys
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.key.ItemKey
 import proton.android.pass.domain.key.ShareKey
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class FakeGetItemKeys @Inject constructor() : GetItemKeys {
+interface GetShareAndItemKey {
 
-    private var itemKeys: Pair<ShareKey, ItemKey>? = null
-
-    fun setItemKeys(itemKeys: Pair<ShareKey, ItemKey>) {
-        this.itemKeys = itemKeys
-    }
-
-    override suspend fun invoke(
+    suspend operator fun invoke(
         userAddress: UserAddress,
         shareId: ShareId,
         itemId: ItemId
-    ): Pair<ShareKey, ItemKey> = itemKeys ?: throw IllegalStateException("Item keys not set")
+    ): Pair<ShareKey, ItemKey>
 
 }

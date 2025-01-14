@@ -49,7 +49,7 @@ import proton.android.pass.crypto.fakes.usecases.TestMigrateItem
 import proton.android.pass.crypto.fakes.usecases.TestOpenItem
 import proton.android.pass.crypto.fakes.usecases.TestUpdateItem
 import proton.android.pass.data.api.repositories.ItemRevision
-import proton.android.pass.data.fakes.crypto.FakeGetItemKeys
+import proton.android.pass.data.fakes.crypto.FakeGetShareAndItemKey
 import proton.android.pass.data.impl.db.AppDatabase
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
@@ -121,7 +121,7 @@ class ItemRepositoryImplTest {
             },
             migrateItem = TestMigrateItem(),
             encryptionContextProvider = TestEncryptionContextProvider(),
-            getItemKeys = FakeGetItemKeys(),
+            getShareAndItemKey = FakeGetShareAndItemKey(),
         )
     }
 

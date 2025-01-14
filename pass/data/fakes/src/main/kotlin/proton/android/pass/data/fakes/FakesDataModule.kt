@@ -23,7 +23,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.core.repositories.SentinelRepository
-import proton.android.pass.data.api.crypto.GetItemKeys
+import proton.android.pass.data.api.crypto.GetShareAndItemKey
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.AssetLinkRepository
 import proton.android.pass.data.api.repositories.BulkInviteRepository
@@ -209,7 +209,7 @@ import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.data.api.work.WorkerLauncher
-import proton.android.pass.data.fakes.crypto.FakeGetItemKeys
+import proton.android.pass.data.fakes.crypto.FakeGetShareAndItemKey
 import proton.android.pass.data.fakes.repositories.FakeAliasRepository
 import proton.android.pass.data.fakes.repositories.FakeAssetLinkRepository
 import proton.android.pass.data.fakes.repositories.FakeDraftAttachmentRepository
@@ -993,7 +993,7 @@ abstract class FakesDataModule {
     abstract fun bindClearAttachments(impl: FakeClearAttachments): ClearAttachments
 
     @Binds
-    abstract fun bindGetItemKeys(impl: FakeGetItemKeys): GetItemKeys
+    abstract fun bindGetItemKeys(impl: FakeGetShareAndItemKey): GetShareAndItemKey
 
     @Binds
     abstract fun bindDownloadAttachment(impl: FakeDownloadAttachment): DownloadAttachment

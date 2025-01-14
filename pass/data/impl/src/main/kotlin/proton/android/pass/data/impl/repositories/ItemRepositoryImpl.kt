@@ -50,7 +50,7 @@ import proton.android.pass.crypto.api.usecases.UpdateItem
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.ItemPendingEvent
 import proton.android.pass.data.api.PendingEventList
-import proton.android.pass.data.api.crypto.GetItemKeys
+import proton.android.pass.data.api.crypto.GetShareAndItemKey
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
@@ -120,7 +120,7 @@ class ItemRepositoryImpl @Inject constructor(
     private val openItem: OpenItem,
     private val migrateItem: MigrateItem,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val getItemKeys: GetItemKeys
+    private val getShareAndItemKey: GetShareAndItemKey
 ) : BaseRepository(userAddressRepository), ItemRepository {
 
     @Suppress("TooGenericExceptionCaught")
@@ -1210,7 +1210,7 @@ class ItemRepositoryImpl @Inject constructor(
     ): List<ItemEntity> {
         val userId = userAddress.userId
         val migrations = chunk.map { item ->
-            val (_, itemKey) = getItemKeys(
+            val (_, itemKey) = getShareAndItemKey(
                 userAddress = userAddress,
                 shareId = source,
                 itemId = ItemId(item.id)
@@ -1373,7 +1373,7 @@ class ItemRepositoryImpl @Inject constructor(
         item: Item,
         itemContents: ItemV1.Item
     ): Item = withUserAddress(userId) { userAddress ->
-        val (shareKey, itemKey) = getItemKeys(
+        val (shareKey, itemKey) = getShareAndItemKey(
             userAddress = userAddress,
             shareId = share.id,
             itemId = item.id

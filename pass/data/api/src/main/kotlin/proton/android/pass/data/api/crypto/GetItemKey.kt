@@ -18,18 +18,17 @@
 
 package proton.android.pass.data.api.crypto
 
-import me.proton.core.user.domain.entity.UserAddress
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.key.ItemKey
-import proton.android.pass.domain.key.ShareKey
 
-interface GetItemKeys {
+interface GetItemKey {
 
     suspend operator fun invoke(
-        userAddress: UserAddress,
+        userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Pair<ShareKey, ItemKey>
+    ): ItemKey
 
 }

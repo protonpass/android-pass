@@ -22,14 +22,16 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.data.api.crypto.GetItemKeys
+import proton.android.pass.data.api.crypto.GetItemKey
+import proton.android.pass.data.api.crypto.GetShareAndItemKey
 import proton.android.pass.data.impl.crypto.EncryptInviteKeys
 import proton.android.pass.data.impl.crypto.EncryptInviteKeysImpl
 import proton.android.pass.data.impl.crypto.EncryptItemsKeysForUser
 import proton.android.pass.data.impl.crypto.EncryptItemsKeysForUserImpl
 import proton.android.pass.data.impl.crypto.EncryptShareKeysForUser
 import proton.android.pass.data.impl.crypto.EncryptShareKeysForUserImpl
-import proton.android.pass.data.impl.crypto.GetItemKeysImpl
+import proton.android.pass.data.impl.crypto.GetItemKeyImpl
+import proton.android.pass.data.impl.crypto.GetShareAndItemKeyImpl
 import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManager
 import proton.android.pass.data.impl.crypto.NewUserInviteSignatureManagerImpl
 import proton.android.pass.data.impl.crypto.ReencryptAttachment
@@ -70,7 +72,10 @@ abstract class DataCryptoModule {
     abstract fun bindEncryptItemsKeysForUser(impl: EncryptItemsKeysForUserImpl): EncryptItemsKeysForUser
 
     @[Binds Singleton]
-    abstract fun bindGetItemKeys(impl: GetItemKeysImpl): GetItemKeys
+    abstract fun bindGetItemKeys(impl: GetShareAndItemKeyImpl): GetShareAndItemKey
+
+    @[Binds Singleton]
+    abstract fun bindGetItemKey(impl: GetItemKeyImpl): GetItemKey
 
     @[Binds Singleton]
     abstract fun bindReencryptAttachment(impl: ReencryptAttachmentImpl): ReencryptAttachment

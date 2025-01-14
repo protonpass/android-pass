@@ -235,6 +235,12 @@ class LauncherViewModel @Inject constructor(
         }
     }
 
+    internal fun securityKeys() = viewModelScope.launch {
+        getPrimaryUserIdOrNull()?.let {
+            userSettingsOrchestrator.startSecurityKeysWorkflow(it)
+        }
+    }
+
     @Suppress("ReturnCount")
     private fun getState(accounts: List<Account>): AccountState {
 

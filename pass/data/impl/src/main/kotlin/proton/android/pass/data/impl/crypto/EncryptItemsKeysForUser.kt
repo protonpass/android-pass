@@ -22,7 +22,7 @@ import me.proton.core.key.domain.extension.primary
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.crypto.api.usecases.EncryptInviteKeys
 import proton.android.pass.crypto.api.usecases.EncryptedInviteShareKeyList
-import proton.android.pass.data.api.crypto.GetItemKeys
+import proton.android.pass.data.api.crypto.GetShareAndItemKey
 import proton.android.pass.data.api.usecases.GetAllKeysByAddress
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -43,7 +43,7 @@ interface EncryptItemsKeysForUser {
 class EncryptItemsKeysForUserImpl @Inject constructor(
     private val getAllKeysByAddress: GetAllKeysByAddress,
     private val encryptInviteKeys: EncryptInviteKeys,
-    private val getItemKeys: GetItemKeys
+    private val getShareAndItemKey: GetShareAndItemKey
 ) : EncryptItemsKeysForUser {
 
     @Suppress("ReturnCount")
@@ -53,7 +53,7 @@ class EncryptItemsKeysForUserImpl @Inject constructor(
         userAddress: UserAddress,
         targetEmail: String
     ): Result<EncryptedInviteShareKeyList> {
-        val (_, itemKey) = getItemKeys(userAddress, shareId, itemId)
+        val (_, itemKey) = getShareAndItemKey(userAddress, shareId, itemId)
 
         val inviterAddressKey = userAddress.keys.primary()?.privateKey
             ?: return Result.failure(IllegalStateException("No primary address key for inviter user"))

@@ -19,47 +19,50 @@
 package proton.android.pass.data.impl.crypto
 
 import kotlinx.coroutines.flow.first
-import me.proton.core.user.domain.entity.UserAddress
-import proton.android.pass.data.api.crypto.GetItemKeys
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.crypto.GetItemKey
+import proton.android.pass.data.api.errors.ItemKeyNotAvailableError
 import proton.android.pass.data.api.repositories.ShareRepository
-import proton.android.pass.data.impl.repositories.ItemKeyRepository
+import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.key.ItemKey
-import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
 
-class GetItemKeysImpl @Inject constructor(
+class GetItemKeyImpl @Inject constructor(
     private val shareRepository: ShareRepository,
     private val shareKeyRepository: ShareKeyRepository,
-    private val itemKeyRepository: ItemKeyRepository
-) : GetItemKeys {
+    private val localItemDataSource: LocalItemDataSource
+) : GetItemKey {
 
     override suspend fun invoke(
-        userAddress: UserAddress,
+        userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Pair<ShareKey, ItemKey> = shareRepository.getById(userAddress.userId, shareId).let { share ->
-        when (share) {
-            is Share.Item -> shareKeyRepository.getLatestKeyForShare(shareId)
-                .first()
-                .let { shareKey ->
-                    shareKey to ItemKey(
-                        rotation = shareKey.rotation,
-                        key = shareKey.key,
-                        responseKey = shareKey.responseKey
-                    )
-                }
+    ): ItemKey = when (shareRepository.getById(userId, shareId)) {
+        is Share.Item -> shareKeyRepository.getLatestKeyForShare(shareId)
+            .first()
+            .let { shareKey ->
+                ItemKey(
+                    rotation = shareKey.rotation,
+                    key = shareKey.key,
+                    responseKey = shareKey.responseKey
+                )
+            }
 
-            is Share.Vault -> itemKeyRepository.getLatestItemKey(
-                userId = userAddress.userId,
-                addressId = userAddress.addressId,
-                shareId = shareId,
-                itemId = itemId
-            ).first()
-        }
+        is Share.Vault -> localItemDataSource.getById(shareId, itemId)
+            .let { item ->
+                item ?: throw IllegalArgumentException("Item not found")
+                item.key ?: throw ItemKeyNotAvailableError()
+                item.encryptedKey ?: throw ItemKeyNotAvailableError()
+                ItemKey(
+                    rotation = item.keyRotation,
+                    key = item.encryptedKey,
+                    responseKey = item.key
+                )
+            }
     }
-
 }
+

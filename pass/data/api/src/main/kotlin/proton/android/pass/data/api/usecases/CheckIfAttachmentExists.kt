@@ -20,12 +20,12 @@ package proton.android.pass.data.api.usecases
 
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.attachments.AttachmentId
+import proton.android.pass.domain.attachments.PersistentAttachmentId
 
 interface CheckIfAttachmentExists {
     suspend operator fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-        attachmentId: AttachmentId
+        persistentId: PersistentAttachmentId
     ): Boolean
 }

@@ -47,7 +47,9 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.attachments.LinkAttachmentsToItem
 import proton.android.pass.data.api.usecases.attachments.RestoreAttachments
+import proton.android.pass.data.api.usecases.attachments.SetAttachmentToBeUnlinked
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
 import proton.android.pass.domain.HiddenState
@@ -76,6 +78,8 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val restoreItemRevision: RestoreItemRevision,
     private val restoreAttachments: RestoreAttachments,
+    private val linkAttachmentsToItem: LinkAttachmentsToItem,
+    private val setAttachmentToBeUnlinked: SetAttachmentToBeUnlinked,
     private val itemDetailsHandler: ItemDetailsHandler,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -289,22 +293,34 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         eventFlow.update { ItemHistoryRestoreEvent.OnRestoreItemCanceled }
     }
 
-    internal fun onRestoreItemConfirmed(itemContents: ItemContents, attachmentsToRestore: Set<AttachmentId>) {
+    internal fun onRestoreItemConfirmed(
+        itemContents: ItemContents,
+        attachmentsToRestore: Set<AttachmentId>,
+        attachmentsToDelete: Set<AttachmentId>
+    ) {
         viewModelScope.launch {
             eventFlow.update { ItemHistoryRestoreEvent.OnRestoreItemConfirmed }
 
             runCatching { restoreItemRevision(shareId, itemId, itemContents) }
-                .onSuccess {
-                    runCatching {
-                        restoreAttachments(shareId, itemId, attachmentsToRestore)
-                    }.onFailure {
-                        PassLogger.w(TAG, "Error restoring attachments")
-                        PassLogger.w(TAG, it)
+                .onSuccess { revision ->
+                    if (attachmentsToRestore.isNotEmpty()) {
+                        runCatching {
+                            restoreAttachments(shareId, itemId, attachmentsToRestore)
+                        }.onFailure {
+                            PassLogger.w(TAG, "Error restoring attachments")
+                            PassLogger.w(TAG, it)
+                        }
                     }
 
-                    runCatching {
-                        // unlink new files
-                    }.onFailure { }
+                    if (attachmentsToDelete.isNotEmpty()) {
+                        runCatching {
+                            setAttachmentToBeUnlinked(attachmentsToDelete)
+                            linkAttachmentsToItem(shareId, itemId, revision)
+                        }.onFailure {
+                            PassLogger.w(TAG, "Error unlinking attachments")
+                            PassLogger.w(TAG, it)
+                        }
+                    }
                     eventFlow.update { ItemHistoryRestoreEvent.OnItemRestored }
                     snackbarDispatcher(ItemHistoryRestoreSnackbarMessage.RestoreItemRevisionSuccess)
                 }

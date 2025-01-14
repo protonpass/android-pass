@@ -27,6 +27,9 @@ import proton.android.pass.domain.ShareId
 value class PendingAttachmentId(val id: String)
 
 @JvmInline
+value class PersistentAttachmentId(val id: String)
+
+@JvmInline
 value class AttachmentId(val id: String)
 
 enum class AttachmentType {
@@ -48,6 +51,7 @@ enum class AttachmentType {
 
 data class Attachment(
     val id: AttachmentId,
+    val persistentId: PersistentAttachmentId,
     val shareId: ShareId,
     val itemId: ItemId,
     val name: String,

@@ -77,7 +77,11 @@ fun ItemHistoryRestoreScreen(
                 }
 
                 is ItemHistoryRestoreUiEvent.OnRestoreConfirmClick -> {
-                    onRestoreItemConfirmed(uiEvent.contents, uiEvent.attachmentsToRestore)
+                    onRestoreItemConfirmed(
+                        itemContents = uiEvent.contents,
+                        attachmentsToRestore = uiEvent.attachmentsToRestore,
+                        attachmentsToDelete = uiEvent.attachmentsToDelete
+                    )
                 }
 
                 is ItemHistoryRestoreUiEvent.OnSectionClick -> {

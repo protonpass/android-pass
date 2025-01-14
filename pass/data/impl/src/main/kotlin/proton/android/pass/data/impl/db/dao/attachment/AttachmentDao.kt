@@ -75,14 +75,14 @@ abstract class AttachmentDao : BaseDao<AttachmentEntity>() {
             SELECT 1 FROM ${AttachmentEntity.TABLE}
             WHERE ${AttachmentEntity.Columns.SHARE_ID} = :shareId 
               AND ${AttachmentEntity.Columns.ITEM_ID} = :itemId 
-              AND ${AttachmentEntity.Columns.ID} = :attachmentId
+              AND ${AttachmentEntity.Columns.ID} = :persistentId
         )
         """
     )
     abstract fun checkIfAttachmentExists(
         shareId: String,
         itemId: String,
-        attachmentId: String
+        persistentId: String
     ): Boolean
 
     @Query(

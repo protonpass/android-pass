@@ -64,6 +64,11 @@ sealed interface ItemDetailsNavDestination {
         val itemId: ItemId
     ) : ItemDetailsNavDestination
 
+    data class ItemTrashSharedWarning(
+        val shareId: ShareId,
+        val itemId: ItemId
+    ) : ItemDetailsNavDestination
+
     data object ItemMigration : ItemDetailsNavDestination
 
     data object DismissBottomSheet : ItemDetailsNavDestination

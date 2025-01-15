@@ -67,6 +67,8 @@ data class Item(
     val isEmailBreached: Boolean = flags.isEmailBreached()
     val hasAttachments: Boolean = flags.hasAttachments()
     val hasHadAttachments: Boolean = flags.hasHadAttachments()
+
+    val isShared: Boolean = shareCount > 0
 }
 
 data class ItemEncrypted(

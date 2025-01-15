@@ -98,9 +98,7 @@ private fun SharedAuthScreen(
                 )
 
                 AuthNavigation.ForceSignOutAllUsers -> onNavigate(AppNavigation.ForceSignOutAllUsers)
-                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {}
             }
         }
     )

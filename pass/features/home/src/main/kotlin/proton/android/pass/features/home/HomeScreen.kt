@@ -330,7 +330,14 @@ fun HomeScreen(
                             {
                                 scope.launch {
                                     bottomSheetState.hide()
-                                    homeViewModel.sendItemsToTrash(listOf(it))
+                                    if (it.isShared) {
+                                        HomeNavigation.TrashSharedWarning(
+                                            shareId = it.shareId,
+                                            itemId = it.id
+                                        ).also(onNavigateEvent)
+                                    } else {
+                                        homeViewModel.sendItemsToTrash(listOf(it))
+                                    }
                                 }
                             }
                         },

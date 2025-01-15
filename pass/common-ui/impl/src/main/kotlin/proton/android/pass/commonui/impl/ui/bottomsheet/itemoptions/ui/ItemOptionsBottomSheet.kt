@@ -36,7 +36,7 @@ fun ItemOptionsBottomSheet(
 
     LaunchedEffect(state.event) {
         when (state.event) {
-            ItemOptionsEvent.Idle -> {}
+            ItemOptionsEvent.Idle -> Unit
             ItemOptionsEvent.Close -> onNavigate(ItemOptionsNavDestination.Dismiss)
         }
     }

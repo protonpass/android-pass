@@ -151,7 +151,9 @@ fun NavGraphBuilder.autofillActivityGraph(
                 AuthNavigation.ForceSignOutAllUsers -> {
                 }
 
-                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {}
+                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
             }
         }
     )
@@ -194,7 +196,9 @@ fun NavGraphBuilder.autofillActivityGraph(
     searchOptionsGraph(
         onNavigateEvent = {
             when (it) {
-                is SearchOptionsNavigation.SelectSorting -> dismissBottomSheet {}
+                is SearchOptionsNavigation.SelectSorting -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
                 SearchOptionsNavigation.ResetFilters,
                 SearchOptionsNavigation.Filter,
@@ -221,7 +225,9 @@ fun NavGraphBuilder.autofillActivityGraph(
         ),
         onNavigate = {
             when (it) {
-                BaseLoginNavigation.Close -> dismissBottomSheet {}
+                BaseLoginNavigation.Close -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,
@@ -315,7 +321,9 @@ fun NavGraphBuilder.autofillActivityGraph(
                     )
                 }
 
-                BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {}
+                BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
                 // Updates cannot happen
                 is BaseLoginNavigation.OnUpdateLoginEvent -> {}
@@ -343,7 +351,9 @@ fun NavGraphBuilder.autofillActivityGraph(
         onNavigate = {
             when (it) {
                 GeneratePasswordNavigation.CloseDialog -> appNavigator.navigateBack()
-                GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {}
+                GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
                 GeneratePasswordNavigation.OnSelectWordSeparator -> appNavigator.navigate(
                     destination = WordSeparatorDialog
@@ -359,9 +369,13 @@ fun NavGraphBuilder.autofillActivityGraph(
         onNavigate = {
             when (it) {
                 CreateAliasNavigation.Close -> appNavigator.navigateBack()
-                CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
+                CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
-                is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
+                is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
 
                 is CreateAliasNavigation.Created -> {
@@ -460,7 +474,9 @@ fun NavGraphBuilder.autofillActivityGraph(
                     )
                 )
 
-                BaseIdentityNavigation.RemovedCustomField -> dismissBottomSheet {}
+                BaseIdentityNavigation.RemovedCustomField -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
                 BaseIdentityNavigation.AddExtraSection ->
                     appNavigator.navigate(CustomSectionNameDialogNavItem)
@@ -478,7 +494,9 @@ fun NavGraphBuilder.autofillActivityGraph(
                     route = CustomSectionOptionsBottomSheetNavItem.buildRoute(it.index, it.title)
                 )
 
-                BaseIdentityNavigation.RemoveCustomSection -> dismissBottomSheet {}
+                BaseIdentityNavigation.RemoveCustomSection -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
                 is UpdateIdentityNavigation.IdentityUpdated -> {
                     // Updates cannot happen

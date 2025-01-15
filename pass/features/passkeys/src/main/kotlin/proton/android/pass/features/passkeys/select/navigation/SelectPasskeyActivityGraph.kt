@@ -77,9 +77,7 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
                 is AuthNavigation.SignOut,
                 AuthNavigation.ForceSignOutAllUsers -> {}
 
-                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {}
             }
         }
     )
@@ -132,9 +130,7 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
     searchOptionsGraph(
         onNavigateEvent = {
             when (it) {
-                is SearchOptionsNavigation.SelectSorting -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                is SearchOptionsNavigation.SelectSorting -> dismissBottomSheet {}
 
                 SearchOptionsNavigation.Filter -> {
                     throw IllegalStateException("Cannot Filter on SelectPasskey")

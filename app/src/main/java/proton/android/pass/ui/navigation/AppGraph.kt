@@ -87,6 +87,7 @@ import proton.android.pass.features.item.trash.shared.navigation.ItemTrashNavDes
 import proton.android.pass.features.item.trash.shared.navigation.itemTrashNavGraph
 import proton.android.pass.features.item.trash.trashdelete.navigation.ItemTrashDeleteNavItem
 import proton.android.pass.features.item.trash.trashmenu.navigation.ItemTrashMenuNavItem
+import proton.android.pass.features.item.trash.trashwarningshared.navigation.ItemTrashWarningSharedNavItem
 import proton.android.pass.features.itemcreate.alias.CreateAlias
 import proton.android.pass.features.itemcreate.alias.CreateAliasBottomSheet
 import proton.android.pass.features.itemcreate.alias.CreateAliasNavigation
@@ -454,6 +455,14 @@ fun NavGraphBuilder.appGraph(
                 is HomeNavigation.ManageVault -> appNavigator.navigate(
                     destination = ManageVault,
                     route = ManageVault.createRoute(shareId = it.shareId)
+                )
+
+                is HomeNavigation.TrashSharedWarning -> appNavigator.navigate(
+                    destination = ItemTrashWarningSharedNavItem,
+                    route = ItemTrashWarningSharedNavItem.createNavRoute(
+                        shareId = it.shareId,
+                        itemId = it.itemId
+                    )
                 )
             }
         }

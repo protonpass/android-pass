@@ -18,29 +18,31 @@
 
 package proton.android.pass.ui
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import proton.android.pass.log.api.PassLogger
 
-@OptIn(ExperimentalMaterialApi::class)
 internal fun onBottomSheetDismissed(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     block: () -> Unit
 ) {
     coroutineScope.launch {
-        if (modalBottomSheetState.isVisible) {
+        while (isActive && modalBottomSheetState.isVisible) {
             try {
                 modalBottomSheetState.hide()
             } catch (e: CancellationException) {
                 PassLogger.d(TAG, e, "Bottom sheet hidden animation interrupted")
             }
+            delay(DELAY)
         }
         block()
     }
 }
 
+private const val DELAY = 100L
 private const val TAG = "OnBottomSheetDismissed"

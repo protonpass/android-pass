@@ -57,19 +57,34 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MigrateSelectVaultViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandleProvider,
+    savedStateHandleProvider: SavedStateHandleProvider,
     bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     observeVaults: ObserveVaultsWithItemCount,
     snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
-    private val mode: Mode = getMode()
+    private val migrateMode: MigrateModeValue = savedStateHandleProvider.get()
+        .require(MigrateModeArg.key)
+
+    private val mode: Mode = when (migrateMode) {
+        MigrateModeValue.SelectedItems -> Mode.MigrateSelectedItems(
+            filter = savedStateHandleProvider.get()
+                .require(MigrateVaultFilterArg.key)
+        )
+
+        MigrateModeValue.AllVaultItems -> Mode.MigrateAllItems(
+            shareId = savedStateHandleProvider.get()
+                .require<String>(CommonNavArgId.ShareId.key)
+                .let(::ShareId)
+        )
+    }
 
     private val eventFlow: MutableStateFlow<Option<SelectVaultEvent>> = MutableStateFlow(None)
+
     private val selectedItemsFlow = bulkMoveToVaultRepository.observe()
         .distinctUntilChanged()
 
-    val state: StateFlow<MigrateSelectVaultUiState> = combine(
+    internal val state: StateFlow<MigrateSelectVaultUiState> = combine(
         observeVaults().asLoadingResult(),
         eventFlow,
         selectedItemsFlow
@@ -95,7 +110,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
         initialValue = MigrateSelectVaultUiState.Uninitialised
     )
 
-    fun onVaultSelected(shareId: ShareId) {
+    internal fun onVaultSelected(shareId: ShareId) {
         val event = when (mode) {
             is Mode.MigrateSelectedItems -> SelectVaultEvent.VaultSelectedForMigrateItem(
                 destinationShareId = shareId
@@ -110,7 +125,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
         eventFlow.update { event.toOption() }
     }
 
-    fun clearEvent() {
+    internal fun clearEvent() {
         eventFlow.update { None }
     }
 
@@ -185,24 +200,6 @@ class MigrateSelectVaultViewModel @Inject constructor(
         }
     }
 
-    private fun getMode(): Mode {
-        val savedState = savedStateHandle.get()
-        return when (MigrateModeValue.valueOf(savedState.require(MigrateModeArg.key))) {
-            MigrateModeValue.SelectedItems -> {
-                Mode.MigrateSelectedItems(
-                    filter = MigrateVaultFilter.valueOf(
-                        savedState.require(MigrateVaultFilterArg.key)
-                    )
-                )
-            }
-
-            MigrateModeValue.AllVaultItems -> {
-                val sourceShareId = ShareId(savedState.require(CommonNavArgId.ShareId.key))
-                Mode.MigrateAllItems(sourceShareId)
-            }
-        }
-    }
-
     internal sealed interface Mode {
 
         data class MigrateSelectedItems(
@@ -217,7 +214,10 @@ class MigrateSelectVaultViewModel @Inject constructor(
         }
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "MigrateSelectVaultViewModel"
+
     }
+
 }

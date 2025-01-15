@@ -136,11 +136,19 @@ fun LoginDetail(
                                     }
                                 },
                                 onMoveToTrash = {
-                                    viewModel.onMoveToTrash(
-                                        state.itemUiModel.shareId,
-                                        state.itemUiModel.id
-                                    )
                                     scope.launch { bottomSheetState.hide() }
+
+                                    if (state.itemUiModel.isShared) {
+                                        ItemDetailNavigation.TrashSharedWarning(
+                                            shareId = state.itemUiModel.shareId,
+                                            itemId = state.itemUiModel.id
+                                        ).also(onNavigate)
+                                    } else {
+                                        viewModel.onMoveToTrash(
+                                            state.itemUiModel.shareId,
+                                            state.itemUiModel.id
+                                        )
+                                    }
                                 },
                                 onPinned = {
                                     scope.launch { bottomSheetState.hide() }

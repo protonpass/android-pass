@@ -108,10 +108,18 @@ fun NoteDetail(
                             },
                             onMoveToTrash = {
                                 scope.launch { bottomSheetState.hide() }
-                                viewModel.onMoveToTrash(
-                                    state.itemUiModel.shareId,
-                                    state.itemUiModel.id
-                                )
+
+                                if (state.itemUiModel.isShared) {
+                                    ItemDetailNavigation.TrashSharedWarning(
+                                        shareId = state.itemUiModel.shareId,
+                                        itemId = state.itemUiModel.id
+                                    ).also(onNavigate)
+                                } else {
+                                    viewModel.onMoveToTrash(
+                                        state.itemUiModel.shareId,
+                                        state.itemUiModel.id
+                                    )
+                                }
                             },
                             onCopyNote = {
                                 scope.launch {

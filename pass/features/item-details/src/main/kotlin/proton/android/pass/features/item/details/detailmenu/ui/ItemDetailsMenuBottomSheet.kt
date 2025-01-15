@@ -50,7 +50,14 @@ fun ItemDetailsMenuBottomSheet(
             is ItemDetailsMenuEvent.OnItemLeaved -> {
                 ItemDetailsNavDestination.LeaveItemShare(
                     shareId = event.shareId
-                )
+                ).also(onNavigated)
+            }
+
+            is ItemDetailsMenuEvent.OnItemSharedTrashed -> {
+                ItemDetailsNavDestination.ItemTrashSharedWarning(
+                    shareId = event.shareId,
+                    itemId = event.itemId
+                ).also(onNavigated)
             }
 
             ItemDetailsMenuEvent.OnItemNoteCopied,

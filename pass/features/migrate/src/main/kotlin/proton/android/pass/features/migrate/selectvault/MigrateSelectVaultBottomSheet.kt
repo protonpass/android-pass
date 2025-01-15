@@ -39,9 +39,7 @@ fun MigrateSelectVaultBottomSheet(
     when (val state = uiState) {
         MigrateSelectVaultUiState.Error -> onNavigate(MigrateNavigation.DismissBottomsheet)
         MigrateSelectVaultUiState.Loading,
-        MigrateSelectVaultUiState.Uninitialised -> {
-            // no-op
-        }
+        MigrateSelectVaultUiState.Uninitialised -> Unit
 
         is MigrateSelectVaultUiState.Success -> {
             LaunchedEffect(state.event) {

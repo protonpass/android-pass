@@ -2544,7 +2544,6 @@ fun NavGraphBuilder.appGraph(
             }
 
             is AttachmentsNavigation.OpenRenameAttachment -> dismissBottomSheet {
-                appNavigator.navigateBack(comesFromBottomsheet = true)
                 appNavigator.navigate(
                     destination = RenameAttachmentNavItem,
                     route = RenameAttachmentNavItem.createNavRoute(
@@ -2556,7 +2555,6 @@ fun NavGraphBuilder.appGraph(
             }
 
             is AttachmentsNavigation.OpenRenameDraftAttachment -> dismissBottomSheet {
-                appNavigator.navigateBack(comesFromBottomsheet = true)
                 appNavigator.navigate(
                     destination = RenameAttachmentNavItem,
                     route = RenameAttachmentNavItem.createNavRoute(it.uri)

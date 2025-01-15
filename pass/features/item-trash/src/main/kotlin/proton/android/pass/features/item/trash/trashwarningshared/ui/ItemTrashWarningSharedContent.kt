@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.item.trash.R
 import proton.android.pass.features.item.trash.trashwarningshared.presentation.ItemTrashWarningSharedState
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -38,7 +39,6 @@ internal fun ItemTrashWarningSharedContent(
         isLoading = isLoading,
         isConfirmActionDestructive = false,
         title = stringResource(id = R.string.item_trash_warning_shared_dialog_title),
-        message = stringResource(id = R.string.item_trash_warning_shared_dialog_message),
         confirmText = stringResource(id = CompR.string.action_continue),
         cancelText = stringResource(id = CompR.string.action_cancel),
         onDismiss = {
@@ -49,6 +49,11 @@ internal fun ItemTrashWarningSharedContent(
         },
         onCancel = {
             onUiEvent(ItemTrashWarningSharedUiEvent.OnCancelClicked)
+        },
+        content = {
+            Text.Body1Regular(
+                text = stringResource(id = R.string.item_trash_warning_shared_dialog_message)
+            )
         }
     )
 }

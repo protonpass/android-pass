@@ -328,16 +328,15 @@ fun HomeScreen(
                         },
                         onMoveToTrash = remember {
                             {
-                                scope.launch {
-                                    bottomSheetState.hide()
-                                    if (it.isShared) {
-                                        HomeNavigation.TrashSharedWarning(
-                                            shareId = it.shareId,
-                                            itemId = it.id
-                                        ).also(onNavigateEvent)
-                                    } else {
-                                        homeViewModel.sendItemsToTrash(listOf(it))
-                                    }
+                                scope.launch { bottomSheetState.hide() }
+
+                                if (it.isShared) {
+                                    HomeNavigation.TrashSharedWarning(
+                                        shareId = it.shareId,
+                                        itemId = it.id
+                                    ).also(onNavigateEvent)
+                                } else {
+                                    homeViewModel.sendItemsToTrash(listOf(it))
                                 }
                             }
                         },
@@ -460,8 +459,14 @@ fun HomeScreen(
                         },
                         onMoveToTrash = remember {
                             {
-                                scope.launch {
-                                    bottomSheetState.hide()
+                                scope.launch { bottomSheetState.hide() }
+
+                                if (it.isShared) {
+                                    HomeNavigation.TrashSharedWarning(
+                                        shareId = it.shareId,
+                                        itemId = it.id
+                                    ).also(onNavigateEvent)
+                                } else {
                                     homeViewModel.sendItemsToTrash(listOf(it))
                                 }
                             }
@@ -524,8 +529,14 @@ fun HomeScreen(
                         },
                         onMoveToTrash = remember {
                             {
-                                scope.launch {
-                                    bottomSheetState.hide()
+                                scope.launch { bottomSheetState.hide() }
+
+                                if (it.isShared) {
+                                    HomeNavigation.TrashSharedWarning(
+                                        shareId = it.shareId,
+                                        itemId = it.id
+                                    ).also(onNavigateEvent)
+                                } else {
                                     homeViewModel.sendItemsToTrash(listOf(it))
                                 }
                             }
@@ -572,7 +583,15 @@ fun HomeScreen(
                         },
                         onMoveToTrash = {
                             scope.launch { bottomSheetState.hide() }
-                            homeViewModel.sendItemsToTrash(listOf(it))
+
+                            if (it.isShared) {
+                                HomeNavigation.TrashSharedWarning(
+                                    shareId = it.shareId,
+                                    itemId = it.id
+                                ).also(onNavigateEvent)
+                            } else {
+                                homeViewModel.sendItemsToTrash(listOf(it))
+                            }
                         },
                         onRemoveFromRecentSearch = { shareId, itemId ->
                             scope.launch { bottomSheetState.hide() }

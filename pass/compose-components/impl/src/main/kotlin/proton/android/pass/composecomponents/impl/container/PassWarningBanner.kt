@@ -28,6 +28,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -38,11 +39,15 @@ import proton.android.pass.commonui.api.body3Weak
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun PassInfoWarningBanner(modifier: Modifier = Modifier, text: String) {
+fun PassInfoWarningBanner(
+    modifier: Modifier = Modifier,
+    text: String,
+    backgroundColor: Color = PassTheme.colors.backgroundStrong
+) {
     Row(
         modifier = modifier
             .background(
-                color = PassTheme.colors.backgroundStrong,
+                color = backgroundColor,
                 shape = PassTheme.shapes.squircleMediumShape
             )
             .padding(

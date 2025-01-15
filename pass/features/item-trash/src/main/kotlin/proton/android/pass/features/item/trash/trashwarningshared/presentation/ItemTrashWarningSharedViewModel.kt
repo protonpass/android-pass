@@ -36,12 +36,14 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
 class ItemTrashWarningSharedViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
-    private val trashItems: TrashItems
+    private val trashItems: TrashItems,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -82,10 +84,13 @@ class ItemTrashWarningSharedViewModel @Inject constructor(
                 .onFailure { error ->
                     PassLogger.w(TAG, "Error moving shared item to trash")
                     PassLogger.e(TAG, error)
+
                     eventFlow.update { ItemTrashWarningSharedEvent.OnMoveItemToTrashError }
+                    snackbarDispatcher(ItemTrashWarningSharedMessage.ItemTrashError)
                 }
                 .onSuccess {
                     eventFlow.update { ItemTrashWarningSharedEvent.OnMoveItemToTrashSuccess }
+                    snackbarDispatcher(ItemTrashWarningSharedMessage.ItemTrashSuccess)
                 }
 
             isLoadingStateFlow.update { IsLoadingState.NotLoading }

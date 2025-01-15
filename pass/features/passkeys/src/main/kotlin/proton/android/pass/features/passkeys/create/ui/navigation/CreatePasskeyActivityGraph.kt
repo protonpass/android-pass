@@ -92,7 +92,9 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 is AuthNavigation.SignOut,
                 AuthNavigation.ForceSignOutAllUsers -> {}
 
-                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {}
+                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
             }
         }
     )
@@ -146,7 +148,9 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
         initialCreateLoginUiState = navState.createLoginUiState,
         onNavigate = {
             when (it) {
-                BaseLoginNavigation.Close -> dismissBottomSheet {}
+                BaseLoginNavigation.Close -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,
@@ -240,7 +244,9 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                     )
                 }
 
-                BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {}
+                BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
                 // Updates cannot happen
                 is BaseLoginNavigation.OnUpdateLoginEvent -> {}
@@ -269,7 +275,9 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
         onNavigate = {
             when (it) {
                 GeneratePasswordNavigation.CloseDialog -> appNavigator.navigateBack()
-                GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {}
+                GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
                 GeneratePasswordNavigation.OnSelectWordSeparator -> appNavigator.navigate(
                     destination = WordSeparatorDialog
@@ -286,9 +294,13 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
         onNavigate = {
             when (it) {
                 CreateAliasNavigation.Close -> appNavigator.navigateBack()
-                CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
+                CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
-                is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
+                is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
 
                 is CreateAliasNavigation.Created -> {
@@ -341,7 +353,9 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
         onNavigateEvent = {
             when (it) {
                 SearchOptionsNavigation.ResetFilters,
-                is SearchOptionsNavigation.SelectSorting -> dismissBottomSheet {}
+                is SearchOptionsNavigation.SelectSorting -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
                 SearchOptionsNavigation.Filter -> {
                     throw IllegalStateException("Cannot Filter on CreatePasskey")

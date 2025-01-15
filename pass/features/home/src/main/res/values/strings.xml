@@ -153,6 +153,10 @@
         <item quantity="one">Are you sure you want to delete the item? This action is irreversible</item>
         <item quantity="other">Are you sure you want to delete the %d items? This action is irreversible</item>
     </plurals>
+    <plurals name="alert_shared_delete_items_message">
+        <item quantity="one">1 item is currently shared. Moving it to trash will remove access for all other users.</item>
+        <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+    </plurals>
     <!-- Recent search -->
     <string name="recent_search_header_count">Recent searches</string>
     <string name="recent_search_clear">Clear</string>

@@ -1062,6 +1062,8 @@ fun HomeScreen(
                 show = shouldShowMoveToTrashItemsDialog,
                 isLoading = actionState is ActionState.Loading,
                 amount = homeUiState.homeListUiState.selectionState.selectedItems.size,
+                hasSelectedSharedItems = homeUiState.homeListUiState.selectionState.hasSelectedSharedItems,
+                sharedSelectedItemsCount = homeUiState.homeListUiState.selectionState.selectedSharedItemsCount,
                 onConfirm = {
                     homeViewModel.sendItemsToTrash(
                         homeUiState.homeListUiState.selectionState.selectedItems

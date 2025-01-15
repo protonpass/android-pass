@@ -183,6 +183,12 @@ internal data class HomeSelectionState(
     val topBarState: SelectionTopBarState
 ) {
 
+    private val selectedSharedItems = selectedItems.filter { it.isShared }
+
+    internal val selectedSharedItemsCount = selectedSharedItems.size
+
+    internal val hasSelectedSharedItems = selectedSharedItems.isNotEmpty()
+
     internal companion object {
 
         internal val Initial = HomeSelectionState(

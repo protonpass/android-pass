@@ -113,10 +113,18 @@ fun CreditCardDetail(
                             },
                             onMoveToTrash = {
                                 scope.launch { bottomSheetState.hide() }
-                                viewModel.onMoveToTrash(
-                                    itemUiModel.shareId,
-                                    itemUiModel.id
-                                )
+
+                                if (itemUiModel.isShared) {
+                                    ItemDetailNavigation.TrashSharedWarning(
+                                        shareId = itemUiModel.shareId,
+                                        itemId = itemUiModel.id
+                                    ).also(onNavigate)
+                                } else {
+                                    viewModel.onMoveToTrash(
+                                        itemUiModel.shareId,
+                                        itemUiModel.id
+                                    )
+                                }
                             },
                             onPinned = {
                                 scope.launch { bottomSheetState.hide() }

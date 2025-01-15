@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.item.details.detailmenu.presentation
 
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 internal sealed interface ItemDetailsMenuEvent {
@@ -54,4 +55,6 @@ internal sealed interface ItemDetailsMenuEvent {
 
     @JvmInline
     value class OnItemLeaved(val shareId: ShareId) : ItemDetailsMenuEvent
+
+    data class OnItemSharedTrashed(val shareId: ShareId, val itemId: ItemId) : ItemDetailsMenuEvent
 }

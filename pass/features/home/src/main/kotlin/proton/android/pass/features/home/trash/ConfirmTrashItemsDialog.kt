@@ -18,6 +18,8 @@
 
 package proton.android.pass.features.home.trash
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.pluralStringResource
@@ -25,8 +27,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.composecomponents.impl.container.PassInfoWarningBanner
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.home.R
 import me.proton.core.presentation.R as CoreR
 
@@ -35,6 +40,8 @@ internal fun ConfirmTrashItemsDialog(
     show: Boolean,
     isLoading: Boolean,
     amount: Int,
+    hasSelectedSharedItems: Boolean,
+    sharedSelectedItemsCount: Int,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit
 ) {
@@ -43,30 +50,52 @@ internal fun ConfirmTrashItemsDialog(
         isLoading = isLoading,
         isConfirmActionDestructive = false,
         title = pluralStringResource(R.plurals.alert_confirm_trash_items_title, amount, amount),
-        message = pluralStringResource(
-            R.plurals.alert_confirm_trash_items_message,
-            amount,
-            amount
-        ),
         confirmText = stringResource(id = CoreR.string.presentation_alert_ok),
         cancelText = stringResource(id = CoreR.string.presentation_alert_cancel),
         onDismiss = onDismiss,
         onConfirm = onConfirm,
-        onCancel = onDismiss
+        onCancel = onDismiss,
+        content = {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+            ) {
+                Text.Body1Regular(
+                    text = pluralStringResource(
+                        R.plurals.alert_confirm_trash_items_message,
+                        amount,
+                        amount
+                    )
+                )
+
+                if (hasSelectedSharedItems) {
+                    PassInfoWarningBanner(
+                        text = pluralStringResource(
+                            id = R.plurals.alert_shared_delete_items_message,
+                            count = sharedSelectedItemsCount,
+                            sharedSelectedItemsCount
+                        ),
+                        backgroundColor = PassTheme.colors.interactionNormMinor2
+                    )
+                }
+            }
+        }
     )
 }
 
-@Preview
-@Composable
-fun ConfirmTrashItemsDialogPreview(
+@[Preview Composable]
+internal fun ConfirmTrashItemsDialogPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    PassTheme(isDark = input.first) {
+    val (isDark, hasSelectedSharedItems) = input
+
+    PassTheme(isDark = isDark) {
         Surface {
             ConfirmTrashItemsDialog(
                 show = true,
-                isLoading = input.second,
+                isLoading = false,
                 amount = 1,
+                hasSelectedSharedItems = hasSelectedSharedItems,
+                sharedSelectedItemsCount = 1,
                 onDismiss = {},
                 onConfirm = {}
             )

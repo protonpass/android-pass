@@ -83,7 +83,7 @@ class ItemTrashWarningSharedViewModel @Inject constructor(
             runCatching { trashItems(items = mapOf(shareId to listOf(itemId))) }
                 .onFailure { error ->
                     PassLogger.w(TAG, "Error moving shared item to trash")
-                    PassLogger.e(TAG, error)
+                    PassLogger.w(TAG, error)
 
                     eventFlow.update { ItemTrashWarningSharedEvent.OnMoveItemToTrashError }
                     snackbarDispatcher(ItemTrashWarningSharedMessage.ItemTrashError)

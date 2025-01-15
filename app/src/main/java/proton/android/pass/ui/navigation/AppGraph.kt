@@ -1500,6 +1500,14 @@ fun NavGraphBuilder.appGraph(
                         )
                     )
                 }
+
+                is ItemDetailNavigation.TrashSharedWarning -> appNavigator.navigate(
+                    destination = ItemTrashWarningSharedNavItem,
+                    route = ItemTrashWarningSharedNavItem.createNavRoute(
+                        shareId = it.shareId,
+                        itemId = it.itemId
+                    )
+                )
             }
         }
     )
@@ -1626,6 +1634,16 @@ fun NavGraphBuilder.appGraph(
                         destination = ItemDetailsLeaveNavItem,
                         route = ItemDetailsLeaveNavItem.createNavRoute(
                             shareId = itemDetailsNavDestination.shareId
+                        )
+                    )
+                }
+
+                is ItemDetailsNavDestination.ItemTrashSharedWarning -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = ItemTrashWarningSharedNavItem,
+                        route = ItemTrashWarningSharedNavItem.createNavRoute(
+                            shareId = itemDetailsNavDestination.shareId,
+                            itemId = itemDetailsNavDestination.itemId
                         )
                     )
                 }

@@ -52,6 +52,11 @@ internal data class ItemDetailsMenuState(
         is Some -> itemOption.value.isPinned
     }
 
+    internal val isItemShared: Boolean = when (itemOption) {
+        None -> false
+        is Some -> itemOption.value.isShared
+    }
+
     internal val canBeMonitored: Boolean = itemCategory == ItemCategory.Login
 
     internal val canCopyItemNote: Boolean = itemCategory == ItemCategory.Note

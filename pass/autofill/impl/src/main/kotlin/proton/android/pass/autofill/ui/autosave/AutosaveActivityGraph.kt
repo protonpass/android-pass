@@ -75,7 +75,9 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 AuthNavigation.ForceSignOutAllUsers -> {
                 }
 
-                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {}
+                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
             }
         }
     )
@@ -157,7 +159,9 @@ fun NavGraphBuilder.autosaveActivityGraph(
                     )
                 }
 
-                BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {}
+                BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
                 // Updates cannot happen
                 is BaseLoginNavigation.OnUpdateLoginEvent -> {}
@@ -188,7 +192,9 @@ fun NavGraphBuilder.autosaveActivityGraph(
         onNavigate = {
             when (it) {
                 GeneratePasswordNavigation.CloseDialog -> appNavigator.navigateBack()
-                GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {}
+                GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
                 GeneratePasswordNavigation.OnSelectWordSeparator -> appNavigator.navigate(
                     destination = WordSeparatorDialog

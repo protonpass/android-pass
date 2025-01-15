@@ -148,9 +148,13 @@ class AppNavigator(
             }
 
             previousRoute != null -> {
-                PassLogger.i(TAG, "Navigating back to $previousRoute")
-                navController.navigateUp()
-                PassLogger.i(TAG, "Navigated back to $previousRoute")
+                val navigatedFromRoute = previousRoute
+                PassLogger.i(TAG, "Navigating back to $navigatedFromRoute")
+                if (navController.navigateUp()) {
+                    PassLogger.i(TAG, "Navigated back to $navigatedFromRoute")
+                } else {
+                    PassLogger.i(TAG, "Could not navigate back to $navigatedFromRoute")
+                }
             }
 
             else -> {

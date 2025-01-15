@@ -24,6 +24,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.migrate.confirmvault.MigrateConfirmVaultBottomSheet
 import proton.android.pass.features.migrate.selectvault.MigrateSelectVaultBottomSheet
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.DestinationShareNavArgId
 import proton.android.pass.navigation.api.NavArgId
@@ -53,13 +54,16 @@ sealed interface MigrateNavigation {
 }
 
 object MigrateModeArg : NavArgId {
+
     override val key: String = "migrateMode"
-    override val navType: NavType<*> = NavType.StringType
+
+    override val navType: NavType<*> = NavType.EnumType(MigrateModeValue::class.java)
+
 }
 
 enum class MigrateModeValue {
-    SelectedItems,
-    AllVaultItems
+    AllVaultItems,
+    SelectedItems
 }
 
 enum class MigrateVaultFilter {
@@ -68,8 +72,11 @@ enum class MigrateVaultFilter {
 }
 
 object MigrateVaultFilterArg : OptionalNavArgId {
-    override val key = "migrateVaultFilter"
-    override val navType = NavType.StringType
+
+    override val key: String = "migrateVaultFilter"
+
+    override val navType: NavType<*> = NavType.EnumType(MigrateVaultFilter::class.java)
+
 }
 
 object MigrateSelectVault : NavItem(
@@ -78,42 +85,53 @@ object MigrateSelectVault : NavItem(
     optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, MigrateVaultFilterArg),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun createNavRouteForMigrateAll(shareId: ShareId) = buildString {
-        append("$baseRoute/${MigrateModeValue.AllVaultItems.name}")
 
-        val map = mapOf(
-            CommonOptionalNavArgId.ShareId.key to shareId.id
-        )
-        append(map.toPath())
-    }
+    fun createNavRoute(
+        migrateMode: MigrateModeValue,
+        shareId: ShareId? = null,
+        filter: MigrateVaultFilter? = null
+    ): String = buildString {
+        append("$baseRoute/$migrateMode")
 
-    fun createNavRouteForMigrateSelectedItems(filter: MigrateVaultFilter): String = buildString {
-        append("$baseRoute/${MigrateModeValue.SelectedItems.name}")
+        buildMap {
+            if (shareId != null) {
+                put(CommonNavArgId.ShareId.key, shareId.id)
+            }
 
-        val map = mapOf(
-            MigrateVaultFilterArg.key to filter.name
-        )
-        append(map.toPath())
+            if (filter != null) {
+                put(MigrateVaultFilterArg.key, filter)
+            }
+        }
+            .toPath()
+            .also(::append)
     }
 
 }
 
 object MigrateConfirmVault : NavItem(
     baseRoute = "migrate/confirm",
-    navArgIds = listOf(MigrateModeArg, DestinationShareNavArgId),
+    navArgIds = listOf(
+        MigrateModeArg,
+        DestinationShareNavArgId
+    ),
     optionalArgIds = listOf(CommonOptionalNavArgId.ShareId),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun createNavRouteForMigrateAll(sourceShareId: ShareId, destShareId: ShareId) = buildString {
-        append("$baseRoute/${MigrateModeValue.AllVaultItems.name}/${destShareId.id}")
-        val map = mapOf(
-            CommonOptionalNavArgId.ShareId.key to sourceShareId.id
-        )
-        append(map.toPath())
+
+    fun createNavRoute(
+        migrateMode: MigrateModeValue,
+        destShareId: ShareId,
+        sourceShareId: ShareId? = null
+    ): String = buildString {
+        append("$baseRoute/$migrateMode/${destShareId.id}")
+
+        sourceShareId?.let { shareId ->
+            mapOf(CommonOptionalNavArgId.ShareId.key to shareId.id)
+                .toPath()
+                .also(::append)
+        }
     }
 
-    fun createNavRouteForMigrateSelectedItems(destShareId: ShareId): String =
-        "$baseRoute/${MigrateModeValue.SelectedItems.name}/${destShareId.id}"
 }
 
 fun NavGraphBuilder.migrateGraph(navigation: (MigrateNavigation) -> Unit) {

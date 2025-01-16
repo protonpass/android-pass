@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,20 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemdetail.common
+package proton.android.pass.features.migrate.warningshared.ui
 
-import androidx.compose.runtime.Stable
+internal sealed interface MigrateSharedWarningUiEvent {
 
-@Stable
-sealed interface ItemDetailEvent {
+    data object OnCancelClicked : MigrateSharedWarningUiEvent
 
-    @Stable
-    data object Unknown : ItemDetailEvent
+    data object OnContinueClicked : MigrateSharedWarningUiEvent
 
-    @Stable
-    data object MoveToVault : ItemDetailEvent
-
-    @Stable
-    data object MoveToVaultSharedWarning : ItemDetailEvent
+    data object OnDismissed : MigrateSharedWarningUiEvent
 
 }

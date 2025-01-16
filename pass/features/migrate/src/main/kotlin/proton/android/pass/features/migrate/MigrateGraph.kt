@@ -24,6 +24,8 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.migrate.confirmvault.MigrateConfirmVaultBottomSheet
 import proton.android.pass.features.migrate.selectvault.MigrateSelectVaultBottomSheet
+import proton.android.pass.features.migrate.warningshared.navigation.MigrateSharedWarningNavItem
+import proton.android.pass.features.migrate.warningshared.ui.MigrateSharedWarningDialog
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.DestinationShareNavArgId
@@ -32,6 +34,7 @@ import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.OptionalNavArgId
 import proton.android.pass.navigation.api.bottomSheet
+import proton.android.pass.navigation.api.dialog
 import proton.android.pass.navigation.api.toPath
 
 sealed interface MigrateNavigation {
@@ -146,5 +149,8 @@ fun NavGraphBuilder.migrateGraph(navigation: (MigrateNavigation) -> Unit) {
             navigation = navigation
         )
     }
-}
 
+    dialog(MigrateSharedWarningNavItem) {
+        MigrateSharedWarningDialog(onNavigate = navigation)
+    }
+}

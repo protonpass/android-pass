@@ -17,5 +17,6 @@
 
     <string name="migrate_disabled_vault_reason_no_permission">You cannot create items in this vault</string>
     <string name="migrate_disabled_vault_reason_same_vault">You cannot move an item to the same vault</string>
-
+    <string name="migrate_shared_warning_title">Move this item?</string>
+    <string name="migrate_shared_warning_message">This item is currently shared. Moving it to another vault will remove access for all other users.</string>
 </resources>

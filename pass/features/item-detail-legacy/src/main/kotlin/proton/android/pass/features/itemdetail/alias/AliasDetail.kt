@@ -80,11 +80,16 @@ fun AliasDetail(
 
             LaunchedEffect(state.event) {
                 when (state.event) {
-                    ItemDetailEvent.Unknown -> {}
+                    ItemDetailEvent.Unknown -> Unit
                     ItemDetailEvent.MoveToVault -> {
                         onNavigate(ItemDetailNavigation.OnMigrate)
                     }
+
+                    ItemDetailEvent.MoveToVaultSharedWarning -> {
+                        onNavigate(ItemDetailNavigation.OnMigrateSharedWarning)
+                    }
                 }
+
                 viewModel.onConsumeEvent(state.event)
             }
 
@@ -288,6 +293,7 @@ fun AliasDetail(
                                         contextHolder = context.toClassHolder(),
                                         attachment = it.attachment
                                     )
+
                                 is AttachmentContentEvent.OnAttachmentOptions,
                                 AttachmentContentEvent.OnAddAttachment,
                                 AttachmentContentEvent.OnDeleteAllAttachments,

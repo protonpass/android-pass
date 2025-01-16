@@ -26,7 +26,7 @@ import proton.android.pass.domain.items.ItemCategory
 
 sealed interface ItemDetailsNavDestination {
 
-    data object Back : ItemDetailsNavDestination
+    data object CloseScreen : ItemDetailsNavDestination
 
     data object Home : ItemDetailsNavDestination
 

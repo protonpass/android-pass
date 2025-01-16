@@ -77,7 +77,7 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
         canLogout = false,
         navigation = {
             when (it) {
-                is AuthNavigation.Back -> onNavigate(CreatePasskeyNavigation.Cancel)
+                is AuthNavigation.CloseScreen -> onNavigate(CreatePasskeyNavigation.Cancel)
                 is AuthNavigation.Success -> appNavigator.navigate(SelectItem)
                 AuthNavigation.Dismissed -> onNavigate(CreatePasskeyNavigation.Cancel)
                 AuthNavigation.Failed -> onNavigate(CreatePasskeyNavigation.Cancel)

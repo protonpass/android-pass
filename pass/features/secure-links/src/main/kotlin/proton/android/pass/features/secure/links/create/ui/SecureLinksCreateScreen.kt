@@ -56,7 +56,7 @@ fun SecureLinksCreateScreen(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SecureLinksCreateUiEvent.OnBackArrowClicked -> {
-                    onNavigated(SecureLinksNavDestination.Back)
+                    onNavigated(SecureLinksNavDestination.CloseScreen)
                 }
 
                 SecureLinksCreateUiEvent.OnSetExpirationClicked -> {

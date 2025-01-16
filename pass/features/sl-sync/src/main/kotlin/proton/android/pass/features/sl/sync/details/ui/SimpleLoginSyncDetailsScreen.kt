@@ -48,7 +48,7 @@ fun SimpleLoginSyncDetailsScreen(
     LaunchedEffect(state.event) {
         when (state.event) {
             SimpleLoginSyncDetailsEvent.OnFetchAliasDetailsError -> {
-                SimpleLoginSyncNavDestination.Back(
+                SimpleLoginSyncNavDestination.CloseScreen(
                     force = true // Needed, otherwise navigation sometimes discards it as duplicated
                 ).also(onNavigated)
             }
@@ -72,7 +72,7 @@ fun SimpleLoginSyncDetailsScreen(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SimpleLoginSyncDetailsUiEvent.OnBackClicked -> {
-                    onNavigated(SimpleLoginSyncNavDestination.Back())
+                    onNavigated(SimpleLoginSyncNavDestination.CloseScreen())
                 }
 
                 SimpleLoginSyncDetailsUiEvent.OnDomainClicked -> {

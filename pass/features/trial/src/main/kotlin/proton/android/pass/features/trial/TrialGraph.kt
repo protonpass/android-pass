@@ -23,7 +23,7 @@ import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 
 sealed interface TrialNavigation {
-    data object Close : TrialNavigation
+    data object CloseScreen : TrialNavigation
     data object Upgrade : TrialNavigation
 }
 

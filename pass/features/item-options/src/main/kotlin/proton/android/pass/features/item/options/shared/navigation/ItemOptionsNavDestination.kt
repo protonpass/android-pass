@@ -20,7 +20,7 @@ package proton.android.pass.features.item.options.shared.navigation
 
 sealed interface ItemOptionsNavDestination {
 
-    data object Back : ItemOptionsNavDestination
+    data object CloseScreen : ItemOptionsNavDestination
 
     data object TrashItem : ItemOptionsNavDestination
 

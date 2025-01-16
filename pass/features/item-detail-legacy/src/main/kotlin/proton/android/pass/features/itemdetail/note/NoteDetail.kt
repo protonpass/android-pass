@@ -69,7 +69,7 @@ fun NoteDetail(
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     when (val state = uiState) {
         NoteDetailUiState.NotInitialised, NoteDetailUiState.Pending -> {}
-        NoteDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
+        NoteDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.CloseScreen) }
         is NoteDetailUiState.Success -> {
             LaunchedEffect(state.event) {
                 when (state.event) {
@@ -83,7 +83,7 @@ fun NoteDetail(
 
             var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
             if (state.isItemSentToTrash || state.isPermanentlyDeleted || state.isRestoredFromTrash) {
-                LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
+                LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.CloseScreen) }
             }
             val scope = rememberCoroutineScope()
             val bottomSheetState = rememberModalBottomSheetState(
@@ -178,7 +178,7 @@ fun NoteDetail(
                             itemCategory = state.itemUiModel.category,
                             shareSharedCount = state.shareSharedCount,
                             isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
-                            onUpClick = { onNavigate(ItemDetailNavigation.Back) },
+                            onUpClick = { onNavigate(ItemDetailNavigation.CloseScreen) },
                             onEditClick = {
                                 onEditClick(state.itemActions, onNavigate, state.itemUiModel)
                             },

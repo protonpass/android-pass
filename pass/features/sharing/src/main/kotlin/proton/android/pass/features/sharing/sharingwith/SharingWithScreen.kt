@@ -63,7 +63,7 @@ fun SharingWithScreen(
                 )
 
                 SharingWithUiEvent.OnScrolledToBottom -> onScrolledToBottom()
-                SharingWithUiEvent.OnBackClick -> onNavigateEvent(SharingNavigation.Back)
+                SharingWithUiEvent.OnBackClick -> onNavigateEvent(SharingNavigation.CloseScreen)
                 is SharingWithUiEvent.OnEditVaultClick -> SharingNavigation.EditVault(
                     shareId = uiEvent.shareId
                 ).also(onNavigateEvent)

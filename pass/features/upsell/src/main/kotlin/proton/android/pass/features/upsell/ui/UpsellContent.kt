@@ -58,7 +58,7 @@ internal fun UpsellContent(
                         onNavigated(UpsellNavDestination.Subscription)
                     }
                 },
-                onNotNowClick = { onNavigated(UpsellNavDestination.Back) }
+                onNotNowClick = { onNavigated(UpsellNavDestination.CloseScreen) }
             )
         }
     ) { innerPaddingValues ->

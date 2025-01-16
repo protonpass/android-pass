@@ -81,7 +81,7 @@ fun LoginDetail(
 
     when (val state = uiState) {
         LoginDetailUiState.NotInitialised, LoginDetailUiState.Pending -> {}
-        LoginDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
+        LoginDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.CloseScreen) }
         is LoginDetailUiState.Success -> {
             LaunchedEffect(state.event) {
                 when (state.event) {
@@ -95,7 +95,7 @@ fun LoginDetail(
 
             var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
             if (state.isItemSentToTrash || state.isPermanentlyDeleted || state.isRestoredFromTrash) {
-                LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
+                LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.CloseScreen) }
             }
             val scope = rememberCoroutineScope()
             val bottomSheetState = rememberModalBottomSheetState(
@@ -222,7 +222,7 @@ fun LoginDetail(
                             itemCategory = state.itemUiModel.category,
                             shareSharedCount = state.shareSharedCount,
                             isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
-                            onUpClick = { onNavigate(ItemDetailNavigation.Back) },
+                            onUpClick = { onNavigate(ItemDetailNavigation.CloseScreen) },
                             onEditClick = {
                                 onEditClick(state.itemActions, onNavigate, state.itemUiModel)
                             },

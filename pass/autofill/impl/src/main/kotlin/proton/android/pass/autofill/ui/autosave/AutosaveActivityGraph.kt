@@ -59,7 +59,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
         canLogout = false,
         navigation = {
             when (it) {
-                is AuthNavigation.Back -> onNavigate(AutosaveNavigation.Cancel)
+                is AuthNavigation.CloseScreen -> onNavigate(AutosaveNavigation.Cancel)
                 is AuthNavigation.Success -> appNavigator.navigate(CreateLogin)
                 AuthNavigation.Dismissed -> onNavigate(AutosaveNavigation.Cancel)
                 AuthNavigation.Failed -> onNavigate(AutosaveNavigation.Cancel)

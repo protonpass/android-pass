@@ -39,7 +39,7 @@ fun ItemTrashWarningSharedDialog(
     LaunchedEffect(state.event) {
         when (state.event) {
             ItemTrashWarningSharedEvent.Idle -> Unit
-            ItemTrashWarningSharedEvent.OnMoveItemToTrashError -> onNavigated(ItemTrashNavDestination.Back)
+            ItemTrashWarningSharedEvent.OnMoveItemToTrashError -> onNavigated(ItemTrashNavDestination.CloseScreen)
             ItemTrashWarningSharedEvent.OnMoveItemToTrashSuccess -> onNavigated(ItemTrashNavDestination.Home)
         }
 
@@ -52,7 +52,7 @@ fun ItemTrashWarningSharedDialog(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 ItemTrashWarningSharedUiEvent.OnCancelClicked,
-                ItemTrashWarningSharedUiEvent.OnDismissed -> onNavigated(ItemTrashNavDestination.Back)
+                ItemTrashWarningSharedUiEvent.OnDismissed -> onNavigated(ItemTrashNavDestination.CloseScreen)
                 ItemTrashWarningSharedUiEvent.OnContinueClicked -> onMoveItemToTrash()
             }
         }

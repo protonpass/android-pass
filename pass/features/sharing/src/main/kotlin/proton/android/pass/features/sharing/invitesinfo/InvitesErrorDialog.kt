@@ -34,6 +34,6 @@ fun InvitesErrorDialog(onNavigateEvent: (SharingNavigation) -> Unit, modifier: M
         cancelText = "",
         state = true,
         onConfirm = { },
-        onDismiss = { onNavigateEvent(SharingNavigation.Back) }
+        onDismiss = { onNavigateEvent(SharingNavigation.CloseScreen) }
     )
 }

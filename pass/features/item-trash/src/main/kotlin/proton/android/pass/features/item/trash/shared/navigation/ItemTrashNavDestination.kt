@@ -23,7 +23,7 @@ import proton.android.pass.domain.ShareId
 
 sealed interface ItemTrashNavDestination {
 
-    data object Back : ItemTrashNavDestination
+    data object CloseScreen : ItemTrashNavDestination
 
     data object Home : ItemTrashNavDestination
 

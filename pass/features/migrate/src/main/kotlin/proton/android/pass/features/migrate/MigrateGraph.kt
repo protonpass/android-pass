@@ -38,6 +38,7 @@ import proton.android.pass.navigation.api.dialog
 import proton.android.pass.navigation.api.toPath
 
 sealed interface MigrateNavigation {
+
     data class VaultSelectedForMigrateItem(
         val destShareId: ShareId
     ) : MigrateNavigation
@@ -53,7 +54,15 @@ sealed interface MigrateNavigation {
     ) : MigrateNavigation
 
     data object VaultMigrated : MigrateNavigation
+
     data object DismissBottomsheet : MigrateNavigation
+
+    data class VaultSelection(
+        val migrateModeValue: MigrateModeValue,
+        val shareId: ShareId?,
+        val filter: MigrateVaultFilter?
+    ) : MigrateNavigation
+
 }
 
 object MigrateModeArg : NavArgId {
@@ -86,7 +95,8 @@ object MigrateSelectVault : NavItem(
     baseRoute = "migrate/select",
     navArgIds = listOf(MigrateModeArg),
     optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, MigrateVaultFilterArg),
-    navItemType = NavItemType.Bottomsheet
+    navItemType = NavItemType.Bottomsheet,
+    noHistory = true
 ) {
 
     fun createNavRoute(

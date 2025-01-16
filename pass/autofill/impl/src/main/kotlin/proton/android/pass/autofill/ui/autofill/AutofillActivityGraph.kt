@@ -538,7 +538,8 @@ fun NavGraphBuilder.autofillActivityGraph(
     vaultGraph(
         onNavigate = {
             when (it) {
-                VaultNavigation.Close -> appNavigator.navigateBack()
+                VaultNavigation.CloseScreen -> appNavigator.navigateBack()
+                VaultNavigation.DismissBottomsheet -> dismissBottomSheet {}
                 VaultNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
                     appNavigator.setResult(

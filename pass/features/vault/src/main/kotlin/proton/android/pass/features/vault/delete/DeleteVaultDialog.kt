@@ -40,7 +40,7 @@ fun DeleteVaultDialog(
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
         if (state.event == DeleteVaultEvent.Deleted) {
-            onNavigate(VaultNavigation.Close)
+            onNavigate(VaultNavigation.CloseScreen)
         }
     }
 
@@ -49,7 +49,7 @@ fun DeleteVaultDialog(
         state = state,
         onVaultTextChange = { viewModel.onTextChange(it) },
         onDelete = { viewModel.onDelete() },
-        onCancel = { onNavigate(VaultNavigation.Close) },
-        onDismiss = { onNavigate(VaultNavigation.Close) }
+        onCancel = { onNavigate(VaultNavigation.CloseScreen) },
+        onDismiss = { onNavigate(VaultNavigation.CloseScreen) }
     )
 }

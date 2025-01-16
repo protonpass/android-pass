@@ -39,7 +39,7 @@ fun EditVaultScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     BackHandler {
-        onNavigate(VaultNavigation.Close)
+        onNavigate(VaultNavigation.CloseScreen)
     }
 
     LaunchedEffect(Unit) {
@@ -51,7 +51,7 @@ fun EditVaultScreen(
     )
     LaunchedEffect(state.isVaultCreatedEvent) {
         if (state.isVaultCreatedEvent == IsVaultCreatedEvent.Created) {
-            onNavigate(VaultNavigation.Close)
+            onNavigate(VaultNavigation.CloseScreen)
         }
     }
 
@@ -63,7 +63,7 @@ fun EditVaultScreen(
         onNameChange = { viewModel.onNameChange(it) },
         onIconChange = { viewModel.onIconChange(it) },
         onColorChange = { viewModel.onColorChange(it) },
-        onClose = { onNavigate(VaultNavigation.Close) },
+        onClose = { onNavigate(VaultNavigation.CloseScreen) },
         onButtonClick = { viewModel.onEditClick() },
         onUpgradeClick = {}
     )

@@ -37,7 +37,7 @@ fun LeaveVaultDialog(
         when (state.event) {
             LeaveVaultEvent.Close,
             LeaveVaultEvent.Left -> {
-                onNavigate(VaultNavigation.Close)
+                onNavigate(VaultNavigation.CloseScreen)
                 viewModel.clearEvent()
             }
             LeaveVaultEvent.Unknown -> {}
@@ -48,7 +48,7 @@ fun LeaveVaultDialog(
         modifier = modifier,
         state = state,
         onDelete = { viewModel.onLeave() },
-        onCancel = { onNavigate(VaultNavigation.Close) },
-        onDismiss = { onNavigate(VaultNavigation.Close) }
+        onCancel = { onNavigate(VaultNavigation.CloseScreen) },
+        onDismiss = { onNavigate(VaultNavigation.CloseScreen) }
     )
 }

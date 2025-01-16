@@ -47,7 +47,7 @@ fun SelectVaultBottomsheet(
 
         SelectVaultUiState.Error -> {
             LaunchedEffect(Unit) {
-                onNavigate(VaultNavigation.Close)
+                onNavigate(VaultNavigation.DismissBottomsheet)
             }
         }
 

@@ -1757,6 +1757,18 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 MigrateNavigation.DismissBottomsheet -> dismissBottomSheet {}
+
+                is MigrateNavigation.VaultSelection -> {
+                    appNavigator.navigate(
+                        destination = MigrateSelectVault,
+                        route = MigrateSelectVault.createNavRoute(
+                            migrateMode = it.migrateModeValue,
+                            shareId = it.shareId,
+                            filter = it.filter
+                        ),
+                        backDestination = MigrateSharedWarningNavItem
+                    )
+                }
             }
         }
     )

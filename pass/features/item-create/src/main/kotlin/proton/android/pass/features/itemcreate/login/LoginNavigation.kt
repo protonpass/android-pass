@@ -56,7 +56,8 @@ sealed interface BaseLoginNavigation {
     data class ScanTotp(
         val index: Option<Int>
     ) : BaseLoginNavigation
-    data object Close : BaseLoginNavigation
+    data object CloseScreen : BaseLoginNavigation
+    data object DismissBottomsheet : BaseLoginNavigation
 
     data class AliasOptions(
         val shareId: ShareId,

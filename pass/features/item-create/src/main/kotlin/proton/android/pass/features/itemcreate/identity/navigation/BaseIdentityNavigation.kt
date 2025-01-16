@@ -28,7 +28,8 @@ import proton.android.pass.features.itemcreate.identity.navigation.bottomsheets.
 import java.net.URI
 
 sealed interface BaseIdentityNavigation {
-    data object Close : BaseIdentityNavigation
+    data object CloseScreen : BaseIdentityNavigation
+    data object DismissBottomsheet : BaseIdentityNavigation
 
     data class OpenExtraFieldBottomSheet(
         val addIdentityFieldType: AddIdentityFieldType,

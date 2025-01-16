@@ -19,6 +19,6 @@
 package proton.android.pass.features.itemcreate.identity.navigation.bottomsheets
 
 sealed interface IdentityFieldsNavigation {
-    data object Close : IdentityFieldsNavigation
+    data object DismissBottomsheet : IdentityFieldsNavigation
     data object AddCustomField : IdentityFieldsNavigation
 }

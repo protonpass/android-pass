@@ -85,7 +85,7 @@ fun CreateIdentityScreen(
             showConfirmDialog = !showConfirmDialog
         } else {
             viewModel.onClose()
-            actionAfterKeyboardHide = { onNavigate(BaseIdentityNavigation.Close) }
+            actionAfterKeyboardHide = { onNavigate(BaseIdentityNavigation.CloseScreen) }
         }
     }
     BackHandler(onBack = onExit)
@@ -207,7 +207,7 @@ fun CreateIdentityScreen(
             },
             onConfirm = {
                 showConfirmDialog = false
-                actionAfterKeyboardHide = { onNavigate(BaseIdentityNavigation.Close) }
+                actionAfterKeyboardHide = { onNavigate(BaseIdentityNavigation.CloseScreen) }
             }
         )
     }

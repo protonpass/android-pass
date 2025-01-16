@@ -38,7 +38,7 @@ fun IdentityFieldsBottomSheet(
 
     LaunchedEffect(state.event) {
         when (state.event) {
-            IdentityFieldsEvent.OnAddExtraField -> onNavigate(IdentityFieldsNavigation.Close)
+            IdentityFieldsEvent.OnAddExtraField -> onNavigate(IdentityFieldsNavigation.DismissBottomsheet)
             IdentityFieldsEvent.Idle -> {}
             IdentityFieldsEvent.OnAddCustomExtraField -> onNavigate(IdentityFieldsNavigation.AddCustomField)
         }

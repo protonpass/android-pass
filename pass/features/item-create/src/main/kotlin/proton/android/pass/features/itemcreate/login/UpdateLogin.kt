@@ -77,7 +77,7 @@ internal fun UpdateLogin(
             showConfirmDialog = !showConfirmDialog
         } else {
             viewModel.onClose()
-            actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.Close) }
+            actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.CloseScreen) }
         }
     }
 
@@ -284,7 +284,7 @@ internal fun UpdateLogin(
             onConfirm = {
                 showConfirmDialog = false
                 viewModel.onClose()
-                actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.Close) }
+                actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.CloseScreen) }
             }
         )
 

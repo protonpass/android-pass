@@ -22,9 +22,14 @@ import androidx.compose.runtime.Stable
 
 @Stable
 sealed interface ItemDetailEvent {
+
     @Stable
     data object Unknown : ItemDetailEvent
 
     @Stable
     data object MoveToVault : ItemDetailEvent
+
+    @Stable
+    data object MoveToVaultSharedWarning : ItemDetailEvent
+
 }

@@ -87,7 +87,6 @@ import proton.android.pass.commonui.api.ItemSorter.sortByTitleAsc
 import proton.android.pass.commonui.api.ItemSorter.sortByTitleDesc
 import proton.android.pass.commonui.api.ItemSorter.sortMostRecent
 import proton.android.pass.commonui.api.ItemUiFilter.filterByQuery
-import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.ShareUiModel
@@ -162,7 +161,6 @@ import proton.android.pass.features.home.HomeSnackbarMessage.RefreshError
 import proton.android.pass.features.home.HomeSnackbarMessage.RestoreItemsError
 import proton.android.pass.features.home.HomeSnackbarMessage.RestoreItemsSuccess
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.FeatureFlag
@@ -215,7 +213,6 @@ class HomeViewModel @Inject constructor(
     observeAppNeedsUpdate: ObserveAppNeedsUpdate,
     appDispatchers: AppDispatchers,
     getUserPlan: GetUserPlan,
-    savedState: SavedStateHandleProvider,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeItemCount: ObserveItemCount,
     accountManager: AccountManager
@@ -628,17 +625,6 @@ class HomeViewModel @Inject constructor(
 
 
     init {
-        viewModelScope.launch {
-            // Setup initial share id if we can get one from the route
-            val initialShareId: String? = savedState.get()[CommonOptionalNavArgId.ShareId.key]
-            if (initialShareId != null) {
-                VaultSelectionOption.Vault(shareId = ShareId(initialShareId))
-                    .also { vaultSelectionOption ->
-                        homeSearchOptionsRepository.setVaultSelectionOption(vaultSelectionOption)
-                    }
-            }
-        }
-
         // Observe bulkMoveToVault event
         viewModelScope.launch {
             bulkMoveToVaultRepository.observeEvent().collect { event ->
@@ -648,7 +634,6 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
-
     }
 
     fun onSearchQueryChange(query: String) {

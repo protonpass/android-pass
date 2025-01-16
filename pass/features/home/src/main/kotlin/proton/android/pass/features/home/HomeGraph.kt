@@ -25,37 +25,23 @@ import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.composecomponents.impl.dialogs.PassUpgradePlanDialog
 import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
-import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.dialog
-import proton.android.pass.navigation.api.toPath
 
-const val HOME_GO_TO_VAULT_KEY = "home_go_to_vault"
 const val HOME_ENABLE_BULK_ACTIONS_KEY = "home_enable_bulk_actions"
 
-object HomeNavItem : NavItem(
-    baseRoute = "home",
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId),
+data object HomeNavItem : NavItem(
+    baseRoute = "home/screen",
     isTopLevel = true
-) {
-    fun buildRoute(shareId: ShareId?): String = buildString {
-        append(baseRoute)
-
-        if (shareId != null) {
-            val path = mapOf(CommonOptionalNavArgId.ShareId.key to shareId.id)
-            append(path.toPath())
-        }
-    }
-}
+)
 
 object HomeUpgradeDialog : NavItem(
     baseRoute = "home/upgrade/dialog",
@@ -64,17 +50,11 @@ object HomeUpgradeDialog : NavItem(
 
 fun NavGraphBuilder.homeGraph(onNavigateEvent: (HomeNavigation) -> Unit) {
     composable(HomeNavItem) { navBackStack ->
-        val goToVault by navBackStack.savedStateHandle
-            .getStateFlow<String?>(HOME_GO_TO_VAULT_KEY, null)
-            .collectAsStateWithLifecycle()
 
         val enableBulkActions by navBackStack.savedStateHandle
             .getStateFlow(HOME_ENABLE_BULK_ACTIONS_KEY, false)
             .collectAsStateWithLifecycle()
 
-        LaunchedEffect(goToVault) {
-            navBackStack.savedStateHandle.remove<String?>(HOME_GO_TO_VAULT_KEY)
-        }
         LaunchedEffect(enableBulkActions) {
             if (enableBulkActions) {
                 navBackStack.savedStateHandle[HOME_ENABLE_BULK_ACTIONS_KEY] = false
@@ -83,7 +63,6 @@ fun NavGraphBuilder.homeGraph(onNavigateEvent: (HomeNavigation) -> Unit) {
 
         HomeScreen(
             modifier = Modifier.testTag(HomeScreenTestTag.SCREEN),
-            goToVault = goToVault.toOption().map { ShareId(it) }.value(),
             enableBulkActions = enableBulkActions,
             onNavigateEvent = onNavigateEvent
         )

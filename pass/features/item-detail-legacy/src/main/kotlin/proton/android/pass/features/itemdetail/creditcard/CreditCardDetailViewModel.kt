@@ -394,25 +394,36 @@ class CreditCardDetailViewModel @Inject constructor(
         }
     }
 
-    fun toggleCvv() = viewModelScope.launch {
+    internal fun toggleCvv() {
         fieldVisibilityFlow.update { it.copy(cvv = !it.cvv) }
     }
 
-    fun toggleNumber() = viewModelScope.launch {
+    internal fun toggleNumber() {
         fieldVisibilityFlow.update { it.copy(cardNumber = !it.cardNumber) }
     }
 
-    fun togglePin() = viewModelScope.launch {
+    internal fun togglePin() {
         fieldVisibilityFlow.update { it.copy(pin = !it.pin) }
     }
 
-    fun clearEvent() = viewModelScope.launch {
+    internal fun clearEvent() {
         eventState.update { ItemDetailEvent.Unknown }
     }
 
-    fun onMigrate() = viewModelScope.launch {
-        bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
-        eventState.update { ItemDetailEvent.MoveToVault }
+    internal fun onMigrate() {
+        val state = uiState.value as? CreditCardDetailUiState.Success ?: return
+
+        viewModelScope.launch {
+            bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
+
+            if (state.itemContent.model.isShared) {
+                ItemDetailEvent.MoveToVaultSharedWarning
+            } else {
+                ItemDetailEvent.MoveToVault
+            }.also { event ->
+                eventState.update { event }
+            }
+        }
     }
 
     internal fun pinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {

@@ -307,7 +307,7 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(destination, route)
                 }
 
-                HomeNavigation.Back -> appNavigator.navigateBack(comesFromBottomsheet = false)
+                HomeNavigation.Back -> appNavigator.navigateBack()
 
                 HomeNavigation.CreateVault -> {
                     appNavigator.navigate(
@@ -471,9 +471,7 @@ fun NavGraphBuilder.appGraph(
         onNavigateEvent = {
             when (it) {
                 SearchOptionsNavigation.ResetFilters,
-                is SearchOptionsNavigation.SelectSorting -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                is SearchOptionsNavigation.SelectSorting -> dismissBottomSheet {}
 
                 SearchOptionsNavigation.Filter -> dismissBottomSheet {
                     appNavigator.navigate(
@@ -493,10 +491,8 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 SearchOptionsNavigation.BulkActions -> dismissBottomSheet {
-                    appNavigator.navigateBackWithResult(
-                        key = HOME_ENABLE_BULK_ACTIONS_KEY,
-                        value = true,
-                        comesFromBottomsheet = true
+                    appNavigator.setResult(
+                        mapOf(HOME_ENABLE_BULK_ACTIONS_KEY to true)
                     )
                 }
             }
@@ -563,10 +559,8 @@ fun NavGraphBuilder.appGraph(
 
                 VaultNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
-                    appNavigator.navigateBackWithResult(
-                        key = KEY_VAULT_SELECTED,
-                        value = it.shareId.id,
-                        comesFromBottomsheet = true
+                    appNavigator.setResult(
+                        mapOf(KEY_VAULT_SELECTED to it.shareId.id)
                     )
                 }
 
@@ -623,9 +617,7 @@ fun NavGraphBuilder.appGraph(
         onNavigate = {
             when (it) {
                 GeneratePasswordNavigation.CloseDialog -> appNavigator.navigateBack()
-                GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {}
 
                 GeneratePasswordNavigation.OnSelectWordSeparator -> appNavigator.navigate(
                     destination = WordSeparatorDialog
@@ -703,9 +695,7 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.FeatureFlags -> appNavigator.navigate(FeatureFlagRoute)
                 ProfileNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 ProfileNavigation.Finish -> onNavigate(AppNavigation.Finish)
-                ProfileNavigation.CloseBottomSheet -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                ProfileNavigation.CloseBottomSheet -> dismissBottomSheet {}
 
                 ProfileNavigation.AppLockTime -> appNavigator.navigate(AppLockTimeBottomsheet)
                 ProfileNavigation.AppLockType -> appNavigator.navigate(AppLockTypeBottomsheet)
@@ -759,9 +749,7 @@ fun NavGraphBuilder.appGraph(
             when (it) {
                 SettingsNavigation.SelectTheme -> appNavigator.navigate(ThemeSelector)
                 SettingsNavigation.Close -> appNavigator.navigateBack()
-                SettingsNavigation.DismissBottomSheet -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                SettingsNavigation.DismissBottomSheet -> dismissBottomSheet {}
 
                 SettingsNavigation.ViewLogs -> appNavigator.navigate(LogView)
                 SettingsNavigation.ClipboardSettings -> dismissBottomSheet {
@@ -785,9 +773,7 @@ fun NavGraphBuilder.appGraph(
                 else -> null
             }
             when (it) {
-                BaseLoginNavigation.Close -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                BaseLoginNavigation.Close -> dismissBottomSheet {}
 
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,
@@ -848,10 +834,8 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 BaseLoginNavigation.DeleteAlias -> dismissBottomSheet {
-                    appNavigator.navigateBackWithResult(
-                        key = CLEAR_ALIAS_NAV_PARAMETER_KEY,
-                        value = true,
-                        comesFromBottomsheet = true
+                    appNavigator.setResult(
+                        mapOf(CLEAR_ALIAS_NAV_PARAMETER_KEY to true)
                     )
                 }
 
@@ -902,9 +886,7 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {}
 
                 is BaseLoginNavigation.OpenImagePicker -> {
                     appNavigator.navigate(
@@ -1115,13 +1097,9 @@ fun NavGraphBuilder.appGraph(
         onNavigate = {
             when (it) {
                 CreateAliasNavigation.Close -> appNavigator.navigateBack()
-                CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
 
-                is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
 
                 is CreateAliasNavigation.Created -> {
                     appNavigator.navigateBack()
@@ -1261,9 +1239,7 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                BaseIdentityNavigation.RemovedCustomField -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                BaseIdentityNavigation.RemovedCustomField -> dismissBottomSheet {}
 
                 BaseIdentityNavigation.AddExtraSection ->
                     appNavigator.navigate(CustomSectionNameDialogNavItem)
@@ -1281,9 +1257,7 @@ fun NavGraphBuilder.appGraph(
                     route = CustomSectionOptionsBottomSheetNavItem.buildRoute(it.index, it.title)
                 )
 
-                BaseIdentityNavigation.RemoveCustomSection -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                BaseIdentityNavigation.RemoveCustomSection -> dismissBottomSheet {}
 
                 is UpdateIdentityNavigation.IdentityUpdated -> appNavigator.navigate(
                     destination = ItemDetailsNavItem,
@@ -1332,9 +1306,7 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigateBack()
                 }
 
-                ItemDetailNavigation.CloseBottomSheet -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                ItemDetailNavigation.CloseBottomSheet -> dismissBottomSheet {}
 
                 is ItemDetailNavigation.OnCreateLoginFromAlias -> {
                     appNavigator.navigate(
@@ -1515,9 +1487,7 @@ fun NavGraphBuilder.appGraph(
     itemDetailsNavGraph(
         onNavigated = { itemDetailsNavDestination ->
             when (itemDetailsNavDestination) {
-                ItemDetailsNavDestination.Back -> appNavigator.navigateBack(
-                    comesFromBottomsheet = false
-                )
+                ItemDetailsNavDestination.Back -> appNavigator.navigateBack()
 
                 ItemDetailsNavDestination.Home -> dismissBottomSheet {
                     appNavigator.popUpTo(destination = HomeNavItem)
@@ -1616,9 +1586,7 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                ItemDetailsNavDestination.DismissBottomSheet -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                ItemDetailsNavDestination.DismissBottomSheet -> dismissBottomSheet {}
 
                 is ItemDetailsNavDestination.ItemActionForbidden -> appNavigator.navigate(
                     destination = ItemDetailsForbiddenNavItem,
@@ -1654,13 +1622,10 @@ fun NavGraphBuilder.appGraph(
     itemHistoryNavGraph(
         onNavigated = { itemHistoryNavDestination ->
             when (itemHistoryNavDestination) {
-                ItemHistoryNavDestination.Back -> appNavigator.navigateBack(
-                    comesFromBottomsheet = false
-                )
+                ItemHistoryNavDestination.Back -> appNavigator.navigateBack()
 
                 is ItemHistoryNavDestination.Detail -> appNavigator.popUpTo(
-                    destination = getItemDetailsDestination(itemHistoryNavDestination.itemCategory),
-                    comesFromBottomsheet = false
+                    destination = getItemDetailsDestination(itemHistoryNavDestination.itemCategory)
                 )
 
                 is ItemHistoryNavDestination.Restore -> appNavigator.navigate(
@@ -1712,17 +1677,13 @@ fun NavGraphBuilder.appGraph(
     itemTrashNavGraph(
         onNavigated = { itemTrashNavDestination ->
             when (itemTrashNavDestination) {
-                ItemTrashNavDestination.Back -> appNavigator.navigateBack(
-                    comesFromBottomsheet = false
-                )
+                ItemTrashNavDestination.Back -> appNavigator.navigateBack()
 
                 ItemTrashNavDestination.Home -> dismissBottomSheet {
                     appNavigator.popUpTo(destination = HomeNavItem)
                 }
 
-                ItemTrashNavDestination.DismissBottomSheet -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                ItemTrashNavDestination.DismissBottomSheet -> dismissBottomSheet {}
 
                 is ItemTrashNavDestination.DeleteItem -> appNavigator.navigate(
                     destination = ItemTrashDeleteNavItem,
@@ -1757,14 +1718,12 @@ fun NavGraphBuilder.appGraph(
                             backDestination = HomeNavItem
                         )
                     } else if (appNavigator.hasDestinationInStack(HomeNavItem)) {
-                        appNavigator.popUpTo(HomeNavItem, comesFromBottomsheet = true)
+                        appNavigator.popUpTo(HomeNavItem)
                     }
                 }
 
 
-                MigrateNavigation.VaultMigrated -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                MigrateNavigation.VaultMigrated -> dismissBottomSheet {}
 
                 is MigrateNavigation.VaultSelectedForMigrateAll -> dismissBottomSheet {
                     appNavigator.navigate(
@@ -1777,9 +1736,7 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                MigrateNavigation.Close -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                MigrateNavigation.Close -> dismissBottomSheet {}
             }
         }
     )
@@ -1829,9 +1786,7 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 AuthNavigation.ForceSignOutAllUsers -> onNavigate(AppNavigation.ForceSignOutAllUsers)
-                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {}
             }
         }
     )
@@ -1850,12 +1805,12 @@ fun NavGraphBuilder.appGraph(
     securityCenterNavGraph(
         onNavigated = { destination ->
             when (destination) {
-                is SecurityCenterNavDestination.Back -> dismissBottomSheet {
-                    appNavigator.navigateBack(
-                        comesFromBottomsheet = destination.comesFromBottomSheet,
-                        force = destination.force
-                    )
-                }
+                is SecurityCenterNavDestination.Back ->
+                    if (destination.comesFromBottomSheet) {
+                        dismissBottomSheet {}
+                    } else {
+                        appNavigator.navigateBack(force = destination.force)
+                    }
 
                 SecurityCenterNavDestination.Home -> appNavigator.navigate(
                     destination = SecurityCenterHomeNavItem
@@ -2080,13 +2035,9 @@ fun NavGraphBuilder.appGraph(
 
             is SharingNavigation.CloseBottomSheet -> dismissBottomSheet {
                 if (it.refresh) {
-                    appNavigator.navigateBackWithResult(
-                        key = REFRESH_MEMBER_LIST_FLAG,
-                        value = true,
-                        comesFromBottomsheet = true
+                    appNavigator.setResult(
+                        mapOf(REFRESH_MEMBER_LIST_FLAG to true)
                     )
-                } else {
-                    appNavigator.navigateBack(true)
                 }
             }
 
@@ -2220,10 +2171,8 @@ fun NavGraphBuilder.appGraph(
             is SharingNavigation.ViewVault -> dismissBottomSheet {
                 when {
                     appNavigator.hasDestinationInStack(HomeNavItem) -> {
-                        appNavigator.navigateBackWithResult(
-                            key = HOME_GO_TO_VAULT_KEY,
-                            value = it.shareId.id,
-                            comesFromBottomsheet = true
+                        appNavigator.setResult(
+                            mapOf(HOME_GO_TO_VAULT_KEY to it.shareId.id)
                         )
                     }
 
@@ -2318,7 +2267,7 @@ fun NavGraphBuilder.appGraph(
     upsellNavGraph(
         onNavigated = { upsellNavDestination ->
             when (upsellNavDestination) {
-                UpsellNavDestination.Back -> appNavigator.navigateBack(comesFromBottomsheet = false)
+                UpsellNavDestination.Back -> appNavigator.navigateBack()
                 UpsellNavDestination.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 UpsellNavDestination.Subscription -> onNavigate(AppNavigation.Subscription)
             }
@@ -2328,17 +2277,13 @@ fun NavGraphBuilder.appGraph(
     secureLinksNavGraph(
         onNavigated = { destination ->
             when (destination) {
-                SecureLinksNavDestination.Back -> appNavigator.navigateBack(
-                    comesFromBottomsheet = false
-                )
+                SecureLinksNavDestination.Back -> appNavigator.navigateBack()
 
                 is SecureLinksNavDestination.Close -> appNavigator.popUpTo(
                     destination = getItemDetailsDestination(destination.itemCategory)
                 )
 
-                SecureLinksNavDestination.DismissBottomSheet -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                SecureLinksNavDestination.DismissBottomSheet -> dismissBottomSheet {}
 
                 SecureLinksNavDestination.Profile -> appNavigator.navigate(
                     destination = ProfileNavItem
@@ -2437,9 +2382,7 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                SimpleLoginSyncNavDestination.DismissBottomSheet -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                SimpleLoginSyncNavDestination.DismissBottomSheet -> dismissBottomSheet {}
             }
         }
     )
@@ -2455,9 +2398,7 @@ fun NavGraphBuilder.appGraph(
     itemOptionsNavGraph(
         onNavigated = { destination ->
             when (destination) {
-                ItemOptionsNavDestination.Back -> appNavigator.navigateBack(
-                    comesFromBottomsheet = false
-                )
+                ItemOptionsNavDestination.Back -> appNavigator.navigateBack()
 
                 ItemOptionsNavDestination.TrashItem -> {
                     appNavigator.navigateBackWithResult(
@@ -2490,9 +2431,7 @@ fun NavGraphBuilder.appGraph(
                 )
             )
 
-            AliasContactsNavigation.CloseBottomSheet -> dismissBottomSheet {
-                appNavigator.navigateBack(comesFromBottomsheet = true)
-            }
+            AliasContactsNavigation.CloseBottomSheet -> dismissBottomSheet {}
 
             AliasContactsNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
         }
@@ -2500,15 +2439,10 @@ fun NavGraphBuilder.appGraph(
 
     inAppMessageGraph {
         when (it) {
-            InAppMessageModalDestination.CloseBottomsheet -> dismissBottomSheet {
-                appNavigator.navigateBack(comesFromBottomsheet = true)
-            }
+            InAppMessageModalDestination.CloseBottomsheet -> dismissBottomSheet {}
 
             is InAppMessageModalDestination.DeepLink -> dismissBottomSheet {
-                if (it.deepLink.isBlank()) {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                } else {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                if (it.deepLink.isNotBlank()) {
                     appNavigator.navigateToDeeplink(deepLink = it.deepLink)
                 }
             }
@@ -2526,9 +2460,7 @@ fun NavGraphBuilder.appGraph(
 
     attachmentsGraph {
         when (it) {
-            AttachmentsNavigation.CloseBottomsheet -> dismissBottomSheet {
-                appNavigator.navigateBack(comesFromBottomsheet = true)
-            }
+            AttachmentsNavigation.CloseBottomsheet -> dismissBottomSheet {}
 
             AttachmentsNavigation.CloseScreen -> appNavigator.navigateBack(force = true)
             AttachmentsNavigation.OpenFilePicker -> dismissBottomSheet {

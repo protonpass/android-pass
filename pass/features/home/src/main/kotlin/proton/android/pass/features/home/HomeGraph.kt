@@ -76,7 +76,9 @@ fun NavGraphBuilder.homeGraph(onNavigateEvent: (HomeNavigation) -> Unit) {
             navBackStack.savedStateHandle.remove<String?>(HOME_GO_TO_VAULT_KEY)
         }
         LaunchedEffect(enableBulkActions) {
-            navBackStack.savedStateHandle.remove<Boolean?>(HOME_ENABLE_BULK_ACTIONS_KEY)
+            if (enableBulkActions) {
+                navBackStack.savedStateHandle[HOME_ENABLE_BULK_ACTIONS_KEY] = false
+            }
         }
 
         HomeScreen(

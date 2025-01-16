@@ -390,8 +390,7 @@ private fun handleBottomBarEvent(
         route = route,
         appNavigator = appNavigator,
         coroutineScope = coroutineScope,
-        bottomSheetState = bottomSheetState,
-        currentRoute = currentRoute
+        bottomSheetState = bottomSheetState
     )
 }
 
@@ -402,8 +401,7 @@ private fun navigateWithDismiss(
     route: String?,
     appNavigator: AppNavigator,
     coroutineScope: CoroutineScope,
-    bottomSheetState: ModalBottomSheetState,
-    currentRoute: String?
+    bottomSheetState: ModalBottomSheetState
 ) {
     coroutineScope.launch {
         if (bottomSheetState.isVisible) {
@@ -412,9 +410,6 @@ private fun navigateWithDismiss(
             } catch (e: CancellationException) {
                 PassLogger.d(TAG, e, "Bottom sheet hidden animation interrupted")
             }
-        }
-        if (currentRoute == CreateItemBottomsheetNavItem.route) {
-            appNavigator.navigateBack(comesFromBottomsheet = true)
         }
         val backDestination = if (destination == CreateItemBottomsheetNavItem) {
             appNavigator.findCloserDestination(HomeNavItem, ProfileNavItem, SecurityCenterHomeNavItem)

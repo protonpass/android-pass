@@ -40,14 +40,14 @@ fun EditCustomSectionNameDialog(
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
         when (state.event) {
-            CustomSectionEvent.Close -> onNavigate(ExtraSectionNavigation.Close)
+            CustomSectionEvent.Close -> onNavigate(ExtraSectionNavigation.CloseScreen)
             CustomSectionEvent.Idle -> {}
         }
     }
 
     NoPaddingDialog(
         modifier = modifier,
-        onDismissRequest = { onNavigate(ExtraSectionNavigation.Close) }
+        onDismissRequest = { onNavigate(ExtraSectionNavigation.CloseScreen) }
     ) {
         SingleInputDialogContent(
             value = state.value,
@@ -57,7 +57,7 @@ fun EditCustomSectionNameDialog(
             placeholderRes = R.string.custom_field_dialog_placeholder,
             onChange = viewModel::onNameChanged,
             onConfirm = viewModel::onSave,
-            onCancel = { onNavigate(ExtraSectionNavigation.Close) }
+            onCancel = { onNavigate(ExtraSectionNavigation.CloseScreen) }
         )
     }
 }

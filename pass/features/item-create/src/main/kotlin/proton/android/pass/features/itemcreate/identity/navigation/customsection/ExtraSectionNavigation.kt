@@ -19,7 +19,7 @@
 package proton.android.pass.features.itemcreate.identity.navigation.customsection
 
 sealed interface ExtraSectionNavigation {
-    data object Close : ExtraSectionNavigation
+    data object CloseScreen : ExtraSectionNavigation
     data class EditCustomSection(val index: Int, val title: String) : ExtraSectionNavigation
     data object RemoveCustomSection : ExtraSectionNavigation
 }

@@ -133,12 +133,12 @@ fun NavGraphBuilder.createLoginGraph(
                 onNavigate(BaseLoginNavigation.EditCustomField(title, index))
             },
             onRemoveCustomFieldNavigate = { onNavigate(BaseLoginNavigation.RemovedCustomField) },
-            onCloseNavigate = { onNavigate(BaseLoginNavigation.Close) }
+            onDismissBottomsheet = { onNavigate(BaseLoginNavigation.DismissBottomsheet) }
         )
         customFieldNameDialogGraph(CustomFieldPrefix.CreateLogin) {
             when (it) {
-                is CustomFieldNameNavigation.Close -> {
-                    onNavigate(BaseLoginNavigation.Close)
+                is CustomFieldNameNavigation.CloseScreen -> {
+                    onNavigate(BaseLoginNavigation.CloseScreen)
                 }
             }
         }

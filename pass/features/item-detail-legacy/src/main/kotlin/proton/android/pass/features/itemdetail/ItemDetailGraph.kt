@@ -50,6 +50,8 @@ sealed interface ItemDetailNavigation {
 
     data object OnMigrate : ItemDetailNavigation
 
+    data object OnMigrateSharedWarning : ItemDetailNavigation
+
     data class OnCreateLoginFromAlias(
         val alias: String,
         val shareId: ShareId

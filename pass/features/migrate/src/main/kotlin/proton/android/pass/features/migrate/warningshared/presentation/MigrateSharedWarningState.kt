@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,20 +16,24 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.itemdetail.common
+package proton.android.pass.features.migrate.warningshared.presentation
 
-import androidx.compose.runtime.Stable
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
-@Stable
-sealed interface ItemDetailEvent {
+internal data class MigrateSharedWarningState(
+    internal val event: MigrateSharedWarningEvent,
+    private val isLoadingState: IsLoadingState
+) {
 
-    @Stable
-    data object Unknown : ItemDetailEvent
+    internal val isLoading: Boolean = isLoadingState.value()
 
-    @Stable
-    data object MoveToVault : ItemDetailEvent
+    internal companion object {
 
-    @Stable
-    data object MoveToVaultSharedWarning : ItemDetailEvent
+        internal val Initial: MigrateSharedWarningState = MigrateSharedWarningState(
+            event = MigrateSharedWarningEvent.Idle,
+            isLoadingState = IsLoadingState.NotLoading
+        )
+
+    }
 
 }

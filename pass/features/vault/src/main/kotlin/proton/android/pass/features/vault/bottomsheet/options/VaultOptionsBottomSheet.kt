@@ -80,7 +80,7 @@ fun VaultOptionsBottomSheet(
 
         VaultOptionsUiState.Error -> {
             LaunchedEffect(Unit) {
-                onNavigate(VaultNavigation.Close)
+                onNavigate(VaultNavigation.DismissBottomsheet)
             }
         }
     }

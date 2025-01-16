@@ -20,5 +20,5 @@ package proton.android.pass.features.report.navigation
 
 sealed interface ReportNavDestination {
 
-    data object Close : ReportNavDestination
+    data object CloseScreen : ReportNavDestination
 }

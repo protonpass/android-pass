@@ -20,7 +20,7 @@ package proton.android.pass.features.upsell.navigation
 
 sealed interface UpsellNavDestination {
 
-    data object Back : UpsellNavDestination
+    data object CloseScreen : UpsellNavDestination
 
     data object Upgrade : UpsellNavDestination
 

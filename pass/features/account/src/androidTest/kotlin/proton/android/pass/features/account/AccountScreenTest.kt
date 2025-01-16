@@ -97,7 +97,7 @@ class AccountScreenTest {
             setContent {
                 PassTheme {
                     AccountScreen(
-                        onNavigate = { if (it is AccountNavigation.Back) checker.call() }
+                        onNavigate = { if (it is AccountNavigation.CloseScreen) checker.call() }
                     )
                 }
             }

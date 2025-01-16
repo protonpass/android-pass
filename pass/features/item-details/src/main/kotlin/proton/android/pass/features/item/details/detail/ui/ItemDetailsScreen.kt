@@ -58,7 +58,7 @@ fun ItemDetailsScreen(
         onEvent = { uiEvent ->
             when (uiEvent) {
                 ItemDetailsUiEvent.OnNavigateBack ->
-                    ItemDetailsNavDestination.Back
+                    ItemDetailsNavDestination.CloseScreen
                         .also(onNavigated)
 
                 is ItemDetailsUiEvent.OnEditClicked -> ItemDetailsNavDestination.EditItem(

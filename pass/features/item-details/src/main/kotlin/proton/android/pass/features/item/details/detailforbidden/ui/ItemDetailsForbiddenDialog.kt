@@ -33,7 +33,7 @@ fun ItemDetailsForbiddenDialog(
         onEvent = { uiEvent ->
             when (uiEvent) {
                 ItemDetailsForbiddenUiEvent.OnCancel,
-                ItemDetailsForbiddenUiEvent.OnDismiss -> ItemDetailsNavDestination.Back
+                ItemDetailsForbiddenUiEvent.OnDismiss -> ItemDetailsNavDestination.CloseScreen
 
                 ItemDetailsForbiddenUiEvent.OnUpgrade -> ItemDetailsNavDestination.Upgrade
             }.also(onNavigated)

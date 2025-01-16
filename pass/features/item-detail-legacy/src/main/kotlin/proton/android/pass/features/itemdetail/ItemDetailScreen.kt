@@ -36,7 +36,7 @@ fun ItemDetailScreen(
 
     LaunchedEffect(uiState.event) {
         when (uiState.event) {
-            ItemDetailScreenEvent.Close -> onNavigate(ItemDetailNavigation.Back)
+            ItemDetailScreenEvent.Close -> onNavigate(ItemDetailNavigation.CloseScreen)
             else -> {}
         }
         viewModel.clearEvent()

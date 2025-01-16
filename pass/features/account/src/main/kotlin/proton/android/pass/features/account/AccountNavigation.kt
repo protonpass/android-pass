@@ -23,7 +23,7 @@ import me.proton.core.domain.entity.UserId
 sealed interface AccountNavigation {
     data object Subscription : AccountNavigation
     data object Upgrade : AccountNavigation
-    data object Back : AccountNavigation
+    data object CloseScreen : AccountNavigation
     data object PasswordManagement : AccountNavigation
     data object RecoveryEmail : AccountNavigation
     data object SecurityKeys : AccountNavigation

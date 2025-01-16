@@ -40,7 +40,7 @@ fun ReportScreen(
     LaunchedEffect(state.reportEvent) {
         when (state.reportEvent) {
             is ReportEvent.Idle -> {}
-            is ReportEvent.Close -> onNavigated(ReportNavDestination.Close)
+            is ReportEvent.Close -> onNavigated(ReportNavDestination.CloseScreen)
         }
         viewModel.onEventConsumed(state.reportEvent)
     }
@@ -48,7 +48,7 @@ fun ReportScreen(
         modifier = modifier,
         onEvent = { event ->
             when (event) {
-                ReportNavContentEvent.Close -> onNavigated(ReportNavDestination.Close)
+                ReportNavContentEvent.Close -> onNavigated(ReportNavDestination.CloseScreen)
                 ReportNavContentEvent.OpenAutofillSettings -> viewModel.openAutofillSettings()
                 ReportNavContentEvent.SubmitReport -> viewModel.trySendingBugReport()
                 is ReportNavContentEvent.OnDescriptionChange -> viewModel.onDescriptionChange(event.value)

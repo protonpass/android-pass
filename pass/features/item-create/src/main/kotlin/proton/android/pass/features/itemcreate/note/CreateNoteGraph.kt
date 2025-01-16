@@ -68,7 +68,7 @@ sealed interface CreateNoteNavigation {
 
     @JvmInline
     value class DeleteAllAttachments(val attachmentIds: Set<AttachmentId>) : CreateNoteNavigation
-    data object Back : CreateNoteNavigation
+    data object CloseScreen : CreateNoteNavigation
 
     @JvmInline
     value class OpenDraftAttachmentOptions(val uri: URI) : CreateNoteNavigation

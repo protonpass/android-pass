@@ -60,7 +60,7 @@ fun SharingSummaryScreen(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SharingSummaryUiEvent.OnBackClick -> {
-                    onNavigateEvent(SharingNavigation.Back)
+                    onNavigateEvent(SharingNavigation.CloseScreen)
                 }
 
                 is SharingSummaryUiEvent.OnShareItemClick -> {

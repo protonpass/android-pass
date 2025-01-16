@@ -79,7 +79,7 @@ fun CreateNoteScreen(
             showConfirmDialog = !showConfirmDialog
         } else {
             viewModel.onClose()
-            actionAfterKeyboardHide = { onNavigate(CreateNoteNavigation.Back) }
+            actionAfterKeyboardHide = { onNavigate(CreateNoteNavigation.CloseScreen) }
         }
     }
     BackHandler {
@@ -94,7 +94,7 @@ fun CreateNoteScreen(
             if (shares.shareError == EmptyShareList || shares.shareError == SharesNotAvailable) {
                 viewModel.onEmitSnackbarMessage(NoteSnackbarMessage.InitError)
                 LaunchedEffect(Unit) {
-                    onNavigate(CreateNoteNavigation.Back)
+                    onNavigate(CreateNoteNavigation.CloseScreen)
                 }
             }
             false to null
@@ -172,7 +172,7 @@ fun CreateNoteScreen(
             },
             onConfirm = {
                 showConfirmDialog = false
-                actionAfterKeyboardHide = { onNavigate(CreateNoteNavigation.Back) }
+                actionAfterKeyboardHide = { onNavigate(CreateNoteNavigation.CloseScreen) }
             }
         )
     }

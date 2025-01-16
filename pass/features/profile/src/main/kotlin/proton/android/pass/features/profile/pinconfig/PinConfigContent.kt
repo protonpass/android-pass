@@ -80,7 +80,7 @@ fun PinConfigContent(
                         modifier = Modifier.padding(Spacing.mediumSmall, Spacing.extraSmall),
                         color = PassTheme.colors.interactionNorm,
                         backgroundColor = PassTheme.colors.interactionNormMinor1,
-                        onUpClick = { onNavigateEvent(ProfileNavigation.Back) }
+                        onUpClick = { onNavigateEvent(ProfileNavigation.CloseScreen) }
                     )
                 },
                 actions = {

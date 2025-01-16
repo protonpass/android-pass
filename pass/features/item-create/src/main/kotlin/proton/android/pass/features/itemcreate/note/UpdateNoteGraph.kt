@@ -42,7 +42,7 @@ fun NavGraphBuilder.updateNoteGraph(onNavigate: (UpdateNoteNavigation) -> Unit) 
 
 sealed interface UpdateNoteNavigation {
     data class NoteUpdated(val shareId: ShareId, val itemId: ItemId) : UpdateNoteNavigation
-    data object Back : UpdateNoteNavigation
+    data object CloseScreen : UpdateNoteNavigation
     data object AddAttachment : UpdateNoteNavigation
     data object UpsellAttachments : UpdateNoteNavigation
 

@@ -70,7 +70,7 @@ fun NavGraphBuilder.homeGraph(onNavigateEvent: (HomeNavigation) -> Unit) {
 
     dialog(HomeUpgradeDialog) {
         PassUpgradePlanDialog(
-            onCancel = { onNavigateEvent(HomeNavigation.Back) },
+            onCancel = { onNavigateEvent(HomeNavigation.CloseScreen) },
             onUpgrade = { onNavigateEvent(HomeNavigation.Upgrade) }
         )
     }
@@ -83,7 +83,7 @@ sealed interface HomeNavigation {
         val itemTypeUiState: ItemTypeUiState
     ) : HomeNavigation
 
-    data object Back : HomeNavigation
+    data object CloseScreen : HomeNavigation
 
     data class EditLogin(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 

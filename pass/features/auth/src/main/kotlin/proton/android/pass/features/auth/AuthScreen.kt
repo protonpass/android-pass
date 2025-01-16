@@ -39,7 +39,7 @@ fun AuthScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val ctx = LocalContext.current
 
-    BackHandler { navigation(AuthNavigation.Back(viewModel.origin)) }
+    BackHandler { navigation(AuthNavigation.CloseScreen(viewModel.origin)) }
     LaunchedEffect(state.event) {
         when (val authEventOption = state.event) {
             None -> viewModel.onAuthMethodRequested()
@@ -71,7 +71,7 @@ fun AuthScreen(
                     viewModel.onTogglePasswordVisibility(it.value)
 
                 AuthUiEvent.OnAuthAgainClick -> viewModel.onAuthMethodRequested()
-                AuthUiEvent.OnNavigateBack -> navigation(AuthNavigation.Back(viewModel.origin))
+                AuthUiEvent.OnNavigateBack -> navigation(AuthNavigation.CloseScreen(viewModel.origin))
                 is AuthUiEvent.OnAccountSwitch -> viewModel.onAccountSwitch(it.userId)
             }
         }

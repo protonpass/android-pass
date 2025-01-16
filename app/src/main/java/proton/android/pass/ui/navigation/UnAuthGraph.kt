@@ -83,7 +83,7 @@ private fun SharedAuthScreen(
         navigation = {
             when (it) {
                 AuthNavigation.Dismissed -> appNavigator.navigateBack()
-                is AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
+                is AuthNavigation.CloseScreen -> onNavigate(AppNavigation.Finish)
 
                 is AuthNavigation.Success -> if (it.origin == AuthOrigin.EXTRA_PASSWORD_LOGIN) {
                     onNavigate(AppNavigation.Finish)

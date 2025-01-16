@@ -55,7 +55,7 @@ fun SimpleLoginSyncMailboxCreateScreen(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SimpleLoginSyncMailboxCreateUiEvent.OnBackClicked -> {
-                    SimpleLoginSyncNavDestination.Back()
+                    SimpleLoginSyncNavDestination.CloseScreen()
                         .also(onNavigated)
                 }
 

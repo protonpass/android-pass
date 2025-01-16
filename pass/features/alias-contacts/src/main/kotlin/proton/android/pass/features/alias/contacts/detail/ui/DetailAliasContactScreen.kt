@@ -62,7 +62,7 @@ fun DetailAliasContactScreen(
         state = state,
         onEvent = {
             when (it) {
-                DetailAliasContactUIEvent.Back -> onNavigate(AliasContactsNavigation.Back)
+                DetailAliasContactUIEvent.Back -> onNavigate(AliasContactsNavigation.CloseScreen)
                 DetailAliasContactUIEvent.CreateContact -> viewModel.onCreateItem()
                 DetailAliasContactUIEvent.Help -> onNavigate(AliasContactsNavigation.OnBoardingContacts)
                 DetailAliasContactUIEvent.LearnMore -> onNavigate(AliasContactsNavigation.OnBoardingContacts)

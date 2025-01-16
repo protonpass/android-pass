@@ -1596,6 +1596,16 @@ fun NavGraphBuilder.appGraph(
 
                 ItemDetailsNavDestination.DismissBottomSheet -> dismissBottomSheet {}
 
+                ItemDetailsNavDestination.ItemSharedMigration -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = MigrateSharedWarningNavItem,
+                        route = MigrateSharedWarningNavItem.createNavRoute(
+                            migrateMode = MigrateModeValue.SelectedItems,
+                            filter = MigrateVaultFilter.All
+                        )
+                    )
+                }
+
                 is ItemDetailsNavDestination.ItemActionForbidden -> appNavigator.navigate(
                     destination = ItemDetailsForbiddenNavItem,
                     route = ItemDetailsForbiddenNavItem.createNavRoute(

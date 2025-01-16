@@ -71,6 +71,8 @@ sealed interface ItemDetailsNavDestination {
 
     data object ItemMigration : ItemDetailsNavDestination
 
+    data object ItemSharedMigration : ItemDetailsNavDestination
+
     data object DismissBottomSheet : ItemDetailsNavDestination
 
     @JvmInline

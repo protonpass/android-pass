@@ -45,7 +45,7 @@ internal fun ItemHistoryTimelineContent(
             ItemHistoryTimelineTopBar(
                 colors = itemColors,
                 showOptions = showOptions,
-                onUpClick = { onNavigated(ItemHistoryNavDestination.Back) },
+                onUpClick = { onNavigated(ItemHistoryNavDestination.CloseScreen) },
                 onOptions = {
                     if (this@with is ItemHistoryTimelineState.Success) {
                         onNavigated(ItemHistoryNavDestination.Options(shareId, itemId))
@@ -67,7 +67,7 @@ internal fun ItemHistoryTimelineContent(
 
             when (this@with) {
                 ItemHistoryTimelineState.Error -> {
-                    onNavigated(ItemHistoryNavDestination.Back)
+                    onNavigated(ItemHistoryNavDestination.CloseScreen)
                 }
 
                 ItemHistoryTimelineState.Loading -> {

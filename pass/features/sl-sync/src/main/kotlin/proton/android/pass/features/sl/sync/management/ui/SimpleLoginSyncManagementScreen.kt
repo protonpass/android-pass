@@ -38,7 +38,7 @@ fun SimpleLoginSyncManagementScreen(
         when (state.event) {
             SimpleLoginSyncManagementEvent.Idle -> Unit
             SimpleLoginSyncManagementEvent.OnFetchAliasManagementError -> {
-                SimpleLoginSyncNavDestination.Back(
+                SimpleLoginSyncNavDestination.CloseScreen(
                     force = true // Needed, otherwise navigation sometimes discards it as duplicated
                 ).also(onNavigated)
             }
@@ -52,7 +52,7 @@ fun SimpleLoginSyncManagementScreen(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SimpleLoginSyncManagementUiEvent.OnBackClicked -> {
-                    onNavigated(SimpleLoginSyncNavDestination.Back())
+                    onNavigated(SimpleLoginSyncNavDestination.CloseScreen())
                 }
 
                 SimpleLoginSyncManagementUiEvent.OnDomainClicked -> {

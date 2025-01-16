@@ -23,7 +23,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.aliascontacts.ContactId
 
 sealed interface AliasContactsNavigation {
-    data object Back : AliasContactsNavigation
+    data object CloseScreen : AliasContactsNavigation
     data object CloseBottomSheet : AliasContactsNavigation
     data class CreateContact(val shareId: ShareId, val itemId: ItemId) : AliasContactsNavigation
     data class ContactOptions(

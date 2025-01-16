@@ -41,7 +41,7 @@ fun ItemOptionsAliasTrashDialog(
             ItemOptionsAliasTrashDialogEvent.OnDisableError,
             ItemOptionsAliasTrashDialogEvent.OnDisableSuccess,
             ItemOptionsAliasTrashDialogEvent.OnTrashError -> {
-                onNavigated(ItemOptionsNavDestination.Back)
+                onNavigated(ItemOptionsNavDestination.CloseScreen)
             }
 
             ItemOptionsAliasTrashDialogEvent.OnTrashSuccess -> {
@@ -57,7 +57,7 @@ fun ItemOptionsAliasTrashDialog(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 ItemOptionsAliasTrashDialogUiEvent.OnDismiss -> {
-                    onNavigated(ItemOptionsNavDestination.Back)
+                    onNavigated(ItemOptionsNavDestination.CloseScreen)
                 }
 
                 ItemOptionsAliasTrashDialogUiEvent.OnDisable -> {

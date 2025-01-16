@@ -42,7 +42,7 @@ fun ItemHistoryRestoreScreen(
         onEvent = { uiEvent ->
             when (uiEvent) {
                 ItemHistoryRestoreUiEvent.OnBackClick -> {
-                    ItemHistoryNavDestination.Back
+                    ItemHistoryNavDestination.CloseScreen
                         .also(onNavigated)
                 }
 

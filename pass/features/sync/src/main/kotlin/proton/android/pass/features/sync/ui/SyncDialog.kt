@@ -42,7 +42,7 @@ fun SyncDialog(
                 SyncDialogUiEvent.OnCloseSync,
                 SyncDialogUiEvent.OnCompleteSync -> {
                     viewModel.onDismissSync()
-                    onNavigate(SyncNavDestination.Back)
+                    onNavigate(SyncNavDestination.CloseScreen)
                 }
 
                 SyncDialogUiEvent.OnRetrySync -> viewModel.onRetrySync()

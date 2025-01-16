@@ -43,7 +43,7 @@ fun ConfirmResetHistoryDialog(
     LaunchedEffect(state.event) {
         when (val event = state.event) {
             ConfirmResetHistoryDialogEvent.Idle -> {}
-            ConfirmResetHistoryDialogEvent.OnError -> onNavigated(ItemHistoryNavDestination.Back)
+            ConfirmResetHistoryDialogEvent.OnError -> onNavigated(ItemHistoryNavDestination.CloseScreen)
             is ConfirmResetHistoryDialogEvent.OnSuccess ->
                 onNavigated(ItemHistoryNavDestination.Detail(event.itemCategory))
         }
@@ -62,7 +62,7 @@ fun ConfirmResetHistoryDialog(
         confirmText = stringResource(R.string.reset_history_action),
         cancelText = stringResource(id = CoreR.string.presentation_alert_cancel),
         onConfirm = viewModel::onResetHistory,
-        onDismiss = { onNavigated(ItemHistoryNavDestination.Back) },
-        onCancel = { onNavigated(ItemHistoryNavDestination.Back) }
+        onDismiss = { onNavigated(ItemHistoryNavDestination.CloseScreen) },
+        onCancel = { onNavigated(ItemHistoryNavDestination.CloseScreen) }
     )
 }

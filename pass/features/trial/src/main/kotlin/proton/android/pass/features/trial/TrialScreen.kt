@@ -36,7 +36,7 @@ fun TrialScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
-    BackHandler { onNavigate(TrialNavigation.Close) }
+    BackHandler { onNavigate(TrialNavigation.CloseScreen) }
 
     TrialScreenContent(
         modifier = modifier,

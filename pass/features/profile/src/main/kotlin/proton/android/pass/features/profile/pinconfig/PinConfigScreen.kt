@@ -37,7 +37,7 @@ fun PinConfigScreen(
     LaunchedEffect(state.event) {
         when (state.event) {
             PinConfigEvent.PinSet -> {
-                onNavigateEvent(ProfileNavigation.Back)
+                onNavigateEvent(ProfileNavigation.CloseScreen)
                 viewModel.clearEvents()
             }
 

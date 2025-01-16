@@ -68,7 +68,7 @@ fun UpdateNote(
             showConfirmDialog = !showConfirmDialog
         } else {
             viewModel.onClose()
-            actionAfterKeyboardHide = { onNavigate(UpdateNoteNavigation.Back) }
+            actionAfterKeyboardHide = { onNavigate(UpdateNoteNavigation.CloseScreen) }
         }
     }
     BackHandler {
@@ -150,7 +150,7 @@ fun UpdateNote(
             },
             onConfirm = {
                 showConfirmDialog = false
-                actionAfterKeyboardHide = { onNavigate(UpdateNoteNavigation.Back) }
+                actionAfterKeyboardHide = { onNavigate(UpdateNoteNavigation.CloseScreen) }
             }
         )
     }

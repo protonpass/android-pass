@@ -57,7 +57,7 @@ sealed interface ItemDetailNavigation {
 
     data class OnViewItem(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
 
-    data object Back : ItemDetailNavigation
+    data object CloseScreen : ItemDetailNavigation
     data object DismissBottomSheet : ItemDetailNavigation
 
     @JvmInline
@@ -192,7 +192,7 @@ fun NavGraphBuilder.itemDetailGraph(onNavigate: (ItemDetailNavigation) -> Unit) 
         }
         CannotPerformActionDialog(
             type = type,
-            onClose = { onNavigate(ItemDetailNavigation.Back) },
+            onClose = { onNavigate(ItemDetailNavigation.CloseScreen) },
             onUpgrade = { onNavigate(ItemDetailNavigation.Upgrade(true)) }
         )
     }

@@ -21,7 +21,7 @@ package proton.android.pass.features.extrapassword
 import me.proton.core.crypto.common.keystore.EncryptedString
 
 sealed interface ExtraPasswordNavigation {
-    data object Back : ExtraPasswordNavigation
+    data object CloseScreen : ExtraPasswordNavigation
     data object Configure : ExtraPasswordNavigation
     data object FinishedConfiguring : ExtraPasswordNavigation
     data object Remove : ExtraPasswordNavigation

@@ -19,17 +19,18 @@
 package proton.android.pass.features.vault
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.domain.ShareId
 import proton.android.pass.features.vault.bottomsheet.createVaultGraph
 import proton.android.pass.features.vault.bottomsheet.editVaultGraph
 import proton.android.pass.features.vault.bottomsheet.options.bottomSheetVaultOptionsGraph
 import proton.android.pass.features.vault.bottomsheet.select.selectVaultBottomsheetGraph
 import proton.android.pass.features.vault.delete.deleteVaultDialogGraph
 import proton.android.pass.features.vault.leave.leaveVaultDialogGraph
-import proton.android.pass.domain.ShareId
 
 sealed interface VaultNavigation {
     data object Upgrade : VaultNavigation
-    data object Close : VaultNavigation
+    data object CloseScreen : VaultNavigation
+    data object DismissBottomsheet : VaultNavigation
 
     @JvmInline
     value class VaultSelected(val shareId: ShareId) : VaultNavigation

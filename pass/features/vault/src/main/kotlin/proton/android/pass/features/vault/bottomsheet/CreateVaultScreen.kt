@@ -39,7 +39,7 @@ fun CreateVaultScreen(
     val createState by viewModel.createState.collectAsStateWithLifecycle()
 
     BackHandler {
-        onNavigate(VaultNavigation.Close)
+        onNavigate(VaultNavigation.CloseScreen)
     }
 
     InAppReviewTriggerLaunchedEffect(
@@ -48,7 +48,7 @@ fun CreateVaultScreen(
     LaunchedEffect(createState.base.isVaultCreatedEvent) {
         when (val event = createState.base.isVaultCreatedEvent) {
             IsVaultCreatedEvent.Created -> {
-                onNavigate(VaultNavigation.Close)
+                onNavigate(VaultNavigation.CloseScreen)
             }
 
             is IsVaultCreatedEvent.CreatedAndMoveToShare -> {
@@ -72,7 +72,7 @@ fun CreateVaultScreen(
         onNameChange = { viewModel.onNameChange(it) },
         onIconChange = { viewModel.onIconChange(it) },
         onColorChange = { viewModel.onColorChange(it) },
-        onClose = { onNavigate(VaultNavigation.Close) },
+        onClose = { onNavigate(VaultNavigation.CloseScreen) },
         onButtonClick = { viewModel.onCreateClick() },
         onUpgradeClick = { onNavigate(VaultNavigation.Upgrade) }
     )

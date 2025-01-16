@@ -74,7 +74,7 @@ fun UpdateAlias(
             showConfirmDialog = !showConfirmDialog
         } else {
             viewModel.onClose()
-            actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Close) }
+            actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.CloseScreen) }
         }
     }
     BackHandler {
@@ -83,7 +83,7 @@ fun UpdateAlias(
 
     LaunchedEffect(uiState.baseAliasUiState.closeScreenEvent) {
         if (uiState.baseAliasUiState.closeScreenEvent is CloseScreenEvent.Close) {
-            actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Close) }
+            actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.CloseScreen) }
         }
     }
 
@@ -181,7 +181,7 @@ fun UpdateAlias(
             },
             onConfirm = {
                 showConfirmDialog = false
-                actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Close) }
+                actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.CloseScreen) }
             }
         )
     }

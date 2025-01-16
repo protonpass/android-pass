@@ -21,7 +21,6 @@ package proton.android.pass.features.home
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaInstant
@@ -36,7 +35,6 @@ import proton.android.pass.commonui.api.DateFormatUtils
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonui.api.toUiModel
-import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
@@ -66,7 +64,6 @@ import proton.android.pass.data.fakes.usecases.TestUnpinItems
 import proton.android.pass.data.fakes.usecases.shares.FakeObserveEncryptedSharedItems
 import proton.android.pass.domain.ItemEncrypted
 import proton.android.pass.domain.ShareId
-import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.notifications.fakes.TestToastManager
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
@@ -108,7 +105,6 @@ internal class HomeViewModelTest {
     private lateinit var observePinnedItems: TestObservePinnedItems
     private lateinit var preferencesRepository: TestPreferenceRepository
     private lateinit var getUserPlan: TestGetUserPlan
-    private lateinit var savedState: TestSavedStateHandleProvider
     private lateinit var bulkMoveToVaultRepository: TestBulkMoveToVaultRepository
     private lateinit var toastManager: TestToastManager
     private lateinit var observeCurrentUser: TestObserveCurrentUser
@@ -135,7 +131,6 @@ internal class HomeViewModelTest {
         observeEncryptedItems = FakeObserveEncryptedItems()
         preferencesRepository = TestPreferenceRepository()
         getUserPlan = TestGetUserPlan()
-        savedState = TestSavedStateHandleProvider()
         bulkMoveToVaultRepository = TestBulkMoveToVaultRepository()
         toastManager = TestToastManager()
         observePinnedItems = TestObservePinnedItems()
@@ -188,16 +183,6 @@ internal class HomeViewModelTest {
             assertThat(state.homeListUiState.isLoading).isInstanceOf(IsLoadingState.NotLoading::class.java)
             assertThat(state.homeListUiState.items).isEmpty()
         }
-    }
-
-    @Test
-    fun `if savedState contains initial share id it gets passed to repository`() = runTest {
-        val shareId = "SHARE_ID"
-        savedState.get()[CommonOptionalNavArgId.ShareId.key] = shareId
-
-        createViewModel()
-        val vaultSelection = searchOptionsRepository.observeVaultSelectionOption().first()
-        assertThat(vaultSelection).isEqualTo(VaultSelectionOption.Vault(ShareId(shareId)))
     }
 
     private fun setupItems(): List<ItemEncrypted> {
@@ -265,7 +250,6 @@ internal class HomeViewModelTest {
             observePinnedItems = observePinnedItems,
             preferencesRepository = preferencesRepository,
             getUserPlan = getUserPlan,
-            savedState = savedState,
             bulkMoveToVaultRepository = bulkMoveToVaultRepository,
             toastManager = toastManager,
             pinItem = FakePinItem(),

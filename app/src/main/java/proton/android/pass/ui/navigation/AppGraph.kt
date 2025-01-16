@@ -61,7 +61,6 @@ import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswo
 import proton.android.pass.features.featureflags.FeatureFlagRoute
 import proton.android.pass.features.featureflags.featureFlagsGraph
 import proton.android.pass.features.home.HOME_ENABLE_BULK_ACTIONS_KEY
-import proton.android.pass.features.home.HOME_GO_TO_VAULT_KEY
 import proton.android.pass.features.home.HomeNavItem
 import proton.android.pass.features.home.HomeNavigation
 import proton.android.pass.features.home.HomeUpgradeDialog
@@ -2167,23 +2166,6 @@ fun NavGraphBuilder.appGraph(
                 route = EditVaultScreen.createNavRoute(it.shareId),
                 backDestination = SharingWith
             )
-
-            is SharingNavigation.ViewVault -> dismissBottomSheet {
-                when {
-                    appNavigator.hasDestinationInStack(HomeNavItem) -> {
-                        appNavigator.setResult(
-                            mapOf(HOME_GO_TO_VAULT_KEY to it.shareId.id)
-                        )
-                    }
-
-                    else -> {
-                        appNavigator.navigate(
-                            destination = HomeNavItem,
-                            route = HomeNavItem.buildRoute(it.shareId)
-                        )
-                    }
-                }
-            }
 
             is SharingNavigation.InviteToShareEditPermissions -> appNavigator.navigate(
                 destination = SharingEditPermissions,

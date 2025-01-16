@@ -79,7 +79,7 @@ fun CreateAliasScreen(
             showConfirmDialog = !showConfirmDialog
         } else {
             viewModel.onClose()
-            actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.Close) }
+            actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.CloseScreen) }
         }
     }
     BackHandler {
@@ -88,7 +88,7 @@ fun CreateAliasScreen(
 
     LaunchedEffect(uiState.baseAliasUiState.closeScreenEvent) {
         if (uiState.baseAliasUiState.closeScreenEvent is CloseScreenEvent.Close) {
-            actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.Close) }
+            actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.CloseScreen) }
         }
     }
     val (showVaultSelector, selectedVault) = when (val shares = uiState.shareUiState) {
@@ -99,7 +99,7 @@ fun CreateAliasScreen(
             if (shares.shareError == EmptyShareList || shares.shareError == SharesNotAvailable) {
                 viewModel.onEmitSnackbarMessage(AliasSnackbarMessage.InitError)
                 LaunchedEffect(Unit) {
-                    actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.Close) }
+                    actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.CloseScreen) }
                 }
             }
             false to null
@@ -179,7 +179,7 @@ fun CreateAliasScreen(
             },
             onConfirm = {
                 showConfirmDialog = false
-                actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.Close) }
+                actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.CloseScreen) }
             }
         )
     }

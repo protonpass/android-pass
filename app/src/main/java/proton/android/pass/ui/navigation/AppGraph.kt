@@ -552,9 +552,8 @@ fun NavGraphBuilder.appGraph(
     vaultGraph(
         onNavigate = {
             when (it) {
-                VaultNavigation.CloseScreen -> dismissBottomSheet {
-                    appNavigator.navigateBack()
-                }
+                VaultNavigation.CloseScreen -> appNavigator.navigateBack()
+                VaultNavigation.DismissBottomsheet -> dismissBottomSheet {}
 
                 VaultNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
@@ -1096,15 +1095,10 @@ fun NavGraphBuilder.appGraph(
     createAliasGraph(
         onNavigate = {
             when (it) {
-                CreateAliasNavigation.Close -> appNavigator.navigateBack()
+                CreateAliasNavigation.CloseScreen -> appNavigator.navigateBack()
                 CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
-
                 is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
-
-                is CreateAliasNavigation.Created -> {
-                    appNavigator.navigateBack()
-                }
-
+                is CreateAliasNavigation.Created -> appNavigator.navigateBack()
                 CreateAliasNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
 
                 is CreateAliasNavigation.SelectVault -> {
@@ -1140,7 +1134,7 @@ fun NavGraphBuilder.appGraph(
     updateAliasGraph(
         onNavigate = {
             when (it) {
-                UpdateAliasNavigation.Close -> appNavigator.navigateBack()
+                UpdateAliasNavigation.CloseScreen -> appNavigator.navigateBack()
                 is UpdateAliasNavigation.Updated -> appNavigator.navigate(
                     destination = ViewItem,
                     route = ViewItem.createNavRoute(it.shareId, it.itemId),
@@ -1303,11 +1297,8 @@ fun NavGraphBuilder.appGraph(
     itemDetailGraph(
         onNavigate = {
             when (it) {
-                ItemDetailNavigation.Back -> {
-                    appNavigator.navigateBack()
-                }
-
-                ItemDetailNavigation.CloseBottomSheet -> dismissBottomSheet {}
+                ItemDetailNavigation.Back -> appNavigator.navigateBack()
+                ItemDetailNavigation.DismissBottomSheet -> dismissBottomSheet {}
 
                 is ItemDetailNavigation.OnCreateLoginFromAlias -> {
                     appNavigator.navigate(

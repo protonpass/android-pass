@@ -359,11 +359,9 @@ fun NavGraphBuilder.autofillActivityGraph(
     createAliasGraph(
         onNavigate = {
             when (it) {
-                CreateAliasNavigation.Close -> appNavigator.navigateBack()
+                CreateAliasNavigation.CloseScreen -> appNavigator.navigateBack()
                 CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
-
                 is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}
-
 
                 is CreateAliasNavigation.Created -> {
                     val created = CreatedAlias(it.shareId, it.itemId, it.alias)

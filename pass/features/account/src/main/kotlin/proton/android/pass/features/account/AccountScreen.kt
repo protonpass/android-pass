@@ -40,7 +40,7 @@ fun AccountScreen(
     )
     LaunchedEffect(hasBeenSignedOut) {
         if (hasBeenSignedOut) {
-            onNavigate(AccountNavigation.Back)
+            onNavigate(AccountNavigation.CloseScreen)
         }
     }
 
@@ -50,7 +50,7 @@ fun AccountScreen(
         state = state,
         onEvent = {
             when (it) {
-                AccountContentEvent.Back -> onNavigate(AccountNavigation.Back)
+                AccountContentEvent.Back -> onNavigate(AccountNavigation.CloseScreen)
                 AccountContentEvent.PasswordManagement -> onNavigate(AccountNavigation.PasswordManagement)
                 AccountContentEvent.RecoveryEmail -> onNavigate(AccountNavigation.RecoveryEmail)
                 AccountContentEvent.Upgrade -> onNavigate(AccountNavigation.Upgrade)

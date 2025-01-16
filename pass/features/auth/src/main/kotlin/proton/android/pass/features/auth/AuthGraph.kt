@@ -94,7 +94,7 @@ sealed interface AuthNavigation {
     value class EnterPin(val origin: AuthOrigin) : AuthNavigation
 
     @JvmInline
-    value class Back(val origin: AuthOrigin) : AuthNavigation
+    value class CloseScreen(val origin: AuthOrigin) : AuthNavigation
 
 }
 

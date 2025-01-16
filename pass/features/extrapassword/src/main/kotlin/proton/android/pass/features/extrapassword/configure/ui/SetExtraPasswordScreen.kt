@@ -51,7 +51,7 @@ fun SetExtraPasswordScreen(
         validationError = state.validationError,
         onEvent = {
             when (it) {
-                is SetExtraPasswordContentNavEvent.Back -> onNavigate(ExtraPasswordNavigation.Back)
+                is SetExtraPasswordContentNavEvent.Back -> onNavigate(ExtraPasswordNavigation.CloseScreen)
                 is SetExtraPasswordContentNavEvent.OnExtraPasswordRepeatValueChangedNav ->
                     viewModel.onExtraPasswordRepeatValueChanged(it.value)
 

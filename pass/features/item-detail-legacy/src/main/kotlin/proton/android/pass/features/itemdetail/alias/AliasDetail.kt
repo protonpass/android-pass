@@ -75,7 +75,7 @@ fun AliasDetail(
 
     when (val state = uiState) {
         AliasDetailUiState.NotInitialised, AliasDetailUiState.Pending -> {}
-        AliasDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
+        AliasDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.CloseScreen) }
         is AliasDetailUiState.Success -> {
 
             LaunchedEffect(state.event) {
@@ -101,7 +101,7 @@ fun AliasDetail(
             }
 
             if (state.requiresBackNavigation || isItemMovedToTrash) {
-                LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
+                LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.CloseScreen) }
             }
             val scope = rememberCoroutineScope()
             val bottomSheetState = rememberModalBottomSheetState(
@@ -202,7 +202,7 @@ fun AliasDetail(
                             itemCategory = state.itemUiModel.category,
                             shareSharedCount = state.shareSharedCount,
                             isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
-                            onUpClick = { onNavigate(ItemDetailNavigation.Back) },
+                            onUpClick = { onNavigate(ItemDetailNavigation.CloseScreen) },
                             onEditClick = {
                                 onEditClick(state.itemActions, onNavigate, state.itemUiModel)
                             },

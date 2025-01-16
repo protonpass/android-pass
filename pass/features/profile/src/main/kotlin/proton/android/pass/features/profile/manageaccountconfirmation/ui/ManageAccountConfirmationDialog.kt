@@ -49,6 +49,6 @@ fun ManageAccountConfirmationDialog(
         modifier = modifier,
         email = state.email,
         onConfirm = { viewModel.switchAccount() },
-        onDismiss = { onNavigateEvent(ProfileNavigation.Back) }
+        onDismiss = { onNavigateEvent(ProfileNavigation.CloseScreen) }
     )
 }

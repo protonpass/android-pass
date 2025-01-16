@@ -50,7 +50,7 @@ internal fun LoginItemDetailReusedPassContent(
         modifier = modifier,
         topBar = {
             BackArrowTopAppBar(
-                onUpClick = { onNavigated(ItemDetailNavigation.Back) }
+                onUpClick = { onNavigated(ItemDetailNavigation.CloseScreen) }
             )
         }
     ) { innerPaddingValues ->

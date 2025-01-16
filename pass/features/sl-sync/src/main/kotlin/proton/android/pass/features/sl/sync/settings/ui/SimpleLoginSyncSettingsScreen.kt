@@ -51,7 +51,7 @@ fun SimpleLoginSyncSettingsScreen(
             SimpleLoginSyncSettingsEvent.Idle -> {}
 
             SimpleLoginSyncSettingsEvent.OnSyncEnabled -> {
-                onNavigated(SimpleLoginSyncNavDestination.Back())
+                onNavigated(SimpleLoginSyncNavDestination.CloseScreen())
             }
         }
 
@@ -63,7 +63,7 @@ fun SimpleLoginSyncSettingsScreen(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SimpleLoginSettingsSyncUiEvent.OnCloseClicked -> {
-                    onNavigated(SimpleLoginSyncNavDestination.Back())
+                    onNavigated(SimpleLoginSyncNavDestination.CloseScreen())
                 }
 
                 SimpleLoginSettingsSyncUiEvent.OnConfirmClicked -> {

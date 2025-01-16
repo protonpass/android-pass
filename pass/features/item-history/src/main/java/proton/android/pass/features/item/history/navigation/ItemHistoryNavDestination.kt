@@ -26,7 +26,7 @@ import proton.android.pass.domain.items.ItemCategory
 
 sealed interface ItemHistoryNavDestination {
 
-    data object Back : ItemHistoryNavDestination
+    data object CloseScreen : ItemHistoryNavDestination
 
     @JvmInline
     value class Detail(val itemCategory: ItemCategory) : ItemHistoryNavDestination

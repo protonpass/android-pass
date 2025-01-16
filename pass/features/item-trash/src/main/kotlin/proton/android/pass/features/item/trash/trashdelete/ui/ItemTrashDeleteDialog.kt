@@ -55,7 +55,7 @@ fun ItemTrashDeleteDialog(
         onEvent = { uiEvent ->
             when (uiEvent) {
                 ItemTrashDeleteUiEvent.OnCancelButtonClicked ->
-                    ItemTrashNavDestination.Back
+                    ItemTrashNavDestination.CloseScreen
                         .also(onNavigated)
 
                 ItemTrashDeleteUiEvent.OnConfirmButtonClicked -> onDeleteItem()

@@ -41,7 +41,7 @@ fun ItemDetailsLeaveDialog(
             ItemDetailsLeaveEvent.Idle -> Unit
 
             ItemDetailsLeaveEvent.OnLeaveShareError -> {
-                onNavigated(ItemDetailsNavDestination.Back)
+                onNavigated(ItemDetailsNavDestination.CloseScreen)
             }
 
             ItemDetailsLeaveEvent.OnLeaveShareSuccess -> {
@@ -59,7 +59,7 @@ fun ItemDetailsLeaveDialog(
             when (uiEvent) {
                 ItemDetailsLeaveUiEvent.OnCancelClick,
                 ItemDetailsLeaveUiEvent.OnDismiss -> {
-                    onNavigated(ItemDetailsNavDestination.Back)
+                    onNavigated(ItemDetailsNavDestination.CloseScreen)
                 }
 
                 ItemDetailsLeaveUiEvent.OnContinueClick -> {

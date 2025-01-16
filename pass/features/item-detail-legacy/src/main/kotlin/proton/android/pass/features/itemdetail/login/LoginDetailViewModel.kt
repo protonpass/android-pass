@@ -698,9 +698,9 @@ class LoginDetailViewModel @Inject constructor(
     }
 
     internal fun onMigrate() {
-        viewModelScope.launch {
-            val state = uiState.value as? LoginDetailUiState.Success ?: return@launch
+        val state = uiState.value as? LoginDetailUiState.Success ?: return
 
+        viewModelScope.launch {
             bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
 
             if (state.itemUiModel.isShared) {

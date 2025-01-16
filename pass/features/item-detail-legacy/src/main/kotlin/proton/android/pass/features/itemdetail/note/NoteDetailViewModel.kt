@@ -308,14 +308,24 @@ class NoteDetailViewModel @Inject constructor(
         snackbarDispatcher(NoteCopiedToClipboard)
     }
 
-
-    fun clearEvent() = viewModelScope.launch {
+    internal fun clearEvent() {
         eventState.update { ItemDetailEvent.Unknown }
     }
 
-    fun onMigrate() = viewModelScope.launch {
-        bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
-        eventState.update { ItemDetailEvent.MoveToVault }
+    internal fun onMigrate() {
+        val state = state.value as? NoteDetailUiState.Success ?: return
+
+        viewModelScope.launch {
+            bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
+
+            if (state.itemUiModel.isShared) {
+                ItemDetailEvent.MoveToVaultSharedWarning
+            } else {
+                ItemDetailEvent.MoveToVault
+            }.also { event ->
+                eventState.update { event }
+            }
+        }
     }
 
     internal fun pinItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {

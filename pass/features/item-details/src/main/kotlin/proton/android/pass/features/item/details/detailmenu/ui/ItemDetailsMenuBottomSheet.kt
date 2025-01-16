@@ -47,6 +47,10 @@ fun ItemDetailsMenuBottomSheet(
                 onNavigated(ItemDetailsNavDestination.ItemMigration)
             }
 
+            ItemDetailsMenuEvent.OnItemSharedMigrated -> {
+                onNavigated(ItemDetailsNavDestination.ItemSharedMigration)
+            }
+
             is ItemDetailsMenuEvent.OnItemLeaved -> {
                 ItemDetailsNavDestination.LeaveItemShare(
                     shareId = event.shareId

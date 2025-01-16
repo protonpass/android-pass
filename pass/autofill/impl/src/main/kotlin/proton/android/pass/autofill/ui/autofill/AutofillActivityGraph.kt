@@ -221,7 +221,8 @@ fun NavGraphBuilder.autofillActivityGraph(
         ),
         onNavigate = {
             when (it) {
-                BaseLoginNavigation.Close -> dismissBottomSheet {}
+                BaseLoginNavigation.CloseScreen -> appNavigator.navigateBack()
+                BaseLoginNavigation.DismissBottomsheet -> dismissBottomSheet {}
 
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,
@@ -387,7 +388,7 @@ fun NavGraphBuilder.autofillActivityGraph(
     )
     createCreditCardGraph {
         when (it) {
-            BaseCreditCardNavigation.Close -> appNavigator.navigateBack()
+            BaseCreditCardNavigation.CloseScreen -> appNavigator.navigateBack()
             is CreateCreditCardNavigation -> when (it) {
                 is CreateCreditCardNavigation.ItemCreated ->
                     onEvent(AutofillEvent.AutofillItemSelected(it.itemUiModel.toAutoFillItem()))
@@ -412,7 +413,8 @@ fun NavGraphBuilder.autofillActivityGraph(
     createIdentityGraph(
         onNavigate = {
             when (it) {
-                BaseIdentityNavigation.Close -> appNavigator.navigateBack()
+                BaseIdentityNavigation.CloseScreen -> appNavigator.navigateBack()
+                BaseIdentityNavigation.DismissBottomsheet -> dismissBottomSheet {}
                 is BaseIdentityNavigation.OpenExtraFieldBottomSheet ->
                     appNavigator.navigate(
                         destination = IdentityFieldsBottomSheet,

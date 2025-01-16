@@ -84,10 +84,8 @@ fun NavGraphBuilder.autosaveActivityGraph(
         showCreateAliasButton = false,
         onNavigate = {
             when (it) {
-                BaseLoginNavigation.Close -> dismissBottomSheet {
-                    onNavigate(AutosaveNavigation.Cancel)
-                }
-
+                BaseLoginNavigation.CloseScreen -> onNavigate(AutosaveNavigation.Cancel)
+                BaseLoginNavigation.DismissBottomsheet -> dismissBottomSheet {}
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,
                     route = CreateAliasBottomSheet.createNavRoute(

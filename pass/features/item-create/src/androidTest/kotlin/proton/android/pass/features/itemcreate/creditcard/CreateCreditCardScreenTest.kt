@@ -309,7 +309,7 @@ class CreateCreditCardScreenTest {
                     CreateCreditCardScreen(
                         selectVault = null,
                         onNavigate = {
-                            if (it == BaseCreditCardNavigation.Close) {
+                            if (it == BaseCreditCardNavigation.CloseScreen) {
                                 checker.call()
                             }
                         }

@@ -150,6 +150,7 @@ import proton.android.pass.features.migrate.MigrateNavigation
 import proton.android.pass.features.migrate.MigrateSelectVault
 import proton.android.pass.features.migrate.MigrateVaultFilter
 import proton.android.pass.features.migrate.migrateGraph
+import proton.android.pass.features.migrate.warningshared.navigation.MigrateSharedWarningNavItem
 import proton.android.pass.features.onboarding.OnBoarding
 import proton.android.pass.features.onboarding.onBoardingGraph
 import proton.android.pass.features.password.GeneratePasswordBottomsheet
@@ -1364,6 +1365,16 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = MigrateSelectVault,
                         route = MigrateSelectVault.createNavRoute(
+                            migrateMode = MigrateModeValue.SelectedItems,
+                            filter = MigrateVaultFilter.All
+                        )
+                    )
+                }
+
+                is ItemDetailNavigation.OnMigrateSharedWarning -> {
+                    appNavigator.navigate(
+                        destination = MigrateSharedWarningNavItem,
+                        route = MigrateSharedWarningNavItem.createNavRoute(
                             migrateMode = MigrateModeValue.SelectedItems,
                             filter = MigrateVaultFilter.All
                         )

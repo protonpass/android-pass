@@ -93,7 +93,7 @@ fun CreateLoginScreen(
             showConfirmDialog = !showConfirmDialog
         } else {
             viewModel.onClose()
-            actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.Close) }
+            actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.CloseScreen) }
         }
     }
     BackHandler {
@@ -108,7 +108,7 @@ fun CreateLoginScreen(
             if (shares.shareError == EmptyShareList || shares.shareError == SharesNotAvailable) {
                 viewModel.onEmitSnackbarMessage(LoginSnackbarMessages.InitError)
                 LaunchedEffect(Unit) {
-                    actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.Close) }
+                    actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.CloseScreen) }
                 }
             }
             false to null
@@ -287,7 +287,7 @@ fun CreateLoginScreen(
             onConfirm = {
                 showConfirmDialog = false
                 viewModel.onClose()
-                actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.Close) }
+                actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.CloseScreen) }
             }
         )
     }

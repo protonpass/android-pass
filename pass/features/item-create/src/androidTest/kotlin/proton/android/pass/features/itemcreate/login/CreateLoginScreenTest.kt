@@ -464,7 +464,7 @@ class CreateLoginScreenTest {
                         clearAlias = false,
                         selectVault = null,
                         onNavigate = {
-                            if (it == BaseLoginNavigation.Close) {
+                            if (it == BaseLoginNavigation.CloseScreen) {
                                 checker.call()
                             }
                         }

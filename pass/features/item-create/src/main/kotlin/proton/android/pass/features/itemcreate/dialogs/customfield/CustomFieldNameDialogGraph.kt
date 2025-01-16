@@ -62,7 +62,7 @@ class EditCustomFieldNameDialogNavItem(val prefix: CustomFieldPrefix) : NavItem(
 }
 
 sealed interface CustomFieldNameNavigation {
-    data object Close : CustomFieldNameNavigation
+    data object CloseScreen : CustomFieldNameNavigation
 }
 
 fun NavGraphBuilder.customFieldNameDialogGraph(

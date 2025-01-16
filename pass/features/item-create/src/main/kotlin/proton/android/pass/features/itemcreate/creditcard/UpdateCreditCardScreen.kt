@@ -22,7 +22,7 @@ import proton.android.pass.features.itemcreate.ItemSavedState
 import proton.android.pass.features.itemcreate.R
 import proton.android.pass.features.itemcreate.common.ItemSavedLaunchedEffect
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.AddAttachment
-import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.Close
+import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.CloseScreen
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.DeleteAllAttachments
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.OpenAttachmentOptions
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.OpenDraftAttachmentOptions
@@ -48,7 +48,7 @@ fun UpdateCreditCardScreen(
 
     when (val uiState = state) {
         UpdateCreditCardUiState.Error -> LaunchedEffect(Unit) {
-            actionAfterKeyboardHide = { onNavigate(Close) }
+            actionAfterKeyboardHide = { onNavigate(CloseScreen) }
         }
 
         UpdateCreditCardUiState.Loading,
@@ -62,7 +62,7 @@ fun UpdateCreditCardScreen(
                     showConfirmDialog = !showConfirmDialog
                 } else {
                     viewModel.onClose()
-                    actionAfterKeyboardHide = { onNavigate(Close) }
+                    actionAfterKeyboardHide = { onNavigate(CloseScreen) }
                 }
             }
             BackHandler(onBack = onExit)
@@ -166,7 +166,7 @@ fun UpdateCreditCardScreen(
                     },
                     onConfirm = {
                         showConfirmDialog = false
-                        actionAfterKeyboardHide = { onNavigate(Close) }
+                        actionAfterKeyboardHide = { onNavigate(CloseScreen) }
                     }
                 )
             }

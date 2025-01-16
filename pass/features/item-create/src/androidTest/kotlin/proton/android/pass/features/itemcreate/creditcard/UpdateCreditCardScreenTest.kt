@@ -272,7 +272,7 @@ class UpdateCreditCardScreenTest {
                 PassTheme(isDark = true) {
                     UpdateCreditCardScreen(
                         onNavigate = {
-                            if (it == BaseCreditCardNavigation.Close) {
+                            if (it == BaseCreditCardNavigation.CloseScreen) {
                                 checker.call()
                             }
                         }

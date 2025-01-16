@@ -58,7 +58,7 @@ sealed interface ItemDetailNavigation {
     data class OnViewItem(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
 
     data object Back : ItemDetailNavigation
-    data object CloseBottomSheet : ItemDetailNavigation
+    data object DismissBottomSheet : ItemDetailNavigation
 
     @JvmInline
     value class Upgrade(val popBefore: Boolean = false) : ItemDetailNavigation
@@ -198,7 +198,7 @@ fun NavGraphBuilder.itemDetailGraph(onNavigate: (ItemDetailNavigation) -> Unit) 
     }
 
     passkeyDetailBottomSheetGraph(
-        onDismiss = { onNavigate(ItemDetailNavigation.CloseBottomSheet) }
+        onDismiss = { onNavigate(ItemDetailNavigation.DismissBottomSheet) }
     )
 
     composable(navItem = LoginItemDetailsReusedPassNavItem) {

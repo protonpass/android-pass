@@ -100,7 +100,7 @@ sealed interface CreateAliasNavigation {
     ) : CreateAliasNavigation
 
     data object Upgrade : CreateAliasNavigation
-    data object Close : CreateAliasNavigation
+    data object CloseScreen : CreateAliasNavigation
     data object CloseBottomsheet : CreateAliasNavigation
     data object AddAttachment : CreateAliasNavigation
     data object UpsellAttachments : CreateAliasNavigation

@@ -65,7 +65,7 @@ fun CreateAliasBottomSheet(
         modifier = modifier,
         state = state.baseAliasUiState,
         aliasItemFormState = viewModel.aliasItemFormState,
-        onCancel = { onNavigate(CreateAliasNavigation.Close) },
+        onCancel = { onNavigate(CreateAliasNavigation.CloseScreen) },
         onConfirm = {
             val shareUiState = state.shareUiState
             if (shareUiState is ShareUiState.Success) {

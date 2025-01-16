@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -42,10 +43,10 @@ class MigrateSharedWarningViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val migrateMode: MigrateModeValue = savedStateHandleProvider.get()
+    private val migrateModeValue: MigrateModeValue = savedStateHandleProvider.get()
         .require(MigrateModeArg.key)
 
-    private val mode: Mode = when (migrateMode) {
+    private val mode: Mode = when (migrateModeValue) {
         MigrateModeValue.SelectedItems -> Mode.MigrateSelectedItems(
             filter = savedStateHandleProvider.get()
                 .require(MigrateVaultFilterArg.key)
@@ -81,7 +82,19 @@ class MigrateSharedWarningViewModel @Inject constructor(
     }
 
     internal fun onMigrate() {
-        println("JIBIRI: onMigrate()")
+        when (mode) {
+            is Mode.MigrateAllItems -> MigrateSharedWarningEvent.OnMigrated(
+                migrateModeValue = migrateModeValue,
+                shareId = mode.shareId
+            )
+
+            is Mode.MigrateSelectedItems -> MigrateSharedWarningEvent.OnMigrated(
+                migrateModeValue = migrateModeValue,
+                filter = mode.filter
+            )
+        }.also { event ->
+            eventFlow.update { event }
+        }
     }
 
 }

@@ -73,11 +73,16 @@ fun NoteDetail(
         is NoteDetailUiState.Success -> {
             LaunchedEffect(state.event) {
                 when (state.event) {
-                    ItemDetailEvent.Unknown -> {}
+                    ItemDetailEvent.Unknown -> Unit
                     ItemDetailEvent.MoveToVault -> {
                         onNavigate(ItemDetailNavigation.OnMigrate)
                     }
+
+                    ItemDetailEvent.MoveToVaultSharedWarning -> {
+                        onNavigate(ItemDetailNavigation.OnMigrateSharedWarning)
+                    }
                 }
+
                 viewModel.clearEvent()
             }
 

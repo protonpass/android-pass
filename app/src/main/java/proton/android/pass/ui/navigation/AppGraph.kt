@@ -772,7 +772,8 @@ fun NavGraphBuilder.appGraph(
                 else -> null
             }
             when (it) {
-                BaseLoginNavigation.Close -> dismissBottomSheet {}
+                BaseLoginNavigation.CloseScreen -> appNavigator.navigateBack()
+                BaseLoginNavigation.DismissBottomsheet -> dismissBottomSheet {}
 
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,
@@ -1006,7 +1007,7 @@ fun NavGraphBuilder.appGraph(
     )
     createCreditCardGraph {
         when (it) {
-            BaseCreditCardNavigation.Close -> appNavigator.navigateBack()
+            BaseCreditCardNavigation.CloseScreen -> appNavigator.navigateBack()
             is CreateCreditCardNavigation -> when (it) {
                 is CreateCreditCardNavigation.ItemCreated -> appNavigator.navigateBack()
                 is CreateCreditCardNavigation.SelectVault -> appNavigator.navigate(
@@ -1049,7 +1050,7 @@ fun NavGraphBuilder.appGraph(
     }
     updateCreditCardGraph {
         when (it) {
-            BaseCreditCardNavigation.Close -> appNavigator.navigateBack()
+            BaseCreditCardNavigation.CloseScreen -> appNavigator.navigateBack()
             is CreateCreditCardNavigation -> {}
             is UpdateCreditCardNavigation -> {
                 when (it) {
@@ -1186,7 +1187,8 @@ fun NavGraphBuilder.appGraph(
                 else -> null
             }
             when (it) {
-                BaseIdentityNavigation.Close -> dismissBottomSheet { appNavigator.navigateBack() }
+                BaseIdentityNavigation.CloseScreen -> appNavigator.navigateBack()
+                BaseIdentityNavigation.DismissBottomsheet -> dismissBottomSheet { }
                 is BaseIdentityNavigation.OpenExtraFieldBottomSheet -> appNavigator.navigate(
                     destination = IdentityFieldsBottomSheet,
                     route = IdentityFieldsBottomSheet.createRoute(

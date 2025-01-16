@@ -107,7 +107,7 @@ class CustomExtraFieldNameDialogTest {
                 PassTheme {
                     CustomFieldNameDialog(
                         onNavigate = {
-                            if (it == CustomFieldNameNavigation.Close) {
+                            if (it == CustomFieldNameNavigation.CloseScreen) {
                                 checker.call()
                             }
                         }

@@ -85,7 +85,7 @@ fun NavGraphBuilder.customFieldBottomSheetGraph(
     onAddCustomFieldNavigate: (CustomFieldType) -> Unit,
     onEditCustomFieldNavigate: (String, Int) -> Unit,
     onRemoveCustomFieldNavigate: () -> Unit,
-    onCloseNavigate: () -> Unit
+    onDismissBottomsheet: () -> Unit
 ) {
     bottomSheet(AddCustomFieldBottomSheetNavItem(prefix)) {
         AddCustomFieldBottomSheet(prefix = prefix) {
@@ -104,7 +104,7 @@ fun NavGraphBuilder.customFieldBottomSheetGraph(
                     is CustomFieldOptionsNavigation.EditCustomField ->
                         onEditCustomFieldNavigate(it.title, it.index)
                     CustomFieldOptionsNavigation.RemoveCustomField -> onRemoveCustomFieldNavigate()
-                    CustomFieldOptionsNavigation.Close -> onCloseNavigate()
+                    CustomFieldOptionsNavigation.Close -> onDismissBottomsheet()
                 }
             }
         )

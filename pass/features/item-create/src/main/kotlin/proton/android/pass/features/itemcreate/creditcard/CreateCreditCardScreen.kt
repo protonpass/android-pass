@@ -26,7 +26,7 @@ import proton.android.pass.features.itemcreate.common.ShareError.EmptyShareList
 import proton.android.pass.features.itemcreate.common.ShareError.SharesNotAvailable
 import proton.android.pass.features.itemcreate.common.ShareUiState
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.AddAttachment
-import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.Close
+import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.CloseScreen
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.DeleteAllAttachments
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.OpenAttachmentOptions
 import proton.android.pass.features.itemcreate.creditcard.BaseCreditCardNavigation.OpenDraftAttachmentOptions
@@ -57,7 +57,7 @@ fun CreateCreditCardScreen(
 
     when (val uiState = state) {
         CreateCreditCardUiState.Error -> LaunchedEffect(Unit) {
-            actionAfterKeyboardHide = { onNavigate(Close) }
+            actionAfterKeyboardHide = { onNavigate(CloseScreen) }
         }
 
         CreateCreditCardUiState.Loading,
@@ -71,7 +71,7 @@ fun CreateCreditCardScreen(
                     showConfirmDialog = !showConfirmDialog
                 } else {
                     viewModel.onClose()
-                    actionAfterKeyboardHide = { onNavigate(Close) }
+                    actionAfterKeyboardHide = { onNavigate(CloseScreen) }
                 }
             }
             BackHandler(onBack = onExit)
@@ -82,7 +82,7 @@ fun CreateCreditCardScreen(
                 is ShareUiState.Error -> {
                     if (shares.shareError == EmptyShareList || shares.shareError == SharesNotAvailable) {
                         LaunchedEffect(Unit) {
-                            actionAfterKeyboardHide = { onNavigate(Close) }
+                            actionAfterKeyboardHide = { onNavigate(CloseScreen) }
                         }
                     }
                     false to null
@@ -187,7 +187,7 @@ fun CreateCreditCardScreen(
                     },
                     onConfirm = {
                         showConfirmDialog = false
-                        actionAfterKeyboardHide = { onNavigate(Close) }
+                        actionAfterKeyboardHide = { onNavigate(CloseScreen) }
                     }
                 )
             }

@@ -37,13 +37,13 @@ fun CustomFieldNameDialog(
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
         if (state.event == CustomFieldEvent.Close) {
-            onNavigate(CustomFieldNameNavigation.Close)
+            onNavigate(CustomFieldNameNavigation.CloseScreen)
         }
     }
 
     NoPaddingDialog(
         modifier = modifier,
-        onDismissRequest = { onNavigate(CustomFieldNameNavigation.Close) }
+        onDismissRequest = { onNavigate(CustomFieldNameNavigation.CloseScreen) }
     ) {
         SingleInputDialogContent(
             value = state.value,
@@ -53,7 +53,7 @@ fun CustomFieldNameDialog(
             placeholderRes = R.string.custom_field_dialog_placeholder,
             onChange = viewModel::onNameChanged,
             onConfirm = viewModel::onSave,
-            onCancel = { onNavigate(CustomFieldNameNavigation.Close) }
+            onCancel = { onNavigate(CustomFieldNameNavigation.CloseScreen) }
         )
     }
 }

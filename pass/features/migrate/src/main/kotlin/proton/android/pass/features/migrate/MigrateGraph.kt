@@ -49,7 +49,7 @@ sealed interface MigrateNavigation {
     ) : MigrateNavigation
 
     data object VaultMigrated : MigrateNavigation
-    data object Close : MigrateNavigation
+    data object DismissBottomsheet : MigrateNavigation
 }
 
 object MigrateModeArg : NavArgId {

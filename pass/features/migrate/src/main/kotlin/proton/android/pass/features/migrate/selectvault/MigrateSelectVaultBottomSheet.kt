@@ -37,7 +37,7 @@ fun MigrateSelectVaultBottomSheet(
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
     when (val state = uiState) {
-        MigrateSelectVaultUiState.Error -> onNavigate(MigrateNavigation.Close)
+        MigrateSelectVaultUiState.Error -> onNavigate(MigrateNavigation.DismissBottomsheet)
         MigrateSelectVaultUiState.Loading,
         MigrateSelectVaultUiState.Uninitialised -> {
             // no-op
@@ -48,7 +48,7 @@ fun MigrateSelectVaultBottomSheet(
                 val event = state.event
                 if (event is Some) {
                     when (val value = event.value) {
-                        SelectVaultEvent.Close -> onNavigate(MigrateNavigation.Close)
+                        SelectVaultEvent.Close -> onNavigate(MigrateNavigation.DismissBottomsheet)
                         is SelectVaultEvent.VaultSelectedForMigrateItem -> {
                             onNavigate(
                                 MigrateNavigation.VaultSelectedForMigrateItem(

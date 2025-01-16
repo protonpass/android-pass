@@ -552,7 +552,7 @@ fun NavGraphBuilder.appGraph(
     vaultGraph(
         onNavigate = {
             when (it) {
-                VaultNavigation.Close -> dismissBottomSheet {
+                VaultNavigation.CloseScreen -> dismissBottomSheet {
                     appNavigator.navigateBack()
                 }
 
@@ -1737,7 +1737,7 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                MigrateNavigation.Close -> dismissBottomSheet {}
+                MigrateNavigation.DismissBottomsheet -> dismissBottomSheet {}
             }
         }
     )

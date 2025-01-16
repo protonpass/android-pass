@@ -286,7 +286,7 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
     createAliasGraph(
         onNavigate = {
             when (it) {
-                CreateAliasNavigation.Close -> appNavigator.navigateBack()
+                CreateAliasNavigation.CloseScreen -> appNavigator.navigateBack()
                 CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {}
 
                 is CreateAliasNavigation.CreatedFromBottomsheet -> dismissBottomSheet {}

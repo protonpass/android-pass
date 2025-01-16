@@ -59,7 +59,6 @@ import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ShareId
 import proton.android.pass.features.home.HomeBottomSheetType.AliasOptions
 import proton.android.pass.features.home.HomeBottomSheetType.CreditCardOptions
 import proton.android.pass.features.home.HomeBottomSheetType.IdentityOptions
@@ -109,7 +108,6 @@ import proton.android.pass.searchoptions.api.VaultSelectionOption
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onNavigateEvent: (HomeNavigation) -> Unit,
-    goToVault: ShareId? = null,
     enableBulkActions: Boolean = false,
     homeViewModel: HomeViewModel = hiltViewModel(),
     routerViewModel: RouterViewModel = hiltViewModel(),
@@ -170,12 +168,6 @@ fun HomeScreen(
     LaunchedEffect(enableBulkActions) {
         if (enableBulkActions) {
             homeViewModel.onBulkEnabled()
-        }
-    }
-
-    LaunchedEffect(goToVault) {
-        if (goToVault != null) {
-            homeViewModel.setVaultSelection(VaultSelectionOption.Vault(goToVault))
         }
     }
 

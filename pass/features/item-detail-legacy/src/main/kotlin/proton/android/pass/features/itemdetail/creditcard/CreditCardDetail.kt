@@ -76,11 +76,16 @@ fun CreditCardDetail(
         is CreditCardDetailUiState.Success -> {
             LaunchedEffect(state.event) {
                 when (state.event) {
-                    ItemDetailEvent.Unknown -> {}
+                    ItemDetailEvent.Unknown -> Unit
                     ItemDetailEvent.MoveToVault -> {
                         onNavigate(ItemDetailNavigation.OnMigrate)
                     }
+
+                    ItemDetailEvent.MoveToVaultSharedWarning -> {
+                        onNavigate(ItemDetailNavigation.OnMigrateSharedWarning)
+                    }
                 }
+
                 viewModel.clearEvent()
             }
 
@@ -257,6 +262,7 @@ fun CreditCardDetail(
                                                 contextHolder = context.toClassHolder(),
                                                 attachment = event.attachment
                                             )
+
                                         is AttachmentContentEvent.OnAttachmentOptions,
                                         AttachmentContentEvent.OnAddAttachment,
                                         AttachmentContentEvent.OnDeleteAllAttachments,

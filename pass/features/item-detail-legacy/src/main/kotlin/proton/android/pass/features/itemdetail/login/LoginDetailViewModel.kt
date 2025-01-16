@@ -693,13 +693,24 @@ class LoginDetailViewModel @Inject constructor(
         }
     }
 
-    fun clearEvent() = viewModelScope.launch {
+    internal fun clearEvent() {
         eventState.update { ItemDetailEvent.Unknown }
     }
 
-    fun onMigrate() = viewModelScope.launch {
-        bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
-        eventState.update { ItemDetailEvent.MoveToVault }
+    internal fun onMigrate() {
+        viewModelScope.launch {
+            val state = uiState.value as? LoginDetailUiState.Success ?: return@launch
+
+            bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
+
+            if (state.itemUiModel.isShared) {
+                ItemDetailEvent.MoveToVaultSharedWarning
+            } else {
+                ItemDetailEvent.MoveToVault
+            }.also { event ->
+                eventState.update { event }
+            }
+        }
     }
 
     internal fun onExcludeItemFromMonitoring() = viewModelScope.launch {

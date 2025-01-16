@@ -37,8 +37,16 @@ fun MigrateSharedWarningDialog(
     val state by stateFlow.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
-        when (state.event) {
+        when (val event = state.event) {
             MigrateSharedWarningEvent.Idle -> Unit
+
+            is MigrateSharedWarningEvent.OnMigrated -> {
+                MigrateNavigation.VaultSelection(
+                    migrateModeValue = event.migrateModeValue,
+                    shareId = event.shareId,
+                    filter = event.filter
+                ).also(onNavigate)
+            }
         }
 
         onConsumeEvent(state.event)
@@ -51,10 +59,9 @@ fun MigrateSharedWarningDialog(
             when (uiEvent) {
                 MigrateSharedWarningUiEvent.OnCancelClicked,
                 MigrateSharedWarningUiEvent.OnDismissed -> onNavigate(MigrateNavigation.Close)
+
                 MigrateSharedWarningUiEvent.OnContinueClicked -> onMigrate()
             }
         }
     )
-
-
 }

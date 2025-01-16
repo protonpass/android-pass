@@ -76,7 +76,7 @@ class ItemDetailsMenuViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
-    private val actionFlow = MutableStateFlow<BottomSheetItemAction>(BottomSheetItemAction.None)
+    private val actionFlow = MutableStateFlow(BottomSheetItemAction.None)
 
     private val eventFlow = MutableStateFlow<ItemDetailsMenuEvent>(ItemDetailsMenuEvent.Idle)
 
@@ -137,7 +137,13 @@ class ItemDetailsMenuViewModel @Inject constructor(
                     snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemMigrationError)
                 }
                 .onSuccess {
-                    eventFlow.update { ItemDetailsMenuEvent.OnItemMigrated }
+                    if (state.value.isItemShared) {
+                        ItemDetailsMenuEvent.OnItemSharedMigrated
+                    } else {
+                        ItemDetailsMenuEvent.OnItemMigrated
+                    }.also { event ->
+                        eventFlow.update { event }
+                    }
                 }
 
             actionFlow.update { BottomSheetItemAction.None }

@@ -88,7 +88,7 @@ class CreateVaultBottomSheetTest {
                 PassTheme {
                     CreateVaultScreen(
                         onNavigate = {
-                            if (it == VaultNavigation.Close) {
+                            if (it == VaultNavigation.CloseScreen) {
                                 checker.call()
                             }
                         }

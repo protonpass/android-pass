@@ -49,7 +49,7 @@ fun MigrateConfirmVaultBottomSheet(
                     navigation(MigrateNavigation.VaultMigrated)
                 }
 
-                ConfirmMigrateEvent.Close -> navigation(MigrateNavigation.Close)
+                ConfirmMigrateEvent.Close -> navigation(MigrateNavigation.DismissBottomsheet)
             }
         }
     }

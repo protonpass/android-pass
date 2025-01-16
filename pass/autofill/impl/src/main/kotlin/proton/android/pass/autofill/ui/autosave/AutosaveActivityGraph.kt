@@ -75,9 +75,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 AuthNavigation.ForceSignOutAllUsers -> {
                 }
 
-                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                AuthNavigation.CloseBottomsheet -> dismissBottomSheet {}
             }
         }
     )
@@ -159,9 +157,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
                     )
                 }
 
-                BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {}
 
                 // Updates cannot happen
                 is BaseLoginNavigation.OnUpdateLoginEvent -> {}
@@ -192,9 +188,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
         onNavigate = {
             when (it) {
                 GeneratePasswordNavigation.CloseDialog -> appNavigator.navigateBack()
-                GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {
-                    appNavigator.navigateBack(comesFromBottomsheet = true)
-                }
+                GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {}
 
                 GeneratePasswordNavigation.OnSelectWordSeparator -> appNavigator.navigate(
                     destination = WordSeparatorDialog
@@ -212,10 +206,8 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 VaultNavigation.Close -> appNavigator.navigateBack()
                 VaultNavigation.Upgrade -> onNavigate(AutosaveNavigation.Upgrade)
                 is VaultNavigation.VaultSelected -> dismissBottomSheet {
-                    appNavigator.navigateBackWithResult(
-                        key = KEY_VAULT_SELECTED,
-                        value = it.shareId.id,
-                        comesFromBottomsheet = true
+                    appNavigator.setResult(
+                        mapOf(KEY_VAULT_SELECTED to it.shareId.id)
                     )
                 }
 

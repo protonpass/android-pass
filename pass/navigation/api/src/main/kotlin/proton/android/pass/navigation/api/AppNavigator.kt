@@ -116,13 +116,13 @@ class AppNavigator(
     fun hasPreviousDestination(destination: NavItem): Boolean =
         navController.previousBackStackEntry.run { this?.destination?.route == destination.route }
 
-    fun popUpTo(destination: NavItem, comesFromBottomsheet: Boolean = false) {
-        if (shouldDiscard(comesFromBottomsheet)) return
+    fun popUpTo(destination: NavItem) {
+        if (isInProgress()) return
         navController.popBackStack(route = destination.route, inclusive = false, saveState = false)
     }
 
-    fun navigateBackToStartDestination(comesFromBottomsheet: Boolean = false, force: Boolean = false) {
-        if (!force && shouldDiscard(comesFromBottomsheet)) return
+    fun navigateBackToStartDestination(force: Boolean = false) {
+        if (!force && isInProgress()) return
         val navOptions = navOptions {
             popUpTo(navController.graph.id) { inclusive = true }
         }
@@ -132,8 +132,8 @@ class AppNavigator(
         navController.navigate(startDestinationRoute, navOptions)
     }
 
-    fun navigateBack(comesFromBottomsheet: Boolean = false, force: Boolean = false) {
-        if (!force && shouldDiscard(comesFromBottomsheet)) return
+    fun navigateBack(force: Boolean = false) {
+        if (!force && isInProgress()) return
         when {
             previousRoute == null && startRoute != null && currentRoute != startRoute -> {
                 PassLogger.i(TAG, "Navigating back to start destination: $startRoute")
@@ -150,9 +150,7 @@ class AppNavigator(
             previousRoute != null -> {
                 val navigatedFromRoute = previousRoute
                 PassLogger.i(TAG, "Navigating back to $navigatedFromRoute")
-                if (navController.navigateUp()) {
-                    PassLogger.i(TAG, "Navigated back to $navigatedFromRoute")
-                } else {
+                if (!navController.navigateUp()) {
                     PassLogger.i(TAG, "Could not navigate back to $navigatedFromRoute")
                 }
             }
@@ -171,12 +169,8 @@ class AppNavigator(
             destinations.find { it.route == entry.destination.route }
         }
 
-    fun navigateBackWithResult(
-        key: String,
-        value: Any,
-        comesFromBottomsheet: Boolean = false
-    ) {
-        if (shouldDiscard(comesFromBottomsheet)) return
+    fun navigateBackWithResult(key: String, value: Any) {
+        if (isInProgress()) return
         PassLogger.i(TAG, "Navigating back with result to $previousRoute")
         navController.previousBackStackEntry
             ?.savedStateHandle
@@ -184,8 +178,18 @@ class AppNavigator(
         navController.navigateUp()
     }
 
-    fun navigateBackWithResult(values: Map<String, Any>, comesFromBottomsheet: Boolean = false) {
-        if (shouldDiscard(comesFromBottomsheet)) return
+    fun setResult(values: Map<String, Any>) {
+        navController.currentBackStackEntry
+            ?.savedStateHandle
+            ?.let {
+                values.forEach { (key, value) ->
+                    it[key] = value
+                }
+            }
+    }
+
+    fun navigateBackWithResult(values: Map<String, Any>) {
+        if (isInProgress()) return
         PassLogger.i(TAG, "Navigating back with results to $previousRoute")
         navController.previousBackStackEntry
             ?.savedStateHandle
@@ -222,9 +226,9 @@ class AppNavigator(
         }
     }
 
-    private fun shouldDiscard(comesFromBottomsheet: Boolean): Boolean {
-        if (!lifecycleIsResumed() && !comesFromBottomsheet) {
-            PassLogger.d(TAG, "Navigation event discarded as it was duplicated.")
+    private fun isInProgress(): Boolean {
+        if (!lifecycleIsResumed()) {
+            PassLogger.d(TAG, "Navigation event discarded.")
             return true
         }
         return false

@@ -65,7 +65,7 @@ fun SettingsScreen(
                 SettingsContentEvent.Clipboard -> onNavigate(SettingsNavigation.ClipboardSettings)
                 SettingsContentEvent.Privacy -> { openWebsite(context, "https://proton.me/legal/privacy") }
                 SettingsContentEvent.Terms -> { openWebsite(context, "https://proton.me/legal/terms") }
-                SettingsContentEvent.Up -> onNavigate(SettingsNavigation.Close)
+                SettingsContentEvent.Up -> onNavigate(SettingsNavigation.CloseScreen)
                 is SettingsContentEvent.OnDisplayUsernameToggled -> {
                     viewModel.onToggleDisplayUsernameField(isEnabled = it.isEnabled)
                 }

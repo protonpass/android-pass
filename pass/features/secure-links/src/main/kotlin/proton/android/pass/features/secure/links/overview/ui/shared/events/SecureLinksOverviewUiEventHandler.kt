@@ -33,7 +33,7 @@ internal fun handleSecureLinksOverviewUiEvent(
 ) {
     when (uiEvent) {
         is SecureLinksOverviewUiEvent.OnCloseClicked -> {
-            SecureLinksNavDestination.Close(
+            SecureLinksNavDestination.CloseScreenWithCategory(
                 itemCategory = uiEvent.itemCategory
             ).also(onNavigated)
         }

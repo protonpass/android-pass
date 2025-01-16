@@ -24,10 +24,10 @@ import proton.android.pass.features.secure.links.overview.navigation.SecureLinks
 
 sealed interface SecureLinksNavDestination {
 
-    data object Back : SecureLinksNavDestination
+    data object CloseScreen : SecureLinksNavDestination
 
     @JvmInline
-    value class Close(val itemCategory: ItemCategory) : SecureLinksNavDestination
+    value class CloseScreenWithCategory(val itemCategory: ItemCategory) : SecureLinksNavDestination
 
     data object DismissBottomSheet : SecureLinksNavDestination
 

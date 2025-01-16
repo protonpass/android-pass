@@ -157,7 +157,7 @@ object ShareFromItem : NavItem(
 
 sealed interface SharingNavigation {
 
-    data object Back : SharingNavigation
+    data object CloseScreen : SharingNavigation
 
     data object BackToHome : SharingNavigation
 

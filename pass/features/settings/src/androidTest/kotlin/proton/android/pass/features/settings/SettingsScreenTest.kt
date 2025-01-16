@@ -136,7 +136,7 @@ class SettingsScreenTest {
             PassTheme {
                 SettingsScreen(
                     onNavigate = {
-                        if (it is SettingsNavigation.Close) {
+                        if (it is SettingsNavigation.CloseScreen) {
                             checker.call()
                         }
                     }

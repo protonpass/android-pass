@@ -56,7 +56,7 @@ fun SharingPermissionsScreen(
         onEvent = { uiEvent ->
             when (uiEvent) {
                 SharingPermissionsUiEvent.OnBackClick -> {
-                    onNavigateEvent(SharingNavigation.Back)
+                    onNavigateEvent(SharingNavigation.CloseScreen)
                 }
 
                 is SharingPermissionsUiEvent.OnPermissionChangeClick -> {

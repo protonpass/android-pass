@@ -20,6 +20,6 @@ package proton.android.pass.features.sync.navigation
 
 sealed interface SyncNavDestination {
 
-    data object Back : SyncNavDestination
+    data object CloseScreen : SyncNavDestination
 
 }

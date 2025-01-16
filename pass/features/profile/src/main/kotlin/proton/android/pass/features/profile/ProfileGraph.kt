@@ -70,7 +70,7 @@ sealed interface ProfileNavigation {
 
     data object AppLockType : ProfileNavigation
 
-    data object Back : ProfileNavigation
+    data object CloseScreen : ProfileNavigation
 
     data object CloseBottomSheet : ProfileNavigation
 

@@ -45,7 +45,7 @@ fun TrialScreenContent(
                 title = { },
                 navigationIcon = {
                     CrossBackIconButton(
-                        onUpClick = { onNavigate(TrialNavigation.Close) }
+                        onUpClick = { onNavigate(TrialNavigation.CloseScreen) }
                     )
                 }
             )

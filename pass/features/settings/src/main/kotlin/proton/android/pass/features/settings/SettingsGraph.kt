@@ -51,7 +51,7 @@ sealed interface SettingsNavigation {
     data object SelectTheme : SettingsNavigation
     data object ClipboardSettings : SettingsNavigation
     data object ClearClipboardSettings : SettingsNavigation
-    data object Close : SettingsNavigation
+    data object CloseScreen : SettingsNavigation
     data object DismissBottomSheet : SettingsNavigation
     data object ViewLogs : SettingsNavigation
     data object Restart : SettingsNavigation
@@ -72,7 +72,7 @@ fun NavGraphBuilder.settingsGraph(onNavigate: (SettingsNavigation) -> Unit) {
             ThemeSelectionBottomSheet(onNavigate = onNavigate)
         }
         composable(LogView) {
-            LogViewScreen(onUpClick = { onNavigate(SettingsNavigation.Close) })
+            LogViewScreen(onUpClick = { onNavigate(SettingsNavigation.CloseScreen) })
         }
         bottomSheet(ClipboardSettings) {
             ClipboardBottomSheet(

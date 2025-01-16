@@ -39,7 +39,7 @@ internal fun ManageItemScreen(
     LaunchedEffect(state.event) {
         when (state.event) {
             ManageItemEvent.Idle -> Unit
-            ManageItemEvent.OnShareManagementError -> onNavigateEvent(SharingNavigation.Back)
+            ManageItemEvent.OnShareManagementError -> onNavigateEvent(SharingNavigation.CloseScreen)
         }
 
         onConsumeEvent(state.event)
@@ -51,7 +51,7 @@ internal fun ManageItemScreen(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 ManageItemUiEvent.OnBackClick -> {
-                    onNavigateEvent(SharingNavigation.Back)
+                    onNavigateEvent(SharingNavigation.CloseScreen)
                 }
 
                 is ManageItemUiEvent.OnInviteToItemClick -> {

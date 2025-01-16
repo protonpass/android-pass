@@ -72,7 +72,7 @@ fun CreditCardDetail(
 
     when (val state = uiState) {
         CreditCardDetailUiState.NotInitialised, CreditCardDetailUiState.Pending -> {}
-        CreditCardDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
+        CreditCardDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.CloseScreen) }
         is CreditCardDetailUiState.Success -> {
             LaunchedEffect(state.event) {
                 when (state.event) {
@@ -86,7 +86,7 @@ fun CreditCardDetail(
 
             var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
             if (state.isItemSentToTrash || state.isPermanentlyDeleted || state.isRestoredFromTrash) {
-                LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
+                LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.CloseScreen) }
             }
             val scope = rememberCoroutineScope()
             val bottomSheetState = rememberModalBottomSheetState(
@@ -177,7 +177,7 @@ fun CreditCardDetail(
                             itemCategory = state.itemContent.model.category,
                             shareSharedCount = state.shareSharedCount,
                             isItemSharingEnabled = state.itemFeatures.isItemSharingEnabled,
-                            onUpClick = { onNavigate(ItemDetailNavigation.Back) },
+                            onUpClick = { onNavigate(ItemDetailNavigation.CloseScreen) },
                             onEditClick = {
                                 onEditClick(state.itemActions, onNavigate, state.itemContent.model)
                             },

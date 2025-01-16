@@ -60,7 +60,8 @@ fun NavGraphBuilder.updateIdentityGraph(onNavigate: (BaseIdentityNavigation) -> 
         }
         identityFieldsGraph {
             when (it) {
-                IdentityFieldsNavigation.Close -> onNavigate(BaseIdentityNavigation.Close)
+                IdentityFieldsNavigation.DismissBottomsheet ->
+                    onNavigate(BaseIdentityNavigation.DismissBottomsheet)
                 IdentityFieldsNavigation.AddCustomField ->
                     onNavigate(BaseIdentityNavigation.OpenCustomFieldBottomSheet)
             }
@@ -76,16 +77,17 @@ fun NavGraphBuilder.updateIdentityGraph(onNavigate: (BaseIdentityNavigation) -> 
             onRemoveCustomFieldNavigate = {
                 onNavigate(BaseIdentityNavigation.RemovedCustomField)
             },
-            onCloseNavigate = { onNavigate(BaseIdentityNavigation.Close) }
+            onDismissBottomsheet = { onNavigate(BaseIdentityNavigation.DismissBottomsheet) }
         )
         customFieldNameDialogGraph(CustomFieldPrefix.UpdateIdentity) {
             when (it) {
-                is CustomFieldNameNavigation.Close -> onNavigate(BaseIdentityNavigation.Close)
+                is CustomFieldNameNavigation.CloseScreen -> onNavigate(BaseIdentityNavigation.CloseScreen)
             }
         }
         extraSectionGraph {
             when (it) {
-                is ExtraSectionNavigation.Close -> onNavigate(BaseIdentityNavigation.Close)
+                is ExtraSectionNavigation.CloseScreen ->
+                    onNavigate(BaseIdentityNavigation.CloseScreen)
                 is ExtraSectionNavigation.EditCustomSection ->
                     onNavigate(BaseIdentityNavigation.EditCustomSection(it.title, it.index))
 

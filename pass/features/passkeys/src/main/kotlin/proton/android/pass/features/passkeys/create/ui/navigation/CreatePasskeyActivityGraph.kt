@@ -146,7 +146,8 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
         initialCreateLoginUiState = navState.createLoginUiState,
         onNavigate = {
             when (it) {
-                BaseLoginNavigation.Close -> dismissBottomSheet {}
+                BaseLoginNavigation.CloseScreen -> appNavigator.navigateBack()
+                BaseLoginNavigation.DismissBottomsheet -> dismissBottomSheet {}
 
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,

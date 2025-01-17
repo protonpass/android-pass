@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Du kannst nur Einträge in deinem ältesten Tresor bearbeiten. Um diesen Artikel zu bearbeiten, aktualisiere bitte auf dein aktuelles Abonnement.</string>
   <string name="item_details_forbidden_actions_share_title">Teilen nicht möglich</string>
   <string name="item_details_forbidden_actions_share_limit">Du hast das Limit für das Teilen von Tresoren erreicht. Um mehr Tresore gemeinsam nutzen zu können, upgrade bitte dein aktueles Abonnement.</string>
-  <string name="item_details_forbidden_actions_share_permission">Deine Berechtigungen reichen nicht aus, um diesen Tresor freizugeben.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">You don\'t have enough permissions to perform this action.</string>
   <string name="item_details_forbidden_actions_share_trash">Du kannst diesen Eintrag nicht bearbeiten, da er sich im Papierkorb befindet. Bitte entferne ihn aus dem Papierkorb, um ihn zu bearbeiten.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">Leave this Item?</string>
+  <string name="item_details_leave_dialog_message">You will lose access to this item and its details. Do you want to continue?</string>
+  <string name="item_details_leave_item_message_error">There was an error leaving the item</string>
+  <string name="item_details_leave_item_message_success">Item successfully left</string>
 </resources>

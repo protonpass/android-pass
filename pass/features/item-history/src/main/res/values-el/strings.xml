@@ -28,4 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">Δημιουργήθηκε</string>
   <string name="item_history_timeline_node_root_title">Τρέχουσα έκδοση</string>
   <string name="item_history_timeline_snackbar_message_error">Παρουσιάστηκε σφάλμα κατά τη λήψη αναθεωρήσεων στοιχείων</string>
+  <string name="reset_history_bottomsheet_option">Επαναφορά ιστορικού</string>
+  <string name="reset_history_dialog_title">Να γίνει επαναφορά ιστορικού για αυτό το στοιχείο;</string>
+  <string name="reset_history_dialog_body">Η επαναφορά ιστορικού θα διαγράψει οριστικά όλες τις παλαιότερες εκδόσεις και δεν είναι δυνατό να αναιρεθεί.</string>
+  <string name="reset_history_action">Επαναφορά</string>
+  <string name="reset_history_dialog_snackbar_message_error">Συνέβη κάποιο σφάλμα κατά την επαναφορά</string>
+  <string name="reset_history_dialog_snackbar_message_success">Επαναφορά ιστορικού του στοιχείου</string>
 </resources>

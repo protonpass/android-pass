@@ -18,5 +18,5 @@
   -->
 <resources>
   <string name="account_switch_title">Вибрати обліковий запис</string>
-  <string name="unknown_email">Unknown email</string>
+  <string name="unknown_email">Невідома електронна пошта</string>
 </resources>

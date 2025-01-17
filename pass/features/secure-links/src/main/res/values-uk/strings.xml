@@ -26,9 +26,9 @@
   <string name="secure_links_create_row_expiration_options_fourteen_days">14 дні</string>
   <string name="secure_links_create_row_expiration_options_thirty_days">30 дні</string>
   <string name="secure_links_create_row_max_views_title">Обмежити кількість переглядів</string>
-  <string name="secure_links_create_row_max_views_subtitle">Maximum views: %d</string>
+  <string name="secure_links_create_row_max_views_subtitle">Максимум переглядів: %d</string>
   <string name="secure_links_create_button_generate">Створити безпечне посилання</string>
-  <string name="secure_links_create_snackbar_message_error">There was an error generating secure link</string>
+  <string name="secure_links_create_snackbar_message_error">Виникла помилка при створенні захищеного посилання</string>
   <!--Overview screen-->
   <string name="secure_links_overview_widget_expiration_title">Термін дії збігає через:</string>
   <string name="secure_links_overview_widget_max_views_title">Можна переглянути:</string>
@@ -40,7 +40,7 @@
     <item quantity="other">%d разів</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">Необмежено</string>
-  <string name="secure_links_overview_button_view_all_links">View all your secure links</string>
+  <string name="secure_links_overview_button_view_all_links">Переглянути всі ваші захищені посилання</string>
   <!--List screen-->
   <string name="secure_links_list_title">Безпечні посилання</string>
   <string name="secure_links_list_empty_title">Немає безпечних посилань</string>
@@ -53,7 +53,7 @@
     <item quantity="many">%d перегляди</item>
     <item quantity="other">%d перегляди</item>
   </plurals>
-  <string name="secure_links_list_snackbar_message_links_fetch_error">There was an error fetching secure links</string>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">Виникла помилка при отриманні захищених посилань</string>
   <string name="secure_links_list_header_title_inactive">Неактивні посилання</string>
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">Копіювати посилання</string>
@@ -62,8 +62,8 @@
   <string name="secure_links_shared_action_delete_link_inactive">Видалити неактивне посилання</string>
   <string name="secure_links_shared_action_delete_links_inactive">Видалити всі неактивні посилання</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Захищене посилання скопійовано</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Secure link deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_error">There was an error deleting secure link</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Inactive secure links deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">There was an error deleting inactive secure links</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Видалення захищених посилань скасовано</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">Виникла помилка при видаленні захищеного посилання</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Видалення неактивних безпечних посилань скасовано</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Виникла помилка при видаленні неактивних захищених посилань</string>
 </resources>

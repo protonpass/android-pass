@@ -2,7 +2,7 @@
 <resources>
   <!-- Home -->
   <string name="home_empty_vault_title">保管庫は空っぽです</string>
-  <string name="home_empty_vault_subtitle">最初の項目を作成して始めましょう。</string>
+  <string name="home_empty_vault_subtitle">最初のアイテムを作成して始めましょう。</string>
   <string name="home_empty_vault_login_title">ログインが見つかりません</string>
   <string name="home_empty_vault_login_subtitle">最初のログインアイテムを作成して始めましょう</string>
   <string name="home_empty_vault_aliases_title">エイリアスが見つかりません</string>
@@ -25,23 +25,24 @@
   <string name="home_empty_vault_create_note">メモを作成</string>
   <string name="home_empty_vault_create_credit_card">クレジットカード情報を作成</string>
   <string name="home_empty_vault_create_identity">ユーザー情報を作成</string>
-  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">アイテムの読み込みに失敗</string>
+  <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">アイテム読み込みエラー</string>
   <string name="error_refreshing">更新実行中のエラー</string>
   <string name="home_snackbar_login_moved_to_trash">ログイン情報がごみ箱に移動されました</string>
   <string name="home_snackbar_alias_moved_to_trash">エイリアスがごみ箱に移動されました</string>
-  <string name="home_snackbar_note_moved_to_trash">ノートがごみ箱に移動されました</string>
+  <string name="home_snackbar_note_moved_to_trash">メモがごみ箱に移動されました</string>
   <string name="home_snackbar_credit_card_moved_to_trash">クレジットカード情報がごみ箱に移動されました</string>
   <string name="home_snackbar_identity_moved_to_trash">ユーザー情報がゴミ箱に移動されました</string>
-  <string name="home_snackbar_move_to_trash_error">アイテムをごみ箱への移動に失敗</string>
+  <string name="home_snackbar_move_to_trash_error">アイテムはゴミ箱に移動できませんでした</string>
   <string name="home_snackbar_items_move_to_trash_success">アイテムはごみ箱に移動されました</string>
-  <string name="home_snackbar_items_move_to_trash_error">アイテムのごみ箱への移動に失敗しました</string>
+  <string name="home_snackbar_items_move_to_trash_error">アイテムはゴミ箱に移動できませんでした</string>
   <string name="home_toast_items_selected_read_only">読み取り専用アイテムは選択できません</string>
   <string name="home_autofill_banner_title">自動入力マジックをお楽しみください</string>
-  <string name="home_autofill_banner_text">ワンタップでユーザー名とパスワードが即座に入力される。</string>
+  <string name="home_autofill_banner_text">ワンタップでユーザー名とパスワードが即座に入力されます。</string>
   <string name="home_autofill_banner_settings">自動入力を有効にする ›</string>
   <string name="home_trial_banner_title">無料トライアルをお楽しみください</string>
-  <string name="home_trial_banner_text">期間限定で利用可能なすべての限定機能をチェックする</string>
+  <string name="home_trial_banner_text">プレミアム機能を 7 日間無料でお試しいただけます。Proton Passの最初の週に限ります。</string>
   <string name="home_trial_banner_settings">もっと詳しく ›</string>
+  <string name="home_drawer_all_items">すべてのアイテム</string>
   <string name="sl_sync_banner_title">SimpleLoginからエイリアスを同期</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="other">SimpleLoginにProton Passにはない%d個のエイリアスが存在しています。同期しますか？</item>
@@ -51,7 +52,7 @@
   <string name="home_notification_permission_banner_title">重要な最新情報を入手する</string>
   <string name="home_notification_permission_banner_text">プッシュ通知を有効にすると、他の人があなたと保管庫を共有したときに通知されます。</string>
   <string name="home_notification_permission_banner_settings">権限を有効にする ›</string>
-  <string name="home_invite_banner_title">あなたと共有しているフォルダー</string>
+  <string name="home_invite_banner_title">保管庫をあなたと共有しました</string>
   <string name="home_invite_banner_subtitle">共有フォルダーへの招待があります。詳細はタップしてください。</string>
   <string name="home_item_invite_banner_title" comment="placeholder is replaced by an email address">%sがあなたにアイテムを共有したいようです。</string>
   <string name="home_item_invite_banner_subtitle">詳細はタップ。</string>
@@ -73,11 +74,11 @@
   <string name="password_copied_to_clipboard">パスワードをコピーしました</string>
   <string name="credit_card_number_copied_to_clipboard">クレジットカード番号をコピーしました</string>
   <string name="credit_card_cvv_copied_to_clipboard">認証番号をコピーしました</string>
-  <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">内容が長すぎるため、部分的にクリップボードにコピーされた。</string>
+  <string name="item_too_long_copied_to_clipboard" comment="Snackbar message that's shown to the user whenever an action where the content that would be copied to the clipboard cannot be performed due to the size of the text">内容が長すぎるため、部分的にクリップボードにコピーされました</string>
   <!-- Vault drawer -->
   <string name="vault_drawer_vaults_title">保管庫</string>
   <plurals name="vault_drawer_vaults_item_count">
-    <item quantity="other">%d アイテム</item>
+    <item quantity="other">%d個のアイテム</item>
   </plurals>
   <string name="vault_drawer_create_vault">保管庫を作成</string>
   <string name="vault_drawer_item_trash">ごみ箱</string>
@@ -87,14 +88,15 @@
   <string name="vault_delete_dialog_cancel_action">キャンセル</string>
   <string name="vault_delete_dialog_delete_action">削除</string>
   <string name="snackbar_delete_vault_success">保管庫が削除されました</string>
-  <string name="snackbar_delete_vault_error">削除されない保管庫</string>
+  <string name="snackbar_delete_vault_error">保管庫は削除されていません</string>
   <!-- Search top bar -->
+  <string name="search_topbar_placeholder_all_items">すべてのアイテムを検索…</string>
   <string name="search_topbar_placeholder_all_vaults">すべての保管庫を検索...</string>
   <string name="search_topbar_placeholder_vault">%s 内を検索…</string>
   <string name="search_topbar_placeholder_trash">ごみ箱を検索...</string>
   <string name="search_topbar_placeholder_pinning">ピン留めされたものを検索...</string>
-  <string name="search_topbar_placeholder_shared_by_me">Search in Shared by me…</string>
-  <string name="search_topbar_placeholder_shared_with_me">Search in Shared with me…</string>
+  <string name="search_topbar_placeholder_shared_by_me">自分が共有した中から検索中…</string>
+  <string name="search_topbar_placeholder_shared_with_me">共有されたものの中から検索中…</string>
   <string name="item_type_filter_list_icon_content_description">アイテムタイプアイコン</string>
   <string name="item_type_filter_all">すべて</string>
   <string name="item_type_filter_login">ログイン</string>
@@ -103,16 +105,16 @@
   <string name="item_type_filter_credit_card">カード</string>
   <string name="item_type_filter_identity">ユーザー情報</string>
   <string name="item_type_filter_login_totp">TOTPでログイン</string>
-  <string name="item_type_filter_items_shared_with_me">私と共有済み</string>
+  <string name="item_type_filter_items_shared_with_me">私と共有中</string>
   <string name="item_type_filter_items_shared_by_me">自分が共有</string>
   <!-- Trash -->
   <string name="trash_empty_list_title">ごみ箱は空です</string>
-  <string name="trash_empty_list_message">ごみ箱に移されたものはここに表示される。</string>
+  <string name="trash_empty_list_message">ゴミ箱に移動したアイテムはここに表示されます。</string>
   <string name="bottomsheet_trash_all_items_title">ごみ箱</string>
   <string name="bottomsheet_restore_all_items">すべてのアイテムを復元する</string>
   <string name="bottomsheet_empty_trash">ごみ箱を空にする</string>
-  <string name="bottomsheet_select_items">項目を選択する</string>
-  <string name="trash_error_clearing_trash">ごみ箱整理のエラー</string>
+  <string name="bottomsheet_select_items">アイテムを選択する</string>
+  <string name="trash_error_clearing_trash">ごみ箱の消去エラー</string>
   <string name="trash_success_restoring_items">アイテムが復元されました</string>
   <string name="trash_error_restoring_items">アイテムの復元エラー</string>
   <string name="trash_error_deleting_item">アイテムの削除エラー</string>
@@ -123,7 +125,7 @@
   <string name="alert_confirm_clear_trash_title">ごみ箱をクリアしますか？</string>
   <string name="alert_confirm_clear_trash_message">本当にごみ箱を空にしますか？ごみ箱に入れたアイテムはすべて永久に削除されます。</string>
   <string name="alert_confirm_restore_all_title">全アイテムを復元しますか？</string>
-  <string name="alert_confirm_restore_all_message">本当にごみ箱にあるものをすべて復元したいのですか？</string>
+  <string name="alert_confirm_restore_all_message">本当にゴミ箱にあるアイテムをすべて復元しますか？</string>
   <plurals name="alert_confirm_restore_items_title">
     <item quantity="other">%d 個のアイテムを復元しますか?</item>
   </plurals>
@@ -141,6 +143,9 @@
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="other">%d 個のアイテムを削除してもよろしいですか? この操作は元に戻せません</item>
+  </plurals>
+  <plurals name="alert_shared_delete_items_message">
+    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">最近の検索</string>

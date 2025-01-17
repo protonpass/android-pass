@@ -81,4 +81,6 @@
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Você precisa mudar para %1$s para gerenciá-lo</string>
   <string name="account_switch_confirmation_title">Gerenciar conta</string>
   <string name="account_switch_confirmation_confirm">Trocar e gerenciar</string>
+  <string name="profile_storage_data_title">Armazenamento</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s de %2$s</string>
 </resources>

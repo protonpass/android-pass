@@ -21,6 +21,7 @@
   <string name="upsell_dark_web_monitoring_subtitle">Dark Web Monitoring は有料プランで利用できます。アップグレードしてすぐにアクセスできます。</string>
   <string name="upsell_missing_2fa_subtitle">オンラインでの存在を保護するために、二要素認証を追加できるサイトのリストを表示します。即時アクセスのためにアップグレードしてください。</string>
   <string name="upsell_sentinel_subtitle">高度なセキュリティ機能と詳細なログのロックを解除して、オンライン プレゼンスを保護します。</string>
+  <string name="upsell_paid_feature_file_attachments">添付ファイル</string>
   <string name="upsell_paid_feature_dark_web_monitoring">Dark Web Monitoring</string>
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
   <string name="upsell_paid_feature_authenticator">統合された 2FA 認証システム</string>
@@ -34,6 +35,7 @@
   <string name="upsell_paid_feature_advance_alias_management_subtitle">高度なエイリアス管理は有料プランで利用可能です。即時アクセスのためにアップグレードしてください。</string>
   <string name="upsell_paid_feature_item_sharing_title">迅速にアイテムを共有</string>
   <string name="upsell_paid_feature_item_sharing_subtitle">今日アップグレードして、どのPassユーザーともアイテムを共有できるようにしましょう。他のプレミアム機能もお楽しみください：</string>
+  <string name="upsell_paid_feature_file_attachments_title">添付ファイル</string>
   <string name="upsell_button_upgrade">Pass Plusを入手</string>
   <string name="upsell_button_upgrade_essentials">BusinessPassを入手する</string>
 </resources>

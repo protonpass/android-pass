@@ -93,7 +93,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Επιτρέπεται μόνο η επεξεργασία στοιχείων στις παλαιότερες κρύπτες σας. Για να επεξεργαστείτε αυτό το στοιχείο, αναβαθμίστε το τρέχον πλάνο σας.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Δεν μπορείτε να επεξεργαστείτε αυτό το στοιχείο επειδή βρίσκεται στα διαγραμμένα. Μετακινήστε το από τα διαγραμμένα πριν το επεξεργαστείτε.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Δεν είναι δυνατή η κοινή χρήση</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Δεν έχετε αρκετά δικαιώματα για να μοιραστείτε αυτήν την κρύπτη</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">Δεν έχετε τα απαραίτητα δικαιώματα για την εκτέλεση αυτής της ενέργειας.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Έχετε συμπληρώσει το όριο κοινής χρήσης κρύπτης. Για να μοιραστείτε περισσότερες κρύπτες, αναβαθμίστε το τρέχον πλάνο σας.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Δεν μπορείτε να κοινοποιήσετε αυτό το στοιχείο επειδή βρίσκεται στα διαγραμμένα. Παρακαλούμε μετακινήστε το από τα διαγραμμένα πριν το κοινοποιήσετε.</string>
   <string name="password_score_vulnerable">Ευάλωτο</string>
@@ -122,4 +122,5 @@
     <item quantity="other">%1$s μπλοκ</item>
   </plurals>
   <string name="open_with">Άνοιγμα με:</string>
+  <string name="open_attachments_error">Δεν ήταν δυνατό το άνοιγμα του συνημμένου</string>
 </resources>

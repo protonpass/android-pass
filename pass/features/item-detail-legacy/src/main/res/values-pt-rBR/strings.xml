@@ -93,7 +93,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Você só tem permissão para editar itens nos cofres mais antigos. Para editar este item, atualize seu plano atual.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Você não pode editar este item porque ele está na lixeira. Retire-o da lixeira antes de editá-lo.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Não pode compartilhar</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Você não tem permissões suficientes para compartilhar este cofre.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">Você não tem permissões suficientes para realizar esta ação.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Você atingiu o limite de compartilhamento de cofre. Para compartilhar mais cofres, faça upgrade do seu plano atual.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Você não pode compartilhar este item porque ele está na lixeira. Retire-o da lixeira antes de compartilhá-lo.</string>
   <string name="password_score_vulnerable">Vulnerável</string>
@@ -122,4 +122,5 @@
     <item quantity="other">%1$s bloqueados</item>
   </plurals>
   <string name="open_with">Abrir com:</string>
+  <string name="open_attachments_error">Erro ao abrir o anexo</string>
 </resources>

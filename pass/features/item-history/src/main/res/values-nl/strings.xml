@@ -28,4 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">Aangemaakt</string>
   <string name="item_history_timeline_node_root_title">Huidige versie</string>
   <string name="item_history_timeline_snackbar_message_error">Er is een fout opgetreden bij het herstellen van de revisie</string>
+  <string name="reset_history_bottomsheet_option">Reset historiek</string>
+  <string name="reset_history_dialog_title">Historiek van dit item resetten</string>
+  <string name="reset_history_dialog_body">Het resetten van de historiek zal alle voorgaande versies definitief verwijderen en kan niet ongedaan worden gemaakt.</string>
+  <string name="reset_history_action">Resetten</string>
+  <string name="reset_history_dialog_snackbar_message_error">Er is een fout opgetreden bij resetten</string>
+  <string name="reset_history_dialog_snackbar_message_success">Item historiek reset</string>
 </resources>

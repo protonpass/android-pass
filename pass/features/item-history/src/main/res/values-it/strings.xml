@@ -28,4 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">Creato</string>
   <string name="item_history_timeline_node_root_title">Versione attuale</string>
   <string name="item_history_timeline_snackbar_message_error">Si è verificato un errore nel caricamento delle versioni degli elementi</string>
+  <string name="reset_history_bottomsheet_option">Azzera Cronologia</string>
+  <string name="reset_history_dialog_title">Reimpostare la cronologia per questo elemento?</string>
+  <string name="reset_history_dialog_body">La reimpostazione della cronologia eliminerà definitivamente tutte le versioni precedenti e non potrà essere annullata.</string>
+  <string name="reset_history_action">Azzera</string>
+  <string name="reset_history_dialog_snackbar_message_error">Si è verificato un errore durante il ripristino</string>
+  <string name="reset_history_dialog_snackbar_message_success">Reset cronologia degli elementi</string>
 </resources>

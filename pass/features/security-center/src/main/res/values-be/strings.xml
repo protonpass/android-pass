@@ -73,10 +73,10 @@
     <item quantity="other">Выкарыстоўваецца ў %d запісах уваходу</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
-    <item quantity="one">Выяўлена %d парушэнне</item>
-    <item quantity="few">Выяўлены %d парушэнні</item>
-    <item quantity="many">Выяўлены %d парушэнняў</item>
-    <item quantity="other">Выяўлены %d парушэнняў</item>
+    <item quantity="one">Выяўлена %d уцечка</item>
+    <item quantity="few">Выяўлены %d уцечкі</item>
+    <item quantity="many">Выяўлены %d уцечак</item>
+    <item quantity="other">Выяўлены %d уцечак</item>
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Памылка загрузкі карыстальніцкіх адрасоў электроннай пошты</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Немагчыма атрымаць адрасы электроннай пошты</string>

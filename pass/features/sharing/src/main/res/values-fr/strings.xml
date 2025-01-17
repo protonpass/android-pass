@@ -125,12 +125,8 @@
   <string name="share_with_suggestions_title">Suggestions</string>
   <string name="share_with_recents_title">Récents</string>
   <string name="share_with_remove_email_content_description">Retirer cette adresse e-mail</string>
-  <string name="share_with_user_title">Partager avec</string>
-  <string name="share_with_user_description">Partagez cet élément avec d\'autres utilisateurs Proton.</string>
   <string name="share_with_secure_link_title">Par lien sécurisé</string>
   <string name="share_with_secure_link_description">Générez un lien sécurisé vers cet élément.</string>
-  <string name="share_with_vault_title">Tout le coffre-fort</string>
-  <string name="share_with_vault_description">Partagez ce coffre-fort et son contenu.</string>
   <string name="share_with_user_shared_title">Avec d\'autres utilisateurs de Proton Pass</string>
   <string name="share_with_user_shared_description">Utile pour un partage permanent.</string>
   <string name="share_with_manage_shared_item_title">Gérer l\'accès</string>

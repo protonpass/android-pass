@@ -22,7 +22,7 @@
   <plurals name="enter_your_pin_code_error">
     <item quantity="other">PINが間違っています。あと%d回試すことが出来ます。</item>
   </plurals>
-  <string name="auth_unlock_app_title">Proton Pass をロック解除</string>
+  <string name="auth_unlock_app_title">Proton Passをアンロック</string>
   <string name="auth_unlock_app_subtitle">%s 用のマスターパスワードを入力</string>
   <string name="auth_unlock_app_extra_password_subtitle">%sに追加のパスワードを入力してください</string>
   <string name="auth_unlock_app_subtitle_account_switch">マスターパスワードを入力してください：</string>

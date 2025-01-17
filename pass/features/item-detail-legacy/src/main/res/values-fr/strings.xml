@@ -93,7 +93,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Vous pouvez modifier uniquement les éléments de vos coffres-forts les plus anciens. Pour modifier cet élément, vous devez mettre à jour votre abonnement actuel.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Vous ne pouvez pas modifier cet élément parce qu\'il se trouve dans la corbeille. Retirez-le de la corbeille avant de le modifier.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Partage impossible</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Vous n\'avez pas les autorisations nécessaires pour partager ce coffre-fort.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">Vous n\'avez pas les autorisations suffisantes pour réaliser cette action.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Vous avez atteint la limite de partage de coffres-forts. Pour en partager davantage, vous devez passer à un abonnement supérieur.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Vous ne pouvez pas partager cet élément parce qu\'il se trouve dans la corbeille. Retirez-le de la corbeille avant de le partager.</string>
   <string name="password_score_vulnerable">Vulnérable</string>
@@ -110,8 +110,8 @@
   <string name="field_detail_display_name_title">Nom d\'affichage</string>
   <string name="display_name_section_description">Il s\'agit du nom d\'affichage lors de l\'envoi d\'un message depuis cet alias.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="one">%1$s transfert</item>
-    <item quantity="other">%1$s transferts</item>
+    <item quantity="one">%1$s transféré</item>
+    <item quantity="other">%1$s transférés</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s réponse</item>
@@ -122,4 +122,5 @@
     <item quantity="other">%1$s bloqués</item>
   </plurals>
   <string name="open_with">Ouvrir avec :</string>
+  <string name="open_attachments_error">La pièce jointe n\'a pu être ouverte.</string>
 </resources>

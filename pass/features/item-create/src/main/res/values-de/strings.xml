@@ -39,8 +39,9 @@
   <string name="create_login_item_update_error">Login konnte nicht aktualisiert werden</string>
   <string name="create_login_init_error">Problem beim Abrufen der Anmeldedaten</string>
   <string name="create_login_invalid_totp">Die 2FA-Inhalte sind ungültig.</string>
-  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_link_attachments_error">Could not add attachments to login</string>
+  <string name="update_login_attachments_init_error">Fehler beim Abrufen der Login-Anhänge.</string>
+  <string name="login_link_attachments_error">Verknüpfen oder aufheben von Anhängen mit der Anmeldung fehlgeschlagen</string>
+  <string name="login_rename_attachments_error">Umbenennen von Login-Anhängen fehlgeschlagen</string>
   <string name="login_created">Login erstellt</string>
   <string name="bottomsheet_modify_alias_title">Alias bearbeiten</string>
   <string name="bottomsheet_custom_field_type_text">Text</string>
@@ -65,8 +66,9 @@
   <string name="create_note_item_creation_error">Notiz konnte nicht erstellt werden</string>
   <string name="create_note_item_update_error">Notiz konnte nicht aktualisiert werden</string>
   <string name="create_note_init_error">Problem beim Abrufen der Notizdetails</string>
-  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_link_attachments_error">Could not add attachments to note</string>
+  <string name="update_note_attachments_init_error">Fehler beim Abrufen der Notiz-Anhänge.</string>
+  <string name="note_link_attachments_error">Verknüpfen oder aufheben von Anhängen mit der Notiz fehlgeschlagen</string>
+  <string name="note_rename_attachments_error">Umbenennung von Notiz-Anhängen fehlgeschlagen</string>
   <string name="note_created">Notiz erstellt</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Alias-Adresse</string>
@@ -83,8 +85,9 @@
   <string name="alias_rate_limited">Zu viele kürzlich erstellte Aliasse.</string>
   <string name="create_alias_item_update_error">Alias konnte nicht aktualisiert werden.</string>
   <string name="create_alias_init_error">Problem beim Abrufen der Aliasdetails</string>
-  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_link_attachments_error">Could not add attachments to alias</string>
+  <string name="update_alias_attachments_init_error">Fehler beim Abrufen der Alias-Anhänge.</string>
+  <string name="alias_link_attachments_error">Verknüpfen oder aufheben von Anhängen mit dem Alias fehlgeschlagen</string>
+  <string name="alias_rename_attachments_error">Umbenennung von Alias-Anhängen fehlgeschlagen</string>
   <string name="alias_created">Alias erstellt</string>
   <string name="cannot_retrieve_alias_options">Fehler beim Abrufen der Alias-Optionen.</string>
   <string name="alias_mailbox_dialog_title">Weiterleiten an</string>
@@ -110,8 +113,9 @@
   <string name="create_credit_card_item_creation_error">Fehler beim Erfassen der Kreditkarte.</string>
   <string name="create_credit_card_item_creation_success">Kreditkarte erfasst.</string>
   <string name="credit_card_init_error">Problem beim Abrufen der Kreditkartendetails</string>
-  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_link_attachments_error">Could not add attachments to credit card</string>
+  <string name="update_credit_card_attachments_init_error">Fehler beim Abrufen der Kreditkarte-Anhänge.</string>
+  <string name="credit_card_link_attachments_error">Verknüpfen oder aufheben von Anhängen mit der Kreditkarte fehlgeschlagen</string>
+  <string name="credit_card_rename_attachments_error">Umbenennung von Kreditkarten-Anhängen fehlgeschlagen</string>
   <string name="credit_card_item_update_error">Fehler beim Aktualisieren der Kreditkarte.</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Vollständiger Name</string>
@@ -169,7 +173,8 @@
   <string name="identity_bottomsheet_add_field">Feld hinzufügen</string>
   <string name="create_identity_init_error">Problem beim Abrufen von Angaben zur Identität</string>
   <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_link_attachments_error">Could not add attachments to identity</string>
+  <string name="identity_link_attachments_error">Verknüpfen oder aufheben von Anhängen mit der Identität fehlgeschlagen</string>
+  <string name="identity_rename_attachments_error">Umbenennung von Identität-Anhängen fehlgeschlagen</string>
   <string name="create_identity_item_creation_error">Fehler beim Erstellen der Identität.</string>
   <string name="create_identity_item_creation_success">Identität erstellt</string>
   <string name="update_identity_item_creation_success">Identität bearbeitet.</string>
@@ -201,4 +206,6 @@
   <string name="banner_title_attachments">Anhänge</string>
   <string name="banner_body_attachments">You can attach files to items for a better organization</string>
   <string name="open_with">Öffnen mit:</string>
+  <string name="open_attachments_error">Could not open attachment</string>
+  <string name="upload_attachments_error">Hochladen des Anhangs der Nachricht fehlgeschlagen</string>
 </resources>

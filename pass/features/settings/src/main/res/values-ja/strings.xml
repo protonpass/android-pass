@@ -9,7 +9,7 @@
   <string name="settings_authentication_preference_description_enabled">指紋を使って、迅速かつ安全にアプリを開きます。</string>
   <string name="settings_authentication_preference_description_no_fingerprint">このデバイスには指紋が登録されていないため、アプリを操作するために指紋を要求することはできません。</string>
   <string name="settings_appearance_preference_title">テーマ</string>
-  <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">マッチシステム</string>
+  <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">システムに合わせる</string>
   <string name="settings_appearance_preference_subtitle_light">ライトモード</string>
   <string name="settings_appearance_preference_subtitle_dark">ダークモード</string>
   <string name="settings_fingerprint_lock_enabled">指紋ロックが有効</string>

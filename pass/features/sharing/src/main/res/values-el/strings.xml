@@ -125,12 +125,8 @@
   <string name="share_with_suggestions_title">Προτάσεις</string>
   <string name="share_with_recents_title">Πρόσφατα</string>
   <string name="share_with_remove_email_content_description">Αφαίρεση email</string>
-  <string name="share_with_user_title">Κοινοποίηση με</string>
-  <string name="share_with_user_description">Μοιραστείτε αυτό το στοιχείο με άλλους χρήστες Proton.</string>
   <string name="share_with_secure_link_title">Μέσω ασφαλούς συνδέσμου</string>
   <string name="share_with_secure_link_description">Δημιουργία ασφαλούς σύνδεσης προς αυτό το στοιχείο.</string>
-  <string name="share_with_vault_title">Ολόκληρη κρύπτη</string>
-  <string name="share_with_vault_description">Μοιραστείτε αυτή την κρύπτη και το περιεχόμενά της.</string>
   <string name="share_with_user_shared_title">Με άλλους χρήστες του Proton Pass</string>
   <string name="share_with_user_shared_description">Χρήσιμο για μόνιμη κοινή χρήση.</string>
   <string name="share_with_manage_shared_item_title">Διαχείριση πρόσβασης</string>

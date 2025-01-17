@@ -38,8 +38,8 @@
   <string name="login_item_monitor_widget_weak_pass_title">Schwaches Kennwort</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Dieses Konto ist angreifbar, besuche den Dienst und ändere dein Passwort.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="one">%d anderes Login verwendet das gleiche Passwort</item>
-    <item quantity="other">%d andere Logins verwenden das gleiche Passwort</item>
+    <item quantity="one">%d other login uses the same password</item>
+    <item quantity="other">%d other logins use the same password</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Richte 2FA für mehr Sicherheit ein</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Dieser Dienst unterstützt 2FA. Aktiviere sie für zusätzliche Kontosicherheit.</string>
@@ -93,7 +93,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Du kannst nur Einträge in deinem ältesten Tresor bearbeiten. Um diesen Artikel zu bearbeiten, aktualisiere bitte auf dein aktuelles Abonnement.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Du kannst diesen Eintrag nicht bearbeiten, da er sich im Papierkorb befindet. Bitte entferne ihn aus dem Papierkorb, um ihn zu bearbeiten.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Teilen nicht möglich</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Deine Berechtigungen reichen nicht aus, um diesen Tresor freizugeben.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">You don\'t have enough permissions to perform this action.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Du hast das Limit für das Teilen von Tresoren erreicht. Um mehr Tresore gemeinsam nutzen zu können, upgrade bitte dein aktueles Abonnement.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Du kannst diesen Eintrag nicht teilen, da er sich im Papierkorb befindet. Bitte entferne ihn aus dem Papierkorb, um ihn zu teilen.</string>
   <string name="password_score_vulnerable">Verwundbar</string>
@@ -110,16 +110,17 @@
   <string name="field_detail_display_name_title">Anzeigename</string>
   <string name="display_name_section_description">Der Anzeigename, wenn eine E-Mail von diesem Alias versendet wird.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="one">%1$s Weitergeleiteter</item>
-    <item quantity="other">%1$s Weitergeleitete</item>
+    <item quantity="one">%1$s forward</item>
+    <item quantity="other">%1$s forwards</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s Antwort</item>
     <item quantity="other">%1$s Antworten</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="one">%1$s Blockierter</item>
-    <item quantity="other">%1$s Blockierte</item>
+    <item quantity="one">%1$s block</item>
+    <item quantity="other">%1$s blocks</item>
   </plurals>
   <string name="open_with">Öffnen mit:</string>
+  <string name="open_attachments_error">Could not open attachment</string>
 </resources>

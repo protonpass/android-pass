@@ -125,12 +125,8 @@
   <string name="share_with_suggestions_title">Forslag</string>
   <string name="share_with_recents_title">Seneste</string>
   <string name="share_with_remove_email_content_description">Fjern e-mail</string>
-  <string name="share_with_user_title">Del med</string>
-  <string name="share_with_user_description">Del dette element med andre Proton-brugere.</string>
   <string name="share_with_secure_link_title">Via sikkert link</string>
   <string name="share_with_secure_link_description">Generer et sikkert link til dette element.</string>
-  <string name="share_with_vault_title">Hele boksen</string>
-  <string name="share_with_vault_description">Del denne boks og dens indhold.</string>
   <string name="share_with_user_shared_title">Med andre Proton Pass-brugere</string>
   <string name="share_with_user_shared_description">Nyttigt til permanent deling.</string>
   <string name="share_with_manage_shared_item_title">Administrer adgang</string>

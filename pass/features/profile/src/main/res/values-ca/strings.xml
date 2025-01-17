@@ -81,4 +81,6 @@
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Heu de canviar a %1$s per gestionar-lo.</string>
   <string name="account_switch_confirmation_title">Gestiona el compte</string>
   <string name="account_switch_confirmation_confirm">Canvia de compte i gestiona-lo</string>
+  <string name="profile_storage_data_title">Emmagatzematge</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s de %2$s</string>
 </resources>

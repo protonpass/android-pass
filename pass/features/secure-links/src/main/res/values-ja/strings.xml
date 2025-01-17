@@ -51,7 +51,7 @@
   <string name="secure_links_list_header_title_inactive">非アクティブなリンク</string>
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">リンクをコピー</string>
-  <string name="secure_links_shared_action_share_link">共有リンク</string>
+  <string name="secure_links_shared_action_share_link">リンクを共有</string>
   <string name="secure_links_shared_action_delete_link">リンクを削除</string>
   <string name="secure_links_shared_action_delete_link_inactive">非アクティブなリンクを削除</string>
   <string name="secure_links_shared_action_delete_links_inactive">全ての非アクティブなリンクを削除</string>

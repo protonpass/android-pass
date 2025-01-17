@@ -81,4 +81,6 @@
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">სამართავად %1$s-ზე უნდა გადახვიდეთ</string>
   <string name="account_switch_confirmation_title">ანგარიშის მართვა</string>
   <string name="account_switch_confirmation_confirm">გადართვა და მართვა</string>
+  <string name="profile_storage_data_title">საცავი</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s %2$s-დან</string>
 </resources>

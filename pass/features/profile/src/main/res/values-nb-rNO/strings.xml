@@ -81,4 +81,6 @@
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Du må bytte til %1$s for å administrere det</string>
   <string name="account_switch_confirmation_title">Administrer konto</string>
   <string name="account_switch_confirmation_confirm">Bytt og administrer</string>
+  <string name="profile_storage_data_title">Lagringsplass</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s av %2$s</string>
 </resources>

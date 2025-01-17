@@ -27,4 +27,12 @@
   <string name="camera_open_error">Nie je možné otvoriť fotoaparát</string>
   <string name="camera_permission_explanation">Na sprístupnenie tejto funkcie sa vyžaduje prístup k fotoaparátu.</string>
   <string name="camera_permission_open_settings">Otvoriť nastavenia</string>
+  <string name="delete_all_attachments_title">Vymazať všetky prílohy?</string>
+  <string name="delete_all_attachments_subtitle">Túto akciu nie je možné vrátiť späť</string>
+  <string name="delete_all_attachments_confirm">Výmazať všetko</string>
+  <string name="rename_attachment_dialog_title">Premenovať súbor</string>
+  <string name="storage_full_title">Vaše úložisko je takmer plné.</string>
+  <string name="storage_full_body">Upgradujte a zvýšte kapacitu úložiska.</string>
+  <string name="storage_full_upgrade">Navýšiť predplatné</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s z %2$s</string>
 </resources>

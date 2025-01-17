@@ -4,6 +4,8 @@
   <string name="autofill_notification_channel_name">Αυτόματη συμπλήρωση</string>
   <string name="autofill_notification_copy_to_clipboard_title">Κωδικός TOTP</string>
   <string name="autofill_notification_copy_to_clipboard_body">Ο TOTP έχει αντιγραφεί στο πρόχειρο</string>
-  <string name="updates_new_invite_received_title">Λάβατε μια πρόσκληση</string>
-  <string name="updates_new_invite_received_message">Έχετε προσκληθεί σε μία κρύπτη. Ανοίξτε την εφαρμογή για να δείτε την πρόσκληση και να την αποδεχτείτε.</string>
+  <string name="new_item_invite_notification_title">Ελήφθη πρόσκληση νέου στοιχείου</string>
+  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">Ο %s θέλει να μοιραστεί μαζί σας ένα αντικείμενο.</string>
+  <string name="new_vault_invite_notification_title">Ελήφθη πρόσκληση νέας κρύπτης</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">Ο %s θέλει να μοιραστεί μαζί σας μια κοινόχρηστη κρύπτη.</string>
 </resources>

@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Bạn chỉ có thể chỉnh sửa nội dung trong các kho lưu trữ cũ nhất của mình. Để chỉnh sửa nội dung này, vui lòng nâng cấp gói của bạn.</string>
   <string name="item_details_forbidden_actions_share_title">Không thể chia sẽ</string>
   <string name="item_details_forbidden_actions_share_limit">Bạn đã đạt đến giới hạn chia sẻ kho. Để chia sẻ nhiều kho hơn, vui lòng nâng cấp gói hiện tại của bạn.</string>
-  <string name="item_details_forbidden_actions_share_permission">Bạn không có đủ quyền để chia sẻ kho lưu trữ này.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">You don\'t have enough permissions to perform this action.</string>
   <string name="item_details_forbidden_actions_share_trash">Bạn không thể chia sẻ mục này vì nó nằm trong thùng rác. Vui lòng di chuyển nó ra khỏi thùng rác trước khi chỉnh sửa nó.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">Leave this Item?</string>
+  <string name="item_details_leave_dialog_message">You will lose access to this item and its details. Do you want to continue?</string>
+  <string name="item_details_leave_item_message_error">There was an error leaving the item</string>
+  <string name="item_details_leave_item_message_success">Item successfully left</string>
 </resources>

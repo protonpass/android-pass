@@ -35,6 +35,7 @@
   <string name="bottomsheet_copy_item_note">Copiere notiță</string>
   <string name="bottomsheet_delete_permanently">Ștergere permanentă</string>
   <string name="bottomsheet_restore">Restaurare</string>
+  <string name="bottomsheet_leave">Părăsire</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Meniu acțiune deschidere articol</string>
   <string name="action_upgrade_now">Modificare</string>
@@ -294,4 +295,7 @@
   <string name="attachment_title">Atașamente</string>
   <string name="attachment_no_files">Încărcare fișiere din dispozitiv</string>
   <string name="attachment_add_file">Atașare fișier</string>
+  <string name="attachment_row_upload_failed">Încărcare eșuată</string>
+  <string name="attachment_row_retry">Reîncercare</string>
+  <string name="options_menu_content_description">Meniu opțiuni</string>
 </resources>

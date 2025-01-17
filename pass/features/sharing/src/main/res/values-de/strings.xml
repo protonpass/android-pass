@@ -32,9 +32,9 @@
     <item quantity="other">%d Mitglieder</item>
   </plurals>
   <string name="sharing_member_count_header">Mitglieder</string>
-  <string name="shared_via_title">Shared via</string>
+  <string name="shared_via_title">Geteilt über</string>
   <string name="shared_via_item_member_count_header">Item sharing</string>
-  <string name="shared_via_vault_member_count_header">Vault sharing</string>
+  <string name="shared_via_vault_member_count_header">Tresore teilen</string>
   <string name="share_with_title">Teilen mit</string>
   <string name="share_with_email_hint">E‐Mail‐Adresse</string>
   <string name="share_with_email_error">Ungültige E-Mail-Adresse</string>
@@ -43,12 +43,12 @@
   <string name="share_permissions_title">Zugriffsstufe festlegen</string>
   <string name="sharing_reject_invitation">Einladung ablehnen</string>
   <string name="sharing_vault_invitation_title">Geteilte Tresoreinladung</string>
-  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share a vault with you.</string>
+  <string name="sharing_vault_invitation_subtitle" comment="placeholder is replaced by an email address">%s möchte einen Tresor mit dir teilen.</string>
   <string name="sharing_vault_invitation_accept">Freigegebenem Tresor beitreten</string>
   <string name="sharing_item_invitation_title">Shared item invitation</string>
-  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s wants to share an item with you.</string>
+  <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s möchte etwas mit dir teilen.</string>
   <string name="sharing_item_invitation_accept">Accept and view the item</string>
-  <string name="sharing_invite_more">Invite more…</string>
+  <string name="sharing_invite_more">Weitere einladen…</string>
   <string name="sharing_snackbar_invite_accepted">Einladung angenommen</string>
   <string name="sharing_snackbar_invite_accept_error">Fehler beim Annehmen der Einladung.</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Die Einladung konnte nicht angenommen werden, da du bereits die zulässige Anzahl an Tresoren erreicht hast.</string>
@@ -61,8 +61,8 @@
   <string name="sharing_snackbar_change_permission_error">Fehler beim Ändern der Berechtigungen.</string>
   <string name="sharing_snackbar_remove_member_success">Mitglied aus dem Tresor entfernt.</string>
   <string name="sharing_snackbar_remove_member_error">Fehler beim Entfernen aus dem Tresor.</string>
-  <string name="sharing_snackbar_fetch_member_error">There was an error fetching members</string>
-  <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
+  <string name="sharing_snackbar_fetch_member_error">Fehler beim Abrufen der Mitglieder.</string>
+  <string name="sharing_snackbar_fetch_pending_invites_error">Fehler beim Abrufen der ausstehenden Einladungen.</string>
   <string name="share_summary_title">Überprüfen und teilen</string>
   <string name="share_summary_vault">%s Tresor</string>
   <string name="share_summary_share_vault">Tresor teilen</string>
@@ -125,18 +125,14 @@
   <string name="share_with_suggestions_title">Vorschläge</string>
   <string name="share_with_recents_title">Kürzlich</string>
   <string name="share_with_remove_email_content_description">E-Mail entfernen</string>
-  <string name="share_with_user_title">Teilen mit</string>
-  <string name="share_with_user_description">Share this item with other Proton users.</string>
   <string name="share_with_secure_link_title">Über sicheren Link</string>
   <string name="share_with_secure_link_description">Einen sicheren Link zu diesem Eintrag generieren.</string>
-  <string name="share_with_vault_title">Entire vault</string>
-  <string name="share_with_vault_description">Share this vault and its content.</string>
-  <string name="share_with_user_shared_title">With other Proton Pass users</string>
-  <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
-  <string name="share_with_manage_shared_item_title">Manage access</string>
-  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
-  <string name="share_with_secure_link_shared_title">Via a secure link</string>
-  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
+  <string name="share_with_user_shared_title">Mit anderen Proton Pass-Benutzern</string>
+  <string name="share_with_user_shared_description">Nützlich für permanentes Teilen.</string>
+  <string name="share_with_manage_shared_item_title">Zugriff verwalten</string>
+  <string name="share_with_manage_shared_item_description">Übersicht über Mitglieder und Berechtigungen anzeigen.</string>
+  <string name="share_with_secure_link_shared_title">Über einen sicheren Link</string>
+  <string name="share_with_secure_link_shared_description">Für einmaliges Teilen.</string>
   <string name="share_with_manage_shared_vault_title">Tresorzugriff verwalten</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Der Tresor dieses Eintrags ist derzeit mit %d Benutzer geteilt.</item>

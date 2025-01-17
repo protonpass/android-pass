@@ -95,7 +95,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Вы можете редактировать элементы только в самых старых хранилищах. Чтобы отредактировать этот элемент, пожалуйста, обновите текущий тариф.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Вы не можете отредактировать этот элемент, потому что он находится в корзине. Пожалуйста, переместите его из корзины, прежде чем редактировать.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Невозможно поделиться</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">У вас недостаточно прав для совместного использования этого хранилища.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">You don\'t have enough permissions to perform this action.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Вы достигли предела общего доступа к хранилищу. Для того, чтобы поделиться большим количеством хранилищ, улучшите ваш текущий тариф.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Вы не можете поделиться этим элементом, потому что он находится в корзине. Переместите его из корзины перед тем, как делиться доступом.</string>
   <string name="password_score_vulnerable">Уязвимый</string>
@@ -112,22 +112,23 @@
   <string name="field_detail_display_name_title">Отображаемое имя</string>
   <string name="display_name_section_description">The display name when sending an email from this alias.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="one">%1$s forward</item>
-    <item quantity="few">%1$s forwards</item>
-    <item quantity="many">%1$s forwards</item>
-    <item quantity="other">%1$s forwards</item>
+    <item quantity="one">%1$s пересылка</item>
+    <item quantity="few">%1$s пересылки</item>
+    <item quantity="many">%1$s пересылок</item>
+    <item quantity="other">%1$s пересылок</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="one">%1$s reply</item>
-    <item quantity="few">%1$s replies</item>
-    <item quantity="many">%1$s replies</item>
-    <item quantity="other">%1$s replies</item>
+    <item quantity="one">%1$s ответ</item>
+    <item quantity="few">%1$s ответа</item>
+    <item quantity="many">%1$s ответов</item>
+    <item quantity="other">%1$s ответов</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="one">%1$s block</item>
-    <item quantity="few">%1$s blocks</item>
-    <item quantity="many">%1$s blocks</item>
-    <item quantity="other">%1$s blocks</item>
+    <item quantity="one">%1$s блокировка</item>
+    <item quantity="few">%1$s блокировки</item>
+    <item quantity="many">%1$s блокировок</item>
+    <item quantity="other">%1$s блокировок</item>
   </plurals>
   <string name="open_with">Открыть с помощью:</string>
+  <string name="open_attachments_error">Could not open attachment</string>
 </resources>

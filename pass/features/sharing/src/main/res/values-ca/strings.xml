@@ -48,7 +48,7 @@
   <string name="sharing_item_invitation_title">Invitació a un element compartit</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s vol compartir un element amb vosaltres.</string>
   <string name="sharing_item_invitation_accept">Accepta i mostra l\'element</string>
-  <string name="sharing_invite_more">Inviteu més persones...</string>
+  <string name="sharing_invite_more">Convideu més persones...</string>
   <string name="sharing_snackbar_invite_accepted">Invitació acceptada</string>
   <string name="sharing_snackbar_invite_accept_error">S\'ha produït un error en acceptar la invitació</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">No s\'ha pogut acceptar la invitació perquè heu arribat al límit de la caixa forta</string>
@@ -125,12 +125,8 @@
   <string name="share_with_suggestions_title">Suggeriments</string>
   <string name="share_with_recents_title">Recents</string>
   <string name="share_with_remove_email_content_description">Esborra el correu electrònic</string>
-  <string name="share_with_user_title">Comparteix amb</string>
-  <string name="share_with_user_description">Compartiu aquest article amb altres usuaris de Proton.</string>
   <string name="share_with_secure_link_title">Mitjançant un enllaç segur</string>
   <string name="share_with_secure_link_description">Generar un enllaç segur a aquest element.</string>
-  <string name="share_with_vault_title">Caixa forta sencera</string>
-  <string name="share_with_vault_description">Compartiu aquesta caixa forta i el seu contingut.</string>
   <string name="share_with_user_shared_title">Amb altres usuaris de Proton Pass</string>
   <string name="share_with_user_shared_description">Útil per compartir permanentment.</string>
   <string name="share_with_manage_shared_item_title">Gestiona l\'accés</string>

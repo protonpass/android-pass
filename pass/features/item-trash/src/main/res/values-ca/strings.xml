@@ -20,4 +20,9 @@
   <!-- Delete dialog -->
   <string name="item_trash_delete_dialog_title">Voleu eliminar-lo permanentment?</string>
   <string name="item_trash_delete_dialog_message">Aquesta acció és irreversible</string>
+  <!-- Shared warning dialog -->
+  <string name="item_trash_warning_shared_dialog_title">Voleu moure l\'element a la paperera?</string>
+  <string name="item_trash_warning_shared_dialog_message">Aquest element està compartit actualment. Moure-ho a la paperera eliminarà l\'accés per a tots els altres usuaris.</string>
+  <string name="item_trash_warning_shared_snackbar_trash_error">S\'ha produït un error en moure l\'element a la paperera.</string>
+  <string name="item_trash_warning_shared_snackbar_trash_success">S\'ha mogut l\'element a la paperera.</string>
 </resources>

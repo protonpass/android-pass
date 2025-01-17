@@ -54,4 +54,5 @@
   <string name="item_details_snackbar_message_yahoo_copied">Se ha copiado la cuenta Yahoo.</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">Se ha copiado el código postal.</string>
   <string name="open_with">Abrir con:</string>
+  <string name="open_attachments_error">Error al abrir el archivo adjunto</string>
 </resources>

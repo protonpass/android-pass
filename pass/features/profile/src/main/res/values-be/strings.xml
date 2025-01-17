@@ -87,4 +87,6 @@
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Пераключыцеся на %1$s, каб кіраваць гэтым уліковым запісам</string>
   <string name="account_switch_confirmation_title">Кіраванне ўліковым запісам</string>
   <string name="account_switch_confirmation_confirm">Пераключыць і кіраваць</string>
+  <string name="profile_storage_data_title">Сховішча</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s з %2$s</string>
 </resources>

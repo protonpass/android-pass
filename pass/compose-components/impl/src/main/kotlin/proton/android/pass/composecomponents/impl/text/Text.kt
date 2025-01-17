@@ -22,6 +22,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -36,6 +37,7 @@ import me.proton.core.compose.theme.headlineNorm
 import me.proton.core.compose.theme.overlineNorm
 import me.proton.core.compose.theme.subheadlineNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.commonui.api.body3Medium
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.body3Weak
@@ -92,8 +94,27 @@ object Text {
         overflow: TextOverflow = TextOverflow.Clip,
         textAlign: TextAlign = TextAlign.Start
     ) {
+        Body1Regular(
+            annotatedText = text.asAnnotatedString(),
+            modifier = modifier,
+            color = color,
+            maxLines = maxLines,
+            overflow = overflow,
+            textAlign = textAlign
+        )
+    }
+
+    @Composable
+    fun Body1Regular(
+        annotatedText: AnnotatedString,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.colors.textNorm,
+        maxLines: Int = Int.MAX_VALUE,
+        overflow: TextOverflow = TextOverflow.Clip,
+        textAlign: TextAlign = TextAlign.Start
+    ) {
         Text(
-            text = text,
+            text = annotatedText,
             style = ProtonTheme.typography.defaultNorm.copy(color = color),
             modifier = modifier,
             maxLines = maxLines,

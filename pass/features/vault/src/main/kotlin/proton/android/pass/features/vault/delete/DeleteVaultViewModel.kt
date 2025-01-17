@@ -27,16 +27,22 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetVaultByShareId
+import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveEncryptedItems
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareSelection
 import proton.android.pass.features.vault.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -45,13 +51,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DeleteVaultViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    observeEncryptedItems: ObserveEncryptedItems,
     private val getVaultByShareId: GetVaultByShareId,
     private val deleteVault: DeleteVault,
-    private val savedStateHandle: SavedStateHandle,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
-    private val shareId = getNavShareId()
+    private val shareId: ShareId = savedStateHandle
+        .require<String>(CommonNavArgId.ShareId.key)
+        .let(::ShareId)
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -64,18 +73,28 @@ class DeleteVaultViewModel @Inject constructor(
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
 
-    val state: StateFlow<DeleteVaultUiState> = combine(
+    private val sharedItemsCountFlow = observeEncryptedItems(
+        selection = ShareSelection.Share(shareId),
+        itemState = ItemState.Active,
+        filter = ItemTypeFilter.All
+    ).mapLatest { encryptedItems ->
+        encryptedItems.filter { it.isShared }.size
+    }
+
+    internal val state: StateFlow<DeleteVaultUiState> = combine(
         vaultNameFlow,
         eventFlow,
         formFlow,
-        isLoadingState
-    ) { vaultName, event, form, isLoadingState ->
+        isLoadingState,
+        sharedItemsCountFlow
+    ) { vaultName, event, form, isLoadingState, sharedItemsCount ->
         DeleteVaultUiState(
             event = event,
             vaultText = form.text,
             isButtonEnabled = form.isButtonEnabled,
             isLoadingState = isLoadingState,
-            vaultName = vaultName
+            vaultName = vaultName,
+            sharedItemsCount = sharedItemsCount
         )
 
     }.stateIn(
@@ -84,29 +103,33 @@ class DeleteVaultViewModel @Inject constructor(
         initialValue = DeleteVaultUiState.Initial
     )
 
-    fun onStart() = viewModelScope.launch(coroutineExceptionHandler) {
-        getVaultByShareId(shareId = shareId)
-            .asLoadingResult()
-            .collect { res ->
-                when (res) {
-                    LoadingResult.Loading -> {
-                        isLoadingState.update { IsLoadingState.Loading }
-                    }
-                    is LoadingResult.Error -> {
-                        PassLogger.w(TAG, "Error getting vault by id")
-                        PassLogger.w(TAG, res.exception)
-                        snackbarDispatcher(VaultSnackbarMessage.CannotRetrieveVaultError)
-                        isLoadingState.update { IsLoadingState.NotLoading }
-                    }
-                    is LoadingResult.Success -> {
-                        vaultNameFlow.update { res.data.name }
-                        isLoadingState.update { IsLoadingState.NotLoading }
+    internal fun onStart() {
+        viewModelScope.launch(coroutineExceptionHandler) {
+            getVaultByShareId(shareId = shareId)
+                .asLoadingResult()
+                .collect { res ->
+                    when (res) {
+                        LoadingResult.Loading -> {
+                            isLoadingState.update { IsLoadingState.Loading }
+                        }
+
+                        is LoadingResult.Error -> {
+                            PassLogger.w(TAG, "Error getting vault by id")
+                            PassLogger.w(TAG, res.exception)
+                            snackbarDispatcher(VaultSnackbarMessage.CannotRetrieveVaultError)
+                            isLoadingState.update { IsLoadingState.NotLoading }
+                        }
+
+                        is LoadingResult.Success -> {
+                            vaultNameFlow.update { res.data.name }
+                            isLoadingState.update { IsLoadingState.NotLoading }
+                        }
                     }
                 }
-            }
+        }
     }
 
-    fun onTextChange(text: String) {
+    internal fun onTextChange(text: String) {
         formFlow.update {
             FormState(
                 text = text,
@@ -115,25 +138,23 @@ class DeleteVaultViewModel @Inject constructor(
         }
     }
 
-    fun onDelete() = viewModelScope.launch {
-        isLoadingState.update { IsLoadingState.Loading }
-        runCatching { deleteVault.invoke(shareId) }
-            .onSuccess {
-                snackbarDispatcher(VaultSnackbarMessage.DeleteVaultSuccess)
-                eventFlow.update { DeleteVaultEvent.Deleted }
-            }
-            .onFailure {
-                PassLogger.w(TAG, "Error deleting vault")
-                PassLogger.w(TAG, it)
-                snackbarDispatcher(VaultSnackbarMessage.DeleteVaultError)
-            }
-        isLoadingState.update { IsLoadingState.NotLoading }
-    }
+    internal fun onDelete() {
+        viewModelScope.launch {
+            isLoadingState.update { IsLoadingState.Loading }
 
-    private fun getNavShareId(): ShareId {
-        val arg = savedStateHandle.get<String>(CommonNavArgId.ShareId.key)
-            ?: throw IllegalStateException("Missing ShareID nav argument")
-        return ShareId(arg)
+            runCatching { deleteVault.invoke(shareId) }
+                .onSuccess {
+                    snackbarDispatcher(VaultSnackbarMessage.DeleteVaultSuccess)
+                    eventFlow.update { DeleteVaultEvent.Deleted }
+                }
+                .onFailure {
+                    PassLogger.w(TAG, "Error deleting vault")
+                    PassLogger.w(TAG, it)
+                    snackbarDispatcher(VaultSnackbarMessage.DeleteVaultError)
+                }
+
+            isLoadingState.update { IsLoadingState.NotLoading }
+        }
     }
 
     private data class FormState(
@@ -148,8 +169,10 @@ class DeleteVaultViewModel @Inject constructor(
         }
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "DeleteVaultViewModel"
+
     }
 
 }

@@ -7,6 +7,7 @@
     <bool name="core_feature_notifications_enabled">true</bool>
     <!-- Show system Notification permission request dialog after login. -->
     <bool name="core_feature_notifications_permission_request_enabled">false</bool>
+    <integer name="core_feature_auth_user_check_max_free_user_count">99</integer>
 
     <bool name="leak_canary_add_dynamic_shortcut">false</bool>
     <bool name="pass_passkeys_enabled">true</bool>

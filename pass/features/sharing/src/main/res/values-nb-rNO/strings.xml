@@ -64,8 +64,7 @@
   <string name="sharing_snackbar_fetch_member_error">Det oppstod en feil under henting av medlemmer</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Det oppstod en feil under henting av ventende invitasjoner</string>
   <string name="share_summary_title">Se over og del</string>
-  <string name="share_summary_vault">%s hvelv</string>
-  <string name="share_summary_share_vault">Del hvelv</string>
+    <string name="share_summary_share_vault">Del hvelv</string>
   <string name="share_summary_share_item">Del element</string>
   <string name="share_summary_vault_title">Hvelv</string>
   <string name="share_summary_item_title">Element</string>

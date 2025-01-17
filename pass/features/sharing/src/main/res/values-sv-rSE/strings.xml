@@ -64,8 +64,7 @@
   <string name="sharing_snackbar_fetch_member_error">Det gick inte hämta medlemmar</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Det gick inte hämta väntade inbjudningar</string>
   <string name="share_summary_title">Granska och dela</string>
-  <string name="share_summary_vault">%s valv</string>
-  <string name="share_summary_share_vault">Dela valv</string>
+    <string name="share_summary_share_vault">Dela valv</string>
   <string name="share_summary_share_item">Dela objekt</string>
   <string name="share_summary_vault_title">Valv</string>
   <string name="share_summary_item_title">Objekt</string>

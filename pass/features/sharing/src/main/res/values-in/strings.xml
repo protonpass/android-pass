@@ -62,8 +62,7 @@
   <string name="sharing_snackbar_fetch_member_error">Terdapat masalah dalam memperoleh anggota</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Terdapat masalah dalam memperoleh undangan yang menunggu untuk dijawab</string>
   <string name="share_summary_title">Kaji dan bagikan</string>
-  <string name="share_summary_vault">%s brankas</string>
-  <string name="share_summary_share_vault">Bagikan brankas</string>
+    <string name="share_summary_share_vault">Bagikan brankas</string>
   <string name="share_summary_share_item">Bagikan item</string>
   <string name="share_summary_vault_title">Brankas</string>
   <string name="share_summary_item_title">Item</string>

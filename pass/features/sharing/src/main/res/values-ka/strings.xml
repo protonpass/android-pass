@@ -83,8 +83,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">მოწვევები</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">წევრები</string>
   <string name="share_manage_vault_current_user_indicator">თქვენ</string>
-  <string name="share_role_can_view">შეუძლია, ნახოს</string>
-  <string name="share_role_can_edit">შეუძლია, ჩაასწოროს</string>
+  <string name="share_role_viewer">შეუძლია, ნახოს</string>
+  <string name="share_role_editor">შეუძლია, ჩაასწოროს</string>
   <string name="share_role_admin">ადმინისტრატორი</string>
   <string name="share_role_owner">მფლობელი</string>
   <string name="sharing_bottomsheet_transfer_ownership">მფლობელობის გადაცემა</string>

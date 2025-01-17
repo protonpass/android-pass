@@ -83,8 +83,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Προσκλήσεις</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Μέλη</string>
   <string name="share_manage_vault_current_user_indicator">Εσείς</string>
-  <string name="share_role_can_view">Δυνατότητα προβολής</string>
-  <string name="share_role_can_edit">Δυνατότητα επεξεργασίας</string>
+  <string name="share_role_viewer">Δυνατότητα προβολής</string>
+  <string name="share_role_editor">Δυνατότητα επεξεργασίας</string>
   <string name="share_role_admin">Διαχειριστής</string>
   <string name="share_role_owner">Ιδιοκτήτης</string>
   <string name="sharing_bottomsheet_transfer_ownership">Μεταβίβαση κυριότητας</string>

@@ -20,13 +20,13 @@ package proton.android.pass.features.sharing.common
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import proton.android.pass.features.sharing.R
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.features.sharing.R
 
 @Composable
 fun ShareRole.toShortSummary(): String = when (this) {
     ShareRole.Admin -> stringResource(R.string.share_role_admin)
     is ShareRole.Custom -> ""
-    ShareRole.Read -> stringResource(R.string.share_role_can_view)
-    ShareRole.Write -> stringResource(R.string.share_role_can_edit)
+    ShareRole.Read -> stringResource(R.string.share_role_viewer)
+    ShareRole.Write -> stringResource(R.string.share_role_editor)
 }

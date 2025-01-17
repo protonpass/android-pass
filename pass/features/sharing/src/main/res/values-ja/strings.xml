@@ -79,8 +79,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">招待</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">メンバー</string>
   <string name="share_manage_vault_current_user_indicator">あなた</string>
-  <string name="share_role_can_view">閲覧可能</string>
-  <string name="share_role_can_edit">編集可能</string>
+  <string name="share_role_viewer">閲覧可能</string>
+  <string name="share_role_editor">編集可能</string>
   <string name="share_role_admin">管理者</string>
   <string name="share_role_owner">所有者</string>
   <string name="sharing_bottomsheet_transfer_ownership">所有権の移転</string>

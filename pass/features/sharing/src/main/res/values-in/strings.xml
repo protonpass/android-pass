@@ -79,8 +79,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Undangan</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Anggota</string>
   <string name="share_manage_vault_current_user_indicator">Anda</string>
-  <string name="share_role_can_view">Dapat melihat</string>
-  <string name="share_role_can_edit">Dapat menyunting</string>
+  <string name="share_role_viewer">Dapat melihat</string>
+  <string name="share_role_editor">Dapat menyunting</string>
   <string name="share_role_admin">Admin</string>
   <string name="share_role_owner">Pemilik</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transfer kepemilikan</string>

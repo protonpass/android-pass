@@ -110,8 +110,8 @@
         comment="Text that will be used as the title of the list containing the members of a vault"
     >Members</string>
     <string name="share_manage_vault_current_user_indicator">You</string>
-    <string name="share_role_can_view">Can view</string>
-    <string name="share_role_can_edit">Can edit</string>
+    <string name="share_role_viewer">Viewer</string>
+    <string name="share_role_editor">Editor</string>
     <string name="share_role_admin">Admin</string>
     <string name="share_role_owner">Owner</string>
 

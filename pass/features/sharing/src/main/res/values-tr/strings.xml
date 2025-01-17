@@ -83,8 +83,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Davetler</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Üyeler</string>
   <string name="share_manage_vault_current_user_indicator">Siz</string>
-  <string name="share_role_can_view">Görüntüleyebilir</string>
-  <string name="share_role_can_edit">Düzenleyebilir</string>
+  <string name="share_role_viewer">Görüntüleyebilir</string>
+  <string name="share_role_editor">Düzenleyebilir</string>
   <string name="share_role_admin">Yönetici</string>
   <string name="share_role_owner">Sahibi</string>
   <string name="sharing_bottomsheet_transfer_ownership">Sahipliği aktar</string>

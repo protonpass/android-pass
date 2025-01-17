@@ -328,11 +328,11 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
 
                 is VaultNavigation.VaultEdit,
                 is VaultNavigation.VaultMigrate,
+                is VaultNavigation.VaultMigrateSharedWarning,
                 is VaultNavigation.VaultRemove,
                 is VaultNavigation.VaultShare,
                 is VaultNavigation.VaultLeave,
-                is VaultNavigation.VaultAccess -> {
-                }
+                is VaultNavigation.VaultAccess -> Unit
             }
         }
     )

@@ -20,10 +20,25 @@ package proton.android.pass.features.vault.bottomsheet.options
 
 import proton.android.pass.domain.ShareId
 
-sealed class VaultOptionsUiState {
-    data object Uninitialised : VaultOptionsUiState()
-    data object Loading : VaultOptionsUiState()
-    data object Error : VaultOptionsUiState()
+internal sealed interface VaultOptionsUiState {
+
+    val event: VaultOptionsEvent
+
+    data object Uninitialised : VaultOptionsUiState {
+
+        override val event: VaultOptionsEvent = VaultOptionsEvent.Idle
+    }
+
+    data object Loading : VaultOptionsUiState {
+
+        override val event: VaultOptionsEvent = VaultOptionsEvent.Idle
+    }
+
+    data object Error : VaultOptionsUiState {
+
+        override val event: VaultOptionsEvent = VaultOptionsEvent.Idle
+    }
+
     data class Success(
         val shareId: ShareId,
         val showEdit: Boolean,
@@ -32,6 +47,8 @@ sealed class VaultOptionsUiState {
         val showShare: Boolean,
         val showLeave: Boolean,
         val showManageAccess: Boolean,
-        val showViewMembers: Boolean
-    ) : VaultOptionsUiState()
+        val showViewMembers: Boolean,
+        override val event: VaultOptionsEvent
+    ) : VaultOptionsUiState
+
 }

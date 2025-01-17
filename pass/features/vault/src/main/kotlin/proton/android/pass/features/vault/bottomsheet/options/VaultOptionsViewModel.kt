@@ -22,22 +22,30 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveEncryptedItems
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
 import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareShare
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.Vault
 import proton.android.pass.features.vault.VaultSnackbarMessage.CannotFindVaultError
 import proton.android.pass.features.vault.VaultSnackbarMessage.CannotGetVaultListError
@@ -53,20 +61,27 @@ class VaultOptionsViewModel @Inject constructor(
     canShareShare: CanShareShare,
     canMigrateVault: CanMigrateVault,
     canManageVaultAccess: CanManageVaultAccess,
-    savedStateHandle: SavedStateHandleProvider
+    savedStateHandle: SavedStateHandleProvider,
+    private val observeEncryptedItems: ObserveEncryptedItems
 ) : ViewModel() {
 
-    private val navShareId: ShareId =
-        ShareId(savedStateHandle.get().require(CommonNavArgId.ShareId.key))
+    private val navShareId: ShareId = savedStateHandle.get()
+        .require<String>(CommonNavArgId.ShareId.key)
+        .let(::ShareId)
 
     private val canShare: Flow<Boolean> = flow { emit(canShareShare(navShareId)) }
         .map { it.value }
         .distinctUntilChanged()
 
-    val state: StateFlow<VaultOptionsUiState> = combine(
+    private val eventFlow = MutableStateFlow<VaultOptionsEvent>(
+        value = VaultOptionsEvent.Idle
+    )
+
+    internal val state: StateFlow<VaultOptionsUiState> = combine(
         observeVaults().asLoadingResult(),
-        canShare
-    ) { vaultResult, canShare ->
+        canShare,
+        eventFlow
+    ) { vaultResult, canShare, event ->
         val (allVaults, selectedVault) = when (vaultResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(CannotGetVaultListError)
@@ -109,13 +124,39 @@ class VaultOptionsViewModel @Inject constructor(
             showShare = showShare,
             showLeave = canLeave,
             showManageAccess = showManageAccess,
-            showViewMembers = showViewMembers
+            showViewMembers = showViewMembers,
+            event = event
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = VaultOptionsUiState.Uninitialised
     )
+
+    internal fun onEventConsumed(event: VaultOptionsEvent) {
+        eventFlow.compareAndSet(event, VaultOptionsEvent.Idle)
+    }
+
+    internal fun onMigrateVault() {
+        viewModelScope.launch {
+            observeEncryptedItems(
+                selection = ShareSelection.Share(navShareId),
+                itemState = ItemState.Active,
+                filter = ItemTypeFilter.All
+            )
+                .first()
+                .any { itemEncrypted -> itemEncrypted.isShared }
+                .also { hasSharedItems ->
+                    if (hasSharedItems) {
+                        VaultOptionsEvent.OnMigrateVaultItemsSharedWarning(navShareId)
+                    } else {
+                        VaultOptionsEvent.OnMigrateVaultItems(navShareId)
+                    }.also { event ->
+                        eventFlow.update { event }
+                    }
+                }
+        }
+    }
 
     private fun canDeleteVault(allVaults: List<Vault>, selectedVault: Vault): Boolean {
         val ownedVaultsCount = allVaults.count { it.isOwned }
@@ -126,7 +167,10 @@ class VaultOptionsViewModel @Inject constructor(
         }
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "VaultOptionsViewModel"
+
     }
+
 }

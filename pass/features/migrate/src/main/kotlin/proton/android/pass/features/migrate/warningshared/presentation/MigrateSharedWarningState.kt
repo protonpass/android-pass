@@ -19,19 +19,30 @@
 package proton.android.pass.features.migrate.warningshared.presentation
 
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.items.MigrationItemsSelection
 
 internal data class MigrateSharedWarningState(
     internal val event: MigrateSharedWarningEvent,
-    private val isLoadingState: IsLoadingState
+    private val isLoadingState: IsLoadingState,
+    private val migrationItemsSelection: MigrationItemsSelection
 ) {
 
     internal val isLoading: Boolean = isLoadingState.value()
+
+    internal val totalItemsCount: Int = migrationItemsSelection.itemsCount
+
+    internal val sharedItemsCount: Int = migrationItemsSelection.sharedItemsCount
+
+    internal val isSingleSharedItem: Boolean = totalItemsCount == 1
 
     internal companion object {
 
         internal val Initial: MigrateSharedWarningState = MigrateSharedWarningState(
             event = MigrateSharedWarningEvent.Idle,
-            isLoadingState = IsLoadingState.NotLoading
+            isLoadingState = IsLoadingState.NotLoading,
+            migrationItemsSelection = MigrationItemsSelection(
+                items = emptyList()
+            )
         )
 
     }

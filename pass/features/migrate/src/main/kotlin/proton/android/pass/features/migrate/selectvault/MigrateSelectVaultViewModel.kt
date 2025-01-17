@@ -57,27 +57,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MigrateSelectVaultViewModel @Inject constructor(
-    savedStateHandleProvider: SavedStateHandleProvider,
+    private val savedStateHandle: SavedStateHandleProvider,
     bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     observeVaults: ObserveVaultsWithItemCount,
     snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
-    private val migrateMode: MigrateModeValue = savedStateHandleProvider.get()
-        .require(MigrateModeArg.key)
-
-    private val mode: Mode = when (migrateMode) {
-        MigrateModeValue.SelectedItems -> Mode.MigrateSelectedItems(
-            filter = savedStateHandleProvider.get()
-                .require(MigrateVaultFilterArg.key)
-        )
-
-        MigrateModeValue.AllVaultItems -> Mode.MigrateAllItems(
-            shareId = savedStateHandleProvider.get()
-                .require<String>(CommonNavArgId.ShareId.key)
-                .let(::ShareId)
-        )
-    }
+    private val mode: Mode = getMode()
 
     private val eventFlow: MutableStateFlow<Option<SelectVaultEvent>> = MutableStateFlow(None)
 
@@ -196,6 +182,24 @@ class MigrateSelectVaultViewModel @Inject constructor(
                         reason = VaultStatus.DisabledReason.SameVault
                     )
                 )
+            }
+        }
+    }
+
+    private fun getMode(): Mode {
+        val savedState = savedStateHandle.get()
+        return when (MigrateModeValue.valueOf(savedState.require(MigrateModeArg.key))) {
+            MigrateModeValue.SelectedItems -> {
+                Mode.MigrateSelectedItems(
+                    filter = MigrateVaultFilter.valueOf(
+                        savedState.require(MigrateVaultFilterArg.key)
+                    )
+                )
+            }
+
+            MigrateModeValue.AllVaultItems -> {
+                val sourceShareId = ShareId(savedState.require(CommonNavArgId.ShareId.key))
+                Mode.MigrateAllItems(sourceShareId)
             }
         }
     }

@@ -40,11 +40,15 @@ fun MigrateSharedWarningDialog(
         when (val event = state.event) {
             MigrateSharedWarningEvent.Idle -> Unit
 
-            is MigrateSharedWarningEvent.OnMigrated -> {
-                MigrateNavigation.VaultSelection(
-                    migrateModeValue = event.migrateModeValue,
-                    shareId = event.shareId,
+            is MigrateSharedWarningEvent.OnMigrateItems -> {
+                MigrateNavigation.VaultSelectionForItemsMigration(
                     filter = event.filter
+                ).also(onNavigate)
+            }
+
+            is MigrateSharedWarningEvent.OnMigrateVault -> {
+                MigrateNavigation.VaultSelectionForVaultMigration(
+                    shareId = event.shareId
                 ).also(onNavigate)
             }
         }

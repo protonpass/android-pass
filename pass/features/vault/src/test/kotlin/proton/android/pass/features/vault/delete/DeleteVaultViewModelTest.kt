@@ -26,7 +26,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.TestDeleteVault
 import proton.android.pass.data.fakes.usecases.TestGetVaultByShareId
 import proton.android.pass.features.vault.VaultSnackbarMessage
@@ -45,19 +45,23 @@ class DeleteVaultViewModelTest {
     private lateinit var getVaultById: TestGetVaultByShareId
     private lateinit var deleteVault: TestDeleteVault
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var observeEncryptedItems: FakeObserveEncryptedItems
 
     @Before
     fun setup() {
         getVaultById = TestGetVaultByShareId()
         deleteVault = TestDeleteVault()
         snackbarDispatcher = TestSnackbarDispatcher()
+        observeEncryptedItems = FakeObserveEncryptedItems()
+
         instance = DeleteVaultViewModel(
             getVaultByShareId = getVaultById,
             deleteVault = deleteVault,
             savedStateHandle = TestSavedStateHandle.create().apply {
                 set(CommonNavArgId.ShareId.key, "123")
             },
-            snackbarDispatcher = snackbarDispatcher
+            snackbarDispatcher = snackbarDispatcher,
+            observeEncryptedItems = observeEncryptedItems
         )
     }
 
@@ -71,9 +75,10 @@ class DeleteVaultViewModelTest {
     @Test
     fun `emits right vault name`() = runTest {
         performSetup()
+
         instance.state.test {
             val item = awaitItem()
-            assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(item.isLoading).isFalse()
             assertThat(item.isButtonEnabled).isEqualTo(IsButtonEnabled.Disabled)
             assertThat(item.vaultName).isEqualTo(VAULT_NAME)
             assertThat(item.vaultText).isEqualTo("")
@@ -112,7 +117,7 @@ class DeleteVaultViewModelTest {
         instance.onDelete()
         instance.state.test {
             val item = awaitItem()
-            assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(item.isLoading).isFalse()
             assertThat(item.event).isEqualTo(DeleteVaultEvent.Deleted)
         }
 
@@ -128,7 +133,7 @@ class DeleteVaultViewModelTest {
         instance.onDelete()
         instance.state.test {
             val item = awaitItem()
-            assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(item.isLoading).isFalse()
             assertThat(item.event).isEqualTo(DeleteVaultEvent.Unknown)
         }
 
@@ -138,6 +143,7 @@ class DeleteVaultViewModelTest {
 
     private fun performSetup() {
         getVaultById.emitValue(TestVault.create(name = VAULT_NAME))
+        observeEncryptedItems.emitValue(emptyList())
         instance.onStart()
     }
 

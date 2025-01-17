@@ -23,9 +23,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -35,22 +35,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
-import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.composecomponents.impl.container.PassInfoWarningBanner
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.uievents.value
 import proton.android.pass.features.vault.R
+import proton.android.pass.composecomponents.impl.R as CompR
 
 private const val TAG_VAULT_NAME = "__VAULT_NAME__"
 
 @Composable
-fun DeleteVaultDialogContent(
+internal fun DeleteVaultDialogContent(
     modifier: Modifier = Modifier,
     state: DeleteVaultUiState,
     onVaultTextChange: (String) -> Unit,
@@ -73,7 +74,7 @@ fun DeleteVaultDialogContent(
     ConfirmWithLoadingDialog(
         modifier = modifier,
         show = true,
-        isLoading = state.isLoadingState.value(),
+        isLoading = state.isLoading,
         isConfirmActionDestructive = true,
         isConfirmEnabled = state.isButtonEnabled.value(),
         title = stringResource(R.string.vault_delete_dialog_title),
@@ -82,10 +83,23 @@ fun DeleteVaultDialogContent(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(Spacing.medium)
             ) {
-                Text(
-                    text = bodyText,
-                    style = ProtonTheme.typography.defaultWeak
+                Text.Body1Regular(
+                    annotatedText = bodyText
                 )
+
+                if (state.showSharedItemsWarning) {
+                    PassInfoWarningBanner(
+                        backgroundColor = PassTheme.colors.interactionNormMinor2,
+                        text = stringResource(
+                            id = R.string.vault_delete_dialog_shared_items_warning,
+                            pluralStringResource(
+                                id = CompR.plurals.shared_items_count,
+                                count = state.sharedItemsCount,
+                                state.sharedItemsCount
+                            )
+                        )
+                    )
+                }
 
                 Column(
                     modifier = Modifier
@@ -97,7 +111,7 @@ fun DeleteVaultDialogContent(
                         modifier = Modifier.fillMaxWidth(),
                         value = state.vaultText,
                         onChange = onVaultTextChange,
-                        editable = state.isLoadingState == IsLoadingState.NotLoading,
+                        editable = !state.isLoading,
                         placeholder = {
                             ProtonTextFieldPlaceHolder(
                                 text = stringResource(R.string.vault_delete_dialog_placeholder)
@@ -116,12 +130,12 @@ fun DeleteVaultDialogContent(
     )
 }
 
-class DeleteVaultPreviewProvider :
-    ThemePairPreviewProvider<DeleteVaultUiState>(DeleteVaultDialogPreviewProvider())
+internal class DeleteVaultPreviewProvider : ThemePairPreviewProvider<DeleteVaultUiState>(
+    DeleteVaultDialogPreviewProvider()
+)
 
-@Preview
-@Composable
-fun DeleteVaultDialogContentPreview(
+@[Preview Composable]
+internal fun DeleteVaultDialogContentPreview(
     @PreviewParameter(DeleteVaultPreviewProvider::class) input: Pair<Boolean, DeleteVaultUiState>
 ) {
     PassTheme(isDark = input.first) {

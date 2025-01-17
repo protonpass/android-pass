@@ -79,8 +79,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">초대</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">구성원</string>
   <string name="share_manage_vault_current_user_indicator">나</string>
-  <string name="share_role_can_view">보기 가능</string>
-  <string name="share_role_can_edit">편집 가능</string>
+  <string name="share_role_viewer">보기 가능</string>
+  <string name="share_role_editor">편집 가능</string>
   <string name="share_role_admin">관리자</string>
   <string name="share_role_owner">소유자</string>
   <string name="sharing_bottomsheet_transfer_ownership">소유권 이전</string>

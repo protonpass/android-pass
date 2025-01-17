@@ -91,8 +91,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Pozvánky</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Členové</string>
   <string name="share_manage_vault_current_user_indicator">Vy</string>
-  <string name="share_role_can_view">Může zobrazit</string>
-  <string name="share_role_can_edit">Může upravovat</string>
+  <string name="share_role_viewer">Může zobrazit</string>
+  <string name="share_role_editor">Může upravovat</string>
   <string name="share_role_admin">Správce</string>
   <string name="share_role_owner">Vlastník</string>
   <string name="sharing_bottomsheet_transfer_ownership">Převést vlastnictví</string>

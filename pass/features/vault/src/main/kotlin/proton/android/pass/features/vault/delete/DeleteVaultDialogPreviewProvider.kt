@@ -19,26 +19,29 @@
 package proton.android.pass.features.vault.delete
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import me.proton.core.util.kotlin.toInt
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
-class DeleteVaultDialogPreviewProvider : PreviewParameterProvider<DeleteVaultUiState> {
-    override val values: Sequence<DeleteVaultUiState>
-        get() = sequence {
-            for (button in listOf(IsButtonEnabled.Enabled, IsButtonEnabled.Disabled)) {
-                for (loading in listOf(IsLoadingState.Loading, IsLoadingState.NotLoading)) {
-                    for (text in listOf("", "vaultname")) {
-                        yield(
-                            DeleteVaultUiState(
-                                vaultName = text,
-                                vaultText = text,
-                                event = DeleteVaultEvent.Unknown,
-                                isButtonEnabled = button,
-                                isLoadingState = loading
-                            )
+internal class DeleteVaultDialogPreviewProvider : PreviewParameterProvider<DeleteVaultUiState> {
+
+    override val values: Sequence<DeleteVaultUiState> = sequence {
+        for (button in listOf(IsButtonEnabled.Enabled, IsButtonEnabled.Disabled)) {
+            for (hasSharedItems in listOf(false, true)) {
+                for (text in listOf("", "vaultname")) {
+                    yield(
+                        DeleteVaultUiState(
+                            vaultName = text,
+                            vaultText = text,
+                            event = DeleteVaultEvent.Unknown,
+                            isButtonEnabled = button,
+                            isLoadingState = IsLoadingState.NotLoading,
+                            sharedItemsCount = hasSharedItems.toInt()
                         )
-                    }
+                    )
                 }
             }
         }
+    }
+
 }

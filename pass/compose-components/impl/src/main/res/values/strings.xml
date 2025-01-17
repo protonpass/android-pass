@@ -290,4 +290,9 @@
     <string name="attachment_row_retry">Retry</string>
     <string name="options_menu_content_description">Options menu</string>
 
+    <!-- Items -->
+    <plurals name="shared_items_count">
+        <item quantity="one">%d shared item</item>
+        <item quantity="other">%d shared items</item>
+    </plurals>
 </resources>

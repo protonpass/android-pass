@@ -68,8 +68,7 @@
   <string name="sharing_snackbar_fetch_member_error">Wystąpił błąd podczas pobierania użytkowników</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Wystąpił błąd podczas pobierania oczekujących zaproszeń</string>
   <string name="share_summary_title">Przejrzyj i udostępnij</string>
-  <string name="share_summary_vault">sejfu %s</string>
-  <string name="share_summary_share_vault">Udostępnij sejf</string>
+    <string name="share_summary_share_vault">Udostępnij sejf</string>
   <string name="share_summary_share_item">Udostępnij element</string>
   <string name="share_summary_vault_title">Sejf</string>
   <string name="share_summary_item_title">Element</string>

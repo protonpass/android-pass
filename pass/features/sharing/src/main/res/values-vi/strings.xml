@@ -62,8 +62,7 @@
   <string name="sharing_snackbar_fetch_member_error">Đã xảy ra lỗi khi truy xuất thành viên</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Đã xảy ra lỗi khi truy xuất lời mời đang chờ</string>
   <string name="share_summary_title">Xem lại và chia sẻ</string>
-  <string name="share_summary_vault">kho lưu trữ %s</string>
-  <string name="share_summary_share_vault">Chia sẽ kho lưu trữ</string>
+    <string name="share_summary_share_vault">Chia sẽ kho lưu trữ</string>
   <string name="share_summary_share_item">Chia sẻ mục</string>
   <string name="share_summary_vault_title">Kho lưu trữ</string>
   <string name="share_summary_item_title">Mục</string>

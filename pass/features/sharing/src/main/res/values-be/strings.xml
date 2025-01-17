@@ -68,8 +68,7 @@
   <string name="sharing_snackbar_fetch_member_error">Адбылася памылка падчас атрымання ўдзельнікаў</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Адбылася памылка падчас атрымання запрашэнняў, якія чакаюць адказу</string>
   <string name="share_summary_title">Прагляд і абагульненне</string>
-  <string name="share_summary_vault">%s сховішча</string>
-  <string name="share_summary_share_vault">Абагуліць сховішча</string>
+    <string name="share_summary_share_vault">Абагуліць сховішча</string>
   <string name="share_summary_share_item">Абагуліць элемент</string>
   <string name="share_summary_vault_title">Сховішча</string>
   <string name="share_summary_item_title">Элемент</string>

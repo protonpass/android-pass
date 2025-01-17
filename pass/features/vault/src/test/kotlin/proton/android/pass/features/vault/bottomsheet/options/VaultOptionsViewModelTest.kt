@@ -26,6 +26,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
+import proton.android.pass.data.fakes.usecases.FakeObserveEncryptedItems
 import proton.android.pass.data.fakes.usecases.TestCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
 import proton.android.pass.data.fakes.usecases.TestCanShareShare
@@ -338,7 +339,8 @@ class VaultOptionsViewModelTest {
             canMigrateVault = canMigrateVault,
             observeVaults = observeVaults,
             canShareShare = canShareVault,
-            canManageVaultAccess = canManageVaultAccess
+            canManageVaultAccess = canManageVaultAccess,
+            observeEncryptedItems = FakeObserveEncryptedItems()
         )
     }
 

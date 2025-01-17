@@ -91,8 +91,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Запрашэнні</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Удзельнікі</string>
   <string name="share_manage_vault_current_user_indicator">Вы</string>
-  <string name="share_role_can_view">Можа праглядаць</string>
-  <string name="share_role_can_edit">Можа рэдагаваць</string>
+  <string name="share_role_viewer">Можа праглядаць</string>
+  <string name="share_role_editor">Можа рэдагаваць</string>
   <string name="share_role_admin">Адміністратар</string>
   <string name="share_role_owner">Уладальнік</string>
   <string name="sharing_bottomsheet_transfer_ownership">Перадаць права ўласнасці</string>

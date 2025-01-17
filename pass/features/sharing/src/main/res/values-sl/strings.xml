@@ -91,8 +91,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Vabila</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Člani</string>
   <string name="share_manage_vault_current_user_indicator">Vi</string>
-  <string name="share_role_can_view">Lahko si ogledate</string>
-  <string name="share_role_can_edit">Lahko ureja</string>
+  <string name="share_role_viewer">Lahko si ogledate</string>
+  <string name="share_role_editor">Lahko ureja</string>
   <string name="share_role_admin">Administrator</string>
   <string name="share_role_owner">Lastnik</string>
   <string name="sharing_bottomsheet_transfer_ownership">Prenos lastništva</string>

@@ -83,8 +83,8 @@
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Convites</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Membros</string>
   <string name="share_manage_vault_current_user_indicator">Você</string>
-  <string name="share_role_can_view">Pode ver</string>
-  <string name="share_role_can_edit">Pode editar</string>
+  <string name="share_role_viewer">Pode ver</string>
+  <string name="share_role_editor">Pode editar</string>
   <string name="share_role_admin">Administrador</string>
   <string name="share_role_owner">Proprietário</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transferir a propriedade</string>

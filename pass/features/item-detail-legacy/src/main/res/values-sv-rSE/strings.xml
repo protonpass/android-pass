@@ -93,7 +93,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Du får endast redigera objekt i dina äldsta valv. För att kunna redigera detta objekt, uppgradera ditt nuvarande paket.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Du kan inte redigera detta objekt eftersom det är i papperskorgen. Flytta det från papperskorgen innan du redigerar det.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan inte dela</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Du har inte tillräckligt med behörigheter för att dela detta valv.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">Du har inte tillräckliga behörigheter för att utföra denna åtgärd.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Du har nått gränsen för valvdelning. För att dela fler valv, uppgradera ditt nuvarande paket.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Du kan inte dela detta objekt eftersom det ligger i papperskorgen. Flytta den ur papperskorgen innan du delar det.</string>
   <string name="password_score_vulnerable">Sårbart</string>
@@ -110,8 +110,8 @@
   <string name="field_detail_display_name_title">Visningsnamn</string>
   <string name="display_name_section_description">Visningsnamnet när du skickar ett e-postmeddelande från detta alias.</string>
   <plurals name="alias_forwards_count">
-    <item quantity="one">%1$s vidarebefordrad</item>
-    <item quantity="other">%1$s vidarebefordrade</item>
+    <item quantity="one">%1$s vidarebefordran</item>
+    <item quantity="other">%1$s vidarebefordringar</item>
   </plurals>
   <plurals name="alias_replies_count">
     <item quantity="one">%1$s svar</item>
@@ -122,4 +122,5 @@
     <item quantity="other">%1$s blockeringar</item>
   </plurals>
   <string name="open_with">Öppna med:</string>
+  <string name="open_attachments_error">Kunde inte öppna bilaga</string>
 </resources>

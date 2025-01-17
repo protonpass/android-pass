@@ -20,7 +20,7 @@
   <string name="bottomsheet_copy_email">Копіювати е-пошту</string>
   <string name="bottomsheet_copy_password">Копіювати пароль</string>
   <string name="bottomsheet_copy_username">Копіювати ім\'я користувача</string>
-  <string name="bottomsheet_no_actions">No actions available</string>
+  <string name="bottomsheet_no_actions">Немає доступних дій</string>
   <string name="snackbar_item_move_to_trash_success">Елемент переміщено до смітника</string>
   <string name="snackbar_item_move_to_trash_error">Не вдалося перемістити до смітника</string>
   <string name="snackbar_item_copy_email_success">Електронний лист скопійовано до буфера обміну</string>

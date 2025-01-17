@@ -4,6 +4,8 @@
   <string name="autofill_notification_channel_name">Compilazione automatica</string>
   <string name="autofill_notification_copy_to_clipboard_title">Codice TOTP</string>
   <string name="autofill_notification_copy_to_clipboard_body">TOTP copiato negli appunti</string>
-  <string name="updates_new_invite_received_title">Hai ricevuto un invito</string>
-  <string name="updates_new_invite_received_message">Sei stato invitato in una cassaforte. Apri l\'app per visualizzare l\'invito e accettarlo.</string>
+  <string name="new_item_invite_notification_title">Ricevuto invito per un nuovo elemento</string>
+  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s vuole condividere un elemento con te.</string>
+  <string name="new_vault_invite_notification_title">Ricevuto invito per una nuova cassaforte</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s vuole condividere una cassaforte con te.</string>
 </resources>

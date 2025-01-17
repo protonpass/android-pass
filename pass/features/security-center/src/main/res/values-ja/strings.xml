@@ -67,7 +67,7 @@
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">新しいカスタムメールアドレスを追加</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">追加</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
-    <item quantity="other">%d ログインで使用されます</item>
+    <item quantity="other">%d 個のログインで使用されます</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
     <item quantity="other">%d個の侵害を検知</item>
@@ -111,21 +111,21 @@
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">で使われる</string>
   <string name="security_center_email_report_breaches_header">侵害</string>
-  <string name="security_center_email_report_resolved_breaches_header">解決された違反</string>
+  <string name="security_center_email_report_resolved_breaches_header">解決された侵害</string>
   <string name="security_center_email_report_mark_as_resolved">解決済みにする</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_success">侵害は対処済みとマークされました</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_error">対処済みにマークできませんでした</string>
   <string name="security_center_email_report_snackbar_get_breaches_error">侵害が読み込めませんでした</string>
   <string name="security_center_email_report_options_menu">侵害報告オプションメニュー</string>
   <!-- Breach report detail-->
-  <string name="security_center_report_detail_your_exposed_information">あなたの暴露された情報</string>
+  <string name="security_center_report_detail_your_exposed_information">あなたの公開された情報</string>
   <string name="security_center_report_detail_subtitle">あなたの情報はデータ侵害に遭い、__DATE__ で発見されました。</string>
   <string name="security_center_report_detail_details">詳細</string>
   <string name="security_center_report_detail_email_address">メールアドレス</string>
   <string name="security_center_report_detail_password">パスワード</string>
   <string name="security_center_report_detail_recommended_actions">推奨されるアクション</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">危険に晒された情報は%sから漏洩しました。あなたのProtonアカウント情報は安全で暗号化されたままです。</string>
-  <string name="security_center_report_detail_learn_more">もっと詳しく知る</string>
+  <string name="security_center_report_detail_learn_more">もっと詳しく</string>
   <string name="security_center_report_detail_snackbar_error">侵害詳細が読み込めませんでした</string>
   <string name="security_center_report_detail_excluded_from_monitoring">監視対象外</string>
   <string name="security_center_report_resolve_confirmation_dialog_title">全ての侵害を対処済みにしますか？</string>

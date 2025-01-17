@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Aç</string>
+  <string name="action_copy">Kopyala</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Öge bilgileri alınırken sorun çıktı</string>
+  <string name="top_bar_edit_button_text">Düzenle</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Takma ad adresi</string>
+  <string name="field_alias_disabled_title">Takma adres (kullanımdan kaldırılmış)</string>
+  <string name="alias_copied_to_clipboard">Takma ad kopyalandı</string>
+  <string name="alias_detail_field_mailboxes_title">Şuraya iletiliyor</string>
+  <string name="alias_create_login_from_alias">Oturum açma kaydı oluştur</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Not</string>
+  <string name="note_detail_copy_note_to_clipboard">Notu kopyala</string>
+  <string name="note_copied_to_clipboard">Not panoya kopyalandı</string>
+  <!-- Login details -->
+  <string name="email_copied_to_clipboard">E-posta adresi kopyalandı</string>
+  <string name="username_copied_to_clipboard">Kullanıcı adı kopyalandı</string>
+  <string name="password_copied_to_clipboard">Parola kopyalandı</string>
+  <string name="website_copied_to_clipboard">Site kopyalandı</string>
+  <string name="totp_copied_to_clipboard">Tek kullanımlık parola kopyalandı</string>
+  <string name="field_copied_to_clipboard">Alan kopyalandı</string>
+  <string name="move_item_to_trash_message">Öge çöpe atıldı</string>
+  <string name="error_move_item_to_trash_message">Çöpe atılırken sorun çıktı.</string>
+  <string name="item_permanently_deleted_message">Öge kalıcı olarak silindi</string>
+  <string name="item_permanently_deleted_message_error">Öge silinirken sorun çıktı</string>
+  <string name="item_restored_message">Öge geri yüklendi</string>
+  <string name="item_restored_message_error">Öge geri yüklenirken sorun çıktı</string>
+  <string name="item_monitor_exclude_message">Öge izlemeye katılmayacak</string>
+  <string name="item_monitor_exclude_message_error">Öge izlemeye katılmayacak olarak ayarlanırken sorun çıktı</string>
+  <string name="item_monitor_include_message">Öge izlemeye katılacak</string>
+  <string name="item_monitor_include_message_error">Öge izlemeye katılacak olarak ayarlanırken sorun çıktı</string>
+  <string name="alias_change_status_error">Takma adın durumu değiştirilirken bir sorun çıktı</string>
+  <string name="login_item_generate_totp_error">İki adımlı doğrulama kodu oluşturulurken sorun çıktı</string>
+  <string name="login_item_view_alias_button">Takma adları görüntüle</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Zayıf Parola</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Bu hesap ele geçirilebilir. Hizmeti ziyaret edin ve parolanızı değiştirin.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d oturum açma kaydı aynı parolayı kullanıyor</item>
+    <item quantity="other">%d oturum açma kaydı aynı parolayı kullanıyor</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Güvenliği artırmak için iki adımlı doğrulamayı açın</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Bu hizmet iki adımlı doğrulama sağlıyor. Hesap güvenliğini artırmak için bunu kullanın.</string>
+  <string name="login_item_reused_passwords_subtitle">Kasalarınızda bu parolayı kullanan ögeler.</string>
+  <string name="field_email">E-posta adresi</string>
+  <string name="field_username">Kullanıcı adı</string>
+  <string name="field_username_or_email">Kullanıcı adı ya da e-posta adresi</string>
+  <string name="field_password">Parola</string>
+  <string name="websites_section_title">Siteler</string>
+  <string name="totp_section_title">İki adımlı doğrulama kodu (tek kullanımlık)</string>
+  <string name="action_reveal_password">Parolayı göster</string>
+  <string name="action_conceal_password">Parolayı gizle</string>
+  <string name="action_reveal_number">Numarayı göster</string>
+  <string name="action_conceal_number">Numarayı gizle</string>
+  <string name="share_button_content_description">Paylaşmayı açma düğmesi</string>
+  <string name="open_menu_icon_content_description">Menüyü açma düğmesi</string>
+  <string name="mfa_limit_reached">İki adımlı doğrulama sınırına ulaşıldı</string>
+  <string name="mfa_icon_content_description">İki adımlı doğrulama simgesi</string>
+  <string name="custom_field_text_icon_description">Metin özel alanı</string>
+  <string name="custom_field_hidden_icon_description">Gizli özel alan</string>
+  <string name="custom_field_totp_icon_description">İki adımlı doğrulama özel alanı</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Kart üzerindeki isim</string>
+  <string name="credit_card_number_field_name">Kart numarası</string>
+  <string name="credit_card_cvv_field_name">Güvenlik kodu</string>
+  <string name="credit_card_pin_field_name">PIN kodu</string>
+  <string name="credit_card_expiration_date_field_name">Son kullanma tarihi</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Kart sahibi panoya kopyalandı</string>
+  <string name="credit_card_number_copied_to_clipboard">Kart numarası panoya kopyalandı</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Güvenlik kodu panoya kopyalandı</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Çöpe at</string>
+  <string name="migrate_item_detail_bottom_sheet">Başka bir kasaya taşı</string>
+  <!-- More info -->
+  <string name="date_today">Bugün %s</string>
+  <string name="date_yesterday">Dün %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Düzenlenemez</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Yeterli izniniz olmadığından bu ögeyi düzenleyemezsiniz.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Yalnızca en eski kasalarınızdaki ögeleri düzenlemenize izin veriliyor. Bu ögeyi düzenlemek için lütfen abonelik tarifenizi yükseltin.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Bu öge çöp kutusunda olduğundan düzenleyemezsiniz. Lütfen düzenlemeden önce çöp kutusundan çıkarın.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Paylaşılamaz</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Bu kasayı paylaşmak için yeterli izniniz yok.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Paylaşılabilecek kasa sayısı sınırına ulaştınız. Daha fazla kasa paylaşmak için tarifenizi yükseltin.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Bu öge çöp kutusunda olduğundan paylaşamazsınız. Lütfen paylaşmadan önce çöp kutusundan çıkarın.</string>
+  <string name="password_score_vulnerable">Çok zayıf</string>
+  <string name="password_score_weak">Zayıf</string>
+  <string name="password_score_strong">Güçlü</string>
+  <string name="passkey_detail_bottomsheet_title">Geçiş anahtarı</string>
+  <string name="passkey_detail_bottomsheet_username">Kullanıcı adı</string>
+  <string name="passkey_detail_bottomsheet_domain">Etki alanı</string>
+  <string name="passkey_detail_bottomsheet_key">Anahtar</string>
+  <string name="passkey_detail_bottomsheet_created">Oluşturulma</string>
+  <string name="activity_in_last_two_weeks">Son 14 gündeki etkinlikler</string>
+  <string name="contacts">Kişiler</string>
+  <string name="contacts_section_description">Kişisel e-posta adresinizi gizli tutmak için bir takma ad kişisi oluşturarak adresinizi gizleyebilirsiniz.</string>
+  <string name="field_detail_display_name_title">Görüntülenecek ad</string>
+  <string name="display_name_section_description">Bu takma ad ile e-posta gönderilirken görüntülenecek ad.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s iletme</item>
+    <item quantity="other">%1$s iletme</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s yanıt</item>
+    <item quantity="other">%1$s yanıt</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s engelleme</item>
+    <item quantity="other">%1$s engelleme</item>
+  </plurals>
+  <string name="open_with">Şununla aç:</string>
+  <string name="open_attachments_error">Ek dosya açılamadı</string>
+</resources>

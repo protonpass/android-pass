@@ -31,8 +31,8 @@
   <string name="unblock_button">Kontakt entsperren</string>
   <string name="block_button">Kontakt blockieren</string>
   <string name="contact_created_date" comment="date of creation">Erstellt vor %1$s</string>
-  <string name="no_activity_contact">No activity in the last 14 days.</string>
-  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">in the last 14 days.</string>
+  <string name="no_activity_contact">Keine Aktivität in den letzten 14 Tagen.</string>
+  <string name="activity_summary" comment="%1$d forwarded, %2$d sent, %3$d blocked will prepend this">In den letzten 14 Tagen.</string>
   <plurals name="forwarded_count" comment="full sentence is %1$d forwarded, %2$d sent, %3$d blocked in the last 14 days.">
     <item quantity="one">%1$d forwarded</item>
     <item quantity="other">%1$d forwarded</item>
@@ -52,7 +52,7 @@
   <string name="snackbar_contact_unblock_success">Kontakt entsperrt</string>
   <string name="snackbar_contact_unblock_error">Kontakt konnte nicht entsperrt werden</string>
   <string name="snackbar_delete_contact_success">Kontakt gelöscht</string>
-  <string name="snackbar_delete_contact_error">Could not delete contact</string>
+  <string name="snackbar_delete_contact_error">Fehler beim Löschen des Kontakts.</string>
   <string name="snackbar_email_copied_success">E-Mail-Adresse in Zwischenablage kopiert</string>
   <string name="contact_option_send_email">E-Mail senden</string>
   <string name="contact_option_copy_address">Adresse kopieren</string>
@@ -61,8 +61,8 @@
   <string name="contact_option_delete">Löschen</string>
   <string name="alias_contacts_bottomsheet_title">Alias-Kontakte</string>
   <string name="alias_contacts_bottomsheet_subtitle">Um deine persönliche E-Mail-Adresse zu verbergen, kannst du einen Alias-Kontakt erstellen, der deine Adresse verschleiert.</string>
-  <string name="alias_contacts_explanation">Here’s how it works:</string>
+  <string name="alias_contacts_explanation">So funktioniert es:</string>
   <string name="alias_contacts_bottomsheet_section_1">Enter the address you want to email.</string>
-  <string name="alias_contacts_bottomsheet_section_2">Proton Pass will generate a forwarding address (also referred to as reverse alias).</string>
+  <string name="alias_contacts_bottomsheet_section_2">Proton Pass erzeugt eine Weiterleitungsadresse (auch als Reverse Alias bezeichnet).</string>
   <string name="alias_contacts_bottomsheet_section_3" comment="an email will follow this sentence">Email this address and it will appear to be sent from</string>
 </resources>

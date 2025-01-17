@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">사용자의 이전 금고의 항목 편집만 허용됩니다. 이 항목을 수정하려면 플랜을 업그레이드 하세요.</string>
   <string name="item_details_forbidden_actions_share_title">공유할 수 없음</string>
   <string name="item_details_forbidden_actions_share_limit">금고 공유 수 제한에 도달했습니다. 금고를 더 공유하려면 현재 플랜에서 업그레이드 하세요.</string>
-  <string name="item_details_forbidden_actions_share_permission">이 금고를 공유할 권한이 없습니다.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">이 작업을 수행할 권한이 없습니다.</string>
   <string name="item_details_forbidden_actions_share_trash">휴지통에 있어 항목 공유가 불가합니다. 수정 전 휴지통에서 복구하십시오.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">이 항목에서 나갈까요?</string>
+  <string name="item_details_leave_dialog_message">이 항목과 상세 정보에 대한 접근 권한을 잃게 됩니다. 정말 계속하시겠어요?</string>
+  <string name="item_details_leave_item_message_error">항목에서 나가는데 오류가 생겼습니다.</string>
+  <string name="item_details_leave_item_message_success">항목에서 성공적으로 떠났습니다.</string>
 </resources>

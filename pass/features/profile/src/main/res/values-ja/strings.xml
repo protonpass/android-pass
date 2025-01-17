@@ -17,7 +17,7 @@
   <string name="profile_error_biometry_failed_to_authenticate">認証に失敗しました</string>
   <string name="profile_fingerprint_lock_enabled">指紋ロックが有効</string>
   <string name="profile_fingerprint_lock_disabled">指紋ロックが無効です</string>
-  <string name="profile_app_version_copied_to_clipboard">コピーされたアプリのバージョン</string>
+  <string name="profile_app_version_copied_to_clipboard">アプリのバージョンをコピーしました</string>
   <string name="feedback_option_reddit">RedditでProtonをチェック</string>
   <string name="feedback_option_mail">メッセージを送る</string>
   <string name="feedback_option_vote_new_features">新機能への投票</string>
@@ -38,14 +38,14 @@
   <string name="configure_pin_set_pin_code">PINコードの設定</string>
   <string name="configure_pin_unlock_the_app_with_this_code">このコードでアプリのロックを解除する</string>
   <string name="configure_pin_enter_pin_code">PINコードの入力</string>
-  <string name="configure_pin_repeat_pin_code">繰り返しPINコード</string>
+  <string name="configure_pin_repeat_pin_code">PINコードを再度入力してください</string>
   <string name="configure_pin_continue">続ける</string>
-  <string name="configure_pin_pin_does_not_match">PINが一致しない</string>
-  <string name="configure_pin_pin_too_short">PINが短すぎる</string>
+  <string name="configure_pin_pin_does_not_match">PINが一致しません</string>
+  <string name="configure_pin_pin_too_short">PINが短すぎます</string>
   <string name="configure_pin_pin_cannot_be_blank">PINを空白にすることはできません。</string>
   <string name="configure_pin_pin_lock_enabled">PINロック有効</string>
   <string name="configure_pin_pin_lock_disabled">PINロック無効</string>
-  <string name="profile_option_lock_with">でロックする。</string>
+  <string name="profile_option_lock_with">でロック</string>
   <string name="profile_option_unlock_with">ロック解除</string>
   <string name="profile_option_change_pin_code">PINコードの変更</string>
   <string name="profile_passkey_support_section_title">パスキー</string>
@@ -78,4 +78,6 @@
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">管理するには%1$sに切り替える必要があります</string>
   <string name="account_switch_confirmation_title">アカウント管理</string>
   <string name="account_switch_confirmation_confirm">切り替えて管理</string>
+  <string name="profile_storage_data_title">容量</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%2$s の中の%1$s</string>
 </resources>

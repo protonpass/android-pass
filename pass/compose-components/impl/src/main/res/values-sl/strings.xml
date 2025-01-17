@@ -21,8 +21,8 @@
     <item quantity="other">rezultatov</item>
   </plurals>
   <string name="item_list_header_identities_type">Identitete</string>
-  <string name="item_list_header_shared_with_me">Shared with me</string>
-  <string name="item_list_header_shared_by_me">Shared by me</string>
+  <string name="item_list_header_shared_with_me">Deljeno z mano</string>
+  <string name="item_list_header_shared_by_me">Kaj delim z drugimi</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Potrdi</string>
   <string name="bottomsheet_cancel_button">Prekliči</string>
@@ -36,6 +36,7 @@
   <string name="bottomsheet_copy_item_note">Kopiraj opombo</string>
   <string name="bottomsheet_delete_permanently">Trajno izbriši</string>
   <string name="bottomsheet_restore">Obnovi</string>
+  <string name="bottomsheet_leave">Zapusti</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Odpri meni z dejanji predmeta</string>
   <string name="action_upgrade_now">Nadgradi zdaj</string>
@@ -51,7 +52,7 @@
   <string name="action_edit">Uredi</string>
   <string name="action_add">Dodaj</string>
   <string name="action_delete">Izbriši</string>
-  <string name="action_make_default">Make default</string>
+  <string name="action_make_default">Nastavite na splošno</string>
   <string name="action_verify">Preveri</string>
   <string name="action_close">Zapri</string>
   <string name="action_update">Posodobi</string>
@@ -209,7 +210,7 @@
   <string name="dialog_upgrade_plan_action_cancel">Ne zdaj</string>
   <!-- Words -->
   <string name="email_address">E-poštni naslov</string>
-  <string name="email_address_invalid">Invalid email address</string>
+  <string name="email_address_invalid">Neveljaven e-poštni naslov</string>
   <string name="password">Geslo</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Gumb za zavrnitev namiga in preprečitev njegovega ponovnega prikaza</string>
@@ -295,7 +296,7 @@
   <string name="verification_code_suggestion_subject_new_mailbox">Please confirm your mailbox</string>
   <string name="verification_code_suggestion_resend" comment="The text that follows is: -request a new code.-">If you can\'t find such email, you can %s.</string>
   <string name="verification_code_suggestion_resend_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code</string>
-  <string name="field_display_name_title">Display name</string>
+  <string name="field_display_name_title">Ime za prikaz</string>
   <!-- Attachments -->
   <plurals name="attachment_file_amount">
     <item quantity="one">%1$s file</item>
@@ -303,7 +304,10 @@
     <item quantity="few">%1$s files</item>
     <item quantity="other">%1$s files</item>
   </plurals>
-  <string name="attachment_title">Attachments</string>
+  <string name="attachment_title">Priponke</string>
   <string name="attachment_no_files">Upload files from your device</string>
-  <string name="attachment_add_file">Attach a file</string>
+  <string name="attachment_add_file">Pripni datoteko</string>
+  <string name="attachment_row_upload_failed">Upload failed</string>
+  <string name="attachment_row_retry">Poskusi znova</string>
+  <string name="options_menu_content_description">Options menu</string>
 </resources>

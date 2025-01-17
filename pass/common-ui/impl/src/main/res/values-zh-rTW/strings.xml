@@ -17,13 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="bottomsheet_copy_email">Copy email</string>
+  <string name="bottomsheet_copy_email">複製電子郵件地址</string>
   <string name="bottomsheet_copy_password">複製密碼</string>
   <string name="bottomsheet_copy_username">複製使用者名稱</string>
-  <string name="bottomsheet_no_actions">No actions available</string>
+  <string name="bottomsheet_no_actions">沒有可用的操作</string>
   <string name="snackbar_item_move_to_trash_success">項目已移至垃圾桶</string>
   <string name="snackbar_item_move_to_trash_error">無法移至垃圾桶</string>
-  <string name="snackbar_item_copy_email_success">Email copied to clipboard</string>
+  <string name="snackbar_item_copy_email_success">郵件地址已複製到剪貼簿</string>
   <string name="snackbar_item_copy_username_success">使用者名稱已複製到剪貼簿</string>
   <string name="snackbar_item_copy_password_success">密碼已複製至剪貼簿</string>
 </resources>

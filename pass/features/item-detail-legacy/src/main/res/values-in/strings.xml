@@ -92,7 +92,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Anda hanya dapat menyunting item yang berada pada brankas terlawas Anda. Untuk menyunting item ini, tingkatkan paket langganan Anda.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Anda tidak dapat menyunting item ini karena item berada di sampah. Silakan keluarkan item dari sampah sebelum menyunting.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Tidak dapat membagikan</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Anda tidak memiliki izin yang memadai untuk membagikan brankas ini.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">Anda belum memiliki izin yang cukup untuk melakukan tindakan ini.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Anda telah mencapai batas pembagian brankas Anda. Untuk dapat membagikan lebih banyak brankas, silakan tingkatkan paket Anda saat ini.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Anda tidak dapat membagikan item ini karena item berada di sampah. Silakan keluarkan item dari sampah sebelum membagikan.</string>
   <string name="password_score_vulnerable">Rentan</string>
@@ -118,4 +118,5 @@
     <item quantity="other">%1$s pemblokiran</item>
   </plurals>
   <string name="open_with">Buka dengan:</string>
+  <string name="open_attachments_error">Gagal membuka lampiran</string>
 </resources>

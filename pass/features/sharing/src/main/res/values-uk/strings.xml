@@ -36,9 +36,9 @@
     <item quantity="other">%d учасників</item>
   </plurals>
   <string name="sharing_member_count_header">Учасники</string>
-  <string name="shared_via_title">Shared via</string>
-  <string name="shared_via_item_member_count_header">Item sharing</string>
-  <string name="shared_via_vault_member_count_header">Vault sharing</string>
+  <string name="shared_via_title">Поширено через</string>
+  <string name="shared_via_item_member_count_header">Поширення елементу</string>
+  <string name="shared_via_vault_member_count_header">Поширення сховища</string>
   <string name="share_with_title">Поділитися з</string>
   <string name="share_with_email_hint">Адреса електронної пошти</string>
   <string name="share_with_email_error">Недійсна адреса електронної пошти</string>
@@ -52,7 +52,7 @@
   <string name="sharing_item_invitation_title">Запрошення на спільний елемент</string>
   <string name="sharing_item_invitation_subtitle" comment="placeholder is replaced by an email address">%s хоче поділитися з вами елементом.</string>
   <string name="sharing_item_invitation_accept">Прийняти та переглянути елемент</string>
-  <string name="sharing_invite_more">Invite more…</string>
+  <string name="sharing_invite_more">Запросити більше…</string>
   <string name="sharing_snackbar_invite_accepted">Запрошення прийнято</string>
   <string name="sharing_snackbar_invite_accept_error">Помилка приймання запрошення</string>
   <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Не вдалося прийняти запрошення, оскільки ви досягли ліміту сховища</string>
@@ -135,18 +135,14 @@
   <string name="share_with_suggestions_title">Пропозиції</string>
   <string name="share_with_recents_title">Найновіші</string>
   <string name="share_with_remove_email_content_description">Видалити пошту</string>
-  <string name="share_with_user_title">Поділитися з</string>
-  <string name="share_with_user_description">Надати доступ до цього елемента з іншими користувачами Proton.</string>
   <string name="share_with_secure_link_title">Через безпечне посилання</string>
   <string name="share_with_secure_link_description">Згенерувати безпечне посилання на цей елемент.</string>
-  <string name="share_with_vault_title">Все сховище</string>
-  <string name="share_with_vault_description">Share this vault and its content.</string>
-  <string name="share_with_user_shared_title">With other Proton Pass users</string>
-  <string name="share_with_user_shared_description">Useful for permanent sharing.</string>
+  <string name="share_with_user_shared_title">З іншими користувачами Proton Pass</string>
+  <string name="share_with_user_shared_description">Корисне для постійного спільного використання.</string>
   <string name="share_with_manage_shared_item_title">Керувати доступом</string>
-  <string name="share_with_manage_shared_item_description">See member and permission overview.</string>
+  <string name="share_with_manage_shared_item_description">Дивіться огляд учасників та дозволів.</string>
   <string name="share_with_secure_link_shared_title">Через безпечне посилання</string>
-  <string name="share_with_secure_link_shared_description">For one-off sharing.</string>
+  <string name="share_with_secure_link_shared_description">Для разового обміну.</string>
   <string name="share_with_manage_shared_vault_title">Керування доступом до сховища</string>
   <plurals name="share_with_manage_shared_vault_description">
     <item quantity="one">Наразі сховище елемента знаходиться у спільному доступі з %d користувачем.</item>

@@ -125,12 +125,8 @@
   <string name="share_with_suggestions_title">Sugerencias</string>
   <string name="share_with_recents_title">Recientes</string>
   <string name="share_with_remove_email_content_description">Quitar correo</string>
-  <string name="share_with_user_title">Compartir con</string>
-  <string name="share_with_user_description">Comparta este elemento con otros usuarios de Proton.</string>
   <string name="share_with_secure_link_title">Vía enlace seguro</string>
   <string name="share_with_secure_link_description">Genera un enlace seguro para este elemento.</string>
-  <string name="share_with_vault_title">Bóveda completa</string>
-  <string name="share_with_vault_description">Comparta esta bóveda y su contenido.</string>
   <string name="share_with_user_shared_title">Con otros usuarios de Proton Pass</string>
   <string name="share_with_user_shared_description">Útil para compartir permanentemente.</string>
   <string name="share_with_manage_shared_item_title">Gestionar el acceso</string>

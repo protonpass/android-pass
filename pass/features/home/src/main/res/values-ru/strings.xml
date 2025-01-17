@@ -42,6 +42,7 @@
   <string name="home_trial_banner_title">Our welcome gift to you</string>
   <string name="home_trial_banner_text">7 дней, чтобы попробовать платные функции бесплатно. Только в течение первой недели использования Proton Pass.</string>
   <string name="home_trial_banner_settings">Подробнее ›</string>
+  <string name="home_drawer_all_items">All items</string>
   <string name="sl_sync_banner_title">Sync your aliases from SimpleLogin</string>
   <plurals name="sl_sync_banner_text">
     <item quantity="one">You have %d alias that is present in SimpleLogin but missing in Proton Pass. Would you like to sync it?</item>
@@ -95,6 +96,7 @@
   <string name="snackbar_delete_vault_success">Хранилище удалено</string>
   <string name="snackbar_delete_vault_error">Хранилище не удалено</string>
   <!-- Search top bar -->
+  <string name="search_topbar_placeholder_all_items">Search in all items…</string>
   <string name="search_topbar_placeholder_all_vaults">Поиск во всех хранилищах...</string>
   <string name="search_topbar_placeholder_vault">Поиск в %s…</string>
   <string name="search_topbar_placeholder_trash">Поиск в Корзине…</string>
@@ -165,6 +167,12 @@
     <item quantity="few">Вы уверены, что хотите удалить %d элемента? Это действие необратимо</item>
     <item quantity="many">Вы уверены, что хотите удалить %d элементов? Это действие необратимо</item>
     <item quantity="other">Вы уверены, что хотите удалить %d элементов? Это действие необратимо</item>
+  </plurals>
+  <plurals name="alert_shared_delete_items_message">
+    <item quantity="one">1 item is currently shared. Moving it to trash will remove access for all other users.</item>
+    <item quantity="few">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+    <item quantity="many">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
+    <item quantity="other">%d items are currently shared. Moving them to trash will remove access for all other users.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Недавние поиски</string>

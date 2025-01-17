@@ -78,4 +78,6 @@
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Bạn cần chuyển sang %1$s để quản lý nó</string>
   <string name="account_switch_confirmation_title">Quản lý tài khoản</string>
   <string name="account_switch_confirmation_confirm">Chuyển và quản lý</string>
+  <string name="profile_storage_data_title">Storage</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s of %2$s</string>
 </resources>

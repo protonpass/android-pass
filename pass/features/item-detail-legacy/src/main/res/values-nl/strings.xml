@@ -93,7 +93,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">U kunt enkel items wijzigen in uw oudste kluizen. Upgrade uw huidige abonnement om dit item te wijzigen.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">U kan dit item niet wijzigen omdat het in de prullenbak zit. Verplaats het uit de prullenbak voordat u het wijzigt.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan niet delen</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">U heeft onvoldoende machtigingen om deze kluis te delen.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">U heeft geen rechten om deze actie uit te voeren.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">U heeft de limiet van het delen van kluis bereikt. Upgrade uw huidige abonnement om meer kluizen te delen.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">U kunt dit item niet delen omdat het in de prullenbak zit. Verplaats het uit de prullenbak voordat u het deelt.</string>
   <string name="password_score_vulnerable">Kwetsbaar</string>
@@ -114,12 +114,13 @@
     <item quantity="other">%1$s doorgestuurd</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="one">%1$s antwoord</item>
-    <item quantity="other">%1$s antwoorden</item>
+    <item quantity="one">%1$s reactie</item>
+    <item quantity="other">%1$s reacties</item>
   </plurals>
   <plurals name="alias_blocks_count">
     <item quantity="one">%1$s blok</item>
     <item quantity="other">%1$s blokken</item>
   </plurals>
   <string name="open_with">Openen met</string>
+  <string name="open_attachments_error">Kon bijlage niet openen</string>
 </resources>

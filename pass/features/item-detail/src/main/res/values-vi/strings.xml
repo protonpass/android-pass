@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Mở</string>
+  <string name="action_copy">Sao chép</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Lỗi khi lấy thông tin nội dung</string>
+  <string name="top_bar_edit_button_text">Sửa</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Địa chỉ bí danh</string>
+  <string name="field_alias_disabled_title">Địa chỉ bí danh (đã tắt)</string>
+  <string name="alias_copied_to_clipboard">Đã sao chép bí danh</string>
+  <string name="alias_detail_field_mailboxes_title">Chuyển tiếp đến</string>
+  <string name="alias_create_login_from_alias">Tạo đăng nhập</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Ghi chú</string>
+  <string name="note_detail_copy_note_to_clipboard">Sao chép ghi chú</string>
+  <string name="note_copied_to_clipboard">Đã sao chép ghi chú vào bộ nhớ tạm</string>
+  <!-- Login details -->
+  <string name="email_copied_to_clipboard">Đã sao chép địa chỉ email</string>
+  <string name="username_copied_to_clipboard">Đã sao chép tên đăng nhập</string>
+  <string name="password_copied_to_clipboard">Đã sao chép mật khẩu</string>
+  <string name="website_copied_to_clipboard">Web address copied</string>
+  <string name="totp_copied_to_clipboard">Đã sao chép mã TOTP</string>
+  <string name="field_copied_to_clipboard">Đã sao chép trường</string>
+  <string name="move_item_to_trash_message">Đã chuyển nội dung vào thùng rác</string>
+  <string name="error_move_item_to_trash_message">Lỗi khi chuyển tới thùng rác</string>
+  <string name="item_permanently_deleted_message">Nội dung đã xóa vĩnh viễn</string>
+  <string name="item_permanently_deleted_message_error">Lỗi khi xóa nội dung</string>
+  <string name="item_restored_message">Đã khôi phục nội dung</string>
+  <string name="item_restored_message_error">Lỗi khi khôi phục nội dung</string>
+  <string name="item_monitor_exclude_message">Nội dung được loại bỏ khỏi giám sát thành công</string>
+  <string name="item_monitor_exclude_message_error">Đã xảy ra lỗi khi tiến hành loại bỏ nội dung khỏi giám sát</string>
+  <string name="item_monitor_include_message">Nội dung được thêm vào giám sát thành công</string>
+  <string name="item_monitor_include_message_error">Đã xảy ra lỗi khi tiến hành thêm nội dung vào giám sát</string>
+  <string name="alias_change_status_error">Đã xảy ra lỗi khi thay đổi trạng thái alias</string>
+  <string name="login_item_generate_totp_error">Lỗi khi tạo mã 2FA</string>
+  <string name="login_item_view_alias_button">Xem bí danh</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Mật khẩu yếu</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Tài khoản này không an toàn, hãy tới dịch vụ và thay đổi mật khẩu.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="other">%d lần đăng nhập khác sử dụng cùng mật khẩu</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Thiết lập 2FA để an toàn hơn</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Dịch vụ này hỗ trợ mã bí mật 2FA. Hãy khởi tạo nó để tăng cường bảo mật cho tài khoản của bạn.</string>
+  <string name="login_item_reused_passwords_subtitle">Các nội dung khác sử dụng cùng mật khẩu này.</string>
+  <string name="field_email">Địa chỉ email</string>
+  <string name="field_username">Tên người dùng</string>
+  <string name="field_username_or_email">Tên đăng nhập hoặc Email</string>
+  <string name="field_password">Mật khẩu</string>
+  <string name="websites_section_title">Trang web</string>
+  <string name="totp_section_title">Mã bảo mật 2FA (TOTP)</string>
+  <string name="action_reveal_password">Hiện mật khẩu</string>
+  <string name="action_conceal_password">Che mật khẩu</string>
+  <string name="action_reveal_number">Hiện số thẻ</string>
+  <string name="action_conceal_number">Che số thẻ</string>
+  <string name="share_button_content_description">Mở nút chia sẻ</string>
+  <string name="open_menu_icon_content_description">Nút mở menu</string>
+  <string name="mfa_limit_reached">Đã dạt giới hạn 2FA</string>
+  <string name="mfa_icon_content_description">biểu tượng 2FA</string>
+  <string name="custom_field_text_icon_description">Trường văn bản tùy chỉnh</string>
+  <string name="custom_field_hidden_icon_description">Ẩn trường nội dung tùy chỉnh</string>
+  <string name="custom_field_totp_icon_description">Trường 2FA tùy chỉnh</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Tên trên thẻ</string>
+  <string name="credit_card_number_field_name">Số thẻ</string>
+  <string name="credit_card_cvv_field_name">Mã bảo mật</string>
+  <string name="credit_card_pin_field_name">Mã PIN</string>
+  <string name="credit_card_expiration_date_field_name">Ngày hết hạn</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Đã sao chép tên chủ thẻ vào bộ nhớ tạm</string>
+  <string name="credit_card_number_copied_to_clipboard">Đã sao chép số thẻ vào bảng nhớ tạm.</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Đã sao chép mã bảo mật vào bộ nhớ tạm</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Chuyển vào thùng rác</string>
+  <string name="migrate_item_detail_bottom_sheet">Chuyển đến kho lưu trữ khác</string>
+  <!-- More info -->
+  <string name="date_today">Hôm nay %s</string>
+  <string name="date_yesterday">Hôm qua %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Không thể chỉnh sửa</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Bạn không thể chỉnh sửa nội dung này vì bạn không có đủ quyền làm điều đó.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Bạn chỉ có thể chỉnh sửa nội dung trong các kho lưu trữ cũ nhất của mình. Để chỉnh sửa nội dung này, vui lòng nâng cấp gói của bạn.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Bạn không thể chỉnh sửa nội dung này vì nó nằm trong thùng rác. Hãy chuyển nó ra trước khi chỉnh sửa.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Không thể chia sẽ</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Bạn không có đủ quyền để chia sẻ kho lưu trữ này.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Bạn đã đạt đến giới hạn chia sẻ kho. Để chia sẻ nhiều kho hơn, vui lòng nâng cấp gói hiện tại của bạn.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Bạn không thể chỉnh sửa nội dung này vì nó nằm trong thùng rác. Hãy chuyển nó ra trước khi chỉnh sửa.</string>
+  <string name="password_score_vulnerable">Dễ bị bẻ khóa</string>
+  <string name="password_score_weak">Yếu</string>
+  <string name="password_score_strong">Mạnh</string>
+  <string name="passkey_detail_bottomsheet_title">Khóa truy cập</string>
+  <string name="passkey_detail_bottomsheet_username">Tên người dùng</string>
+  <string name="passkey_detail_bottomsheet_domain">Tên miền</string>
+  <string name="passkey_detail_bottomsheet_key">Chìa khóa</string>
+  <string name="passkey_detail_bottomsheet_created">Đã tạo</string>
+  <string name="activity_in_last_two_weeks">Hoạt động trong 14 ngày qua</string>
+  <string name="contacts">Danh bạ</string>
+  <string name="contacts_section_description">Để giữ địa chỉ email cá nhân của bạn ẩn, bạn có thể tạo một liên hệ bí danh che giấu địa chỉ của bạn.</string>
+  <string name="field_detail_display_name_title">Tên hiển thị</string>
+  <string name="display_name_section_description">Tên hiển thị khi gửi email từ bí danh này.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="other">%1$s chuyển tiếp</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="other">%1$s phản hồi</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="other">%1$s khối</item>
+  </plurals>
+  <string name="open_with">Mở bằng:</string>
+  <string name="open_attachments_error">Could not open attachment</string>
+</resources>

@@ -33,6 +33,7 @@
   <string name="bottomsheet_copy_item_note">Sao chép ghi chú</string>
   <string name="bottomsheet_delete_permanently">Xóa vĩnh viễn</string>
   <string name="bottomsheet_restore">Khôi phục</string>
+  <string name="bottomsheet_leave">Leave</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Mở menu hành động mục</string>
   <string name="action_upgrade_now">Nâng cấp ngay</string>
@@ -270,4 +271,7 @@
   <string name="attachment_title">Tệp đính kèm</string>
   <string name="attachment_no_files">Tải lên tệp từ thiết bị của bạn</string>
   <string name="attachment_add_file">Đính kèm một tệp</string>
+  <string name="attachment_row_upload_failed">Upload failed</string>
+  <string name="attachment_row_retry">Retry</string>
+  <string name="options_menu_content_description">Options menu</string>
 </resources>

@@ -32,8 +32,8 @@
   <string name="settings_share_crashes">Надсилати анонімні звіти про збої</string>
   <string name="settings_preference_updated">Налаштування оновлено</string>
   <string name="settings_display_section_title">Показувати</string>
-  <string name="settings_preference_display_username">Username field always visible</string>
-  <string name="settings_preference_display_autofill_pinning">Autofill pinning always visible</string>
+  <string name="settings_preference_display_username">Поле імені користувача завжди видиме</string>
+  <string name="settings_preference_display_autofill_pinning">Закріплення автозаповнення завжди видно</string>
   <string name="view_logs_title">Переглянути журнали</string>
   <string name="clipboard_bottomsheet_title">Буфер обміну</string>
   <string name="clipboard_option_clear_clipboard_label">Очистити буфер обміну</string>

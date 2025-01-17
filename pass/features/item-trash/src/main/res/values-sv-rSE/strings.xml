@@ -20,4 +20,9 @@
   <!-- Delete dialog -->
   <string name="item_trash_delete_dialog_title">Ta bort permanent?</string>
   <string name="item_trash_delete_dialog_message">Denna åtgärd är oåterkallelig.</string>
+  <!-- Shared warning dialog -->
+  <string name="item_trash_warning_shared_dialog_title">Move item to trash?</string>
+  <string name="item_trash_warning_shared_dialog_message">This item is currently shared. Moving it to trash will remove access for all other users.</string>
+  <string name="item_trash_warning_shared_snackbar_trash_error">Error moving item to trash</string>
+  <string name="item_trash_warning_shared_snackbar_trash_success">Item moved to trash</string>
 </resources>

@@ -38,8 +38,8 @@
   <string name="login_item_monitor_widget_weak_pass_title">Svag adgangskode</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Denne konto er sårbar. Besøg tjenesten og skift din adgangskode.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="one">%d anden indlogning bruger samme adgangskode</item>
-    <item quantity="other">%d andre indlogninger bruger samme adgangskode</item>
+    <item quantity="one">%d andet login bruger samme adgangskode</item>
+    <item quantity="other">%d andre logins bruger samme adgangskode</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Indstil 2FA for mere sikkerhed</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Denne tjeneste tilbyder 2FA. Aktivér det for at få ekstra kontosikkerhed.</string>
@@ -93,7 +93,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Du har kun tilladelse til at redigere elementer i dine ældste bokse. For at redigere dette element skal du opgradere dit nuværende abonnement.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Du kan ikke redigere dette element, fordi det er i papirkurven. Flyt det ud af papirkurven, før du redigerer det.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan ikke dele</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Du har ikke tilstrækkelige tilladelser til at dele denne boks.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">Du har ikke nok tilladelser til at udføre denne handling.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Du har nået grænsen for deling af bokse. Hvis du vil dele flere bokse, skal du opgradere dit nuværende abonnement.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Du kan ikke dele dette element, for det ligger i papirkurven. Flyt den fra papirkurven, inden du deler den.</string>
   <string name="password_score_vulnerable">Sårbar</string>
@@ -122,4 +122,5 @@
     <item quantity="other">%1$s blokeringer</item>
   </plurals>
   <string name="open_with">Åbn med:</string>
+  <string name="open_attachments_error">Kunne ikke åbne vedhæftning</string>
 </resources>

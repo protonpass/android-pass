@@ -21,6 +21,7 @@
   <string name="upsell_dark_web_monitoring_subtitle">Spremljanje Dark Web je na voljo s plačljivim paketom. Nadgradite za takojšen dostop.</string>
   <string name="upsell_missing_2fa_subtitle">Oglejte si seznam spletnih mest, kjer lahko dodate drugi faktor avtentikacije za zaščito vaše spletne prisotnosti. Nadgradite za takojšen dostop.</string>
   <string name="upsell_sentinel_subtitle">Odklenite napredne varnostne funkcije in podrobne dnevnike, da zaščitite svojo spletno prisotnost.</string>
+  <string name="upsell_paid_feature_file_attachments">File attachments</string>
   <string name="upsell_paid_feature_dark_web_monitoring">Spremljanje temnega spleta</string>
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
   <string name="upsell_paid_feature_authenticator">Vgrajen modul za preverjanje pristnosti 2FA</string>
@@ -34,6 +35,7 @@
   <string name="upsell_paid_feature_advance_alias_management_subtitle">Advanced alias management is available with a paid plan. Upgrade for immediate access.</string>
   <string name="upsell_paid_feature_item_sharing_title">Quickly share an item</string>
   <string name="upsell_paid_feature_item_sharing_subtitle">Upgrade today so you can share an item with any Pass user. And enjoy other premium features:</string>
+  <string name="upsell_paid_feature_file_attachments_title">File attachments</string>
   <string name="upsell_button_upgrade">Pridobite Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Pridobite Pass Business</string>
 </resources>

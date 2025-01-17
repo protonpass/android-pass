@@ -6,7 +6,7 @@
   <string name="snackbar_edit_vault_success">保管庫が編集されました</string>
   <string name="snackbar_edit_vault_error">保管庫は編集されていません</string>
   <string name="snackbar_delete_vault_success">保管庫が削除されました</string>
-  <string name="snackbar_delete_vault_error">削除されない保管庫</string>
+  <string name="snackbar_delete_vault_error">保管庫は削除されていません</string>
   <string name="snackbar_leave_vault_success">保管庫を退出しました</string>
   <string name="snackbar_leave_vault_error">保管庫を退出できませんでした</string>
   <string name="snackbar_retrieve_vault_error">保管庫が見つかりません</string>

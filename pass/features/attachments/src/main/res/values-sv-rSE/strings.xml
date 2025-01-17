@@ -27,4 +27,12 @@
   <string name="camera_open_error">Kunde inte öppna kamera</string>
   <string name="camera_permission_explanation">Tillåtelse för kamera krävs för att denna funktion ska vara tillgänglig.</string>
   <string name="camera_permission_open_settings">Öppna inställningar</string>
+  <string name="delete_all_attachments_title">Ta bort alla bilagor?</string>
+  <string name="delete_all_attachments_subtitle">Denna åtgärd kan inte ångras</string>
+  <string name="delete_all_attachments_confirm">Ta bort alla</string>
+  <string name="rename_attachment_dialog_title">Byt namn på fil</string>
+  <string name="storage_full_title">Ditt lagringsutrymme är nästan fullt.</string>
+  <string name="storage_full_body">Uppgradera för att öka ditt lagringsutrymme.</string>
+  <string name="storage_full_upgrade">Uppgradera</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s av %2$s</string>
 </resources>

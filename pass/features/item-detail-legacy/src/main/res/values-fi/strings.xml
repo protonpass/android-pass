@@ -93,7 +93,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Voit muokata vain vanhimpien holviesi kohteita. Muokkaa kohdetta päivittämällä nykyinen tilauksesi.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Et voi muokata kohdetta, koska se on roskakorissa. Siirrä se ensin pois roskakorista.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Jakaminen ei ole mahdollista</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Oikeutesi eivät riitä tämän holvin jakamiseen.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">You don\'t have enough permissions to perform this action.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Olet saavuttanut holvien jakorajoituksen. Jaa lisää holveja päivittämällä nykyinen tilauksesi.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Et voi jakaa kohdetta, koska se on roskakorissa. Siirrä se ensin pois roskakorista.</string>
   <string name="password_score_vulnerable">Haavoittuvainen</string>
@@ -122,4 +122,5 @@
     <item quantity="other">%1$s estoa</item>
   </plurals>
   <string name="open_with">Avaa käyttäen:</string>
+  <string name="open_attachments_error">Liitettä ei voitu avata</string>
 </resources>

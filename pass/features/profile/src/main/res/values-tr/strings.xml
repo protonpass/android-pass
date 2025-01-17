@@ -81,4 +81,6 @@
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Yönetebilmek için %1$s adresine geçmelisiniz</string>
   <string name="account_switch_confirmation_title">Hesap yönetimi</string>
   <string name="account_switch_confirmation_confirm">Geç ve yönet</string>
+  <string name="profile_storage_data_title">Depolama alanı</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s / %2$s</string>
 </resources>

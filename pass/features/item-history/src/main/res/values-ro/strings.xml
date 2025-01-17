@@ -28,4 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">Creat la</string>
   <string name="item_history_timeline_node_root_title">Versiune curentă</string>
   <string name="item_history_timeline_snackbar_message_error">A apărut o eroare la preluarea reviziilor articolului.</string>
+  <string name="reset_history_bottomsheet_option">Resetare istoric</string>
+  <string name="reset_history_dialog_title">Resetați istoricul pentru acest articol?</string>
+  <string name="reset_history_dialog_body">Resetarea istoricului va șterge definitiv toate versiunile anterioare și nu poate fi anulată.</string>
+  <string name="reset_history_action">Resetare</string>
+  <string name="reset_history_dialog_snackbar_message_error">S-a produs o eroare în timpul resetării.</string>
+  <string name="reset_history_dialog_snackbar_message_success">Istoricul articolului s-a resetat.</string>
 </resources>

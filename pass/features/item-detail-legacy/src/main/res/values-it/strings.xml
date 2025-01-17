@@ -93,7 +93,7 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Puoi modificare solamente gli elementi nelle tue casseforti più vecchie. Effettua l\'upgrade per modificare questo elemento.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Non puoi modificare questo elemento perché è stato spostato nel cestino. Spostalo fuori dal cestino per poterlo modificare.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Impossibile condividere</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Non disponi delle autorizzazioni necessarie per condividere questa cassaforte.</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">Non disponi di autorizzazioni sufficienti per eseguire questa azione.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Hai raggiunto il limite di condivisione delle casseforti. Effettua l\'upgrade per condividere più casseforti.</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Non puoi condividere questo elemento perché è nel cestino. Spostalo fuori dal cestino prima di condividerlo.</string>
   <string name="password_score_vulnerable">Vulnerabile</string>
@@ -122,4 +122,5 @@
     <item quantity="other">%1$s blocchi</item>
   </plurals>
   <string name="open_with">Apri con:</string>
+  <string name="open_attachments_error">Impossibile aprire l\'allegato</string>
 </resources>

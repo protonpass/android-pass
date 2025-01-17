@@ -34,6 +34,7 @@
   <string name="bottomsheet_copy_item_note">Kopiera anteckning</string>
   <string name="bottomsheet_delete_permanently">Ta bort permanent</string>
   <string name="bottomsheet_restore">Återställ</string>
+  <string name="bottomsheet_leave">Lämna</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Öppna åtgärdsmeny för objekt</string>
   <string name="action_upgrade_now">Uppgradera nu</string>
@@ -282,4 +283,7 @@
   <string name="attachment_title">Bilagor</string>
   <string name="attachment_no_files">Ladda upp filer från din enhet</string>
   <string name="attachment_add_file">Bifoga en fil</string>
+  <string name="attachment_row_upload_failed">Uppladdning misslyckades</string>
+  <string name="attachment_row_retry">Försök igen</string>
+  <string name="options_menu_content_description">Alternativmeny</string>
 </resources>

@@ -50,7 +50,7 @@
   <string name="profile_option_change_pin_code">Vaihda PIN-koodi</string>
   <string name="profile_passkey_support_section_title">Pääsyavaimet</string>
   <string name="profile_passkey_support_subtitle_supported">Pääsyavaimia tuetaan</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your Android version does not support passkeys.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Android-versiosi ei tue pääsyavaimia.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Laitteesi ei tue pääsyavaimia</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Pääsyavaintukea ei voitu tarkastaa</string>
   <plurals name="profile_after_days">
@@ -81,4 +81,6 @@
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Sinun on vaihdettava tiliin %1$s hallitaksesi sitä</string>
   <string name="account_switch_confirmation_title">Hallitse tiliä</string>
   <string name="account_switch_confirmation_confirm">Vaihda ja hallitse</string>
+  <string name="profile_storage_data_title">Tallennustila</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s/%2$s</string>
 </resources>

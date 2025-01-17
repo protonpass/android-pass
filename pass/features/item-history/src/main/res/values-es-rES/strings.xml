@@ -28,4 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">Creado</string>
   <string name="item_history_timeline_node_root_title">Versión actual</string>
   <string name="item_history_timeline_snackbar_message_error">Se ha producido un error al recuperar las revisiones del elemento.</string>
+  <string name="reset_history_bottomsheet_option">Restablecer el historial</string>
+  <string name="reset_history_dialog_title">¿Quieres restablecer el historial de este elemento?</string>
+  <string name="reset_history_dialog_body">Al restablecer el historial se eliminará permanentemente todas las versiones anteriores y no se podrá deshacer.</string>
+  <string name="reset_history_action">Restablecer</string>
+  <string name="reset_history_dialog_snackbar_message_error">Se ha producido un error durante el restablecimiento.</string>
+  <string name="reset_history_dialog_snackbar_message_success">Se ha restablecido el historial del elemento.</string>
 </resources>

@@ -4,6 +4,8 @@
   <string name="autofill_notification_channel_name">Emplenament automàtic</string>
   <string name="autofill_notification_copy_to_clipboard_title">Codi TOTP</string>
   <string name="autofill_notification_copy_to_clipboard_body">S\'ha copiat el codi TOTP al porta-retalls.</string>
-  <string name="updates_new_invite_received_title">Heu rebut una invitació.</string>
-  <string name="updates_new_invite_received_message">Heu estat convidat a una caixa forta. Obreu l\'aplicació per veure la invitació i acceptar-la.</string>
+  <string name="new_item_invite_notification_title">Nova invitació a un element</string>
+  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s vol compartir un element amb vosaltres.</string>
+  <string name="new_vault_invite_notification_title">Nova invitació a una caixa forta</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s vol compartir una caixa forta amb vosaltres.</string>
 </resources>

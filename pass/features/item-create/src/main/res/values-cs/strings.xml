@@ -39,8 +39,9 @@
   <string name="create_login_item_update_error">Nelze aktualizovat přihlášení</string>
   <string name="create_login_init_error">Problém s načítáním detalů přihlášení</string>
   <string name="create_login_invalid_totp">Obsah 2FA je neplatný</string>
-  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_link_attachments_error">Could not add attachments to login</string>
+  <string name="update_login_attachments_init_error">Problém s načítáním příloh přihlášení</string>
+  <string name="login_link_attachments_error">Připojení nebo odpojení příloh k přihlášení selhalo</string>
+  <string name="login_rename_attachments_error">Přejmenování příloh přihlášení selhalo</string>
   <string name="login_created">Přihlášení vytvořeno</string>
   <string name="bottomsheet_modify_alias_title">Upravit alias</string>
   <string name="bottomsheet_custom_field_type_text">Text</string>
@@ -65,8 +66,9 @@
   <string name="create_note_item_creation_error">Nelze vytvořit poznámku</string>
   <string name="create_note_item_update_error">Nelze aktualizovat poznámku</string>
   <string name="create_note_init_error">Problém s načítáním detailů pozvánky</string>
-  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_link_attachments_error">Could not add attachments to note</string>
+  <string name="update_note_attachments_init_error">Problém s načítáním příloh poznámky</string>
+  <string name="note_link_attachments_error">Připojení nebo odpojení příloh k poznámce selhalo</string>
+  <string name="note_rename_attachments_error">Přejmenování příloh poznámky selhalo</string>
   <string name="note_created">Poznámka vytvořena</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Alias adresa</string>
@@ -83,8 +85,9 @@
   <string name="alias_rate_limited">Příliš mnoho aliasů vytvořených v poslední době</string>
   <string name="create_alias_item_update_error">Nelze aktualizovat alias</string>
   <string name="create_alias_init_error">Problém s načítáním detailů aliasu</string>
-  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_link_attachments_error">Could not add attachments to alias</string>
+  <string name="update_alias_attachments_init_error">Problém s načítáním příloh aliasu</string>
+  <string name="alias_link_attachments_error">Připojení nebo odpojení příloh k aliasu selhalo</string>
+  <string name="alias_rename_attachments_error">Přejmenování příloh aliasu selhalo</string>
   <string name="alias_created">Alias byl vytvořen</string>
   <string name="cannot_retrieve_alias_options">Nelze načíst možnosti aliasu</string>
   <string name="alias_mailbox_dialog_title">Přeposlat na</string>
@@ -110,8 +113,9 @@
   <string name="create_credit_card_item_creation_error">Nelze vytvořit platební kartu</string>
   <string name="create_credit_card_item_creation_success">Platební karta vytvořena</string>
   <string name="credit_card_init_error">Problém s načítáním detailů platební karty</string>
-  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_link_attachments_error">Could not add attachments to credit card</string>
+  <string name="update_credit_card_attachments_init_error">Problém s načítáním příloh platební karty</string>
+  <string name="credit_card_link_attachments_error">Připojení nebo odpojení příloh k platební kartě selhalo</string>
+  <string name="credit_card_rename_attachments_error">Přejmenování příloh platební karty selhalo</string>
   <string name="credit_card_item_update_error">Nelze aktualizovat platební kartu</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Jméno a příjmení</string>
@@ -168,8 +172,9 @@
   <string name="identity_add_more_fields">Přidat další pole</string>
   <string name="identity_bottomsheet_add_field">Přidat pole</string>
   <string name="create_identity_init_error">Problém s načítáním detailů identity</string>
-  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_link_attachments_error">Could not add attachments to identity</string>
+  <string name="update_identity_attachments_init_error">Problém s načítáním příloh identity</string>
+  <string name="identity_link_attachments_error">Připojení nebo odpojení příloh k identitě selhalo</string>
+  <string name="identity_rename_attachments_error">Přejmenování příloh identity selhalo</string>
   <string name="create_identity_item_creation_error">Nelze vytvořit identitu</string>
   <string name="create_identity_item_creation_success">Identita vytvořena</string>
   <string name="update_identity_item_creation_success">Identita aktualizována</string>
@@ -201,4 +206,6 @@
   <string name="banner_title_attachments">Přílohy</string>
   <string name="banner_body_attachments">Pro lepší organizaci můžete k položkám připojit soubory</string>
   <string name="open_with">Otevřít pomocí:</string>
+  <string name="open_attachments_error">Nepodařilo se otevřít přílohu</string>
+  <string name="upload_attachments_error">Nepodařilo se nahrát přílohu</string>
 </resources>

@@ -27,4 +27,12 @@
   <string name="camera_open_error">Kamera açılamadı</string>
   <string name="camera_permission_explanation">Bu özelliği kullanabilmek için kameraya erişme izni verilmelidir.</string>
   <string name="camera_permission_open_settings">Ayarları aç</string>
+  <string name="delete_all_attachments_title">Tüm ek dosyalar silinsin mi?</string>
+  <string name="delete_all_attachments_subtitle">Bu işlem geri alınamaz</string>
+  <string name="delete_all_attachments_confirm">Tümünü sil</string>
+  <string name="rename_attachment_dialog_title">Dosyayı yeniden adlandır</string>
+  <string name="storage_full_title">Depolama alanınız dolmak üzere.</string>
+  <string name="storage_full_body">Depolama alanınızı artırmak için tarifenizi yükseltin.</string>
+  <string name="storage_full_upgrade">Yükselt</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s / %2$s</string>
 </resources>

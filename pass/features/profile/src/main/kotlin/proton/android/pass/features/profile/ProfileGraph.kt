@@ -135,7 +135,7 @@ fun NavGraphBuilder.profileGraph(onNavigateEvent: (ProfileNavigation) -> Unit) {
                 modifier = Modifier.testTag(ProfileScreenTestTag.SCREEN),
                 enterPinSuccess = enterPinSuccess,
                 onNavigateEvent = onNavigateEvent,
-                onClearPinSuccess = { it.savedStateHandle.remove<Boolean>(ENTER_PIN_PARAMETER_KEY) }
+                onClearPinSuccess = { it.savedStateHandle[ENTER_PIN_PARAMETER_KEY] = false }
             )
         }
         bottomSheet(FeedbackBottomsheet) {
@@ -145,8 +145,13 @@ fun NavGraphBuilder.profileGraph(onNavigateEvent: (ProfileNavigation) -> Unit) {
             AppLockTimeBottomsheet(onClose = { onNavigateEvent(ProfileNavigation.CloseBottomSheet) })
         }
         bottomSheet(AppLockTypeBottomsheet) {
-            val enterPin = it.savedStateHandle.get<Boolean>(ENTER_PIN_PARAMETER_KEY) ?: false
-            AppLockTypeBottomsheet(enterPinSuccess = enterPin, onNavigateEvent = onNavigateEvent)
+            val enterPinSuccess by it.savedStateHandle.getStateFlow(ENTER_PIN_PARAMETER_KEY, false)
+                .collectAsStateWithLifecycle()
+            AppLockTypeBottomsheet(
+                enterPinSuccess = enterPinSuccess,
+                onNavigateEvent = onNavigateEvent,
+                onClearPinSuccess = { it.savedStateHandle[ENTER_PIN_PARAMETER_KEY] = false }
+            )
         }
         composable(PinConfig) {
             PinConfigScreen(onNavigateEvent = onNavigateEvent)

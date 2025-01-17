@@ -702,12 +702,10 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(PinConfig)
                 }
 
-                ProfileNavigation.EnterPin -> dismissBottomSheet {
-                    appNavigator.navigate(
-                        destination = EnterPin,
-                        route = EnterPin.buildRoute(AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY)
-                    )
-                }
+                ProfileNavigation.EnterPin -> appNavigator.navigate(
+                    destination = EnterPin,
+                    route = EnterPin.buildRoute(AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY)
+                )
 
                 ProfileNavigation.SecureLinks -> appNavigator.navigate(
                     destination = SecureLinksListNavItem
@@ -1745,27 +1743,24 @@ fun NavGraphBuilder.appGraph(
                     AuthOrigin.EXTRA_PASSWORD_LOGIN -> onNavigate(AppNavigation.Finish)
                 }
 
-                is AuthNavigation.Success -> dismissBottomSheet {
-                    when (it.origin) {
-                        AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY ->
-                            appNavigator.navigateBackWithResult(
-                                key = ENTER_PIN_PARAMETER_KEY,
-                                value = true
-                            )
+                is AuthNavigation.Success -> when (it.origin) {
+                    AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY ->
+                        dismissBottomSheet {
+                            appNavigator.setResult(mapOf(ENTER_PIN_PARAMETER_KEY to true))
+                        }
 
-                        AuthOrigin.EXTRA_PASSWORD_CONFIGURE ->
-                            appNavigator.navigate(
-                                destination = SetExtraPasswordNavItem,
-                                backDestination = Account
-                            )
-
-                        AuthOrigin.AUTO_LOCK -> appNavigator.navigateBack()
-                        AuthOrigin.EXTRA_PASSWORD_LOGIN -> {}
-                        AuthOrigin.EXTRA_PASSWORD_REMOVE -> appNavigator.navigateBackWithResult(
-                            key = ENTER_PIN_PARAMETER_KEY,
-                            value = true
+                    AuthOrigin.EXTRA_PASSWORD_CONFIGURE ->
+                        appNavigator.navigate(
+                            destination = SetExtraPasswordNavItem,
+                            backDestination = Account
                         )
-                    }
+
+                    AuthOrigin.AUTO_LOCK -> appNavigator.navigateBack()
+                    AuthOrigin.EXTRA_PASSWORD_LOGIN -> {}
+                    AuthOrigin.EXTRA_PASSWORD_REMOVE -> appNavigator.navigateBackWithResult(
+                        key = ENTER_PIN_PARAMETER_KEY,
+                        value = true
+                    )
                 }
 
                 AuthNavigation.Dismissed -> onNavigate(AppNavigation.Finish)

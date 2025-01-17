@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Адкрыць</string>
+  <string name="action_copy">Скапіяваць</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Праблема пры атрыманні падрабязнасцяў элемента</string>
+  <string name="top_bar_edit_button_text">Рэдагаваць</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Адрас псеўданіма</string>
+  <string name="field_alias_disabled_title">Адрас псеўданіма (адключана)</string>
+  <string name="alias_copied_to_clipboard">Псеўданім скапіяваны</string>
+  <string name="alias_detail_field_mailboxes_title">Перасылаецца на</string>
+  <string name="alias_create_login_from_alias">Стварыць запіс уваходу</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Нататка</string>
+  <string name="note_detail_copy_note_to_clipboard">Скапіяваць нататку</string>
+  <string name="note_copied_to_clipboard">Нататка скапіявана ў буфер абмену</string>
+  <!-- Login details -->
+  <string name="email_copied_to_clipboard">Адрас электроннай пошты скапіяваны</string>
+  <string name="username_copied_to_clipboard">Імя карыстальніка скапіявана</string>
+  <string name="password_copied_to_clipboard">Пароль скапіяваны</string>
+  <string name="website_copied_to_clipboard">Вэб-сайт скапіяваны</string>
+  <string name="totp_copied_to_clipboard">TOTP скапіяваны</string>
+  <string name="field_copied_to_clipboard">Поле скапіявана</string>
+  <string name="move_item_to_trash_message">Элемент перамешчаны ў сметніцу</string>
+  <string name="error_move_item_to_trash_message">Памылка перамяшчэння ў сметніцу</string>
+  <string name="item_permanently_deleted_message">Элемент незваротна выдалены</string>
+  <string name="item_permanently_deleted_message_error">Памылка выдалення элемента</string>
+  <string name="item_restored_message">Элемент адноўлены</string>
+  <string name="item_restored_message_error">Памылка аднаўлення элемента</string>
+  <string name="item_monitor_exclude_message">Элемент паспяхова выключаны з назірання</string>
+  <string name="item_monitor_exclude_message_error">Адбылася памылка падчас выключэння элемента з назірання</string>
+  <string name="item_monitor_include_message">Элемент паспяхова ўключаны ў назіранне</string>
+  <string name="item_monitor_include_message_error">Адбылася памылка падчас уключэння элемента ў назіранне</string>
+  <string name="alias_change_status_error">Адбылася памылка падчас змянення статусу псеўданіма</string>
+  <string name="login_item_generate_totp_error">Памылка генерацыі кода 2ФА</string>
+  <string name="login_item_view_alias_button">Паглядзець псеўданім</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Ненадзейны пароль</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Гэты ўліковы запіс з\'яўляецца ўразлівым. Наведайце сэрвіс і змяніце пароль.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d запіс уваходу выкарыстоўвае такі ж самы пароль</item>
+    <item quantity="few">%d запісы ўваходу выкарыстоўваюць такі ж самы пароль</item>
+    <item quantity="many">%d запісаў уваходу выкарыстоўваюць такі ж самы пароль</item>
+    <item quantity="other">%d запісаў уваходу выкарыстоўваюць такі ж самы пароль</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Наладзьце 2ФА для большай бяспекі</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Гэты сэрвіс прапануе 2ФА. Уключыце гэту функцыю, каб дадаць бяспеку ўліковаму запісу.</string>
+  <string name="login_item_reused_passwords_subtitle">Элементы з вашага сховішча, якія выкарыстоўваць гэты пароль.</string>
+  <string name="field_email">Адрас электроннай пошты</string>
+  <string name="field_username">Імя карыстальніка</string>
+  <string name="field_username_or_email">Імя карыстальніка або адрас электроннай пошты</string>
+  <string name="field_password">Пароль</string>
+  <string name="websites_section_title">Вэб-сайты</string>
+  <string name="totp_section_title">Токен 2ФА (TOTP)</string>
+  <string name="action_reveal_password">Паказаць пароль</string>
+  <string name="action_conceal_password">Схаваць пароль</string>
+  <string name="action_reveal_number">Паказаць нумар</string>
+  <string name="action_conceal_number">Схаваць нумар</string>
+  <string name="share_button_content_description">Адкрыць кнопку абагулення</string>
+  <string name="open_menu_icon_content_description">Кнопка адкрыцця меню</string>
+  <string name="mfa_limit_reached">Дасягнута абмежаванне 2ФА</string>
+  <string name="mfa_icon_content_description">Значок 2ФА</string>
+  <string name="custom_field_text_icon_description">Карыстальніцкае тэкставае поле</string>
+  <string name="custom_field_hidden_icon_description">Значок схаванага карыстальніцкага поля</string>
+  <string name="custom_field_totp_icon_description">Карыстальніцкае поле 2ФА</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Імя на картцы</string>
+  <string name="credit_card_number_field_name">Нумар карткі</string>
+  <string name="credit_card_cvv_field_name">Код бяспекі</string>
+  <string name="credit_card_pin_field_name">PIN-код</string>
+  <string name="credit_card_expiration_date_field_name">Тэрмін дзеяння</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Трымальнік карткі скапіяваны ў буфер абмену</string>
+  <string name="credit_card_number_copied_to_clipboard">Нумар карткі скапіяваны ў буфер абмену.</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Код бяспекі скапіяваны ў буфер абмену!</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Перамясціць у сметніцу</string>
+  <string name="migrate_item_detail_bottom_sheet">Перамясціць у іншае сховішча</string>
+  <!-- More info -->
+  <string name="date_today">Сёння %s</string>
+  <string name="date_yesterday">Учора %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL у HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy \'у\' HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Немагчыма рэдагаваць</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Вы не можаце рэдагаваць гэты элемент, бо ў вас недастаткова правоў для гэтай аперацыі.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Вам толькі дазволена рэдагаваць элементы ў сваіх больш старых сховішчах. Палепшыце свой бягучы тарыфны план, каб рэдагаваць гэты элемент.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Вы не можаце рэдагаваць гэты элемент, бо ён знаходзіцца ў сметніцы. Дастаньце яго адтуль, а потым паўтарыце спробу.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Немагчыма абагуліць</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">У вас недастаткова правоў, каб абагуліць гэта сховішча.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Вы дасягнулі максімальнай колькасці абагуленняў сховішчаў. Для таго, каб абагуліць больш сховішчаў, палепшыце свой бягучы тарыфны план.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Вы не можаце абагуліць гэты элемент, бо ён знаходзіцца ў сметніцы. Дастаньце яго адтуль, а потым паўтарыце спробу.</string>
+  <string name="password_score_vulnerable">Уразлівы</string>
+  <string name="password_score_weak">Ненадзейны</string>
+  <string name="password_score_strong">Надзейны</string>
+  <string name="passkey_detail_bottomsheet_title">Ключ доступу</string>
+  <string name="passkey_detail_bottomsheet_username">Імя карыстальніка</string>
+  <string name="passkey_detail_bottomsheet_domain">Дамен</string>
+  <string name="passkey_detail_bottomsheet_key">Ключ</string>
+  <string name="passkey_detail_bottomsheet_created">Створана</string>
+  <string name="activity_in_last_two_weeks">Актыўнасць за апошнія 14 дзён</string>
+  <string name="contacts">Кантакты</string>
+  <string name="contacts_section_description">Вы можаце стварыць кантакт псеўданіма, які замаскіруе ваш адрас. Гэта дазволіць захаваць ваш персанальны адрас электроннай пошты схаваным.</string>
+  <string name="field_detail_display_name_title">Бачнае імя</string>
+  <string name="display_name_section_description">Бачнае імя пры адпраўцы ліста з гэтага псеўданіма.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s перасылка</item>
+    <item quantity="few">%1$s перасылкі</item>
+    <item quantity="many">%1$s перасылак</item>
+    <item quantity="other">%1$s перасылак</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s адказ</item>
+    <item quantity="few">%1$s адказы</item>
+    <item quantity="many">%1$s адказаў</item>
+    <item quantity="other">%1$s адказаў</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s блакіроўка</item>
+    <item quantity="few">%1$s блакіроўкі</item>
+    <item quantity="many">%1$s блакіровак</item>
+    <item quantity="other">%1$s блакіровак</item>
+  </plurals>
+  <string name="open_with">Адкрыць праз:</string>
+  <string name="open_attachments_error">Немагчыма адкрыць далучэнне</string>
+</resources>

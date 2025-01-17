@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Obre</string>
+  <string name="action_copy">Copia</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Problema en recuperar els detalls de l\'element</string>
+  <string name="top_bar_edit_button_text">Edita</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Adreça d\'àlies</string>
+  <string name="field_alias_disabled_title">Adreça de l\'àlies (desactivada)</string>
+  <string name="alias_copied_to_clipboard">S\'ha copiat l\'àlies</string>
+  <string name="alias_detail_field_mailboxes_title">S\'està reenviant a</string>
+  <string name="alias_create_login_from_alias">Crea un inici de sessió</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Nota</string>
+  <string name="note_detail_copy_note_to_clipboard">Copia la nota</string>
+  <string name="note_copied_to_clipboard">S\'ha copiat la nota al porta-retalls</string>
+  <!-- Login details -->
+  <string name="email_copied_to_clipboard">S\'ha copiat l\'adreça de correu electrònic.</string>
+  <string name="username_copied_to_clipboard">S\'ha copiat el nom d\'usuari</string>
+  <string name="password_copied_to_clipboard">S\'ha copiat la contrasenya</string>
+  <string name="website_copied_to_clipboard">S\'ha copiat el lloc web.</string>
+  <string name="totp_copied_to_clipboard">S\'ha copiat el TOTP</string>
+  <string name="field_copied_to_clipboard">S\'ha copiat el camp</string>
+  <string name="move_item_to_trash_message">L\'element s\'ha mogut a la paperera</string>
+  <string name="error_move_item_to_trash_message">S\'ha produït un error en moure a la paperera</string>
+  <string name="item_permanently_deleted_message">S\'ha eliminat l\'element de forma permanent.</string>
+  <string name="item_permanently_deleted_message_error">S\'ha produït un error en eliminar l\'element</string>
+  <string name="item_restored_message">S\'ha restaurat l\'element</string>
+  <string name="item_restored_message_error">S\'ha produït un error en restaurar l\'element</string>
+  <string name="item_monitor_exclude_message">S\'ha exclòs l\'element del monitoratge.</string>
+  <string name="item_monitor_exclude_message_error">S\'ha produït un error en excloure l\'element del monitoratge.</string>
+  <string name="item_monitor_include_message">S\'ha afegit l\'element al monitoratge.</string>
+  <string name="item_monitor_include_message_error">S\'ha produït un error en incloure l\'element al seguiment.</string>
+  <string name="alias_change_status_error">S\'ha produït un error en canviar l\'estat de l\'àlies.</string>
+  <string name="login_item_generate_totp_error">S\'ha produït un error en generar el codi A2F.</string>
+  <string name="login_item_view_alias_button">Mostra l\'àlies</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Contrasenya feble</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Aquest compte és vulnerable, visiteu el servei i canvieu la contrasenya.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d altre inici de sessió fa servir la mateixa contrasenya.</item>
+    <item quantity="other">%d altres inicis de sessió fan servir la mateixa contrasenya.</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Configureu A2F per a més seguretat</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Aquest servei ofereix A2F. Habiliteu-lo per a augmentar la seguretat del compte.</string>
+  <string name="login_item_reused_passwords_subtitle">Elements de les vostres caixes fortes que utilitzen aquesta contrasenya.</string>
+  <string name="field_email">Adreça de correu electrònic</string>
+  <string name="field_username">Nom d\'usuari</string>
+  <string name="field_username_or_email">Nom d\'usuari o adreça de correu electrònic</string>
+  <string name="field_password">Contrasenya</string>
+  <string name="websites_section_title">Llocs web</string>
+  <string name="totp_section_title">Testimoni 2FA (TOTP)</string>
+  <string name="action_reveal_password">Mostra la contrasenya</string>
+  <string name="action_conceal_password">Oculta la contrasenya</string>
+  <string name="action_reveal_number">Mostra el número</string>
+  <string name="action_conceal_number">Oculta el número</string>
+  <string name="share_button_content_description">Obre el botó de compartició</string>
+  <string name="open_menu_icon_content_description">Botó d\'obertura de menú</string>
+  <string name="mfa_limit_reached">S\'ha assolit el límit de 2FA</string>
+  <string name="mfa_icon_content_description">Icona de 2FA</string>
+  <string name="custom_field_text_icon_description">Camp de text personalitzat</string>
+  <string name="custom_field_hidden_icon_description">Camp personalitzat amagat</string>
+  <string name="custom_field_totp_icon_description">Camp personalitzat 2FA</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Nom a la targeta</string>
+  <string name="credit_card_number_field_name">Número de la targeta</string>
+  <string name="credit_card_cvv_field_name">Codi de seguretat</string>
+  <string name="credit_card_pin_field_name">Codi PIN</string>
+  <string name="credit_card_expiration_date_field_name">Data de caducitat</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">S\'ha copiat el titular de la targeta al porta-retalls</string>
+  <string name="credit_card_number_copied_to_clipboard">S\'ha copiat el número de la targeta al porta-retalls</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">S\'ha copiat el codi de verificació al porta-retalls.</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Mou a la paperera</string>
+  <string name="migrate_item_detail_bottom_sheet">Mou a una altra caixa forta</string>
+  <!-- More info -->
+  <string name="date_today">Avui %s</string>
+  <string name="date_yesterday">Ahir %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">No es pot editar.</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">No podeu editar aquest element perquè no teniu prou permisos per fer-ho.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Només podeu editar elements a les vostres caixes fortes més antigues. Per editar aquest element, milloreu el vostre pla actual.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">No podeu editar aquest element perquè és a la paperera. Si us plau, traieu-lo de la paperera abans d\'editar-lo.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">No es pot compartir.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">No teniu prou permisos per compartir aquesta caixa forta.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Heu assolit el límit de compartició de la caixa forta. Per compartir més caixes fortes, milloreu el vostre pla actual.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">No podeu compartir aquest element perquè és a la paperera. Traieu-lo de la paperera abans de compartir-lo.</string>
+  <string name="password_score_vulnerable">Vulnerable</string>
+  <string name="password_score_weak">Feble</string>
+  <string name="password_score_strong">Segura</string>
+  <string name="passkey_detail_bottomsheet_title">Clau d\'accés</string>
+  <string name="passkey_detail_bottomsheet_username">Nom d\'usuari</string>
+  <string name="passkey_detail_bottomsheet_domain">Domini</string>
+  <string name="passkey_detail_bottomsheet_key">Clau</string>
+  <string name="passkey_detail_bottomsheet_created">Creada</string>
+  <string name="activity_in_last_two_weeks">Activitat en els darrers 14 dies</string>
+  <string name="contacts">Contactes</string>
+  <string name="contacts_section_description">Per mantenir la vostra adreça electrònica personal oculta, podeu crear un contacte d\'àlies que emmascari la vostra adreça.</string>
+  <string name="field_detail_display_name_title">Nom per a mostrar</string>
+  <string name="display_name_section_description">Aquest és el nom de visualització quan s\'envia un missatge des d\'aquest àlies.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s reenviament</item>
+    <item quantity="other">%1$s reenviaments</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s resposta</item>
+    <item quantity="other">%1$s respostes</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s blocat</item>
+    <item quantity="other">%1$s blocats</item>
+  </plurals>
+  <string name="open_with">Obre amb:</string>
+  <string name="open_attachments_error">No s\'ha pogut obrir el adjunt.</string>
+</resources>

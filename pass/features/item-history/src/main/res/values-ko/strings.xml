@@ -28,4 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">생성함</string>
   <string name="item_history_timeline_node_root_title">현재 버전</string>
   <string name="item_history_timeline_snackbar_message_error">항목 리비전을 받아오는 중에 오류가 발생했습니다</string>
+  <string name="reset_history_bottomsheet_option">기록 재설정</string>
+  <string name="reset_history_dialog_title">이 항목의 기록을 재설정하시겠어요?</string>
+  <string name="reset_history_dialog_body">기록 재설정은 모든 과거 버전들을 삭제하며 되돌릴 수 없습니다.</string>
+  <string name="reset_history_action">재설정</string>
+  <string name="reset_history_dialog_snackbar_message_error">재설정에 오류가 발생했습니다.</string>
+  <string name="reset_history_dialog_snackbar_message_success">항목 기록이 재설정되었습니다.</string>
 </resources>

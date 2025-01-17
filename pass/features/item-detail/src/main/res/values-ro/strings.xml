@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Deschidere</string>
+  <string name="action_copy">Copiere</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Problemă preluare detalii articole.</string>
+  <string name="top_bar_edit_button_text">Editare</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Adresă alias</string>
+  <string name="field_alias_disabled_title">Adresă alias (dezactivată)</string>
+  <string name="alias_copied_to_clipboard">Alias copiat</string>
+  <string name="alias_detail_field_mailboxes_title">Se redirecționează către</string>
+  <string name="alias_create_login_from_alias">Creare autentificare</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Notiță</string>
+  <string name="note_detail_copy_note_to_clipboard">Copiere notiță</string>
+  <string name="note_copied_to_clipboard">Notița a fost copiată în memorie.</string>
+  <!-- Login details -->
+  <string name="email_copied_to_clipboard">Adresa de e-mail a fost copiată</string>
+  <string name="username_copied_to_clipboard">Nume de utilizator copiat</string>
+  <string name="password_copied_to_clipboard">Parola s-a copiat</string>
+  <string name="website_copied_to_clipboard">Site web copiat.</string>
+  <string name="totp_copied_to_clipboard">TOTP copiat.</string>
+  <string name="field_copied_to_clipboard">Câmp copiat.</string>
+  <string name="move_item_to_trash_message">Articolul s-a mutat în gunoi.</string>
+  <string name="error_move_item_to_trash_message">Eroare mutare în gunoi.</string>
+  <string name="item_permanently_deleted_message">Articolul s-a șters definitiv.</string>
+  <string name="item_permanently_deleted_message_error">Eroare ștergere articol.</string>
+  <string name="item_restored_message">Articolul s-a restaurat.</string>
+  <string name="item_restored_message_error">Eroare restaurare articol.</string>
+  <string name="item_monitor_exclude_message">Articolul a fost exclus din monitorizare.</string>
+  <string name="item_monitor_exclude_message_error">A apărut o eroare la excluderea articolului din monitorizare.</string>
+  <string name="item_monitor_include_message">Articolul a fost inclus în monitorizare.</string>
+  <string name="item_monitor_include_message_error">A apărut o eroare la includerea articolului în monitorizare.</string>
+  <string name="alias_change_status_error">A apărut o eroare la modificarea stării aliasului.</string>
+  <string name="login_item_generate_totp_error">Eroare generare cod A2F.</string>
+  <string name="login_item_view_alias_button">Afișare alias</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Parolă slabă</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Acest cont este vulnerabil, accesați serviciul și schimbați-vă parola.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">Alte autentificări care folosesc aceeași parolă: %d</item>
+    <item quantity="few">Alte autentificări care folosesc aceeași parolă: %d</item>
+    <item quantity="other">Alte autentificări care folosesc aceeași parolă: %d</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Setați A2F pentru mai multă securitate</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Acest serviciu oferă A2A. Activați-l pentru securitate suplimentară a contului.</string>
+  <string name="login_item_reused_passwords_subtitle">Articole din seifuri care folosesc această parolă.</string>
+  <string name="field_email">Adresa de e-mail</string>
+  <string name="field_username">Nume de utilizator</string>
+  <string name="field_username_or_email">Nume utilizator sau adresă de e-mail</string>
+  <string name="field_password">Parola</string>
+  <string name="websites_section_title">Pagini web</string>
+  <string name="totp_section_title">Cod A2F (TOTP)</string>
+  <string name="action_reveal_password">Afișare parolă</string>
+  <string name="action_conceal_password">Ascundere parolă</string>
+  <string name="action_reveal_number">Afișare număr</string>
+  <string name="action_conceal_number">Ascundere număr</string>
+  <string name="share_button_content_description">Deschidere buton partajare.</string>
+  <string name="open_menu_icon_content_description">Buton meniu deschidere</string>
+  <string name="mfa_limit_reached">Limită A2F atinsă.</string>
+  <string name="mfa_icon_content_description">Pictogramă A2F</string>
+  <string name="custom_field_text_icon_description">Text câmp personal</string>
+  <string name="custom_field_hidden_icon_description">Câmp personal ascuns</string>
+  <string name="custom_field_totp_icon_description">Câmp personal A2F</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Titular card</string>
+  <string name="credit_card_number_field_name">Număr card</string>
+  <string name="credit_card_cvv_field_name">Cod de securitate</string>
+  <string name="credit_card_pin_field_name">Cod PIN</string>
+  <string name="credit_card_expiration_date_field_name">Data de expirare</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Titularul cardului a fost copiat în memorie.</string>
+  <string name="credit_card_number_copied_to_clipboard">Numărul cardului a fost copiat în memorie.</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Codul de securitate a fost copiat în memorie.</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Mutare în gunoi</string>
+  <string name="migrate_item_detail_bottom_sheet">Mutare în alt seif</string>
+  <!-- More info -->
+  <string name="date_today">Astăzi %s</string>
+  <string name="date_yesterday">Ieri %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">zz LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Nu se poate edita</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Nu puteți edita acest articol deoarece nu aveți suficiente permisiuni pentru a face acest lucru.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Aveți voie să editați doar articole din cele seifurile vechi. Pentru a edita acest articol, modificați-vă planul actual.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Nu puteți edita acest articol deoarece este în coșul de gunoi. Scoateți-l din coșul de gunoi înainte de a-l edita.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nu se poate partaja</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nu aveți permisiuni suficiente pentru a participa acest seif.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Ați atins limita de partajare a seifului. Pentru a partaja mai multe seifuri, alegeți alt plan cu plată.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">Nu puteți partaja acest articol deoarece este în coșul de gunoi. Scoateți-l din coșul de gunoi înainte de a-l partaja.</string>
+  <string name="password_score_vulnerable">Vulnerabilă</string>
+  <string name="password_score_weak">Slabă</string>
+  <string name="password_score_strong">Puternică</string>
+  <string name="passkey_detail_bottomsheet_title">Cheie de acces</string>
+  <string name="passkey_detail_bottomsheet_username">Nume utilizator</string>
+  <string name="passkey_detail_bottomsheet_domain">Domeniu</string>
+  <string name="passkey_detail_bottomsheet_key">Cheia</string>
+  <string name="passkey_detail_bottomsheet_created">Creată la</string>
+  <string name="activity_in_last_two_weeks">Activitate în ultimele 14 zile</string>
+  <string name="contacts">Contacte</string>
+  <string name="contacts_section_description">Pentru a vă păstra adresa de e-mail personală ascunsă, puteți crea un alias de contact care vă maschează adresa.</string>
+  <string name="field_detail_display_name_title">Nume afișat</string>
+  <string name="display_name_section_description">Numele afișat când se trimite un mesaj de la acest alias.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">Redirecționări: %1$s</item>
+    <item quantity="few">Redirecționări: %1$s</item>
+    <item quantity="other">Redirecționări: %1$s</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">Răspunsuri: %1$s</item>
+    <item quantity="few">Răspunsuri: %1$s</item>
+    <item quantity="other">Răspunsuri: %1$s</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">Blocări: %1$s</item>
+    <item quantity="few">Blocări: %1$s</item>
+    <item quantity="other">Blocări: %1$s</item>
+  </plurals>
+  <string name="open_with">Deschideți cu:</string>
+  <string name="open_attachments_error">Atașamentul nu a putut fi deschis.</string>
+</resources>

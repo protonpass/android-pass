@@ -7,17 +7,17 @@
   <string name="alias_dialog_move_to_trash_title">Перемістити до смітника?</string>
   <string name="alias_dialog_move_to_trash_content">Якщо ви перемістите псевдонім до смітника, він перестане пересилати листи на вашу пошту.</string>
   <string name="alias_dialog_move_to_trash_confirm">Підтвердити</string>
-  <string name="delete_alias_confirm">Delete it, I will never need it</string>
-  <string name="delete_alias_title">Delete %s</string>
+  <string name="delete_alias_confirm">Видалити це, мені це ніколи не знадобиться</string>
+  <string name="delete_alias_title">Видалити %s</string>
   <string name="delete_alias_enabled_subtitle">"Зверніть увагу, що після видалення псевдонім не можна відновити. Можливо, ви хочете вимкнути псевдонім? "</string>
-  <string name="delete_alias_disabled_subtitle">Please note once deleted, the alias can\'t be restored. The alias is already disabled and won’t forward emails to your mailbox.</string>
+  <string name="delete_alias_disabled_subtitle">Зверніть увагу, що після видалення псевдонім не можна відновити. Псевдонім вже вимкнено, і він не буде пересилати листи на вашу поштову скриньку.</string>
   <plurals name="bulk_delete_alias_title">
-    <item quantity="one">You\'re about to permanently delete %d alias</item>
-    <item quantity="few">You\'re about to permanently delete %d aliases</item>
-    <item quantity="many">You\'re about to permanently delete %d aliases</item>
-    <item quantity="other">You\'re about to permanently delete %d aliases</item>
+    <item quantity="one">Ви збираєтеся назавжди видалити псевдонім %d</item>
+    <item quantity="few">Ви збираєтеся назавжди видалити псевдоніми %d</item>
+    <item quantity="many">Ви збираєтеся назавжди видалити псевдонімів %d</item>
+    <item quantity="other">Ви збираєтеся назавжди видалити псевдоніми %d</item>
   </plurals>
-  <string name="bulk_delete_alias_subtitle">Please note once deleted, the aliases can\'t be restored</string>
-  <string name="bulk_delete_alias_confirm">Understood, I will never need them</string>
+  <string name="bulk_delete_alias_subtitle">Зверніть увагу, що після видалення псевдоніми не можна відновити</string>
+  <string name="bulk_delete_alias_confirm">Зрозуміло, вони мені ніколи не знадобляться</string>
   <string name="delete_alias_disable">Вимкнути псевдонім</string>
 </resources>

@@ -21,6 +21,7 @@
   <string name="upsell_dark_web_monitoring_subtitle">Pemantauan Web Gelap tersedia dengan paket berbayar. Tingkatkan akun Anda untuk memperoleh akses ke fitur ini dengan segera.</string>
   <string name="upsell_missing_2fa_subtitle">Tampilkan daftar situs di mana Anda dapat menambahkan faktor autentikasi kedua untuk melindungi presensi daring Anda. Tingkatkan untuk akses langsung.</string>
   <string name="upsell_sentinel_subtitle">Dapatkan berbagai fitur keamanan mutakhir dan log yang terperinci untuk melindungi presensi daring Anda.</string>
+  <string name="upsell_paid_feature_file_attachments">Lampiran berkas</string>
   <string name="upsell_paid_feature_dark_web_monitoring">Pemantauan Web Gelap</string>
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
   <string name="upsell_paid_feature_authenticator">Autentikator 2FA terintegrasi</string>
@@ -34,6 +35,7 @@
   <string name="upsell_paid_feature_advance_alias_management_subtitle">Pengelolaan alias tingkat lanjut tersedia dengan paket berbayar. Tingkatkan akun Anda untuk memperoleh akses ke fitur ini dengan segera.</string>
   <string name="upsell_paid_feature_item_sharing_title">Bagikan item dengan cepat</string>
   <string name="upsell_paid_feature_item_sharing_subtitle">Tingkatkan hari ini supaya Anda dapat membagikan item dengan pengguna Pass lain. Dan nikmati fitur premium lainnya:</string>
+  <string name="upsell_paid_feature_file_attachments_title">Lampiran berkas</string>
   <string name="upsell_button_upgrade">Dapatkan Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Dapatkan Pass Business</string>
 </resources>

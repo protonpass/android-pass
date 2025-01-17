@@ -20,14 +20,14 @@
   <string name="username_copied_to_clipboard">ユーザー名をコピーしました</string>
   <string name="password_copied_to_clipboard">パスワードをコピーしました</string>
   <string name="website_copied_to_clipboard">コピーされたウェブサイト</string>
-  <string name="totp_copied_to_clipboard">コピーされた TOTP コード</string>
-  <string name="field_copied_to_clipboard">コピーされたフィールド</string>
-  <string name="move_item_to_trash_message">項目をごみ箱に移動されました</string>
+  <string name="totp_copied_to_clipboard">TOTP をコピーしました</string>
+  <string name="field_copied_to_clipboard">フィールドをコピーしました</string>
+  <string name="move_item_to_trash_message">アイテムをゴミ箱に移動しました</string>
   <string name="error_move_item_to_trash_message">ごみ箱への移動中のエラー</string>
-  <string name="item_permanently_deleted_message">項目は永久に削除されました</string>
-  <string name="item_permanently_deleted_message_error">項目の削除エラー</string>
-  <string name="item_restored_message">項目を復旧</string>
-  <string name="item_restored_message_error">項目の復元中エラー</string>
+  <string name="item_permanently_deleted_message">アイテムが完全に削除されました</string>
+  <string name="item_permanently_deleted_message_error">アイテムの削除エラー</string>
+  <string name="item_restored_message">アイテムが復元されました</string>
+  <string name="item_restored_message_error">アイテムを復元中にエラーが発生しました</string>
   <string name="item_monitor_exclude_message">アイテムは監視から正常に除外されました</string>
   <string name="item_monitor_exclude_message_error">監視からアイテムを除外する際にエラーが発生しました</string>
   <string name="item_monitor_include_message">アイテムが監視対象に正常に追加されました</string>
@@ -38,7 +38,7 @@
   <string name="login_item_monitor_widget_weak_pass_title">弱いパスワード</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">このアカウントは脆弱です。サービスにアクセスしてパスワードを変更してください。</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="other">%d 件の他のログインで同じパスワードが使用されています</item>
+    <item quantity="other">%d件の他のログインで同じパスワードが使用されています</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">2要素認証を設定するとより安全になります</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">このサービスは 2FA を提供します。アカウントのセキュリティを強化するには、これを有効にしてください。</string>
@@ -73,8 +73,8 @@
   <string name="move_to_trash_item_detail_bottom_sheet">ごみ箱に移動</string>
   <string name="migrate_item_detail_bottom_sheet">別の保管庫に移動</string>
   <!-- More info -->
-  <string name="date_today">今日 %s</string>
-  <string name="date_yesterday">昨日 %s</string>
+  <string name="date_today">今日%s</string>
+  <string name="date_yesterday">昨日%s</string>
   <!--
     Pattern used when displaying a date in the same year as we are.
     It would translate to
@@ -92,8 +92,8 @@
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">編集できるのは、最も古い保管庫内のアイテムのみです。 このアイテムを編集するには、現在のプランをアップグレードしてください。</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">このアイテムはごみ箱内にあるため編集できません。編集する前にごみ箱から移動してください。</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">共有できません</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">この保管庫を共有するための十分な権限がありません。</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">保管庫の共有制限に達しました。さらに多くのボールトを共有するには、現在のプランをアップグレードしてください。</string>
+  <string name="item_detail_cannot_perform_action_sharing_no_permissions_message">このアクションを実行するための権限がありません。</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">保管庫の共有制限に達しました。さらに多くの保管庫を共有するには、現在のプランをアップグレードしてください。</string>
   <string name="item_detail_cannot_perform_action_share_item_in_trash_message">このアイテムはゴミ箱にあるため共有できません。共有する前にゴミ箱から移動してください。</string>
   <string name="password_score_vulnerable">脆弱</string>
   <string name="password_score_weak">弱い</string>
@@ -109,13 +109,14 @@
   <string name="field_detail_display_name_title">表示名</string>
   <string name="display_name_section_description">このエイリアスからメールを送る際の表示名</string>
   <plurals name="alias_forwards_count">
-    <item quantity="other">%1$s個の転送</item>
+    <item quantity="other">%1$s件の転送</item>
   </plurals>
   <plurals name="alias_replies_count">
-    <item quantity="other">%1$s個の返信</item>
+    <item quantity="other">%1$s件の返信</item>
   </plurals>
   <plurals name="alias_blocks_count">
-    <item quantity="other">%1$s個のブロック</item>
+    <item quantity="other">%1$s件のブロック</item>
   </plurals>
   <string name="open_with">開く：</string>
+  <string name="open_attachments_error">添付ファイルを開くことができませんでした</string>
 </resources>

@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Du får endast redigera objekt i dina äldsta valv. För att kunna redigera detta objekt, uppgradera ditt nuvarande paket.</string>
   <string name="item_details_forbidden_actions_share_title">Kan inte dela</string>
   <string name="item_details_forbidden_actions_share_limit">Du har nått gränsen för valvdelning. För att dela fler valv, uppgradera ditt nuvarande paket.</string>
-  <string name="item_details_forbidden_actions_share_permission">Du har inte tillräckligt med behörigheter för att dela detta valv.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">Du har inte tillräckliga behörigheter för att utföra denna åtgärd.</string>
   <string name="item_details_forbidden_actions_share_trash">Du kan inte dela detta objekt eftersom det är i papperskorgen. Flytta det ur papperskorgen innan du redigerar det.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">Lämna detta objekt?</string>
+  <string name="item_details_leave_dialog_message">Du kommer att förlora åtkomst till detta objekt och dess detaljer. Vill du fortsätta?</string>
+  <string name="item_details_leave_item_message_error">Ett fel uppstod när objektet skulle lämnas</string>
+  <string name="item_details_leave_item_message_success">Objektet har lämnats</string>
 </resources>

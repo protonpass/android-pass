@@ -5,7 +5,7 @@
   <string name="inline_suggestions_open_app">Proton Pass を開く</string>
   <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">自動入力を更新</string>
   <string name="autofill_associate_web_app_name_dialog_title">このアプリやウェブサイトでの “%s” によるログイン詳細を使用</string>
-  <string name="autofill_dialog_associate_and_autofill">常時使用</string>
+  <string name="autofill_dialog_associate_and_autofill">常に使用</string>
   <string name="autofill_dialog_just_autofill">1 度のみ使用</string>
   <string name="autofill_dialog_cancel">キャンセル</string>
   <string name="autofill_notification_copy_to_clipboard">TOTP がクリップボードにコピーされました</string>

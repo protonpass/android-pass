@@ -33,6 +33,7 @@
   <string name="bottomsheet_copy_item_note">Salin catatan</string>
   <string name="bottomsheet_delete_permanently">Hapus secara permanen</string>
   <string name="bottomsheet_restore">Pulihkan</string>
+  <string name="bottomsheet_leave">Keluar</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Buka menu tindakan item</string>
   <string name="action_upgrade_now">Tingkatkan sekarang</string>
@@ -252,7 +253,7 @@
   <!-- Simple Login -->
   <string name="simple_login_widget_title">Aktifkan sinkronisasi SimpleLogin</string>
   <plurals name="simple_login_widget_pending_aliases_message">
-    <item quantity="other">Kami mendeteksi bahwa Anda memiliki %d alias yang saat ini ada di SimpleLogin namun belum terdaftar pada Proton Pass. Apakah Anda ingin mengimpor alias ini?</item>
+    <item quantity="other">Kami mendeteksi bahwa Anda memiliki %d alias yang terdapat SimpleLogin namun tidak ada pada Proton Pass. Apakah Anda ingin mengimpor alias ini?</item>
   </plurals>
   <string name="simple_login_widget_action">Sinkronkan alias</string>
   <!-- Verification codes -->
@@ -270,4 +271,7 @@
   <string name="attachment_title">Lampiran</string>
   <string name="attachment_no_files">Unggah berkas dari perangkat Anda</string>
   <string name="attachment_add_file">Lampirkan berkas</string>
+  <string name="attachment_row_upload_failed">Pengunggahan gagal</string>
+  <string name="attachment_row_retry">Coba lagi</string>
+  <string name="options_menu_content_description">Menu opsi</string>
 </resources>

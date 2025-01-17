@@ -28,4 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">Dibuat</string>
   <string name="item_history_timeline_node_root_title">Versi saat ini</string>
   <string name="item_history_timeline_snackbar_message_error">Ada kesalahan mendapatkan revisi item</string>
+  <string name="reset_history_bottomsheet_option">Atur Ulang Riwayat</string>
+  <string name="reset_history_dialog_title">Atur ulang riwayat untuk item ini?</string>
+  <string name="reset_history_dialog_body">Mengatur ulang riwayat akan menghapus semua versi lama secara permanen dan tidak dapat diurungkan.</string>
+  <string name="reset_history_action">Atur ulang</string>
+  <string name="reset_history_dialog_snackbar_message_error">Ada kesalahan saat mengatur ulang</string>
+  <string name="reset_history_dialog_snackbar_message_success">Riwayat item diatur ulang</string>
 </resources>

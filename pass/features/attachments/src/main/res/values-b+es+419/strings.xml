@@ -27,4 +27,12 @@
   <string name="camera_open_error">No se pudo abrir la cámara.</string>
   <string name="camera_permission_explanation">Se requiere el permiso de cámara para que esta función esté disponible.</string>
   <string name="camera_permission_open_settings">Abrir ajustes</string>
+  <string name="delete_all_attachments_title">¿Desea eliminar todos los archivos?</string>
+  <string name="delete_all_attachments_subtitle">Esta acción no se puede deshacer.</string>
+  <string name="delete_all_attachments_confirm">Eliminar todo</string>
+  <string name="rename_attachment_dialog_title">Cambiar el nombre del archivo</string>
+  <string name="storage_full_title">El almacenamiento está casi lleno.</string>
+  <string name="storage_full_body">Mejore para aumentar el almacenamiento.</string>
+  <string name="storage_full_upgrade">Cambiar de plan</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s de %2$s</string>
 </resources>

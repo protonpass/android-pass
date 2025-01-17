@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Możesz edytować tylko najstarsze sejfy. Ulepsz do płatnego planu, aby edytować ten element.</string>
   <string name="item_details_forbidden_actions_share_title">Nie można udostępnić</string>
   <string name="item_details_forbidden_actions_share_limit">Osiągnięto maksymalną liczbę udostępnionych sejfów. Ulepsz plan, aby udostępnić więcej sejfów.</string>
-  <string name="item_details_forbidden_actions_share_permission">Nie masz wystarczających uprawnień do udostępnienia sejfu.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">You don\'t have enough permissions to perform this action.</string>
   <string name="item_details_forbidden_actions_share_trash">Nie można udostępniać elementu znajdującego się w Koszu. Przenieś element z Kosza, aby go edytować.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">Opuścić element?</string>
+  <string name="item_details_leave_dialog_message">You will lose access to this item and its details. Do you want to continue?</string>
+  <string name="item_details_leave_item_message_error">There was an error leaving the item</string>
+  <string name="item_details_leave_item_message_success">Item successfully left</string>
 </resources>

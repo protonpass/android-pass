@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Dovoljeno vam je samo urejanje predmetov v vaših najstarejših trezorjih. Če želite urediti ta predmet, nadgradite svoj trenutni paket.</string>
   <string name="item_details_forbidden_actions_share_title">Ni mogoče deliti</string>
   <string name="item_details_forbidden_actions_share_limit">Dosegli ste omejitev skupne rabe trezorja. Če želite deliti več trezorjev, nadgradite svoj trenutni paket.</string>
-  <string name="item_details_forbidden_actions_share_permission">Nimate dovolj dovoljenj za skupno rabo tega trezorja.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">You don\'t have enough permissions to perform this action.</string>
   <string name="item_details_forbidden_actions_share_trash">Tega predmeta ne morete dati v skupno rabo, ker je v smetnjaku. Pred urejanjem ga premaknite iz smetnjaka.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">Leave this Item?</string>
+  <string name="item_details_leave_dialog_message">You will lose access to this item and its details. Do you want to continue?</string>
+  <string name="item_details_leave_item_message_error">There was an error leaving the item</string>
+  <string name="item_details_leave_item_message_success">Item successfully left</string>
 </resources>

@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Upravovat můžete pouze položky v nejstarších trezorech. Chcete-li tuto položku upravit, navyšte svůj aktuální tarif.</string>
   <string name="item_details_forbidden_actions_share_title">Nelze sdílet</string>
   <string name="item_details_forbidden_actions_share_limit">Dosáhli jste limitu pro sdílení trezoru. Chcete-li sdílet více trezorů, navyšte svůj stávající tarif.</string>
-  <string name="item_details_forbidden_actions_share_permission">Nemáte dostatečná oprávnění pro sdílení tohoto trezoru.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">K provedení této akce nemáte dostatečná oprávnění.</string>
   <string name="item_details_forbidden_actions_share_trash">Tuto položku nemůžete sdílet, protože je v koši. Před editací ji prosím přesuňte z koše.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">Opustit tuto položku?</string>
+  <string name="item_details_leave_dialog_message">Ztratíte přístup k této položce a jejím detailům. Chcete pokračovat?</string>
+  <string name="item_details_leave_item_message_error">Došlo k chybě při opouštění položky</string>
+  <string name="item_details_leave_item_message_success">Položka úspěšně opuštěna</string>
 </resources>

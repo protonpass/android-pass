@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="action_open">Open</string>
+  <string name="action_copy">Kopiëren</string>
+  <!-- Detail -->
+  <string name="detail_init_error">Probleem bij het verkrijgen van item gegevens</string>
+  <string name="top_bar_edit_button_text">Bewerken</string>
+  <!-- Alias details -->
+  <string name="field_alias_title">Alias-adres</string>
+  <string name="field_alias_disabled_title">Aliasadres (uitgeschakeld)</string>
+  <string name="alias_copied_to_clipboard">Alias gekopieerd</string>
+  <string name="alias_detail_field_mailboxes_title">Doorsturen naar</string>
+  <string name="alias_create_login_from_alias">Login aanmaken</string>
+  <!-- Note details -->
+  <string name="field_detail_note_title">Notitie</string>
+  <string name="note_detail_copy_note_to_clipboard">Notitie kopiëren</string>
+  <string name="note_copied_to_clipboard">Notitie gekopieerd naar klembord</string>
+  <!-- Login details -->
+  <string name="email_copied_to_clipboard">E-mailadres gekopieerd</string>
+  <string name="username_copied_to_clipboard">Gebruikersnaam gekopieerd</string>
+  <string name="password_copied_to_clipboard">Wachtwoord gekopieerd</string>
+  <string name="website_copied_to_clipboard">Website gekopieerd</string>
+  <string name="totp_copied_to_clipboard">TOTP gekopieerd</string>
+  <string name="field_copied_to_clipboard">Veld gekopieerd</string>
+  <string name="move_item_to_trash_message">Item verplaatst naar prullenbak</string>
+  <string name="error_move_item_to_trash_message">Fout bij verplaatsen naar prullenbak</string>
+  <string name="item_permanently_deleted_message">Item permanent verwijderd</string>
+  <string name="item_permanently_deleted_message_error">Fout bij verwijderen van item</string>
+  <string name="item_restored_message">Item hersteld</string>
+  <string name="item_restored_message_error">Fout bij herstellen van item</string>
+  <string name="item_monitor_exclude_message">Item succesvol uitgesloten van monitoring</string>
+  <string name="item_monitor_exclude_message_error">Er is een fout opgetreden bij het uitsluiten van het item van de monitoring</string>
+  <string name="item_monitor_include_message">Item succesvol opgenomen in monitoring</string>
+  <string name="item_monitor_include_message_error">Er is een fout opgetreden bij het opnemen van het item in de monitoring</string>
+  <string name="alias_change_status_error">Er is een fout opgetreden bij het wijzigen van de aliasstatus</string>
+  <string name="login_item_generate_totp_error">Fout bij genereren van 2FA-code</string>
+  <string name="login_item_view_alias_button">Alias bekijken</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Zwak wachtwoord</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Dit account is kwetsbaar, bezoek de service en wijzig uw wachtwoord.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d andere login gebruikt hetzelfde wachtwoord</item>
+    <item quantity="other">%d andere logins gebruiken hetzelfde wachtwoord</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">2FA instellen voor meer beveiliging</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Deze service biedt 2FA aan. Schakel het in voor extra accountveiligheid.</string>
+  <string name="login_item_reused_passwords_subtitle">Items van uw kluis die dit wachtwoord gebruiken.</string>
+  <string name="field_email">E-mailadres</string>
+  <string name="field_username">Gebruikersnaam</string>
+  <string name="field_username_or_email">Gebruikersnaam of e-mailadres</string>
+  <string name="field_password">Wachtwoord</string>
+  <string name="websites_section_title">Websites</string>
+  <string name="totp_section_title">2FA-token (TOTP)</string>
+  <string name="action_reveal_password">Wachtwoord tonen</string>
+  <string name="action_conceal_password">Wachtwoord verbergen</string>
+  <string name="action_reveal_number">Nummer weergeven</string>
+  <string name="action_conceal_number">Nummer verbergen</string>
+  <string name="share_button_content_description">Deelknop openen</string>
+  <string name="open_menu_icon_content_description">Menuknop openen</string>
+  <string name="mfa_limit_reached">2FA-limiet bereikt</string>
+  <string name="mfa_icon_content_description">2FA-pictogram</string>
+  <string name="custom_field_text_icon_description">Tekst aangepast veld</string>
+  <string name="custom_field_hidden_icon_description">Verborgen aangepast veld</string>
+  <string name="custom_field_totp_icon_description">2FA aangepast veld</string>
+  <!-- Credit card details -->
+  <string name="credit_card_cardholder_field_name">Naam op de kaart</string>
+  <string name="credit_card_number_field_name">Kaartnummer</string>
+  <string name="credit_card_cvv_field_name">Beveiligingscode</string>
+  <string name="credit_card_pin_field_name">PIN-code</string>
+  <string name="credit_card_expiration_date_field_name">Verloopdatum</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Kaarthouder gekopieerd naar klembord</string>
+  <string name="credit_card_number_copied_to_clipboard">Kaartnummer gekopieerd naar klembord</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Beveiligingscode gekopieerd naar klembord</string>
+  <!-- Bottomsheet -->
+  <string name="move_to_trash_item_detail_bottom_sheet">Verplaats naar prullenbak</string>
+  <string name="migrate_item_detail_bottom_sheet">Verplaatsen naar andere kluis</string>
+  <!-- More info -->
+  <string name="date_today">Vandaag %s</string>
+  <string name="date_yesterday">Gisteren %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <string name="item_detail_cannot_perform_action_edit_title">Kan niet bewerken</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">U kunt dit item niet bewerken omdat u hiervoor onvoldoende machtigingen hebt.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">U kunt enkel items wijzigen in uw oudste kluizen. Upgrade uw huidige abonnement om dit item te wijzigen.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">U kan dit item niet wijzigen omdat het in de prullenbak zit. Verplaats het uit de prullenbak voordat u het wijzigt.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan niet delen</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">U heeft onvoldoende machtigingen om deze kluis te delen.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">U heeft de limiet van het delen van kluis bereikt. Upgrade uw huidige abonnement om meer kluizen te delen.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">U kunt dit item niet delen omdat het in de prullenbak zit. Verplaats het uit de prullenbak voordat u het deelt.</string>
+  <string name="password_score_vulnerable">Kwetsbaar</string>
+  <string name="password_score_weak">Zwak</string>
+  <string name="password_score_strong">Sterk</string>
+  <string name="passkey_detail_bottomsheet_title">Toegangssleutel</string>
+  <string name="passkey_detail_bottomsheet_username">Gebruikersnaam</string>
+  <string name="passkey_detail_bottomsheet_domain">Domein</string>
+  <string name="passkey_detail_bottomsheet_key">Sleutel</string>
+  <string name="passkey_detail_bottomsheet_created">Aangemaakt</string>
+  <string name="activity_in_last_two_weeks">Activiteiten tijdens de voorbije 14 dagen</string>
+  <string name="contacts">Contacten</string>
+  <string name="contacts_section_description">Om uw persoonlijke e-mailadres verborgen te houden, kunt u een alias-contactpersoon maken die uw adres maskert.</string>
+  <string name="field_detail_display_name_title">Weergavenaam</string>
+  <string name="display_name_section_description">De weergavenaam bij het verzenden van een e-mail van deze alias.</string>
+  <plurals name="alias_forwards_count">
+    <item quantity="one">%1$s doorgestuurd</item>
+    <item quantity="other">%1$s doorgestuurd</item>
+  </plurals>
+  <plurals name="alias_replies_count">
+    <item quantity="one">%1$s antwoord</item>
+    <item quantity="other">%1$s antwoorden</item>
+  </plurals>
+  <plurals name="alias_blocks_count">
+    <item quantity="one">%1$s blok</item>
+    <item quantity="other">%1$s blokken</item>
+  </plurals>
+  <string name="open_with">Openen met</string>
+  <string name="open_attachments_error">Kon bijlage niet openen</string>
+</resources>

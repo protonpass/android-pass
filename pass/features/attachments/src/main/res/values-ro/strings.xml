@@ -27,4 +27,12 @@
   <string name="camera_open_error">Nu s-a putut deschide camera.</string>
   <string name="camera_permission_explanation">Este necesar accesul la cameră pentru ca funcția să fie disponibilă.</string>
   <string name="camera_permission_open_settings">Deschidere setări</string>
+  <string name="delete_all_attachments_title">Ștergeți toate atașamentele?</string>
+  <string name="delete_all_attachments_subtitle">Această acțiune nu poate fi anulată</string>
+  <string name="delete_all_attachments_confirm">Ștergere toate</string>
+  <string name="rename_attachment_dialog_title">Redenumire fișier</string>
+  <string name="storage_full_title">Spațiul de stocare este aproape plin.</string>
+  <string name="storage_full_body">Treceți la alt tip de plan pentru a vă mări capacitatea de stocare.</string>
+  <string name="storage_full_upgrade">Modificare</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s din %2$s</string>
 </resources>

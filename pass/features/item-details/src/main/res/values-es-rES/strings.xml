@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Solo tienes permitido editar elementos en tus cajas fuertes antiguas. Mejora tu plan actual para editar este elemento.</string>
   <string name="item_details_forbidden_actions_share_title">No se puede compartir.</string>
   <string name="item_details_forbidden_actions_share_limit">Has alcanzado el límite de cajas fuertes compartidas. Mejora tu plan actual para compartir más cajas fuertes.</string>
-  <string name="item_details_forbidden_actions_share_permission">No tienes los permisos suficientes para compartir esta caja fuerte.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">No tienes suficientes permisos para realizar esta acción.</string>
   <string name="item_details_forbidden_actions_share_trash">No se puede compartir este elemento porque está en la papelera. Sácalo de la papelera antes de compartirlo.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">¿Deseas dejar este elemento?</string>
+  <string name="item_details_leave_dialog_message">Perderás el acceso a este artículo y a sus detalles. ¿Deseas continuar?</string>
+  <string name="item_details_leave_item_message_error">Se ha producido un error al abandonar el elemento.</string>
+  <string name="item_details_leave_item_message_success">Se ha dejado el elemento.</string>
 </resources>

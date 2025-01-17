@@ -39,8 +39,9 @@
   <string name="create_login_item_update_error">Kunne ikke oppdatere pålogging</string>
   <string name="create_login_init_error">Problem ved innhenting av påloggingsinformasjon</string>
   <string name="create_login_invalid_totp">2FA-innholdet er ikke gyldig</string>
-  <string name="update_login_attachments_init_error">Problem retrieving login attachments</string>
-  <string name="login_link_attachments_error">Could not add attachments to login</string>
+  <string name="update_login_attachments_init_error">Problemer med å hente påloggingsvedlegg</string>
+  <string name="login_link_attachments_error">Kunne ikke koble til eller fra vedlegg for påloggingen</string>
+  <string name="login_rename_attachments_error">Kunne ikke gi nytt navn til påloggingsvedlegg</string>
   <string name="login_created">Pålogging opprettet</string>
   <string name="bottomsheet_modify_alias_title">Modifiser alias</string>
   <string name="bottomsheet_custom_field_type_text">Tekst</string>
@@ -65,8 +66,9 @@
   <string name="create_note_item_creation_error">Kunne ikke opprette notat</string>
   <string name="create_note_item_update_error">Kunne ikke oppdatere notat</string>
   <string name="create_note_init_error">Problemer med å hente notatdetaljer</string>
-  <string name="update_note_attachments_init_error">Problem retrieving note attachments</string>
-  <string name="note_link_attachments_error">Could not add attachments to note</string>
+  <string name="update_note_attachments_init_error">Problemer med å hente notatvedlegg</string>
+  <string name="note_link_attachments_error">Kunne ikke koble til eller fra vedlegg for notatet</string>
+  <string name="note_rename_attachments_error">Kunne ikke gi nytt navn til notatvedlegg</string>
   <string name="note_created">Notat opprettet</string>
   <!-- Create Alias -->
   <string name="field_alias_title">Aliasadresse</string>
@@ -83,8 +85,9 @@
   <string name="alias_rate_limited">For mange aliaser opprettet nylig</string>
   <string name="create_alias_item_update_error">Kunne ikke oppdatere alias</string>
   <string name="create_alias_init_error">Problem med å hente aliasdetaljer</string>
-  <string name="update_alias_attachments_init_error">Problem retrieving alias attachments</string>
-  <string name="alias_link_attachments_error">Could not add attachments to alias</string>
+  <string name="update_alias_attachments_init_error">Problemer med å hente aliasvedlegg</string>
+  <string name="alias_link_attachments_error">Kunne ikke koble til eller fra vedlegg for aliaset</string>
+  <string name="alias_rename_attachments_error">Kunne ikke gi nytt navn til aliasvedlegg</string>
   <string name="alias_created">Alias opprettet</string>
   <string name="cannot_retrieve_alias_options">Kan ikke hente aliasalternativer</string>
   <string name="alias_mailbox_dialog_title">Videresend til</string>
@@ -110,8 +113,9 @@
   <string name="create_credit_card_item_creation_error">Kunne ikke opprette kredittkort</string>
   <string name="create_credit_card_item_creation_success">Kredittkort opprettet</string>
   <string name="credit_card_init_error">Problem ved innhenting av kredittkortinformasjon</string>
-  <string name="update_credit_card_attachments_init_error">Problem retrieving credit card attachments</string>
-  <string name="credit_card_link_attachments_error">Could not add attachments to credit card</string>
+  <string name="update_credit_card_attachments_init_error">Problemer med å hente kredittkortvedlegg</string>
+  <string name="credit_card_link_attachments_error">Kunne ikke koble til eller fra vedlegg for kredittkortet</string>
+  <string name="credit_card_rename_attachments_error">Kunne ikke gi nytt navn til kredittkortvedlegg</string>
   <string name="credit_card_item_update_error">Kunne ikke oppdatere kredittkort</string>
   <!-- Create Identity -->
   <string name="identity_field_full_name_title">Fullt navn</string>
@@ -168,8 +172,9 @@
   <string name="identity_add_more_fields">Legge til et annet felt</string>
   <string name="identity_bottomsheet_add_field">Legg til felt</string>
   <string name="create_identity_init_error">Problem med å hente identitetsdetaljer</string>
-  <string name="update_identity_attachments_init_error">Problem retrieving identity attachments</string>
-  <string name="identity_link_attachments_error">Could not add attachments to identity</string>
+  <string name="update_identity_attachments_init_error">Problemer med å hente identitetsvedlegg</string>
+  <string name="identity_link_attachments_error">Kunne ikke koble til eller fra vedlegg for identiteten</string>
+  <string name="identity_rename_attachments_error">Kunne ikke gi nytt navn til identitetsvedlegg</string>
   <string name="create_identity_item_creation_error">Kunne ikke skape identitet</string>
   <string name="create_identity_item_creation_success">Identitet opprettet</string>
   <string name="update_identity_item_creation_success">Identitet oppdatert</string>
@@ -201,4 +206,6 @@
   <string name="banner_title_attachments">Vedlegg</string>
   <string name="banner_body_attachments">Du kan legge ved filer til elementer for en bedre organisering</string>
   <string name="open_with">Åpne med:</string>
+  <string name="open_attachments_error">Kunne ikke åpne vedlegg</string>
+  <string name="upload_attachments_error">Kunne ikke laste opp vedlegg</string>
 </resources>

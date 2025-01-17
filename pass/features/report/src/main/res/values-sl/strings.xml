@@ -17,13 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="description_field_label">What is your issue?</string>
+  <string name="description_field_label">Kaj je vaša težava?</string>
   <string name="description_field_hint">Describe the issue, the more detailed the better. If there\'s an error message, let us know what it says.</string>
   <string name="email_field_label">E-pošta</string>
   <string name="email_field_hint">e-pošta</string>
   <string name="attach_image_button">Attach image</string>
-  <string name="categories_title">What is your issue?</string>
-  <string name="report_toolbar_title">Report an issue</string>
+  <string name="categories_title">Kaj je vaša težava?</string>
+  <string name="report_toolbar_title">Prijavi težavo</string>
   <string name="send_report_button">Pošlji poročilo</string>
   <string name="cancel_tips_button">Prekliči</string>
   <string name="contact_us_button">Stopite v stik z nami</string>
@@ -53,5 +53,5 @@
   <string name="description_is_too_short">Description is too short</string>
   <string name="description_is_too_long">Description is too long</string>
   <string name="email_cannot_be_blank">Email cannot be blank</string>
-  <string name="email_invalid">Invalid email address</string>
+  <string name="email_invalid">Neveljaven e-poštni naslov</string>
 </resources>

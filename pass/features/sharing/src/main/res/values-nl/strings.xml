@@ -125,12 +125,8 @@
   <string name="share_with_suggestions_title">Suggesties</string>
   <string name="share_with_recents_title">Recent</string>
   <string name="share_with_remove_email_content_description">E-mailadres verwijderen</string>
-  <string name="share_with_user_title">Deel met</string>
-  <string name="share_with_user_description">Deel dit item met andere Proton gebruikers.</string>
   <string name="share_with_secure_link_title">Via beveiligde link</string>
   <string name="share_with_secure_link_description">Genereer een beveiligde link naar dit item.</string>
-  <string name="share_with_vault_title">Volledige kluis</string>
-  <string name="share_with_vault_description">Deel deze kluis en de inhoud.</string>
   <string name="share_with_user_shared_title">Met andere Proton Pass gebruikers</string>
   <string name="share_with_user_shared_description">Nuttig voor permanent delen</string>
   <string name="share_with_manage_shared_item_title">Beheer toegang</string>

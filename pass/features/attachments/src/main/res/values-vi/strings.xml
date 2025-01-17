@@ -27,4 +27,12 @@
   <string name="camera_open_error">Không thể mở camera</string>
   <string name="camera_permission_explanation">Quyền truy cập máy ảnh là cần thiết để tính năng này hoạt động.</string>
   <string name="camera_permission_open_settings">Mở cài đặt</string>
+  <string name="delete_all_attachments_title">Delete all attachments?</string>
+  <string name="delete_all_attachments_subtitle">This action cannot be undone</string>
+  <string name="delete_all_attachments_confirm">Delete all</string>
+  <string name="rename_attachment_dialog_title">Rename file</string>
+  <string name="storage_full_title">Your storage is almost full.</string>
+  <string name="storage_full_body">Upgrade to increase your storage capacity.</string>
+  <string name="storage_full_upgrade">Upgrade</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s of %2$s</string>
 </resources>

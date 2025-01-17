@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">編集できるのは、最も古い保管庫内のアイテムのみです。 このアイテムを編集するには、現在のプランをアップグレードしてください。</string>
   <string name="item_details_forbidden_actions_share_title">共有できません</string>
   <string name="item_details_forbidden_actions_share_limit">保管庫の共有制限に達しました。さらに多くのボールトを共有するには、現在のプランをアップグレードしてください。</string>
-  <string name="item_details_forbidden_actions_share_permission">この保管庫を共有するための十分な権限がありません。</string>
+  <string name="item_details_forbidden_actions_sharing_permission">このアクションを実行するための権限がありません。</string>
   <string name="item_details_forbidden_actions_share_trash">このアイテムはゴミ箱にあるため共有できません。編集する前にゴミ箱から移動してください。</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">このアイテムから退出しますか？</string>
+  <string name="item_details_leave_dialog_message">このアイテムとその詳細にアクセスできなくなります。続行しますか？</string>
+  <string name="item_details_leave_item_message_error">アイテムからの退出中にエラーが発生しました</string>
+  <string name="item_details_leave_item_message_success">アイテムを正常に退出しました</string>
 </resources>

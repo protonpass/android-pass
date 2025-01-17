@@ -28,4 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">Skapad</string>
   <string name="item_history_timeline_node_root_title">Nuvarande version</string>
   <string name="item_history_timeline_snackbar_message_error">Det gick inte hämta objektversioner</string>
+  <string name="reset_history_bottomsheet_option">Återställ historik</string>
+  <string name="reset_history_dialog_title">Återställ historik för detta objekt?</string>
+  <string name="reset_history_dialog_body">Återställning av historik kommer att ta bort alla tidigare versioner permanent och kan inte ångras.</string>
+  <string name="reset_history_action">Återställ</string>
+  <string name="reset_history_dialog_snackbar_message_error">Ett fel uppstod vid återställningen</string>
+  <string name="reset_history_dialog_snackbar_message_success">Objekthistorik återställd</string>
 </resources>

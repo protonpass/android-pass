@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">Вы можете редактировать элементы только в самых старых хранилищах. Чтобы отредактировать этот элемент, пожалуйста, обновите текущий тариф.</string>
   <string name="item_details_forbidden_actions_share_title">Невозможно поделиться</string>
   <string name="item_details_forbidden_actions_share_limit">Вы достигли предела общего доступа к хранилищу. Для того чтобы поделиться большим количеством хранилищ, улучшите ваш текущий тариф.</string>
-  <string name="item_details_forbidden_actions_share_permission">У вас недостаточно прав для совместного использования этого хранилища.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">You don\'t have enough permissions to perform this action.</string>
   <string name="item_details_forbidden_actions_share_trash">Вы не можете поделиться этим предметом, потому что он в корзине. Пожалуйста, уберите его из корзины, прежде чем его изменять.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">Leave this Item?</string>
+  <string name="item_details_leave_dialog_message">You will lose access to this item and its details. Do you want to continue?</string>
+  <string name="item_details_leave_item_message_error">There was an error leaving the item</string>
+  <string name="item_details_leave_item_message_success">Item successfully left</string>
 </resources>

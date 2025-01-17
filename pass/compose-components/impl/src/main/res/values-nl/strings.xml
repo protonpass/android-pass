@@ -34,6 +34,7 @@
   <string name="bottomsheet_copy_item_note">Notitie kopiëren</string>
   <string name="bottomsheet_delete_permanently">Permanent verwijderen</string>
   <string name="bottomsheet_restore">Herstel</string>
+  <string name="bottomsheet_leave">Afsluiten</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Actiemenu item openen</string>
   <string name="action_upgrade_now">Nu upgraden</string>
@@ -282,4 +283,7 @@
   <string name="attachment_title">Bijlagen</string>
   <string name="attachment_no_files">Bestanden uploaden van uw computer</string>
   <string name="attachment_add_file">Bestand toevoegen</string>
+  <string name="attachment_row_upload_failed">Opladen mislukt</string>
+  <string name="attachment_row_retry">Probeer opnieuw</string>
+  <string name="options_menu_content_description">Opties-menu</string>
 </resources>

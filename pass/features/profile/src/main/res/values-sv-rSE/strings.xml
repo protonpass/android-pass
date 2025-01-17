@@ -81,4 +81,6 @@
   <string name="account_switch_confirmation_body" comment="Placeholder is the email we're switching to">Du måste byta till %1$s för att hantera det</string>
   <string name="account_switch_confirmation_title">Hantera konto</string>
   <string name="account_switch_confirmation_confirm">Byt och hantera</string>
+  <string name="profile_storage_data_title">Lagringsutrymme</string>
+  <string name="profile_storage_amount" comment="This will show 20MB of 100MB">%1$s av %2$s</string>
 </resources>

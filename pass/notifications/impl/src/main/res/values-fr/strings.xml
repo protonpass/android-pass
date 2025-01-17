@@ -4,6 +4,8 @@
   <string name="autofill_notification_channel_name">Remplissage automatique</string>
   <string name="autofill_notification_copy_to_clipboard_title">Code TOTP</string>
   <string name="autofill_notification_copy_to_clipboard_body">Le mot de passe à usage unique basé sur le temps (TOTP) a été copié dans le presse-papiers.</string>
-  <string name="updates_new_invite_received_title">Vous avez reçu une invitation.</string>
-  <string name="updates_new_invite_received_message">Vous avez reçu une invitation à un coffre-fort. Ouvrez l\'application pour la voir et l\'accepter.</string>
+  <string name="new_item_invite_notification_title">Nouvelle invitation à un élément</string>
+  <string name="new_item_invite_notification_message" comment="the placeholder will be replaced by an email address">%s souhaite partager un élément avec vous.</string>
+  <string name="new_vault_invite_notification_title">Nouvelle invitation à un coffre-fort</string>
+  <string name="new_vault_invite_notification_message" comment="the placeholder will be replaced by an email address">%s souhaite partager un coffre-fort avec vous.</string>
 </resources>

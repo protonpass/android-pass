@@ -36,6 +36,7 @@
   <string name="bottomsheet_copy_item_note">Скапіяваць нататку</string>
   <string name="bottomsheet_delete_permanently">Выдаліць незваротна</string>
   <string name="bottomsheet_restore">Аднавіць</string>
+  <string name="bottomsheet_leave">Выйсці</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Адкрыць меню дзеянняў элемента</string>
   <string name="action_upgrade_now">Палепшыць</string>
@@ -306,4 +307,7 @@
   <string name="attachment_title">Далучэнні</string>
   <string name="attachment_no_files">Запампаваць файлы з вашай прылады</string>
   <string name="attachment_add_file">Далучыць файл</string>
+  <string name="attachment_row_upload_failed">Збой запампоўвання</string>
+  <string name="attachment_row_retry">Паўтарыць</string>
+  <string name="options_menu_content_description">Options menu</string>
 </resources>

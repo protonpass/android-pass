@@ -34,6 +34,7 @@
   <string name="bottomsheet_copy_item_note">Notiz kopieren</string>
   <string name="bottomsheet_delete_permanently">Dauerhaft löschen</string>
   <string name="bottomsheet_restore">Wiederherstellen</string>
+  <string name="bottomsheet_leave">Verlassen</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Aktionsmenü für Eintrag öffnen.</string>
   <string name="action_upgrade_now">Jetzt upgraden</string>
@@ -282,4 +283,7 @@
   <string name="attachment_title">Anhänge</string>
   <string name="attachment_no_files">Dateien von deinem Gerät hochladen</string>
   <string name="attachment_add_file">Datei anhängen</string>
+  <string name="attachment_row_upload_failed">Hochladen fehlgeschlagen</string>
+  <string name="attachment_row_retry">Wiederholen</string>
+  <string name="options_menu_content_description">Options menu</string>
 </resources>

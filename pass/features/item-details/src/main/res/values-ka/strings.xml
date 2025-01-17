@@ -26,6 +26,11 @@
   <string name="item_details_forbidden_actions_edit_upgrade">თქვენს უძველეს საცავებში ელემენტებს ვერ ჩაასწორებთ. ამ ელემენტების ჩასასწორებლად ასწიეთ მიმდინარე სატარიფო გეგმა.</string>
   <string name="item_details_forbidden_actions_share_title">გაზიარება შეუძლებელია</string>
   <string name="item_details_forbidden_actions_share_limit">მიაღწიეთ საცავის გაზიარების ზღვარს. იმისთვის, რომ მეტი საცავი გააზიაროთ, ასწიეთ თქვენი სატარიფო გეგმა.</string>
-  <string name="item_details_forbidden_actions_share_permission">ამ საცავის გაზიარებისთვის საკმარისი წვდომები არ გაგაჩნიათ.</string>
+  <string name="item_details_forbidden_actions_sharing_permission">ამ ქმედების შესრულებისთვის საკმარისი წვდომები არ გაქვთ.</string>
   <string name="item_details_forbidden_actions_share_trash">ამ ელემენტის გაზიარება არ შეგიძლიათ, რადგან ის ნაგვის ყუთშია. გამოიტანეთ ის ნაგვის ყუთიდან, სანამ ჩაასწორებთ.</string>
+  <!-- Item details leave item -->
+  <string name="item_details_leave_dialog_title">დავტოვო ეს ელემენტი?</string>
+  <string name="item_details_leave_dialog_message">დაკარგავთ წვდომას ამ ელემენტთან და მის დეტალებთან. გნებავთ გააგრძელოთ?</string>
+  <string name="item_details_leave_item_message_error">შეცდომა ელემენტიდან გასვლისას</string>
+  <string name="item_details_leave_item_message_success">ელემენტი წარმატებით იქნა დატოვებული</string>
 </resources>

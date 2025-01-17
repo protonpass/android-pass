@@ -27,4 +27,12 @@
   <string name="camera_open_error">Kamera tidak dapat dibuka</string>
   <string name="camera_permission_explanation">Izin kamera diperlukan agar fitur ini tersedia.</string>
   <string name="camera_permission_open_settings">Buka pengaturan</string>
+  <string name="delete_all_attachments_title">Hapus seluruh lampiran?</string>
+  <string name="delete_all_attachments_subtitle">Tindakan ini tidak dapat diurungkan</string>
+  <string name="delete_all_attachments_confirm">Hapus semua</string>
+  <string name="rename_attachment_dialog_title">Ubah nama berkas</string>
+  <string name="storage_full_title">Penyimpanan Anda hampir penuh.</string>
+  <string name="storage_full_body">Tingkatkan untuk menambah kapasitas penyimpanan Anda.</string>
+  <string name="storage_full_upgrade">Tingkatkan</string>
+  <string name="storage_full_amount" comment="This will show 20MB of 100MB">%1$s dari %2$s</string>
 </resources>

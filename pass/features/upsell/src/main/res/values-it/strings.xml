@@ -21,6 +21,7 @@
   <string name="upsell_dark_web_monitoring_subtitle">Il monitoraggio del Dark Web è disponibile con un piano a pagamento. Effettua l\'upgrade per ottenere l\'accesso immediato.</string>
   <string name="upsell_missing_2fa_subtitle">Visualizza un elenco di siti in cui puoi aggiungere un secondo fattore di autenticazione per proteggere la tua presenza online. Effettua l\'upgrade per ottenere l\'accesso immediato a questa funzionalità.</string>
   <string name="upsell_sentinel_subtitle">Sblocca funzionalità di sicurezza avanzate e log dettagliati per proteggere la tua presenza online.</string>
+  <string name="upsell_paid_feature_file_attachments">File allegati</string>
   <string name="upsell_paid_feature_dark_web_monitoring">Monitoraggio del Dark Web</string>
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
   <string name="upsell_paid_feature_authenticator">Autenticatore 2FA integrato</string>
@@ -34,6 +35,7 @@
   <string name="upsell_paid_feature_advance_alias_management_subtitle">La gestione avanzata degli alias è disponibile con un piano a pagamento. Esegui l\'upgrade per l\'accesso immediato.</string>
   <string name="upsell_paid_feature_item_sharing_title">Condividi rapidamente un elemento</string>
   <string name="upsell_paid_feature_item_sharing_subtitle">Esegui l\'upgrade oggi per poter condividere un elemento con qualsiasi utente Pass. E goditi altre funzionalità premium:</string>
+  <string name="upsell_paid_feature_file_attachments_title">File allegati</string>
   <string name="upsell_button_upgrade">Ottieni Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Ottieni Pass Business</string>
 </resources>

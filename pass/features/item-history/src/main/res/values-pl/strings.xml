@@ -28,4 +28,10 @@
   <string name="item_history_timeline_node_leaf_title">Utworzono</string>
   <string name="item_history_timeline_node_root_title">Obecna wersja</string>
   <string name="item_history_timeline_snackbar_message_error">Wystąpił błąd pobierania wersji elementu</string>
+  <string name="reset_history_bottomsheet_option">Reset History</string>
+  <string name="reset_history_dialog_title">Reset history for this item?</string>
+  <string name="reset_history_dialog_body">Resetting history will permanently delete all past versions and cannot be undone.</string>
+  <string name="reset_history_action">Reset</string>
+  <string name="reset_history_dialog_snackbar_message_error">There was an error resetting</string>
+  <string name="reset_history_dialog_snackbar_message_success">Item history reset</string>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="autofill_authenticate_prompt">Aconseguiu el Proton Pass</string>
-  <string name="error_loading_items">No s\'ha pogut carregar els elements.</string>
+  <string name="error_loading_items">No s\'han pogut carregar els elements.</string>
   <string name="inline_suggestions_open_app">Obriu Proton Pass</string>
   <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Milloreu per emplenar automàticament</string>
   <string name="autofill_associate_web_app_name_dialog_title">Utilitza les dades d\'inici de sessió de \"%s\" en aquesta aplicació o lloc web.</string>

@@ -21,6 +21,7 @@
   <string name="upsell_dark_web_monitoring_subtitle">El monitoratge del web fosc està disponible amb un pla de pagament. Milloreu el vostre pla per accedir-hi immediatament.</string>
   <string name="upsell_missing_2fa_subtitle">Consulteu una llista de llocs on podeu afegir un segon factor d\'autenticació per protegir la vostra presència en línia. Milloreu el vostre pla per accedir-hi immediatament.</string>
   <string name="upsell_sentinel_subtitle">Desbloquegeu característiques de seguretat avançades i registres detallats per protegir la vostra presència en línia.</string>
+  <string name="upsell_paid_feature_file_attachments">Fitxers adjunts</string>
   <string name="upsell_paid_feature_dark_web_monitoring">Monitoratge de la web fosca</string>
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
   <string name="upsell_paid_feature_authenticator">Autenticador A2F integrat</string>
@@ -34,6 +35,7 @@
   <string name="upsell_paid_feature_advance_alias_management_subtitle">La gestió avançada dels àlies està disponible amb un pla de pagament. Milloreu el vostre pla per accedir-hi immediatament.</string>
   <string name="upsell_paid_feature_item_sharing_title">Compartiu ràpidament un element</string>
   <string name="upsell_paid_feature_item_sharing_subtitle">Milloreu avui mateix per poder compartir un element amb qualsevol usuari de Pass. I gaudiu d\'altres característiques prèmium:</string>
+  <string name="upsell_paid_feature_file_attachments_title">Fitxers adjunts</string>
   <string name="upsell_button_upgrade">Aconsegueixi Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Aconsegueixi Pass Business</string>
 </resources>

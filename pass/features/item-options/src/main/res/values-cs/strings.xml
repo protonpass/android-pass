@@ -20,7 +20,7 @@
   <string name="item_options_alias_trash_dialog_title">Přesunout do koše</string>
   <string name="item_options_alias_trash_dialog_message">Aliasy v koši budou nadále přeposílat e-maily. Pokud chcete přestat dostávat e-maily na tuto adresu, deaktivujte ji.</string>
   <string name="item_options_alias_trash_dialog_checkbox_text">Znovu nepřipomínat</string>
-  <string name="item_options_alias_trash_dialog_button_text_disable">Místo toho deaktivovat</string>
+  <string name="item_options_alias_trash_dialog_button_text_disable">Deaktivovat</string>
   <string name="item_options_alias_trash_dialog_button_text_trash">Přesunout do koše</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_error">Při deaktivaci aliasu došlo k chybě</string>
   <string name="item_options_alias_trash_dialog_snackbar_message_disable_success">Alias deaktivován</string>

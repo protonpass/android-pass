@@ -20,4 +20,9 @@
   <!-- Delete dialog -->
   <string name="item_trash_delete_dialog_title">¿Eliminar permanentemente?</string>
   <string name="item_trash_delete_dialog_message">Esta acción es irreversible.</string>
+  <!-- Shared warning dialog -->
+  <string name="item_trash_warning_shared_dialog_title">¿Mover el elemento a la papelera?</string>
+  <string name="item_trash_warning_shared_dialog_message">Este elemento está compartido actualmente. Si lo mueves a la papelera, se eliminará el acceso para todos los demás usuarios.</string>
+  <string name="item_trash_warning_shared_snackbar_trash_error">Error al mover el elemento a la papelera</string>
+  <string name="item_trash_warning_shared_snackbar_trash_success">Se ha movido el elemento a la papelera.</string>
 </resources>

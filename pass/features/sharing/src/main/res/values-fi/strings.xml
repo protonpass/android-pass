@@ -64,8 +64,7 @@
   <string name="sharing_snackbar_fetch_member_error">Virhe noudettaessa jäseniä</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Virhe noudettaessa odottavia kutsuja</string>
   <string name="share_summary_title">Tarkista ja jaa</string>
-  <string name="share_summary_vault">Holvi \"%s\"</string>
-  <string name="share_summary_share_vault">Jaa holvi</string>
+    <string name="share_summary_share_vault">Jaa holvi</string>
   <string name="share_summary_share_item">Jaa kohde</string>
   <string name="share_summary_vault_title">Holvi</string>
   <string name="share_summary_item_title">Kohde</string>

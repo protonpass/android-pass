@@ -72,7 +72,6 @@
     <string name="sharing_snackbar_fetch_pending_invites_error">There was an error fetching pending invites</string>
 
     <string name="share_summary_title">Review and share</string>
-    <string name="share_summary_vault">%s vault</string>
     <string name="share_summary_share_vault">Share vault</string>
     <string name="share_summary_share_item">Share item</string>
     <string name="share_summary_vault_title">Vault</string>

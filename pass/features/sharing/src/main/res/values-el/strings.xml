@@ -64,8 +64,7 @@
   <string name="sharing_snackbar_fetch_member_error">Συνέβη κάποιο σφάλμα κατά τη λήψη μελών</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">Συνέβη κάποιο σφάλμα κατά τη λήψη εκκρεμών προσκλήσεων</string>
   <string name="share_summary_title">Επανεξέταση και κοινή χρήση</string>
-  <string name="share_summary_vault">%s κρύπτη</string>
-  <string name="share_summary_share_vault">Κοινή χρήση κρύπτης</string>
+    <string name="share_summary_share_vault">Κοινή χρήση κρύπτης</string>
   <string name="share_summary_share_item">Κοινοποίηση στοιχείου</string>
   <string name="share_summary_vault_title">Κρύπτη</string>
   <string name="share_summary_item_title">Στοιχείο</string>

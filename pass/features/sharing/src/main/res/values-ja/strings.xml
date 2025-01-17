@@ -62,8 +62,7 @@
   <string name="sharing_snackbar_fetch_member_error">メンバーの取得にエラーが発生しました</string>
   <string name="sharing_snackbar_fetch_pending_invites_error">保留中の招待の取得中にエラーが発生しました</string>
   <string name="share_summary_title">レビューして共有</string>
-  <string name="share_summary_vault">%s 保管庫</string>
-  <string name="share_summary_share_vault">保管庫を共有する</string>
+    <string name="share_summary_share_vault">保管庫を共有する</string>
   <string name="share_summary_share_item">アイテムを共有</string>
   <string name="share_summary_vault_title">保管庫</string>
   <string name="share_summary_item_title">アイテム</string>

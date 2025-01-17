@@ -103,14 +103,22 @@ class PassScopeUserCheck(
     private suspend fun currentFreeUserCount(): Int = accountManager.getAccounts(AccountState.Ready).first()
         .map { userManager.getUser(it.userId) }
         .fold(0) { acc, user ->
-            val hasPassLifeTime = user.flags["pass-lifetime"] ?: false
-            val isPassFromSL = user.flags["pass-from-sl"] ?: false
-            if (!user.hasSubscription() && !hasPassLifeTime && !isPassFromSL) {
+            val flags = user.flags
+            val hasPassLifetime = flags.hasFlag(UserFlag.PASS_LIFETIME)
+            val isPassFromSL = flags.hasFlag(UserFlag.PASS_FROM_SL)
+            if (!user.hasSubscription() && !hasPassLifetime && !isPassFromSL) {
                 acc + 1
             } else {
                 acc
             }
         }
+
+    private fun Map<String, Boolean>.hasFlag(flag: UserFlag): Boolean = this[flag.key] ?: false
+
+    private enum class UserFlag(val key: String) {
+        PASS_LIFETIME("pass-lifetime"),
+        PASS_FROM_SL("pass-from-sl")
+    }
 
     companion object {
         private const val TAG = "PassScopeUserCheck"

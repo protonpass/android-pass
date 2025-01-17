@@ -465,6 +465,14 @@ fun NavGraphBuilder.appGraph(
                         itemId = it.itemId
                     )
                 )
+
+                HomeNavigation.ItemsMigrationSharedWarning -> appNavigator.navigate(
+                    destination = MigrateSharedWarningNavItem,
+                    route = MigrateSharedWarningNavItem.createNavRoute(
+                        migrateMode = MigrateModeValue.SelectedItems,
+                        filter = MigrateVaultFilter.All
+                    )
+                )
             }
         }
     )

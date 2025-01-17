@@ -995,11 +995,18 @@ class HomeViewModel @Inject constructor(
         selectionState.update { SelectionState.Initial }
     }
 
-    fun moveItemsToVault(items: List<ItemUiModel>) = viewModelScope.launch {
-        val selectedItemsAsPairs = items.map { it.shareId to it.id }.toPersistentSet()
-        val groupedItems = groupItems(selectedItemsAsPairs)
-        bulkMoveToVaultRepository.save(groupedItems)
-        navEventState.update { HomeNavEvent.ShowBulkMoveToVault }
+    internal fun moveItemsToVault(items: List<ItemUiModel>) {
+        viewModelScope.launch {
+            val selectedItemsAsPairs = items.map { it.shareId to it.id }.toPersistentSet()
+            val groupedItems = groupItems(selectedItemsAsPairs)
+            bulkMoveToVaultRepository.save(groupedItems)
+
+            if (items.any { it.isShared }) {
+                HomeNavEvent.OnBulkMigrationSharedWarning
+            } else {
+                HomeNavEvent.ShowBulkMoveToVault
+            }.also { event -> navEventState.update { event } }
+        }
     }
 
     fun pinSelectedItems(items: List<ItemUiModel>) = viewModelScope.launch {

@@ -30,7 +30,6 @@ import me.proton.core.auth.presentation.DefaultUserCheck
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.hasSubscription
-import me.proton.core.user.domain.extension.isCredentialLess
 import proton.android.pass.PassActivityOrchestrator
 import proton.android.pass.R
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
@@ -103,7 +102,6 @@ class PassScopeUserCheck(
 
     private suspend fun currentFreeUserCount(): Int = accountManager.getAccounts(AccountState.Ready).first()
         .map { userManager.getUser(it.userId) }
-        .filterNot { it.isCredentialLess() }
         .fold(0) { acc, user ->
             val hasPassLifeTime = user.flags["pass-lifetime"] ?: false
             val isPassFromSL = user.flags["pass-from-sl"] ?: false
